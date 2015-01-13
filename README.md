@@ -1,6 +1,7 @@
 ## About the project
 
 **Stage 1**: Recreate all Warcraft 3 Hero Abilities in Dota. 
+
 This will serve as an extension to the [Dota Spell Library](https://github.com/Pizzalol/SpellLibrary)
 
 Stage 2: Add every race-based unit and their abilities.
@@ -11,16 +12,17 @@ Stage 3: Port some RTS elements of the WC3 engine (like unit-creating buildings,
 
 - All abilities will be written using the datadriven system & lua scripts, no dota overrides allowed.
 
-- Values and general description is taken from http://classic.battle.net/war3/
+- Values and general description are taken from http://classic.battle.net/war3/
 
 - Code each separate ability file inside scripts/npc/abilities then use executable.jar to merge the npc_abilities_custom.txt and test.
 
-- Update progress in the spreadsheet: https://docs.google.com/spreadsheets/d/1qwyG20YNi88G-SFYbaiyxi11Vtar8kjNXXJCMZyF7Y0
+- Update progress in the [Warcraft 3 SpellLibrary Spreadsheet](https://docs.google.com/spreadsheets/d/1qwyG20YNi88G-SFYbaiyxi11Vtar8kjNXXJCMZyF7Y0)
 
 - Check [Warchasers](https://github.com/MNoya/Warchasers/tree/master/scripts) & [SpellLibrary spreadsheet](https://docs.google.com/spreadsheets/d/1oNoqMW2_PZ57TEonAQgMF-9JlApbt3LPNFtx72RhS8Y)
 to see if a similar spell was already made. Many spells overlap, so also make sure to reuse spells from both libraries and credit the authors.
 
-- Try to use any existing dota particle similar to the original spell. Use this guide for reference: http://moddota.com/forums/discussion/69/particle-attachment
+- Try to use any existing dota particle similar to the original spell. [Use this guide for reference](http://moddota.com/forums/discussion/69/particle-attachment)
+
 If custom particles are needed we can deal with that later.
 
 - Follow this coding style:
