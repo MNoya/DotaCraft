@@ -1,0 +1,41 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Activate Avatar to temporarily give the Mountain King 5 bonus armor, 500 bonus hit points, 20 bonus damage and spell immunity.
+//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//N/A	60 sec.	180 sec.	150	N/A	Personal	Self	+5 Armor, +500 hit points, +20 damage, spell immunity	6
+"mountain_king_avatar"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"mountain_king_avatar"
+	"MaxLevel"						"1"
+	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

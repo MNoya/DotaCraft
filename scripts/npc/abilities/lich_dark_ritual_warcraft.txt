@@ -1,0 +1,42 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Blasts enemy units around a target enemy unit with a wave of damaging frost that slows movement and attack rate.
+//Level	Duration (Heroes)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	4 (2) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 50 nova damage	1
+//2	6 (3) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 100 nova damage	3
+//3	8 (4) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 150 nova damage	5
+"lich_dark_ritual_warcraft"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"lich_dark_ritual_warcraft"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

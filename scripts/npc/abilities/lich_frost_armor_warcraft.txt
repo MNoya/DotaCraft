@@ -1,0 +1,42 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Creates a shield of frost around a target friendly unit. The shield adds armor and slows melee units that attack it.
+//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 3 armor, 5 seconds of cold	1
+//2	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 5 armor, 5 seconds of cold	3
+//3	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 7 armor, 5 seconds of cold	5
+"lich_frost_armor_warcraft"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"lich_frost_armor_warcraft"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

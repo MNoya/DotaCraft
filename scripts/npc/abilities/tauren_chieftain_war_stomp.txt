@@ -1,0 +1,42 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Slams the ground, stunning and damaging nearby enemy units.
+//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	N/A	6 sec.	90	N/A	25	Ground, Enemy	25 damage, 3 (Hero 2) sec. stun	1
+//2	N/A	6 sec.	90	N/A	30	Ground, Enemy	50 damage, 4 (Hero 3) sec. stun	3
+//3	N/A	6 sec.	90	N/A	35	Ground, Enemy	75 damage, 5 (Hero 4) sec. stun	5
+"tauren_chieftain_war_stomp"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"tauren_chieftain_war_stomp"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

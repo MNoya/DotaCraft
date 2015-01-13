@@ -1,0 +1,42 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Summons an angry Quilbeast to attack your enemies.
+//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	N/A	25 sec.	75	N/A	N/A	N/A	Summons Quilbeast	1
+//2	N/A	25 sec.	75	N/A	N/A	N/A	Summons Dire Quilbeast with Frenzy	3
+//3	N/A	25 sec.	75	N/A	N/A	N/A	Summons Raging Quilbeast with area effect damage and Frenzy	5
+"beastmaster_summon_quilbeast"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"beastmaster_summon_quilbeast"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

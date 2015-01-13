@@ -1,0 +1,42 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Turns a unit ethereal and slows its movement speed by 50% for 18 seconds (at level 3). Ethereal units cannot attack, but they can cast spells and will take 66% more damage from //Magic attacks and spells.
+//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	12 (4) sec.	N/A	75	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	1
+//2	15 (5) sec.	N/A	60	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	3
+//3	18 (6) sec.	N/A	50	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	5
+"blood_mage_banish"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"blood_mage_banish"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

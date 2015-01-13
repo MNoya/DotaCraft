@@ -1,0 +1,42 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Transfers mana between the Blood Mage and a target. Drains mana from an enemy, or transfers mana to an ally. Siphon Mana can push the Blood Mage's mana over its maximum value, //though excess mana drains off rapidly if not used.
+//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	6 sec.	6 sec.	10	60-80	Unit	Air, Ground, Enemy, Organic, Neutral	15 mana drained/sec.	1
+//2	6 sec.	6 sec.	10	60-80	Unit	Air, Ground, Enemy, Organic, Neutral	30 mana drained/sec.	3
+//3	6 sec.	6 sec.	10	60-80	Unit	Air, Ground, Enemy, Organic, Neutral	45 mana drained/sec.	5
+"blood_mage_siphon_mana"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"blood_mage_siphon_mana"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

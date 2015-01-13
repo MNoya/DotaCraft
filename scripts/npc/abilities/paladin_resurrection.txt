@@ -1,0 +1,50 @@
+// Paladin Resurrection
+// Author: Noya
+// Date: 13.1.2015.
+// Notes: Brings back to life the corpses of 6 friendly nearby units. The spell will choose the most powerful corpses to resurrect if there are more than 6.
+//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//N/A	N/A	240 sec.	200	40	90	Ground, Dead, Friend	Resurrects up to 6 Units	6 
+"paladin_resurrection"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityTextureName"			"paladin_resurrection"
+	"MaxLevel"						"1"
+	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityCastRange"				"400"
+	"AbilityCooldown"				"240"
+	"AbilityManaCost"				"200"
+	"AbilityCastPoint"    			"0.3"
+	"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+	}
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"target_damage"			"100 200 300"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"heal_amount"			"200 400 600"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/paladin/holy_light.lua"
+			"Function"		"HolyLight"
+		}
+	}
+}

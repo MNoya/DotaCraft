@@ -1,0 +1,43 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Description: The Alchemist causes his Ogre to enter a chemically induced rage, increasing movement rate by 50% and increasing attack rate.
+// Notes: 
+// Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	15 sec.	30 sec.	25	N/A	N/A	Self	25% attack rate increase	1
+//2	15 sec.	30 sec.	25	N/A	N/A	Self	75% attack rate increase	3
+//3	15 sec.	30 sec.	25	N/A	N/A	Self	125% attack rate increase	5
+"alchemist_chemical_rage_warcraft"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"alchemist_chemical_rage_warcraft"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

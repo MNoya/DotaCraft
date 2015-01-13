@@ -1,0 +1,42 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Transforms an enemy unit into a random critter, disabling special abilities.
+//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	15 (4) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	1
+//2	30 (5) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	3
+//3	45 (6) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	5
+"shadow_hunter_hex"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"shadow_hunter_hex"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

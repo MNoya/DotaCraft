@@ -1,0 +1,45 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Description: Hurls a flask of acid at a target. The flask breaks upon impact, splashing a powerful acid on nearby hostile units. 
+//				Decreases armor; deals slightly less damage over time to nearby targets.
+// Notes: 
+// Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	15 sec.	12 sec.	75	70	20	Ground, Enemy, Neutral, Organic	5 max damage per second, armor -3	1
+//2	15 sec.	12 sec.	75	70	20	Ground, Enemy, Neutral, Organic	10 max damage per second, armor -4	3
+//3	15 sec.	12 sec.	75	70	20	Ground, Enemy, Neutral, Organic	15 max damage per second, armor -5	5
+
+"alchemist_acid_bomb"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"alchemist_acid_bomb"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

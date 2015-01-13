@@ -1,0 +1,40 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Causes the ground to erupt into a massive Volcano. Every 5 seconds, a wave of molten rocks is hurled from the Volcano at nearby ground units and buildings, causing 100 damage to each target and stunning it for 2 seconds. Buildings take 2 times more damage from molten rocks than units do.
+//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//N/A	35 sec.	180 sec.	200	80	50	Ground, Building, Not Self, Tree, Debris	Creates Volcano	6
+"firelord_volcano"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"firelord_volcano"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

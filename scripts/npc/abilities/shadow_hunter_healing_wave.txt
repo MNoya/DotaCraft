@@ -1,0 +1,42 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Calls forth a wave of energy that heals a target and bounces to nearby friendlies. Each bounce heals less damage.
+//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	N/A	9 sec.	90	70	50	Air, Ground, Friend, Self, Organic	Heals 130 damage, jumps 3 times	1
+//2	N/A	9 sec.	90	70	50	Air, Ground, Friend, Self, Organic	Heals 215 damage, jumps 4 times	3
+//3	N/A	9 sec.	90	70	50	Air, Ground, Friend, Self, Organic	Heals 300 damage, jumps 5 times	5
+"shadow_hunter_healing_wave"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"shadow_hunter_healing_wave"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

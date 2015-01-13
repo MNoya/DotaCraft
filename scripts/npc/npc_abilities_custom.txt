@@ -1,0 +1,4558 @@
+//Generated using Dota Custom File Generator by cris9696
+"DOTAAbilities"
+{
+
+
+	//Start of file ability_layout.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: 
+	"hero_ability_name"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"hero_ability_name"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file ability_layout.txt
+
+
+	//Start of file alchemist_acid_bomb.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Description: Hurls a flask of acid at a target. The flask breaks upon impact, splashing a powerful acid on nearby hostile units. 
+	//				Decreases armor; deals slightly less damage over time to nearby targets.
+	// Notes: 
+	// Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	15 sec.	12 sec.	75	70	20	Ground, Enemy, Neutral, Organic	5 max damage per second, armor -3	1
+	//2	15 sec.	12 sec.	75	70	20	Ground, Enemy, Neutral, Organic	10 max damage per second, armor -4	3
+	//3	15 sec.	12 sec.	75	70	20	Ground, Enemy, Neutral, Organic	15 max damage per second, armor -5	5
+	
+	"alchemist_acid_bomb"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"alchemist_acid_bomb"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file alchemist_acid_bomb.txt
+
+
+	//Start of file alchemist_chemical_rage_warcraft.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Description: The Alchemist causes his Ogre to enter a chemically induced rage, increasing movement rate by 50% and increasing attack rate.
+	// Notes: 
+	// Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	15 sec.	30 sec.	25	N/A	N/A	Self	25% attack rate increase	1
+	//2	15 sec.	30 sec.	25	N/A	N/A	Self	75% attack rate increase	3
+	//3	15 sec.	30 sec.	25	N/A	N/A	Self	125% attack rate increase	5
+	"alchemist_chemical_rage_warcraft"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"alchemist_chemical_rage_warcraft"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file alchemist_chemical_rage_warcraft.txt
+
+
+	//Start of file alchemist_healing_spray.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Description: Sprays waves of healing mist that heals units in a target area.
+	// Notes: 
+	// Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	N/A	75	80	25	Air, Ground, Organic	3 waves at 40 HP healed each	1
+	//2	N/A	N/A	75	80	25	Air, Ground, Organic	4 waves at 55 HP healed each	3
+	//3	N/A	N/A	75	80	25	Air, Ground, Organic	5 waves at 70 HP healed each	5
+	"alchemist_healing_spray"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"alchemist_healing_spray"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file alchemist_healing_spray.txt
+
+
+	//Start of file alchemist_transmute.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Description: Kills a target unit instantly, transforming it into gold which is added to your available gold! Transmute cannot be used on Heroes, or creeps above level 5.
+	// Notes: 
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	Instant	45 sec.	150	65	Unit	Air, Ground, Enemy, Neutral, Non Hero	Kills Unit, Gains Gold Depending on Unit	6
+	"alchemist_transmute"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"alchemist_transmute"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file alchemist_transmute.txt
+
+
+	//Start of file archmage_blizzard.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Calls down waves of freezing ice shards that damage units in a target area.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	6 sec.	6 sec.	75	80	20	N/A	6 waves at 30 damage each, 150 max damage	1
+	//2	8 sec.	6 sec.	75	80	20	N/A	8 waves at 40 damage each, 200 max damage	3
+	//3	10 sec.	6 sec.	75	80	20	N/A	10 waves at 50 damage each, 250 max damage	5
+	"archmage_blizzard"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"archmage_blizzard"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file archmage_blizzard.txt
+
+
+	//Start of file archmage_brilliance_aura.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Gives additional mana regeneration to nearby friendly units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 0.75 mana per sec.	1
+	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 1.5 mana per sec.	3
+	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 2.25 mana per sec.	5
+	"archmage_brilliance_aura"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"archmage_brilliance_aura"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file archmage_brilliance_aura.txt
+
+
+	//Start of file archmage_mass_teleport.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Calls down waves of freezing ice shards that damage units in a target area.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	6 sec.	6 sec.	75	80	20	N/A	6 waves at 30 damage each, 150 max damage	1
+	//2	8 sec.	6 sec.	75	80	20	N/A	8 waves at 40 damage each, 200 max damage	3
+	//3	10 sec.	6 sec.	75	80	20	N/A	10 waves at 50 damage each, 250 max damage	5
+	"archmage_mass_teleport"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"archmage_mass_teleport"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file archmage_mass_teleport.txt
+
+
+	//Start of file archmage_summon_water_elemental.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons a Water Elemental to attack the Archmage's enemies.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	60 sec.	20 sec.	125	N/A	N/A	N/A	525 hit points, light damage	1
+	//2	60 sec.	20 sec.	125	N/A	N/A	N/A	675 hit points, moderate damage	3
+	//3	60 sec.	20 sec.	125	N/A	N/A	N/A	900 hit points, heavy damage	5
+	"archmage_summon_water_elemental"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"archmage_summon_water_elemental"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file archmage_summon_water_elemental.txt
+
+
+	//Start of file beastmaster_stampede.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Calls down hordes of rampaging thunder lizards to explode upon the Beastmaster's enemies. Each exploding lizard does 60 damage.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	30 sec.	180 sec.	150	30	100	Ground, Buildings, Enemy, Neutral	Thunder Lizards go Crazy	6
+	"beastmaster_stampede"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"beastmaster_stampede"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file beastmaster_stampede.txt
+
+
+	//Start of file beastmaster_summon_bear.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons a powerful bear to attack your enemies.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	45 sec.	125	N/A	N/A	N/A	Summons Bear	1
+	//2	N/A	40 sec.	125	N/A	N/A	N/A	Summons Raging Bear with Bash	3
+	//3	N/A	40 sec.	125	N/A	N/A	N/A	Summons Spirit Bear with Bash and Blink	5
+	"beastmaster_summon_bear"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"beastmaster_summon_bear"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file beastmaster_summon_bear.txt
+
+
+	//Start of file beastmaster_summon_hawk.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons a proud hawk to spy on your enemies.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	70 sec.	50	N/A	N/A	N/A	Summons Hawk	1
+	//2	N/A	70 sec.	50	N/A	N/A	N/A	Summons Thunder Hawk with an attack	3
+	//3	N/A	70 sec.	50	N/A	N/A	N/A	Summons Spirit Hawk with Invisibility	5
+	"beastmaster_summon_hawk"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"beastmaster_summon_hawk"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file beastmaster_summon_hawk.txt
+
+
+	//Start of file beastmaster_summon_quilbeast.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons an angry Quilbeast to attack your enemies.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	25 sec.	75	N/A	N/A	N/A	Summons Quilbeast	1
+	//2	N/A	25 sec.	75	N/A	N/A	N/A	Summons Dire Quilbeast with Frenzy	3
+	//3	N/A	25 sec.	75	N/A	N/A	N/A	Summons Raging Quilbeast with area effect damage and Frenzy	5
+	"beastmaster_summon_quilbeast"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"beastmaster_summon_quilbeast"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file beastmaster_summon_quilbeast.txt
+
+
+	//Start of file blademaster_bladestorm.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Causes a bladestorm of destructive force around the Blademaster, rendering him immune to magic and dealing 110 damage per second to nearby enemy land units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	7 sec.	180 sec.	200	N/A	N/A	Ground, Enemy, Neutral	110 damage per second	6
+	"blademaster_bladestorm"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blademaster_bladestorm"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file blademaster_bladestorm.txt
+
+
+	//Start of file blademaster_critical_strike.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Gives a 15% chance that the Blademaster will do more damage on his attacks.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	Unlimited	N/A	N/A	N/A	N/A	Self	2 times normal damage	1
+	//2	Unlimited	N/A	N/A	N/A	N/A	Self	3 times normal damage	3
+	//3	Unlimited	N/A	N/A	N/A	N/A	Self	4 times normal damage	5
+	"blademaster_critical_strike"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blademaster_critical_strike"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file blademaster_critical_strike.txt
+
+
+	//Start of file blademaster_mirror_image.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Confuses the enemy by creating illusions of the Blademaster and dispelling all magic from the Blademaster.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 1 illusion	1
+	//2	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 2 illusion	3
+	//3	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 3 illusion	5
+	"blademaster_mirror_image"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blademaster_mirror_image"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file blademaster_mirror_image.txt
+
+
+	//Start of file blademaster_windwalk.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Allows the Blademaster to become invisible, and move faster for a set amount of time. When the Blademaster attacks a unit to break invisibility, he will deal bonus damage.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	20 sec.	5 sec.	75	N/A	Personal	Self	Invisible, +10% movement speed, 40 bonus damage	1
+	//2	35 sec.	5 sec.	75	N/A	Personal	Self	Invisible, +40% movement speed, 70 bonus damage	3
+	//3	50 sec.	5 sec.	75	N/A	Personal	Self	Invisible, Max Movement Speed, 100 bonus damage	5
+	"blademaster_windwalk"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blademaster_windwalk"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file blademaster_windwalk.txt
+
+
+	//Start of file blood_mage_banish.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Turns a unit ethereal and slows its movement speed by 50% for 18 seconds (at level 3). Ethereal units cannot attack, but they can cast spells and will take 66% more damage from //Magic attacks and spells.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	12 (4) sec.	N/A	75	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	1
+	//2	15 (5) sec.	N/A	60	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	3
+	//3	18 (6) sec.	N/A	50	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	5
+	"blood_mage_banish"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blood_mage_banish"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file blood_mage_banish.txt
+
+
+	//Start of file blood_mage_flame_strike.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Conjures a pillar of fire which damages ground units in a target area over time.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	6 sec.	10 sec.	135	80	20	Ground, Enemy, Neutral, Friend, Building, Self, Tree	45 damage/sec. for 3 seconds, minor damage for 6 sec.	1
+	//2	6 sec.	10 sec.	135	80	20	Ground, Enemy, Neutral, Friend, Building, Self, Tree	80 damage/sec. for 3 seconds, light damage for 6 sec.	3
+	//3	6 sec.	10 sec.	135	80	20	Ground, Enemy, Neutral, Friend, Building, Self, Tree	110 damage/sec. for 3 seconds, moderate damage for 6 sec.	5
+	"blood_mage_flame_strike"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blood_mage_flame_strike"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file blood_mage_flame_strike.txt
+
+
+	//Start of file blood_mage_phoenix.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons a powerful Phoenix. The Phoenix burns with such intensity that it damages itself and nearby enemy units. Has Spell Immunity, and Resistant Skin. When a Phoenix dies, it //creates an egg that will hatch into a Phoenix.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	N/A	180+ sec.	175	N/A	N/A	N/A	Summons a Phoenix	6
+	"blood_mage_phoenix"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blood_mage_phoenix"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file blood_mage_phoenix.txt
+
+
+	//Start of file blood_mage_siphon_mana.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Transfers mana between the Blood Mage and a target. Drains mana from an enemy, or transfers mana to an ally. Siphon Mana can push the Blood Mage's mana over its maximum value, //though excess mana drains off rapidly if not used.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	6 sec.	6 sec.	10	60-80	Unit	Air, Ground, Enemy, Organic, Neutral	15 mana drained/sec.	1
+	//2	6 sec.	6 sec.	10	60-80	Unit	Air, Ground, Enemy, Organic, Neutral	30 mana drained/sec.	3
+	//3	6 sec.	6 sec.	10	60-80	Unit	Air, Ground, Enemy, Organic, Neutral	45 mana drained/sec.	5
+	"blood_mage_siphon_mana"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blood_mage_siphon_mana"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file blood_mage_siphon_mana.txt
+
+
+	//Start of file crypt_lord_carrion_beetles.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: The Crypt Lord progenerates 1 Carrion Beetle from a target corpse to attack the Crypt Lord's enemies. Beetles are permanent but only 5 can be controlled at a time.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	6 sec.	30	90	Unit	Dead	140 hit points, 8-9 damage	1
+	//2	N/A	6 sec.	30	90	Unit	Dead	275 hit points, 15-18 damage	3
+	//3	N/A	6 sec.	30	90	Unit	Dead	410 hit points, 22-27 damage	5
+	"crypt_lord_carrion_beetles"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"crypt_lord_carrion_beetles"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file crypt_lord_carrion_beetles.txt
+
+
+	//Start of file crypt_lord_impale.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Slams the ground with the Crypt Lord's massive claws, shooting spiked tendrils out in a straight line, dealing damage and hurling enemy ground units into the air in their wake.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	2 (1) sec.	9 sec.	100	70	25	Ground, Enemy, Neutral, Organic	50 damage, 2 (1) second stun	1
+	//2	3 (2) sec.	9 sec.	100	70	25	Ground, Enemy, Neutral, Organic	80 damage, 3 (2) second stun	3
+	//3	4 (3) sec.	9 sec.	100	70	25	Ground, Enemy, Neutral, Organic	110 damage, 4 (3) second stun	5
+	"crypt_lord_impale"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"crypt_lord_impale"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file crypt_lord_impale.txt
+
+
+	//Start of file crypt_lord_locust_swarm.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Creates a swarm of angry locusts that bite and tear at nearby enemy units. As they chew the enemy flesh, they convert it into a substance that restores hit points to the Crypt Lord when they return.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	30 sec.	180 sec.	150	N/A	80	Air, Ground, Building, Neutral, Enemy	Creates Locust Swarm	6
+	"crypt_lord_locust_swarm"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"crypt_lord_locust_swarm"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file crypt_lord_locust_swarm.txt
+
+
+	//Start of file crypt_lord_spiked_carapace.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: The Crypt Lord forms barbed layers of chitinous armor that increases its defense and returns damage to enemy melee attackers.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	N/A	None	N/A	Personal	Self	15% damage returned, 3 bonus armor	1
+	//2	N/A	N/A	None	N/A	Personal	Self	25% damage returned, 5 bonus armor	3
+	//3	N/A	N/A	None	N/A	Personal	Self	35% damage returned, 7 bonus armor	5
+	"crypt_lord_spiked_carapace"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"crypt_lord_spiked_carapace"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file crypt_lord_spiked_carapace.txt
+
+
+	//Start of file dark_ranger_black_arrow.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Adds extra damage to attacks. Units killed while under the effect of Black Arrow will turn into Dark Minions.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	None	6	60	Unit	Air, Ground, Enemy, Organic, Neutral	2 bonus damage, 215 hit point Lesser Dark Minion	1
+	//2	N/A	None	6	60	Unit	Air, Ground, Enemy, Organic, Neutral	10 bonus damage, 290 hit point Dark Minion	3
+	//3	N/A	None	6	60	Unit	Air, Ground, Enemy, Organic, Neutral	20 bonus damage, 405 hit point Greater Dark Minion	5
+	"dark_ranger_black_arrow"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dark_ranger_black_arrow"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file dark_ranger_black_arrow.txt
+
+
+	//Start of file dark_ranger_charm.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Takes control of a target enemy unit. Charm cannot be used on Heroes, or creeps above level 5.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	N/A	45 sec.	150	70	Unit	Air, Ground, NonHero, Enemy, Neutral, Organic	Takes Control of Unit Permanently	6
+	"dark_ranger_charm"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dark_ranger_charm"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file dark_ranger_charm.txt
+
+
+	//Start of file dark_ranger_life_drain.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Absorbs the life essence of a target enemy unit by taking hit points from it every second and giving them to the Dark Ranger.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	8 sec.	8 sec.	75	50	Unit	Air, Ground, Enemy, Organic, Neutral	25 hit point drain per second	1
+	//2	8 sec.	8 sec.	75	50	Unit	Air, Ground, Enemy, Organic, Neutral	40 hit point drain per second	3
+	//3	8 sec.	8 sec.	75	50	Unit	Air, Ground, Enemy, Organic, Neutral	55 hit point drain per second	5
+	"dark_ranger_life_drain"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dark_ranger_life_drain"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file dark_ranger_life_drain.txt
+
+
+	//Start of file dark_ranger_silence.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Stops all enemies in a target area from casting spells. The area of effect and duration increase with level.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	16 (8) sec.	15 sec.	75	90	20	Air, Ground, Enemy, Organic, Neutral	Prevents Spell Casting	1
+	//2	20 (10) sec.	15 sec.	75	90	27.5	Air, Ground, Enemy, Organic, Neutral	Prevents Spell Casting	3
+	//3	24 (12) sec.	15 sec.	75	90	35	Air, Ground, Enemy, Organic, Neutral	Prevents Spell Casting	5
+	"dark_ranger_silence"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dark_ranger_silence"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file dark_ranger_silence.txt
+
+
+	//Start of file death_knight_animate_dead.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Raises 6 dead units in an area to fight for the Death Knight. Animated units are invulnerable.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	40 sec.	180 sec.	175	40	90	Ground, Dead	Raises Dead Units	6
+	"death_knight_animate_dead"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"death_knight_animate_dead"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file death_knight_animate_dead.txt
+
+
+	//Start of file death_knight_death_coil.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: A coil of death that can damage an enemy living unit or heal a friendly undead unit.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	6 sec.	75	80	Unit	Air, Ground, Organic, Not Self	Damages 100 or Heals 200 HP	1
+	//2	N/A	6 sec.	75	80	Unit	Air, Ground, Organic, Not Self	Damages 200 or Heals 400 HP	3
+	//3	N/A	6 sec.	75	80	Unit	Air, Ground, Organic, Not Self	Damages 300 or Heals 600 HP	5
+	"death_knight_death_coil"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"death_knight_death_coil"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file death_knight_death_coil.txt
+
+
+	//Start of file death_knight_death_pact.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Kills a target friendly unit, giving a percentage of its hit points to the Death Knight.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	15 sec.	50	80	Unit	Air, Ground, Player, Non Hero	100% conversion	1
+	//2	N/A	15 sec.	50	80	Unit	Air, Ground, Player, Non Hero	200% conversion	3
+	//3	N/A	15 sec.	50	80	Unit	Air, Ground, Player, Non Hero	300% conversion	5
+	"death_knight_death_pact"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"death_knight_death_pact"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file death_knight_death_pact.txt
+
+
+	//Start of file death_knight_unholy_aura.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Increases the movement speed and life regeneration rate of nearby friendly units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+10% movement, +0.5 HP/sec.	1
+	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+20% movement, +1 HP/sec.	3
+	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+30% movement, +1.5 HP/sec.	5
+	"death_knight_unholy_aura"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"death_knight_unholy_aura"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file death_knight_unholy_aura.txt
+
+
+	//Start of file demon_hunter_demon_form.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Transforms the Demon Hunter into a powerful demon with a ranged attack (60 range) and 500 bonus hit points.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	60 sec.	180 sec.	150	N/A	N/A	Self	+500 HP, 3 HP regenerated/sec	6
+	"demon_hunter_demon_form"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"demon_hunter_demon_form"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file demon_hunter_demon_form.txt
+
+
+	//Start of file demon_hunter_evasion.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Gives the Demon Hunter a chance to avoid attacks.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	N/A	None	N/A	N/A	N/A	10% chance opponent misses	1
+	//2	N/A	N/A	None	N/A	N/A	N/A	20% chance opponent misses	3
+	//3	N/A	N/A	None	N/A	N/A	N/A	30% chance opponent misses	5
+	"demon_hunter_evasion"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"demon_hunter_evasion"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file demon_hunter_evasion.txt
+
+
+	//Start of file demon_hunter_immolation.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Engulfs the Demon Hunter in flames, causing damage to nearby enemy land units. Drains mana until deactivated.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	N/A	35 + 7/sec	N/A	16	Ground, Enemy, Neutral, Organic	10 damage/sec	1
+	//2	N/A	N/A	35 + 7/sec	N/A	16	Ground, Enemy, Neutral, Organic	15 damage/sec	3
+	//3	N/A	N/A	35 + 7/sec	N/A	16	Ground, Enemy, Neutral, Organic	20 damage/sec	5
+	"demon_hunter_immolation"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"demon_hunter_immolation"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file demon_hunter_immolation.txt
+
+
+	//Start of file demon_hunter_mana_burn.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Sends a bolt of negative energy that burns a target enemy unit's mana. Burned mana combusts, dealing damage to the target equal to the amount of mana burned.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	7 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 50 mana	1
+	//2	N/A	6 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 100 mana	3
+	//3	N/A	5 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 150 mana	5
+	"demon_hunter_mana_burn"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"demon_hunter_mana_burn"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file demon_hunter_mana_burn.txt
+
+
+	//Start of file dread_lord_carrion_swarm.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Sends a horde of bats to damage enemies.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	10 sec.	110	70	15	Air, Ground	75 damage per unit, max 300	1
+	//2	N/A	10 sec.	110	70	15	Air, Ground	125 damage per unit, max 600	3
+	//3	N/A	10 sec.	110	70	15	Air, Ground	200 damage per unit, max 1000	5
+	"dread_lord_carrion_swarm"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dread_lord_carrion_swarm"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file dread_lord_carrion_swarm.txt
+
+
+	//Start of file dread_lord_inferno.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Calls an Infernal down from the sky, dealing 50 damage and stunning enemy land units for 4 seconds in an area. The Infernal lasts 180 seconds.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	N/A	180 sec.	175	90	25	Ground, Structure, Debris, Enemy	Creates an Infernal, 4 (2) second stun, 50 damage	6
+	"dread_lord_inferno"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dread_lord_inferno"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file dread_lord_inferno.txt
+
+
+	//Start of file dread_lord_sleep.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Puts a target enemy unit to sleep. A sleeping unit can be awoken by attacking it.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	20 (5) sec.	6 sec.	100	80	Unit	Air, Ground, Enemy, Organic	Unit put to sleep	1
+	//2	40 (10) sec.	6 sec.	75	80	Unit	Air, Ground, Enemy, Organic	Unit put to sleep	3
+	//3	60 (15) sec.	6 sec.	50	80	Unit	Air, Ground, Enemy, Organic	Unit put to sleep	5
+	"dread_lord_sleep"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dread_lord_sleep"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file dread_lord_sleep.txt
+
+
+	//Start of file dread_lord_vampiric_aura.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Nearby friendly melee units gain hit points when they hit a unit.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 15% of Attack Damage	1
+	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 30% of Attack Damage	3
+	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 45% of Attack Damage	5
+	"dread_lord_vampiric_aura"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dread_lord_vampiric_aura"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file dread_lord_vampiric_aura.txt
+
+
+	//Start of file far_seer_chain_lightning.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Hurls a bolt of damaging lightning at a target enemy that jumps to nearby enemies. Each jump deals less damage.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	9 sec.	120	70	50	Air, Ground, Enemy, Neutral	85 damage, jumps 4 times	1
+	//2	N/A	9 sec.	120	70	50	Air, Ground, Enemy, Neutral	125 damage, jumps 6 times	3
+	//3	N/A	9 sec.	120	70	50	Air, Ground, Enemy, Neutral	180 damage, jumps 8 times	5
+	"far_seer_chain_lightning"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"far_seer_chain_lightning"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file far_seer_chain_lightning.txt
+
+
+	//Start of file far_seer_earthquake.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Makes the ground tremble and break, causing 50 damage per second to buildings and slowing units by 75% within area of effect. Lasts 25 seconds.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	25 sec.	90 sec.	150	100	25	Ground, Structures	50 damage/sec to buildings, slows units 75%	6
+	"far_seer_earthquake"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"far_seer_earthquake"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file far_seer_earthquake.txt
+
+
+	//Start of file far_seer_far_sight.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Reveals the area of the map that is cast upon. Also reveals invisible units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	8 sec.	N/A	75	Unlimited	60	N/A	Reveals Map	1
+	//2	8 sec.	N/A	60	Unlimited	180	N/A	Reveals Map	3
+	//3	8 sec.	N/A	50	Unlimited	400	N/A	Reveals Map	5
+	"far_seer_far_sight"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"far_seer_far_sight"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file far_seer_far_sight.txt
+
+
+	//Start of file far_seer_feral_spirit.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons Spirit Wolves to fight enemies for a limited time.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	60 sec.	30 sec.	75	N/A	N/A	N/A	Summons Two Spirit Wolves	1
+	//2	60 sec.	25 sec.	75	N/A	N/A	N/A	Summons Two Dire Wolves	3
+	//3	60 sec.	25 sec.	75	N/A	N/A	N/A	Summons Two Shadow Wolves	5
+	"far_seer_feral_spirit"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"far_seer_feral_spirit"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file far_seer_feral_spirit.txt
+
+
+	//Start of file firelord_incinerate.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Each attack made is enchanced with living flames that cling to the target. These flames add a small amount of damage on the first attack, twice as much on the second attack, three times as much on the third attack, etc. If the unit dies while under this effect, it is incinerated, causing significant damage to all nearby hostile units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	None	6 per attack	N/A	N/A	Enemy, Organic, Neutral	1 bonus damage, 30 incineration damage	1
+	//2	N/A	None	6 per attack	N/A	N/A	Enemy, Organic, Neutral	2 bonus damage, 45 incineration damage	3
+	//3	N/A	None	6 per attack	N/A	N/A	Enemy, Organic, Neutral	3 bonus damage, 60 incineration damage	5
+	"firelord_incinerate"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"firelord_incinerate"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file firelord_incinerate.txt
+
+
+	//Start of file firelord_soul_burn.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Wreaths an enemy unit in magical flames which cause damage over time, prevent the casting of spells, and reduce attack damage by 50%.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	14 (6) sec.	12 sec.	85	70	N/A	Air, Ground, Enemy, Organic, Neutral	100 damage over 14 seconds.	1
+	//2	16 (7) sec.	12 sec.	85	70	N/A	Air, Ground, Enemy, Organic, Neutral	225 damage over 16 seconds.	3
+	//3	18 (8) sec.	12 sec.	85	70	N/A	Air, Ground, Enemy, Organic, Neutral	375 damage over 18 seconds.	5
+	"firelord_soul_burn"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"firelord_soul_burn"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file firelord_soul_burn.txt
+
+
+	//Start of file firelord_summon_lava_spawn.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons a Lava Spawn, a resilient and deadly fire creature. As a Lava Spawn deals damage, it consumes the flesh of its target, eventually splitting into two healthy Lava Spawns.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	425 hit points, 11-27 damage	1
+	//2	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	550 hit points, 21-45 damage	3
+	//3	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	700 hit points, 32-56 damage	5
+	"firelord_summon_lava_spawn"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"firelord_summon_lava_spawn"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file firelord_summon_lava_spawn.txt
+
+
+	//Start of file firelord_volcano.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Causes the ground to erupt into a massive Volcano. Every 5 seconds, a wave of molten rocks is hurled from the Volcano at nearby ground units and buildings, causing 100 damage to each target and stunning it for 2 seconds. Buildings take 2 times more damage from molten rocks than units do.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	35 sec.	180 sec.	200	80	50	Ground, Building, Not Self, Tree, Debris	Creates Volcano	6
+	"firelord_volcano"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"firelord_volcano"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file firelord_volcano.txt
+
+
+	//Start of file keeper_entangling_roots.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Causes roots to burst from the ground, immobilizing and damaging a target enemy.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	9 (3) sec.	8 sec.	75	80	Unit	Ground, Enemy, Neutral	Deals 15 damage/sec	1
+	//2	24 (4) sec.	8 sec.	75	80	Unit	Ground, Enemy, Neutral	Deals 15 damage/sec	3
+	//3	36 (5) sec.	8 sec.	75	80	Unit	Ground, Enemy, Neutral	Deals 25 damage/sec	5
+	"keeper_entangling_roots"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"keeper_entangling_roots"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file keeper_entangling_roots.txt
+
+
+	//Start of file keeper_force_of_nature.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Converts an area of trees into Treants. Treants can attack land units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	60 sec.	20 sec.	125	80	15	Trees	Raises 2 Treants	1
+	//2	60 sec.	20 sec.	125	80	22.5	Trees	Raises 3 Treants	3
+	//3	60 sec.	20 sec.	125	80	30	Trees	Raises 4 Treants	5
+	"keeper_force_of_nature"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"keeper_force_of_nature"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file keeper_force_of_nature.txt
+
+
+	//Start of file keeper_thorns_aura.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: An aura that gives friendly units around the Keeper of the Grove a damage shield, which wounds enemy melee attackers.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 10% of melee damage	1
+	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 20% of melee damage	3
+	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 30% of melee damage	5
+	"keeper_thorns_aura"
+	{
+		"BaseClass"             		"keeper_thorns_aura"
+		"AbilityTextureName"			"keeper_thorns_aura"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file keeper_thorns_aura.txt
+
+
+	//Start of file keeper_tranquility.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Causes a rain of healing energy to pour down in a large area, healing friendly allied units for 20 hit points per second.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	30 sec.	60 sec.	125	N/A	90	Air, Ground, Friend, Self	Heals 20 HP/sec	6
+	"keeper_tranquility"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"keeper_tranquility"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file keeper_tranquility.txt
+
+
+	//Start of file lich_dark_ritual_warcraft.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Blasts enemy units around a target enemy unit with a wave of damaging frost that slows movement and attack rate.
+	//Level	Duration (Heroes)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	4 (2) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 50 nova damage	1
+	//2	6 (3) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 100 nova damage	3
+	//3	8 (4) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 150 nova damage	5
+	"lich_dark_ritual_warcraft"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"lich_dark_ritual_warcraft"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file lich_dark_ritual_warcraft.txt
+
+
+	//Start of file lich_death_and_decay.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Damages everything in its area of effect by 4% of its base hit points per second.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	35 sec.	150 sec.	250	100	30	Air, Ground, Wards, Buildings, Trees	Damage to 4% of base HP/sec	6
+	"lich_death_and_decay"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"lich_death_and_decay"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file lich_death_and_decay.txt
+
+
+	//Start of file lich_frost_armor_warcraft.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Creates a shield of frost around a target friendly unit. The shield adds armor and slows melee units that attack it.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 3 armor, 5 seconds of cold	1
+	//2	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 5 armor, 5 seconds of cold	3
+	//3	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 7 armor, 5 seconds of cold	5
+	"lich_frost_armor_warcraft"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"lich_frost_armor_warcraft"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file lich_frost_armor_warcraft.txt
+
+
+	//Start of file lich_frost_nova_warcraft.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Sacrifices a target friendly unit to convert its hit points into mana for the Lich.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	15 sec.	25	80	Unit	Air, Ground, Player, Non Hero	33% HP to mana	1
+	//2	N/A	15 sec.	25	80	Unit	Air, Ground, Player, Non Hero	66% HP to mana	3
+	//3	N/A	15 sec.	25	80	Unit	Air, Ground, Player, Non Hero	100% HP to mana	5
+	"lich_frost_nova_warcraft"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"lich_frost_nova_warcraft"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file lich_frost_nova_warcraft.txt
+
+
+	//Start of file mountain_king_avatar.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Activate Avatar to temporarily give the Mountain King 5 bonus armor, 500 bonus hit points, 20 bonus damage and spell immunity.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	60 sec.	180 sec.	150	N/A	Personal	Self	+5 Armor, +500 hit points, +20 damage, spell immunity	6
+	"mountain_king_avatar"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"mountain_king_avatar"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file mountain_king_avatar.txt
+
+
+	//Start of file mountain_king_bash.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Gives a chance that the Mountain King's attack will do 25 bonus damage and stun his opponent for 2 seconds (1 second for Heroes).
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	N/A	None	N/A	Unit	Ground	20% chance, damage +25, 2 (Hero 1) second stun	1
+	//2	N/A	N/A	None	N/A	Unit	Ground	30% chance, damage +25, 2 (Hero 1) second stun	3
+	//3	N/A	N/A	None	N/A	Unit	Ground	40% chance, damage +25, 2 (Hero 1) second stun	5
+	"mountain_king_bash"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"mountain_king_bash"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file mountain_king_bash.txt
+
+
+	//Start of file mountain_king_storm_bolt.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: A magical hammer that is thrown at an enemy unit, causing damage and stunning the target.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	9 sec.	75	60	Unit	Air, Ground, Enemy, Neutral	100 damage and 5 (Hero 3) second stun	1
+	//2	N/A	9 sec.	75	60	Unit	Air, Ground, Enemy, Neutral	225 damage and 5 (Hero 3) second stun	3
+	//3	N/A	9 sec.	75	60	Unit	Air, Ground, Enemy, Neutral	350 damage and 5 (Hero 3) second stun	5
+	"mountain_king_storm_bolt"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"mountain_king_storm_bolt"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file mountain_king_storm_bolt.txt
+
+
+	//Start of file mountain_king_thunder_clap.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Slams the ground, damaging nearby enemy units. Units are also slowed for the duration listed below.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	5 (3) sec.	6 sec.	90	N/A	25	Ground, Enemy	60 damage, Movement Speed Slowed 50%, Attack Rate Slowed 50%	1
+	//2	5 (3) sec.	6 sec.	90	N/A	30	Ground, Enemy	100 damage, Movement Speed Slowed 50%, Attack Rate Slowed 50%	3
+	//3	5 (3) sec.	6 sec.	90	N/A	35	Ground, Enemy	140 damage, Movement Speed Slowed 50%, Attack Rate Slowed 50%	5
+	"mountain_king_thunder_clap"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"mountain_king_thunder_clap"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file mountain_king_thunder_clap.txt
+
+
+	//Start of file naga_sea_witch_forked_lightning.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Calls forth a cone of lightning to damage enemies. Hits a maximum of 3 units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	Instant	11 sec.	110	60	N/A	Air, Ground, Enemy, Organic, Neutral	85 damage per unit.	1
+	//2	Instant	11 sec.	110	60	N/A	Air, Ground, Enemy, Organic, Neutral	160 damage per unit.	3
+	//3	Instant	11 sec.	110	60	N/A	Air, Ground, Enemy, Organic, Neutral	250 damage per unit.	5
+	"naga_sea_witch_forked_lightning"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"naga_sea_witch_forked_lightning"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file naga_sea_witch_forked_lightning.txt
+
+
+	//Start of file naga_sea_witch_frost_arrows.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Adds a cold effect to each attack, slowing a target enemy unit's attacks and movement.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+5 bonus damage, 30% attack rate, 30% movement speed	1
+	//2	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+10 bonus damage, 50% attack rate, 50% movement speed	3
+	//3	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+15 bonus damage, 70% attack rate, 70% movement speed	5
+	"naga_sea_witch_frost_arrows"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"naga_sea_witch_frost_arrows"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file naga_sea_witch_frost_arrows.txt
+
+
+	//Start of file naga_sea_witch_mana_shield.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Creates a shield that absorbs damage by using the Sea Witch's mana. Blocks 100% of incoming damage.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	10 sec.	25	N/A	Personal	Self	1 damage per point of mana	1
+	//2	N/A	10 sec.	25	N/A	Personal	Self	1.5 damage per point of mana	3
+	//3	N/A	10 sec.	25	N/A	Personal	Self	2 damage per point of mana	5
+	"naga_sea_witch_mana_shield"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"naga_sea_witch_mana_shield"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file naga_sea_witch_mana_shield.txt
+
+
+	//Start of file naga_sea_witch_tornado.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons a fierce controllable Tornado that slows enemy units' movement speed, randomly tosses enemy ground units into the air and damages enemy buildings. The Tornado does 50 damage per second to buildings under it, and 7 damage per second to buildings in its general vicinity. Lasts 40 seconds.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	12 (6) sec.	120 sec.	200	90	27.5	Air, Ground, Building, Enemy, Neutral	Creates Tornado	6
+	"naga_sea_witch_tornado"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"naga_sea_witch_tornado"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file naga_sea_witch_tornado.txt
+
+
+	//Start of file paladin_devotion_aura.txt
+	// Paladin Devotion Aura
+	// Author: Noya
+	// Date: 13.1.2015.
+	// Description: Gives additional armor to nearby friendly units.
+	// Notes: TODO - Make custom aura particle
+	"paladin_devotion_aura"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"paladin_devotion_aura"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"	
+		"AbilityCastRange"    			"900"
+	
+		"precache"
+		{
+			"particle"				"particles/items_fx/aura_assault.vpcf"
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"armor_bonus"	"1.5 3 4.5"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"900"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_devotion_aura"
+			{
+				"EffectName"		"particles/items_fx/aura_assault.vpcf"
+				"EffectAttachType" 	"follow_origin"
+	
+				"Passive" 			"1"
+				"IsHidden" 			"1"
+				"IsBuff"			"1"
+	
+				"Aura" 				"modifier_devotion_aura_buff"
+				"Aura_Radius" 		"%radius"
+				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
+			}
+	
+			"modifier_devotion_aura_buff"
+			{
+				"IsBuff"				"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
+				}
+			}
+		}
+	}
+	
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"	
+		"AbilityCastRange"    "900"
+	
+			"precache"
+			{
+				"particle"				"particles/items_fx/aura_assault.vpcf"	//Recolor this blue
+			}
+		
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"		"FIELD_FLOAT"
+					"armor_bonus"	"1.5 3 4.5"
+				}
+				"02"
+				{
+					"var_type"		"FIELD_INTEGER"
+					"radius"		"900"
+				}
+			}
+	
+			"Modifiers"
+			{
+				"modifier_devotion_aura"
+				{
+					"EffectName"		"particles/items_fx/aura_assault.vpcf"
+					"EffectAttachType" 	"follow_origin"
+	
+					"Passive" 			"1"
+					"IsHidden" 			"1"
+					"IsBuff"			"1"
+	
+					"Aura" 				"modifier_devotion_aura_buff"
+					"Aura_Radius" 		"%Range"
+					"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
+				}
+	
+				"modifier_devotion_aura_buff"
+				{
+					"IsBuff"				"1"
+					"Properties"
+					{
+						"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
+					}
+				}
+			}
+	//End of file paladin_devotion_aura.txt
+
+
+	//Start of file paladin_divine_shield.txt
+	// Paladin Divine Shield
+	// Author: Noya
+	// Date: 13.1.2015.
+	// Description: An impenetrable shield surrounds the Paladin, protecting him from all damage and spells for a set amount of time
+	// Notes: Magic & Attack immune instead of total invulnerability to prevent issues.
+	"paladin_divine_shield"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"paladin_divine_shield"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityCooldown"				"35 50 65"
+		"AbilityManaCost"				"25"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+	
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"shield_duration"	"15 30 45"
+			}
+		}
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_paladin_divine_shield"
+			}
+			
+			"FireSound"
+			{
+				"Target" 		"CASTER"
+				"EffectName" 	"Hero_Omniknight.GuardianAngel.Cast"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_paladin_divine_shield"
+			{
+				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Duration"	"%shield_duration"
+	
+				"States"
+				{
+					//"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
+				}
+			}
+		}
+	}
+	//End of file paladin_divine_shield.txt
+
+
+	//Start of file paladin_holy_light.txt
+	// Paladin Holy Light
+	// Author: Noya
+	// Date: 13.1.2015.
+	// Description: A holy light that can heal a friendly living unit or damage an enemy undead unit.
+	// Notes: Animation still goes off when targeting self
+	"paladin_holy_light"
+	{
+		"BaseClass" 					"ability_datadriven"
+		"MaxLevel"						"3"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"5"
+		"AbilityManaCost"				"65"
+		"AbilityCastPoint"    			"0.3"
+		"AbilityTextureName"			"paladin_holy_light"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"target_damage"			"100 200 300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_amount"			"200 400 600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"particle_radius"		"200 400 600"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/paladin/holy_light.lua"
+				"Function"		"HolyLight"
+			}
+		}
+	}
+	//End of file paladin_holy_light.txt
+
+
+	//Start of file paladin_resurrection.txt
+	// Paladin Resurrection
+	// Author: Noya
+	// Date: 13.1.2015.
+	// Notes: Brings back to life the corpses of 6 friendly nearby units. The spell will choose the most powerful corpses to resurrect if there are more than 6.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	N/A	240 sec.	200	40	90	Ground, Dead, Friend	Resurrects up to 6 Units	6 
+	"paladin_resurrection"
+	{
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"			"paladin_resurrection"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityCastRange"				"400"
+		"AbilityCooldown"				"240"
+		"AbilityManaCost"				"200"
+		"AbilityCastPoint"    			"0.3"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"target_damage"			"100 200 300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_amount"			"200 400 600"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/paladin/holy_light.lua"
+				"Function"		"HolyLight"
+			}
+		}
+	}
+	//End of file paladin_resurrection.txt
+
+
+	//Start of file pandaren_breath_of_fire.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Breathes a cone of fire at enemy units which deals damage. Units that have Drunken Haze on them will ignite and take burn damage over time.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	5 (5) sec.	10 sec.	70	50	15	Air, Ground, Building	65 initial damage, 7 damage/sec.	1
+	//2	5 (5) sec.	10 sec.	70	50	15	Air, Ground, Building	125 initial damage, 14 damage/sec.	3
+	//3	5 (5) sec.	10 sec.	70	50	15	Air, Ground, Building	170 initial damage, 21 damage/sec.	5
+	"pandaren_breath_of_fire"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"pandaren_breath_of_fire"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file pandaren_breath_of_fire.txt
+
+
+	//Start of file pandaren_drunken_brawler.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Gives a percent chance to avoid attacks and a 10% chance to deal additional damage.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	Always	N/A	None	N/A	Personal	Self	7% dodge, 2 times normal damage	1
+	//2	Always	N/A	None	N/A	Personal	Self	14% dodge, 3 times normal damage	3
+	//3	Always	N/A	None	N/A	Personal	Self	21% dodge, 4 times normal damage	5
+	"pandaren_drunken_brawler"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"pandaren_drunken_brawler"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file pandaren_drunken_brawler.txt
+
+
+	//Start of file pandaren_drunken_haze.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Drenches a target enemy unit in alcohol, causing its movement speed to be reduced, and have a chance to miss on attacks. When units with Drunken Haze cast on them are hit by Breath of Fire, they will ignite and take burn damage over time.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	12 (5) sec.	12 sec.	70	55	20	Air, Ground, Enemy, Organic, Neutral	15% movement speed, 45% miss chance	1
+	//2	12 (5) sec.	12 sec.	70	55	20	Air, Ground, Enemy, Organic, Neutral	30% movement speed, 65% miss chance	3
+	//3	12 (5) sec.	12 sec.	70	55	20	Air, Ground, Enemy, Organic, Neutral	50% movement speed, 80% miss chance	5
+	"pandaren_drunken_haze"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"pandaren_drunken_haze"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file pandaren_drunken_haze.txt
+
+
+	//Start of file pandaren_storm_earth_fire.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: 
+	"pandaren_storm_earth_fire"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"pandaren_storm_earth_fire"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file pandaren_storm_earth_fire.txt
+
+
+	//Start of file pit_lord_cleaving_attack.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: The Pit Lord strikes with such force that he damages multiple enemies with his attack.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	N/A	None	N/A	20	Ground, Enemy, Neutral	30% damage is splash	1
+	//2	N/A	N/A	None	N/A	20	Ground, Enemy, Neutral	55% damage is splash	3
+	//3	N/A	N/A	None	N/A	20	Ground, Enemy, Neutral	80% damage is splash	5
+	"pit_lord_cleaving_attack"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"pit_lord_cleaving_attack"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file pit_lord_cleaving_attack.txt
+
+
+	//Start of file pit_lord_doom.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Marks a target unit for the manifestation of a Demon. The afflicted unit will take 40 damage per second until it dies. Upon its death, a great Demon will spawn from its corpse. Doom cannot be dispelled or canceled.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	N/A	120 sec.	150	65	Unit	Air, Ground, NonHero, Organic	Creates Doom Guard	6
+	"pit_lord_doom"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"pit_lord_doom"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file pit_lord_doom.txt
+
+
+	//Start of file pit_lord_howl_of_terror.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: The Pit Lord lets loose a terrifying howl that causes nearby enemy units to shiver in fear, reducing their attack damage.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	15 sec.	12 sec.	75	N/A	50	Air, Ground, Enemy, Neutral	30% attack damage reduction	1
+	//2	15 sec.	12 sec.	75	N/A	50	Air, Ground, Enemy, Neutral	40% attack damage reduction	3
+	//3	15 sec.	12 sec.	75	N/A	50	Air, Ground, Enemy, Neutral	50% attack damage reduction	5
+	"pit_lord_howl_of_terror"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"pit_lord_howl_of_terror"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file pit_lord_howl_of_terror.txt
+
+
+	//Start of file pit_lord_rain_of_fire.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Calls down waves of fire that damage units in an area. Each wave deals initial damage and then burns enemies for 3 seconds.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	3 sec.	8 sec.	85	80	20	N/A	25 wave damage, 6 waves, 5 damage/sec., 125 max damage	1
+	//2	3 sec.	8 sec.	85	80	20	N/A	30 wave damage, 8 waves, 10 damage/sec., 150 max damage	3
+	//3	3 sec.	8 sec.	85	80	20	N/A	35 wave damage, 10 waves, 15 damage/sec., 175 max damage	5
+	"pit_lord_rain_of_fire"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"pit_lord_rain_of_fire"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file pit_lord_rain_of_fire.txt
+
+
+	//Start of file potm_scout.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Temporarily summons an Owl Scout, which can be used to scout the map. Can see invisible units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	60 sec.	20 sec.	100	N/A	N/A	N/A	Summons an Owl	1
+	//2	90 sec.	20 sec.	75	N/A	N/A	N/A	Summons an Owl	3
+	//3	120 sec.	20 sec.	50	N/A	N/A	N/A	Summons an Owl	5
+	"potm_scout"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"potm_scout"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file potm_scout.txt
+
+
+	//Start of file potm_searing_arrows.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Increases the damage of the Priestess' attack by adding fire. Searing Arrows will fire until the Priestess is out of mana. Manually casting Searing Arrows will allow the Priestess of the Moon to fire beyond her normal 60 range at level 2.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	N/A	8	60	Unit	N/A	10 bonus damage	1
+	//2	N/A	N/A	8	70	Unit	N/A	20 bonus damage	3
+	//3	N/A	N/A	8	70	Unit	N/A	30 bonus damage	5
+	"potm_searing_arrows"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"potm_searing_arrows"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file potm_searing_arrows.txt
+
+
+	//Start of file potm_starfall.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Calls down waves of falling stars that damage nearby enemy units. Each wave deals 50 damage. The time between waves is 1.5 seconds.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	45 sec.	180 sec.	200	N/A	100	Air, Ground, Enemy	50 damage/wave for 45 sec.	6
+	"potm_starfall"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"potm_starfall"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file potm_starfall.txt
+
+
+	//Start of file potm_trueshot_aura.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: An aura that gives friendly units around the Priestess bonus damage to their ranged attacks.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Base ranged damage increased 10%	1
+	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Base ranged damage increased 20%	3
+	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Base ranged damage increased 30%	5
+	"potm_trueshot_aura"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"potm_trueshot_aura"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file potm_trueshot_aura.txt
+
+
+	//Start of file shadow_hunter_big_bad_vodoo.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Turns all friendly units invulnerable in an area around the Shadow Hunter. The Shadow Hunter does not turn invulnerable. Lasts 30 seconds.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	30 sec.	180 sec.	200	N/A	80	Air, Ground, Friend	Nearby units become invulnerable	6
+	"shadow_hunter_big_bad_vodoo"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"shadow_hunter_big_bad_vodoo"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file shadow_hunter_big_bad_vodoo.txt
+
+
+	//Start of file shadow_hunter_healing_wave.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Calls forth a wave of energy that heals a target and bounces to nearby friendlies. Each bounce heals less damage.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	9 sec.	90	70	50	Air, Ground, Friend, Self, Organic	Heals 130 damage, jumps 3 times	1
+	//2	N/A	9 sec.	90	70	50	Air, Ground, Friend, Self, Organic	Heals 215 damage, jumps 4 times	3
+	//3	N/A	9 sec.	90	70	50	Air, Ground, Friend, Self, Organic	Heals 300 damage, jumps 5 times	5
+	"shadow_hunter_healing_wave"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"shadow_hunter_healing_wave"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file shadow_hunter_healing_wave.txt
+
+
+	//Start of file shadow_hunter_hex.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Transforms an enemy unit into a random critter, disabling special abilities.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	15 (4) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	1
+	//2	30 (5) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	3
+	//3	45 (6) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	5
+	"shadow_hunter_hex"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"shadow_hunter_hex"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file shadow_hunter_hex.txt
+
+
+	//Start of file shadow_hunter_serpent_ward.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Summons an immobile serpentine ward to attack the Shadow Hunter's enemies. The ward has 75/135/135 hit points and is immune to magic. Lasts 40 seconds.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	40 sec.	6.5 sec.	30	50	N/A	N/A	11-13 damage	1
+	//2	40 sec.	6.5 sec.	30	80	N/A	N/A	23-26 damage	3
+	//3	40 sec.	6.5 sec.	30	80	N/A	N/A	41-45 damage	5
+	"shadow_hunter_serpent_ward"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"shadow_hunter_serpent_ward"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file shadow_hunter_serpent_ward.txt
+
+
+	//Start of file tauren_chieftain_endurance_aura.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Increases the movement speed and attack rate of nearby friendly units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +10%, Attack Rate +5%	1
+	//2	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +20%, Attack Rate +10%	3
+	//3	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +30%, Attack Rate +15%	5
+	"tauren_chieftain_endurance_aura"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tauren_chieftain_endurance_aura"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file tauren_chieftain_endurance_aura.txt
+
+
+	//Start of file tauren_chieftain_reincarnation.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: When killed, the Tauren Chieftain will come back to life. The Tauren Chieftain will return with full mana.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	7 sec.	240 sec.	None	N/A	N/A	Self	Hero comes back to life	6
+	"tauren_chieftain_reincarnation"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tauren_chieftain_reincarnation"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file tauren_chieftain_reincarnation.txt
+
+
+	//Start of file tauren_chieftain_shockwave.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: A wave of force that ripples out from the Hero, causing damage to land units in a line.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	8 sec.	100	70	15	Ground, Enemy	75 damage	1
+	//2	N/A	8 sec.	100	70	15	Ground, Enemy	130 damage	3
+	//3	N/A	8 sec.	100	70	15	Ground, Enemy	200 damage	5
+	"tauren_chieftain_shockwave"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tauren_chieftain_shockwave"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file tauren_chieftain_shockwave.txt
+
+
+	//Start of file tauren_chieftain_war_stomp.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Slams the ground, stunning and damaging nearby enemy units.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	6 sec.	90	N/A	25	Ground, Enemy	25 damage, 3 (Hero 2) sec. stun	1
+	//2	N/A	6 sec.	90	N/A	30	Ground, Enemy	50 damage, 4 (Hero 3) sec. stun	3
+	//3	N/A	6 sec.	90	N/A	35	Ground, Enemy	75 damage, 5 (Hero 4) sec. stun	5
+	"tauren_chieftain_war_stomp"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tauren_chieftain_war_stomp"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file tauren_chieftain_war_stomp.txt
+
+
+	//Start of file tinker_cluster_rockets.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Bombards an area with rockets, stunning enemy land units for 1 second and damaging nearby enemy units.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	1 sec.	6 sec.	70	80	23	Ground, Enemy, Neutral, Building	30 damage	1
+	//2	1 sec.	6 sec.	70	80	26	Ground, Enemy, Neutral, Building	65 damage	3
+	//3	1 sec.	6 sec.	70	80	29	Ground, Enemy, Neutral, Building	100 damage	5
+	"tinker_cluster_rockets"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tinker_cluster_rockets"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file tinker_cluster_rockets.txt
+
+
+	//Start of file tinker_engineering_upgrade.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Improves other Tinker abilities with each level learned:
+	//Cluster Rockets - Larger Area.
+	//Pocket Factory - Builds Clockwerk Goblins more quickly.
+	//Robo-Goblin - Increases armor and Strength; enhances Demolish.
+	
+	//Also gives bonus damage and increases the Tinker's movement speed.
+	"tinker_engineering_upgrade"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tinker_engineering_upgrade"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file tinker_engineering_upgrade.txt
+
+
+	//Start of file tinker_pocket_factory.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Creates a factory which automatically constructs Clockwerk Goblins. Clockwerk Goblins explode upon death, causing damage to nearby enemy units.
+	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	45 sec.	35 sec.	125	50	N/A	N/A	30 damage	1
+	//2	45 sec.	35 sec.	125	50	N/A	N/A	60 damage	3
+	//3	45 sec.	35 sec.	125	50	N/A	N/A	80 damage	5
+	"tinker_pocket_factory"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tinker_pocket_factory"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file tinker_pocket_factory.txt
+
+
+	//Start of file tinker_robo_goblin.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Transforms the Tinker into a Robo-Goblin, a powerful armored form that has the following traits:
+	//-Bonus Strength and armor.
+	//-Use of the Demolish ability, which grants bonus damage against buildings.
+	//-The Tinker becomes mechanical, rendering him immune to stun, most offensive spells, and several beneficial spells.
+	
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	Unlimited	1 sec.	25	N/A	Personal	Self	Transforms into Robo-Goblin	6
+	"tinker_robo_goblin"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tinker_robo_goblin"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file tinker_robo_goblin.txt
+
+
+	//Start of file warden_avatar_of_vengeance.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	N/A	180 sec.	200	N/A	N/A	N/A	Creates Avatar of Vengeance	6
+	"warden_avatar_of_vengeance"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"warden_avatar_of_vengeance"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file warden_avatar_of_vengeance.txt
+
+
+	//Start of file warden_blink.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Short distance teleportation that allows the Warden to move in and out of combat.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	10 sec.	50	9999.9	N/A	Self	Teleport	1
+	//2	N/A	10 sec.	10	9999.9	N/A	Self	Teleport	3
+	//3	N/A	1 sec.	10	9999.9	N/A	Self	Teleport	5
+	"warden_blink"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"warden_blink"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file warden_blink.txt
+
+
+	//Start of file warden_fan_of_knives.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: The Warden flings a flurry of knives at multiple enemy targets around her.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	9 sec.	100	N/A	40	Air, Ground, Enemy	75 damage per target, 300 max damage	1
+	//2	N/A	9 sec.	100	N/A	50	Air, Ground, Enemy	125 damage per target, 625 max damage	3
+	//3	N/A	9 sec.	100	N/A	60	Air, Ground, Enemy	190 damage per target, 950 max damage	5
+	"warden_fan_of_knives"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"warden_fan_of_knives"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file warden_fan_of_knives.txt
+
+
+	//Start of file warden_shadow_strike.txt
+	// AbilityName
+	// Author: 
+	// Date: 13.1.2015.
+	// Notes: Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement rate slowed for a short duration.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	15 sec.	8 sec.	75	30	N/A	Air, Ground, Enemy, Neutral	75 strike damage, 10 damage every 3 sec., Movement Slowed 50%	1
+	//2	15 sec.	8 sec.	75	30	N/A	Air, Ground, Enemy, Neutral	150 strike damage, 30 damage every 3 sec., Movement Slowed 50%	3
+	//3	15 sec.	8 sec.	75	30	N/A	Air, Ground, Enemy, Neutral	225 strike damage, 45 damage every 3 sec., Movement Slowed 50%	5
+	"warden_shadow_strike"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"warden_shadow_strike"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	}
+	//End of file warden_shadow_strike.txt
+}

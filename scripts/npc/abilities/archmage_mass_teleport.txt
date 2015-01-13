@@ -1,0 +1,43 @@
+// AbilityName
+// Author: 
+// Date: 13.1.2015.
+// Notes: Calls down waves of freezing ice shards that damage units in a target area.
+//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+//1	6 sec.	6 sec.	75	80	20	N/A	6 waves at 30 damage each, 150 max damage	1
+//2	8 sec.	6 sec.	75	80	20	N/A	8 waves at 40 damage each, 200 max damage	3
+//3	10 sec.	6 sec.	75	80	20	N/A	10 waves at 50 damage each, 250 max damage	5
+"archmage_mass_teleport"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"archmage_mass_teleport"
+	"MaxLevel"						"1"
+	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"8.0"
+
+	"AbilityManaCost"				"100"
+	"AbilityDamage"					"75 130 200"
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+}

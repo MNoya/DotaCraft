@@ -1,0 +1,54 @@
+// Paladin Holy Light
+// Author: Noya
+// Date: 13.1.2015.
+// Description: A holy light that can heal a friendly living unit or damage an enemy undead unit.
+// Notes: Animation still goes off when targeting self
+"paladin_holy_light"
+{
+	"BaseClass" 					"ability_datadriven"
+	"MaxLevel"						"3"
+	
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastRange"				"800"
+	"AbilityCooldown"				"5"
+	"AbilityManaCost"				"65"
+	"AbilityCastPoint"    			"0.3"
+	"AbilityTextureName"			"paladin_holy_light"
+	"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+	}
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"target_damage"			"100 200 300"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"heal_amount"			"200 400 600"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"particle_radius"		"200 400 600"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/paladin/holy_light.lua"
+			"Function"		"HolyLight"
+		}
+	}
+}
