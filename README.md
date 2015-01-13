@@ -1,8 +1,7 @@
 ## About the project
 
-Repo for recreating the original dota skills for the use of the Dota2 modding community
-
-**Stage 1**: Recreate all Warcraft 3 Hero Abilities in Dota. This will serve as an extension to the [Dota Spell Library](https://github.com/Pizzalol/SpellLibrary)
+**Stage 1**: Recreate all Warcraft 3 Hero Abilities in Dota. 
+This will serve as an extension to the [Dota Spell Library](https://github.com/Pizzalol/SpellLibrary)
 
 Stage 2: Add every race-based unit and their abilities.
 
