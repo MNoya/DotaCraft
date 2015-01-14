@@ -3598,31 +3598,102 @@
 		"AbilityTextureName"			"naga_sea_witch_frost_arrows"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+	    "AbilityCastPoint"          	"0"
+	    "AbilityCastRange"          	"600"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"10"
+		"AbilityDamage"					"5 10 15"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
+			"particle"	"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"particle"	"particles/status_fx/status_effect_frost.vpcf"	
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"						"FIELD_FLOAT"
+				"slow_hero_duration"			"1.5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"slow_creep_duration"			"5"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slow_percentage"				"-20 -35 -50"		
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_frost_arrows"
+			{
+				"Passive"               "1" 
+				"IsHidden"				"1"
+	
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
+					"ProjectileName"    "particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
+					"CastAttack"		"1"
+				}
+	
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"    			"%AbilityManaCost"
+					}
+					"FireSound"
+					{
+						"EffectName"		"Hero_DrowRanger.FrostArrows"
+						"Target"			"CASTER"
+					}
+				}
+				
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    	"heroes/naga_sea_witch/frost_arrows.lua"
+						"Function"			"FrostArrowsApply"
+					}
+					"Damage"
+					{
+						"Type"          	"DAMAGE_TYPE_PHYSICAL"
+						"Damage"        	"%AbilityDamage"
+						"Target"			"TARGET"
+					}
+				}
+			}
+	
+			"modifier_frost_arrows_slow"
+			{
+				"IsDebuff" 			"1"
+				"TextureName"		"naga_sea_witch_frost_arrows"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_percentage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow_percentage"
+	
+				}
+				"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
+				"EffectAttachType"      "attach_hitloc"
+				
+				"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
+				"StatusEffectPriority"	"10"
 			}
 		}
 	}
@@ -4425,10 +4496,11 @@
 
 
 	//Start of file potm_searing_arrows.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
-	// Notes: Increases the damage of the Priestess' attack by adding fire. Searing Arrows will fire until the Priestess is out of mana. Manually casting Searing Arrows will allow the Priestess of the Moon to fire beyond her normal 60 range at level 2.
+	// Priestess of the Moon Searing Arrows
+	// Author: Noya
+	// Date: 14.1.2015.
+	// Notes: Increases the damage of the Priestess' attack by adding fire. Searing Arrows will fire until the Priestess is out of mana. 
+	// Manually casting Searing Arrows will allow the Priestess of the Moon to fire beyond her normal 60 range at level 2.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	N/A	8	60	Unit	N/A	10 bonus damage	1
 	//2	N/A	N/A	8	70	Unit	N/A	20 bonus damage	3
@@ -4439,31 +4511,79 @@
 		"AbilityTextureName"			"potm_searing_arrows"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastPoint"          	"0"
+	    "AbilityCastRange"          	"600 700 700"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"8"
+		"AbilityDamage"					"10 20 30"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"				"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+			"soundfile"				"soundevents/voscripts/game_sounds_vo_clinkz.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_range"		"0 100 100"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_snake_searing_arrow"
+			{
+				"Passive"               "1"
+				"IsHidden"				"1"
+				"TextureName"			"potm_searing_arrows"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"		"%bonus_range"
+				}
+	
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+					"CastAttack"		"1"
+				}
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"    		"%AbilityManaCost"
+					}
+					"FireSound"
+					{
+						"EffectName"	"Hero_Clinkz.SearingArrows"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"OnOrbImpact"
+				{
+					"Damage"
+					{
+						"Type"          "DAMAGE_TYPE_PHYSICAL"
+						"Damage"        "%AbilityDamage"
+						"Target"		"TARGET"
+					}
+					"FireSound"
+					{
+						"EffectName"	"Hero_Clinkz.SearingArrows.Impact"
+						"Target"		"CASTER"
+					}
+				}
 			}
 		}
 	}

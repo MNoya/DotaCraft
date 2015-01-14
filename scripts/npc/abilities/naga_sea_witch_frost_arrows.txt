@@ -12,31 +12,102 @@
 	"AbilityTextureName"			"naga_sea_witch_frost_arrows"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+    "AbilityCastPoint"          	"0"
+    "AbilityCastRange"          	"600"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"10"
+	"AbilityDamage"					"5 10 15"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"	"particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
+		"particle"	"particles/generic_gameplay/generic_slowed_cold.vpcf"
+		"particle"	"particles/status_fx/status_effect_frost.vpcf"	
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"						"FIELD_FLOAT"
+			"slow_hero_duration"			"1.5"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"slow_creep_duration"			"5"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"slow_percentage"				"-20 -35 -50"		
+		}		
+	}
+
+	"Modifiers"
+	{
+		"modifier_frost_arrows"
+		{
+			"Passive"               "1" 
+			"IsHidden"				"1"
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
+				"ProjectileName"    "particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
+				"CastAttack"		"1"
+			}
+
+			"OnOrbFire"
+			{
+				"SpendMana"
+				{
+					"Mana"    			"%AbilityManaCost"
+				}
+				"FireSound"
+				{
+					"EffectName"		"Hero_DrowRanger.FrostArrows"
+					"Target"			"CASTER"
+				}
+			}
+			
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    	"heroes/naga_sea_witch/frost_arrows.lua"
+					"Function"			"FrostArrowsApply"
+				}
+				"Damage"
+				{
+					"Type"          	"DAMAGE_TYPE_PHYSICAL"
+					"Damage"        	"%AbilityDamage"
+					"Target"			"TARGET"
+				}
+			}
+		}
+
+		"modifier_frost_arrows_slow"
+		{
+			"IsDebuff" 			"1"
+			"TextureName"		"naga_sea_witch_frost_arrows"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_percentage"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow_percentage"
+
+			}
+			"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"EffectAttachType"      "attach_hitloc"
+			
+			"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
+			"StatusEffectPriority"	"10"
 		}
 	}
 }
