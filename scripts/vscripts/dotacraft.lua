@@ -480,6 +480,15 @@ function dotacraft:Initdotacraft()
   --ListenToGameEvent('dota_player_killed', Dynamic_Wrap(dotacraft, 'OnPlayerKilled'), self)
   --ListenToGameEvent('player_team', Dynamic_Wrap(dotacraft, 'OnPlayerTeam'), self)
 
+  -- Remove building invulnerability
+    print("Make buildings vulnerable")
+    local allBuildings = Entities:FindAllByClassname('npc_dota_building')
+    for i = 1, #allBuildings, 1 do
+        local building = allBuildings[i]
+        if building:HasModifier('modifier_invulnerable') then
+            building:RemoveModifierByName('modifier_invulnerable')
+        end
+    end
 
 
   -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI

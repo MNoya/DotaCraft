@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Dread Lord Vampiric Aura
+// Author: Noya
+// Date: 14.1.2015.
 // Notes: Nearby friendly melee units gain hit points when they hit a unit.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 15% of Attack Damage	1
@@ -12,23 +12,16 @@
 	"AbilityTextureName"			"dread_lord_vampiric_aura"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityCastRange"				"900"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"	"particles/items_fx/aura_vlads.vpcf"
 	}
 	
 	"AbilitySpecial"
@@ -36,7 +29,55 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"lifesteal"		"15 30 45"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"900"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_vampiric_aura"
+   		{
+    		"Passive" 			"1"
+    		"IsHidden" 			"1"
+
+    		"Aura" 				"modifier_vampiric_aura_buff"
+    		"Aura_Radius" 		"%radius"
+    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    		"Aura_Flags" 		"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+
+            "EffectName"		"particles/items_fx/aura_vlads.vpcf"
+			"EffectAttachType" 	"follow_origin"
+   		}
+		
+		"modifier_vampiric_aura_buff"
+   		{	
+   			"OnAttackLanded"    	
+   			{
+   				"RunScript"
+				{
+					"ScriptFile"	"heroes/dread_lord/vampiric_aura.lua"
+					"Function"		"VampiricAuraApply"
+				}
+			}
+	    }
+
+	    "modifier_vampiric_aura_lifesteal"
+	    {
+	    	"IsHidden"		"1"
+	    	"OnDealDamage"
+			{
+				"Lifesteal"
+				{
+					"Target" 				"ATTACKER"
+					"LifestealPercent"		"%lifesteal"
+				}
+			}
 		}
 	}
 }

@@ -2170,9 +2170,9 @@
 
 
 	//Start of file dread_lord_vampiric_aura.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Dread Lord Vampiric Aura
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: Nearby friendly melee units gain hit points when they hit a unit.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 15% of Attack Damage	1
@@ -2184,23 +2184,16 @@
 		"AbilityTextureName"			"dread_lord_vampiric_aura"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityCastRange"				"900"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/items_fx/aura_vlads.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -2208,7 +2201,55 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"lifesteal"		"15 30 45"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"900"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_vampiric_aura"
+	   		{
+	    		"Passive" 			"1"
+	    		"IsHidden" 			"1"
+	
+	    		"Aura" 				"modifier_vampiric_aura_buff"
+	    		"Aura_Radius" 		"%radius"
+	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    		"Aura_Flags" 		"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+	
+	            "EffectName"		"particles/items_fx/aura_vlads.vpcf"
+				"EffectAttachType" 	"follow_origin"
+	   		}
+			
+			"modifier_vampiric_aura_buff"
+	   		{	
+	   			"OnAttackLanded"    	
+	   			{
+	   				"RunScript"
+					{
+						"ScriptFile"	"heroes/dread_lord/vampiric_aura.lua"
+						"Function"		"VampiricAuraApply"
+					}
+				}
+		    }
+	
+		    "modifier_vampiric_aura_lifesteal"
+		    {
+		    	//"Duration"		"0.03"
+		    	"OnDealDamage"
+				{
+					"Lifesteal"
+					{
+						"Target" 				"ATTACKER"
+						"LifestealPercent"		"%lifesteal"
+					}
+				}
 			}
 		}
 	}
@@ -4636,9 +4677,9 @@
 
 
 	//Start of file potm_trueshot_aura.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Priestess of the Moon Trueshot Aura
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: An aura that gives friendly units around the Priestess bonus damage to their ranged attacks.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Base ranged damage increased 10%	1
@@ -4650,32 +4691,56 @@
 		"AbilityTextureName"			"potm_trueshot_aura"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityCastRange"				"900"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_cyclone_swirl.vpcf"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus_percent"	"10 20 30"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_trueshot_aura"
+	   		{
+	    		"Passive" 			"1"
+	    		"IsHidden" 			"1"
+	
+	    		"Aura" 				"modifier_trueshot_aura_buff"
+	    		"Aura_Radius" 		"%radius"
+	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	    		"Aura_Flags" 		"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
+	
+	            "EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_cyclone_swirl.vpcf"
+				"EffectAttachType" 	"follow_origin"
+	   		}
+			
+			"modifier_trueshot_aura_buff"
+	   		{	    	
+		    	"Properties"
+		    	{
+		     		"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%damage_bonus_percent"
+		    	}
+		    }
 		}
 	}
 	//End of file potm_trueshot_aura.txt
