@@ -16,27 +16,101 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
+	"AbilityCastRange"				"800"
+	"AbilityCastPoint"				"0.4"
 	"AbilityCooldown"				"8.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"75"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"				"particles/econ/items/lone_druid/lone_druid_cauldron/lone_druid_bear_entangle_body_cauldron.vpcf"
+		"particle"				"particles/econ/items/lone_druid/lone_druid_cauldron/lone_druid_bear_entangle_cauldron.vpcf"
+		"particle"				"particles/units/heroes/hero_lone_druid/lone_druid_bear_entangle_body.vpcf"
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"damage_per_second"		"15 15 25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hero_duration"			"3 4 5"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"creep_duration"		"9 24 36"
 		}
 	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Treant.Overgrowth.Cast"
+			"Target" 			"TARGET"
+		}	
+
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/keeper/entangling_roots.lua"
+			"Function"			"EntanglingRootsCheck"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_entangling_roots"
+		{
+			"IsDebuff"		"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target" 			"TARGET"
+					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_entangle_body.vpcf"
+					"EffectAttachType" 	"attach_hitloc"
+				}
+				"AttachEffect"
+				{
+					"Target" 			"TARGET"
+					"EffectName"		"particles/econ/items/lone_druid/lone_druid_cauldron/lone_druid_bear_entangle_body_cauldron.vpcf"
+					"EffectAttachType" 	"attach_hitloc"
+				}
+				"AttachEffect"
+				{
+					"Target" 			"TARGET"
+					"EffectName"		"particles/econ/items/lone_druid/lone_druid_cauldron/lone_druid_bear_entangle_cauldron.vpcf"
+					"EffectAttachType" 	"attach_hitloc"
+				}			
+			}
+
+			"ThinkInterval"	"1"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		 "TARGET"
+					"Type"			 "DAMAGE_TYPE_MAGICAL"
+					"Damage"		 "%damage_per_second"
+				}
+			}
+		}
+	}
+
 }
