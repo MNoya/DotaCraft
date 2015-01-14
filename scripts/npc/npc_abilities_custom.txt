@@ -1531,7 +1531,7 @@
 		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"6"
 		"AbilityManaCost"				"75"
-
+	
 		"AbilitySpecial"
 		{
 			"01"
@@ -1550,24 +1550,24 @@
 				"heal_amount"			"200 400 600"
 			}
 		}
-
+	
 		"OnAbilityPhaseStart"
-			{
+		{
 			"RunScript"
-				{
+			{
 				"ScriptFile"	"heroes\death_knight\death_coil.lua"
 				"Function"	"death_coil_precast"
-				}
 			}
-
+		}
+	
 		"OnAbilityStart"
-			{
+		{
 			"RunScript"
-				{
+			{
 				"ScriptFile"	"heroes\death_knight\death_coil.lua"
 				"Function"	"death_coil_cast"
-				}
 			}
+		}
 	}
 	//End of file death_knight_death_coil.txt
 
@@ -4943,9 +4943,9 @@
 
 
 	//Start of file warden_avatar_of_vengeance.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Warden Avatar of Vengeance
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	N/A	180 sec.	200	N/A	N/A	N/A	Creates Avatar of Vengeance	6
@@ -4953,33 +4953,188 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"warden_avatar_of_vengeance"
-		"MaxLevel" 						"3"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 	
 		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"180"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"200"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"	"FIELD_INTEGER"
+				"duration"	"180"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_avatar_of_vengeance"
+				"UnitCount"		"1"
+				"SpawnRadius"	"100"
+				"Duration"		"%duration"
+				"Target"		"CASTER"
+				"OnSpawn"
+				{
+					"FireSound"
+					{
+						"EffectName" "Hero_Spectre.Haunt"
+						"Target"	 "CASTER"
+					}
+				}
+			}
+		}
+	}
+	
+	
+	// Avatar of Vengeance Passive
+	// No collision and calls a script OnDeath to kill all the summoned spirits
+	"avatar_of_vengeance_passive"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE	| DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"vengeance_modifier"
+			{
+				"IsHidden"	"1"
+				"Passive"	"1"
+				"States"
+				{	
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+						"Function"		"KillVengeanceSpirits"
+					}
+				}
+			}
+		}
+	}
+	
+	// Spirit Spawn - Spaws a Spirit of Vengeance near a corpse
+	// AUTOCAST doesn't work currently, would need some lua AI.
+	"avatar_of_vengeance_spirit_spawn"
+	{
+	
+		"BaseClass" 			"ability_datadriven"
+		"MaxLevel"				"1"
+		"AbilityTextureName" 	"warden_avatar_of_vengeance"
+	
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityCooldown" 		"2"
+		"AbilityManacost" 		"25"
+		"AbilityCastRange"		"600"
+	
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_limit"			"6"
+			}		
+		}
+	
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_spirit_of_vengeance"
+				"UnitCount"		"1"
+				"UnitLimit"		"%spirit_limit"
+				"SpawnRadius"	"1"
+				"Duration"		"50"
+				"Target"
+				{
+					"Center" 		"CASTER"
+					"Radius" 		"900"
+					"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+					"Flags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
+					"MaxTargets"	"1"
+					"Random"		"1"
+				}
+	
+				"OnSpawn"
+				{
+					"FireSound"
+					{
+						"EffectName" "Hero_Spectre.DaggerCast"
+						"Target"	 "CASTER"
+					}
+				}
+			}
+		}		
+	}
+	
+	// Spirit of Vengeance Passive
+	// Invulnerable and some particle
+	"spirit_of_vengeance_passive"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE	| DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"vengeance_modifier"
+			{
+				"IsHidden"	"1"
+				"Passive"	"1"
+				"States"
+				{
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"CASTER"
+					}
+				}
 			}
 		}
 	}
@@ -4987,9 +5142,9 @@
 
 
 	//Start of file warden_blink.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Warden Blink
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: Short distance teleportation that allows the Warden to move in and out of combat.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	10 sec.	50	9999.9	N/A	Self	Teleport	1
@@ -5001,31 +5156,63 @@
 		"AbilityTextureName"			"warden_blink"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"10.0 10.0 1.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"50"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"blink_range"			"1000"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/warden/blink.lua"
+				"Function"			"Blink"
+				"Target"			"POINT"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.Blink_out"
+				"Target"			"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+				"Target"			"CASTER"
+				"EffectAttachType"	"attach_hitloc"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.Blink_in"
+				"Target"			"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+				"Target"			"CASTER"
+				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}
@@ -5033,9 +5220,9 @@
 
 
 	//Start of file warden_fan_of_knives.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Warden Fan of Knives
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: The Warden flings a flurry of knives at multiple enemy targets around her.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	9 sec.	100	N/A	40	Air, Ground, Enemy	75 damage per target, 300 max damage	1
@@ -5047,41 +5234,112 @@
 		"AbilityTextureName"			"warden_fan_of_knives"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"400 500 600"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"9.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManacost" 				"100"
+		"AbilityDamage"					"75 125 190"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/custom/bristleback_quill_spray.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400 500 600"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"AttachEffect"
+			{
+				"EffectName"		"particles/custom/bristleback_quill_spray.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
+			"FireSound"
+			{	
+				"EffectName"		"Hero_PhantomAssassin.Dagger.Target"
+				"Target"			"CASTER"
+			}
+			"Damage"
+			{
+				"Type"          "DAMAGE_TYPE_MAGICAL"
+				"Damage"        "%AbilityDamage"
+				"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"%radius"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
 			}
 		}
 	}
+	
+	
+	
+			"AbilityManacost" 				"100"
+			"AbilityCastPoint"				"0.3"
+			"AbilityCooldown"				"9"
+			"AbilityCastRange"				"400 500 600"
+			"AbilityDamage"					"75 125 190"
+	
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"				"FIELD_INTEGER"
+					"radius"				"400 500 600"
+				}
+			}
+	
+			"OnSpellStart"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/warchasers/bristleback_quill_spray.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"CASTER"
+				}
+				"FireSound"
+				{	
+					"EffectName"		"Hero_PhantomAssassin.Dagger.Target"
+					"Target"			"CASTER"
+				}
+				"Damage"
+				{
+					"Type"          "DAMAGE_TYPE_MAGICAL"
+					"Damage"        "%AbilityDamage"
+					"Target"
+					{
+						"Center"  				"CASTER"
+						"Radius" 				"%radius"
+						"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+					}
+				}
+			}
 	//End of file warden_fan_of_knives.txt
 
 
 	//Start of file warden_shadow_strike.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Warden Shadow Strike
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement rate slowed for a short duration.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	15 sec.	8 sec.	75	30	N/A	Air, Ground, Enemy, Neutral	75 strike damage, 10 damage every 3 sec., Movement Slowed 50%	1
@@ -5097,9 +5355,9 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"8.0"
 	
@@ -5108,18 +5366,239 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
+			"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+			"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_impact.vpcf"
+			"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+			"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_beam.vpcf"
+			"particle"	"particles/status_fx/status_effect_poison_viper.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"	"FIELD_INTEGER"
+				"duration"	"15"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"initial_damage"	"75 150 225"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_every_3sec"	"10 30 45"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"move_speed_slow"	"-50"
 			}
 		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireEffect"
+			{
+				// This particle is bugged, it has some unattached childs that always generates at 0 0 0 (because viper has 4 wing points)
+				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+				"EffectAttachType"	"attach_attack1"
+				"Target"			"CASTER"
+				"ControlPointEntities"
+				{
+					"CASTER"		"attach_attack1"
+					"CASTER"		"attach_attack1"
+				}
+			}		
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"hero_viper.viperStrike"
+				"Target"			"TARGET"
+			}
+	
+			"TrackingProjectile"
+	        {
+	            "Target"			"TARGET"
+	            "EffectName"        "particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
+	            "Dodgeable"         "0"
+	            "ProvidesVision"    "1"
+	            "VisionRadius"      "300"
+	            "MoveSpeed"         "800"
+	            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+	        }
+	    }
+	
+	    "OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+			"Damage"
+			{
+				"Type"          "DAMAGE_TYPE_MAGICAL"
+				"Damage"        "%initial_damage"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike"		
+				"Target"		"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Viper.viperStrikeImpact"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_shadow_strike"	
+			{	
+				"Duration"	"%duration"
+				"IsDebuff"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
+				}
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+					}
+				}
+				"ThinkInterval"	"3"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Type"          "DAMAGE_TYPE_MAGICAL"
+						"Damage"        "%damage_every_3sec"
+						"Target"		"TARGET"
+					}
+				}
+			}
+		}
+	
 	}
+	
+	
+			"precache"
+			{
+				"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+				"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_impact.vpcf"
+				"soundfile"	"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
+			}
+	
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"	"FIELD_INTEGER"
+					"duration"	"15"
+				}
+				"02"
+				{
+					"var_type"	"FIELD_INTEGER"
+					"initial_damage"	"75 150 225"
+				}
+				"03"
+				{
+					"var_type"	"FIELD_INTEGER"
+					"damage_every_3sec"	"10 30 45"
+				}
+				"04"
+				{
+					"var_type"	"FIELD_INTEGER"
+					"move_speed_slow"	"-50"
+				}
+			}
+	
+			"OnSpellStart"
+			{
+				"FireSound"
+				{
+					"EffectName"		"hero_viper.viperStrike"
+					"Target"			"TARGET"
+				}
+				"TrackingProjectile"
+	            {
+	                "Target"			"TARGET"
+	                "EffectName"        "particles/warchasers/queen_shadow_strike.vpcf"
+	                "Dodgeable"         "0"
+	                "ProvidesVision"    "1"
+	                "VisionRadius"      "300"
+	                "MoveSpeed"         "800"
+	                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+	            }
+	        }
+	
+	        "OnProjectileHitUnit"
+			{
+				"Damage"
+				{
+					"Type"          "DAMAGE_TYPE_MAGICAL"
+					"Damage"        "%initial_damage"
+					"Target"		"TARGET"
+				}
+	
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_shadow_strike"		
+					"Target"	"TARGET"
+				}
+				"DeleteOnHit"				"0"
+			}
+	
+			"Modifiers"
+			{
+				"modifier_shadow_strike"	
+				{	
+					"OnCreated"
+					{
+						"FireSound"
+						{
+							"EffectName"		"hero_viper.viperStrikeImpact"
+							"Target"			"TARGET"
+						}
+						"AttachEffect"
+						{
+							"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+							"EffectAttachType"	"attach_hitloc"
+							"Target"		"TARGET"
+						}
+					}
+					"Duration"	"%duration"
+					"IsDebuff"	"1"
+					"Properties"
+					{
+						"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
+					}
+					"ThinkInterval"	"3"
+					"OnIntervalThink"
+					{
+						"Damage"
+						{
+							"Type"          "DAMAGE_TYPE_MAGICAL"
+							"Damage"        "%damage_every_3sec"
+							"Target"		"TARGET"
+						}
+					}
+				}
+			}
+		}
 	//End of file warden_shadow_strike.txt
 }

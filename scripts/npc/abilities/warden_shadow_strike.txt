@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Warden Shadow Strike
+// Author: Noya
+// Date: 14.1.2015.
 // Notes: Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement rate slowed for a short duration.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	15 sec.	8 sec.	75	30	N/A	Air, Ground, Enemy, Neutral	75 strike damage, 10 damage every 3 sec., Movement Slowed 50%	1
@@ -16,9 +16,9 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
-	"AbilityCastRange"				"700"
+	"AbilityCastRange"				"600"
 	"AbilityCastPoint"				"0.3"
 	"AbilityCooldown"				"8.0"
 
@@ -27,16 +27,237 @@
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
+		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_impact.vpcf"
+		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_beam.vpcf"
+		"particle"	"particles/status_fx/status_effect_poison_viper.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"	"FIELD_INTEGER"
+			"duration"	"15"
+		}
+		"02"
+		{
+			"var_type"	"FIELD_INTEGER"
+			"initial_damage"	"75 150 225"
+		}
+		"03"
+		{
+			"var_type"	"FIELD_INTEGER"
+			"damage_every_3sec"	"10 30 45"
+		}
+		"04"
+		{
+			"var_type"	"FIELD_INTEGER"
+			"move_speed_slow"	"-50"
 		}
 	}
+
+	"OnAbilityPhaseStart"
+	{
+		"FireEffect"
+		{
+			// This particle is bugged, it has some unattached childs that always generates at 0 0 0 (because viper has 4 wing points)
+			"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+			"EffectAttachType"	"attach_attack1"
+			"Target"			"CASTER"
+			"ControlPointEntities"
+			{
+				"CASTER"		"attach_attack1"
+				"CASTER"		"attach_attack1"
+			}
+		}		
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"hero_viper.viperStrike"
+			"Target"			"TARGET"
+		}
+
+		"TrackingProjectile"
+        {
+            "Target"			"TARGET"
+            "EffectName"        "particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
+            "Dodgeable"         "0"
+            "ProvidesVision"    "1"
+            "VisionRadius"      "300"
+            "MoveSpeed"         "800"
+            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+        }
+    }
+
+    "OnProjectileHitUnit"
+	{
+		"DeleteOnHit"		"0"
+		"Damage"
+		{
+			"Type"          "DAMAGE_TYPE_MAGICAL"
+			"Damage"        "%initial_damage"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike"		
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Viper.viperStrikeImpact"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_shadow_strike"	
+		{	
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
+			}
+
+			"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"			"TARGET"
+				}
+			}
+			"ThinkInterval"	"3"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Type"          "DAMAGE_TYPE_MAGICAL"
+					"Damage"        "%damage_every_3sec"
+					"Target"		"TARGET"
+				}
+			}
+		}
+	}
+
 }
+
+
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+			"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_impact.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"duration"	"15"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"initial_damage"	"75 150 225"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_every_3sec"	"10 30 45"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"move_speed_slow"	"-50"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"hero_viper.viperStrike"
+				"Target"			"TARGET"
+			}
+			"TrackingProjectile"
+            {
+                "Target"			"TARGET"
+                "EffectName"        "particles/warchasers/queen_shadow_strike.vpcf"
+                "Dodgeable"         "0"
+                "ProvidesVision"    "1"
+                "VisionRadius"      "300"
+                "MoveSpeed"         "800"
+                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+            }
+        }
+
+        "OnProjectileHitUnit"
+		{
+			"Damage"
+			{
+				"Type"          "DAMAGE_TYPE_MAGICAL"
+				"Damage"        "%initial_damage"
+				"Target"		"TARGET"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike"		
+				"Target"	"TARGET"
+			}
+			"DeleteOnHit"				"0"
+		}
+
+		"Modifiers"
+		{
+			"modifier_shadow_strike"	
+			{	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"		"hero_viper.viperStrikeImpact"
+						"Target"			"TARGET"
+					}
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"		"TARGET"
+					}
+				}
+				"Duration"	"%duration"
+				"IsDebuff"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
+				}
+				"ThinkInterval"	"3"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Type"          "DAMAGE_TYPE_MAGICAL"
+						"Damage"        "%damage_every_3sec"
+						"Target"		"TARGET"
+					}
+				}
+			}
+		}
+	}
