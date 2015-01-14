@@ -153,7 +153,7 @@ end
 -- Cleanup a player when they leave
 function dotacraft:OnDisconnect(keys)
   print('[DOTACRAFT] Player Disconnected ' .. tostring(keys.userid))
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local name = keys.name
   local networkid = keys.networkid
@@ -164,7 +164,7 @@ end
 -- The overall game state has changed
 function dotacraft:OnGameRulesStateChange(keys)
   print("[DOTACRAFT] GameRules State Changed")
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local newState = GameRules:State_Get()
   if newState == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
@@ -196,7 +196,7 @@ end
 -- An NPC has spawned somewhere in game.  This includes heroes
 function dotacraft:OnNPCSpawned(keys)
   print("[DOTACRAFT] NPC Spawned")
-  PrintTable(keys)
+  --DeepPrintTable(keys)
   local npc = EntIndexToHScript(keys.entindex)
 
   if npc:IsRealHero() and npc.bFirstSpawned == nil then
@@ -209,7 +209,7 @@ end
 -- operations here
 function dotacraft:OnEntityHurt(keys)
   --print("[DOTACRAFT] Entity Hurt")
-  --PrintTable(keys)
+  ----DeepPrintTable(keys)
   local entCause = EntIndexToHScript(keys.entindex_attacker)
   local entVictim = EntIndexToHScript(keys.entindex_killed)
 end
@@ -217,7 +217,7 @@ end
 -- An item was picked up off the ground
 function dotacraft:OnItemPickedUp(keys)
   print ( '[DOTACRAFT] OnItemPurchased' )
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
   local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
@@ -229,13 +229,13 @@ end
 -- state as necessary
 function dotacraft:OnPlayerReconnect(keys)
   print ( '[DOTACRAFT] OnPlayerReconnect' )
-  PrintTable(keys) 
+  --DeepPrintTable(keys) 
 end
 
 -- An item was purchased by a player
 function dotacraft:OnItemPurchased( keys )
   print ( '[DOTACRAFT] OnItemPurchased' )
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   -- The playerID of the hero who is buying something
   local plyID = keys.PlayerID
@@ -252,7 +252,7 @@ end
 -- An ability was used by a player
 function dotacraft:OnAbilityUsed(keys)
   print('[DOTACRAFT] AbilityUsed')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local player = EntIndexToHScript(keys.PlayerID)
   local abilityname = keys.abilityname
@@ -261,7 +261,7 @@ end
 -- A non-player entity (necro-book, chen creep, etc) used an ability
 function dotacraft:OnNonPlayerUsedAbility(keys)
   print('[DOTACRAFT] OnNonPlayerUsedAbility')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local abilityname=  keys.abilityname
 end
@@ -269,7 +269,7 @@ end
 -- A player changed their name
 function dotacraft:OnPlayerChangedName(keys)
   print('[DOTACRAFT] OnPlayerChangedName')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local newName = keys.newname
   local oldName = keys.oldName
@@ -278,7 +278,7 @@ end
 -- A player leveled up an ability
 function dotacraft:OnPlayerLearnedAbility( keys)
   print ('[DOTACRAFT] OnPlayerLearnedAbility')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local player = EntIndexToHScript(keys.player)
   local abilityname = keys.abilityname
@@ -287,7 +287,7 @@ end
 -- A channelled ability finished by either completing or being interrupted
 function dotacraft:OnAbilityChannelFinished(keys)
   print ('[DOTACRAFT] OnAbilityChannelFinished')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local abilityname = keys.abilityname
   local interrupted = keys.interrupted == 1
@@ -296,7 +296,7 @@ end
 -- A player leveled up
 function dotacraft:OnPlayerLevelUp(keys)
   print ('[DOTACRAFT] OnPlayerLevelUp')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local player = EntIndexToHScript(keys.player)
   local level = keys.level
@@ -305,7 +305,7 @@ end
 -- A player last hit a creep, a tower, or a hero
 function dotacraft:OnLastHit(keys)
   print ('[DOTACRAFT] OnLastHit')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local isFirstBlood = keys.FirstBlood == 1
   local isHeroKill = keys.HeroKill == 1
@@ -316,7 +316,7 @@ end
 -- A tree was cut down by tango, quelling blade, etc
 function dotacraft:OnTreeCut(keys)
   print ('[DOTACRAFT] OnTreeCut')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local treeX = keys.tree_x
   local treeY = keys.tree_y
@@ -325,7 +325,7 @@ end
 -- A rune was activated by a player
 function dotacraft:OnRuneActivated (keys)
   print ('[DOTACRAFT] OnRuneActivated')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local player = PlayerResource:GetPlayer(keys.PlayerID)
   local rune = keys.rune
@@ -347,7 +347,7 @@ end
 -- A player took damage from a tower
 function dotacraft:OnPlayerTakeTowerDamage(keys)
   print ('[DOTACRAFT] OnPlayerTakeTowerDamage')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local player = PlayerResource:GetPlayer(keys.PlayerID)
   local damage = keys.damage
@@ -356,17 +356,22 @@ end
 -- A player picked a hero
 function dotacraft:OnPlayerPickHero(keys)
   print ('[DOTACRAFT] OnPlayerPickHero')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local heroClass = keys.hero
   local heroEntity = EntIndexToHScript(keys.heroindex)
   local player = EntIndexToHScript(keys.player)
+
+  local level = MAX_LEVEL
+  for i=1,level-1 do
+    heroEntity:HeroLevelUp(false)
+  end
 end
 
 -- A player killed another player in a multi-team context
 function dotacraft:OnTeamKillCredit(keys)
   print ('[DOTACRAFT] OnTeamKillCredit')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
 
   local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
   local victimPlayer = PlayerResource:GetPlayer(keys.victim_userid)
@@ -377,7 +382,7 @@ end
 -- An entity died
 function dotacraft:OnEntityKilled( keys )
   print( '[DOTACRAFT] OnEntityKilled Called' )
-  PrintTable( keys )
+  --DeepPrintTable( keys )
   
   -- The Unit that was Killed
   local killedUnit = EntIndexToHScript( keys.entindex_killed )
@@ -463,7 +468,7 @@ function dotacraft:Initdotacraft()
   --ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(dotacraft, 'OnAbilityUsed'), self)
   --ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
   --ListenToGameEvent('npc_spawned', Dynamic_Wrap(dotacraft, 'OnNPCSpawned'), self)
-  --ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(dotacraft, 'OnPlayerPickHero'), self)
+  ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(dotacraft, 'OnPlayerPickHero'), self)
   --ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(dotacraft, 'OnTeamKillCredit'), self)
   --ListenToGameEvent("player_reconnected", Dynamic_Wrap(dotacraft, 'OnPlayerReconnect'), self)
   --ListenToGameEvent('player_spawn', Dynamic_Wrap(dotacraft, 'OnPlayerSpawn'), self)
@@ -570,23 +575,23 @@ function dotacraft:Capturedotacraft()
 
     --GameRules:GetGameModeEntity():SetThink( "Think", self, "GlobalThink", 2 )
 
-    self:SetupMultiTeams()
-    self:OnFirstPlayerLoaded()
+    --self:SetupMultiTeams()
+    --self:OnFirstPlayerLoaded()
   end 
 end
 
 -- Multiteam support is unfinished currently
-function dotacraft:SetupMultiTeams()
+--[[function dotacraft:SetupMultiTeams()
   MultiTeam:start()
   MultiTeam:CreateTeam("team1")
   MultiTeam:CreateTeam("team2")
-end
+end]]
 
 -- This function is called 1 to 2 times as the player connects initially but before they 
 -- have completely connected
 function dotacraft:PlayerConnect(keys)
   print('[DOTACRAFT] PlayerConnect')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
   
   if keys.bot == 1 then
     -- This user is a Bot, so add it to the bots table
@@ -597,7 +602,7 @@ end
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function dotacraft:OnConnectFull(keys)
   print ('[DOTACRAFT] OnConnectFull')
-  PrintTable(keys)
+  --DeepPrintTable(keys)
   dotacraft:Capturedotacraft()
   
   local entIndex = keys.index+1

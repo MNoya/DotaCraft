@@ -1,9 +1,8 @@
 -- Generated from template
 
-require('util')
 require('timers')
-require('physics')
-require('multiteam')
+--require('physics')
+--require('multiteam')
 require('dotacraft')
 
 function Precache( context )
