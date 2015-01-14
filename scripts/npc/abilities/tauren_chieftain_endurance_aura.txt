@@ -12,31 +12,58 @@
 	"AbilityTextureName"			"tauren_chieftain_endurance_aura"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityCastRange"    			"900"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"	"particles/items_fx/aura_endurance.vpcf"
 	}
-	
+
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_FLOAT"
+			"move_speed_bonus"		"10 20 30"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"attack_speed_bonus"	"5 10 15"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"900"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_endurance_aura"
+		{
+			"EffectName"		"particles/items_fx/aura_endurance.vpcf"
+			"EffectAttachType" 	"follow_origin"
+
+			"Passive" 			"1"
+			"IsHidden" 			"1"
+			"IsBuff"			"1"
+
+			"Aura" 				"modifier_endurance_aura_effect"
+			"Aura_Radius" 		"%radius"
+			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
+		}
+		"modifier_endurance_aura_effect"
+		{
+			"IsBuff"				"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_bonus"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_bonus"
+			}
 		}
 	}
 }
