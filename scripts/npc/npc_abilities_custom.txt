@@ -1678,31 +1678,128 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"180"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"150"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-		}
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"422"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range_tooltip"			"600"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+			"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+			"model"		"models/heroes/terrorblade/demon.vmdl"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Terrorblade.Metamorphosis"
+				"Target"			"CASTER"
+			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_demon_form"
+				"Target"			"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_demon_form"
+			{
+				"Duration"	"%duration"
+				
+				"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+				"EffectAttachType"  "follow_origin"
+	
+				"AllowsIllusionDuplicate"	"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
+					"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS" 			"%bonus_health"		
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 	"%bonus_health_regen"				
+				}
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/demon_hunter/demon_form.lua"
+						"Function"				"ModelSwapStart"
+						"model"					"models/heroes/terrorblade/demon.vmdl"
+						"projectile_model"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/demon_hunter/demon_form.lua"
+						"Function"			"HideWearables"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/demon_hunter/demon_form.lua"
+						"Function"		"ModelSwapEnd"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/demon_hunter/demon_form.lua"
+						"Function"		"ShowWearables"
+					}
+				}
 			}
 		}
 	}
@@ -1710,9 +1807,9 @@
 
 
 	//Start of file demon_hunter_evasion.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Demon Hunter Evasion
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: Gives the Demon Hunter a chance to avoid attacks.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	N/A	None	N/A	N/A	N/A	10% chance opponent misses	1
@@ -1724,31 +1821,26 @@
 		"AbilityTextureName"			"demon_hunter_evasion"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
-	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-		}
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"evasion"		"10 20 30"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"evasion"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion"
+				}
 			}
 		}
 	}
@@ -1756,9 +1848,9 @@
 
 
 	//Start of file demon_hunter_immolation.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Demon Hunter Immolation
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: Engulfs the Demon Hunter in flames, causing damage to nearby enemy land units. Drains mana until deactivated.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	N/A	35 + 7/sec	N/A	16	Ground, Enemy, Neutral, Organic	10 damage/sec	1
@@ -1770,31 +1862,103 @@
 		"AbilityTextureName"			"demon_hunter_immolation"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastRange"				"160"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"35"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+			"soundfile" "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"10 15 20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost_per_second"	"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"160"
+			}
+		}
+	
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_immolation"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_EmberSpirit.FlameGuard.Cast"
+				"Target"			"CASTER"
+			}
+		}
+	
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_immolation"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_immolation"
+			{	
+				"IsPassive"		"1"
+				"IsBuff"		"1"
+				"IsPurgable"	"0"
+				
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+						}
+					}
+				}
+				
+				"ThinkInterval"		"1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+	    			{
+				        "ScriptFile"    "heroes/demon_hunter/immolation.lua"
+				        "Function"      "Immolation"
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Radius"	"%radius"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+				}
 			}
 		}
 	}
@@ -1802,9 +1966,9 @@
 
 
 	//Start of file demon_hunter_mana_burn.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Demon Hunter Mana Burn
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: Sends a bolt of negative energy that burns a target enemy unit's mana. Burned mana combusts, dealing damage to the target equal to the amount of mana burned.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	7 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 50 mana	1
@@ -1820,18 +1984,17 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"300"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"7.0 6.0 5.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"50"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle" 	"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -1839,10 +2002,32 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"			"FIELD_INTEGER"
+				"mana_burn"			"50 100 150"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_mana"	"1"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"    "heroes/demon_hunter/mana_burn.lua"
+				"Function"      "ManaBurn"
+			}
+		}
+	
 	}
 	//End of file demon_hunter_mana_burn.txt
 
@@ -4949,6 +5134,10 @@
 	// Notes: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	N/A	180 sec.	200	N/A	N/A	N/A	Creates Avatar of Vengeance	6
+	
+	// TODO: Make AI for Autocast
+	//		 Give Spirit of Vengeance an icon
+	//		 Make a corpse mechanic that actually works like intended
 	"warden_avatar_of_vengeance"
 	{
 		"BaseClass"             		"ability_datadriven"

@@ -11,31 +11,128 @@
 	"MaxLevel"						"1"
 	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"180"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"150"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
-	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"500"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health_regen"	"3"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_range"			"422"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"range_tooltip"			"600"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+		"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+		"model"		"models/heroes/terrorblade/demon.vmdl"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Terrorblade.Metamorphosis"
+			"Target"			"CASTER"
+		}
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"CASTER"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"		"modifier_demon_form"
+			"Target"			"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_demon_form"
+		{
+			"Duration"	"%duration"
+			
+			"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+			"EffectAttachType"  "follow_origin"
+
+			"AllowsIllusionDuplicate"	"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
+				"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS" 			"%bonus_health"		
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 	"%bonus_health_regen"				
+			}
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/demon_hunter/demon_form.lua"
+					"Function"				"ModelSwapStart"
+					"model"					"models/heroes/terrorblade/demon.vmdl"
+					"projectile_model"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/demon_hunter/demon_form.lua"
+					"Function"			"HideWearables"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/demon_hunter/demon_form.lua"
+					"Function"		"ModelSwapEnd"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/demon_hunter/demon_form.lua"
+					"Function"		"ShowWearables"
+				}
+			}
 		}
 	}
 }
