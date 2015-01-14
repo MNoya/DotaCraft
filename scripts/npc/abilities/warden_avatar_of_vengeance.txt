@@ -1,40 +1,199 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Warden Avatar of Vengeance
+// Author: Noya
+// Date: 14.1.2015.
 // Notes: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //N/A	N/A	180 sec.	200	N/A	N/A	N/A	Creates Avatar of Vengeance	6
+
+// TODO: Make AI for Autocast
+//		 Give Spirit of Vengeance an icon
+//		 Make a corpse mechanic that actually works like intended
 "warden_avatar_of_vengeance"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"warden_avatar_of_vengeance"
-	"MaxLevel" 						"3"
+	"MaxLevel"						"1"
+	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 	"AbilityCastRange"				"700"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"180"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"200"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"	"FIELD_INTEGER"
+			"duration"	"180"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"SpawnUnit"
+		{
+			"UnitName"		"npc_avatar_of_vengeance"
+			"UnitCount"		"1"
+			"SpawnRadius"	"100"
+			"Duration"		"%duration"
+			"Target"		"CASTER"
+			"OnSpawn"
+			{
+				"FireSound"
+				{
+					"EffectName" "Hero_Spectre.Haunt"
+					"Target"	 "CASTER"
+				}
+			}
+		}
+	}
+}
+
+
+// Avatar of Vengeance Passive
+// No collision and calls a script OnDeath to kill all the summoned spirits
+"avatar_of_vengeance_passive"
+{
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE	| DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"BaseClass" 					"ability_datadriven"
+	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"vengeance_modifier"
+		{
+			"IsHidden"	"1"
+			"Passive"	"1"
+			"States"
+			{	
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+					"Function"		"KillVengeanceSpirits"
+				}
+			}
+		}
+	}
+}
+
+// Spirit Spawn - Spaws a Spirit of Vengeance near a corpse
+// AUTOCAST doesn't work currently, would need some lua AI.
+"avatar_of_vengeance_spirit_spawn"
+{
+
+	"BaseClass" 			"ability_datadriven"
+	"MaxLevel"				"1"
+	"AbilityTextureName" 	"warden_avatar_of_vengeance"
+
+	"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+
+	"AbilityCooldown" 		"2"
+	"AbilityManacost" 		"25"
+	"AbilityCastRange"		"600"
+
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+	}
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"spirit_limit"			"6"
+		}		
+	}
+
+	"OnSpellStart"
+	{
+		"SpawnUnit"
+		{
+			"UnitName"		"npc_spirit_of_vengeance"
+			"UnitCount"		"1"
+			"UnitLimit"		"%spirit_limit"
+			"SpawnRadius"	"1"
+			"Duration"		"50"
+			"Target"
+			{
+				"Center" 		"CASTER"
+				"Radius" 		"900"
+				"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				"Flags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
+				"MaxTargets"	"1"
+				"Random"		"1"
+			}
+
+			"OnSpawn"
+			{
+				"FireSound"
+				{
+					"EffectName" "Hero_Spectre.DaggerCast"
+					"Target"	 "CASTER"
+				}
+			}
+		}
+	}		
+}
+
+// Spirit of Vengeance Passive
+// Invulnerable and some particle
+"spirit_of_vengeance_passive"
+{
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE	| DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"BaseClass" 					"ability_datadriven"
+	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"vengeance_modifier"
+		{
+			"IsHidden"	"1"
+			"Passive"	"1"
+			"States"
+			{
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"CASTER"
+				}
+			}
 		}
 	}
 }

@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Warden Fan of Knives
+// Author: Noya
+// Date: 14.1.2015.
 // Notes: The Warden flings a flurry of knives at multiple enemy targets around her.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	N/A	9 sec.	100	N/A	40	Air, Ground, Enemy	75 damage per target, 300 max damage	1
@@ -12,31 +12,102 @@
 	"AbilityTextureName"			"warden_fan_of_knives"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
+	"AbilityCastRange"				"400 500 600"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"9.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManacost" 				"100"
+	"AbilityDamage"					"75 125 190"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle" 	"particles/custom/bristleback_quill_spray.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"400 500 600"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"AttachEffect"
+		{
+			"EffectName"		"particles/custom/bristleback_quill_spray.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"CASTER"
+		}
+		"FireSound"
+		{	
+			"EffectName"		"Hero_PhantomAssassin.Dagger.Target"
+			"Target"			"CASTER"
+		}
+		"Damage"
+		{
+			"Type"          "DAMAGE_TYPE_MAGICAL"
+			"Damage"        "%AbilityDamage"
+			"Target"
+			{
+				"Center"  				"CASTER"
+				"Radius" 				"%radius"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			}
 		}
 	}
 }
+
+
+
+		"AbilityManacost" 				"100"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"9"
+		"AbilityCastRange"				"400 500 600"
+		"AbilityDamage"					"75 125 190"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400 500 600"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"AttachEffect"
+			{
+				"EffectName"		"particles/warchasers/bristleback_quill_spray.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
+			"FireSound"
+			{	
+				"EffectName"		"Hero_PhantomAssassin.Dagger.Target"
+				"Target"			"CASTER"
+			}
+			"Damage"
+			{
+				"Type"          "DAMAGE_TYPE_MAGICAL"
+				"Damage"        "%AbilityDamage"
+				"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"%radius"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+			}
+		}

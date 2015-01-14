@@ -13,17 +13,13 @@
 	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHERS"
+	
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-
-	"AbilityCastRange"				"700"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	
 
 	"precache"
 	{
@@ -31,12 +27,44 @@
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 	}
 	
+	"AbilityCastRange"				"800"
+	"AbilityCooldown"				"6"
+	"AbilityManaCost"				"75"
+
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"projectile_speed"		"1100"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"target_damage"			"100 200 300"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"heal_amount"			"200 400 600"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes\death_knight\death_coil.lua"
+			"Function"	"death_coil_precast"
+		}
+	}
+
+	"OnAbilityStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes\death_knight\death_coil.lua"
+			"Function"	"death_coil_cast"
 		}
 	}
 }
