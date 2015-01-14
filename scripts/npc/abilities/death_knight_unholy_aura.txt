@@ -6,6 +6,8 @@
 //1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+10% movement, +0.5 HP/sec.	1
 //2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+20% movement, +1 HP/sec.	3
 //3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+30% movement, +1.5 HP/sec.	5
+
+// TODO: Custom Particle
 "death_knight_unholy_aura"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -13,30 +15,58 @@
 	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityCastRange"				"900"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"	"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
 	}
-	
+
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_FLOAT"
+			"move_speed_bonus"		"10 20 30"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"health_regen_bonus"	"0.5 1 1.5"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"900"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_unholy_aura"
+		{
+			"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+			"EffectAttachType"   "follow_origin"
+			
+			"Passive" 			"1"
+			"IsHidden" 			"1"
+			"IsBuff"			"1"
+			"Aura" 				"modifier_unholy_aura_buff"
+			"Aura_Radius" 		"%radius"
+			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		}
+
+		"modifier_unholy_aura_buff"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen_bonus"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_bonus"
+			}
 		}
 	}
 }
