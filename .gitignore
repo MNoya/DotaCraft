@@ -1,6 +1,12 @@
 # Cache crap that Valve autogenerates
 *.bin
 
+# Ignore all particles except the custom folder
+*.vpcf_c
+/particles/*
+!/particles/custom
+!/particles/custom/*
+
 # Map Files
 *.vmap
 *.vpk
