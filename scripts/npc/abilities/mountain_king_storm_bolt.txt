@@ -1,5 +1,5 @@
-// AbilityName
-// Author: 
+// Mountain King Storm Bolt
+// Author: Noya
 // Date: 13.1.2015.
 // Notes: A magical hammer that is thrown at an enemy unit, causing damage and stunning the target.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
@@ -22,21 +22,111 @@
 	"AbilityCastPoint"				"0.3"
 	"AbilityCooldown"				"8.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
-
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
+	"AbilityManaCost"				"75"
+	"AbilityDamage"					"100 225 350"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"bolt_speed"			"750"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"stun_hero_duration"	"2.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"stun_creep_duration"	"5.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"vision_radius"			"225"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+		"particle"			"particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
+		"particle"			"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+		"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+			"Target"           	"TARGET"
+		    "EffectName"       	"particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
+		    "Dodgeable"        	"1"
+		    "ProvidesVision"   	"1"
+		    "VisionRadius"		"%vision_radius"
+		    "MoveSpeed"        	"%bolt_speed"
+		    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+
+		"FireSound"
+		{
+			"EffectName"		"Hero_Sven.StormBolt"
+			"Target"			"CASTER"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Sven.StormBoltImpact"
+			"Target"			"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+			"EffectAttachType"	"attach_origin"
+			"Target"			"TARGET"
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_origin"
+				"TARGET"	"attach_origin"
+				"TARGET"	"attach_origin"
+				"TARGET"	"attach_origin"	//CP3 has a child explosion origin
+			}
+		}
+
+		"Damage"
+		{
+			"Target"		"TARGET"
+			"Type"			"DAMAGE_TYPE_MAGICAL"
+			"Damage"		"%AbilityDamage"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"    "heroes/mountain_king/storm_bolt.lua"
+			"Function"		"StormBoltApply"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_storm_bolt"
+		{
+			"IsDebuff"		"1"
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+
+			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
