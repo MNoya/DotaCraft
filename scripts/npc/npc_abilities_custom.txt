@@ -1633,7 +1633,7 @@
 		"AbilityTextureName"			"death_knight_unholy_aura"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	
@@ -1641,7 +1641,7 @@
 	
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+			"particle"	"particles/custom/doom_bringer_doom.vpcf"
 		}
 	
 		"AbilitySpecial"
@@ -1667,8 +1667,8 @@
 		{
 			"modifier_unholy_aura"
 			{
-				"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
-				"EffectAttachType"   "follow_origin"
+				"EffectName"		"particles/custom/doom_bringer_doom.vpcf"
+				"EffectAttachType"  "follow_origin"
 				
 				"Passive" 			"1"
 				"IsHidden" 			"1"
