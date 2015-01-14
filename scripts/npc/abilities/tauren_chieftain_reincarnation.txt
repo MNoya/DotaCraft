@@ -1,9 +1,13 @@
-// AbilityName
-// Author: 
+// Tauren Chieftain Reincarnation
+// Author: Noya
 // Date: 13.1.2015.
 // Notes: When killed, the Tauren Chieftain will come back to life. The Tauren Chieftain will return with full mana.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //N/A	7 sec.	240 sec.	None	N/A	N/A	Self	Hero comes back to life	6
+
+// Issues: "MODIFIER_PROPERTY_REINCARNATION" is Unhandled, this uses lua Kill and gives the gold back when the caster dies
+// 	      It still counts the death count for the player, because there's currently no way to decrease deaths (only lua IncrementDeaths)
+
 "tauren_chieftain_reincarnation"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -11,31 +15,40 @@
 	"MaxLevel"						"1"
 	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCooldown"				"240"
+	"AbilityManaCost"				"0"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
-
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
-	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_FLOAT"
+			"reincarnate_time"		"7.0"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+		"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+		"particle"	"particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_reincarnation"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/tauren_chieftain/reincarnation.lua"
+					"Function"			"Reincarnation"
+				}
+			}
 		}
 	}
 }

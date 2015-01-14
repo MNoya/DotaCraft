@@ -4355,12 +4355,16 @@
 
 
 	//Start of file tauren_chieftain_reincarnation.txt
-	// AbilityName
-	// Author: 
+	// Tauren Chieftain Reincarnation
+	// Author: Noya
 	// Date: 13.1.2015.
 	// Notes: When killed, the Tauren Chieftain will come back to life. The Tauren Chieftain will return with full mana.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	7 sec.	240 sec.	None	N/A	N/A	Self	Hero comes back to life	6
+	
+	// Issues: "MODIFIER_PROPERTY_REINCARNATION" is Unhandled, this uses lua Kill and gives the gold back when the caster dies
+	// 	      It still counts the death count for the player, because there's currently no way to decrease deaths (only lua IncrementDeaths)
+	
 	"tauren_chieftain_reincarnation"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -4368,31 +4372,40 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCooldown"				"240"
+		"AbilityManaCost"				"0"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
-	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-		}
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_FLOAT"
+				"reincarnate_time"		"7.0"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+			"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_reincarnation"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/tauren_chieftain/reincarnation.lua"
+						"Function"			"Reincarnation"
+					}
+				}
 			}
 		}
 	}
@@ -4409,143 +4422,143 @@
 	//2	N/A	8 sec.	100	70	15	Ground, Enemy	130 damage	3
 	//3	N/A	8 sec.	100	70	15	Ground, Enemy	200 damage	5
 	"tauren_chieftain_shockwave"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tauren_chieftain_shockwave"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
+	
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+	
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+	
+		"precache"
 		{
-			"BaseClass"             		"ability_datadriven"
-			"AbilityTextureName"			"tauren_chieftain_shockwave"
-			"MaxLevel" 						"3"
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle"	"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
 		
-			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
-			"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-			"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
-	
-			"AbilityCastRange"				"700"
-			"AbilityCastPoint"				"0.3"
-			"AbilityCooldown"				"8.0"
-	
-			"AbilityManaCost"				"100"
-			"AbilityDamage"					"75 130 200"
-	
-			"precache"
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-				"particle"	"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
-				"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+				"var_type"				"FIELD_INTEGER"
+				"shock_speed"			"900"
 			}
-			
-			"AbilitySpecial"
+			"02"
 			{
-				"01"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"shock_speed"			"900"
-				}
-				"02"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"shock_width"			"250"
-				}
-				"03"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"shock_distance"		"700"
-				}
-				"04"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"shock_vision"			"300"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"shock_width"			"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shock_distance"		"700"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shock_vision"			"300"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shockwave_hidden_cast"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnSpellStart"
+		{	
+			"FireSound"
+			{
+				"EffectName"		"Hero_Magnataur.ShockWave.Cast"
+				"Target"			"CASTER"
 			}
 	
-			"OnAbilityPhaseStart"
+			"FireSound"
 			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_shockwave_hidden_cast"
-					"Target"		"CASTER"
-				}
+				"EffectName"		"Hero_Magnataur.ShockWave.Particle"
+				"Target"			"CASTER"
 			}
 	
-			"OnSpellStart"
-			{	
-				"FireSound"
-				{
-					"EffectName"		"Hero_Magnataur.ShockWave.Cast"
-					"Target"			"CASTER"
-				}
+			"LinearProjectile"
+			{
+			    "Target"      	"POINT"
+			    "EffectName" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			    "MoveSpeed"   	"%shock_speed"
+			    "StartRadius"   "%shock_width"
+			    "StartPosition" "attach_attack1"
+			    "EndRadius"     "%shock_width"
+			    "FixedDistance" "%shock_distance"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone" "0"
+			    "ProvidesVision" "1"
+			    "VisionRadius" 	"%shock_vision"
+			}
+		}
 	
-				"FireSound"
-				{
-					"EffectName"		"Hero_Magnataur.ShockWave.Particle"
-					"Target"			"CASTER"
-				}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
 	
-				"LinearProjectile"
-				{
-				    "Target"      	"POINT"
-				    "EffectName" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-				    "MoveSpeed"   	"%shock_speed"
-				    "StartRadius"   "%shock_width"
-				    "StartPosition" "attach_attack1"
-				    "EndRadius"     "%shock_width"
-				    "FixedDistance" "%shock_distance"
-				    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
-				    "HasFrontalCone" "0"
-				    "ProvidesVision" "1"
-				    "VisionRadius" 	"%shock_vision"
-				}
+			"Damage"
+			{
+				"Target"		 "TARGET"
+				"Type"			 "DAMAGE_TYPE_MAGICAL"
+				"Damage"		 "%AbilityDamage"
 			}
 	
-			"OnProjectileHitUnit"
+			"FireSound"
 			{
-				"DeleteOnHit"		"0"
+				"EffectName"	"Hero_Magnataur.ShockWave.Target"
+				"Target"		"TARGET"
+			}			
+		}
 	
-				"Damage"
-				{
-					"Target"		 "TARGET"
-					"Type"			 "DAMAGE_TYPE_MAGICAL"
-					"Damage"		 "%AbilityDamage"
-				}
-	
-				"FireSound"
-				{
-					"EffectName"	"Hero_Magnataur.ShockWave.Target"
-					"Target"		"TARGET"
-				}			
-			}
-	
-			"Modifiers"
+		"Modifiers"
+		{
+			"modifier_shockwave_hidden_cast"
 			{
-				"modifier_shockwave_hidden_cast"
+				"IsHidden"	"1"
+				"Duration"	"0.5"
+				"OnCreated"
 				{
-					"IsHidden"	"1"
-					"Duration"	"0.5"
-					"OnCreated"
+					"AttachEffect"
 					{
-						"AttachEffect"
+						"EffectName"		"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
+						"EffectAttachType" 	"attach_attack1"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
 						{
-							"EffectName"		"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
-							"EffectAttachType" 	"attach_attack1"
-							"Target" 			"CASTER"
-							"ControlPointEntities"
-							{
-								"CASTER"		"attach_attack1"
-								"CASTER"		"attach_attack1"
-							}
+							"CASTER"		"attach_attack1"
+							"CASTER"		"attach_attack1"
 						}
 					}
 				}
 			}
 		}
+	}
 	//End of file tauren_chieftain_shockwave.txt
 
 
 	//Start of file tauren_chieftain_war_stomp.txt
-	// AbilityName
-	// Author: 
+	// Tauren Chieftain War Stomp
+	// Author: Noya
 	// Date: 13.1.2015.
 	// Notes: Slams the ground, stunning and damaging nearby enemy units.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
@@ -4594,11 +4607,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"stun_creep_duration"	"3.0 4.0 5.0"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"225"
-			}
 		}
 	
 		"OnSpellStart"
@@ -4619,6 +4627,13 @@
 			{
 				"EffectName"		"Hero_Centaur.HoofStomp"
 				"Target" 			"CASTER"
+			}
+	
+			"Damage"
+			{
+				"Target"		 "TARGET"
+				"Type"			 "DAMAGE_TYPE_MAGICAL"
+				"Damage"		 "%AbilityDamage"
 			}
 	
 			"RunScript"
