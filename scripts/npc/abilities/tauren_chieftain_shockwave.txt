@@ -7,36 +7,134 @@
 //2	N/A	8 sec.	100	70	15	Ground, Enemy	130 damage	3
 //3	N/A	8 sec.	100	70	15	Ground, Enemy	200 damage	5
 "tauren_chieftain_shockwave"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"tauren_chieftain_shockwave"
-	"MaxLevel" 						"3"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
-
-	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tauren_chieftain_shockwave"
+		"MaxLevel" 						"3"
 	
-	"AbilitySpecial"
-	{
-		"01"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
+
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0"
+
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"75 130 200"
+
+		"precache"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle"	"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shock_speed"			"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shock_width"			"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shock_distance"		"700"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shock_vision"			"300"
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shockwave_hidden_cast"
+				"Target"		"CASTER"
+			}
+		}
+
+		"OnSpellStart"
+		{	
+			"FireSound"
+			{
+				"EffectName"		"Hero_Magnataur.ShockWave.Cast"
+				"Target"			"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"		"Hero_Magnataur.ShockWave.Particle"
+				"Target"			"CASTER"
+			}
+
+			"LinearProjectile"
+			{
+			    "Target"      	"POINT"
+			    "EffectName" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			    "MoveSpeed"   	"%shock_speed"
+			    "StartRadius"   "%shock_width"
+			    "StartPosition" "attach_attack1"
+			    "EndRadius"     "%shock_width"
+			    "FixedDistance" "%shock_distance"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone" "0"
+			    "ProvidesVision" "1"
+			    "VisionRadius" 	"%shock_vision"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+
+			"Damage"
+			{
+				"Target"		 "TARGET"
+				"Type"			 "DAMAGE_TYPE_MAGICAL"
+				"Damage"		 "%AbilityDamage"
+			}
+
+			"FireSound"
+			{
+				"EffectName"	"Hero_Magnataur.ShockWave.Target"
+				"Target"		"TARGET"
+			}			
+		}
+
+		"Modifiers"
+		{
+			"modifier_shockwave_hidden_cast"
+			{
+				"IsHidden"	"1"
+				"Duration"	"0.5"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
+						"EffectAttachType" 	"attach_attack1"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_attack1"
+							"CASTER"		"attach_attack1"
+						}
+					}
+				}
+			}
 		}
 	}
-}
