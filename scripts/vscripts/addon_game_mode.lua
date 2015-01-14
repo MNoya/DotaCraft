@@ -4,6 +4,7 @@ require('timers')
 --require('physics')
 --require('multiteam')
 require('dotacraft')
+require('popups')
 
 function Precache( context )
 	--[[
