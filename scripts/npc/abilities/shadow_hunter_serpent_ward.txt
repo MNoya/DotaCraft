@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Shadow Hunter Serpent Ward
+// Author: Noya
+// Date: 15.01.2015.
 // Notes: Summons an immobile serpentine ward to attack the Shadow Hunter's enemies. The ward has 75/135/135 hit points and is immune to magic. Lasts 40 seconds.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	40 sec.	6.5 sec.	30	50	N/A	N/A	11-13 damage	1
@@ -12,31 +12,126 @@
 	"AbilityTextureName"			"shadow_hunter_serpent_ward"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
+	"AbilityCastRange"				"500 800 800"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"6.5"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"30"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+		"particle"	"particles/units/heroes/hero_venomancer/venomancer_ward_cast.vpcf"
+		"particle"	"particles/units/heroes/hero_venomancer/venomancer_ward_spawn.vpcf"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"40.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_hp_tooltip"		"75 135 135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_damage_tooltip"	"12 24 43"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"plague_ward_1_count"	"1 0 0 0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"plague_ward_2_count"	"0 1 0 0"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"plague_ward_3_count"	"0 0 1 0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Venomancer.Plague_Ward"
+			"Target"			"CASTER"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_serpent_ward_1"
+			"Target"			"POINT"
+			"UnitCount"			"%plague_ward_1_count"
+			"Duration"			"%duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			// This makes sure units never get stuck
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_serpent_ward_2"
+			"Target"			"POINT"
+			"UnitCount"			"%plague_ward_2_count"
+			"Duration"			"%duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_serpent_ward_3"
+			"Target"			"POINT"
+			"UnitCount"			"%plague_ward_3_count"
+			"Duration"			"%duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+			}
 		}
 	}
 }
