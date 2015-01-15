@@ -767,7 +767,7 @@
 
 
 	//Start of file blademaster_critical_strike.txt
-	// AbilityName
+	// Blademaster Critical Strike
 	// Author: 
 	// Date: 13.1.2015.
 	// Notes: Gives a 15% chance that the Blademaster will do more damage on his attacks.
@@ -781,31 +781,93 @@
 		"AbilityTextureName"			"blademaster_critical_strike"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
+			"particle"	"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"					"FIELD_INTEGER"
+				"crit_bonus"				"200 300 400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"15"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_critical_strike"
+			{
+			    "Passive"   "1"
+			    "IsHidden"  "1"
+			    "OnAttackStart"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName" 	"modifier_critical_strike_crit"
+			            "Target" 		"CASTER"
+			        }
+	
+			        "Random"
+			        {
+			            "Chance" "%crit_chance"
+			            "OnSuccess"
+			            {
+			            	"FireSound"
+					        {
+					        	"EffectName"	"Hero_SkeletonKing.CriticalStrike"
+					        	"Target"		"CASTER"
+					        }
+	
+					        "FireEffect"
+					        {
+					       		"EffectName" 		"particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
+					            "EffectAttachType"  "attach_sword"
+					            "Target"    		"CASTER"
+					        }
+	
+			                "ApplyModifier"
+			                {
+			                    "ModifierName" 	"modifier_critical_strike_crit"
+			                    "Target"    	"CASTER"    
+			                }        
+			            }
+			        }
+			    }
+			}
+	
+			"modifier_critical_strike_crit"
+			{
+			    "IsHidden"  "1"
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
+			    }
+	
+			    "OnAttackLanded"
+			    {
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			    		"EffectAttachType"	"attach_hitloc"
+			    		"Target"			"TARGET"
+			    	}
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_critical_strike_crit"
+			            "Target"   			"CASTER"    
+			        }
+			    }
 			}
 		}
 	}
@@ -3379,9 +3441,9 @@
 
 
 	//Start of file mountain_king_bash.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Mountain King Bash
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: Gives a chance that the Mountain King's attack will do 25 bonus damage and stun his opponent for 2 seconds (1 second for Heroes).
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	N/A	None	N/A	Unit	Ground	20% chance, damage +25, 2 (Hero 1) second stun	1
@@ -3397,14 +3459,8 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityDamage"					"25"
 	
 		"precache"
 		{
@@ -3416,8 +3472,18 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"bash_chance"			"20 30 40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_hero_duration"	"1.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_creep_duration"	"5.0"
 			}
 		}
 	}
@@ -4336,9 +4402,9 @@
 
 
 	//Start of file pit_lord_cleaving_attack.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Pit Lord Cleaving Attack
+	// Author: Noya
+	// Date: 14.1.2015.
 	// Notes: The Pit Lord strikes with such force that he damages multiple enemies with his attack.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	N/A	None	N/A	20	Ground, Enemy, Neutral	30% damage is splash	1
@@ -4350,31 +4416,45 @@
 		"AbilityTextureName"			"pit_lord_cleaving_attack"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
-	
+		"AbilityCastRange"				"200"
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"cleave_damage"			"30 55 80"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_radius"			"200.0"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_cleaving_attack"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"CleaveAttack"
+					{
+						"CleavePercent"		"%cleave_damage"
+						"CleaveRadius"		"%cleave_radius"
+						"CleaveEffect"		"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+					}
+				}
 			}
 		}
 	}
