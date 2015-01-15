@@ -79,11 +79,28 @@
 			
 			"OnOrbImpact"
 			{
-				"RunScript"
+				"ApplyModifier"
 				{
-					"ScriptFile"    	"heroes/naga_sea_witch/frost_arrows.lua"
-					"Function"			"FrostArrowsApply"
+					"ModifierName"	"modifier_frost_arrows_slow"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Types"		"DOTA_UNIT_TARGET_HERO"
+					}
+					"Duration"		"%slow_hero_duration"
 				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_frost_arrows_slow"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Types"		"DOTA_UNIT_TARGET_BASIC"
+					}
+					"Duration"		"%slow_creep_duration"
+				}
+
 				"Damage"
 				{
 					"Type"          	"DAMAGE_TYPE_PHYSICAL"

@@ -77,17 +77,30 @@
 			"Damage"		 "%AbilityDamage"
 		}
 
-		"RunScript"
+		"ApplyModifier"
 		{
-			"ScriptFile"    "heroes/tauren_chieftain/war_stomp.lua"
-			"Function"		"WarStompApply"
+			"ModifierName"    "modifier_war_stomp"
 			"Target"
 			{
 				"Center"	"CASTER"
 				"Radius"	"%radius"
 				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
 			}
+			"Duration"		"%stun_hero_duration"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"    "modifier_war_stomp"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_BASIC"
+			}
+			"Duration"		"%stun_creep_duration"
 		}
 	}
 

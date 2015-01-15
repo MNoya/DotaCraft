@@ -59,10 +59,26 @@
 			"Target" 			"TARGET"
 		}	
 
-		"RunScript"
+		"ApplyModifier"
 		{
-			"ScriptFile"		"heroes/keeper/entangling_roots.lua"
-			"Function"			"EntanglingRootsCheck"
+			"ModifierName"	"modifier_entangling_roots"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
+			}
+			"Duration"		"%hero_duration"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_entangling_roots"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Types"		"DOTA_UNIT_TARGET_BASIC"
+			}
+			"Duration"		"%creep_duration"
 		}
 	}
 
@@ -71,7 +87,6 @@
 		"modifier_entangling_roots"
 		{
 			"IsDebuff"		"1"
-
 			"States"
 			{
 				"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -112,5 +127,4 @@
 			}
 		}
 	}
-
 }

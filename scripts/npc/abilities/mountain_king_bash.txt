@@ -67,22 +67,24 @@
 
 						"ApplyModifier"
 						{
-							"ModifierName"	"modifier_bash_hero"
+							"ModifierName"	"modifier_bash"
 							"Target"
 							{
 								"Center"	"TARGET"
 								"Types"		"DOTA_UNIT_TARGET_HERO"
 							}
+							"Duration"		"%stun_hero_duration"	
 						}
 
 						"ApplyModifier"
 						{
-							"ModifierName"	"modifier_bash_creep"
+							"ModifierName"	"modifier_bash"
 							"Target"
 							{
 								"Center"	"TARGET"
 								"Types"		"DOTA_UNIT_TARGET_BASIC"
 							}
+							"Duration"		"%stun_creep_duration"
 						}
 
 						"Damage"
@@ -96,28 +98,9 @@
 			}
 		}
 
-		"modifier_bash_hero"
+		"modifier_bash"
 		{
 			"IsDebuff"	"1"
-			"Duration"	"%stun_hero_duration"
-
-			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-			"EffectAttachType"	"follow_overhead"
-
-			"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-			"StatusEffectPriority"	"1"
-
-			"States"
-			{
-				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
-		"modifier_bash_creep"
-		{
-			"IsDebuff"	"1"
-			"Duration"	"%stun_creep_duration"
-
 			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
 			"EffectAttachType"	"follow_overhead"
 
