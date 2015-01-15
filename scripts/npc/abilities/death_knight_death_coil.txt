@@ -23,7 +23,7 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+			"particle" 	"particles/custom/death_coil/vengeful_magic_missle.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -64,7 +64,7 @@
 			"TrackingProjectile"
 			{
 				"Target"	"TARGET"
-				"EffectName"	"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+				"EffectName"		"particles/custom/vengeful_magic_missle.vpcf"
 				"Dodgeable"	"1"
 				"ProvidesVision"	"0"
 				"MoveSpeed"	"%projectile_speed"

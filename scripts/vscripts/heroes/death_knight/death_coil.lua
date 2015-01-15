@@ -5,10 +5,6 @@ function death_coil_precast( event )
 	end
 end
 
-function death_coil_cast( event )
-	print("hello")
-end
-
 function death_coil_hit( event )
 	local caster = event.caster
 	local target = event.target
