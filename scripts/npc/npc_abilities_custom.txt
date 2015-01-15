@@ -1577,16 +1577,16 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHERS"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastPoint"				"0.452"
 		
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle" 	"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -1622,14 +1622,27 @@
 			}
 		}
 	
-		"OnAbilityStart"
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Target"	"TARGET"
+				"EffectName"	"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+				"Dodgeable"	"1"
+				"ProvidesVision"	"0"
+				"MoveSpeed"	"%projectile_speed"
+				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+		"OnProjectileHitUnit"
 		{
 			"RunScript"
 			{
 				"ScriptFile"	"heroes\death_knight\death_coil.lua"
-				"Function"	"death_coil_cast"
+				"Function"	"death_coil_hit"
 			}
 		}
+		
 	}
 	//End of file death_knight_death_coil.txt
 
@@ -1650,17 +1663,16 @@
 		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.452"
+		"AbilityCooldown"				"15"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"50"
+		
 	
 		"precache"
 		{
@@ -1673,7 +1685,15 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"conversion_rate"			"100 200 300"
+			}
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes\death_knight\death_pact.lua"
+				"Function"	"death_pact_cast"
 			}
 		}
 	}
