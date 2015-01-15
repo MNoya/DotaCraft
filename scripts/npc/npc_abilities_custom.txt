@@ -3455,17 +3455,16 @@
 		"AbilityTextureName"			"mountain_king_bash"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	
 		"AbilityDamage"					"25"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"	"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -3484,6 +3483,94 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_creep_duration"	"5.0"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_bash"	
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%bash_chance"
+						"PseudoRandom"	"DOTA_PSEUDO_RANDOM_FACELESS_BASH"
+	
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"	"Hero_FacelessVoid.TimeLockImpact"
+								"Target"		"TARGET"
+							}
+	
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_bash_hero"
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_HERO"
+								}
+							}
+	
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_bash_creep"
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_BASIC"
+								}
+							}
+	
+							"Damage"
+							{
+								"Target"	"TARGET"
+								"Type"		"DAMAGE_TYPE_MAGICAL"
+								"Damage"	"%bonus_damage"
+							}
+						}
+					}
+				}
+			}
+	
+			"modifier_bash_hero"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%stun_hero_duration"
+	
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"StatusEffectPriority"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_bash_creep"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%stun_creep_duration"
+	
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"StatusEffectPriority"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -5751,7 +5838,7 @@
 	
 		"BaseClass" 			"ability_datadriven"
 		"MaxLevel"				"1"
-		"AbilityTextureName" 	"warden_avatar_of_vengeance"
+		"AbilityTextureName" 	"warden_spirit_of_vengeance"
 	
 		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	
