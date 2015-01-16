@@ -23,8 +23,8 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/custom/death_coil/vengeful_magic_missle.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/custom/vengeful_magic_missle.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 		}
 		
 		"AbilityCastRange"				"800"
@@ -70,6 +70,12 @@
 				"MoveSpeed"	"%projectile_speed"
 				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
 			}
+
+			"FireSound"
+			{
+				"Target"		"CASTER"
+				"EffectName"	"Hero_Abaddon.DeathCoil.Cast"
+			}
 		}
 		"OnProjectileHitUnit"
 		{
@@ -77,6 +83,12 @@
 			{
 				"ScriptFile"	"heroes\death_knight\death_coil.lua"
 				"Function"	"death_coil_hit"
+			}
+
+			"FireSound"
+			{
+				"Target"		"CASTER"
+				"EffectName"	"Hero_Abaddon.DeathCoil.Target"
 			}
 		}
 		
