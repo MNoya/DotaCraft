@@ -12,17 +12,14 @@
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityCastRange"				"900"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		
 		"AbilityCastPoint"				"0.453"
 		"AbilityCooldown" "180"
 		"AbilityManacost" "175"
-	
-
-	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"				"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+			"particle"				"particles/status_fx/status_effect_terrorblade_reflection.vpcf"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -44,6 +41,34 @@
 			{
 				"ScriptFile"	"heroes/death_knight/animate_dead.lua"
 				"Function"	"animate_dead_cast"
+			}
+		}
+		"Modifiers"
+		{
+			"animate_dead_invulnerability"
+			{
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target" "TARGET"
+						"EffectName"	"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+						"EffectAttachType" "follow_overhead"
+					}
+					"FireSound"
+					{
+						"EffectName"		"Hero_Abaddon.AphoticShield.Cast"
+						"Target"			  "CASTER"
+					}
+				}
+				"StatusEffectName" "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+   				"StatusEffectPriority" "15"
+				"IsPurgable"	"0"
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DOMINATED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
