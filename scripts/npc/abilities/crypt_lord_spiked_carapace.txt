@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Crypt Lord Skiped Carapace
+// Author: Noya
+// Date: 17.1.2015.
 // Notes: The Crypt Lord forms barbed layers of chitinous armor that increases its defense and returns damage to enemy melee attackers.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	N/A	N/A	None	N/A	Personal	Self	15% damage returned, 3 bonus armor	1
@@ -12,31 +12,61 @@
 	"AbilityTextureName"			"crypt_lord_spiked_carapace"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle" 	"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+		"particle"	"particles/custom/creature_spiked_carapace.vpcf"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"					"FIELD_INTEGER"
+			"melee_damage_return"		"15 25 35"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"armor_bonus"				"3 5 7"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_spiked_carapace"
+		{
+			"Passive"			"1"
+			"EffectName"		"particles/custom/creature_spiked_carapace.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
+			}
+
+			"OnAttacked"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/crypt_lord/spiked_carapace.lua"
+					"Function"		"SpikedCarapace"
+				}
+			}
+
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/crypt_lord/spiked_carapace.lua"
+					"Function"		"SpikedCarapaceDamage"
+				}
+			}	
 		}
 	}
 }
