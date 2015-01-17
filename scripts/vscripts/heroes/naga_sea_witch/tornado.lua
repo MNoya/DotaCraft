@@ -14,6 +14,12 @@ function EndTornadoParticle(event)
 	ParticleManager:DestroyParticle(target.tornado,false)
 end
 
+-- Finds and kills the tornado
+function TornadoEnd( event )
+	local tornado = Entities:FindByModel(nil, "models/heroes/attachto_ghost/attachto_ghost.vmdl")
+	tornado:RemoveSelf()
+end
+
 --[[
 	Author: Noya
 	Date: 16.01.2015.

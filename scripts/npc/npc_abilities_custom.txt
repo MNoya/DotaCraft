@@ -4183,6 +4183,9 @@
 	// Notes: Summons a fierce controllable Tornado that slows enemy units' movement speed, randomly tosses enemy ground units into the air and damages enemy buildings. The Tornado does 50 damage per second to buildings under it, and 7 damage per second to buildings in its general vicinity. Lasts 40 seconds.
 	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	12 (6) sec.	120 sec.	200	90	27.5	Air, Ground, Building, Enemy, Neutral	Creates Tornado	6
+	
+	//Tornado tosses units every 3 seconds, and the toss lasts for 12 seconds. 
+	//The Tornado's speed is 75. That means that Tornado more or less disables 4 units continuously.
 	"naga_sea_witch_tornado"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -4190,7 +4193,7 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -4203,7 +4206,8 @@
 		"AbilityManaCost"				"200"
 		"AbilityDamage"					"75 130 200"
 	
-		"AoERadius"		"275"
+		"AbilityChannelTime" 			"4"
+		"AoERadius"						"275"
 	
 		"precache"
 		{
@@ -4224,37 +4228,38 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"center_radius"				"50"
+				"move_attack_speed_slow"	"-25"
+				
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"full_radius"				"275"
+				"slow_radius"				"600"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"air_duration"				"6"
+				"air_duration"				"12"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_speed_slow"			"-25"
+				"dps_to_buildings_center"	"50"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_speed_slow"			"-25"
+				"dps_to_buildings_outside"	"7"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_to_buildings_center"	"50"
+				"center_radius"				"50"	
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_to_buildings_outside"	"7"
+				"outside_radius"			"275"
 			}
 		}
 	
@@ -4277,19 +4282,18 @@
 				"UnitName"		"npc_naga_sea_witch_tornado"
 				"UnitCount"		"1"
 				"SpawnRadius"	"1"
-				"Duration"		"%duration"
 				"Target"		"POINT"
-				"OnSpawn"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/custom/tornado_ambient.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-					}
-				}
 			}
 		}
+	
+		"OnChannelFinish"
+		{
+			"RunScript"
+	       {
+	        	"ScriptFile" 	   	"heroes/naga_sea_witch/tornado.lua"
+	            "Function" 			"TornadoEnd"
+	        }
+		}	
 	}
 	
 	"naga_sea_witch_tornado_passive"
@@ -4298,6 +4302,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityTextureName"			"naga_sea_witch_tornado"
+	
+		"AbilityCastRange"				"275"	//for displaying damage to building radius
 	
 		"AbilitySpecial"	//copied values from the main spell
 		{
@@ -4309,37 +4315,38 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"center_radius"				"50"
+				"move_attack_speed_slow"	"-25"
+				
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"full_radius"				"275"
+				"slow_radius"				"600"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"air_duration"				"6"
+				"air_duration"				"12"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_speed_slow"			"-25"
+				"dps_to_buildings_center"	"50"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_speed_slow"			"-25"
+				"dps_to_buildings_outside"	"7"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_to_buildings_center"	"50"
+				"center_radius"				"50"	
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_to_buildings_outside"	"7"
+				"outside_radius"				"275"
 			}
 		}
 	
@@ -4347,6 +4354,12 @@
 		{
 			"modifier_tornado_passive"
 			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+	
+				"EffectName"		"particles/custom/tornado_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"States"
 		        {         
 		          "MODIFIER_STATE_NOT_ON_MINIMAP"       "MODIFIER_STATE_VALUE_ENABLED"
@@ -4355,18 +4368,15 @@
 				  "MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
 				  "MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"	
 		        }
-		        
-				"IsHidden"				"1"
-				"Passive"				"1"
-				
+		        			
 				"Aura"					"modifier_tornado_debuff"
-				"Aura_Radius"			"%full_radius"
+				"Aura_Radius"			"%slow_radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 				"Aura_ApplyToCaster"	"0"	        
 	
-				"ThinkInterval"		"%air_duration / 2"
+				"ThinkInterval"		"%air_duration / 4"
 				"OnIntervalThink"
 				{
 					"FireSound"
@@ -4381,7 +4391,7 @@
 						"Target"
 						{
 							"Center"  		"CASTER"
-							"Radius" 		"%full_radius"
+							"Radius" 		"%slow_radius"
 							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 							"MaxTargets"	"1"
@@ -4396,8 +4406,8 @@
 				"IsDebuff"			"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%move_attack_speed_slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_attack_speed_slow"
 				}
 			}
 	
@@ -4408,7 +4418,7 @@
 				"OnCreated"
 				{
 					"RunScript"
-			        {
+			       {
 			        	"ScriptFile" 	   	"heroes/naga_sea_witch/tornado.lua"
 			            "Function" 			"TornadoParticle"
 			        }
@@ -4469,7 +4479,7 @@
 						"Target"
 						{
 							"Center"  	"CASTER"
-							"Radius" 	"%full_radius"
+							"Radius" 	"%outside_radius"
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
 						}
