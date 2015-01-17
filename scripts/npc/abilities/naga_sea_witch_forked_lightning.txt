@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Naga Sea Witch Forked Lightning
+// Author: Noya
+// Date: 17.01.2015.
 // Notes: Calls forth a cone of lightning to damage enemies. Hits a maximum of 3 units.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	Instant	11 sec.	110	60	N/A	Air, Ground, Enemy, Organic, Neutral	85 damage per unit.	1
@@ -19,32 +19,53 @@
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
 	"AbilityCooldown"				"11"
-	"AbilityManaCost"				"110"
-	"AbilityTextureName"			"naga_forked_lightning"
-	"AbilityDamage"					"85 160 250"
 	"AbilityCastPoint"				"0.4"
+	"AbilityCastRange"				"900"
+
+	"AbilityManaCost"				"110"
+	"AbilityDamage"					"85 160 250"
 
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"max_units"				"3 5 7"
+			"max_units"				"3"
 		}
 	}
 
 	"precache"
 	{
 		"particle"	"particles/items_fx/chain_lightning.vpcf"
+		"particle"	"particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf"
 		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 	}
 
 	"OnSpellStart"
 	{
-		"RunScript"
+		"LinearProjectile"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"ForkedLightning"
+		    "Target" 		 "TARGET"
+		    "EffectName"     ""
+		    "MoveSpeed"      "3000"
+		    "StartRadius"    "50"
+		    "EndRadius"      "500"
+		    "StartPosition"  "attach_attack1"
+		    "FixedDistance"  "600"
+		    "TargetTeams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		    "TargetTypes"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		    "HasFrontalCone" "1"
+		    "ProvidesVision" "0"
 		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"0"
+		"RunScript"
+        {
+        	"ScriptFile" 	   	"heroes/naga_sea_witch/forked_lightning.lua"
+            "Function" 			"ForkedLightning"
+        }
 	}
 }
