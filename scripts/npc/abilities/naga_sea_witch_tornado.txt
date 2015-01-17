@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Naga Sea Witch Tornado
+// Author: Noya
+// Date: 16.1.2015.
 // Notes: Summons a fierce controllable Tornado that slows enemy units' movement speed, randomly tosses enemy ground units into the air and damages enemy buildings. The Tornado does 50 damage per second to buildings under it, and 7 damage per second to buildings in its general vicinity. Lasts 40 seconds.
 //Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //N/A	12 (6) sec.	120 sec.	200	90	27.5	Air, Ground, Building, Enemy, Neutral	Creates Tornado	6
@@ -11,31 +11,293 @@
 	"MaxLevel"						"1"
 	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastRange"				"900"
+	"AbilityCastPoint"				"0.4"
+	"AbilityCooldown"				"120"
 
-	"AbilityManaCost"				"100"
+	"AbilityManaCost"				"200"
 	"AbilityDamage"					"75 130 200"
+
+	"AoERadius"		"275"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"				"particles/custom/tornado_ambient.vpcf"
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		"particle"				"particles/neutral_fx/tornado_ambient.vpcf"
+		"particle"				"particles/units/heroes/hero_invoker/invoker_tornado.vpcf"
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 	}
-	
-	"AbilitySpecial"
+
+	"AbilitySpecial"	//most of these are just to show them in the spell, not actually used directly.
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"					"FIELD_INTEGER"
+			"duration"					"40"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"center_radius"				"50"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"full_radius"				"275"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"air_duration"				"6"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"move_speed_slow"			"-25"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attack_speed_slow"			"-25"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"dps_to_buildings_center"	"50"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"dps_to_buildings_outside"	"7"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{			
+			"EffectName"    "Hero_Invoker.Tornado.Cast"
+			"Target"		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"    "Hero_Invoker.Tornado"
+			"Target"		"CASTER"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"npc_naga_sea_witch_tornado"
+			"UnitCount"		"1"
+			"SpawnRadius"	"1"
+			"Duration"		"%duration"
+			"Target"		"POINT"
+			"OnSpawn"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/custom/tornado_ambient.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+				}
+			}
+		}
+	}
+}
+
+"naga_sea_witch_tornado_passive"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityTextureName"			"naga_sea_witch_tornado"
+
+	"AbilitySpecial"	//copied values from the main spell
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"duration"					"40"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"center_radius"				"50"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"full_radius"				"275"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"air_duration"				"6"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"move_speed_slow"			"-25"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attack_speed_slow"			"-25"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"dps_to_buildings_center"	"50"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"dps_to_buildings_outside"	"7"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_tornado_passive"
+		{
+			"States"
+	        {         
+	          "MODIFIER_STATE_NOT_ON_MINIMAP"       "MODIFIER_STATE_VALUE_ENABLED"
+			  "MODIFIER_STATE_PROVIDES_VISION"      "MODIFIER_STATE_VALUE_DISABLED"
+			  "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+			  "MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+			  "MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"	
+	        }
+	        
+			"IsHidden"				"1"
+			"Passive"				"1"
+			
+			"Aura"					"modifier_tornado_debuff"
+			"Aura_Radius"			"%full_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			"Aura_ApplyToCaster"	"0"	        
+
+			"ThinkInterval"		"%air_duration / 2"
+			"OnIntervalThink"
+			{
+				"FireSound"
+				{
+					"EffectName"    "Hero_Invoker.Tornado"
+					"Target"		"CASTER"
+				}
+
+				"ApplyModifier"	
+				{
+					"ModifierName"	"modifier_tornado_flying_debuff"
+					"Target"
+					{
+						"Center"  		"CASTER"
+						"Radius" 		"%full_radius"
+						"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+						"MaxTargets"	"1"
+						"Random"		"1"
+					}
+				}
+			}
+		}
+
+		"modifier_tornado_debuff"
+		{
+			"IsDebuff"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
+			}
+		}
+
+		"modifier_tornado_flying_debuff"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%air_duration"
+			"OnCreated"
+			{
+				"RunScript"
+		        {
+		        	"ScriptFile" 	   	"heroes/naga_sea_witch/tornado.lua"
+		            "Function" 			"TornadoParticle"
+		        }
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+		        {
+		        	"ScriptFile" 	   	"heroes/naga_sea_witch/tornado.lua"
+		            "Function" 			"EndTornadoParticle"
+		        }
+			}
+
+			"ThinkInterval"		"0.03"
+			"OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/naga_sea_witch/tornado.lua"
+                    "Function"      "Spin"
+                    "Angle"         "20"
+                }
+			}
+			"States"
+	        {   
+	        	"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+	        	"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+	        }
+		}
+
+		"modifier_tornado_building_damage"
+		{
+			"IsHidden"			"1"
+			"Passive"			"1"
+
+			"ThinkInterval"		"1"
+	        "OnIntervalThink"
+	        {
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"%center_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+					}
+					"Type"			 "DAMAGE_TYPE_MAGICAL"
+					"Damage"		 "%dps_to_buildings_center - %dps_to_buildings_outside"
+				}
+
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"%full_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+					}
+					"Type"			 "DAMAGE_TYPE_MAGICAL"
+					"Damage"		 "%dps_to_buildings_outside"
+				}
+			}
 		}
 	}
 }
