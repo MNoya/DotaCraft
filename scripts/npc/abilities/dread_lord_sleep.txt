@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Dread Lord Sleep
+// Author: Noya
+// Date: 17.01.2015.
 // Notes: Puts a target enemy unit to sleep. A sleeping unit can be awoken by attacking it.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	20 (5) sec.	6 sec.	100	80	Unit	Air, Ground, Enemy, Organic	Unit put to sleep	1
@@ -27,16 +27,83 @@
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"	"particles/newplayer_fx/npx_sleeping.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
 	}
-	
+		
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"			"FIELD_INTEGER"
+			"hero_duration"		"5 10 15"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"creep_duration"	"20 40 60"
 		}
 	}
+		
+	"OnSpellStart"
+	{
+		"FireSound"				
+		{
+			"EffectName"	"Hero_Bane.Nightmare" 
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"    "modifier_sleep"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
+			}
+			"Duration"		"%hero_duration"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"    "modifier_sleep"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_BASIC"
+			}
+			"Duration"		"%creep_duration"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_sleep"
+		{
+			"IsDebuff"	"1"
+
+			"EffectName"		"particles/newplayer_fx/npx_sleeping.vpcf"
+			"EffectAttachType" "follow_overhead"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NIGHTMARED"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_LOW_ATTACK_PRIORITY" 	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+
+			"OnTakeDamage"
+			{
+				"RemoveModifier"
+				{
+					"Target"		"UNIT"
+					"ModifierName"	"modifier_sleep"
+				}					
+			}			
+		}
+	}		
 }

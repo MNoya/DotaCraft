@@ -2463,21 +2463,23 @@
 
 
 	//Start of file dread_lord_carrion_swarm.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Dread Lord Carrion Swarm
+	// Author: Noya
+	// Date: 17.01.2015.
 	// Notes: Sends a horde of bats to damage enemies.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	10 sec.	110	70	15	Air, Ground	75 damage per unit, max 300	1
 	//2	N/A	10 sec.	110	70	15	Air, Ground	125 damage per unit, max 600	3
 	//3	N/A	10 sec.	110	70	15	Air, Ground	200 damage per unit, max 1000	5
+	
+	// NOTE: No max damage restriction for now.
 	"dread_lord_carrion_swarm"
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"dread_lord_carrion_swarm"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -2485,33 +2487,90 @@
 	
 		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"10.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"110"
+		"AbilityDamage"					"75 125 200"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_carrion_swarm.vpcf"	//Can't attach the bats
+			"particle"	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"start_radius"			"150"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_radius"			"300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"700"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1100"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+			    "Target"		 	"POINT"
+			    "EffectName"     	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			    "MoveSpeed"      	"%speed"
+			    "StartRadius"    	"%start_radius"
+			    "EndRadius"      	"%end_radius"
+			    "StartPosition"  	"attach_attack1"
+			    "FixedDistance"  	"%range"
+			    "TargetTeams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			    "HasFrontalCone" 	"1"
+			    "ProvidesVision" 	"0"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.CarrionSwarm"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+	        {
+	        	"EffectName" 	   	"Hero_DeathProphet.CarrionSwarm.Damage"
+	            "Target" 			"TARGET"
+	        }
+	
+	        "Damage"
+	        {
+	        	"Target"		 "TARGET"
+	        	"Type"			 "DAMAGE_TYPE_MAGICAL"
+	        	"Damage"		 "%AbilityDamage"
+	        }
 		}
 	}
 	//End of file dread_lord_carrion_swarm.txt
 
 
 	//Start of file dread_lord_inferno.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Dread Lord Inferno
+	// Author: Noya
+	// Date: 17.1.2015.
 	// Notes: Calls an Infernal down from the sky, dealing 50 damage and stunning enemy land units for 4 seconds in an area. The Infernal lasts 180 seconds.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	N/A	180 sec.	175	90	25	Ground, Structure, Debris, Enemy	Creates an Infernal, 4 (2) second stun, 50 damage	6
@@ -2522,23 +2581,155 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"180"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"175"
+		"AbilityDamage"					"50"
+	
+		"AoERadius"						"250"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250"
+			}
+			"02"
+			{	
+				"var_type"				"FIELD_FLOAT"
+				"infernal_duration"		"180"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_hero_duration"	"2"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_creep_duration"	"4"
+			}
+		}
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Hero_Warlock.RainOfChaos_buildup"
+				"Target"				"CASTER"
+			}
+	
+			"SpawnUnit"
+			{
+				"Target"            	"POINT"
+				"UnitName"              "npc_dread_lord_inferno"
+				"UnitCount"             "1"
+				"Duration"				"180"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "heroes/dread_lord/inferno.lua"
+	        			"Function"      "SummonInferno"
+						"Target"		"POINT"
+					}		
+				}
+			}
+	
+			"DestroyTrees"
+			{
+				"Target"	"POINT"
+				"Radius"	"%radius"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"    "modifier_inferno_stun"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%stun_hero_duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"    "modifier_inferno_stun"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+				"Duration"		"%stun_creep_duration"
+			}
+	
+			"Damage"
+			{
+				"Type" 		"DAMAGE_TYPE_MAGICAL"
+				"Damage" 	"%AbilityDamage"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_inferno_stun"
+			{
+				"IsDebuff"	"1"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"			
+				}
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+			}
+		}
+	}
+	
+	// Ability for the Infernal Unit
+	"dread_lord_inferno_immolation"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"dread_lord_inferno_immolation"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	
+		"AbilityCastRange"				"220"
+	
+		"precache"
+		{
+			"particle"	"particles/items2_fx/radiance.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -2546,17 +2737,53 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"radius"		"220"
 			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"dps"			"10"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_inferno_immolation"
+	   		{
+	    		"Passive" 			"1"
+	    		"IsHidden" 			"1"
+	
+	    		"Aura" 				"modifier_inferno_immolation_burn"
+	    		"Aura_Radius" 		"%radius"
+	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+	            "EffectName"		"particles/items2_fx/radiance.vpcf"
+				"EffectAttachType" 	"attach_hitloc"
+	   		}
+			
+			"modifier_inferno_immolation_burn"
+	   		{
+	   			"ThinkInterval"		"1"
+	   			"OnIntervalThink"    	
+	   			{
+	   				"Damage"
+					{		
+						"Type" 		"DAMAGE_TYPE_MAGICAL"
+						"Damage" 	"%dps"
+						"Target"	"TARGET"
+					}
+				}
+		    }
 		}
 	}
 	//End of file dread_lord_inferno.txt
 
 
 	//Start of file dread_lord_sleep.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Dread Lord Sleep
+	// Author: Noya
+	// Date: 17.01.2015.
 	// Notes: Puts a target enemy unit to sleep. A sleeping unit can be awoken by attacking it.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	20 (5) sec.	6 sec.	100	80	Unit	Air, Ground, Enemy, Organic	Unit put to sleep	1
@@ -2583,18 +2810,85 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/newplayer_fx/npx_sleeping.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
 		}
-		
+			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"			"FIELD_INTEGER"
+				"hero_duration"		"5 10 15"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"creep_duration"	"20 40 60"
 			}
 		}
+			
+		"OnSpellStart"
+		{
+			"FireSound"				
+			{
+				"EffectName"	"Hero_Bane.Nightmare" 
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"    "modifier_sleep"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%hero_duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"    "modifier_sleep"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%creep_duration"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_sleep"
+			{
+				"IsDebuff"	"1"
+	
+				"EffectName"		"particles/newplayer_fx/npx_sleeping.vpcf"
+				"EffectAttachType" "follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NIGHTMARED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_LOW_ATTACK_PRIORITY" 	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+	
+				"OnTakeDamage"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"UNIT"
+						"ModifierName"	"modifier_sleep"
+					}					
+				}			
+			}
+		}		
 	}
 	//End of file dread_lord_sleep.txt
 
