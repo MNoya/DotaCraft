@@ -11,7 +11,7 @@
 	"MaxLevel"						"1"
 	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -24,7 +24,7 @@
 	"AbilityManaCost"				"175"
 	"AbilityDamage"					"50"
 
-	"AoERadius"						"250"
+	"AOERadius"						"250"
 
 	"AbilitySpecial"
 	{
