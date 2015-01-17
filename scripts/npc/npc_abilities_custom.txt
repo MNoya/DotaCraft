@@ -3320,24 +3320,52 @@
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
 		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"9.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"120"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/items_fx/chain_lightning.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"lightning_damage"		"85 125 180"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lightning_bounces"		"4 6 8"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range"			"500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lightning_decay"		"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"time_between_bounces"	"0.2"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/far_seer/chain_lightning.lua"
+				"Function"		"ChainLightning"
 			}
 		}
 	}
