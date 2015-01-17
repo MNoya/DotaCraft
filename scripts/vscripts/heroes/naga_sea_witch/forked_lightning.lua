@@ -1,7 +1,7 @@
 --[[
 	Author: Noya
 	Date: 16.01.2015.
-	Shows tornado particles on a target and destroys later
+	Fires lightning particle sound and damage at the target unit, if the spell hasn't hit its max_units limit.
 ]]
 function ForkedLightning( event )
 	local hero = event.caster
@@ -9,7 +9,7 @@ function ForkedLightning( event )
 	local max_units = event.ability:GetLevelSpecialValueFor("max_units", (event.ability:GetLevel() - 1))
 	
 	if hero.forked_units_hit == nil then
-			hero.forked_units_hit = 0
+		hero.forked_units_hit = 0
 	end
 
 	-- hit the target if we haven't hit the max unit count yet
