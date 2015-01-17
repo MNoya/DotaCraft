@@ -18,7 +18,7 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
 	"AbilityCastRange"				"900"
 	"AbilityCastPoint"				"0.4"
@@ -27,7 +27,7 @@
 	"AbilityManaCost"				"200"
 	"AbilityDamage"					"75 130 200"
 
-	"AbilityChannelTime" 			"4"
+	"AbilityChannelTime" 			"40"
 	"AoERadius"						"275"
 
 	"precache"
@@ -105,16 +105,49 @@
 			"SpawnRadius"	"1"
 			"Target"		"POINT"
 		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_naga_sea_witch_channeling"
+			"Target"		"CASTER"
+		}
 	}
 
 	"OnChannelFinish"
 	{
 		"RunScript"
-       {
+       	{
         	"ScriptFile" 	   	"heroes/naga_sea_witch/tornado.lua"
             "Function" 			"TornadoEnd"
         }
-	}	
+        "RemoveModifier"
+        {
+        	"ModifierName"	"modifier_naga_sea_witch_channeling"
+        	"Target"		"CASTER"
+        }
+	}
+
+	"Modifiers"
+	{
+		"modifier_naga_sea_witch_channeling"
+		{
+			"ThinkInterval"	"1.29"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_naga_sea_witch_animation"
+					"Target"		"CASTER"
+				}
+			}
+		}
+
+		"modifier_naga_sea_witch_animation"
+		{
+			"Duration"			"1.2"
+			"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
+		}
+	}
 }
 
 "naga_sea_witch_tornado_passive"
