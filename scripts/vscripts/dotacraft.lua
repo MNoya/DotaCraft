@@ -380,42 +380,21 @@ function dotacraft:OnTeamKillCredit(keys)
 end
 
 -- An entity died
-function dotacraft:OnEntityKilled( keys )
+function dotacraft:OnEntityKilled( event )
   print( '[DOTACRAFT] OnEntityKilled Called' )
-  --DeepPrintTable( keys )
   
   -- The Unit that was Killed
-  local killedUnit = EntIndexToHScript( keys.entindex_killed )
+  local killedUnit = EntIndexToHScript(event.entindex_killed)
   -- The Killing entity
-  local killerEntity = nil
+  local killerEntity = EntIndexToHScript(event.entindex_attacker)
 
-  if keys.entindex_attacker ~= nil then
-    killerEntity = EntIndexToHScript( keys.entindex_attacker )
+  if killedUnit.AddAbility ~= nil and killedUnit.GetInvulnCount == nil and killedUnit:GetUnitName() ~= "dummy_unit" and killedUnit:IsIllusion() == false and killedUnit:IsRealHero() == false then
+    local corpse = CreateUnitByName("dummy_unit", killedUnit:GetAbsOrigin(), true, nil, nil, killedUnit:GetTeamNumber())
+    corpse:SetModel("models/props_structures/skeleton001.vmdl")
+    corpse.corpse_expiration = GameRules:GetGameTime() + 10
+    corpse.unit_name = killedUnit:GetUnitName() 
+    corpse:SetContextThink("corpse_think", function() if GameRules:GetGameTime() > corpse.corpse_expiration then  corpse:RemoveSelf() return nil else return 3 end end, 11)
   end
-
-  if killedUnit:IsRealHero() then 
-    print ("KILLEDKILLER: " .. killedUnit:GetName() .. " -- " .. killerEntity:GetName())
-    if killedUnit:GetTeam() == DOTA_TEAM_BADGUYS and killerEntity:GetTeam() == DOTA_TEAM_GOODGUYS then
-      self.nRadiantKills = self.nRadiantKills + 1
-      if END_GAME_ON_KILLS and self.nRadiantKills >= KILLS_TO_END_GAME_FOR_TEAM then
-        GameRules:SetSafeToLeave( true )
-        GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
-      end
-    elseif killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killerEntity:GetTeam() == DOTA_TEAM_BADGUYS then
-      self.nDireKills = self.nDireKills + 1
-      if END_GAME_ON_KILLS and self.nDireKills >= KILLS_TO_END_GAME_FOR_TEAM then
-        GameRules:SetSafeToLeave( true )
-        GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
-      end
-    end
-
-    if SHOW_KILLS_ON_TOPBAR then
-      GameRules:GetGameModeEntity():SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireKills )
-      GameRules:GetGameModeEntity():SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, self.nRadiantKills )
-    end
-  end
-
-  -- Put code here to handle when an entity gets killed
 end
 
 
@@ -452,7 +431,7 @@ function dotacraft:Initdotacraft()
   --ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap(dotacraft, 'OnPlayerLevelUp'), self)
   --ListenToGameEvent('dota_ability_channel_finished', Dynamic_Wrap(dotacraft, 'OnAbilityChannelFinished'), self)
   --ListenToGameEvent('dota_player_learned_ability', Dynamic_Wrap(dotacraft, 'OnPlayerLearnedAbility'), self)
-  --ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
+  ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
   ListenToGameEvent('player_connect_full', Dynamic_Wrap(dotacraft, 'OnConnectFull'), self)
   --ListenToGameEvent('player_disconnect', Dynamic_Wrap(dotacraft, 'OnDisconnect'), self)
   --ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(dotacraft, 'OnItemPurchased'), self)

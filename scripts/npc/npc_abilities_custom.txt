@@ -1528,19 +1528,14 @@
 		"AbilityTextureName"			"death_knight_animate_dead"
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityCastRange"				"900"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		
+		"AbilityCastPoint"				"0.453"
+		"AbilityCooldown" "180"
+		"AbilityManacost" "175"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+
 	
 		"precache"
 		{
@@ -1553,7 +1548,20 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"resurrections_limit"			"6"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"resurrections_duration"			"40"
+			}
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/death_knight/animate_dead.lua"
+				"Function"	"animate_dead_cast"
 			}
 		}
 	}
