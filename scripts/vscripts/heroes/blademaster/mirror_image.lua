@@ -6,7 +6,6 @@
 	Note: The positions weren't random in the original ability. Fix later
 ]]
 function MirrorImage( event )
-	print("Mirror Image")
 	local caster = event.caster
 	local player = caster:GetPlayerID()
 	local ability = event.ability
@@ -25,7 +24,6 @@ function MirrorImage( event )
 	for k,v in pairs(caster.illusions) do
 		if v and IsValidEntity(v) then 
 			v:ForceKill(false)
-			print("Killed one illusion")
 		end
 	end
 
