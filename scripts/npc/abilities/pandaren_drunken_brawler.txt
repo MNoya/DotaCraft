@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Pandaren Dunken Brawler
+// Author: Noya
+// Date: 18.1.2015.
 // Notes: Gives a percent chance to avoid attacks and a 10% chance to deal additional damage.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	Always	N/A	None	N/A	Personal	Self	7% dodge, 2 times normal damage	1
@@ -12,23 +12,13 @@
 	"AbilityTextureName"			"pandaren_drunken_brawler"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+		"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
 	}
 	
 	"AbilitySpecial"
@@ -36,7 +26,87 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"miss_chance"	"7 14 21"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"crit_chance"	"10"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"crit_bonus"	"200 300 400"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_drunken_brawler"
+		{
+		    "Passive"   "1"
+		    "IsHidden"  "0"
+
+		    "EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
+		    "EffectAttachType"	"follow_origin"
+
+		    "Properties"
+		    {
+		        "MODIFIER_PROPERTY_EVASION_CONSTANT" "%miss_chance"
+		    }
+
+		    "OnAttackStart"
+		    {
+		        "RemoveModifier"
+		        {
+		            "ModifierName" 	"modifier_drunken_brawler_crit"
+		            "Target" 		"CASTER"
+		        }
+
+		        "Random"
+		        {
+		            "Chance" "%crit_chance"
+		            "OnSuccess"
+		            {
+		            	"FireSound"
+				        {
+				        	"EffectName"	"Hero_Brewmaster.Brawler.Crit"
+				        	"Target"		"CASTER"
+				        }
+
+				        "FireEffect"
+				        {
+				       		"EffectName" 		"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+				            "EffectAttachType"  "attach_attack1"
+				            "Target"    		"CASTER"
+				        }
+
+		                "ApplyModifier"
+		                {
+		                    "ModifierName" 	"modifier_drunken_brawler_crit"
+		                    "Target"    	"CASTER"    
+		                }        
+		            }
+		        }
+		    }
+		}
+
+		"modifier_drunken_brawler_crit"
+		{
+		    "IsHidden"  "1"
+		    "Properties"
+		    {
+		        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
+		    }
+
+		    "OnAttackLanded"
+		    {
+		        "RemoveModifier"
+		        {
+		            "ModifierName"  	"modifier_critical_strike_crit"
+		            "Target"   			"CASTER"    
+		        }
+		    }
 		}
 	}
 }

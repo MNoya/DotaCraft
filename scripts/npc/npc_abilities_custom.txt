@@ -465,7 +465,6 @@
 				"Target"		"CASTER"
 				"GrantsGold" 	"1"
 		        "GrantsXP" 		"1"
-		        "UnitLimit"		"8"
 				"OnSpawn"
 				{
 					"AttachEffect"
@@ -491,7 +490,6 @@
 				"Target"		"CASTER"
 				"GrantsGold" 	"1"
 		        "GrantsXP" 		"1"
-		        "UnitLimit"		"8"
 				"OnSpawn"
 				{
 					"AttachEffect"
@@ -517,7 +515,6 @@
 				"Target"		"CASTER"
 				"GrantsGold" 	"1"
 		        "GrantsXP" 		"1"
-		        "UnitLimit"		"8"
 				"OnSpawn"
 				{
 					"AttachEffect"
@@ -5919,8 +5916,8 @@
 
 
 	//Start of file pandaren_breath_of_fire.txt
-	// AbilityName
-	// Author: 
+	// Pandaren Breath of Fire
+	// Author: Noya, adapted from SpellLibrary dragon_knight_breathe_fire_datadriven
 	// Date: 13.1.2015.
 	// Notes: Breathes a cone of fire at enemy units which deals damage. Units that have Drunken Haze on them will ignite and take burn damage over time.
 	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
@@ -5933,31 +5930,121 @@
 		"AbilityTextureName"			"pandaren_breath_of_fire"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"	
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"10.0"
 	
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"70"
 		"AbilityDamage"					"75 130 200"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"particle"	"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn_creep.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"drunken_haze_burn_dps"	"7 14 21"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_duration"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"start_radius"			"150"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_radius"			"250"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"500"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1000"
+			}	
+		}
+		
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target" 		"POINT"
+				"EffectName" 	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+				"MoveSpeed" 	"%speed"
+				"StartRadius" 	"%start_radius"
+				"StartPosition" "attach_origin"
+				"EndRadius" 	"%end_radius"
+				"FixedDistance" "%range"
+				"TargetTeams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNITY_TARGET_MECHANICAL"
+				"HasFrontalCone" "1"
+				"ProvidesVision" "0"
+			}
+	
+			"FireSound"
+			{
+				"EffectName" 	"Hero_DragonKnight.BreathFire"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit" "0"
+			"Damage"
+			{
+				"Target" 	"TARGET"
+				"Type" 		"DAMAGE_TYPE_MAGICAL"
+				"Damage" 	"%AbilityDamage"
+			}
+	
+			"RunScript"
+		    {
+		        "ScriptFile"    "heroes/pandaren/breath_of_fire.lua"
+		        "Function"      "BreathFire"
+		    }
+		}
+	
+		"Modifiers"
+		{
+			"modifier_breath_fire_burn"
+			{	
+				"IsDebuff"			"1"
+				"Duration"			"%burn_duration"
+	
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn_creep.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"ThinkInterval"		"1.0"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Target"	"TARGET"
+						"Damage"	"%drunken_haze_burn_dps"
+					}
+				}
 			}
 		}
 	}
@@ -5965,9 +6052,9 @@
 
 
 	//Start of file pandaren_drunken_brawler.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Pandaren Dunken Brawler
+	// Author: Noya
+	// Date: 18.1.2015.
 	// Notes: Gives a percent chance to avoid attacks and a 10% chance to deal additional damage.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	Always	N/A	None	N/A	Personal	Self	7% dodge, 2 times normal damage	1
@@ -5979,23 +6066,13 @@
 		"AbilityTextureName"			"pandaren_drunken_brawler"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+			"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -6003,7 +6080,87 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"miss_chance"	"7 14 21"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"crit_chance"	"10"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"crit_bonus"	"200 300 400"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_drunken_brawler"
+			{
+			    "Passive"   "1"
+			    "IsHidden"  "0"
+	
+			    "EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
+			    "EffectAttachType"	"follow_origin"
+	
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_EVASION_CONSTANT" "%miss_chance"
+			    }
+	
+			    "OnAttackStart"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName" 	"modifier_drunken_brawler_crit"
+			            "Target" 		"CASTER"
+			        }
+	
+			        "Random"
+			        {
+			            "Chance" "%crit_chance"
+			            "OnSuccess"
+			            {
+			            	"FireSound"
+					        {
+					        	"EffectName"	"Hero_Brewmaster.Brawler.Crit"
+					        	"Target"		"CASTER"
+					        }
+	
+					        "FireEffect"
+					        {
+					       		"EffectName" 		"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+					            "EffectAttachType"  "attach_attack1"
+					            "Target"    		"CASTER"
+					        }
+	
+			                "ApplyModifier"
+			                {
+			                    "ModifierName" 	"modifier_drunken_brawler_crit"
+			                    "Target"    	"CASTER"    
+			                }        
+			            }
+			        }
+			    }
+			}
+	
+			"modifier_drunken_brawler_crit"
+			{
+			    "IsHidden"  "1"
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
+			    }
+	
+			    "OnAttackLanded"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_critical_strike_crit"
+			            "Target"   			"CASTER"    
+			        }
+			    }
 			}
 		}
 	}
@@ -6011,9 +6168,9 @@
 
 
 	//Start of file pandaren_drunken_haze.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Pandaren Dunken Haze
+	// Author: Noya
+	// Date: 18.1.2015.
 	// Notes: Drenches a target enemy unit in alcohol, causing its movement speed to be reduced, and have a chance to miss on attacks. When units with Drunken Haze cast on them are hit by Breath of Fire, they will ignite and take burn damage over time.
 	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	12 (5) sec.	12 sec.	70	55	20	Air, Ground, Enemy, Organic, Neutral	15% movement speed, 45% miss chance	1
@@ -6025,31 +6182,127 @@
 		"AbilityTextureName"			"pandaren_drunken_haze"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"550"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"12.0"
 	
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"70"
 		"AbilityDamage"					"75 130 200"
+	
+		"AoERadius"						"200"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze_debuff.vpcf"
+			"particle" 	"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
+			"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"			"FIELD_INTEGER"
+				"move_speed_slow"	"-15 -30 -50"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"miss_chance"		"45 65 80"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"200"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hero_duration"		"5"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"creep_duration"	"12"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+			    "Target"           "TARGET"
+			    "EffectName"       "particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze.vpcf"
+			    "Dodgeable"        "0"
+			    "ProvidesVision"   "0"
+			    "MoveSpeed"        "1300"
+			    "SourceAttachment" "attach_keg"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Brewmaster.DrunkenHaze.Cast"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Brewmaster.DrunkenHaze.Target"
+				"Target"		"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"    "modifier_drunken_haze"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%hero_duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"    "modifier_drunken_haze"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%creep_duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_drunken_haze"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%creep_duration"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
+				"StatusEffectPriority"	"5"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_slow"
+				}
 			}
 		}
 	}
