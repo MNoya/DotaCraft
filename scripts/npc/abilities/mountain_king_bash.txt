@@ -67,7 +67,7 @@
 
 						"ApplyModifier"
 						{
-							"ModifierName"	"modifier_bash"
+							"ModifierName"	"modifier_bash_stun"
 							"Target"
 							{
 								"Center"	"TARGET"
@@ -78,7 +78,7 @@
 
 						"ApplyModifier"
 						{
-							"ModifierName"	"modifier_bash"
+							"ModifierName"	"modifier_bash_stun"
 							"Target"
 							{
 								"Center"	"TARGET"
@@ -91,16 +91,16 @@
 						{
 							"Target"	"TARGET"
 							"Type"		"DAMAGE_TYPE_MAGICAL"
-							"Damage"	"%bonus_damage"
+							"Damage"	"%AbilityDamage"
 						}
 					}
 				}
 			}
 		}
 
-		"modifier_bash"
+		"modifier_bash_stun"
 		{
-			"IsDebuff"	"1"
+			"IsDebuff"			"1"
 			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
 			"EffectAttachType"	"follow_overhead"
 
