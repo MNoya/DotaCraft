@@ -2089,9 +2089,9 @@
 
 
 	//Start of file dark_ranger_life_drain.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Dark Ranger Life Drain
+	// Author: Noya
+	// Date: 18.1.2015.
 	// Notes: Absorbs the life essence of a target enemy unit by taking hit points from it every second and giving them to the Dark Ranger.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	8 sec.	8 sec.	75	50	Unit	Air, Ground, Enemy, Organic, Neutral	25 hit point drain per second	1
@@ -2103,7 +2103,7 @@
 		"AbilityTextureName"			"dark_ranger_life_drain"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -2113,21 +2113,101 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"8.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"50"
+		"AbilityChannelTime"			"8"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"hp_drain_per_second"	"25 40 55"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName" 	"modifier_life_drain"
+				"Target" 		"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Pugna.LifeDrain.Target"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName" 	"modifier_life_drain"
+				"Target" 		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_life_drain"
+			{
+				"IsDebuff"	"1"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target" 				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+	
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+						}
+					
+					}
+				}
+	
+				"ThinkInterval"		"1.0"
+				"OnIntervalThink"
+				{
+					// Health Transfer
+					"Damage"
+					{
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Target"	"TARGET"	
+						"Damage"	"%hp_drain_per_second"
+					}
+	
+					"Heal"
+					{
+						"Target" 		"CASTER"
+						"HealAmount"	"%hp_drain_per_second"
+					}
+	
+					// Looping Animation
+					"ApplyModifier"
+					{
+						"ModifierName"	"channelling_animation"
+						"Target"		"CASTER"
+					}
+				}
+			}
+	
+			"channelling_animation"
+			{
+				"IsHidden"			"0"
+				"Duration"			"0.9"
+				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 			}
 		}
 	}
