@@ -43,32 +43,32 @@
 			"var_type"				"FIELD_INTEGER"
 			"bear_hp"				"600 900 1200"
 		}
-		"02"
+		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bear_regen_tooltip"	"0.5 1 1.5"
 		}
-		"03"
+		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bear_damage"			"20 29 39"
 		}
-		"04"
+		"05"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bear_armor"			"0 1 2"
 		}	
-		"05"
+		"06"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bear_1_count"			"1 0 0"
 		}
-		"06"
+		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bear_2_count"			"0 1 0"
 		}
-		"07"
+		"08"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bear_3_count"			"0 0 1"
@@ -97,7 +97,6 @@
 				}
 			}
 
-			"SpawnRadius"		"200"
 			"UnitCount"			"%bear_1_count"
 			"Duration"			"%duration"
 
