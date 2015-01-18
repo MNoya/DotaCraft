@@ -875,9 +875,9 @@
 
 
 	//Start of file blademaster_mirror_image.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Blademaster Mirror Image
+	// Author: Noya
+	// Date: 18.01.2015.
 	// Notes: Confuses the enemy by creating illusions of the Blademaster and dispelling all magic from the Blademaster.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 1 illusion	1
@@ -889,22 +889,19 @@
 		"AbilityTextureName"			"blademaster_mirror_image"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCooldown"				"3.0"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"125 125 125"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle" 	"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf"
+			"particle"	"particles/items2_fx/manta_phase.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -912,8 +909,85 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"					"FIELD_INTEGER"
+				"images_count"				"1 2 3"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_outgoing_damage"	"-100 -100 -100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"outgoing_damage_tooltip"	"0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_incoming_damage"	"100"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_duration"			"60.0 60.0 60.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"invuln_duration"			"0.5"
+			}			
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mirror_image"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mirror_image"
+			{	
+				"Duration"			"%invuln_duration"
+				"IsHidden"			"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE" 			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"CASTER"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"DOTA_Item.Manta.Activate"
+						"Target"		"CASTER"
+					}
+			    }
+	
+			    "OnDestroy"
+			    {
+			    	"RunScript"
+				    {
+				        "ScriptFile"    "heroes/blademaster/mirror_image.lua"
+				        "Function"      "MirrorImage"
+				    }
+			    }
 			}
 		}
 	}
