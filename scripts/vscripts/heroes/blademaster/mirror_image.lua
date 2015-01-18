@@ -69,13 +69,6 @@ function MirrorImage( event )
 			end
 		end
 
-		-- Add our datadriven Metamorphosis modifier if appropiate
-		-- You can add other buffs that want to be passed to illusions this way
-		if caster:HasModifier("modifier_metamorphosis") then
-			local meta_ability = caster:FindAbilityByName("terrorblade_metamorphosis_datadriven")
-			meta_ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_metamorphosis", nil)
-		end
-
 		-- Set the unit as an illusion
 		-- modifier_illusion controls many illusion properties like +Green damage not adding to the unit damage, not being able to cast spells and the team-only blue particle
 		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = duration, outgoing_damage = outgoingDamage, incoming_damage = incomingDamage })
