@@ -95,9 +95,9 @@
 
 
 	//Start of file alchemist_chemical_rage_warcraft.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Alchemist Chemical Rage
+	// Author: Noya
+	// Date: 18.01.2015.
 	// Description: The Alchemist causes his Ogre to enter a chemically induced rage, increasing movement rate by 50% and increasing attack rate.
 	// Notes: 
 	// Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
@@ -110,31 +110,87 @@
 		"AbilityTextureName"			"alchemist_chemical_rage_warcraft"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastAnimation"			"ACT_DOTA_ALCHEMIST_CHEMICAL_RAGE_START"
 	
 		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"30.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"25"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-		}
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"15.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"transformation_time"		"0.35"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_movespeed_percent"	"50"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_attack_speed"		"25 75 125"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"	"particles/status_fx/status_effect_chemical_rage.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Alchemist.ChemicalRage.Cast"
+				"Target"		"CASTER"
+			}
+	
+			// Applying the dota modifier controls the new animations sounds and body
+			// The modifier_alchemist_chemical_rage tooltip needs to be adjusted to ignore AbilitySpecials we don't need
+			// base_attack_time bonus_health bonus_health_regen bonus_mana_regen bonus_movespeed
+			// And instead use our bonus_movespeed_percent and bonus_attack_speed
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_alchemist_chemical_rage_transform"
+				"Target"		"CASTER"
+				"Duration"		"%transformation_time"
+			}
+	
+			// Extra Modifier with what we need to add for the custom ability
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_chemical_rage_warcraft"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			
+			"modifier_chemical_rage_warcraft"
+			{
+				"IsBuff"	"1"
+				"IsHidden"	"1"
+				"Duration"	"%duration"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed_percent"
+				}
 			}
 		}
 	}
@@ -142,9 +198,9 @@
 
 
 	//Start of file alchemist_healing_spray.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Alchemist Healing Spray
+	// Author: Noya
+	// Date: 18.01.2015.
 	// Description: Sprays waves of healing mist that heals units in a target area.
 	// Notes: 
 	// Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
