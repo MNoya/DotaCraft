@@ -228,6 +228,16 @@
 					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
 					"EffectAttachType"	"follow_origin"
 				}
+				
+				"FireSound"
+				{
+					"Target"			
+					{
+						"Center"	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"EffectName"	"Hero_Beastmaster_Boar.Death"
+				}
 			}
 		}
 	}
