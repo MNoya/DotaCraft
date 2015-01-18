@@ -17,15 +17,17 @@
 
 	"AbilityCastRange"				"700"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"45.0 40.0 40"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"125"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+		"particle"	"particles/status_fx/status_effect_spirit_bear.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+		"model"		"models/heroes/lone_druid/spirit_bear.vmdl"
 	}
 
 	"AbilitySpecial"
@@ -73,15 +75,6 @@
 		}
 	}
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
-		"particle"	"particles/status_fx/status_effect_spirit_bear.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
-		"model"		"models/heroes/lone_druid/spirit_bear.vmdl"
-	}
-
 	"OnSpellStart"
 	{
 		"FireSound"
@@ -120,6 +113,12 @@
 					"Target"		"TARGET"
 					"Duration"		"0.03"
 				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_beastmaster_bear"
+					"Target"		"TARGET"
+				}
 			}
 		}
 
@@ -151,6 +150,12 @@
 					"Target"		"TARGET"
 					"Duration"		"0.03"
 				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_beastmaster_bear"
+					"Target"		"TARGET"
+				}
 			}
 		}
 
@@ -181,6 +186,47 @@
 					"ModifierName"	"modifier_phased"
 					"Target"		"TARGET"
 					"Duration"		"0.03"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_beastmaster_bear"
+					"Target"		"TARGET"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_beastmaster_bear"
+		{
+			"IsHidden"		"1"
+
+			"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
+			"StatusEffectPriority"	"1"
+
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+					"EffectAttachType"	"follow_origin"
+				}
+			}
+
+			"OnDeath"
+			{
+				"FireEffect"
+				{
+					"Target"			
+					{
+						"Center"	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+					"EffectAttachType"	"follow_origin"
 				}
 			}
 		}
