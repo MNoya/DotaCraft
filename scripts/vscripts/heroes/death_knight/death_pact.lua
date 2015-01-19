@@ -7,3 +7,9 @@ function death_pact_cast( event )
 	caster:Heal( target_health * rate, caster)
 	target:Kill(ability, caster)
 end
+
+function death_pact_precast( event )
+	if event.caster:GetHealthPercent() == 100 then
+		event.caster:Interrupt()
+	end
+end

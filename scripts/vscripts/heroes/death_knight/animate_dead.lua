@@ -12,9 +12,17 @@ function animate_dead_cast( event )
 			local resurected = CreateUnitByName(unit.unit_name, unit:GetAbsOrigin(), true, owner, owner, team_id)
 			resurected:SetControllableByPlayer(player_id, true)
 			resurected:AddNewModifier(owner, event.ability, "modifier_kill", {duration = resurrections_duration})
+			resurected.no_corpse = true
 			ability:ApplyDataDrivenModifier(owner, resurected, "animate_dead_invulnerability", nil)
 			unit:RemoveSelf()
 			number_of_resurrections = number_of_resurrections + 1
 		end
+	end
+end
+
+function animate_dead_precast( event )
+	local corpse = Entities:FindByModelWithin(nil, "models/props_structures/skeleton001.vmdl", event.caster:GetAbsOrigin(), 900) 
+	if corpse == nil then
+		event.caster:Interrupt()
 	end
 end

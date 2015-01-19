@@ -388,7 +388,7 @@ function dotacraft:OnEntityKilled( event )
   -- The Killing entity
   local killerEntity = EntIndexToHScript(event.entindex_attacker)
 
-  if killedUnit.AddAbility ~= nil and killedUnit.GetInvulnCount == nil and killedUnit:GetUnitName() ~= "dummy_unit" and killedUnit:IsIllusion() == false and killedUnit:IsRealHero() == false then
+  if killedUnit.AddAbility ~= nil and killedUnit.GetInvulnCount == nil and killedUnit:GetUnitName() ~= "dummy_unit" and killedUnit:IsIllusion() == false and killedUnit:IsRealHero() == false and killedUnit.no_corpse ~= true then
     local corpse = CreateUnitByName("dummy_unit", killedUnit:GetAbsOrigin(), true, nil, nil, killedUnit:GetTeamNumber())
     corpse:SetModel("models/props_structures/skeleton001.vmdl")
     corpse.corpse_expiration = GameRules:GetGameTime() + 10

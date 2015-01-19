@@ -3115,6 +3115,14 @@
 					"resurrections_duration"			"40"
 				}
 			}
+			"OnAbilityPhaseStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/death_knight/animate_dead.lua"
+					"Function"	"animate_dead_precast"
+				}
+			}
 			"OnSpellStart"
 			{
 				"RunScript"
@@ -3273,7 +3281,8 @@
 			"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 			"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-		
+			"AbilityUnitTargetFlags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			
 			"AbilityCastRange"				"800"
 			"AbilityCastPoint"				"0.452"
 			"AbilityCooldown"				"15"
@@ -3293,6 +3302,14 @@
 				{
 					"var_type"		"FIELD_INTEGER"
 					"conversion_rate"			"100 200 300"
+				}
+			}
+			"OnAbilityPhaseStart"
+			{	
+				"RunScript"
+				{
+					"ScriptFile"	"heroes\death_knight\death_pact.lua"
+					"Function"	"death_pact_precast"
 				}
 			}
 			"OnSpellStart"
