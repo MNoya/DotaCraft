@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Shadow Hunter Hex
+// Author: Noya, adapted from spellLibrary lion_vodoo_datadriven by Pizzalol
+// Date: 20.01.2015.
 // Notes: Transforms an enemy unit into a random critter, disabling special abilities.
 //Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	15 (4) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	1
@@ -15,28 +15,138 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastRange"				"800"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"7.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"80"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		"particle"			"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+		"model"				"models/props_gameplay/frog.vmdl"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"					"FIELD_FLOAT"
+			"hero_duration"				"4 5 6"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"creep_duration"			"15 30 45"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movespeed"					"100"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.Voodoo"
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.Hex.Target"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_hex"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
+			}
+			"Duration"		"%hero_duration"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_hex"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_BASIC"
+			}
+			"Duration"		"%creep_duration"
+		}
+		
+	}
+
+	"Modifiers"
+	{
+		"modifier_hex"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"voodoo_start"
+					"model"			"models/props_gameplay/frog.vmdl"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/shadow_hunter/hex.lua"
+					"Function"			"HideWearables"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"voodoo_end"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"ShowWearables"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"%movespeed"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MUTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_HEXED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_EVADE_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_BLOCK_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
