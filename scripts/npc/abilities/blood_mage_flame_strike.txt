@@ -31,7 +31,7 @@
 		"particle"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
 		"particle"	"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
 		"particle" 	"particles/custom/phoenix_fire_spirit_ground.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 	}
 	
 	"AbilitySpecial"
@@ -70,7 +70,7 @@
 			"ModifierName"	"modifier_flame_strike_thinker1"
 			"Target"		"POINT"
 		}
-
+		
 		"DestroyTrees"
 		{
 			"Target"		"POINT"
@@ -103,6 +103,12 @@
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 					}
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Ability.LightStrikeArray"
+					"Target" 		"TARGET"
 				}
 
     			"AttachEffect"

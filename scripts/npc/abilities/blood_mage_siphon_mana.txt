@@ -1,7 +1,8 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
-// Notes: Transfers mana between the Blood Mage and a target. Drains mana from an enemy, or transfers mana to an ally. Siphon Mana can push the Blood Mage's mana over its maximum value, //though excess mana drains off rapidly if not used.
+// Blood Mage Siphon Mana
+// Author: Noya, adapted from SpellLibrary lion_mana_drain_datadriven
+// Date: 20.01.2015.
+// Notes: Transfers mana between the Blood Mage and a target. Drains mana from an enemy, or transfers mana to an ally. 
+//Siphon Mana can push the Blood Mage's mana over its maximum value, though excess mana drains off rapidly if not used.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	6 sec.	6 sec.	10	60-80	Unit	Air, Ground, Enemy, Organic, Neutral	15 mana drained/sec.	1
 //2	6 sec.	6 sec.	10	60-80	Unit	Air, Ground, Enemy, Organic, Neutral	30 mana drained/sec.	3
@@ -12,31 +13,107 @@
 	"AbilityTextureName"			"blood_mage_siphon_mana"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastRange"				"600"
+	"AbilityCastPoint"				"0.1"
+	"AbilityCooldown"				"6.0"
+	"AbilityChannelTime"			"6"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"10"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"6.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"mana_per_second"			"15 30 45"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"break_distance"			"800"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"tick_interval"				"0.25"
 		}
 	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/blood_mage/siphon_mana.lua"
+			"Function"		"SiphonManaStart"
+		}		
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.ManaDrain"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_siphon_mana"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}			
+	}
+
+	"OnChannelFinish"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/blood_mage/siphon_mana.lua"
+			"Function"			"SiphonManaEnd"
+			"sound"				"Hero_Lion.ManaDrain"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"		"modifier_siphon_mana"
+			"Target"			"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_siphon_mana"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"1"
+	
+			"ThinkInterval"	"%tick_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/blood_mage/siphon_mana.lua"
+					"Function"		"SiphonMana"
+				}
+			}
+		}
+	}	
 }
