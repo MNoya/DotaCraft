@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Lich Frost Armor
+// Author: Noya
+// Date: 20.01.2015.
 // Notes: Creates a shield of frost around a target friendly unit. The shield adds armor and slows melee units that attack it.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 3 armor, 5 seconds of cold	1
@@ -12,31 +12,161 @@
 	"AbilityTextureName"			"lich_frost_armor_warcraft"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastRange"				"800"
+	"AbilityCastPoint"				"0.4"
+	"AbilityCooldown"				"2.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
-
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
+	"AbilityManaCost"				"40"
+	"AbilityDuration"				"45"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"armor_bonus"			"3 5 7"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"slow_duration"			"5.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_movement_speed"	"-50"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_attack_speed"		"-25"
+		}
+
+		// Extra values to control the Autocast AI
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"autocast_radius"		"900"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+		"particle"	"particles/status_fx/status_effect_frost_armor.vpcf"
+		"particle"	"particles/status_fx/status_effect_frost.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lich.FrostArmor"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_frost_armor"
+			"Target"		"TARGET"
+			"Duration"		"%AbilityDuration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_frost_armor"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
+			}
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "heroes/lich/frost_armor.lua"
+			        "Function"      "FrostArmorParticle"	
+			    }
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "heroes/lich/frost_armor.lua"
+			        "Function"      "EndFrostArmorParticle"	
+			    }
+			}
+
+			"StatusEffectName"		"particles/status_fx/status_effect_frost_armor.vpcf"
+			"StatusEffectPriority"	"10"
+
+			//Frost Armor only slows units that attack the unit with a Melee attack.
+			"OnAttacked"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_frost_armor_slow"
+					"Target"
+					{
+						"Center"	"ATTACKER"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+					}
+					"Duration"		"%slow_duration"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Lich.FrostArmorDamage"
+					"Target"		"TARGET"
+				}
+			}
+		}
+
+		"modifier_frost_armor_slow"
+		{
+			"IsDebuff"	"1"
+
+			"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
+			"StatusEffectPriority"	"10"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
+			}
+		}
+
+		"modifier_frost_armor_autocast_aura"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"Aura" 				"modifier_frost_armor_autocast_attacked"
+			"Aura_Radius" 		"%autocast_radius"
+			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 		"DOTA_UNIT_TARGET_HERO"
+		}
+
+		"modifier_frost_armor_autocast_attacked"
+		{
+			"IsHidden"	"1"
+			"OnAttacked"
+			{
+				"RunScript"
+			    {
+			        "ScriptFile"    "heroes/lich/frost_armor.lua"
+			        "Function"      "FrostArmorAutocast"
+			    }
+			}
 		}
 	}
 }
