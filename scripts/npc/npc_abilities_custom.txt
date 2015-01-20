@@ -5191,14 +5191,14 @@
 
 
 	//Start of file lich_dark_ritual_warcraft.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
-	// Notes: Blasts enemy units around a target enemy unit with a wave of damaging frost that slows movement and attack rate.
-	//Level	Duration (Heroes)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	4 (2) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 50 nova damage	1
-	//2	6 (3) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 100 nova damage	3
-	//3	8 (4) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 150 nova damage	5
+	// Lich Dark Ritual, Warcraft version
+	// Author: Noya
+	// Date: 20.01.2015.
+	// Notes: Sacrifices a target friendly unit to convert its hit points into mana for the Lich.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//1	N/A	15 sec.	25	80	Unit	Air, Ground, Player, Non Hero	33% HP to mana	1
+	//2	N/A	15 sec.	25	80	Unit	Air, Ground, Player, Non Hero	66% HP to mana	3
+	//3	N/A	15 sec.	25	80	Unit	Air, Ground, Player, Non Hero	100% HP to mana	5
 	"lich_dark_ritual_warcraft"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -5206,31 +5206,56 @@
 		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCooldown"				"15.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"25"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"health_conversion"		"33 66 100"
 			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Ability.DarkRitual"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+				"EffectAttachType" 	"follow_origin"
+				"Target" 			"TARGET"
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_hitloc"
+					"CASTER"	"attach_hitloc"
+				}
+			}
+	
+			"RunScript"
+		    {
+		        "ScriptFile"    "heroes/lich/dark_ritual.lua"
+		        "Function"      "DarkRitual"
+		    }
 		}
 	}
 	//End of file lich_dark_ritual_warcraft.txt
