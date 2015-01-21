@@ -123,7 +123,9 @@
 		"modifier_drunken_haze"
 		{
 			"IsDebuff"	"1"
-			"Duration"	"%creep_duration"
+
+			"EffectName"			"particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze_debuff.vpcf"
+			"EffectAttachType"		"follow_origin"
 
 			"StatusEffectName"		"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
 			"StatusEffectPriority"	"5"

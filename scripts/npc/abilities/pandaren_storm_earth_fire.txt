@@ -1,7 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
-// Notes: 
+// Pandaren Storm, Earth, And Fire
+// Author: Noya
+// Date: 21.1.2015.
 "pandaren_storm_earth_fire"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -9,31 +8,173 @@
 	"MaxLevel"						"1"
 	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastPoint"				"0.65"
+	"AbilityCooldown"				"180.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
-
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
+	"AbilityManaCost"				"150"
 	
 	"AbilitySpecial"
 	{
+		
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"60.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"split_duration"			"0.65"
+		}
+	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_earth_ambient.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_ambient.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_ambient.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_death.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_earth_death.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_death.vpcf"
+		"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+		"model"		"models/heroes/brewmaster/brewmaster_earthspirit.vmdl"
+		"model"		"models/heroes/brewmaster/brewmaster_firespirit.vmdl"
+		"model"		"models/heroes/brewmaster/brewmaster_windspirit.vmdl"
+
+		// Sub ability particles
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_pulverize.vpcf"
+
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_windwalk.vpcf"
+
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_immolation_child.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_primal_split_delay"
+			"Target" 		"CASTER"
+			"Duration"		"%split_duration"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Brewmaster.PrimalSplit.Cast"
+			"Target" 		"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_primal_split_delay"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_primal_split.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnDestroy"			
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Brewmaster.PrimalSplit.Spawn"
+					"Target" 		"CASTER"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_primal_split_duration"
+					"Target" 		"CASTER"
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"modifier_primal_split_duration"
+		{
+			"IsHidden"			"0"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/pandaren/storm_earth_fire.lua"
+					"Function"			"PrimalSplit"
+					"unit_name_earth"	"npc_earth_panda"
+					"unit_name_storm"	"npc_storm_panda"
+					"unit_name_fire"	"npc_fire_panda"
+				}			
+			}
+
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
+					"Function"		"PrimalSplitAuraMove"
+				}				
+			}			
+
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Brewmaster.PrimalSplit.Return"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_brewmaster/storm_earth_fire.lua"
+					"Function"		"PrimalSplitEnd"
+				}			
+			}	
+		}
+
+		"modifier_split_unit"
+		{
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
+					"Function"		"SplitUnitDied"
+				}				
+			}			
 		}
 	}
 }
