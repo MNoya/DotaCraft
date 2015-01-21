@@ -1,49 +1,84 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Death Knight Death Pact
+// Author: Noya
+// Date: 21.1.2015.
 // Notes: Kills a target friendly unit, giving a percentage of its hit points to the Death Knight.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	N/A	15 sec.	50	80	Unit	Air, Ground, Player, Non Hero	100% conversion	1
 //2	N/A	15 sec.	50	80	Unit	Air, Ground, Player, Non Hero	200% conversion	3
 //3	N/A	15 sec.	50	80	Unit	Air, Ground, Player, Non Hero	300% conversion	5
 "death_knight_death_pact"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"death_knight_death_pact"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastRange"				"800"
+	"AbilityCastPoint"				"0.452"
+	"AbilityCooldown"				"15"
+
+	"AbilityManaCost"				"50"
+	
+
+	"precache"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"death_knight_death_pact"
-		"MaxLevel" 						"3"
+		"particle" 	"particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+	}
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-	
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.452"
-		"AbilityCooldown"				"15"
-	
-		"AbilityManaCost"				"50"
-		
-	
-		"precache"
+	"AbilitySpecial"
+	{
+		"01"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"conversion_rate"			"100 200 300"
-			}
-		}
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes\death_knight\death_pact.lua"
-				"Function"	"death_pact_cast"
-			}
+			"var_type"			"FIELD_INTEGER"
+			"conversion_rate"	"100 200 300"
 		}
 	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/death_knight/death_pact.lua"
+			"Function"		"DeathPactPrecast"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Clinkz.DeathPact.Cast"
+			"Target" 		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_origin"
+				"CASTER"	"attach_origin"
+			}
+		}
+			
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/death_knight/death_pact.lua"
+			"Function"		"DeathPact"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Clinkz.DeathPact"
+			"Target" 		"TARGET"
+		}
+		
+	}
+}

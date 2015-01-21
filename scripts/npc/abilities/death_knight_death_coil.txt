@@ -19,8 +19,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 		"AbilityCastPoint"				"0.452"
-		
-	
+		  	
 		"precache"
 		{
 			"particle" 	"particles/custom/vengeful_magic_missle.vpcf"
@@ -54,8 +53,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"heroes\death_knight\death_coil.lua"
-				"Function"	"death_coil_precast"
+				"ScriptFile"	"heroes/death_knight/death_coil.lua"
+				"Function"		"DeathCoilPrecast"
 			}
 		}
 	
@@ -63,11 +62,11 @@
 		{
 			"TrackingProjectile"
 			{
-				"Target"	"TARGET"
+				"Target"			"TARGET"
 				"EffectName"		"particles/custom/vengeful_magic_missle.vpcf"
-				"Dodgeable"	"1"
+				"Dodgeable"			"1"
 				"ProvidesVision"	"0"
-				"MoveSpeed"	"%projectile_speed"
+				"MoveSpeed"			"%projectile_speed"
 				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
 			}
 
@@ -77,12 +76,13 @@
 				"EffectName"	"Hero_Abaddon.DeathCoil.Cast"
 			}
 		}
+
 		"OnProjectileHitUnit"
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"heroes\death_knight\death_coil.lua"
-				"Function"	"death_coil_hit"
+				"ScriptFile"	"heroes/death_knight/death_coil.lua"
+				"Function"		"DeathCoil"
 			}
 
 			"FireSound"

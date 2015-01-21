@@ -1,28 +1,51 @@
-function animate_dead_cast( event )
-	local owner = event.caster
+--[[
+	Author: Noya
+	Date: 21.01.2015.
+	Resurrects units near the caster, using the corpse mechanic.
+]]
+function AnimateDead( event )
+	local caster = event.caster
 	local ability = event.ability
-	local player_id = event.caster:GetPlayerID()
-	local team_id = event.caster:GetTeamNumber()
-	local number_of_resurrections = 0
-	local group = Entities:FindAllByNameWithin("npc_dota_creature", event.caster:GetAbsOrigin(), ability:GetCastRange())
-	local resurrections_duration = event.ability:GetLevelSpecialValueFor( "resurrections_duration", (ability:GetLevel() - 1))
-	local resurrections_limit = event.ability:GetLevelSpecialValueFor( "resurrections_limit", (ability:GetLevel() - 1))
-	for number, unit in pairs(group) do
-		if number_of_resurrections < resurrections_limit and unit.corpse_expiration ~= nil then
-			local resurected = CreateUnitByName(unit.unit_name, unit:GetAbsOrigin(), true, owner, owner, team_id)
-			resurected:SetControllableByPlayer(player_id, true)
-			resurected:AddNewModifier(owner, event.ability, "modifier_kill", {duration = resurrections_duration})
+	local player = event.caster:GetPlayerID()
+	local team = event.caster:GetTeamNumber()
+	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
+	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
+	local max_units_resurrected = ability:GetLevelSpecialValueFor( "max_units_resurrected", ability:GetLevel() - 1 )
+
+	-- Find all corpse entities in the radius and start the counter of units resurrected.
+	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), radius)
+	local units_resurrected = 0
+
+	-- Go through the units
+	for _, unit in pairs(targets) do
+		print(unit:GetEntityIndex())
+		print(unit.corpse_expiration)
+		print(unit:GetUnitName())
+		if units_resurrected < max_units_resurrected and unit.corpse_expiration ~= nil then
+
+			-- The corpse has a unit_name associated.
+			local resurected = CreateUnitByName(unit.unit_name, unit:GetAbsOrigin(), true, caster, caster, team)
+			resurected:SetControllableByPlayer(player, true)
+
+			-- Apply modifiers for the summon properties
+			resurected:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+			ability:ApplyDataDrivenModifier(caster, resurected, "modifier_animate_dead", nil)
+
+			-- Leave no corpses
 			resurected.no_corpse = true
-			ability:ApplyDataDrivenModifier(owner, resurected, "animate_dead_invulnerability", nil)
 			unit:RemoveSelf()
-			number_of_resurrections = number_of_resurrections + 1
+
+			-- Increase the counter of units resurrected
+			units_resurrected = units_resurrected + 1
 		end
 	end
 end
 
-function animate_dead_precast( event )
+-- Denies casting if no corpses near, with a message
+function AnimateDeadPrecast( event )
 	local corpse = Entities:FindByModelWithin(nil, "models/props_structures/skeleton001.vmdl", event.caster:GetAbsOrigin(), 900) 
 	if corpse == nil then
 		event.caster:Interrupt()
+		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "No Usable Corpses Near" } )
 	end
 end
