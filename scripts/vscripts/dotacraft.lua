@@ -1,5 +1,12 @@
 print ('[DOTACRAFT] dotacraft.lua' )
 
+----------------
+
+CORPSE_MODEL = "models/creeps/dead_creeps/dire_creep_melee_dead_03.vmdl"
+CORPSE_DURATION = 10
+
+----------------
+
 ENABLE_HERO_RESPAWN = true              -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret Shop items as well as regular items
 ALLOW_SAME_HERO_SELECTION = true        -- Should we let people select the same hero as each other
@@ -389,12 +396,50 @@ function dotacraft:OnEntityKilled( event )
 	-- The Killing entity
 	local killerEntity = EntIndexToHScript(event.entindex_attacker)
 
-	if killedUnit.AddAbility ~= nil and killedUnit.GetInvulnCount == nil and not string.find(killedUnit:GetUnitName(), "dummy") and killedUnit:IsIllusion() == false and killedUnit:IsRealHero() == false and killedUnit.no_corpse ~= true then
+	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
+	if LeavesCorpse( killedUnit ) then
+		-- Create and set model
 		local corpse = CreateUnitByName("dummy_unit", killedUnit:GetAbsOrigin(), true, nil, nil, killedUnit:GetTeamNumber())
-		corpse:SetModel("models/props_structures/skeleton001.vmdl")
-		corpse.corpse_expiration = GameRules:GetGameTime() + 10
-		corpse.unit_name = killedUnit:GetUnitName() 
-		corpse:SetContextThink("corpse_think", function() if GameRules:GetGameTime() > corpse.corpse_expiration then  corpse:RemoveSelf() return nil else return 3 end end, 11)
+		corpse:SetModel(CORPSE_MODEL)
+
+		-- Keep a reference to its name and expire time
+		corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
+		corpse.unit_name = killedUnit:GetUnitName()
+
+		-- Remove itself after the corpse duration
+		Timers:CreateTimer(CORPSE_DURATION, function()
+			corpse:RemoveSelf()
+		end)
+	end
+
+end
+
+-- Custom Corpse Mechanic
+function LeavesCorpse( unit )
+	
+	-- Heroes don't leave corpses (includes illusions)
+	if unit:IsHero() then
+		return false
+
+	-- Ignore buildings	
+	elseif unit.GetInvulnCount ~= nil then
+		return false
+
+	-- Ignore units that start with dummy keyword	
+	elseif string.find(unit:GetUnitName(), "dummy") then
+		return false
+
+	-- Ignore units that were specifically set to leave no corpse
+	elseif unit.no_corpse then
+		return false
+
+	-- ?
+	--elseif unit.AddAbility == nil then
+	--	return false
+
+	-- Leave corpse
+	else
+		return true
 	end
 end
 
