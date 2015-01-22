@@ -6,7 +6,6 @@ function TargetTest( event )
 	local target = event.target
 	local unit = event.unit
 	local attacker = event.attacker
-	local projectile = event.projectile
 	local ability = event.ability
 
 	local target_points = event.target_points
@@ -18,7 +17,6 @@ function TargetTest( event )
 	if target then print("TARGET: "..target:GetUnitName()) end
 	if unit then print("UNIT: "..unit:GetUnitName()) end
 	if attacker then print("ATTACKER: "..attacker:GetUnitName()) end
-	if projectile then print("PROJECTILE: "..projectile) end
 	if Damage then print("DAMAGE: "..Damage) end
 
 	if target_points then
@@ -37,5 +35,3 @@ function TargetTest( event )
 	--DeepPrintTable(event)
 	print("~~~")
 end
-
--- Others include event.ability (the ability handle), .Function ("TargetTest"), .ScriptFile ("test.lua"), .caster_entindex, 
