@@ -26,7 +26,7 @@ function Precache( context )
 		-- PrecacheModel should generally used over PrecacheResource for individual models
 		PrecacheResource("model_folder", "particles/heroes/antimage", context)
 		PrecacheResource("model", "particles/heroes/viper/viper.vmdl", context)
-		PrecacheModel(("models/props_structures/skeleton001.vmdl"), context)
+		PrecacheModel("models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl", context)
 
 		-- Sounds can precached here like anything else
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)

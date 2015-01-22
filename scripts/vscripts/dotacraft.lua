@@ -2,7 +2,7 @@ print ('[DOTACRAFT] dotacraft.lua' )
 
 ----------------
 
-CORPSE_MODEL = "models/creeps/dead_creeps/dire_creep_melee_dead_03.vmdl"
+CORPSE_MODEL = "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl"
 CORPSE_DURATION = 10
 
 ----------------
@@ -389,7 +389,7 @@ function dotacraft:OnTeamKillCredit(keys)
 
 -- An entity died
 function dotacraft:OnEntityKilled( event )
-	print( '[DOTACRAFT] OnEntityKilled Called' )
+	--print( '[DOTACRAFT] OnEntityKilled Called' )
 
 	-- The Unit that was Killed
 	local killedUnit = EntIndexToHScript(event.entindex_killed)
@@ -402,9 +402,15 @@ function dotacraft:OnEntityKilled( event )
 		local corpse = CreateUnitByName("dummy_unit", killedUnit:GetAbsOrigin(), true, nil, nil, killedUnit:GetTeamNumber())
 		corpse:SetModel(CORPSE_MODEL)
 
+		-- Set the corpse invisible until the dota corpse disappears
+		corpse:AddNoDraw()
+		
 		-- Keep a reference to its name and expire time
 		corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
 		corpse.unit_name = killedUnit:GetUnitName()
+
+		-- Set custom corpse visible
+		Timers:CreateTimer(5, function() corpse:RemoveNoDraw() end)
 
 		-- Remove itself after the corpse duration
 		Timers:CreateTimer(CORPSE_DURATION, function()
@@ -427,7 +433,7 @@ function LeavesCorpse( unit )
 
 	-- Ignore units that start with dummy keyword	
 	elseif string.find(unit:GetUnitName(), "dummy") then
-		return false
+	--	return false
 
 	-- Ignore units that were specifically set to leave no corpse
 	elseif unit.no_corpse then
@@ -439,6 +445,7 @@ function LeavesCorpse( unit )
 
 	-- Leave corpse
 	else
+		print("Leave corpse")
 		return true
 	end
 end
