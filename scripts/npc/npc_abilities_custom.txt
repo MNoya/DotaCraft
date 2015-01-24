@@ -2070,13 +2070,9 @@
 				{
 					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-				
-				
+				}			
 			}
-		}
-		
-		
+		}	
 	}
 	//End of file blood_mage_banish.txt
 
@@ -4671,9 +4667,9 @@
 
 
 	//Start of file far_seer_far_sight.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Far Seer Far Sight
+	// Author: Noya
+	// Date: 24.1.2015.
 	// Notes: Reveals the area of the map that is cast upon. Also reveals invisible units.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	8 sec.	N/A	75	Unlimited	60	N/A	Reveals Map	1
@@ -4685,22 +4681,17 @@
 		"AbilityTextureName"			"far_seer_far_sight"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"0.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"75 60 50"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle" 	"particles/items_fx/dust_of_appearance.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -4709,9 +4700,25 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"reveal_radius"	"600 1800 4000"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"8"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/far_seer/far_sight.lua"
+				"Function"		"FarSight"
+				"Target"		"POINT"
+			}	
+		}
+		
 	}
 	//End of file far_seer_far_sight.txt
 

@@ -27,6 +27,31 @@
 		"Ability1"					"dummy_passive_vulnerable"
 	}
 
+	"dummy_600vision"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"VisionDaytimeRange"		"600"	
+		"VisionNighttimeRange"		"600"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"AbilityLayout"				"4"
+		"Ability1"					"dummy_passive"
+	}
+
+	"dummy_1800vision"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"VisionDaytimeRange"		"1800"	
+		"VisionNighttimeRange"		"1800"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"AbilityLayout"				"4"
+		"Ability1"					"dummy_passive"
+	}
+
 	"npc_dummy_blank"
 	{
 		// General
