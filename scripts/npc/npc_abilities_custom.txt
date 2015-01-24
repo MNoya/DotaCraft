@@ -6788,9 +6788,9 @@
 
 
 	//Start of file naga_sea_witch_mana_shield.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Naga Sea Witch Mana Shield
+	// Author: Noya
+	// Date: 24.1.2015.
 	// Notes: Creates a shield that absorbs damage by using the Sea Witch's mana. Blocks 100% of incoming damage.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	10 sec.	25	N/A	Personal	Self	1 damage per point of mana	1
@@ -6802,33 +6802,98 @@
 		"AbilityTextureName"			"naga_sea_witch_mana_shield"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityManaCost"				"25"
+		"AbilityCooldown"				"10"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
-	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-		}
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_mana"		"1 1.5 2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"absorption_percent"	"100"
 			}
 		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+			"particle"	"particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
+		}
+	
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_shield"
+				"Target" 		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.On"
+				"Target" 		"CASTER"
+			}		
+		}
+	
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_shield"
+				"Target" 		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.Off"
+				"Target" 		"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_mana_shield"
+			{
+				"IsHidden"			"0"
+		
+				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/naga_sea_witch/mana_shield.lua"
+						"Function"		"ManaShield"
+						"Damage"		"%attack_damage"
+					}		
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Medusa.ManaShield.Proc"
+						"Target" 		"CASTER"
+					}									
+				}
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/naga_sea_witch/mana_shield.lua"
+						"Function"		"ManaShieldHealth"
+					}
+				}					
+			}
+		}	
 	}
 	//End of file naga_sea_witch_mana_shield.txt
 
