@@ -4766,27 +4766,27 @@
 				"var_type"					"FIELD_INTEGER"
 				"wolf_damage"				"11 16 21"
 			}
-			"04"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wolf_hp"					"200 300 500"
 			}
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wolf_1_count"				"2 0 0"
 			}
-			"06"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wolf_2_count"				"0 2 0"
 			}
-			"07"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wolf_3_count"				"0 0 2"
 			}
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"spawn_distance"			"150"
@@ -8451,9 +8451,9 @@
 
 
 	//Start of file potm_scout.txt
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Priestess of the Moon Scout
+	// Author: Noya
+	// Date: 24.1.2015.
 	// Notes: Temporarily summons an Owl Scout, which can be used to scout the map. Can see invisible units.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	60 sec.	20 sec.	100	N/A	N/A	N/A	Summons an Owl	1
@@ -8465,31 +8465,216 @@
 		"AbilityTextureName"			"potm_scout"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	
-		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"20.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"100 75 50"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_mirana/mirana_starfall_moonray.vpcf"
+			"particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"model"		"models/items/courier/snowl/snowl_flying.vmdl"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"					"FIELD_INTEGER"
+				"owl_duration"				"60 90 120"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"owl_hp"					"40"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"owl_vision"				"1000 1400 1800" //1000 1500 2200 originally
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"owl_movespeed"				"270 350 450"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"owl_1_count"				"1 0 0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"owl_2_count"				"0 1 0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"owl_3_count"				"0 0 1"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spawn_distance"			"150"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Mirana.Leap.Owlcat"
+				"Target"		"CASTER"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_potm_owl_1"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/potm/scout.lua"
+	        			"Function"      "SummonLocation"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"Duration"		"%owl_duration"
+				"UnitCount"		"%owl_1_count"
+				"UnitLimit"		"0"
+				"GrantsGold"	"0"
+				"GrantsXP"		"0"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/potm/scout.lua"
+						"Function"		"SetUnitsMoveForward"
+					}				
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+			
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_owl_scout"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_potm_owl_2"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/potm/scout.lua"
+	        			"Function"      "SummonLocation"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"Duration"		"%owl_duration"
+				"UnitCount"		"%owl_2_count"
+				"UnitLimit"		"0"
+				"GrantsGold"	"0"
+				"GrantsXP"		"0"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/potm/scout.lua"
+						"Function"		"SetUnitsMoveForward"
+					}				
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+			
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_owl_scout"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_potm_owl_3"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/potm/scout.lua"
+	        			"Function"      "SummonLocation"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"Duration"		"%owl_duration"
+				"UnitCount"		"%owl_3_count"
+				"UnitLimit"		"0"
+				"GrantsGold"	"0"
+				"GrantsXP"		"0"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/potm/scout.lua"
+						"Function"		"SetUnitsMoveForward"
+					}				
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+			
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_owl_scout"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_owl_scout"
+			{
+				"IsHidden"			"1"
+			
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+				"EffectAttachType"  "follow_overhead"		
 			}
 		}
 	}
