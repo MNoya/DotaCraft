@@ -40,7 +40,8 @@ end
 
 -- Denies casting if no corpses near, with a message
 function AnimateDeadPrecast( event )
-	local corpse = Entities:FindByModelWithin(nil, CORPSE_MODEL, event.caster:GetAbsOrigin(), 900) 
+	local ability = event.ability
+	local corpse = Entities:FindByModelWithin(nil, CORPSE_MODEL, event.caster:GetAbsOrigin(), ability:GetCastRange()) 
 	if corpse == nil then
 		event.caster:Interrupt()
 		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "No Usable Corpses Near" } )

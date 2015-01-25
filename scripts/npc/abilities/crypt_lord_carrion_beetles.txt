@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Crypt Lord Carrion Beetles
+// Author: Noya
+// Date: 25.01.2015.
 // Notes: The Crypt Lord progenerates 1 Carrion Beetle from a target corpse to attack the Crypt Lord's enemies. Beetles are permanent but only 5 can be controlled at a time.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	N/A	6 sec.	30	90	Unit	Dead	140 hit points, 8-9 damage	1
@@ -12,31 +12,94 @@
 	"AbilityTextureName"			"crypt_lord_carrion_beetles"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
+	"AbilityCastRange"				"900"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"6.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"30"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle" 	"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
+		"model"		"models/heroes/weaver/weaver_bug.vmdl"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"					"FIELD_INTEGER"
+			"beetle_limit"				"5"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"beetle_damage"				"8 16 24"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"beetle_hp"					"140 275 410"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
+			"Function"		"CarrionBeetlesPrecast"
+		}	
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
+			"Function"		"CarrionBeetleSpawn"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Weaver.SwarmCast"
+			"Target" 		"CASTER"
+		}
+		
+	}
+
+	"Modifiers"
+	{
+		"modifier_carrion_beetle"
+		{	
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"TARGET"	"attach_origin"
+					}
+				}
+				
+			}
+			
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
+					"Function"		"RemoveDeadBeetle"
+				}
+			}		
 		}
 	}
 }

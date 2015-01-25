@@ -3,7 +3,7 @@ print ('[DOTACRAFT] dotacraft.lua' )
 ----------------
 
 CORPSE_MODEL = "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl"
-CORPSE_DURATION = 10
+CORPSE_DURATION = 88
 
 ----------------
 
@@ -410,11 +410,14 @@ function dotacraft:OnEntityKilled( event )
 		corpse.unit_name = killedUnit:GetUnitName()
 
 		-- Set custom corpse visible
-		Timers:CreateTimer(5, function() corpse:RemoveNoDraw() end)
+		Timers:CreateTimer(4, function() corpse:RemoveNoDraw() end)
 
 		-- Remove itself after the corpse duration
 		Timers:CreateTimer(CORPSE_DURATION, function()
-			corpse:RemoveSelf()
+			if corpse and IsValidEntity(corpse) then
+				print("removing corpse")
+				corpse:RemoveSelf()
+			end
 		end)
 	end
 
