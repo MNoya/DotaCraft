@@ -2536,7 +2536,7 @@
 		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
 		"Model"						"models/heroes/doom/doom.vmdl"	// Model.	
 		"ModelScale"				"1.2"
-		"Level"						"6"
+		"Level"						"8"
 		"Portrait"					"vgui/hud/heroportraits/portrait_doom_bringer"
 		"SoundSet"					"Hero_DoomBringer"			
 		"IdleSoundLoop"				"Hero_DoomBringer.IdleLoop"
@@ -2565,12 +2565,12 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"34"		// Damage range min.
-		"AttackDamageMax"			"42"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"1.35"			// Speed of attack.
+		"AttackDamageMin"			"41"		// Damage range min.
+		"AttackDamageMax"			"48"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"	//CHAOS
+		"AttackRate"				"1.8"			// Speed of attack.
 		"AttackAnimationPoint"		"0.467"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"1000"		// Range within a target can be acquired.
+		"AttackAcquisitionRange"	"600"		// Range within a target can be acquired.
 		"AttackRange"				"128"		// Range within a target can be attacked.
 		"ProjectileModel"			""			// Particle system model for projectile.
 		"ProjectileSpeed"			""			// Speed of projectile.
@@ -2583,10 +2583,10 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"500"		// Base health.
+		"StatusHealth"				"1600"		// Base health.
 		"StatusHealthRegen"			"0.2"		// Health regeneration rate.
 		"StatusMana"				"500"			// Base mana.
-		"StatusManaRegen"			"0.6"			// Mana regeneration rate.
+		"StatusManaRegen"			"1.25"			// Mana regeneration rate.
 
 		// Team
 		//----------------------------------------------------------------
@@ -2598,12 +2598,12 @@
 		// Vision
 		//-------------------------------------------------------------------------------------------------------------
 		"VisionDaytimeRange"		"1400"									// Range of vision during day light.
-		"VisionNighttimeRange"		"1400"									// Range of vision at night time.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 		
 		// Movement
 		//-------------------------------------------------------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementSpeed"				"300"									// Speed.
+		"MovementSpeed"				"270"									// Speed.
 		"MovementTurnRate"			"0.4"									// Turning rate.
 		
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
