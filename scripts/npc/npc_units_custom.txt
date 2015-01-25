@@ -2626,7 +2626,430 @@
 			}
 		}
 	}
-  
+
+	//------------------------------------------------------------------------------------
+	//- Units for crypt_lord_carrion_beetles ability 								 	-
+	//------------------------------------------------------------------------------------
+
+	// TODO - Add Abilities
+	// Burrow
+
+	"npc_carrion_beetle_1"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/heroes/weaver/weaver_bug.vmdl"	 //Needs model data
+		"ModelScale"		"1"
+		"Level"				"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"2"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"		"8.0"
+		"AttackDamageMax"		"9.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1.5"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"			"90"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"26.0"
+		"BountyGoldMax"			"38.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"270"
+		"MovementTurnRate"		"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"140"
+		"StatusHealthRegen"		"2"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"80"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"			"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
+	"npc_carrion_beetle_2"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/heroes/weaver/weaver_bug.vmdl"	 //Needs model data
+		"ModelScale"		"1"
+		"Level"				"2"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			""	 //Reference: Abu2
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"2"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"		"15.0"
+		"AttackDamageMax"		"18.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1.5"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"			"90"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"26.0"
+		"BountyGoldMax"			"38.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"270"
+		"MovementTurnRate"		"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"275"
+		"StatusHealthRegen"		"2"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"			"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
+	"npc_carrion_beetle_3"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/heroes/weaver/weaver_bug.vmdl"	 //Needs model data
+		"ModelScale"		"1"
+		"Level"				"3"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			""	 //Reference: Abu3
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"2"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"		"22.0"
+		"AttackDamageMax"		"27.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1.5"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"			"90"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"26.0"
+		"BountyGoldMax"			"38.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"270"
+		"MovementTurnRate"		"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"410"
+		"StatusHealthRegen"		"2"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"			"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
+
+	//------------------------------------------------------------------------------------
+	//- Units for keeper_force_of_nature ability 								 	-
+	//------------------------------------------------------------------------------------
+
+	"npc_treant"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/items/furion/treant_flower_1.vmdl"	 //Needs model data
+		"ModelScale"		"1"
+		"Level"				"2"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			""	 //Reference: Ault
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"0"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"		"15.0"
+		"AttackDamageMax"		"17.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1.75"
+		"AttackAnimationPoint"		"0.467"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"			"100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"2.0"
+		"BountyGoldMax"			"4.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"220"
+		"MovementTurnRate"		"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"300"
+		"StatusHealthRegen"		"0.5"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"			"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
+	//------------------------------------------------------------------------------------
+	//- Units for blood_mage_phoenix ability 								 	-
+	//------------------------------------------------------------------------------------
+
+	// TODO - Add Abilities
+	// Reborn
+
+  	"npc_phoenix"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/heroes/phoenix/phoenix_bird.vmdl"	 //Needs model data
+		"ModelScale"		"1"
+		"Level"				"6"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			""	 //Reference: Aphx
+		"Ability2"			"neutral_spell_immunity"	 //Reference: ACmi
+		"Ability3"			""	 //Reference: ACrk
+		"Ability4"			""	 //Reference: Apxf
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"1"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"		"61.0"
+		"AttackDamageMax"		"75.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1.4"
+		"AttackAnimationPoint"		"0.43"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"			"600"
+		"ProjectileModel"		""	 //Add projectile models
+		"ProjectileSpeed"		"1800"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"32.0"
+		"BountyGoldMax"			"46.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"			"320"
+		"MovementTurnRate"		"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"1250"
+		"StatusHealthRegen"		"-25"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1600"
+		"VisionNighttimeRange"		"900"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"			"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"MAGIC_MAN"
+		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
+	"npc_phoenix_egg"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_base_additive"
+		"Model"				"models/heroes/phoenix/phoenix_egg.vmdl"	 //Needs model data
+		"ModelScale"		"1"
+		"SoundSet"			"Phoenix_Sun"
+		"Level"				"6"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			""	 //Reference: Aphx
+		"Ability2"			"neutral_spell_immunity"	 //Reference: ACrk
+		"Ability3"			""	 //Reference: ACmi
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"0"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.	
+		"AttackRate"				"1.0"		// Speed of attack.
+		"AttackAnimationPoint"		"0.0"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.		
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"32.0"
+		"BountyGoldMax"			"46.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"			"0"
+		"MovementTurnRate"		"0"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"200"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"600"
+		"VisionNighttimeRange"		"600"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"				"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
+
   //------------------------------------------------------------------------------------
   //- This unit can be used to precache different models/particles/sounds              -
   //- that are needed every game.  Uncomment any model/particle/sound you need to load -
