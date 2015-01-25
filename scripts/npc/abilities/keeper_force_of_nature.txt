@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Keeper Force of Nature
+// Author: Noya
+// Date: 25.01.2015.
 // Notes: Converts an area of trees into Treants. Treants can attack land units.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	60 sec.	20 sec.	125	80	15	Trees	Raises 2 Treants	1
@@ -12,23 +12,24 @@
 	"AbilityTextureName"			"keeper_force_of_nature"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastRange"				"800"
+	"AbilityCastPoint"				"0.4"
+	"AbilityCooldown"				"20.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"125"
+
+	"AOERadius"						"%radius"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle" 	"particles/units/heroes/hero_furion/furion_force_of_nature_cast.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
+		"model"		"models/items/furion/treant/father_treant/father_treant.vmdl"
 	}
 	
 	"AbilitySpecial"
@@ -36,7 +37,50 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"treant_count"	"2 3 4"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"60.0"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"150 225 300"
 		}
 	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/keeper/force_of_nature.lua"
+			"Function"		"CheckTrees"
+			"Target"		"POINT"
+		}
+	}
+
+	"OnSpellStart"
+	{		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/keeper/force_of_nature.lua"
+			"Function"		"ForceOfNature"
+			"Target"		"POINT"
+		}
+
+		"DestroyTrees"
+		{
+			"Target" 		"POINT"
+			"Radius"		"%radius"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Furion.ForceOfNature"
+			"Target" 		"CASTER"
+		}
+										
+	}	
 }

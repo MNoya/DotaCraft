@@ -2841,7 +2841,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"			"npc_dota_creature"
-		"Model"				"models/items/furion/treant_flower_1.vmdl"	 //Needs model data
+		"Model"				"models/items/furion/treant/father_treant/father_treant.vmdl"	 //Needs model data
 		"ModelScale"		"1"
 		"Level"				"2"
 		
@@ -2900,6 +2900,10 @@
 		
 		// Creature Data
 		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+		}
 	}
 
 	//------------------------------------------------------------------------------------
