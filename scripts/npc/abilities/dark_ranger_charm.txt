@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Dark Ranger Charm
+// Author: Noya
+// Date: 15.01.2015.
 // Notes: Takes control of a target enemy unit. Charm cannot be used on Heroes, or creeps above level 5.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //N/A	N/A	45 sec.	150	70	Unit	Air, Ground, NonHero, Enemy, Neutral, Organic	Takes Control of Unit Permanently	6
@@ -13,29 +13,40 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"			"ACT_DOTA_ATTACK"
 
 	"AbilityCastRange"				"700"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"150.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"70"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle" 	"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 	}
 	
-	"AbilitySpecial"
+	"OnSpellStart"
 	{
-		"01"
+		"RunScript"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"ScriptFile"	"heroes/dark_ranger/charm.lua"
+			"Function"		"Charm"
+		}
+		
+		"AttachEffect"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+		"FireSound"
+		{
+			"EffectName"		"Hero_Chen.HolyPersuasionCast"
+			"Target" 			"CASTER"
 		}
 	}
+	
 }
