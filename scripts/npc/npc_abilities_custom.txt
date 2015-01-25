@@ -3199,33 +3199,124 @@
 		"AbilityTextureName"			"dark_ranger_silence"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"15.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"75"
+		
+		"AOERadius"						"%radius"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+			"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"200 275 350"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hero_duration"		"8 10 12"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"creep_duration"	"16 20 24"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_silenced"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%hero_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_silenced"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%creep_duration"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+				"EffectAttachType"  "follow_overhead"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"ControlPoints"
+				{
+					"00"	"1 0 0"
+				}				
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Silence"
+				"TargetPoint" 	"POINT"	// This works but its actually fired at the caster
+			}				
+		}
+	
+		//modifier_silence is a Built-In modifier, _silenced is custom
+		"Modifiers"
+		{
+			"modifier_silenced"
+			{
+				"IsDebuff"			"1"
+	
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+		}	
 	}
 	//End of file dark_ranger_silence.txt
 
@@ -6796,6 +6887,8 @@
 	//1	N/A	10 sec.	25	N/A	Personal	Self	1 damage per point of mana	1
 	//2	N/A	10 sec.	25	N/A	Personal	Self	1.5 damage per point of mana	3
 	//3	N/A	10 sec.	25	N/A	Personal	Self	2 damage per point of mana	5
+	
+	// Notes: Post mitigation.
 	"naga_sea_witch_mana_shield"
 	{
 		"BaseClass"             		"ability_datadriven"
