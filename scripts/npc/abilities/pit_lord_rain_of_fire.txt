@@ -16,7 +16,7 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_VICTORY"
 
@@ -25,7 +25,7 @@
 	"AbilityCooldown"				"8"
 	"AbilityManaCost"				"85"
 
-	"AOERadius"     				"200"
+	"AOERadius"     				"%radius"
 	"AbilityChannelTime"			"7.0 9.0 11.0"
 	
 	"precache"
@@ -165,6 +165,19 @@
 										
 					"Type"			"DAMAGE_TYPE_MAGICAL"
 					"Damage"		"%wave_damage"
+				}
+
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+					}
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%wave_damage / 2"
 				}
 				
 				"ApplyModifier"
