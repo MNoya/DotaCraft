@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Pit Lord Howl of Terror
+// Author: Noya
+// Date: 24.01.2015.
 // Notes: The Pit Lord lets loose a terrifying howl that causes nearby enemy units to shiver in fear, reducing their attack damage.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	15 sec.	12 sec.	75	N/A	50	Air, Ground, Enemy, Neutral	30% attack damage reduction	1
@@ -12,23 +12,22 @@
 	"AbilityTextureName"			"pit_lord_howl_of_terror"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"			"ACT_DOTA_ATTACK"
 
-	"AbilityCastRange"				"700"
+	"AbilityCastRange"				"500"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"12.0"
 
-	"AbilityManaCost"				"100"
+	"AbilityManaCost"				"75"
 	"AbilityDamage"					"75 130 200"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"  "particles/custom/vengeful_wave_of_terror_recipient_reduction.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
 	}
 	
 	"AbilitySpecial"
@@ -36,7 +35,55 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"radius"		"500"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_reduction_percent"	"-30 -40 -50"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"15"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_VengefulSpirit.WaveOfTerror"
+			"Target" 		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_howl_of_terror"
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+			"Duration"		"%duration"
+		}				
+	}
+
+	"Modifiers"
+	{
+		"modifier_howl_of_terror"
+		{
+			"IsDebuff"			"1"
+	
+			"EffectName"		"particles/custom/vengeful_wave_of_terror_recipient_reduction.vpcf"
+			"EffectAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE" "%damage_reduction_percent"
+			}			
 		}
 	}
 }
