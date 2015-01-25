@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Alchemist Acid Bomb
+// Author: Noya
+// Date: 25.01.2015.
 // Description: Hurls a flask of acid at a target. The flask breaks upon impact, splashing a powerful acid on nearby hostile units. 
 //				Decreases armor; deals slightly less damage over time to nearby targets.
 // Notes: 
@@ -15,7 +15,7 @@
 	"AbilityTextureName"			"alchemist_acid_bomb"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -23,23 +23,153 @@
 
 	"AbilityCastRange"				"700"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"12.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"75"
+
+	"AOERadius"						"%radius"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle" 	"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+		"particle"  "particles/units/heroes/hero_witchdoctor/witchdoctor_cask_explosion_flash.vpcf"
+		"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
+		"particle"	"particles/status_fx/status_effect_maledict.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"			"FIELD_INTEGER"
+			"armor_reduction"	"-3 -4 -5"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"15"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_per_second"	"5 10 15"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"200"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"projectile_speed"	"900"
 		}
 	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+			"Target"           	"TARGET"
+			"EffectName"		"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+			"Dodgeable"			"1"
+			"ProvidesVision"	"0"
+			"MoveSpeed"        	"%projectile_speed"
+			"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Alchemist.UnstableConcoction.Throw"
+			"Target" 		"TARGET"
+		}		
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"EffectRadius"		"%radius"
+			"Target"            "TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_witchdoctor/witchdoctor_cask_explosion_flash.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_hitloc"
+				"TARGET"	"attach_hitloc"
+				"TARGET"	"attach_hitloc"
+				"TARGET"	"attach_hitloc"
+			}
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Alchemist.UnstableConcoction.Stun"
+			"Target" 		"TARGET"
+		}
+		
+	
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_acid_bomb"
+			"Target"
+			{
+				"Center"  	"TARGET"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+			"Duration"		"%duration"
+		}						
+	}
+
+	"Modifiers"
+	{
+		"modifier_acid_bomb"
+		{
+			"IsDebuff"			"1"
+	
+			"StatusEffectName"		"particles/status_fx/status_effect_maledict.vpcf"
+			"StatusEffectPriority"	"10"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+			}		
+
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage_per_second"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"        "particles/msg_fx/msg_poison.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "TARGET"
+					"ControlPoints"
+					{
+						"01"	"9 %damage_per_second 6"
+						"02"	"1 3 0"
+						"03"	"170 0 250"
+					}					
+				}									
+			}			
+		}
+	}			
 }
