@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Pit Lord Doom
+// Author: Noya
+// Date: 25.01.2015.
 // Notes: Marks a target unit for the manifestation of a Demon. The afflicted unit will take 40 damage per second until it dies. Upon its death, a great Demon will spawn from its corpse. Doom cannot be dispelled or canceled.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //N/A	N/A	120 sec.	150	65	Unit	Air, Ground, NonHero, Organic	Creates Doom Guard	6
@@ -12,30 +12,134 @@
 	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"			"ACT_DOTA_SPAWN"
 
-	"AbilityCastRange"				"700"
+	"AbilityCastRange"				"650"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"120.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"150"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"  "particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+		"particle"  "particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
+		"particle" 	"particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+		"model"		"models/heroes/doom/doom.vmdl"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"damage_per_second"		"40"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"doom_guard_duration"	"180"
 		}
 	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_doom"
+			"Target" 		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_DoomBringer.Doom"
+			"Target" 		"TARGET"
+		}
+		
+	}
+	
+	"Modifiers"
+	{
+		"modifier_doom"
+		{
+			"IsDebuff"			"1"
+	
+			"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage_per_second"
+				}			
+			}
+			
+			"OnDeath"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_DoomBringer.LvlDeath"
+					"Target"
+					{
+						"Center" 	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/pit_lord/doom.lua"
+					"Function"		"DoomStopSound"
+				}
+				
+				
+				"SpawnUnit"
+				{
+					"UnitName"		"npc_doom_guard"
+					"Target"
+					{
+						"Center" 	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"Duration"		"%doom_guard_duration"
+					"UnitCount"		"1"
+					"UnitLimit"		"0"
+					"GrantsGold"	"1"
+					"GrantsXP"		"1"
+					"SpawnRadius"	"10"
+					"OnSpawn"
+					{
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_phased"
+							"Target"		"TARGET"
+							"Duration"		"0.03"
+						}
+				
+						"FireEffect"
+						{
+							"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
+							"EffectAttachType"  "follow_origin"
+							"Target"            "TARGET"
+						}
+
+						"FireEffect"
+						{
+							"EffectName"        "particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death.vpcf"
+							"EffectAttachType"  "follow_origin"
+							"Target"			"TARGET"
+						}			
+					}
+				}				
+			}		
+		}
+	}	
 }
