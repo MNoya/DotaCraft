@@ -1,11 +1,9 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
-// Notes: Calls down waves of freezing ice shards that damage units in a target area.
+// Archmage Mass Teleport
+// Author: Noya
+// Date: 26.01.2015.
+// Notes: Teleports 24 of the player's nearby units, including the Archmage, to a friendly ground unit or structure.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	6 sec.	6 sec.	75	80	20	N/A	6 waves at 30 damage each, 150 max damage	1
-//2	8 sec.	6 sec.	75	80	20	N/A	8 waves at 40 damage each, 200 max damage	3
-//3	10 sec.	6 sec.	75	80	20	N/A	10 waves at 50 damage each, 250 max damage	5
+//N/A	N/A	20 sec.	100	Unlimited	70	Friendly Ground Units, Friendly Buildings	Teleports up to 24 units	6
 "archmage_mass_teleport"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -14,30 +12,134 @@
 	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
-	"AbilityCastRange"				"700"
 	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCooldown"				"20.0"
 
 	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityChannelTime"			"3.0"
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"max_units_teleported"	"24"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"700"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"channel_time"			"3.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/archmage/mass_teleport.lua"
+			"Function"		"MassTeleportStart"
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"MaxTargets" "%max_units_teleported"
+			}
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_channeling_animation"
+			"Target" 		"CASTER"
+			"Duration"		"%channel_time"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
+			"EffectAttachType"	"start_at_custom_origin"
+			
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+				"CASTER"	"attach_origin"
+			}
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.Recall.Cast"
+			"Target"		"CASTER"
+		}
+		
+	}
+
+	"OnChannelInterrupted"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/archmage/mass_teleport.lua"
+			"Function"		"MassTeleportStop"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.Recall.Fail"
+			"Target" 		"CASTER"
+		}	
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_channeling_animation"
+			"Target" 		"CASTER"
+		}
+	}	
+
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/archmage/mass_teleport.lua"
+			"Function"		"MassTeleport"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_channeling_animation"
+			"Target" 		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.Recall.End"
+			"Target" 		"TARGET"
+		}										
+	}	
+
+	"Modifiers"
+	{
+		"modifier_channeling_animation"
+		{
+			"Passive"			"0"
+			
+			"OverrideAnimation" "ACT_DOTA_CAST_ABILITY_1"
 		}
 	}
 }
