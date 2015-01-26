@@ -2689,7 +2689,7 @@
 		//----------------------------------------------------------------
 		"TeamName"			"DOTA_TEAM_BADGUYS"
 		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
@@ -2755,7 +2755,7 @@
 		//----------------------------------------------------------------
 		"TeamName"			"DOTA_TEAM_BADGUYS"
 		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
@@ -2821,7 +2821,7 @@
 		//----------------------------------------------------------------
 		"TeamName"			"DOTA_TEAM_BADGUYS"
 		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
@@ -2892,7 +2892,7 @@
 		//----------------------------------------------------------------
 		"TeamName"			"DOTA_TEAM_BADGUYS"
 		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
@@ -2924,7 +2924,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"			""	 //Reference: Aphx
+		"Ability1"			"blood_mage_phoenix_reborn"	 //Reference: Aphx
 		"Ability2"			"neutral_spell_immunity"	 //Reference: ACmi
 		"Ability3"			""	 //Reference: ACrk
 		"Ability4"			""	 //Reference: Apxf
@@ -2944,7 +2944,7 @@
 		"AttackAnimationPoint"		"0.43"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"			"600"
-		"ProjectileModel"		""	 //Add projectile models
+		"ProjectileModel"		"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
 		"ProjectileSpeed"		"1800"
 		
 		// Bounty
@@ -2961,7 +2961,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"			"1250"
-		"StatusHealthRegen"		"-25"
+		"StatusHealthRegen"		"0"
 		"StatusMana"			"0"
 		"StatsManaRegen"		"0"
 		
@@ -2973,8 +2973,8 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"			"DOTA_TEAM_BADGUYS"
-		"CombatClassAttack"		"MAGIC_MAN"
-		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC" // MAGIC ATTACK
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
@@ -2988,15 +2988,15 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"			"npc_dota_base_additive"
+		"BaseClass"			"npc_dota_creature"
 		"Model"				"models/heroes/phoenix/phoenix_egg.vmdl"	 //Needs model data
-		"ModelScale"		"1"
+		"ModelScale"		"0.6"
 		"SoundSet"			"Phoenix_Sun"
 		"Level"				"6"
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"			""	 //Reference: Aphx
+		"Ability1"			"blood_mage_phoenix_egg"	 //Reference: Aphx
 		"Ability2"			"neutral_spell_immunity"	 //Reference: ACrk
 		"Ability3"			""	 //Reference: ACmi
 		
@@ -3043,7 +3043,7 @@
 		//----------------------------------------------------------------
 		"TeamName"				"DOTA_TEAM_BADGUYS"
 		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefened"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"

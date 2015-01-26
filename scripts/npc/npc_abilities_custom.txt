@@ -2661,10 +2661,11 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
-	// Notes: Summons a powerful Phoenix. The Phoenix burns with such intensity that it damages itself and nearby enemy units. Has Spell Immunity, and Resistant Skin. When a Phoenix dies, it //creates an egg that will hatch into a Phoenix.
+	// Blood Mage Phoenix
+	// Author: Noya
+	// Date: 26.01.2015.
+	// Notes: Summons a powerful Phoenix. The Phoenix burns with such intensity that it damages itself and nearby enemy units. Has Spell Immunity, and Resistant Skin.
+	// When a Phoenix dies, it creates an egg that will hatch into a Phoenix.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	N/A	180+ sec.	175	N/A	N/A	N/A	Summons a Phoenix	6
 	"blood_mage_phoenix"
@@ -2674,31 +2675,220 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"180.0"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
+			"particle"  "particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+			"particle"  "particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"model"		"models/heroes/phoenix/phoenix_bird.vmdl"
+			"model"		"models/heroes/phoenix/phoenix_egg.vmdl"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"					"FIELD_INTEGER"
+				"phoenix_damage_per_second"	"25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"phoenix_egg_duration"		"10"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spawn_distance"			"200"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"negative_regen"			"-5.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/blood_mage/phoenix.lua"
+				"Function"		"KillPhoenix"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_phoenix"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/blood_mage/phoenix.lua"
+						"Function"      "SummonLocation"
+						"Target"		"CASTER"
+						"Count"			"1"
+						"distance"		"%spawn_distance"
+					}
+				}
+				"UnitCount"		"1"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/blood_mage/phoenix.lua"
+						"Function"		"SetUnitsMoveForward"
+					}				
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+				}
+			}
+		}
+	}
+	
+	// Extra abilities
+	"blood_mage_phoenix_reborn"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blood_mage_phoenix"
+		"MaxLevel"						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"phoenix_damage_per_second"	"25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"phoenix_egg_duration"		"10"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"phoenix_immolation_radius"	"400"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_phoenix_reborn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0"
+	
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Phoenix.SuperNova.Begin"
+						"Target"		"CASTER"
+					}
+				}
+			
+	
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/blood_mage/phoenix.lua"
+						"Function"		"PhoenixDegen"
+					}
+	
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"%phoenix_immolation_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%phoenix_damage_per_second"
+					}
+					
+				}
+								
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/blood_mage/phoenix.lua"
+						"Function"		"PhoenixEgg"
+					}
+				}
+			}
+		}
+	}
+	
+	
+	"blood_mage_phoenix_egg"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"blood_mage_phoenix"
+		"MaxLevel"						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"Modifiers"
+		{
+			"modifier_egg"
+			{
+				"Passive"	"1"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}						
+				}
+	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/blood_mage/phoenix.lua"
+						"Function"		"PhoenixEggCheckReborn"
+					}				
+				}
+	
+				// Prevent getting stuck
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+						
 			}
 		}
 	}
@@ -5134,9 +5324,9 @@
 		}
 		
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Far Seer Feral Spirit
+	// Author: Noya
+	// Date: 25.01.2015.
 	// Notes: Summons Spirit Wolves to fight enemies for a limited time.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	60 sec.	30 sec.	75	N/A	N/A	N/A	Summons Two Spirit Wolves	1

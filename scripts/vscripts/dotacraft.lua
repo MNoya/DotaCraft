@@ -397,29 +397,31 @@ function dotacraft:OnEntityKilled( event )
 	local killerEntity = EntIndexToHScript(event.entindex_attacker)
 
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
+	Timers:CreateTimer(1, function() 
 	if LeavesCorpse( killedUnit ) then
-		-- Create and set model
-		local corpse = CreateUnitByName("dummy_unit", killedUnit:GetAbsOrigin(), true, nil, nil, killedUnit:GetTeamNumber())
-		corpse:SetModel(CORPSE_MODEL)
+			-- Create and set model
+			local corpse = CreateUnitByName("dummy_unit", killedUnit:GetAbsOrigin(), true, nil, nil, killedUnit:GetTeamNumber())
+			corpse:SetModel(CORPSE_MODEL)
 
-		-- Set the corpse invisible until the dota corpse disappears
-		corpse:AddNoDraw()
-		
-		-- Keep a reference to its name and expire time
-		corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
-		corpse.unit_name = killedUnit:GetUnitName()
+			-- Set the corpse invisible until the dota corpse disappears
+			corpse:AddNoDraw()
+			
+			-- Keep a reference to its name and expire time
+			corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
+			corpse.unit_name = killedUnit:GetUnitName()
 
-		-- Set custom corpse visible
-		Timers:CreateTimer(4, function() corpse:RemoveNoDraw() end)
+			-- Set custom corpse visible
+			Timers:CreateTimer(3, function() corpse:RemoveNoDraw() end)
 
-		-- Remove itself after the corpse duration
-		Timers:CreateTimer(CORPSE_DURATION, function()
-			if corpse and IsValidEntity(corpse) then
-				print("removing corpse")
-				corpse:RemoveSelf()
-			end
-		end)
-	end
+			-- Remove itself after the corpse duration
+			Timers:CreateTimer(CORPSE_DURATION, function()
+				if corpse and IsValidEntity(corpse) then
+					print("removing corpse")
+					corpse:RemoveSelf()
+				end
+			end)
+		end
+	end)
 
 end
 
@@ -436,7 +438,7 @@ function LeavesCorpse( unit )
 
 	-- Ignore units that start with dummy keyword	
 	elseif string.find(unit:GetUnitName(), "dummy") then
-	--	return false
+		return false
 
 	-- Ignore units that were specifically set to leave no corpse
 	elseif unit.no_corpse then
