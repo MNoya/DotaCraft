@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Alchemist Transmute
+// Author: Noya
+// Date: 25.01.2015.
 // Description: Kills a target unit instantly, transforming it into gold which is added to your available gold! Transmute cannot be used on Heroes, or creeps above level 5.
 // Notes: 
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
@@ -14,29 +14,47 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastRange"				"650"
+	"AbilityCooldown"				"45.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
-
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
+	"AbilityManaCost"				"150"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"					"FIELD_FLOAT"
+			"gold_bounty_multiplier"	"5"	//Placeholder until unit prices are done.
 		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"DOTA_Item.Hand_Of_Midas"
+			"Target" 		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/items2_fx/hand_of_midas.vpcf"
+			"EffectAttachType"	"follow_origiin"
+			"Target"            "TARGET"
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_hitloc"
+				"CASTER"	"attach_hitloc"
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/alchemist/transmute.lua"
+			"Function"				"Transmute"
+		}	
 	}
 }

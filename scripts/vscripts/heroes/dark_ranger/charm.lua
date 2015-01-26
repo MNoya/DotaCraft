@@ -18,5 +18,8 @@ function Charm( event )
         target:SetControllableByPlayer( caster:GetPlayerOwnerID(), true )
         target:RespawnUnit()
         target:SetHealth(target:GetHealth())
+	else
+		caster:Interrupt()
+		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Can't target creeps over level 5" } )
 	end
 end
