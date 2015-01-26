@@ -10678,50 +10678,6 @@
 			}
 		}
 	}
-	
-	
-	
-			"AbilityManacost" 				"100"
-			"AbilityCastPoint"				"0.3"
-			"AbilityCooldown"				"9"
-			"AbilityCastRange"				"400 500 600"
-			"AbilityDamage"					"75 125 190"
-	
-			"AbilitySpecial"
-			{
-				"01"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"radius"				"400 500 600"
-				}
-			}
-	
-			"OnSpellStart"
-			{
-				"AttachEffect"
-				{
-					"EffectName"		"particles/warchasers/bristleback_quill_spray.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"CASTER"
-				}
-				"FireSound"
-				{	
-					"EffectName"		"Hero_PhantomAssassin.Dagger.Target"
-					"Target"			"CASTER"
-				}
-				"Damage"
-				{
-					"Type"          "DAMAGE_TYPE_MAGICAL"
-					"Damage"        "%AbilityDamage"
-					"Target"
-					{
-						"Center"  				"CASTER"
-						"Radius" 				"%radius"
-						"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-					}
-				}
-			}
 	// Warden Shadow Strike
 	// Author: Noya
 	// Date: 14.1.2015.
