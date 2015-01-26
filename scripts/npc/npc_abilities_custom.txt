@@ -2686,6 +2686,7 @@
 			"particle" 	"particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
 			"particle"  "particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
 			"particle"  "particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
+			"particle"  "particles/units/heroes/hero_phoenix/phoenix_supernova_death.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
 			"model"		"models/heroes/phoenix/phoenix_bird.vmdl"
 			"model"		"models/heroes/phoenix/phoenix_egg.vmdl"
@@ -3909,6 +3910,8 @@
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
 		"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 	
 		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.453"
@@ -7992,9 +7995,11 @@
 	// Paladin Resurrection
 	// Author: Noya
 	// Date: 13.1.2015.
-	// Notes: Brings back to life the corpses of 6 friendly nearby units. The spell will choose the most powerful corpses to resurrect if there are more than 6.
+	// Notes: Brings back to life the corpses of 6 friendly nearby units.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	N/A	240 sec.	200	40	90	Ground, Dead, Friend	Resurrects up to 6 Units	6 
+	
+	// TODO: The spell will choose the most powerful corpses to resurrect if there are more than 6.
 	"paladin_resurrection"
 	{
 		"BaseClass" 					"ability_datadriven"
@@ -8004,6 +8009,8 @@
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	
 		"AbilityCastRange"				"400"
 		"AbilityCooldown"				"240"
 		"AbilityManaCost"				"200"
@@ -8012,30 +8019,96 @@
 	
 		"precache"
 		{
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+			"particle"	"particles/status_fx/status_effect_guardian_angel.vpcf"
+			"particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
 		}
-	
+		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"target_damage"			"100 200 300"
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"900"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"heal_amount"			"200 400 600"
-			}
+				"var_type"					"FIELD_INTEGER"
+				"max_units_resurrected"		"6"
+			}		
 		}
 	
-		"OnSpellStart"
+		"OnAbilityPhaseStart"
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/paladin/holy_light.lua"
-				"Function"		"HolyLight"
+				"ScriptFile"	"heroes/paladin/resurrection.lua"
+				"Function"		"ResurrectionPrecast"
+			}
+		}
+		
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
+				"Target"		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/paladin/resurrection.lua"
+				"Function"		"Resurrection"
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_resurrection"
+			{
+				"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
+				"StatusEffectPriority" "10"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"CASTER"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_resurrection_fx"
+						"Target" 		"TARGET"
+					}
+					
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_resurrection_fx"
+			{
+				"IsHidden"		"1"
+				"Duration"		"0.5"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"EffectRadius"		"100"
+					}
+				}
+					
 			}
 		}
 	}
