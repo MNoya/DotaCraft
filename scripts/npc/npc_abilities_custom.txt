@@ -9637,8 +9637,8 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
+	// Priestess of the Moon Starfall
+	// Author: Noya
 	// Date: 13.1.2015.
 	// Notes: Calls down waves of falling stars that damage nearby enemy units. Each wave deals 50 damage. The time between waves is 1.5 seconds.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
@@ -9650,23 +9650,27 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"180.0"
 	
 		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityChannelTime"			"45.0"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" "particles/units/heroes/hero_mirana/mirana_starfall_moonray.vpcf"
+			"particle" "particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+			"particle" "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+			"particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+			"particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -9674,9 +9678,195 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"duration"		"45"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"wave_damage"	"50"
+			}
+			"03"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"wave_interval"	"1.5"
+			}
+			"04"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"1000"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"building_dmg_pct" 	"35"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_starfall"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_attack1"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Ability.MoonlightShadow"
+				"Target" 		"CASTER"
+			}			
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_starfall"
+				"Target" 		"CASTER"
+			}		
+		}
+		
+		"Modifiers"
+		{
+			"modifier_starfall"
+			{
+				"EffectName" 		"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+				"EffectAttachType" 	"follow_overhead"
+		
+				"ThinkInterval"  "%wave_interval"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_channeling_animation"
+						"Target" 		"CASTER"
+						"Duration"		"1.4"
+					}
+					
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_mirana/mirana_starfall_moonray.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "CASTER"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Ability.Starfall"
+						"Target" 		"TARGET"
+					}
+					
+					// Units
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"FireEffect"
+							{
+								"EffectName"        "particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+								"EffectAttachType"  "follow_origin"
+								"Target"            "TARGET"
+							}
+	
+							"DelayedAction"
+							{
+								"Delay"     "0.4"
+								"Action"    
+								{
+									"Damage"
+									{
+										"Target"		"TARGET"
+										"Type"			"DAMAGE_TYPE_MAGICAL"
+										"Damage"		"%wave_damage"
+									}
+	
+									"FireSound"
+									{
+										"EffectName"	"Ability.StarfallImpact"
+										"Target" 		"TARGET"
+									}
+								}
+							}
+							
+						}
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						}
+					
+						"Action"    
+						{
+							"FireEffect"
+							{
+								"EffectName"        "particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+								"EffectAttachType"  "follow_origin"
+								"Target"            "TARGET"
+							}
+	
+							"DelayedAction"
+							{
+								"Delay"     "0.4"
+								"Action"    
+								{
+									"Damage"
+									{
+										"Target"		"TARGET"
+										"Type"			"DAMAGE_TYPE_MAGICAL"
+										"Damage"		"%wave_damage * %building_dmg_pct * 0.01"
+									}
+	
+									"FireSound"
+									{
+										"EffectName"	"Ability.StarfallImpact"
+										"Target" 		"TARGET"
+									}
+								}
+							}
+							
+						}
+					}
+				}		
+			}
+	
+			"modifier_channeling_animation"
+			{
+				"IsHidden"	"1"
+				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_1"
+			}
+		}	
 	}
 	// Priestess of the Moon Trueshot Aura
 	// Author: Noya
