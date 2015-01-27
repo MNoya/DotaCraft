@@ -2548,7 +2548,7 @@
 		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
@@ -2622,7 +2622,7 @@
 	
 				"Aura" 				"modifier_flame_strike_first_burn"
 	    		"Aura_Radius" 		"%radius"
-	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	
 	    		"OnCreated"
@@ -2635,7 +2635,7 @@
 						{
 							"Center"	"TARGET"
 							"Radius"	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
 							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						}
 					}
@@ -2691,7 +2691,7 @@
 	
 				"Aura" 				"modifier_flame_strike_second_burn"
 	    		"Aura_Radius" 		"%radius"
-	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	
 	    		"OnCreated"
@@ -2704,7 +2704,7 @@
 						{
 							"Center"	"TARGET"
 							"Radius"	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
 							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						}
 					}
@@ -7812,7 +7812,7 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -7826,7 +7826,7 @@
 		"AbilityDamage"					"75 130 200"
 	
 		"AbilityChannelTime" 			"40"
-		"AoERadius"						"275"
+		"AoERadius"						"%outside_radius"
 	
 		"precache"
 		{
