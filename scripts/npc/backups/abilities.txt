@@ -5335,9 +5335,9 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Far Seer Earthquake
+	// Author: Noya
+	// Date: 26.01.2015.
 	// Notes: Makes the ground tremble and break, causing 50 damage per second to buildings and slowing units by 75% within area of effect. Lasts 25 seconds.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	25 sec.	90 sec.	150	100	25	Ground, Structures	50 damage/sec to buildings, slows units 75%	6
@@ -5348,31 +5348,264 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_SPAWN"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCooldown"				"90.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"150"
+		"AbilityChannelTime"			"25.0"
+	
+		"AOERadius"						"%radius"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"	"particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
+			"particle"	"particles/units/heroes/hero_earthshaker/temp_eruption_dirt.vpcf"
+			"particle"	"particles/dire_fx/dire_lava_falling_rocks.vpcf"
+			"particle"	"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_fallback_mid.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_egset.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"building_damage_per_sec"	"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"250"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_slow_pct"	"-75"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"wave_interval"				"1.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/far_seer/earthquake.lua"
+				"Function"		"EarthquakeStart"
+				"Target"		"POINT"
+			}
+	
+			"DestroyTrees"
+			{
+				"Target" 		"POINT"
+				"Radius"		"%radius"
+			}
+	
+			//First Animation
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_channeling"
+				"Target" 		"CASTER"
+				"Duration"		"0.9"
+			}		
+	
+			// Animation needs to start half a second later to sync with the damage
+			"DelayedAction"
+			{
+				"Delay"     "0.5"
+				"Action"    
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_earthquake_channelling"
+						"Target" 		"CASTER"
+					}
+				}
+			}	
+		}
+	
+		"OnChannelFinish"
+	    {
+	    	"RunScript"
+	    	{
+	    		"ScriptFile"	"heroes/far_seer/earthquake.lua"
+				"Function"		"EarthquakeEnd"
+	    	} 
+	
+	    	"RemoveModifier"
+			{
+				"ModifierName"	"modifier_earthquake_channelling"
+				"Target" 		"CASTER"
+			}  			
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_earthquake_channelling"
+	        {
+	        	"IsHidden"			"1"
+	            "ThinkInterval"		"1.0"
+	            "OnIntervalThink"
+	         	{
+	 				"ApplyModifier"
+	         		{
+	         			"ModifierName"	"modifier_channeling"
+	         			"Target" 		"CASTER"
+	         			"Duration"		"0.9"
+	         		}    		
+				}
+			}
+	
+			"modifier_channeling"
+			{
+				"IsHidden"				"1"
+				"OverrideAnimation"     "ACT_DOTA_KINETIC_FIELD"
+			}
+	
+			"modifier_earthquake_thinker"
+			{
+				"Aura"          "modifier_eartquake_slow"
+				"Aura_Radius"   "%radius"
+				"Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Leshrac.Split_Earth"
+						"Target" 		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_egset.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+					}
+					
+	
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectAttachType" 	"follow_origin"
+						"EffectName"		"particles/units/heroes/hero_earth_spirit/espirit_spawn.vpcf"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}
+	
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectAttachType" 	"follow_origin"
+						"EffectName"		"particles/dire_fx/dire_lava_falling_rocks.vpcf"
+					}
+	
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectAttachType" 	"follow_origin"
+						"EffectName"		"particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+					}
+				}
+	
+				"ThinkInterval"  "%wave_interval"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						}
+											
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%building_damage_per_sec"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Leshrac.Split_Earth"
+						"Target" 		"TARGET"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
+						"EffectAttachType" 	"follow_origin"
+						"Target" 			"TARGET"
+					}
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_earthshaker/temp_eruption_dirt.vpcf"
+						"EffectAttachType" 	"follow_origin"
+						"Target" 			"TARGET"
+					}
+					"AttachEffect"
+					{
+						"Target"	"TARGET"
+						"EffectAttachType" "follow_origin"
+						"EffectName"	"particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
+						"ControlPoints"
+						{
+							"01"		"%radius 50 50"
+						}
+					}
+	
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectAttachType" 	"follow_origin"
+						"EffectName"		"particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+						"ControlPoints"
+						{
+							"01"	"%radius 0 %radius"
+						}
+					}
+	
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectAttachType" 	"follow_origin"
+						"EffectName"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_fallback_mid.vpcf"
+						"ControlPoints"
+						{
+							"01"	"1 0 0"
+						}		
+					}
+				}
+			}
+	
+			"modifier_eartquake_slow"
+			{
+				"IsDebuff"		"1"
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_slow_pct" 
+				}		
 			}
 		}
 	}
@@ -9668,6 +9901,8 @@
 			"particle" "particles/units/heroes/hero_mirana/mirana_starfall_moonray.vpcf"
 			"particle" "particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
 			"particle" "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+			"particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+			"particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 		}
 		
@@ -9707,7 +9942,30 @@
 				"ModifierName"	"modifier_starfall"
 				"Target" 		"CASTER"
 				"Duration"		"%duration"
-			}		
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_attack1"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Ability.MoonlightShadow"
+				"Target" 		"CASTER"
+			}			
 		}
 	
 		"OnChannelFinish"
