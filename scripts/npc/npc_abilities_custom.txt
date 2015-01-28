@@ -10255,36 +10255,41 @@
 		    }
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Shadow Hunter Big Bad Voodoo
+	// Author: Noya
+	// Date: 28.01.2015.
 	// Notes: Turns all friendly units invulnerable in an area around the Shadow Hunter. The Shadow Hunter does not turn invulnerable. Lasts 30 seconds.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	30 sec.	180 sec.	200	N/A	80	Air, Ground, Friend	Nearby units become invulnerable	6
-	"shadow_hunter_big_bad_vodoo"
+	"shadow_hunter_big_bad_voodoo"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"shadow_hunter_big_bad_vodoo"
+		"AbilityTextureName"			"shadow_hunter_big_bad_voodoo"
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCooldown"				"180.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"200"
+		"AbilityChannelTime"			"30.0"
+	
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/units/heroes/hero_shadowshaman/unused_field_4.vpcf"
+			"particle"	"particles/custom/warlock_shadow_word_buff_c.vpcf"
+			"particle"  "particles/custom/witchdoctor_voodoo_restoration_aura.vpcf"
+			"particle"	"particles/custom/witchdoctor_voodoo_restoration.vpcf"
+			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -10292,7 +10297,139 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"duration"		"30"
+			}
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"800"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_big_bad_voodoo"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_big_bad_voodoo_channeling"
+				"Target" 		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"shadowshaman_shad_ability_shackle_08"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_big_bad_voodoo"
+				"Target" 		"CASTER"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_big_bad_voodoo_channeling"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_big_bad_voodoo_channeling"
+			{
+				"IsHidden"			"1"
+	            "ThinkInterval"		"1.0"
+	            "OnIntervalThink"
+	         	{
+	         		"ApplyModifier"
+	         		{
+	         			"ModifierName"	"modifier_channeling"
+	         			"Target" 		"CASTER"
+	         			"Duration"		"0.9"
+	         		}
+				}
+			}
+	
+			"modifier_channeling"
+			{
+				"IsHidden"				"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+			}
+	
+			"modifier_big_bad_voodoo"
+			{
+				"EffectName"		"particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/custom/witchdoctor_voodoo_restoration_aura.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "CASTER"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"		"particles/custom/warlock_shadow_word_buff_copy.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"            "CASTER"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/custom/witchdoctor_voodoo_restoration.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target"            "CASTER"
+						"ControlPoints"
+						{
+							"01"	"%radius 0 0"
+						}				
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_WitchDoctor.Maledict_Loop"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/shadow_hunter/big_bad_voodoo.lua"
+						"Function"		"MaledictStop"
+					}
+				}
+	
+				"Aura"          	"modifier_big_bad_voodoo_invulnerability"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster" "0"
+			}
+	
+			"modifier_big_bad_voodoo_invulnerability"
+			{
+				"EffectName"		"particles/custom/warlock_shadow_word_buff_c.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
