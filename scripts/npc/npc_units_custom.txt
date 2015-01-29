@@ -3053,6 +3053,145 @@
 		//----------------------------------------------------------------
 	}
 
+	//=================================================================================
+	// Creature: Wisp
+	// Discription: "Basic worker unit. Can harvest gold and lumber, create Night Elf buildings and Renew. |nCan Detonate to dispel magic, hurt summoned creatures and drain mana in an area."
+	//=================================================================================
+	"nightelf_wisp"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/items/courier/echo_wisp/echo_wisp.vmdl"	 //Needs model data
+		"ModelScale"		"1"
+		"Level"				"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			"build_tree_of_life"	 //Reference: Adtn
+		"Ability2"			""	 //Reference: Aren
+		"Ability3"			""	 //Reference: Awha
+		"Ability4"			""	 //Reference: Ault
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"0"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"	"DOTA_UNIT_CAP_NO_ATTACK"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"20.0"
+		"BountyGoldMax"			"30.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"270"
+		"MovementTurnRate"		"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"120"
+		"StatusHealthRegen"		"0.5"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"
+		"VisionNighttimeRange"		"750"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"				"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
+	//=================================================================================
+	// Creature: Tree of Life
+	// Discription: "Primary structure, used to train Wisps and entangle gold mines. Can be upgraded to Tree of Ages and then Tree of Eternity to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"nightelf_tree_of_life"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature" //npc_dota_building - Prevents turning!
+		"Model"				"models/heroes/treant_protector/treant_protector.vmdl"	 //Needs model data
+		"ModelScale"		"1"
+		"Level"				"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			"spawnerino_wisperino"	 //Reference: Aent
+		"Ability2"			""	 //Reference: Aeat
+		"Ability3"			""	 //Reference: Aro1
+		"Ability4"			""	 //Reference: Abdl
+		"Ability5"			""	 //Reference: Atol
+		"Ability6"			""	 //Reference: Arlm
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"2"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"		"41.0"
+		"AttackDamageMax"		"50.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"2.5"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"			"128"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"0.0"
+		"BountyGoldMax"			"0.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"40"
+		"MovementTurnRate"		"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"1300"
+		"StatusHealthRegen"		"0.5"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"
+		"VisionNighttimeRange"		"600"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"			"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
 
   //------------------------------------------------------------------------------------
   //- This unit can be used to precache different models/particles/sounds              -
