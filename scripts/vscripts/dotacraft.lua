@@ -369,11 +369,16 @@ function dotacraft:OnPlayerPickHero(keys)
 	local heroClass = keys.hero
 	local heroEntity = EntIndexToHScript(keys.heroindex)
 	local player = EntIndexToHScript(keys.player)
+	local playerID = heroEntity:GetPlayerID()
 
 	local level = MAX_LEVEL
 	for i=1,level-1 do
 		heroEntity:HeroLevelUp(false)
 	end
+
+	local tree = CreateUnitByName("nightelf_tree_of_life", heroEntity:GetAbsOrigin()+Vector(200, 200, 0), true, heroEntity, heroEntity, heroEntity:GetTeamNumber())
+	tree:SetControllableByPlayer(playerID, true)
+
 end
 
 -- A player killed another player in a multi-team context
