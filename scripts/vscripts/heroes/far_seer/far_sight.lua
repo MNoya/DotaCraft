@@ -24,19 +24,13 @@ function FarSight( event )
 	end
 
 	-- Vision
-	if level == 1 then
-		local dummy = CreateUnitByName("dummy_600vision", target, false, caster, caster, caster:GetTeamNumber())
-		Timers:CreateTimer(duration, function() dummy:RemoveSelf() end)
-
-	elseif level == 2 then
-		local dummy = CreateUnitByName("dummy_1800vision", target, false, caster, caster, caster:GetTeamNumber())
-		Timers:CreateTimer(duration, function() dummy:RemoveSelf() end)
-
+	if level == 1 or level == 2 then
+		ability:CreateVisibilityNode(target, reveal_radius, duration)
 	elseif level == 3 then
-		-- Central dummy
-		local dummy = CreateUnitByName("dummy_1800vision", target, false, caster, caster, caster:GetTeamNumber())
+		-- Central vision
+		ability:CreateVisibilityNode(target, 1800, duration)
 
-		-- We need to create many 1800vision dummies to make a bigger circle
+		-- We need to create many 1800 vision nodes to make a bigger circle
 		local fv = caster:GetForwardVector()
     	local distance = 1800
 
@@ -52,19 +46,10 @@ function FarSight( event )
     	local right_position = RotatePosition(target, ang_right, front_position)
 
     	-- Create the 4 auxiliar units
-    	local dummy_front = CreateUnitByName("dummy_1800vision", front_position, false, caster, caster, caster:GetTeamNumber())
-    	local dummy_back = CreateUnitByName("dummy_1800vision", back_position, false, caster, caster, caster:GetTeamNumber())
-    	local dummy_left = CreateUnitByName("dummy_1800vision", left_position, false, caster, caster, caster:GetTeamNumber())
-    	local dummy_right = CreateUnitByName("dummy_1800vision", right_position, false, caster, caster, caster:GetTeamNumber())
-
-    	-- Destroy after the duration
-    	Timers:CreateTimer(duration, function() 
-    		dummy:RemoveSelf()
-    		dummy_front:RemoveSelf() 
-    		dummy_back:RemoveSelf() 
-    		dummy_left:RemoveSelf() 
-    		dummy_right:RemoveSelf()
-    	end)
+    	ability:CreateVisibilityNode(front_position, 1800, duration)
+    	ability:CreateVisibilityNode(back_position, 1800, duration)
+    	ability:CreateVisibilityNode(left_position, 1800, duration)
+    	ability:CreateVisibilityNode(right_position, 1800, duration)
     end
 
 end

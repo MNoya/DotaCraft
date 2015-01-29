@@ -47,7 +47,34 @@
 			"ScriptFile"	"heroes/far_seer/far_sight.lua"
 			"Function"		"FarSight"
 			"Target"		"POINT"
-		}	
+		}
+
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_far_sight"
+			"Target" 		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_far_sight"
+		{	
+			"IsHidden"			"1"
+			"Duration"			"%duration"
+			"Aura"          	"modifier_far_sight_vision"
+			"Aura_Radius"   	"%reveal_radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+		}
+
+		"modifier_far_sight_vision"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
 	}
 	
 }

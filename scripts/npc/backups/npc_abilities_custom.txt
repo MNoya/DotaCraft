@@ -1149,7 +1149,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"lizards_per_sec"	"10"
+				"lizards_per_sec"	"20"
 			}
 			"07"
 			{
@@ -3675,12 +3675,17 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
-	// Notes: Creates a swarm of angry locusts that bite and tear at nearby enemy units. As they chew the enemy flesh, they convert it into a substance that restores hit points to the Crypt Lord when they return.
+	// Crypt Lord Locust Swarm
+	// Author: Noya
+	// Date: 29.01.2015.
+	// Notes: Creates a swarm of angry locusts that bite and tear at nearby enemy units. 
+	//As they chew the enemy flesh, they convert it into a substance that restores hit points to the Crypt Lord when they return.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	30 sec.	180 sec.	150	N/A	80	Air, Ground, Building, Neutral, Enemy	Creates Locust Swarm	6
+	
+	//Once "launched" the Locust Swarm will follow the Crypt Lord where he walks, heading out in an area around the Crypt Lord.
+	//20 Locusts are released. 0.2 second delay between releasing each Locust. Up to 7 Locusts can target an enemy unit at the same time. 
+	//Fraction of damage dealt by Locusts that will be returned and collected by Crypt Lord: 0.75. The Locust must collect 20 hit points before returning it to the Crypt Lord.
 	"crypt_lord_locust_swarm"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -3688,10 +3693,8 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
 		"AbilityCastRange"				"700"
@@ -3713,6 +3716,15 @@
 			{
 				"var_type"		"FIELD_INTEGER"
 				"value"			"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
+				"Function"		"LocustSwarmStart"
 			}
 		}
 	}
@@ -5927,7 +5939,34 @@
 				"ScriptFile"	"heroes/far_seer/far_sight.lua"
 				"Function"		"FarSight"
 				"Target"		"POINT"
-			}	
+			}
+	
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_far_sight"
+				"Target" 		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_far_sight"
+			{	
+				"IsHidden"			"0"
+				"Duration"			"%duration"
+				"Aura"          	"modifier_far_sight_vision"
+				"Aura_Radius"   	"%reveal_radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+			}
+	
+			"modifier_far_sight_vision"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
 		}
 		
 	}
