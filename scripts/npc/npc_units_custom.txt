@@ -27,31 +27,6 @@
 		"Ability1"					"dummy_passive_vulnerable"
 	}
 
-	"dummy_600vision"
-	{
-		"BaseClass"					"npc_dota_creature"
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"VisionDaytimeRange"		"600"	
-		"VisionNighttimeRange"		"600"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"AbilityLayout"				"4"
-		"Ability1"					"dummy_passive"
-	}
-
-	"dummy_1800vision"
-	{
-		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl"
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"VisionDaytimeRange"		"1800"	
-		"VisionNighttimeRange"		"1800"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"AbilityLayout"				"4"
-		"Ability1"					"dummy_passive"
-	}
-
 	"npc_dummy_blank"
 	{
 		// General
@@ -2822,6 +2797,76 @@
 		"TeamName"			"DOTA_TEAM_BADGUYS"
 		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+
+	//------------------------------------------------------------------------------------
+	//- Unit for crypt_lord_locust_swarm ability 								 	-
+	//------------------------------------------------------------------------------------
+	"npc_crypt_lord_locust"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/development/invisiblebox.vmdl"
+		"ModelScale"		"1"
+		"Level"				"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			"crypt_lord_locust_passive"	 //Reference: Aloc
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"0"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"		"13.0"
+		"AttackDamageMax"		"14.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1"
+		"AttackAnimationPoint"		"0"
+		"AttackAcquisitionRange"	"900"
+		"AttackRange"			"10"
+		"ProjectileModel"		""	 //Add projectile models
+		"ProjectileSpeed"		"500"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"26.0"
+		"BountyGoldMax"			"38.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"			"400"
+		"MovementTurnRate"		"0.2"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"65"
+		"StatusHealthRegen"		"0.25"
+		"StatsManaRegen"		"-"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"10"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"			"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"

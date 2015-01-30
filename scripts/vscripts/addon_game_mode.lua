@@ -1,7 +1,7 @@
 -- Generated from template
 
 require('timers')
---require('physics')
+require('physics')
 --require('multiteam')
 require('dotacraft')
 require('popups')
