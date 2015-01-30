@@ -3675,17 +3675,6 @@
 			}
 		}
 	}
-	// Crypt Lord Locust Swarm
-	// Author: Noya
-	// Date: 29.01.2015.
-	// Notes: Creates a swarm of angry locusts that bite and tear at nearby enemy units. 
-	//As they chew the enemy flesh, they convert it into a substance that restores hit points to the Crypt Lord when they return.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	30 sec.	180 sec.	150	N/A	80	Air, Ground, Building, Neutral, Enemy	Creates Locust Swarm	6
-	
-	//Once "launched" the Locust Swarm will follow the Crypt Lord where he walks, heading out in an area around the Crypt Lord.
-	//20 Locusts are released. 0.2 second delay between releasing each Locust. Up to 7 Locusts can target an enemy unit at the same time. 
-	//Fraction of damage dealt by Locusts that will be returned and collected by Crypt Lord: 0.75. The Locust must collect 20 hit points before returning it to the Crypt Lord.
 	"crypt_lord_locust_swarm"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -3695,36 +3684,132 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 	
 		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCooldown"				"180.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"150"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"  "particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"800"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"locusts"				"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"//"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"locusts_speed"			"400"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_distance"			"2000"	//teleports
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"give_up_distance"		"800"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay_between_locusts"	"0.2"	//Means 4 seconds to spawn all 20 locusts
 			}
 		}
 	
 		"OnSpellStart"
 		{
-			"RunScript"
+			"ApplyModifier"
 			{
-				"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
-				"Function"		"LocustSwarmStart"
+				"ModifierName"	"modifier_locust_swarm"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Exorcism.Cast"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_locust_swarm"
+			{	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
+						"Function"		"LocustSwarmStart"
+					}
+				}	
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
+						"Function"		"LocustSwarmEnd"
+					}
+				}
+			}
+	
+			"modifier_locust"
+			{	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
+						"Function"		"LocustSwarmPhysics"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}
+				}
+		
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -5952,7 +6037,7 @@
 		{
 			"modifier_far_sight"
 			{	
-				"IsHidden"			"0"
+				"IsHidden"			"1"
 				"Duration"			"%duration"
 				"Aura"          	"modifier_far_sight_vision"
 				"Aura_Radius"   	"%reveal_radius"

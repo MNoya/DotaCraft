@@ -17,7 +17,6 @@
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_weaver/weaver_bug_swarm.vpcf"
 		"particle"  "particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 	}
@@ -99,41 +98,17 @@
 				}
 			}
 		}
-	}
-}
 
-
-// Auxiliar ability on the summoned units
-"crypt_lord_locust_passive"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"crypt_lord_locust_swarm"
-	"MaxLevel"						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-	"Modifiers"
-	{
 		"modifier_locust"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-	
+		{	
 			"OnCreated"
 			{
-				"AttachEffect"
+				"RunScript"
 				{
-					"EffectName"		"particles/units/heroes/hero_weaver/weaver_bug_swarm.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"            "TARGET"
-					"ControlPointEntities"
-					{
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-					}
+					"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
+					"Function"		"LocustSwarmPhysics"
 				}
+
 				"AttachEffect"
 				{
 					"EffectName"		"particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
@@ -147,8 +122,7 @@
 						"TARGET"	"attach_origin"
 					}
 				}
-				
-			}	
+			}
 	
 			"States"
 			{
