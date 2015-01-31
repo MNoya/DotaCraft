@@ -70,7 +70,7 @@ function LocustSwarmStart( event )
 	local ability = event.ability
 	local playerID = caster:GetPlayerID()
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
-	local locusts = ability:GetLevelSpecialValueFor( "locusts", ability:GetLevel() - 1 )
+	local locusts = 1--ability:GetLevelSpecialValueFor( "locusts", ability:GetLevel() - 1 )
 	local delay_between_locusts = ability:GetLevelSpecialValueFor( "delay_between_locusts", ability:GetLevel() - 1 )
 	local unit_name = "npc_crypt_lord_locust"
 
@@ -113,6 +113,8 @@ function LocustSwarmPhysics( event )
 	unit:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 	unit:FollowNavMesh(false)
 	unit:SetPhysicsVelocityMax(locusts_speed)
+	unit:SetPhysicsVelocity(locusts_speed * RandomVector(1))
+	unit:SetPhysicsFriction(0)
 	unit:Hibernate(false)
 
 	-- Initial default state
@@ -124,33 +126,45 @@ function LocustSwarmPhysics( event )
 	-- This is set to repeat on each frame
 	unit:OnPhysicsFrame(function(unit)
 
+		-- Skip frames for the state check
+		frameCount = (frameCount + 1) % 3
+
+		-- Current positions
 		local source = caster:GetAbsOrigin()
 		local current_position = unit:GetAbsOrigin()
+		DebugDrawCircle(current_position, Vector(255,0,0), 0, 5, true, 10)
 
-		-- Skip 2 out of 3 frames for the state check
-		frameCount = (frameCount + 1) % 30
+		local point = current_position
 
-		if frameCount == 0 and unit.state == "idle" then
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), source, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, 
+										  DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-			-- Get a Point
-			local point = source + RandomVector(RandomInt(radius/2, radius))
+		-- Get a Point for idling and mark it
+		if unit.state == "idle" then
+			point = source + RandomVector(RandomInt(radius/2, radius))
+			DebugDrawCircle(point, Vector(0,0,255), 0, 10, true, duration)
+			unit.state = "target_acquired"
+		end
 
-			-- Mark It
-			DebugDrawCircle(point, Vector(255,0,0), 0, 10, true, 1)
-			DebugDrawCircle(point, Vector(255,0,0), 0, 20, true, 1)
-			DebugDrawCircle(point, Vector(255,0,0), 0, 30, true, 1)	
+		if unit.state == "target_acquired" then
+			if frameCount == 0 then
+				-- Get the direction
+				local diff = point - unit:GetAbsOrigin()
+		        diff.z = 0
+		        local direction = diff:Normalized()
 
-			-- Move towards it
-		    local distance = point - current_position
-          	distance.z = 0
-         	local direction = distance:Normalized()
-          	--local newaccel = unit:GetPhysicsAcceleration():Length() * direction
-         	--unit:SetPhysicsAcceleration(newaccel)
-         	unit:SetPhysicsAcceleration(direction * locusts_speed)
-         	print("new accel "..newaccel)
-
-         	-- Set the new state as target_acquired
-         	unit.state = "target_acquired"
+				-- Calculate the angle difference
+				local angle_difference = math.abs(RotationDelta(VectorToAngles(unit:GetPhysicsVelocity():Normalized()), VectorToAngles(direction)).y)
+				
+				-- Set the new velocity
+				if angle_difference > 0 then
+					local newVel = RotatePosition(Vector(0,0,0), QAngle(0,15,0), unit:GetPhysicsVelocity())
+					unit:SetPhysicsVelocity(newVel)
+				else		
+					local newVel = RotatePosition(Vector(0,0,0), QAngle(0,-15,0), unit:GetPhysicsVelocity())
+					unit:SetPhysicsVelocity(newVel)
+				end
+			end
 		end
 
 		-- Stop if set the state to end and reached the caster
@@ -167,8 +181,8 @@ function LocustSwarmPhysics( event )
 		        unit:SetPhysicsVelocity(Vector(0,0,0))
 		        unit:OnPhysicsFrame(nil)
 		        unit:RemoveSelf()
+		        print(distance:Length(),"removed")
 		    end
-		    print(distance:Length())
         end
     end)
 
