@@ -3675,6 +3675,18 @@
 			}
 		}
 	}
+	// Crypt Lord Locust Swarm
+	// Author: Noya
+	// Date: 29.01.2015.
+	// Notes: Creates a swarm of angry locusts that bite and tear at nearby enemy units. 
+	//As they chew the enemy flesh, they convert it into a substance that restores hit points to the Crypt Lord when they return.
+	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
+	//N/A	30 sec.	180 sec.	150	N/A	80	Air, Ground, Building, Neutral, Enemy	Creates Locust Swarm	6
+	
+	// Once "launched" the Locust Swarm will follow the Crypt Lord where he walks, heading out in an area around the Crypt Lord.
+	// 20 Locusts are released. 0.2 second delay between releasing each Locust. Up to 7 Locusts can target an enemy unit at the same time. 
+	// Fraction of damage dealt by Locusts that will be returned and collected by Crypt Lord: 0.75.
+	// The Locust must collect 20 hit points before returning it to the Crypt Lord.
 	"crypt_lord_locust_swarm"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -3683,6 +3695,8 @@
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 	
@@ -3695,7 +3709,7 @@
 		"precache"
 		{
 			"particle"  "particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -3713,32 +3727,48 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"10"//"30"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"locusts_speed"			"400"
+				"duration"				"30"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_distance"			"2000"	//teleports
+				"locusts_speed"			"400"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"give_up_distance"		"800"
+				"max_distance"			"2000"	//teleports
 			}
 			"06"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"give_up_distance"		"800"
+			}
+			"07"
+			{
 				"var_type"				"FIELD_FLOAT"
 				"delay_between_locusts"	"0.2"	//Means 4 seconds to spawn all 20 locusts
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"locust_damage"			"13"	//Physical damage instance on each collision
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"locust_heal_threshold"	"20"	//The ammount of physical damage that needs to be done to return and heal the caster
 			}
 		}
 	
 		"OnSpellStart"
 		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_locust_swarm"
+				"Target" 		"CASTER"
+			}
+	
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_locust_swarm"
@@ -3748,7 +3778,7 @@
 	
 			"FireSound"
 			{
-				"EffectName"	"Hero_DeathProphet.Exorcism.Cast"
+				"EffectName"	"Hero_Weaver.SwarmCast"
 				"Target" 		"CASTER"
 			}
 		}
@@ -3764,7 +3794,7 @@
 						"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
 						"Function"		"LocustSwarmStart"
 					}
-				}	
+				}
 	
 				"OnDestroy"
 				{
@@ -3809,6 +3839,7 @@
 					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"
 				}
 			}
 		}
@@ -6339,7 +6370,7 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle" 	"fireblast_explosion"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -6352,9 +6383,9 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Firelord Soul Burn
+	// Author: Noya
+	// Date: 30.1.2015.
 	// Notes: Wreaths an enemy unit in magical flames which cause damage over time, prevent the casting of spells, and reduce attack damage by 50%.
 	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	14 (6) sec.	12 sec.	85	70	N/A	Air, Ground, Enemy, Organic, Neutral	100 damage over 14 seconds.	1
@@ -6381,7 +6412,7 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle" 	"axe_battle_hunger"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -6423,7 +6454,7 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle" 	"invoker_forge_spirits_attacks"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -6463,7 +6494,7 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle" 	"arcana_sf_particles"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -12289,5 +12320,4 @@
 			}
 		}
 	}
-
 }

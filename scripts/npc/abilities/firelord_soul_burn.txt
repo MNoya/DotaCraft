@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Firelord Soul Burn
+// Author: Noya
+// Date: 30.1.2015.
 // Notes: Wreaths an enemy unit in magical flames which cause damage over time, prevent the casting of spells, and reduce attack damage by 50%.
 //Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	14 (6) sec.	12 sec.	85	70	N/A	Air, Ground, Enemy, Organic, Neutral	100 damage over 14 seconds.	1
@@ -27,7 +27,7 @@
 
 	"precache"
 	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"particle" 	"axe_battle_hunger"
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 	}
 	

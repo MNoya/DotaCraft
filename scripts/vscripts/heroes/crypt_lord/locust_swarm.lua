@@ -1,67 +1,5 @@
---[[<func_door> I think thats just what happens when you send them back and forth with momentum involved
-<Noya> its a elipse with random points and random "width"
-<BMD> spirits have 3 states, target_acquired, returning, and idle
-<BMD> exactly func_door
-<BMD> there's no elliptical calculation here
-<BMD> just an application of acceleration according to the state given
-<func_door> because the spirits have to return to the caster between each "attack"
-<BMD> with a maximum velocity
-<BMD> yeah
-<BMD> spirits acquire a random valid target within 700 range
-<Noya> and actually if you look at them, its not even 0.03 frames lol
-<Noya> its very choppy
-<BMD> if they are in idle state
-<func_door> yeah I've noticed the spirits can be pretty choppy
-<Noya> their "turn-rate" is awful in idle
-<BMD> and they then enter target_acquired
-<BMD> and get an acceleration towards that targetg
-<BMD> which adjusts in direction to keep it towards them
-<BMD> but not in magnitude
-<BMD> that rotates them out of their current idling trajectory
-<Noya> when the spell starts, if there are no targets, the spirits try to go to the max range possible
-<BMD> once they connect with the target, or it dies or gets out of range
-<BMD> they reacquire a target
-<BMD> though if they connect then they go into returning
-<BMD> where they aim for a random point within about 200 ish of DP
-<BMD> once reaching it they reenter idle
-<BMD> and idle behavior is just acquisition seeking plus randomized point selection and acceleration around DP
-<Noya> yeah it select points, then circles between them
-<Noya> some spirits just circle over the same path many times
-<BMD> yep
-<BMD> they'
-<BMD> they're likely given a point series relative to DP's position
-<BMD> that they run throuhg
-<BMD> but really idling doesn't matter that much, it's mainly just making sure the ghosts don't get lost while idling
-<BMD> so they keep up with DP and disappear/respawn when she goes over 2000 away
-<BMD> otherwise they can just jiggle around her like idiots
-<BMD> but acquired target and returning are more important, though also more simple it seems
-<Noya> wait is there actually AI tied to the hero autoattack?
-<Noya> I don't seem to notice it
-<Noya> i have a single enemy, cast exorcism, target an attack to it
-<Noya> meh I guess there is, but as its just 700 range it doesn't matter
-<Noya> need more targets
-<BMD> yeah if they're outside the autoacquisition range they prioritize the right clicked target it sees
-<BMD> seems
-<BMD> and there are some things that they won't attack if you don't
-<BMD> like healing wards, observer wards, etc
-<Noya> there's modifier_death_prophet_exorcism _start_spirit_duration and _start_time
-<Noya> the start_time is probaby the spawning, as they dont spawn all at the same time
-<Noya> and yes they totally focus the right clicked target
-<BMD> yeah each spirit spawns .1 seconds apart supposedly
-<Noya> but still keep the physics momentum of attack-return
-<BMD> yep
-<Noya> locust swarm wc3 its 0.2
-<BMD> i don't believe they reacquire
-<BMD> like if you have two targets and they auto select 1
-<BMD> and you right click the other
-<BMD> i think they have to finish their attack
-<BMD> or lose it to death/out of range
-<BMD> oh i guess there's a 4th state which is return_to_die or whatever
-<BMD> when it times out
-<BMD> the spirit has to go right back and heal up DP]]
-
 --[[
-	Author: Noya
+	Author: Noya, BMD
 	Date: 25.01.2015.
 	Spawns locusts swarms
 ]]
@@ -70,6 +8,7 @@ function LocustSwarmStart( event )
 	local ability = event.ability
 	local playerID = caster:GetPlayerID()
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
+	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
 	local locusts = 1--ability:GetLevelSpecialValueFor( "locusts", ability:GetLevel() - 1 )
 	local delay_between_locusts = ability:GetLevelSpecialValueFor( "delay_between_locusts", ability:GetLevel() - 1 )
 	local unit_name = "npc_crypt_lord_locust"
@@ -84,18 +23,22 @@ function LocustSwarmStart( event )
 
 			-- The modifier takes care of the logic and particles of each unit
 			ability:ApplyDataDrivenModifier(caster, unit, "modifier_locust", {})
-
+			
 			-- Add the spawned unit to the table
 			table.insert(caster.swarm, unit)
 
 			-- Double check to kill the units, remove this later
-			Timers:CreateTimer(20, function() if unit and IsValidEntity(unit) then unit:RemoveSelf() end end)
+			Timers:CreateTimer(duration+20, function() if unit and IsValidEntity(unit) then unit:RemoveSelf() end end)
 		end)
 	end
 end
 
 -- Movement logic for each locust
--- Spirits have 3 states: target_acquired, returning and idle
+-- Units have 4 main states: 
+	-- acquiring: transition after completing one target-return cycle.
+	-- target_acquired: tracking an enemy to collide and deal damage to it
+	-- returning: After colliding with an enemy, move back to the casters location
+	-- idle: When no enemy is found, just go to a random point
 function LocustSwarmPhysics( event )
 	local caster = event.caster
 	local unit = event.target
@@ -103,6 +46,10 @@ function LocustSwarmPhysics( event )
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
 	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
 	local locusts_speed = ability:GetLevelSpecialValueFor( "locusts_speed", ability:GetLevel() - 1 )
+	local locust_damage = ability:GetLevelSpecialValueFor( "locust_damage", ability:GetLevel() - 1 )
+	local locust_heal_threshold = ability:GetLevelSpecialValueFor( "locust_heal_threshold", ability:GetLevel() - 1 )
+	local abilityDamageType = ability:GetAbilityDamageType()
+	local abilityTargetType = ability:GetAbilityTargetType()
 
 	-- Make the locust a physics unit
 	Physics:Unit(unit)
@@ -118,10 +65,25 @@ function LocustSwarmPhysics( event )
 	unit:Hibernate(false)
 
 	-- Initial default state
-	unit.state = "idle"
+	unit.state = "acquiring"
 
 	-- This is to skip frames
 	local frameCount = 0
+
+	-- Store the damage done
+	unit.damage_done = 0
+
+	-- Color Debugging for points and paths. Turn it false later!
+	local Debug = true
+	local pathColor = Vector(255,255,255) -- White to draw 
+	local targetColor = Vector(255,0,0) -- Red for enemy targets
+	local idleColor = Vector(0,255,0) -- Green for moving to idling points
+	local returnColor = Vector(0,0,255) --
+	local endColor = Vector(0,0,0) -- Back when returning to the caster to end
+	local draw_duration = 3
+
+	-- Find one target point at random which will be used for the first acquisition.
+	point = caster:GetAbsOrigin() + RandomVector(RandomInt(radius/2, radius))
 
 	-- This is set to repeat on each frame
 	unit:OnPhysicsFrame(function(unit)
@@ -132,63 +94,166 @@ function LocustSwarmPhysics( event )
 		-- Current positions
 		local source = caster:GetAbsOrigin()
 		local current_position = unit:GetAbsOrigin()
-		DebugDrawCircle(current_position, Vector(255,0,0), 0, 5, true, 10)
 
-		local point = current_position
+		-- Print the path on Debug mode
+		if Debug then DebugDrawCircle(current_position, pathColor, 0, 2, true, draw_duration) end
 
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), source, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, 
-										  DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemies = nil
+		local target_enemy = nil
 
-		-- Get a Point for idling and mark it
-		if unit.state == "idle" then
-			point = source + RandomVector(RandomInt(radius/2, radius))
-			DebugDrawCircle(point, Vector(0,0,255), 0, 10, true, duration)
-			unit.state = "target_acquired"
-		end
+		-- TARGETING
+		-- If the unit doesn't have a target locked, find enemies near the caster
+		if unit.state == "acquiring" then
+			enemies = FindUnitsInRadius(caster:GetTeamNumber(), source, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, 
+										  abilityTargetType, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			print(abilityTargetType)
 
-		if unit.state == "target_acquired" then
-			if frameCount == 0 then
-				-- Get the direction
-				local diff = point - unit:GetAbsOrigin()
-		        diff.z = 0
-		        local direction = diff:Normalized()
+			-- Select one enemy if we found one
+			if (#enemies) > 0 then
+				target_enemy = enemies[RandomInt(1, #enemies)]
+			end
 
-				-- Calculate the angle difference
-				local angle_difference = math.abs(RotationDelta(VectorToAngles(unit:GetPhysicsVelocity():Normalized()), VectorToAngles(direction)).y)
+			-- Keep track of it
+			if target_enemy then
+				unit.state = "target_acquired"
+				unit.current_target = target_enemy
+				print("Target acquired ->",unit.current_target:GetUnitName())
+			
+			-- If no enemies, set the unit to idle.
+			else
+				unit.state = "idle"
+				unit.current_target = nil
+				print("No Target found, idling")
 				
-				-- Set the new velocity
-				if angle_difference > 0 then
-					local newVel = RotatePosition(Vector(0,0,0), QAngle(0,15,0), unit:GetPhysicsVelocity())
-					unit:SetPhysicsVelocity(newVel)
-				else		
-					local newVel = RotatePosition(Vector(0,0,0), QAngle(0,-15,0), unit:GetPhysicsVelocity())
-					unit:SetPhysicsVelocity(newVel)
-				end
+				-- It will go to a random position and then return, to acquire a new target on the next loop
+				-- As we are sure this point won't be moved, we don't need to update it on each frame, just once every cycle.
+				point = caster:GetAbsOrigin() + RandomVector(RandomInt(radius/2, radius))
+
+				-- Mark this point. The duration has to be longer, becase this isn't updated on each frame
+				if Debug then DebugDrawCircle(point, idleColor, 100, 25, true, draw_duration*5) end
+			end
+		end
+		
+		-- We need this somewhere:
+		--if dist > 2000 then setabsorigin(caster absorigbin); state = idle end
+		--in acquisition it's if dist > 1200 then state = returning
+
+		-- MOVEMENT
+		if frameCount == 0 then
+
+			-- Update the point
+			-- if target_acquired, the point is the target's current position
+			if unit.state == "target_acquired" then
+				point = unit.current_target:GetAbsOrigin()
+				if Debug then DebugDrawCircle(point, targetColor, 100, 25, true, draw_duration) end
+
+			-- if returning, the point is the caster's current position
+			elseif unit.state == "returning" then
+				point = source
+				if Debug then DebugDrawCircle(point, returnColor, 100, 25, true, draw_duration) end
+			
+			-- if set the state to end, the point is also the caster position, but the units won't acquire new targets after colliding.
+			elseif unit.state == "end" then
+				point = source
+				DebugDrawCircle(point, endColor, 100, 25, true, 2)			   
+	        end
+
+			-- Get the direction
+			local diff = point - unit:GetAbsOrigin()
+	        diff.z = 0
+	        local direction = diff:Normalized()
+
+			-- Calculate the angle difference
+			local angle_difference = RotationDelta(VectorToAngles(unit:GetPhysicsVelocity():Normalized()), VectorToAngles(direction)).y
+			
+			-- Set the new velocity
+			if math.abs(angle_difference) < 5 then
+				-- CLAMP
+				local newVel = unit:GetPhysicsVelocity():Length() * direction
+				unit:SetPhysicsVelocity(newVel)
+			elseif angle_difference > 0 then
+				local newVel = RotatePosition(Vector(0,0,0), QAngle(0,10,0), unit:GetPhysicsVelocity())
+				unit:SetPhysicsVelocity(newVel)
+			else		
+				local newVel = RotatePosition(Vector(0,0,0), QAngle(0,-10,0), unit:GetPhysicsVelocity())
+				unit:SetPhysicsVelocity(newVel)
 			end
 		end
 
-		-- Stop if set the state to end and reached the caster
-		if unit.state == "end" then
+		-- COLLISION
+		-- Check if enemy near enough + unit attack target to acquire target
+		-- Switch state and dump out on acquire
+		local dist = (point - current_position):Length()
+		local collision = dist < 50
 
-		    -- Retarget acceleration vector
-		    local distance = source - current_position
-		    local direction = distance:Normalized()
-		    unit:SetPhysicsAcceleration(direction * 500)
-		      
-		    -- Stop if reached the unit
-		    if distance:Length() < 100 then
-		        unit:SetPhysicsAcceleration(Vector(0,0,0))
-		        unit:SetPhysicsVelocity(Vector(0,0,0))
+		-- If the unit collided with target position, change the state accordingly
+		if collision then
+
+			-- If the state is idle, it reached the desired random point.
+			-- Here we allow reacquiring a target
+			if unit.state == "idle" then
+				unit.state = "acquiring"
+				print("Attempting to acquire a new target")
+			
+			-- If the state was to follow a target enemy, it means the unit can perform an attack. 
+			-- Do physical damage here, and increase heal counter. 
+			-- Also set to come back to the caster if the locust_heal_threshold has been dealt
+			elseif unit.state == "target_acquired" then
+
+				-- Fire Sound on the target unit
+				unit.current_target:EmitSound("Hero_Weaver.SwarmAttach"	)
+
+				-- Damage, units will still try to collide with attack immune targets but the damage wont be applied
+				if not unit.current_target:IsAttackImmune() then
+					local damage_table = {}
+
+					damage_table.victim = unit.current_target
+					damage_table.attacker = caster					
+					damage_table.damage_type = abilityDamageType
+					damage_table.damage = locust_damage
+
+					ApplyDamage(damage_table)
+
+					-- Calculate how much physical damage was dealt
+					local targetArmor = unit.current_target:GetPhysicalArmorValue()
+					local damageReduction = ((0.06 * targetArmor) / (1 + 0.06 * targetArmor))
+					local damagePostReduction = locust_damage * (1 - damageReduction)
+					print(locust_damage, damageReduction, damagePostReduction)
+
+					unit.damage_done = unit.damage_done + damagePostReduction	
+				end
+
+				-- Send the unit back to return, or keep attacking new targets
+				if unit.damage_done >= locust_heal_threshold then
+					unit.state = "returning"
+					print("Returning to caster after dealing ",unit.damage_done)
+				else
+					unit.state = "acquiring"
+					print("Locust attacked but still needs more damage to return back to the caster: ",unit.damage_done)
+				end
+
+			-- If it was a collision on a return (meaning it reached the caster), change to acquiring so it finds a new target
+			-- Also heal the caster on each return of a locust
+			elseif unit.state == "returning" then
+				unit.state = "acquiring"
+
+				caster:Heal(locust_heal_threshold, ability)
+				print("Healed")
+
+				-- Reset the damage done
+				unit.damage_done = 0
+			
+			-- Last collision ends the unit
+			elseif unit.state == "end" then
+				unit:SetPhysicsVelocity(Vector(0,0,0))
 		        unit:OnPhysicsFrame(nil)
 		        unit:RemoveSelf()
-		        print(distance:Length(),"removed")
 		    end
-        end
+		end
     end)
-
 end
 
--- 4th state is returning to the caster to end the ability
+-- Change the state to end when the modifier is removed
 function LocustSwarmEnd( event )
 	local caster = event.caster
 	local targets = caster.swarm
