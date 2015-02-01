@@ -3743,7 +3743,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"give_up_distance"		"1200" //Max distance to follow a target acquired
+				"give_up_distance"		"900" //Max distance to follow a target acquired
 			}
 			"07"
 			{
@@ -3804,6 +3804,11 @@
 	
 				"OnDeath"
 				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_NyxAssassin.Death"
+						"Target" 		"CASTER"
+					}
 					"RunScript"
 					{
 						"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
@@ -3917,17 +3922,9 @@
 					{
 						"ScriptFile"	"heroes/crypt_lord/spiked_carapace.lua"
 						"Function"		"SpikedCarapace"
+						"Damage"		"%attack_damage"
 					}
 				}
-	
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/crypt_lord/spiked_carapace.lua"
-						"Function"		"SpikedCarapaceDamage"
-					}
-				}	
 			}
 		}
 	}
@@ -6805,15 +6802,7 @@
 					{
 						"ScriptFile"	"heroes/keeper/thorns_aura.lua"
 						"Function"		"ThornsAura"
-					}
-				}
-	
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/keeper/thorns_aura.lua"
-						"Function"		"ThornsAuraDamage"
+						"Damage"		"%attack_damage"
 					}
 				}	
 			}

@@ -79,7 +79,7 @@ function LocustSwarmPhysics( event )
 	unit.damage_done = 0
 
 	-- Color Debugging for points and paths. Turn it false later!
-	local Debug = true
+	local Debug = false
 	local pathColor = Vector(255,255,255) -- White to draw path
 	local targetColor = Vector(255,0,0) -- Red for enemy targets
 	local idleColor = Vector(0,255,0) -- Green for moving to idling points
