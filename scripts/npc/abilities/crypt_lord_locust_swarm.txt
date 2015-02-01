@@ -32,6 +32,7 @@
 	"precache"
 	{
 		"particle"  "particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
+		"particle"	"particles/units/heroes/hero_weaver/weaver_base_attack_explosion.vpcf"
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
 	}
 	
@@ -65,7 +66,7 @@
 		"06"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"give_up_distance"		"800"
+			"give_up_distance"		"1200" //Max distance to follow a target acquired
 		}
 		"07"
 		{
@@ -80,7 +81,12 @@
 		"09"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"locust_heal_threshold"	"20"	//The ammount of physical damage that needs to be done to return and heal the caster
+			"locust_heal_threshold"	"20"	//The amount of physical damage that needs to be done to return and heal the caster
+		}
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"max_locusts_on_target"	"7"	//Max counter of units locked onto one target, find another or idle if this threshold is met
 		}
 	}
 
@@ -116,6 +122,20 @@
 				{
 					"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
 					"Function"		"LocustSwarmStart"
+				}
+			}
+
+			"OnDeath"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_NyxAssassin.Death"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
+					"Function"		"LocustSwarmDeath"
 				}
 			}
 
