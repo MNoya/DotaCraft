@@ -65,15 +65,7 @@
 				{
 					"ScriptFile"	"heroes/keeper/thorns_aura.lua"
 					"Function"		"ThornsAura"
-				}
-			}
-
-			"OnTakeDamage"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/keeper/thorns_aura.lua"
-					"Function"		"ThornsAuraDamage"
+					"Damage"		"%attack_damage"
 				}
 			}	
 		}

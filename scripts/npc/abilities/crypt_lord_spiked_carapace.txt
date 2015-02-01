@@ -56,17 +56,9 @@
 				{
 					"ScriptFile"	"heroes/crypt_lord/spiked_carapace.lua"
 					"Function"		"SpikedCarapace"
+					"Damage"		"%attack_damage"
 				}
 			}
-
-			"OnTakeDamage"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/crypt_lord/spiked_carapace.lua"
-					"Function"		"SpikedCarapaceDamage"
-				}
-			}	
 		}
 	}
 }
