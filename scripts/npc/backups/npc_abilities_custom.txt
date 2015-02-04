@@ -3859,7 +3859,7 @@
 					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"
+					"MODIFIER_STATE_DISARMED"						"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -11654,9 +11654,9 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Tinker Cluster Rockets
+	// Author: Noya
+	// Date: 03.02.2015.
 	// Notes: Bombards an area with rockets, stunning enemy land units for 1 second and damaging nearby enemy units.
 	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	1 sec.	6 sec.	70	80	23	Ground, Enemy, Neutral, Building	30 damage	1
@@ -11668,37 +11668,175 @@
 		"AbilityTextureName"			"tinker_cluster_rockets"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"6.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"70"
+		"AbilityDamage"					"35 65 100"
+	
+		"AOERadius"						"%radius"
+		"AbilityChannelTime"			"0.5 1.0 1.5"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle" 	"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_rocket_barrage.vpcf"
+			"particle"  "particles/units/heroes/hero_tinker/tinker_missile.vpcf"
+			"particle"	"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+			"particle"	"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"230 260 290"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_duration"			"1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_radius"		"100"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"Hero_Tinker.Heat-Seeking_Missile"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_cluster_rockets"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/tinker/cluster_rockets.lua"
+				"Function"		"StartClusterRockets"
+				"Target"		"POINT"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_cluster_rockets"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"Hero_Gyrocopter.Rocket_Barrage.Impact"
+			}
+		
+			"FireEffect"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+				"ControlPointEntities"
+				{
+					"TARGET"		"attach_origin"
+				}
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"PROJECTILE"
+					"Radius" 	"%projectile_radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+				}
+			
+				"Action"    
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Damage"	"%AbilityDamage"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+					}
+	
+					"Stun"
+					{
+						"Duration"   "%stun_duration"
+						"Target" 	 "TARGET"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_cluster_rockets"
+			{
+				"IsHidden"			"1"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+						"EffectAttachType"  "attach_origin"
+						"Target"            "CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_origin"
+							"CASTER"	"attach_attack1"
+						}
+					}
+				}
+		
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "Hero_Gyrocopter.Rocket_Barrage.Launch"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/tinker/cluster_rockets.lua"
+						"Function"		"FireClusterRocket"
+					}
+				}
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Tinker Engineering Upgrade
+	// Author: Noya
+	// Date: 03.02.2015.
 	// Notes: Improves other Tinker abilities with each level learned:
 	//Cluster Rockets - Larger Area.
 	//Pocket Factory - Builds Clockwerk Goblins more quickly.
@@ -11711,37 +11849,71 @@
 		"AbilityTextureName"			"tinker_engineering_upgrade"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
-	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
-	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-		}
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"2 4 6"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_movement_speed"			"10 20 30"
+			}
+			"03"
+			{
+				"var_type"					 	"FIELD_FLOAT"
+				"factory_spawn_time_reduced"	"1.0 2.0 3.0"
+			}
+			"04"
+			{	
+				"var_type"						"FIELD_INTEGER"
+				"cluster_extra_radius"			"30 60 90"
+			}
+			"05"
+			{	
+				"var_type"						"FIELD_INTEGER"
+				"robo_goblin_extra_str"			"2 4 6"
+			}
+			"05"
+			{	
+				"var_type"						"FIELD_INTEGER"
+				"robo_goblin_extra_armor"		"1 2 3"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_engineering_upgrade"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 		"%bonus_damage"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%bonus_movement_speed" 
+				}
+			}
+	
+			"modifier_robo_goblin_upgrade"
+			{
+				"IsHidden"			"1"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%robo_goblin_extra_str"
+				    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" 		"%robo_goblin_extra_armor" 
+				}
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Tinker Pocket Factory
+	// Author: Noya
+	// Date: 03.02.2015.
 	// Notes: Creates a factory which automatically constructs Clockwerk Goblins. Clockwerk Goblins explode upon death, causing damage to nearby enemy units.
 	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	45 sec.	35 sec.	125	50	N/A	N/A	30 damage	1
@@ -11753,31 +11925,193 @@
 		"AbilityTextureName"			"tinker_pocket_factory"
 		"MaxLevel" 						"3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 	
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"35.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"125"
 	
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+	
+			//Factory
+			"model"		"models/buildings/building_plain_reference.vmdl"
+	
+			//Goblins
+			"model"		"models/heroes/rattletrap/rattletrap.vmdl"
+			"model"		"models/items/rattletrap/forge_warrior_claw/forge_warrior_claw.vmdl"
+			"model"		"models/items/rattletrap/forge_warrior_helm/forge_warrior_helm.vmdl"
+			"model"		"models/items/rattletrap/forge_warrior_steam_exoskeleton/forge_warrior_steam_exoskeleton.vmdl"
+			"model"		"models/items/rattletrap/forge_warrior_rocket_cannon/forge_warrior_rocket_cannon.vmdl"
+			"particle"	"particles/econ/items/clockwerk/clockwerk_mortar_forge/clockwerk_mortar_ambient.vpcf"
+			
+			//Goblin Ability
+			"particle"	"particles/units/heroes/hero_techies/techies_suicide.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"			"FIELD_INTEGER"
+				"factory_duration"	"45"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Tinker.Rearm"
+				"Target" 		"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/tinker/pocket_factory.lua"
+				"Function"		"BuildPocketFactory"
+				"Target"		"POINT"
+			}
+		}
+	}
+	
+	//Goblins have a limited duration and have suicide ability
+	"tinker_pocket_factory_spawn_goblin"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tinker_pocket_factory"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"AbilityCooldown"				"8.0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"goblin_duration"	"10"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"spawn_ratio"		"5.0"
+			}
+			"03"
+			{
+				"var_type"					 "FIELD_FLOAT"
+				"reduction_per_eng_level"	"1.0"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spawn_goblin"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/tinker/pocket_factory.lua"
+						"Function"		"StartGoblinSpawn"
+					}
+				}
+			}
+		}
+	}
+	
+	//Explosion deals 30/60/80 damage.
+	"tinker_clockwerk_goblin_kaboom"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"creep_kaboom"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"	"tinker_clockwerk_goblin_kaboom"
+		"MaxLevel"				"3"
+	
+		"AbilityCastRange"		"100"
+		"AbilityCastPoint"		"0.0"
+	
+		"AbilityDamage"			"30 60 80"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"small_radius"		"100"
+			}
+	
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"big_radius"		"250"
+			}
+	
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"big_radius_dmg"	"0.5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"Target"		"CASTER"
+				"EffectName"	"particles/units/heroes/hero_techies/techies_suicide.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Techies.Suicide"
+				"Target"	"CASTER"
+			}
+	
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%small_radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+				"Damage"	"%AbilityDamage * %big_radius_dmg"
+				"Type"	"DAMAGE_TYPE_MAGICAL"
+			}
+			
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%big_radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+				"Damage"	"%AbilityDamage * %big_radius_dmg"
+				"Type"	"DAMAGE_TYPE_MAGICAL"
+			}
+			
+			"Damage"
+			{
+				"Target"	"CASTER"			
+				"Damage"	"99999"
+				"Type"		"DAMAGE_TYPE_PURE"
 			}
 		}
 	}
@@ -11798,31 +12132,227 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityCastAnimation"			"ACT_DOTA_TINKER_REARM3"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8.0"
+		"AbilityCastPoint"				"1.0"
+		"AbilityCooldown"				"0.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"75 130 200"
+		"AbilityManaCost"				"25"
 	
 		"precache"
 		{
 			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"model"		"models/courier/mechjaw/mechjaw.vmdl"
 		}
 		
 		"AbilitySpecial"
 		{
 			"01"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"extra_str"				"11"
+			}
+			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
+				"var_type"				"FIELD_INTEGER"
+				"extra_armor"			"4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"extra_dmg_to_buildings"	"3.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.0"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"LevelUpAbility"
+			{
+				"Target" 		"CASTER"
+				"AbilityName"	"tinker_normal_form"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Tinker.RearmStart"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_robot_transform"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_robot_transform"
+			{
+				"Duration"		"%transformation_time"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invulnerable"
+						"Target"		"CASTER"
+						"Duration"		"0.03"
+					}
+				}
+	
+				"OnDestroy"
+				{			
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_robot_form"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_robot_form"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+			
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/tinker/robo_goblin.lua"
+						"Function"				"RoboGoblinStart"
+						"model"					"models/courier/mechjaw/mechjaw.vmdl"
+						"sub_ability_name"		"tinker_normal_form"
+						"upgrade_ability_name"	"tinker_engineering_upgrade"
+						"sub_modifier_name"		"modifier_robo_goblin_upgrade"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"tinker_tink_spawn_03"
+						"Target"		"CASTER"
+					}
+	
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%extra_str"
+				    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%extra_armor" 
+				}
+			}
+		}
+	}
+	
+	// Transform back
+	"tinker_normal_form"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"tinker_robo_goblin"
+		"MaxLevel"						"1"
+		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityCastAnimation"			"ACT_DOTA_TINKER_REARM3"
+	
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"1.0"
+	
+		"AbilityManaCost"				"25"
+	
+		"precache"
+		{
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"model"		"models/courier/mechjaw/mechjaw.vmdl"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"extra_str"				"5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"extra_armor"			"1 4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"extra_dmg_to_buildings"	"3.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.0"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_tinker_transform"
+				"Target"		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Tinker.Rearm"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_tinker_transform"
+			{
+				"Duration"		"%transformation_time"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invulnerable"
+						"Target"		"CASTER"
+						"Duration"		"0.03"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/tinker/robo_goblin.lua"
+						"Function"				"RoboGoblinEnd"
+						"main_ability_name"		"tinker_robo_goblin"
+						"remove_modifier_name"	"modifier_robot_form"
+						"sub_modifier_name"		"modifier_robo_goblin_upgrade"					
+					}
+				}
 			}
 		}
 	}

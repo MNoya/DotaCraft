@@ -306,10 +306,15 @@
 	{
 		"override_hero" "npc_dota_hero_tinker"
 	
+		"AbilityLayout"	"4"
 		"Ability1" "tinker_pocket_factory"
 		"Ability2" "tinker_cluster_rockets"
 		"Ability3" "tinker_engineering_upgrade"
 		"Ability4" "tinker_robo_goblin"
+		"Ability5" "tinker_normal_form"
+
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"			"128"
 	}
 
 	// Firelord

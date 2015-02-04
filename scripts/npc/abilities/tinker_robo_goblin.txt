@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Tinker Robo Goblin
+// Author: Noya
+// Date: 03.02.2015.
 // Notes: Transforms the Tinker into a Robo-Goblin, a powerful armored form that has the following traits:
 //-Bonus Strength and armor.
 //-Use of the Demolish ability, which grants bonus damage against buildings.
@@ -15,31 +15,227 @@
 	"MaxLevel"						"1"
 	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityCastAnimation"			"ACT_DOTA_TINKER_REARM3"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastPoint"				"1.0"
+	"AbilityCooldown"				"0.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"25"
 
 	"precache"
 	{
 		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		"model"		"models/courier/mechjaw/mechjaw.vmdl"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
+		{	
+			"var_type"				"FIELD_INTEGER"
+			"extra_str"				"5"
+		}
+		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"extra_armor"			"1"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"extra_dmg_to_buildings"	"3.5"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"transformation_time"	"1.0"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"LevelUpAbility"
+		{
+			"Target" 		"CASTER"
+			"AbilityName"	"tinker_normal_form"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Tinker.RearmStart"
+			"Target" 		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_robot_transform"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_robot_transform"
+		{
+			"Duration"		"%transformation_time"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_invulnerable"
+					"Target"		"CASTER"
+					"Duration"		"0.03"
+				}
+			}
+
+			"OnDestroy"
+			{			
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_robot_form"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+
+		"modifier_robot_form"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+		
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/tinker/robo_goblin.lua"
+					"Function"				"RoboGoblinStart"
+					"model"					"models/courier/mechjaw/mechjaw.vmdl"
+					"sub_ability_name"		"tinker_normal_form"
+					"upgrade_ability_name"	"tinker_engineering_upgrade"
+					"sub_modifier_name"		"modifier_robo_goblin_upgrade"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"tinker_tink_spawn_03"
+					"Target"		"CASTER"
+				}
+
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%extra_str"
+			    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%extra_armor" 
+			}
+		}
+	}
+}
+
+// Transform back
+"tinker_normal_form"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"tinker_robo_goblin"
+	"MaxLevel"						"1"
+	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityCastAnimation"			"ACT_DOTA_TINKER_REARM3"
+
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"1.0"
+
+	"AbilityManaCost"				"25"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		"model"		"models/courier/mechjaw/mechjaw.vmdl"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{	
+			"var_type"				"FIELD_INTEGER"
+			"extra_str"				"5"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"extra_armor"			"1 4"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"extra_dmg_to_buildings"	"3.5"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"transformation_time"	"1.0"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_tinker_transform"
+			"Target"		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Tinker.Rearm"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_tinker_transform"
+		{
+			"Duration"		"%transformation_time"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_invulnerable"
+					"Target"		"CASTER"
+					"Duration"		"0.03"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/tinker/robo_goblin.lua"
+					"Function"				"RoboGoblinEnd"
+					"main_ability_name"		"tinker_robo_goblin"
+					"remove_modifier_name"	"modifier_robot_form"
+					"sub_modifier_name"		"modifier_robo_goblin_upgrade"					
+				}
+			}
 		}
 	}
 }

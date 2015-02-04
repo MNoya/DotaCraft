@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Tinker Engineering Upgrade
+// Author: Noya
+// Date: 03.02.2015.
 // Notes: Improves other Tinker abilities with each level learned:
 //Cluster Rockets - Larger Area.
 //Pocket Factory - Builds Clockwerk Goblins more quickly.
@@ -13,31 +13,65 @@
 	"AbilityTextureName"			"tinker_engineering_upgrade"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
-
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
-
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
-	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"						"FIELD_INTEGER"
+			"bonus_damage"					"2 4 6"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_movement_speed"			"10 20 30"
+		}
+		"03"
+		{
+			"var_type"					 	"FIELD_FLOAT"
+			"factory_spawn_time_reduced"	"1.0 2.0 3.0"
+		}
+		"04"
+		{	
+			"var_type"						"FIELD_INTEGER"
+			"cluster_extra_radius"			"30 60 90"
+		}
+		"05"
+		{	
+			"var_type"						"FIELD_INTEGER"
+			"robo_goblin_extra_str"			"2 4 6"
+		}
+		"05"
+		{	
+			"var_type"						"FIELD_INTEGER"
+			"robo_goblin_extra_armor"		"1 2 3"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_engineering_upgrade"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 		"%bonus_damage"
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%bonus_movement_speed" 
+			}
+		}
+
+		"modifier_robo_goblin_upgrade"
+		{
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%robo_goblin_extra_str"
+			    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" 		"%robo_goblin_extra_armor" 
+			}
 		}
 	}
 }

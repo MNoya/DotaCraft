@@ -68,6 +68,7 @@ function LocustSwarmPhysics( event )
 	unit:SetPhysicsVelocity(locusts_speed * RandomVector(1))
 	unit:SetPhysicsFriction(0)
 	unit:Hibernate(false)
+	unit:SetGroundBehavior(PHYSICS_GROUND_LOCK)
 
 	-- Initial default state
 	unit.state = "acquiring"
@@ -238,7 +239,7 @@ function LocustSwarmPhysics( event )
 						ParticleManager:SetParticleControlEnt(particle, 3, unit.current_target, PATTACH_POINT_FOLLOW, "attach_hitloc", unit.current_target:GetAbsOrigin(), true)
 
 						-- Fire Sound on the target unit
-						unit.current_target:EmitSound("Hero_Weaver.SwarmAttach"	)
+						unit.current_target:EmitSound("Hero_Weaver.SwarmAttach")
 						
 						-- Decrease the locusts_locked counter
 						unit.current_target.locusts_locked = unit.current_target.locusts_locked - 1
