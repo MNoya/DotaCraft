@@ -134,6 +134,17 @@
 
 			}
 
+			"OnAttackLanded"
+			// "%attack_damage" is set to the damage value before mitigation
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/tinker/robo_goblin.lua"
+					"Function"		"DealSiegeDamage"
+					"Damage"		"%attack_damage"
+				}
+			}
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%extra_str"

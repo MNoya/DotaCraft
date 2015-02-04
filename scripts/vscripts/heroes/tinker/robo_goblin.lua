@@ -60,3 +60,26 @@ function RoboGoblinEnd( event )
 	caster:RemoveModifierByName(modifier)
 	caster:RemoveModifierByName(sub_modifier_name)
 end
+
+
+--[[
+	Author: Noya
+	Date: 04.02.2015.
+	Checks if the attacked target is a building and deals extra physical damage if so
+]]
+function DealSiegeDamage( event )
+ 	-- Variables
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+	local attack_damage = event.Damage
+	local extra_dmg_to_buildings =  ability:GetLevelSpecialValueFor( "extra_dmg_to_buildings" , ability:GetLevel() - 1  )
+	local damage = attack_damage * ( extra_dmg_to_buildings - 1)
+	
+	print("damage siege")
+	if target.GetInvulnCount then
+		print(damage)
+		ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
+	end
+
+ end 

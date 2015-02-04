@@ -16,6 +16,7 @@ function BuildPocketFactory( event )
 	caster.pocket_factory = CreateUnitByName(building_name, point, true, caster, caster, caster:GetTeam())
 	caster.pocket_factory:AddNewModifier(caster, nil, "modifier_kill", {duration = factory_duration})
 	caster.pocket_factory:RemoveModifierByName("modifier_invulnerable")
+	caster.pocket_factory.no_corpse = true
 	Timers:CreateTimer(0.03, function() caster.pocket_factory:SetAbsOrigin(point) end)
 
 	-- Add the ability and set its level

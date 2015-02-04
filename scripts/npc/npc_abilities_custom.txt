@@ -6382,7 +6382,7 @@
 	
 		"precache"
 		{
-			"particle" 	"fireblast_explosion"
+			"particle" 	"particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -6424,7 +6424,7 @@
 	
 		"precache"
 		{
-			"particle" 	"axe_battle_hunger"
+			"particle" 	"particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
@@ -6468,6 +6468,7 @@
 		{
 			"particle" 	"invoker_forge_spirits_attacks"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"model"		"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
 		}
 		
 		"AbilitySpecial"
@@ -12115,9 +12116,9 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Tinker Robo Goblin
+	// Author: Noya
+	// Date: 03.02.2015.
 	// Notes: Transforms the Tinker into a Robo-Goblin, a powerful armored form that has the following traits:
 	//-Bonus Strength and armor.
 	//-Use of the Demolish ability, which grants bonus damage against buildings.
@@ -12249,6 +12250,17 @@
 						"Target"		"CASTER"
 					}
 	
+				}
+	
+				"OnAttackLanded"
+				// "%attack_damage" is set to the damage value before mitigation
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/tinker/robo_goblin.lua"
+						"Function"		"DealSiegeDamage"
+						"Damage"		"%attack_damage"
+					}
 				}
 	
 				"Properties"
