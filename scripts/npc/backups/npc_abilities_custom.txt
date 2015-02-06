@@ -6897,7 +6897,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_6"
 	
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"1.67"	
@@ -6935,6 +6934,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"stun_duration"			"100"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_volcano_channelling"
+				"Target" 		"CASTER"
+				"Duration"		"1.67"
 			}
 		}
 	
@@ -6983,22 +6992,22 @@
 	    
 	    "Modifiers"
 	    {
-	        "modifier_volcano_channelling"
-	        {
-	        	"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
-	        	"IsHidden"				"1"
-	            "ThinkInterval"			"1.7"
-	            "OnIntervalThink"
-	         	{
-	         		"ApplyModifier"
-	         		{
-	         			"ModifierName"	"modifier_channeling"
-	         			"Target" 		"CASTER"
-	         			"Duration"		"1.67"
-	         		}
-				}
-			}
-	
+	        //"modifier_volcano_channelling"
+	        //{
+	        //	"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
+	       // 	"IsHidden"				"1"
+	         //   "ThinkInterval"			"1.7"
+	        //    "OnIntervalThink"
+	         //	{
+	         //		"ApplyModifier"
+	        // 		{
+	        // 			"ModifierName"	"modifier_channeling"
+	        // 			"Target" 		"CASTER"
+	         //			"Duration"		"1.67"
+	         //		}
+			//	}
+		//	}
+	//
 			"modifier_channeling"
 			{
 				"IsHidden"				"1"
@@ -12838,7 +12847,7 @@
 	"tinker_normal_form"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"tinker_robo_goblin"
+		"AbilityTextureName"			"tinker_normal_form"
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	

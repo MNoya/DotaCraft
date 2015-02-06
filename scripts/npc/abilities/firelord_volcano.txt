@@ -5,6 +5,9 @@
 // causing 100 damage to each target and stunning it for 2 seconds. Buildings take 2 times more damage from molten rocks than units do.
 //Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //N/A	35 sec.	180 sec.	200	80	50	Ground, Building, Not Self, Tree, Debris	Creates Volcano	6
+
+// Extra notes: Stuns all friendly units except for the hero channelling.
+// Transforms the terrain.
 "firelord_volcano"
 {
 	"BaseClass"             		"ability_datadriven"
