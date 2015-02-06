@@ -1,6 +1,6 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
+// Firelord Summon Lava Spawn
+// Author: Noya
+// Date: 05.02.2015.
 // Notes: Summons a Lava Spawn, a resilient and deadly fire creature. As a Lava Spawn deals damage, it consumes the flesh of its target, eventually splitting into two healthy Lava Spawns.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	425 hit points, 11-27 damage	1
@@ -12,31 +12,265 @@
 	"AbilityTextureName"			"firelord_summon_lava_spawn"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"			"ACT_DOTA_RAZE_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastPoint"				"0.5"
+	"AbilityCooldown"				"32.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+	"AbilityManaCost"				"150"
 
 	"precache"
 	{
-		"particle" 	"invoker_forge_spirits_attacks"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle" 	"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+		"particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze.vpcf"
+		"particle"  "particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		"model"		"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
 	}
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"					"FIELD_INTEGER"
+			"lava_spawn_duration"		"70"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attacks_to_split"			"15"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"lava_spawn_damage"			"11 16 21"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"lava_spawn_hp"				"425 550 700"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"lava_spawn_1_count"		"1 0 0"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"lava_spawn_2_count"		"0 1 0"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"lava_spawn_3_count"		"0 0 1"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"spawn_distance"			"250"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Invoker.ForgeSpirit"
+			"Target"		"CASTER"
+		}		
+
+		"SpawnUnit"
+		{
+			"UnitName"		"firelord_lava_spawn1"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/firelord/summon_lava_spawn.lua"
+					"Function"      "GetSummonPoints"
+					"Target"		"CASTER"
+					"Count"			"1"
+					"distance"		"%spawn_distance"
+				}
+			}
+			
+			"Duration"		"%lava_spawn_duration"
+			"UnitCount"		"%lava_spawn_1_count"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/firelord/summon_lava_spawn.lua"
+					"Function"		"SetUnitsMoveForward"
+				}				
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+		
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_lava_spawn"
+					"Target" 		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_lava_spawn_replicate"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"firelord_lava_spawn2"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/firelord/summon_lava_spawn.lua"
+					"Function"      "GetSummonPoints"
+					"Target"		"CASTER"
+					"Count"			"1"
+					"distance"		"%spawn_distance"
+				}
+			}
+			
+			"Duration"		"%lava_spawn_duration"
+			"UnitCount"		"%lava_spawn_2_count"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/firelord/summon_lava_spawn.lua"
+					"Function"		"SetUnitsMoveForward"
+				}				
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+		
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_lava_spawn"
+					"Target" 		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_lava_spawn_replicate"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"firelord_lava_spawn3"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/firelord/summon_lava_spawn.lua"
+					"Function"      "GetSummonPoints"
+					"Target"		"CASTER"
+					"Count"			"1"
+					"distance"		"%spawn_distance"
+				}
+			}
+			
+			"Duration"		"%lava_spawn_duration"
+			"UnitCount"		"%lava_spawn_3_count"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/firelord/summon_lava_spawn.lua"
+					"Function"		"SetUnitsMoveForward"
+				}				
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+		
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_lava_spawn"
+					"Target" 		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_lava_spawn_replicate"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_lava_spawn"
+		{
+			"IsHidden"			"1"
+		
+			"EffectName"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnDeath"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"
+				    {
+				       "Center" "UNIT"
+				       "Flags"	"DOTA_UNIT_TARGET_FLAG_DEAD"
+				   	}
+				   	"ControlPoints"
+				   	{
+				   		"03"	"1 0 0"
+				   	}
+				}
+			}
+		}
+
+		"modifier_lava_spawn_replicate"
+		{
+			"IsHidden"	"1"
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/firelord/summon_lava_spawn.lua"
+					"Function"		"LavaSpawnAttackCounter"
+				}
+			}
 		}
 	}
 }

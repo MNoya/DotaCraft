@@ -34,6 +34,9 @@ function SetUnitsMoveForward( event )
 
 	-- Add the target to a table on the caster handle, to find them later
 	table.insert(caster.wolves, target)
+
+	-- Leave no corpse
+	target.no_corpse = true
 end
 
 --[[

@@ -1,40 +1,212 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
-// Notes: Causes the ground to erupt into a massive Volcano. Every 5 seconds, a wave of molten rocks is hurled from the Volcano at nearby ground units and buildings, causing 100 damage to each target and stunning it for 2 seconds. Buildings take 2 times more damage from molten rocks than units do.
+// Fire Lord Volcano
+// Author: Noya
+// Date: 05.02.2015.
+// Notes: Causes the ground to erupt into a massive Volcano. Every 5 seconds, a wave of molten rocks is hurled from the Volcano at nearby ground units and buildings, 
+// causing 100 damage to each target and stunning it for 2 seconds. Buildings take 2 times more damage from molten rocks than units do.
 //Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //N/A	35 sec.	180 sec.	200	80	50	Ground, Building, Not Self, Tree, Debris	Creates Volcano	6
 "firelord_volcano"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"firelord_volcano"
-	"MaxLevel" 						"3"
+	"MaxLevel" 						"1"
+	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastRange"				"800"
+	"AbilityCastPoint"				"1.67"	
+	"AbilityCooldown"				"180.0"
+	"AbilityManaCost"				"200"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
-
+	"AOERadius"     				"%radius"
+	"AbilityChannelTime"			"35.0"
+	
 	"precache"
 	{
-		"particle" 	"arcana_sf_particles"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle"	"particles/custom/custom_stunned.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+		"particle"	"particles/custom/espirit_spawn.vpcf"
 	}
-	
+
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"500"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"wave_interval"			"5.0"
+		}		
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"wave_damage"			"100"	//buildings take *2
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"stun_duration"			"100"
 		}
 	}
+
+	"OnAbilityPhaseStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_volcano_channelling"
+			"Target" 		"CASTER"
+			"Duration"		"1.67"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/firelord/volcano.lua"
+			"Function"		"VolcanoStart"
+			"Target"		"POINT"
+		}
+
+		"DestroyTrees"
+		{
+			"Target" 		"POINT"
+			"Radius"		"%radius"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_volcano_channelling"
+			"Target" 		"CASTER"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Jakiro.DualBreath"
+			"Target"		"CASTER"
+		}
+    }
+
+    "OnChannelFinish"
+    {
+    	"RunScript"
+    	{
+    		"ScriptFile"	"heroes/firelord/volcano.lua"
+			"Function"		"VolcanoEnd"
+    	} 
+
+    	"RemoveModifier"
+		{
+			"ModifierName"	"modifier_volcano_channelling"
+			"Target" 		"CASTER"
+		} 			
+    }
+    
+    "Modifiers"
+    {
+        //"modifier_volcano_channelling"
+        //{
+        //	"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
+       // 	"IsHidden"				"1"
+         //   "ThinkInterval"			"1.7"
+        //    "OnIntervalThink"
+         //	{
+         //		"ApplyModifier"
+        // 		{
+        // 			"ModifierName"	"modifier_channeling"
+        // 			"Target" 		"CASTER"
+         //			"Duration"		"1.67"
+         //		}
+		//	}
+	//	}
+//
+		"modifier_channeling"
+		{
+			"IsHidden"				"1"
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"
+		}
+
+		"modifier_volcano_thinker"
+		{
+			"EffectName"		"particles/custom/espirit_spawn.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"TARGET"
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_origin"
+				"TARGET"	"attach_origin"
+			}
+
+			"ThinkInterval"  "%wave_interval"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}										
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%wave_damage"
+				}
+
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+					}
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%wave_damage * 2"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_volcano_stun"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+					"Duration"		"%duration"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"		"Hero_Jakiro.LiquidFire"
+					"Target"			"TARGET"
+				}
+			}			
+		}
+
+		"modifier_volcano_stun"
+		{
+			"IsHidden"			"1"
+			"IsDebuff"			"1"
+		
+			"EffectName"		"particles/custom/custom_stunned.vpcf"
+			"EffectAttachType"	"follow_origin"
+		
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			"OverrideAnimation"     "ACT_DOTA_DISABLED"
+		}
+	}	
 }
