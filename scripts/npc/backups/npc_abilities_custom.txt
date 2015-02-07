@@ -10388,6 +10388,15 @@
 			}
 		}
 	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/pit_lord/doom.lua"
+				"Function"		"DoomLevelCheck"
+			}
+		}
+	
 		"OnSpellStart"
 		{
 			"ApplyModifier"

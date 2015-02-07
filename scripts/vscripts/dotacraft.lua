@@ -376,8 +376,8 @@ function dotacraft:OnPlayerPickHero(keys)
 		heroEntity:HeroLevelUp(false)
 	end
 
-	local tree = CreateUnitByName("nightelf_tree_of_life", heroEntity:GetAbsOrigin()+Vector(200, 200, 0), true, heroEntity, heroEntity, heroEntity:GetTeamNumber())
-	tree:SetControllableByPlayer(playerID, true)
+	--local tree = CreateUnitByName("nightelf_tree_of_life", heroEntity:GetAbsOrigin()+Vector(200, 200, 0), true, heroEntity, heroEntity, heroEntity:GetTeamNumber())
+	--tree:SetControllableByPlayer(playerID, true)
 
 end
 
@@ -618,7 +618,6 @@ function dotacraft:Capturedotacraft()
 		mode:SetFogOfWarDisabled(DISABLE_FOG_OF_WAR_ENTIRELY)
 		mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
-
 
 		--GameRules:GetGameModeEntity():SetThink( "Think", self, "GlobalThink", 2 )
 

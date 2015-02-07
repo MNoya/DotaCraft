@@ -42,6 +42,7 @@ end
 function AnimateDeadPrecast( event )
 	local ability = event.ability
 	local corpse = Entities:FindByModelWithin(nil, CORPSE_MODEL, event.caster:GetAbsOrigin(), ability:GetCastRange()) 
+	local pID = event.caster:GetPlayerID()
 	if corpse == nil then
 		event.caster:Interrupt()
 		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "No Usable Corpses Near" } )

@@ -4136,6 +4136,15 @@
 			"particle" 	"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/dark_ranger/charm.lua"
+				"Function"		"CharmLevelCheck"
+			}
+		}
 		
 		"OnSpellStart"
 		{
@@ -10385,6 +10394,15 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"doom_guard_duration"	"180"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/pit_lord/doom.lua"
+				"Function"		"DoomLevelCheck"
 			}
 		}
 	

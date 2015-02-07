@@ -27,6 +27,15 @@
 		"particle" 	"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/dark_ranger/charm.lua"
+			"Function"		"CharmLevelCheck"
+		}
+	}
 	
 	"OnSpellStart"
 	{
