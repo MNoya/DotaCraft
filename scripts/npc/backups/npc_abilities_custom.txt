@@ -2803,7 +2803,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_CHAOS_METEOR"
 	
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.5"
@@ -2818,7 +2818,9 @@
 			"particle"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
 			"particle"	"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
 			"particle" 	"particles/custom/phoenix_fire_spirit_ground.vpcf"
+			"particle" 	"particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -2848,14 +2850,39 @@
 				"var_type"				"FIELD_INTEGER"
 				"burn_duration"			"6"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"delay"					"1.6"
+			}
 		}
 	
 		"OnSpellStart"
 		{
-			"CreateThinker"
+			"FireSound"
 			{
-				"ModifierName"	"modifier_flame_strike_thinker1"
-				"Target"		"POINT"
+				"EffectName"	"Hero_Invoker.SunStrike.Charge"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+			}
+	
+			"DelayedAction"
+			{
+				"Delay"     "%delay"
+				"Action"    
+				{
+					"CreateThinker"
+					{
+						"ModifierName"	"modifier_flame_strike_thinker1"
+						"Target"		"POINT"
+					}
+				}
 			}
 			
 			"DestroyTrees"
@@ -13159,14 +13186,14 @@
 	
 		"precache"
 		{
-			//"soundfile"	"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
-			//"model"		"models/heroes/vengeful/vengeful.vmdl"
-			//"model"		"models/items/vengeful/vengeful_immortal_weapon/vengeful_immortal_weapon.vmdl"
-			//"model"		"models/items/vengefulspirit/fallenprincess_shoulders/fallenprincess_shoulders.vmdl"
-			//"model"		"models/items/vengefulspirit/fallenprincess_legs/fallenprincess_legs.vmdl"
-			//"model"		"models/items/vengefulspirit/fallenprincess_head/fallenprincess_head.vmdl"
-			//"particle"  "particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
-			//"particle"  "particles/econ/items/vengeful/vengeful_wing_fallenprincess/venge_wingsoffallenprincess_ambient.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+			"model"		"models/heroes/vengeful/vengeful.vmdl"
+			"model"		"models/items/vengeful/vengeful_immortal_weapon/vengeful_immortal_weapon.vmdl"
+			"model"		"models/items/vengefulspirit/fallenprincess_shoulders/fallenprincess_shoulders.vmdl"
+			"model"		"models/items/vengefulspirit/fallenprincess_legs/fallenprincess_legs.vmdl"
+			"model"		"models/items/vengefulspirit/fallenprincess_head/fallenprincess_head.vmdl"
+			"particle"  "particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+			"particle"  "particles/econ/items/vengeful/vengeful_wing_fallenprincess/venge_wingsoffallenprincess_ambient.vpcf"
 		}
 		
 		"AbilitySpecial"
