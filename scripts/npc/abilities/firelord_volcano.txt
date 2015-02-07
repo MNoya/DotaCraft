@@ -30,9 +30,13 @@
 	
 	"precache"
 	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+		"particle"	"particles/custom/sf_fire_arcana_wings.vpcf"
+		"particle"  "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
+		"particle"  "particles/custom/sf_fire_arcana_base_attack_impact.vpcf"
 		"particle"	"particles/custom/custom_stunned.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-		"particle"	"particles/custom/espirit_spawn.vpcf"
+		"particle"  "models/particle/soil_rupture.vmdl"
 	}
 
 	"AbilitySpecial"
@@ -55,7 +59,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"stun_duration"			"100"
+			"stun_duration"			"2"
 		}
 	}
 
@@ -65,7 +69,25 @@
 		{
 			"ModifierName"	"modifier_volcano_channelling"
 			"Target" 		"CASTER"
-			"Duration"		"1.67"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Nevermore.RequiemOfSoulsCast"
+			"Target" 		"CASTER"
+		}
+
+		"DelayedAction"
+		{
+			"Delay"     "2.6"
+			"Action"    
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_volcano_channeling_idle"
+					"Target" 		"CASTER"
+				}
+			}
 		}
 	}
 
@@ -83,17 +105,11 @@
 			"Target" 		"POINT"
 			"Radius"		"%radius"
 		}
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_volcano_channelling"
-			"Target" 		"CASTER"
-		}
-		
+	
 		"FireSound"
 		{
-			"EffectName"	"Hero_Jakiro.DualBreath"
-			"Target"		"CASTER"
+			"EffectName"	"Hero_EmberSpirit.FlameGuard.Loop"
+			"Target" 		"CASTER"
 		}
     }
 
@@ -109,36 +125,82 @@
 		{
 			"ModifierName"	"modifier_volcano_channelling"
 			"Target" 		"CASTER"
-		} 			
+		} 
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_volcano_channeling_idle"
+			"Target" 		"CASTER"
+		}
     }
     
     "Modifiers"
     {
-        //"modifier_volcano_channelling"
-        //{
-        //	"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
-       // 	"IsHidden"				"1"
-         //   "ThinkInterval"			"1.7"
-        //    "OnIntervalThink"
-         //	{
-         //		"ApplyModifier"
-        // 		{
-        // 			"ModifierName"	"modifier_channeling"
-        // 			"Target" 		"CASTER"
-         //			"Duration"		"1.67"
-         //		}
-		//	}
-	//	}
-//
+        "modifier_volcano_channelling"
+        {
+        	"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
+        	"IsHidden"				"0"
+
+			// Every 5 seconds, one wave is launched, then an idle channeling animation
+           	"ThinkInterval"			"5"
+            "OnIntervalThink"
+        	{
+        		"ApplyModifier"
+         		{
+         			"ModifierName"	"modifier_channeling"
+        			"Target" 		"CASTER"
+        			"Duration"		"2.46" //74 frames
+        		}
+			}
+		}
+
 		"modifier_channeling"
 		{
-			"IsHidden"				"1"
+			"IsHidden"				"0"
 			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"
+		}
+
+		"modifier_volcano_channeling_idle"
+		{
+			"OverrideAnimation"		"ACT_DOTA_TELEPORT"
+        	"IsHidden"				"0"
+
+			// Every 5 seconds after a 2.6 delay, make an idle channeling animation
+           	"ThinkInterval"			"5"
+            "OnIntervalThink"
+        	{
+        		// First after finishing ACT_DOTA_CAST_ABILITY_6	
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_channeling_idle"
+					"Target" 		"CASTER"
+					"Duration"		"2.33" //67 frames
+				}
+			}
+		}	
+
+		"modifier_channeling_idle"
+		{
+			"IsHidden"				"0"
+			"OverrideAnimation"     "ACT_DOTA_TELEPORT"
 		}
 
 		"modifier_volcano_thinker"
 		{
-			"EffectName"		"particles/custom/espirit_spawn.vpcf"
+			"States"
+			{
+				//"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_MOVE_TO"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_SELECT"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"	
+			}
+
+			"EffectName"		"particles/custom/sf_fire_arcana_wings.vpcf"
 			"EffectAttachType"	"follow_origin"
 			"Target"			"TARGET"
 			"ControlPointEntities"
@@ -147,20 +209,52 @@
 				"TARGET"	"attach_origin"
 			}
 
-			"ThinkInterval"  "%wave_interval"
-			"OnIntervalThink"
+			"OnCreated"
 			{
-				"Damage"
+				"RunScript"
 				{
+					"ScriptFile"	"heroes/firelord/volcano.lua"
+					"Function"		"VolcanoKnockback"
 					"Target"
 					{
 						"Center"  	"TARGET"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					}										
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%wave_damage"
+						"Radius" 	"%radius / 2"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //Exclude self in the code
+					}
+				}
+
+				"FireEffect"
+				{
+					"EffectName"        "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Nevermore.RequiemOfSouls"
+					"Target"		"CASTER"
+				}
+
+				"DelayedAction"
+				{
+					"Delay"     "0.5"
+					"Action"    
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/firelord/volcano.lua"
+							"Function"		"VolcanoWave"
+							"Target"
+							{
+								"Center"  	"TARGET"
+								"Radius" 	"%radius"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							}
+						}
+					}
 				}
 
 				"Damage"
@@ -175,36 +269,75 @@
 					"Type"			"DAMAGE_TYPE_MAGICAL"
 					"Damage"		"%wave_damage * 2"
 				}
+			}
 
-				"ApplyModifier"
+			"ThinkInterval"  "%wave_interval"
+			"OnIntervalThink"
+			{
+				"FireEffect"
 				{
-					"ModifierName"	"modifier_volcano_stun"
+					"EffectName"        "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Nevermore.RequiemOfSouls"
+					"Target"		"CASTER"
+				}
+
+				"DelayedAction"
+				{
+					"Delay"     "0.5"
+					"Action"    
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/firelord/volcano.lua"
+							"Function"		"VolcanoWave"
+							"Target"
+							{
+								"Center"  	"TARGET"
+								"Radius" 	"%radius"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							}
+						}
+					}
+				}
+
+				"Damage"
+				{
 					"Target"
 					{
 						"Center"  	"TARGET"
 						"Radius" 	"%radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
 					}
-					"Duration"		"%duration"
-				}
-				
-				"FireSound"
-				{
-					"EffectName"		"Hero_Jakiro.LiquidFire"
-					"Target"			"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%wave_damage * 2"
 				}
 			}			
 		}
 
 		"modifier_volcano_stun"
 		{
-			"IsHidden"			"1"
 			"IsDebuff"			"1"
 		
-			"EffectName"		"particles/custom/custom_stunned.vpcf"
-			"EffectAttachType"	"follow_origin"
+			"EffectName"        "particles/custom/sf_fire_arcana_base_attack_impact.vpcf"
+			"EffectAttachType"  "follow_origin"
 		
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Nevermore.RequiemOfSouls.Damage"
+					"Target" 		"TARGET"
+				}
+			}
+
 			"States"
 			{
 				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
