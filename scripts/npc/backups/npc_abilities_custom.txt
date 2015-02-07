@@ -3328,7 +3328,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tick_interval"				"0.25"
+				"tick_interval"				"1.0"
 			}
 		}
 	
@@ -3390,6 +3390,19 @@
 						"Function"		"SiphonMana"
 					}
 				}
+			}
+	
+			"modifier_siphon_mana_extra"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"IsHidden"			"0"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS" "%mana_per_second" 
+				}
+	
+				"Duration"			"%duration"
 			}
 		}	
 	}

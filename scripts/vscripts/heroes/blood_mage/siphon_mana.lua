@@ -8,24 +8,28 @@ function SiphonManaStart( event )
 	local target = event.target
 	local ability = event.ability
 	local particleName = "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
-	caster.ManaDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, caster)
+	
 
 	if target == caster then
 		print("Self Target")
 		caster:Interrupt()
+		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Can't target self" } )
 	elseif target:GetTeamNumber() == caster:GetTeamNumber() then
 		print("Cast on Ally")
 		if target:IsRealHero() then
 			print("Cast on Ally Hero")
 			caster:Interrupt()
+			FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Can't cast on allied heroes" } )
 		else
-		-- Particle from caster to ally
-		ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			-- Particle from caster to ally
+			caster.ManaDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, caster)
+			ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 		end
 	else
 		print("Cast on Enemy")
 		-- Particle from target to caster
+		caster.ManaDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, caster)
 		ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 	end
@@ -93,10 +97,11 @@ function SiphonMana( keys )
 			if target_mana >= mana_drain then
 				target:ReduceMana(mana_drain)
 
-				-- Mana gained can go over the max mana, add MODIFIER_PROPERTY_EXTRA_MANA_BONUS
+				-- Mana gained can go over the max mana
 				if caster_mana + mana_drain > caster_max_mana then
 					print("Go over max mana")
 					caster:GiveMana(mana_drain)
+					ability:ApplyDataDrivenModifier(caster, caster, "modifier_siphon_mana_extra", nil)
 				else
 					print("Giff Mana "..mana_drain)
 					caster:GiveMana(mana_drain)
