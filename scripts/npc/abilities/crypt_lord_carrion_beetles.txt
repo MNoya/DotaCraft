@@ -103,3 +103,117 @@
 		}
 	}
 }
+
+
+// Burrow Sub Ability
+"crypt_lord_beetle_burrow"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"crypt_lord_beetle_burrow"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastPoint"				"0.1"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hp_regen"				"2"
+		}
+	}
+	
+	"OnToggleOn"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
+			"Function"		"Burrow"
+			"Move"			"down"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_burrow"
+			"Target" 		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Weaver.SwarmCast"
+			"Target" 		"CASTER"
+		}	
+	}
+
+	"OnToggleOff"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
+			"Function"		"Burrow"
+			"Move"			"up"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_burrow"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_burrow"
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%hp_regen"
+			}
+
+			"States"
+			{
+				//"MODIFIER_STATE_NO_HEALTH_BAR" 				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ROOTED"						"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_PROVIDES_VISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"TARGET"	"attach_origin"
+					}
+				}				
+			}
+			
+			"OnDestroy"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"TARGET"	"attach_origin"
+					}
+				}
+			}		
+		}
+	}
+}

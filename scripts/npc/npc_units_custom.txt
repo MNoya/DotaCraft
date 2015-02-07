@@ -1355,9 +1355,6 @@
 	//- Units for crypt_lord_carrion_beetles ability 								 	-
 	//------------------------------------------------------------------------------------
 	
-	// TODO - Add Abilities
-	// Burrow
-	
 	"npc_carrion_beetle_1"
 	{
 		// General
@@ -1400,7 +1397,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"			"140"
-		"StatusHealthRegen"		"2"
+		"StatusHealthRegen"		"0" //2 burrow
 		"StatusMana"			"0"
 		"StatsManaRegen"		"0"
 		
@@ -1422,6 +1419,7 @@
 		// Creature Data
 		//----------------------------------------------------------------
 	}
+	
 	"npc_carrion_beetle_2"
 	{
 		// General
@@ -1433,7 +1431,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"			""	 //Reference: Abu2
+		"Ability1"			"crypt_lord_beetle_burrow"	 //Reference: Abu2
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1465,7 +1463,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"			"275"
-		"StatusHealthRegen"		"2"
+		"StatusHealthRegen"		"0" //2 burrow
 		"StatusMana"			"0"
 		"StatsManaRegen"		"0"
 		
@@ -1498,7 +1496,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"			""	 //Reference: Abu3
+		"Ability1"			"crypt_lord_beetle_burrow"	 //Reference: Abu3
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1530,7 +1528,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"			"410"
-		"StatusHealthRegen"		"2"
+		"StatusHealthRegen"		"0" //2 burrow
 		"StatusMana"			"0"
 		"StatsManaRegen"		"0"
 		
@@ -1552,6 +1550,8 @@
 		// Creature Data
 		//----------------------------------------------------------------
 	}
+	
+	
 	//------------------------------------------------------------------------------------
 	//- Unit for crypt_lord_locust_swarm ability 								 	-
 	//------------------------------------------------------------------------------------
