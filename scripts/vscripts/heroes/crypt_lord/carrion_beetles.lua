@@ -48,6 +48,7 @@ end
 -- Denies casting if no corpses near, with a message
 function CarrionBeetlesPrecast( event )
 	local ability = event.ability
+	local pID = event.caster:GetPlayerID()
 	local corpse = Entities:FindByModelWithin(nil, CORPSE_MODEL, event.caster:GetAbsOrigin(), ability:GetCastRange()) 
 	if corpse == nil then
 		event.caster:Interrupt()

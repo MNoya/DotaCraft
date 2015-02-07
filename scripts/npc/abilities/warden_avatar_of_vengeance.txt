@@ -26,7 +26,14 @@
 
 	"precache"
 	{
-		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+		"model"		"models/heroes/vengeful/vengeful.vmdl"
+		"model"		"models/items/vengeful/vengeful_immortal_weapon/vengeful_immortal_weapon.vmdl"
+		"model"		"models/items/vengefulspirit/fallenprincess_shoulders/fallenprincess_shoulders.vmdl"
+		"model"		"models/items/vengefulspirit/fallenprincess_legs/fallenprincess_legs.vmdl"
+		"model"		"models/items/vengefulspirit/fallenprincess_head/fallenprincess_head.vmdl"
+		"particle"  "particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+		"particle"  "particles/econ/items/vengeful/vengeful_wing_fallenprincess/venge_wingsoffallenprincess_ambient.vpcf"
 	}
 	
 	"AbilitySpecial"
@@ -126,37 +133,29 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"spirit_limit"			"6"
-		}		
+		}
+		"02"	
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"900"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+			"Function"		"SpiritOfVengeancePrecast"
+		}
 	}
 
 	"OnSpellStart"
 	{
-		"SpawnUnit"
+		"RunScript"
 		{
-			"UnitName"		"npc_spirit_of_vengeance"
-			"UnitCount"		"1"
-			"UnitLimit"		"%spirit_limit"
-			"SpawnRadius"	"1"
-			"Duration"		"50"
-			"Target"
-			{
-				"Center" 		"CASTER"
-				"Radius" 		"900"
-				"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types" 		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				"Flags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
-				"MaxTargets"	"1"
-				"Random"		"1"
-			}
-
-			"OnSpawn"
-			{
-				"FireSound"
-				{
-					"EffectName" "Hero_Spectre.DaggerCast"
-					"Target"	 "CASTER"
-				}
-			}
+			"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+			"Function"		"SpiritOfVengeanceSpawn"
 		}
 	}		
 }
@@ -190,7 +189,7 @@
 				"AttachEffect"
 				{
 					"EffectName"		"particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
-					"EffectAttachType"	"follow_origin"
+					"EffectAttachType"	"attach_uppertorso"
 					"Target"			"CASTER"
 				}
 			}
