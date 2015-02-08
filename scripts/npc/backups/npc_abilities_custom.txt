@@ -1717,6 +1717,7 @@
 			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
 			"model"		"models/heroes/beastmaster/beastmaster_bird.vmdl"
+			"particle"  "particles/status_fx/status_effect_slark_shadow_dance.vpcf"
 		}
 	
 		"AbilitySpecial"
@@ -1926,6 +1927,109 @@
 				}
 			}
 		}
+	}
+	
+	
+	// Sub Ability
+	"beastmaster_hawk_invis"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"beastmaster_hawk_invisibility"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"motionless_time"	"4"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"		"3.0 4.0 5.0"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_hawk_think"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"			
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/beastmaster/summon_hawk.lua"
+						"Function"		"HawkCreated"
+					}
+				}
+	
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+						"Function"		"HawkMoved"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_hawk_invis"
+						"Target" 		"CASTER"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+						"Function"		"HawkAttacked"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName" 	"modifier_hawk_invis"
+						"Target"		"CASTER"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+						"Function"		"HawkInvisCheck"
+					}		
+				}
+			}
+	
+			"modifier_hawk_invis"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}	
 	}
 	// Beastmaster Summon Quillbeast
 	// Author: Noya
