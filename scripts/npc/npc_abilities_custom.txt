@@ -1768,7 +1768,7 @@
 		{
 			"FireSound"
 		    {
-		    	"EffectName"	"Hero_Beastmaster.Call.bird"
+		    	"EffectName"	"Hero_Beastmaster.Call.Hawk"
 		    	"Target"		"CASTER"
 		    }
 	
@@ -12311,45 +12311,6 @@
 	
 				"EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
 				"EffectAttachType"  "follow_overhead"
-	
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%owl_vision"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					
-						"Action"    
-						{
-							"RemoveModifier"
-							{
-								"ModifierName"	"modifier_truesight_reveal"
-								"Target" 		"TARGET"
-							}
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_truesight_reveal"
-								"Target" 		"TARGET"
-							}
-						}
-					}			
-				}	
-			}
-	
-			"modifier_truesight_reveal"
-			{
-				"IsHidden"			"1"
-				"Duration"			"0.03"
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
-				}
 			}
 		}
 	}
@@ -14374,6 +14335,62 @@
 				}
 			}
 		}
+	}
+	"true_sight"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"true_sight"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"Modifiers"
+		{
+			"modifier_true_sight"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%owl_vision"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+						}
+					}			
+				}
+			}
+	
+			"modifier_true_sight_reveal"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.03"
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+		}	
 	}
 	// Warden Avatar of Vengeance
 	// Author: Noya
