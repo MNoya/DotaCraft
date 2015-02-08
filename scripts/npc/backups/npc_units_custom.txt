@@ -1903,12 +1903,7 @@
 	//=================================================================================
 	
 	// TODO - Add Abilities
-	// Pulverize (Passive)
-	// Taunt
-	// Dispel Magic
 	// Cyclone
-	// Wind Walk
-	// Permanent Immolation (Passive)
 	
 	"npc_earth_panda"
 	{										
@@ -1928,9 +1923,9 @@
 	
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"brewmaster_earth_taunt"		// Ability 1
-		"Ability2"					"brewmaster_earth_spell_immunity"	// Ability 2
-		"Ability3"					"brewmaster_earth_pulverize"		// Ability 3
+		"Ability1"					"pandaren_earth_taunt"		// Ability 1
+		"Ability2"					"pandaren_earth_spell_immunity"	// Ability 2
+		"Ability3"					"pandaren_earth_pulverize"		// Ability 3
 		"Ability4"					""		// Ability 4	
 	
 		// Armor
@@ -2228,7 +2223,7 @@
 	
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"brewmaster_fire_permanent_immolation"		// Ability 1
+		"Ability1"					"pandaren_fire_permanent_immolation"		// Ability 1
 		"Ability2"					""		// Ability 2		
 	
 		// Armor
@@ -3015,10 +3010,10 @@
 	
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"brewmaster_storm_dispel_magic"		// Ability 1
-		"Ability2"					"brewmaster_storm_cyclone"			// Ability 2
-		"Ability3"					"brewmaster_storm_wind_walk"		// Ability 3
-		"Ability4"					""		// Ability 4	
+		"Ability1"					"pandaren_storm_dispel_magic"		// Ability 1
+		"Ability2"					"pandaren_storm_cyclone"			// Ability 2
+		"Ability3"					"pandaren_storm_wind_walk"		// Ability 3
+		"Ability4"					"brewmaster_storm_cyclone"		// Ability 4	
 	
 		// Armor
 		//----------------------------------------------------------------

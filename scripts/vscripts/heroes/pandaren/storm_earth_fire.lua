@@ -76,6 +76,11 @@ function PrimalSplit( event )
 	local underground_position = Vector(origin.x, origin.y, origin.z - 322)
 	caster:SetAbsOrigin(underground_position)
 
+	-- Leave no corpses
+	caster.Earth.no_corpse = true
+	caster.Storm.no_corpse = true
+	caster.Fire.no_corpse = true
+
 end
 
 -- When the spell ends, the Brewmaster takes Earth's place. 
@@ -144,4 +149,148 @@ function LearnAllAbilities( unit, level )
 			print("Set Level "..level.." on "..ability:GetAbilityName())
 		end
 	end
+end
+
+
+--- SUB ABILITIES ---
+
+
+--[[
+	Author: Noya
+	Date: 08.02.2015.
+	Dispel Magic purges buffs from all enemy targets near, and deals damage to units with the SUMMONED flag.
+]]
+function DispelMagic( event )
+	local caster = event.caster
+	local ability = event.ability
+	local damage = ability:GetLevelSpecialValueFor( "damage" , ability:GetLevel() - 1 )
+	local abilityDamageType = ability:GetAbilityDamageType()
+	local targets = event.target_entities
+
+	for _,unit in pairs(targets) do
+		unit:Purge(true, false, false, false, false)
+
+		if unit:IsSummoned() then
+			ApplyDamage({ victim = unit, attacker = event.target, damage = damage, damage_type = abilityDamageType}) 
+		end
+	end
+end
+
+
+--[[
+	Author: Noya
+	Date: 08.02.2015.
+	Changes the attack target of units all targets near to the caster. Doesn't force them to attack for a duration, this is just micro control.
+	To force the attack for a duration, use SetForceAttackTarget to caster, and then a timer to nil.
+]]
+function Taunt( event )
+	local caster = event.caster
+	local targets = event.target_entities
+
+	for _,unit in pairs(targets) do
+		unit:MoveToTargetToAttack(caster)
+		--unit:SetForceAttackTarget(caster)
+	end
+end
+
+--[[
+	Author: Noya
+	Date: 08.02.2015.
+	Progressively sends the target at a max height, then up and down between an interval, and finally back to the original ground position.
+]]
+function TornadoHeight( event )
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+	local duration_hero = ability:GetLevelSpecialValueFor( "duration_hero" , ability:GetLevel() - 1 )
+	local duration_unit = ability:GetLevelSpecialValueFor( "duration_unit" , ability:GetLevel() - 1 )
+	local cyclone_height = ability:GetLevelSpecialValueFor( "cyclone_height" , ability:GetLevel() - 1 )
+	local cyclone_min_height = ability:GetLevelSpecialValueFor( "cyclone_min_height" , ability:GetLevel() - 1 )
+	local cyclone_max_height = ability:GetLevelSpecialValueFor( "cyclone_max_height" , ability:GetLevel() - 1 )
+	local tornado_start = GameRules:GetGameTime()
+
+	-- Position variables
+	local target_initial_x = target:GetAbsOrigin().x
+	local target_initial_y = target:GetAbsOrigin().y
+	local target_initial_z = target:GetAbsOrigin().z
+	local position = Vector(target_initial_x, target_initial_y, target_initial_z)
+
+	-- Adjust duration to hero or unit
+	local duration = duration_hero
+	if not target:IsHero() then
+		duration = duration_unit
+	end
+	
+	-- Height per time calculation
+	local time_to_reach_max_height = duration / 10
+	local height_per_frame = cyclone_height * 0.03
+	print(height_per_frame)
+
+	-- Time to go down
+	local time_to_stop_fly = duration - time_to_reach_max_height
+	print(time_to_stop_fly)
+
+	-- Loop up and down
+	local going_up = true
+
+	-- Loop every frame for the duration
+	Timers:CreateTimer(function()
+		local time_in_air = GameRules:GetGameTime() - tornado_start
+		
+		-- First send the target at max height very fast
+		if position.z < cyclone_height and time_in_air <= time_to_reach_max_height then
+			print("+",height_per_frame,position.z)
+			
+			position.z = position.z + height_per_frame
+			target:SetAbsOrigin(position)
+			return 0.03
+
+		-- Go down until the target reaches the initial z
+		elseif time_in_air > time_to_stop_fly and time_in_air <= duration then
+			print("-",height_per_frame)
+
+			position.z = position.z - height_per_frame
+			target:SetAbsOrigin(position)
+			return 0.03
+
+		-- Do Up and down cycles
+		elseif time_in_air <= duration then
+			-- Up
+			if position.z < cyclone_max_height and going_up then 
+				print("going up")
+				position.z = position.z + height_per_frame/3
+				target:SetAbsOrigin(position)
+				return 0.03
+
+			-- Down
+			elseif position.z >= cyclone_min_height then
+				going_up = false
+				print("going down")
+				position.z = position.z - height_per_frame/3
+				target:SetAbsOrigin(position)
+				return 0.03
+
+			-- Go up again
+			else
+				print("going up again")
+				going_up = true
+				return 0.03
+			end
+
+		-- End
+		else
+			print("End TornadoHeight")
+		end
+	end)
+end
+
+--[[
+	Author: Noya
+	Date: 16.01.2015.
+	Rotates by an angle degree
+]]
+function Spin(keys)
+    local target = keys.target
+    local total_degrees = keys.Angle
+    target:SetForwardVector(RotatePosition(Vector(0,0,0), QAngle(0,total_degrees,0), target:GetForwardVector()))
 end

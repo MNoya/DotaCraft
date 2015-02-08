@@ -9963,7 +9963,7 @@
 				"EndRadius" 	"%end_radius"
 				"FixedDistance" "%range"
 				"TargetTeams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"TargetTypes" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNITY_TARGET_MECHANICAL"
+				"TargetTypes" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_MECHANICAL"
 				"HasFrontalCone" "1"
 				"ProvidesVision" "0"
 			}
@@ -10316,6 +10316,7 @@
 			"model"		"models/heroes/brewmaster/brewmaster_windspirit.vmdl"
 	
 			// Sub ability particles
+			"particle"  "particles/custom/axe_beserkers_call_owner.vpcf"
 			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf"
 			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_pulverize.vpcf"
 	
@@ -10447,6 +10448,596 @@
 			}
 		}
 	}
+	
+	// Pandaren Sub Abilities
+	// Author: Noya
+	// Date: 08.12.2015.
+	
+	"pandaren_earth_taunt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"axe_berserkers_call"
+	
+		"MaxLevel"						"1"
+	
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"15"
+	
+		"AbilityManaCost"				"0"	
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"
+			}	
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/custom/axe_beserkers_call_owner.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+					"CASTER"	"attach_attack1"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
+				"Function"		"Taunt"
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			}
+		}
+	}
+	
+	"pandaren_earth_spell_immunity"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"pandaren_earth_spell_immunity"
+		"MaxLevel"				"1"
+	
+		"Modifiers"
+		{
+			"modifier_earth_spell_immunity"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_earth_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	"pandaren_earth_pulverize"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"				"1"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_inner"				"40"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius_inner"				"150"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_outer"				"20"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius_outer"				"250"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"chance"					"20"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_earth_pulverize"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"			"%chance"
+						"OnSuccess"
+						{
+							"FireEffect"
+							{
+								"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_pulverize.vpcf"
+								"EffectAttachType"  "follow_origin"
+								"Target"            "CASTER"
+							}
+	
+							"Damage"
+							{
+								"Target"
+								{
+									"Center"  	"CASTER"
+									"Radius" 	"%radius_inner"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+								}
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%damage_inner - %damage_outer"
+							}
+	
+							"Damage"
+							{
+								"Target"
+								{
+									"Center"  	"CASTER"
+									"Radius" 	"%radius_outer"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+								}
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%damage_outer"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	"pandaren_storm_dispel_magic"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"MaxLevel"						"1"
+	
+		"AbilityCastRange"				"500"
+	
+		"AOERadius"						"%radius"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8.0"
+		"AbilityCastPoint"				"0.4"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"		
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"200"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Brewmaster_Storm.DispelMagic"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
+				"Function"		"DispelMagic"
+				"Target"
+				{
+					"Center"  	"POINT"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			}
+		}
+	}
+	
+	"pandaren_storm_cyclone"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"MaxLevel"						"1"
+	
+		"AbilityCastRange"				"600 600 600 600"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8.0"
+		"AbilityCastPoint"				"0.4"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 150 150 150"		
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_hero"				"6.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_unit"				"20.0"
+			}
+			// Extra
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_height"			"550"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_min_height"		"500"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_max_height"		"650"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_storm_cyclone" //modifier_cyclone is built-in
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%duration_hero"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_storm_cyclone"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration_unit"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_storm_cyclone"
+			{
+				"IsDebuff"			"1"
+	
+				"States"
+		        {   
+		        	"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+		        	"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+		        }
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
+						"EffectAttachType"	"world_origin"
+						"Target"            "TARGET"
+					}
+	
+					"RunScript"
+		        	{
+		        		"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
+		        		"Function"		"TornadoHeight"
+	
+		        	}
+				}	
+	
+		        "ThinkInterval"		"0.03"
+				"OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/pandaren/storm_earth_fire.lua"
+	                    "Function"      "Spin"
+	                    "Angle"         "20"
+	                }
+				}
+	
+				"OverrideAnimation"     "ACT_DOTA_FLAIL"
+			}
+		}
+	}
+	
+	"pandaren_storm_wind_walk"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"		
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movespeed"			"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"20.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"0.6"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_windwalk.vpcf"
+				"EffectAttachType"	"attach_origin"
+			}
+	
+			"FireSound"
+			{
+				"Target"		"CASTER"
+				"EffectName"	"Brewmaster_Storm.WindWalk"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName" 	"modifier_invisible"
+				"Target"		"CASTER"
+				"Duration"		"%duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName" 	"modifier_windwalk"
+				"Target"		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_windwalk"
+			{
+				"IsBuff"			"1"
+				"Duration"          "%duration"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"      "%bonus_movespeed"
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				
+				"OnAttackLanded"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName" 	"modifier_invisible"
+						"Target"		"CASTER"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName" 	"modifier_windwalk"
+						"Target"		"CASTER"
+					}
+	
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_PHYSICAL"
+						"Damage"	"%bonus_damage"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"		"particles/msg_fx/msg_crit.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
+						"ControlPoints"
+						{
+							"01"		"9 %bonus_damage 4"	//pre number post
+							"02"		"1 4 0"					//lifetime digits
+							"03"		"255 0 0"				//color
+						}
+					}
+				}
+	
+				"OnAbilityExecuted"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName" 	"modifier_invisible"
+						"Target"		"CASTER"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName" 	"modifier_windwalk"
+						"Target"		"CASTER"
+					}
+				}
+			}
+		}
+	}
+	
+	"pandaren_fire_permanent_immolation"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"15 30 45"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"220"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/items2_fx/radiance.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_permanent_immolation"
+	   		{
+	    		"Passive" 			"1"
+	    		"IsHidden" 			"1"
+	
+	    		"Aura" 				"modifier_permanent_immolation_burn"
+	    		"Aura_Radius" 		"%radius"
+	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+	            "EffectName"		"particles/items2_fx/radiance.vpcf"
+				"EffectAttachType" 	"attach_hitloc"
+	   		}
+			
+			"modifier_permanent_immolation_burn"
+	   		{
+	   			"IsDebuff"			"1"
+	   			"ThinkInterval"		"1"
+	   			"OnIntervalThink"    	
+	   			{
+	   				"Damage"
+					{		
+						"Type" 		"DAMAGE_TYPE_MAGICAL"
+						"Damage" 	"%damage"
+						"Target"	"TARGET"
+					}
+				}
+		    }
+		}
+	}
+	
 	// Pit Lord Cleaving Attack
 	// Author: Noya
 	// Date: 14.1.2015.
