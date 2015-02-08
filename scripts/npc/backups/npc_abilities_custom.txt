@@ -10461,7 +10461,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"axe_berserkers_call"
+		"AbilityTextureName"			"pandaren_earth_taunt"
 	
 		"MaxLevel"						"1"
 	
@@ -10541,6 +10541,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"pandaren_earth_pulverize"
 		"MaxLevel"				"1"
 	
 		// Special
@@ -10636,6 +10637,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"pandaren_storm_dispel_magic"
 		"MaxLevel"						"1"
 	
 		"AbilityCastRange"				"500"
@@ -10710,6 +10712,8 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"pandaren_storm_cyclone"
+		"MaxLevel"						"1"
 	
 		"AbilityCastRange"				"600 600 600 600"
 	
@@ -10740,7 +10744,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cyclone_height"			"600"
+				"cyclone_height"			"550"
 			}
 			"04"
 			{
@@ -10750,7 +10754,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cyclone_max_height"		"700"
+				"cyclone_max_height"		"650"
 			}
 		}
 	
@@ -10837,6 +10841,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"pandaren_storm_wind_walk"
 		"MaxLevel"						"1"
 	
 		// Time		
@@ -10982,6 +10987,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"pandaren_fire_permanent_immolation"
+		"MaxLevel"						"1"
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
