@@ -9525,6 +9525,7 @@
 		"precache"
 		{
 			"particle"				"particles/custom/tornado_ambient.vpcf"
+			"particle"  			"particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 			"particle"				"particles/neutral_fx/tornado_ambient.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado.vpcf"
@@ -9724,17 +9725,17 @@
 			"010"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cyclone_height"			"550"
+				"cyclone_height"			"450"
 			}
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cyclone_min_height"		"500"
+				"cyclone_min_height"		"400"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cyclone_max_height"		"650"
+				"cyclone_max_height"		"500"
 			}
 		}
 	
@@ -9745,16 +9746,16 @@
 				"IsHidden"				"1"
 				"Passive"				"1"
 	
-				"EffectName"		"particles/custom/tornado_ambient.vpcf"
+				"EffectName"		"particles/custom/tornado_ambient.vpcf" //could use better particle
 				"EffectAttachType"	"follow_origin"
 	
 				"States"
-		        {         
-		          "MODIFIER_STATE_NOT_ON_MINIMAP"       "MODIFIER_STATE_VALUE_ENABLED"
-				  "MODIFIER_STATE_PROVIDES_VISION"      "MODIFIER_STATE_VALUE_DISABLED"
-				  "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-				  "MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-				  "MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"	
+		        {   
+		        	"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+		        	"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
 		        }
 		        			
 				"Aura"					"modifier_tornado_debuff"
@@ -9884,10 +9885,14 @@
 		        {   
 		        	"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
 		        	"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
 		        }
+	
+		        "OverrideAnimation"     "ACT_DOTA_FLAIL"
 			}
 	
 			"modifier_tornado_building_damage"

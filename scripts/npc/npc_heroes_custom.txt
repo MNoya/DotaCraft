@@ -1,3 +1,347 @@
-"DOTAHeroes"
+// Warcraft 3 <-> Dota 2
+
+"WarcraftHeroes"
 {
+
+	// --------------------------------------------	//
+	//				  HUMAN FACTION	 				//
+	// -------------------------------------------- //
+
+	//	Omni: Holy Light, Devotion Aura, Divine Shield, Resurrection
+	//	KotL: Blizzard, Elemental, Brilliance Aura, Mass TP
+	//	Zeus: Thunderclap, Storm Bolt, Bash, Avatar 
+	//	Invoker: Flame Strike, Banish, Siphon Mana, Phoenix
+
+	// Paladin
+	"npc_paladin"
+	{
+		"override_hero" "npc_dota_hero_omniknight"
+	
+		"Ability1" "paladin_holy_light"
+		"Ability2" "paladin_devotion_aura"
+		"Ability3" "paladin_divine_shield"
+		"Ability4" "paladin_resurrection"
+	}
+
+	// Archmage
+	"npc_archmage"
+	{
+		"override_hero" "npc_dota_hero_keeper_of_the_light"
+	
+		"AbilityLayout"	"4"
+
+		"Ability1" "archmage_blizzard"
+		"Ability2" "archmage_summon_water_elemental"
+		"Ability3" "archmage_brilliance_aura"
+		"Ability4" "archmage_mass_teleport"
+		"Ability5" ""
+		"Ability6" ""
+	}
+
+	// Mountain King
+	"npc_mountain_king"
+	{
+		"override_hero" "npc_dota_hero_zuus"
+	
+		"Ability1" "mountain_king_storm_bolt"
+		"Ability2" "mountain_king_thunder_clap"
+		"Ability3" "mountain_king_bash"
+		"Ability4" "mountain_king_avatar"
+	}
+
+	// Blood Mage
+	"npc_blood_mage"
+	{
+		"override_hero" "npc_dota_hero_invoker"
+
+		"AbilityLayout"	"4"
+	
+		"Ability1" "blood_mage_flame_strike"
+		"Ability2" "blood_mage_banish"
+		"Ability3" "blood_mage_siphon_mana"
+		"Ability4" "blood_mage_phoenix"
+		"Ability5" ""
+		"Ability6" ""
+	}
+
+	// --------------------------------------------	//
+	//				    ORC FACTION	 				//
+	// -------------------------------------------- //
+
+	//	Juggernaut: Wind Walk, Mirror Image, Critical Strike, Bladestorm
+	//	Chen: Far Sight, Chain Lightning, Feral Spirit, Earthquake
+	//	Elder Titan: Shockwave, War Stomp, Endurance, Reincarnation
+	//	Rhasta: Healing Wave, Hex, Serpent Ward, Big Bad voodoo
+
+	// Blademaster
+	"npc_blademaster"
+	{
+		"override_hero" "npc_dota_hero_juggernaut"
+	
+		"Ability1" "blademaster_windwalk"
+		"Ability2" "blademaster_mirror_image"
+		"Ability3" "blademaster_critical_strike"
+		"Ability4" "blademaster_bladestorm"
+	}
+
+	// Far Seer
+	"npc_far_seer"
+	{
+		"override_hero" "npc_dota_hero_disruptor"
+
+		"Ability1" "far_seer_far_sight"
+		"Ability2" "far_seer_chain_lightning"
+		"Ability3" "far_seer_feral_spirit"
+		"Ability4" "far_seer_earthquake"
+	}
+
+	// Tauren Chieftain
+	"npc_tauren_chieftain"
+	{
+		"override_hero" "npc_dota_hero_elder_titan"
+
+		"AbilityLayout"	"4"
+	
+		"Ability1" "tauren_chieftain_shockwave"
+		"Ability2" "tauren_chieftain_war_stomp"
+		"Ability3" "tauren_chieftain_endurance_aura"
+		"Ability4" "tauren_chieftain_reincarnation"
+		"Ability5" ""
+		"Ability6" ""
+	}
+
+	// Shadow Hunter
+	"npc_shadow_hunter"
+	{
+		"override_hero" "npc_dota_hero_shadow_shaman"
+	
+		"Ability1" "shadow_hunter_healing_wave"
+		"Ability2" "shadow_hunter_hex"
+		"Ability3" "shadow_hunter_serpent_ward"
+		"Ability4" "shadow_hunter_big_bad_voodoo"
+	}
+
+	// --------------------------------------------	//
+	//				NIGHT ELF FACTION	 			//
+	// -------------------------------------------- //
+
+	//	AM:  Mana Burn, Immolation, Evasion, Demon Form
+	//	Lesh: Roots, Treants, Thorns, Tranquility
+	//	PotM: Owl Scout, Searing Arrows, Trueshot Aura, Starfall
+	//	PA: Fan of Knives, Blink, Shadow Strike, Avatar of Vengeance 
+
+	// Demon Hunter
+	"npc_demon_hunter"
+	{
+		"override_hero" "npc_dota_hero_antimage"
+	
+		"Ability1" "demon_hunter_mana_burn"
+		"Ability2" "demon_hunter_immolation"
+		"Ability3" "demon_hunter_evasion"
+		"Ability4" "demon_hunter_demon_form"
+
+		"ProjectileSpeed"	"900"	//Needed for Demon Form
+	}
+
+	// Keeper of the Grove
+	"npc_keeper"
+	{
+		"override_hero" "npc_dota_hero_leshrac"
+	
+		"Ability1" "keeper_entangling_roots"
+		"Ability2" "keeper_force_of_nature"
+		"Ability3" "keeper_thorns_aura"
+		"Ability4" "keeper_tranquility"
+	}
+
+	// Priestess of the Moon
+	"npc_potm"
+	{
+		"override_hero" "npc_dota_hero_mirana"
+	
+		"Ability1" "potm_scout"
+		"Ability2" "potm_searing_arrows"
+		"Ability3" "potm_trueshot_aura"
+		"Ability4" "potm_starfall"
+	}
+
+	// Warden
+	"npc_warden"
+	{
+		"override_hero" "npc_dota_hero_phantom_assassin"
+	
+		"Ability1" "warden_fan_of_knives"
+		"Ability2" "warden_blink"
+		"Ability3" "warden_shadow_strike"
+		"Ability4" "warden_avatar_of_vengeance"
+	}
+
+	// --------------------------------------------	//
+	//				  UNDEAD FACTION	 			//
+	// -------------------------------------------- //
+
+	//	Aba: Death Coil, Death Pact, Unholy Aura, Animate Dead
+	//	NS: Carrion Swarm, Sleep, Vampiric Aura, Inferno
+	// 	Lich: Frost Nova, Frost Armor, Dark Ritual, Death and Decay
+	// 	Nyx: Impale, Carrion Beetles, Spiked Carapace, Locust Swarm
+	
+	// Death Knight
+	"npc_death_knight"
+	{
+		"override_hero" "npc_dota_hero_abaddon"
+	
+		"Ability1" "death_knight_death_coil"
+		"Ability2" "death_knight_death_pact"
+		"Ability3" "death_knight_unholy_aura"
+		"Ability4" "death_knight_animate_dead"
+	}
+
+	// Dread Lord
+	"npc_dread_lord"
+	{
+		"override_hero" "npc_dota_hero_night_stalker"
+	
+		"Ability1" "dread_lord_carrion_swarm"
+		"Ability2" "dread_lord_sleep"
+		"Ability3" "dread_lord_vampiric_aura"
+		"Ability4" "dread_lord_inferno"
+	}
+
+	// Lich
+	"npc_lich"
+	{
+		"override_hero" "npc_dota_hero_lich"
+	
+		"Ability1" "lich_frost_nova_warcraft"
+		"Ability2" "lich_frost_armor_warcraft"
+		"Ability3" "lich_dark_ritual_warcraft"
+		"Ability4" "lich_death_and_decay"
+	}
+
+	// Crypt Lord
+	"npc_crypt_lord"
+	{
+		"override_hero" "npc_dota_hero_nyx_assassin"
+	
+		"Ability1" "crypt_lord_impale"
+		"Ability2" "crypt_lord_spiked_carapace"
+		"Ability3" "crypt_lord_carrion_beetles"
+		"Ability4" "crypt_lord_locust_swarm"
+	}
+
+	// --------------------------------------------	//
+	//				  NEUTRAL FACTION	 			//
+	// -------------------------------------------- //
+
+	//	Medusa: Forked Lightning, Frost Arrows, Mana Shield, Tornado
+	//	Drow: Silence, Black Arrow, Life Drain, Charm
+	//	Panda: Breath of Fire, Drunken Haze, Drunken Brawler, Storm, Earth, And Fire
+	//	BM: Summon Bear, Summon Quilbeast, Summon Hawk, Stampede
+	//	Pit Lord: Rain of Fire, Howl of Terror, Cleave, Doom
+	//	Tinker: Pocket Factory, Cluster Rockets, Engineering Upgrade, Robo-Golin
+	//	SF: Soul Bourn, Summon Lava Spawn, Incinerate, Volcano
+	//	Alchemist: Healing Spray, Chemical Rage, Acid Bomb, Transmute
+
+	// Naga Sea Witch
+	"npc_naga_sea_witch"
+	{
+		"override_hero" "npc_dota_hero_medusa"
+	
+		"Ability1" "naga_sea_witch_forked_lightning"
+		"Ability2" "naga_sea_witch_frost_arrows"
+		"Ability3" "naga_sea_witch_mana_shield"
+		"Ability4" "naga_sea_witch_tornado"
+	}
+
+	// Dark Ranger
+	"npc_dark_ranger"
+	{
+		"override_hero" "npc_dota_hero_drow_ranger"
+	
+		"Ability1" "dark_ranger_silence"
+		"Ability2" "dark_ranger_black_arrow"
+		"Ability3" "dark_ranger_life_drain"
+		"Ability4" "dark_ranger_charm"
+	}
+
+	// Pandaren Brewmaster
+	"npc_pandaren"
+	{
+		"override_hero" "npc_dota_hero_brewmaster"
+	
+		"Ability1" "pandaren_breath_of_fire"
+		"Ability2" "pandaren_drunken_haze"
+		"Ability3" "pandaren_drunken_brawler"
+		"Ability4" "pandaren_storm_earth_fire"
+	}
+
+	// Beastmaster
+	"npc_beastmaster"
+	{
+		"override_hero" "npc_dota_hero_beastmaster"
+
+		"AbilityLayout"	"4"
+	
+		"Ability1" "beastmaster_summon_bear"
+		"Ability2" "beastmaster_summon_quilbeast"
+		"Ability3" "beastmaster_summon_hawk"
+		"Ability4" "beastmaster_stampede"
+		"Ability5" ""
+		"Ability6" ""
+	}
+
+	// Pit Lord
+	"npc_pit_lord"
+	{
+		"override_hero" "npc_dota_hero_undying" // Placeholder
+	
+		"Ability1" "pit_lord_rain_of_fire"
+		"Ability2" "pit_lord_howl_of_terror"
+		"Ability3" "pit_lord_cleaving_attack"
+		"Ability4" "pit_lord_doom"
+	}
+
+	// Tinker
+	"npc_tinker"
+	{
+		"override_hero" "npc_dota_hero_tinker"
+	
+		"AbilityLayout"	"4"
+		"Ability1" "tinker_pocket_factory"
+		"Ability2" "tinker_cluster_rockets"
+		"Ability3" "tinker_engineering_upgrade"
+		"Ability4" "tinker_robo_goblin"
+		"Ability5" "tinker_normal_form"
+
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"			"128"
+	}
+
+	// Firelord
+	"npc_firelord"
+	{
+		"override_hero" "npc_dota_hero_nevermore" // Swap to Arcana Model
+	
+		"AbilityLayout"	"4"
+		//"Model"			"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+
+		"Ability1" "firelord_soul_burn"
+		"Ability2" "firelord_summon_lava_spawn"
+		"Ability3" "firelord_incinerate"
+		"Ability4" "firelord_volcano"
+		"Ability5" ""
+		"Ability6" ""
+	}
+
+	// Alchemist
+	"npc_alchemist"
+	{
+		"override_hero" "npc_dota_hero_alchemist"
+	
+		"Ability1" "alchemist_healing_spray"
+		"Ability2" "alchemist_chemical_rage_warcraft"
+		"Ability3" "alchemist_acid_bomb"
+		"Ability4" "alchemist_transmute"
+	}
+
 }
