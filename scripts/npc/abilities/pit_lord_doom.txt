@@ -261,7 +261,7 @@
 				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Types"		"DOTA_UNIT_TARGET_HERO"
 			}
-			"Duration"		"%hero_duration"
+			"Duration"		"%stun_duration_hero"
 		}
 		
 		"ApplyModifier"
@@ -273,7 +273,7 @@
 				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Types"		"DOTA_UNIT_TARGET_BASIC"
 			}
-			"Duration"		"%creep_duration"
+			"Duration"		"%stun_duration_creep"
 		}	
 	}
 
