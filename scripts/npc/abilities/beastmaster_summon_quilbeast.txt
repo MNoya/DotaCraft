@@ -32,6 +32,10 @@
 		"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"
 		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
 		"model"		"models/heroes/beastmaster/beastmaster_beast.vmdl"
+
+		// Sub Abilities
+		"particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+		"particle"  "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
 	}
 
 	"AbilitySpecial"
@@ -237,6 +241,114 @@
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
 					}
 					"EffectName"	"Hero_Beastmaster_Boar.Death"
+				}
+			}
+		}
+	}
+}
+
+
+// Sub Abilities
+
+"beastmaster_quillbeast_frenzy"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NO_TARGET"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+
+	"AbilityCooldown"				"30"
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"duration"			"20"
+		}
+
+		"02"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"modelscale"		"25"
+		}	
+
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movement_speed"	"25"
+		}
+
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_speed"	"40"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_frenzy"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_frenzy"
+		{
+			"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+			"EffectAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+			}
+
+			//Missing Autocast AI and Model Scale
+		}
+	}
+
+}
+"beastmaster_quillbeast_cleave"
+{
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"125"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"cleave_pct"		"100"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_quillbeast_cleave"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnAttackLanded"
+			{
+				"CleaveAttack"
+				{
+					"CleavePercent"         "%cleave_pct"
+					"CleaveRadius"          "%radius"
+					"CleaveEffect"          "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
 				}
 			}
 		}
