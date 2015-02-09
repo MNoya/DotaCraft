@@ -1,10 +1,10 @@
 ## About the project
 
-**Stage 1**: Recreate all Warcraft 3 Hero Abilities in Dota. 
+Stage 1 Finished - Every Warcraft 3 Hero Ability is now fully implemented in Dota KV and Lua.
 
 This will serve as an extension to the [Dota Spell Library](https://github.com/Pizzalol/SpellLibrary)
 
-Stage 2: Add every race-based unit and their abilities.
+**Stage 2**: Add every race-based unit and their abilities.
 
 Stage 3: Port some RTS elements of the WC3 engine (like unit-creating buildings, tech upgrades, multi teams, etc) and ultimately develop a decent game mode out of this.
 
@@ -15,8 +15,6 @@ Stage 3: Port some RTS elements of the WC3 engine (like unit-creating buildings,
 - Values and general description are taken from http://classic.battle.net/war3/
 
 - Code each separate ability file inside scripts/npc/abilities then use executable.jar to merge the npc_abilities_custom.txt and test.
-
-- Update progress in the [Warcraft 3 SpellLibrary Spreadsheet](https://docs.google.com/spreadsheets/d/1qwyG20YNi88G-SFYbaiyxi11Vtar8kjNXXJCMZyF7Y0)
 
 - Check [Warchasers](https://github.com/MNoya/Warchasers/tree/master/scripts) & [SpellLibrary spreadsheet](https://docs.google.com/spreadsheets/d/1oNoqMW2_PZ57TEonAQgMF-9JlApbt3LPNFtx72RhS8Y)
 to see if a similar spell was already made. Many spells overlap, so also make sure to reuse spells from both libraries and credit the authors.
@@ -69,10 +67,3 @@ end
 - Use as many AbilitySpecials as possible, do not hardcode the lua file.
 
 - Find a good ACT_DOTA_X and cast point for the abilities if possible.
-
-- There are some mechanics that might not be worth porting, we have to discuss those later:
-
-  - Undead damage
-  - Disabling targeting units more than level 5
-  - Air units
-  - Others...
