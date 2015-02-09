@@ -8,7 +8,7 @@ function AvatarResize( event )
 	local caster = event.caster
 	local ability = event.ability
 	local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
-	local model_size = ability:GetLevelSpecialValueFor( "model_size" , ability:GetLevel() - 1  )
+	local model_size = ability:GetLevelSpecialValueFor( "model_size" , ability:GetLevel() - 1  ) - 0.25
 
 	local model_size_interval = 100 / ( model_size - 1 ) 
 

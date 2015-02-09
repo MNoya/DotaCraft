@@ -250,7 +250,7 @@
 "beastmaster_quillbeast_frenzy"
 {
 	"BaseClass"						"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NO_TARGET"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 
@@ -270,7 +270,7 @@
 		"02"
 		{
 			"var_type"			"FIELD_FLOAT"
-			"modelscale"		"25"
+			"model_size"		"1.25"
 		}	
 
 		"03"
@@ -298,6 +298,22 @@
 
 	"Modifiers"
 	{
+		"modifier_frenzy_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+		
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
+					"Function"		"FrenzyAutocast"
+				}
+			}
+		}
+
 		"modifier_frenzy"
 		{
 			"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
@@ -315,16 +331,6 @@
 				{
 					"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
 					"Function"		"FrenzyResize"
-				}
-			}
-
-			"ThinkInterval"  "1.0"
-			"OnAttackStart"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
-					"Function"		"FrenzyAutocast"
 				}
 			}
 		}
