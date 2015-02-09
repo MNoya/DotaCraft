@@ -7,9 +7,6 @@
 //2	N/A	25 sec.	75	N/A	N/A	N/A	Summons Dire Quilbeast with Frenzy	3
 //3	N/A	25 sec.	75	N/A	N/A	N/A	Summons Raging Quilbeast with area effect damage and Frenzy	5
 
-// TODO - Add Abilities
-	// Frenzy
-	// AoE Attack
 "beastmaster_summon_quilbeast"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -312,11 +309,28 @@
 			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
 			}
 
-			//Missing Autocast AI and Model Scale
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
+					"Function"		"FrenzyResize"
+				}
+			}
+
+			"ThinkInterval"  "1.0"
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
+					"Function"		"FrenzyAutocast"
+				}
+			}
 		}
 	}
-
 }
+
 "beastmaster_quillbeast_cleave"
 {
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
