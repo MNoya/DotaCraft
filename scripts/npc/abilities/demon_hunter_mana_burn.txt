@@ -27,7 +27,7 @@
 	"precache"
 	{
 		"particle" 	"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
 	}
 	
 	"AbilitySpecial"
@@ -46,6 +46,12 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_NyxAssassin.ManaBurn.Target"
+			"Target" 		"TARGET"
+		}
+		
 		"FireEffect"
 		{
 			"Target"			"TARGET"

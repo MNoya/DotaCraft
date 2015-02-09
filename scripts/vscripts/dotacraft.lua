@@ -399,7 +399,9 @@ function dotacraft:OnEntityKilled( event )
 	-- The Unit that was Killed
 	local killedUnit = EntIndexToHScript(event.entindex_killed)
 	-- The Killing entity
-	local killerEntity = EntIndexToHScript(event.entindex_attacker)
+	if event.entindex_attacker then
+		local killerEntity = EntIndexToHScript(event.entindex_attacker)
+	end
 
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
 	Timers:CreateTimer(1, function() 

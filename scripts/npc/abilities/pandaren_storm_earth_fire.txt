@@ -491,6 +491,11 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"	"Brewmaster_Storm.Cyclone"
+			"Target" 		"TARGET"
+		}
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_storm_cyclone" //modifier_cyclone is built-in
@@ -546,7 +551,6 @@
 	        	{
 	        		"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
 	        		"Function"		"TornadoHeight"
-
 	        	}
 			}	
 

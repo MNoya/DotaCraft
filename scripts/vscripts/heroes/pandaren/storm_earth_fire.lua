@@ -239,7 +239,7 @@ function TornadoHeight( event )
 		
 		-- First send the target at max height very fast
 		if position.z < cyclone_height and time_in_air <= time_to_reach_max_height then
-			print("+",height_per_frame,position.z)
+			--print("+",height_per_frame,position.z)
 			
 			position.z = position.z + height_per_frame
 			target:SetAbsOrigin(position)
@@ -247,7 +247,7 @@ function TornadoHeight( event )
 
 		-- Go down until the target reaches the initial z
 		elseif time_in_air > time_to_stop_fly and time_in_air <= duration then
-			print("-",height_per_frame)
+			--print("-",height_per_frame)
 
 			position.z = position.z - height_per_frame
 			target:SetAbsOrigin(position)
@@ -257,7 +257,7 @@ function TornadoHeight( event )
 		elseif time_in_air <= duration then
 			-- Up
 			if position.z < cyclone_max_height and going_up then 
-				print("going up")
+				--print("going up")
 				position.z = position.z + height_per_frame/3
 				target:SetAbsOrigin(position)
 				return 0.03
@@ -265,14 +265,14 @@ function TornadoHeight( event )
 			-- Down
 			elseif position.z >= cyclone_min_height then
 				going_up = false
-				print("going down")
+				--print("going down")
 				position.z = position.z - height_per_frame/3
 				target:SetAbsOrigin(position)
 				return 0.03
 
 			-- Go up again
 			else
-				print("going up again")
+				--print("going up again")
 				going_up = true
 				return 0.03
 			end

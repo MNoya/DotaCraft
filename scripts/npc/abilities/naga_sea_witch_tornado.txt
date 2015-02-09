@@ -60,27 +60,47 @@
 		"04"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"air_duration"				"12"
+			"dps_to_buildings_center"	"50"
 		}
 		"05"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"dps_to_buildings_center"	"50"
+			"dps_to_buildings_outside"	"7"
 		}
 		"06"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"dps_to_buildings_outside"	"7"
+			"center_radius"				"50"	
 		}
 		"07"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"center_radius"				"50"	
+			"outside_radius"			"275"
 		}
 		"08"
 		{
+			"var_type"					"FIELD_FLOAT"
+			"duration_hero"				"6.0"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration_unit"				"12.0"
+		}
+		"010"
+		{
 			"var_type"					"FIELD_INTEGER"
-			"outside_radius"			"275"
+			"cyclone_height"			"550"
+		}
+		"11"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cyclone_min_height"		"500"
+		}
+		"12"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cyclone_max_height"		"650"
 		}
 	}
 
@@ -131,6 +151,7 @@
 	{
 		"modifier_naga_sea_witch_channeling"
 		{
+			"IsHidden"		"1"
 			"ThinkInterval"	"1.29"
 			"OnIntervalThink"
 			{
@@ -144,6 +165,7 @@
 
 		"modifier_naga_sea_witch_animation"
 		{
+			"IsHidden"			"1"
 			"Duration"			"1.2"
 			"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 		}
@@ -180,27 +202,47 @@
 		"04"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"air_duration"				"12"
+			"dps_to_buildings_center"	"50"
 		}
 		"05"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"dps_to_buildings_center"	"50"
+			"dps_to_buildings_outside"	"7"
 		}
 		"06"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"dps_to_buildings_outside"	"7"
+			"center_radius"				"50"	
 		}
 		"07"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"center_radius"				"50"	
+			"outside_radius"			"275"
 		}
 		"08"
 		{
+			"var_type"					"FIELD_FLOAT"
+			"duration_hero"				"6.0"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration_unit"				"12.0"
+		}
+		"010"
+		{
 			"var_type"					"FIELD_INTEGER"
-			"outside_radius"				"275"
+			"cyclone_height"			"550"
+		}
+		"11"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cyclone_min_height"		"500"
+		}
+		"12"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cyclone_max_height"		"650"
 		}
 	}
 
@@ -230,7 +272,7 @@
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			"Aura_ApplyToCaster"	"0"	        
 
-			"ThinkInterval"		"%air_duration / 4"
+			"ThinkInterval"		"%duration_unit / 4"
 			"OnIntervalThink"
 			{
 				"FireSound"
@@ -239,17 +281,61 @@
 					"Target"		"CASTER"
 				}
 
-				"ApplyModifier"	
+				"ActOnTargets"
 				{
-					"ModifierName"	"modifier_tornado_flying_debuff"
 					"Target"
 					{
 						"Center"  		"CASTER"
 						"Radius" 		"%slow_radius"
 						"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+						"Types" 		"DOTA_UNIT_TARGET_HERO"
 						"MaxTargets"	"1"
 						"Random"		"1"
+					}
+				
+					"Action"    
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_tornado_flying_debuff"
+							"Target" 		"TARGET"
+						}
+
+						"ApplyModifier"	
+						{
+							"ModifierName"	"modifier_tornado_flying_debuff"
+							"Target"		"TARGET"
+							"Duration"		"%duration_hero"
+						}
+					}
+				}
+
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  		"CASTER"
+						"Radius" 		"%slow_radius"
+						"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 		"DOTA_UNIT_TARGET_BASIC"
+						"MaxTargets"	"1"
+						"Random"		"1"
+					}
+				
+					"Action"    
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_tornado_flying_debuff"
+							"Target" 		"TARGET"
+						}
+
+						"ApplyModifier"	
+						{
+							"ModifierName"	"modifier_tornado_flying_debuff"
+							"Target"		"TARGET"
+							"Duration"		"%duration_unit"
+						}
 					}
 				}
 			}
@@ -268,7 +354,6 @@
 		"modifier_tornado_flying_debuff"
 		{
 			"IsDebuff"	"1"
-			"Duration"	"%air_duration"
 			"OnCreated"
 			{
 				"RunScript"
@@ -276,6 +361,12 @@
 		        	"ScriptFile" 	   	"heroes/naga_sea_witch/tornado.lua"
 		            "Function" 			"TornadoParticle"
 		        }
+
+		        "RunScript"
+	        	{
+	        		"ScriptFile"	"heroes/naga_sea_witch/tornado.lua"
+	        		"Function"		"TornadoHeight"
+	        	}
 			}
 
 			"OnDestroy"

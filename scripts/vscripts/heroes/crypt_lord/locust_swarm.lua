@@ -287,7 +287,7 @@ function LocustSwarmPhysics( event )
 		-- if set the state to end, the point is also the caster position, but the units will be removed on collision
 		elseif unit.state == "end" then
 			point = source
-			DebugDrawCircle(point, endColor, 100, 25, true, 2)	
+			if Debug then DebugDrawCircle(point, endColor, 100, 25, true, 2) end
 
 			-- Last collision ends the unit
 			if collision then 

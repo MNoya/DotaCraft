@@ -157,6 +157,15 @@
 				}
 			}
 
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/big_bad_voodoo.lua"
+					"Function"		"MaledictStop"
+				}
+			}
+
 			"Aura"          	"modifier_big_bad_voodoo_invulnerability"
 			"Aura_Radius"   	"%radius"
 			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"

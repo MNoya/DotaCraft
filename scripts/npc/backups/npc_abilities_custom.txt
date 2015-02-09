@@ -2286,6 +2286,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NO_TARGET"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"beastmaster_quillbeast_frenzy"
 	
 		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"0"
@@ -3297,6 +3298,7 @@
 	
 		"AbilityCastPoint"				"0.2"
 		"AbilityCooldown"				"180.0"
+		"AbilityManaCost"				"175"
 	
 		"precache"
 		{
@@ -5040,6 +5042,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.452"
@@ -5494,7 +5497,7 @@
 		"precache"
 		{
 			"particle" 	"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -5513,6 +5516,12 @@
 	
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_NyxAssassin.ManaBurn.Target"
+				"Target" 		"TARGET"
+			}
+			
 			"FireEffect"
 			{
 				"Target"			"TARGET"
@@ -5683,7 +5692,7 @@
 	
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
+			"particle"	"particles/custom/warlock_rain_of_chaos_start.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
 		}
 	
@@ -5706,9 +5715,15 @@
 					"RunScript"
 					{
 						"ScriptFile"    "heroes/dread_lord/inferno.lua"
-	        			"Function"      "SummonInferno"
-						"Target"		"POINT"
-					}		
+	        			"Function"      "RenderInferno"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/custom/warlock_rain_of_chaos_start.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+					}	
 				}
 			}
 	
@@ -7866,7 +7881,7 @@
 		"precache"
 		{
 			"particle"				"particles/units/heroes/hero_omniknight/omniknight_degen_aura_b.vpcf"
-			"particle"				"particles/items_fx/aura_endurance_b.vpcf"
+			"particle"				"particles/custom/aura_thorns.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -7895,7 +7910,7 @@
 				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
 	
-				"EffectName"		"particles/items_fx/aura_endurance_b.vpcf"
+				"EffectName"		"particles/custom/aura_thorns.vpcf"
 				"EffectAttachType"	"follow_origin"
 			}
 	
@@ -9537,27 +9552,47 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"air_duration"				"12"
+				"dps_to_buildings_center"	"50"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_to_buildings_center"	"50"
+				"dps_to_buildings_outside"	"7"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_to_buildings_outside"	"7"
+				"center_radius"				"50"	
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"center_radius"				"50"	
+				"outside_radius"			"275"
 			}
 			"08"
 			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_hero"				"6.0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_unit"				"12.0"
+			}
+			"010"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"outside_radius"			"275"
+				"cyclone_height"			"550"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_min_height"		"500"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_max_height"		"650"
 			}
 		}
 	
@@ -9608,6 +9643,7 @@
 		{
 			"modifier_naga_sea_witch_channeling"
 			{
+				"IsHidden"		"1"
 				"ThinkInterval"	"1.29"
 				"OnIntervalThink"
 				{
@@ -9621,6 +9657,7 @@
 	
 			"modifier_naga_sea_witch_animation"
 			{
+				"IsHidden"			"1"
 				"Duration"			"1.2"
 				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 			}
@@ -9657,27 +9694,47 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"air_duration"				"12"
+				"dps_to_buildings_center"	"50"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_to_buildings_center"	"50"
+				"dps_to_buildings_outside"	"7"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_to_buildings_outside"	"7"
+				"center_radius"				"50"	
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"center_radius"				"50"	
+				"outside_radius"			"275"
 			}
 			"08"
 			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_hero"				"6.0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_unit"				"12.0"
+			}
+			"010"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"outside_radius"				"275"
+				"cyclone_height"			"550"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_min_height"		"500"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_max_height"		"650"
 			}
 		}
 	
@@ -9707,7 +9764,7 @@
 				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 				"Aura_ApplyToCaster"	"0"	        
 	
-				"ThinkInterval"		"%air_duration / 4"
+				"ThinkInterval"		"%duration_unit / 4"
 				"OnIntervalThink"
 				{
 					"FireSound"
@@ -9716,17 +9773,61 @@
 						"Target"		"CASTER"
 					}
 	
-					"ApplyModifier"	
+					"ActOnTargets"
 					{
-						"ModifierName"	"modifier_tornado_flying_debuff"
 						"Target"
 						{
 							"Center"  		"CASTER"
 							"Radius" 		"%slow_radius"
 							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+							"Types" 		"DOTA_UNIT_TARGET_HERO"
 							"MaxTargets"	"1"
 							"Random"		"1"
+						}
+					
+						"Action"    
+						{
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_tornado_flying_debuff"
+								"Target" 		"TARGET"
+							}
+	
+							"ApplyModifier"	
+							{
+								"ModifierName"	"modifier_tornado_flying_debuff"
+								"Target"		"TARGET"
+								"Duration"		"%duration_hero"
+							}
+						}
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  		"CASTER"
+							"Radius" 		"%slow_radius"
+							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 		"DOTA_UNIT_TARGET_BASIC"
+							"MaxTargets"	"1"
+							"Random"		"1"
+						}
+					
+						"Action"    
+						{
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_tornado_flying_debuff"
+								"Target" 		"TARGET"
+							}
+	
+							"ApplyModifier"	
+							{
+								"ModifierName"	"modifier_tornado_flying_debuff"
+								"Target"		"TARGET"
+								"Duration"		"%duration_unit"
+							}
 						}
 					}
 				}
@@ -9745,7 +9846,6 @@
 			"modifier_tornado_flying_debuff"
 			{
 				"IsDebuff"	"1"
-				"Duration"	"%air_duration"
 				"OnCreated"
 				{
 					"RunScript"
@@ -9753,6 +9853,12 @@
 			        	"ScriptFile" 	   	"heroes/naga_sea_witch/tornado.lua"
 			            "Function" 			"TornadoParticle"
 			        }
+	
+			        "RunScript"
+		        	{
+		        		"ScriptFile"	"heroes/naga_sea_witch/tornado.lua"
+		        		"Function"		"TornadoHeight"
+		        	}
 				}
 	
 				"OnDestroy"
@@ -9838,7 +9944,7 @@
 	
 		"precache"
 		{
-			"particle"				"particles/items_fx/aura_assault.vpcf"
+			"particle"				"particles/custom/aura_devotion.vpcf"
 		}
 	
 		"AbilitySpecial"
@@ -9859,7 +9965,7 @@
 		{
 			"modifier_devotion_aura"
 			{
-				"EffectName"		"particles/items_fx/aura_assault.vpcf"
+				"EffectName"		"particles/custom/aura_devotion.vpcf"
 				"EffectAttachType" 	"follow_origin"
 	
 				"Passive" 			"1"
@@ -10084,7 +10190,7 @@
 					{
 						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
 						"EffectAttachType"	"follow_overhead"
-						"Target"			"CASTER"
+						"Target"			"TARGET"
 					}
 	
 					"ApplyModifier"
@@ -10298,7 +10404,7 @@
 			"modifier_drunken_brawler"
 			{
 			    "Passive"   "1"
-			    "IsHidden"  "0"
+			    "IsHidden"  "1"
 	
 			    "EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
 			    "EffectAttachType"	"follow_origin"
@@ -11051,7 +11157,6 @@
 		        	{
 		        		"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
 		        		"Function"		"TornadoHeight"
-	
 		        	}
 				}	
 	
@@ -12559,6 +12664,8 @@
 	//1	N/A	N/A	8	60	Unit	N/A	10 bonus damage	1
 	//2	N/A	N/A	8	70	Unit	N/A	20 bonus damage	3
 	//3	N/A	N/A	8	70	Unit	N/A	30 bonus damage	5
+	
+	// BUG: Orb doesn't fire on Buildings
 	"potm_searing_arrows"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -12607,7 +12714,7 @@
 	
 				"Orb"
 				{
-					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
 					"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
 					"CastAttack"		"1"
 				}
@@ -13097,6 +13204,15 @@
 					}
 				}
 	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/shadow_hunter/big_bad_voodoo.lua"
+						"Function"		"MaledictStop"
+					}
+				}
+	
 				"Aura"          	"modifier_big_bad_voodoo_invulnerability"
 				"Aura_Radius"   	"%radius"
 				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -13476,9 +13592,9 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Tauren Chieftain Endurance Aura
+	// Author: Noya
+	// Date: 13.01.2015.
 	// Notes: Increases the movement speed and attack rate of nearby friendly units.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +10%, Attack Rate +5%	1
@@ -13497,7 +13613,7 @@
 	
 		"precache"
 		{
-			"particle"	"particles/items_fx/aura_endurance.vpcf"
+			"particle"	"particles/custom/aura_endurance.vpcf"
 		}
 	
 		"AbilitySpecial"
@@ -13522,7 +13638,7 @@
 		{
 			"modifier_endurance_aura"
 			{
-				"EffectName"		"particles/items_fx/aura_endurance.vpcf"
+				"EffectName"		"particles/custom/aura_endurance.vpcf"
 				"EffectAttachType" 	"follow_origin"
 	
 				"Passive" 			"1"
@@ -13558,6 +13674,7 @@
 	"tauren_chieftain_reincarnation"
 	{
 		"BaseClass"             		"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"tauren_chieftain_reincarnation"
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
@@ -14664,6 +14781,7 @@
 			"model"		"models/items/vengefulspirit/fallenprincess_head/fallenprincess_head.vmdl"
 			"particle"  "particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
 			"particle"  "particles/econ/items/vengeful/vengeful_wing_fallenprincess/venge_wingsoffallenprincess_ambient.vpcf"
+			"particle"	"particles/units/heroes/hero_vengeful/vengeful_base_attack.vpcf"
 		}
 		
 		"AbilitySpecial"

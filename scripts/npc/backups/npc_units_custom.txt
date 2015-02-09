@@ -762,7 +762,7 @@
 		"BaseClass"					"npc_dota_lone_druid_bear"
 		"SoundSet"					"LoneDruid_SpiritBear"
 		"Level"						"7"
-		"ModelScale" 				".75"
+		"ModelScale" 				"0.75"
 		"ConsideredHero"			"1"
 		"UnitLabel"					"spirit_bear"
 	
@@ -1659,6 +1659,7 @@
 		"IdleSoundLoop"				"Hero_DoomBringer.IdleLoop"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
 		"IsAncient"					"1"
+		"ConsideredHero"			"1"
 		
 		"precache"
 		{
@@ -1751,7 +1752,7 @@
 	{										
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models/items/warlock/golem/ahmhedoq/ahmhedoq.vmdl"
+		"Model"						"models/items/warlock/golem/obsidian_golem/obsidian_golem.vmdl"
 		"BaseClass"					"npc_dota_warlock_golem"
 		"SoundSet"					"Hero_WarlockGolem"			// Name of sound set.
 		"IdleSoundLoop"				"Hero_WarlockGolem.Spawn_Loop"

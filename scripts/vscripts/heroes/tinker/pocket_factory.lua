@@ -54,24 +54,26 @@ function StartGoblinSpawn( event )
 	-- Start the repeated spawn
 	Timers:CreateTimer(spawn_ratio, function()
 
-		-- Start another cooldown
-		ability:StartCooldown(spawn_ratio)
+		if caster and IsValidEntity(caster) and caster:IsAlive() then
+			-- Start another cooldown
+			ability:StartCooldown(spawn_ratio)
 
-		-- Create the unit, making it controllable by the building owner, and time out after a duration.
-		local goblin = CreateUnitByName(unit_name, caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
-		goblin:SetControllableByPlayer(player, true)
-		goblin:AddNewModifier(caster, nil, "modifier_kill", {duration = goblin_duration})
-		goblin.no_corpse = true
+			-- Create the unit, making it controllable by the building owner, and time out after a duration.
+			local goblin = CreateUnitByName(unit_name, caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
+			goblin:SetControllableByPlayer(player, true)
+			goblin:AddNewModifier(caster, nil, "modifier_kill", {duration = goblin_duration})
+			goblin.no_corpse = true
 
-		-- Add the ability and set its level to the main ability level
-		goblin:AddAbility(goblin_ability_name)
-		local goblin_ability = goblin:FindAbilityByName(goblin_ability_name)
-		goblin_ability:SetLevel(ability_level)
+			-- Add the ability and set its level to the main ability level
+			goblin:AddAbility(goblin_ability_name)
+			local goblin_ability = goblin:FindAbilityByName(goblin_ability_name)
+			goblin_ability:SetLevel(ability_level)
 
-		-- Spawn sound
-		goblin:EmitSound("Hero_Tinker.March_of_the_Machines.Cast")
+			-- Spawn sound
+			goblin:EmitSound("Hero_Tinker.March_of_the_Machines.Cast")
 
-		return spawn_ratio
+			return spawn_ratio
+		end
 	end)
 
 end

@@ -52,7 +52,7 @@
 
 	"precache"
 	{
-		"particle"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
+		"particle"	"particles/custom/warlock_rain_of_chaos_start.vpcf"
 		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
 	}
 
@@ -75,9 +75,15 @@
 				"RunScript"
 				{
 					"ScriptFile"    "heroes/dread_lord/inferno.lua"
-        			"Function"      "SummonInferno"
-					"Target"		"POINT"
-				}		
+        			"Function"      "RenderInferno"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"        "particles/custom/warlock_rain_of_chaos_start.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}	
 			}
 		}
 
