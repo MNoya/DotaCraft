@@ -1,0 +1,86 @@
+//=================================================================================
+// Creature: Demon Hunter
+// Description: "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_demon_hunter"
+{
+	// General
+	//----------------------------------------------------------------
+	"override_hero"				"npc_dota_hero_antimage"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1" 					"demon_hunter_mana_burn"
+	"Ability2" 					"demon_hunter_immolation"
+	"Ability3" 					"demon_hunter_evasion"
+	"Ability4" 					"demon_hunter_demon_form"
+	"Ability5"					""
+	"Ability6"					""
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"2.0"
+	"AttackDamageMax"			"24.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.7"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"650"
+	"AttackRange"				"100"
+	"ProjectileSpeed"			"900"	//Needed for Demon Form
+	
+	// Attributes
+	//----------------------------------------------------------------
+	"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+	"AttributeBaseStrength"		"21"
+	"AttributeStrengthGain"		"2.4"
+	"AttributeBaseIntelligence"	"16"
+	"AttributeIntelligenceGain"	"2.1"
+	"AttributeBaseAgility"		"22"
+	"AttributeAgilityGain"		"1.5"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"100"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"100"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1800"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+

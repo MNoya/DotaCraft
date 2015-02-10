@@ -1,0 +1,89 @@
+//=================================================================================
+// Creature: Firelord
+// Description: "Mystical Hero, adept at disrupting spells and dealing large amounts of fire damage.  Can learn Soul Burn, Summon Lava Spawn, Incinerate and Volcano.|n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_firelord"
+{
+	// General
+	//----------------------------------------------------------------
+	"override_hero"				"npc_dota_hero_nevermore"	 //Add npc_dota_hero internal name
+	//"Model"					"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"	"4"
+	"Ability1" 					"firelord_soul_burn"
+	"Ability2" 					"firelord_summon_lava_spawn"
+	"Ability3" 					"firelord_incinerate"
+	"Ability4" 					"firelord_volcano"
+	"Ability5" 					""
+	"Ability6" 					""
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"2.0"
+	"AttackDamageMax"			"8.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.8"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"550"
+	//"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1200"
+	
+	// Attributes
+	//----------------------------------------------------------------
+	"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+	"AttributeBaseStrength"		"15"
+	"AttributeStrengthGain"		"2"
+	"AttributeBaseIntelligence"	"18"
+	"AttributeIntelligenceGain"	"2.5"
+	"AttributeBaseAgility"		"20"
+	"AttributeAgilityGain"		"1.6"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"135"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"100"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1800"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+

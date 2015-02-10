@@ -1,0 +1,85 @@
+//=================================================================================
+// Creature: Paladin
+// Description: "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"human_paladin"
+{
+	// General
+	//----------------------------------------------------------------
+	"override_hero"				"npc_dota_hero_omniknight"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1" 					"paladin_holy_light"
+	"Ability2" 					"paladin_devotion_aura"
+	"Ability3" 					"paladin_divine_shield"
+	"Ability4" 					"paladin_resurrection"
+	"Ability5"					""
+	"Ability6"					""
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"2"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"2.0"
+	"AttackDamageMax"			"12.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"2.2"
+	"AttackAnimationPoint"		"0.433"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Attributes
+	//----------------------------------------------------------------
+	"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+	"AttributeBaseStrength"		"22"
+	"AttributeStrengthGain"		"2.7"
+	"AttributeBaseIntelligence"	"17"
+	"AttributeIntelligenceGain"	"1.8"
+	"AttributeBaseAgility"		"13"
+	"AttributeAgilityGain"		"1.5"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"100"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"100"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatsManaRegen"			"0.01"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1800"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+

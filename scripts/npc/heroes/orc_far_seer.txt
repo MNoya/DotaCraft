@@ -1,0 +1,85 @@
+//=================================================================================
+// Creature: Far Seer
+// Description: "Mystical Hero, effective at ranged attacks and scouting. Can learn Chain Lightning, Far Sight, Feral Spirit and Earthquake. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"orc_far_seer"
+{
+	// General
+	//----------------------------------------------------------------
+	"override_hero"				"npc_dota_hero_disruptor"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1" 					"far_seer_far_sight"
+	"Ability2" 					"far_seer_chain_lightning"
+	"Ability3" 					"far_seer_feral_spirit"
+	"Ability4" 					"far_seer_earthquake"
+	"Ability5"					""
+	"Ability6"					""
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"2.0"
+	"AttackDamageMax"			"8.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"2.28"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	//"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1200"
+	
+	// Attributes
+	//----------------------------------------------------------------
+	"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+	"AttributeBaseStrength"		"15"
+	"AttributeStrengthGain"		"2"
+	"AttributeBaseIntelligence"	"19"
+	"AttributeIntelligenceGain"	"3"
+	"AttributeBaseAgility"		"18"
+	"AttributeAgilityGain"		"1"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"425"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"100"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1800"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}

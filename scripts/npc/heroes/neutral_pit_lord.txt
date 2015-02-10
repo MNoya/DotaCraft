@@ -1,0 +1,85 @@
+//=================================================================================
+// Creature: Pit Lord
+//=================================================================================
+"neutral_pit_lord"
+{
+	// General
+	//----------------------------------------------------------------
+	"override_hero"				"npc_dota_hero_undying"	 // Placeholder
+	
+	// Abilities
+	//----------------------------------------------------------------	
+	"Ability1" 					"pit_lord_rain_of_fire"
+	"Ability2" 					"pit_lord_howl_of_terror"
+	"Ability3" 					"pit_lord_cleaving_attack"
+	"Ability4" 					"pit_lord_doom"
+	"Ability5"					""
+	"Ability6"					""
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"12.0"
+	"AttackDamageMax"			"22.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"2.05"
+	"AttackAnimationPoint"		"0.8"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"128"
+	
+	// Attributes
+	//----------------------------------------------------------------
+	"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+	"AttributeBaseStrength"		"30"
+	"AttributeStrengthGain"		"3"
+	"AttributeBaseIntelligence"	"20"
+	"AttributeIntelligenceGain"	"2"
+	"AttributeBaseAgility"		"17"
+	"AttributeAgilityGain"		"1"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"100"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"250"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"100"
+	"StatusHealthRegen"			"1"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1800"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+
+

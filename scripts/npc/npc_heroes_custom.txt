@@ -1,347 +1,2066 @@
-// Warcraft 3 <-> Dota 2
-
-"WarcraftHeroes"
+"DOTAHeroes"
 {
-
-	// --------------------------------------------	//
-	//				  HUMAN FACTION	 				//
-	// -------------------------------------------- //
-
-	//	Omni: Holy Light, Devotion Aura, Divine Shield, Resurrection
-	//	KotL: Blizzard, Elemental, Brilliance Aura, Mass TP
-	//	Zeus: Thunderclap, Storm Bolt, Bash, Avatar 
-	//	Invoker: Flame Strike, Banish, Siphon Mana, Phoenix
-
-	// Paladin
-	"npc_paladin"
+	//=================================================================================
+	// Creature: Archmage
+	// Description: "Mystical Hero, adept at ranged assaults. Can learn Blizzard, Summon Water Elemental, Brilliance Aura and Mass Teleport. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"human_archmage"
 	{
-		"override_hero" "npc_dota_hero_omniknight"
-	
-		"Ability1" "paladin_holy_light"
-		"Ability2" "paladin_devotion_aura"
-		"Ability3" "paladin_divine_shield"
-		"Ability4" "paladin_resurrection"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_keeper_of_the_light"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1" 					"archmage_blizzard"
+		"Ability2" 					"archmage_summon_water_elemental"
+		"Ability3" 					"archmage_brilliance_aura"
+		"Ability4" 					"archmage_mass_teleport"
+		"Ability5" 					""
+		"Ability6" 					""
+		"Ability10"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.13"
+		"AttackAnimationPoint"		"0.55"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"		"15"
+		"AttributeStrengthGain"		"1.8"
+		"AttributeBaseIntelligence"	"19"
+		"AttributeIntelligenceGain"	"3.2"
+		"AttributeBaseAgility"		"17"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatsManaRegen"			"0.01"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Archmage
-	"npc_archmage"
-	{
-		"override_hero" "npc_dota_hero_keeper_of_the_light"
 	
+	
+	//=================================================================================
+	// Creature: Blood Mage
+	// Description: "Mystical Hero, adept at controlling magic and ranged assaults. Can learn Flame Strike, Banish, Siphon Mana and Phoenix. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"Blood_Mage"
+	{
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_invoker"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+	
+		"Ability1" 					"blood_mage_flame_strike"
+		"Ability2" 					"blood_mage_banish"
+		"Ability3" 					"blood_mage_siphon_mana"
+		"Ability4" 					"blood_mage_phoenix"
+		"Ability5" 					""
+		"Ability6" 					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.13"
+		"AttackAnimationPoint"		"0.55"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"		"16"
+		"AttributeStrengthGain"		"2"
+		"AttributeBaseIntelligence"	"19"
+		"AttributeIntelligenceGain"	"3"
+		"AttributeBaseAgility"		"15"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatsManaRegen"			"0.01"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Mountain King
+	//=================================================================================
+	"human_mountain_king"
+	{
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_zuus"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"mountain_king_storm_bolt"
+		"Ability2" 					"mountain_king_thunder_clap"
+		"Ability3" 					"mountain_king_bash"
+		"Ability4" 					"mountain_king_avatar"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.22"
+		"AttackAnimationPoint"		"0.35"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"24"
+		"AttributeStrengthGain"		"3"
+		"AttributeBaseIntelligence"	"15"
+		"AttributeIntelligenceGain"	"1.5"
+		"AttributeBaseAgility"		"11"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatsManaRegen"			"0.01"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Paladin
+	// Description: "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"human_paladin"
+	{
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_omniknight"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"paladin_holy_light"
+		"Ability2" 					"paladin_devotion_aura"
+		"Ability3" 					"paladin_divine_shield"
+		"Ability4" 					"paladin_resurrection"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.2"
+		"AttackAnimationPoint"		"0.433"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"22"
+		"AttributeStrengthGain"		"2.7"
+		"AttributeBaseIntelligence"	"17"
+		"AttributeIntelligenceGain"	"1.8"
+		"AttributeBaseAgility"		"13"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatsManaRegen"			"0.01"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Alchemist
+	// Description: "Warrior Hero, known for offensive and defensive versatility. Can learn Healing Spray, Chemical Rage, Acid Bomb and Transmute.|n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_alchemist"
+	{
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_alchemist"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"alchemist_healing_spray"
+		"Ability2" 					"alchemist_chemical_rage_warcraft"
+		"Ability3" 					"alchemist_acid_bomb"
+		"Ability4" 					"alchemist_transmute"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"3.0"
+		"AttackDamageMax"			"30.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.42"
+		"AttackAnimationPoint"		"0.35"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"25"
+		"AttributeStrengthGain"		"3.3"
+		"AttributeBaseIntelligence"	"18"
+		"AttributeIntelligenceGain"	"2"
+		"AttributeBaseAgility"		"10"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"135"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"405"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Beastmaster
+	// Description: "Warrior Hero, adept at summoning beasts into battle. Can learn Summon Bear, Summon Quilbeast, Summon Hawk, and Stampede. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_beastmaster"
+	{
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_beastmaster"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1" 					"beastmaster_summon_bear"
+		"Ability2" 					"beastmaster_summon_quilbeast"
+		"Ability3" 					"beastmaster_summon_hawk"
+		"Ability4" 					"beastmaster_stampede"
+		"Ability5" 					""
+		"Ability6" 					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.2"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"128"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"22"
+		"AttributeStrengthGain"		"2.9"
+		"AttributeBaseIntelligence"	"15"
+		"AttributeIntelligenceGain"	"1.8"
+		"AttributeBaseAgility"		"14"
+		"AttributeAgilityGain"		"1.3"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"135"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Dark Ranger
+	// Description: "Cunning Hero, adept at manipulating opponents. Can learn Silence, Black Arrow, Life Drain, and Charm. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_dark_ranger"
+	{
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_drow_ranger"	
+		
+		// Abilities
+		//----------------------------------------------------------------	
+		"Ability1" 					"dark_ranger_silence"
+		"Ability2" 					"dark_ranger_black_arrow"
+		"Ability3" 					"dark_ranger_life_drain"
+		"Ability4" 					"dark_ranger_charm"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.46"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"650"
+		"AttackRange"				"600"
+		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"		"18"
+		"AttributeStrengthGain"		"1.9"
+		"AttributeBaseIntelligence"	"15"
+		"AttributeIntelligenceGain"	"2.6"
+		"AttributeBaseAgility"		"19"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Firelord
+	// Description: "Mystical Hero, adept at disrupting spells and dealing large amounts of fire damage.  Can learn Soul Burn, Summon Lava Spawn, Incinerate and Volcano.|n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_firelord"
+	{
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_nevermore"	 //Add npc_dota_hero internal name
+		//"Model"					"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+		
+		// Abilities
+		//----------------------------------------------------------------
 		"AbilityLayout"	"4"
-
-		"Ability1" "archmage_blizzard"
-		"Ability2" "archmage_summon_water_elemental"
-		"Ability3" "archmage_brilliance_aura"
-		"Ability4" "archmage_mass_teleport"
-		"Ability5" ""
-		"Ability6" ""
+		"Ability1" 					"firelord_soul_burn"
+		"Ability2" 					"firelord_summon_lava_spawn"
+		"Ability3" 					"firelord_incinerate"
+		"Ability4" 					"firelord_volcano"
+		"Ability5" 					""
+		"Ability6" 					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.8"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"550"
+		"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"1200"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"		"15"
+		"AttributeStrengthGain"		"2"
+		"AttributeBaseIntelligence"	"18"
+		"AttributeIntelligenceGain"	"2.5"
+		"AttributeBaseAgility"		"20"
+		"AttributeAgilityGain"		"1.6"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"135"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Mountain King
-	"npc_mountain_king"
-	{
-		"override_hero" "npc_dota_hero_zuus"
 	
-		"Ability1" "mountain_king_storm_bolt"
-		"Ability2" "mountain_king_thunder_clap"
-		"Ability3" "mountain_king_bash"
-		"Ability4" "mountain_king_avatar"
-	}
-
-	// Blood Mage
-	"npc_blood_mage"
-	{
-		"override_hero" "npc_dota_hero_invoker"
-
-		"AbilityLayout"	"4"
 	
-		"Ability1" "blood_mage_flame_strike"
-		"Ability2" "blood_mage_banish"
-		"Ability3" "blood_mage_siphon_mana"
-		"Ability4" "blood_mage_phoenix"
-		"Ability5" ""
-		"Ability6" ""
-	}
-
-	// --------------------------------------------	//
-	//				    ORC FACTION	 				//
-	// -------------------------------------------- //
-
-	//	Juggernaut: Wind Walk, Mirror Image, Critical Strike, Bladestorm
-	//	Chen: Far Sight, Chain Lightning, Feral Spirit, Earthquake
-	//	Elder Titan: Shockwave, War Stomp, Endurance, Reincarnation
-	//	Rhasta: Healing Wave, Hex, Serpent Ward, Big Bad voodoo
-
-	// Blademaster
-	"npc_blademaster"
+	//=================================================================================
+	// Creature: Naga Sea Witch
+	// Description: "Mystical Hero, adept at ranged combat. Can learn Forked Lightning, Frost Arrows, Mana Shield, and Tornado. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_naga_sea_witch"
 	{
-		"override_hero" "npc_dota_hero_juggernaut"
-	
-		"Ability1" "blademaster_windwalk"
-		"Ability2" "blademaster_mirror_image"
-		"Ability3" "blademaster_critical_strike"
-		"Ability4" "blademaster_bladestorm"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_medusa"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"naga_sea_witch_forked_lightning"
+		"Ability2" 					"naga_sea_witch_frost_arrows"
+		"Ability3" 					"naga_sea_witch_mana_shield"
+		"Ability4" 					"naga_sea_witch_tornado"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.9"
+		"AttackAnimationPoint"		"0.73"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"1200"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"		"15"
+		"AttributeStrengthGain"		"2"
+		"AttributeBaseIntelligence"	"20"
+		"AttributeIntelligenceGain"	"3.4"
+		"AttributeBaseAgility"		"14"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Far Seer
-	"npc_far_seer"
+	
+	
+	//=================================================================================
+	// Creature: Pandaren Brewmaster
+	// Description: "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Breath of Fire, Drunken Haze, Drunken Brawler and Storm, Earth, And Fire. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_pandaren"
 	{
-		"override_hero" "npc_dota_hero_disruptor"
-
-		"Ability1" "far_seer_far_sight"
-		"Ability2" "far_seer_chain_lightning"
-		"Ability3" "far_seer_feral_spirit"
-		"Ability4" "far_seer_earthquake"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_brewmaster"
+		
+		// Abilities
+		//----------------------------------------------------------------	
+		"Ability1" 					"pandaren_breath_of_fire"
+		"Ability2" 					"pandaren_drunken_haze"
+		"Ability3" 					"pandaren_drunken_brawler"
+		"Ability4" 					"pandaren_storm_earth_fire"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.22"
+		"AttackAnimationPoint"		"0.35"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"22"
+		"AttributeStrengthGain"		"3"
+		"AttributeBaseIntelligence"	"15"
+		"AttributeIntelligenceGain"	"1.5"
+		"AttributeBaseAgility"		"14"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"135"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Tauren Chieftain
-	"npc_tauren_chieftain"
+	
+	
+	//=================================================================================
+	// Creature: Pit Lord
+	//=================================================================================
+	"neutral_pit_lord"
 	{
-		"override_hero" "npc_dota_hero_elder_titan"
-
-		"AbilityLayout"	"4"
-	
-		"Ability1" "tauren_chieftain_shockwave"
-		"Ability2" "tauren_chieftain_war_stomp"
-		"Ability3" "tauren_chieftain_endurance_aura"
-		"Ability4" "tauren_chieftain_reincarnation"
-		"Ability5" ""
-		"Ability6" ""
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_undying"	 // Placeholder
+		
+		// Abilities
+		//----------------------------------------------------------------	
+		"Ability1" 					"pit_lord_rain_of_fire"
+		"Ability2" 					"pit_lord_howl_of_terror"
+		"Ability3" 					"pit_lord_cleaving_attack"
+		"Ability4" 					"pit_lord_doom"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"12.0"
+		"AttackDamageMax"			"22.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.05"
+		"AttackAnimationPoint"		"0.8"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"128"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"30"
+		"AttributeStrengthGain"		"3"
+		"AttributeBaseIntelligence"	"20"
+		"AttributeIntelligenceGain"	"2"
+		"AttributeBaseAgility"		"17"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"250"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"1"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Shadow Hunter
-	"npc_shadow_hunter"
+	
+	
+	
+	//=================================================================================
+	// Creature: Tinker
+	// Description: "Cunning Hero, exceptional at disrupting battles and enduring damage. Can learn Pocket Factory, Cluster Rockets, Engineering Upgrade and Robo-Goblin.|n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_tinker"
 	{
-		"override_hero" "npc_dota_hero_shadow_shaman"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_tinker"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1" 					"tinker_pocket_factory"
+		"Ability2" 					"tinker_cluster_rockets"
+		"Ability3" 					"tinker_engineering_upgrade"
+		"Ability4" 					"tinker_robo_goblin"
+		"Ability5" 					"tinker_normal_form"
+		"Ability6"					""
 	
-		"Ability1" "shadow_hunter_healing_wave"
-		"Ability2" "shadow_hunter_hex"
-		"Ability3" "shadow_hunter_serpent_ward"
-		"Ability4" "shadow_hunter_big_bad_voodoo"
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2"
+		"AttackAnimationPoint"		"0.35"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"128"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"		"20"
+		"AttributeStrengthGain"		"2.4"
+		"AttributeBaseIntelligence"	"20"
+		"AttributeIntelligenceGain"	"2.6"
+		"AttributeBaseAgility"		"15"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"135"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// --------------------------------------------	//
-	//				NIGHT ELF FACTION	 			//
-	// -------------------------------------------- //
-
-	//	AM:  Mana Burn, Immolation, Evasion, Demon Form
-	//	Lesh: Roots, Treants, Thorns, Tranquility
-	//	PotM: Owl Scout, Searing Arrows, Trueshot Aura, Starfall
-	//	PA: Fan of Knives, Blink, Shadow Strike, Avatar of Vengeance 
-
-	// Demon Hunter
-	"npc_demon_hunter"
+	//=================================================================================
+	// Creature: Demon Hunter
+	// Description: "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"nightelf_demon_hunter"
 	{
-		"override_hero" "npc_dota_hero_antimage"
-	
-		"Ability1" "demon_hunter_mana_burn"
-		"Ability2" "demon_hunter_immolation"
-		"Ability3" "demon_hunter_evasion"
-		"Ability4" "demon_hunter_demon_form"
-
-		"ProjectileSpeed"	"900"	//Needed for Demon Form
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_antimage"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"demon_hunter_mana_burn"
+		"Ability2" 					"demon_hunter_immolation"
+		"Ability3" 					"demon_hunter_evasion"
+		"Ability4" 					"demon_hunter_demon_form"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"24.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"650"
+		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"	//Needed for Demon Form
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"		"21"
+		"AttributeStrengthGain"		"2.4"
+		"AttributeBaseIntelligence"	"16"
+		"AttributeIntelligenceGain"	"2.1"
+		"AttributeBaseAgility"		"22"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Keeper of the Grove
-	"npc_keeper"
+	
+	
+	//=================================================================================
+	// Creature: Keeper of the Grove
+	// Description: "Mystical Hero, adept at using nature spells. Can learn Entangling Roots, Force of Nature, Thorns Aura, and Tranquility. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"nightelf_keeper"
 	{
-		"override_hero" "npc_dota_hero_leshrac"
-	
-		"Ability1" "keeper_entangling_roots"
-		"Ability2" "keeper_force_of_nature"
-		"Ability3" "keeper_thorns_aura"
-		"Ability4" "keeper_tranquility"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_leshrac"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"keeper_entangling_roots"
+		"Ability2" 					"keeper_force_of_nature"
+		"Ability3" 					"keeper_thorns_aura"
+		"Ability4" 					"keeper_tranquility"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.18"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"		"17"
+		"AttributeStrengthGain"		"1.8"
+		"AttributeBaseIntelligence"	"18"
+		"AttributeIntelligenceGain"	"2.7"
+		"AttributeBaseAgility"		"15"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Priestess of the Moon
-	"npc_potm"
+	
+	
+	//=================================================================================
+	// Creature: Priestess of the Moon
+	// Description: "Warrior Hero, adept at enhancing ranged attacks and slaying enemies from afar. Can learn Scout, Searing Arrows, Trueshot Aura, and Starfall. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"nightelf_potm"
 	{
-		"override_hero" "npc_dota_hero_mirana"
-	
-		"Ability1" "potm_scout"
-		"Ability2" "potm_searing_arrows"
-		"Ability3" "potm_trueshot_aura"
-		"Ability4" "potm_starfall"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_mirana"	 //Add npc_dota_hero internal name
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"potm_scout"
+		"Ability2" 					"potm_searing_arrows"
+		"Ability3" 					"potm_trueshot_aura"
+		"Ability4" 					"potm_starfall"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.46"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"650"
+		"AttackRange"				"600"
+		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"		"18"
+		"AttributeStrengthGain"		"1.9"
+		"AttributeBaseIntelligence"	"15"
+		"AttributeIntelligenceGain"	"2.6"
+		"AttributeBaseAgility"		"19"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Warden
-	"npc_warden"
+	
+	
+	//=================================================================================
+	// Creature: Warden
+	// Description: "Cunning Hero, adept at entering and escaping combat. Can learn Blink, Fan of Knives, Shadow Strike and Vengeance. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"nightelf_warden"
 	{
-		"override_hero" "npc_dota_hero_phantom_assassin"
-	
-		"Ability1" "warden_fan_of_knives"
-		"Ability2" "warden_blink"
-		"Ability3" "warden_shadow_strike"
-		"Ability4" "warden_avatar_of_vengeance"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_phantom_assassin"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"warden_fan_of_knives"
+		"Ability2" 					"warden_blink"
+		"Ability3" 					"warden_shadow_strike"
+		"Ability4" 					"warden_avatar_of_vengeance"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"22.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.05"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"650"
+		"AttackRange"				"100"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"		"18"
+		"AttributeStrengthGain"		"2.4"
+		"AttributeBaseIntelligence"	"15"
+		"AttributeIntelligenceGain"	"2"
+		"AttributeBaseAgility"		"20"
+		"AttributeAgilityGain"		"1.6"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// --------------------------------------------	//
-	//				  UNDEAD FACTION	 			//
-	// -------------------------------------------- //
-
-	//	Aba: Death Coil, Death Pact, Unholy Aura, Animate Dead
-	//	NS: Carrion Swarm, Sleep, Vampiric Aura, Inferno
-	// 	Lich: Frost Nova, Frost Armor, Dark Ritual, Death and Decay
-	// 	Nyx: Impale, Carrion Beetles, Spiked Carapace, Locust Swarm
 	
-	// Death Knight
-	"npc_death_knight"
+	
+	//=================================================================================
+	// Creature: Blademaster
+	// Description: "Cunning Hero, adept at quickly killing individual units and creating confusion among enemies. Can learn Mirror Image, Wind Walk, Critical Strike and Bladestorm. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"orc_blademaster"
 	{
-		"override_hero" "npc_dota_hero_abaddon"
-	
-		"Ability1" "death_knight_death_coil"
-		"Ability2" "death_knight_death_pact"
-		"Ability3" "death_knight_unholy_aura"
-		"Ability4" "death_knight_animate_dead"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_juggernaut"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"blademaster_windwalk"
+		"Ability2" 					"blademaster_mirror_image"
+		"Ability3" 					"blademaster_critical_strike"
+		"Ability4" 					"blademaster_bladestorm"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"24.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.77"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"		"19"
+		"AttributeStrengthGain"		"2"
+		"AttributeBaseIntelligence"	"16"
+		"AttributeIntelligenceGain"	"2.25"
+		"AttributeBaseAgility"		"23"
+		"AttributeAgilityGain"		"1.75"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Dread Lord
-	"npc_dread_lord"
+	
+	
+	//=================================================================================
+	// Creature: Far Seer
+	// Description: "Mystical Hero, effective at ranged attacks and scouting. Can learn Chain Lightning, Far Sight, Feral Spirit and Earthquake. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"orc_far_seer"
 	{
-		"override_hero" "npc_dota_hero_night_stalker"
-	
-		"Ability1" "dread_lord_carrion_swarm"
-		"Ability2" "dread_lord_sleep"
-		"Ability3" "dread_lord_vampiric_aura"
-		"Ability4" "dread_lord_inferno"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_disruptor"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"far_seer_far_sight"
+		"Ability2" 					"far_seer_chain_lightning"
+		"Ability3" 					"far_seer_feral_spirit"
+		"Ability4" 					"far_seer_earthquake"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.28"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"1200"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"		"15"
+		"AttributeStrengthGain"		"2"
+		"AttributeBaseIntelligence"	"19"
+		"AttributeIntelligenceGain"	"3"
+		"AttributeBaseAgility"		"18"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"425"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Lich
-	"npc_lich"
+	//=================================================================================
+	// Creature: Shadow Hunter
+	// Description: "Cunning Hero, adept at healing magics and voodoo curses. Can learn Healing Wave, Hex, Serpent Ward and Big Bad Voodoo. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"orc_shadow_hunter"
 	{
-		"override_hero" "npc_dota_hero_lich"
-	
-		"Ability1" "lich_frost_nova_warcraft"
-		"Ability2" "lich_frost_armor_warcraft"
-		"Ability3" "lich_dark_ritual_warcraft"
-		"Ability4" "lich_death_and_decay"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_shadow_shaman"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"shadow_hunter_healing_wave"
+		"Ability2" 					"shadow_hunter_hex"
+		"Ability3" 					"shadow_hunter_serpent_ward"
+		"Ability4" 					"shadow_hunter_big_bad_voodoo"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.28"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"		"15"
+		"AttributeStrengthGain"		"2"
+		"AttributeBaseIntelligence"	"18"
+		"AttributeIntelligenceGain"	"2.5"
+		"AttributeBaseAgility"		"20"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Crypt Lord
-	"npc_crypt_lord"
+	
+	
+	"orc_tauren_chieftain"
 	{
-		"override_hero" "npc_dota_hero_nyx_assassin"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_elder_titan"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
 	
-		"Ability1" "crypt_lord_impale"
-		"Ability2" "crypt_lord_spiked_carapace"
-		"Ability3" "crypt_lord_carrion_beetles"
-		"Ability4" "crypt_lord_locust_swarm"
+		"Ability1" 					"tauren_chieftain_shockwave"
+		"Ability2" 					"tauren_chieftain_war_stomp"
+		"Ability3" 					"tauren_chieftain_endurance_aura"
+		"Ability4" 					"tauren_chieftain_reincarnation"
+		"Ability5" 					""
+		"Ability6" 					""
+	
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.05"
+		"AttackAnimationPoint"		"0.36"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"128"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"25"
+		"AttributeStrengthGain"		"3.2"
+		"AttributeBaseIntelligence"	"14"
+		"AttributeIntelligenceGain"	"1.3"
+		"AttributeBaseAgility"		"10"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"250"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// --------------------------------------------	//
-	//				  NEUTRAL FACTION	 			//
-	// -------------------------------------------- //
-
-	//	Medusa: Forked Lightning, Frost Arrows, Mana Shield, Tornado
-	//	Drow: Silence, Black Arrow, Life Drain, Charm
-	//	Panda: Breath of Fire, Drunken Haze, Drunken Brawler, Storm, Earth, And Fire
-	//	BM: Summon Bear, Summon Quilbeast, Summon Hawk, Stampede
-	//	Pit Lord: Rain of Fire, Howl of Terror, Cleave, Doom
-	//	Tinker: Pocket Factory, Cluster Rockets, Engineering Upgrade, Robo-Golin
-	//	SF: Soul Bourn, Summon Lava Spawn, Incinerate, Volcano
-	//	Alchemist: Healing Spray, Chemical Rage, Acid Bomb, Transmute
-
-	// Naga Sea Witch
-	"npc_naga_sea_witch"
+	
+	
+	//=================================================================================
+	// Creature: Crypt Lord
+	// Description: "Warrior Hero, adept at summoning insect minions and crushing enemies. Can learn Impale, Spiked Carapace, Carrion Beetles and Locust Swarm. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"undead_crypt_lord"
 	{
-		"override_hero" "npc_dota_hero_medusa"
-	
-		"Ability1" "naga_sea_witch_forked_lightning"
-		"Ability2" "naga_sea_witch_frost_arrows"
-		"Ability3" "naga_sea_witch_mana_shield"
-		"Ability4" "naga_sea_witch_tornado"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_nyx_assassin"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"crypt_lord_impale"
+		"Ability2"					"crypt_lord_spiked_carapace"
+		"Ability3"					"crypt_lord_carrion_beetles"
+		"Ability4"					"crypt_lord_locust_swarm"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.9"
+		"AttackAnimationPoint"		"0.46"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"128"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"26"
+		"AttributeStrengthGain"		"3.2"
+		"AttributeBaseIntelligence"	"14"
+		"AttributeIntelligenceGain"	"1.6"
+		"AttributeBaseAgility"		"14"
+		"AttributeAgilityGain"		"1.2"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"25"
+		"StatusHealthRegen"			"2"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Dark Ranger
-	"npc_dark_ranger"
+	
+	
+	//=================================================================================
+	// Creature: Death Knight
+	// Description: "Warrior Hero, evil counterpart to the Human Paladin. Can learn Death Coil, Death Pact, Unholy Aura, and Animate Dead. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"undead_death_knight"
 	{
-		"override_hero" "npc_dota_hero_drow_ranger"
-	
-		"Ability1" "dark_ranger_silence"
-		"Ability2" "dark_ranger_black_arrow"
-		"Ability3" "dark_ranger_life_drain"
-		"Ability4" "dark_ranger_charm"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_abaddon"
+		
+		// Abilities
+		//----------------------------------------------------------------	
+		"Ability1" 					"death_knight_death_coil"
+		"Ability2" 					"death_knight_death_pact"
+		"Ability3" 					"death_knight_unholy_aura"
+		"Ability4" 					"death_knight_animate_dead"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.33"
+		"AttackAnimationPoint"		"0.56"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"23"
+		"AttributeStrengthGain"		"2.7"
+		"AttributeBaseIntelligence"	"17"
+		"AttributeIntelligenceGain"	"1.8"
+		"AttributeBaseAgility"		"12"
+		"AttributeAgilityGain"		"1.5"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"1"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Pandaren Brewmaster
-	"npc_pandaren"
+	
+	
+	//=================================================================================
+	// Creature: Dreadlord
+	// Description: "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"undead_dread_lord"
 	{
-		"override_hero" "npc_dota_hero_brewmaster"
-	
-		"Ability1" "pandaren_breath_of_fire"
-		"Ability2" "pandaren_drunken_haze"
-		"Ability3" "pandaren_drunken_brawler"
-		"Ability4" "pandaren_storm_earth_fire"
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_night_stalker"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1" 					"dread_lord_carrion_swarm"
+		"Ability2" 					"dread_lord_sleep"
+		"Ability3" 					"dread_lord_vampiric_aura"
+		"Ability4" 					"dread_lord_inferno"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.8"
+		"AttackAnimationPoint"		"0.55"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"20"
+		"AttributeStrengthGain"		"2.5"
+		"AttributeBaseIntelligence"	"18"
+		"AttributeIntelligenceGain"	"2.5"
+		"AttributeBaseAgility"		"16"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"1"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Beastmaster
-	"npc_beastmaster"
+	
+	
+	//=================================================================================
+	// Creature: Lich
+	// Description: "Mystical Hero, particularly adept at cold magic. Can learn Frost Armor, Frost Nova, Dark Ritual and Death And Decay. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"undead_lich"
 	{
-		"override_hero" "npc_dota_hero_beastmaster"
-
-		"AbilityLayout"	"4"
-	
-		"Ability1" "beastmaster_summon_bear"
-		"Ability2" "beastmaster_summon_quilbeast"
-		"Ability3" "beastmaster_summon_hawk"
-		"Ability4" "beastmaster_stampede"
-		"Ability5" ""
-		"Ability6" ""
+		// General
+		//----------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_lich"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"lich_frost_nova_warcraft"
+		"Ability2"					"lich_frost_armor_warcraft"
+		"Ability3" 					"lich_dark_ritual_warcraft"
+		"Ability4" 					"lich_death_and_decay"
+		"Ability5"					""
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"2.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.9"
+		"AttackAnimationPoint"		"0.46"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"		"14"
+		"AttributeStrengthGain"		"1.6"
+		"AttributeBaseIntelligence"	"20"
+		"AttributeIntelligenceGain"	"3.4"
+		"AttributeBaseAgility"		"14"
+		"AttributeAgilityGain"		"1"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"425"
+		"LumberCost"				"100"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"1"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
-
-	// Pit Lord
-	"npc_pit_lord"
-	{
-		"override_hero" "npc_dota_hero_undying" // Placeholder
 	
-		"Ability1" "pit_lord_rain_of_fire"
-		"Ability2" "pit_lord_howl_of_terror"
-		"Ability3" "pit_lord_cleaving_attack"
-		"Ability4" "pit_lord_doom"
-	}
-
-	// Tinker
-	"npc_tinker"
-	{
-		"override_hero" "npc_dota_hero_tinker"
 	
-		"AbilityLayout"	"4"
-		"Ability1" "tinker_pocket_factory"
-		"Ability2" "tinker_cluster_rockets"
-		"Ability3" "tinker_engineering_upgrade"
-		"Ability4" "tinker_robo_goblin"
-		"Ability5" "tinker_normal_form"
-
-		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackRange"			"128"
-	}
-
-	// Firelord
-	"npc_firelord"
-	{
-		"override_hero" "npc_dota_hero_nevermore" // Swap to Arcana Model
-	
-		"AbilityLayout"	"4"
-		//"Model"			"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
-
-		"Ability1" "firelord_soul_burn"
-		"Ability2" "firelord_summon_lava_spawn"
-		"Ability3" "firelord_incinerate"
-		"Ability4" "firelord_volcano"
-		"Ability5" ""
-		"Ability6" ""
-	}
-
-	// Alchemist
-	"npc_alchemist"
-	{
-		"override_hero" "npc_dota_hero_alchemist"
-	
-		"Ability1" "alchemist_healing_spray"
-		"Ability2" "alchemist_chemical_rage_warcraft"
-		"Ability3" "alchemist_acid_bomb"
-		"Ability4" "alchemist_transmute"
-	}
-
 }

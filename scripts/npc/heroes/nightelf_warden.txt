@@ -1,0 +1,85 @@
+//=================================================================================
+// Creature: Warden
+// Description: "Cunning Hero, adept at entering and escaping combat. Can learn Blink, Fan of Knives, Shadow Strike and Vengeance. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_warden"
+{
+	// General
+	//----------------------------------------------------------------
+	"override_hero"				"npc_dota_hero_phantom_assassin"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1" 					"warden_fan_of_knives"
+	"Ability2" 					"warden_blink"
+	"Ability3" 					"warden_shadow_strike"
+	"Ability4" 					"warden_avatar_of_vengeance"
+	"Ability5"					""
+	"Ability6"					""
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"2.0"
+	"AttackDamageMax"			"22.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"2.05"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"650"
+	"AttackRange"				"100"
+	
+	// Attributes
+	//----------------------------------------------------------------
+	"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+	"AttributeBaseStrength"		"18"
+	"AttributeStrengthGain"		"2.4"
+	"AttributeBaseIntelligence"	"15"
+	"AttributeIntelligenceGain"	"2"
+	"AttributeBaseAgility"		"20"
+	"AttributeAgilityGain"		"1.6"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"100"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"100"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1800"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+

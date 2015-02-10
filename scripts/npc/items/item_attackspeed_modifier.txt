@@ -1,0 +1,101 @@
+"item_attackspeed_modifier"
+{
+	"ID"							"2104"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"BaseClass"						"item_datadriven"
+
+	"Modifiers"
+	{
+
+		"modifier_attackspeed_mod_1"
+		{
+			"Passive"           	"1"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"1"
+			}
+		}
+		"modifier_attackspeed_mod_2"
+		{
+			"Passive"           	"1"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"2"
+			}
+		}
+		"modifier_attackspeed_mod_4"
+		{
+			"Passive"           	"1"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"4"
+			}
+		}
+		"modifier_attackspeed_mod_8"
+		{
+			"Passive"           	"1"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"8"
+			}
+		}
+		"modifier_attackspeed_mod_16"
+		{
+			"Passive"           	"1"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"16"
+			}
+		}
+		"modifier_attackspeed_mod_32"
+		{
+			"Passive"           	"1"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"32"
+			}
+		}
+		"modifier_attackspeed_mod_64"
+		{
+			"Passive"           	"1"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"64"
+			}
+		}
+		"modifier_attackspeed_mod_128"
+		{
+			"Passive"           	"1"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"128"
+			}
+		}
+	}
+}
+

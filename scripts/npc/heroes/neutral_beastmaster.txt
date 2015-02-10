@@ -1,0 +1,86 @@
+//=================================================================================
+// Creature: Beastmaster
+// Description: "Warrior Hero, adept at summoning beasts into battle. Can learn Summon Bear, Summon Quilbeast, Summon Hawk, and Stampede. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_beastmaster"
+{
+	// General
+	//----------------------------------------------------------------
+	"override_hero"				"npc_dota_hero_beastmaster"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1" 					"beastmaster_summon_bear"
+	"Ability2" 					"beastmaster_summon_quilbeast"
+	"Ability3" 					"beastmaster_summon_hawk"
+	"Ability4" 					"beastmaster_stampede"
+	"Ability5" 					""
+	"Ability6" 					""
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"2.0"
+	"AttackDamageMax"			"12.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"2.2"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"128"
+	
+	// Attributes
+	//----------------------------------------------------------------
+	"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+	"AttributeBaseStrength"		"22"
+	"AttributeStrengthGain"		"2.9"
+	"AttributeBaseIntelligence"	"15"
+	"AttributeIntelligenceGain"	"1.8"
+	"AttributeBaseAgility"		"14"
+	"AttributeAgilityGain"		"1.3"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"135"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"100"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1800"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+
