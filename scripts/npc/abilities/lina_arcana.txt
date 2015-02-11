@@ -1,0 +1,48 @@
+// Notes: This attaches the arcana particles to head and hands, AttachWearable code is 
+"lina_arcana"
+{
+	"BaseClass"             		"ability_datadriven"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"precache"
+	{
+		"particle" 	"particles/econ/items/lina/lina_head_headflame/lina_flame_hand_headflame.vpcf"
+		"particle" 	"particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_arcana"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/econ/items/lina/lina_head_headflame/lina_flame_hand_headflame.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"			"CASTER"
+					"ControlPointEntities"
+					{
+						"CASTER"	"attach_head"
+					}
+				}
+				"AttachEffect"
+				{
+					"EffectName"        "particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"			"CASTER"
+					"ControlPointEntities"
+					{
+						"CASTER"	"attach_attack1"
+						"CASTER"	"attach_attack2"
+					}
+				}
+			}
+		}
+	}
+}

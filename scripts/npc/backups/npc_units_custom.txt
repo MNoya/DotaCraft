@@ -244,6 +244,1131 @@
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER" 
 	}
+	// Human Unit List
+	//	human_peasant - models/creeps/lane_creeps/creep_good_ranged/creep_good_ranged.vmdl
+	//	human_militia - models/creeps/lane_creeps/creep_good_melee/creep_good_melee.vmdl
+	//	human_footman - models/heroes/dragon_knight/dragon_knight.vmdl
+	//	human_rifleman - models/heroes/sniper/sniper.vmdl
+	//	human_sorceress - models/heroes/lina/lina.vmdl
+	//	human_spell_breaker - models/heroes/silencer/silencer.vmdl
+	//	human_flying_machine - models/heroes/gyro/gyro.vmdl
+	//	human_dragonhawk_rider - models/heroes/skywrath_mage/skywrath_mage.vmdl
+	//	human_knight - models/heroes/legion_commander/legion_commander.vmdl
+	//	human_priest - models/heroes/oracle/oracle.vmdl
+	//	human_mortar_team - models/heroes/techies/techies.vmdl
+	//	human_siege_engine - models/items/courier/carty/carty.vmdl
+	//	human_gryphon_rider - models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl
+	
+	//=================================================================================
+	// Creature: Peasant
+	// Description: "Basic worker unit. Can harvest gold and lumber, build structures and Repair. Can become Militia. |n|n|cffffcc00Attacks land units and trees.|r"
+	//=================================================================================
+	"human_peasant"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/lane_creeps/creep_good_ranged/creep_good_ranged.vmdl"
+		"ModelScale"				"1"
+		"Level"						"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Ahar
+		"Ability2"					""	 //Reference: Amil
+		"Ability3"					""	 //Reference: Ahrp
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"5.0"
+		"AttackDamageMax"			"6.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2"
+		"AttackAnimationPoint"		"0.433"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"20.0"
+		"BountyGoldMax"				"30.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"75"
+		"LumberCost"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"190"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"220"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"800"
+		"VisionNighttimeRange"		"600"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Militia
+	//=================================================================================
+	"human_militia"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/lane_creeps/creep_good_melee/creep_good_melee.vmdl"
+		"ModelScale"				"1"
+		"Level"						"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Ahar
+		"Ability2"					""	 //Reference: Amil
+		"Ability3"					""	 //Reference: Ahrp
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"12.0"
+		"AttackDamageMax"			"13.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.2"
+		"AttackAnimationPoint"		"0.39"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"20.0"
+		"BountyGoldMax"				"30.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"75"
+		"LumberCost"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"220"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Footman
+	// Description: "Versatile foot soldier. Can learn the Defend ability. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"human_footman"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/dragon_knight/dragon_knight.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"2"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Adef
+		"Ability2"					""	 //Reference: Aihn
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"12.0"
+		"AttackDamageMax"			"13.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.35"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"26.0"
+		"BountyGoldMax"				"38.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"135"
+		"LumberCost"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"420"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"6789"		} //"Shield of Ascension"
+				"Wearable2"		{	"ItemDef"		"6791"		} //"Pauldrons of Ascension"
+				"Wearable3" 	{	"ItemDef"		"6790"		} //"Gauntlets of Ascension"
+				"Wearable4"		{	"ItemDef"		"6788"		} //"Drapes of Ascension"
+				"Wearable5"		{	"ItemDef"		"6787"		} //"Sword of Ascension"
+				"Wearable6"		{	"ItemDef"		"6792"		} //"Helm of Ascension"
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Rifleman
+	// Description: "Highly skilled sharpshooter, effective against air units. Can gain the Long Rifles upgrade. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"human_rifleman"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/sniper/sniper.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"3"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Aihn
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"18.0"
+		"AttackDamageMax"			"24.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.5"
+		"AttackAnimationPoint"		"0.17"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"400"
+		"ProjectileModel"			"particles/econ/items/sniper/sniper_charlie/sniper_base_attack_charlie.vpcf"
+		"ProjectileSpeed"			"1900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"26.0"
+		"BountyGoldMax"				"38.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"205"
+		"LumberCost"				"30"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"535"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"6453"		} //"Muh Keen Gun"
+				"Wearable2"		{	"ItemDef"		"4698"		} //"Sharpshooter's Stache"
+				"Wearable3" 	{	"ItemDef"		"4807"		} //"Gramma Sharpie's Smokin' Rug"
+				"Wearable4"		{	"ItemDef"		"4700"		} //"Sharpshooter's Pauldrons"
+				"Wearable5"		{	"ItemDef"		"4793"		} //"Sharpshooter's Bullet Bracers"
+				"Wearable6"		{	"ItemDef"		"4701"		} //"Sharpshooter's Cloak"
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Sorceress
+	// Description: "Versatile spellcaster. Can initially cast Slow, which decreases movement and attack speed on enemy units. Can also learn Invisibility and Polymorph. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"human_sorceress"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/lina/lina.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"2"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"200"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"lina_arcana"	 //Reference: Aivs
+		"Ability2"					""	 //Reference: Aply
+		"Ability3"					""	 //Reference: Aslo
+		"Ability4"					""	 //Reference: Aihn
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"10.0"
+		"AttackDamageMax"			"12.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.75"
+		"AttackAnimationPoint"		"0.75"
+		"AttackAcquisitionRange"	"700"
+		"AttackRange"				"600"
+		"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"32.0"
+		"BountyGoldMax"				"46.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"155"
+		"LumberCost"				"20"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"325"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"200"
+		"StatusManaRegen"			"200"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"4794"		} //"Fiery Soul of the Slayer"
+				"Wearable2"		{	"ItemDef"		"6339"		} //"Fire Lotus Belt"
+				"Wearable3" 	{	"ItemDef"		"5941"		} //"Wings of the Ember Crane"
+				"Wearable4"		{	"ItemDef"		"4756"		} //"Arc of the Solar Divine"
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Spell Breaker
+	// Description: "Elven warrior trained to destroy spellcasters. Initially has Spell Steal, which manipulates buffs to your advantage, Spell Immunity and Feedback. Can also learn Control Magic. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"human_spell_breaker"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/silencer/silencer.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"3"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Asps
+		"Ability2"					""	 //Reference: Acmg
+		"Ability3"					""	 //Reference: Amim
+		"Ability4"					""	 //Reference: Afbk
+		"Ability5"					""	 //Reference: Aihn
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"3"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"13.0"
+		"AttackDamageMax"			"15.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.9"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"700"
+		"AttackRange"				"250"
+		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+		"ProjectileSpeed"			"900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"26.0"
+		"BountyGoldMax"				"38.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"215"
+		"LumberCost"				"30"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"250"
+		"StatusManaRegen"			"250"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{	//Tribunal Set
+				"Wearable1"	{ "ItemDef" "6387" }
+				"Wearable2"	{ "ItemDef"	"6389" }
+				"Wearable3" { "ItemDef"	"6390" }
+				"Wearable4" { "ItemDef"	"6391" }
+				"Wearable5" { "ItemDef"	"6393" }
+				"Wearable6" { "ItemDef"	"6394" }
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Flying Machine
+	// Description: "Fast moving flying machine. Excellent at scouting, and effective against air units. Can learn the Flying Machine Bombs and Flak Cannons upgrades. |nCan see invisible units. |n|n|cffffcc00Attacks air units.|r"
+	//=================================================================================
+	"human_flying_machine"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/gyro/gyro.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"280"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Agyb
+		"Ability2"					""	 //Reference: Agyv
+		"Ability3"					""	 //Reference: Aflk
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"14.0"
+		"AttackDamageMax"			"15.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2"
+		"AttackAnimationPoint"		"0.03"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"500"
+		"ProjectileModel"			"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"2000" //"2000,900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"26.0"
+		"BountyGoldMax"				"38.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"90"
+		"LumberCost"				"30"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"400"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"200"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"1100"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"7822"		} //"Sky-High Warship Bomb"
+				"Wearable2"		{	"ItemDef"		"7823"		} //"Sky-High Warship Munitions"
+				"Wearable3" 	{	"ItemDef"		"7825"		} //"Sky-High Warship Helmet"
+				"Wearable4"		{	"ItemDef"		"7827"		} //"Sky-High Warship Wings"
+				"Wearable5"		{	"ItemDef"		"7828"		} //"Sky-High Warship Propeller"
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Dragonhawk Rider
+	// Description: "Swift flying unit, mounted by an Elven warrior. Has the Aerial Shackles ability, which allows it to immobilize and disarm enemy air units temporarily. Can learn Animal War Training, and the Cloud ability. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"human_dragonhawk_rider"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/skywrath_mage/skywrath_mage.vmdl"
+		"ModelScale"				"0.7"
+		"Level"						"3"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"280"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Aclf
+		"Ability2"					""	 //Reference: Amls
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"18.0"
+		"AttackDamageMax"			"20.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.75"
+		"AttackAnimationPoint"		"0.43"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"300"
+		"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"1100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"32.0"
+		"BountyGoldMax"				"46.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"200"
+		"LumberCost"				"30"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"575"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"300"
+		"StatusManaRegen"			"300"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1600"
+		"VisionNighttimeRange"		"900"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{	//Divine Ascension Set
+				"Wearable1"	{ "ItemDef" "6124" }
+				"Wearable2"	{ "ItemDef"	"6125" }
+				"Wearable3" { "ItemDef"	"6126" }
+				"Wearable4" { "ItemDef"	"6127" }
+				"Wearable5" { "ItemDef"	"6128" }
+				"Wearable6" { "ItemDef"	"6919" } //golden empyrean
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Knight
+	// Description: "Powerful mounted warrior. Can learn Animal War Training. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"human_knight"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/legion_commander/legion_commander.vmdl"
+		"ModelScale"				"1"
+		"Level"						"4"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"180"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"legion_arcana"	 //Reference: Aihn
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30.0"
+		"AttackDamageMax"			"38.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.4"
+		"AttackAnimationPoint"		"0.66"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"245"
+		"LumberCost"				"60"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"835"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"5810"		} //"Blades of Voth Domosh"
+				"Wearable2"		{	"ItemDef"		"5886"		} //"Stonehall Royal Guard Banners"
+				"Wearable3" 	{	"ItemDef"		"5887"		} //"Stonehall Royal Guard Helmet"
+				"Wearable4"		{	"ItemDef"		"5885"		} //"Stonehall Royal Guard Arms"
+				"Wearable5"		{	"ItemDef"		"6192"		} //"Pauldrons of the Equine Emissary"
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Priest
+	// Description: "Supporting spellcaster. Can initially cast Heal, which increases the life of wounded units. Can also learn Dispel Magic and Inner Fire. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"human_priest"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/oracle/oracle.vmdl"
+		"ModelScale"				"0.7"
+		"Level"						"2"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Ahea
+		"Ability2"					""	 //Reference: Ainf
+		"Ability3"					""	 //Reference: Adis
+		"Ability4"					""	 //Reference: Aihn
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"8.0"
+		"AttackDamageMax"			"9.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2"
+		"AttackAnimationPoint"		"0.59"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		"ProjectileModel"			"particles/units/heroes/hero_oracle/oracle_base_attack.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"26.0"
+		"BountyGoldMax"				"38.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"135"
+		"LumberCost"				"10"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"290"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"200"
+		"StatusManaRegen"			"200"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Mortar Team
+	// Description: "Long-range siege weaponry. Exceptional damage versus buildings, but slow and vulnerable. Can learn the Fragmentation Shards and Flare abilities. |n|n|cffffcc00Attacks land units and trees.|r"
+	//=================================================================================
+	"human_mortar_team"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/techies/techies.vmdl"
+		"ModelScale"				"0.6"
+		"Level"						"2"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"120"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Afla
+		"Ability2"					""	 //Reference: Afsh
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"52.0"
+		"AttackDamageMax"			"64.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"3.5"
+		"AttackAnimationPoint"		"1"
+		"AttackAcquisitionRange"	"1150"
+		"AttackRange"				"1150"
+		"ProjectileModel"			"particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"32.0"
+		"BountyGoldMax"				"46.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"180"
+		"LumberCost"				"70"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"360"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1200"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"491"		} //"Squee Costume"
+				"Wearable2"		{	"ItemDef"		"7011"		} //"Swine Powder Barrel"
+				"Wearable3" 	{	"ItemDef"		"492"		} //"Spleen Costume"
+				"Wearable4"		{	"ItemDef"		"6879"		} //"Swine of the Sunken Galley"
+				"Wearable5"		{	"ItemDef"		"489"		} //"Slingshot"
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Siege Engine
+	// Description: "Heavily armored vehicle, effective at destroying buildings. Can be upgraded with the Barrage ability. |n|n|cffffcc00Attacks buildings.|r"
+	//=================================================================================
+	"human_siege_engine"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/courier/carty/carty.vmdl"
+		"ModelScale"				"1.5"
+		"Level"						"3"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Srtt
+		"Ability2"					""	 //Reference: Aroc
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"45.0"
+		"AttackDamageMax"			"55.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.1"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"192"
+		"ProjectileModel"			"particles/base_attacks/ranged_siege_good.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"2500"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"32.0"
+		"BountyGoldMax"				"46.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"195"
+		"LumberCost"				"60"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"220"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"700"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Gryphon Rider
+	// Description: "Powerful flying creature, mounted by a Dwarven hammer-thrower. Can learn Animal War Training, and the Storm Hammers ability. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"human_gryphon_rider"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl"
+		"ModelScale"				"1.5"
+		"Level"						"5"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"ShouldDoFlyHeightVisual" 	"1"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Asth
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"45.0"
+		"AttackDamageMax"			"55.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"2.2"
+		"AttackAnimationPoint"		"0.8"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"450"
+		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"1100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"32.0"
+		"BountyGoldMax"				"46.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"280"
+		"LumberCost"				"70"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"825"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1600"
+		"VisionNighttimeRange"		"900"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
 	//=================================================================================
 	// Creature: Tree of Life
 	// Discription: "Primary structure, used to train Wisps and entangle gold mines. Can be upgraded to Tree of Ages and then Tree of Eternity to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land units.|r"

@@ -1,0 +1,63 @@
+// Notes: This attaches the arcana particles to head and hands, AttachWearable code is 
+"legion_arcana"
+{
+	"BaseClass"             		"ability_datadriven"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"precache"
+	{
+		"particle" 	"particles/econ/items/legion/legion_weapon_voth_domosh/legion_ambient_arcana.vpcf"
+		"particle" 	"particles/econ/items/legion/legion_weapon_voth_domosh/legion_arcana_weapon.vpcf"
+		"particle"  "particles/econ/items/legion/legion_weapon_voth_domosh/legion_arcana_weapon_offhand.vpcf"
+		"particle"  "particles/econ/items/legion/legion_weapon_voth_domosh/legion_blades.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_arcana"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/econ/items/legion/legion_weapon_voth_domosh/legion_ambient_arcana.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+					"ControlPointEntities"
+					{
+						"CASTER"	"attach_hitloc"
+						"CASTER"	"attach_eyeL"
+						"CASTER"	"attach_eyeR"
+						"CASTER"	"attach_hitloc"
+					}
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/econ/items/legion/legion_weapon_voth_domosh/legion_arcana_weapon.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"			"CASTER"
+					"ControlPointEntities"
+					{
+						"CASTER"	"attach_attack1"
+					}
+				}
+				"AttachEffect"
+				{
+					"EffectName"        "particles/econ/items/legion/legion_weapon_voth_domosh/legion_arcana_weapon_offhand.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"			"CASTER"
+					"ControlPointEntities"
+					{
+						"CASTER"	"attach_attack2"
+					}
+				}
+			}
+		}
+	}
+}

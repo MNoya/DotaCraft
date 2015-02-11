@@ -8079,6 +8079,69 @@
 			}
 		}
 	}
+	// Notes: This attaches the arcana particles to head and hands, AttachWearable code is 
+	"legion_arcana"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"precache"
+		{
+			"particle" 	"particles/econ/items/legion/legion_weapon_voth_domosh/legion_ambient_arcana.vpcf"
+			"particle" 	"particles/econ/items/legion/legion_weapon_voth_domosh/legion_arcana_weapon.vpcf"
+			"particle"  "particles/econ/items/legion/legion_weapon_voth_domosh/legion_arcana_weapon_offhand.vpcf"
+			"particle"  "particles/econ/items/legion/legion_weapon_voth_domosh/legion_blades.vpcf"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_arcana"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/econ/items/legion/legion_weapon_voth_domosh/legion_ambient_arcana.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_hitloc"
+							"CASTER"	"attach_eyeL"
+							"CASTER"	"attach_eyeR"
+							"CASTER"	"attach_hitloc"
+						}
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/econ/items/legion/legion_weapon_voth_domosh/legion_arcana_weapon.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_attack1"
+						}
+					}
+					"AttachEffect"
+					{
+						"EffectName"        "particles/econ/items/legion/legion_weapon_voth_domosh/legion_arcana_weapon_offhand.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_attack2"
+						}
+					}
+				}
+			}
+		}
+	}
 	// Lich Dark Ritual, Warcraft version
 	// Author: Noya
 	// Date: 20.01.2015.
@@ -8648,6 +8711,54 @@
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
+				}
+			}
+		}
+	}
+	// Notes: This attaches the arcana particles to head and hands, AttachWearable code is 
+	"lina_arcana"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"precache"
+		{
+			"particle" 	"particles/econ/items/lina/lina_head_headflame/lina_flame_hand_headflame.vpcf"
+			"particle" 	"particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_arcana"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/econ/items/lina/lina_head_headflame/lina_flame_hand_headflame.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_head"
+						}
+					}
+					"AttachEffect"
+					{
+						"EffectName"        "particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_attack1"
+							"CASTER"	"attach_attack2"
+						}
+					}
 				}
 			}
 		}
