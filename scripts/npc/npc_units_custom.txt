@@ -1442,51 +1442,73 @@
 		// Creature Data
 		//----------------------------------------------------------------
 	}
+	// Night Elf Unit List
+	//	Wisp -	models/heroes/wisp/wisp.vmdl + particles/units/heroes/hero_wisp/wisp_ambient.vpcf
+	//	Hypogryph - models/items/mirana/mirana_nightsilver_owlion/mirana_nightsilver_owlion.vmdl
+	//	Archer - models/heroes/windrunner/windrunner.vmdl
+	//	Huntress - models/heroes/luna/luna.vmdl
+	//	Glaive Thrower - models/creeps/lane_creeps/creep_good_siege/creep_good_siege.vmdl
+	//	Dryad - models/heroes/enchantress/enchantress.vmdl
+	//	Druid of the Claw - models/heroes/lone_druid/lone_druid.vmdl
+	//	Mountain Giant - models/heroes/tiny_01/tiny_01.vmdl
+	//	Druid of the Talon - models/heroes/furion/furion.vmdl
+	//	Faerie Dragon - models/heroes/puck/puck.vmdl
+	//	Chimaera - models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl
+	
 	//=================================================================================
 	// Creature: Wisp
-	// Discription: "Basic worker unit. Can harvest gold and lumber, create Night Elf buildings and Renew. |nCan Detonate to dispel magic, hurt summoned creatures and drain mana in an area."
+	// Description: "Basic worker unit. Can harvest gold and lumber, create Night Elf buildings and Renew. |nCan Detonate to dispel magic, hurt summoned creatures and drain mana in an area."
 	//=================================================================================
 	"nightelf_wisp"
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"			"npc_dota_creature"
-		"Model"				"models/items/courier/echo_wisp/echo_wisp.vmdl"
-		"ModelScale"		"1"
-		"Level"				"1"
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/courier/echo_wisp/echo_wisp.vmdl"	 //Add model
+		"ModelScale"				"1"
+		"Level"						"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"			"build_tree_of_life"	 //Reference: Adtn
-		"Ability2"			""	 //Reference: Aren
-		"Ability3"			""	 //Reference: Awha
-		"Ability4"			""	 //Reference: Ault
+		"Ability1"					"build_tree_of_life"	 //Reference: Adtn
+		"Ability2"					""	 //Reference: Aren
+		"Ability3"					""	 //Reference: Awha
+		"Ability4"					""	 //Reference: Ault
 		
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"			"0"
-		"MagicalResistance"		"0"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
 		
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"	"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"			"20.0"
-		"BountyGoldMax"			"30.0"
+		"BountyGoldMin"				"20.0"
+		"BountyGoldMax"				"30.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"60"
+		"LumberCost"				"0"
 		
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"			"270"
-		"MovementTurnRate"		"0.6"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"			"120"
-		"StatusHealthRegen"		"0.5"
-		"StatsManaRegen"		"0"
+		"StatusHealth"				"120"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -1495,13 +1517,10 @@
 		
 		// Team
 		//----------------------------------------------------------------
-		"TeamName"				"DOTA_TEAM_BADGUYS"
-		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-		
-		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
-		"HealthBarOffset"		"140"
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Creature Data
 		//----------------------------------------------------------------
@@ -4543,6 +4562,19 @@
 			}
 		}
 	}
+	// Orc Unit List
+	//	Peon - models/items/courier/dokkaebi_nexon_courier/dokkaebi_nexon_courier.vmdl (no attack animation)
+	//	Grunt - models/creeps/lane_creeps/creep_bad_melee/creep_bad_melee_mega.vmdl (recolor green?)
+	//	Headhunter/Berseker - models/heroes/huskar/huskar.vmdl
+	//	Demolisher - models/items/courier/carty_dire/carty_dire.vmdl
+	//	Shaman - models/heroes/blood_seeker/blood_seeker.vmdl
+	//	Witch Doctor - models/heroes/witchdoctor/witchdoctor.vmdl
+	//	Spirit Walker - models/heroes/spirit_breaker/spirit_breaker.vmdl
+	//	Raider - models/heroes/chaos_knight/chaos_knight.vmdl
+	//	Kodo Beast - models/courier/smeevil_mammoth/smeevil_mammoth.vmdl
+	//	Wind Rider - models/items/batrider/firestarter_bat/firestarter_bat.vmdl
+	//	Troll Batrider - models/heroes/batrider/batrider.vmdl
+	//	Tauren - models/heroes/earthshaker/earthshaker.vmdl
 	"tinker_clockwerk_goblin"
 	{
 		// General
@@ -4830,4 +4862,18 @@
 		// Creature Data
 		//----------------------------------------------------------------
 	}
+	// Undead Unit List
+	//	Acolyte - models/items/courier/boooofus_courier/boooofus_courier.vmdl
+	//	Ghoul - models/heroes/life_stealer/life_stealer.vmdl
+	//	Crypt Fiend - models/heroes/weaver/weaver.vmdl
+	//	Gargoyle - models/heroes/visage/visage_familiar.vmdl
+	//	Abomination - models/heroes/pudge/pudge.vmdl
+	//	Meat Wagon - Dire Catapult
+	//	Destroyer - models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl
+	//	Necromancer - models/heroes/warlock/warlock.vmdl
+	//	Banshee - models/heroes/death_prophet/death_prophet.vmdl
+	//	Skeleton Warrior - models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl
+	//	Skeletal Mage - models/heroes/pugna/pugna.vmdl
+	//	Frost Wyrm - Valve give Winter Wyvern
+		
 }
