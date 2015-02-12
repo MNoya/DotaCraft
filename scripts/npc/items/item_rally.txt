@@ -2,11 +2,11 @@
 {
 	"BaseClass"             		"item_datadriven"
 	"AbilityTextureName"			"item_rally"
-
-	"MaxLevel" 						"1"
-
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
 	
 	"precache"
 	{

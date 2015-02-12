@@ -205,7 +205,7 @@ end
 
 -- An NPC has spawned somewhere in game.  This includes heroes
 function dotacraft:OnNPCSpawned(keys)
-	print("[DOTACRAFT] NPC Spawned")
+	--print("[DOTACRAFT] NPC Spawned")
 	--DeepPrintTable(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
