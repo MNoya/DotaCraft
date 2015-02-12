@@ -1,0 +1,49 @@
+"build_barracks"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_tree_of_life"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+	"AbilityCastRange"				"100"
+	"AbilityCastPoint"				"0.1"
+
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"60.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"50"	// Not needed, just for tooltips
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/build.lua"
+			"Function"		"CheckCustomResources"
+			"BuildingName"	"human_barracks"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/build.lua"
+			"Function"		"Build"
+			"BuildingName"	"human_barracks"
+			"Target"		"POINT"
+		}
+	}
+}

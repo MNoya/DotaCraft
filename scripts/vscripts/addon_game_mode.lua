@@ -5,6 +5,7 @@ require('physics')
 --require('multiteam')
 require('dotacraft')
 require('popups')
+require('buildinghelper')
 
 function Precache( context )
 	--[[
@@ -34,15 +35,16 @@ function Precache( context )
 		-- Entire items can be precached by name
 		-- Abilities can also be precached in this way despite the name
 		PrecacheItemByNameSync("example_ability", context)
-		PrecacheItemByNameSync("item_example_item", context)
+		PrecacheItemByNameSync("item_rally", context)
 
 		-- Entire heroes (sound effects/voice/models/particles) can be precached with PrecacheUnitByNameSync
 		-- Custom units from npc_units_custom.txt can also have all of their abilities and precache{} blocks precached in this way
 		PrecacheUnitByNameSync("npc_dota_hero_ancient_apparition", context)
 		PrecacheUnitByNameSync("npc_dota_hero_enigma", context)
 
-		PrecacheUnitByNameSync("nightelf_wisp", context)
-		PrecacheUnitByNameSync("nightelf_tree_of_life", context)
+		-- Remove this later, it's just for testing
+		PrecacheUnitByNameSync("human_barracks", context)
+		PrecacheUnitByNameSync("human_peasant", context)
 end
 
 -- Create the game mode when we activate

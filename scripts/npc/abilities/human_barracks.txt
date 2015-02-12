@@ -29,12 +29,31 @@
 		}
 	}
 
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"    "buildings/rally_point.lua"
+			"Function"      "SetRallyPoint"
+		}
+	}
+
 	"OnChannelSucceeded"
 	{
 		"SpawnUnit"
 		{
 			"UnitName"		"human_footman"
-			"Target" 		"CASTER"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
 			"UnitCount"		"1"
 			"UnitLimit"		"0"
 			"GrantsGold"	"1"

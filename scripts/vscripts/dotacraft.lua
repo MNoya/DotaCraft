@@ -375,23 +375,37 @@ function dotacraft:OnPlayerPickHero(keys)
 	print ('[DOTACRAFT] OnPlayerPickHero')
 	--DeepPrintTable(keys)
 
-	local heroClass = keys.hero
-	local heroEntity = EntIndexToHScript(keys.heroindex)
+	local hero = EntIndexToHScript(keys.heroindex)
 	local player = EntIndexToHScript(keys.player)
-	local playerID = heroEntity:GetPlayerID()
+	local playerID = hero:GetPlayerID()
 
 	local level = MAX_LEVEL
 	for i=1,level-1 do
-		heroEntity:HeroLevelUp(false)
+		hero:HeroLevelUp(false)
 	end
 
-	--local position = Vector(6144,5501,129)
-	--local tree = CreateUnitByName("nightelf_tree_of_life", heroEntity:GetAbsOrigin()+Vector(200, 200, 0), true, heroEntity, heroEntity, heroEntity:GetTeamNumber())
-	local barracks = Entities:FindByModel(nil, "models/props_structures/good_barracks_melee001.vmdl")
-	barracks:SetOwner(heroEntity)
-	barracks:SetControllableByPlayer(playerID, true)
+	local position = Vector(6150,5500,128)
+	--local position = Vector(4572, 5499, 128)
 
-	local item = CreateItem("item_rally", heroEntity, heroEntity)
+	local barracks = CreateUnitByName("human_barracks", position, true, hero, hero, hero:GetTeamNumber())
+	barracks:SetOwner(hero)
+	barracks:SetControllableByPlayer(playerID, true)
+	barracks:SetAbsOrigin(position)
+	barracks:RemoveModifierByName("modifier_invulnerable")
+
+	local peasant = CreateUnitByName("human_peasant", position+RandomVector(300), true, hero, hero, hero:GetTeamNumber())
+	peasant:SetOwner(hero)
+	peasant:SetControllableByPlayer(playerID, true)
+
+	local peasant = CreateUnitByName("human_peasant", position+RandomVector(301), true, hero, hero, hero:GetTeamNumber())
+	peasant:SetOwner(hero)
+	peasant:SetControllableByPlayer(playerID, true)
+
+	local peasant = CreateUnitByName("human_peasant", position+RandomVector(302), true, hero, hero, hero:GetTeamNumber())
+	peasant:SetOwner(hero)
+	peasant:SetControllableByPlayer(playerID, true)
+
+	local item = CreateItem("item_rally", hero, hero)
 	barracks:AddItem(item)
 
 end
@@ -607,6 +621,13 @@ function dotacraft:Initdotacraft()
 	self.nDireKills = 0
 
 	self.bSeenWaitForPlayers = false
+
+	-- Full units file to get the custom values
+  	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+
+  	-- Building Helper by Myll
+  	nMapLength = 16384
+  	BuildingHelper:BlockGridNavSquares(nMapLength)
 
 	print('[DOTACRAFT] Done loading dotacraft gamemode!\n\n')
 end

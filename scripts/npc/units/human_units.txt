@@ -23,14 +23,14 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/creeps/lane_creeps/creep_good_ranged/creep_good_ranged.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"Ability1"					""	 //Reference: Ahar
-	"Ability2"					""	 //Reference: Amil
+	"Ability1"					"human_gather_repair"	 //Reference: Ahar
+	"Ability2"					"build_barracks"	 //Reference: Amil
 	"Ability3"					""	 //Reference: Ahrp
 	
 	// Armor
@@ -56,8 +56,8 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
-	"RingRadius"				"70"
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
 	"CollisionSize"				"16"
 	"FormationRank"				"4"
 	
