@@ -25,7 +25,6 @@
 	"Model"						"models/creeps/lane_creeps/creep_good_ranged/creep_good_ranged.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
@@ -55,10 +54,19 @@
 	"BountyGoldMin"				"20.0"
 	"BountyGoldMax"				"30.0"
 	
-	// Gold and Lumber
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+	"RingRadius"				"70"
+	"CollisionSize"				"16"
+	"FormationRank"				"4"
+	
+	// Building Cost Stats
 	//----------------------------------------------------------------
 	"GoldCost"					"75"
 	"LumberCost"				"0"
+	"FoodCost"					"1"
+	"BuildTime"					"15"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -104,7 +112,6 @@
 	"Model"						"models/creeps/lane_creeps/creep_good_melee/creep_good_melee.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
@@ -134,10 +141,19 @@
 	"BountyGoldMin"				"20.0"
 	"BountyGoldMax"				"30.0"
 	
-	// Gold and Lumber
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+	"RingRadius"				"70"
+	"CollisionSize"				"16"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
 	//----------------------------------------------------------------
 	"GoldCost"					"75"
 	"LumberCost"				"0"
+	"FoodCost"					"1"
+	"BuildTime"					"15"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -184,7 +200,6 @@
 	"Model"						"models/heroes/dragon_knight/dragon_knight.vmdl"
 	"ModelScale"				"0.8"
 	"Level"						"2"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
@@ -200,9 +215,9 @@
 	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackDamageMin"			"12.0"
 	"AttackDamageMax"			"13.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"500"
@@ -213,10 +228,19 @@
 	"BountyGoldMin"				"26.0"
 	"BountyGoldMax"				"38.0"
 	
-	// Gold and Lumber
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"31"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
 	//----------------------------------------------------------------
 	"GoldCost"					"135"
 	"LumberCost"				"0"
+	"FoodCost"					"2"
+	"BuildTime"					"20"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -272,7 +296,6 @@
 	"Model"						"models/heroes/sniper/sniper.vmdl"
 	"ModelScale"				"0.8"
 	"Level"						"3"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
@@ -287,9 +310,9 @@
 	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackDamageMin"			"18.0"
 	"AttackDamageMax"			"24.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	"AttackRate"				"1.5"
 	"AttackAnimationPoint"		"0.17"
 	"AttackAcquisitionRange"	"600"
@@ -302,10 +325,19 @@
 	"BountyGoldMin"				"26.0"
 	"BountyGoldMax"				"38.0"
 	
-	// Gold and Lumber
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
 	//----------------------------------------------------------------
 	"GoldCost"					"205"
 	"LumberCost"				"30"
+	"FoodCost"					"3"
+	"BuildTime"					"26"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -350,6 +382,113 @@
 }
 
 //=================================================================================
+// Creature: Knight
+// Description: "Powerful mounted warrior. Can learn Animal War Training. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"human_knight"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/chaos_knight/chaos_knight.vmdl"
+	"ModelScale"				"0.7"
+	"Level"						"4"
+	"HealthBarOffset"			"180"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: Aihn
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"30.0"
+	"AttackDamageMax"			"38.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.4"
+	"AttackAnimationPoint"		"0.66"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"245"
+	"LumberCost"				"60"
+	"FoodCost"					"4"
+	"BuildTime"					"40"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"835"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		//"AttachWearables"
+		//{
+		//	"Wearable1"		{	"ItemDef"		"5810"		} //"Blades of Voth Domosh"
+		//	"Wearable2"		{	"ItemDef"		"5886"		} //"Stonehall Royal Guard Banners"
+		//	"Wearable3" 	{	"ItemDef"		"5887"		} //"Stonehall Royal Guard Helmet"
+		//	"Wearable4"		{	"ItemDef"		"5885"		} //"Stonehall Royal Guard Arms"
+		//	"Wearable5"		{	"ItemDef"		"6192"		} //"Pauldrons of the Equine Emissary"
+		//}
+		"AttachWearables"	
+		{
+			"Wearable1"		{	"ItemDef"	"5828"	} // "Atramentos the Apocalyptic"
+			"Wearable2"		{	"ItemDef"	"6266"	} // "Pauldrons of the Chaos Hound"
+			"Wearable3"		{	"ItemDef"	"5173"	} // "Entropic Helmet"
+			"Wearable4"		{	"ItemDef"	"5925"	} // "Shield of Screaming Souls"
+			"Wearable5"		{	"ItemDef"	"5233"	} // "Blade of Endless Havoc"
+		}
+	}
+
+	"precache"
+	{
+		"particle_folder"	"particles/units/heroes/hero_chaos_knight"
+	}
+}
+
+//=================================================================================
 // Creature: Sorceress
 // Description: "Versatile spellcaster. Can initially cast Slow, which decreases movement and attack speed on enemy units. Can also learn Invisibility and Polymorph. |n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
@@ -361,7 +500,6 @@
 	"Model"						"models/heroes/lina/lina.vmdl"
 	"ModelScale"				"0.8"
 	"Level"						"2"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"200"
 	
 	// Abilities
@@ -394,10 +532,19 @@
 	"BountyGoldMin"				"32.0"
 	"BountyGoldMax"				"46.0"
 	
-	// Gold and Lumber
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+	"RingRadius"				"50"
+	"CollisionSize"				"16"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
 	//----------------------------------------------------------------
 	"GoldCost"					"155"
 	"LumberCost"				"20"
+	"FoodCost"					"2"
+	"BuildTime"					"30"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -439,6 +586,96 @@
 }
 
 //=================================================================================
+// Creature: Priest
+// Description: "Supporting spellcaster. Can initially cast Heal, which increases the life of wounded units. Can also learn Dispel Magic and Inner Fire. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"human_priest"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/oracle/oracle.vmdl"
+	"ModelScale"				"0.7"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: Ahea
+	"Ability2"					""	 //Reference: Ainf
+	"Ability3"					""	 //Reference: Adis
+	"Ability4"					""	 //Reference: Aihn
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"8.0"
+	"AttackDamageMax"			"9.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"2"
+	"AttackAnimationPoint"		"0.59"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			"particles/units/heroes/hero_oracle/oracle_base_attack.vpcf"
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+	"RingRadius"				"70"
+	"CollisionSize"				"16"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"135"
+	"LumberCost"				"10"
+	"FoodCost"					"2"
+	"BuildTime"					"28"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"290"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"200"
+	"StatusManaRegen"			"200"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+//=================================================================================
 // Creature: Spell Breaker
 // Description: "Elven warrior trained to destroy spellcasters. Initially has Spell Steal, which manipulates buffs to your advantage, Spell Immunity and Feedback. Can also learn Control Magic. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
@@ -450,7 +687,6 @@
 	"Model"						"models/heroes/silencer/silencer.vmdl"
 	"ModelScale"				"0.8"
 	"Level"						"3"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
@@ -484,10 +720,19 @@
 	"BountyGoldMin"				"26.0"
 	"BountyGoldMax"				"38.0"
 	
-	// Gold and Lumber
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"31"
+	"FormationRank"				"1"
+	
+	// Building Cost Stats
 	//----------------------------------------------------------------
 	"GoldCost"					"215"
 	"LumberCost"				"30"
+	"FoodCost"					"3"
+	"BuildTime"					"28"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -541,9 +786,8 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/heroes/gyro/gyro.vmdl"
-	"ModelScale"				"0.8"
+	"ModelScale"				"0.7"
 	"Level"						"1"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"280"
 	
 	// Abilities
@@ -570,15 +814,19 @@
 	"ProjectileModel"			"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"2000" //"2000,900"
 	
-	// Bounty
+	// Bounds
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"26.0"
-	"BountyGoldMax"				"38.0"
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
 	
-	// Gold and Lumber
+	// Building Cost Stats
 	//----------------------------------------------------------------
 	"GoldCost"					"90"
 	"LumberCost"				"30"
+	"FoodCost"					"1"
+	"BuildTime"					"13"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -633,7 +881,6 @@
 	"Model"						"models/heroes/skywrath_mage/skywrath_mage.vmdl"
 	"ModelScale"				"0.7"
 	"Level"						"3"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"280"
 	
 	// Abilities
@@ -656,7 +903,7 @@
 	"AttackAnimationPoint"		"0.43"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"300"
-	"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"
 	"ProjectileSpeed"			"1100"
 	
 	// Bounty
@@ -664,10 +911,19 @@
 	"BountyGoldMin"				"32.0"
 	"BountyGoldMax"				"46.0"
 	
-	// Gold and Lumber
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
 	//----------------------------------------------------------------
 	"GoldCost"					"200"
 	"LumberCost"				"30"
+	"FoodCost"					"3"
+	"BuildTime"					"28"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -712,174 +968,6 @@
 }
 
 //=================================================================================
-// Creature: Knight
-// Description: "Powerful mounted warrior. Can learn Animal War Training. |n|n|cffffcc00Attacks land units.|r"
-//=================================================================================
-"human_knight"
-{
-	// General
-	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/legion_commander/legion_commander.vmdl"
-	"ModelScale"				"1"
-	"Level"						"4"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-	"HealthBarOffset"			"180"
-	
-	// Abilities
-	//----------------------------------------------------------------
-	"Ability1"					"legion_arcana"	 //Reference: Aihn
-	
-	// Armor
-	//----------------------------------------------------------------
-	"ArmorPhysical"				"5"
-	"MagicalResistance"			"0"
-	
-	// Attack
-	//----------------------------------------------------------------
-	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-	"AttackDamageMin"			"30.0"
-	"AttackDamageMax"			"38.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
-	"AttackRate"				"1.4"
-	"AttackAnimationPoint"		"0.66"
-	"AttackAcquisitionRange"	"500"
-	"AttackRange"				"100"
-	
-	// Bounty
-	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
-	
-	// Gold and Lumber
-	//----------------------------------------------------------------
-	"GoldCost"					"245"
-	"LumberCost"				"60"
-	
-	// Movement
-	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"350"
-	"MovementTurnRate"			"0.5"
-	
-	// Status
-	//----------------------------------------------------------------
-	"StatusHealth"				"835"
-	"StatusHealthRegen"			"0.25"
-	"StatusMana"				"0"
-	"StatusManaRegen"			"0"
-	
-	// Vision
-	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1400"
-	"VisionNighttimeRange"		"800"
-	
-	// Team
-	//----------------------------------------------------------------
-	"TeamName"					"DOTA_TEAM_NEUTRALS"
-	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
-	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	
-	// Creature Data
-	//----------------------------------------------------------------
-	"Creature"
-	{
-		"DisableClumpingBehavior"	"1"
-		"AttachWearables"
-		{
-			"Wearable1"		{	"ItemDef"		"5810"		} //"Blades of Voth Domosh"
-			"Wearable2"		{	"ItemDef"		"5886"		} //"Stonehall Royal Guard Banners"
-			"Wearable3" 	{	"ItemDef"		"5887"		} //"Stonehall Royal Guard Helmet"
-			"Wearable4"		{	"ItemDef"		"5885"		} //"Stonehall Royal Guard Arms"
-			"Wearable5"		{	"ItemDef"		"6192"		} //"Pauldrons of the Equine Emissary"
-		}
-	}
-}
-
-//=================================================================================
-// Creature: Priest
-// Description: "Supporting spellcaster. Can initially cast Heal, which increases the life of wounded units. Can also learn Dispel Magic and Inner Fire. |n|n|cffffcc00Attacks land and air units.|r"
-//=================================================================================
-"human_priest"
-{
-	// General
-	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/oracle/oracle.vmdl"
-	"ModelScale"				"0.7"
-	"Level"						"2"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-	"HealthBarOffset"			"140"
-	
-	// Abilities
-	//----------------------------------------------------------------
-	"Ability1"					""	 //Reference: Ahea
-	"Ability2"					""	 //Reference: Ainf
-	"Ability3"					""	 //Reference: Adis
-	"Ability4"					""	 //Reference: Aihn
-	
-	// Armor
-	//----------------------------------------------------------------
-	"ArmorPhysical"				"0"
-	"MagicalResistance"			"0"
-	
-	// Attack
-	//----------------------------------------------------------------
-	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"AttackDamageMin"			"8.0"
-	"AttackDamageMax"			"9.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
-	"AttackRate"				"2"
-	"AttackAnimationPoint"		"0.59"
-	"AttackAcquisitionRange"	"600"
-	"AttackRange"				"600"
-	"ProjectileModel"			"particles/units/heroes/hero_oracle/oracle_base_attack.vpcf"	 //Add projectile
-	"ProjectileSpeed"			"900"
-	
-	// Bounty
-	//----------------------------------------------------------------
-	"BountyGoldMin"				"26.0"
-	"BountyGoldMax"				"38.0"
-	
-	// Gold and Lumber
-	//----------------------------------------------------------------
-	"GoldCost"					"135"
-	"LumberCost"				"10"
-	
-	// Movement
-	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"270"
-	"MovementTurnRate"			"0.6"
-	
-	// Status
-	//----------------------------------------------------------------
-	"StatusHealth"				"290"
-	"StatusHealthRegen"			"0.25"
-	"StatusMana"				"200"
-	"StatusManaRegen"			"200"
-	
-	// Vision
-	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1400"
-	"VisionNighttimeRange"		"800"
-	
-	// Team
-	//----------------------------------------------------------------
-	"TeamName"					"DOTA_TEAM_NEUTRALS"
-	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
-	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	
-	// Creature Data
-	//----------------------------------------------------------------
-	"Creature"
-	{
-		"DisableClumpingBehavior"	"1"
-	}
-}
-
-//=================================================================================
 // Creature: Mortar Team
 // Description: "Long-range siege weaponry. Exceptional damage versus buildings, but slow and vulnerable. Can learn the Fragmentation Shards and Flare abilities. |n|n|cffffcc00Attacks land units and trees.|r"
 //=================================================================================
@@ -891,7 +979,6 @@
 	"Model"						"models/heroes/techies/techies.vmdl"
 	"ModelScale"				"0.6"
 	"Level"						"2"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"120"
 	
 	// Abilities

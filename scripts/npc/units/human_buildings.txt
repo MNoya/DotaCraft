@@ -1,0 +1,92 @@
+// Human Buildings
+// Town Hall - Keep - Castle
+// Barracks
+// Farm
+// Altar of Kings
+// Lumber Mill
+// Scout Tower - Guard Tower/Cannon Tower/Arcane Tower
+// Blacksmith
+// Workshop
+// Arcane Sanctum
+// Gryphon Aviary
+// Arcane Vault
+
+//=================================================================================
+// Creature: Barracks
+// Description: "Primary troop production building. Trains Footmen, Riflemen and Knights. |nAlso contains the Defend, Long Rifles, and Animal War Training upgrades."
+//=================================================================================
+"human_barracks"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/good_barracks_melee001.vmdl"
+	"ModelScale"				"1"
+	"Level"						"1"
+	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"6"
+	"Ability1"					"human_barracks_footman"	 //Reference: Abds
+	"Ability2"					"human_barracks_rifleman"
+	"Ability3"					"human_barracks_knight"
+	"Ability4"					"human_barracks_sorceress"
+	"Ability5"					"human_barracks_priest"
+	"Ability6"					"human_barracks_spell_breaker"
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+	"RingRadius"				"220"
+	"CollisionSize"				"144"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"180"
+	"LumberCost"				"50"
+	"BuildTime"					"60"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// Needed to cast Point abilities
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1200"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}

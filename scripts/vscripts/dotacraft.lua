@@ -385,8 +385,14 @@ function dotacraft:OnPlayerPickHero(keys)
 		heroEntity:HeroLevelUp(false)
 	end
 
+	--local position = Vector(6144,5501,129)
 	--local tree = CreateUnitByName("nightelf_tree_of_life", heroEntity:GetAbsOrigin()+Vector(200, 200, 0), true, heroEntity, heroEntity, heroEntity:GetTeamNumber())
-	--tree:SetControllableByPlayer(playerID, true)
+	local barracks = Entities:FindByModel(nil, "models/props_structures/good_barracks_melee001.vmdl")
+	barracks:SetOwner(heroEntity)
+	barracks:SetControllableByPlayer(playerID, true)
+
+	local item = CreateItem("item_rally", heroEntity, heroEntity)
+	barracks:AddItem(item)
 
 end
 

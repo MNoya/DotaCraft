@@ -443,4 +443,43 @@
 	}
 		
 	
+	"item_rally"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_rally"
+	
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityCastPoint"				"0"
+		
+		"precache"
+		{
+			"model"						"models/particle/legion_duel_banner.vmdl"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/rally_point.lua"
+				"Function"		"SetRallyPoint"
+				"Target"		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_rally_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
 }

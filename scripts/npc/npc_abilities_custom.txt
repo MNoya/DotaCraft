@@ -7641,6 +7641,381 @@
 			}
 		}	
 	}
+	// Trains Footmen, Riflemen and Knights.
+	"human_barracks_footman"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_footman"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityGoldCost"				"135" // From "GoldCost"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"2" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/refund_unit_cost.lua"
+				"Function"		"RefundUnitCost"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"human_footman"
+				"Target" 		"CASTER"
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_barracks_rifleman"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_rifleman"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityGoldCost"				"205" // From "GoldCost"
+		"AbilityChannelTime"			"3" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/refund_unit_cost.lua"
+				"Function"		"RefundUnitCost"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"human_rifleman"
+				"Target" 		"CASTER"
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_barracks_knight"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_knight"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityGoldCost"				"245" // From "GoldCost"
+		"AbilityChannelTime"			"40" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/refund_unit_cost.lua"
+				"Function"		"RefundUnitCost"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"human_knight"
+				"Target" 		"CASTER"
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_barracks_sorceress"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_sorceress"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityGoldCost"				"155" // From "GoldCost"
+		"AbilityChannelTime"			"30" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"human_sorceress"
+				"Target" 		"CASTER"
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_barracks_priest"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_priest"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityGoldCost"				"135" // From "GoldCost"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"26" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"human_priest"
+				"Target" 		"CASTER"
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_barracks_spell_breaker"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_spell_breaker"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityGoldCost"				"215" // From "GoldCost"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"28" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"human_spell_breaker"
+				"Target" 		"CASTER"
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+				}
+			}
+		}
+	}
 	// AbilityName
 	// Author: 
 	// Date: 13.1.2015.
