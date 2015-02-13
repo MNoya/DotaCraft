@@ -387,7 +387,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	local position = Vector(6150,5500,128)
 	--local position = Vector(4572, 5499, 128)
 
-	local barracks = CreateUnitByName("human_barracks", position, true, hero, hero, hero:GetTeamNumber())
+	local barracks = CreateUnitByName("human_arcane_sanctum", position, true, hero, hero, hero:GetTeamNumber())
 	barracks:SetOwner(hero)
 	barracks:SetControllableByPlayer(playerID, true)
 	barracks:SetAbsOrigin(position)
