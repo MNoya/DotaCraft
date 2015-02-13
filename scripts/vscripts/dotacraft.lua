@@ -385,13 +385,19 @@ function dotacraft:OnPlayerPickHero(keys)
 	end
 
 	local position = Vector(6150,5500,128)
-	--local position = Vector(4572, 5499, 128)
+	local position2 = Vector(5000,5067,128)
 
-	local barracks = CreateUnitByName("human_arcane_sanctum", position, true, hero, hero, hero:GetTeamNumber())
+	local barracks = CreateUnitByName("human_barracks", position, true, hero, hero, hero:GetTeamNumber())
 	barracks:SetOwner(hero)
 	barracks:SetControllableByPlayer(playerID, true)
 	barracks:SetAbsOrigin(position)
 	barracks:RemoveModifierByName("modifier_invulnerable")
+
+	local sanctum = CreateUnitByName("human_arcane_sanctum", position2, true, hero, hero, hero:GetTeamNumber())
+	sanctum:SetOwner(hero)
+	sanctum:SetControllableByPlayer(playerID, true)
+	sanctum:SetAbsOrigin(position2)
+	sanctum:RemoveModifierByName("modifier_invulnerable")
 
 	local peasant = CreateUnitByName("human_peasant", position+RandomVector(300), true, hero, hero, hero:GetTeamNumber())
 	peasant:SetOwner(hero)
@@ -407,6 +413,9 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	local item = CreateItem("item_rally", hero, hero)
 	barracks:AddItem(item)
+
+	local item = CreateItem("item_rally", hero, hero)
+	sanctum:AddItem(item)
 
 end
 

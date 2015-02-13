@@ -251,7 +251,7 @@
 		}
 	}
 
-		"OnSpellStart"
+	"OnSpellStart"
 	{
 		"RunScript"
 		{
@@ -348,12 +348,38 @@
 		}
 	}
 
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
 	"OnChannelSucceeded"
 	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
 		"SpawnUnit"
 		{
 			"UnitName"		"human_sorceress"
-			"Target" 		"CASTER"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
 			"UnitCount"		"1"
 			"UnitLimit"		"0"
 			"GrantsGold"	"1"
@@ -366,6 +392,32 @@
 					"ModifierName"	"modifier_phased"
 					"Target"		"TARGET"
 					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
 				}
 			}
 		}
