@@ -526,6 +526,48 @@
 			}
 		}
 	}
+	
+	"item_human_train_priest"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_human_train_priest"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"DequeueUnit"
+			}
+		}
+	}
+	
+	"item_human_train_spell_breaker"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_human_train_spell_breaker"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"DequeueUnit"
+			}
+		}
+	}
 	"item_rally"
 	{
 		"BaseClass"             		"item_datadriven"
@@ -548,20 +590,6 @@
 				"ScriptFile"	"buildings/rally_point.lua"
 				"Function"		"SetRallyPoint"
 				"Target"		"POINT"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_rally_passive"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}

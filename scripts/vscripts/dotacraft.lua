@@ -411,11 +411,11 @@ function dotacraft:OnPlayerPickHero(keys)
 	peasant:SetOwner(hero)
 	peasant:SetControllableByPlayer(playerID, true)
 
-	local item = CreateItem("item_rally", hero, hero)
-	barracks:AddItem(item)
+	--local item = CreateItem("item_rally", hero, hero)
+	--barracks:AddItem(item)
 
-	local item = CreateItem("item_rally", hero, hero)
-	sanctum:AddItem(item)
+	--local item = CreateItem("item_rally", hero, hero)
+	--sanctum:AddItem(item)
 
 end
 

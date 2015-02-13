@@ -44,6 +44,7 @@ function Precache( context )
 
 		-- Remove this later, it's just for testing
 		PrecacheUnitByNameSync("human_barracks", context)
+		PrecacheUnitByNameSync("human_arcane_sanctum", context)
 		PrecacheUnitByNameSync("human_peasant", context)
 end
 

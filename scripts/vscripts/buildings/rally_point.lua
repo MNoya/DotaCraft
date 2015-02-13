@@ -33,6 +33,11 @@ function SetRallyPoint( event )
 
 			-- Keep track of this position so that every unit is autospawned there (avoids going around the)
 			caster.initial_spawn_position = point
+
+			-- Add item ability to change rally point
+			local item = CreateItem("item_rally", caster, caster)
+			caster:AddItem(item)
+
 		else
 			point = event.target_points[1]
 			--caster.flag = nil
