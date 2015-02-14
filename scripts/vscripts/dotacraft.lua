@@ -16,7 +16,7 @@ PRE_GAME_TIME = 30.0                    -- How long after people select their he
 POST_GAME_TIME = 60.0                   -- How long should we let people look at the scoreboard before closing the server automatically?
 TREE_REGROW_TIME = 60.0                 -- How long should it take individual trees to respawn after being cut down/destroyed?
 
-GOLD_PER_TICK = 100                     -- How much gold should players get per tick?
+GOLD_PER_TICK = 0                     -- How much gold should players get per tick?
 GOLD_TICK_TIME = 5                      -- How long should we wait in seconds between gold ticks?
 
 RECOMMENDED_BUILDS_DISABLED = false     -- Should we disable the recommened builds for heroes (Note: this is not working currently I believe)
@@ -386,6 +386,10 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	local position = Vector(6150,5500,128)
 	local position2 = Vector(5000,5067,128)
+
+	hero.lumber = 150
+	print("Lumber Gained. " .. hero:GetUnitName() .. " is currently at " .. hero.lumber)
+    FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = hero.lumber })
 
 	local barracks = CreateUnitByName("human_barracks", position, true, hero, hero, hero:GetTeamNumber())
 	barracks:SetOwner(hero)

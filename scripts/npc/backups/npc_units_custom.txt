@@ -352,6 +352,82 @@
 	// Arcane Vault
 	
 	//=================================================================================
+	// Creature: Keep
+	// Description: "Upgrade to Keep to enable the production of additional types of structures and units."
+	//=================================================================================
+	"human_keep"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_building"
+		"Model"						"models/props_structures/tent_dk_large.vmdl"
+		"ModelScale"				"1"
+		"Level"						"0"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1"					""	 //Reference: Abdl
+		"Ability2"					""	 //Reference: Amic
+		"Ability3"					""	 //Reference: Argl
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"0.0"
+		"BountyGoldMax"				"0.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"220"
+		"CollisionSize"				"176"
+		
+		// Building Cost Stats
+		//----------------------------------------------------------------
+		"GoldCost"					"705"
+		"LumberCost"				"415"
+		"BuildTime"					"140"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2000"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"
+		"VisionNighttimeRange"		"600"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+	}
+	
+	//=================================================================================
 	// Creature: Barracks
 	// Description: "Primary troop production building. Trains Footmen, Riflemen and Knights. |nAlso contains the Defend, Long Rifles, and Animal War Training upgrades."
 	//=================================================================================
@@ -430,6 +506,84 @@
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
 		
 	}
+	
+	//=================================================================================
+	// Creature: Altar of Kings
+	// Description: "Summons Heroes. Revives slain Heroes."
+	//=================================================================================
+	"human_altar_of_kings"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_building"
+		"Model"						"models/props_structures/tower_good2.vmdl"	 //Add model
+		"ModelScale"				"1"
+		"Level"						"0"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1"					"human_train_archmage"	 //Reference: Abds
+		"Ability2"					"human_train_mountain_king"
+		"Ability3"					"human_train_paladin"
+		"Ability4"					"human_train_blood_mage"
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"0.0"
+		"BountyGoldMax"				"0.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"220"
+		"CollisionSize"				"144"
+		
+		// Building Cost Stats
+		//----------------------------------------------------------------
+		"GoldCost"					"180"
+		"LumberCost"				"50"
+		"BuildTime"					"60"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"900"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"
+		"VisionNighttimeRange"		"600"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+	}
+	
 	
 	//=================================================================================
 	// Creature: Arcane Sanctum
@@ -541,9 +695,13 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"human_gather_repair"	 //Reference: Ahar
-		"Ability2"					"build_barracks"	 //Reference: Amil
-		"Ability3"					""	 //Reference: Ahrp
+		"AbilityLayout"				"6"
+		"Ability1"					"human_gather"	 //Reference: Ahar
+		"Ability2"					"human_return_resources"
+		"Ability3"					"build_keep"	 //Reference: Amil
+		"Ability4"					"build_barracks"	 //Reference: Amil
+		"Ability5"					"build_altar_of_kings"	
+		"Ability6"					"build_arcane_sanctum"	 //Reference: Ahrp
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -555,7 +713,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"5.0"
 		"AttackDamageMax"			"6.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2"
 		"AttackAnimationPoint"		"0.433"
 		"AttackAcquisitionRange"	"500"
@@ -642,7 +800,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"12.0"
 		"AttackDamageMax"			"13.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.2"
 		"AttackAnimationPoint"		"0.39"
 		"AttackAcquisitionRange"	"500"
@@ -921,7 +1079,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"30.0"
 		"AttackDamageMax"			"38.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.4"
 		"AttackAnimationPoint"		"0.66"
 		"AttackAcquisitionRange"	"500"
@@ -1031,7 +1189,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"10.0"
 		"AttackDamageMax"			"12.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.75"
 		"AttackAnimationPoint"		"0.75"
 		"AttackAcquisitionRange"	"700"
@@ -1128,7 +1286,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"8.0"
 		"AttackDamageMax"			"9.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2"
 		"AttackAnimationPoint"		"0.59"
 		"AttackAcquisitionRange"	"600"
@@ -1219,7 +1377,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"13.0"
 		"AttackDamageMax"			"15.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.9"
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"700"
@@ -1318,7 +1476,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"14.0"
 		"AttackDamageMax"			"15.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2"
 		"AttackAnimationPoint"		"0.03"
 		"AttackAcquisitionRange"	"500"
@@ -1410,7 +1568,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"18.0"
 		"AttackDamageMax"			"20.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.75"
 		"AttackAnimationPoint"		"0.43"
 		"AttackAcquisitionRange"	"600"
@@ -1508,7 +1666,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"52.0"
 		"AttackDamageMax"			"64.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"3.5"
 		"AttackAnimationPoint"		"1"
 		"AttackAcquisitionRange"	"1150"
@@ -1597,7 +1755,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"45.0"
 		"AttackDamageMax"			"55.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2.1"
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"500"
@@ -1674,7 +1832,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"45.0"
 		"AttackDamageMax"			"55.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2.2"
 		"AttackAnimationPoint"		"0.8"
 		"AttackAcquisitionRange"	"500"

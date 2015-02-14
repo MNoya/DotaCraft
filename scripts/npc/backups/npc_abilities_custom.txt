@@ -3716,7 +3716,7 @@
 	"build_barracks"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_tree_of_life"
+		"AbilityTextureName"			"human_barracks"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
@@ -3758,6 +3758,156 @@
 				"ScriptFile"	"buildings/build.lua"
 				"Function"		"Build"
 				"BuildingName"	"human_barracks"
+				"Target"		"POINT"
+			}
+		}
+	}
+	
+	"build_altar_of_kings"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_altar_of_kings"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	
+		"AbilityCastRange"				"100"
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_altar_of_kings"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"Build"
+				"BuildingName"	"human_altar_of_kings"
+				"Target"		"POINT"
+			}
+		}
+	}
+	
+	"build_arcane_sanctum"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_arcane_sanctum"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	
+		"AbilityCastRange"				"100"
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_arcane_sanctum"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"Build"
+				"BuildingName"	"human_arcane_sanctum"
+				"Target"		"POINT"
+			}
+		}
+	}
+	
+	"build_keep"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_keep"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	
+		"AbilityCastRange"				"100"
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_keep"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"Build"
+				"BuildingName"	"human_keep"
 				"Target"		"POINT"
 			}
 		}
@@ -7805,9 +7955,6 @@
 				}
 			}
 		}
-	
-			local item = CreateItem("item_rally", hero, hero)
-		barracks:AddItem(item)
 	}
 	
 	// Trains Footmen, Riflemen and Knights.
@@ -8389,6 +8536,286 @@
 						"Function"      "BuildingAutocast"
 					}
 				}
+			}
+		}
+	}
+	
+	
+	
+	
+	// Heroes
+	
+	"human_train_archmage"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_archmage"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"215" // From "GoldCost"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"28" // From "BuildTime"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_keeper_of_the_light"
+			}
+		}
+		
+	}
+	
+	"human_train_mountain_king"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_mountain_king"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"450" // From "GoldCost"
+		"AbilityChannelTime"			"55" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_zuus"
+			}
+		}
+		
+	}
+	
+	"human_train_paladin"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_paladin"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"450" // From "GoldCost"
+		"AbilityChannelTime"			"55" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_omniknight"
+			}
+		}
+		
+	}
+	
+	"human_train_blood_mage"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_blood_mage"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"450" // From "GoldCost"
+		"AbilityChannelTime"			"55" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_Invoker"
+			}
+		}
+	}
+	
+	"human_gather"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_gather"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
+	
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/peasant.lua"
+				"Function"		"Gather"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_gathering_lumber"
+			{
+				"IsHidden"			"0"
+					
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"CheckTreePosition"
+					}
+				}
+	
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_gathering_lumber"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"ToggleOffGather"
+					}
+				}
+				
+			}
+	
+			"modifier_chopping_wood"
+			{
+				"IsHidden"				"0"
+			
+				"OverrideAnimation"     "ACT_DOTA_ATTACK"
+	
+				"OnOrder"
+				{			
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_chopping_wood"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"ToggleOffGather"
+					}
+				}
+	
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"Gather1Lumber"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_chopping_wood_animation"
+						"Target" 		"CASTER"
+						"Duration"		"0.9"
+					}
+				}		
+			}
+	
+			"modifier_chopping_wood_animation"
+			{
+				"OverrideAnimation"     "ACT_DOTA_ATTACK"
+				"IsHidden"				"0"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_chopping_wood_animation"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"ToggleOffGather"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_return_resources"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_return_resources"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle
+	
+		// When the ability is active, it means there are resources left to return (else it will be hidden)
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_returning_resources"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"units/peasant.lua"
+				"Function"		"ReturnResources"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_returning_resources"
+			{
+				"IsHidden"				"0"
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"CheckBuildingPosition"
+					}
+				}
+	
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"ToggleOffGather"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"ToggleOffReturn"
+					}
+				}		
 			}
 		}
 	}

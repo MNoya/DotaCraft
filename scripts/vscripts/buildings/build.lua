@@ -13,12 +13,7 @@ function CheckCustomResources( event )
 
 	--DeepPrintTable(unit_table)
 
-	-- Replace this by a custom player resource variable later
-	--if not hero.player_lumber then
-		hero.player_lumber = 100 
-	--end
-
-	if hero.player_lumber < lumber_cost then
+	if hero.lumber < lumber_cost then
 		caster:Interrupt()
 		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Lumber" } )		
 	end
@@ -65,7 +60,7 @@ function Build( event )
 		building:SetOwner( hero )
 
 		-- Pay custom resource
-		hero.player_lumber = hero.player_lumber - lumber_cost
+		hero.lumber hero.lumber - lumber_cost
 	else
 		--Fire a game event here and use Actionscript to let the player know he can't place a building at this spot.
 		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "You can't build there" } )

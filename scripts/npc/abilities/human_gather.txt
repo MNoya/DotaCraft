@@ -1,0 +1,180 @@
+
+"human_gather"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_gather"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
+
+	"AbilityCastPoint"				"0.1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/peasant.lua"
+			"Function"		"Gather"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_gathering_lumber"
+		{
+			"IsHidden"				"1"
+				
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"CheckTreePosition"
+				}
+			}
+
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_gathering_lumber"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"ToggleOffGather"
+				}
+			}
+			
+		}
+
+		"modifier_chopping_wood"
+		{
+			"IsHidden"				"1"
+		
+			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+
+			"OnOrder"
+			{			
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_chopping_wood"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"ToggleOffGather"
+				}
+			}
+
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"Gather1Lumber"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_chopping_wood_animation"
+					"Target" 		"CASTER"
+					"Duration"		"0.9"
+				}
+			}		
+		}
+
+		"modifier_chopping_wood_animation"
+		{
+			"OverrideAnimation"     "ACT_DOTA_ATTACK"
+			"IsHidden"				"1"
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_chopping_wood_animation"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"ToggleOffGather"
+				}
+			}
+		}
+	}
+}
+
+"human_return_resources"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_return_resources"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle
+
+	// When the ability is active, it means there are resources left to return (else it will be hidden)
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_returning_resources"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"units/peasant.lua"
+			"Function"		"ReturnResources"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_returning_resources"
+		{
+			"IsHidden"				"1"
+
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"CheckBuildingPosition"
+				}
+			}
+
+			"OnOrder"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"ToggleOffGather"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"ToggleOffReturn"
+				}
+			}		
+		}
+	}
+}

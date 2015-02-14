@@ -6,5 +6,12 @@
 		"player_ID"		"short"
 		"_error"		"string"
 	}
+
+	//This is fired when a player's lumber changes
+	"cgm_player_lumber_changed"
+	{
+		"player_ID"		"short"
+		"lumber"		"long"
+	}
 	
 }

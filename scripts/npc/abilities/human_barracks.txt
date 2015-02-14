@@ -44,9 +44,6 @@
 			}
 		}
 	}
-
-		local item = CreateItem("item_rally", hero, hero)
-	barracks:AddItem(item)
 }
 
 // Trains Footmen, Riflemen and Knights.
@@ -628,6 +625,106 @@
 					"Function"      "BuildingAutocast"
 				}
 			}
+		}
+	}
+}
+
+
+
+
+// Heroes
+
+"human_train_archmage"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_archmage"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+	"AbilityGoldCost"				"215" // From "GoldCost"
+	"AbilityUpgradeGoldCost"		"0"
+	"AbilityChannelTime"			"28" // From "BuildTime"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"BuildHero"
+			"Hero"			"npc_dota_hero_keeper_of_the_light"
+		}
+	}
+	
+}
+
+"human_train_mountain_king"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_mountain_king"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+	"AbilityGoldCost"				"450" // From "GoldCost"
+	"AbilityChannelTime"			"55" // From "BuildTime"
+	"AbilityUpgradeGoldCost"		"0"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"BuildHero"
+			"Hero"			"npc_dota_hero_zuus"
+		}
+	}
+	
+}
+
+"human_train_paladin"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_paladin"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+	"AbilityGoldCost"				"450" // From "GoldCost"
+	"AbilityChannelTime"			"55" // From "BuildTime"
+	"AbilityUpgradeGoldCost"		"0"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"BuildHero"
+			"Hero"			"npc_dota_hero_omniknight"
+		}
+	}
+	
+}
+
+"human_train_blood_mage"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_blood_mage"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+	"AbilityGoldCost"				"450" // From "GoldCost"
+	"AbilityChannelTime"			"55" // From "BuildTime"
+	"AbilityUpgradeGoldCost"		"0"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"BuildHero"
+			"Hero"			"npc_dota_hero_Invoker"
 		}
 	}
 }
