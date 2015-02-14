@@ -268,11 +268,26 @@ end
 
 -- An ability was used by a player
 function dotacraft:OnAbilityUsed(keys)
-	print('[DOTACRAFT] AbilityUsed')
-	--DeepPrintTable(keys)
 
 	local player = EntIndexToHScript(keys.PlayerID)
 	local abilityname = keys.abilityname
+	local hero = player:GetAssignedHero()
+
+	-- Cancel the ghost if the player casts another active ability.
+	-- Start of BH Snippet:
+	if hero ~= nil then
+		local abil = hero:FindAbilityByName(abilityname)
+		if player.cursorStream ~= nil then
+			if not (string.len(abilityname) > 14 and string.sub(abilityname,1,14) == "move_to_point_") then
+				if not DontCancelBuildingGhostAbils[abilityname] then
+					player.cancelBuilding = true
+				else
+					print(abilityname .. " did not cancel building ghost.")
+				end
+			end
+		end
+	end
+	-- End of BH Snippet
 end
 
 -- A non-player entity (necro-book, chen creep, etc) used an ability
@@ -551,7 +566,7 @@ function dotacraft:Initdotacraft()
 	--ListenToGameEvent('tree_cut', Dynamic_Wrap(dotacraft, 'OnTreeCut'), self)
 	--ListenToGameEvent('entity_hurt', Dynamic_Wrap(dotacraft, 'OnEntityHurt'), self)
 	ListenToGameEvent('player_connect', Dynamic_Wrap(dotacraft, 'PlayerConnect'), self)
-	--ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(dotacraft, 'OnAbilityUsed'), self)
+	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(dotacraft, 'OnAbilityUsed'), self)
 	--ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap(dotacraft, 'OnNPCSpawned'), self)
 	ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(dotacraft, 'OnPlayerPickHero'), self)
@@ -639,8 +654,8 @@ function dotacraft:Initdotacraft()
   	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
   	-- Building Helper by Myll
-  	nMapLength = 16384
-  	BuildingHelper:BlockGridNavSquares(nMapLength)
+  	--nMapLength = 16384
+  	--BuildingHelper:BlockGridNavSquares(nMapLength)
 
 	print('[DOTACRAFT] Done loading dotacraft gamemode!\n\n')
 end

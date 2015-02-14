@@ -13,5 +13,40 @@
 		"player_ID"		"short"
 		"lumber"		"long"
 	}
+
+	"FlashUtil_request"
+	{
+		"request_id"		"string"
+		"data_name"			"string"
+		"target_player"		"short"
+	}
+
+	"FlashUtil_request_stream"
+	{
+		"request_id"		"string"
+		"data_name"			"string"
+		"requests_per_second"		"short"
+		"target_player"		"short"
+	}
+
+	"FlashUtil_stop_stream"
+	{
+		"stream_id"			"string"
+	}
+	"build_command_executed"
+	{
+		"player_id"			"short"
+		"building_size"		"short"
+	}
+
+    // Stat collection
+    "stat_collection_part"
+    {
+        "data"          "string"
+    }
+
+    "stat_collection_send"
+    {
+    }
 	
 }
