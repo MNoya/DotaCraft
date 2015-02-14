@@ -670,6 +670,8 @@ function dotacraft:Capturedotacraft()
 		mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
+		mode:SetHUDVisible(9, false)  -- Get Rid of Courier
+
 		--GameRules:GetGameModeEntity():SetThink( "Think", self, "GlobalThink", 2 )
 
 		--self:SetupMultiTeams()

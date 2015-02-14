@@ -45,11 +45,10 @@ package {
 		public function onResize(re:ResizeManager) : * {
 			
 			// calculate by what ratio the stage is scaling
-			var scaleRatioY:Number = re.ScreenHeight/900;
-					
-			if (re.ScreenHeight > 900){
-				scaleRatioY = 1;
-			}
+			var scaleRatioY:Number = re.ScreenHeight/1080;
+			
+			trace("Custom UI resize");
+			trace("##########################");
 					
 			screenWidth = re.ScreenWidth;
 					

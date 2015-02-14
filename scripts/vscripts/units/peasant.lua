@@ -50,11 +50,11 @@ function ToggleOffReturn( event )
 	local caster = event.caster
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 
-	-- Wait 1 frame 
+	-- Wait 1 frame, this is kinda fucked up. Need additional state to properly display the un-toggle of the gather.
 	Timers:CreateTimer(0.03, function() 
+		if return_ability:GetToggleState() == true then return_ability:ToggleAbility() end
 		if return_ability:GetToggleState() == true and not caster.manual_order then
 			caster.manual_order = false
-			return_ability:ToggleAbility()
 			caster:RemoveModifierByName("modifier_returning_resources")
 			print("OnOrder: Toggled Off Return, modifier removed")
 		end

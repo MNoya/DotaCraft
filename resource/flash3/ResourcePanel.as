@@ -5,7 +5,8 @@ package  {
 	
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
-	import flash.text.*;
+	import flash.utils.getDefinitionByName;
+	import scaleform.clik.events.*;
 	
 	//import some stuff from the valve lib
 	import ValveLib.Globals;
@@ -13,15 +14,6 @@ package  {
 
 	import fl.transitions.Tween;
 	import fl.transitions.easing.*;
-	import flash.display.Sprite;
-	
-	//copied from VotingPanel.as source
-	import flash.display.*;
-    import flash.filters.*;
-    import flash.text.*;
-    import scaleform.clik.events.*;
-    import vcomponents.*;
-
 	
 	
 	public class ResourcePanel extends MovieClip {
@@ -29,12 +21,7 @@ package  {
 		public var gameAPI:Object;
 		public var globals:Object;
 		
-		//more shameless copy paste
-		private var _btnYes:VButton;
-        private var _btnNo:VButton;
-		
-		private var _loc_2:VComponent;
-		
+	
 		public function ResourcePanel() {
 			// constructor code
 		}
@@ -65,6 +52,24 @@ package  {
 		}
 				
 		//onScreenResize
+		public function screenResize(stageW:int, stageH:int, xScale:Number, yScale:Number, wide:Boolean){
+			
+			trace("Stage Size: ",stageW,stageH,"Minus",stageW*0.4*yScale,stageH*0.352*yScale);
+			
+			this.x = stageW-stageW*0.407*yScale;
+			this.y = stageH-stageH*0.352*yScale;
+			
+			this.width = this.width*yScale;
+			this.height	 = this.height*yScale;
+			
+			trace("Result Resize: ",this.x,this.y,yScale);
+					 
+			//Now we just set the scale of this element, because these parameters are already the inverse ratios
+			this.scaleX = xScale;
+			this.scaleY = yScale;
+			
+			trace("Custom UI ResourcePanel Resize");
+		}
 	}
 	
 }
