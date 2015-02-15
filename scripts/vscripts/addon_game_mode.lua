@@ -8,7 +8,6 @@ require('popups')
 require('buildinghelper')
 require('FlashUtil')
 require('abilities')
-require('util')
 
 function Precache( context )
 	--[[
