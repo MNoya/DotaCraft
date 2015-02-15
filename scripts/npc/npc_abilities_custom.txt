@@ -4139,13 +4139,28 @@
 		"AbilityTextureName"			"human_barracks"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	
-		"AbilityCastRange"				"100"
 		"AbilityCastPoint"				"0.1"
 	
 		"AbilityGoldCost"				"180"
 		"AbilityUpgradeGoldCost"		"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"60.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"CasterCanControl"				"1" //bool. This will automatically run SetControllableByPlayer and Set Owner, letting the caster of this ability to control the building.
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_barracks"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"180"
+		// End of BuildingHelper info
 	
 		"AbilitySpecial"
 		{
@@ -4175,10 +4190,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"buildings/build.lua"
-				"Function"		"Build"
-				"BuildingName"	"human_barracks"
-				"Target"		"POINT"
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
 			}
 		}
 	}

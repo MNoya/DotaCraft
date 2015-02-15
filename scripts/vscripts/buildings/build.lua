@@ -60,7 +60,7 @@ function Build( event )
 		building:SetOwner( hero )
 
 		-- Pay custom resource
-		hero.lumber hero.lumber - lumber_cost
+		hero.lumber = hero.lumber - lumber_cost
 	else
 		--Fire a game event here and use Actionscript to let the player know he can't place a building at this spot.
 		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "You can't build there" } )

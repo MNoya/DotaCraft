@@ -5,6 +5,16 @@ function build( keys )
 		-- Unit is the building be built.
 		-- Play construction sound
 		-- FindClearSpace for the builder
+
+		-- Substract custom resource
+		local caster = keys.caster
+		print(caster:GetUnitName())
+		local unit_table = GameRules.UnitKV[unit:GetUnitName()]
+		print(unit_table.LumberCost)
+		caster.lumber = caster.lumber - unit_table.LumberCost
+    	print("Lumber Spend. " .. caster:GetUnitName() .. " is currently at " .. caster.lumber)
+    	FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = caster.lumber })
+
 	end)
 	keys:OnConstructionCompleted(function(unit)
 		print("Completed construction of " .. unit:GetUnitName())

@@ -543,6 +543,7 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 	local bCasterCanControl = buildingTable:GetVal("CasterCanControl", "bool")
 	if bCasterCanControl then
 		unit:SetControllableByPlayer(caster:GetPlayerID(), true)
+		unit:SetOwner( caster )
 	end
 
 	if bUpdateHealth then
