@@ -50,16 +50,14 @@ function ToggleOffReturn( event )
 	local caster = event.caster
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 
-	-- Wait 1 frame, this is kinda fucked up. Need additional state to properly display the un-toggle of the gather.
-	Timers:CreateTimer(0.03, function() 
-		if return_ability:GetToggleState() == true then return_ability:ToggleAbility() end
-		if return_ability:GetToggleState() == true and not caster.manual_order then
-			caster.manual_order = false
-			caster:RemoveModifierByName("modifier_returning_resources")
-			print("OnOrder: Toggled Off Return, modifier removed")
-		end
-	end)
+	if return_ability:GetToggleState() == true then 
+		return_ability:ToggleAbility()
+		print("Toggled Off Return")
+	end
+	caster.skip_order = false
+
 end
+
 
 function CheckTreePosition( event )
 
@@ -95,6 +93,12 @@ function Gather1Lumber( event )
 	caster.lumber_gathered = caster.lumber_gathered + 1
 	print("Gathered "..caster.lumber_gathered)
 
+	-- Show the stack of resources that the unit is carrying
+	if not caster:HasModifier("modifier_returning_resources") then
+        return_ability:ApplyDataDrivenModifier( caster, caster, "modifier_returning_resources", nil)
+    end
+    caster:SetModifierStackCount("modifier_returning_resources", caster, caster.lumber_gathered)
+ 
 	-- Increase up to the max, or cancel
 	if caster.lumber_gathered < max_lumber_carried then
 
@@ -127,8 +131,17 @@ function ReturnResources( event )
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster )
 		print("Returning "..caster.lumber_gathered.." Lumber back to "..building:GetUnitName())
+
+		-- Set On, Wait one frame, as OnOrder gets executed before this is applied.
+		Timers:CreateTimer(0.03, function() 
+			if ability:GetToggleState() == false then
+				ability:ToggleAbility()
+				print("Return Ability Toggled On")
+			end
+		end)
+
 		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Position = building:GetAbsOrigin(), Queue = false}) 
-		caster.manual_order = true
+		caster.skip_order = true
 		caster.target_building = building
 	end
 end
@@ -141,12 +154,6 @@ function CheckBuildingPosition( event )
 
 	if not target then
 		return
-	end
-
-	-- Always On while the modifier is up
-	if ability:GetToggleState() == false then
-		ability:ToggleAbility()
-		print("Return Ability Toggled On")		
 	end
 
 	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
