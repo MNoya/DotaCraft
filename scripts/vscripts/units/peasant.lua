@@ -214,6 +214,32 @@ function Gather1Lumber( event )
 	end
 end
 
+-- Takes 10 hit points away from the gold mine
+function GatherGold( event )
+	local caster = event.caster
+	local ability = event.ability
+	local target = caster.target_mine
+
+	target:SetHealth( target:GetHealth() - 10 )
+
+	if target:GetHealth() < 10 then
+		target:RemoveSelf()
+		caster.target_mine = nil
+
+		-- Swap the gather ability back
+		-- Hide Return
+		local return_ability = caster:FindAbilityByName("human_return_resources")
+		return_ability:SetHidden(true)
+		ability:SetHidden(false)
+		print("Gathering Lumber ON, Return OFF")
+	end
+end
+
+function DestroyMine( event )
+	print("RIP MINE")
+	event.caster:RemoveSelf()
+end
+
 function ReturnResources( event )
 
 	local caster = event.caster

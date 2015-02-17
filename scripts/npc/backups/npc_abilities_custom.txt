@@ -9268,6 +9268,22 @@
 					//"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"GatherGold"
+					}
+				}
+			}
+	
+			"modifier_mine_animation"
+			{
+				"IsHidden"				"0"
+				"OverrideAnimation"     "ACT_DOTA_FLINCH"
+				"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
 		}
 	}
