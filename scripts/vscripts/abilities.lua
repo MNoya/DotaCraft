@@ -8,12 +8,15 @@ function build( keys )
 
 		-- Substract custom resource
 		local caster = keys.caster
-		print(caster:GetUnitName())
+		local hero = caster:GetPlayerOwner():GetAssignedHero()
+		local playerID = hero:GetPlayerID()
+		local building_name = unit:GetUnitName()
+
 		local unit_table = GameRules.UnitKV[unit:GetUnitName()]
 		print(unit_table.LumberCost)
-		caster.lumber = caster.lumber - unit_table.LumberCost
-    	print("Lumber Spend. " .. caster:GetUnitName() .. " is currently at " .. caster.lumber)
-    	FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = caster.lumber })
+		hero.lumber = hero.lumber - unit_table.LumberCost
+    	print("Lumber Spend. " .. hero:GetUnitName() .. " is currently at " .. hero.lumber)
+    	FireGameEvent('cgm_player_lumber_changed', { player_ID = playerID, lumber = hero.lumber })
 
 	end)
 	keys:OnConstructionCompleted(function(unit)

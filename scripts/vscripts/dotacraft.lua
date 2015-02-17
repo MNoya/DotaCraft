@@ -654,7 +654,7 @@ function dotacraft:Initdotacraft()
   	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
   	-- Building Helper by Myll
-  	BuildingHelper:Init(8192) -- nHalfMapLength
+  	BuildingHelper:Init() -- nHalfMapLength
 
 	print('[DOTACRAFT] Done loading dotacraft gamemode!\n\n')
 end

@@ -1,0 +1,26 @@
+// Gold Mine Abilities
+"gold_mine_passive"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"alchemist_goblins_greed"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"Modifiers"
+	{
+		"modifier_gold_mine_passive"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_MOVE_TO"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_SELECT"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}

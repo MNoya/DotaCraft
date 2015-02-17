@@ -1,3 +1,9 @@
+--[[
+  TODO
+	- Destroy Tree and FindNewTree when the tree is destroyed or when the peasant cant reach the targeted tree after a duration
+	- Make the functions a bit cleaner for multiple resources
+--]]
+
 function Gather( event )
 	local caster = event.caster
 	local target = event.target
@@ -12,25 +18,48 @@ function Gather( event )
 	-- Intialize the variable to stop the return (workaround for ExecuteFromOrder being good and MoveToNPC now working after a Stop)
 	caster.manual_order = false
 
+	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
 		caster:MoveToTargetToAttack(target)
 		print("Moving to ", target_class)
 		caster.target_tree = target
+
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
+
+		-- Visual fake toggle
+		if ability:GetToggleState() == false then
+			ability:ToggleAbility()
+		end
+
+		-- Hide Return
+		local return_ability = caster:FindAbilityByName("human_return_resources")
+		return_ability:SetHidden(true)
+		ability:SetHidden(false)
+		print("Gathering Lumber ON, Return OFF")
+
+	elseif target_class == "npc_dota_building" then
+		if target:GetUnitName() == "gold_mine" then
+			print("Gathering Gold On")
+			caster.gold_gathered = nil
+
+			caster:MoveToTargetToAttack(target)
+			print("Moving to Gold Mine")
+			caster.target_mine = target
+
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {})
+
+			-- Visual fake toggle
+			if ability:GetToggleState() == false then
+				ability:ToggleAbility()
+			end
+
+		else
+			print("Not a valid gathering target")
+			return
+		end
 	end
-
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
-
-	-- Visual fake toggle
-	if ability:GetToggleState() == false then
-		ability:ToggleAbility()
-	end
-
-	-- Hide Return
-	local return_ability = caster:FindAbilityByName("human_return_resources")
-	return_ability:SetHidden(true)
-	ability:SetHidden(false)
-	print("Gather ON, Return OFF")
-
+	
+	
 end
 
 -- Toggles Off Gather
@@ -82,6 +111,39 @@ function CheckTreePosition( event )
 	end
 end
 
+function CheckMinePosition( event )
+
+	local caster = event.caster
+	local target = caster.target_mine 
+	local ability = event.ability
+
+	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
+	local collision = distance < 250
+	if not collision then
+		print("Moving to mine, distance: ",distance)
+	else
+		caster:RemoveModifierByName("modifier_gathering_gold")
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_mining_gold", {})
+		print("Reached mine, send builder inside")
+		caster:SetAbsOrigin(target:GetAbsOrigin())
+		caster.gold_gathered = 10 --this is instant and uncancellable, no reason to increase it progressively
+		local return_ability = caster:FindAbilityByName("human_return_resources")
+		return_ability:ApplyDataDrivenModifier( caster, caster, "modifier_returning_resources", nil)
+
+		-- Fake Toggle the Return ability
+		if return_ability:GetToggleState() == false or return_ability:IsHidden() then
+			print("Gather OFF, Return ON")
+			return_ability:SetHidden(false)
+			if return_ability:GetToggleState() == false then
+				return_ability:ToggleAbility()
+			end
+			ability:SetHidden(true)
+		end
+
+	end
+end
+
+
 function Gather1Lumber( event )
 	
 	local caster = event.caster
@@ -121,12 +183,14 @@ function Gather1Lumber( event )
 	end
 end
 
-
 function ReturnResources( event )
 
 	local caster = event.caster
 	local ability = event.ability
 
+	print("Return Resources")
+
+	-- LUMBER
 	if caster.lumber_gathered and caster.lumber_gathered > 0 then
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster )
@@ -143,7 +207,30 @@ function ReturnResources( event )
 		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Position = building:GetAbsOrigin(), Queue = false}) 
 		caster.skip_order = true
 		caster.target_building = building
+	
+
+	-- GOLD
+	elseif caster.gold_gathered and caster.gold_gathered > 0 then
+		-- Find where to return the resources
+		local building = FindClosestResourceDeposit( caster )
+		print("Returning "..caster.gold_gathered.." Gold back to "..building:GetUnitName())
+
+		-- Set On, Wait one frame, as OnOrder gets executed before this is applied.
+		Timers:CreateTimer(0.03, function() 
+			if ability:GetToggleState() == false then
+				ability:ToggleAbility()
+				print("Return Ability Toggled On")
+			end
+		end)
+
+		-- Get closest point from target_mine to building, to make the peasant appear
+		caster:SetAbsOrigin(caster.target_mine:GetAbsOrigin() + RandomVector(300) )
+
+		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Position = building:GetAbsOrigin(), Queue = false}) 
+		caster.skip_order = true
+		caster.target_building = building
 	end
+
 end
 
 function CheckBuildingPosition( event )
@@ -159,10 +246,13 @@ function CheckBuildingPosition( event )
 	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
 	local collision = distance <= (caster.target_building:GetHullRadius()+100)
 	if not collision then
-		--print("Moving to building, distance: ",distance)
+		print("Moving to building, distance: ",distance)
 	else
 		local hero = caster:GetOwner()
 		local pID = hero:GetPlayerID()
+
+		local returned_type = nil
+
 		caster:RemoveModifierByName("modifier_returning_resources")
 		print("Removed modifier_returning_resources")
 
@@ -175,6 +265,18 @@ function CheckBuildingPosition( event )
     		FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = hero.lumber })
 
 			caster.lumber_gathered = 0
+
+			returned_type = "lumber"
+		
+		elseif caster.gold_gathered > 0 then
+			print("Reached building, give resources")
+			PopupGoldGain(caster, caster.gold_gathered)
+
+			hero:ModifyGold(caster.gold_gathered, false, 0)
+
+			caster.gold_gathered = 0
+
+			returned_type = "gold"
 		end
 
 		-- Return Ability Off
@@ -190,8 +292,15 @@ function CheckBuildingPosition( event )
 			gather_ability:ToggleAbility() 
 			print("Gather Ability Toggled On")
 		end
-		caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
-		print("Casting ability to target tree")
+
+		if returned_type == "lumber" then
+			caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
+			print("Casting ability to target tree")
+		elseif returned_type == "gold" then
+			caster:CastAbilityOnTarget(caster.target_mine, gather_ability, pID)
+			print("Casting ability to target mine")
+		end
+		
 
 	end
 end
@@ -202,18 +311,33 @@ function FindClosestResourceDeposit( caster )
 	local position = caster:GetAbsOrigin()
 
 	-- Find a Lumber Mill, a Town Hall and Barracks
-	local lumber_mill = Entities:FindByModel(nil, "models/buildings/building_plain_reference.vmdl")
-	local town_hall = Entities:FindByModel(nil, "models/props_garden/building_garden005.vmdl")
-	local barracks = Entities:FindByModel(nil, "models/props_structures/good_barracks_melee001.vmdl")
-	if lumber_mill then
+	--local lumber_mill = Entities:FindByModel(nil, "models/buildings/building_plain_reference.vmdl")
+	--local town_hall = Entities:FindByModel(nil, "models/props_garden/building_garden005.vmdl")
+	
+	-- Find a building to deliver
+	local barracks = Entities:FindAllByModel("models/props_structures/good_barracks_melee001.vmdl")	
+	local distance = 9999
+	local closest_building = nil
+
+	if barracks then
+		print("barrack found")
+		for _,building in pairs(barracks) do
+			-- Ensure the same owner
+			if building:GetOwner() == caster:GetOwner() then
+				local this_distance = (position - building:GetAbsOrigin()):Length()
+				if this_distance < distance then
+					distance = this_distance
+					closest_building = building
+				end
+			end
+		end
+		return closest_building
+
+	elseif lumber_mill then
 		return lumber_mill
 
 	elseif town_hall then
 		return town_hall
-	
-	-- Find Barrack
-	elseif barracks then
-		return barracks
 	end
 
 end

@@ -8,6 +8,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
 	"AbilityCastPoint"				"0.1"
 
@@ -115,6 +116,72 @@
 				{
 					"ScriptFile"	"units/peasant.lua"
 					"Function"		"ToggleOffGather"
+				}
+			}
+		}
+
+		"modifier_gathering_gold"
+		{
+			"IsHidden"				"0"
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"ThinkInterval"  		"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"CheckMinePosition"
+				}
+			}
+
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_gathering_gold"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"ToggleOffGoldGather"
+				}
+			}
+		}
+
+		"modifier_mining_gold"
+		{
+			"IsHidden"				"0"
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"DelayedAction"
+				{
+					"Delay"		"5.0"
+					"Action"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"units/peasant.lua"
+							"Function"		"ReturnResources"
+						}	
+					}	
 				}
 			}
 		}
