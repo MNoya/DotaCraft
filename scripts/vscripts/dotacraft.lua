@@ -430,6 +430,14 @@ function dotacraft:OnPlayerPickHero(keys)
 	peasant:SetOwner(hero)
 	peasant:SetControllableByPlayer(playerID, true)
 
+	local peasant = CreateUnitByName("human_peasant", position+RandomVector(310), true, hero, hero, hero:GetTeamNumber())
+	peasant:SetOwner(hero)
+	peasant:SetControllableByPlayer(playerID, true)
+
+	local peasant = CreateUnitByName("human_peasant", position+RandomVector(320), true, hero, hero, hero:GetTeamNumber())
+	peasant:SetOwner(hero)
+	peasant:SetControllableByPlayer(playerID, true)
+
 	--local item = CreateItem("item_rally", hero, hero)
 	--barracks:AddItem(item)
 

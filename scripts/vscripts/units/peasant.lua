@@ -10,6 +10,8 @@ function Gather( event )
 	local ability = event.ability
 	local target_class = target:GetClassname()
 
+	print("Gather OnAbilityPhaseStart")
+
 	-- Initialize variable to keep track of how much resource is the unit carrying
 	if not caster.lumber_gathered then
 		caster.lumber_gathered = 0
@@ -40,7 +42,7 @@ function Gather( event )
 	elseif target_class == "npc_dota_building" then
 		if target:GetUnitName() == "gold_mine" then
 			print("Gathering Gold On")
-			caster.gold_gathered = nil
+			caster.gold_gathered = 0
 
 			caster:MoveToTargetToAttack(target)
 			print("Moving to Gold Mine")
@@ -52,6 +54,12 @@ function Gather( event )
 			if ability:GetToggleState() == false then
 				ability:ToggleAbility()
 			end
+
+			-- Hide Return
+			local return_ability = caster:FindAbilityByName("human_return_resources")
+			return_ability:SetHidden(true)
+			ability:SetHidden(false)
+			print("Gathering Lumber ON, Return OFF")
 
 		else
 			print("Not a valid gathering target")
@@ -117,18 +125,21 @@ function CheckMinePosition( event )
 	local target = caster.target_mine 
 	local ability = event.ability
 
-	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
-	local collision = distance < 250
+	local targetLoc = target:GetAbsOrigin()
+	local casterLoc = caster:GetAbsOrigin()
+	local distance = (targetLoc - casterLoc):Length()
+	local collision = distance < 200
 	if not collision then
-		print("Moving to mine, distance: ",distance)
+		--print("Moving to mine, distance: ",distance)
 	else
 		caster:RemoveModifierByName("modifier_gathering_gold")
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_mining_gold", {})
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_mining_gold", {duration = 2})
 		print("Reached mine, send builder inside")
 		caster:SetAbsOrigin(target:GetAbsOrigin())
-		caster.gold_gathered = 10 --this is instant and uncancellable, no reason to increase it progressively
+		caster.gold_gathered = 10 --this is instant and uncancellable, no reason to increase it progressively like lumber
+		
 		local return_ability = caster:FindAbilityByName("human_return_resources")
-		return_ability:ApplyDataDrivenModifier( caster, caster, "modifier_returning_resources", nil)
+		return_ability:ApplyDataDrivenModifier( caster, caster, "modifier_returning_gold", nil)
 
 		-- Fake Toggle the Return ability
 		if return_ability:GetToggleState() == false or return_ability:IsHidden() then
@@ -137,9 +148,29 @@ function CheckMinePosition( event )
 			if return_ability:GetToggleState() == false then
 				return_ability:ToggleAbility()
 			end
-			ability:SetHidden(true)
+			ability:SetHidden(true)			
 		end
 
+		Timers:CreateTimer(2.1, function() 
+			local player = caster:GetOwner():GetPlayerID()
+			
+			-- Find where to return the resources
+			local building = FindClosestResourceDeposit( caster )
+			local targetLoc = building:GetAbsOrigin()
+			local casterLoc = caster:GetAbsOrigin()
+			
+			-- Get closest point from target_mine to building, to make the peasant appear outside
+			-- Find forward vector
+			local forwardVec = (targetLoc - casterLoc):Normalized()
+			local entrance_position = casterLoc + forwardVec * 220
+			--DebugDrawLine(targetLoc, casterLoc, 255, 0, 0, false, 2)
+			--DebugDrawCircle(entrance_position, Vector(0,255,0), 255, 10, true, 2)
+		
+			caster:SetAbsOrigin( entrance_position )
+			caster:CastAbilityNoTarget(return_ability, player)
+
+			print("Builder is now outside the mine on ", entrance_position)
+		end)
 	end
 end
 
@@ -192,6 +223,9 @@ function ReturnResources( event )
 
 	-- LUMBER
 	if caster.lumber_gathered and caster.lumber_gathered > 0 then
+
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_returning_resources", {})
+
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster )
 		print("Returning "..caster.lumber_gathered.." Lumber back to "..building:GetUnitName())
@@ -211,9 +245,12 @@ function ReturnResources( event )
 
 	-- GOLD
 	elseif caster.gold_gathered and caster.gold_gathered > 0 then
+
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster )
 		print("Returning "..caster.gold_gathered.." Gold back to "..building:GetUnitName())
+
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_returning_gold", {})
 
 		-- Set On, Wait one frame, as OnOrder gets executed before this is applied.
 		Timers:CreateTimer(0.03, function() 
@@ -222,9 +259,6 @@ function ReturnResources( event )
 				print("Return Ability Toggled On")
 			end
 		end)
-
-		-- Get closest point from target_mine to building, to make the peasant appear
-		caster:SetAbsOrigin(caster.target_mine:GetAbsOrigin() + RandomVector(300) )
 
 		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Position = building:GetAbsOrigin(), Queue = false}) 
 		caster.skip_order = true
@@ -246,19 +280,19 @@ function CheckBuildingPosition( event )
 	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
 	local collision = distance <= (caster.target_building:GetHullRadius()+100)
 	if not collision then
-		print("Moving to building, distance: ",distance)
+		--print("Moving to building, distance: ",distance)
 	else
 		local hero = caster:GetOwner()
 		local pID = hero:GetPlayerID()
 
 		local returned_type = nil
 
-		caster:RemoveModifierByName("modifier_returning_resources")
-		print("Removed modifier_returning_resources")
-
-		if caster.lumber_gathered > 0 then
+		if caster.lumber_gathered and caster.lumber_gathered > 0 then
 			print("Reached building, give resources")
 			PopupLumber(caster, caster.lumber_gathered)
+
+			caster:RemoveModifierByName("modifier_returning_resources")
+			print("Removed modifier_returning_resources")
 
 			hero.lumber = hero.lumber + caster.lumber_gathered 
     		print("Lumber Gained. " .. hero:GetUnitName() .. " is currently at " .. hero.lumber)
@@ -268,9 +302,12 @@ function CheckBuildingPosition( event )
 
 			returned_type = "lumber"
 		
-		elseif caster.gold_gathered > 0 then
+		elseif caster.gold_gathered and caster.gold_gathered > 0 then
 			print("Reached building, give resources")
 			PopupGoldGain(caster, caster.gold_gathered)
+
+			caster:RemoveModifierByName("modifier_returning_gold")
+			print("Removed modifier_returning_gold")
 
 			hero:ModifyGold(caster.gold_gathered, false, 0)
 

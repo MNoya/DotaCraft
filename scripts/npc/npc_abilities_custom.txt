@@ -9222,14 +9222,14 @@
 	
 			"modifier_gathering_gold"
 			{
-				"IsHidden"				"0"
+				"IsHidden"				"1"
 				
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	
-				"ThinkInterval"  		"0.03"
+				"ThinkInterval"  		"0.033"
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -9250,39 +9250,23 @@
 					"RunScript"
 					{
 						"ScriptFile"	"units/peasant.lua"
-						"Function"		"ToggleOffGoldGather"
+						"Function"		"ToggleOffGather"
 					}
 				}
 			}
 	
 			"modifier_mining_gold"
 			{
-				"IsHidden"				"0"
+				"IsHidden"				"1"
 				
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
 					//"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
 					//"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
-				"OnCreated"
-				{
-					"DelayedAction"
-					{
-						"Delay"		"5.0"
-						"Action"
-						{
-							"RunScript"
-							{
-								"ScriptFile"	"units/peasant.lua"
-								"Function"		"ReturnResources"
-							}	
-						}	
-					}
+					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -9299,12 +9283,6 @@
 		// When the ability is active, it means there are resources left to return (else it will be hidden)
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_returning_resources"
-				"Target" 		"CASTER"
-			}
-	
 			"RunScript"
 			{
 				"ScriptFile"	"units/peasant.lua"
@@ -9318,6 +9296,42 @@
 			{
 				"IsHidden"				"0"
 				"TextureName"			"furion_sprout"
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"CheckBuildingPosition"
+					}
+				}
+	
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"ToggleOffGather"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/peasant.lua"
+						"Function"		"ToggleOffReturn"
+					}
+				}		
+			}
+	
+			"modifier_returning_gold"
+			{
+				"IsHidden"				"0"
+				"TextureName"			"alchemist_goblins_greed"
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 	
 				"ThinkInterval"  "0.03"
 				"OnIntervalThink"
