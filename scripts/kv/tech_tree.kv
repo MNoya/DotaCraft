@@ -1,0 +1,230 @@
+// Tech Tree File
+// Defines the requirements for being able to buy certain building/unit/upgrade
+
+"human"
+{
+	// Building Creation - Builder Abilities
+	// Treat buildings as Tech that can be destroyed
+	// These abilities will show on the builder at all points, but as a disabled version that states the requirements if some of them aren't met.
+	// To avoid having to search the building every time, each building will run a script on created/destroyed, to keep track of the current tech
+	// The script will compare the requirements for any ability that mentions the created/destroyed unit, and update all builders accordingly.
+	// Requirements aren't recursive, meaning if A is a requirement for B and B is a requirement for C, destroying A won't make you unable to build C as long as B is up.
+	"blacksmith"
+	{
+		"town_hall"		"1"
+	}
+
+	"workshop"
+	{
+		"blacksmith"	"1"
+		"keep"			"1"
+	}
+
+	"arcane_sanctum"
+	{
+		"blacksmith"	"1"
+		"keep"			"1"
+	}
+
+	"cannon_tower"
+	{
+		"workshop"		"1"
+	}
+
+	"guard_tower"
+	{
+		"lumbermill"	"1"
+	}
+
+	"gryphon_aviary"
+	{
+		"lumbermill"	"1"
+		"keep"			"1"
+	}
+
+	// Technology Upgrades - Building abilities
+	// Destroying the building doesn't remove the upgrade, these are permanent until the game ends
+	// Having the previous upgrade is not a requirement, as lvl 2-3 tech will only appear on the building whenever the first one is acquired
+	// Tech Upgrade abilities are hidden once they are researched
+	// Each time a unit spawns it should check for its upgrades. 
+	// Each time an upgrade is finished, it should go through all the units and apply it.
+	"castle"
+	{
+		"altar_of_kings"	"1"
+	}
+
+	"backpack"
+	{
+		"arcane_vault"	"1"
+	}
+
+	// LumberMill: Lumber Harvesting and Masonry.
+	"lumber_harvesting_1"
+	{
+		"keep"		"1"			
+	}
+
+	"lumber_harvesting_2"
+	{
+		"castle"	"1"
+	}
+
+	// "masonry_1" has no requirements
+	"masonry_2" 
+	{
+		"keep"		"1"
+	}
+
+	"masonry_3" 
+	{
+		"castle"	"1"
+	}
+
+	// BlackSmith: 4 Upgrades for Melee, Plate, Ranged and Leather http://puu.sh/g2NQR/9d47f6c538.jpg
+	// 1st level doesn't have requirement, 2nd level has Keep, 3rd level has Castle
+	"melee_weapons_2" 
+	{
+		"keep"		"1"
+	}
+
+	"melee_weapons_3" 
+	{
+		"castle"	"1"
+	}
+
+	"plating_2" 
+	{
+		"keep"		"1"
+	}
+
+	"plating_3" 
+	{
+		"castle"	"1"	
+	}
+
+	"ranged_weapons_2" 
+	{
+		"keep"		"1"	
+	}
+
+	"ranged_weapons_3" 
+	{
+		"castle"	"1"	
+	}
+
+	"leather_armor_2" 
+	{
+		"keep"		"1"	
+	}
+
+	"leather_armor_3" 
+	{
+		"castle"	"1"	
+	}
+
+	// Barracks
+	// Unit Abilities + Unit Upgrades
+	"rifleman"
+	{
+		"blacksmith"	"1"
+	}
+	"long_rifles"
+	{
+		"blacksmith"	"1"
+	}
+
+	"knight"
+	{
+		"blacksmith"	"1"
+		"lumbermill"	"1"
+		"castle"		"1"
+	}
+	"animal_war_training"
+	{
+		"blacksmith"	"1"
+		"lumbermill"	"1"
+		"castle"		"1"
+	}
+
+	// Arcane Sanctum
+	"spell_breaker"
+	{
+		"arcane_vault"	"1"
+		"keep"			"1"
+	}
+	"control_magic"
+	{
+		"arcane_vault"	"1"
+		"castle"		"1"
+	}
+
+	"priest_master_training"
+	{
+		"castle"	"1"
+	}
+
+	"sorceress_master_training"
+	{
+		"castle"	"1"
+	}
+
+	// Workshop
+	"siege_engine"
+	{
+		"castle"	"1"
+	}
+
+	"flare"
+	{
+		"keep"		"1"
+	}
+
+	"flak_cannons"
+	{
+		"castle"	"1"
+	}
+
+	"flying_machine_bombs"
+	{
+		"castle"		"1"
+	}
+
+	"fragmentation_shards"
+	{
+		"castle"		"1"
+	}
+
+	"barrage"
+	{
+		"castle"		"1"
+	}
+
+	// Gryphon Aviary
+	"gryphon_rider"
+	{
+		"castle"		"1"
+	}
+
+	"dragonhawk_rider"
+	{
+		"arcane_vault"	"1"
+	}
+
+	"storm_hammers"
+	{
+		"castle"		"1"
+	}
+
+	"cloud"
+	{
+		"castle"		"1"
+		"arcane_vault"	"1"
+	}
+
+
+	// Altar of Kings: Each additional hero requires a Town Hall upgrade (So 2nd hero requires a Keep, and 3rd a Castle)
+
+	// Arcane Vault Items: 
+	// Keep: Potion of Healing, Mana, TP Scroll, Ivory Tower
+	// Castle: Orb of Fire, Staff of Sanctuary
+}
