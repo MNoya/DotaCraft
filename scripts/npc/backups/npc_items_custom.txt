@@ -341,6 +341,378 @@
 		}
 	}
 	
+	"item_build_town_hall"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_build_town_hall"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastPoint"				"0.1"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"180.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_keep"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"385"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"180.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"205"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_town_hall"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	"item_build_farm"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_build_farm"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastPoint"				"0.1"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"3" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"35.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_farm"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"80"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"35.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"20"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_farm"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	"item_build_altar_of_kings"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_build_altar_of_kings"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastPoint"				"0.1"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"60.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_altar_of_kings"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"180"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_altar_of_kings"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	"item_build_lumber_mill"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_build_lumber_mill"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastPoint"				"0.1"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"60.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_lumber_mill"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"180"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_altar_of_kings"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	
+	"item_build_arcane_vault"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_build_arcane_vault"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastPoint"				"0.1"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"60.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_arcane_vault"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"180"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_altar_of_kings"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	"item_build_scout_tower"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_build_scout_tower"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastPoint"				"0.1"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"60.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_scout_tower"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"180"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_altar_of_kings"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
 	"item_mana_modifier"
 	{
 		"ID"							"2103"

@@ -1,5 +1,5 @@
 // Human Buildings
-// Town Hall
+// human_town_hall
 	// human_keep
 	// human_castle
 // human_barracks
@@ -182,8 +182,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/tent_dk_large.vmdl"
-	"ModelScale"				"0.7"
+	"Model"						"models/props_structures/good_ancient_dest_sim.vmdl"
+	"ModelScale"				"0.8"
 	"Level"						"0"
 	"HealthBarOffset"			"140"
 	
@@ -251,7 +251,7 @@
 
 //=================================================================================
 // Creature: Barracks
-// Description: "Primary troop production building. Trains Footmen, Riflemen and Knights. |nAlso contains the Defend, Long Rifles, and Animal War Training upgrades."
+// Description: "Primary troop production building. Trains Footmen, Riflemen and Knights.\nAlso contains the Defend, Long Rifles, and Animal War Training upgrades."
 //=================================================================================
 "human_barracks"
 {
@@ -482,7 +482,7 @@
 
 //=================================================================================
 // Building: Lumber Mill
-// Description: "Serves as a drop-off point for harvested lumber. |nAlso contains the upgrades for Lumber Harvesting and Masonry."
+// Description: "Serves as a drop-off point for harvested lumber.\nAlso contains the upgrades for Lumber Harvesting and Masonry."
 //=================================================================================
 "human_lumber_mill"
 {
@@ -633,7 +633,7 @@
 
 //=================================================================================
 // Building: Guard Tower
-// Description: "Primary defensive structure. Can learn the Magic Sentry ability. |n|n|cffffcc00Attacks land and air units.|r"
+// Description: "Primary defensive structure. Can learn the Magic Sentry ability.\n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
 "human_guard_tower"
 {
@@ -715,7 +715,7 @@
 
 //=================================================================================
 // Building: Cannon Tower
-// Description: "Heavy defensive structure. Particularly effective against clusters of troops. Can learn the Magic Sentry ability. |n|n|cffffcc00Attacks land units and trees.|r"
+// Description: "Heavy defensive structure. Particularly effective against clusters of troops. Can learn the Magic Sentry ability.\n|n|cffffcc00Attacks land units and trees.|r"
 //=================================================================================
 "human_cannon_tower"
 {
@@ -796,7 +796,7 @@
 
 //=================================================================================
 // Building: Arcane Tower
-// Description: "Magical defensive tower. Particularly effective against enemy Heroes and spellcasters. Has the Feedback ability, which causes its attacks to destroy mana, dealing extra damage equal to the mana destroyed. Deals bonus damage against summoned units. Can learn the Magic Sentry ability. |n|n|cffffcc00Attacks land and air units.|r"
+// Description: "Magical defensive tower. Particularly effective against enemy Heroes and spellcasters. Has the Feedback ability, which causes its attacks to destroy mana, dealing extra damage equal to the mana destroyed. Deals bonus damage against summoned units. Can learn the Magic Sentry ability.\n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
 "human_arcane_tower"
 {
@@ -954,7 +954,7 @@
 
 //=================================================================================
 // Building: Workshop
-// Description: "Produces Siege Engines, Flying Machines, and Mortar Teams. |nAlso contains the Flare, Fragmentation Shards, Barrage, Flying Machine Bombs, and Flak Cannons upgrades."
+// Description: "Produces Siege Engines, Flying Machines, and Mortar Teams.\nAlso contains the Flare, Fragmentation Shards, Barrage, Flying Machine Bombs, and Flak Cannons upgrades."
 //=================================================================================
 "human_workshop"
 {
@@ -1029,7 +1029,7 @@
 
 //=================================================================================
 // Creature: Arcane Sanctum
-// Description: "Trains Priests, Sorceresses, and Spell Breakers. |nAlso contains spell upgrades for Priests and Sorceresses, Control Magic, and Magic Sentry."
+// Description: "Trains Priests, Sorceresses, and Spell Breakers.\nAlso contains spell upgrades for Priests and Sorceresses, Control Magic, and Magic Sentry."
 //=================================================================================
 "human_arcane_sanctum"
 {
@@ -1109,7 +1109,7 @@
 
 //=================================================================================
 // Building: Gryphon Aviary
-// Description: "Trains Gryphon Riders, and Dragonhawk Riders. |nAlso contains the Storm Hammers and Cloud upgrades."
+// Description: "Trains Gryphon Riders, and Dragonhawk Riders.\nAlso contains the Storm Hammers and Cloud upgrades."
 //=================================================================================
 "human_gryphon_aviary"
 {

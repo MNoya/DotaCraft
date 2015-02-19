@@ -4133,218 +4133,6 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
 	}
-	"build_barracks"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_barracks"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	
-		"AbilityCastPoint"				"0.1"
-	
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
-	
-		// BuildingHelper info
-		"Building"						"1" //bool
-		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
-		"BuildTime"						"60.0"
-		"AbilityCastRange"				"200"
-		"UpdateHealth"					"1" //bool
-		"Scale"							"1" //bool
-		"MaxScale"						"0.8"
-		"CasterCanControl"				"1" //bool. This will automatically run SetControllableByPlayer and Set Owner, letting the caster of this ability to control the building.
-		//"CancelsBuildingGhost"			"0" //bool
-	
-		"UnitName"						"human_barracks"
-		"AbilityCooldown"				"0"
-		"AbilityGoldCost"				"180"
-		// End of BuildingHelper info
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"build_time"			"60.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"50"	// Not needed, just for tooltips
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/build.lua"
-				"Function"		"CheckCustomResources"
-				"BuildingName"	"human_barracks"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
-			}
-		}
-	}
-	
-	"build_altar_of_kings"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_altar_of_kings"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-	
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"0.1"
-	
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"build_time"			"60.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"50"	// Not needed, just for tooltips
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/build.lua"
-				"Function"		"CheckCustomResources"
-				"BuildingName"	"human_altar_of_kings"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/build.lua"
-				"Function"		"Build"
-				"BuildingName"	"human_altar_of_kings"
-				"Target"		"POINT"
-			}
-		}
-	}
-	
-	"build_arcane_sanctum"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_arcane_sanctum"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-	
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"0.1"
-	
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"build_time"			"60.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"50"	// Not needed, just for tooltips
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/build.lua"
-				"Function"		"CheckCustomResources"
-				"BuildingName"	"human_arcane_sanctum"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/build.lua"
-				"Function"		"Build"
-				"BuildingName"	"human_arcane_sanctum"
-				"Target"		"POINT"
-			}
-		}
-	}
-	
-	"build_keep"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_keep"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-	
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"0.1"
-	
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"build_time"			"60.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"50"	// Not needed, just for tooltips
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/build.lua"
-				"Function"		"CheckCustomResources"
-				"BuildingName"	"human_keep"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/build.lua"
-				"Function"		"Build"
-				"BuildingName"	"human_keep"
-				"Target"		"POINT"
-			}
-		}
-	}
 	"build_tree_of_life"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -9095,6 +8883,391 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"BuildHero"
 				"Hero"			"npc_dota_hero_Invoker"
+			}
+		}
+	}
+	// Abilities that are available will be Undroppable Unsellable Items
+	// Dummy abilities with max level 0 for those buildings that have requirements
+	// Upgrading a building is replacing the unit on the same position
+	
+	// human_town_hall - Item
+		// human_keep - Upgrade
+		// human_castle - Upgrade
+	// human_farm - Item
+	// human_altar_of_kings - Item
+	// human_lumber_mill - Item
+	// human_scout_tower - Item 
+		// human_guard_tower - Upgrade
+		// human_cannon_tower - Upgrade
+		// human_arcane_tower - Upgrade
+	// human_arcane_vault - Item
+	
+	// human_barracks - Ability, no requirements.
+	// human_blacksmith - Ability, requires Town Hall
+	// human_arcane_sanctum - Ability, requires Keep
+	// human_workshop - Ability, requires Keep and Blacksmith
+	// human_gryphon_aviary - Ability, requires Keep and Lumber Mill
+	
+	
+	// This ability fills the peasant slot with undroppable build items
+	"build_human_items"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel" 						"1"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/items.lua"
+				"Function"		"GiveHumanBuildingItems"
+			}
+		}
+	}
+	
+	"build_barracks"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_barracks"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+		"AbilityCastPoint"				"0.1"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"60.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_barracks"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"180"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_barracks"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	"build_blacksmith_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_blacksmith"
+		"MaxLevel" 						"0"
+	}
+	
+	"build_blacksmith"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_blacksmith"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"70.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_blacksmith"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"150"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"70.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"140"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_arcane_sanctum"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	"build_arcane_sanctum_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_arcane_sanctum"
+		"MaxLevel" 						"0"
+	}
+	
+	"build_arcane_sanctum"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_arcane_sanctum"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"70.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_arcane_sanctum"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"150"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"70.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"140"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_arcane_sanctum"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	"build_workshop_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_workshop"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityGoldCost"				"180"
+	}
+	
+	"build_workshop"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_workshop"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"70.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_workshop"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"150"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"70.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"140"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_arcane_sanctum"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
+			}
+		}
+	}
+	
+	"build_gryphon_aviary_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_gryphon_aviary"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityGoldCost"				"180"
+	}
+	
+	"build_gryphon_aviary"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_gryphon_aviary"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		// BuildingHelper info
+		"Building"						"1" //bool
+		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildTime"						"70.0"
+		"AbilityCastRange"				"200"
+		"UpdateHealth"					"1" //bool
+		"Scale"							"1" //bool
+		"MaxScale"						"0.8"
+		"PlayerCanControl"				"1" //bool. 
+		//"CancelsBuildingGhost"			"0" //bool
+	
+		"UnitName"						"human_gryphon_aviary"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"150"
+		// End of BuildingHelper info
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"70.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"140"	// Not needed, just for tooltips
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/build.lua"
+				"Function"		"CheckCustomResources"
+				"BuildingName"	"human_arcane_sanctum"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"build"
 			}
 		}
 	}

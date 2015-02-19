@@ -7,13 +7,14 @@ function CheckCustomResources( event )
 	local caster = event.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()
+	local player = PlayerResource:GetPlayer(playerID)
 	local building_name = event.BuildingName
 	local unit_table = GameRules.UnitKV[building_name]
 	local lumber_cost = unit_table.LumberCost
 
 	--DeepPrintTable(unit_table)
 
-	if hero.lumber < lumber_cost then
+	if player.lumber < lumber_cost then
 		caster:Interrupt()
 		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Lumber" } )		
 	end

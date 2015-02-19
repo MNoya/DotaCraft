@@ -414,7 +414,7 @@
 		
 	}
 	// Human Buildings
-	// Town Hall
+	// human_town_hall
 		// human_keep
 		// human_castle
 	// human_barracks
@@ -597,8 +597,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_building"
-		"Model"						"models/props_structures/tent_dk_large.vmdl"
-		"ModelScale"				"0.7"
+		"Model"						"models/props_structures/good_ancient_dest_sim.vmdl"
+		"ModelScale"				"0.8"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -1377,7 +1377,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_building"
 		"Model"						"models/props_structures/water_wheel.vmdl"
-		"ModelScale"				"0.7"
+		"ModelScale"				"0.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		"IsChampion"				"1"
@@ -1706,12 +1706,14 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
-		"Ability1"					"human_gather"	 //Reference: Ahar
+		"Ability1"					"human_gather"
 		"Ability2"					"human_return_resources"
-		"Ability3"					"build_keep"	 //Reference: Amil
-		"Ability4"					"build_barracks"	 //Reference: Amil
-		"Ability5"					"build_altar_of_kings"	
-		"Ability6"					"build_arcane_sanctum"	 //Reference: Ahrp
+		"Ability3"					"build_barracks"
+		"Ability4"					"build_blacksmith_disabled" //"build_arcane_sanctum"
+		"Ability5"					"build_arcane_sanctum_disabled" //"build_arcane_sanctum"
+		"Ability6"					"build_workshop_disabled" //"build_human_workshop"
+		"Ability7"					"build_gryphon_aviary_disabled" //build_human_gryphon_aviary"				
+		"Ability8"					"build_human_items" // Provides 6 additional building abilities
 		
 		// Armor
 		//----------------------------------------------------------------

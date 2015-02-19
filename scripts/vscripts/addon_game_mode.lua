@@ -51,7 +51,7 @@ function Precache( context )
 		PrecacheUnitByNameSync("human_barracks", context)
 		PrecacheUnitByNameSync("human_arcane_sanctum", context)
 		PrecacheUnitByNameSync("human_altar_of_kings", context)
-		PrecacheUnitByNameSync("human_keep", context)
+		PrecacheUnitByNameSync("human_town_hall", context)
 		PrecacheUnitByNameSync("human_peasant", context)
 end
 
