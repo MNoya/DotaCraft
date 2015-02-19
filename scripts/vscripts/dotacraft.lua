@@ -406,17 +406,11 @@ function dotacraft:OnPlayerPickHero(keys)
 	print("Lumber Gained. " .. hero:GetUnitName() .. " is currently at " .. hero.lumber)
     FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = hero.lumber })
 
-	local barracks = CreateUnitByName("human_barracks", position, true, hero, hero, hero:GetTeamNumber())
+	local barracks = CreateUnitByName("human_castle", position, true, hero, hero, hero:GetTeamNumber())
 	barracks:SetOwner(hero)
 	barracks:SetControllableByPlayer(playerID, true)
 	barracks:SetAbsOrigin(position)
 	barracks:RemoveModifierByName("modifier_invulnerable")
-
-	local sanctum = CreateUnitByName("human_arcane_sanctum", position2, true, hero, hero, hero:GetTeamNumber())
-	sanctum:SetOwner(hero)
-	sanctum:SetControllableByPlayer(playerID, true)
-	sanctum:SetAbsOrigin(position2)
-	sanctum:RemoveModifierByName("modifier_invulnerable")
 
 	local peasant = CreateUnitByName("human_peasant", position+RandomVector(300), true, hero, hero, hero:GetTeamNumber())
 	peasant:SetOwner(hero)

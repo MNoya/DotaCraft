@@ -1,15 +1,101 @@
 // Human Buildings
-// Town Hall - Keep - Castle
-// Barracks
-// Farm
-// Altar of Kings
-// Lumber Mill
-// Scout Tower - Guard Tower/Cannon Tower/Arcane Tower
-// Blacksmith
-// Workshop
-// Arcane Sanctum
-// Gryphon Aviary
-// Arcane Vault
+// Town Hall
+	// human_keep
+	// human_castle
+// human_barracks
+// human_farm
+// human_altar_of_kings
+// human_lumber_mill
+// human_scout_tower
+	// human_guard_tower
+	// human_cannon_tower
+	// human_arcane_tower
+// human_blacksmith
+// human_workshop
+// human_arcane_sanctum
+// human_gryphon_aviary
+// human_arcane_vault
+
+
+// Unused Models that could somewhat be used:
+// models/props_structures/secretshop_radiant001.vmdl
+// models/props_structures/cathedral001.vmdl
+
+
+//=================================================================================
+// Building: Town Hall
+// Description: "Primary structure, used to train Peasants and receive gathered resources. Can be upgraded to Keep and then Castle to enable the production of additional types of structures and units."
+//=================================================================================
+"human_town_hall"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/tent_dk_small.vmdl"
+	"ModelScale"				"1.5"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abdl
+	"Ability2"					""	 //Reference: Argl
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+	"RingRadius"				"220"
+	"CollisionSize"				"176"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"385"
+	"LumberCost"				"205"
+	"BuildTime"					"180"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1500"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
 
 //=================================================================================
 // Creature: Keep
@@ -20,7 +106,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/tent_dk_large.vmdl"
+	"Model"						"models/props_structures/tent_dk_med.vmdl"
 	"ModelScale"				"1"
 	"Level"						"0"
 	"HealthBarOffset"			"140"
@@ -69,6 +155,82 @@
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"2000"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+//=================================================================================
+// Building: Castle
+// Description: "Upgrade to Castle to enable the production of additional types of structures and units."
+//=================================================================================
+"human_castle"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/tent_dk_large.vmdl"
+	"ModelScale"				"0.7"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abdl
+	"Ability2"					""	 //Reference: Amic
+	"Ability3"					""	 //Reference: Argl
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+	"RingRadius"				"220"
+	"CollisionSize"				"172"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"1065"
+	"LumberCost"				"625"
+	"BuildTime"					"140"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"2500"
 	"StatusHealthRegen"			"0"
 	"StatusMana"				"0"
 	"StatusManaRegen"			"0"
@@ -168,6 +330,80 @@
 }
 
 //=================================================================================
+// Building: Farm
+// Description: "Provides food, which increases the maximum number of units that can be trained."
+//=================================================================================
+"human_farm"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/good_statue008.vmdl"
+	"ModelScale"				"1"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"RingRadius"				"140"
+	"CollisionSize"				"72"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"80"
+	"LumberCost"				"20"
+	"BuildTime"					"35"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"500"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+//=================================================================================
 // Creature: Altar of Kings
 // Description: "Summons Heroes. Revives slain Heroes."
 //=================================================================================
@@ -244,6 +480,552 @@
 	
 }
 
+//=================================================================================
+// Building: Lumber Mill
+// Description: "Serves as a drop-off point for harvested lumber. |nAlso contains the upgrades for Lumber Harvesting and Masonry."
+//=================================================================================
+"human_lumber_mill"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/buildings/building_plain_reference.vmdl"
+	"ModelScale"				"1.5"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	"Ability2"					""	 //Reference: Arlm
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+	"RingRadius"				"220"
+	"CollisionSize"				"144"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"120"
+	"LumberCost"				"0"
+	"BuildTime"					"60"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"900"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+
+//=================================================================================
+// Building: Scout Tower
+// Description: "Basic observation tower. Has no attack, but can be upgraded into a Guard Tower, an Arcane Tower, or a Cannon Tower. Can learn the Magic Sentry ability."
+//=================================================================================
+"human_scout_tower"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/wooden_sentry_tower001.vmdl"	 //Add model
+	"ModelScale"				"0.7"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	"Ability2"					""	 //Reference: Adts
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"RingRadius"				"140"
+	"CollisionSize"				"72"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"30"
+	"LumberCost"				"20"
+	"BuildTime"					"25"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"300"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"1000"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+//=================================================================================
+// Building: Guard Tower
+// Description: "Primary defensive structure. Can learn the Magic Sentry ability. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"human_guard_tower"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/tower_good.vmdl"
+	"ModelScale"				"1"
+	"Level"						"1"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	"Ability2"					""	 //Reference: Adts
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"23.0"
+	"AttackDamageMax"			"27.0"
+	"AttackRate"				"0.9"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"700"
+	"AttackRange"				"700"
+	"ProjectileModel"			"particles/units/heroes/hero_mirana/mirana_base_attack.vpcf"	
+	"ProjectileSpeed"			"1800"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"RingRadius"				"140"
+	"CollisionSize"				"72"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"100"
+	"LumberCost"				"70"
+	"BuildTime"					"50"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"500"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+
+//=================================================================================
+// Building: Cannon Tower
+// Description: "Heavy defensive structure. Particularly effective against clusters of troops. Can learn the Magic Sentry ability. |n|n|cffffcc00Attacks land units and trees.|r"
+//=================================================================================
+"human_cannon_tower"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/tower001.vmdl"
+	"ModelScale"				"1"
+	"Level"						"1"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	"Ability2"					""	 //Reference: Adts
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"90.0"
+	"AttackDamageMax"			"111.0"
+	"AttackRate"				"2.5"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"800"
+	"AttackRange"				"800"
+	"ProjectileModel"			"particles/units/heroes/hero_techies/techies_base_attack.vpcf"
+	"ProjectileSpeed"			"700"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"RingRadius"				"140"
+	"CollisionSize"				"72"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"200"
+	"LumberCost"				"120"
+	"BuildTime"					"75"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"600"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+//=================================================================================
+// Building: Arcane Tower
+// Description: "Magical defensive tower. Particularly effective against enemy Heroes and spellcasters. Has the Feedback ability, which causes its attacks to destroy mana, dealing extra damage equal to the mana destroyed. Deals bonus damage against summoned units. Can learn the Magic Sentry ability. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"human_arcane_tower"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/tower_dragon_white.vmdl"
+	"ModelScale"				"1"
+	"Level"						"1"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	"Ability2"					""	 //Reference: Afbt
+	"Ability3"					""	 //Reference: AHta
+	"Ability4"					""	 //Reference: Adts
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"8.0"
+	"AttackDamageMax"			"10.0"
+	"AttackRate"				"1"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"800"
+	"AttackRange"				"800"
+	"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"
+	"ProjectileSpeed"			"1500"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"RingRadius"				"140"
+	"CollisionSize"				"72"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"100"
+	"LumberCost"				"70"
+	"BuildTime"					"50"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"500"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+
+//=================================================================================
+// Building: Blacksmith
+// Description: "Contains upgrades for improved armor, weaponry and gunpowder."
+//=================================================================================
+"human_blacksmith"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/weapon_rack_00.vmdl"
+	"ModelScale"				"1.2"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+	"RingRadius"				"200"
+	"CollisionSize"				"144"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"140"
+	"LumberCost"				"60"
+	"BuildTime"					"70"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1200"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+//=================================================================================
+// Building: Workshop
+// Description: "Produces Siege Engines, Flying Machines, and Mortar Teams. |nAlso contains the Flare, Fragmentation Shards, Barrage, Flying Machine Bombs, and Flak Cannons upgrades."
+//=================================================================================
+"human_workshop"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/water_wheel.vmdl"
+	"ModelScale"				"0.5"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	"IsChampion"				"1"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+	"RingRadius"				"220"
+	"CollisionSize"				"144"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"140"
+	"LumberCost"				"140"
+	"BuildTime"					"60"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1200"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
 
 //=================================================================================
 // Creature: Arcane Sanctum
@@ -315,6 +1097,159 @@
 	//----------------------------------------------------------------
 	"VisionDaytimeRange"		"900"
 	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+//=================================================================================
+// Building: Gryphon Aviary
+// Description: "Trains Gryphon Riders, and Dragonhawk Riders. |nAlso contains the Storm Hammers and Cloud upgrades."
+//=================================================================================
+"human_gryphon_aviary"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/props_structures/good_statue010.vmdl"
+	"ModelScale"				"1"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+	"RingRadius"				"190"
+	"CollisionSize"				"100"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"140"
+	"LumberCost"				"150"
+	"BuildTime"					"75"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1200"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+}
+
+
+//=================================================================================
+// Building: Arcane Vault
+// Description: "Creates a shop with purchasable items. The items available depend upon what level of upgrade your Town Hall has (Town Hall, Keep, or Castle) and which buildings you have."
+//=================================================================================
+"human_arcane_vault"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_building"
+	"Model"						"models/buildings/building_racks_ranged_reference.vmdl"
+	"ModelScale"				"1"
+	"Level"						"0"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Abds
+	"Ability2"					""	 //Reference: Aall
+	"Ability3"					""	 //Reference: Apit
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	"AttackRate"				"0"
+	"AttackAcquisitionRange"	"500"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"RingRadius"				"120"
+	"CollisionSize"				"50"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"130"
+	"LumberCost"				"30"
+	"BuildTime"					"60"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementSpeed"				"0"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"485"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1000"
+	"VisionNighttimeRange"		"750"
 	
 	// Team
 	//----------------------------------------------------------------
