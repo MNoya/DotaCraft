@@ -9531,6 +9531,94 @@
 			}
 		}
 	}
+	
+	
+	// Town Hall -> Keep Upgrade. Gets queued
+	"human_upgrade_to_keep"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_keep"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityGoldCost"				"385"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"140.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"205"	// Not needed, just for tooltips
+			}
+		}
+	}
+	
+	"human_keep_passive"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_keep_particle"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/radiant_fx2/good_ancient001_ambient_fallback_med.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_fx"
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	"human_castle_passive"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_castle_particle"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/radiant_fx2/good_ancient001_ambient.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_fx"
+						}
+					}
+				}
+			}
+		}
+	}
 	// AbilityName
 	// Author: 
 	// Date: 13.1.2015.
