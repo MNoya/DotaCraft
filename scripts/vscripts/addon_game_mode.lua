@@ -47,12 +47,27 @@ function Precache( context )
 		PrecacheUnitByNameSync("npc_dota_hero_omniknight", context)
 		PrecacheUnitByNameSync("npc_dota_hero_Invoker", context)
 
-		-- Remove this later, it's just for testing
+		-- This units are created as soon as the player gets into the game		
+		PrecacheUnitByNameSync("human_town_hall", context)
+		PrecacheUnitByNameSync("human_peasant", context)
+
+		-- These should be on PostLoadPrecache, but it's not working inside tools. Just temporary.
 		PrecacheUnitByNameSync("human_barracks", context)
 		PrecacheUnitByNameSync("human_arcane_sanctum", context)
 		PrecacheUnitByNameSync("human_altar_of_kings", context)
-		PrecacheUnitByNameSync("human_town_hall", context)
-		PrecacheUnitByNameSync("human_peasant", context)
+		PrecacheUnitByNameSync("human_keep", context)
+		PrecacheUnitByNameSync("human_castle", context)
+		PrecacheUnitByNameSync("human_farm", context)
+		PrecacheUnitByNameSync("human_lumber_mill", context)
+		PrecacheUnitByNameSync("human_scout_tower", context)
+		PrecacheUnitByNameSync("human_guard_tower", context)
+		PrecacheUnitByNameSync("human_cannon_tower", context)
+		PrecacheUnitByNameSync("human_arcane_tower", context)
+		PrecacheUnitByNameSync("human_blacksmith", context)
+		PrecacheUnitByNameSync("human_workshop", context)
+		PrecacheUnitByNameSync("human_arcane_sanctum", context)
+		PrecacheUnitByNameSync("human_gryphon_aviary", context)
+		PrecacheUnitByNameSync("human_arcane_vault", context)
 end
 
 -- Create the game mode when we activate

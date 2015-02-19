@@ -8938,7 +8938,7 @@
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
-		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildingSize"					"5"
 		"BuildTime"						"60.0"
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
@@ -9008,7 +9008,7 @@
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
-		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildingSize"					"5" 
 		"BuildTime"						"70.0"
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
@@ -9078,7 +9078,7 @@
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
-		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildingSize"					"5" 
 		"BuildTime"						"70.0"
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
@@ -9131,9 +9131,6 @@
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_workshop"
 		"MaxLevel" 						"0"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityGoldCost"				"180"
 	}
 	
 	"build_workshop"
@@ -9151,7 +9148,7 @@
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
-		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildingSize"					"5" 
 		"BuildTime"						"70.0"
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
@@ -9204,9 +9201,6 @@
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_gryphon_aviary"
 		"MaxLevel" 						"0"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityGoldCost"				"180"
 	}
 	
 	"build_gryphon_aviary"
@@ -9224,7 +9218,7 @@
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
-		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+		"BuildingSize"					"5" 
 		"BuildTime"						"70.0"
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool

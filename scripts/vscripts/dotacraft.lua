@@ -82,10 +82,7 @@ function dotacraft:PostLoadPrecache()
 		print("[DOTACRAFT] Performing Post-Load precache")    
 	--PrecacheItemByNameAsync("item_example_item", function(...) end)
 	--PrecacheItemByNameAsync("example_ability", function(...) end)
-
-	PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
-	--PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
+	
 end
 
 --[[
