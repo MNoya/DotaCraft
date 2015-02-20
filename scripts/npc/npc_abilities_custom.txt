@@ -9635,7 +9635,7 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	
-		"AbilityGoldCost"				"385"// From "GoldCost"
+		"AbilityGoldCost"				"320"// From "GoldCost"
 		"AbilityChannelTime"			"10" // From "BuildTime"
 	
 	
@@ -9666,26 +9666,12 @@
 				"Function"		"EnqueueUnit"
 			}
 	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_building_particle"
-				"Target" 		"CASTER"
-			}
-	
-			// Disable any other queue-able ability that the building could have, because the caster will be removed after the channel ends.
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"DisableAbility"
-				"AbilityName"	"human_train_peasant"
+				"Function"		"DisableAbilities"
 			}
 	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"DisableAbility"
-				"AbilityName"	"human_train_keep"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -9709,7 +9695,7 @@
 		{
 			"modifier_building_particle"
 			{
-				"IsHidden"			"0"
+				"IsHidden"			"1"
 		
 				"OnCreated"
 				{
@@ -9728,9 +9714,93 @@
 		}
 	}
 	
-	//human_upgrade_to_castle
+	// Keep -> Castle Upgrade.
+	"human_train_castle"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_castle"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"360"// From "GoldCost"
+		"AbilityChannelTime"			"10" // From "BuildTime"
 	
 	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"build_time"			"140.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"210"	// Not needed, just for tooltips
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/radiant_fx2/good_ancient001_ambient.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"DisableAbilities"
+			}
+	
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"UpgradeBuilding"
+				"UnitName"		"human_castle"
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_particle"
+			{
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/radiant_fx2/good_ancient001_ambient.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_fx"
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	// Passive particles
 	"human_keep_passive"
@@ -9740,9 +9810,14 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	
+		"precache"
+		{
+			"particle"  "particles/radiant_fx2/good_ancient001_ambient_fallback_med.vpcf"
+		}
+	
 		"Modifiers"
 		{
-			"modifier_building_particle"
+			"modifier_keep_particle"
 			{
 				"Passive"			"1"
 				"IsHidden"			"0"
@@ -9772,9 +9847,14 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	
+		"precache"
+		{
+			"particle"  "particles/radiant_fx2/good_ancient001_ambient.vpcf"
+		}
+	
 		"Modifiers"
 		{
-			"modifier_building_particle"
+			"modifier_castle_particle"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"

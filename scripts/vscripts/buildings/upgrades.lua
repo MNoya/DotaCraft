@@ -25,26 +25,49 @@ function UpgradeBuilding( event )
 	end
 end
 
--- Hides an ability by its name
-function DisableAbility( event )
+-- Disable any queue-able ability that the building could have, because the caster will be removed after the channel ends.
+function DisableAbilities( event )
 	
-	local ability_name = event.AbilityName
 	local caster = event.caster
+	local ability = event.ability
+	local abilities = { "human_train_peasant", 
+						"human_train_keep",
+						"human_train_castle" }
 
-	print("Disabling ability"..ability_name)
+	-- Check to not disable when the queue was full
+	if #caster.queue < 5 then
 
-	local ability = caster:FindAbilityByName(ability_name)
-	ability:SetHidden(true)
+		-- Harcoded as fuck particle attachment
+		if not caster:HasModifier("modifier_building_particle") then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_building_particle", {})
+		else
+			-- Reapply
+			caster:RemoveModifierByName("modifier_building_particle")
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_building_particle", {})
+		end
+
+		for i=1,#abilities do
+			local ability = caster:FindAbilityByName(abilities[i])
+			if ability then
+				ability:SetHidden(true)
+			end			
+		end
+	end
 end
 
--- Shows an ability by its name
-function EnableAbility( event )
+-- Shows abilities from a list
+function EnableAbilities( event )
 	
-	local ability_name = event.AbilityName
 	local caster = event.caster
+	local abilities = { "human_train_peasant", 
+						"human_train_keep",
+						"human_train_castle" }
 
-	print("Enabling ability"..ability_name)
+	for i=1,#abilities do
+		local ability = caster:FindAbilityByName(abilities[i])
+		if ability then
+			ability:SetHidden(false)
+		end
+	end
 
-	local ability = caster:FindAbilityByName(ability_name)
-	ability:SetHidden(false)
 end

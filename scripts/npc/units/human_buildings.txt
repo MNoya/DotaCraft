@@ -119,7 +119,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"human_train_peasant"	 //Reference: Abdl
-	"Ability2"					"human_upgrade_to_castle"	 //Reference: Amic
+	"Ability2"					"human_train_castle"	 //Reference: Amic
 	"Ability3"					"human_keep_passive"	 //Reference: Argl
 	"Ability4"					"human_building_queue"	 //Reference: Argl
 	
@@ -148,7 +148,7 @@
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
-	"GoldCost"					"385"//"705" - 385
+	"GoldCost"					"320"//"705" - 385
 	"LumberCost"				"205"//"415" - 205
 	"BuildTime"					"140"
 	
@@ -226,8 +226,8 @@
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
-	"GoldCost"					"1065"
-	"LumberCost"				"625"
+	"GoldCost"					"360"//"1065" - "705"
+	"LumberCost"				"210"//"625" - "415"
 	"BuildTime"					"140"
 	
 	// Movement
