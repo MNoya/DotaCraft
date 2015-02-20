@@ -450,12 +450,13 @@
 		"ModelScale"				"0.7"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""
-		"Ability2"					"human_upgrade_to_keep"
+		"Ability1"					"human_train_peasant"
+		"Ability2"					"human_train_keep"
 		"Ability3"					""
 		"Ability5"					"human_building_queue"
 		
@@ -527,13 +528,15 @@
 		"ModelScale"				"0.9"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"human_keep_passive"	 //Reference: Abdl
-		"Ability2"					""	 //Reference: Amic
-		"Ability3"					""	 //Reference: Argl
+		"Ability1"					"human_train_peasant"	 //Reference: Abdl
+		"Ability2"					"human_upgrade_to_castle"	 //Reference: Amic
+		"Ability3"					"human_keep_passive"	 //Reference: Argl
+		"Ability4"					"human_building_queue"	 //Reference: Argl
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -603,13 +606,15 @@
 		"ModelScale"				"1"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"human_castle_passive"	 //Reference: Abdl
-		"Ability2"					""	 //Reference: Amic
+		"Ability1"					"human_train_peasant"	 //Reference: Abdl
+		"Ability2"					"human_castle_passive"	 //Reference: Amic
 		"Ability3"					""	 //Reference: Argl
+		"Ability4"					"human_building_queue"	 //Reference: Argl
 		
 		// Armor
 		//----------------------------------------------------------------

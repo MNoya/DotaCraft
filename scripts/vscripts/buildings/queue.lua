@@ -10,12 +10,12 @@ function EnqueueUnit( event )
 	local gold_cost = ability:GetGoldCost( ability:GetLevel() - 1 )
 
 	-- Initialize queue
-	if not ability.queue then
-		ability.queue = {}
+	if not caster.queue then
+		caster.queue = {}
 	end
 
 	-- Queue up to 5 units max
-	if #ability.queue < 5 then
+	if #caster.queue < 5 then
 
 		local ability_name = ability:GetAbilityName()
 		local item_name = "item_"..ability_name
@@ -23,13 +23,15 @@ function EnqueueUnit( event )
 		caster:AddItem(item)
 
 		-- RemakeQueue
-		ability.queue = {}
+		caster.queue = {}
 		for itemSlot = 1, 5, 1 do
 			local item = caster:GetItemInSlot( itemSlot )
 			if item ~= nil then
-				table.insert(ability.queue, item:GetEntityIndex())
+				table.insert(caster.queue, item:GetEntityIndex())
 			end
 		end
+
+
 	else
 		-- Refund with message
  		PlayerResource:ModifyGold(player, gold_cost, false, 0)
@@ -61,10 +63,10 @@ function DequeueUnit( event )
 
         	if current_item == item_ability then
         		print("Q")
-        		DeepPrintTable(train_ability.queue)
-        		local queue_element = getIndex(train_ability.queue, item:GetEntityIndex())
+        		DeepPrintTable(caster.queue)
+        		local queue_element = getIndex(caster.queue, item:GetEntityIndex())
         		print(item:GetEntityIndex().." in queue at "..queue_element)
-	            table.remove(train_ability.queue, queue_element)
+	            table.remove(caster.queue, queue_element)
 
 	            caster:RemoveItem(item)
 	            
@@ -77,7 +79,7 @@ function DequeueUnit( event )
 					train_ability:SetChanneling(false)
 					train_ability:EndChannel(true)
 					print("Cancel current channel")
-					ReorderItems(caster,train_ability.queue)
+					ReorderItems(caster,caster.queue)
 				else
 					print("Removed unit in queue slot",itemSlot)					
 				end
@@ -90,17 +92,26 @@ end
 -- Auxiliar function, takes all items and puts them 1 slot back
 function ReorderItems( caster, queue )
 	queue = {}
+	print("Reordering Items...")
 	for itemSlot = 1, 5, 1 do
-		local item = caster:GetItemInSlot( itemSlot )
+
+		-- Handle the case in which the caster is removed
+		local item
+		if IsValidEntity(caster) then
+			item = caster:GetItemInSlot( itemSlot )
+		end
+
        	if item ~= nil then
        		print("========>REMOVING",item:GetEntityIndex())   		
     		local new_item = CreateItem(item:GetName(), caster, caster)
-       		caster:RemoveItem(item)
+       		
 			table.insert(queue, new_item:GetEntityIndex())
 			print("========>ADDED",new_item:GetEntityIndex())   		
        		caster:AddItem(new_item)
+       		caster:RemoveItem(item)
        	end
     end
+    print("Done Reordering items")
 end
 
 
@@ -128,11 +139,11 @@ function NextQueue( event )
         		local train_ability = caster:FindAbilityByName(train_ability_name)
 
         		print("Q")
-        		DeepPrintTable(train_ability.queue)
-        		local queue_element = getIndex(train_ability.queue, item:GetEntityIndex())
+        		DeepPrintTable(caster.queue)
+        		local queue_element = getIndex(caster.queue, item:GetEntityIndex())
         		if IsValidEntity(item) then
 	        		print(item:GetEntityIndex().." in queue at "..queue_element)
-		            table.remove(train_ability.queue, queue_element)
+		            table.remove(caster.queue, queue_element)
 	            	caster:RemoveItem(item)
 	            end
 
@@ -151,14 +162,14 @@ function AdvanceQueue( event )
 	if not IsChanneling( caster ) then
 		
 		-- RemakeQueue
-		ability.queue = {}
+		caster.queue = {}
 
 		-- Check the first item that contains "train" on the queue
 		for itemSlot=1,5 do
 			local item = caster:GetItemInSlot(itemSlot)
 			if item ~= nil then
 
-				table.insert(ability.queue, item:GetEntityIndex())
+				table.insert(caster.queue, item:GetEntityIndex())
 
 				local item_name = tostring(item:GetAbilityName())
 				if not IsChanneling( caster ) and string.find(item_name, "train") then

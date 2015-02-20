@@ -1,14 +1,113 @@
 
+// Train Peasant
+"human_train_peasant"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_peasant"
+	"MaxLevel" 						"1"
 
-// Town Hall -> Keep Upgrade. Gets queued
-"human_upgrade_to_keep"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+	"AbilityGoldCost"				"75" // From "GoldCost"
+	"AbilityChannelTime"			"15" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"human_peasant"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+// Town Hall -> Keep Upgrade.
+"human_train_keep"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_keep"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityGoldCost"				"385"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+	"AbilityGoldCost"				"385"// From "GoldCost"
+	"AbilityChannelTime"			"10" // From "BuildTime"
+
 
 	"AbilitySpecial"
 	{
@@ -23,21 +122,64 @@
 			"lumber_cost"			"205"	// Not needed, just for tooltips
 		}
 	}
-}
 
-"human_keep_passive"
-{
-	"BaseClass"             		"ability_datadriven"
-	"MaxLevel" 						"1"
+	"precache"
+	{
+		"particle"  "particles/radiant_fx2/good_ancient001_ambient_fallback_med.vpcf"
+	}
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_building_particle"
+			"Target" 		"CASTER"
+		}
+
+		// Disable any other queue-able ability that the building could have, because the caster will be removed after the channel ends.
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"DisableAbility"
+			"AbilityName"	"human_train_peasant"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"DisableAbility"
+			"AbilityName"	"human_train_keep"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"UpgradeBuilding"
+			"UnitName"		"human_keep"
+		}		
+	}
 
 	"Modifiers"
 	{
-		"modifier_keep_particle"
+		"modifier_building_particle"
 		{
-			"Passive"			"1"
-			"IsHidden"			"1"
+			"IsHidden"			"0"
 	
 			"OnCreated"
 			{
@@ -56,6 +198,48 @@
 	}
 }
 
+//human_upgrade_to_castle
+
+
+
+// Passive particles
+"human_keep_passive"
+{
+	"BaseClass"             		"ability_datadriven"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"precache"
+	{
+		"particle"  "particles/radiant_fx2/good_ancient001_ambient_fallback_med.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_particle"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/radiant_fx2/good_ancient001_ambient_fallback_med.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"			"CASTER"
+					"ControlPointEntities"
+					{
+						"CASTER"	"attach_fx"
+					}
+				}
+			}
+		}
+	}
+}
+
+
 "human_castle_passive"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -63,9 +247,14 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
+	"precache"
+	{
+		"particle"  "particles/radiant_fx2/good_ancient001_ambient.vpcf"
+	}
+
 	"Modifiers"
 	{
-		"modifier_castle_particle"
+		"modifier_building_particle"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
