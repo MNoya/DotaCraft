@@ -39,6 +39,7 @@ function EnqueueUnit( event )
 	end
 end
 
+
 -- Destroys an item on the buildings inventory, refunding full cost of purchasing and reordering the queue
 -- If its the first slot, the channeling ability is also set to not channel, refunding the full price.
 function DequeueUnit( event )
@@ -172,31 +173,62 @@ function AdvanceQueue( event )
 				table.insert(caster.queue, item:GetEntityIndex())
 
 				local item_name = tostring(item:GetAbilityName())
-				if not IsChanneling( caster ) and string.find(item_name, "train") then
-					-- Find the name of the tied ability-item: 
-					--	ability = human_train_footman
-					-- 	item = item_human_train_footman
-					local train_ability_name = string.gsub(item_name, "item_", "")
+				if not IsChanneling( caster ) then
 
-					local ability_to_channel = caster:FindAbilityByName(train_ability_name)
+					-- Items that contain "train_" will start a channel of an ability with the same name without the item_ affix
+					if string.find(item_name, "train_") then
+						-- Find the name of the tied ability-item: 
+						--	ability = human_train_footman
+						-- 	item = item_human_train_footman
+						local train_ability_name = string.gsub(item_name, "item_", "")
 
-					ability_to_channel:SetChanneling(true)
-					print(ability_to_channel:GetAbilityName()," started channel")
+						local ability_to_channel = caster:FindAbilityByName(train_ability_name)
 
-					-- After the channeling time, check if it was cancelled or spawn it
-					-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
-					Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
-					function()
-						print("===Queue Table====")
-						DeepPrintTable(ability_to_channel.queue)
-						if IsValidEntity(item) then
-							ability_to_channel:EndChannel(false)
-							ReorderItems(caster, ability_to_channel.queue)
-							print("Unit finished building")
-						else
-							print("This unit was interrupted")
-						end
-					end)
+						ability_to_channel:SetChanneling(true)
+						print("->"..ability_to_channel:GetAbilityName()," started channel")
+
+						-- After the channeling time, check if it was cancelled or spawn it
+						-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
+						Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
+						function()
+							print("===Queue Table====")
+							DeepPrintTable(caster.queue)
+							if IsValidEntity(item) then
+								ability_to_channel:EndChannel(false)
+								ReorderItems(caster, caster.queue)
+								print("Unit finished building")
+							else
+								print("This unit was interrupted")
+							end
+						end)
+
+					-- Items that contain "research_" will start a channel of an ability with the same name  without the item_ affix
+					elseif string.find(item_name, "research_") then
+						-- Find the name of the tied ability-item: 
+						--	ability = human_research_defend
+						-- 	item = item_human_research_defend
+						local research_ability_name = string.gsub(item_name, "item_", "")
+
+						local ability_to_channel = caster:FindAbilityByName(research_ability_name)
+
+						ability_to_channel:SetChanneling(true)
+						print("->"..ability_to_channel:GetAbilityName()," started channel")
+
+						-- After the channeling time, check if it was cancelled or spawn it
+						-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
+						Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
+						function()
+							print("===Queue Table====")
+							DeepPrintTable(caster.queue)
+							if IsValidEntity(item) then
+								ability_to_channel:EndChannel(false)
+								ReorderItems(caster, caster.queue)
+								print("Research complete!")
+							else
+								print("This Research was interrupted")
+							end
+						end)
+					end
 				end
 			end
 		end

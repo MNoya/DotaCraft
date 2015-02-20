@@ -40,9 +40,23 @@ function UpgradeBuilding( event )
 	-- Add the new building to the structures list
 	table.insert(player.structures, building)
 
-	print("Upgrade complete.")
+	print("Upgrade complete. Player current building list:")
+	DeepPrintTable(player.buildings)
+
+	-- Update the abilities of the builders and structures
+	for k,builder in pairs(player.builders) do
+		print("=Checking Requirements on "..builder:GetUnitName()..k)
+		CheckAbilityRequirements( builder, player )
+	end
+
+	for k,structure in pairs(player.structures) do
+		print("=Checking Requirements on "..structure:GetUnitName()..k)
+		CheckAbilityRequirements( structure, player )
+	end
 
 end
+
+
 
 -- Disable any queue-able ability that the building could have, because the caster will be removed after the channel ends.
 function DisableAbilities( event )

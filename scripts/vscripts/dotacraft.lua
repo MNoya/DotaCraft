@@ -401,6 +401,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.buildings = {} -- This keeps the name and quantity of each building, to access in O(1)
 	player.builders = {} -- This keeps the handle of all the builders, to iterate for unlocking buildings
 	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
+	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 
 	-- Give Initial Lumber
 	player.lumber = 1000
@@ -436,8 +437,7 @@ function CheckAbilityRequirements( unit, player )
 
 	local requirements = GameRules.Requirements
 	local buildings = player.buildings
-	local requirement_failed = false
-
+	
 	-- The disabled abilities end with this affix
 	local len = string.len("_disabled")
 
@@ -446,6 +446,7 @@ function CheckAbilityRequirements( unit, player )
 
 		-- If the ability exists, check its requirements
 		if ability then
+			local requirement_failed = false
 			local disabled_ability_name = ability:GetAbilityName()
 
 			-- Check the table of requirements in the KV file
@@ -460,6 +461,7 @@ function CheckAbilityRequirements( unit, player )
 					-- Look for the building and update counter
 					if buildings[k] and buildings[k] > 0 then
 						print("Found at least one "..k)
+						requirement_failed = false
 					else
 						print("Failed one of the requirements for "..disabled_ability_name..", no "..k.." found")
 						local disabled_ability = unit:FindAbilityByName(disabled_ability_name)

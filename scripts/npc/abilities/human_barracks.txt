@@ -328,14 +328,10 @@
 	"AbilityTextureName"			"human_research_defend"
 	"MaxLevel" 						"1"
 
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_knight"
-	"MaxLevel" 						"1"
-
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 
-	"AbilityGoldCost"				"245" // From "GoldCost"
-	"AbilityChannelTime"			"40" // From "BuildTime"
+	"AbilityGoldCost"				"150" // From "GoldCost"
+	"AbilityChannelTime"			"45" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -353,6 +349,12 @@
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"EnqueueUnit"
 		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
 	}
 
 	"OnChannelSucceeded"
@@ -365,6 +367,11 @@
 		}
 
 		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
 	}
 }
 
@@ -389,6 +396,52 @@
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_long_rifles"
 	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+	"AbilityGoldCost"				"150" // From "GoldCost"
+	"AbilityChannelTime"			"45" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
 }
 
 "human_research_animal_war_training_disabled"
@@ -412,6 +465,52 @@
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_animal_war_training"
 	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+	"AbilityGoldCost"				"150" // From "GoldCost"
+	"AbilityChannelTime"			"45" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"value"			"900"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
 }
 
 
