@@ -398,8 +398,9 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	-- Initialize Variables for Tracking
 	player.lumber = 0
-	player.buildings = {}
-	player.builders = {}
+	player.buildings = {} -- This keeps the name and quantity of each building, to access in O(1)
+	player.builders = {} -- This keeps the handle of all the builders, to iterate for unlocking buildings
+	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
 
 	-- Give Initial Lumber
 	player.lumber = 1000
@@ -414,6 +415,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	building:SetAbsOrigin(position)
 	building:RemoveModifierByName("modifier_invulnerable")
 	player.buildings["human_town_hall"] = 1
+	table.insert(player.structures, building)
 
 	-- Create Builders
 	for i=1,5 do
@@ -448,8 +450,7 @@ function CheckAbilityRequirements( unit, player )
 
 			-- Check the table of requirements in the KV file
 			if requirements[disabled_ability_name] then
-				local requirement_count = #requirements[disabled_ability_name]
-				print(disabled_ability_name.. "has "..requirement_count.." Requirements")
+				print("Checking "..disabled_ability_name.. " Requirements")
 						
 				-- Go through each requirement line and check if the player has that building on its list
 				for k,v in pairs(requirements[disabled_ability_name]) do
@@ -461,6 +462,9 @@ function CheckAbilityRequirements( unit, player )
 						print("Found at least one "..k)
 					else
 						print("Failed one of the requirements for "..disabled_ability_name..", no "..k.." found")
+						local disabled_ability = unit:FindAbilityByName(disabled_ability_name)
+						disabled_ability:SetLevel(0)
+						print("SetLevel 0")
 						requirement_failed = true
 						break
 					end

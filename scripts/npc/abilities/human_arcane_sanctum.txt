@@ -1,16 +1,16 @@
 
 
-// Trains Footmen, Riflemen and Knights.
-"human_train_footman"
+"human_train_sorceress"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_footman"
+	"AbilityTextureName"			"human_sorceress"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"155" // From "GoldCost"
+	"AbilityChannelTime"			"30" // From "BuildTime"
+	"AbilityUpgradeGoldCost"		"0"
 	
 	"AbilitySpecial"
 	{
@@ -41,7 +41,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"human_footman"
+			"UnitName"		"human_sorceress"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -97,31 +97,16 @@
 	}
 }
 
-"human_train_rifleman_disabled"
+"human_train_priest"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_rifleman"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
-"human_train_rifleman"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_rifleman"
+	"AbilityTextureName"			"human_priest"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 
-	"AbilityGoldCost"				"205" // From "GoldCost"
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityUpgradeGoldCost"		"0"
 	"AbilityChannelTime"			"26" // From "BuildTime"
 	
 	"AbilitySpecial"
@@ -153,7 +138,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"human_rifleman"
+			"UnitName"		"human_priest"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -209,32 +194,17 @@
 	}
 }
 
-"human_train_knight_disabled"
+"human_train_spell_breaker"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_knight"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
-"human_train_knight"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_knight"
+	"AbilityTextureName"			"human_spell_breaker"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 
-	"AbilityGoldCost"				"245" // From "GoldCost"
-	"AbilityChannelTime"			"40" // From "BuildTime"
+	"AbilityGoldCost"				"215" // From "GoldCost"
+	"AbilityUpgradeGoldCost"		"0"
+	"AbilityChannelTime"			"28" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -265,7 +235,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"human_knight"
+			"UnitName"		"human_spell_breaker"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -320,113 +290,4 @@
 		}
 	}
 }
-
-// Research
-"human_research_defend"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_research_defend"
-	"MaxLevel" 						"1"
-
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_knight"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-
-	"AbilityGoldCost"				"245" // From "GoldCost"
-	"AbilityChannelTime"			"40" // From "BuildTime"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/queue.lua"
-			"Function"		"EnqueueUnit"
-		}
-	}
-
-	"OnChannelSucceeded"
-	{
-		// Consume the first item in the queue
-		"RunScript"
-		{
-			"ScriptFile"   	"buildings/queue.lua"
-			"Function"      "NextQueue"
-		}
-
-		// Add Upgrade and Swap the ability for the next upgrade if there is one
-	}
-}
-
-"human_research_long_rifles_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_research_long_rifles"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
-"human_research_long_rifles"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_research_long_rifles"
-	"MaxLevel" 						"1"
-}
-
-"human_research_animal_war_training_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_research_animal_war_training"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
-"human_research_animal_war_training"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_research_animal_war_training"
-	"MaxLevel" 						"1"
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

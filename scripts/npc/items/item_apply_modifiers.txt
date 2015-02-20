@@ -1,0 +1,27 @@
+"item_apply_modifiers"
+{
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"BaseClass"						"item_datadriven"
+
+	"Modifiers"
+	{
+		"modifier_construction"
+		{
+			"IsHidden"				"1"  
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/custom/sandking_sandstorm.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+					"ControlPoints"
+					{
+						"01"			"0 300 0"
+					}
+				}
+			}
+		}
+	}
+}

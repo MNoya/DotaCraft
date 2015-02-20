@@ -11,18 +11,37 @@ function UpgradeBuilding( event )
 	local playerID = hero:GetPlayerID()
 	local player = PlayerResource:GetPlayer(playerID)
 
-	caster:RemoveSelf()
+	-- Remove the old building from the structures list and from the game
+	local buildingIndex = getIndex(player.structures, caster)
+	if IsValidEntity(caster) then
+        table.remove(player.structures, buildingIndex)
+
+        -- Remove the rally flag if there is one
+        if caster.flag then
+			caster.flag:RemoveSelf()
+		end
+
+        caster:RemoveSelf()
+    end
+
 	local building = CreateUnitByName(new_unit, position, true, hero, hero, hero:GetTeamNumber())
 	building:SetOwner(hero)
 	building:SetControllableByPlayer(playerID, true)
 	building:SetAbsOrigin(position)
 	building:RemoveModifierByName("modifier_invulnerable")
 
+	-- Add 1 to the buildings list for that name. The old name still remains
 	if not player.buildings[new_unit] then
 		player.buildings[new_unit] = 1
 	else
 		player.buildings[new_unit] = player.buildings[new_unit] + 1
 	end
+
+	-- Add the new building to the structures list
+	table.insert(player.structures, building)
+
+	print("Upgrade complete.")
+
 end
 
 -- Disable any queue-able ability that the building could have, because the caster will be removed after the channel ends.
@@ -69,5 +88,13 @@ function EnableAbilities( event )
 			ability:SetHidden(false)
 		end
 	end
+end
 
+
+-- Forces an ability to level 0
+function SetLevel0( event )
+	local ability = event.ability
+	if ability:GetLevel() == 1 then
+		ability:SetLevel(0)	
+	end
 end

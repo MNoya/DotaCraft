@@ -1,5 +1,38 @@
 "DOTAAbilities"
 {
+	"item_apply_modifiers"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"BaseClass"						"item_datadriven"
+	
+		"Modifiers"
+		{
+			"modifier_construction"
+			{
+				"IsHidden"				"1"  
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/custom/sandking_sandstorm.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPoints"
+						{
+							"01"			"0 300 0"
+						}
+					}
+				}
+			}
+		}
+	}
 	"item_armor_modifier"
 	{
 		"ID"							"2105"

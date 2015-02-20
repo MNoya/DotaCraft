@@ -1,0 +1,48 @@
+"human_building_queue"
+{
+	"BaseClass"             		"ability_datadriven"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	// Only do this once
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"    "buildings/rally_point.lua"
+			"Function"      "SetRallyPoint"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_queue"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"buildings/queue.lua"
+					"Function"		"AdvanceQueue"
+				}
+			}
+		}
+
+		// Buildings need MOVE_GROUND capacity to cast point abilities
+		"modifier_grounded_passive"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}

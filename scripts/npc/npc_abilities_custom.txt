@@ -8156,342 +8156,103 @@
 			}
 		}
 	}
-	"human_building_queue"
+	// Heroes
+	
+	"human_train_archmage"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		// Only do this once
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"    "buildings/rally_point.lua"
-				"Function"      "SetRallyPoint"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_queue"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"buildings/queue.lua"
-						"Function"		"AdvanceQueue"
-					}
-				}
-			}
-	
-			"modifier_grounded_passive"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	// Trains Footmen, Riflemen and Knights.
-	"human_train_footman"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_footman"
+		"AbilityTextureName"			"human_archmage"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	
-		"AbilityGoldCost"				"135" // From "GoldCost"
-		"AbilityChannelTime"			"20" // From "BuildTime"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
-			}
-		}
+		"AbilityGoldCost"				"215" // From "GoldCost"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"28" // From "BuildTime"
 	
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"EnqueueUnit"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_keeper_of_the_light"
 			}
 		}
-	
-		"OnChannelSucceeded"
-		{
-			// Consume the first item in the queue
-			"RunScript"
-			{
-				"ScriptFile"   	"buildings/queue.lua"
-				"Function"      "NextQueue"
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"human_footman"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "GetInitialRallyPoint"
-						"Target"		"CASTER"
-						"Count"			"1"
-					}
-				}
-				"UnitCount"		"1"
-				"UnitLimit"		"0"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "MoveToRallyPoint"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
+		
 	}
 	
-	"human_train_rifleman"
+	"human_train_mountain_king"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_rifleman"
+		"AbilityTextureName"			"human_mountain_king"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	
-		"AbilityGoldCost"				"205" // From "GoldCost"
-		"AbilityChannelTime"			"26" // From "BuildTime"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
-			}
-		}
+		"AbilityGoldCost"				"450" // From "GoldCost"
+		"AbilityChannelTime"			"55" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
 	
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"EnqueueUnit"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_zuus"
 			}
 		}
-	
-		"OnChannelSucceeded"
-		{
-			// Consume the first item in the queue
-			"RunScript"
-			{
-				"ScriptFile"   	"buildings/queue.lua"
-				"Function"      "NextQueue"
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"human_rifleman"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "GetInitialRallyPoint"
-						"Target"		"CASTER"
-						"Count"			"1"
-					}
-				}
-				"UnitCount"		"1"
-				"UnitLimit"		"0"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "MoveToRallyPoint"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
+		
 	}
 	
-	"human_train_knight"
+	"human_train_paladin"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_knight"
+		"AbilityTextureName"			"human_paladin"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	
-		"AbilityGoldCost"				"245" // From "GoldCost"
-		"AbilityChannelTime"			"40" // From "BuildTime"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"900"
-			}
-		}
+		"AbilityGoldCost"				"450" // From "GoldCost"
+		"AbilityChannelTime"			"55" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
 	
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"EnqueueUnit"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_omniknight"
 			}
 		}
+		
+	}
 	
-		"OnChannelSucceeded"
+	"human_train_blood_mage"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_blood_mage"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"450" // From "GoldCost"
+		"AbilityChannelTime"			"55" // From "BuildTime"
+		"AbilityUpgradeGoldCost"		"0"
+	
+		"OnSpellStart"
 		{
-			// Consume the first item in the queue
 			"RunScript"
 			{
-				"ScriptFile"   	"buildings/queue.lua"
-				"Function"      "NextQueue"
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"human_knight"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "GetInitialRallyPoint"
-						"Target"		"CASTER"
-						"Count"			"1"
-					}
-				}
-				"UnitCount"		"1"
-				"UnitLimit"		"0"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "MoveToRallyPoint"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_Invoker"
 			}
 		}
 	}
+	
 	
 	"human_train_sorceress"
 	{
@@ -8786,100 +8547,481 @@
 	
 	
 	
-	
-	// Heroes
-	
-	"human_train_archmage"
+	// Trains Footmen, Riflemen and Knights.
+	"human_train_footman"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_footman"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	
-		"AbilityGoldCost"				"215" // From "GoldCost"
-		"AbilityUpgradeGoldCost"		"0"
-		"AbilityChannelTime"			"28" // From "BuildTime"
-	
-		"OnSpellStart"
+		"AbilityGoldCost"				"135" // From "GoldCost"
+		"AbilityChannelTime"			"20" // From "BuildTime"
+		
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"BuildHero"
-				"Hero"			"npc_dota_hero_keeper_of_the_light"
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
 			}
 		}
-		
-	}
-	
-	"human_train_mountain_king"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-	
-		"AbilityGoldCost"				"450" // From "GoldCost"
-		"AbilityChannelTime"			"55" // From "BuildTime"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"BuildHero"
-				"Hero"			"npc_dota_hero_zuus"
+				"Function"		"EnqueueUnit"
 			}
 		}
-		
-	}
 	
-	"human_train_paladin"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-	
-		"AbilityGoldCost"				"450" // From "GoldCost"
-		"AbilityChannelTime"			"55" // From "BuildTime"
-		"AbilityUpgradeGoldCost"		"0"
-	
-		"OnSpellStart"
+		"OnChannelSucceeded"
 		{
+			// Consume the first item in the queue
 			"RunScript"
 			{
-				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"BuildHero"
-				"Hero"			"npc_dota_hero_omniknight"
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"human_footman"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "GetInitialRallyPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+					}
+				}
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+				}
 			}
 		}
-		
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
 	}
 	
-	"human_train_blood_mage"
+	"human_train_rifleman_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_rifleman"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_train_rifleman"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_rifleman"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	
-		"AbilityGoldCost"				"450" // From "GoldCost"
-		"AbilityChannelTime"			"55" // From "BuildTime"
-		"AbilityUpgradeGoldCost"		"0"
+		"AbilityGoldCost"				"205" // From "GoldCost"
+		"AbilityChannelTime"			"26" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
 	
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"BuildHero"
-				"Hero"			"npc_dota_hero_Invoker"
+				"Function"		"EnqueueUnit"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"human_rifleman"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "GetInitialRallyPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+					}
+				}
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_train_knight_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_knight"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_train_knight"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_knight"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"245" // From "GoldCost"
+		"AbilityChannelTime"			"40" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"human_knight"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "GetInitialRallyPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+					}
+				}
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	// Research
+	"human_research_defend"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_defend"
+		"MaxLevel" 						"1"
+	
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_knight"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"245" // From "GoldCost"
+		"AbilityChannelTime"			"40" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			// Add Upgrade and Swap the ability for the next upgrade if there is one
+		}
+	}
+	
+	"human_research_long_rifles_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_long_rifles"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_research_long_rifles"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_long_rifles"
+		"MaxLevel" 						"1"
+	}
+	
+	"human_research_animal_war_training_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_animal_war_training"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_research_animal_war_training"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_animal_war_training"
+		"MaxLevel" 						"1"
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	"human_building_queue"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		// Only do this once
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "buildings/rally_point.lua"
+				"Function"      "SetRallyPoint"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_queue"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/queue.lua"
+						"Function"		"AdvanceQueue"
+					}
+				}
+			}
+	
+			// Buildings need MOVE_GROUND capacity to cast point abilities
+			"modifier_grounded_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -9633,7 +9775,7 @@
 		"AbilityTextureName"			"human_keep"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	
 		"AbilityGoldCost"				"320"// From "GoldCost"
 		"AbilityChannelTime"			"10" // From "BuildTime"
@@ -9714,6 +9856,24 @@
 		}
 	}
 	
+	// Dummy Ability, requires Halls of Kings
+	"human_train_castle_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_castle"
+		"MaxLevel" 						"0"
+	
+		// npc_dota_buildings will override the MaxLevel 0 to 1, so this is needed.
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
 	// Keep -> Castle Upgrade.
 	"human_train_castle"
 	{
@@ -9721,7 +9881,7 @@
 		"AbilityTextureName"			"human_castle"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	
 		"AbilityGoldCost"				"360"// From "GoldCost"
 		"AbilityChannelTime"			"10" // From "BuildTime"
@@ -9820,7 +9980,7 @@
 			"modifier_keep_particle"
 			{
 				"Passive"			"1"
-				"IsHidden"			"0"
+				"IsHidden"			"1"
 		
 				"OnCreated"
 				{

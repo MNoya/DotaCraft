@@ -22,6 +22,9 @@ function build( keys )
     	-- Remove invulnerability on npc_dota_building baseclass
     	unit:RemoveModifierByName("modifier_invulnerable")
 
+    	-- Silence the building. Temp solution for not having building_abilities.kv and having them in the npc_unit_custom instead.
+    	local item = CreateItem("item_apply_modifiers", nil, nil)
+    	item:ApplyDataDrivenModifier(caster, unit, "modifier_construction", {})
 
 	end)
 
@@ -29,6 +32,9 @@ function build( keys )
 		print("Completed construction of " .. unit:GetUnitName())
 		-- Play construction complete sound.
 		-- Give building its abilities
+
+		-- Let the building cast abilities
+		unit:RemoveModifierByName("modifier_construction")
 
 		local caster = keys.caster
 		local hero = caster:GetPlayerOwner():GetAssignedHero()
@@ -43,10 +49,18 @@ function build( keys )
 			player.buildings[building_name] = player.buildings[building_name] + 1
 		end
 
-		-- Update the abilities of the builders
+		-- Add the building handle to the list of constructed structures
+		table.insert(player.structures, unit)
+
+		-- Update the abilities of the builders and structures
     	for k,builder in pairs(player.builders) do
     		print("=Checking Requirements on "..builder:GetUnitName()..k)
     		CheckAbilityRequirements( builder, player )
+    	end
+
+    	for k,structure in pairs(player.structures) do
+    		print("=Checking Requirements on "..structure:GetUnitName()..k)
+    		CheckAbilityRequirements( structure, player )
     	end
 
 	end)
