@@ -296,19 +296,23 @@ end
 function CheckBuildingPosition( event )
 
 	local caster = event.caster
-	local target = caster.target_building -- Index building so we know which target to start with
 	local ability = event.ability
 
-	if not target then
-		return
+	if not caster.target_building or not IsValidEntity(caster.target_building) then
+		-- Find where to return the resources
+		caster.target_building = FindClosestResourceDeposit( caster )
+		print("Resource delivery position set to "..caster.target_building:GetUnitName())
 	end
 
+	local target = caster.target_building
+
 	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
-	local collision = distance <= (caster.target_building:GetHullRadius()+100)
+	local collision = distance <= (target:GetHullRadius()+100)
 	if not collision then
 		--print("Moving to building, distance: ",distance)
 	else
 		local hero = caster:GetOwner()
+		local player = caster:GetPlayerOwner()
 		local pID = hero:GetPlayerID()
 
 		local returned_type = nil
@@ -320,9 +324,9 @@ function CheckBuildingPosition( event )
 			caster:RemoveModifierByName("modifier_returning_resources")
 			print("Removed modifier_returning_resources")
 
-			hero.lumber = hero.lumber + caster.lumber_gathered 
-    		print("Lumber Gained. " .. hero:GetUnitName() .. " is currently at " .. hero.lumber)
-    		FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = hero.lumber })
+			player.lumber = player.lumber + caster.lumber_gathered 
+    		print("Lumber Gained. Player " .. pID .. " is currently at " .. player.lumber)
+    		FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
 
 			caster.lumber_gathered = 0
 
@@ -378,29 +382,41 @@ function FindClosestResourceDeposit( caster )
 	--local town_hall = Entities:FindByModel(nil, "models/props_garden/building_garden005.vmdl")
 	
 	-- Find a building to deliver
-	local barracks = Entities:FindAllByModel("models/props_structures/good_barracks_melee001.vmdl")	
+	local player = caster:GetPlayerOwner()
+	local buildings = player.structures
 	local distance = 9999
 	local closest_building = nil
 
-	if barracks then
-		print("barrack found")
-		for _,building in pairs(barracks) do
-			-- Ensure the same owner
-			if building:GetOwner() == caster:GetOwner() then
-				local this_distance = (position - building:GetAbsOrigin()):Length()
-				if this_distance < distance then
-					distance = this_distance
-					closest_building = building
-				end
+	for _,building in pairs(buildings) do
+		if IsValidDepositName( building:GetUnitName() ) then
+		   
+			local this_distance = (position - building:GetAbsOrigin()):Length()
+			if this_distance < distance then
+				distance = this_distance
+				closest_building = building
 			end
 		end
-		return closest_building
+	end
+	
+	return closest_building		
 
-	elseif lumber_mill then
-		return lumber_mill
+end
 
-	elseif town_hall then
-		return town_hall
+function IsValidDepositName( name )
+	
+	-- Possible Delivery Buildings are:
+	local possible_deposits = { "human_town_hall",
+								"human_keep",
+								"human_castle",
+								"human_barracks",
+								"human_lumber_mill"
+							  }
+
+	for i=1,#possible_deposits do 
+		if name == possible_deposits[i] then
+			return true
+		end
 	end
 
+	return false
 end

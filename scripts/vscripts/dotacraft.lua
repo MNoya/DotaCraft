@@ -409,7 +409,12 @@ function dotacraft:OnPlayerPickHero(keys)
     FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
 
     -- Create Main Building
-    local position = Vector(6150,5500,128) -- This position should be dynamic according to the map starting points
+    -- This position should be dynamic according to the map starting points
+    local position = Vector(6150,5500,128)
+    if playerID > 0 then
+    	position = Vector(-5916,5831,128)
+    end
+
 	local building = CreateUnitByName("human_town_hall", position, true, hero, hero, hero:GetTeamNumber())
 	building:SetOwner(hero)
 	building:SetControllableByPlayer(playerID, true)
@@ -420,7 +425,7 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	-- Create Builders
 	for i=1,5 do
-		local peasant = CreateUnitByName("human_peasant", position+RandomVector(300+i*20), true, hero, hero, hero:GetTeamNumber())
+		local peasant = CreateUnitByName("human_peasant", position+RandomVector(300+i*40), true, hero, hero, hero:GetTeamNumber())
 		peasant:SetOwner(hero)
 		peasant:SetControllableByPlayer(playerID, true)
 		table.insert(player.units, peasant)
