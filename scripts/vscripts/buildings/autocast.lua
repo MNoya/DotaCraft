@@ -13,7 +13,7 @@ function BuildingAutocast( event )
 	end
 
 	-- Get if the ability is on autocast mode and cast the ability if it doesn't have the modifier
-	if ability:GetAutoCastState() then
+	if ability and ability:GetAutoCastState() then
 		if not IsChanneling( caster ) then
 			if ability:IsOwnersGoldEnough( player ) then
 				caster:CastAbilityNoTarget(ability, caster:GetPlayerOwnerID())

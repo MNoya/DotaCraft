@@ -40,17 +40,16 @@ function UpgradeBuilding( event )
 	-- Add the new building to the structures list
 	table.insert(player.structures, building)
 
-	print("Upgrade complete. Player current building list:")
+	print("Building upgrade complete. Player current building list:")
 	DeepPrintTable(player.buildings)
+	print("==========================")
 
-	-- Update the abilities of the builders and structures
-	for k,builder in pairs(player.builders) do
-		print("=Checking Requirements on "..builder:GetUnitName()..k)
-		CheckAbilityRequirements( builder, player )
+	-- Update the abilities of the units and structures
+	for k,unit in pairs(player.units) do
+		CheckAbilityRequirements( unit, player )
 	end
 
 	for k,structure in pairs(player.structures) do
-		print("=Checking Requirements on "..structure:GetUnitName()..k)
 		CheckAbilityRequirements( structure, player )
 	end
 

@@ -14,9 +14,16 @@ function ResearchComplete( event )
 	-- It shouldn't be possible to research the same upgrade more than once.
 	player.upgrades[research_name] = 1
 
-	print("==Current Research Table==")
+	print("Research complete. Player current upgrades list:")
 	DeepPrintTable(player.upgrades)
 	print("==========================")
+
+	-- Go through all the upgradeable units and upgrade with the research
+	-- These are just abilities set as lvl 0 _disabled until the tech is researched
+	-- Some show as passives, while wc3 showed them as 0-1-2-3 ranks on the damage/armor indicator
+	for _,unit in pairs(player.units) do
+		CheckAbilityRequirements( unit, player )
+	end
 
 end
 
@@ -40,3 +47,5 @@ function ReEnableResearch( event )
 	local research_ability = caster:FindAbilityByName(research_ability_name)
 	research_ability:SetHidden(false)
 end
+
+-- 

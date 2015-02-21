@@ -399,7 +399,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	-- Initialize Variables for Tracking
 	player.lumber = 0
 	player.buildings = {} -- This keeps the name and quantity of each building, to access in O(1)
-	player.builders = {} -- This keeps the handle of all the builders, to iterate for unlocking buildings
+	player.units = {} -- This keeps the handle of all the units of the player army, to iterate for unlocking upgrades
 	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 
@@ -423,7 +423,7 @@ function dotacraft:OnPlayerPickHero(keys)
 		local peasant = CreateUnitByName("human_peasant", position+RandomVector(300+i*20), true, hero, hero, hero:GetTeamNumber())
 		peasant:SetOwner(hero)
 		peasant:SetControllableByPlayer(playerID, true)
-		table.insert(player.builders, peasant)
+		table.insert(player.units, peasant)
 
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( peasant, player )
@@ -437,57 +437,112 @@ function CheckAbilityRequirements( unit, player )
 
 	local requirements = GameRules.Requirements
 	local buildings = player.buildings
+	local upgrades = player.upgrades
 	
 	-- The disabled abilities end with this affix
 	local len = string.len("_disabled")
 
-	for abilitySlot=0,15 do
-		local ability = unit:GetAbilityByIndex(abilitySlot)
+	if IsValidEntity(unit) then
+		print("--- Checking Requirements on "..unit:GetUnitName().." ---")
+		for abilitySlot=0,15 do
+			local ability = unit:GetAbilityByIndex(abilitySlot)
 
-		-- If the ability exists, check its requirements
-		if ability then
-			local requirement_failed = false
-			local disabled_ability_name = ability:GetAbilityName()
+			-- If the ability exists and isn't hidden, check its requirements
+			if ability and not ability:IsHidden() then
+				local requirement_failed = false
+				local ability_name = ability:GetAbilityName()
+				local disabled = false
+				
+				-- By default, all abilities are enabled, so it precaches the stuff. 
+				-- The disabled ability is just a dummy for tooltip and level 0.
 
-			-- Check the table of requirements in the KV file
-			if requirements[disabled_ability_name] then
-				print("Checking "..disabled_ability_name.. " Requirements")
+				-- Check if the ability is disabled or not
+				if string.find(ability_name, "_disabled") then
+					-- Cut the disabled part from the name to check the requirements
+					local ability_len = string.len(ability_name)
+					ability_name = string.sub(ability_name, 1 , ability_len - len)
+					disabled = true
+				end			
+
+				-- Check if it has requirements on the KV table
+				if requirements[ability_name] then
+					print("Checking "..ability_name.. " Requirements")
 						
-				-- Go through each requirement line and check if the player has that building on its list
-				for k,v in pairs(requirements[disabled_ability_name]) do
-					print("Building Name","Need","Have")
-					print(k,v,buildings[k])
+					-- Go through each requirement line and check if the player has that building on its list
+					for k,v in pairs(requirements[ability_name]) do
 
-					-- Look for the building and update counter
-					if buildings[k] and buildings[k] > 0 then
-						print("Found at least one "..k)
-						requirement_failed = false
-					else
-						print("Failed one of the requirements for "..disabled_ability_name..", no "..k.." found")
-						local disabled_ability = unit:FindAbilityByName(disabled_ability_name)
-						disabled_ability:SetLevel(0)
-						print("SetLevel 0")
-						requirement_failed = true
-						break
+						-- If it's a research, check the upgrades table
+						if requirements[ability_name].research then
+							if upgrades[k] and upgrades[k] > 0 then
+								print("The player has researched "..k)
+								requirement_failed = false
+							elseif k ~= "research" then --ignore the research "requirement" which is just a flag
+								print("Failed the research requirements for "..ability_name..", no "..k.." found")
+								requirement_failed = true
+								break -- Breaks this loop, as the ability failed the requirement check.
+							end
+						else
+							print("Building Name","Need","Have")
+							print(k,v,buildings[k])
+
+							-- If its a building, check every building requirement
+							if buildings[k] and buildings[k] > 0 then
+								print("Found at least one "..k)
+								requirement_failed = false
+							else
+								print("Failed one of the requirements for "..ability_name..", no "..k.." found")
+								requirement_failed = true
+								break -- Breaks this loop, as the ability failed the requirement check.
+							end
+						end
 					end
 				end
 
-				if not requirement_failed then
-					-- Cut the _disabled to learn the new ability 
-					local ability_len = string.len(disabled_ability_name)
-					local ability_name = string.sub(disabled_ability_name, 1 , ability_len - len)
+				--[[Act accordingly to the disabled/enabled state of the ability
+					If the ability is _disabled
+						Requirements succeed: Enable
+					 	Requirements fail: Do nothing
+					Else ability was enabled
+					 	Requirements succeed: Do nothing
+						Requirements fail: Set disabled
+				]]
+				if disabled then
+					if not requirement_failed then
+						-- Learn the ability and remove the disabled one (as we might run out of the 16 ability slot limit)
+						print("SUCCESS, ENABLED "..ability_name)
+						unit:AddAbility(ability_name)
 
-					print("Requirement is met, swapping "..disabled_ability_name.." for "..ability_name)
-					unit:AddAbility(ability_name)
-					unit:SwapAbilities(disabled_ability_name, ability_name, false, true)
-					unit:RemoveAbility(disabled_ability_name)
+						local disabled_ability_name = ability_name.."_disabled"
+						unit:SwapAbilities(disabled_ability_name, ability_name, false, true)
+						unit:RemoveAbility(disabled_ability_name)
 
-					-- Set the new ability level
-					local ability = unit:FindAbilityByName(ability_name)
-					ability:SetLevel(ability:GetMaxLevel())
+						-- Set the new ability level
+						local ability = unit:FindAbilityByName(ability_name)
+						ability:SetLevel(ability:GetMaxLevel())
+					else
+						--print("Do nothing. Ability Still DISABLED")
+					end
+				else
+					if not requirement_failed then
+						--print("Do nothing. Ability Still ENABLED")
+					else	
+						-- Disable the ability, swap to a _disabled
+						print("FAIL, DISABLED "..ability_name)
+
+						local disabled_ability_name = ability_name.."_disabled"
+						unit:AddAbility(disabled_ability_name)					
+						unit:SwapAbilities(ability_name, disabled_ability_name, false, true)
+						unit:RemoveAbility(ability_name)
+
+						-- Set the new ability level
+						local disabled_ability = unit:FindAbilityByName(disabled_ability_name)
+						disabled_ability:SetLevel(0)
+					end
 				end				
-			end
-		end	
+			end	
+		end
+	else
+		print("! Not a Valid Entity !, there's currently ",#player.units,"units and",#player.structures,"structures in the table")
 	end
 end
 
@@ -515,6 +570,9 @@ function dotacraft:OnEntityKilled( event )
 		local killerEntity = EntIndexToHScript(event.entindex_attacker)
 	end
 
+	-- Player owner of the unit
+	local player = killedUnit:GetPlayerOwner()
+
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
 	Timers:CreateTimer(1, function() 
 	if LeavesCorpse( killedUnit ) then
@@ -541,6 +599,36 @@ function dotacraft:OnEntityKilled( event )
 			end)
 		end
 	end)
+
+	-- Remove from Builders table if its a peasant
+	if killedUnit:GetUnitName() == "human_peasant" then
+		local peasant = getIndex(player.builders, killedUnit)
+		print(#player.builders)
+		print("Removing human_peasant from the player builders")
+		
+		table.remove(player.builders, peasant)
+		print(#player.builders)
+
+	-- IF BUILDING DESTROYED, CHECK FOR POSSIBLE DOWNGRADES OF ABILITIES THAT CAN'T BE BUILT ANYMORE
+	elseif killedUnit.GetInvulnCount ~= nil then
+
+		-- Remove from it from player building tables
+		local building = getIndex(player.structures, killedUnit:GetEntityIndex())
+		local building_name = killedUnit:GetUnitName()
+		print("Removing "..killedUnit:GetUnitName().." from the player structures")
+		table.remove(player.structures, building)
+
+		-- Substract 1 to the player building tracking table for that name
+		player.buildings[building_name] = player.buildings[building_name] - 1
+
+    	for k,builder in pairs(player.builders) do
+    		CheckAbilityRequirements( builder, player )
+    	end
+
+    	for k,structure in pairs(player.structures) do
+    		CheckAbilityRequirements( structure, player )
+    	end
+    end
 
 end
 

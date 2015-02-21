@@ -26,6 +26,11 @@ function build( keys )
     	local item = CreateItem("item_apply_modifiers", nil, nil)
     	item:ApplyDataDrivenModifier(caster, unit, "modifier_construction", {})
 
+    	-- Check the abilities of this building, disabling those that don't meet the requirements
+    	print("=Checking Requirements on "..unit:GetUnitName())
+    	CheckAbilityRequirements( unit, player )
+
+
 	end)
 
 	keys:OnConstructionCompleted(function(unit)
@@ -52,14 +57,12 @@ function build( keys )
 		-- Add the building handle to the list of constructed structures
 		table.insert(player.structures, unit)
 
-		-- Update the abilities of the builders and structures
-    	for k,builder in pairs(player.builders) do
-    		print("=Checking Requirements on "..builder:GetUnitName()..k)
-    		CheckAbilityRequirements( builder, player )
+		-- Update the abilities of the builders and buildings
+    	for k,units in pairs(player.units) do
+    		CheckAbilityRequirements( units, player )
     	end
 
     	for k,structure in pairs(player.structures) do
-    		print("=Checking Requirements on "..structure:GetUnitName()..k)
     		CheckAbilityRequirements( structure, player )
     	end
 

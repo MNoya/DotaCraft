@@ -57,6 +57,7 @@ function SetRallyPoint( event )
 end
 
 -- Queues a movement command for the spawned unit to the rally point
+-- Also adds the unit to the players army and looks for upgrades
 function MoveToRallyPoint( event )
 	local caster = event.caster
 	local target = event.target
@@ -66,6 +67,10 @@ function MoveToRallyPoint( event )
 		Timers:CreateTimer(0.05, function() target:MoveToPosition(position) end)
 		print(target:GetUnitName().." moving to position",position)
 	end
+
+	local player = caster:GetPlayerOwner()
+	table.insert(player.units, target)
+	CheckAbilityRequirements(target, player)
 end
 
 function GetInitialRallyPoint( event )
