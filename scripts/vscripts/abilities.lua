@@ -30,6 +30,11 @@ function build( keys )
     	print("=Checking Requirements on "..unit:GetUnitName())
     	CheckAbilityRequirements( unit, player )
 
+    	-- Some units with multiple upgrade ranks might require an additional ability requirement loop because I suck at programming
+    	if unit:GetUnitName() == "human_lumber_mill" or unit:GetUnitName() == "human_blacksmith" then
+    		CheckAbilityRequirements( unit, player )
+    	end
+
 
 	end)
 

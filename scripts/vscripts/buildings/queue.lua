@@ -93,7 +93,7 @@ end
 -- Auxiliar function, takes all items and puts them 1 slot back
 function ReorderItems( caster, queue )
 	queue = {}
-	print("Reordering Items...")
+	--print("Reordering Items...")
 	for itemSlot = 1, 5, 1 do
 
 		-- Handle the case in which the caster is removed
@@ -112,7 +112,7 @@ function ReorderItems( caster, queue )
        		caster:RemoveItem(item)
        	end
     end
-    print("Done Reordering items")
+    --print("Done Reordering items")
 end
 
 
@@ -191,14 +191,14 @@ function AdvanceQueue( event )
 						-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
 						Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
 						function()
-							print("===Queue Table====")
+							--print("===Queue Table====")
 							DeepPrintTable(caster.queue)
 							if IsValidEntity(item) then
 								ability_to_channel:EndChannel(false)
 								ReorderItems(caster, caster.queue)
-								print("Unit finished building")
+								--print("Unit finished building")
 							else
-								print("This unit was interrupted")
+								--print("This unit was interrupted")
 							end
 						end)
 
@@ -210,24 +210,25 @@ function AdvanceQueue( event )
 						local research_ability_name = string.gsub(item_name, "item_", "")
 
 						local ability_to_channel = caster:FindAbilityByName(research_ability_name)
+						if ability_to_channel then
+							ability_to_channel:SetChanneling(true)
+							print("->"..ability_to_channel:GetAbilityName()," started channel")
 
-						ability_to_channel:SetChanneling(true)
-						print("->"..ability_to_channel:GetAbilityName()," started channel")
-
-						-- After the channeling time, check if it was cancelled or spawn it
-						-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
-						Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
-						function()
-							print("===Queue Table====")
-							DeepPrintTable(caster.queue)
-							if IsValidEntity(item) then
-								ability_to_channel:EndChannel(false)
-								ReorderItems(caster, caster.queue)
-								print("Research complete!")
-							else
-								print("This Research was interrupted")
-							end
-						end)
+							-- After the channeling time, check if it was cancelled or spawn it
+							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
+							Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
+							function()
+								print("===Queue Table====")
+								DeepPrintTable(caster.queue)
+								if IsValidEntity(item) then
+									ability_to_channel:EndChannel(false)
+									ReorderItems(caster, caster.queue)
+									print("Research complete!")
+								else
+									--print("This Research was interrupted")
+								end
+							end)
+						end
 					end
 				end
 			end

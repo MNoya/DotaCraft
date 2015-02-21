@@ -16,36 +16,13 @@ function ResearchComplete( event )
 	DeepPrintTable(player.upgrades)
 	print("==========================")
 	
-	-- Upgrade 1 -> 2, if the research name contains "1"
-	local name = nil
-	local level = 0
-	if string.find(research_name, "1") then
-		name = string.gsub(research_name, "1" , "2")
-		level = 2	
-
-	-- Upgrade 2 -> 3, if the research name contains "1"
-	elseif string.find(research_name, "2") then		
-		name = string.gsub(research_name, "2" , "3")
-		level = 3
-	end
-
-	if name then
-		caster:AddAbility(name)
-		local new_rank = caster:FindAbilityByName(name)
-		if new_rank then
-			new_rank:SetLevel(1)
-			print("New rank "..level.." unlocked",name)
-		else
-			print("Upgrade at max rank "..level)
-		end
-	end
-
 	-- Go through all the upgradeable units and upgrade with the research
 	-- These are just abilities set as lvl 0 _disabled until the tech is researched
 	-- Some show as passives, while wc3 showed them as 0-1-2-3 ranks on the damage/armor indicator
-	--for _,unit in pairs(player.units) do
-		CheckAbilityRequirements( caster, player )
-	--end	
+	-- Also, on the buildings that have the upgrade, disable the upgrade and/or apply the next rank.
+	for _,unit in pairs(player.structures) do
+		CheckAbilityRequirements( unit, player )
+	end
 
 end
 
@@ -69,5 +46,3 @@ function ReEnableResearch( event )
 	local research_ability = caster:FindAbilityByName(research_ability_name)
 	research_ability:SetHidden(false)
 end
-
--- 

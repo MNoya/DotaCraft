@@ -443,108 +443,170 @@ function CheckAbilityRequirements( unit, player )
 	local requirements = GameRules.Requirements
 	local buildings = player.buildings
 	local upgrades = player.upgrades
-	
+
 	-- The disabled abilities end with this affix
 	local len = string.len("_disabled")
 
 	if IsValidEntity(unit) then
-		print("--- Checking Requirements on "..unit:GetUnitName().." ---")
+		--print("--- Checking Requirements on "..unit:GetUnitName().." ---")
 		for abilitySlot=0,15 do
 			local ability = unit:GetAbilityByIndex(abilitySlot)
 
-			-- If the ability exists and isn't hidden, check its requirements
-			if ability and not ability:IsHidden() then
-				local requirement_failed = false
+			-- If the ability exists
+			if ability then
+				print("")
 				local ability_name = ability:GetAbilityName()
-				local disabled = false
-				
-				-- By default, all abilities are enabled, so it precaches the stuff. 
-				-- The disabled ability is just a dummy for tooltip and level 0.
 
-				-- Check if the ability is disabled or not
-				if string.find(ability_name, "_disabled") then
-					-- Cut the disabled part from the name to check the requirements
-					local ability_len = string.len(ability_name)
-					ability_name = string.sub(ability_name, 1 , ability_len - len)
-					disabled = true
-				end			
+				-- Handle upgrades with ranks
+				if string.find(ability_name, "research_") then
+					if player.upgrades[ability_name] then 
+						print("#### Ability "..ability_name.." is already on the research table of the player.")
 
-				-- Check if it has requirements on the KV table
-				if requirements[ability_name] then
-					print("Checking "..ability_name.. " Requirements")
-						
-					-- Go through each requirement line and check if the player has that building on its list
-					for k,v in pairs(requirements[ability_name]) do
+						local name = nil
+						local level = 1
 
-						-- If it's a research, check the upgrades table
-						if requirements[ability_name].research then
-							if upgrades[k] and upgrades[k] > 0 then
-								print("The player has researched "..k)
-								requirement_failed = false
-							elseif k ~= "research" then --ignore the research "requirement" which is just a flag
-								print("Failed the research requirements for "..ability_name..", no "..k.." found")
-								requirement_failed = true
-								break -- Breaks this loop, as the ability failed the requirement check.
+						-- Remove the ability if reached max rank
+						-- If not, add a new one with _2 and _3, which needs to check building requirements to disable/enable
+
+						-- Upgrade 1 -> 2, if the research name contains "1"
+						if string.find(ability_name, "1") then
+							name = string.gsub(ability_name, "1" , "2")
+							level = 2	
+
+						-- Upgrade 2 -> 3, if the research name contains "1"
+						elseif string.find(ability_name, "2") then		
+							name = string.gsub(ability_name, "2" , "3")
+							level = 3
+						end
+
+						if name then
+							print("### Swapping "..ability_name.." for "..name)
+							unit:AddAbility(name)
+							unit:SwapAbilities(ability_name, name, false, true)
+							unit:RemoveAbility(ability_name)
+
+							-- Update the new, to check for requirements and disable state
+							ability = unit:FindAbilityByName(name)
+							if ability then
+								ability_name = ability:GetAbilityName()
+								ability:SetLevel(1)
+								print("### New rank unlocked: ",name)
+							else
+								print("## Max Rank Ability: ", ability_name)
 							end
 						else
-							print("Building Name","Need","Have")
-							print(k,v,buildings[k])
-
-							-- If its a building, check every building requirement
-							if buildings[k] and buildings[k] > 0 then
-								print("Found at least one "..k)
-								requirement_failed = false
-							else
-								print("Failed one of the requirements for "..ability_name..", no "..k.." found")
-								requirement_failed = true
-								break -- Breaks this loop, as the ability failed the requirement check.
-							end
+							-- Single or Max Rank ability. Disable if found
+							print("## Max Rank Ability: ", ability_name)
+							ability:SetHidden(true)
+							unit:RemoveAbility(ability_name)
 						end
+					else
+						print("Not found "..ability_name.." in the upgrades list")
 					end
 				end
 
-				--[[Act accordingly to the disabled/enabled state of the ability
-					If the ability is _disabled
-						Requirements succeed: Enable
-					 	Requirements fail: Do nothing
-					Else ability was enabled
-					 	Requirements succeed: Do nothing
-						Requirements fail: Set disabled
-				]]
-				if disabled then
-					if not requirement_failed then
-						-- Learn the ability and remove the disabled one (as we might run out of the 16 ability slot limit)
-						print("SUCCESS, ENABLED "..ability_name)
-						unit:AddAbility(ability_name)
+				-- Exists and isn't hidden, check its requirements
+				if IsValidEntity(ability) and not ability:IsHidden() then
+					local requirement_failed = false
+					local disabled = false
+				
+					-- By default, all abilities are enabled, so it precaches the stuff. 
+					-- The disabled ability is just a dummy for tooltip and level 0.
 
-						local disabled_ability_name = ability_name.."_disabled"
-						unit:SwapAbilities(disabled_ability_name, ability_name, false, true)
-						unit:RemoveAbility(disabled_ability_name)
+					-- Check if the ability is disabled or not
+					if string.find(ability_name, "_disabled") then
+						-- Cut the disabled part from the name to check the requirements
+						local ability_len = string.len(ability_name)
+						ability_name = string.sub(ability_name, 1 , ability_len - len)
+						disabled = true
+					end
 
-						-- Set the new ability level
-						local ability = unit:FindAbilityByName(ability_name)
-						ability:SetLevel(ability:GetMaxLevel())
+					-- Check if it has requirements on the KV table
+					if requirements[ability_name] then
+						print("Checking "..ability_name.." Requirements:")
+						DeepPrintTable(requirements[ability_name])
+							
+						-- Go through each requirement line and check if the player has that building on its list
+						for k,v in pairs(requirements[ability_name]) do
+
+							-- If it's an ability tied to a research, check the upgrades table
+							if requirements[ability_name].research then
+								if upgrades[k] and upgrades[k] > 0 then
+									print("The player has researched "..k)
+									requirement_failed = false
+								elseif k ~= "research" then --ignore the research "requirement" which is just a flag
+									print("Failed the research requirements for "..ability_name..", no "..k.." found")
+									requirement_failed = true
+									break -- Breaks this loop, as the ability failed the requirement check.
+								end
+							else
+								--print("Building Name","Need","Have")
+								--print(k,v,buildings[k])
+
+								-- If its a building, check every building requirement
+								if buildings[k] and buildings[k] > 0 then
+									print("Found at least one "..k)
+									requirement_failed = false
+								else
+									print("Failed one of the requirements for "..ability_name..", no "..k.." found")
+									requirement_failed = true
+									break -- Breaks this loop, as the ability failed the requirement check.
+								end
+							end
+						end
 					else
-						--print("Do nothing. Ability Still DISABLED")
+						print(ability_name.." has no requirements.")
 					end
+
+					--[[Act accordingly to the disabled/enabled state of the ability
+						If the ability is _disabled
+							Requirements succeed: Enable
+						 	Requirements fail: Do nothing
+						Else ability was enabled
+						 	Requirements succeed: Do nothing
+							Requirements fail: Set disabled
+					]]
+					if disabled then
+						if not requirement_failed then
+							-- Learn the ability and remove the disabled one (as we might run out of the 16 ability slot limit)
+							print("SUCCESS, ENABLED "..ability_name)
+							unit:AddAbility(ability_name)
+
+							local disabled_ability_name = ability_name.."_disabled"
+							unit:SwapAbilities(disabled_ability_name, ability_name, false, true)
+							unit:RemoveAbility(disabled_ability_name)
+
+							-- Set the new ability level
+							local ability = unit:FindAbilityByName(ability_name)
+							ability:SetLevel(ability:GetMaxLevel())
+						else
+							print("Ability Still DISABLED "..ability_name)
+						end
+					else
+						if not requirement_failed then
+							print("Ability Still ENABLED "..ability_name)
+
+							-- Check for a max rank upgrade and disable it.
+
+
+						else	
+							-- Disable the ability, swap to a _disabled
+							print("FAIL, DISABLED "..ability_name)
+
+							local disabled_ability_name = ability_name.."_disabled"
+							unit:AddAbility(disabled_ability_name)					
+							unit:SwapAbilities(ability_name, disabled_ability_name, false, true)
+							unit:RemoveAbility(ability_name)
+
+							-- Set the new ability level
+							local disabled_ability = unit:FindAbilityByName(disabled_ability_name)
+							disabled_ability:SetLevel(0)
+						end
+					end				
 				else
-					if not requirement_failed then
-						--print("Do nothing. Ability Still ENABLED")
-					else	
-						-- Disable the ability, swap to a _disabled
-						print("FAIL, DISABLED "..ability_name)
-
-						local disabled_ability_name = ability_name.."_disabled"
-						unit:AddAbility(disabled_ability_name)					
-						unit:SwapAbilities(ability_name, disabled_ability_name, false, true)
-						unit:RemoveAbility(ability_name)
-
-						-- Set the new ability level
-						local disabled_ability = unit:FindAbilityByName(disabled_ability_name)
-						disabled_ability:SetLevel(0)
-					end
-				end				
-			end	
+					--print("->Ability is hidden or invalid")	
+				end
+			end
 		end
 	else
 		print("! Not a Valid Entity !, there's currently ",#player.units,"units and",#player.structures,"structures in the table")
