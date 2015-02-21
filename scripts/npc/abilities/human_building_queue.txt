@@ -5,7 +5,7 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
-	// Only do this once
+	// Only do this once, and only for the buildings that have unit spawning
 	"OnUpgrade"
 	{
 		"RunScript"

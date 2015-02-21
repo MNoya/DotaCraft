@@ -835,18 +835,20 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_building"
-		"Model"						"models/props_structures/tower_good2.vmdl"	 //Add model
+		"Model"						"models/props_structures/tower_good2.vmdl"
 		"ModelScale"				"1"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"human_train_archmage"	 //Reference: Abds
+		"Ability1"					"human_train_archmage"
 		"Ability2"					"human_train_mountain_king"
 		"Ability3"					"human_train_paladin"
 		"Ability4"					"human_train_blood_mage"
+		"Ability5"					"human_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -916,12 +918,14 @@
 		"ModelScale"				"1.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
-		"Ability2"					""	 //Reference: Arlm
+		"Ability1"					"human_research_lumber_harvesting1"
+		"Ability2"					"human_research_masonry1"
+		"Ability3"					"human_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -992,6 +996,7 @@
 		"ModelScale"				"0.7"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1314,6 +1319,7 @@
 		"ModelScale"				"1.2"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1388,7 +1394,7 @@
 		"ModelScale"				"0.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
-		"IsChampion"				"1"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1543,6 +1549,7 @@
 		"ModelScale"				"1"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1618,6 +1625,7 @@
 		"ModelScale"				"1"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------

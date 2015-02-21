@@ -75,8 +75,8 @@ function DequeueUnit( event )
 	            PlayerResource:ModifyGold(player, gold_cost, false, 0)
 				print("Refund ",gold_cost)
 
-				-- Set not channeling if the cancelled item was the first **current** slot
-				if itemSlot == 1 then
+				-- Set not channeling if the cancelled item was the first slot
+				if itemSlot == 1 or itemSlot == 0 then
 					train_ability:SetChanneling(false)
 					train_ability:EndChannel(true)
 					print("Cancel current channel")
@@ -166,7 +166,7 @@ function AdvanceQueue( event )
 		caster.queue = {}
 
 		-- Check the first item that contains "train" on the queue
-		for itemSlot=1,5 do
+		for itemSlot=0,5 do
 			local item = caster:GetItemInSlot(itemSlot)
 			if item ~= nil then
 

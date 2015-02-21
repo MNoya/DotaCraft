@@ -179,7 +179,7 @@ function Gather1Lumber( event )
 	
 	local caster = event.caster
 	local ability = event.ability
-	local max_lumber_carried = 5 --20 with upgrade
+	local max_lumber_carried = 10 --20 with upgrade
 
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 

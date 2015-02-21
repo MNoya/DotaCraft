@@ -7,6 +7,11 @@ function SetRallyPoint( event )
 	local caster = event.caster
 	local origin = caster:GetOrigin()
 	print(origin)
+
+	-- Ignore pure-research buildings
+	if caster:GetUnitName() == "human_lumber_mill" or caster:GetUnitName() == "human_blacksmith" then
+		return
+	end
 	
 	-- Need to wait one frame for the building to be properly positioned
 	Timers:CreateTimer(0.03, function()
