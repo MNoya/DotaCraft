@@ -92,23 +92,13 @@ function BuildingHelper:Init(...)
 	end
 	print("Total Blocked squares added: " .. blockedCount)
 
+	--Setup the BH dummy
+	BH_DUMMY = CreateUnitByName("npc_bh_dummy", OutOfWorldVector, false, nil, nil, DOTA_TEAM_GOODGUYS)
+	InitAbilities(BH_DUMMY)
+
 	--print("BuildingAbilities: ")
 	--PrintTable(BuildingAbilities)
 end
-
---[[function BuildingHelper:BlockRectangularArea(leftBorderX, rightBorderX, topBorderY, bottomBorderY)
-	if leftBorderX%64 ~= 0 or rightBorderX%64 ~= 0 or topBorderY%64 ~= 0 or bottomBorderY%64 ~= 0 then
-		print("[BuildingHelper] Error in BlockRectangularArea. One of the values does not divide evenly into 64.")
-		return
-	end
-	local blockedCount = 0
-	for x=leftBorderX+32, rightBorderX-32, 64 do
-		for y=topBorderY-32, bottomBorderY+32,-64 do
-			GRIDNAV_SQUARES[VectorString(Vector(x,y,0))] = true
-			blockedCount=blockedCount+1
-		end
-	end
-end]]
 
 function BuildingHelper:BlockRectangularArea(vPoint1, vPoint2)
 	local leftBorderX = vPoint2.x
@@ -190,6 +180,10 @@ function BuildingHelper:AddBuilding(keys)
 		keys.onAboveHalfHealth = callback
 	end
 
+	function keys:OnBuildingPosChosen( callback )
+		keys.onBuildingPosChosen = callback
+	end	
+
 	-- TODO: since the ability phase funcs are screwed up, can't get when building was canceled
 	-- due to right click
 	function keys:OnCanceled( callback )
@@ -237,6 +231,7 @@ function BuildingHelper:AddBuilding(keys)
 
 	player.buildingPosChosen = false
 	player.cancelBuilding = false
+	player.stickyGhosts = {}
 	-- store ref to the buildingTable in the builder.
 	builder.buildingTable = buildingTable
 
@@ -268,6 +263,8 @@ function BuildingHelper:AddBuilding(keys)
 		print('[BuildingHelper] Error: ' .. abilName .. ' does not have a UnitName KeyValue')
 		return
 	end
+
+	--print("UnitName: " .. unitName)
 
 	local castRange = buildingTable:GetVal("AbilityCastRange", "number")
 	if castRange == nil then
@@ -325,12 +322,14 @@ function BuildingHelper:AddBuilding(keys)
 	--setup the dummy for model ghost
 	if player.modelGhostDummy ~= nil then
 		player.modelGhostDummy:RemoveSelf()
+		player.modelGhostDummy = nil
 	end
 
 	local fMaxScale = buildingTable:GetVal("MaxScale", "float")
 	if fMaxScale == nil then
 		fMaxScale = 1
 	end
+
 	player.modelGhostDummy = CreateUnitByName(unitName, OutOfWorldVector, false, nil, nil, caster:GetTeam())
 	local mgd = player.modelGhostDummy -- alias
 	--mgd:SetModelScale(.2) -- this won't reduce the model particle size atm...
@@ -355,27 +354,22 @@ function BuildingHelper:AddBuilding(keys)
 					validPos = false
 				end
 
-				-- Check if the player canceled the ghost.
-				if player.cancelBuilding then
-					FlashUtil:StopDataStream( player.cursorStream )
-					player.cursorStream = nil
-					player.cancelBuilding = false
-					player.lastCursorCenter = OutOfWorldVector
-					ClearParticleTable(player.ghost_particles)
-					return
-				end
-
-				--if validPos then
 				-- Check if the player chose the position.
 				if player.buildingPosChosen then
 					if validPos then
-						AddToGrid(cursorPos)
+						keys:AddToGrid(cursorPos)
 					end
 					FlashUtil:StopDataStream( player.cursorStream )
 					player.cursorStream = nil
 					player.buildingPosChosen = false
 					player.lastCursorCenter = OutOfWorldVector
 					ClearParticleTable(player.ghost_particles)
+					return
+				end
+
+				-- This runs if player right clicked.
+				if player.cancelBuilding then
+					player:CancelGhost()
 					return
 				end
 
@@ -429,9 +423,10 @@ function BuildingHelper:AddBuilding(keys)
 						end
 						--<BMD> position is 0, model attach is 1, color is CP2, and alpha is CP3.x
 						--ParticleManager:SetParticleControlEnt(particle, 1, unit, 1, "follow_origin", unit:GetAbsOrigin(), true)
-						local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, player.modelGhostDummy, player)
-						ParticleManager:SetParticleControlEnt(modelParticle, 1, player.modelGhostDummy, 1, "follow_origin", player.modelGhostDummy:GetAbsOrigin(), true)
+						local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
+						ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true)
 						ParticleManager:SetParticleControl(modelParticle, 3, Vector(100,0,0))
+						ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0))
 						if areaBlocked then
 							ParticleManager:SetParticleControl(modelParticle, 2, Vector(255,0,0))
 						else
@@ -446,8 +441,16 @@ function BuildingHelper:AddBuilding(keys)
 		end
 	end
 
+	function player:CancelGhost( )
+		FlashUtil:StopDataStream( player.cursorStream )
+		player.cursorStream = nil
+		player.cancelBuilding = false
+		player.lastCursorCenter = OutOfWorldVector
+		ClearParticleTable(player.ghost_particles)
+	end
+
 	-- Private function.
-	function AddToGrid(vPoint)
+	function keys:AddToGrid(vPoint)
 		-- Remember, our blocked squares are defined according to the square's center.
 		local centerX = SnapToGrid64(vPoint.x)
 		local centerY = SnapToGrid64(vPoint.y)
@@ -473,13 +476,6 @@ function BuildingHelper:AddBuilding(keys)
 			end
 			return nil
 		end
-		
-		-- Keep the particles alive until the building is built.
-		--[[if player.stickyGhost ~= nil then
-			ClearParticleTable(player.stickyGhost)
-		end
-		player.stickyGhost = shallowcopy(player.ghost_particles)
-		player.ghost_particles = {}]]
 
 		-- The spot is not blocked, so add it to the closed squares.
 		local closed = {}
@@ -491,7 +487,6 @@ function BuildingHelper:AddBuilding(keys)
 		end
 
 		-- Make the caster move towards the point
-		local dontMove = false
 		local abilName = "move_to_point_" .. tostring(castRange)
 		if AbilityKVs[abilName] == nil then
 			print('[BuildingHelper] Error: ' .. abilName .. ' was not found in npc_abilities_custom.txt. Using the ability move_to_point_100')
@@ -511,38 +506,43 @@ function BuildingHelper:AddBuilding(keys)
 			end
 		end)
 
-		if not dontMove then
+		if not caster:HasAbility(abilName) then
 			caster:AddAbility(abilName)
-			local abil = caster:FindAbilityByName(abilName)
-			abil.succeeded = false
-			abil:SetLevel(1)
-			caster.orders[DoUniqueString("order")] = {["unitName"] = unitName, ["pos"] = vBuildingCenter, ["team"] = caster:GetTeam(),
-				["buildingTable"] = buildingTable, ["squares_to_close"] = closed, ["keys"] = keys}
-			Timers:CreateTimer(.03, function()
-				caster:CastAbilityOnPosition(vBuildingCenter, abil, 0)
-
-				-- We need a thinker to check if the abil goes out of phase.
-				-- If it does we need to remove the sticky ghost.
-				--[[Timers:CreateTimer(.2, function()
-					local active = caster:GetCurrentActiveAbility()
-					if active == nil and not abil.succeeded then
-						if player.stickyGhost ~= nil then
-							print("Yep")
-							ClearParticleTable(player.stickyGhost)
-							return nil
-						end
-					end
-					if abil.succeeded then
-						return nil
-					end
-					return .03
-				end)]]
-			end)
 		end
+		local abil = caster:FindAbilityByName(abilName)
+		abil.succeeded = false
+		abil:SetLevel(1)
+		caster.orders[DoUniqueString("order")] = {["unitName"] = unitName, ["pos"] = vBuildingCenter, ["team"] = caster:GetTeam(),
+			["buildingTable"] = buildingTable, ["squares_to_close"] = closed, ["keys"] = keys}
+		Timers:CreateTimer(.03, function()
+			caster:CastAbilityOnPosition(vBuildingCenter, abil, 0)
+			if keys.onBuildingPosChosen ~= nil then
+				keys.onBuildingPosChosen(vBuildingCenter)
+				keys.onBuildingPosChosen = nil
+			end
+		end)
+
+		-- Sticky ghosts will be stored in a queue. this will help with shift-click later on
+		table.insert(player.stickyGhosts, shallowcopy(player.ghost_particles))
+		-- prevent the particles from being deleted.
+		player.ghost_particles = {}
+
+		local abil = BH_DUMMY:FindAbilityByName("bh_dummy")
+		abil:ApplyDataDrivenModifier(BH_DUMMY, builder, "building_canceled", nil)
+
 	end
 
 	player:BeginGhost()
 	FireGameEvent('build_command_executed', { player_id = pID, building_size = size })
+end
+
+function BuildingHelper:ChangeBuildingGhostStyle( nStyle )
+	--Style 1: No green or red tint on the building ghost unit model.
+	if nStyle == 1 then
+
+	elseif nStyle == 2 then
+
+	end
 end
 
 function BuildingHelper:InitializeBuildingEntity(keys)
@@ -587,6 +587,7 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 	local player = buildingTable["player"]
 
 	-- create building entity
+	print("UnitName: " .. order.unitName)
 	local unit = CreateUnitByName(order.unitName, order.pos, false, playersHero, nil, order.team)
 	local building = unit --alias
 	building.isBuilding = true
@@ -669,9 +670,6 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 					if unit:GetHealth() < fMaxHealth then
 						unit:SetHealth(unit:GetHealth()+nHealthInterval)
 					else
-						if keys2.onConstructionCompleted ~= nil then
-							keys2.onConstructionCompleted(unit)
-						end
 						unit.bUpdatingHealth = false
 					end
 				end
@@ -685,10 +683,10 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 					end
 				end
 			else
-				-- two cases of completion: 1. the unit reaches full health,
-				-- 2. timesUp is true
+				-- completion: timesUp is true
 				if keys2.onConstructionCompleted ~= nil then
 					keys2.onConstructionCompleted(unit)
+					unit.constructionCompleted = true
 				end
 				unit.bUpdatingHealth = false
 			end
@@ -728,37 +726,77 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 		return .2
 	end)
 
-	function unit:Remove(bForceKill)
-		BuildingHelper:OpenSquares(unit.squaresOccupied "string")
+	function unit:RemoveBuilding(bForceKill)
+		self:OpenSquares(unit.squaresOccupied "string")
 		if bForceKill then
 			unit:ForceKill(true)
 		end
 	end
 
-	-- Remove gold, start cooldown ,etc
-	local goldCost = buildingTable.goldCost
+	-- start cooldown if any
 	local cooldown = buildingTable:GetVal("AbilityCooldown", "number")
 	if cooldown == nil then
 		cooldown = 0
 	end
+
 	-- remove gold from playersHero.
+	local goldCost = buildingTable.goldCost
 	if playersHero ~= nil then
 		playersHero:SetGold(playersHero:GetGold()-goldCost, false)
 	end
 	buildingTable["abil"]:StartCooldown(cooldown)
 
+	--print("Resource costs:")
+	PrintTable(buildingTable["resources"])
+
+	--[[ ensure player still has enough resources.
+	for k,v in pairs(buildingTable["resources"]) do
+		if player[resourceName] < cost then
+			notEnoughResources[resourceName] = cost-player[resourceName]
+		end
+	end]]
+
 	-- take out custom resources from player
-	local resources = buildingTable.resources
+	--[[local resources = buildingTable.resources
 	for k,v in pairs(resources) do
 		player[k] = player[k] - v
 		if player[k] < 0 then
 			player[k] = 0
 		end
-	end
+	end]]
 
 	if keys2.onConstructionStarted ~= nil then
 		keys2.onConstructionStarted(unit)
 	end
+
+	-- Remove the sticky ghost
+	if #player.stickyGhosts > 0 then
+		ClearParticleTable(player.stickyGhosts[1])
+		--print("Clearing sticky ghost.")
+		table.remove(player.stickyGhosts, 1)
+	end
+end
+
+function BuildingHelper:IsBuilding( hUnit )
+	if not hUnit.isBuilding then
+		return false
+	end
+	return true
+end
+
+-- Occurs when move_to_point goes out of phase.
+function BuildingHelper:CancelBuilding( keys )
+	local caster = keys.unit
+	local player = caster.player
+
+	if IsValidTable(player.stickyGhosts) and #player.stickyGhosts > 0 then
+		ClearParticleTable(player.stickyGhosts[1])
+		table.remove(player.stickyGhosts, 1)
+	end
+	if caster:HasModifier("building_canceled") then
+		caster:RemoveModifierByName("building_canceled")
+	end
+	--print("building_canceled")
 end
 
 -- DEPRECATED
@@ -965,11 +1003,6 @@ function BuildingHelper:CloseSquares( vSquareCenters, type )
 	end
 end
 
-BuildingHelper.FireEffect = "modifier_jakiro_liquid_fire_burn"
-function BuildingHelper:SetDefaultFireEffect( sFireEffect )
-	self.FireEffect = sFireEffect
-end
-
 function BuildingHelper:OpenSquares( vSquareCenters, type )
 	-- these are strings, not vectors
 	if #vSquareCenters > 0 then
@@ -990,6 +1023,16 @@ function BuildingHelper:IsAreaBlocked( vSquareCenters )
 		end
 	end
 	return false
+end
+
+
+function BuildingHelper:AddBuildingsToGrid( entities )
+	for _,ent in pairs(entities) do
+		local pos = ent:GetAbsOrigin()
+		local snap = WorldToGrid32(pos)
+		ent:SetAbsOrigin(snap)
+	end
+
 end
 
 ------------------------ UTILITY FUNCTIONS --------------------------------------------
@@ -1048,6 +1091,11 @@ function ClearParticleTable( t )
 end
 
 -- ********* UTILITY FUNCTIONS **************
+
+function IsValidTable( t )
+	return t ~= nil and t ~= {}
+end
+
 -- Returns a shallow copy of the passed table.
 function shallowcopy(orig)
     local orig_type = type(orig)
@@ -1081,7 +1129,7 @@ function string.ends(String,End)
 end
 
 function TableLength( t )
-	if t == nil or t == {} then
+	if not IsValidTable(t) then
 		return 0
 	end
     local len = 0

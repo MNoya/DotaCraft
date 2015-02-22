@@ -277,7 +277,7 @@ function dotacraft:OnAbilityUsed(keys)
 		if player.cursorStream ~= nil then
 			if not (string.len(abilityname) > 14 and string.sub(abilityname,1,14) == "move_to_point_") then
 				if not DontCancelBuildingGhostAbils[abilityname] then
-					player.cancelBuilding = true
+					player.CancelGhost()
 				else
 					print(abilityname .. " did not cancel building ghost.")
 				end
@@ -580,11 +580,11 @@ function CheckAbilityRequirements( unit, player )
 							local ability = unit:FindAbilityByName(ability_name)
 							ability:SetLevel(ability:GetMaxLevel())
 						else
-							print("Ability Still DISABLED "..ability_name)
+							--print("Ability Still DISABLED "..ability_name)
 						end
 					else
 						if not requirement_failed then
-							print("Ability Still ENABLED "..ability_name)
+							--print("Ability Still ENABLED "..ability_name)
 
 							-- Check for a max rank upgrade and disable it.
 
@@ -636,6 +636,12 @@ function dotacraft:OnEntityKilled( event )
 	if event.entindex_attacker then
 		local killerEntity = EntIndexToHScript(event.entindex_attacker)
 	end
+
+	-- START OF BH SNIPPET
+	if BuildingHelper:IsBuilding(killedUnit) then
+		killedUnit:RemoveBuilding(false)
+	end
+	-- END OF BH SNIPPET
 
 	-- Player owner of the unit
 	local player = killedUnit:GetPlayerOwner()

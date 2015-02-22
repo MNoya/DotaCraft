@@ -38,6 +38,16 @@ function build( keys )
 
 	end)
 
+	keys:OnBuildingPosChosen(function(vPos)
+		--print("OnBuildingPosChosen")
+		-- in WC3 some build sound was played here.
+	end)
+
+	function building_canceled( keys )
+		BuildingHelper:CancelBuilding(keys)
+	end
+
+
 	keys:OnConstructionCompleted(function(unit)
 		print("Completed construction of " .. unit:GetUnitName())
 		-- Play construction complete sound.

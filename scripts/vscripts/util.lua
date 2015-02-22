@@ -33,3 +33,19 @@ function getUnitIndex(list, unitName)
     end
     return -1
 end
+
+
+-- goes through a unit's abilities and sets the abil's level to 1,
+-- spending an ability point if possible.
+function InitAbilities( hero )
+    for i=0, hero:GetAbilityCount()-1 do
+        local abil = hero:GetAbilityByIndex(i)
+        if abil ~= nil then
+            if hero:IsHero() and hero:GetAbilityPoints() > 0 then
+                hero:UpgradeAbility(abil)
+            else
+                abil:SetLevel(1)
+            end
+        end
+    end
+end
