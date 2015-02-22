@@ -1,6 +1,8 @@
+# DotaCraft
+---
 ## Recreating Warcraft III inside Dota 2
 
-### Heroes - All the Heroes with its abilities are finished. [Preview here](http://moddota.com/forums/discussion/comment/382/#Comment_382)
+### Heroes - All the Classic Heroes are finished. [Preview here](http://moddota.com/forums/discussion/comment/382/#Comment_382)
 
 ### Core Mechanics Implemented so far:
 
