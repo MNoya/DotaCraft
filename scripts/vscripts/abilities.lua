@@ -43,11 +43,6 @@ function build( keys )
 		-- in WC3 some build sound was played here.
 	end)
 
-	function building_canceled( keys )
-		BuildingHelper:CancelBuilding(keys)
-	end
-
-
 	keys:OnConstructionCompleted(function(unit)
 		print("Completed construction of " .. unit:GetUnitName())
 		-- Play construction complete sound.
@@ -106,6 +101,9 @@ function create_building_entity( keys )
 	BuildingHelper:InitializeBuildingEntity(keys)
 end
 
+function building_canceled( keys )
+	BuildingHelper:CancelBuilding(keys)
+end
 
 
 
