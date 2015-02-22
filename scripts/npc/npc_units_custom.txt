@@ -456,7 +456,7 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"human_train_peasant"
 		"Ability2"					"human_train_keep"
-		"Ability3"					""
+		"Ability3"					"human_research_backpack"
 		"Ability5"					"human_building_queue"
 		
 		// Armor
@@ -534,8 +534,9 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"human_train_peasant"	 
 		"Ability2"					"human_train_castle_disabled"	// "human_train_castle"
-		"Ability3"					"human_keep_passive"	
+		"Ability3"					"human_research_backpack"	
 		"Ability4"					"human_building_queue"	
+		"Ability5"					"human_keep_passive"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -612,7 +613,7 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"human_train_peasant"	 //Reference: Abdl
 		"Ability2"					"human_castle_passive"	 //Reference: Amic
-		"Ability3"					""	 //Reference: Argl
+		"Ability3"					"human_research_backpack"	 //Reference: Argl
 		"Ability4"					"human_building_queue"	 //Reference: Argl
 		
 		// Armor
@@ -1002,6 +1003,7 @@
 		"AbilityLayout"				"4"
 		"Ability1"					""	 //Reference: Abds
 		"Ability2"					""	 //Reference: Adts
+		"Ability3"					""
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1401,8 +1403,14 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
+		"AbilityLayout"				"6"
+		"Ability1"					"human_research_flare"	 //Reference: Abds
+		"Ability2"					"human_research_flak_cannons"
+		"Ability3"					"human_research_flying_machine_bombs"
+		"Ability4"					"human_research_fragmentation_shards"
+		"Ability5"					"human_research_barrage"
+		"Ability6"					""
+		"Ability7"					""
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1480,10 +1488,10 @@
 		"Ability1"					"human_train_sorceress"	 //Reference: Abds
 		"Ability2"					"human_train_priest"
 		"Ability3"					"human_train_spell_breaker"
-		"Ability4"					"human_building_queue"
-		"Ability5"					""
-		"Ability6"					""
-		"Ability7"					""
+		"Ability4"					"human_research_priest_training1"
+		"Ability5"					"human_research_sorceress_training1"
+		"Ability6"					"human_research_control_magic"
+		"Ability7"					"human_building_queue"
 		
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"5"
@@ -1558,6 +1566,10 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					""	 //Reference: Abds
+		"Ability2"					""
+		"Ability3"					"human_research_storm_hammers"
+		"Ability4"					"human_research_cloud"
+		"Ability5"					"human_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------

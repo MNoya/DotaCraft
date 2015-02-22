@@ -19,6 +19,12 @@ BHGlobalDummySet = false
 PACK_ENABLED = false
 Debug_BH = true
 
+-- Ghost Building Preferences
+GRID_ALPHA = 30 -- Defines the transparency of the ghost squares
+MODEL_ALPHA = 100 -- Defines the transparency of the ghost model
+RECOLOR_GHOST_MODEL = false -- Whether to recolor the ghost model green/red or not
+USE_PROJECTED_GRID = false -- Enabling this will make the ghost squares follow terrain and be placed under the model. Works 
+
 -- Circle packing math.
 BH_A = math.pow(2,.5) --multi this by rad of building
 BH_cos45 = math.pow(.5,.5) -- cos(45)
@@ -414,10 +420,16 @@ function BuildingHelper:AddBuilding(keys)
 								local groundZ = GetGroundPosition(Vector(x,y,z),caster).z
 								--table.insert(squares, Vector(x,y,z))
 								--print(VectorString(Vector(x,y,z)))
-								local id = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/square_sprite.vpcf", PATTACH_ABSORIGIN, caster, player)
+
+								local ghost_grid_particle = "particles/buildinghelper/square_sprite.vpcf"
+								if USE_PROJECTED_GRID then
+									ghost_grid_particle = "particles/buildinghelper/square_projected.vpcf"
+								end
+
+								local id = ParticleManager:CreateParticleForPlayer(ghost_grid_particle, PATTACH_ABSORIGIN, caster, player)
 								ParticleManager:SetParticleControl(id, 0, Vector(x,y,groundZ))
 								ParticleManager:SetParticleControl(id, 1, Vector(32,0,0))
-								ParticleManager:SetParticleControl(id, 3, Vector(70,0,0))
+								ParticleManager:SetParticleControl(id, 3, Vector(GRID_ALPHA,0,0))
 								if IsSquareBlocked(Vector(x,y,z), true) then
 									ParticleManager:SetParticleControl(id, 2, Vector(255,0,0))
 									areaBlocked = true
@@ -431,13 +443,17 @@ function BuildingHelper:AddBuilding(keys)
 						--<BMD> position is 0, model attach is 1, color is CP2, and alpha is CP3.x
 						--ParticleManager:SetParticleControlEnt(particle, 1, unit, 1, "follow_origin", unit:GetAbsOrigin(), true)
 						local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
-						ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true)
-						ParticleManager:SetParticleControl(modelParticle, 3, Vector(100,0,0))
+						ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true)						
+						ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0))
 						ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0))
-						if areaBlocked then
-							ParticleManager:SetParticleControl(modelParticle, 2, Vector(255,0,0))
+						if RECOLOR_GHOST_MODEL then
+							if areaBlocked then
+								ParticleManager:SetParticleControl(modelParticle, 2, Vector(255,0,0))	
+							else
+								ParticleManager:SetParticleControl(modelParticle, 2, Vector(0,255,0))
+							end
 						else
-							ParticleManager:SetParticleControl(modelParticle, 2, Vector(0,255,0))
+							ParticleManager:SetParticleControl(modelParticle, 2, Vector(255,255,255)) -- Draws the ghost with the original colors
 						end
 						ParticleManager:SetParticleControl(modelParticle, 0, vBuildingCenter)
 						table.insert(player.ghost_particles, modelParticle)

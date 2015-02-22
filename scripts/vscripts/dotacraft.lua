@@ -423,6 +423,8 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.buildings["human_town_hall"] = 1
 	table.insert(player.structures, building)
 
+	CheckAbilityRequirements( building, player )
+
 	-- Create Builders
 	for i=1,5 do
 		local peasant = CreateUnitByName("human_peasant", position+RandomVector(300+i*40), true, hero, hero, hero:GetTeamNumber())
