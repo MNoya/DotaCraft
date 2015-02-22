@@ -1,69 +1,25 @@
-## About the project
+## Recreating Warcraft III inside Dota 2
 
-Stage 1 Finished - Every Warcraft 3 Hero Ability is now fully implemented in Dota KV and Lua.
+### Heroes - All the Heroes with its abilities are finished. [Preview here](http://moddota.com/forums/discussion/comment/382/#Comment_382)
 
-This will serve as an extension to the [Dota Spell Library](https://github.com/Pizzalol/SpellLibrary)
+### Core Mechanics Implemented so far:
 
-**Stage 2**: Add every race-based unit and their abilities.
+* Lumber and Gold Gathering. Missing right-click behavior
+* Building and unit creation, with ghost preview and rally points.
+* Building Queue for Train and Research, being able to add 5~6 items and cancel them at will.
+* Tech Tree
+  * Unlocking buildings and unit production while certain buildings requirements are missing.
+  * Researching upgrades to enhance certain abilities, with multiple levels and requirements.
+  
+---
 
-Stage 3: Port some RTS elements of the WC3 engine (like unit-creating buildings, tech upgrades, multi teams, etc) and ultimately develop a decent game mode out of this.
+If you are interested in helping with this project don't hesitate contacting me, either through my email, [Steam](http://steamcommunity.com/id/mnoya), or come chat at the [#dota2mods IRC @ GameSurge.net](kiwiirc.com/client/irc.gamesurge.net/?#dota2mods)
 
-## Guidelines
+---
 
-- All abilities will be written using the datadriven system & lua scripts, no dota overrides allowed.
+### Special Thanks
 
-- Values and general description are taken from http://classic.battle.net/war3/
-
-- Code each separate ability file inside scripts/npc/abilities then use executable.jar to merge the npc_abilities_custom.txt and test.
-
-- Check [Warchasers](https://github.com/MNoya/Warchasers/tree/master/scripts) & [SpellLibrary spreadsheet](https://docs.google.com/spreadsheets/d/1oNoqMW2_PZ57TEonAQgMF-9JlApbt3LPNFtx72RhS8Y)
-to see if a similar spell was already made. Many spells overlap, so also make sure to reuse spells from both libraries and credit the authors.
-
-- Try to use any existing dota particle similar to the original spell. [Use this guide for reference](http://moddota.com/forums/discussion/69/particle-attachment)
-
-If custom particles are needed we can deal with that later.
-
-- Follow this coding style:
-
-For Datadriven KeyValues
-~~~
-"OnSpellStart"
-{
-    "RunScript"
-    {
-        "ScriptFile"    "heroes/hero_name/ability_name.lua"
-        "Function"      "AbilityName"
-    }
-}
-~~~
-
-For Lua functions
-~~~
---[[
-    Author:
-    Date: Day.Month.2015.
-    (Description)
-]]
-function AbilityName( event )
-    -- Variables
-    local caster = event.caster
-    local ability = event.ability
-    local value = = ability:GetLevelSpecialValueFor( "value" , ability:GetLevel() - 1  )
-
-    -- Try to comment each block of logical actions
-    -- If the ability handle is not nil, print a message
-    if ability then
-        print("RunScript")
-    end
-end
-~~~
-
-- Modifier Name conventions (very important for automating tooltips later)
-
-  - Start with "modifier_"
-  - Then add the spell name (no hero name)
-  - Add "_buff" "_debuff" "_stun" or anything when appropiate
-
-- Use as many AbilitySpecials as possible, do not hardcode the lua file.
-
-- Find a good ACT_DOTA_X and cast point for the abilities if possible.
+* [Myll](https://github.com/Myll), for his incredible hard work and dedication on [ModKit](https://github.com/Myll/Dota-2-ModKit) and [Building Helper](https://github.com/Myll/Dota-2-Building-Helper)
+* [BMD](https://github.com/bmddota), for his invaluable help to the modding community in general.
+* [kritth](https://github.com/kritth), helped a ton with particles and mechanic ideas.
+* [DarkMio](https://github.com/DarkMio), reddit diplomacy frontman.
