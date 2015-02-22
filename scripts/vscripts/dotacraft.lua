@@ -675,14 +675,15 @@ function dotacraft:OnEntityKilled( event )
 		end
 	end)
 
-	-- Remove from Builders table if its a peasant
-	if killedUnit:GetUnitName() == "human_peasant" then
-		local peasant = getIndex(player.builders, killedUnit)
-		print(#player.builders)
-		print("Removing human_peasant from the player builders")
-		
-		table.remove(player.builders, peasant)
-		print(#player.builders)
+	-- Remove from units table
+	if killedUnit:IsCreature() then
+		local unit = getIndex(player.units, killedUnit)
+		if unit and unit ~= -1 then
+			DeepPrintTable(player.units)
+			print("Removing "..unit.." from the player builders")
+			table.remove(player.units, unit)
+			DeepPrintTable(player.units)
+		end
 
 	-- IF BUILDING DESTROYED, CHECK FOR POSSIBLE DOWNGRADES OF ABILITIES THAT CAN'T BE BUILT ANYMORE
 	elseif killedUnit.GetInvulnCount ~= nil then
