@@ -44,7 +44,7 @@ function build( keys )
 	end)
 
 	keys:OnConstructionCompleted(function(unit)
-		print("Completed construction of " .. unit:GetUnitName())
+		print("[BH] Completed construction of " .. unit:GetUnitName())
 		-- Play construction complete sound.
 		-- Give building its abilities
 

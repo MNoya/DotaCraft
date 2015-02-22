@@ -689,14 +689,11 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 					unit.constructionCompleted = true
 				end
 				unit.bUpdatingHealth = false
-			end
-
-			-- clean up the timer if we don't need it.
-			if not unit.bUpdatingHealth and not bScaling then
+				-- clean up the timer if we don't need it.
 				return nil
 			end
-		-- not valid ent
 		else
+			-- not valid ent
 			return nil
 		end
 	    return BUILDINGHELPER_THINK
