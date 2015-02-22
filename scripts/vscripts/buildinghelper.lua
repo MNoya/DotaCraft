@@ -56,6 +56,7 @@ function BuildingHelper:Init(...)
 
 	AbilityKVs = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
 	ItemKVs = LoadKeyValues("scripts/npc/npc_items_custom.txt")
+	UnitKVs = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 	-- abils and items can't have the same name or the item will override the ability.
 	--PrintTable(abilities)
 	for i=1,2 do
@@ -327,7 +328,13 @@ function BuildingHelper:AddBuilding(keys)
 
 	local fMaxScale = buildingTable:GetVal("MaxScale", "float")
 	if fMaxScale == nil then
-		fMaxScale = 1
+		-- If no MaxScale is defined, check the "ModelScale" KeyValue. Otherwise just default to 1
+		local fModelScale = UnitKVs[unitName].ModelScale
+		if fModelScale then
+			fMaxScale = fModelScale
+		else
+			fMaxScale = 1
+		end
 	end
 
 	player.modelGhostDummy = CreateUnitByName(unitName, OutOfWorldVector, false, nil, nil, caster:GetTeam())
