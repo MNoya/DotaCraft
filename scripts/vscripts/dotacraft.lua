@@ -615,6 +615,208 @@ function CheckAbilityRequirements( unit, player )
 	end
 end
 
+-- Update to the appropiate research rank on each unit
+function UpdateUnitUpgrades( unit, player, research_type )
+	local unit_name = unit:GetUnitName()
+	local upgrades = player.upgrades
+
+	print("UUU - UpdatingUnitUpgrades for research type: "..research_type)
+
+	-- This should be use the KV file but I'm feeling lazy today
+
+	-- Forged Swords
+	if research_type == "forged" then
+		if unit_name == "human_gryphon_rider" or 
+			unit_name == "human_knight" or 
+			unit_name == "human_footman" or 
+			unit_name == "human_militia" or
+			unit_name == "human_spellbreaker" then
+	
+			-- Find current level and remove it
+			local rank1 = unit:FindAbilityByName("human_forged_swords1")
+			local rank2 = unit:FindAbilityByName("human_forged_swords2")
+			local rank3 = unit:FindAbilityByName("human_forged_swords3")
+			if rank1 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("human_forged_swords1")
+				unit:RemoveModifierByName("modifier_bonus_damage")
+				unit:RemoveModifierByName("modifier_knight_damage")
+				unit:RemoveModifierByName("modifier_gryphon_rider_damage")
+
+				unit:AddAbility("human_forged_swords2")
+				unit:SwapAbilities("human_forged_swords1", "human_forged_swords2", false, true)
+				unit:RemoveAbility("human_forged_swords1")
+				local ability = unit:FindAbilityByName("human_forged_swords2")
+				ability:SetLevel(2)
+				print("UUU Rank 2 of Forged Weapons Reached")
+			elseif rank2 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("human_forged_swords")
+				unit:RemoveModifierByName("modifier_bonus_damage")
+				unit:RemoveModifierByName("modifier_knight_damage")
+				unit:RemoveModifierByName("modifier_gryphon_rider_damage")
+
+
+				unit:AddAbility("human_forged_swords3")
+				unit:SwapAbilities("human_forged_swords2", "human_forged_swords3", false, true)
+				unit:RemoveAbility("human_forged_swords2")
+				local ability = unit:FindAbilityByName("human_forged_swords3")
+				ability:SetLevel(3)
+				print("UUU Rank 3 of Forged Weapons Reached")
+			elseif forged3 then
+				print("UUU Max Rank of Forged Weapons Reached")
+			else
+				-- Learn the rank 1ability
+				unit:AddAbility("human_forged_swords1")
+				local ability = unit:FindAbilityByName("human_forged_swords1")
+				ability:SetLevel(1)
+				print("UUU Rank 1 of Forged Swords Reached")
+			end
+		end
+	elseif research_type == "plating" then
+		if unit_name == "human_militia" or 
+			unit_name == "human_footman" or 
+			unit_name == "human_spell_breaker" or 
+			unit_name == "human_knight" or
+			unit_name == "human_siege_engine" or
+			unit_name == "human_flying_machine" then
+
+			-- Find current level and remove it
+			local rank1 = unit:FindAbilityByName("human_plating1")
+			local rank2 = unit:FindAbilityByName("human_plating2")
+			local rank3 = unit:FindAbilityByName("human_plating3")
+
+			if rank1 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("modifier_plating1")
+
+				unit:AddAbility("human_plating2")
+				unit:SwapAbilities("human_plating1", "human_plating2", false, true)
+				unit:RemoveAbility("human_plating1")
+				local ability = unit:FindAbilityByName("human_plating2")
+				ability:SetLevel(2)
+				print("UUU Rank 2 of Plating Reached")
+			elseif rank2 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("modifier_plating2")
+
+				unit:AddAbility("human_plating3")
+				unit:SwapAbilities("human_plating2", "human_plating3", false, true)
+				unit:RemoveAbility("human_plating2")
+				local ability = unit:FindAbilityByName("human_plating3")
+				ability:SetLevel(3)
+				print("UUU Rank 3 of Plating Reached")
+			elseif rank3 then
+				print("UUU Max Rank of Plating Reached")
+			else
+				-- Learn the rank 1ability
+				unit:AddAbility("human_plating1")
+				local ability = unit:FindAbilityByName("human_plating1")
+				ability:SetLevel(1)
+				print("UUU Rank 1 of Plating Reached")
+			end
+		end 
+
+	elseif research_type == "ranged" then
+		if unit_name == "human_rifleman" or 
+			unit_name == "human_mortar_team" or 
+			unit_name == "human_siege_engine" or 
+			unit_name == "human_flying_machine" then
+
+
+			-- Find current level and remove it
+			local rank1 = unit:FindAbilityByName("human_ranged_weapons1")
+			local rank2 = unit:FindAbilityByName("human_ranged_weapons2")
+			local rank3 = unit:FindAbilityByName("human_ranged_weapons3")
+
+			if rank1 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("human_ranged_weapons1")
+				unit:RemoveModifierByName("modifier_bonus_damage")
+				unit:RemoveModifierByName("modifier_siege_engine_damage")
+				unit:RemoveModifierByName("modifier_mortar_team_damage")
+
+				unit:AddAbility("human_ranged_weapons2")
+				unit:SwapAbilities("human_ranged_weapons1", "human_ranged_weapons2", false, true)
+				unit:RemoveAbility("human_ranged_weapons1")
+				local ability = unit:FindAbilityByName("human_ranged_weapons2")
+				ability:SetLevel(2)
+				print("UUU Rank 2 of Ranged Weapons Reached")
+			elseif rank2 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("human_ranged_weapons2")
+				unit:RemoveModifierByName("modifier_bonus_damage")
+				unit:RemoveModifierByName("modifier_siege_engine_damage")
+				unit:RemoveModifierByName("modifier_mortar_team_damage")
+
+
+				unit:AddAbility("human_ranged_weapons3")
+				unit:SwapAbilities("human_ranged_weapons2", "human_ranged_weapons3", false, true)
+				unit:RemoveAbility("human_ranged_weapons2")
+				local ability = unit:FindAbilityByName("human_ranged_weapons3")
+				ability:SetLevel(3)
+				print("UUU Rank 3 of Ranged Weapons Reached")
+			elseif rank3 then
+				print("UUU Max Rank of Ranged Weapons Reached")
+			else
+				-- Learn the rank 1ability
+				unit:AddAbility("human_ranged_weapons1")
+				local ability = unit:FindAbilityByName("human_ranged_weapons1")
+				ability:SetLevel(1)
+				print("UUU Rank 1 of Ranged Weapons Reached")
+			end
+		end
+
+
+
+
+	elseif research_type == "leather" then
+
+		--Riflemen, Mortar Teams, Dragonhawk Riders, and Gryphon Riders.
+		if unit_name == "human_rifleman" or 
+			unit_name == "human_mortar_team" or 
+			unit_name == "human_dragonhawk_rider" or 
+			unit_name == "human_gryphon_rider" then
+
+			-- Find current level and remove it
+			local rank1 = unit:FindAbilityByName("human_leather_armor1")
+			local rank2 = unit:FindAbilityByName("human_leather_armor2")
+			local rank3 = unit:FindAbilityByName("human_leather_armor3")
+
+			if rank1 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("modifier_leather_armor1")
+
+				unit:AddAbility("human_leather_armor2")
+				unit:SwapAbilities("human_leather_armor1", "human_leather_armor2", false, true)
+				unit:RemoveAbility("human_leather_armor1")
+				local ability = unit:FindAbilityByName("human_leather_armor2")
+				ability:SetLevel(2)
+				print("UUU Rank 2 of leather_armor Reached")
+			elseif rank2 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("modifier_leather_armor2")
+
+				unit:AddAbility("human_leather_armor3")
+				unit:SwapAbilities("human_leather_armor2", "human_leather_armor3", false, true)
+				unit:RemoveAbility("human_leather_armor2")
+				local ability = unit:FindAbilityByName("human_leather_armor3")
+				ability:SetLevel(3)
+				print("UUU Rank 3 of leather_armor Reached")
+			elseif rank3 then
+				print("UUU Max Rank of leather_armor Reached")
+			else
+				-- Learn the rank 1ability
+				unit:AddAbility("human_leather_armor1")
+				local ability = unit:FindAbilityByName("human_leather_armor1")
+				ability:SetLevel(1)
+				print("UUU Rank 1 of leather_armor Reached")
+			end
+		end 
+	end
+
+end
+
 
 
 -- A player killed another player in a multi-team context

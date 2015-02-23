@@ -1,0 +1,607 @@
+
+"human_forged_swords1"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_forged_swords1"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"knight_damage"   		"3 6 9"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gryphon_rider_damage"  "6 12 18"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_forged_swords1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_knight_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%knight_damage"
+			}
+		}
+		"modifier_gryphon_rider_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%gryphon_rider_damage"
+			}
+		}
+	}
+}
+"human_forged_swords2"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_forged_swords2"
+	"MaxLevel"				"2"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"knight_damage"   		"3 6 9"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gryphon_rider_damage"  "6 12 18"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_forged_swords2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_knight_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%knight_damage"
+			}
+		}
+		"modifier_gryphon_rider_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%gryphon_rider_damage"
+			}
+		}
+	}
+}
+"human_forged_swords3"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_forged_swords3"
+	"MaxLevel"				"3"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"knight_damage"   		"3 6 9"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"modifier_gryphon_rider_damage"  "6 12 18"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_forged_swords3"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_knight_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%knight_damage"
+			}
+		}
+		"modifier_gryphon_rider_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%gryphon_rider_damage"
+			}
+		}
+	}
+}
+"human_plating1"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_plating1"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_plating1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"human_plating2"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_plating2"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_plating2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"human_plating3"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_plating3"
+	"MaxLevel"				"3"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_plating3"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"human_ranged_weapons1"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_ranged_weapons1"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"siege_engine_damage"   "6 12 18"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mortar_team_damage"  	"7 14 21"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_ranged_weapons1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_siege_engine_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%siege_engine_damage"
+			}
+		}
+		"modifier_mortar_team_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%mortar_team_damage"
+			}
+		}
+	}
+}
+"human_ranged_weapons2"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_ranged_weapons2"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"siege_engine_damage"   "6 12 18"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mortar_team_damage"  	"7 14 21"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_ranged_weapons2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_siege_engine_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%siege_engine_damage"
+			}
+		}
+		"modifier_mortar_team_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%mortar_team_damage"
+			}
+		}
+	}
+}
+"human_ranged_weapons3"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_ranged_weapons3"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"siege_engine_damage"   "6 12 18"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mortar_team_damage"  	"7 14 21"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_ranged_weapons3"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_siege_engine_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%siege_engine_damage"
+			}
+		}
+		"modifier_mortar_team_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%mortar_team_damage"
+			}
+		}
+	}
+}
+"human_leather_armor1"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_leather_armor1"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_leather_armor1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"human_leather_armor2"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_leather_armor2"
+	"MaxLevel"				"2"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_leather_armor2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"human_leather_armor3"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"human_research_leather_armor3"
+	"MaxLevel"				"3"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_leather_armor3"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}

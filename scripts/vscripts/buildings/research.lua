@@ -18,14 +18,35 @@ function ResearchComplete( event )
 	
 	-- Go through all the upgradeable units and upgrade with the research
 	-- These are just abilities set as lvl 0 _disabled until the tech is researched
-	-- Some show as passives, while wc3 showed them as 0-1-2-3 ranks on the damage/armor indicator
+	-- Some show as passives, while wc3 showed them as 0-1-2-3 ranks on the damage/armor indicator	
+	for _,unit in pairs(player.units) do
+		CheckAbilityRequirements( unit, player )
+	end
+
 	-- Also, on the buildings that have the upgrade, disable the upgrade and/or apply the next rank.
 	for _,structure in pairs(player.structures) do
 		CheckAbilityRequirements( structure, player )
 	end
-	
-	for _,unit in pairs(player.units) do
-		CheckAbilityRequirements( unit, player )
+
+	-- For these upgrades, update directly
+	local research_type = nil
+	print(research_name)
+	if string.find(research_name, "forged") then
+		research_type = "forged"
+	elseif string.find(research_name, "plating") then
+		research_type = "plating"
+	elseif string.find(research_name, "ranged") then
+		research_type = "ranged"
+	elseif string.find(research_name, "leather") then
+		research_type = "leather"
+	end
+
+	print("#####################",research_type)
+		
+	if research_type ~= nil then
+		for _,unit in pairs(player.units) do
+			UpdateUnitUpgrades( unit, player, research_type)
+		end	
 	end
 
 end
