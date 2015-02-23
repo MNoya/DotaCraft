@@ -627,6 +627,7 @@ function UpdateUnitUpgrades( unit, player, research_type )
 	-- Forged Swords
 	if research_type == "forged" then
 		if unit_name == "human_gryphon_rider" or 
+			unit_name == "human_dragonhawk_rider" or 
 			unit_name == "human_knight" or 
 			unit_name == "human_footman" or 
 			unit_name == "human_militia" or
