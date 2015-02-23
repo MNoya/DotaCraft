@@ -456,8 +456,8 @@ function CheckAbilityRequirements( unit, player )
 
 			-- If the ability exists
 			if ability then
-				print("")
 				local ability_name = ability:GetAbilityName()
+				--print(ability_name)
 
 				-- Handle upgrades with ranks
 				if string.find(ability_name, "research_") then

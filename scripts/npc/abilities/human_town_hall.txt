@@ -96,6 +96,19 @@
 	}
 }
 
+// Ability researched by human_research_backpack
+"human_backpack"
+{
+	// Lua SetHasInventory
+	// Item drops when unit is killed
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_backpack"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+}
+
 // Town Hall -> Keep Upgrade.
 "human_train_keep"
 {

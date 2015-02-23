@@ -20,7 +20,11 @@ function ResearchComplete( event )
 	-- These are just abilities set as lvl 0 _disabled until the tech is researched
 	-- Some show as passives, while wc3 showed them as 0-1-2-3 ranks on the damage/armor indicator
 	-- Also, on the buildings that have the upgrade, disable the upgrade and/or apply the next rank.
-	for _,unit in pairs(player.structures) do
+	for _,structure in pairs(player.structures) do
+		CheckAbilityRequirements( structure, player )
+	end
+	
+	for _,unit in pairs(player.units) do
 		CheckAbilityRequirements( unit, player )
 	end
 

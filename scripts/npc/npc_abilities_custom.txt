@@ -8635,6 +8635,518 @@
 	}
 	
 	
+	
+	// Sorceress Innate ability
+	"human_slow"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_slow"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"10"
+		"AbilityManaCost"				"50"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"10"
+			}
+	
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"attack_speed"	"-25"
+			}
+	
+			"03"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"move_speed"	"-20"
+			}
+	
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_human_slow"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_human_slow"
+				"Target"		"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.RodOfAtos.Activate"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_human_slow"
+			{
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+				"EffectName"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+				"Duration"	"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+		}
+	}
+	
+	// Ability Researched by sorceress train 1
+	"human_invisibility"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_invisibility"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	}
+	"human_invisibility_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_invisibility"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	// Ability Researched by sorceress train 2
+	"human_polymorph"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_polymorph"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	}
+	"human_polymorph_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_polymorph"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	// Priest Innate Ability
+	"human_heal"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"human_heal"
+	
+		"MaxLevel"						"1"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"250"
+		"AbilityCooldown"				"1"
+		"AbilityManacost"				"5"
+		
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"heal"			"25"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"Heal"
+			{
+				"HealAmount"	"%heal"
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Omniknight.Purification"
+				"Target"		"TARGET"
+			}
+		}
+	}
+	
+	// Ability Researched by priest train 1
+	"human_dispel_magic"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"pandaren_storm_dispel_magic"
+		"MaxLevel"						"1"
+	
+		"AbilityCastRange"				"500"
+	
+		"AOERadius"						"%radius"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8.0"
+		"AbilityCastPoint"				"0.4"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"		
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"200"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Brewmaster_Storm.DispelMagic"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
+				"Function"		"DispelMagic"
+				"Target"
+				{
+					"Center"  	"POINT"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			}
+		}
+	}
+	"human_dispel_magic_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_dispel_magic"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	// Ability Researched by priest train 2
+	"human_inner_fire"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"human_inner_fire"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		
+		"AbilityCastPoint"			"0.0"
+		"AbilityCastRange"			"500"
+		"AbilityCooldown"			"5"
+		"AbilityManaCost"			"35"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"60"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"armor_bonus"	"5"
+			}
+			"03"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"damage_bonus"	"10"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"		"TARGET"
+				"ModifierName"	"creep_inner_fire_buff"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.Buckler.Activate"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"creep_inner_fire_buff"
+			{
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/items_fx/buckler.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+					}
+				}
+	
+				"IsPurgable"	"1"
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"5"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"10"
+				}
+			}
+		}
+	}
+	"human_inner_fire_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_inner_fire"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	// Spell Breaker Innate Ability
+	"human_spell_steal"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"human_spell_steal"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	}
+	
+	// Ability Researched by human_research_control_magic
+	"human_control_magic"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"human_research_control_magic"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+		//Mana cost is .45 mana per hit point.
+	}
+	"human_control_magic_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_control_magic"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	// Spell Breaker Innate Ability
+	"human_spell_immunity"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"human_spell_immunity"
+		"MaxLevel"				"1"
+	
+		"Modifiers"
+		{
+			"modifier_human_spell_immunity"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	// Spell Breaker Innate Ability
+	"human_feedback"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"human_feedback"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"		
+	
+		"precache"
+		{
+			"particle"	"particles/generic_gameplay/generic_manaburn.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_burn"		"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_hit"			"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_hit_heroes"	"4"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_human_feedback"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"Orb"
+				{
+					"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+				}
+	
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/spell_breaker.lua"
+						"Function"		"ManaBreak"
+						"Target"		"TARGET"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Antimage.ManaBreak"
+						"Target"		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+					}
+				}
+			}
+		}
+	}
+	
+	
 	// Trains Footmen, Riflemen and Knights.
 	"human_train_footman"
 	{
@@ -8969,6 +9481,8 @@
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_defend"
 		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	}
 	
 	
@@ -8985,6 +9499,8 @@
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_long_rifles"
 		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
 	
@@ -9000,6 +9516,8 @@
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_animal_war_training"
 		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
 	
@@ -11970,6 +12488,19 @@
 				}
 			}
 		}
+	}
+	
+	// Ability researched by human_research_backpack
+	"human_backpack"
+	{
+		// Lua SetHasInventory
+		// Item drops when unit is killed
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_backpack"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
 	}
 	
 	// Town Hall -> Keep Upgrade.
