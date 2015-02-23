@@ -298,6 +298,16 @@
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
 				}
+				"RunScript"
+				{
+					"ScriptFile"    "units/human_upgrades.lua"
+					"Function"      "ApplyForgedSwordUpgrade"
+				}
+				"RunScript"
+				{
+					"ScriptFile"    "units/human_upgrades.lua"
+					"Function"      "ApplyLeatherArmorUpgrade"
+				}
 			}
 		}
 	}

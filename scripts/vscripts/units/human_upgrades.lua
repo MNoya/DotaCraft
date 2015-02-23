@@ -40,7 +40,7 @@ end
 
 -- This directly applies the current lvl 1/2/3, from the player upgrades table
 -- Called on each different OnSpawn event
-function ApplyForgedSwordUpgrade( event )
+function ApplyForgedSwordsUpgrade( event )
 
 	local caster = event.caster
 	local target = event.target
@@ -117,15 +117,15 @@ function ApplyLeatherArmorUpgrade( event )
 
 	if player.upgrades["human_research_leather_armor3"] then
 		target:AddAbility("human_leather_armor3")
-		local ability = target:FindAbilityByName("human_ranged_weapons3")
+		local ability = target:FindAbilityByName("human_leather_armor3")
 		ability:SetLevel(3)
 	elseif player.upgrades["human_research_leather_armor2"] then
 		target:AddAbility("human_leather_armor2")
-		local ability = target:FindAbilityByName("human_ranged_weapons2")
+		local ability = target:FindAbilityByName("human_leather_armor2")
 		ability:SetLevel(2)
 	elseif player.upgrades["human_research_leather_armor1"] then
 		target:AddAbility("human_leather_armor1")
-		local ability = target:FindAbilityByName("human_ranged_weapons1")
+		local ability = target:FindAbilityByName("human_leather_armor1")
 		ability:SetLevel(1)
 	end
 

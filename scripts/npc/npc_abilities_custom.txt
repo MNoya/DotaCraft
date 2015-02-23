@@ -8593,6 +8593,16 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyForgedSwordUpgrade"
+					}
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyLeatherArmorUpgrade"
+					}
 				}
 			}
 		}
@@ -10215,6 +10225,7 @@
 				"States"
 				{
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES" "MODIFIER_STATE_VALUE_ENABLED" //test
 				}
 			}
 		}
@@ -10864,16 +10875,252 @@
 			}
 		}
 	}
-	//"RunScript"
-	//				{
-	//					"ScriptFile"    "units/human_upgrades.lua"
-	//					"Function"      "ApplyRangedWeaponsUpgrade"
-	//				}
-	//				"RunScript"
-	//				{
-	//					"ScriptFile"    "units/human_upgrades.lua"
-	//					"Function"      "ApplyLeatherArmorUpgrade"
-	//				}
+	"human_train_gryphon_rider_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_gryphon_rider"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_train_gryphon_rider"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_gryphon_rider"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"205" // From "GoldCost"
+		"AbilityChannelTime"			"26" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"human_gryphon_rider"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "GetInitialRallyPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+					}
+				}
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyForgedSwordsUpgrade"
+					}
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyLeatherArmorUpgrade"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	
+	"human_train_dragonhawk_rider_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_dragonhawk_rider"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_train_dragonhawk_rider"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_dragonhawk_rider"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"205" // From "GoldCost"
+		"AbilityChannelTime"			"26" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"human_dragonhawk_rider"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "GetInitialRallyPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+					}
+				}
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyForgedSwordsUpgrade"
+					}
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyLeatherArmorUpgrade"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
 	//==========================================================//
 	//                 HUMAN RESEARCH ABILITIES                 //
 	//==========================================================//
@@ -13419,16 +13666,374 @@
 			}
 		}
 	}
-	//"RunScript"
-	//				{
-	//					"ScriptFile"    "units/human_upgrades.lua"
-	//					"Function"      "ApplyRangedWeaponsUpgrade"
-	//				}
-	//				"RunScript"
-	//				{
-	//					"ScriptFile"    "units/human_upgrades.lua"
-	//					"Function"      "ApplyLeatherArmorUpgrade"
-	//				}
+	"human_train_flying_machine_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flying_machine"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_train_flying_machine"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flying_machine"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"205" // From "GoldCost"
+		"AbilityChannelTime"			"26" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"human_flying_machine"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "GetInitialRallyPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+					}
+				}
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyRangedWeaponsUpgrade"
+					}
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyPlatingUpgrade"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_train_mortar_team_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_mortar_team"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_train_mortar_team"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_mortar_team"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"205" // From "GoldCost"
+		"AbilityChannelTime"			"26" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"human_mortar_team"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "GetInitialRallyPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+					}
+				}
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyRangedWeaponsUpgrade"
+					}
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyLeatherArmorUpgrade"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_train_siege_engine_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_siege_engine"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_train_siege_engine"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_siege_engine"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	
+		"AbilityGoldCost"				"205" // From "GoldCost"
+		"AbilityChannelTime"			"26" // From "BuildTime"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"human_siege_engine"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "GetInitialRallyPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+					}
+				}
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/rally_point.lua"
+						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyRangedWeaponsUpgrade"
+					}
+					"RunScript"
+					{
+						"ScriptFile"    "units/human_upgrades.lua"
+						"Function"      "ApplyPlatingUpgrade"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_building_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"ThinkInterval"  	"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "buildings/autocast.lua"
+						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
 	// AbilityName
 	// Author: 
 	// Date: 13.1.2015.

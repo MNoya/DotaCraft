@@ -134,7 +134,7 @@ end
 function FlashUtil:RequestDataStream( dataName, rps, pID, callback )
 	local requestID = DoUniqueString(dataName)
 	self.callbacks[requestID] = callback
-	FireGameEvent('FlashUtil_request_stream', { request_id = requestID, data_name = dataName, requests_per_second = rps, target_player = playerID })
+FireGameEvent('FlashUtil_request_stream', { request_id = requestID, data_name = dataName, requests_per_second = rps, target_player = pID })
 
 	return requestID
 end

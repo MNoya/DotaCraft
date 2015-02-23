@@ -74,6 +74,8 @@ function MoveToRallyPoint( event )
 	end
 
 	local player = caster:GetPlayerOwner()
+	local hero = player:GetAssignedHero()
+	target:SetOwner(hero)
 	table.insert(player.units, target)
 	CheckAbilityRequirements(target, player)
 end
