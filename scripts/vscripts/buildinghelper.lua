@@ -191,11 +191,9 @@ function BuildingHelper:AddBuilding(keys)
 		keys.onBuildingPosChosen = callback
 	end	
 
-	-- TODO: since the ability phase funcs are screwed up, can't get when building was canceled
-	-- due to right click
-	function keys:OnCanceled( callback )
-		keys.onCanceledCallback = callback
-	end
+	--[[function keys:onBuildingCanceled( callback )
+		keys.onBuildingCanceled = callback
+	end]]
 
 	local hAbility = keys.ability
 	local abilName = hAbility:GetAbilityName()
@@ -290,40 +288,6 @@ function BuildingHelper:AddBuilding(keys)
 	-- same thing with the gold cost.
 	if playersHero ~= nil then
 		playersHero:SetGold(playersHero:GetGold()+goldCost, false)
-	end
-
-	local resources = {}
-	local notEnoughResources = {}
-	-- Check other resource costs.
-	local abilitySpecials = {}
-	if buildingTable["AbilitySpecial"] ~= nil then
-		abilitySpecials = buildingTable["AbilitySpecial"]
-	end
-
-	for k2,v2 in pairs(abilitySpecials) do
-		if abilitySpecials[k2] ~= nil then
-			local abilitySpecial = abilitySpecials[k2]
-			for k3,v3 in pairs(abilitySpecial) do
-				if string.starts(k3, "resource_") then
-					local cost = tonumber(abilitySpecial[k3])
-					local resourceName = string.sub(k3, 10):lower()
-					resources[resourceName] = cost
-					--print("Detected resource: " .. resourceName)
-					if player[resourceName] == nil then
-						player[resourceName] = 0
-					end
-					if player[resourceName] < cost then
-						notEnoughResources[resourceName] = cost-player[resourceName]
-					end
-				end
-			end
-		end
-	end
-
-	buildingTable.resources = resources
-
-	if TableLength(notEnoughResources) > 0 then
-		return {["error"] = "not_enough_resources", ["resourceTable"] = notEnoughResources}
 	end
 
 	--setup the dummy for model ghost
@@ -765,25 +729,6 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 		playersHero:SetGold(playersHero:GetGold()-goldCost, false)
 	end
 	buildingTable["abil"]:StartCooldown(cooldown)
-
-	--print("Resource costs:")
-	PrintTable(buildingTable["resources"])
-
-	--[[ ensure player still has enough resources.
-	for k,v in pairs(buildingTable["resources"]) do
-		if player[resourceName] < cost then
-			notEnoughResources[resourceName] = cost-player[resourceName]
-		end
-	end]]
-
-	-- take out custom resources from player
-	--[[local resources = buildingTable.resources
-	for k,v in pairs(resources) do
-		player[k] = player[k] - v
-		if player[k] < 0 then
-			player[k] = 0
-		end
-	end]]
 
 	if keys2.onConstructionStarted ~= nil then
 		keys2.onConstructionStarted(unit)
