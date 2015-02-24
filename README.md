@@ -12,6 +12,7 @@
   * Unlocking buildings and unit production while certain buildings requirements are missing.
   * Researching upgrades to enhance certain abilities, with multiple levels and requirements.
   * Generic passive upgrades for Damage/Armor on multiple different units, with multiple rank icons
+
 ---
 
 If you are interested in helping with this project don't hesitate contacting me, either through my email, [Steam](http://steamcommunity.com/id/mnoya), or come chat at the [#dota2mods IRC @ GameSurge.net](kiwiirc.com/client/irc.gamesurge.net/?#dota2mods)
