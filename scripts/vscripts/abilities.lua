@@ -1,4 +1,33 @@
 function build( keys )
+
+	-- Checks if there is enough custom resources to start the building, else stop.
+	local caster = keys.caster
+	local ability_name = keys.ability:GetAbilityName()
+	local AbilityKV = GameRules.AbilityKV
+	local UnitKV = GameRules.UnitKV
+	
+	-- Handle the resource for item-ability build
+	local building_name
+	if keys.ItemUnitName then
+		building_name = keys.ItemUnitName
+	else
+		building_name = AbilityKV[ability_name].UnitName --Building Helper value, could just be a parameter of the RunScript but w/e
+	end
+
+	local unit_table = UnitKV[building_name]
+	local lumber_cost = unit_table.LumberCost
+
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	local playerID = hero:GetPlayerID()
+	local player = PlayerResource:GetPlayer(playerID)	
+
+	print(playerID,player,building_name,unit_table,lumber_cost)
+
+	if player.lumber < lumber_cost then
+		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Lumber" } )		
+		return
+	end
+
 	BuildingHelper:AddBuilding(keys)
 	keys:OnConstructionStarted(function(unit)
 		print("Started construction of " .. unit:GetUnitName())
@@ -6,16 +35,7 @@ function build( keys )
 		-- Play construction sound
 		-- FindClearSpace for the builder
 
-		-- Substract custom resource
-		local caster = keys.caster
-		local hero = caster:GetPlayerOwner():GetAssignedHero()
-		local playerID = hero:GetPlayerID()
-		local player = PlayerResource:GetPlayer(playerID)
-		local building_name = unit:GetUnitName()
-
-		local unit_table = GameRules.UnitKV[building_name]
-		print(unit_table.LumberCost)
-		player.lumber = player.lumber - unit_table.LumberCost
+		player.lumber = player.lumber - lumber_cost
     	print("Lumber Spend. Player "..playerID.." is currently at " .. player.lumber)
     	FireGameEvent('cgm_player_lumber_changed', { player_ID = playerID, lumber = player.lumber })
 

@@ -404,7 +404,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 
 	-- Give Initial Lumber
-	player.lumber = 99999
+	player.lumber = 150
 	print("Lumber Gained. " .. hero:GetUnitName() .. " is currently at " .. player.lumber)
     FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
 
@@ -1073,7 +1073,9 @@ function dotacraft:Initdotacraft()
 	self.bSeenWaitForPlayers = false
 
 	-- Full units file to get the custom values
+	GameRules.AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
   	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+  	GameRules.ItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
   	GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
 
   	-- Building Helper by Myll

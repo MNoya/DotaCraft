@@ -44,7 +44,7 @@
 	"AbilityTextureName"			"human_barracks"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 	"AbilityCastPoint"				"0"
 
@@ -76,16 +76,6 @@
 			"lumber_cost"			"50"	// Not needed, just for tooltips
 		}
 	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_barracks"
-		}
-	}
 	
 	"OnSpellStart"
 	{
@@ -110,10 +100,7 @@
 	"AbilityTextureName"			"human_blacksmith"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-
-	"AbilityCastPoint"				"0.1"
-
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityGoldCost"				"180"
 	"AbilityUpgradeGoldCost"		"0"
 
@@ -146,16 +133,6 @@
 		}
 	}
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_arcane_sanctum"
-		}
-	}
-	
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -179,10 +156,7 @@
 	"AbilityTextureName"			"human_arcane_sanctum"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-
-	"AbilityCastPoint"				"0.1"
-
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityGoldCost"				"180"
 	"AbilityUpgradeGoldCost"		"0"
 
@@ -215,16 +189,6 @@
 		}
 	}
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_arcane_sanctum"
-		}
-	}
-	
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -248,10 +212,7 @@
 	"AbilityTextureName"			"human_workshop"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-
-	"AbilityCastPoint"				"0.1"
-
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityGoldCost"				"180"
 	"AbilityUpgradeGoldCost"		"0"
 
@@ -283,16 +244,6 @@
 			"lumber_cost"			"140"	// Not needed, just for tooltips
 		}
 	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_arcane_sanctum"
-		}
-	}
 	
 	"OnSpellStart"
 	{
@@ -317,10 +268,7 @@
 	"AbilityTextureName"			"human_gryphon_aviary"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-
-	"AbilityCastPoint"				"0.1"
-
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityGoldCost"				"180"
 	"AbilityUpgradeGoldCost"		"0"
 
@@ -353,16 +301,6 @@
 		}
 	}
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_arcane_sanctum"
-		}
-	}
-	
 	"OnSpellStart"
 	{
 		"RunScript"

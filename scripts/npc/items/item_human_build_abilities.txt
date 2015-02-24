@@ -4,8 +4,7 @@
 	"AbilityTextureName"			"item_build_town_hall"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastPoint"				"0.1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 	"ItemDroppable" 				"0"
 	"ItemPurchasable" 				"0"
@@ -39,16 +38,6 @@
 		}
 	}
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_town_hall"
-		}
-	}
-	
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -65,8 +54,7 @@
 	"AbilityTextureName"			"item_build_farm"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastPoint"				"0.1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 	"ItemDroppable" 				"0"
 	"ItemPurchasable" 				"0"
@@ -100,22 +88,13 @@
 		}
 	}
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_farm"
-		}
-	}
-	
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
 			"ScriptFile"	"abilities.lua"
 			"Function"		"build"
+			"ItemUnitName"  "human_farm"
 		}
 	}
 }
@@ -126,8 +105,7 @@
 	"AbilityTextureName"			"item_build_altar_of_kings"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastPoint"				"0.1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 	"ItemDroppable" 				"0"
 	"ItemPurchasable" 				"0"
@@ -160,16 +138,6 @@
 			"lumber_cost"			"50"	// Not needed, just for tooltips
 		}
 	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_altar_of_kings"
-		}
-	}
 	
 	"OnSpellStart"
 	{
@@ -177,6 +145,7 @@
 		{
 			"ScriptFile"	"abilities.lua"
 			"Function"		"build"
+			"ItemUnitName"  "human_altar_of_kings"
 		}
 	}
 }
@@ -187,8 +156,7 @@
 	"AbilityTextureName"			"item_build_lumber_mill"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastPoint"				"0.1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 	"ItemDroppable" 				"0"
 	"ItemPurchasable" 				"0"
@@ -221,16 +189,6 @@
 			"lumber_cost"			"50"	// Not needed, just for tooltips
 		}
 	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_altar_of_kings"
-		}
-	}
 	
 	"OnSpellStart"
 	{
@@ -238,6 +196,7 @@
 		{
 			"ScriptFile"	"abilities.lua"
 			"Function"		"build"
+			"ItemUnitName"  "human_lumber_mill"
 		}
 	}
 }
@@ -249,8 +208,7 @@
 	"AbilityTextureName"			"item_build_arcane_vault"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastPoint"				"0.1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 	"ItemDroppable" 				"0"
 	"ItemPurchasable" 				"0"
@@ -284,22 +242,13 @@
 		}
 	}
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_altar_of_kings"
-		}
-	}
-	
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
 			"ScriptFile"	"abilities.lua"
 			"Function"		"build"
+			"ItemUnitName"  "human_arcane_vault"
 		}
 	}
 }
@@ -310,8 +259,7 @@
 	"AbilityTextureName"			"item_build_scout_tower"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastPoint"				"0.1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 	"ItemDroppable" 				"0"
 	"ItemPurchasable" 				"0"
@@ -345,22 +293,13 @@
 		}
 	}
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/build.lua"
-			"Function"		"CheckCustomResources"
-			"BuildingName"	"human_altar_of_kings"
-		}
-	}
-	
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
 			"ScriptFile"	"abilities.lua"
 			"Function"		"build"
+			"ItemUnitName"  "human_scout_tower"
 		}
 	}
 }
