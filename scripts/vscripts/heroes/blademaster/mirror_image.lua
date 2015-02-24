@@ -9,7 +9,7 @@ function MirrorImage( event )
 	local caster = event.caster
 	local player = caster:GetPlayerID()
 	local ability = event.ability
-	local unit_name = --caster:GetUnitName()
+	local unit_name = caster:GetUnitName()
 	local images_count = ability:GetLevelSpecialValueFor( "images_count", ability:GetLevel() - 1 )
 	local duration = ability:GetLevelSpecialValueFor( "illusion_duration", ability:GetLevel() - 1 )
 	local outgoingDamage = ability:GetLevelSpecialValueFor( "illusion_outgoing_damage", ability:GetLevel() - 1 )
@@ -71,10 +71,10 @@ function MirrorImage( event )
 
 		-- Set the unit as an illusion
 		-- modifier_illusion controls many illusion properties like +Green damage not adding to the unit damage, not being able to cast spells and the team-only blue particle
-		--illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = duration, outgoing_damage = outgoingDamage, incoming_damage = incomingDamage })
+		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = duration, outgoing_damage = outgoingDamage, incoming_damage = incomingDamage })
 		
 		-- Without MakeIllusion the unit counts as a hero, e.g. if it dies to neutrals it says killed by neutrals, it respawns, etc.
-		--illusion:MakeIllusion()
+		illusion:MakeIllusion()
 
 		-- Add the illusion created to a table within the caster handle, to remove the illusions on the next cast if necessary
 		table.insert(caster.illusions, illusion)
