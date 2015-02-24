@@ -32,18 +32,5 @@
 				}
 			}
 		}
-
-		// Buildings need MOVE_GROUND capacity to cast point abilities
-		"modifier_grounded_passive"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-	
-			"States"
-			{
-				"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES" "MODIFIER_STATE_VALUE_ENABLED" //test
-			}
-		}
 	}
 }

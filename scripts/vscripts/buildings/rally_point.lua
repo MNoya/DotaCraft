@@ -93,3 +93,10 @@ function GetInitialRallyPoint( event )
 
 	return result
 end
+
+
+function DetectRightClick( event )
+	local point = event.target_points[1]
+
+	print("####",point)
+end

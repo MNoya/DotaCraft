@@ -30,10 +30,10 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_ancient001.vmdl"
 	"ModelScale"				"0.7"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	
@@ -44,6 +44,7 @@
 	"Ability2"					"human_train_keep"
 	"Ability3"					"human_research_backpack"
 	"Ability5"					"human_building_queue"
+	"Ability6"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -108,10 +109,10 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_ancient001_dest_lvl1.vmdl"
 	"ModelScale"				"0.9"
-	"Level"						"0"
+	"Level"						"2"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	
@@ -123,6 +124,7 @@
 	"Ability3"					"human_research_backpack"	
 	"Ability4"					"human_building_queue"	
 	"Ability5"					"human_keep_passive"
+	"Ability6"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -187,10 +189,10 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_ancient001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"3"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	
@@ -201,6 +203,7 @@
 	"Ability2"					"human_castle_passive"	 //Reference: Amic
 	"Ability3"					"human_research_backpack"	 //Reference: Argl
 	"Ability4"					"human_building_queue"	 //Reference: Argl
+	"Ability5"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -265,7 +268,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_barracks_melee001.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
@@ -282,6 +285,7 @@
 	"Ability5"					"human_research_long_rifles"
 	"Ability6"					"human_research_animal_war_training"
 	"Ability7"					"human_building_queue"
+	"Ability8"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -346,7 +350,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_statue008.vmdl"
 	"ModelScale"				"1"
 	"Level"						"0"
@@ -356,6 +360,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Abds
+	"Ability2"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -388,7 +393,7 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
@@ -420,7 +425,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/tower_good2.vmdl"
 	"ModelScale"				"1"
 	"Level"						"0"
@@ -435,6 +440,7 @@
 	"Ability3"					"human_train_paladin"
 	"Ability4"					"human_train_blood_mage"
 	"Ability5"					"human_building_queue"
+	"Ability6"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -499,7 +505,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/buildings/building_plain_reference.vmdl"
 	"ModelScale"				"1.5"
 	"Level"						"0"
@@ -512,6 +518,7 @@
 	"Ability1"					"human_research_lumber_harvesting1"
 	"Ability2"					"human_research_masonry1"
 	"Ability3"					"human_building_queue"
+	"Ability4"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -544,7 +551,7 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
@@ -577,7 +584,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/wooden_sentry_tower001.vmdl"	 //Add model
 	"ModelScale"				"0.7"
 	"Level"						"0"
@@ -590,6 +597,7 @@
 	"Ability1"					""	 //Reference: Abds
 	"Ability2"					""	 //Reference: Adts
 	"Ability3"					""
+	"Ability6"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -622,7 +630,7 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
@@ -654,7 +662,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/tower_good.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
@@ -665,6 +673,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Abds
 	"Ability2"					""	 //Reference: Adts
+	"Ability6"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -703,7 +712,7 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
@@ -736,7 +745,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/tower001.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
@@ -747,6 +756,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Abds
 	"Ability2"					""	 //Reference: Adts
+	"Ability6"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -785,7 +795,7 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
@@ -817,7 +827,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/tower_dragon_white.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
@@ -868,7 +878,7 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
@@ -901,7 +911,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/weapon_rack_00.vmdl"
 	"ModelScale"				"1.2"
 	"Level"						"0"
@@ -915,7 +925,8 @@
 	"Ability2"					"human_research_forged_swords1"
 	"Ability3"					"human_research_plating1"
 	"Ability4"					"human_research_ranged_weapons1"
-	"Ability5"					"human_research_leather_armor1"				
+	"Ability5"					"human_research_leather_armor1"
+	"Ability6"					"ability_building"		
 
 	// Armor
 	//----------------------------------------------------------------
@@ -948,7 +959,7 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
@@ -980,7 +991,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/water_wheel.vmdl"
 	"ModelScale"				"0.5"
 	"Level"						"0"
@@ -997,6 +1008,7 @@
 	"Ability5"					"human_research_fragmentation_shards" //"human_research_flare"
 	"Ability6"					"human_research_barrage"
 	"Ability7"					"human_building_queue"
+	"Ability8"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1061,7 +1073,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_barracks_ranged001.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
@@ -1078,6 +1090,7 @@
 	"Ability5"					"human_research_sorceress_training1"
 	"Ability6"					"human_research_control_magic"
 	"Ability7"					"human_building_queue"
+	"Ability8"					"ability_building"
 	
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"5"
@@ -1141,7 +1154,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_statue010.vmdl"
 	"ModelScale"				"1"
 	"Level"						"0"
@@ -1156,6 +1169,7 @@
 	"Ability3"					"human_research_storm_hammers"
 	"Ability4"					"human_research_cloud"
 	"Ability5"					"human_building_queue"
+	"Ability6"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1221,7 +1235,7 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
+	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/buildings/building_racks_ranged_reference.vmdl"
 	"ModelScale"				"1"
 	"Level"						"0"
@@ -1234,6 +1248,7 @@
 	"Ability1"					""	 //Reference: Abds
 	"Ability2"					""	 //Reference: Aall
 	"Ability3"					""	 //Reference: Apit
+	"Ability6"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1268,7 +1283,7 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status

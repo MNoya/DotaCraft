@@ -2,7 +2,7 @@
 {
 	"BaseClass"             		"item_datadriven"
 	"AbilityTextureName"			"item_rally"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	"AbilityCastPoint"				"0"
 
 	"ItemDroppable" 				"0"
@@ -13,7 +13,7 @@
 		"model"						"models/particle/legion_duel_banner.vmdl"
 	}
 	
-	"OnSpellStart"
+	"OnAbilityPhaseStart"
 	{
 		"RunScript"
 		{

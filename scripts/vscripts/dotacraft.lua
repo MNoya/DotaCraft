@@ -587,7 +587,7 @@ function CheckAbilityRequirements( unit, player )
 					else
 						if not requirement_failed then
 							--print("Ability Still ENABLED "..ability_name)
-
+							ability:SetLevel(1)
 							-- Check for a max rank upgrade and disable it.
 
 
