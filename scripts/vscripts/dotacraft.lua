@@ -404,7 +404,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 
 	-- Give Initial Lumber
-	player.lumber = 1000
+	player.lumber = 99999
 	print("Lumber Gained. " .. hero:GetUnitName() .. " is currently at " .. player.lumber)
     FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
 
@@ -1108,6 +1108,10 @@ function dotacraft:Capturedotacraft()
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
 		mode:SetHUDVisible(9, false)  -- Get Rid of Courier
+		mode:SetHUDVisible(12, false)  -- Get Rid of Recommended items
+		mode:SetHUDVisible(1, false) -- Get Rid of Heroes on top
+		mode:SetHUDVisible(6, false)  -- Get Rid of Shop button
+		mode:SetHUDVisible(8, false) -- Get Rid of Quick Buy
 
 		--GameRules:GetGameModeEntity():SetThink( "Think", self, "GlobalThink", 2 )
 

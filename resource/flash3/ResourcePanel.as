@@ -7,6 +7,8 @@ package  {
 	import flash.events.MouseEvent;
 	import flash.utils.getDefinitionByName;
 	import scaleform.clik.events.*;
+	import flash.text.TextField;
+    import flash.text.TextFormat;
 	
 	//import some stuff from the valve lib
 	import ValveLib.Globals;
@@ -38,7 +40,15 @@ package  {
 		}
 		
 		public function setLumber(number): void {
-			lumberCount.text = number;			
+			lumberCount.text = number;
+			
+			var txFormat:TextFormat = new TextFormat;
+	
+			//font
+			txFormat.font = "$TextFontBold";					
+			
+			lumberCount.setTextFormat(txFormat);
+			
 			trace("##ResourcePanel Set Lumber to "+lumberCount.text);
 		}
 		
