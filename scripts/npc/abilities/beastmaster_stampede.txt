@@ -127,6 +127,22 @@
 			"Type"			"DAMAGE_TYPE_MAGICAL"
 			"Damage"		"%lizard_damage"
 		}
+
+		// Custom Building Damage
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/damage.lua"
+			"Function"		"DoBuildingDamage"
+			"Target"
+			{
+				"Center"  	"TARGET"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_BASIC"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+			"Damage"		"%lizard_damage"
+		}
+
 		"FireSound"
 		{
 			"EffectName"	"Hero_Beastmaster.Wild_Axes_Damage"

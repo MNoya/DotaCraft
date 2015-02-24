@@ -411,30 +411,36 @@
 			"ThinkInterval"		"1"
 	        "OnIntervalThink"
 	        {
-				"Damage"
+	        	// Custom Building Damage
+				"RunScript"
 				{
+					"ScriptFile"	"buildings/damage.lua"
+					"Function"		"DoBuildingDamage"
 					"Target"
 					{
 						"Center"  	"CASTER"
 						"Radius" 	"%center_radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
-					"Type"			 "DAMAGE_TYPE_MAGICAL"
-					"Damage"		 "%dps_to_buildings_center - %dps_to_buildings_outside"
+					"Damage"		"%dps_to_buildings_center - %dps_to_buildings_outside"
 				}
 
-				"Damage"
+				// Custom Building Damage
+				"RunScript"
 				{
+					"ScriptFile"	"buildings/damage.lua"
+					"Function"		"DoBuildingDamage"
 					"Target"
 					{
 						"Center"  	"CASTER"
 						"Radius" 	"%outside_radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
-					"Type"			 "DAMAGE_TYPE_MAGICAL"
-					"Damage"		 "%dps_to_buildings_outside"
+					"Damage"		"%dps_to_buildings_outside"
 				}
 			}
 		}

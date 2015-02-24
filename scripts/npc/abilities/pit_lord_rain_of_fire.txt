@@ -167,19 +167,22 @@
 					"Damage"		"%wave_damage"
 				}
 
-				"Damage"
+				// Custom Building Damage
+				"RunScript"
 				{
+					"ScriptFile"	"buildings/damage.lua"
+					"Function"		"DoBuildingDamage"
 					"Target"
 					{
 						"Center"  	"TARGET"
 						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
-					"Type"			"DAMAGE_TYPE_MAGICAL"
 					"Damage"		"%wave_damage / 2"
 				}
-				
+						
 				"ApplyModifier"
 				{
 					"Target"

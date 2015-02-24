@@ -8,7 +8,7 @@
 //2	N/A	N/A	8	70	Unit	N/A	20 bonus damage	3
 //3	N/A	N/A	8	70	Unit	N/A	30 bonus damage	5
 
-// BUG: Orb doesn't fire on Buildings
+// BUG: Orb doesn't fire on Magic Immune targets
 "potm_searing_arrows"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -19,6 +19,7 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 
 	"AbilityCastPoint"          	"0"
     "AbilityCastRange"          	"600 700 700"

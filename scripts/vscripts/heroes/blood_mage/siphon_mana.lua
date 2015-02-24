@@ -7,6 +7,7 @@ function SiphonManaStart( event )
 	local caster = event.caster
 	local target = event.target
 	local ability = event.ability
+	local pID = caster:GetPlayerID()
 	local particleName = "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
 	
 

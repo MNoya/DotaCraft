@@ -922,6 +922,10 @@ function LeavesCorpse( unit )
 	elseif unit.GetInvulnCount ~= nil then
 		return false
 
+	-- Ignore custom buildings
+	elseif (unit:FindAbilityByName("ability_building") == nil) then
+		return false
+
 	-- Ignore units that start with dummy keyword	
 	elseif string.find(unit:GetUnitName(), "dummy") then
 		return false

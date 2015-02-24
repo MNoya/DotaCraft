@@ -67,6 +67,7 @@ function Stampede( event )
 				bProvidesVision = false,
 				iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 				iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING,
+				iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 				vVelocity = velocityVec * projectile_speed
 			}
 			ProjectileManager:CreateLinearProjectile( projectileTable )

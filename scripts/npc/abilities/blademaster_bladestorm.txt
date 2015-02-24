@@ -97,7 +97,7 @@
 						"Center"  	"CASTER"
 						"Radius" 	"%bladestorm_radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 					}
 				
 					"Action"    
@@ -106,6 +106,22 @@
 						{
 							"Target"		"TARGET"
 							"Type"			"DAMAGE_TYPE_MAGICAL"
+							"Damage"		"%AbilityDamage * %bladestorm_damage_tick"
+						}
+
+						// Custom Building Damage
+						"RunScript"
+						{
+							"ScriptFile"	"buildings/damage.lua"
+							"Function"		"DoBuildingDamage"
+							"Target"
+							{
+								"Center"  	"TARGET"
+								"Radius" 	"%radius"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+								"Types" 	"DOTA_UNIT_TARGET_BASIC"
+								"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+							}
 							"Damage"		"%AbilityDamage * %bladestorm_damage_tick"
 						}
 

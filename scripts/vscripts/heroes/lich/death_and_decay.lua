@@ -36,7 +36,23 @@ function DeathAndDecayDamage( event )
 		local targetHP = target:GetMaxHealth()
 		local damage = targetHP * health_percent_damage_per_sec
 
-		ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType })
+		--ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType })
+		ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES}) 
+		
+
+		local isBuilding = target:FindAbilityByName("ability_building")
+		if isBuilding then
+			print("DoBuildingDamage on:",target:GetUnitName(),damage)
+			local currentHP = target:GetHealth()
+			local newHP = currentHP - damage
+
+			-- If the HP would hit 0 with this damage, kill the unit
+			if newHP <= 0 then
+				target:Kill(ability, caster)
+			else
+				target:SetHealth( newHP)
+			end
+		end
 
 		-- Apply particle on each damaged targed, ignore the dummy
 		local particleName = "particles/custom/enigma_malefice.vpcf"

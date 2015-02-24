@@ -757,16 +757,19 @@
 								"Damage"		"%wave_damage"
 							}
 	
-							"Damage"
+							// Custom Building Damage
+							"RunScript"
 							{
+								"ScriptFile"	"buildings/damage.lua"
+								"Function"		"DoBuildingDamage"
 								"Target"
 								{
 									"Center"  	"TARGET"
 									"Radius" 	"%radius"
-									"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-									"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_BASIC"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 								}
-								"Type"			"DAMAGE_TYPE_MAGICAL"
 								"Damage"		"%wave_damage / 2"
 							}
 	
@@ -872,7 +875,7 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 	
 		"AbilityCastPoint"				"0.3"
@@ -907,6 +910,15 @@
 			}
 		}
 	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/archmage/mass_teleport.lua"
+				"Function"		"BuildingCheck"
+			}
+		}
+	
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -919,6 +931,7 @@
 					"Radius" 	"%radius"
 					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 					"MaxTargets" "%max_units_teleported"
 				}
 			}
@@ -1267,6 +1280,22 @@
 				"Type"			"DAMAGE_TYPE_MAGICAL"
 				"Damage"		"%lizard_damage"
 			}
+	
+			// Custom Building Damage
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/damage.lua"
+				"Function"		"DoBuildingDamage"
+				"Target"
+				{
+					"Center"  	"TARGET"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_BASIC"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+				"Damage"		"%lizard_damage"
+			}
+	
 			"FireSound"
 			{
 				"EffectName"	"Hero_Beastmaster.Wild_Axes_Damage"
@@ -2562,7 +2591,7 @@
 							"Center"  	"CASTER"
 							"Radius" 	"%bladestorm_radius"
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						}
 					
 						"Action"    
@@ -2571,6 +2600,22 @@
 							{
 								"Target"		"TARGET"
 								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%AbilityDamage * %bladestorm_damage_tick"
+							}
+	
+							// Custom Building Damage
+							"RunScript"
+							{
+								"ScriptFile"	"buildings/damage.lua"
+								"Function"		"DoBuildingDamage"
+								"Target"
+								{
+									"Center"  	"TARGET"
+									"Radius" 	"%radius"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_BASIC"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+								}
 								"Damage"		"%AbilityDamage * %bladestorm_damage_tick"
 							}
 	
@@ -6940,17 +6985,19 @@
 				"ThinkInterval"  "%wave_interval"
 				"OnIntervalThink"
 				{
-					"Damage"
+					// Custom Building Damage
+					"RunScript"
 					{
+						"ScriptFile"	"buildings/damage.lua"
+						"Function"		"DoBuildingDamage"
 						"Target"
 						{
 							"Center"  	"TARGET"
 							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
-											
-						"Type"			"DAMAGE_TYPE_MAGICAL"
 						"Damage"		"%building_damage_per_sec"
 					}
 	
@@ -8134,20 +8181,23 @@
 									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 								}
 							}
-						}
-					}
 	
-					"Damage"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+							// Custom Building Damage
+							"RunScript"
+							{
+								"ScriptFile"	"buildings/damage.lua"
+								"Function"		"DoBuildingDamage"
+								"Target"
+								{
+									"Center"  	"TARGET"
+									"Radius" 	"%radius"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_BASIC"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+								}
+								"Damage"		"%wave_damage * 2"
+							}
 						}
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%wave_damage * 2"
 					}
 				}
 	
@@ -8184,20 +8234,23 @@
 									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 								}
 							}
-						}
-					}
 	
-					"Damage"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+							// Custom Building Damage
+							"RunScript"
+							{
+								"ScriptFile"	"buildings/damage.lua"
+								"Function"		"DoBuildingDamage"
+								"Target"
+								{
+									"Center"  	"TARGET"
+									"Radius" 	"%radius"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_BASIC"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+								}
+								"Damage"		"%wave_damage * 2"
+							}
 						}
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%wave_damage * 2"
 					}
 				}			
 			}
@@ -14753,7 +14806,8 @@
 							"Center"  	"TARGET"
 							"Radius" 	"%radius"
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
 					}
 				}		
@@ -16387,30 +16441,36 @@
 				"ThinkInterval"		"1"
 		        "OnIntervalThink"
 		        {
-					"Damage"
+		        	// Custom Building Damage
+					"RunScript"
 					{
+						"ScriptFile"	"buildings/damage.lua"
+						"Function"		"DoBuildingDamage"
 						"Target"
 						{
 							"Center"  	"CASTER"
 							"Radius" 	"%center_radius"
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
-						"Type"			 "DAMAGE_TYPE_MAGICAL"
-						"Damage"		 "%dps_to_buildings_center - %dps_to_buildings_outside"
+						"Damage"		"%dps_to_buildings_center - %dps_to_buildings_outside"
 					}
 	
-					"Damage"
+					// Custom Building Damage
+					"RunScript"
 					{
+						"ScriptFile"	"buildings/damage.lua"
+						"Function"		"DoBuildingDamage"
 						"Target"
 						{
 							"Center"  	"CASTER"
 							"Radius" 	"%outside_radius"
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
-						"Type"			 "DAMAGE_TYPE_MAGICAL"
-						"Damage"		 "%dps_to_buildings_outside"
+						"Damage"		"%dps_to_buildings_outside"
 					}
 				}
 			}
@@ -18840,19 +18900,22 @@
 						"Damage"		"%wave_damage"
 					}
 	
-					"Damage"
+					// Custom Building Damage
+					"RunScript"
 					{
+						"ScriptFile"	"buildings/damage.lua"
+						"Function"		"DoBuildingDamage"
 						"Target"
 						{
 							"Center"  	"TARGET"
 							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
-						"Type"			"DAMAGE_TYPE_MAGICAL"
 						"Damage"		"%wave_damage / 2"
 					}
-					
+							
 					"ApplyModifier"
 					{
 						"Target"
@@ -19159,7 +19222,7 @@
 	//2	N/A	N/A	8	70	Unit	N/A	20 bonus damage	3
 	//3	N/A	N/A	8	70	Unit	N/A	30 bonus damage	5
 	
-	// BUG: Orb doesn't fire on Buildings
+	// BUG: Orb doesn't fire on Magic Immune targets
 	"potm_searing_arrows"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -19170,6 +19233,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
 		"AbilityCastPoint"          	"0"
 	    "AbilityCastRange"          	"600 700 700"
@@ -19422,45 +19486,26 @@
 						}
 					}
 	
-					"ActOnTargets"
+					"DelayedAction"
 					{
-						"Target"
-						{
-							"Center"  	"CASTER"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
-						}
-					
+						"Delay"     "0.4"
 						"Action"    
 						{
-							"FireEffect"
+							// Custom Building Damage
+							"RunScript"
 							{
-								"EffectName"        "particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-								"EffectAttachType"  "follow_origin"
-								"Target"            "TARGET"
-							}
-	
-							"DelayedAction"
-							{
-								"Delay"     "0.4"
-								"Action"    
+								"ScriptFile"	"buildings/damage.lua"
+								"Function"		"DoBuildingDamage"
+								"Target"
 								{
-									"Damage"
-									{
-										"Target"		"TARGET"
-										"Type"			"DAMAGE_TYPE_MAGICAL"
-										"Damage"		"%wave_damage * %building_dmg_pct * 0.01"
-									}
-	
-									"FireSound"
-									{
-										"EffectName"	"Ability.StarfallImpact"
-										"Target" 		"TARGET"
-									}
+									"Center"  	"TARGET"
+									"Radius" 	"%radius"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_BASIC"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 								}
+								"Damage"		"%wave_damage * %building_dmg_pct * 0.01"
 							}
-							
 						}
 					}
 				}		
@@ -20487,7 +20532,7 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	
@@ -20591,7 +20636,7 @@
 					"Center"  	"PROJECTILE"
 					"Radius" 	"%projectile_radius"
 					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				}
 			
 				"Action"    

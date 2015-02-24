@@ -254,20 +254,23 @@
 								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							}
 						}
-					}
-				}
 
-				"Damage"
-				{
-					"Target"
-					{
-						"Center"  	"TARGET"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						// Custom Building Damage
+						"RunScript"
+						{
+							"ScriptFile"	"buildings/damage.lua"
+							"Function"		"DoBuildingDamage"
+							"Target"
+							{
+								"Center"  	"TARGET"
+								"Radius" 	"%radius"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+								"Types" 	"DOTA_UNIT_TARGET_BASIC"
+								"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+							}
+							"Damage"		"%wave_damage * 2"
+						}
 					}
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%wave_damage * 2"
 				}
 			}
 
@@ -304,20 +307,23 @@
 								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							}
 						}
-					}
-				}
 
-				"Damage"
-				{
-					"Target"
-					{
-						"Center"  	"TARGET"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						// Custom Building Damage
+						"RunScript"
+						{
+							"ScriptFile"	"buildings/damage.lua"
+							"Function"		"DoBuildingDamage"
+							"Target"
+							{
+								"Center"  	"TARGET"
+								"Radius" 	"%radius"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+								"Types" 	"DOTA_UNIT_TARGET_BASIC"
+								"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+							}
+							"Damage"		"%wave_damage * 2"
+						}
 					}
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%wave_damage * 2"
 				}
 			}			
 		}

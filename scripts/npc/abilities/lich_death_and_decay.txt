@@ -169,7 +169,8 @@
 						"Center"  	"TARGET"
 						"Radius" 	"%radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
 				}
 			}		

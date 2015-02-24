@@ -49,3 +49,17 @@ function MassTeleport( event )
     caster:StopSound("Hero_KeeperOfTheLight.Recall.Cast")
     print("Teleported to ",target:GetUnitName())
 end
+
+-- Check if the target is a custom building
+function BuildingCheck( event )
+	local ability = event.ability
+	local caster = event.caster
+	local target = event.target
+	local pID = caster:GetPlayerID()
+
+	local isBuilding = target:FindAbilityByName("ability_building")
+	if not isBuilding then
+		caster:Interrupt()
+		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need to target a building" } )
+	end	
+end

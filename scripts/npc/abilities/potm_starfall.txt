@@ -178,45 +178,26 @@
 					}
 				}
 
-				"ActOnTargets"
+				"DelayedAction"
 				{
-					"Target"
-					{
-						"Center"  	"CASTER"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
-					}
-				
+					"Delay"     "0.4"
 					"Action"    
 					{
-						"FireEffect"
+						// Custom Building Damage
+						"RunScript"
 						{
-							"EffectName"        "particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-							"EffectAttachType"  "follow_origin"
-							"Target"            "TARGET"
-						}
-
-						"DelayedAction"
-						{
-							"Delay"     "0.4"
-							"Action"    
+							"ScriptFile"	"buildings/damage.lua"
+							"Function"		"DoBuildingDamage"
+							"Target"
 							{
-								"Damage"
-								{
-									"Target"		"TARGET"
-									"Type"			"DAMAGE_TYPE_MAGICAL"
-									"Damage"		"%wave_damage * %building_dmg_pct * 0.01"
-								}
-
-								"FireSound"
-								{
-									"EffectName"	"Ability.StarfallImpact"
-									"Target" 		"TARGET"
-								}
+								"Center"  	"TARGET"
+								"Radius" 	"%radius"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+								"Types" 	"DOTA_UNIT_TARGET_BASIC"
+								"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 							}
+							"Damage"		"%wave_damage * %building_dmg_pct * 0.01"
 						}
-						
 					}
 				}
 			}		

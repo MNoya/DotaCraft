@@ -23,7 +23,7 @@ end
 function VolcanoKnockback( event )
 	local caster = event.caster
 	local targets = event.target_entities
-	print(#targets)
+
 	local ability = event.ability
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
 
@@ -41,7 +41,6 @@ function VolcanoKnockback( event )
 
 	for _,unit in pairs(targets) do
 		if unit ~= caster then
-			print("1")
 			unit:AddNewModifier( caster, nil, "modifier_knockback", knockbackModifierTable )
 		end
 	end			
@@ -52,7 +51,7 @@ end
 function VolcanoWave( event )
 	local caster = event.caster
 	local targets = event.target_entities
-	print(#targets)
+	print("Targets detected: "..#targets)
 	local ability = event.ability
 	local wave_damage = ability:GetLevelSpecialValueFor( "wave_damage", ability:GetLevel() - 1 )
 	local stun_duration = ability:GetLevelSpecialValueFor( "stun_duration", ability:GetLevel() - 1 )
