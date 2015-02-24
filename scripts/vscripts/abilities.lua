@@ -21,8 +21,6 @@ function build( keys )
 	local playerID = hero:GetPlayerID()
 	local player = PlayerResource:GetPlayer(playerID)	
 
-	print(playerID,player,building_name,unit_table,lumber_cost)
-
 	if player.lumber < lumber_cost then
 		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Lumber" } )		
 		return
@@ -33,7 +31,10 @@ function build( keys )
 		print("Started construction of " .. unit:GetUnitName())
 		-- Unit is the building be built.
 		-- Play construction sound
+
 		-- FindClearSpace for the builder
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		caster:AddNewModifier(caster, nil, "modifier_phased", {duration=0.03})
 
 		player.lumber = player.lumber - lumber_cost
     	print("Lumber Spend. Player "..playerID.." is currently at " .. player.lumber)
@@ -61,6 +62,20 @@ function build( keys )
 	keys:OnBuildingPosChosen(function(vPos)
 		--print("OnBuildingPosChosen")
 		-- in WC3 some build sound was played here.
+
+		local hull = unit_table.CollisionSize*2
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), vPos, nil, hull, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
+
+		-- Move the units away from the building place
+		for _,unit in pairs(units) do
+			if unit ~= caster then
+				print(unit:GetUnitName())
+				local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * hull
+				ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
+				unit:AddNewModifier(caster, nil, "modifier_phased", {duration=1})
+			end
+		end
+
 	end)
 
 	keys:OnConstructionCompleted(function(unit)

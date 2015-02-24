@@ -404,7 +404,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 
 	-- Give Initial Lumber
-	player.lumber = 150
+	player.lumber = 5000
 	print("Lumber Gained. " .. hero:GetUnitName() .. " is currently at " .. player.lumber)
     FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
 
