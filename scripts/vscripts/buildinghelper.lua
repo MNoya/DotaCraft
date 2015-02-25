@@ -20,10 +20,10 @@ PACK_ENABLED = false
 Debug_BH = true
 
 -- Ghost Building Preferences
-GRID_ALPHA = 30 -- Defines the transparency of the ghost squares
-MODEL_ALPHA = 100 -- Defines the transparency of the ghost model
+GRID_ALPHA = 60 -- Defines the transparency of the ghost squares
+MODEL_ALPHA = 100 -- Defines the transparency of the ghost model. BMD says it doesn't work currently.
 RECOLOR_GHOST_MODEL = false -- Whether to recolor the ghost model green/red or not
-USE_PROJECTED_GRID = false -- Enabling this will make the ghost squares follow terrain and be placed under the model. Works 
+USE_PROJECTED_GRID = false -- Enabling this will make the ghost squares follow terrain and be placed under the model. Works better with less than 100 alpha.
 
 -- Circle packing math.
 BH_A = math.pow(2,.5) --multi this by rad of building
@@ -324,6 +324,8 @@ function BuildingHelper:AddBuilding(keys)
 		if not player.cursorStream then
 			local delta = .03
 			local start = false
+			local generateParticles = true
+			local modelParticle = nil
 			player.cursorStream = FlashUtil:RequestDataStream( "cursor_position_world", delta, pID, function(playerID, cursorPos)
 				local validPos = true
 				-- Remember, our blocked squares are defined according to the square's center.
@@ -336,11 +338,7 @@ function BuildingHelper:AddBuilding(keys)
 					if validPos then
 						keys:AddToGrid(cursorPos)
 					end
-					FlashUtil:StopDataStream( player.cursorStream )
-					player.cursorStream = nil
-					player.buildingPosChosen = false
-					player.lastCursorCenter = OutOfWorldVector
-					ClearParticleTable(player.ghost_particles)
+					player:CancelGhost()
 					return
 				end
 
@@ -368,59 +366,79 @@ function BuildingHelper:AddBuilding(keys)
 						bottomBorderY = centerY-halfSide}
 
 					-- No need to redraw the particles if the cursor is at the same location. 
-					-- (bug) it will stay green if cursor stays at the same location and a building is built at the location.
 					local cursorSnap = nil
 					if player.lastCursorCenter ~= nil then
 						local cursorSnapX = SnapToGrid32(player.lastCursorCenter.x)
 						local cursorSnapY = SnapToGrid32(player.lastCursorCenter.y)
 						cursorSnap = Vector(cursorSnapX, cursorSnapY, vBuildingCenter.z)
 					end
-					if cursorSnap ~= nil and vBuildingCenter ~= cursorSnap then
-						ClearParticleTable(player.ghost_particles)
+					if cursorSnap ~= nil then
 						local areaBlocked = false
 						local squares = {}
+
+						-- Iterate thru the square locations
+						local ptr = 1
 						for x=boundingRect.leftBorderX+32,boundingRect.rightBorderX-32,64 do
 							for y=boundingRect.topBorderY-32,boundingRect.bottomBorderY+32,-64 do
-								local groundZ = GetGroundPosition(Vector(x,y,z),caster).z
-								--table.insert(squares, Vector(x,y,z))
-								--print(VectorString(Vector(x,y,z)))
+								if generateParticles then
+									if not modelParticle then
+										--<BMD> position is 0, model attach is 1, color is CP2, and alpha is CP3.x
+										modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
+										ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true)						
+										ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0))
+										ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0))
+									end
 
-								local ghost_grid_particle = "particles/buildinghelper/square_sprite.vpcf"
-								if USE_PROJECTED_GRID then
-									ghost_grid_particle = "particles/buildinghelper/square_projected.vpcf"
+									-- Particles haven't been generated yet. Generate them.
+									local ghost_grid_particle = "particles/buildinghelper/square_sprite.vpcf"
+									if USE_PROJECTED_GRID then
+										ghost_grid_particle = "particles/buildinghelper/square_projected.vpcf"
+									end
+									local id = ParticleManager:CreateParticleForPlayer(ghost_grid_particle, PATTACH_ABSORIGIN, caster, player)
+									ParticleManager:SetParticleControl(id, 1, Vector(32,0,0))
+									ParticleManager:SetParticleControl(id, 3, Vector(GRID_ALPHA,0,0))
+									table.insert(player.ghost_particles, id)
+
 								end
 
-								local id = ParticleManager:CreateParticleForPlayer(ghost_grid_particle, PATTACH_ABSORIGIN, caster, player)
-								ParticleManager:SetParticleControl(id, 0, Vector(x,y,groundZ))
-								ParticleManager:SetParticleControl(id, 1, Vector(32,0,0))
-								ParticleManager:SetParticleControl(id, 3, Vector(GRID_ALPHA,0,0))
+								-- Move a particle to a correct location
+								local particle = player.ghost_particles[ptr]
+								ptr = ptr + 1
+
+								local groundZ = GetGroundPosition(Vector(x,y,z),caster).z
+								ParticleManager:SetParticleControl(particle, 0, Vector(x,y,groundZ))
+								--print("Moving " .. particle .. " to " .. VectorString(Vector(x,y,groundZ)))
+
 								if IsSquareBlocked(Vector(x,y,z), true) then
-									ParticleManager:SetParticleControl(id, 2, Vector(255,0,0))
+									ParticleManager:SetParticleControl(particle, 2, Vector(255,0,0))
 									areaBlocked = true
 									--DebugDrawBox(Vector(x,y,z), Vector(-32,-32,0), Vector(32,32,1), 255, 0, 0, 40, delta)
 								else
-									ParticleManager:SetParticleControl(id, 2, Vector(0,255,0))
+									ParticleManager:SetParticleControl(particle, 2, Vector(0,255,0))
 								end
-								table.insert(player.ghost_particles, id)
 							end
 						end
-						--<BMD> position is 0, model attach is 1, color is CP2, and alpha is CP3.x
-						--ParticleManager:SetParticleControlEnt(particle, 1, unit, 1, "follow_origin", unit:GetAbsOrigin(), true)
-						local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
-						ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true)						
-						ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0))
-						ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0))
-						if RECOLOR_GHOST_MODEL then
-							if areaBlocked then
-								ParticleManager:SetParticleControl(modelParticle, 2, Vector(255,0,0))	
+
+						-- color + move model particle
+						if modelParticle ~= nil then
+							-- move model ghost particle
+							ParticleManager:SetParticleControl(modelParticle, 0, vBuildingCenter)
+							if RECOLOR_GHOST_MODEL then
+								if areaBlocked then
+									ParticleManager:SetParticleControl(modelParticle, 2, Vector(255,0,0))	
+								else
+									ParticleManager:SetParticleControl(modelParticle, 2, Vector(0,255,0))
+								end
 							else
-								ParticleManager:SetParticleControl(modelParticle, 2, Vector(0,255,0))
+								ParticleManager:SetParticleControl(modelParticle, 2, Vector(255,255,255)) -- Draws the ghost with the original colors
 							end
-						else
-							ParticleManager:SetParticleControl(modelParticle, 2, Vector(255,255,255)) -- Draws the ghost with the original colors
 						end
-						ParticleManager:SetParticleControl(modelParticle, 0, vBuildingCenter)
-						table.insert(player.ghost_particles, modelParticle)
+
+						if generateParticles then
+							-- modelParticle is in the last index.
+							table.insert(player.ghost_particles, modelParticle)
+							generateParticles = false
+						end
 					end
 					player.lastCursorCenter = vBuildingCenter
 				end
