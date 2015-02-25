@@ -520,7 +520,10 @@ function BuildingHelper:AddBuilding(keys)
 		caster.orders[DoUniqueString("order")] = {["unitName"] = unitName, ["pos"] = vBuildingCenter, ["team"] = caster:GetTeam(),
 			["buildingTable"] = buildingTable, ["squares_to_close"] = closed, ["keys"] = keys}
 		Timers:CreateTimer(.03, function()
-			caster:CastAbilityOnPosition(vBuildingCenter, abil, 0)
+			local casterIndex = caster:GetEntityIndex()
+			local order = DOTA_UNIT_ORDER_CAST_POSITION
+			local abilIndex = abil:GetEntityIndex()
+			ExecuteOrderFromTable({ UnitIndex = casterIndex, OrderType = DOTA_UNIT_ORDER_CAST_POSITION, AbilityIndex = abilIndex, Position = vBuildingCenter, Queue = false}) 
 			if keys.onBuildingPosChosen ~= nil then
 				keys.onBuildingPosChosen(vBuildingCenter)
 				keys.onBuildingPosChosen = nil
@@ -551,6 +554,7 @@ function BuildingHelper:ChangeBuildingGhostStyle( nStyle )
 end
 
 function BuildingHelper:InitializeBuildingEntity(keys)
+	print("InitializeBuildingEntity")
 	local caster = keys.caster
 	local builder = caster -- alias
 	local orders = builder.orders

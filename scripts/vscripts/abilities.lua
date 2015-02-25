@@ -133,6 +133,7 @@ function build( keys )
 end
 
 function create_building_entity( keys )
+	print("create_building_entity")
 	BuildingHelper:InitializeBuildingEntity(keys)
 end
 

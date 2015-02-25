@@ -3980,7 +3980,6 @@
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
 		"AbilityCastRange"				"70"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		"MaxLevel"						"1"
 	
 		"AbilityManaCost"				"0"
@@ -4003,7 +4002,6 @@
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
 		"AbilityCastRange"				"100"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		"MaxLevel"						"1"
 	
 		"AbilityManaCost"				"0"
@@ -4026,7 +4024,6 @@
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
 		"AbilityCastRange"				"150"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		"MaxLevel"						"1"
 	
 		"AbilityManaCost"				"0"
@@ -4049,7 +4046,6 @@
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
 		"AbilityCastRange"				"200"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		"MaxLevel"						"1"
 	
 		"AbilityManaCost"				"0"
@@ -4072,7 +4068,6 @@
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
 		"AbilityCastRange"				"250"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		"MaxLevel"						"1"
 	
 		"AbilityManaCost"				"0"
@@ -4095,7 +4090,6 @@
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
 		"AbilityCastRange"				"300"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		"MaxLevel"						"1"
 	
 		"AbilityManaCost"				"0"
@@ -4243,30 +4237,6 @@
 		"MaxLevel"						"0"
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
-	}
-	"build_tree_of_life"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_tree_of_life"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-	
-		"AbilityCastRange"				"100"
-	
-		"AbilityGoldCost"				"100"
-		"AbilityUpgradeGoldCost"		"0"
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"build.lua"
-				"Function"		"Build"
-				"Unit"			"nightelf_tree_of_life"
-				"Target"		"POINT"
-			}
-		}
 	}
 	// Crypt Lord Carrion Beetles
 	// Author: Noya
