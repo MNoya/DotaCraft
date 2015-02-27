@@ -1017,6 +1017,49 @@ function dotacraft:Initdotacraft()
 	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
 	Convars:RegisterCommand( "command_example", Dynamic_Wrap(dotacraft, 'ExampleConsoleCommand'), "A console command example", 0 )
 
+
+	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
+	-- Note: When the abilities change, we need to update this value.
+	Convars:RegisterCommand( "ability_values_entity", function(name, entityIndex)
+		local cmdPlayer = Convars:GetCommandClient()
+		local pID = cmdPlayer:GetPlayerID()
+
+		if cmdPlayer then
+			local unit = EntIndexToHScript(tonumber(entityIndex))
+
+	  		if unit:GetUnitName() == "human_peasant" then
+
+		  		local abilityValues = {}
+
+		  		-- Iterate over the abilities
+		  		for i=0,15 do
+		  			local ability = unit:GetAbilityByIndex(i)
+
+		  			-- If there's an ability in this slot and its not hidden, define the number to show
+		  			if ability and not ability:IsHidden() then
+		  				local lumberCost = ability:GetLevelSpecialValueFor("lumber_cost", ability:GetLevel() - 1)
+		  				if lumberCost then
+		  					table.insert(abilityValues,lumberCost)
+		  				else
+		  					table.insert(abilityValues,0)
+		  				end
+				  	end
+		  		end
+
+		    	FireGameEvent( 'ability_values_send', { player_ID = pID, 
+		    										hue_1 = -10, val_1 = abilityValues[1], 
+		    										hue_2 = -10, val_2 = abilityValues[2], 
+		    										hue_3 = -10, val_3 = abilityValues[3], 
+		    										hue_4 = -10, val_4 = abilityValues[4], 
+		    										hue_5 = -10, val_5 = abilityValues[5],
+		    										hue_6 = -10, val_6 = abilityValues[6] } )
+		    else
+		    	-- Hide all the values if the unit is not supposed to show any.
+		    	FireGameEvent( 'ability_values_send', { player_ID = pID, val_1 = 0, val_2 = 0, val_3 = 0, val_4 = 0, val_5 = 0, val_6 = 0 } )
+		    end
+	  	end
+	end, "Change AbilityValues", 0 )
+
 	-- Fill server with fake clients
 	-- Fake clients don't use the default bot AI for buying items or moving down lanes and are sometimes necessary for debugging
 	Convars:RegisterCommand('fake', function()
