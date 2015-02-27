@@ -439,6 +439,8 @@ end
 function CheckAbilityRequirements( unit, player )
 
 	local requirements = GameRules.Requirements
+	local hero = unit:GetOwner()
+	local pID = hero:GetPlayerID()
 	local buildings = player.buildings
 	local upgrades = player.upgrades
 
@@ -609,6 +611,11 @@ function CheckAbilityRequirements( unit, player )
 	else
 		print("! Not a Valid Entity !, there's currently ",#player.units,"units and",#player.structures,"structures in the table")
 	end
+
+	-- Fire update lumber costs UI
+	print("###Firing ability_values_force_check for "..unit:GetUnitName())
+	FireGameEvent( 'ability_values_force_check', { player_ID = pID })
+	
 end
 
 -- Update to the appropiate research rank on each unit
@@ -1016,7 +1023,6 @@ function dotacraft:Initdotacraft()
 
 	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
 	Convars:RegisterCommand( "command_example", Dynamic_Wrap(dotacraft, 'ExampleConsoleCommand'), "A console command example", 0 )
-
 
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
 	-- Note: When the abilities change, we need to update this value.
