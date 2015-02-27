@@ -19524,6 +19524,26 @@
 		    }
 		}
 	}
+	"run_animation"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"hero_ability_name"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		
+		"Modifiers"
+		{
+			"modifier_run_sheep"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0"	
+	
+				"OverrideAnimation"     "ACT_DOTA_RUN"
+			}
+		}
+	}
 	// Shadow Hunter Big Bad Voodoo
 	// Author: Noya
 	// Date: 28.01.2015.
