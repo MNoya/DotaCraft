@@ -640,6 +640,7 @@ function UpdateUnitUpgrades( unit, player, research_type )
 			local rank1 = unit:FindAbilityByName("human_forged_swords1")
 			local rank2 = unit:FindAbilityByName("human_forged_swords2")
 			local rank3 = unit:FindAbilityByName("human_forged_swords3")
+			local level = 0
 			if rank1 then
 				-- Remove any of the modifiers before reapplying
 				unit:RemoveModifierByName("human_forged_swords1")
@@ -651,7 +652,8 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				unit:SwapAbilities("human_forged_swords1", "human_forged_swords2", false, true)
 				unit:RemoveAbility("human_forged_swords1")
 				local ability = unit:FindAbilityByName("human_forged_swords2")
-				ability:SetLevel(2)
+				level = 2
+				ability:SetLevel(level)
 				print("UUU Rank 2 of Forged Weapons Reached")
 			elseif rank2 then
 				-- Remove any of the modifiers before reapplying
@@ -665,16 +667,22 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				unit:SwapAbilities("human_forged_swords2", "human_forged_swords3", false, true)
 				unit:RemoveAbility("human_forged_swords2")
 				local ability = unit:FindAbilityByName("human_forged_swords3")
-				ability:SetLevel(3)
+				level = 3
+				ability:SetLevel(level)
 				print("UUU Rank 3 of Forged Weapons Reached")
-			elseif forged3 then
+			elseif rank3 then
 				print("UUU Max Rank of Forged Weapons Reached")
 			else
 				-- Learn the rank 1ability
 				unit:AddAbility("human_forged_swords1")
 				local ability = unit:FindAbilityByName("human_forged_swords1")
-				ability:SetLevel(1)
+				level = 1
+				ability:SetLevel(level)
 				print("UUU Rank 1 of Forged Swords Reached")
+			end
+
+			if level ~= 0 then
+				UpgradeWeaponWearables(unit, level)
 			end
 		end
 	elseif research_type == "plating" then
@@ -1033,7 +1041,7 @@ function dotacraft:Initdotacraft()
 		if cmdPlayer then
 			local unit = EntIndexToHScript(tonumber(entityIndex))
 
-	  		if unit:GetUnitName() == "human_peasant" then
+	  		if unit and unit:GetUnitName() == "human_peasant" then
 
 		  		local abilityValues = {}
 
@@ -1126,6 +1134,7 @@ function dotacraft:Initdotacraft()
   	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
   	GameRules.ItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
   	GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
+  	GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
 
   	-- Building Helper by Myll
   	BuildingHelper:Init() -- nHalfMapLength

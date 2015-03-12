@@ -5,6 +5,8 @@ require('dotacraft')
 require('popups')
 require('util')
 
+require('units.human_upgrades') --This is messy, need to improve the structure later
+
 -- BuildingHelper by Myll
 require('buildinghelper')
 require('FlashUtil')
@@ -70,6 +72,10 @@ function Precache( context )
 		PrecacheUnitByNameSync("human_arcane_sanctum", context)
 		PrecacheUnitByNameSync("human_gryphon_aviary", context)
 		PrecacheUnitByNameSync("human_arcane_vault", context)
+
+		-- HATS
+		PrecacheResource("model_folder", "models/heroes/dragon_knight", context)
+		PrecacheResource("model_folder", "models/items/dragon_knight", context)
 end
 
 -- Create the game mode when we activate
