@@ -76,8 +76,8 @@ function ApplyPlatingUpgrade( event )
 	local target = event.target
 	local player = caster:GetPlayerOwner()
 	local upgrades = player.upgrades
+	local level = 0
 
-	level = 0
 	if player.upgrades["human_research_plating3"] then
 		target:AddAbility("human_plating3")
 		local ability = target:FindAbilityByName("human_plating3")
@@ -107,19 +107,27 @@ function ApplyRangedWeaponsUpgrade( event )
 	local target = event.target
 	local player = caster:GetPlayerOwner()
 	local upgrades = player.upgrades
+	local level = 0
 
 	if player.upgrades["human_research_ranged_weapons3"] then
 		target:AddAbility("human_ranged_weapons3")
 		local ability = target:FindAbilityByName("human_ranged_weapons3")
-		ability:SetLevel(3)
+		level = 3
+		ability:SetLevel(level)
 	elseif player.upgrades["human_research_ranged_weapons2"] then
 		target:AddAbility("human_ranged_weapons2")
 		local ability = target:FindAbilityByName("human_ranged_weapons2")
-		ability:SetLevel(2)
+		level = 2
+		ability:SetLevel(level)
 	elseif player.upgrades["human_research_ranged_weapons1"] then
 		target:AddAbility("human_ranged_weapons1")
 		local ability = target:FindAbilityByName("human_ranged_weapons1")
-		ability:SetLevel(1)
+		level = 1
+		ability:SetLevel(level)
+	end
+
+	if level ~= 0 then
+		UpgradeWeaponWearables(target, level)
 	end
 
 end
@@ -130,19 +138,27 @@ function ApplyLeatherArmorUpgrade( event )
 	local target = event.target
 	local player = caster:GetPlayerOwner()
 	local upgrades = player.upgrades
-
+	local level = 0
+	
 	if player.upgrades["human_research_leather_armor3"] then
 		target:AddAbility("human_leather_armor3")
 		local ability = target:FindAbilityByName("human_leather_armor3")
-		ability:SetLevel(3)
+		level = 3
+		ability:SetLevel(level)
 	elseif player.upgrades["human_research_leather_armor2"] then
 		target:AddAbility("human_leather_armor2")
 		local ability = target:FindAbilityByName("human_leather_armor2")
-		ability:SetLevel(2)
+		level = 2
+		ability:SetLevel(level)
 	elseif player.upgrades["human_research_leather_armor1"] then
 		target:AddAbility("human_leather_armor1")
 		local ability = target:FindAbilityByName("human_leather_armor1")
-		ability:SetLevel(1)
+		level = 1
+		ability:SetLevel(level)
+	end
+
+	if level ~= 0 then
+		UpgradeArmorWearables(target, level)
 	end
 
 end

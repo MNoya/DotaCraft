@@ -748,6 +748,7 @@ function UpdateUnitUpgrades( unit, player, research_type )
 			local rank1 = unit:FindAbilityByName("human_ranged_weapons1")
 			local rank2 = unit:FindAbilityByName("human_ranged_weapons2")
 			local rank3 = unit:FindAbilityByName("human_ranged_weapons3")
+			local level = 0
 
 			if rank1 then
 				-- Remove any of the modifiers before reapplying
@@ -760,7 +761,8 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				unit:SwapAbilities("human_ranged_weapons1", "human_ranged_weapons2", false, true)
 				unit:RemoveAbility("human_ranged_weapons1")
 				local ability = unit:FindAbilityByName("human_ranged_weapons2")
-				ability:SetLevel(2)
+				level = 2
+				ability:SetLevel(level)
 				print("UUU Rank 2 of Ranged Weapons Reached")
 			elseif rank2 then
 				-- Remove any of the modifiers before reapplying
@@ -774,7 +776,8 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				unit:SwapAbilities("human_ranged_weapons2", "human_ranged_weapons3", false, true)
 				unit:RemoveAbility("human_ranged_weapons2")
 				local ability = unit:FindAbilityByName("human_ranged_weapons3")
-				ability:SetLevel(3)
+				level = 3
+				ability:SetLevel(level)
 				print("UUU Rank 3 of Ranged Weapons Reached")
 			elseif rank3 then
 				print("UUU Max Rank of Ranged Weapons Reached")
@@ -782,13 +785,15 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				-- Learn the rank 1ability
 				unit:AddAbility("human_ranged_weapons1")
 				local ability = unit:FindAbilityByName("human_ranged_weapons1")
-				ability:SetLevel(1)
+				level = 1
+				ability:SetLevel(level)
 				print("UUU Rank 1 of Ranged Weapons Reached")
 			end
+
+			if level ~= 0 then
+				UpgradeWeaponWearables(unit, level)
+			end
 		end
-
-
-
 
 	elseif research_type == "leather" then
 
@@ -802,6 +807,7 @@ function UpdateUnitUpgrades( unit, player, research_type )
 			local rank1 = unit:FindAbilityByName("human_leather_armor1")
 			local rank2 = unit:FindAbilityByName("human_leather_armor2")
 			local rank3 = unit:FindAbilityByName("human_leather_armor3")
+			local level = 0
 
 			if rank1 then
 				-- Remove any of the modifiers before reapplying
@@ -811,7 +817,9 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				unit:SwapAbilities("human_leather_armor1", "human_leather_armor2", false, true)
 				unit:RemoveAbility("human_leather_armor1")
 				local ability = unit:FindAbilityByName("human_leather_armor2")
-				ability:SetLevel(2)
+				level = 2
+				ability:SetLevel(level)
+
 				print("UUU Rank 2 of leather_armor Reached")
 			elseif rank2 then
 				-- Remove any of the modifiers before reapplying
@@ -821,7 +829,8 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				unit:SwapAbilities("human_leather_armor2", "human_leather_armor3", false, true)
 				unit:RemoveAbility("human_leather_armor2")
 				local ability = unit:FindAbilityByName("human_leather_armor3")
-				ability:SetLevel(3)
+				level = 3
+				ability:SetLevel(level)
 				print("UUU Rank 3 of leather_armor Reached")
 			elseif rank3 then
 				print("UUU Max Rank of leather_armor Reached")
@@ -829,10 +838,15 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				-- Learn the rank 1ability
 				unit:AddAbility("human_leather_armor1")
 				local ability = unit:FindAbilityByName("human_leather_armor1")
-				ability:SetLevel(1)
+				level = 1
+				ability:SetLevel(level)
 				print("UUU Rank 1 of leather_armor Reached")
 			end
-		end 
+
+			if level ~= 0 then
+				UpgradeArmorWearables(unit, level)
+			end
+		end
 	end
 
 end
@@ -1145,6 +1159,9 @@ function dotacraft:Initdotacraft()
   	GameRules.ItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
   	GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
   	GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
+  	print("##############")
+  	DeepPrintTable(GameRules.Wearables)
+  	print("##############")
 
   	-- Building Helper by Myll
   	BuildingHelper:Init() -- nHalfMapLength

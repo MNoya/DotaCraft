@@ -3,7 +3,7 @@ function UpgradeWeaponWearables(target, level)
 	
 	local wearable = target:FirstMoveChild()
 	local unit_name = target:GetUnitName()
-	print("UWW",unit_name)
+	print("UWW",unit_name,level)
 	local wearables = GameRules.Wearables
 	local unit_table = wearables[unit_name]
 	local weapon_table = unit_table.weapon
@@ -40,13 +40,13 @@ function UpgradeArmorWearables(target, level)
 	
 	local wearable = target:FirstMoveChild()
 	local unit_name = target:GetUnitName()
-	print("UAW",unit_name)
+	print("UAW",unit_name,level)
 	local wearables = GameRules.Wearables
 	local unit_table = wearables[unit_name]
 	local armor_table = unit_table.armor
 
 	print("Armor Table")
-	for _,armor in pairs(armor_table) do
+	for k,armor in pairs(armor_table) do
 		print(k)
 		DeepPrintTable(armor)
 	
@@ -59,9 +59,9 @@ function UpgradeArmorWearables(target, level)
 				print("UAW",wearable:GetModelName())
 
 				-- Unit just spawned, it has the default weapon
-				if original_weapon == wearable:GetModelName() then
+				if original_armor == wearable:GetModelName() then
 					wearable:SetModel( new_armor )
-					print("UAW", "\nSuccessfully swap " .. original_weapon .. " with " .. new_armor )
+					print("UAW", "\nSuccessfully swap " .. original_armor .. " with " .. new_armor )
 					break
 
 				-- In this case, the unit is already on the field and might have an upgrade

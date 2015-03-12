@@ -2,17 +2,11 @@
 {
 	"human_footman"
 	{
-
-		//Dragon Knight
-		//	0. Armor of Sir Davion
-		//	1. Blazing Superiority
-		//	2. Firedragon
-		//	3. Ascension
-
+		// Default -> SirDavion -> Ascension -> FireDragon
 		"weapon"
 		{
 			"0"	"models/heroes/dragon_knight/weapon.vmdl"
-			"1" "models/items/dragon_knight/blazingsuperiority_weapon/blazingsuperiority_weapon.vmdl"
+			"1" "models/items/dragon_knight/blood_ravager.vmdl"
 			"2" "models/items/dragon_knight/ascension_weapon/ascension_weapon.vmdl"
 			"3" "models/items/dragon_knight/firedragon_weapon/firedragon_weapon.vmdl"
 		}
@@ -63,10 +57,56 @@
 
 	"human_rifleman"
 	{
-		//Sniper
-		//	0. Gunslinger Set
-		//	1. Wild West
-		//	2. Gear of the Tally-Ho Hunter Set
-		//	3. The Sharpshooter Set w/Muh Keen Gun and Gramma Sharpie's Smokin' Rug 
+		// Default -> Gunslinger -> Tally-Ho -> Sharpshooter 
+		"weapon"
+		{
+			"0"	"models/heroes/sniper/weapon.vmdl"
+			"1" "models/items/sniper/gunslinger_rifle/gunslinger_rifle.vmdl"
+			"2" "models/items/sniper/weapon_noscope/weapon_noscope.vmdl"
+			"3" "models/items/sniper/machine_gun_charlie/machine_gun_charlie.vmdl"
+		}
+
+		"armor"
+		{
+			"1"	//Head
+			{
+				"0"	"models/heroes/sniper/headitem.vmdl"
+				"1" "models/items/sniper/gunslinger_head/gunslinger_headitem.vmdl"
+				"2" "models/items/sniper/sniper_tallyho_head2/sniper_tallyho_head2.vmdl"
+				"3" "models/items/sniper/sharpshooter_stache/sharpshooter_stache.vmdl"
+			}
+
+			"2"	//Back
+			{
+				"0"	"models/heroes/sniper/cape.vmdl"
+				"1" "models/items/sniper/gunslinger_cape/gunslinger_cape.vmdl"
+				"2" "models/items/sniper/sniper_tally_ho_back2/sniper_tally_ho_back2.vmdl"
+				"3" "models/items/sniper/sharpshooter_cloak/sharpshooter_cloak.vmdl"
+			}
+
+			"3"	//Shoulders
+			{
+				"0"	"models/heroes/sniper/shoulder.vmdl"
+				"1" "models/heroes/sniper/shoulder.vmdl"
+				"2" "models/items/sniper/sniper_tallyho_shoulders3/sniper_tallyho_shoulders3.vmdl"
+				"3" "models/items/sniper/sharpshooter_shoulder/sharpshooter_shoulder.vmdl"
+			}
+
+			"4"	//Bracers
+			{
+				"0"	"models/heroes/sniper/bracer.vmdl"
+				"1" "models/items/sniper/gunslinger_bracers/gunslinger_bracers.vmdl"
+				"2" "models/items/sniper/sniper_tallyho_arms2/sniper_tallyho_arms2.vmdl"
+				"3" "models/items/sniper/sharpshooter_bracers/sharpshooter_bracers.vmdl"
+			}
+		}
 	}
+
+	//human_knight
+	//human_spell_breaker
+	//human_flying_machine
+	//human_dragonhawk_rider
+	//human_mortar_team
+	//human_siege_engine
+	//human_gryphon_rider
 }

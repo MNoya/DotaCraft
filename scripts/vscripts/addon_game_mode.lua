@@ -75,6 +75,8 @@ function Precache( context )
 		-- HATS
 		PrecacheResource("model_folder", "models/heroes/dragon_knight", context)
 		PrecacheResource("model_folder", "models/items/dragon_knight", context)
+		PrecacheResource("model_folder", "models/heroes/sniper", context)
+		PrecacheResource("model_folder", "models/items/sniper", context)
 end
 
 -- Create the game mode when we activate
