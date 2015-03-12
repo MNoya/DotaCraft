@@ -77,18 +77,26 @@ function ApplyPlatingUpgrade( event )
 	local player = caster:GetPlayerOwner()
 	local upgrades = player.upgrades
 
+	level = 0
 	if player.upgrades["human_research_plating3"] then
 		target:AddAbility("human_plating3")
 		local ability = target:FindAbilityByName("human_plating3")
-		ability:SetLevel(3)
+		level = 3
+		ability:SetLevel(level)
 	elseif player.upgrades["human_research_plating2"] then
 		target:AddAbility("human_plating2")
 		local ability = target:FindAbilityByName("human_plating2")
-		ability:SetLevel(2)
+		level = 2
+		ability:SetLevel(level)
 	elseif player.upgrades["human_research_plating1"] then
 		target:AddAbility("human_plating1")
 		local ability = target:FindAbilityByName("human_plating1")
-		ability:SetLevel(1)
+		level = 1
+		ability:SetLevel(level)
+	end
+
+	if level ~= 0 then
+		UpgradeArmorWearables(target, level)
 	end
 
 end
@@ -137,43 +145,4 @@ function ApplyLeatherArmorUpgrade( event )
 		ability:SetLevel(1)
 	end
 
-end
-
--- Read the wearables.kv, check the unit name, swap weapon to the next level
-function UpgradeWeaponWearables(target, level)
-
-	print("UWW APLYING WEAPON COSMETIC UPGRADES")
-	
-	local wearable = target:FirstMoveChild()
-	local unit_name = target:GetUnitName()
-	print("UWW",unit_name)
-	local wearables = GameRules.Wearables
-	local unit_table = wearables[unit_name]
-	local weapon_table = unit_table.weapon
-
-	local original_weapon = weapon_table[tostring(0)]
-	local old_weapon = weapon_table[tostring((level)-1)]
-	local new_weapon = weapon_table[tostring(level)]
-
-	print("UWW",old_weapon,new_weapon)
-	
-	while wearable ~= nil do
-		if wearable:GetClassname() == "dota_item_wearable" then
-			print("UWW",wearable:GetModelName())
-
-			-- Unit just spawned, it has the default weapon
-			if original_weapon == wearable:GetModelName() then
-				wearable:SetModel( new_weapon )
-				print("UWW", "\nSuccessfully swap " .. original_weapon .. " with " .. new_weapon )
-				break
-
-			-- In this case, the unit is already on the field and might have an upgrade
-			elseif old_weapon and old_weapon == wearable:GetModelName() then
-				wearable:SetModel( new_weapon )
-				print("UWW", "\nSuccessfully swap " .. old_weapon .. " with " .. new_weapon )
-				break
-			end
-		end
-		wearable = wearable:NextMovePeer()
-	end
 end

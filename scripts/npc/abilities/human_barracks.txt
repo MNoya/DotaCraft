@@ -367,8 +367,52 @@
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_defend"
 	"MaxLevel" 						"1"
+	"AbilityCastAnimation"			"ACT_DOTA_VICTORY"
+	"AbilityCastPoint"				"0.5"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+
+	"OnToggleOn"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_defend"
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"300"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 	"DOTA_UNIT_TARGET_BASIC"
+			}
+		}
+	}
+
+	"OnToggleOff"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_defend"
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"300"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 	"DOTA_UNIT_TARGET_BASIC"
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_defend"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+	
+			"OverrideAnimation"     "ACT_DOTA_TELEPORT"
+		}
+	}
 }
 
 

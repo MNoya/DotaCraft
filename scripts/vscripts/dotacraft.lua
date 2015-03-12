@@ -697,6 +697,7 @@ function UpdateUnitUpgrades( unit, player, research_type )
 			local rank1 = unit:FindAbilityByName("human_plating1")
 			local rank2 = unit:FindAbilityByName("human_plating2")
 			local rank3 = unit:FindAbilityByName("human_plating3")
+			local level = 0
 
 			if rank1 then
 				-- Remove any of the modifiers before reapplying
@@ -706,7 +707,8 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				unit:SwapAbilities("human_plating1", "human_plating2", false, true)
 				unit:RemoveAbility("human_plating1")
 				local ability = unit:FindAbilityByName("human_plating2")
-				ability:SetLevel(2)
+				level = 2
+				ability:SetLevel(level)
 				print("UUU Rank 2 of Plating Reached")
 			elseif rank2 then
 				-- Remove any of the modifiers before reapplying
@@ -716,7 +718,8 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				unit:SwapAbilities("human_plating2", "human_plating3", false, true)
 				unit:RemoveAbility("human_plating2")
 				local ability = unit:FindAbilityByName("human_plating3")
-				ability:SetLevel(3)
+				level = 3
+				ability:SetLevel(level)
 				print("UUU Rank 3 of Plating Reached")
 			elseif rank3 then
 				print("UUU Max Rank of Plating Reached")
@@ -724,8 +727,13 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				-- Learn the rank 1ability
 				unit:AddAbility("human_plating1")
 				local ability = unit:FindAbilityByName("human_plating1")
-				ability:SetLevel(1)
+				level = 1
+				ability:SetLevel(level)
 				print("UUU Rank 1 of Plating Reached")
+			end
+
+			if level ~= 0 then
+				UpgradeArmorWearables(unit, level)
 			end
 		end 
 
@@ -1028,6 +1036,8 @@ function dotacraft:Initdotacraft()
 		end
 	end
 
+	-- Allow cosmetic swapping
+	SendToServerConsole( "dota_combines_model 0" )
 
 	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
 	Convars:RegisterCommand( "command_example", Dynamic_Wrap(dotacraft, 'ExampleConsoleCommand'), "A console command example", 0 )

@@ -4,8 +4,7 @@ require('physics')
 require('dotacraft')
 require('popups')
 require('util')
-
-require('units.human_upgrades') --This is messy, need to improve the structure later
+require('upgrades')
 
 -- BuildingHelper by Myll
 require('buildinghelper')
