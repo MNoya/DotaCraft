@@ -77,6 +77,14 @@ function Precache( context )
 		PrecacheResource("model_folder", "models/items/dragon_knight", context)
 		PrecacheResource("model_folder", "models/heroes/sniper", context)
 		PrecacheResource("model_folder", "models/items/sniper", context)
+		PrecacheResource("model_folder", "models/heroes/chaos_knight", context)
+		PrecacheResource("model_folder", "models/items/chaos_knight", context)
+		PrecacheResource("model_folder", "models/heroes/silencer", context)
+		PrecacheResource("model_folder", "models/items/silencer", context)
+		PrecacheResource("model_folder", "models/heroes/gyrocopter", context)
+		PrecacheResource("model_folder", "models/items/gyrocopter", context)
+		PrecacheResource("model_folder", "models/heroes/skywrath_mage", context)
+		PrecacheResource("model_folder", "models/items/skywrath_mage", context)
 end
 
 -- Create the game mode when we activate

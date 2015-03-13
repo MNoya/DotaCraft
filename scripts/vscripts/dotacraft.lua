@@ -634,7 +634,7 @@ function UpdateUnitUpgrades( unit, player, research_type )
 			unit_name == "human_knight" or 
 			unit_name == "human_footman" or 
 			unit_name == "human_militia" or
-			unit_name == "human_spellbreaker" then
+			unit_name == "human_spell_breaker" then
 	
 			-- Find current level and remove it
 			local rank1 = unit:FindAbilityByName("human_forged_swords1")
