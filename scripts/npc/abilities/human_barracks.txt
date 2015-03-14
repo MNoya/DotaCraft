@@ -363,27 +363,40 @@
 }
 
 "human_defend"
+//Activate to take 50% less damage from Piercing attacks, but have 30% reduced movement speed. 
+//Defend does not reflect attacks to buildings, and its chance of reflection against units is 30%.
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_defend"
 	"MaxLevel" 						"1"
-	"AbilityCastAnimation"			"ACT_DOTA_VICTORY"
-	"AbilityCastPoint"				"0.5"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"piercing_damage_reduction"	"30"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movement_speed_reduction"	"-30"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"reflect_chance"			"30"
+		}
+	}
 
 	"OnToggleOn"
 	{
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_defend"
-			"Target"
-			{
-				"Center"  	"CASTER"
-				"Radius" 	"300"
-				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Types" 	"DOTA_UNIT_TARGET_BASIC"
-			}
+			"Target"		"CASTER"
 		}
 	}
 
@@ -392,13 +405,7 @@
 		"RemoveModifier"
 		{
 			"ModifierName"	"modifier_defend"
-			"Target"
-			{
-				"Center"  	"CASTER"
-				"Radius" 	"300"
-				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Types" 	"DOTA_UNIT_TARGET_BASIC"
-			}
+			"Target"		"CASTER"
 		}
 	}
 
@@ -409,8 +416,12 @@
 			"Passive"			"0"
 			"IsHidden"			"0"
 			"IsDebuff"			"0"
-	
-			"OverrideAnimation"     "ACT_DOTA_TELEPORT"
+
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_reduction" 
+			}
+
 		}
 	}
 }
