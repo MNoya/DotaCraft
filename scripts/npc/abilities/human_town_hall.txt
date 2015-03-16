@@ -107,6 +107,24 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
+	"Modifiers"
+	{
+		"modifier_backpack"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human_upgrades.lua"
+					"Function"		"Backpack"
+				}
+			}
+		}
+	}
+
 }
 
 // Town Hall -> Keep Upgrade.

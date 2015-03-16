@@ -360,6 +360,25 @@
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_defend"
 	"MaxLevel" 						"0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"piercing_damage_reduction"	"30"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movement_speed_reduction"	"-30"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"reflect_chance"			"30"
+		}
+	}
 }
 
 "human_defend"
@@ -421,7 +440,30 @@
 			{
 			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_reduction" 
 			}
+			"OnAttacked"
+			// "%attack_damage" is set to the damage value after mitigation
+			{
+				"Random"
+				{
+					"Chance"			"%reflect_chance"
+					"OnSuccess"
+					{
+						"Damage"
+						{
+							"Target"
+							{
+								"Center"  	"ATTACKER"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							}
+							"Type"			"DAMAGE_TYPE_MAGICAL"
+							"Damage"		"%attack_damage"
+						}
+					}
+				}
 
+				//Check the type of the attack, if its piercing, reduce it by piercing_damage_reduction
+			}
 		}
 	}
 }
@@ -433,6 +475,15 @@
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_long_rifles"
 	"MaxLevel" 						"0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			 "FIELD_INTEGER"
+			"bonus_attack_range" "200"
+		}
+	}
 }
 
 "human_long_rifles"
@@ -442,6 +493,29 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			 "FIELD_INTEGER"
+			"bonus_attack_range" "200"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_long_rifles"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+			}
+		}
+	}
 }
 
 
@@ -451,6 +525,15 @@
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_animal_war_training"
 	"MaxLevel" 						"0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"	   "FIELD_INTEGER"
+			"bonus_health" "150"
+		}
+	}
 }
 "human_animal_war_training"
 {
@@ -459,6 +542,29 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"	   "FIELD_INTEGER"
+			"bonus_health" "150"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_animal_war_training"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			}
+		}
+	}
 }
 
 

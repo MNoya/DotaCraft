@@ -444,7 +444,27 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"120"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_invisibility"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+	}
 }
+
 "human_invisibility_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -470,8 +490,117 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC" //Level 5 or below
+	"AbilityCastPoint"				"0.1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movespeed"				"100"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/sorceress.lua"
+			"Function"		"PolymorphLevelCheck"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		// Replace for sheep sounds
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.Voodoo"
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.Hex.Target"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"TARGET"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_hex"
+			"Target"		"TARGET"
+			"Duration"		"%duration"
+		}
+	}	
+
+	"Modifiers"
+	{
+		"modifier_hex"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"voodoo_start"
+					"model"			"models/props_gameplay/frog.vmdl"	//sheep
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/shadow_hunter/hex.lua"
+					"Function"			"HideWearables"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"voodoo_end"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"ShowWearables"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"%movespeed"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MUTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_HEXED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_EVADE_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_BLOCK_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
+
 "human_polymorph_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -734,6 +863,10 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+	//OnSpellStart, RunScript, check if casted on friend or enemy
+	//if friend, remove negative debuff and apply it to a random enemy unit nearby
+	//if enemy, remove positive buff and apply it to a random ally unit nearby
 }
 
 // Ability Researched by human_research_control_magic
@@ -856,6 +989,191 @@
 					"EffectAttachType"	"attach_hitloc"
 					"Target"			"TARGET"
 				}
+			}
+		}
+	}
+}
+
+//Passives for the level of upgrades, hidden?
+//Priest Adept Training
+	//Increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives Priests the ability to cast Dispel Magic.
+"human_priest_training1"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_priest_training1"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"100"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"30"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"40"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_priest_training1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
+			}
+		}
+	}
+}
+
+//Priest Master Training
+	//Further increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives him the ability to cast Inner Fire.
+"human_priest_training2"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_priest_training2"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"60"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"80"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_priest_training2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
+			}
+		}
+	}
+}
+
+//Sorceress Adept Training
+	//Increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives the Sorceress the ability to cast Invisibility.
+"human_sorceress_training1"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_sorceress_training1"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"100"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"30"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"40"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_sorceress_training1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
+			}
+		}
+	}
+}
+
+//Sorceress Master Training
+	//Further increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives the Sorceress the ability to cast Polymorph.
+"human_sorceress_training2"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_sorceress_training2"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"60"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"80"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_sorceress_training2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
 			}
 		}
 	}

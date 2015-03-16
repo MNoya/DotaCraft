@@ -162,3 +162,11 @@ function ApplyLeatherArmorUpgrade( event )
 	end
 
 end
+
+
+-- Gives an inventory to this unit
+function Backpack( event )
+	local caster = event.caster
+
+	caster:SetHasInventory(true)
+end

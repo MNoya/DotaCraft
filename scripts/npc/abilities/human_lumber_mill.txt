@@ -1,0 +1,188 @@
+
+//Each Level of Masonry is 20% extra Health
+"human_masonry1"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_masonry1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_health_pct"	"20 40 60"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_masonry1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/lumber_mill.lua"
+					"Function"		"Masonry"
+					"Level"			"1"
+				}
+			}
+		}
+	}
+}
+
+"human_masonry2"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_masonry2"
+	"MaxLevel" 						"2"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_health_pct"	"20 40 60"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_masonry2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/lumber_mill.lua"
+					"Function"		"Masonry"
+					"Level"			"2"
+				}
+			}
+		}
+	}
+}
+
+"human_masonry3"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_masonry3"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_health_pct"	"20 40 60"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_masonry3"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/lumber_mill.lua"
+					"Function"		"Masonry"
+					"Level"			"3"
+				}
+			}
+		}
+	}
+}
+
+
+//This might be better just directly hardcoded into the unit
+"human_lumber_harvesting1"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_lumber_harvesting1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"extra_lumber_carried"	"10 20"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_lumber_harvesting1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"LumberHarvesting"
+					"Level"			"1"
+				}
+			}
+		}
+	}
+}
+
+"human_lumber_harvesting2"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_lumber_harvesting2"
+	"MaxLevel" 						"2"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"extra_lumber_carried"	"10 20"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_lumber_harvesting2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/peasant.lua"
+					"Function"		"LumberHarvesting"
+					"Level"			"2"
+				}
+			}
+		}
+	}
+}

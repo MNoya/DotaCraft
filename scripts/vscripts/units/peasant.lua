@@ -179,7 +179,7 @@ function Gather1Lumber( event )
 	
 	local caster = event.caster
 	local ability = event.ability
-	local max_lumber_carried = 10 --20 with upgrade
+	local max_lumber_carried = hero.LumberCarried or 10 --20/30 with upgrade
 
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 
@@ -419,4 +419,14 @@ function IsValidDepositName( name )
 	end
 
 	return false
+end
+
+
+function LumberHarvesting( event )
+	local hero = event.caster:GetPlayerOwner():GetAssignedHero()
+	local pID = hero:GetPlayerID()
+	local level = event.Level
+	local extra_lumber_carried = event.ability:GetLevelSpecialValueFor("extra_lumber_carried", Level - 1)
+
+	hero.LumberCarried = 10 + extra_lumber_carried
 end
