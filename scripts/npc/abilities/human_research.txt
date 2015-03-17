@@ -287,8 +287,8 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"extra_lumber_carried"	"10 20"
 		}
 	}
 
@@ -321,6 +321,13 @@
 		{
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"LumberResearchComplete"
+			"Level"			"1"			
 		}
 	}
 }
@@ -344,7 +351,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_lumber_harvesting2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -355,8 +362,8 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"extra_lumber_carried"	"10 20"
 		}
 	}
 
@@ -390,6 +397,14 @@
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
 		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"LumberResearchComplete"
+			"Level"			"1"
+		}
+
 	}
 }
 "human_research_lumber_harvesting2_disabled"
