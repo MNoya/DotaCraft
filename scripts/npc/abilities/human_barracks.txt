@@ -559,9 +559,13 @@
 			"Passive"			"1"
 			"IsHidden"			"1"
 	
-			"Properties"
+			"OnCreated"
 			{
-				"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				"RunScript"
+				{
+					"ScriptFile"	"units/human_upgrades.lua"
+					"Function"		"ApplyAnimalWarTraining"
+				}
 			}
 		}
 	}

@@ -170,3 +170,26 @@ function Backpack( event )
 
 	caster:SetHasInventory(true)
 end
+
+
+-- Add Health through lua because MODIFIER_PROPERTY_HEALTH_BONUS doesn't work on npc_dota_creature zzz
+function ApplyAnimalWarTraining( event )
+	local caster = event.caster
+
+	-- Wait 1 frame because the ownership hasn't been set yet
+	Timers:CreateTimer(function() 
+		local hero = caster:GetOwner()
+		local player = hero:GetPlayerOwner()
+		local upgrades = player.upgrades
+		DeepPrintTable(player.upgrades)
+		if player.upgrades["human_research_animal_war_training"] then
+			local health_bonus = event.ability:GetLevelSpecialValueFor("bonus_health", (event.ability:GetLevel() - 1))
+			local unit = event.caster
+
+			local newHP = unit:GetMaxHealth() + health_bonus
+			unit:SetMaxHealth(newHP)
+			unit:SetHealth(newHP)
+		end
+	end)
+
+end

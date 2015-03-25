@@ -601,6 +601,10 @@ function CheckAbilityRequirements( unit, player )
 							-- Set the new ability level
 							local disabled_ability = unit:FindAbilityByName(disabled_ability_name)
 							disabled_ability:SetLevel(0)
+
+							-- Remove Passive modifiers that aren't removed when the skill is removed
+							unit:RemoveModifierByName("modifier_animal_war_training")
+							unit:RemoveModifierByName("modifier_long_rifles")
 						end
 					end				
 				else
