@@ -1,5 +1,5 @@
 -- Denies cast on creeps higher than level 5, with a message
-function PolymorphLevelCheck( keys )
+function PolymorphLevelCheck( event )
 	local target = event.target
 	local hero = event.caster:GetPlayerOwner():GetAssignedHero()
 	local pID = hero:GetPlayerID()

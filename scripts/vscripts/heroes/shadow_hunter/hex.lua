@@ -36,6 +36,7 @@ end
 ]]
 function HideWearables( event )
 	local hero = event.target
+
 	local ability = event.ability
 	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
 	print("Hiding Wearables")
@@ -43,6 +44,14 @@ function HideWearables( event )
 
 	hero.wearableNames = {} -- In here we'll store the wearable names to revert the change
 	hero.hiddenWearables = {} -- Keep every wearable handle in a table, as its way better to iterate than in the MovePeer system
+
+	-- Handle faulty models (might be more!)
+	if hero:GetModelName() == "models/heroes/lina/lina.vmdl" then
+		print("lina.vmdl is potato")
+		DeepPrintTable(hero:GetChildren())
+		return
+	end
+
     local model = hero:FirstMoveChild()
     while model ~= nil do
         if model:GetClassname() ~= "" and model:GetClassname() == "dota_item_wearable" then
@@ -72,12 +81,14 @@ function ShowWearables( event )
 	local hero = event.target
 	print("Showing Wearables on ".. hero:GetModelName())
 
-	-- Iterate on both tables to set each item back to their original modelName
-	for i,v in ipairs(hero.hiddenWearables) do
-		for index,modelName in ipairs(hero.wearableNames) do
-			if i==index then
-				print("Changed "..v:GetModelName().. " back to "..modelName)
-				v:SetModel(modelName)
+	if hero.hiddenWearables then
+		-- Iterate on both tables to set each item back to their original modelName
+		for i,v in ipairs(hero.hiddenWearables) do
+			for index,modelName in ipairs(hero.wearableNames) do
+				if i==index then
+					print("Changed "..v:GetModelName().. " back to "..modelName)
+					v:SetModel(modelName)
+				end
 			end
 		end
 	end
