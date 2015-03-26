@@ -39,6 +39,10 @@ function ResearchComplete( event )
 		research_type = "ranged"
 	elseif string.find(research_name, "leather") then
 		research_type = "leather"
+	elseif string.find(research_name, "priest") then
+		research_type = "priest"
+	elseif string.find(research_name, "sorceress") then
+		research_type = "sorceress"
 	end
 
 	print("#####################",research_type)

@@ -8415,6 +8415,13 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
+	
+					// Level up the creature to the appropiate train level
+					"RunScript"
+					{
+						"ScriptFile"	"units/human_upgrades.lua"
+						"Function"		"TrainSorceress"
+					}
 				}
 			}
 		}
@@ -8527,6 +8534,13 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+	
+					// Level up the creature to the appropiate train level
+					"RunScript"
+					{
+						"ScriptFile"	"units/human_upgrades.lua"
+						"Function"		"TrainPriest"
 					}
 				}
 			}
@@ -9374,10 +9388,20 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human_upgrades.lua"
+						"Function"		"ApplyPriestTraining"
+						"Rank"			"1"
+					}
+				}
+	
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
-				    "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
+					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
 				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
 				}
 			}
@@ -9409,7 +9433,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"80"
+				"bonus_health"			"40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_tooltip"	"80"
 			}
 		}
 	
@@ -9420,10 +9449,20 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human_upgrades.lua"
+						"Function"		"ApplyPriestTraining"
+						"Rank"			"2"
+					}
+				}
+	
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
-				    "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
+					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
 				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
 				}
 			}
@@ -9465,11 +9504,21 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human_upgrades.lua"
+						"Function"		"ApplySorceressTraining"
+						"Rank"			"1"
+					}
+				}
 		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
-				    "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
+					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
 				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
 				}
 			}
@@ -9511,11 +9560,21 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human_upgrades.lua"
+						"Function"		"ApplySorceressTraining"
+						"Rank"			"2"
+					}
+				}
 		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
-				    "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
+					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
 				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
 				}
 			}

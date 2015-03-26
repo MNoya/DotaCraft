@@ -740,7 +740,6 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				UpgradeArmorWearables(unit, level)
 			end
 		end 
-
 	elseif research_type == "ranged" then
 		if unit_name == "human_rifleman" or 
 			unit_name == "human_mortar_team" or 
@@ -798,7 +797,6 @@ function UpdateUnitUpgrades( unit, player, research_type )
 				UpgradeWeaponWearables(unit, level)
 			end
 		end
-
 	elseif research_type == "leather" then
 
 		--Riflemen, Mortar Teams, Dragonhawk Riders, and Gryphon Riders.
@@ -849,6 +847,73 @@ function UpdateUnitUpgrades( unit, player, research_type )
 
 			if level ~= 0 then
 				UpgradeArmorWearables(unit, level)
+			end
+		end
+	elseif research_type == "priest" then
+
+		-- Priests human_priest_training1 -> human_priest_training2
+		if unit_name == "human_priest" then
+
+			-- Find current level and remove it
+			local rank1 = unit:FindAbilityByName("human_priest_training1")
+			local rank2 = unit:FindAbilityByName("human_priest_training2")
+			local level = 0
+
+			if rank1 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("modifier_priest_training1")
+
+				unit:AddAbility("human_priest_training2")
+				unit:SwapAbilities("human_priest_training1", "human_priest_training2", false, true)
+				unit:RemoveAbility("human_priest_training1")
+				local ability = unit:FindAbilityByName("human_priest_training2")
+				level = 2
+				ability:SetLevel(level)
+
+				print("UUU Rank 2 of priest_training Reached")
+			elseif rank2 then
+				print("UUU Max Rank of priest_training Reached")
+			else
+				-- Learn the rank 1ability
+				unit:AddAbility("human_priest_training1")
+				local ability = unit:FindAbilityByName("human_priest_training1")
+				level = 1
+				ability:SetLevel(level)
+				print("UUU Rank 1 of human_priest_training1 Reached")
+			end
+		end
+
+	elseif research_type == "sorceress" then
+
+		-- Priests human_priest_training1 -> human_priest_training2
+		if unit_name == "human_sorceress" then
+
+			-- Find current level and remove it
+			local rank1 = unit:FindAbilityByName("human_sorceress_training1")
+			local rank2 = unit:FindAbilityByName("human_sorceress_training2")
+			local level = 0
+
+			if rank1 then
+				-- Remove any of the modifiers before reapplying
+				unit:RemoveModifierByName("modifier_sorceress_training1")
+
+				unit:AddAbility("human_sorceress_training2")
+				unit:SwapAbilities("human_sorceress_training1", "human_sorceress_training2", false, true)
+				unit:RemoveAbility("human_sorceress_training1")
+				local ability = unit:FindAbilityByName("human_sorceress_training2")
+				level = 2
+				ability:SetLevel(level)
+
+				print("UUU Rank 2 of sorceress_training Reached")
+			elseif rank2 then
+				print("UUU Max Rank of sorceress_training Reached")
+			else
+				-- Learn the rank 1ability
+				unit:AddAbility("human_sorceress_training1")
+				local ability = unit:FindAbilityByName("human_sorceress_training1")
+				level = 1
+				ability:SetLevel(level)
+				print("UUU Rank 1 of human_sorceress_training1 Reached")
 			end
 		end
 	end

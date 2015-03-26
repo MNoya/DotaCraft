@@ -2300,7 +2300,7 @@
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/lina/lina.vmdl"
 		"ModelScale"				"0.8"
-		"Level"						"2"
+		"Level"						"1" //Gets Leveled up to 2 and 3 when trained
 		"HealthBarOffset"			"200"
 		
 		// Abilities
@@ -2376,6 +2376,7 @@
 		"Creature"
 		{
 			"DisableClumpingBehavior"	"1"
+			"ManaGain"					"100" //Training
 			"AttachWearables"
 			{
 				"Wearable1"		{	"ItemDef"		"4794"		} //"Fiery Soul of the Slayer"
@@ -2397,7 +2398,7 @@
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/oracle/oracle.vmdl"
 		"ModelScale"				"0.7"
-		"Level"						"2"
+		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
 		// Abilities
@@ -2473,6 +2474,7 @@
 		"Creature"
 		{
 			"DisableClumpingBehavior"	"1"
+			"ManaGain"					"100" //Training
 		}
 	}
 	
