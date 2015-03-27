@@ -9401,8 +9401,8 @@
 				"Properties"
 				{
 					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
-				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
-				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
 				}
 			}
 		}
@@ -9462,8 +9462,8 @@
 				"Properties"
 				{
 					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
-				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
-				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
 				}
 			}
 		}
@@ -9518,8 +9518,8 @@
 				"Properties"
 				{
 					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
-				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
-				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
 				}
 			}
 		}
@@ -9574,8 +9574,8 @@
 				"Properties"
 				{
 					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
-				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_mana_regen_pct"
-				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_health"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
 				}
 			}
 		}
@@ -11662,7 +11662,7 @@
 		"AbilityTextureName"			"human_research_storm_hammers"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	
 		"OnProjectileHitUnit"
 		{
@@ -11683,26 +11683,21 @@
 		
 				"OnAttackLanded"
 				{
-					"TrackingProjectile"
+					"RunScript"
 					{
-						"Target" //might need ScriptSelectPoints if this looks too weird
+						"ScriptFile"	"units/gryphon_rider.lua"
+						"Function"		"StormHammer"
+						"Target"
 						{
 							"Center"  	"TARGET"
 							"Line"
 							{
-								"Length" 		"300"
+								"Length" 		"600"
 								"Thickness" 	"300"
 							}
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"MaxTargets" "1"
-							"Random" 	"1"
 						}
-						"EffectName"		"particles/base_attacks/ranged_tower_bad.vpcf" //maelstrom
-						"Dodgeable"			"1"
-						"ProvidesVision"	"0"
-						"MoveSpeed"        	"900"
-						"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
 					}
 				}	
 			}
