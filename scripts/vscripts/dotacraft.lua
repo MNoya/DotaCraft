@@ -605,6 +605,7 @@ function CheckAbilityRequirements( unit, player )
 							-- Remove Passive modifiers that aren't removed when the skill is removed
 							unit:RemoveModifierByName("modifier_animal_war_training")
 							unit:RemoveModifierByName("modifier_long_rifles")
+							unit:RemoveModifierByName("modifier_storm_hammers")
 						end
 					end				
 				else

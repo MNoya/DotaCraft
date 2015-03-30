@@ -4,16 +4,12 @@ function StormHammer( event )
 	local targets = event.target_entities
 	local ability = event.ability
 
-	print("Storm Hammer Launched")
-
-	print(#targets)
 	local next_target = targets[1]
-	if next_target == caster then
+	if next_target == target then
 		next_target = targets[2]
 	end
 
 	if next_target then
-		print(next_target:GetUnitName())
 		local projTable = {
 			EffectName = "particles/units/heroes/hero_zuus/zuus_base_attack.vpcf",
 			Ability = ability,
@@ -25,15 +21,15 @@ function StormHammer( event )
 			iMoveSpeed = 900,
 			iVisionRadius = 0,
 			iVisionTeamNumber = caster:GetTeamNumber(),
-			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
+			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_NONE
 		}
 		ProjectileManager:CreateTrackingProjectile( projTable )
+		print("Storm Hammer Launched to "..next_target:GetUnitName().." number ".. next_target:GetEntityIndex())
 	end
 end
 
-
+-- OnProjetileHitUnit doesn't work on npc
 function StormHammerDamage( event )
-	print("Storm Hammer Damage")
 	local caster = event.caster
 	local target = event.target
 	local damage = caster:GetAverageTrueAttackDamage()
@@ -41,5 +37,5 @@ function StormHammerDamage( event )
 	local AbilityDamageType = ability:GetAbilityDamageType()
 
 	ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType })
-
+	print("Storm Hammer dealt "..damage.." to "..target:GetUnitName().." number ".. target:GetEntityIndex())
 end
