@@ -1135,8 +1135,8 @@ function dotacraft:Initdotacraft()
 		if cmdPlayer then
 			local unit = EntIndexToHScript(tonumber(entityIndex))
 
-	  		if unit and unit:GetUnitName() == "human_peasant" then
-
+	  		if unit then
+	  			--and (unit:GetUnitName() == "human_peasant"
 		  		local abilityValues = {}
 		  		local itemValues = {}
 

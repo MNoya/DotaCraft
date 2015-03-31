@@ -15,8 +15,18 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"15.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
 		}
 	}
 
@@ -136,8 +146,8 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"320"// From "GoldCost"
-	"AbilityChannelTime"			"10" // From "BuildTime"
+	"AbilityGoldCost"				"320"
+	"AbilityChannelTime"			"10" //140
 
 
 	"AbilitySpecial"
@@ -150,7 +160,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"205"	// Not needed, just for tooltips
+			"gold_cost"				"320"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"205"
 		}
 	}
 
@@ -241,8 +256,8 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"360"// From "GoldCost"
-	"AbilityChannelTime"			"10" // From "BuildTime"
+	"AbilityGoldCost"				"360"
+	"AbilityChannelTime"			"10" //140
 
 
 	"AbilitySpecial"
@@ -255,7 +270,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"210"	// Not needed, just for tooltips
+			"gold_cost"				"360"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"210"
 		}
 	}
 

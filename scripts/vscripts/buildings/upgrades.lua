@@ -52,7 +52,6 @@ function UpgradeBuilding( event )
 	for k,structure in pairs(player.structures) do
 		CheckAbilityRequirements( structure, player )
 	end
-
 end
 
 
@@ -85,6 +84,11 @@ function DisableAbilities( event )
 			end			
 		end
 	end
+
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	local playerID = hero:GetPlayerID()
+	print("##Firing ability_values_force_check for "..caster:GetUnitName().." and player "..playerID)
+	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
 -- Shows abilities from a list
@@ -101,6 +105,11 @@ function EnableAbilities( event )
 			ability:SetHidden(false)
 		end
 	end
+
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	local playerID = hero:GetPlayerID()
+	print("##Firing ability_values_force_check for "..caster:GetUnitName())
+	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
 

@@ -404,7 +404,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"205"	// Not needed, just for tooltips
+				"gold_cost"				"385"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"205"
 			}
 		}
 	
@@ -455,7 +460,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"20"	// Not needed, just for tooltips
+				"gold_cost"				"80"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"20"
 			}
 		}
 	
@@ -506,7 +516,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"50"	// Not needed, just for tooltips
+				"gold_cost"				"180"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"50"
 			}
 		}
 		
@@ -544,7 +559,7 @@
 	
 		"UnitName"						"human_lumber_mill"
 		"AbilityCooldown"				"0"
-		"AbilityGoldCost"				"180"
+		"AbilityGoldCost"				"120"
 		// End of BuildingHelper info
 	
 		"AbilitySpecial"
@@ -557,7 +572,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"50"	// Not needed, just for tooltips
+				"gold_cost"				"120"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
 			}
 		}
 		
@@ -596,7 +616,7 @@
 	
 		"UnitName"						"human_arcane_vault"
 		"AbilityCooldown"				"0"
-		"AbilityGoldCost"				"180"
+		"AbilityGoldCost"				"130"
 		// End of BuildingHelper info
 	
 		"AbilitySpecial"
@@ -609,7 +629,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"50"	// Not needed, just for tooltips
+				"gold_cost"				"130"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"30"
 			}
 		}
 	
@@ -638,7 +663,7 @@
 		// BuildingHelper info
 		"Building"						"1" //bool
 		"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
-		"BuildTime"						"60.0"
+		"BuildTime"						"25.0"
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
@@ -647,7 +672,7 @@
 	
 		"UnitName"						"human_scout_tower"
 		"AbilityCooldown"				"0"
-		"AbilityGoldCost"				"180"
+		"AbilityGoldCost"				"30"
 		// End of BuildingHelper info
 	
 		"AbilitySpecial"
@@ -655,12 +680,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"60.0"
+				"build_time"			"25.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"50"	// Not needed, just for tooltips
+				"gold_cost"				"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"20"
 			}
 		}
 	

@@ -2,11 +2,12 @@ function build( keys )
 
 	-- Checks if there is enough custom resources to start the building, else stop.
 	local caster = keys.caster
-	local ability_name = keys.ability:GetAbilityName()
+	local ability = keys.ability
+	local ability_name = ability:GetAbilityName()
 	local AbilityKV = GameRules.AbilityKV
 	local UnitKV = GameRules.UnitKV
-	
-	-- Handle the resource for item-ability build
+
+	-- Handle the name for item-ability build
 	local building_name
 	if keys.ItemUnitName then
 		building_name = keys.ItemUnitName
@@ -15,7 +16,8 @@ function build( keys )
 	end
 
 	local unit_table = UnitKV[building_name]
-	local lumber_cost = unit_table.LumberCost
+	local gold_cost = ability:GetSpecialValueFor("gold_cost")
+	local lumber_cost = ability:GetSpecialValueFor("lumber_cost")
 
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()

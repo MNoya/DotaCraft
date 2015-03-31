@@ -13,15 +13,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -84,15 +94,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"45"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"45"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"150"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"100"
 		}
 	}
 
@@ -138,15 +158,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"75"
+	"AbilityChannelTime"			"30"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"30"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"75"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"100"
 		}
 	}
 
@@ -207,15 +237,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"125"
+	"AbilityChannelTime"			"40"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"40"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"125"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"175"
 		}
 	}
 
@@ -280,16 +320,27 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"60"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"extra_lumber_carried"	"10 20"
+			"extra_lumber_carried"	"10"
 		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"60"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+
 	}
 
 	"OnSpellStart"
@@ -355,15 +406,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"200"
+	"AbilityChannelTime"			"75"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"extra_lumber_carried"	"10 20"
+			"extra_lumber_carried"	"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"75"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"200"
 		}
 	}
 
@@ -432,15 +493,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"60"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -502,15 +573,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"125"
+	"AbilityChannelTime"			"75"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"75"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"125"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25 50 75"
 		}
 	}
 
@@ -570,15 +651,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"90"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"90"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"150"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"75"
 		}
 	}
 
@@ -642,15 +733,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"60"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"50"
 		}
 	}
 
@@ -691,19 +792,29 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_forged_swords2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"175"
+	"AbilityChannelTime"			"75"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"75"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"175"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"175"
 		}
 	}
 
@@ -759,19 +870,29 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_forged_swords3"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"250"
+	"AbilityChannelTime"			"90"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"90"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"250"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"300"
 		}
 	}
 
@@ -832,15 +953,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"125"
+	"AbilityChannelTime"			"60"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"125"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"75"
 		}
 	}
 
@@ -881,19 +1012,29 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_plating2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"75"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"75"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"150"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"175"
 		}
 	}
 
@@ -949,19 +1090,29 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_plating3"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"175"
+	"AbilityChannelTime"			"90"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"90"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"175"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"275"
 		}
 	}
 
@@ -1022,15 +1173,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"60"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"50"
 		}
 	}
 
@@ -1075,15 +1236,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"175"
+	"AbilityChannelTime"			"75"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"75"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"175"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"175"
 		}
 	}
 
@@ -1143,15 +1314,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"250"
+	"AbilityChannelTime"			"90"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"90"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"250"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"300"
 		}
 	}
 
@@ -1212,15 +1393,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"60"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"100"
 		}
 	}
 
@@ -1261,19 +1452,29 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_leather_armor2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"75"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"75"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"150"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"175"
 		}
 	}
 
@@ -1329,19 +1530,29 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_leather_armor3"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"200"
+	"AbilityChannelTime"			"90"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"90"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"200"
 		}
 	}
 
@@ -1405,15 +1616,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"60"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"50"
 		}
 	}
 
@@ -1453,19 +1674,29 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_priest_training2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"75"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"75"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"150"
 		}
 	}
 
@@ -1526,15 +1757,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"60"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"50"
 		}
 	}
 
@@ -1574,19 +1815,29 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_sorceress_training2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"100"
+	"AbilityChannelTime"			"75"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"75"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"150"
 		}
 	}
 
@@ -1647,15 +1898,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"1"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -1717,15 +1978,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"1"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -1784,15 +2055,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"1"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -1851,15 +2132,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"1"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -1918,15 +2209,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"1"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -1985,15 +2286,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"1"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -2056,15 +2367,25 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	"AbilityDamageType"				"DAMAGE_TYPE_MAGICAL"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"1"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 
@@ -2123,15 +2444,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"150" // From "GoldCost"
-	"AbilityChannelTime"			"1" // From "BuildTime"
+	"AbilityGoldCost"				"150"
+	"AbilityChannelTime"			"1"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
 		}
 	}
 

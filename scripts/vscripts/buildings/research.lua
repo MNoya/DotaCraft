@@ -70,6 +70,11 @@ function DisableResearch( event )
 	print("Set Hidden "..ability:GetAbilityName())
 	ability:SetHidden(true)
 
+	local caster = event.caster
+	local hero = caster:GetOwner()
+	local pID = hero:GetPlayerID()
+	print("##Firing ability_values_force_check for "..caster:GetUnitName())
+	FireGameEvent( 'ability_values_force_check', { player_ID = pID })
 end
 
 -- Reenable the parent ability without item_ in its name
@@ -82,4 +87,10 @@ function ReEnableResearch( event )
 	print("Unhide "..research_ability_name)
 	local research_ability = caster:FindAbilityByName(research_ability_name)
 	research_ability:SetHidden(false)
+
+	local caster = event.caster
+	local hero = caster:GetOwner()
+	local pID = hero:GetPlayerID()
+	print("##Firing ability_values_force_check for "..caster:GetUnitName())
+	FireGameEvent( 'ability_values_force_check', { player_ID = pID })
 end

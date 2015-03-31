@@ -60,7 +60,7 @@
 
 	"UnitName"						"human_barracks"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"180"
+	"AbilityGoldCost"				"160"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -73,7 +73,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"50"	// Not needed, just for tooltips
+			"gold_cost"				"160"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"60"
 		}
 	}
 	
@@ -129,7 +134,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"60"	// Not needed, just for tooltips
+			"gold_cost"				"140"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"60"
 		}
 	}
 
@@ -185,7 +195,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"140"	// Not needed, just for tooltips
+			"gold_cost"				"150"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"140"
 		}
 	}
 
@@ -219,7 +234,7 @@
 	// BuildingHelper info
 	"Building"						"1" //bool
 	"BuildingSize"					"5" 
-	"BuildTime"						"70.0"
+	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
@@ -236,12 +251,17 @@
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"build_time"			"70.0"
+			"build_time"			"60.0"
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"140"	// Not needed, just for tooltips
+			"gold_cost"				"140"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"140"
 		}
 	}
 	
@@ -275,7 +295,7 @@
 	// BuildingHelper info
 	"Building"						"1" //bool
 	"BuildingSize"					"5" 
-	"BuildTime"						"70.0"
+	"BuildTime"						"75.0"
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
@@ -292,12 +312,17 @@
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"build_time"			"70.0"
+			"build_time"			"75.0"
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"150"	// Not needed, just for tooltips
+			"gold_cost"				"140"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"150"
 		}
 	}
 
