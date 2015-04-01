@@ -101,7 +101,6 @@ function BuildingHelper:Init(...)
 
 	--Setup the BH dummy
 	BH_DUMMY = CreateUnitByName("npc_bh_dummy", OutOfWorldVector, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	InitAbilities(BH_DUMMY)
 
 	--print("BuildingAbilities: ")
 	--PrintTable(BuildingAbilities)
@@ -554,7 +553,6 @@ function BuildingHelper:ChangeBuildingGhostStyle( nStyle )
 end
 
 function BuildingHelper:InitializeBuildingEntity(keys)
-	print("InitializeBuildingEntity")
 	local caster = keys.caster
 	local builder = caster -- alias
 	local orders = builder.orders
@@ -622,20 +620,13 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 
 	-- the gametime when the building should be completed.
 	local fTimeBuildingCompleted=GameRules:GetGameTime()+buildTime
+
 	-- whether we should update the building's health over the build time.
 	local bUpdateHealth = buildingTable:GetVal("UpdateHealth", "bool")
 	local fMaxHealth = unit:GetMaxHealth()
-	-- health to add every tick until build time is completed.
-	local nHealthInterval = (fMaxHealth*BUILDINGHELPER_THINK)/buildTime
-	-- increase the health interval by 25%.
-	nHealthInterval = nHealthInterval + .25*nHealthInterval
 
-	if nHealthInterval < 1 then
-		--print("[BuildingHelper] nHealthInterval is below 1. Setting nHealthInterval to 1. The unit will gain full health before the build time ends.\n" ..
-		--	"Fix this by increasing the max health of your unit. Recommended unit max health is 1000.")
-		nHealthInterval = 1
-	end
-	unit.bUpdatingHealth = false --Keep tracking if we're currently updating health.
+	-- Update every 1 HP
+	local fUpdateHealthInterval = buildTime / fMaxHealth
 
 	-- whether we should scale the building.
 	local bScale = buildingTable:GetVal("Scale", "bool")
@@ -644,9 +635,14 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 	if fMaxScale == nil then
 		fMaxScale = 1
 	end
-	-- scale to add every tick until build time is completed.
-	local fScaleInterval = (fMaxScale*BUILDINGHELPER_THINK)/buildTime
-	fScaleInterval = fScaleInterval + .2*fScaleInterval -- scaling is a bit slow evidently, so make it faster
+
+	-- Update model size, starting with an initial size
+	local fInitialModelScale = 0.2
+	local fUpdateScaleInterval = 0.03
+
+	-- scale to add every frame, distributed by build time
+	local fScaleInterval = (fMaxScale-fInitialModelScale) / buildTime * fUpdateScaleInterval
+
 	-- start the building at 20% of max scale.
 	local fCurrentScale=.2*fMaxScale
 	local bScaling = false -- Keep tracking if we're currently model scaling.
@@ -656,6 +652,8 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 		unit:SetControllableByPlayer(playersHero:GetPlayerID(), true)
 		unit:SetOwner(playersHero)
 	end
+		
+	unit.bUpdatingHealth = false --Keep tracking if we're currently updating health.
 
 	if bUpdateHealth then
 		unit:SetHealth(1)
@@ -667,28 +665,18 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 		end
 	end
 
-	-- health and scale timer
-	unit.updateHealthTimer = DoUniqueString('health')
+	-- health timer
+	unit.updateHealthTimer = DoUniqueString('health')	
 	Timers:CreateTimer(unit.updateHealthTimer, {
-	endTime = .03,
     callback = function()
 		if IsValidEntity(unit) then
 			local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
 			if not timesUp then
 				if unit.bUpdatingHealth then
 					if unit:GetHealth() < fMaxHealth then
-						unit:SetHealth(unit:GetHealth()+nHealthInterval)
+						unit:SetHealth(unit:GetHealth() + 1)
 					else
 						unit.bUpdatingHealth = false
-					end
-				end
-				if bScaling then
-					if fCurrentScale < fMaxScale then
-						fCurrentScale = fCurrentScale+fScaleInterval
-						unit:SetModelScale(fCurrentScale)
-					else
-						unit:SetModelScale(fMaxScale)
-						bScaling = false
 					end
 				end
 			else
@@ -705,8 +693,37 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 			-- not valid ent
 			return nil
 		end
-	    return BUILDINGHELPER_THINK
+	    return fUpdateHealthInterval
     end})
+
+    -- scale timer
+    unit.updateScaleTimer = DoUniqueString('scale')
+    local tick = 0
+    Timers:CreateTimer(unit.updateScaleTimer, {
+    callback = function()
+    	if IsValidEntity(unit) then
+			local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
+			if not timesUp then
+			 	if bScaling then
+					if fCurrentScale < fMaxScale then
+						fCurrentScale = fCurrentScale+fScaleInterval
+						unit:SetModelScale(fCurrentScale)
+						print(fCurrentScale)
+					else
+						unit:SetModelScale(fMaxScale)
+						bScaling = false
+					end
+				end
+			else
+				-- clean up the timer if we don't need it.
+				return nil
+			end
+		else
+			-- not valid ent
+			return nil
+		end
+	    return fUpdateScaleInterval
+	end})	
 
 	-- OnBelowHalfHealth timer
 	building.onBelowHalfHealthProc = false
