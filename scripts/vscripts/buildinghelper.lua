@@ -22,7 +22,7 @@ Debug_BH = true
 -- Ghost Building Preferences
 GRID_ALPHA = 60 -- Defines the transparency of the ghost squares
 MODEL_ALPHA = 100 -- Defines the transparency of the ghost model. BMD says it doesn't work currently.
-RECOLOR_GHOST_MODEL = false -- Whether to recolor the ghost model green/red or not
+RECOLOR_GHOST_MODEL = true -- Whether to recolor the ghost model green/red or not
 USE_PROJECTED_GRID = false -- Enabling this will make the ghost squares follow terrain and be placed under the model. Works better with less than 100 alpha.
 
 -- Circle packing math.
@@ -625,8 +625,15 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 	local bUpdateHealth = buildingTable:GetVal("UpdateHealth", "bool")
 	local fMaxHealth = unit:GetMaxHealth()
 
-	-- Update every 1 HP
+	local fAddedHealth = 0
+	-- health to add every tick until build time is completed.
 	local fUpdateHealthInterval = buildTime / fMaxHealth
+	local fserverFrameRate = 1/30 -- Server executes as close to 1/30 as it can
+	
+	local nHealthInterval = fMaxHealth / (buildTime / fserverFrameRate)
+	local fSmallHealthInterval = nHealthInterval - math.floor(nHealthInterval) -- just the floating point component
+	nHealthInterval = math.floor(nHealthInterval)
+	local fHPAdjustment = 0
 
 	-- whether we should scale the building.
 	local bScale = buildingTable:GetVal("Scale", "bool")
@@ -665,36 +672,77 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 		end
 	end
 
-	-- health timer
-	unit.updateHealthTimer = DoUniqueString('health')	
-	Timers:CreateTimer(unit.updateHealthTimer, {
-    callback = function()
-		if IsValidEntity(unit) then
-			local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
-			if not timesUp then
-				if unit.bUpdatingHealth then
-					if unit:GetHealth() < fMaxHealth then
-						unit:SetHealth(unit:GetHealth() + 1)
-					else
-						unit.bUpdatingHealth = false
+
+	
+
+	-- Health Timers
+	-- If the tick would be faster than 1 frame, adjust the HP gained per frame
+	if fUpdateHealthInterval <= fserverFrameRate then
+		unit.updateHealthTimer = DoUniqueString('health')	
+		Timers:CreateTimer(unit.updateHealthTimer, {
+	    callback = function()
+			if IsValidEntity(unit) then
+				local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
+				if not timesUp then
+					if unit.bUpdatingHealth then
+						fHPAdjustment = fHPAdjustment + fSmallHealthInterval
+						if fHPAdjustment > 1 then
+							unit:SetHealth(unit:GetHealth() + nHealthInterval + 1)
+							fHPAdjustment = fHPAdjustment - 1
+							fAddedHealth = fAddedHealth + nHealthInterval + 1
+						else
+							unit:SetHealth(unit:GetHealth() + nHealthInterval)
+							fAddedHealth = fAddedHealth + nHealthInterval
+						end
 					end
+				else
+					-- completion: timesUp is true
+					if keys2.onConstructionCompleted ~= nil then
+						keys2.onConstructionCompleted(unit)
+						unit.constructionCompleted = true
+					end
+					unit.bUpdatingHealth = false
+					-- clean up the timer if we don't need it.
+					return nil
 				end
 			else
-				-- completion: timesUp is true
-				if keys2.onConstructionCompleted ~= nil then
-					keys2.onConstructionCompleted(unit)
-					unit.constructionCompleted = true
-				end
-				unit.bUpdatingHealth = false
-				-- clean up the timer if we don't need it.
+				-- not valid ent
 				return nil
 			end
-		else
-			-- not valid ent
-			return nil
-		end
-	    return fUpdateHealthInterval
-    end})
+		    return fserverFrameRate
+	    end})
+
+	-- Update every 1 HP with a variable return time (this is the case with buildings that last longer)
+	else
+		unit.updateHealthTimer = DoUniqueString('health')	
+		Timers:CreateTimer(unit.updateHealthTimer, {
+	    callback = function()
+			if IsValidEntity(unit) then
+				local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
+				if not timesUp then
+					if unit.bUpdatingHealth then
+						if unit:GetHealth() < fMaxHealth then
+							unit:SetHealth(unit:GetHealth() + 1)
+						else
+							unit.bUpdatingHealth = false
+						end
+					end
+				else
+					-- completion: timesUp is true
+					if keys2.onConstructionCompleted ~= nil then
+						keys2.onConstructionCompleted(unit)
+						unit.constructionCompleted = true
+					end
+					-- clean up the timer if we don't need it.
+					return nil
+				end
+			else
+				-- not valid ent
+				return nil
+			end
+		    return fUpdateHealthInterval
+	    end})
+	end
 
     -- scale timer
     unit.updateScaleTimer = DoUniqueString('scale')
@@ -708,7 +756,6 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 					if fCurrentScale < fMaxScale then
 						fCurrentScale = fCurrentScale+fScaleInterval
 						unit:SetModelScale(fCurrentScale)
-						print(fCurrentScale)
 					else
 						unit:SetModelScale(fMaxScale)
 						bScaling = false
