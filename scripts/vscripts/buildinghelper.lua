@@ -22,7 +22,7 @@ Debug_BH = true
 -- Ghost Building Preferences
 GRID_ALPHA = 60 -- Defines the transparency of the ghost squares
 MODEL_ALPHA = 100 -- Defines the transparency of the ghost model. BMD says it doesn't work currently.
-RECOLOR_GHOST_MODEL = true -- Whether to recolor the ghost model green/red or not
+RECOLOR_GHOST_MODEL = false -- Whether to recolor the ghost model green/red or not
 USE_PROJECTED_GRID = false -- Enabling this will make the ghost squares follow terrain and be placed under the model. Works better with less than 100 alpha.
 
 -- Circle packing math.

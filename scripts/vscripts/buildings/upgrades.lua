@@ -87,7 +87,7 @@ function DisableAbilities( event )
 
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()
-	print("##Firing ability_values_force_check for "..caster:GetUnitName().." and player "..playerID)
+	--print("##Firing ability_values_force_check for "..caster:GetUnitName().." and player "..playerID)
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 

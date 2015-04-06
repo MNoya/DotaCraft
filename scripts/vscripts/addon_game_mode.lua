@@ -5,6 +5,7 @@ require('dotacraft')
 require('popups')
 require('util')
 require('upgrades')
+require('mechanics')
 
 -- BuildingHelper by Myll
 require('buildinghelper')

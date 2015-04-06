@@ -29,7 +29,7 @@ function ResearchComplete( event )
 	end
 
 	-- For these upgrades, update directly
-	local research_type = nil
+	--[[local research_type = nil
 	print(research_name)
 	if string.find(research_name, "forged") then
 		research_type = "forged"
@@ -45,12 +45,10 @@ function ResearchComplete( event )
 		research_type = "sorceress"
 	end
 
-	print("#####################",research_type)
+	print("#####################",research_type)]]
 		
-	if research_type ~= nil then
-		for _,unit in pairs(player.units) do
-			UpdateUnitUpgrades( unit, player, research_type)
-		end	
+	for _,unit in pairs(player.units) do
+		UpdateUnitUpgrades( unit, player, research_name)
 	end
 
 end

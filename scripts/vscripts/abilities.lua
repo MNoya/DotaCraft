@@ -23,8 +23,7 @@ function build( keys )
 	local playerID = hero:GetPlayerID()
 	local player = PlayerResource:GetPlayer(playerID)	
 
-	if player.lumber < lumber_cost then
-		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Lumber" } )		
+	if not IsOwnersLumberEnough( player, lumber_cost ) then
 		return
 	end
 
@@ -38,9 +37,7 @@ function build( keys )
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 		caster:AddNewModifier(caster, nil, "modifier_phased", {duration=0.03})
 
-		player.lumber = player.lumber - lumber_cost
-    	print("Lumber Spend. Player "..playerID.." is currently at " .. player.lumber)
-    	FireGameEvent('cgm_player_lumber_changed', { player_ID = playerID, lumber = player.lumber })
+    	ModifyLumber( player, -lumber_cost)
 
     	-- Remove invulnerability on npc_dota_building baseclass
     	unit:RemoveModifierByName("modifier_invulnerable")
@@ -50,13 +47,13 @@ function build( keys )
     	item:ApplyDataDrivenModifier(caster, unit, "modifier_construction", {})
 
     	-- Check the abilities of this building, disabling those that don't meet the requirements
-    	print("=Checking Requirements on "..unit:GetUnitName())
+    	--print("=Checking Requirements on "..unit:GetUnitName())
     	CheckAbilityRequirements( unit, player )
 
-    	-- Some units with multiple upgrade ranks might require an additional ability requirement loop because I suck at programming
+    	--[[ Some units with multiple upgrade ranks might require an additional ability requirement loop because I suck at programming
     	if unit:GetUnitName() == "human_lumber_mill" or unit:GetUnitName() == "human_blacksmith" then
     		CheckAbilityRequirements( unit, player )
-    	end
+    	end]]
 
 
 	end)

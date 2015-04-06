@@ -192,7 +192,7 @@ function AdvanceQueue( event )
 						Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
 						function()
 							--print("===Queue Table====")
-							DeepPrintTable(caster.queue)
+							--DeepPrintTable(caster.queue)
 							if IsValidEntity(item) then
 								ability_to_channel:EndChannel(false)
 								ReorderItems(caster, caster.queue)
@@ -218,8 +218,8 @@ function AdvanceQueue( event )
 							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
 							Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
 							function()
-								print("===Queue Table====")
-								DeepPrintTable(caster.queue)
+								--print("===Queue Table====")
+								--DeepPrintTable(caster.queue)
 								if IsValidEntity(item) then
 									ability_to_channel:EndChannel(false)
 									ReorderItems(caster, caster.queue)
