@@ -63,6 +63,54 @@
 			}
 		}
 	}
+	// By default, any unit can attack everything
+	// This disallows attacking air units by stopping their attacks before they go off
+	"ability_prevent_attack_flying"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_prevent_attack_flying"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/flying.lua"
+						"Function"		"CheckFlyingAttack"
+					}
+				}
+			}
+		}
+	}
+	
+	// Used to disallow attacking land units
+	"ability_prevent_attack_ground"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_prevent_attack_ground"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/flying.lua"
+						"Function"		"CheckGroundAttack"
+					}
+				}
+			}
+		}
+	}
 	// Alchemist Acid Bomb
 	// Author: Noya
 	// Date: 25.01.2015.
@@ -1121,6 +1169,10 @@
 			}
 		}
 	}
+	// Attack Abilities:
+	// 	Magic Attack
+	// 	Siege Attack
+	// 	AoE Attack
 	// Beastmaster Stamped3
 	// Author: Noya
 	// Date: 29.01.2015.
@@ -8429,7 +8481,7 @@
 					// Level up the creature to the appropiate train level
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"TrainSorceress"
 					}
 				}
@@ -8559,7 +8611,7 @@
 					// Level up the creature to the appropiate train level
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"TrainPriest"
 					}
 				}
@@ -8687,12 +8739,12 @@
 					}
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyForgedSwordUpgrade"
 					}
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyLeatherArmorUpgrade"
 					}
 				}
@@ -8778,7 +8830,7 @@
 	
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+			"particle"	"particles/units/human/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
 		}
 	
@@ -8809,7 +8861,7 @@
 			{
 				"IsDebuff"		"1"
 				"IsPurgable"	"1"
-				"EffectName"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+				"EffectName"	"particles/units/human/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
 				"EffectAttachType"	"attach_hitloc"
 				"Duration"	"%duration"
 				"Properties"
@@ -8898,7 +8950,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/sorceress.lua"
+				"ScriptFile"	"units/human/sorceress.lua"
 				"Function"		"PolymorphLevelCheck"
 			}
 		}
@@ -8920,7 +8972,7 @@
 	
 			"FireEffect"
 			{
-				"EffectName"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+				"EffectName"		"particles/units/human/heroes/hero_lion/lion_spell_voodoo.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Target"			"TARGET"
 			}
@@ -9023,7 +9075,7 @@
 		
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+			"particle"	"particles/units/human/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 		}
 	
@@ -9047,7 +9099,7 @@
 			"FireEffect"
 			{
 				"Target"			"TARGET"
-				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+				"EffectName"		"particles/units/human/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
 				"EffectAttachType"	"follow_origin"
 			}
 	
@@ -9105,7 +9157,7 @@
 		{
 			"FireEffect"
 			{
-				"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+				"EffectName"        "particles/units/human/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
 				"EffectAttachType"  "world_origin"
 				"TargetPoint"       "POINT"
 				"ControlPoints"
@@ -9190,7 +9242,7 @@
 			"ApplyModifier"
 			{
 				"Target"		"TARGET"
-				"ModifierName"	"creep_inner_fire_buff"
+				"ModifierName"	"modifier_inner_fire"
 			}
 	
 			"FireSound"
@@ -9202,7 +9254,7 @@
 	
 		"Modifiers"
 		{
-			"creep_inner_fire_buff"
+			"modifier_inner_fire"
 			{
 				"OnCreated"
 				{
@@ -9251,9 +9303,21 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	
+		//Need parity values
+		"AbilityCastPoint"			"0.0"
+		"AbilityCastRange"			"500"
+		"AbilityCooldown"			"5"
+		"AbilityManaCost"			"35"
+	
 		//OnSpellStart, RunScript, check if casted on friend or enemy
-		//if friend, remove negative debuff and apply it to a random enemy unit nearby
-		//if enemy, remove positive buff and apply it to a random ally unit nearby
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/spell_breaker.lua"
+				"Function"		"SpellSteal"
+			}
+		}
 	}
 	
 	// Ability Researched by human_research_control_magic
@@ -9266,8 +9330,42 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_SUMMONED" //??
+	
+		//Need parity values
+		"AbilityCastPoint"			"0.0"
+		"AbilityCastRange"			"500"
+		"AbilityCooldown"			"5"
+		"AbilityManaCost"			"35"
 	
 		//Mana cost is .45 mana per hit point.
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mana_control_rate"	"0.45"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/spell_breaker.lua"
+				"Function"		"ControlMagicCheck"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/spell_breaker.lua"
+				"Function"		"ControlMagic"
+			}
+		}
+	
 	}
 	"human_control_magic_disabled"
 	{
@@ -9359,7 +9457,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/spell_breaker.lua"
+						"ScriptFile"	"units/human/spell_breaker.lua"
 						"Function"		"ManaBreak"
 						"Target"		"TARGET"
 					}
@@ -9422,7 +9520,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyPriestTraining"
 						"Rank"			"1"
 					}
@@ -9483,7 +9581,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyPriestTraining"
 						"Rank"			"2"
 					}
@@ -9539,7 +9637,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplySorceressTraining"
 						"Rank"			"1"
 					}
@@ -9595,7 +9693,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplySorceressTraining"
 						"Rank"			"2"
 					}
@@ -9697,12 +9795,12 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyForgedSwordsUpgrade"
 					}
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyPlatingUpgrade"
 					}
 				}
@@ -9830,12 +9928,12 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyRangedWeaponsUpgrade"
 					}
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyLeatherArmorUpgrade"
 					}
 				}
@@ -9963,12 +10061,12 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyForgedSwordsUpgrade"
 					}
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyPlatingUpgrade"
 					}
 				}
@@ -10205,7 +10303,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyAnimalWarTraining"
 					}
 				}
@@ -10253,7 +10351,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_forged_swords1"
+			"modifier_forged_swords"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -10262,7 +10360,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyModifierUpgrade"
 					}
 				}
@@ -10325,7 +10423,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_forged_swords2"
+			"modifier_forged_swords"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -10334,7 +10432,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyModifierUpgrade"
 					}
 				}
@@ -10397,7 +10495,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_forged_swords3"
+			"modifier_forged_swords"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -10406,7 +10504,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyModifierUpgrade"
 					}
 				}
@@ -10459,7 +10557,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_plating1"
+			"modifier_plating"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"		
@@ -10475,7 +10573,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"	"human_research_plating2"
-		"MaxLevel"				"1"
+		"MaxLevel"				"2"
 	
 		"AbilitySpecial"
 		{
@@ -10488,7 +10586,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_plating2"
+			"modifier_plating"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"		
@@ -10517,7 +10615,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_plating3"
+			"modifier_plating"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"		
@@ -10556,7 +10654,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_ranged_weapons1"
+			"modifier_ranged_weapons"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -10565,7 +10663,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyModifierUpgrade"
 					}
 				}
@@ -10605,7 +10703,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"	"human_research_ranged_weapons2"
-		"MaxLevel"				"1"
+		"MaxLevel"				"2"
 	
 		"AbilitySpecial"
 		{
@@ -10628,7 +10726,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_ranged_weapons2"
+			"modifier_ranged_weapons"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -10637,7 +10735,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyModifierUpgrade"
 					}
 				}
@@ -10677,7 +10775,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"	"human_research_ranged_weapons3"
-		"MaxLevel"				"1"
+		"MaxLevel"				"3"
 	
 		"AbilitySpecial"
 		{
@@ -10700,7 +10798,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_ranged_weapons3"
+			"modifier_ranged_weapons"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -10709,7 +10807,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"ApplyModifierUpgrade"
 					}
 				}
@@ -10762,7 +10860,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_leather_armor1"
+			"modifier_leather_armor"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"		
@@ -10791,7 +10889,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_leather_armor2"
+			"modifier_leather_armor"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"		
@@ -10820,7 +10918,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_leather_armor3"
+			"modifier_leather_armor"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"	
@@ -11204,6 +11302,162 @@
 			}
 		}
 	}
+	// Orders the peasants to move towards the nearest Town Hall and replace itself with a Militia unit for a duration
+	"human_call_to_arms"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_call_to_arms"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"45"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/peasant.lua"
+				"Function"		"CallToArms"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_calling_to_arms"
+			{
+				"IsHidden"			"0" //"1"
+		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"CheckCityCenterPosition"
+					}
+				}
+	
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_calling_to_arms"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_militia"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+	
+				"OnDestroy"
+				{
+					// EXPERIMENTAL, IF IT WORKS THEN GG
+					"ReplaceUnit"
+					{
+						"UnitName"      "human_peasant"
+						"Target"        "TARGET"
+					}
+				}
+			}
+		}
+	}
+	
+	
+	// Sends the Militia to the city center for swapping back to Peasant
+	"human_back_to_work"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_back_to_work"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/peasant.lua"
+			"Function"		"BackToWork"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_back_to_work"
+			{
+				"IsHidden"			"0"
+		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"CheckCityCenterPosition"
+					}
+				}
+	
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_back_to_work"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					// EXPERIMENTAL, IF IT WORKS THEN GG, LESS LUA
+					"ReplaceUnit"
+					{
+						"UnitName"      "human_peasant"
+						"Target"        "TARGET"
+					}
+				}
+			}
+		}
+	}
+	
+	
+	// When the Militia is created, this will apply the proper level of Forged and Plating research
+	"militia_upgrades"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_militia_upgrades"
+			{
+				"IsHidden"			"0" //"1"
+				"Passive"			"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "units/human/human_upgrades.lua"
+						"Function"      "ApplyForgedSwordsUpgrade"
+					}
+					"RunScript"
+					{
+						"ScriptFile"    "units/human/human_upgrades.lua"
+						"Function"      "ApplyPlatingUpgrade"
+					}
+				}
+			}
+		}
+	}
 	
 	"human_gather"
 	{
@@ -11213,7 +11467,7 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	
 		"AbilityCastPoint"				"0.1"
@@ -11231,7 +11485,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/peasant.lua"
+				"ScriptFile"	"units/human/peasant.lua"
 				"Function"		"Gather"
 			}
 		}
@@ -11247,7 +11501,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"CheckTreePosition"
 					}
 				}
@@ -11262,7 +11516,7 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"ToggleOffGather"
 					}
 				}
@@ -11284,7 +11538,7 @@
 					}
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"ToggleOffGather"
 					}
 				}
@@ -11294,7 +11548,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"Gather1Lumber"
 					}
 	
@@ -11320,7 +11574,7 @@
 					}
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"ToggleOffGather"
 					}
 				}
@@ -11340,7 +11594,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"CheckMinePosition"
 					}
 				}
@@ -11355,7 +11609,7 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"ToggleOffGather"
 					}
 				}
@@ -11379,8 +11633,92 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"GatherGold"
+					}
+				}
+			}
+	
+			"modifier_moving_to_repair"
+			{
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"CheckRepairPosition"
+					}
+				}
+	
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_repairing_lumber"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"ToggleOffGather"
+					}
+				}
+			}
+	
+			// On the caster, does the animation and removal if killed or moved
+			"modifier_repair_peasant"
+			{
+				"IsHidden"				"0" //"1"
+				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+	
+				"OnOrder"
+				{			
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_chopping_wood"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_repairing_animation"
+						"Target" 		"CASTER"
+						"Duration"		"0.9"
+					}
+				}		
+			}
+	
+			"modifier_repairing_animation"
+			{
+				"OverrideAnimation"     "ACT_DOTA_ATTACK"
+				"IsHidden"				"0" //"1"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_repairing_animation"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			// Stackable modifier on the building
+			"modifier_repairing_building"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/Repair"
+						"Function"		"Repair"
 					}
 				}
 			}
@@ -11400,7 +11738,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/peasant.lua"
+				"ScriptFile"	"units/human/peasant.lua"
 				"Function"		"ReturnResources"
 			}
 		}
@@ -11417,7 +11755,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"CheckBuildingPosition"
 					}
 				}
@@ -11426,13 +11764,13 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"ToggleOffGather"
 					}
 	
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"ToggleOffReturn"
 					}
 				}		
@@ -11453,7 +11791,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"CheckBuildingPosition"
 					}
 				}
@@ -11462,13 +11800,13 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"ToggleOffGather"
 					}
 	
 					"RunScript"
 					{
-						"ScriptFile"	"units/peasant.lua"
+						"ScriptFile"	"units/human/peasant.lua"
 						"Function"		"ToggleOffReturn"
 					}
 				}		
@@ -11746,7 +12084,7 @@
 	"human_storm_hammers_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_research_storm_hammers"
+		"AbilityTextureName"			"human_storm_hammers"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -11764,27 +12102,11 @@
 	"human_storm_hammers"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_research_storm_hammers"
+		"AbilityTextureName"			"human_storm_hammers"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	
-		"OnSpellStart"
-		{
-			"TrackingProjectile"
-			{
-				"Target"           	"TARGET"
-				"EffectName"		"particles/base_attacks/ranged_tower_bad.vpcf"
-				"Dodgeable"			"1"
-				"ProvidesVision"	"1"
-				"VisionRadius"		"0"
-				"MoveSpeed"        	"900"
-				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-			}
-		}
 	
 		"OnProjectileHitUnit"
 		{
@@ -11822,6 +12144,282 @@
 						}
 					}
 				}	
+			}
+		}
+	}
+	
+	"human_cloud_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_cloud"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_cloud"
+	// Cast on enemy buildings with ranged attacks to stop the buildings from attacking. Lasts 30 seconds.
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_cloud"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING" //Just for tooltip
+	
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"20.0"
+		"AbilityManaCost"				"100"
+		"AbilityChannelTime"			"30.0"
+		"AOERadius"						"%radius"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cloud_duration"	"30"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/dragonhawk_rider.lua"
+				"Function"		"CloudStart"
+				"Target"		"POINT"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_cloud_channelling"
+				"Target" 		"CASTER"
+			}
+		}
+	
+	    "OnChannelFinish"
+	    {
+	    	"RunScript"
+	    	{
+	    		"ScriptFile"	"units/dragonhawk_rider.lua"
+				"Function"		"CloudEnd"
+	    	} 
+	
+	    	"RemoveModifier"
+			{
+				"ModifierName"	"modifier_cloud_channelling"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_cloud_thinker"
+			{
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"EffectRadius"		"%radius" //Need to adjust AOE?
+						"Target"            "TARGET"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/dragonhawk_rider.lua"
+						"Function"		"ApplyCloud"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC" //Filter for ranged buildings
+						}
+					}
+				}
+			}
+	
+			"modifier_cloud"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"			
+				}
+			}
+	
+			"modifier_cloud_channelling"
+			{
+				"ThinkInterval"  "1.2"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_channeling_animation"
+						"Target" 		"CASTER"
+						"Duration"		"1.1"
+					}
+				}
+			
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+			}
+			"modifier_channeling_animation"
+			{
+				"IsHidden"				"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+			}
+		}
+	}
+	
+	"human_aerial_shackles"
+	// Magically binds a target enemy air unit, so that it cannot move or attack and takes 30 damage per second. Lasts 40 seconds.
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_aerial_shackles"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+	
+		"AbilityCastRange"				"550"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCooldown"				"30.0"
+		"AbilityManaCost"				"75"
+		"AbilityChannelTime"			"40.0"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"40.0"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_second"	"30.0"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/dragonhawk_rider.lua"
+				"Function"		"AerialShacklesCheck"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_aerial_shackles"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_aerial_shackles_channeling"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_aerial_shackles_channeling"
+				"Target" 		"CASTER"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_aerial_shackles"
+				"Target" 		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_aerial_shackles"
+			{
+				"IsDebuff"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%damage_per_second"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"			"particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+						"EffectAttachType"		"follow_origin"
+						"Target"				"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"CASTER"	"attach_origin"
+						}
+					}
+				}
+			}
+			"modifier_aerial_shackles_channeling"
+			{
+				"ThinkInterval"  "1.2"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_channeling_animation"
+						"Target" 		"CASTER"
+						"Duration"		"1.1"
+					}
+				}
+			
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+			}
+			"modifier_channeling_animation"
+			{
+				"IsHidden"				"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
 			}
 		}
 	}
@@ -14528,6 +15126,135 @@
 			}
 		}
 	}
+	"human_magic_sentry"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_magic_sentry"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_magic_sentry"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+						}
+					}			
+				}
+			}
+	
+			"modifier_true_sight_reveal"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.03"
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+		}	
+	}
+	
+	"human_reveal"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flare"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"180"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"reveal_radius"	"1800"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"15"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/far_seer/far_sight.lua"
+				"Function"		"FarSight"
+				"Target"		"POINT"
+			}
+	
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_reveal"
+				"Target" 		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_reveal"
+			{	
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"Aura"          	"modifier_reveal_vision"
+				"Aura_Radius"   	"%reveal_radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+			}
+	
+			"modifier_reveal_vision"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+		}
+	}
 	
 	// Train Peasant
 	"human_train_peasant"
@@ -14658,13 +15385,12 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human_upgrades.lua"
+						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"Backpack"
 					}
 				}
 			}
 		}
-	
 	}
 	
 	// Town Hall -> Keep Upgrade.
@@ -15043,12 +15769,12 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyRangedWeaponsUpgrade"
 					}
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyPlatingUpgrade"
 					}
 				}
@@ -15176,12 +15902,12 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyRangedWeaponsUpgrade"
 					}
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyLeatherArmorUpgrade"
 					}
 				}
@@ -15309,12 +16035,12 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyRangedWeaponsUpgrade"
 					}
 					"RunScript"
 					{
-						"ScriptFile"    "units/human_upgrades.lua"
+						"ScriptFile"    "units/human/human_upgrades.lua"
 						"Function"      "ApplyPlatingUpgrade"
 					}
 				}
@@ -15338,6 +16064,477 @@
 						"Function"      "BuildingAutocast"
 					}
 				}
+			}
+		}
+	}
+	
+	"human_true_sight"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_true_sight"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"Modifiers"
+		{
+			"modifier_true_sight"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"900"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+						}
+					}			
+				}
+			}
+	
+			"modifier_true_sight_reveal"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.03"
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+		}	
+	}
+	
+	"human_flying_machine_bombs_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flying_machine_bombs"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_flying_machine_bombs"
+	// Allows Flying Machines to attack land units. Removes ability_prevent_attack_ground
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flying_machine_bombs"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"Modifiers"
+		{
+			"modifier_flying_machine_bombs"
+			{
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/flying_machine.lua"
+						"Function"		"AllowGroundAttack"
+					}
+				}
+			}
+		}
+	}
+	
+	"human_flak_cannons_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flak_cannons"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_flak_cannons"
+	// Uses powerful cannons to deal area of effect damage against air units
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flak_cannons"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"medium_damage_radius"	"150" //half damage
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"small_damage_radius"	"325" // 1/4 damage
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/flying_machine.lua"
+				"Function"		"FlakCannonDamage"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_flak_cannons"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+	
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"    "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
+					"CastAttack"		"1"
+				}
+				
+				"OnOrbFire"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/flying_machine.lua"
+						"Function"		"FireFlakCannons"
+						"MediumRadius"	"%medium_damage_radius"
+					}
+				}	
+			}
+		}
+	}
+	
+	"human_flare_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flare"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_flare"
+	// Launches a Dwarven flare above the target point, which reveals that area for 15 seconds.\nReveals invisible units 
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_flare"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	
+		"AbilityCooldown"				"120.0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"reveal_radius"	"1800"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"15"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			// Review this function with dummies and a visual projectile effect
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/far_seer/far_sight.lua"
+				"Function"		"FarSight"
+				"Target"		"POINT"
+			}
+	
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_flare"
+				"Target" 		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_flare"
+			{	
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"Aura"          	"modifier_flare_vision"
+				"Aura_Radius"   	"%reveal_radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+			}
+	
+			"modifier_flare_vision"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+		}
+	}
+	
+	// This is an innate hidden ability of the Mortar Team units, which causes their ranged attacks to splash on impact
+	"human_mortar_team_attack"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL" //Siege
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aoe_medium_damage" "150" // 1/2 damage
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aoe_small_damage" "250" // 1/4 damage
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mortar_team_attack"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"    "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
+					"CastAttack"		"1"
+				}
+				
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/mortar_team.lua"
+						"Function"		"MortarSplashMedium"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%aoe_medium_damage"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/mortar_team.lua"
+						"Function"		"MortarSplashSmall"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%aoe_small_damage"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+				}		
+			}
+		}
+	}
+	
+	"human_fragmentation_shards_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_fragmentation_shards"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_fragmentation_shards"
+	// Uses fragmentation mortars to increase damage dealt to Unarmored and Medium armor units. 
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_fragmentation_shards"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_fragmentation_shards"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"    "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
+					"CastAttack"		"1"
+				}
+				
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/mortar_team.lua"
+						"Function"		"FragmentationShard"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+				}
+				
+			}
+		}
+	}
+	
+	"human_barrage_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_barrage"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"human_barrage"
+	// Fires powerful rockets at nearby enemy air units, dealing 25 damage per hit
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_barrage"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityDamage"					"25"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+			"Damage"
+			{
+				"Target"		"TARGET"
+				"Type"			"DAMAGE_TYPE_PHYSICAL"
+				"Damage"		"%AbilityDamage"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_barrage"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0"	//"1"
+		
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"    "particles/base_attacks/ranged_siege_good.vpcf"
+					"CastAttack"		"1"
+				}
+				
+				"OnOrbFire"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/siege_engine.lua"
+						"Function"		"Barrage"
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+				}			
 			}
 		}
 	}

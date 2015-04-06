@@ -98,12 +98,12 @@
 
 				"RunScript"
 				{
-					"ScriptFile"    "units/human_upgrades.lua"
+					"ScriptFile"    "units/human/human_upgrades.lua"
 					"Function"      "ApplyRangedWeaponsUpgrade"
 				}
 				"RunScript"
 				{
-					"ScriptFile"    "units/human_upgrades.lua"
+					"ScriptFile"    "units/human/human_upgrades.lua"
 					"Function"      "ApplyPlatingUpgrade"
 				}
 			}
@@ -231,12 +231,12 @@
 
 				"RunScript"
 				{
-					"ScriptFile"    "units/human_upgrades.lua"
+					"ScriptFile"    "units/human/human_upgrades.lua"
 					"Function"      "ApplyRangedWeaponsUpgrade"
 				}
 				"RunScript"
 				{
-					"ScriptFile"    "units/human_upgrades.lua"
+					"ScriptFile"    "units/human/human_upgrades.lua"
 					"Function"      "ApplyLeatherArmorUpgrade"
 				}
 			}
@@ -364,12 +364,12 @@
 
 				"RunScript"
 				{
-					"ScriptFile"    "units/human_upgrades.lua"
+					"ScriptFile"    "units/human/human_upgrades.lua"
 					"Function"      "ApplyRangedWeaponsUpgrade"
 				}
 				"RunScript"
 				{
-					"ScriptFile"    "units/human_upgrades.lua"
+					"ScriptFile"    "units/human/human_upgrades.lua"
 					"Function"      "ApplyPlatingUpgrade"
 				}
 			}
@@ -393,6 +393,477 @@
 					"Function"      "BuildingAutocast"
 				}
 			}
+		}
+	}
+}
+
+"human_true_sight"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_true_sight"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"Modifiers"
+	{
+		"modifier_true_sight"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"900"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_truesight_reveal"
+							"Target" 		"TARGET"
+						}
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_truesight_reveal"
+							"Target" 		"TARGET"
+						}
+					}
+				}			
+			}
+		}
+
+		"modifier_true_sight_reveal"
+		{
+			"IsHidden"			"1"
+			"Duration"			"0.03"
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}	
+}
+
+"human_flying_machine_bombs_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_flying_machine_bombs"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"human_flying_machine_bombs"
+// Allows Flying Machines to attack land units. Removes ability_prevent_attack_ground
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_flying_machine_bombs"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"Modifiers"
+	{
+		"modifier_flying_machine_bombs"
+		{
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/flying_machine.lua"
+					"Function"		"AllowGroundAttack"
+				}
+			}
+		}
+	}
+}
+
+"human_flak_cannons_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_flak_cannons"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"human_flak_cannons"
+// Uses powerful cannons to deal area of effect damage against air units
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_flak_cannons"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"medium_damage_radius"	"150" //half damage
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"small_damage_radius"	"325" // 1/4 damage
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/flying_machine.lua"
+			"Function"		"FlakCannonDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_flak_cannons"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
+				"CastAttack"		"1"
+			}
+			
+			"OnOrbFire"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/flying_machine.lua"
+					"Function"		"FireFlakCannons"
+					"MediumRadius"	"%medium_damage_radius"
+				}
+			}	
+		}
+	}
+}
+
+"human_flare_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_flare"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"human_flare"
+// Launches a Dwarven flare above the target point, which reveals that area for 15 seconds.\nReveals invisible units 
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_flare"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCooldown"				"120.0"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"reveal_radius"	"1800"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"15"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		// Review this function with dummies and a visual projectile effect
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/far_seer/far_sight.lua"
+			"Function"		"FarSight"
+			"Target"		"POINT"
+		}
+
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_flare"
+			"Target" 		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_flare"
+		{	
+			"IsHidden"			"1"
+			"Duration"			"%duration"
+			"Aura"          	"modifier_flare_vision"
+			"Aura_Radius"   	"%reveal_radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+		}
+
+		"modifier_flare_vision"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}
+}
+
+// This is an innate hidden ability of the Mortar Team units, which causes their ranged attacks to splash on impact
+"human_mortar_team_attack"
+{
+	"BaseClass"						"ability_datadriven"
+	"MaxLevel"						"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL" //Siege
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"aoe_medium_damage" "150" // 1/2 damage
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"aoe_small_damage" "250" // 1/4 damage
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_mortar_team_attack"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
+				"CastAttack"		"1"
+			}
+			
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/mortar_team.lua"
+					"Function"		"MortarSplashMedium"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%aoe_medium_damage"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/mortar_team.lua"
+					"Function"		"MortarSplashSmall"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%aoe_small_damage"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}		
+		}
+	}
+}
+
+"human_fragmentation_shards_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_fragmentation_shards"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"human_fragmentation_shards"
+// Uses fragmentation mortars to increase damage dealt to Unarmored and Medium armor units. 
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_fragmentation_shards"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"250"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_fragmentation_shards"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
+				"CastAttack"		"1"
+			}
+			
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/mortar_team.lua"
+					"Function"		"FragmentationShard"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}
+			
+		}
+	}
+}
+
+"human_barrage_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_barrage"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"human_barrage"
+// Fires powerful rockets at nearby enemy air units, dealing 25 damage per hit
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_barrage"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityDamage"					"25"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"500"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+		"Damage"
+		{
+			"Target"		"TARGET"
+			"Type"			"DAMAGE_TYPE_PHYSICAL"
+			"Damage"		"%AbilityDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_barrage"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"	//"1"
+	
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/base_attacks/ranged_siege_good.vpcf"
+				"CastAttack"		"1"
+			}
+			
+			"OnOrbFire"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/siege_engine.lua"
+					"Function"		"Barrage"
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}			
 		}
 	}
 }

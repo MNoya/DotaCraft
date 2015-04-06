@@ -5,6 +5,7 @@
 ]]
 function CheckTrees( event )
 	local caster = event.caster
+	local pID = caster:GetPlayerID()
 	local ability = event.ability
 	local point = event.target_points[1]
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )

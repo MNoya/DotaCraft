@@ -86,7 +86,7 @@
 				// Level up the creature to the appropiate train level
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"TrainSorceress"
 				}
 			}
@@ -216,7 +216,7 @@
 				// Level up the creature to the appropiate train level
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"TrainPriest"
 				}
 			}
@@ -344,12 +344,12 @@
 				}
 				"RunScript"
 				{
-					"ScriptFile"    "units/human_upgrades.lua"
+					"ScriptFile"    "units/human/human_upgrades.lua"
 					"Function"      "ApplyForgedSwordUpgrade"
 				}
 				"RunScript"
 				{
-					"ScriptFile"    "units/human_upgrades.lua"
+					"ScriptFile"    "units/human/human_upgrades.lua"
 					"Function"      "ApplyLeatherArmorUpgrade"
 				}
 			}
@@ -435,7 +435,7 @@
 
 	"precache"
 	{
-		"particle"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+		"particle"	"particles/units/human/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
 		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
 	}
 
@@ -466,7 +466,7 @@
 		{
 			"IsDebuff"		"1"
 			"IsPurgable"	"1"
-			"EffectName"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+			"EffectName"	"particles/units/human/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
 			"EffectAttachType"	"attach_hitloc"
 			"Duration"	"%duration"
 			"Properties"
@@ -555,7 +555,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/sorceress.lua"
+			"ScriptFile"	"units/human/sorceress.lua"
 			"Function"		"PolymorphLevelCheck"
 		}
 	}
@@ -577,7 +577,7 @@
 
 		"FireEffect"
 		{
-			"EffectName"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+			"EffectName"		"particles/units/human/heroes/hero_lion/lion_spell_voodoo.vpcf"
 			"EffectAttachType"	"follow_origin"
 			"Target"			"TARGET"
 		}
@@ -680,7 +680,7 @@
 	
 	"precache"
 	{
-		"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+		"particle"	"particles/units/human/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
 		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 	}
 
@@ -704,7 +704,7 @@
 		"FireEffect"
 		{
 			"Target"			"TARGET"
-			"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+			"EffectName"		"particles/units/human/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
 			"EffectAttachType"	"follow_origin"
 		}
 
@@ -762,7 +762,7 @@
 	{
 		"FireEffect"
 		{
-			"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+			"EffectName"        "particles/units/human/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
 			"EffectAttachType"  "world_origin"
 			"TargetPoint"       "POINT"
 			"ControlPoints"
@@ -847,7 +847,7 @@
 		"ApplyModifier"
 		{
 			"Target"		"TARGET"
-			"ModifierName"	"creep_inner_fire_buff"
+			"ModifierName"	"modifier_inner_fire"
 		}
 
 		"FireSound"
@@ -859,7 +859,7 @@
 
 	"Modifiers"
 	{
-		"creep_inner_fire_buff"
+		"modifier_inner_fire"
 		{
 			"OnCreated"
 			{
@@ -908,9 +908,21 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 
+	//Need parity values
+	"AbilityCastPoint"			"0.0"
+	"AbilityCastRange"			"500"
+	"AbilityCooldown"			"5"
+	"AbilityManaCost"			"35"
+
 	//OnSpellStart, RunScript, check if casted on friend or enemy
-	//if friend, remove negative debuff and apply it to a random enemy unit nearby
-	//if enemy, remove positive buff and apply it to a random ally unit nearby
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/spell_breaker.lua"
+			"Function"		"SpellSteal"
+		}
+	}
 }
 
 // Ability Researched by human_research_control_magic
@@ -923,8 +935,42 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_SUMMONED" //??
+
+	//Need parity values
+	"AbilityCastPoint"			"0.0"
+	"AbilityCastRange"			"500"
+	"AbilityCooldown"			"5"
+	"AbilityManaCost"			"35"
 
 	//Mana cost is .45 mana per hit point.
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"mana_control_rate"	"0.45"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/spell_breaker.lua"
+			"Function"		"ControlMagicCheck"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/spell_breaker.lua"
+			"Function"		"ControlMagic"
+		}
+	}
+
 }
 "human_control_magic_disabled"
 {
@@ -1016,7 +1062,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/spell_breaker.lua"
+					"ScriptFile"	"units/human/spell_breaker.lua"
 					"Function"		"ManaBreak"
 					"Target"		"TARGET"
 				}
@@ -1079,7 +1125,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplyPriestTraining"
 					"Rank"			"1"
 				}
@@ -1140,7 +1186,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplyPriestTraining"
 					"Rank"			"2"
 				}
@@ -1196,7 +1242,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplySorceressTraining"
 					"Rank"			"1"
 				}
@@ -1252,7 +1298,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplySorceressTraining"
 					"Rank"			"2"
 				}

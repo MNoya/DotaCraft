@@ -7,7 +7,7 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
 	"AbilityCastPoint"				"0.1"
@@ -25,7 +25,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/peasant.lua"
+			"ScriptFile"	"units/human/peasant.lua"
 			"Function"		"Gather"
 		}
 	}
@@ -41,7 +41,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"CheckTreePosition"
 				}
 			}
@@ -56,7 +56,7 @@
 
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"ToggleOffGather"
 				}
 			}
@@ -78,7 +78,7 @@
 				}
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"ToggleOffGather"
 				}
 			}
@@ -88,7 +88,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"Gather1Lumber"
 				}
 
@@ -114,7 +114,7 @@
 				}
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"ToggleOffGather"
 				}
 			}
@@ -134,7 +134,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"CheckMinePosition"
 				}
 			}
@@ -149,7 +149,7 @@
 
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"ToggleOffGather"
 				}
 			}
@@ -173,8 +173,92 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"GatherGold"
+				}
+			}
+		}
+
+		"modifier_moving_to_repair"
+		{
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"CheckRepairPosition"
+				}
+			}
+
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_repairing_lumber"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"ToggleOffGather"
+				}
+			}
+		}
+
+		// On the caster, does the animation and removal if killed or moved
+		"modifier_repair_peasant"
+		{
+			"IsHidden"				"0" //"1"
+			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+
+			"OnOrder"
+			{			
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_chopping_wood"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"ThinkInterval"  	"1.0"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_repairing_animation"
+					"Target" 		"CASTER"
+					"Duration"		"0.9"
+				}
+			}		
+		}
+
+		"modifier_repairing_animation"
+		{
+			"OverrideAnimation"     "ACT_DOTA_ATTACK"
+			"IsHidden"				"0" //"1"
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_repairing_animation"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+
+		// Stackable modifier on the building
+		"modifier_repairing_building"
+		{
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"ThinkInterval"  	"1.0"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/Repair"
+					"Function"		"Repair"
 				}
 			}
 		}
@@ -194,7 +278,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/peasant.lua"
+			"ScriptFile"	"units/human/peasant.lua"
 			"Function"		"ReturnResources"
 		}
 	}
@@ -211,7 +295,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"CheckBuildingPosition"
 				}
 			}
@@ -220,13 +304,13 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"ToggleOffGather"
 				}
 
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"ToggleOffReturn"
 				}
 			}		
@@ -247,7 +331,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"CheckBuildingPosition"
 				}
 			}
@@ -256,13 +340,13 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"ToggleOffGather"
 				}
 
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"ToggleOffReturn"
 				}
 			}		

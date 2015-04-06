@@ -1,0 +1,156 @@
+// Orders the peasants to move towards the nearest Town Hall and replace itself with a Militia unit for a duration
+"human_call_to_arms"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_call_to_arms"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"45"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/peasant.lua"
+			"Function"		"CallToArms"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_calling_to_arms"
+		{
+			"IsHidden"			"0" //"1"
+	
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"CheckCityCenterPosition"
+				}
+			}
+
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_calling_to_arms"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+
+		"modifier_militia"
+		{
+			"IsHidden"			"1"
+			"Duration"			"%duration"
+
+			"OnDestroy"
+			{
+				// EXPERIMENTAL, IF IT WORKS THEN GG
+				"ReplaceUnit"
+				{
+					"UnitName"      "human_peasant"
+					"Target"        "TARGET"
+				}
+			}
+		}
+	}
+}
+
+
+// Sends the Militia to the city center for swapping back to Peasant
+"human_back_to_work"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_back_to_work"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+
+	"RunScript"
+	{
+		"ScriptFile"	"units/human/peasant.lua"
+		"Function"		"BackToWork"
+	}
+
+	"Modifiers"
+	{
+		"modifier_back_to_work"
+		{
+			"IsHidden"			"0"
+	
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"CheckCityCenterPosition"
+				}
+			}
+
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_back_to_work"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"OnDestroy"
+			{
+				// EXPERIMENTAL, IF IT WORKS THEN GG, LESS LUA
+				"ReplaceUnit"
+				{
+					"UnitName"      "human_peasant"
+					"Target"        "TARGET"
+				}
+			}
+		}
+	}
+}
+
+
+// When the Militia is created, this will apply the proper level of Forged and Plating research
+"militia_upgrades"
+{
+	"BaseClass"             		"ability_datadriven"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"Modifiers"
+	{
+		"modifier_militia_upgrades"
+		{
+			"IsHidden"			"0" //"1"
+			"Passive"			"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "units/human/human_upgrades.lua"
+					"Function"      "ApplyForgedSwordsUpgrade"
+				}
+				"RunScript"
+				{
+					"ScriptFile"    "units/human/human_upgrades.lua"
+					"Function"      "ApplyPlatingUpgrade"
+				}
+			}
+		}
+	}
+}

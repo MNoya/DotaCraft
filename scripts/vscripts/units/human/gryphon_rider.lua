@@ -28,7 +28,6 @@ function StormHammer( event )
 	end
 end
 
--- OnProjetileHitUnit doesn't work on npc
 function StormHammerDamage( event )
 	local caster = event.caster
 	local target = event.target

@@ -1,0 +1,129 @@
+"human_magic_sentry"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_magic_sentry"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"900"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_magic_sentry"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_truesight_reveal"
+							"Target" 		"TARGET"
+						}
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_truesight_reveal"
+							"Target" 		"TARGET"
+						}
+					}
+				}			
+			}
+		}
+
+		"modifier_true_sight_reveal"
+		{
+			"IsHidden"			"1"
+			"Duration"			"0.03"
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}	
+}
+
+"human_reveal"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_flare"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"180"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"reveal_radius"	"1800"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"15"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/far_seer/far_sight.lua"
+			"Function"		"FarSight"
+			"Target"		"POINT"
+		}
+
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_reveal"
+			"Target" 		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_reveal"
+		{	
+			"IsHidden"			"1"
+			"Duration"			"%duration"
+			"Aura"          	"modifier_reveal_vision"
+			"Aura_Radius"   	"%reveal_radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+		}
+
+		"modifier_reveal_vision"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}
+}

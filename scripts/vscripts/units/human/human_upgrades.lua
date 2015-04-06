@@ -1,4 +1,3 @@
-
 function ApplyModifierUpgrade( event )
 	
 	local caster = event.caster
@@ -28,9 +27,9 @@ function ApplyModifierUpgrade( event )
 	elseif string.find(ability_name,"ranged_weapons") then
 
 		if unit_name == "human_siege_engine" then
-			ability:ApplyDataDrivenModifier(caster, caster, "siege_engine_damage", {})
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_siege_engine_damage", {})
 		elseif unit_name == "human_mortar_team" then
-			ability:ApplyDataDrivenModifier(caster, caster, "mortar_team_damage", {})
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_mortar_team_damage", {})
 		else
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_bonus_damage", {})
 		end

@@ -27,7 +27,7 @@
 
 	"Modifiers"
 	{
-		"modifier_forged_swords1"
+		"modifier_forged_swords"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -36,7 +36,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplyModifierUpgrade"
 				}
 			}
@@ -99,7 +99,7 @@
 
 	"Modifiers"
 	{
-		"modifier_forged_swords2"
+		"modifier_forged_swords"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -108,7 +108,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplyModifierUpgrade"
 				}
 			}
@@ -171,7 +171,7 @@
 
 	"Modifiers"
 	{
-		"modifier_forged_swords3"
+		"modifier_forged_swords"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -180,7 +180,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplyModifierUpgrade"
 				}
 			}
@@ -233,7 +233,7 @@
 
 	"Modifiers"
 	{
-		"modifier_plating1"
+		"modifier_plating"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"		
@@ -249,7 +249,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityTextureName"	"human_research_plating2"
-	"MaxLevel"				"1"
+	"MaxLevel"				"2"
 
 	"AbilitySpecial"
 	{
@@ -262,7 +262,7 @@
 
 	"Modifiers"
 	{
-		"modifier_plating2"
+		"modifier_plating"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"		
@@ -291,7 +291,7 @@
 
 	"Modifiers"
 	{
-		"modifier_plating3"
+		"modifier_plating"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"		
@@ -330,7 +330,7 @@
 
 	"Modifiers"
 	{
-		"modifier_ranged_weapons1"
+		"modifier_ranged_weapons"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -339,7 +339,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplyModifierUpgrade"
 				}
 			}
@@ -379,7 +379,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityTextureName"	"human_research_ranged_weapons2"
-	"MaxLevel"				"1"
+	"MaxLevel"				"2"
 
 	"AbilitySpecial"
 	{
@@ -402,7 +402,7 @@
 
 	"Modifiers"
 	{
-		"modifier_ranged_weapons2"
+		"modifier_ranged_weapons"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -411,7 +411,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplyModifierUpgrade"
 				}
 			}
@@ -451,7 +451,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityTextureName"	"human_research_ranged_weapons3"
-	"MaxLevel"				"1"
+	"MaxLevel"				"3"
 
 	"AbilitySpecial"
 	{
@@ -474,7 +474,7 @@
 
 	"Modifiers"
 	{
-		"modifier_ranged_weapons3"
+		"modifier_ranged_weapons"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -483,7 +483,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human_upgrades.lua"
+					"ScriptFile"	"units/human/human_upgrades.lua"
 					"Function"		"ApplyModifierUpgrade"
 				}
 			}
@@ -536,7 +536,7 @@
 
 	"Modifiers"
 	{
-		"modifier_leather_armor1"
+		"modifier_leather_armor"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"		
@@ -565,7 +565,7 @@
 
 	"Modifiers"
 	{
-		"modifier_leather_armor2"
+		"modifier_leather_armor"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"		
@@ -594,7 +594,7 @@
 
 	"Modifiers"
 	{
-		"modifier_leather_armor3"
+		"modifier_leather_armor"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"	

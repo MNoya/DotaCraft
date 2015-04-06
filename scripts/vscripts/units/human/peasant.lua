@@ -39,6 +39,7 @@ function Gather( event )
 		ability:SetHidden(false)
 		print("Gathering Lumber ON, Return OFF")
 
+	-- Gather Gold
 	elseif target_class == "npc_dota_building" then
 		if target:GetUnitName() == "gold_mine" then
 			print("Gathering Gold On")
@@ -65,9 +66,22 @@ function Gather( event )
 			print("Not a valid gathering target")
 			return
 		end
-	end
-	
-	
+
+	-- Repair Building
+	elseif target_class == "npc_dota_creature" then
+		if target:HasAbility("ability_building") then
+			if target:GetHealthDeficit() ~= 0 then
+				print("Repair Building On")
+				caster:MoveToNPC(target)
+
+				caster.repair_building = target
+				ability:ApplyDataDrivenModifier(caster, caster, "modifier_moving_to_repair", {})
+
+			else
+				print("Building already on full health")
+			end
+		end
+	end	
 end
 
 -- Toggles Off Gather
@@ -91,8 +105,6 @@ function ToggleOffReturn( event )
 		return_ability:ToggleAbility()
 		print("Toggled Off Return")
 	end
-	caster.skip_order = false
-
 end
 
 
@@ -173,7 +185,6 @@ function CheckMinePosition( event )
 		end)
 	end
 end
-
 
 function Gather1Lumber( event )
 	
@@ -271,7 +282,6 @@ function ReturnResources( event )
 		end)
 
 		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Position = building:GetAbsOrigin(), Queue = false}) 
-		caster.skip_order = true
 		caster.target_building = building
 	
 
@@ -293,7 +303,6 @@ function ReturnResources( event )
 		end)
 
 		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Position = building:GetAbsOrigin(), Queue = false}) 
-		caster.skip_order = true
 		caster.target_building = building
 	end
 
@@ -325,14 +334,11 @@ function CheckBuildingPosition( event )
 
 		if caster.lumber_gathered and caster.lumber_gathered > 0 then
 			print("Reached building, give resources")
-			PopupLumber(caster, caster.lumber_gathered)
-
+			
 			caster:RemoveModifierByName("modifier_returning_resources")
 			print("Removed modifier_returning_resources")
 
-			player.lumber = player.lumber + caster.lumber_gathered 
-    		print("Lumber Gained. Player " .. pID .. " is currently at " .. player.lumber)
-    		FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
+    		ModifyLumber(player, caster.lumber_gathered)
 
 			caster.lumber_gathered = 0
 
@@ -425,4 +431,241 @@ function IsValidDepositName( name )
 	end
 
 	return false
+end
+
+
+--------------------------------
+--    Call To Arms Scripts    --
+--------------------------------
+
+-- NOTE: There should be a separate Call To Arms ability on each peasant but it's
+-- 		 currently not possible because there's not enough ability slots visible
+
+function CallToArms( event )
+	local hero = caster:GetOwner()
+	local ability = event.ability
+	local player = caster:GetPlayerOwner()
+	local pID = hero:GetPlayerID()
+
+	local allUnits = player.units
+	for _,unit in pairs(allUnits) do
+		if unit:GetUnitName() == "human_peasant" then
+			local building = FindClosestCityCenter( unit )
+			if building then
+				unit.target_building = building
+			else
+				print("ERROR, No City Center Found")
+				return
+			end
+
+			-- Send a move order to the closest city center.
+			ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), 
+									OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
+									TargetIndex = building:GetEntityIndex(), 
+									Position = building:GetAbsOrigin(), Queue = false})
+
+			-- Apply the modifier to check position while moving to the building
+			ability:ApplyDataDrivenModifier(caster, unit, "modifier_calling_to_arms", {})
+
+		end
+	end
+end
+
+function CheckCityCenterPosition( event )
+	local target = event.target -- The peasant
+	local ability = event.ability
+	local building = target.target_building
+
+	if not building or not IsValidEntity(building) then
+		-- Find where to return the resources
+		target.target_building = FindClosestCityCenter( target )
+		building = target.target_building
+		print("Resource delivery position set to "..building:GetUnitName())
+	end
+
+	local distance = (target:GetAbsOrigin() - building:GetAbsOrigin()):Length()
+	local collision = distance <= (building:GetHullRadius()+100)
+	if not collision then
+		--print("Moving to building, distance: ",distance)
+	else
+		print(building:GetUnitName().." reached!")
+		local militia = ReplaceUnit(target, "human_militia")
+		ability:ApplyDataDrivenModifier(building, militia, "modifier_militia", {})
+
+		-- Add the units to a table so they are easier to find later
+		if not player.militia then
+			player.militia = {}
+		else
+			table.insert(player.militia, militia)
+		end
+	end
+end
+
+function BackToWork( event )
+	local caster = event.caster -- The militia unit
+	local ability = event.ability
+	local player = caster:GetPlayerOwner()
+	local pID = hero:GetPlayerID()
+
+	local building = FindClosestCityCenter( caster )
+	if building then
+		caster.target_building = building
+	else
+		print("ERROR, No City Center Found")
+		return
+	end
+
+	-- Send a move order to the closest city center.
+	ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), 
+							OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
+							TargetIndex = building:GetEntityIndex(), 
+							Position = building:GetAbsOrigin(), Queue = false})
+
+	-- Apply the modifier to check position while moving to the building
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_back_to_work", {})
+end
+
+-- Aux to find Town Hall
+function FindClosestCityCenter( caster )
+	local position = caster:GetAbsOrigin()
+
+	-- Find closest Town Hall building
+	local player = caster:GetPlayerOwner()
+	local buildings = player.structures
+	local distance = 9999
+	local closest_building = nil
+
+	for _,building in pairs(buildings) do
+		if IsValidMainBuildingName( building:GetUnitName() ) then
+		   
+			local this_distance = (position - building:GetAbsOrigin()):Length()
+			if this_distance < distance then
+				distance = this_distance
+				closest_building = building
+			end
+		end
+	end	
+	return closest_building
+end
+
+function IsValidMainBuildingName( name )
+	
+	-- Possible Main Buildings are:
+	local possible_buildings = { "human_town_hall",
+								"human_keep",
+								"human_castle"
+							  }
+
+	for i=1,#possible_buildings do 
+		if name == possible_buildings[i] then
+			return true
+		end
+	end
+
+	return false
+end
+
+function ReplaceUnit( unit, new_unit_name )
+	print("Replacing "..unit:GetUnitName().." with "..new_unit_name)
+	
+	local hero = caster:GetOwner()
+	local player = caster:GetPlayerOwner()
+	local pID = hero:GetPlayerID()
+
+	local position = unit:GetAbsOrigin()
+	local health = unit:GetHealth()
+	unit:RemoveSelf()
+
+	local new_unit = CreateUnitByName(new_unit_name, position, true, hero, hero, hero:GetTeamNumber())
+	new_unit:SetOwner(hero)
+	new_unit:SetControllableByPlayer(pID, true)
+	new_unit:SetAbsOrigin(position)
+	new_unit:SetHealth(health)
+
+	return new_unit
+end
+
+--------------------------------
+--       Repair Scripts       --
+--------------------------------
+
+-- These are the Repair ratios for any race
+-- Repair Cost Ratio = 0.35 - Takes 105g to fully repair a building that costs 300. Also applies to lumber
+-- Repair Time Ratio = 1.5 - Takes 150 seconds to fully repair a building that took 100seconds to build
+
+-- Humans can assist the construction with multiple peasants
+-- In that case, extra resources are consumed
+-- Powerbuild Cost = 0.15 - Added for every extra builder repairing the same building
+-- Powerbuild Rate = 0.60 - Fastens the ratio by 60%?
+	-- 2P: 1.5*0.6 = 0.9
+	-- 3P: 1.5*0.6*0.6 = 0.54
+	-- 4P: 1.5*0.6*0.6*0.6 = 0.324
+	-- 5P: 1.5*0.6*0.6*0.6*0.6 = 0.1944 and 0.35 + 0.15*4 = 0.95 cost
+
+-- Values are taken from the UnitKV GoldCost LumberCost and BuildTime
+
+function Repair( event )
+	local caster = event.caster -- ??
+	local target = event.target -- The building to repair
+
+	local hero = caster:GetOwner()
+	local player = caster:GetPlayerOwner()
+	local pID = hero:GetPlayerID()
+
+	local building_name = target:GetUnitName()
+	local building_info = GameRules.UnitKV[building_name]
+	local gold_cost = building_info.GoldCost
+	local lumber_cost = building_info.LumberCost
+	local build_time = building_info.BuildTime
+
+	-- Scale costs/time according to the stack count of builders reparing this
+	if target:GetHealthDeficit() > 0 then
+		local stack_count = target:GetModifierStackCount( "modifier_repairing_building", ability )
+		local health_per_second = target:GetMaxHealth() / build_time * 1.5 * math.pow(0.6, stack_count - 1)
+		local gold_per_second = gold_cost / build_time * ( 0.35 + 0.15 * (stack_count - 1))
+		local lumber_per_second = lumber_cost / build_time * ( 0.35 + 0.15 * (stack_count - 1))
+			
+		if hero:IsOwnersGoldEnough(gold_per_second) and IsOwnersLumberEnough( player, lumber_per_second ) then
+			target:SetHealth( target:GetHealth() +  health_per_second)
+			hero:ModifyGold( -gold_per_second, false, 0)
+			ModifyLumber( player, -lumber_per_second )
+		end
+	end
+
+end
+
+function CheckRepairPosition( event )
+	local caster = event.caster
+	local ability = event.ability
+	local target = caster.repair_building
+
+	if not target or not IsValidTarget(target) then
+		--print("ERROR, building can't be found")
+		return
+	end
+
+	local distance = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length()
+	local collision = distance <= (target:GetHullRadius()+100)
+	if not collision then
+		--print("Moving to building, distance: ",distance)
+	else
+		local hero = caster:GetOwner()
+		local player = caster:GetPlayerOwner()
+		local pID = hero:GetPlayerID()
+
+		print("Reached building, starting the Repair process")
+
+		-- Apply a modifier stack to the building, to show how many peasants are working on it (and scale the Powerbuild costs)
+		local modifierName = "modifier_repairing_building"
+		if target:HasModifier(modifierName) then
+			target:SetModifierStackCount( modifierName, ability, target:GetModifierStackCount( modifierName, ability ) + 1 )
+		else
+			ability:ApplyDataDrivenModifier( caster, target, modifierName, { Duration = duration } )
+			target:SetModifierStackCount( modifierName, ability, 1 )
+		end
+
+		-- Apply a modifier on the caster to fake animation and remove the reparing if the unit is killed
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_repairing_peasant", {})
+	end
+		
 end

@@ -269,7 +269,7 @@
 "human_storm_hammers_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_research_storm_hammers"
+	"AbilityTextureName"			"human_storm_hammers"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -287,27 +287,11 @@
 "human_storm_hammers"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_research_storm_hammers"
+	"AbilityTextureName"			"human_storm_hammers"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-
-	"OnSpellStart"
-	{
-		"TrackingProjectile"
-		{
-			"Target"           	"TARGET"
-			"EffectName"		"particles/base_attacks/ranged_tower_bad.vpcf"
-			"Dodgeable"			"1"
-			"ProvidesVision"	"1"
-			"VisionRadius"		"0"
-			"MoveSpeed"        	"900"
-			"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-		}
-	}
 
 	"OnProjectileHitUnit"
 	{
@@ -345,6 +329,282 @@
 					}
 				}
 			}	
+		}
+	}
+}
+
+"human_cloud_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_cloud"
+	"MaxLevel" 						"0"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"human_cloud"
+// Cast on enemy buildings with ranged attacks to stop the buildings from attacking. Lasts 30 seconds.
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_cloud"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE "
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING" //Just for tooltip
+
+	"AbilityCastRange"				"800"
+	"AbilityCooldown"				"20.0"
+	"AbilityManaCost"				"100"
+	"AbilityChannelTime"			"30.0"
+	"AOERadius"						"%radius"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"cloud_duration"	"30"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"300"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/dragonhawk_rider.lua"
+			"Function"		"CloudStart"
+			"Target"		"POINT"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_cloud_channelling"
+			"Target" 		"CASTER"
+		}
+	}
+
+    "OnChannelFinish"
+    {
+    	"RunScript"
+    	{
+    		"ScriptFile"	"units/dragonhawk_rider.lua"
+			"Function"		"CloudEnd"
+    	} 
+
+    	"RemoveModifier"
+		{
+			"ModifierName"	"modifier_cloud_channelling"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_cloud_thinker"
+		{
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"EffectRadius"		"%radius" //Need to adjust AOE?
+					"Target"            "TARGET"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/dragonhawk_rider.lua"
+					"Function"		"ApplyCloud"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC" //Filter for ranged buildings
+					}
+				}
+			}
+		}
+
+		"modifier_cloud"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"			
+			}
+		}
+
+		"modifier_cloud_channelling"
+		{
+			"ThinkInterval"  "1.2"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_channeling_animation"
+					"Target" 		"CASTER"
+					"Duration"		"1.1"
+				}
+			}
+		
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		}
+		"modifier_channeling_animation"
+		{
+			"IsHidden"				"1"
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		}
+	}
+}
+
+"human_aerial_shackles"
+// Magically binds a target enemy air unit, so that it cannot move or attack and takes 30 damage per second. Lasts 40 seconds.
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_aerial_shackles"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+	"AbilityCastRange"				"550"
+	"AbilityCastPoint"				"0.1"
+	"AbilityCooldown"				"30.0"
+	"AbilityManaCost"				"75"
+	"AbilityChannelTime"			"40.0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"duration"			"40.0"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_per_second"	"30.0"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/dragonhawk_rider.lua"
+			"Function"		"AerialShacklesCheck"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_aerial_shackles"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_aerial_shackles_channeling"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_aerial_shackles_channeling"
+			"Target" 		"CASTER"
+		}
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_aerial_shackles"
+			"Target" 		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_aerial_shackles"
+		{
+			"IsDebuff"			"1"
+	
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage_per_second"
+				}
+			}
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"			"particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+					"EffectAttachType"		"follow_origin"
+					"Target"				"TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"CASTER"	"attach_origin"
+					}
+				}
+			}
+		}
+		"modifier_aerial_shackles_channeling"
+		{
+			"ThinkInterval"  "1.2"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_channeling_animation"
+					"Target" 		"CASTER"
+					"Duration"		"1.1"
+				}
+			}
+		
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		}
+		"modifier_channeling_animation"
+		{
+			"IsHidden"				"1"
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
 		}
 	}
 }

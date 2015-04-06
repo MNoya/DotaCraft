@@ -1821,11 +1821,12 @@
 		"Ability1"					"human_gather"
 		"Ability2"					"human_return_resources"
 		"Ability3"					"build_barracks"
-		"Ability4"					"build_blacksmith_disabled" //"build_arcane_sanctum"
-		"Ability5"					"build_arcane_sanctum_disabled" //"build_arcane_sanctum"
-		"Ability6"					"build_workshop_disabled" //"build_human_workshop"
-		"Ability7"					"build_gryphon_aviary_disabled" //build_human_gryphon_aviary"				
+		"Ability4"					"build_blacksmith_disabled"
+		"Ability5"					"build_arcane_sanctum_disabled"
+		"Ability6"					"build_workshop_disabled"
+		"Ability7"					"build_gryphon_aviary_disabled"				
 		"Ability8"					"build_human_items" // Provides 6 additional building abilities
+		"Ability9"					"ability_prevent_attack_flying"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1910,10 +1911,11 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""	 //Reference: Ahar
-		"Ability2"					""	 //Reference: Amil
+		"Ability1"					"human_back_to_work"	 //Reference: Ahar
+		"Ability2"					"militia_upgrades"	 //Reference: Amil
 		"Ability3"					""	 //Reference: Ahrp
-		
+		"Ability4"					"ability_prevent_attack_flying"
+			
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"4"
@@ -1998,8 +2000,9 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"human_defend"	 //Reference: Adef
+		"Ability1"					"human_defend_disabled"
 		"Ability2"					""	 //Reference: Aihn
+		"Ability3"					"ability_prevent_attack_flying"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2102,7 +2105,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"human_long_rifles"	 //Reference: Aihn
+		"Ability1"					"human_long_rifles_disabled"	 //Reference: Aihn
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2198,7 +2201,8 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"human_animal_war_training"	 //Reference: Aihn
+		"Ability1"					"human_animal_war_training_disabled"	 //Reference: Aihn
+		"Ability3"					"ability_prevent_attack_flying"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2285,7 +2289,7 @@
 	
 		"precache"
 		{
-			"particle_folder"	"particles/units/heroes/hero_chaos_knight"
+			"particle_folder"	"particles/units/human/heroes/hero_chaos_knight"
 		}
 	}
 	
@@ -2307,8 +2311,8 @@
 		//----------------------------------------------------------------
 		"Ability1"					"lina_arcana"	 //Reference: Aivs
 		"Ability2"					"human_slow"	 //Reference: Aply
-		"Ability3"					"human_invisibility"	 //Reference: Aslo
-		"Ability4"					"human_polymorph"	 //Reference: Aihn
+		"Ability3"					"human_invisibility_disabled"	 //Reference: Aslo
+		"Ability4"					"human_polymorph_disabled"	 //Reference: Aihn
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2325,7 +2329,7 @@
 		"AttackAnimationPoint"		"0.75"
 		"AttackAcquisitionRange"	"700"
 		"AttackRange"				"600"
-		"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+		"ProjectileModel"			"particles/units/human/heroes/hero_lina/lina_base_attack.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -2404,8 +2408,8 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"human_heal"	 //Reference: Ahea
-		"Ability2"					"human_dispel_magic"	 //Reference: Ainf
-		"Ability3"					"human_inner_fire"	 //Reference: Adis
+		"Ability2"					"human_dispel_magic_disabled"	 //Reference: Ainf
+		"Ability3"					"human_inner_fire_disabled"	 //Reference: Adis
 		"Ability4"					""	 //Reference: Aihn
 		
 		// Armor
@@ -2423,7 +2427,7 @@
 		"AttackAnimationPoint"		"0.59"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"600"
-		"ProjectileModel"			"particles/units/heroes/hero_oracle/oracle_base_attack.vpcf"
+		"ProjectileModel"			"particles/units/human/heroes/hero_oracle/oracle_base_attack.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -2495,10 +2499,11 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"human_spell_steal"	 //Reference: Asps
-		"Ability2"					"human_control_magic"	 //Reference: Acmg
+		"Ability2"					"human_control_magic_disabled"	 //Reference: Acmg
 		"Ability3"					"human_spell_immunity"	 //Reference: Amim
 		"Ability4"					"human_feedback"	 //Reference: Afbk
 		"Ability5"					""	 //Reference: Aihn
+		"Ability6"					"ability_prevent_attack_flying"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2515,7 +2520,7 @@
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"700"
 		"AttackRange"				"250"
-		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+		"ProjectileModel"			"particles/units/human/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -2595,9 +2600,10 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""	 //Reference: Agyb
-		"Ability2"					""	 //Reference: Agyv
-		"Ability3"					""	 //Reference: Aflk
+		"Ability1"					"human_true_sight"	 //Reference: Agyb
+		"Ability2"					"human_flying_machine_bombs_disabled"	 //Reference: Agyv
+		"Ability3"					"human_flak_cannons_disabled"	 //Reference: Aflk
+		"Ability4"					"ability_prevent_attack_ground" //Removed after learning machine bombs
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2688,8 +2694,8 @@
 	
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""	 //Reference: Aclf
-		"Ability2"					""	 //Reference: Amls
+		"Ability1"					"human_aerial_shackles"	 //Reference: Aclf
+		"Ability2"					"human_cloud_disabled"	 //Reference: Amls
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2706,7 +2712,7 @@
 		"AttackAnimationPoint"		"0.43"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"300"
-		"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"
+		"ProjectileModel"			"particles/units/human/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"
 		"ProjectileSpeed"			"1100"
 		
 		// Bounty
@@ -2786,8 +2792,9 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""	 //Reference: Afla
-		"Ability2"					""	 //Reference: Afsh
+		"Ability1"					"human_flare_disabled"	 //Reference: Afla
+		"Ability2"					"human_fragmentation_shards_disabled"	 //Reference: Afsh
+		"Ability3"					"human_mortar_team_attack"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2875,8 +2882,10 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""	 //Reference: Srtt
+		"Ability1"					"human_barrage_disabled"	 //Reference: Srtt
 		"Ability2"					""	 //Reference: Aroc
+		"Ability3"					"ability_prevent_attack_flying"
+		"Ability3"					"ability_prevent_attack_ground" //Need a building-only version?
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2953,7 +2962,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"human_storm_hammers"	 //Reference: Asth
+		"Ability1"					"human_storm_hammers_disabled"	 //Reference: Asth
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2970,7 +2979,7 @@
 		"AttackAnimationPoint"		"0.8"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"450"
-		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/units/human/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
 		"ProjectileSpeed"			"1100"
 		
 		// Bounty
