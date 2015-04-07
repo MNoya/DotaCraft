@@ -316,7 +316,12 @@ function CheckBuildingPosition( event )
 	if not caster.target_building or not IsValidEntity(caster.target_building) then
 		-- Find where to return the resources
 		caster.target_building = FindClosestResourceDeposit( caster )
-		print("Resource delivery position set to "..caster.target_building:GetUnitName())
+		if caster.target_building then
+			print("Resource delivery position set to "..caster.target_building:GetUnitName())
+		else
+			print("ERROR finding the closest resource deposit")
+			return
+		end
 	end
 
 	local target = caster.target_building
@@ -495,16 +500,21 @@ function CheckCityCenterPosition( event )
 		--print("Moving to building, distance: ",distance)
 	else
 		print(building:GetUnitName().." reached!")
-		local militia = ReplaceUnit(target, "human_militia")
-		ability:ApplyDataDrivenModifier(building, militia, "modifier_militia", {})
+		if target:GetUnitName() == "human_peasant" then
+			
+			local militia = ReplaceUnit(target, "human_militia")
+			ability:ApplyDataDrivenModifier(militia, militia, "modifier_militia", {})
 
-		-- Add the units to a table so they are easier to find later
-		if not player.militia then
-			player.militia = {}
-		else
-			table.insert(player.militia, militia)
+			-- Add the units to a table so they are easier to find later
+			if not player.militia then
+				player.militia = {}
+			else
+				table.insert(player.militia, militia)
+			end
+			print(#player.militia)
+		elseif target:GetUnitName() == "human_militia" then
+			CallToArmsEnd( event )
 		end
-		print(#player.militia)
 	end
 end
 
@@ -512,7 +522,7 @@ end
 function BackToWork( event )
 	local caster = event.caster -- The militia unit
 	local ability = event.ability
-	local pID = caster:GetPlayerID()
+	local pID = caster:GetOwner():GetPlayerID()
 
 	local building = FindClosestCityCenter( caster )
 	if building then

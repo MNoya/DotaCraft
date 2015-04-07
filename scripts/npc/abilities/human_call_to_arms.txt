@@ -69,19 +69,22 @@
 }
 
 
-// Sends the Militia to the city center for swapping back to Peasant
+// Sends the Militia to the city center for swapping back to Peasant, prematurely
 "human_back_to_work"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_back_to_work"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
-	"RunScript"
+	"OnSpellStart"
 	{
-		"ScriptFile"	"units/human/peasant.lua"
-		"Function"		"BackToWork"
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/peasant.lua"
+			"Function"		"BackToWork"
+		}
 	}
 
 	"Modifiers"
