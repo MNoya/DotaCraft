@@ -11309,7 +11309,7 @@
 		"AbilityTextureName"			"human_call_to_arms"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilitySpecial"
 		{
@@ -11333,7 +11333,7 @@
 		{
 			"modifier_calling_to_arms"
 			{
-				"IsHidden"			"0" //"1"
+				"IsHidden"			"1"
 		
 				"ThinkInterval"  "0.03"
 				"OnIntervalThink"
@@ -11357,16 +11357,15 @@
 	
 			"modifier_militia"
 			{
-				"IsHidden"			"1"
+				"IsHidden"			"0"
 				"Duration"			"%duration"
 	
 				"OnDestroy"
 				{
-					// EXPERIMENTAL, IF IT WORKS THEN GG
-					"ReplaceUnit"
+					"RunScript"
 					{
-						"UnitName"      "human_peasant"
-						"Target"        "TARGET"
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"CallToArmsEnd"
 					}
 				}
 			}
@@ -11381,7 +11380,7 @@
 		"AbilityTextureName"			"human_back_to_work"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"RunScript"
 		{
@@ -11393,7 +11392,7 @@
 		{
 			"modifier_back_to_work"
 			{
-				"IsHidden"			"0"
+				"IsHidden"			"1"
 		
 				"ThinkInterval"  "0.03"
 				"OnIntervalThink"
@@ -11416,11 +11415,10 @@
 	
 				"OnDestroy"
 				{
-					// EXPERIMENTAL, IF IT WORKS THEN GG, LESS LUA
-					"ReplaceUnit"
+					"RunScript"
 					{
-						"UnitName"      "human_peasant"
-						"Target"        "TARGET"
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"CallToArmsEnd"
 					}
 				}
 			}
@@ -11440,7 +11438,7 @@
 		{
 			"modifier_militia_upgrades"
 			{
-				"IsHidden"			"0" //"1"
+				"IsHidden"			"1"
 				"Passive"			"1"
 				"OnCreated"
 				{
