@@ -7,8 +7,6 @@
 function CheckAbilityRequirements( unit, player )
 
 	local requirements = GameRules.Requirements
-	local hero = unit:GetOwner()
-	local pID = hero:GetPlayerID()
 	local buildings = player.buildings
 	local upgrades = player.upgrades
 
@@ -19,6 +17,9 @@ function CheckAbilityRequirements( unit, player )
 	local len = string.len("_disabled")
 
 	if IsValidEntity(unit) then
+		local hero = unit:GetOwner()
+		local pID = hero:GetPlayerID()
+
 		--print("--- Checking Requirements on "..unit:GetUnitName().." ---")
 		for abilitySlot=0,15 do
 			local ability = unit:GetAbilityByIndex(abilitySlot)

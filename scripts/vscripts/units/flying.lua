@@ -3,7 +3,7 @@ function CheckFlyingAttack( event )
 	local target = event.target -- The target of the attack
 	local attacker = event.attacker
 
-	if target:HasFlyMovementCapability() then
+	if target and target:GetName() ~= "" and target:HasFlyMovementCapability() then
 		if not attacker:HasAbility("ability_attack_flying") then
 			target:Stop() -- Interrupt the attack
 
@@ -24,7 +24,7 @@ function CheckGroundAttack( event )
 	local target = event.target -- The target of the attack
 	local attacker = event.attacker
 
-	if target:HasGroundMovementCapability() then
+	if target and target:IsCreature() and target:HasGroundMovementCapability() then
 		target:Stop() -- Interrupt the attack
 
 		-- Send a move-to-target order.
@@ -34,6 +34,5 @@ function CheckGroundAttack( event )
 								Position = target:GetAbsOrigin(), 
 								Queue = false
 							}) 
-		end
 	end
 end

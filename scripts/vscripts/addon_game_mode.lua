@@ -54,6 +54,7 @@ function Precache( context )
 		-- This units are created as soon as the player gets into the game		
 		PrecacheUnitByNameSync("human_town_hall", context)
 		PrecacheUnitByNameSync("human_peasant", context)
+		PrecacheUnitByNameSync("human_militia", context)
 
 		-- These should be on PostLoadPrecache, but it's not working inside tools. Just temporary.
 		PrecacheUnitByNameSync("human_barracks", context)

@@ -395,6 +395,7 @@ function FindClosestResourceDeposit( caster )
 	
 	-- Find a building to deliver
 	local player = caster:GetPlayerOwner()
+	if not player then print("ERROR, NO PLAYER") return end
 	local buildings = player.structures
 	local distance = 9999
 	local closest_building = nil
@@ -442,14 +443,17 @@ end
 -- 		 currently not possible because there's not enough ability slots visible
 
 function CallToArms( event )
+	local caster = event.caster
 	local hero = caster:GetOwner()
 	local ability = event.ability
 	local player = caster:GetPlayerOwner()
 	local pID = hero:GetPlayerID()
 
+	print("CALL TO ARMS!")
+
 	local allUnits = player.units
 	for _,unit in pairs(allUnits) do
-		if unit:GetUnitName() == "human_peasant" then
+		if IsValidEntity(unit) and unit:GetUnitName() == "human_peasant" then
 			local building = FindClosestCityCenter( unit )
 			if building then
 				unit.target_building = building
@@ -483,6 +487,8 @@ function CheckCityCenterPosition( event )
 		print("Resource delivery position set to "..building:GetUnitName())
 	end
 
+	local player = building:GetPlayerOwner()
+
 	local distance = (target:GetAbsOrigin() - building:GetAbsOrigin()):Length()
 	local collision = distance <= (building:GetHullRadius()+100)
 	if not collision then
@@ -498,14 +504,15 @@ function CheckCityCenterPosition( event )
 		else
 			table.insert(player.militia, militia)
 		end
+		print(#player.militia)
 	end
 end
+
 
 function BackToWork( event )
 	local caster = event.caster -- The militia unit
 	local ability = event.ability
-	local player = caster:GetPlayerOwner()
-	local pID = hero:GetPlayerID()
+	local pID = caster:GetPlayerID()
 
 	local building = FindClosestCityCenter( caster )
 	if building then
@@ -528,9 +535,9 @@ end
 -- Aux to find Town Hall
 function FindClosestCityCenter( caster )
 	local position = caster:GetAbsOrigin()
+	local player = caster:GetPlayerOwner()
 
 	-- Find closest Town Hall building
-	local player = caster:GetPlayerOwner()
 	local buildings = player.structures
 	local distance = 9999
 	local closest_building = nil
@@ -565,11 +572,19 @@ function IsValidMainBuildingName( name )
 	return false
 end
 
+function CallToArmsEnd( event )
+	local target = event.target
+	local player = target:GetPlayerOwner()
+	local peasant = ReplaceUnit( event.target, "human_peasant" )
+	CheckAbilityRequirements(peasant, player)
+	table.insert(player.units, peasant)
+end
+
 function ReplaceUnit( unit, new_unit_name )
 	print("Replacing "..unit:GetUnitName().." with "..new_unit_name)
-	
-	local hero = caster:GetOwner()
-	local player = caster:GetPlayerOwner()
+
+	local hero = unit:GetOwner()
+	local player = unit:GetPlayerOwner()
 	local pID = hero:GetPlayerID()
 
 	local position = unit:GetAbsOrigin()
@@ -581,6 +596,7 @@ function ReplaceUnit( unit, new_unit_name )
 	new_unit:SetControllableByPlayer(pID, true)
 	new_unit:SetAbsOrigin(position)
 	new_unit:SetHealth(health)
+	FindClearSpaceForUnit(new_unit, position, true)
 
 	return new_unit
 end
