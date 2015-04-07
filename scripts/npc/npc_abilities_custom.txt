@@ -14839,7 +14839,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"1"
+		"AbilityChannelTime"			"40"
 		
 		"AbilitySpecial"
 		{
@@ -16116,12 +16116,12 @@
 						{
 							"RemoveModifier"
 							{
-								"ModifierName"	"modifier_truesight_reveal"
+								"ModifierName"	"modifier_true_sight_reveal"
 								"Target" 		"TARGET"
 							}
 							"ApplyModifier"
 							{
-								"ModifierName"	"modifier_truesight_reveal"
+								"ModifierName"	"modifier_true_sight_reveal"
 								"Target" 		"TARGET"
 							}
 						}
@@ -16170,6 +16170,8 @@
 		{
 			"modifier_flying_machine_bombs"
 			{
+				"Passive"	"1"
+				"IsHidden"	"1"
 				"OnCreated"
 				{
 					"RunScript"
@@ -16237,13 +16239,12 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-				"IsDebuff"			"0"
 	
 				"Orb"
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
-					"CastAttack"		"1"
+					"CastAttack"		"0"
 				}
 				
 				"OnOrbFire"
@@ -16262,7 +16263,7 @@
 	"human_flare_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_flare"
+		"AbilityTextureName"			"human_research_flare"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -16276,10 +16277,11 @@
 	}
 	
 	"human_flare"
-	// Launches a Dwarven flare above the target point, which reveals that area for 15 seconds.\nReveals invisible units 
+	// Launches a Dwarven flare above the target point, which reveals that area for 15 seconds.\nReveals invisible units
+	// TODO: Better particle and cast animation
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_flare"
+		"AbilityTextureName"			"human_research_flare"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
@@ -16341,11 +16343,12 @@
 	}
 	
 	// This is an innate hidden ability of the Mortar Team units, which causes their ranged attacks to splash on impact
+	// TODO: Impact-crater particle, review balance
 	"human_mortar_team_attack"
 	{
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL" //Siege
 	
 		"AbilitySpecial"
@@ -16369,14 +16372,7 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 		
-				"Orb"
-				{
-					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"    "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
-					"CastAttack"		"1"
-				}
-				
-				"OnOrbImpact"
+				"OnAttackLanded"
 				{
 					"RunScript"
 					{
@@ -16403,7 +16399,7 @@
 							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						}
 					}
-				}		
+				}	
 			}
 		}
 	}
@@ -16413,6 +16409,11 @@
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_fragmentation_shards"
 		"MaxLevel" 						"0"
+	
+		"precache"
+		{
+			"particle"  "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
+		}
 	
 		"OnUpgrade"
 		{
@@ -16453,7 +16454,7 @@
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
-					"CastAttack"		"1"
+					"CastAttack"		"0"
 				}
 				
 				"OnOrbImpact"
@@ -16533,7 +16534,7 @@
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/base_attacks/ranged_siege_good.vpcf"
-					"CastAttack"		"1"
+					"CastAttack"		"0"
 				}
 				
 				"OnOrbFire"

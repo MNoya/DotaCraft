@@ -1,6 +1,4 @@
 -- Removes the ground attack restriction
--- PROBLEM: Issue with running this ability before its disabled
--- 	SOLUTION: Start all abilities as _disabled? Upgrade/Research structure needs to be improved!
 function AllowGroundAttack( event )
 	local caster = event.caster
 
@@ -22,7 +20,7 @@ function FireFlakCannons( event )
 						   DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	
 	for _,enemy in pairs(enemies_medium) do
-		if enemy:HasFlyMovementCapability() then
+		if enemy:HasFlyMovementCapability() and enemy ~= target then
 			local projTable = {
 				EffectName = "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf",
 				Ability = ability,
@@ -37,7 +35,7 @@ function FireFlakCannons( event )
 				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
 			}
 			ProjectileManager:CreateTrackingProjectile( projTable )
-			print("Flak Cannon Launched to "..enemy:GetUnitName().." number ".. enemy:GetEntityIndedx())
+			print("Flak Cannon Launched to "..enemy:GetUnitName().." number ".. enemy:GetEntityIndex())
 		end
 	end
 end

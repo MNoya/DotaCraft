@@ -45,6 +45,7 @@ function FragmentationShard( event )
 		if armor_type == "DOTA_COMBAT_CLASS_DEFEND_BASIC" or armor_type == "DOTA_COMBAT_CLASS_DEFEND_WEAK" then
 			-- Do extra damage to this unit
 			ApplyDamage({ victim = enemy, attacker = caster, damage = extra_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES})
+			print("FragmentationShard dealt extra damage to "..unit_name)
 		end
 	end
 end

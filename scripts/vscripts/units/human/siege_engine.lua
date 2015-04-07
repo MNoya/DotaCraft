@@ -10,7 +10,7 @@ function Barrage( event )
 				EffectName = "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf",
 				Ability = ability,
 				Target = enemy,
-				Source = caster
+				Source = caster,
 				bDodgeable = true,
 				bProvidesVision = false,
 				vSpawnOrigin = caster:GetAbsOrigin(),
@@ -20,7 +20,7 @@ function Barrage( event )
 				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
 			}
 			ProjectileManager:CreateTrackingProjectile( projTable )
-			print("Barrage Launched to "..enemy:GetUnitName().." number ".. enemy:GetEntityIndedx())
+			print("Barrage Launched to "..enemy:GetUnitName().." number ".. enemy:GetEntityIndex())
 		end
 	end
 

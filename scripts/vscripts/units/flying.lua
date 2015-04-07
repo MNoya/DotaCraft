@@ -5,7 +5,6 @@ function CheckFlyingAttack( event )
 
 	if target and target:GetName() ~= "" and target:HasFlyMovementCapability() then
 		if not attacker:HasAbility("ability_attack_flying") then
-			target:Stop() -- Interrupt the attack
 
 			-- Send a move-to-target order.
 			-- Could also be a move-aggresive/swap target so it still attacks other valid targets
@@ -25,7 +24,6 @@ function CheckGroundAttack( event )
 	local attacker = event.attacker
 
 	if target and target:IsCreature() and target:HasGroundMovementCapability() then
-		target:Stop() -- Interrupt the attack
 
 		-- Send a move-to-target order.
 		ExecuteOrderFromTable({ UnitIndex = attacker:GetEntityIndex(), 
