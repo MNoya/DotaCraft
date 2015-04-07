@@ -111,6 +111,30 @@
 			}
 		}
 	}
+	"ability_tower"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_tower"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED" // Makes most abilities don't affect this. Use custom damage
+					//"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED" // Prevents turning, but can't attack.
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED" // Prevents moving
+					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED" // Allows attacking own buildings
+					"MODIFIER_STATE_LOW_ATTACK_PRIORITY" "MODIFIER_STATE_VALUE_ENABLED" // Makes it a secondary target when A-clicking ground
+				}
+			}
+		}		
+	}
 	// Alchemist Acid Bomb
 	// Author: Noya
 	// Date: 25.01.2015.
@@ -12184,6 +12208,7 @@
 	
 	"human_cloud"
 	// Cast on enemy buildings with ranged attacks to stop the buildings from attacking. Lasts 30 seconds.
+	// TODO: More dense particle, recolor blue
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_cloud"
@@ -12217,7 +12242,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/dragonhawk_rider.lua"
+				"ScriptFile"	"units/human/dragonhawk_rider.lua"
 				"Function"		"CloudStart"
 				"Target"		"POINT"
 			}
@@ -12233,13 +12258,19 @@
 	    {
 	    	"RunScript"
 	    	{
-	    		"ScriptFile"	"units/dragonhawk_rider.lua"
+	    		"ScriptFile"	"units/human/dragonhawk_rider.lua"
 				"Function"		"CloudEnd"
-	    	} 
+	    	}
 	
 	    	"RemoveModifier"
 			{
 				"ModifierName"	"modifier_cloud_channelling"
+				"Target" 		"CASTER"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_channeling_animation"
 				"Target" 		"CASTER"
 			}
 		}
@@ -12256,12 +12287,16 @@
 					{
 						"EffectName"		"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
 						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"%radius" //Need to adjust AOE?
 						"Target"            "TARGET"
+						"ControlPoints"
+						{
+							"01"	"%radius %radius %radius"
+						}
 					}
+	
 					"RunScript"
 					{
-						"ScriptFile"	"units/dragonhawk_rider.lua"
+						"ScriptFile"	"units/human/dragonhawk_rider.lua"
 						"Function"		"ApplyCloud"
 						"Target"
 						{
@@ -12269,16 +12304,32 @@
 							"Radius" 	"%radius"
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types" 	"DOTA_UNIT_TARGET_BASIC" //Filter for ranged buildings
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
 					}
 				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_cloud"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+					}
+				}	
 			}
 	
 			"modifier_cloud"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-	
+				"IsDebuff"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"States"
 				{
 					"MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"			
@@ -12287,6 +12338,7 @@
 	
 			"modifier_cloud_channelling"
 			{
+				"Ishidden"			"1"	
 				"ThinkInterval"  "1.2"
 				"OnIntervalThink"
 				{

@@ -14,7 +14,21 @@ end
 
 function CloudEnd( event )
 	local caster = event.caster
+	local ability = event.ability
+	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1 )
+	local origin = caster.cloud_dummy:GetAbsOrigin()
 
+	local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, radius, 
+						   DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+
+
+	print("Found ",#targets," units in "..radius.." radius of ",origin)
+
+	for _,target in pairs(targets) do
+		target:RemoveModifierByName("modifier_cloud")  -- This has the issue of not being able to detect different clouds
+		-- If one is cancelled but there are others channeling over the same place, the whole effect is lost :(
+		-- Use multiple stacks instead?
+	end
 	caster.cloud_dummy:RemoveSelf()
 end
 
@@ -28,8 +42,9 @@ function ApplyCloud( event )
 
 	for _,target in pairs(targets) do
 		local isBuilding = target:FindAbilityByName("ability_building")
-		if isBuilding and target:IsRangedAttacker() then
-			target:ApplyDataDrivenModifier(caster, target, "modifier_cloud", { duration = cloud_duration })
+		local isTower = target:FindAbilityByName("ability_tower")
+		if target:IsRangedAttacker() and (isBuilding or isTower) then
+			ability:ApplyDataDrivenModifier(caster, target, "modifier_cloud", { duration = cloud_duration })
 		end
 	end
 end

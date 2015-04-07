@@ -353,6 +353,7 @@
 
 "human_cloud"
 // Cast on enemy buildings with ranged attacks to stop the buildings from attacking. Lasts 30 seconds.
+// TODO: More dense particle, recolor blue
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_cloud"
@@ -386,7 +387,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/dragonhawk_rider.lua"
+			"ScriptFile"	"units/human/dragonhawk_rider.lua"
 			"Function"		"CloudStart"
 			"Target"		"POINT"
 		}
@@ -402,13 +403,19 @@
     {
     	"RunScript"
     	{
-    		"ScriptFile"	"units/dragonhawk_rider.lua"
+    		"ScriptFile"	"units/human/dragonhawk_rider.lua"
 			"Function"		"CloudEnd"
-    	} 
+    	}
 
     	"RemoveModifier"
 		{
 			"ModifierName"	"modifier_cloud_channelling"
+			"Target" 		"CASTER"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_channeling_animation"
 			"Target" 		"CASTER"
 		}
 	}
@@ -425,12 +432,16 @@
 				{
 					"EffectName"		"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
 					"EffectAttachType"	"follow_origin"
-					"EffectRadius"		"%radius" //Need to adjust AOE?
 					"Target"            "TARGET"
+					"ControlPoints"
+					{
+						"01"	"%radius %radius %radius"
+					}
 				}
+
 				"RunScript"
 				{
-					"ScriptFile"	"units/dragonhawk_rider.lua"
+					"ScriptFile"	"units/human/dragonhawk_rider.lua"
 					"Function"		"ApplyCloud"
 					"Target"
 					{
@@ -438,16 +449,32 @@
 						"Radius" 	"%radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types" 	"DOTA_UNIT_TARGET_BASIC" //Filter for ranged buildings
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
 				}
 			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_cloud"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+				}
+			}	
 		}
 
 		"modifier_cloud"
 		{
-			"Passive"			"0"
-			"IsHidden"			"0"
-
+			"IsDebuff"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			"States"
 			{
 				"MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"			
@@ -456,6 +483,7 @@
 
 		"modifier_cloud_channelling"
 		{
+			"Ishidden"			"1"	
 			"ThinkInterval"  "1.2"
 			"OnIntervalThink"
 			{
