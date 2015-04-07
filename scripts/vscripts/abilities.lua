@@ -23,7 +23,7 @@ function build( keys )
 	local playerID = hero:GetPlayerID()
 	local player = PlayerResource:GetPlayer(playerID)	
 
-	if not IsOwnersLumberEnough( player, lumber_cost ) then
+	if not PlayerHasEnoughLumber( player, lumber_cost ) then
 		return
 	end
 
@@ -45,6 +45,7 @@ function build( keys )
     	-- Silence the building. Temp solution for not having building_abilities.kv and having them in the npc_unit_custom instead.
     	local item = CreateItem("item_apply_modifiers", nil, nil)
     	item:ApplyDataDrivenModifier(caster, unit, "modifier_construction", {})
+    	item = nil
 
     	-- Check the abilities of this building, disabling those that don't meet the requirements
     	--print("=Checking Requirements on "..unit:GetUnitName())
@@ -116,19 +117,23 @@ function build( keys )
 	-- i.e. it won't fire multiple times unnecessarily.
 	keys:OnBelowHalfHealth(function(unit)
 		print(unit:GetUnitName() .. " is below half health.")
+				
+		local item = CreateItem("item_apply_modifiers", nil, nil)
+    	item:ApplyDataDrivenModifier(unit, unit, "modifier_onfire", {})
+    	item = nil
+
 	end)
 
 	keys:OnAboveHalfHealth(function(unit)
 		print(unit:GetUnitName() .. " is above half health.")
+
+		unit:RemoveModifierByName("modifier_onfire")
+		
 	end)
 
 	--[[keys:OnCanceled(function()
 		print(keys.ability:GetAbilityName() .. " was canceled.")
 	end)]]
-
-	-- Have a fire effect when the building goes below 50% health.
-	-- It will turn off it building goes above 50% health again.
-	keys:EnableFireEffect("modifier_jakiro_liquid_fire_burn")
 end
 
 function create_building_entity( keys )

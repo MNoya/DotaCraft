@@ -623,15 +623,11 @@ end
 -- In that case, extra resources are consumed
 -- Powerbuild Cost = 0.15 - Added for every extra builder repairing the same building
 -- Powerbuild Rate = 0.60 - Fastens the ratio by 60%?
-	-- 2P: 1.5*0.6 = 0.9
-	-- 3P: 1.5*0.6*0.6 = 0.54
-	-- 4P: 1.5*0.6*0.6*0.6 = 0.324
-	-- 5P: 1.5*0.6*0.6*0.6*0.6 = 0.1944 and 0.35 + 0.15*4 = 0.95 cost
-
+	
 -- Values are taken from the UnitKV GoldCost LumberCost and BuildTime
 
 function Repair( event )
-	local caster = event.caster -- ??
+	local caster = event.caster
 	local target = event.target -- The building to repair
 
 	local hero = caster:GetOwner()
@@ -646,18 +642,132 @@ function Repair( event )
 
 	-- Scale costs/time according to the stack count of builders reparing this
 	if target:GetHealthDeficit() > 0 then
+		-- Initialize the tracking
+		if not target.health_deficit then
+			target.health_deficit = target:GetHealthDeficit()
+			target.gold_used = 0
+			target.lumber_used = 0
+			target.HPAdjustment = 0
+			target.GoldAdjustment = 0
+			target.time_started = GameRules:GetGameTime()
+		end
+		
 		local stack_count = target:GetModifierStackCount( "modifier_repairing_building", ability )
-		local health_per_second = target:GetMaxHealth() / build_time * 1.5 * math.pow(0.6, stack_count - 1)
-		local gold_per_second = gold_cost / build_time * ( 0.35 + 0.15 * (stack_count - 1))
-		local lumber_per_second = lumber_cost / build_time * ( 0.35 + 0.15 * (stack_count - 1))
+
+		-- HP
+		local health_per_second = target:GetMaxHealth() /  ( build_time * 1.5 ) * stack_count
+		local health_float = health_per_second - math.floor(health_per_second) -- floating point component
+		health_per_second = math.floor(health_per_second) -- round down
+
+		-- Gold
+		local gold_per_second = gold_cost / ( build_time * 1.5 ) * 0.35 * stack_count
+		local gold_float = gold_per_second - math.floor(gold_per_second) -- floating point component
+		gold_per_second = math.floor(gold_per_second) -- round down
+
+		-- Lumber takes floats just fine
+		local lumber_per_second = lumber_cost / ( build_time * 1.5 ) * 0.35 * stack_count
+
+		print("Building is repaired for "..health_per_second)
+		if gold_per_second > 0 then
+			print("Cost is "..gold_per_second.." gold and "..lumber_per_second.." lumber per second")
+		else
+			print("Cost is "..gold_float.." gold and "..lumber_per_second.." lumber per second")
+		end
 			
-		if hero:IsOwnersGoldEnough(gold_per_second) and IsOwnersLumberEnough( player, lumber_per_second ) then
-			target:SetHealth( target:GetHealth() +  health_per_second)
-			hero:ModifyGold( -gold_per_second, false, 0)
+		if PlayerHasEnoughGold( player, math.ceil(gold_per_second+gold_float) ) and PlayerHasEnoughLumber( player, lumber_per_second ) then
+			--target:SetHealth( target:GetHealth() +  health_per_second)
+			target.HPAdjustment = target.HPAdjustment + health_float
+			if target.HPAdjustment > 1 then
+				target:SetHealth(target:GetHealth() + health_per_second + 1)
+				target.HPAdjustment = target.HPAdjustment - 1
+			else
+				target:SetHealth(target:GetHealth() + health_per_second)
+			end
+			
+			--hero:ModifyGold( -gold_per_second, false, 0)
+			target.GoldAdjustment = target.GoldAdjustment + gold_float
+			if target.GoldAdjustment > 1 then
+				hero:ModifyGold( -gold_per_second - 1, false, 0)
+				target.GoldAdjustment = target.GoldAdjustment - 1
+				target.gold_used = target.gold_used + gold_per_second + 1
+			else
+				hero:ModifyGold( -gold_per_second, false, 0)
+				target.gold_used = target.gold_used + gold_per_second
+			end
+			
 			ModifyLumber( player, -lumber_per_second )
+			target.lumber_used = target.lumber_used + lumber_per_second
+		else
+			-- Remove the modifiers on the building and the builders
+			target:RemoveModifierByName("modifier_repairing_building")
+			for _,builder in pairs(target.units_repairing) do
+				if builder and IsValidEntity(builder) then
+					builder:RemoveModifierByName("modifier_repairing_animation")
+					builder:RemoveModifierByName("modifier_repair_peasant")
+				end
+			end
+			print("Repair Ended, not enough resources!")
+			target.health_deficit = nil
+		end
+	else
+		-- Remove the modifiers on the building and the builders
+		target:RemoveModifierByName("modifier_repairing_building")
+		for _,builder in pairs(target.units_repairing) do
+			if builder and IsValidEntity(builder) then
+				builder:RemoveModifierByName("modifier_repairing_animation")
+				builder:RemoveModifierByName("modifier_repair_peasant")
+			end
+		end
+		print("Repair End")
+		print("Start HP/Gold/Lumber/Time: ", target.health_deficit, gold_cost, lumber_cost, build_time)
+		print("Final HP/Gold/Lumber/Time: ", target:GetHealth(), target.gold_used, math.floor(target.lumber_used), GameRules:GetGameTime() - target.time_started)
+		target.health_deficit = nil
+	end
+end
+
+function PeasantRepairing( event )
+	local caster = event.caster
+	local ability = event.ability
+	local target = caster.repair_building
+	
+	-- Apply a modifier stack to the building, to show how many peasants are working on it (and scale the Powerbuild costs)
+	local modifierName = "modifier_repairing_building"
+	if target:HasModifier(modifierName) then
+		target:SetModifierStackCount( modifierName, ability, target:GetModifierStackCount( modifierName, ability ) + 1 )
+	else
+		ability:ApplyDataDrivenModifier( caster, target, modifierName, { Duration = duration } )
+		target:SetModifierStackCount( modifierName, ability, 1 )
+	end
+
+	-- Keep a list of the units repairing this building
+	if not target.units_repairing then
+		target.units_repairing = {}
+	else
+		table.insert(target.units_repairing, caster)
+	end
+end
+
+function PeasantStopRepairing( event )
+	local caster = event.caster
+	local ability = event.ability
+	local target = caster.repair_building
+	
+	-- Apply a modifier stack to the building, to show how many peasants are working on it (and scale the Powerbuild costs)
+	local modifierName = "modifier_repairing_building"
+	if target:HasModifier(modifierName) then
+		local current_stack = target:GetModifierStackCount( modifierName, ability )
+		if current_stack > 1 then
+			target:SetModifierStackCount( modifierName, ability, current_stack - 1 )
+		else
+			target:RemoveModifierByName( modifierName )
 		end
 	end
 
+	-- Remove the builder from the list of units repairing the building
+	local builder = getIndex(target.units_repairing, caster)
+	if builder and builder ~= -1 then
+		table.remove(target.units_repairing, builder)
+	end
 end
 
 function CheckRepairPosition( event )
@@ -665,8 +775,8 @@ function CheckRepairPosition( event )
 	local ability = event.ability
 	local target = caster.repair_building
 
-	if not target or not IsValidTarget(target) then
-		--print("ERROR, building can't be found")
+	if not target or not IsValidEntity(target) then
+		print("ERROR, building can't be found")
 		return
 	end
 
@@ -679,19 +789,11 @@ function CheckRepairPosition( event )
 		local player = caster:GetPlayerOwner()
 		local pID = hero:GetPlayerID()
 
+		-- Apply a modifier on the caster to start repairing
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_repair_peasant", {})
+
 		print("Reached building, starting the Repair process")
-
-		-- Apply a modifier stack to the building, to show how many peasants are working on it (and scale the Powerbuild costs)
-		local modifierName = "modifier_repairing_building"
-		if target:HasModifier(modifierName) then
-			target:SetModifierStackCount( modifierName, ability, target:GetModifierStackCount( modifierName, ability ) + 1 )
-		else
-			ability:ApplyDataDrivenModifier( caster, target, modifierName, { Duration = duration } )
-			target:SetModifierStackCount( modifierName, ability, 1 )
-		end
-
-		-- Apply a modifier on the caster to fake animation and remove the reparing if the unit is killed
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_repairing_peasant", {})
+		caster:RemoveModifierByName("modifier_moving_to_repair")
 	end
 		
 end

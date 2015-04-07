@@ -3,6 +3,11 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"BaseClass"						"item_datadriven"
 
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_batrider/batrider_firefly.vpcf"
+	}
+
 	"Modifiers"
 	{
 		"modifier_construction"
@@ -19,6 +24,25 @@
 					"ControlPoints"
 					{
 						"01"			"0 300 0"
+					}
+				}
+			}
+		}
+
+		"modifier_onfire"
+		{
+			"IsHidden"			"1"
+		
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/dire_fx/fire_barracks.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_fx"
 					}
 				}
 			}

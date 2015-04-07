@@ -413,6 +413,7 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	local building = CreateUnitByName("human_town_hall", position, true, hero, hero, hero:GetTeamNumber())
 	building:SetOwner(hero)
+	building:SetHealth(1)
 	building:SetControllableByPlayer(playerID, true)
 	building:SetAbsOrigin(position)
 	building:RemoveModifierByName("modifier_invulnerable")

@@ -6,20 +6,35 @@ function ModifyLumber( player, lumber_value )
 	
 	if lumber_value > 0 then
 		player.lumber = player.lumber + lumber_value
-	    print("Lumber Gained. Player " .. pID .. " is currently at " .. player.lumber)
+	    --print("Lumber Gained. Player " .. pID .. " is currently at " .. player.lumber)
 	    FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
 	    PopupLumber(caster, lumber_value)
 	else
-		if IsOwnersLumberEnough( player, math.abs(lumber_value) ) then
+		if PlayerHasEnoughLumber( player, math.abs(lumber_value) ) then
 			player.lumber = player.lumber + lumber_value
-		    print("Lumber Spend. Player " .. pID .. " is currently at " .. player.lumber)
+		    --print("Lumber Spend. Player " .. pID .. " is currently at " .. player.lumber)
 		    FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
 		end
 	end
 end
 
 -- Returns bool
-function IsOwnersLumberEnough( player, lumber_cost )
+function PlayerHasEnoughGold( player, gold_cost )
+	local hero = player:GetAssignedHero()
+	local pID = hero:GetPlayerID()
+	local gold = hero:GetGold()
+
+	if gold < gold_cost then
+		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Gold" } )		
+		return false
+	else
+		return true
+	end
+end
+
+
+-- Returns bool
+function PlayerHasEnoughLumber( player, lumber_cost )
 	local pID = player:GetAssignedHero():GetPlayerID()
 
 	if player.lumber < lumber_cost then

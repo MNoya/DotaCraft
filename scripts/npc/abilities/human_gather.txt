@@ -7,7 +7,7 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
 	"AbilityCastPoint"				"0.1"
@@ -195,7 +195,7 @@
 			{
 				"RemoveModifier"
 				{
-					"ModifierName"	"modifier_repairing_lumber"
+					"ModifierName"	"modifier_moving_to_repair"
 					"Target" 		"CASTER"
 				}
 
@@ -213,12 +213,27 @@
 			"IsHidden"				"0" //"1"
 			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
 
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"PeasantRepairing"
+				}
+			}
+
 			"OnOrder"
 			{			
 				"RemoveModifier"
 				{
-					"ModifierName"	"modifier_chopping_wood"
+					"ModifierName"	"modifier_repair_peasant"
 					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"PeasantStopRepairing"
 				}
 			}
 
@@ -237,7 +252,7 @@
 		"modifier_repairing_animation"
 		{
 			"OverrideAnimation"     "ACT_DOTA_ATTACK"
-			"IsHidden"				"0" //"1"
+			"IsHidden"				"1"
 			"OnOrder"
 			{
 				"RemoveModifier"
@@ -257,7 +272,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human/Repair"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"Repair"
 				}
 			}
