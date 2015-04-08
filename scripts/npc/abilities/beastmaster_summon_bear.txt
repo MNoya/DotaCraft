@@ -205,6 +205,11 @@
 			"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
 			"StatusEffectPriority"	"1"
 
+			"States"
+			{
+				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
 			"OnCreated"
 			{
 				"FireEffect"

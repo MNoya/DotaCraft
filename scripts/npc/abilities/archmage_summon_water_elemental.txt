@@ -80,12 +80,17 @@
 					"EffectName" "Hero_Morphling.Replicate"
 					"Target"			"CASTER"
 				}
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_summoned"
+					"Target" 		"TARGET"
+				}
 			}
 		}
 
 		"SpawnUnit"
 		{
-			"UnitName"		"npc_water_elemental_1"
+			"UnitName"		"npc_water_elemental_2"
 			"UnitCount"		"%lvl2_unit_count"
 			"SpawnRadius"	"100"
 			"Duration"		"%duration"
@@ -105,12 +110,17 @@
 					"EffectName" "Hero_Morphling.Replicate"
 					"Target"			"CASTER"
 				}
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_summoned"
+					"Target" 		"TARGET"
+				}
 			}
 		}
 
 		"SpawnUnit"
 		{
-			"UnitName"		"npc_water_elemental_1"
+			"UnitName"		"npc_water_elemental_3"
 			"UnitCount"		"%lvl3_unit_count"
 			"SpawnRadius"	"100"
 			"Duration"		"%duration"
@@ -130,6 +140,23 @@
 					"EffectName" "Hero_Morphling.Replicate"
 					"Target"			"CASTER"
 				}
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_summoned"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_summoned"
+		{
+			"IsHidden"			"1"
+			
+			"States"
+			{
+				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}

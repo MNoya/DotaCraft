@@ -80,7 +80,19 @@
 		{
 			"EffectName"	"Hero_Furion.ForceOfNature"
 			"Target" 		"CASTER"
+		}									
+	}
+
+	"Modifiers"
+	{
+		"modifier_summoned"
+		{
+			"IsHidden"			"1"
+	
+			"States"
+			{
+				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
-										
-	}	
+	}
 }

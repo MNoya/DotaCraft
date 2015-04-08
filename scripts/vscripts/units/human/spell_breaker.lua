@@ -130,17 +130,18 @@ function ControlMagicCheck( event )
 	local ability = event.ability
 	local pID = caster:GetPlayerID()
 	
-	if not target:IsSummoned() then
+	if not target:IsSummoned() and not target:IsDominated() then
 		caster:Interrupt()
 		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need to target a Summoned Unit!" } )
 	else
 		local targetHP = target:GetHealth()
 		local casterMana = caster:GetMana()
 		local mana_control_rate = ability:GetLevelSpecialValueFor("mana_control_rate", ability:GetLevel() - 1 )
-		local mana_cost = targetHP*mana_control_rate
-		if manaCost > casterMana then
+		local mana_cost = targetHP*mana_control_rate + ability:GetManaCost(ability:GetLevel() - 1)
+		print("Need "..mana_cost.." Have "..casterMana)
+		if mana_cost > casterMana then
 			caster:Interrupt()
-			FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Not enough mana to control this unit, need "..mana_cost } )
+			FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Not enough mana! Need at least "..math.floor(mana_cost) } )
 		end
 	end
 end

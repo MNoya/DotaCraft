@@ -237,6 +237,11 @@
 		"modifier_lava_spawn"
 		{
 			"IsHidden"			"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		
 			"EffectName"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
 			"EffectAttachType"	"follow_origin"

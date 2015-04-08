@@ -273,7 +273,12 @@
 		"modifier_hawk_think"
 		{
 			"Passive"			"1"
-			"IsHidden"			"1"			
+			"IsHidden"			"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}		
 
 			"OnCreated"
 			{

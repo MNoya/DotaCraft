@@ -69,7 +69,7 @@ function ForceOfNature( event )
 				local treant = CreateUnitByName(unit_name, point, true, caster, caster, caster:GetTeamNumber())
 				treant:SetControllableByPlayer(player, true)
 				treant:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
-				--ability:ApplyDataDrivenModifier(caster, treant, "modifier_animate_dead", nil)
+				ability:ApplyDataDrivenModifier(caster, treant, "modifier_summoned", nil)
 				treant.no_corpse = true
 			end
 		end

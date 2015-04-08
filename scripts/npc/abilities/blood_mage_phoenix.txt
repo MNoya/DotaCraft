@@ -138,6 +138,11 @@
 			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
 			"EffectAttachType"	"follow_origin"
 
+			"States"
+			{
+				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
 			"OnCreated"
 			{
 				"FireSound"

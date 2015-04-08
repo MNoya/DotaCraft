@@ -1139,12 +1139,17 @@
 						"EffectName" "Hero_Morphling.Replicate"
 						"Target"			"CASTER"
 					}
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_summoned"
+						"Target" 		"TARGET"
+					}
 				}
 			}
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_water_elemental_1"
+				"UnitName"		"npc_water_elemental_2"
 				"UnitCount"		"%lvl2_unit_count"
 				"SpawnRadius"	"100"
 				"Duration"		"%duration"
@@ -1164,12 +1169,17 @@
 						"EffectName" "Hero_Morphling.Replicate"
 						"Target"			"CASTER"
 					}
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_summoned"
+						"Target" 		"TARGET"
+					}
 				}
 			}
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_water_elemental_1"
+				"UnitName"		"npc_water_elemental_3"
 				"UnitCount"		"%lvl3_unit_count"
 				"SpawnRadius"	"100"
 				"Duration"		"%duration"
@@ -1189,6 +1199,23 @@
 						"EffectName" "Hero_Morphling.Replicate"
 						"Target"			"CASTER"
 					}
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_summoned"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_summoned"
+			{
+				"IsHidden"			"1"
+				
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -1617,6 +1644,11 @@
 	
 				"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
 				"StatusEffectPriority"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 	
 				"OnCreated"
 				{
@@ -2088,7 +2120,12 @@
 			"modifier_hawk_think"
 			{
 				"Passive"			"1"
-				"IsHidden"			"1"			
+				"IsHidden"			"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}		
 	
 				"OnCreated"
 				{
@@ -2369,6 +2406,11 @@
 			"modifier_beastmaster_boar"
 			{
 				"IsHidden"		"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 	
 				"OnCreated"
 				{
@@ -3565,6 +3607,11 @@
 				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
 				"EffectAttachType"	"follow_origin"
 	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
 				"OnCreated"
 				{
 					"FireSound"
@@ -4406,6 +4453,11 @@
 						}
 					}
 					
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 				
 				"OnDeath"
@@ -6475,6 +6527,11 @@
 	    		"Passive" 			"1"
 	    		"IsHidden" 			"1"
 	
+	    		"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
 	    		"Aura" 				"modifier_inferno_immolation_burn"
 	    		"Aura_Radius" 		"%radius"
 	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -7904,6 +7961,11 @@
 			"modifier_lava_spawn"
 			{
 				"IsHidden"			"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			
 				"EffectName"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
 				"EffectAttachType"	"follow_origin"
@@ -9352,15 +9414,15 @@
 		"MaxLevel"					"1"
 	
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_SUMMONED" //??
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
 		//Need parity values
-		"AbilityCastPoint"			"0.0"
-		"AbilityCastRange"			"500"
+		"AbilityCastPoint"			"0.1"
+		"AbilityCastRange"			"700"
 		"AbilityCooldown"			"5"
-		"AbilityManaCost"			"35"
+		"AbilityManaCost"			"25"
 	
 		//Mana cost is .45 mana per hit point.
 		"AbilitySpecial"
@@ -16856,9 +16918,21 @@
 			{
 				"EffectName"	"Hero_Furion.ForceOfNature"
 				"Target" 		"CASTER"
+			}									
+		}
+	
+		"Modifiers"
+		{
+			"modifier_summoned"
+			{
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
-											
-		}	
+		}
 	}
 	// Keeper Thorns Aura
 	// Author: Noya
@@ -23572,6 +23646,19 @@
 				"Type"		"DAMAGE_TYPE_PURE"
 			}
 		}
+	
+		"Modifiers"
+		{
+			"modifier_summoned"
+			{
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
 	// Tinker Robo Goblin
 	// Author: Noya
@@ -23974,6 +24061,7 @@
 				{	
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DOMINATED"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	
 				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
@@ -24067,6 +24155,7 @@
 				{
 					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 				"OnCreated"
 				{

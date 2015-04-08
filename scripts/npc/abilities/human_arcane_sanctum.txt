@@ -933,15 +933,15 @@
 	"MaxLevel"					"1"
 
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_SUMMONED" //??
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 
 	//Need parity values
-	"AbilityCastPoint"			"0.0"
-	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0.1"
+	"AbilityCastRange"			"700"
 	"AbilityCooldown"			"5"
-	"AbilityManaCost"			"35"
+	"AbilityManaCost"			"25"
 
 	//Mana cost is .45 mana per hit point.
 	"AbilitySpecial"

@@ -189,6 +189,11 @@
     		"Passive" 			"1"
     		"IsHidden" 			"1"
 
+    		"States"
+			{
+				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
     		"Aura" 				"modifier_inferno_immolation_burn"
     		"Aura_Radius" 		"%radius"
     		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
