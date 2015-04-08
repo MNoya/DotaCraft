@@ -342,7 +342,7 @@ function CheckBuildingPosition( event )
 			
 			caster:RemoveModifierByName("modifier_returning_resources")
 			print("Removed modifier_returning_resources")
-
+			PopupLumber(caster, caster.lumber_gathered)
     		ModifyLumber(player, caster.lumber_gathered)
 
 			caster.lumber_gathered = 0

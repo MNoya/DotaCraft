@@ -27,28 +27,13 @@ function ResearchComplete( event )
 	for _,structure in pairs(player.structures) do
 		CheckAbilityRequirements( structure, player )
 	end
-
-	-- For these upgrades, update directly
-	--[[local research_type = nil
-	print(research_name)
-	if string.find(research_name, "forged") then
-		research_type = "forged"
-	elseif string.find(research_name, "plating") then
-		research_type = "plating"
-	elseif string.find(research_name, "ranged") then
-		research_type = "ranged"
-	elseif string.find(research_name, "leather") then
-		research_type = "leather"
-	elseif string.find(research_name, "priest") then
-		research_type = "priest"
-	elseif string.find(research_name, "sorceress") then
-		research_type = "sorceress"
-	end
-
-	print("#####################",research_type)]]
 		
 	for _,unit in pairs(player.units) do
 		UpdateUnitUpgrades( unit, player, research_name)
+	end
+
+	for _,structure in pairs(player.structures) do
+		UpdateUnitUpgrades( structure, player, research_name)
 	end
 
 end
@@ -56,7 +41,7 @@ end
 function LumberResearchComplete( event )
 	local player = event.caster:GetPlayerOwner()
 	local level = event.Level
-	local extra_lumber_carried = event.ability:GetLevelSpecialValueFor("extra_lumber_carried", Level - 1)
+	local extra_lumber_carried = event.ability:GetLevelSpecialValueFor("extra_lumber_carried", level - 1)
 
 	player.LumberCarried = 10 + extra_lumber_carried
 end

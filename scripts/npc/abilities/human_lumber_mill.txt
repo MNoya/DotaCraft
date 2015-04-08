@@ -1,12 +1,12 @@
 
-//Each Level of Masonry is 20% extra Health
+//Each Level of Masonry is 20% extra Health and 1 extra armor (2 for Scout tower)
 "human_masonry1"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_masonry1"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
 
 	"AbilitySpecial"
 	{
@@ -15,23 +15,42 @@
 			"var_type"			"FIELD_INTEGER"
 			"bonus_health_pct"	"20 40 60"
 		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_armor"		"1 2 3"
+		}
 	}
 
 	"Modifiers"
 	{
-		"modifier_human_masonry1"
+		"modifier_human_masonry"
 		{
 			"Passive"			"1"
-			"IsHidden"			"1"
+			"IsHidden"			"0"
 	
 			"OnCreated"
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/lumber_mill.lua"
+					"ScriptFile"	"units/human/lumber_mill.lua"
 					"Function"		"Masonry"
 					"Level"			"1"
 				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+
+		"modifier_human_masonry_light_armor"
+		{
+			"IsHidden"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
 			}
 		}
 	}
@@ -43,7 +62,7 @@
 	"AbilityTextureName"			"human_research_masonry2"
 	"MaxLevel" 						"2"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"			
 
 	"AbilitySpecial"
 	{
@@ -52,23 +71,42 @@
 			"var_type"			"FIELD_INTEGER"
 			"bonus_health_pct"	"20 40 60"
 		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_armor"		"1 2 3"
+		}
 	}
 
 	"Modifiers"
 	{
-		"modifier_human_masonry2"
+		"modifier_human_masonry"
 		{
 			"Passive"			"1"
-			"IsHidden"			"1"
+			"IsHidden"			"0"
 	
 			"OnCreated"
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/lumber_mill.lua"
+					"ScriptFile"	"units/human/lumber_mill.lua"
 					"Function"		"Masonry"
 					"Level"			"2"
 				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+
+		"modifier_human_masonry_light_armor"
+		{
+			"IsHidden"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
 			}
 		}
 	}
@@ -80,7 +118,7 @@
 	"AbilityTextureName"			"human_research_masonry3"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"			
 
 	"AbilitySpecial"
 	{
@@ -89,23 +127,43 @@
 			"var_type"			"FIELD_INTEGER"
 			"bonus_health_pct"	"20 40 60"
 		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_armor"		"1 2 3"
+		}
 	}
 
 	"Modifiers"
 	{
-		"modifier_human_masonry3"
+		"modifier_human_masonry"
 		{
 			"Passive"			"1"
-			"IsHidden"			"1"
+			"IsHidden"			"0"
 	
 			"OnCreated"
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/lumber_mill.lua"
+					"ScriptFile"	"units/human/lumber_mill.lua"
 					"Function"		"Masonry"
 					"Level"			"3"
 				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+
+		// Give 1 extra source of armor to light armored buildings (i.e. Scout Tower)
+		"modifier_human_masonry_light_armor"
+		{
+			"IsHidden"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
 			}
 		}
 	}
@@ -141,7 +199,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"LumberHarvesting"
 					"Level"			"1"
 				}
@@ -178,7 +236,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/peasant.lua"
+					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"LumberHarvesting"
 					"Level"			"2"
 				}

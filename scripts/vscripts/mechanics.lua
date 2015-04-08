@@ -8,7 +8,6 @@ function ModifyLumber( player, lumber_value )
 		player.lumber = player.lumber + lumber_value
 	    --print("Lumber Gained. Player " .. pID .. " is currently at " .. player.lumber)
 	    FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
-	    PopupLumber(caster, lumber_value)
 	else
 		if PlayerHasEnoughLumber( player, math.abs(lumber_value) ) then
 			player.lumber = player.lumber + lumber_value
