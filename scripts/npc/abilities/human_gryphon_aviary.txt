@@ -535,13 +535,23 @@
 			"var_type"			"FIELD_INTEGER"
 			"damage_per_second"	"30.0"
 		}
+		"03"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"tick_rate"			"0.1"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
 	}
 
 	"OnAbilityPhaseStart"
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/dragonhawk_rider.lua"
+			"ScriptFile"	"units/human/dragonhawk_rider.lua"
 			"Function"		"AerialShacklesCheck"
 		}
 	}
@@ -587,15 +597,22 @@
 			{
 				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
+			"OverrideAnimation"     "ACT_DOTA_DISABLED"
 
-			"ThinkInterval"  "1.0"
+			"ThinkInterval"  "%tick_rate"
 			"OnIntervalThink"
 			{
 				"Damage"
 				{
 					"Target"		"TARGET"
 					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%damage_per_second"
+					"Damage"		"%damage_per_second * %tick_rate"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/dragonhawk_rider.lua"
+					"Function"		"LoseHeight"
 				}
 			}
 
@@ -608,9 +625,29 @@
 					"Target"				"TARGET"
 					"ControlPointEntities"
 					{
-						"TARGET"	"attach_origin"
-						"CASTER"	"attach_origin"
+						"TARGET"	"attach_hitloc"
+						"TARGET"	"attach_hitloc"
+						"TARGET"	"attach_hitloc"
+						"TARGET"	"attach_hitloc"
+						"TARGET"	"attach_hitloc"
+						"CASTER"	"attach_staff_generic" //start
+						"TARGET"	"attach_hitloc"
 					}
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/dragonhawk_rider.lua"
+					"Function"		"LoseFlying"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/dragonhawk_rider.lua"
+					"Function"		"ReGainFlying"
 				}
 			}
 		}
