@@ -209,11 +209,12 @@
 	"ModelScale"				"0.8"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"human_defend_disabled"
-	"Ability2"					""	 //Reference: Aihn
+	"Ability2"					"human_backpack_disabled"	 //Reference: Aihn
 	"Ability3"					"ability_prevent_attack_flying"
 	
 	// Armor
@@ -314,10 +315,12 @@
 	"ModelScale"				"0.8"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"human_long_rifles_disabled"	 //Reference: Aihn
+	"Ability2"					"human_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -410,10 +413,12 @@
 	"ModelScale"				"0.7"
 	"Level"						"4"
 	"HealthBarOffset"			"180"
+	"HasInventory"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"human_animal_war_training_disabled"	 //Reference: Aihn
+	"Ability2"					"human_backpack_disabled"
 	"Ability3"					"ability_prevent_attack_flying"
 	
 	// Armor
@@ -518,6 +523,7 @@
 	"ModelScale"				"0.8"
 	"Level"						"1" //Gets Leveled up to 2 and 3 when trained
 	"HealthBarOffset"			"200"
+	"HasInventory"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -525,6 +531,7 @@
 	"Ability2"					"human_slow"	 //Reference: Aply
 	"Ability3"					"human_invisibility_disabled"	 //Reference: Aslo
 	"Ability4"					"human_polymorph_disabled"	 //Reference: Aihn
+	"Ability5"					"human_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -616,13 +623,14 @@
 	"ModelScale"				"0.7"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"human_heal"	 //Reference: Ahea
 	"Ability2"					"human_dispel_magic_disabled"	 //Reference: Ainf
 	"Ability3"					"human_inner_fire_disabled"	 //Reference: Adis
-	"Ability4"					""	 //Reference: Aihn
+	"Ability4"					"human_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -707,6 +715,7 @@
 	"ModelScale"				"0.8"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -714,7 +723,7 @@
 	"Ability2"					"human_control_magic_disabled"	 //Reference: Acmg
 	"Ability3"					"human_spell_immunity"	 //Reference: Amim
 	"Ability4"					"human_feedback"	 //Reference: Afbk
-	"Ability5"					""	 //Reference: Aihn
+	"Ability5"					"human_backpack_disabled"
 	"Ability6"					"ability_prevent_attack_flying"
 	
 	// Armor

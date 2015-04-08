@@ -15530,11 +15530,38 @@
 		}
 	}
 	
+	"human_backpack_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_research_backpack"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	
+		"Modifiers"
+		{
+			"modifier_backpack_disabled"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/human_upgrades.lua"
+						"Function"		"Backpack"
+						"Action"		"Disable"
+					}
+				}
+			}
+		}
+	}
+	
 	// Ability researched by human_research_backpack
 	"human_backpack"
 	{
-		// Lua SetHasInventory
-		// Item drops when unit is killed
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_backpack"
 		"MaxLevel" 						"1"
@@ -15554,6 +15581,17 @@
 					{
 						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"Backpack"
+						"Action"		"Enable"
+					}
+				}
+	
+				"OnDeath"
+				{
+					// Item drops when unit is killed
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/human_upgrades.lua"
+						"Function"		"BackpackDrop"
 					}
 				}
 			}

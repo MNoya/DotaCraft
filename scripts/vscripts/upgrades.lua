@@ -29,7 +29,7 @@ function CheckAbilityRequirements( unit, player )
 				local ability_name = ability:GetAbilityName()
 
 				-- Exists and isn't hidden, check its requirements
-				if IsValidEntity(ability) and not ability:IsHidden() then
+				if IsValidEntity(ability) then
 					local requirement_failed = false
 					local disabled = false
 				
