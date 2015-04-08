@@ -1077,9 +1077,9 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
-		"Ability2"					""	 //Reference: Adts
-		"Ability3"					""
+		"Ability1"					""//upgrade to guard
+		"Ability2"					""//upgrade to cannon
+		"Ability3"					""//upgrade to arcane
 		"Ability6"					"ability_building"
 		
 		// Armor
@@ -1154,8 +1154,8 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
-		"Ability2"					""	 //Reference: Adts
+		"Ability1"					"human_magic_sentry"
+		"Ability2"					""
 		"Ability6"					"ability_tower"
 		
 		// Armor
@@ -1237,8 +1237,8 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
-		"Ability2"					""	 //Reference: Adts
+		"Ability1"					"human_magic_sentry"
+		"Ability2"					""//aoe attack
 		"Ability6"					"ability_tower"
 		
 		// Armor
@@ -1319,10 +1319,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
-		"Ability2"					""	 //Reference: Afbt
-		"Ability3"					""	 //Reference: AHta
-		"Ability4"					"ability_tower"	 //Reference: Adts
+		"Ability1"					"human_reveal"
+		"Ability2"					"human_magic_sentry"
+		"Ability3"					"human_feedback"
+		"Ability4"					"ability_tower"
 		
 		// Armor
 		//----------------------------------------------------------------

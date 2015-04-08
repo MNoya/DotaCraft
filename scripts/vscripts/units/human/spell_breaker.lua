@@ -46,12 +46,12 @@ function SpellSteal( event )
 	local team_type
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		-- Cast on friendly unit. Remove the first negative debuff and apply it to a random enemy unit
-		modifier_type == "negative"
-		team_type == DOTA_UNIT_TARGET_TEAM_ENEMY
+		modifier_type = "negative"
+		team_type = DOTA_UNIT_TARGET_TEAM_ENEMY
 	else
 		-- Cast on enemy unit. Remove the first positive debuff and apply it to a random friendly unit
-		modifier_type == "positive"
-		team_type == DOTA_UNIT_TARGET_TEAM_FRIENDLY
+		modifier_type = "positive"
+		team_type = DOTA_UNIT_TARGET_TEAM_FRIENDLY
 	end
 
 	-- Go through all the modifiers checking the first purgable, of the selected type
@@ -60,36 +60,42 @@ function SpellSteal( event )
 		if ModifierCanBePurged(modifier_name, modifier_type) then
 			target:RemoveModifierByName(modifier_name)
 			transfer_modifier = modifier_name
-			break --Breaks the for?
+			break
 		end
 	end
 
-	-- Find units and apply
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, 
-					team_type, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	if units then
-		local random_target = enemies[RandomInt(0, #units)]
-		if IsValidEntity(random_target) then
+	print("Modifier to transfer: "..transfer_modifier)
+	if transfer_modifier ~= "" then
 
-			-- Get the ability name and duration directly from the modifier table
-			local modifier_table = GameRules.Modifiers
-			local modifier = modifier_table[modifier_name]
-			local ability_name = modifier.Ability
-			local modifier_duration = modifier.Duration
+		-- Find units and apply
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, 
+						team_type, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		if units then
+			local random_target = units[RandomInt(1, #units)]
+			if IsValidEntity(random_target) then
 
-			-- Add the ability to a dummy unit, used to apply the modifier
-			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, nil, nil, caster:GetTeamNumber())
-			dummy:SetOwner(caster:GetOwner()) -- This should be the hero
-			dummy:AddAbility(ability_name)
+				-- Get the ability name and duration directly from the modifier table
+				local modifier_table = GameRules.Modifiers
+				local modifier = modifier_table[transfer_modifier]
+				DeepPrintTable(modifier)
+				local ability_name = modifier.Ability
+				local modifier_duration = modifier.Duration
+				print(ability_name, modifier_duration)
 
-			local new_ability = FindAbilityByName(ability_name)
-			if new_ability then
-				new_ability:SetLevel(new_ability:GetMaxLevel())
-				new_ability:ApplyDataDrivenModifier(caster, random_target, transfer_modifier, { duration = modifier_duration })
-				print("Spell Steal applies "..transfer_modifier.." on "..random_target:GetUnitName().." for "..modifier_duration.." seconds")
-			else
-				print("ERROR, Ability name "..ability_name.." not found")
-			end		
+				-- Add the ability to a dummy unit, used to apply the modifier
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, nil, nil, caster:GetTeamNumber())
+				dummy:SetOwner(caster:GetOwner()) -- This should be the hero
+				dummy:AddAbility(ability_name)
+
+				local new_ability = dummy:FindAbilityByName(ability_name)
+				if new_ability then
+					new_ability:SetLevel(new_ability:GetMaxLevel())
+					new_ability:ApplyDataDrivenModifier(caster, random_target, transfer_modifier, { duration = modifier_duration })
+					print("Spell Steal applies "..transfer_modifier.." on "..random_target:GetUnitName().." for "..modifier_duration.." seconds")
+				else
+					print("ERROR, Ability name "..ability_name.." not found")
+				end		
+			end
 		end
 	end
 end
@@ -100,13 +106,16 @@ function ModifierCanBePurged( modifier_name, modifier_type)
 	local modifier_table = GameRules.Modifiers
 	local modifier = modifier_table[modifier_name]
 
-	if modifier then
+	if modifier and modifier.Ability then
+		print("modifier values:", modifier.Ability, modifier.IsDebuff, modifier.IsBuff)
 		if modifier_type == "negative" then
-			if modifier.IsDebuff and modifier.IsDebuff == "1" then
+			if modifier.IsDebuff and modifier.IsDebuff == 1 then
+				print("ModifierCanBePurged (debuff) "..modifier.Ability)
 				return true
 			end
 		elseif modifier_type == "positive" then
-			if modifier.IsBuff and modifier.IsBuff == "1" then
+			if modifier.IsBuff and modifier.IsBuff == 1 then
+				print("ModifierCanBePurged (buff) "..modifier.Ability)
 				return true
 			end
 		end
