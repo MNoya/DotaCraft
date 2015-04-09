@@ -730,6 +730,20 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 				local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
 				if not timesUp then
 					if unit.bUpdatingHealth then
+
+						-- Handle the case in which the max health changes because of a building research
+						if unit:GetMaxHealth() ~= fMaxHealth then
+
+							local HP_difference = unit:GetMaxHealth() - fMaxHealth
+							fMaxHealth = unit:GetMaxHealth()							
+							
+							-- Keep the relative HP. Rough but works
+							local currentHP = unit:GetHealth()+HP_difference
+							local healthPercent = currentHP/fMaxHealth
+							unit:SetHealth(fMaxHealth * healthPercent)
+
+						end
+
 						if unit:GetHealth() < ( fMaxHealth ) then
 							unit:SetHealth(unit:GetHealth() + 1)
 						else
