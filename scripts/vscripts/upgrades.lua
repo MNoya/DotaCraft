@@ -180,6 +180,9 @@ end
 
 -- This function is called on every unit after ResearchComplete
 function UpdateUnitUpgrades( unit, player, research_name )
+	if not IsValidEntity(unit) then
+		return
+	end
 	local unit_name = unit:GetUnitName()
 	local upgrades = player.upgrades
 
@@ -253,7 +256,7 @@ end
 -- Removes the modifiers defined in the unit_upgrades.kv table for this unit
 function RemoveAssociatedModifiers( unit, ability_name, table )
 	local modifiers = table.modifiers
-	print("modifiers:")
+
 	DeepPrintTable(modifiers)
 	if modifiers then
 		for k,v in pairs(modifiers) do

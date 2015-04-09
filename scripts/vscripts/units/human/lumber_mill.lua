@@ -4,18 +4,24 @@ function Masonry( event )
 	local ability = event.ability
 	local level = event.Level
 	local healthBonusPercentage = event.ability:GetLevelSpecialValueFor("bonus_health_pct", level - 1) * 0.01
+	local healthPercent = caster:GetHealth()/caster:GetMaxHealth()
 	
-	local oldHealthBonus = 0
-	if level > 1 then
-		oldHealthBonus = event.ability:GetLevelSpecialValueFor("bonus_health_pct", level - 2) * 0.01
-	end
+	-- Store the original starting HP
+	if not caster.BaseMaxHealth then
+		caster.BaseMaxHealth = caster:GetMaxHealth()
+	end	
 	
-	local missingHP = caster:GetHealthDeficit()
-	local maxHP = caster:GetMaxHealth()
-	local baseHP = maxHP / (1+oldHealthBonus)
-	local newMaxHP = baseHP * (1+healthBonusPercentage)
+	-- Max Health
+	local maxHP = caster.BaseMaxHealth
+	local newMaxHP = maxHP * (1+healthBonusPercentage)
 	caster:SetMaxHealth(newMaxHP)
-	caster:SetHealth(newMaxHP - missingHP)
+
+	-- Adjust the relative HP for buildings that were already constructed
+	if not caster:HasModifier("modifier_construction") then
+		local newHP = math.ceil(newMaxHP * healthPercent)
+		caster:SetHealth(newHP)
+		print("Masonry HP of "..caster:GetUnitName()..": "..newHP.."/"..newMaxHP)	
+	end
 
 	-- Special case for the scout tower which gains 1 extra armor each level
 	if caster:GetUnitName() == "human_scout_tower" then

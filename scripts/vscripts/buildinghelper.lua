@@ -623,13 +623,18 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 
 	-- whether we should update the building's health over the build time.
 	local bUpdateHealth = buildingTable:GetVal("UpdateHealth", "bool")
-	local fMaxHealth = unit:GetMaxHealth()
+
+	----------------- CUSTOM Warcraft 3 Initial Health ------------------
+	local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
+	local fMaxHealth = unit:GetMaxHealth() * (1 + 0.2 * masonry_rank) 
+	local nInitialHealth = 0.10 * ( fMaxHealth )
+	---------------------------------------------------------------------
 
 	local fAddedHealth = 0
 	-- health to add every tick until build time is completed.
-	local fUpdateHealthInterval = buildTime / fMaxHealth
+	local fUpdateHealthInterval = buildTime / (fMaxHealth - nInitialHealth)
 	local fserverFrameRate = 1/30 -- Server executes as close to 1/30 as it can
-	
+
 	local nHealthInterval = fMaxHealth / (buildTime / fserverFrameRate)
 	local fSmallHealthInterval = nHealthInterval - math.floor(nHealthInterval) -- just the floating point component
 	nHealthInterval = math.floor(nHealthInterval)
@@ -663,7 +668,8 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 	unit.bUpdatingHealth = false --Keep tracking if we're currently updating health.
 
 	if bUpdateHealth then
-		unit:SetHealth(1)
+		unit:SetHealth(nInitialHealth)
+		print("[BH] Set Initial health at "..nInitialHealth)
 		unit.bUpdatingHealth = true
 		if bScale then
 			unit:SetModelScale(fCurrentScale)
@@ -678,7 +684,8 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 	-- Health Timers
 	-- If the tick would be faster than 1 frame, adjust the HP gained per frame
 	if fUpdateHealthInterval <= fserverFrameRate then
-		unit.updateHealthTimer = DoUniqueString('health')	
+		unit.updateHealthTimer = DoUniqueString('health')
+		print("Building will update health every frame at "..nHealthInterval.." + "..fSmallHealthInterval)	
 		Timers:CreateTimer(unit.updateHealthTimer, {
 	    callback = function()
 			if IsValidEntity(unit) then
@@ -715,13 +722,15 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 	-- Update every 1 HP with a variable return time (this is the case with buildings that last longer)
 	else
 		unit.updateHealthTimer = DoUniqueString('health')	
+		print("Building will update 1 health every "..fUpdateHealthInterval.." seconds")
+		print("Building will finish in "..buildTime.." seconds which means it should end at "..(buildTime/fUpdateHealthInterval) + nInitialHealth.." HP")
 		Timers:CreateTimer(unit.updateHealthTimer, {
 	    callback = function()
 			if IsValidEntity(unit) then
 				local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
 				if not timesUp then
 					if unit.bUpdatingHealth then
-						if unit:GetHealth() < fMaxHealth then
+						if unit:GetHealth() < ( fMaxHealth ) then
 							unit:SetHealth(unit:GetHealth() + 1)
 						else
 							unit.bUpdatingHealth = false

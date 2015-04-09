@@ -10,6 +10,7 @@ function UpgradeBuilding( event )
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()
 	local player = PlayerResource:GetPlayer(playerID)
+	local currentHealthPercentage = caster:GetHealth()/caster:GetMaxHealth()
 
 	-- Remove the old building from the structures list and from the game
 	local buildingIndex = getIndex(player.structures, caster)
@@ -29,6 +30,9 @@ function UpgradeBuilding( event )
 	building:SetControllableByPlayer(playerID, true)
 	building:SetAbsOrigin(position)
 	building:RemoveModifierByName("modifier_invulnerable")
+	local newRelativeHP = math.ceil(building:GetMaxHealth() * currentHealthPercentage)
+	if newRelativeHP == 0 then newRelativeHP = 1 end --just incase rounding goes wrong
+	building:SetHealth(newRelativeHP)
 
 	-- Add 1 to the buildings list for that name. The old name still remains
 	if not player.buildings[new_unit] then
@@ -52,6 +56,15 @@ function UpgradeBuilding( event )
 	for k,structure in pairs(player.structures) do
 		CheckAbilityRequirements( structure, player )
 	end
+
+	-- Apply the current level of Masonry to the newly upgraded building
+	local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
+	if masonry_rank and masonry_rank > 0 then
+		print("Applying masonry rank "..masonry_rank.." to this building upgrade")
+		UpdateUnitUpgrades( building, player, "human_research_masonry"..masonry_rank )
+	end
+
+
 end
 
 

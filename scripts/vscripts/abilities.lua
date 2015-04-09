@@ -56,6 +56,16 @@ function build( keys )
     		CheckAbilityRequirements( unit, player )
     	end]]
 
+    	-- Apply the current level of Masonry to the newly upgraded building
+		local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
+		if masonry_rank and masonry_rank > 0 then
+			print("Applying masonry rank "..masonry_rank.." to this building construction")
+			UpdateUnitUpgrades( unit, player, "human_research_masonry"..masonry_rank )
+		end
+
+		-- Add the building handle to the list of structures
+		table.insert(player.structures, unit)
+
 
 	end)
 
@@ -98,9 +108,6 @@ function build( keys )
 		else
 			player.buildings[building_name] = player.buildings[building_name] + 1
 		end
-
-		-- Add the building handle to the list of constructed structures
-		table.insert(player.structures, unit)
 
 		-- Update the abilities of the builders and buildings
     	for k,units in pairs(player.units) do
