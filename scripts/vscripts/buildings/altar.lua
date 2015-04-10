@@ -56,6 +56,15 @@ function UpgradeAltarAbilities( event )
 	local abilityOnProgress = event.ability
 	local level = tonumber(abilityOnProgress:GetMaxLevel())+1
 
+	-- Keep simple track of the abilities being queued, these can't be removed/upgraded else the channeling wont go off
+	if not caster.altar_queue then
+		caster.altar_queue = {}
+	end
+
+	table.insert(caster.altar_queue, abilityOnProgress:GetAbilityName())
+	print("ALTAR QUEUE:")
+	DeepPrintTable(caster.altar_queue)
+
 	for i=0,15 do
 		local ability = caster:GetAbilityByIndex(i)
 		if ability then
@@ -79,14 +88,19 @@ function UpgradeAltarAbilities( event )
 								disabled = false
 							end]]
 
-							caster:AddAbility(new_ability_name)
-							caster:SwapAbilities(ability_name, new_ability_name, false, true)
-							caster:RemoveAbility(ability_name)
+							-- If the ability has to be channeled (i.e. is queued), it cant be removed!
+							if not tableContains(caster.altar_queue, ability_name) then
+								caster:AddAbility(new_ability_name)
+								caster:SwapAbilities(ability_name, new_ability_name, false, true)
+								caster:RemoveAbility(ability_name)
 
-
-							local new_ability = caster:FindAbilityByName(new_ability_name) 
-							new_ability:SetLevel(new_ability:GetMaxLevel())
-							print("Swapped "..ability_name.." with "..new_ability:GetAbilityName())
+								local new_ability = caster:FindAbilityByName(new_ability_name) 
+								new_ability:SetLevel(new_ability:GetMaxLevel())
+								print("Swapped "..ability_name.." with "..new_ability:GetAbilityName())
+							else
+								ability:SetHidden(true)
+								print("Table Contains "..ability_name.." set Hidden because the altar will be casting it later")
+							end
 						end
 					end
 				else
@@ -104,6 +118,19 @@ end
 
 function ReEnableAltarAbilities( event )
 	local caster = event.caster
+	local ability = event.ability
+
+	 -- Remove the "item_" to compare
+	local item_name = ability:GetAbilityName()
+    local train_ability_name = string.gsub(item_name, "item_", "")
+	print("ABILITY NAME : "..train_ability_name)
+
+	-- Remove it from the altar queue
+	local queue_element = getIndex(caster.altar_queue, train_ability_name)
+    table.remove(caster.altar_queue, queue_element)
+
+	print("ALTAR QUEUE:")
+	DeepPrintTable(caster.altar_queue)
 
 	print("--")
 	for i=0,15 do
