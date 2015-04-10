@@ -24,7 +24,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"2"
 		}
 	}
 
@@ -71,7 +70,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"2"
 		}
 	}
 
@@ -118,7 +116,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"2"
 		}
 	}
 
@@ -165,7 +162,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"2"
 		}
 	}
 
@@ -195,7 +191,7 @@
 	"AbilityTextureName"			"human_archmage"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_PASSIVE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
 "human_mountain_king"
@@ -204,7 +200,7 @@
 	"AbilityTextureName"			"human_mountain_king"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_PASSIVE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
 "human_paladin"
@@ -213,7 +209,7 @@
 	"AbilityTextureName"			"human_paladin"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_PASSIVE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
 "human_blood_mage"
@@ -222,7 +218,7 @@
 	"AbilityTextureName"			"human_blood_mage"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_PASSIVE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
 // Version 2 costs 450g and 100lumber and requires to have upgraded the city level 2
@@ -231,7 +227,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_archmage"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -251,7 +247,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"3"
 		}
 	}
 
@@ -298,7 +293,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"3"
 		}
 	}
 
@@ -325,7 +319,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_paladin"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -345,7 +339,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"3"
 		}
 	}
 
@@ -372,7 +365,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_blood_mage"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -392,7 +385,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"3"
 		}
 	}
 
@@ -420,7 +412,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_archmage"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -440,7 +432,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"0"
 		}
 	}
 
@@ -467,7 +458,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_mountain_king"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -487,7 +478,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"0"
 		}
 	}
 
@@ -514,7 +504,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_paladin"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -534,7 +524,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"0"
 		}
 	}
 
@@ -561,7 +550,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_blood_mage"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -581,7 +570,6 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"UpgradeAltarAbilities"
-			"Level"			"0"
 		}
 	}
 

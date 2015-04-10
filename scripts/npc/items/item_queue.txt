@@ -1567,6 +1567,13 @@
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
 		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
 	}
 }
 

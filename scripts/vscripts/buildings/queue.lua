@@ -66,7 +66,7 @@ function DequeueUnit( event )
         		--print("Q")
         		--DeepPrintTable(caster.queue)
         		local queue_element = getIndex(caster.queue, item:GetEntityIndex())
-        		print(item:GetEntityIndex().." in queue at "..queue_element)
+        		--print(item:GetEntityIndex().." in queue at "..queue_element)
 	            table.remove(caster.queue, queue_element)
 
 	            caster:RemoveItem(item)
