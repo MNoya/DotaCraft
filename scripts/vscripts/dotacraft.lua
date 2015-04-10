@@ -398,6 +398,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.units = {} -- This keeps the handle of all the units of the player army, to iterate for unlocking upgrades
 	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
+	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
 
 	-- Give Initial Lumber
 	player.lumber = 5000

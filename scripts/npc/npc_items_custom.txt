@@ -861,7 +861,7 @@
 			// Re-enable abilities
 			"RunScript"
 			{
-				"ScriptFile"	"buildings/upgrades"
+				"ScriptFile"	"buildings/upgrades.lua"
 				"Function"		"EnableAbilities"
 			}
 	
@@ -895,7 +895,7 @@
 			// Re-enable abilities
 			"RunScript"
 			{
-				"ScriptFile"	"buildings/upgrades"
+				"ScriptFile"	"buildings/upgrades.lua"
 				"Function"		"EnableAbilities"
 			}
 	
@@ -2131,6 +2131,142 @@
 			{
 				"ScriptFile"	"buildings/research.lua"
 				"Function"		"ReEnableResearch"
+			}
+		}
+	}
+	
+	
+	//------------ HERO TRAINING ------------//
+	
+	"item_human_train_archmage1"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_human_train_archmage"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"DequeueUnit"
+			}
+	
+			// Re-enable abilities
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReEnableAltarAbilities"
+			}
+		}
+	}
+	
+	"item_human_train_archmage2"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_human_train_archmage"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"DequeueUnit"
+			}
+		}
+	}
+	
+	"item_human_train_archmage3"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_human_train_archmage"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"DequeueUnit"
+			}
+		}
+	}
+	
+	"item_human_train_mountain_king1"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_human_train_mountain_king"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"DequeueUnit"
+			}
+		}
+	}
+	
+	"item_human_train_paladin1"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_human_train_paladin"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"DequeueUnit"
+			}
+		}
+	}
+	
+	"item_human_train_blood_mage1"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_human_train_blood_mage"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"DequeueUnit"
 			}
 		}
 	}

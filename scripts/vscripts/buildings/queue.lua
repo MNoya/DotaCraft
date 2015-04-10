@@ -255,21 +255,3 @@ function IsChanneling ( unit )
 
 	return false
 end
-
-function BuildHero( event )
-	local caster = event.caster
-	local player = caster:GetPlayerOwner()
-	local hero = player:GetAssignedHero()
-	local playerID = player:GetPlayerID()
-	local unit_name = event.Hero
-	local origin = event.caster:GetAbsOrigin() + RandomVector(250)
-
-	-- Get a random position to create the illusion in
-	local origin = caster:GetAbsOrigin() + RandomVector(150)
-
-	-- handle_UnitOwner needs to be nil, else it will crash the game.
-	local illusion = CreateUnitByName(unit_name, origin, true, hero, nil, hero:GetTeamNumber())
-	illusion:SetPlayerID(playerID)
-	illusion:SetControllableByPlayer(playerID, true)
-	
-end
