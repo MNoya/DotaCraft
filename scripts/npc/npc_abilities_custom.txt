@@ -8451,6 +8451,13 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"2"
+			}
 		}
 	
 		"OnChannelSucceeded"
@@ -8490,6 +8497,13 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"2"
 			}
 		}
 	
@@ -8531,6 +8545,13 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"2"
+			}
 		}
 	
 		"OnChannelSucceeded"
@@ -8549,6 +8570,44 @@
 				"Hero"			"npc_dota_hero_Invoker"
 			}
 		}
+	}
+	
+	// Passive version indicates that the hero has already been trained, stopping the next rank of that hero
+	
+	"human_archmage"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_archmage"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_PASSIVE"
+	}
+	
+	"human_mountain_king"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_mountain_king"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_PASSIVE"
+	}
+	
+	"human_paladin"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_paladin"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_PASSIVE"
+	}
+	
+	"human_blood_mage"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_blood_mage"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_PASSIVE"
 	}
 	
 	// Version 2 costs 450g and 100lumber and requires to have upgraded the city level 2
@@ -8571,6 +8630,13 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"3"
 			}
 		}
 	
@@ -8612,6 +8678,13 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"3"
+			}
 		}
 	
 		"OnChannelSucceeded"
@@ -8652,6 +8725,13 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"3"
+			}
 		}
 	
 		"OnChannelSucceeded"
@@ -8691,6 +8771,202 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"3"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_Invoker"
+			}
+		}
+	}
+	
+	// Version 3 costs the same but requires City Hall level 3
+	
+	"human_train_archmage3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_archmage"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"0"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_keeper_of_the_light"
+			}
+		}
+		
+	}
+	
+	"human_train_mountain_king3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_mountain_king"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"0"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_zuus"
+			}
+		}
+		
+	}
+	
+	"human_train_paladin3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_paladin"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"0"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_omniknight"
+			}
+		}
+		
+	}
+	
+	"human_train_blood_mage3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"human_blood_mage"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+				"Level"			"0"
 			}
 		}
 	

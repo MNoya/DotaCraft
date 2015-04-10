@@ -1343,6 +1343,13 @@
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
 		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
 	}
 }
 
@@ -1363,6 +1370,13 @@
 		{
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
 		}
 	}
 }
@@ -1385,6 +1399,69 @@
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
 		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
+	}
+}
+
+"item_human_train_mountain_king2"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_human_train_mountain_king"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
+	}
+}
+
+"item_human_train_mountain_king3"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_human_train_mountain_king"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
 	}
 }
 
@@ -1406,6 +1483,69 @@
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
 		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
+	}
+}
+
+"item_human_train_paladin2"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_human_train_paladin"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
+	}
+}
+
+"item_human_train_paladin3"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_human_train_paladin"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
 	}
 }
 
@@ -1426,6 +1566,62 @@
 		{
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
+		}
+	}
+}
+
+"item_human_train_blood_mage2"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_human_train_blood_mage"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
+		}
+	}
+}
+
+"item_human_train_blood_mage3"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_human_train_blood_mage"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReEnableAltarAbilities"
 		}
 	}
 }

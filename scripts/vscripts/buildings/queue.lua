@@ -63,8 +63,8 @@ function DequeueUnit( event )
         	local current_item = EntIndexToHScript(item:GetEntityIndex())
 
         	if current_item == item_ability then
-        		print("Q")
-        		DeepPrintTable(caster.queue)
+        		--print("Q")
+        		--DeepPrintTable(caster.queue)
         		local queue_element = getIndex(caster.queue, item:GetEntityIndex())
         		print(item:GetEntityIndex().." in queue at "..queue_element)
 	            table.remove(caster.queue, queue_element)

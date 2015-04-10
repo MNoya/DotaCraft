@@ -3,6 +3,7 @@
 -- To build a second Hero, you must upgrade your Town Hall to a Keep instead of a Town Hall. 
 -- To build a third Hero you must have a third level Town Hall building such as a Castle.
 -- You cannot train more than 3 Heroes
+-- 
 
 function BuildHero( event )
 	local caster = event.caster
@@ -33,6 +34,21 @@ function BuildHero( event )
 	table.insert(player.heroes, new_hero)
 	CheckAbilityRequirements(new_hero, player)
 
+	-- Swap the (hidden) finished hero ability for a passive version, to indicate it has been trained
+	local ability = event.ability
+	local ability_name = ability:GetAbilityName()
+	
+	-- Cut the _train and rank
+	local new_ability_name = string.gsub(ability_name, "_train" , "")
+	new_ability_name = string.sub(new_ability_name, 1 , string.len(new_ability_name) - 1)
+
+	-- Swap and Disable
+	caster:AddAbility(new_ability_name)
+	caster:SwapAbilities(ability_name, new_ability_name, false, true)
+	caster:RemoveAbility(ability_name)
+	local new_ability = caster:FindAbilityByName(new_ability_name)
+	new_ability:SetLevel(new_ability:GetMaxLevel())
+
 end
 
 function UpgradeAltarAbilities( event )
@@ -46,9 +62,9 @@ function UpgradeAltarAbilities( event )
 			local ability_name = ability:GetAbilityName()
 			if string.find(ability_name, "_train") then
 				if ability_name ~= abilityOnProgress:GetAbilityName() then	
-					if level == "3"	then -- Disable completely
+					if level == "0"	then -- Disable completely
 						ability:SetHidden(true)
-						caster:RemoveAbility(ability_name)
+						--caster:RemoveAbility(ability_name)
 					else	
 
 						local ability_len = string.len(ability_name)
