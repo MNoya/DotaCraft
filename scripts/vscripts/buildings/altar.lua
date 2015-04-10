@@ -87,13 +87,6 @@ function UpgradeAltarAbilities( event )
 						if rank ~= "0" then
 							local new_ability_name = string.gsub(ability_name, rank , caster.AltarLevel)
 
-							-- Show this ability be a _disabled version?
-							--[[local disabled = true
-							if HasCityCenterLevel(player, level) then
-
-								disabled = false
-							end]]
-
 							-- If the ability has to be channeled (i.e. is queued), it cant be removed!
 							if not tableContains(caster.altar_queue, ability_name) then
 								caster:AddAbility(new_ability_name)
@@ -117,9 +110,15 @@ function UpgradeAltarAbilities( event )
 		end			
 	end
 
+	-- Look to disable the upgraded abilities if the requirements arent met
+	local player = caster:GetPlayerOwner()
+	CheckAbilityRequirements(caster, player)
+
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
+
+	PrintAbilities(caster)
 end
 
 function ReEnableAltarAbilities( event )
@@ -183,16 +182,24 @@ function ReEnableAltarAbilities( event )
 						print("Table Contains "..ability_name.." - Keep it hidden, its queued")
 					end
 				else
+					-- If the ability is disabled, need to adjust
+					if string.find(ability_name, "_disabled")  then
+						ability_name = string.gsub(ability_name, "_disabled" , "")
+						print("Adjusted ability name")
+					end
+
 					local ability_len = string.len(ability_name)
 					local rank = string.sub(ability_name, ability_len , ability_len)
+					print(ability_name,rank)
 					if rank ~= "1" then
-						print("ability_name: ",ability_name)
+
 						local downgraded_ability_name = string.gsub(ability_name, rank , tostring( tonumber(rank) - 1))
 						print("downgraded_ability_name: ", downgraded_ability_name)
 
 						caster:AddAbility(downgraded_ability_name)
 						caster:SwapAbilities(ability_name, downgraded_ability_name, false, true)
 						caster:RemoveAbility(ability_name)
+						caster:RemoveAbility(ability_name.."_disabled")
 
 						local new_ability = caster:FindAbilityByName(downgraded_ability_name) 
 						new_ability:SetLevel(new_ability:GetMaxLevel())
@@ -206,5 +213,11 @@ function ReEnableAltarAbilities( event )
 			end
 		end
 	end
+
+	-- Look to disable the downgraded abilities if the requirements arent met
+	local player = caster:GetPlayerOwner()
+	CheckAbilityRequirements(caster, player)
+
+	PrintAbilities(caster)
 
 end
