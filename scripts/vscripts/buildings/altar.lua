@@ -20,7 +20,7 @@ function BuildHero( event )
 	local new_hero = CreateUnitByName(unit_name, origin, true, hero, nil, hero:GetTeamNumber())
 	new_hero:SetPlayerID(playerID)
 	new_hero:SetControllableByPlayer(playerID, true)
-	new_hero:SetOwner(hero)
+	new_hero:SetOwner(player)
 	
 	if caster.flag then
 		local position = caster.flag:GetAbsOrigin()
@@ -42,6 +42,11 @@ function BuildHero( event )
 	local new_ability_name = string.gsub(ability_name, "_train" , "")
 	new_ability_name = string.sub(new_ability_name, 1 , string.len(new_ability_name) - 1).."_acquired"
 
+	-- Keep the custom name
+	local dotacraft_hero_name = string.gsub(ability_name, "_train" , "")
+	dotacraft_hero_name = string.sub(dotacraft_hero_name, 1 , string.len(dotacraft_hero_name) - 1)
+	new_hero.RealHeroName = dotacraft_hero_name
+
 	-- Swap and Disable on each altars
 	for _,altar in pairs(player.altar_structures) do
 		altar:AddAbility(new_ability_name)
@@ -50,6 +55,8 @@ function BuildHero( event )
 		local new_ability = altar:FindAbilityByName(new_ability_name)
 		new_ability:SetLevel(new_ability:GetMaxLevel())
 	end
+
+	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 
 end
 
@@ -290,4 +297,11 @@ function CloneAltarAbilities( unit, source )
 			end
 		end
 	end
+end
+
+-- Hero Revival
+-- The cost to revive a Hero will be ~half the cost for building the Hero plus 10% more per level of Hero to be revived.
+-- Hero revive time is capped at 100 seconds.
+function StartHeroRevival( event )
+	
 end

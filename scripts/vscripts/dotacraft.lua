@@ -1,4 +1,4 @@
-print ('[DOTACRAFT] dotacraft.lua' )
+ print ('[DOTACRAFT] dotacraft.lua' )
 
 ----------------
 
@@ -465,6 +465,38 @@ function dotacraft:OnEntityKilled( event )
 
 	-- Player owner of the unit
 	local player = killedUnit:GetPlayerOwner()
+
+	if killedUnit:IsRealHero() then
+		if player.altar then
+			for _,altar in pairs(player.altar_structures) do
+				print("ALLOW REVIVAL OF THIS THIS HERO AT THIS ALTAR")
+
+				-- Set the strings for the _acquired ability to find and _revival ability to add
+				local level = killedUnit:GetLevel()
+				local name = killedUnit.RealHeroName
+
+				local acquired_ability_name = name.."_acquired"
+				local revival_ability_name = name.."_revive"..level
+
+				print("FIND "..acquired_ability_name.." AND SWAP TO "..revival_ability_name)
+
+				local ability = altar:FindAbilityByName(acquired_ability_name)
+				if ability then
+					altar:AddAbility(revival_ability_name)
+					altar:SwapAbilities(acquired_ability_name, revival_ability_name, false, true)
+					altar:RemoveAbility(acquired_ability_name)
+
+					local new_ability = altar:FindAbilityByName(revival_ability_name)
+					if new_ability then
+						new_ability:SetLevel(new_ability:GetMaxLevel())
+						print("ADDED "..revival_ability_name.." at level "..new_ability:GetMaxLevel())
+					else
+						print("ABILITY COULDNT BE CHANGED BECAUSE OF REASONS")
+					end
+				end
+			end
+		end
+	end
 
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
 	Timers:CreateTimer(1, function() 
