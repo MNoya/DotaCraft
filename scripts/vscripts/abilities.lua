@@ -63,6 +63,13 @@ function build( keys )
 			UpdateUnitUpgrades( unit, player, "human_research_masonry"..masonry_rank )
 		end
 
+		-- Apply altar linking
+		if string.find( unit:GetUnitName(), "altar") then
+			unit:AddAbility("ability_altar")
+			local ability = unit:FindAbilityByName("ability_altar")
+			ability:SetLevel(1)
+		end
+
 		-- Add the building handle to the list of structures
 		table.insert(player.structures, unit)
 

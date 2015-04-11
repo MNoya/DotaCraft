@@ -134,7 +134,7 @@ function PrintAbilities( unit )
 	print("List of Abilities in "..unit:GetUnitName())
 	for i=0,15 do
 		local ability = unit:GetAbilityByIndex(i)
-		if ability then print("1 - "..ability:GetAbilityName()) end
+		if ability then print(i.." - "..ability:GetAbilityName()) end
 	end
 	print("---------------------")
 end

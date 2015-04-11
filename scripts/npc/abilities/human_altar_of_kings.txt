@@ -1,3 +1,29 @@
+// Link the Altars together with this ability
+"ability_altar"
+{
+	"BaseClass"             		"ability_datadriven"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"Modifiers"
+	{
+		"modifier_altar"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"buildings/altar.lua"
+					"Function"		"LinkAltar"
+				}
+			}
+		}
+	}		
+}
+
 // Heroes
 
 "human_train_archmage1"
@@ -185,7 +211,7 @@
 
 // Passive version indicates that the hero has already been trained, stopping the next rank of that hero
 
-"human_archmage"
+"human_archmage_acquired"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_archmage"
@@ -194,7 +220,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_mountain_king"
+"human_mountain_king_acquired"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_mountain_king"
@@ -203,7 +229,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_paladin"
+"human_paladin_acquired"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_paladin"
@@ -212,7 +238,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_blood_mage"
+"human_blood_mage_acquired"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_blood_mage"

@@ -38,9 +38,9 @@ function BuildHero( event )
 	local ability = event.ability
 	local ability_name = ability:GetAbilityName()
 	
-	-- Cut the _train and rank
+	-- Cut the _train and rank, add the _acquired suffix
 	local new_ability_name = string.gsub(ability_name, "_train" , "")
-	new_ability_name = string.sub(new_ability_name, 1 , string.len(new_ability_name) - 1)
+	new_ability_name = string.sub(new_ability_name, 1 , string.len(new_ability_name) - 1).."_acquired"
 
 	-- Swap and Disable
 	caster:AddAbility(new_ability_name)
@@ -220,4 +220,58 @@ function ReEnableAltarAbilities( event )
 
 	PrintAbilities(caster)
 
+end
+
+-- Keep a player.altar after the player builds its first Altar
+-- Clone the abilities of this building if possible, if its killed try to find another in the structures list
+-- If no altar can be found, check the player.heroes table and decide which rank to apply
+-- This can also include setting re-train abilities (because the heroes are dead) or passive version if the hero is still alive
+function LinkAltar( event )
+	local altar = event.caster
+	local player = altar:GetPlayerOwner()
+
+	-- If no altar is active, this will be the reference
+	if not player.altar then
+		player.altar = altar
+	end
+
+	if altar ~= player.altar and IsValidEntity(player.altar) then
+		print("Linking this Altar to "..player.altar:GetEntityIndex())
+		CloneAltarAbilities( altar, player.altar )
+	end
+
+end
+
+-- Copies the abilities on the main altar to the newly built altar
+function CloneAltarAbilities( unit, source )
+
+	-- First remove the train abilities on the unit
+	for i=0,15 do
+		local unit_ability = unit:GetAbilityByIndex(i)
+
+		if unit_ability then
+			local ability_name = unit_ability:GetAbilityName()
+			if string.find(ability_name, "_train") then
+				unit:RemoveAbility(ability_name)
+			end
+		end
+	end
+
+	-- Then copy over the abilities of the source
+	for i=0,15 do
+		local source_ability = source:GetAbilityByIndex(i)
+
+		if source_ability then
+			local ability_name = source_ability:GetAbilityName()
+			if string.find(ability_name, "_train") or string.find(ability_name, "_acquired") then
+				unit:AddAbility(ability_name)
+				local ability = unit:FindAbilityByName(ability_name)
+				if ability then 
+					ability:SetLevel(ability:GetMaxLevel())
+				else
+					print("Failed to add "..ability_name)
+				end
+			end
+		end
+	end
 end
