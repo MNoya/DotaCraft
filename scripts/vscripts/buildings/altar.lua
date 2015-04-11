@@ -31,8 +31,8 @@ function BuildHero( event )
 		print(new_hero:GetUnitName().." moving to position",position)
 	end
 
+	-- Add the hero to the table of heroes acquired by the player
 	table.insert(player.heroes, new_hero)
-	CheckAbilityRequirements(new_hero, player)
 
 	-- Swap the (hidden) finished hero ability for a passive version, to indicate it has been trained
 	local ability = event.ability
@@ -42,88 +42,94 @@ function BuildHero( event )
 	local new_ability_name = string.gsub(ability_name, "_train" , "")
 	new_ability_name = string.sub(new_ability_name, 1 , string.len(new_ability_name) - 1).."_acquired"
 
-	-- Swap and Disable
-	caster:AddAbility(new_ability_name)
-	caster:SwapAbilities(ability_name, new_ability_name, false, true)
-	caster:RemoveAbility(ability_name)
-	local new_ability = caster:FindAbilityByName(new_ability_name)
-	new_ability:SetLevel(new_ability:GetMaxLevel())
+	-- Swap and Disable on each altars
+	for _,altar in pairs(player.altar_structures) do
+		altar:AddAbility(new_ability_name)
+		altar:SwapAbilities(ability_name, new_ability_name, false, true)
+		altar:RemoveAbility(ability_name)
+		local new_ability = altar:FindAbilityByName(new_ability_name)
+		new_ability:SetLevel(new_ability:GetMaxLevel())
+	end
 
 end
 
 function UpgradeAltarAbilities( event )
 	local caster = event.caster
 	local abilityOnProgress = event.ability
+	local player = caster:GetPlayerOwner()
 
 	-- Keep simple track of the abilities being queued, these can't be removed/upgraded else the channeling wont go off
-	if not caster.altar_queue then
-		caster.altar_queue = {}
+	if not player.altar_queue then
+		player.altar_queue = {}
 	end
 
 	-- Simple track of the current global rank
-	if not caster.AltarLevel then
-		caster.AltarLevel = 2
+	if not player.AltarLevel then
+		player.AltarLevel = 2
 	else
-		caster.AltarLevel = caster.AltarLevel + 1
+		player.AltarLevel = player.AltarLevel + 1
 	end
 
-	table.insert(caster.altar_queue, abilityOnProgress:GetAbilityName())
-	print("ALTAR LEVEL "..caster.AltarLevel.." QUEUE:")
-	DeepPrintTable(caster.altar_queue)
+	table.insert(player.altar_queue, abilityOnProgress:GetAbilityName())
+	print("ALTAR LEVEL "..player.AltarLevel.." QUEUE:")
+	DeepPrintTable(player.altar_queue)
 
-	for i=0,15 do
-		local ability = caster:GetAbilityByIndex(i)
-		if ability then
-			local ability_name = ability:GetAbilityName()
-			if string.find(ability_name, "_train") then
-				if ability_name ~= abilityOnProgress:GetAbilityName() then	
-					if caster.AltarLevel == 4	then -- Disable completely
-						ability:SetHidden(true)
-						--caster:RemoveAbility(ability_name)
-					else	
+	-- On Each altar
+	for _,altar in pairs(player.altar_structures) do
+		for i=0,15 do
+			local ability = altar:GetAbilityByIndex(i)
+			if ability then
+				local ability_name = ability:GetAbilityName()
+				if string.find(ability_name, "_train") then
+					if ability_name ~= abilityOnProgress:GetAbilityName() then	
+						if player.AltarLevel == 4	then -- Disable completely
+							ability:SetHidden(true)
+							--altar:RemoveAbility(ability_name)
+						else	
 
-						local ability_len = string.len(ability_name)
-						local rank = string.sub(ability_name, ability_len , ability_len)
-						if rank ~= "0" then
-							local new_ability_name = string.gsub(ability_name, rank , caster.AltarLevel)
+							local ability_len = string.len(ability_name)
+							local rank = string.sub(ability_name, ability_len , ability_len)
+							if rank ~= "0" then
+								local new_ability_name = string.gsub(ability_name, rank , player.AltarLevel)
 
-							-- If the ability has to be channeled (i.e. is queued), it cant be removed!
-							if not tableContains(caster.altar_queue, ability_name) then
-								caster:AddAbility(new_ability_name)
-								caster:SwapAbilities(ability_name, new_ability_name, false, true)
-								caster:RemoveAbility(ability_name)
+								-- If the ability has to be channeled (i.e. is queued), it cant be removed!
+								if not tableContains(player.altar_queue, ability_name) then
+									altar:AddAbility(new_ability_name)
+									altar:SwapAbilities(ability_name, new_ability_name, false, true)
+									altar:RemoveAbility(ability_name)
 
-								local new_ability = caster:FindAbilityByName(new_ability_name) 
-								new_ability:SetLevel(new_ability:GetMaxLevel())
-								print("Swapped "..ability_name.." with "..new_ability:GetAbilityName())
-							else
-								ability:SetHidden(true)
-								print("Table Contains "..ability_name.." set Hidden because the altar will be casting it later")
+									local new_ability = altar:FindAbilityByName(new_ability_name) 
+									new_ability:SetLevel(new_ability:GetMaxLevel())
+									print("Swapped "..ability_name.." with "..new_ability:GetAbilityName())
+								else
+									ability:SetHidden(true)
+									print("Table Contains "..ability_name.." set Hidden because the altar will be casting it later")
+								end
 							end
 						end
+					else
+						-- Things go wrong if the ability being channeled is removed so just set it hidden
+						ability:SetHidden(true)
 					end
-				else
-					-- Things go wrong if the ability being channeled is removed so just set it hidden
-					ability:SetHidden(true)
 				end
-			end
-		end			
+			end			
+		end
+
+		-- Look to disable the upgraded abilities if the requirements arent met
+		CheckAbilityRequirements(altar, player)
+
+		local hero = altar:GetPlayerOwner():GetAssignedHero()
+		local playerID = hero:GetPlayerID()
+		FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
+
+		PrintAbilities(altar)
 	end
-
-	-- Look to disable the upgraded abilities if the requirements arent met
-	local player = caster:GetPlayerOwner()
-	CheckAbilityRequirements(caster, player)
-
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	local playerID = hero:GetPlayerID()
-	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
-
-	PrintAbilities(caster)
 end
 
 function ReEnableAltarAbilities( event )
 	local caster = event.caster
 	local ability = event.ability
+	local player = caster:GetPlayerOwner()
 
 	 -- Remove the "item_" to compare
 	local item_name = ability:GetAbilityName()
@@ -131,94 +137,97 @@ function ReEnableAltarAbilities( event )
 	print("ABILITY NAME : "..train_ability_name)
 
 	-- Remove it from the altar queue
-	local queue_element = getIndex(caster.altar_queue, train_ability_name)
-    table.remove(caster.altar_queue, queue_element)
+	local queue_element = getIndex(player.altar_queue, train_ability_name)
+    table.remove(player.altar_queue, queue_element)
 
 	-- This is the level at which all train abilities should end up
-	caster.AltarLevel = caster.AltarLevel - 1
+	player.AltarLevel = player.AltarLevel - 1
 
-	print("ALTAR LEVEL "..caster.AltarLevel.." QUEUE:")
-	DeepPrintTable(caster.altar_queue)
+	print("ALTAR LEVEL "..player.AltarLevel.." QUEUE:")
+	DeepPrintTable(player.altar_queue)
 
 	print("--")
-	for i=0,15 do
-		local ability = caster:GetAbilityByIndex(i)
-		if ability then
-			local ability_name = ability:GetAbilityName()
+	-- On Each altar
+	for _,altar in pairs(player.altar_structures) do
+		for i=0,15 do
+			local ability = altar:GetAbilityByIndex(i)
+			if ability then
+				local ability_name = ability:GetAbilityName()
 
-			-- Gotta adjust back the abilities
-			-- The hidden train ability was one in the queue
-			if string.find(ability_name, "_train") then
-			 	if ability:IsHidden() then
+				-- Gotta adjust back the abilities
+				-- The hidden train ability was one in the queue
+				if string.find(ability_name, "_train") then
+				 	if ability:IsHidden() then
 
-			 		-- The level which abilities have to be downgraded and set visible depends on the current AltarLevel
-			 		-- There's some critical issues with different cancelling of the queue that have to be considered
+				 		-- The level which abilities have to be downgraded and set visible depends on the current AltarLevel
+				 		-- There's some critical issues with different cancelling of the queue that have to be considered
 
-					if not tableContains(caster.altar_queue, ability_name) then
+						if not tableContains(player.altar_queue, ability_name) then
 
-						-- Adjust the correct rank of this ability
-						local ability_len = string.len(ability_name)
-						local rank = tonumber(string.sub(ability_name, ability_len , ability_len))
-						local adjusted_ability_name = string.gsub(ability_name, rank , tostring( caster.AltarLevel))
-						print(rank,ability_name,caster.AltarLevel,adjusted_ability_name)
+							-- Adjust the correct rank of this ability
+							local ability_len = string.len(ability_name)
+							local rank = tonumber(string.sub(ability_name, ability_len , ability_len))
+							local adjusted_ability_name = string.gsub(ability_name, rank , tostring( player.AltarLevel))
+							print(rank,ability_name,player.AltarLevel,adjusted_ability_name)
 
-						local correct_ability = caster:FindAbilityByName(adjusted_ability_name)
-						if correct_ability then
-							correct_ability:SetHidden(false)
-							print(adjusted_ability_name.." is now visible")
+							local correct_ability = altar:FindAbilityByName(adjusted_ability_name)
+							if correct_ability then
+								correct_ability:SetHidden(false)
+								print(adjusted_ability_name.." is now visible")
+							else
+								-- The ability has to be set to a new level that didn't exist originally
+								print("Adding new adjusted ability "..adjusted_ability_name)
+								altar:AddAbility(adjusted_ability_name)
+								altar:SwapAbilities(ability_name, adjusted_ability_name, false, true)
+								altar:RemoveAbility(ability_name)
+
+								local new_adjusted_ability = altar:FindAbilityByName(adjusted_ability_name)
+								new_adjusted_ability:SetLevel(new_adjusted_ability:GetMaxLevel())
+
+							end
 						else
-							-- The ability has to be set to a new level that didn't exist originally
-							print("Adding new adjusted ability "..adjusted_ability_name)
-							caster:AddAbility(adjusted_ability_name)
-							caster:SwapAbilities(ability_name, adjusted_ability_name, false, true)
-							caster:RemoveAbility(ability_name)
-
-							local new_adjusted_ability = caster:FindAbilityByName(adjusted_ability_name)
-							new_adjusted_ability:SetLevel(new_adjusted_ability:GetMaxLevel())
-
+							ability:SetHidden(true)
+							print("Table Contains "..ability_name.." - Keep it hidden, its queued")
 						end
 					else
-						ability:SetHidden(true)
-						print("Table Contains "..ability_name.." - Keep it hidden, its queued")
-					end
-				else
-					-- If the ability is disabled, need to adjust
-					if string.find(ability_name, "_disabled")  then
-						ability_name = string.gsub(ability_name, "_disabled" , "")
-						print("Adjusted ability name")
-					end
+						-- If the ability is disabled, need to adjust
+						if string.find(ability_name, "_disabled")  then
+							ability_name = string.gsub(ability_name, "_disabled" , "")
+							print("Adjusted ability name")
+						end
 
-					local ability_len = string.len(ability_name)
-					local rank = string.sub(ability_name, ability_len , ability_len)
-					print(ability_name,rank)
-					if rank ~= "1" then
+						local ability_len = string.len(ability_name)
+						local rank = string.sub(ability_name, ability_len , ability_len)
+						print(ability_name,rank)
+						if rank ~= "1" then
 
-						local downgraded_ability_name = string.gsub(ability_name, rank , tostring( tonumber(rank) - 1))
-						print("downgraded_ability_name: ", downgraded_ability_name)
+							local downgraded_ability_name = string.gsub(ability_name, rank , tostring( tonumber(rank) - 1))
+							print("downgraded_ability_name: ", downgraded_ability_name)
 
-						caster:AddAbility(downgraded_ability_name)
-						caster:SwapAbilities(ability_name, downgraded_ability_name, false, true)
-						caster:RemoveAbility(ability_name)
-						caster:RemoveAbility(ability_name.."_disabled")
+							altar:AddAbility(downgraded_ability_name)
+							altar:SwapAbilities(ability_name, downgraded_ability_name, false, true)
+							altar:RemoveAbility(ability_name)
+							altar:RemoveAbility(ability_name.."_disabled")
 
-						local new_ability = caster:FindAbilityByName(downgraded_ability_name) 
-						new_ability:SetLevel(new_ability:GetMaxLevel())
-						print("Swapped "..ability_name.." with "..new_ability:GetAbilityName())
-						print("--")
-					else
-						print("RANK 0 WAOW")
-						print('--')
+							local new_ability = altar:FindAbilityByName(downgraded_ability_name) 
+							new_ability:SetLevel(new_ability:GetMaxLevel())
+							print("Swapped "..ability_name.." with "..new_ability:GetAbilityName())
+							print("--")
+						else
+							print("RANK 0 WAOW")
+							print('--')
+						end
 					end
 				end
 			end
 		end
+
+		-- Look to disable the downgraded abilities if the requirements arent met
+		local player = altar:GetPlayerOwner()
+		CheckAbilityRequirements( structure, player )
+
+		PrintAbilities(altar)
 	end
-
-	-- Look to disable the downgraded abilities if the requirements arent met
-	local player = caster:GetPlayerOwner()
-	CheckAbilityRequirements(caster, player)
-
-	PrintAbilities(caster)
 
 end
 
@@ -233,7 +242,11 @@ function LinkAltar( event )
 	-- If no altar is active, this will be the reference
 	if not player.altar then
 		player.altar = altar
+		player.altar_structures = {}
 	end
+
+	-- Keep all altars in a separate structure list
+	table.insert(player.altar_structures, altar)
 
 	if altar ~= player.altar and IsValidEntity(player.altar) then
 		print("Linking this Altar to "..player.altar:GetEntityIndex())
@@ -267,6 +280,9 @@ function CloneAltarAbilities( unit, source )
 				unit:AddAbility(ability_name)
 				local ability = unit:FindAbilityByName(ability_name)
 				if ability then 
+					if source_ability:IsHidden() then
+						ability:SetHidden(true)
+					end
 					ability:SetLevel(ability:GetMaxLevel())
 				else
 					print("Failed to add "..ability_name)
