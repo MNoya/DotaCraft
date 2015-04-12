@@ -55,6 +55,11 @@
 			"var_type"				"FIELD_INTEGER"
 			"lumber_cost"			"0"
 		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
 	}
 
 	"OnSpellStart"
@@ -119,6 +124,11 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -185,6 +195,11 @@
 			"var_type"				"FIELD_INTEGER"
 			"lumber_cost"			"0"
 		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
 	}
 
 	"OnSpellStart"
@@ -249,6 +264,11 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -352,8 +372,14 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
+			"lumber_cost"			"0"
 		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+
 	}
 
 	"OnSpellStart"
@@ -417,7 +443,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -482,7 +513,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -547,7 +583,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -613,7 +654,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -678,7 +724,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -743,7 +794,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -808,7 +864,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
 		}
 	}
 
@@ -936,6 +997,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"30.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"180"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -980,6 +1065,30 @@
 	"AbilityChannelTime"			"35"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"35.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"225"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1026,6 +1135,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"40.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"270"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1071,6 +1204,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"45.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"315"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1115,6 +1272,30 @@
 	"AbilityChannelTime"			"50"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"50.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"360"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1162,6 +1343,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"60.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"405"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1206,6 +1411,30 @@
 	"AbilityChannelTime"			"70"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"70.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"450"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1252,6 +1481,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"80.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"495"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1296,6 +1549,30 @@
 	"AbilityChannelTime"			"90"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"90.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"540"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1342,6 +1619,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"100.0"
+ 		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"585"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1386,6 +1687,30 @@
 	"AbilityChannelTime"			"30"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"30.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"180"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1432,6 +1757,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"35.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"225"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1455,7 +1804,7 @@
 			"ScriptFile"   	"buildings/queue.lua"
 			"Function"      "NextQueue"
 		}
-		
+
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/altar.lua"
@@ -1476,6 +1825,30 @@
 	"AbilityChannelTime"			"40"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"40.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"270"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1522,6 +1895,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"45.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"315"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1566,6 +1963,30 @@
 	"AbilityChannelTime"			"50"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"50.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"360"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1612,6 +2033,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"60.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"405"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1656,6 +2101,30 @@
 	"AbilityChannelTime"			"70"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"70.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"450"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1702,6 +2171,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"80.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"495"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1746,6 +2239,30 @@
 	"AbilityChannelTime"			"90"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"90.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"540"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1792,6 +2309,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"100.0"
+ 		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"585"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1836,6 +2377,30 @@
 	"AbilityChannelTime"			"30"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"30.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"180"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1882,6 +2447,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"35.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"225"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -1926,6 +2515,30 @@
 	"AbilityChannelTime"			"40"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"40.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"270"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -1972,6 +2585,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"45.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"315"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2016,6 +2653,30 @@
 	"AbilityChannelTime"			"50"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"50.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"360"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -2062,6 +2723,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"60.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"405"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2106,6 +2791,30 @@
 	"AbilityChannelTime"			"70"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"70.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"450"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -2152,6 +2861,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"80.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"495"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2196,6 +2929,30 @@
 	"AbilityChannelTime"			"90"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"90.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"540"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -2242,6 +2999,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"100.0"
+ 		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"585"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2286,6 +3067,30 @@
 	"AbilityChannelTime"			"30"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"30.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"180"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -2332,6 +3137,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"35.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"225"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2376,6 +3205,30 @@
 	"AbilityChannelTime"			"40"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"40.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"270"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -2422,6 +3275,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"45.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"315"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2466,6 +3343,30 @@
 	"AbilityChannelTime"			"50"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"50.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"360"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -2512,6 +3413,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"60.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"405"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2556,6 +3481,30 @@
 	"AbilityChannelTime"			"70"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"70.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"450"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{
@@ -2602,6 +3551,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"80.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"495"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2647,6 +3620,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"90.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"540"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -2691,6 +3688,30 @@
 	"AbilityChannelTime"			"100"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"revive_time"			"100.0"
+ 		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"585"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"5"
+		}
+	}
 
 	"OnSpellStart"
 	{

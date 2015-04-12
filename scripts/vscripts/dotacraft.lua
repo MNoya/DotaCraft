@@ -394,6 +394,8 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	-- Initialize Variables for Tracking
 	player.lumber = 0
+	player.food_limit = 0 -- The amount of food available to build units
+	player.food_used = 0 -- The amount of food used by this player creatures
 	player.buildings = {} -- This keeps the name and quantity of each building, to access in O(1)
 	player.units = {} -- This keeps the handle of all the units of the player army, to iterate for unlocking upgrades
 	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
@@ -401,9 +403,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
 
 	-- Give Initial Lumber
-	player.lumber = 5000
-	print("Lumber Gained. " .. hero:GetUnitName() .. " is currently at " .. player.lumber)
-    FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
+	ModifyLumber(player, 5000)
 
     -- Create Main Building
     -- This position should be dynamic according to the map starting points
@@ -423,12 +423,18 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	CheckAbilityRequirements( building, player )
 
+	-- Give Initial Food
+    ModifyFoodLimit(player, GetFoodProduced(building))
+
 	-- Create Builders
 	for i=1,5 do
 		local peasant = CreateUnitByName("human_peasant", position+RandomVector(300+i*40), true, hero, hero, hero:GetTeamNumber())
 		peasant:SetOwner(hero)
 		peasant:SetControllableByPlayer(playerID, true)
 		table.insert(player.units, peasant)
+
+		-- Increment food used
+		ModifyFoodUsed(player, GetFoodCost(peasant))
 
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( peasant, player )

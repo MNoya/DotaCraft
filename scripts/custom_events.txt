@@ -14,6 +14,22 @@
 		"lumber"		"long"
 	}
 
+	// This is fired when a player's food limit changes
+	"cgm_player_food_limit_changed"
+	{
+		"player_ID"		"short"
+		"food_used"		"short"
+		"food_limit"	"short"
+	}
+
+	// This is fired when a player's food used changes
+	"cgm_player_food_used_changed"
+	{
+		"player_ID"		"short"
+		"food_used"		"short"
+		"food_limit"	"short"
+	}
+
 	"FlashUtil_request"
 	{
 		"request_id"		"string"

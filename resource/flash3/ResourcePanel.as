@@ -35,6 +35,9 @@ package  {
 			
 			//this is our listener for the event, OnHeroLevelUp() is the handler
 			this.gameAPI.SubscribeToGameEvent("cgm_player_lumber_changed", this.lumberEvent);
+			this.gameAPI.SubscribeToGameEvent("cgm_player_food_limit_changed", this.foodLimitEvent);
+			this.gameAPI.SubscribeToGameEvent("cgm_player_food_used_changed", this.foodUsedEvent);										  
+											  
 				
 			trace("##Module Setup!");
 		}
@@ -52,12 +55,55 @@ package  {
 			trace("##ResourcePanel Set Lumber to "+lumberCount.text);
 		}
 		
+		public function setFood(used, limit): void {
+			foodCount.text = used + " / " + limit;
+			
+			var txFormat:TextFormat = new TextFormat;
+	
+			//font
+			txFormat.font = "$TextFontBold";					
+			
+			//color. 0-50 green, 51-80 yellow, 81-100 red
+			var greenColor:Number = 0x00FF00;
+			var yellowColor:Number = 0xFFFF00;
+			var redColor:Number = 0xFF0000;
+			
+			if (used > 80)
+				txFormat.color = redColor;
+			else if (used > 50)
+				txFormat.color = yellowColor;
+			else
+				txFormat.color = greenColor;
+			
+			foodCount.setTextFormat(txFormat);
+			
+			trace("##ResourcePanel Set Food to "+foodCount.text);
+		}
+		
 		public function lumberEvent(args:Object) : void {
 			trace("##Event Firing Detected")
 			trace("##Data: "+args.player_ID+" - "+args.lumber);
 			if (globals.Players.GetLocalPlayer() == args.player_ID)
 			{
 				this.setLumber(args.lumber);
+			}
+		}
+		
+		public function foodUsedEvent(args:Object) : void {
+			trace("##Event Firing Detected")
+			trace("##Data: "+args.player_ID+" - "+args.food_used+" - "+args.food_limit);
+			if (globals.Players.GetLocalPlayer() == args.player_ID)
+			{
+				this.setFood(args.food_used, args.food_limit);
+			}
+		}
+		
+		public function foodLimitEvent(args:Object) : void {
+			trace("##Event Firing Detected")
+			trace("##Data: "+args.player_ID+" - "+args.food_used+" - "+args.food_limit);
+			if (globals.Players.GetLocalPlayer() == args.player_ID)
+			{
+				this.setFood(args.food_used, args.food_limit);
 			}
 		}
 				

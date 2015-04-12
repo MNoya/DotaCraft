@@ -6,7 +6,7 @@
 function EnqueueUnit( event )
 	local caster = event.caster
 	local ability = event.ability
-	local player = caster:GetPlayerOwner():GetPlayerID()
+	local pID = caster:GetPlayerOwner():GetPlayerID()
 	local gold_cost = ability:GetGoldCost( ability:GetLevel() - 1 )
 
 	-- Initialize queue
@@ -34,8 +34,8 @@ function EnqueueUnit( event )
 
 	else
 		-- Refund with message
- 		PlayerResource:ModifyGold(player, gold_cost, false, 0)
-		FireGameEvent( 'custom_error_show', { player_ID = player, _error = "Queue is full" } )		
+ 		PlayerResource:ModifyGold(pID, gold_cost, false, 0)
+		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Queue is full" } )		
 	end
 end
 
@@ -45,7 +45,8 @@ end
 function DequeueUnit( event )
 	local caster = event.caster
 	local item = event.ability
-	local player = caster:GetPlayerOwner():GetPlayerID()
+	local player = caster:GetPlayerOwner()
+	local pID = player:GetPlayerID()
 
 	local item_ability = EntIndexToHScript(item:GetEntityIndex())
 	local item_ability_name = item_ability:GetAbilityName()
@@ -72,11 +73,18 @@ function DequeueUnit( event )
 	            caster:RemoveItem(item)
 	            
 	            -- Refund ability cost
-	            PlayerResource:ModifyGold(player, gold_cost, false, 0)
+	            PlayerResource:ModifyGold(pID, gold_cost, false, 0)
 				print("Refund ",gold_cost)
 
 				-- Set not channeling if the cancelled item was the first slot
 				if itemSlot == 1 or itemSlot == 0 then
+					-- Refund food used
+					local ability = caster:FindAbilityByName(train_ability_name)
+					local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel() - 1)
+					if food_cost and not caster:HasModifier("modifier_construction") then
+						ModifyFoodUsed(player, -food_cost)
+					end
+
 					train_ability:SetChanneling(false)
 					train_ability:EndChannel(true)
 					print("Cancel current channel")
@@ -159,6 +167,7 @@ end
 function AdvanceQueue( event )
 	local caster = event.caster
 	local ability = event.ability
+	local player = caster:GetPlayerOwner()
 
 	if not IsChanneling( caster ) and not caster:HasModifier("modifier_construction") then
 		
@@ -184,23 +193,37 @@ function AdvanceQueue( event )
 
 						local ability_to_channel = caster:FindAbilityByName(train_ability_name)
 
-						ability_to_channel:SetChanneling(true)
-						print("->"..ability_to_channel:GetAbilityName()," started channel")
+						local food_cost = ability_to_channel:GetLevelSpecialValueFor("food_cost", ability_to_channel:GetLevel() - 1)
+						if not food_cost then
+							food_cost = 0
+						end
 
-						-- After the channeling time, check if it was cancelled or spawn it
-						-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
-						Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
-						function()
-							--print("===Queue Table====")
-							--DeepPrintTable(caster.queue)
-							if IsValidEntity(item) then
-								ability_to_channel:EndChannel(false)
-								ReorderItems(caster, caster.queue)
-								--print("Unit finished building")
-							else
-								--print("This unit was interrupted")
-							end
-						end)
+						if PlayerHasEnoughFood(player, food_cost) then
+
+							-- Add to the value of food used as soon as the unit training starts
+							ModifyFoodUsed(player, food_cost)
+
+							-- Reset the need more farms warning
+							player.need_more_farms = false
+
+							ability_to_channel:SetChanneling(true)
+							print("->"..ability_to_channel:GetAbilityName()," started channel")
+
+							-- After the channeling time, check if it was cancelled or spawn it
+							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
+							Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
+							function()
+								--print("===Queue Table====")
+								--DeepPrintTable(caster.queue)
+								if IsValidEntity(item) then
+									ability_to_channel:EndChannel(false)
+									ReorderItems(caster, caster.queue)
+									--print("Unit finished building")
+								else
+									--print("This unit was interrupted")
+								end
+							end)
+						end
 
 					-- Items that contain "research_" will start a channel of an ability with the same name  without the item_ affix
 					elseif string.find(item_name, "research_") then

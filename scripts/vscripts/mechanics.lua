@@ -17,6 +17,45 @@ function ModifyLumber( player, lumber_value )
 	end
 end
 
+-- Modifies the food limit of this player. Accepts negative values
+function ModifyFoodLimit( player, food_limit_value )
+	local pID = player:GetAssignedHero():GetPlayerID()
+
+	player.food_limit = player.food_limit + food_limit_value
+	print("Food Limit Changed. Player " .. pID .. " can use up to " .. player.food_limit)
+	FireGameEvent('cgm_player_food_limit_changed', { player_ID = pID, food_used = player.food_used, food_limit = player.food_limit })	
+end
+
+-- Modifies the food used of this player. Accepts negative values
+-- Can go over the limit if a build is destroyed while the unit is already spawned/training
+function ModifyFoodUsed( player, food_used_value )
+	local pID = player:GetAssignedHero():GetPlayerID()
+
+	player.food_used = player.food_used + food_used_value
+    print("Food Used Changed. Player " .. pID .. " is currently at " .. player.food_used)
+    FireGameEvent('cgm_player_food_used_changed', { player_ID = pID, food_used = player.food_used, food_limit = player.food_limit })
+end
+
+-- Returns Int
+function GetFoodProduced( unit )
+	if unit and IsValidEntity(unit) then
+		if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].FoodProduced then
+			return GameRules.UnitKV[unit:GetUnitName()].FoodProduced
+		end
+	end
+	return 0
+end
+
+-- Returns Int
+function GetFoodCost( unit )
+	if unit and IsValidEntity(unit) then
+		if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].FoodCost then
+			return GameRules.UnitKV[unit:GetUnitName()].FoodCost
+		end
+	end
+	return 0
+end
+
 -- Returns bool
 function PlayerHasEnoughGold( player, gold_cost )
 	local hero = player:GetAssignedHero()
@@ -38,6 +77,22 @@ function PlayerHasEnoughLumber( player, lumber_cost )
 
 	if player.lumber < lumber_cost then
 		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Lumber" } )		
+		return false
+	else
+		return true
+	end
+end
+
+-- Return bool
+function PlayerHasEnoughFood( player, food_cost )
+	local pID = player:GetAssignedHero():GetPlayerID()
+
+	if player.food_used + food_cost > player.food_limit then
+		-- send the warning only once every time
+		if not player.need_more_farms then
+			FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Farms" } )
+			player.need_more_farms = true
+		end
 		return false
 	else
 		return true
