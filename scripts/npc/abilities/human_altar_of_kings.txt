@@ -934,14 +934,36 @@
 	"AbilityGoldCost"				"180"
 	"AbilityChannelTime"			"30"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
 			"ScriptFile"	"buildings/altar.lua"
-			"Function"		"StartHeroRevival"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
 			"Hero"			"human_archmage"
 		}
 	}
@@ -957,7 +979,39 @@
 	"AbilityGoldCost"				"225"
 	"AbilityChannelTime"			"35"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
 }
 
 //	270 40
@@ -970,7 +1024,39 @@
 	"AbilityGoldCost"				"270"
 	"AbilityChannelTime"			"40"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
 }
 
 //	315 45
@@ -983,7 +1069,39 @@
 	"AbilityGoldCost"				"315"
 	"AbilityChannelTime"			"45"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
 }
 
 //	360 50
@@ -996,7 +1114,40 @@
 	"AbilityGoldCost"				"360"
 	"AbilityChannelTime"			"50"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
+
 }
 
 //	405 60
@@ -1009,7 +1160,39 @@
 	"AbilityGoldCost"				"405"
 	"AbilityChannelTime"			"60"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
 }
 
 //	450 70
@@ -1022,7 +1205,39 @@
 	"AbilityGoldCost"				"450"
 	"AbilityChannelTime"			"70"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
 }
 
 //	495 80
@@ -1035,7 +1250,39 @@
 	"AbilityGoldCost"				"495"
 	"AbilityChannelTime"			"80"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
 }
 
 //	540 90
@@ -1048,7 +1295,39 @@
 	"AbilityGoldCost"				"540"
 	"AbilityChannelTime"			"90"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
 }
 
 //	585 100
@@ -1061,7 +1340,39 @@
 	"AbilityGoldCost"				"585"
 	"AbilityChannelTime"			"100"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_archmage"
+		}
+	}
 }
 	
 //	180 30
@@ -1074,14 +1385,36 @@
 	"AbilityGoldCost"				"180"
 	"AbilityChannelTime"			"30"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
 			"ScriptFile"	"buildings/altar.lua"
-			"Function"		"StartHeroRevival"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
 			"Hero"			"human_mountain_king"
 		}
 	}
@@ -1097,7 +1430,39 @@
 	"AbilityGoldCost"				"225"
 	"AbilityChannelTime"			"35"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	270 40
@@ -1110,7 +1475,39 @@
 	"AbilityGoldCost"				"270"
 	"AbilityChannelTime"			"40"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	315 45
@@ -1123,7 +1520,39 @@
 	"AbilityGoldCost"				"315"
 	"AbilityChannelTime"			"45"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	360 50
@@ -1136,7 +1565,39 @@
 	"AbilityGoldCost"				"360"
 	"AbilityChannelTime"			"50"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	405 60
@@ -1149,7 +1610,39 @@
 	"AbilityGoldCost"				"405"
 	"AbilityChannelTime"			"60"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	450 70
@@ -1162,7 +1655,39 @@
 	"AbilityGoldCost"				"450"
 	"AbilityChannelTime"			"70"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	495 80
@@ -1175,7 +1700,39 @@
 	"AbilityGoldCost"				"495"
 	"AbilityChannelTime"			"80"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	540 90
@@ -1188,7 +1745,39 @@
 	"AbilityGoldCost"				"540"
 	"AbilityChannelTime"			"90"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	585 100
@@ -1201,7 +1790,39 @@
 	"AbilityGoldCost"				"585"
 	"AbilityChannelTime"			"100"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_mountain_king"
+		}
+	}
 }
 
 //	180 30
@@ -1214,14 +1835,36 @@
 	"AbilityGoldCost"				"180"
 	"AbilityChannelTime"			"30"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
 			"ScriptFile"	"buildings/altar.lua"
-			"Function"		"StartHeroRevival"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
 			"Hero"			"human_paladin"
 		}
 	}
@@ -1237,7 +1880,39 @@
 	"AbilityGoldCost"				"225"
 	"AbilityChannelTime"			"35"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	270 40
@@ -1250,7 +1925,39 @@
 	"AbilityGoldCost"				"270"
 	"AbilityChannelTime"			"40"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	315 45
@@ -1263,7 +1970,39 @@
 	"AbilityGoldCost"				"315"
 	"AbilityChannelTime"			"45"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	360 50
@@ -1276,7 +2015,39 @@
 	"AbilityGoldCost"				"360"
 	"AbilityChannelTime"			"50"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	405 60
@@ -1289,7 +2060,39 @@
 	"AbilityGoldCost"				"405"
 	"AbilityChannelTime"			"60"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	450 70
@@ -1302,7 +2105,39 @@
 	"AbilityGoldCost"				"450"
 	"AbilityChannelTime"			"70"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	495 80
@@ -1315,7 +2150,39 @@
 	"AbilityGoldCost"				"495"
 	"AbilityChannelTime"			"80"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	540 90
@@ -1328,7 +2195,39 @@
 	"AbilityGoldCost"				"540"
 	"AbilityChannelTime"			"90"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	585 100
@@ -1341,7 +2240,39 @@
 	"AbilityGoldCost"				"585"
 	"AbilityChannelTime"			"100"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_paladin"
+		}
+	}
 }
 
 //	180 30
@@ -1354,14 +2285,36 @@
 	"AbilityGoldCost"				"180"
 	"AbilityChannelTime"			"30"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
 			"ScriptFile"	"buildings/altar.lua"
-			"Function"		"StartHeroRevival"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
 			"Hero"			"human_blood_mage"
 		}
 	}
@@ -1377,7 +2330,39 @@
 	"AbilityGoldCost"				"225"
 	"AbilityChannelTime"			"35"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 
 //	270 40
@@ -1390,7 +2375,39 @@
 	"AbilityGoldCost"				"270"
 	"AbilityChannelTime"			"40"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 
 //	315 45
@@ -1403,7 +2420,39 @@
 	"AbilityGoldCost"				"315"
 	"AbilityChannelTime"			"45"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 
 //	360 50
@@ -1416,7 +2465,39 @@
 	"AbilityGoldCost"				"360"
 	"AbilityChannelTime"			"50"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 
 //	405 60
@@ -1429,7 +2510,39 @@
 	"AbilityGoldCost"				"405"
 	"AbilityChannelTime"			"60"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 
 //	450 70
@@ -1442,7 +2555,39 @@
 	"AbilityGoldCost"				"450"
 	"AbilityChannelTime"			"70"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 
 //	495 80
@@ -1455,7 +2600,39 @@
 	"AbilityGoldCost"				"495"
 	"AbilityChannelTime"			"80"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 
 //	540 90
@@ -1468,7 +2645,39 @@
 	"AbilityGoldCost"				"540"
 	"AbilityChannelTime"			"90"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 
 //	585 100
@@ -1481,6 +2690,38 @@
 	"AbilityGoldCost"				"585"
 	"AbilityChannelTime"			"100"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"HideReviveAbility"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/altar.lua"
+			"Function"		"ReviveHero"
+			"Hero"			"human_blood_mage"
+		}
+	}
 }
 	

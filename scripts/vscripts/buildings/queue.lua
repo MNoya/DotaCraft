@@ -176,7 +176,7 @@ function AdvanceQueue( event )
 				if not IsChanneling( caster ) then
 
 					-- Items that contain "train_" will start a channel of an ability with the same name without the item_ affix
-					if string.find(item_name, "train_") then
+					if string.find(item_name, "train_") or string.find(item_name, "_revive") then
 						-- Find the name of the tied ability-item: 
 						--	ability = human_train_footman
 						-- 	item = item_human_train_footman

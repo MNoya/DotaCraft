@@ -283,8 +283,9 @@ function CloneAltarAbilities( unit, source )
 
 		if source_ability then
 			local ability_name = source_ability:GetAbilityName()
-			if string.find(ability_name, "_train") or string.find(ability_name, "_acquired") then
+			if string.find(ability_name, "_train") or string.find(ability_name, "_acquired") or string.find(ability_name, "_revive") then
 				unit:AddAbility(ability_name)
+				print('added '..ability_name)
 				local ability = unit:FindAbilityByName(ability_name)
 				if ability then 
 					if source_ability:IsHidden() then
@@ -302,6 +303,85 @@ end
 -- Hero Revival
 -- The cost to revive a Hero will be ~half the cost for building the Hero plus 10% more per level of Hero to be revived.
 -- Hero revive time is capped at 100 seconds.
-function StartHeroRevival( event )
+function ReviveHero( event )
+	local caster = event.caster
+	local player = caster:GetPlayerOwner()
+	local hero_name = event.Hero
+
+	for _,hero in pairs(player.heroes) do
+		print(_,hero.RealHeroName)
+		if hero.RealHeroName == hero_name then
+			print("reviving "..hero_name)
+			hero:RespawnUnit()
+			hero:SetAbsOrigin(caster.flag:GetAbsOrigin()) --This should be a move order towards the flag instead
+		end
+	end
+
+	-- Swap to the passive hero_acquired ability
+	local ability = event.ability
+	local ability_name = ability:GetAbilityName()
+
+	print("SWAPPING "..ability_name.." with the ACQUIRED version on EVERY ALTAR")
+
+	for _,altar in pairs(player.altar_structures) do
+		local new_ability_name = string.gsub(ability_name, "_revive" , "")
+		new_ability_name = string.sub(new_ability_name, 1 , string.len(new_ability_name) - 1).."_acquired"
+
+		print("new_ability_name is "..new_ability_name.." finding it")
+
+		altar:AddAbility(new_ability_name)
+		altar:SwapAbilities(ability_name, new_ability_name, false, true)
+		altar:RemoveAbility(ability_name)
+		
+		print(" FOUND REVIVE Swapped "..ability_name.." with "..new_ability_name)
+
+		local new_ability = altar:FindAbilityByName(new_ability_name)
+		new_ability:SetLevel(new_ability:GetMaxLevel())
+	end
 	
+	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
+end
+
+-- Hide the revive ability on every altar
+function HideReviveAbility( event )
+	local caster = event.caster
+	local ability = event.ability
+	local player = caster:GetPlayerOwner()
+
+	local ability_name = ability:GetAbilityName()
+
+	print("HIDING "..ability_name.." on EVERY ALTAR")
+
+	for _,altar in pairs(player.altar_structures) do
+		local revive_ability = altar:FindAbilityByName(ability_name)
+		if revive_ability then
+			print("Hiding "..revive_ability:GetAbilityName())
+			revive_ability:SetHidden(true)
+		end
+	end
+
+	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
+end
+
+-- Show the revive ability on every altar after cancelling a revive
+function ShowReviveAbility( event )
+	local caster = event.caster
+	local ability = event.ability
+	local player = caster:GetPlayerOwner()
+	local item_name = ability:GetAbilityName()
+
+	local ability_name = string.gsub(item_name, "item_", "")
+	local ability = caster:FindAbilityByName(ability_name)
+
+	print("SHOWING "..ability_name.." on EVERY ALTAR")
+
+	for _,altar in pairs(player.altar_structures) do
+		local acquired_ability = altar:FindAbilityByName(ability_name)
+		if acquired_ability then
+			print("Showing "..acquired_ability:GetAbilityName())
+			acquired_ability:SetHidden(false)
+		end
+	end
+
+	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end

@@ -7,7 +7,7 @@ CORPSE_DURATION = 88
 
 ----------------
 
-ENABLE_HERO_RESPAWN = true              -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
+ENABLE_HERO_RESPAWN = false              -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret Shop items as well as regular items
 ALLOW_SAME_HERO_SELECTION = true        -- Should we let people select the same hero as each other
 
@@ -474,24 +474,25 @@ function dotacraft:OnEntityKilled( event )
 				-- Set the strings for the _acquired ability to find and _revival ability to add
 				local level = killedUnit:GetLevel()
 				local name = killedUnit.RealHeroName
+				if name then
+					local acquired_ability_name = name.."_acquired"
+					local revival_ability_name = name.."_revive"..level
 
-				local acquired_ability_name = name.."_acquired"
-				local revival_ability_name = name.."_revive"..level
+					print("FIND "..acquired_ability_name.." AND SWAP TO "..revival_ability_name)
 
-				print("FIND "..acquired_ability_name.." AND SWAP TO "..revival_ability_name)
+					local ability = altar:FindAbilityByName(acquired_ability_name)
+					if ability then
+						altar:AddAbility(revival_ability_name)
+						altar:SwapAbilities(acquired_ability_name, revival_ability_name, false, true)
+						altar:RemoveAbility(acquired_ability_name)
 
-				local ability = altar:FindAbilityByName(acquired_ability_name)
-				if ability then
-					altar:AddAbility(revival_ability_name)
-					altar:SwapAbilities(acquired_ability_name, revival_ability_name, false, true)
-					altar:RemoveAbility(acquired_ability_name)
-
-					local new_ability = altar:FindAbilityByName(revival_ability_name)
-					if new_ability then
-						new_ability:SetLevel(new_ability:GetMaxLevel())
-						print("ADDED "..revival_ability_name.." at level "..new_ability:GetMaxLevel())
-					else
-						print("ABILITY COULDNT BE CHANGED BECAUSE OF REASONS")
+						local new_ability = altar:FindAbilityByName(revival_ability_name)
+						if new_ability then
+							new_ability:SetLevel(new_ability:GetMaxLevel())
+							print("ADDED "..revival_ability_name.." at level "..new_ability:GetMaxLevel())
+						else
+							print("ABILITY COULDNT BE CHANGED BECAUSE OF REASONS")
+						end
 					end
 				end
 			end
