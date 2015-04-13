@@ -163,7 +163,7 @@ function LeavesCorpse( unit )
 		return false
 
 	-- Ignore custom buildings
-	elseif (unit:FindAbilityByName("ability_building") == nil) then
+	elseif unit:FindAbilityByName("ability_building") then
 		return false
 
 	-- Ignore units that start with dummy keyword	

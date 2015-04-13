@@ -116,6 +116,12 @@ function build( keys )
 			player.buildings[building_name] = player.buildings[building_name] + 1
 		end
 
+		-- Add to the Food Limit if possible
+		local food_produced = GetFoodProduced(unit)
+		if food_produced ~= 0 then
+			ModifyFoodLimit(player, food_produced)
+		end
+
 		-- Update the abilities of the builders and buildings
     	for k,units in pairs(player.units) do
     		CheckAbilityRequirements( units, player )
@@ -148,6 +154,7 @@ function build( keys )
 	--[[keys:OnCanceled(function()
 		print(keys.ability:GetAbilityName() .. " was canceled.")
 	end)]]
+
 end
 
 function create_building_entity( keys )
