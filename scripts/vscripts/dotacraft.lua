@@ -505,6 +505,17 @@ function dotacraft:OnEntityKilled( event )
 		end
 	end
 
+	if killedUnit.isBuilding then
+		killedUnit:RemoveBuilding(false) -- Building Helper grid cleanup
+
+		-- Substract the Food Produced if it had any
+		local food_produced = GetFoodProduced(killedUnit)
+		if food_produced ~= 0 then
+			ModifyFoodLimit(player, - food_produced)
+		end
+	end
+
+
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
 	Timers:CreateTimer(1, function() 
 	if LeavesCorpse( killedUnit ) then
