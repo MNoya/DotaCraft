@@ -85,8 +85,8 @@ function build( keys )
 
 		-- Move the units away from the building place
 		for _,unit in pairs(units) do
-			if unit ~= caster then
-				print(unit:GetUnitName())
+			if unit ~= caster and not unit.isBuilding then
+				print(unit:GetUnitName().." moving")
 				local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * hull
 				ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
 				unit:AddNewModifier(caster, nil, "modifier_phased", {duration=1})
