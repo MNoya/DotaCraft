@@ -820,7 +820,7 @@ function BuildingHelper:InitializeBuildingEntity(keys)
 	end)
 
 	function unit:RemoveBuilding(bForceKill)
-		BuildingHelper:OpenSquares(unit.squaresOccupied, "string")
+		BuildingHelper:OpenSquares(unit.squaresOccupied, "vector")
 		if bForceKill then
 			unit:ForceKill(true)
 		end
