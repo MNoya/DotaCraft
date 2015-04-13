@@ -22,6 +22,9 @@ function ModifyFoodLimit( player, food_limit_value )
 	local pID = player:GetAssignedHero():GetPlayerID()
 
 	player.food_limit = player.food_limit + food_limit_value
+	if player.food_limit > 100 then
+		player.food_limit = 100
+	end
 	print("Food Limit Changed. Player " .. pID .. " can use up to " .. player.food_limit)
 	FireGameEvent('cgm_player_food_limit_changed', { player_ID = pID, food_used = player.food_used, food_limit = player.food_limit })	
 end
@@ -54,6 +57,17 @@ function GetFoodCost( unit )
 		end
 	end
 	return 0
+end
+
+-- Returns float with the percentage to reduce income
+function GetUpkeep( player )
+	if player.food_used > 80 then
+		return 0.4 -- High Upkeep
+	elseif player.food_used > 50 then
+		return 0.7 -- Low Upkeep
+	else
+		return 1 -- No Upkeep
+	end
 end
 
 -- Returns bool

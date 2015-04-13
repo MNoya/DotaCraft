@@ -351,12 +351,16 @@ function CheckBuildingPosition( event )
 		
 		elseif caster.gold_gathered and caster.gold_gathered > 0 then
 			print("Reached building, give resources")
-			PopupGoldGain(caster, caster.gold_gathered)
+
+			local upkeep = GetUpkeep( player )
+			local gold_gain = caster.gold_gathered * upkeep
+
+			PopupGoldGain(caster, gold_gain)
 
 			caster:RemoveModifierByName("modifier_returning_gold")
 			print("Removed modifier_returning_gold")
 
-			hero:ModifyGold(caster.gold_gathered, false, 0)
+			hero:ModifyGold(gold_gain, false, 0)
 
 			caster.gold_gathered = 0
 

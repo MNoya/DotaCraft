@@ -505,12 +505,18 @@ function dotacraft:OnEntityKilled( event )
 		end
 	end
 
+	-- Substract the Food Used
+	local food_cost = GetFoodCost(killedUnit)
+	if food_cost > 0 then
+		ModifyFoodUsed(player, - food_cost)
+	end
+
 	if killedUnit.isBuilding then
 		killedUnit:RemoveBuilding(false) -- Building Helper grid cleanup
 
-		-- Substract the Food Produced if it had any
+		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killedUnit)
-		if food_produced ~= 0 then
+		if food_produced > 0 then
 			ModifyFoodLimit(player, - food_produced)
 		end
 	end
