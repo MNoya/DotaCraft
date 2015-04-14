@@ -41,6 +41,7 @@
 			//pass the gameAPI on to the modules
 			this.myResource.setup(this.gameAPI, this.globals);		
 			this.humanOverview.setup(this.gameAPI, this.globals);
+			this.Overlay.setup(this.gameAPI, this.globals);
 			
 
 			//this is not needed, but it shows you your UI has loaded (needs 'scaleform_spew 1' in console)

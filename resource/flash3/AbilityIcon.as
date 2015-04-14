@@ -50,6 +50,7 @@
 			// Workout where to put it
             var lp:Point = s.localToGlobal(new Point(0, 0));	
 			
+			//if(lp.x < Globals.instance.CustomUI.movieClip.width/2)
 			if(lp.x < 1920/2) { //make it accept other resolutions
                 // Workout how much to move it
                 var offset:Number = 64;

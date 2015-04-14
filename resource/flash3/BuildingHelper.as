@@ -22,6 +22,7 @@
 		public function onLoaded() : void {		
 			//make this UI visible
 			visible = true;
+			this.clickListener.visible = false
 			
 			//let the client rescale the UI
 			Globals.instance.resizeManager.AddListener(this);

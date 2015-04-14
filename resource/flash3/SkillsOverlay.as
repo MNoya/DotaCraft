@@ -15,11 +15,12 @@
 	import ValveLib.Globals;
 	import ValveLib.ResizeManager;	
 	
-	public class RaceOverview extends MovieClip {
+	
+	public class SkillsOverlay extends MovieClip {
 		var gameAPI:Object;
 		var globals:Object;
 		
-		public function RaceOverview() {
+		public function SkillsOverlay() {
 			// constructor code
 		}
 		
@@ -28,8 +29,6 @@
 			//set our needed variables
 			this.gameAPI = api;
 			this.globals = globals;
-			
-			this.closeBtn.addEventListener(MouseEvent.CLICK, onCloseButtonClicked);
 			
 			var i:int = 0;
 			for (i = 0; i<this.numChildren; i++)
@@ -50,5 +49,5 @@
             return;
         }
 	}
-	
 }
+
