@@ -30,7 +30,6 @@ function CheckAbilityRequirements( unit, player )
 
 				-- Exists and isn't hidden, check its requirements
 				if IsValidEntity(ability) then
-					local requirement_failed = false
 					local disabled = false
 				
 					-- By default, all abilities that have a requirement start as _disabled
@@ -45,41 +44,7 @@ function CheckAbilityRequirements( unit, player )
 					end
 
 					-- Check if it has requirements on the KV table
-					if requirements[ability_name] then
-						--print("Checking "..ability_name.." Requirements:")
-						--DeepPrintTable(requirements[ability_name])
-							
-						-- Go through each requirement line and check if the player has that building on its list
-						for k,v in pairs(requirements[ability_name]) do
-
-							-- If it's an ability tied to a research, check the upgrades table
-							if requirements[ability_name].research then
-								if upgrades[k] and upgrades[k] > 0 then
-									--print("The player has researched "..k)
-									requirement_failed = false
-								elseif k ~= "research" then --ignore the research "requirement" which is just a flag
-									--print("Failed the research requirements for "..ability_name..", no "..k.." found")
-									requirement_failed = true
-									break -- Breaks this loop, as the ability failed the requirement check.
-								end
-							else
-								--print("Building Name","Need","Have")
-								--print(k,v,buildings[k])
-
-								-- If its a building, check every building requirement
-								if buildings[k] and buildings[k] > 0 then
-									--print("Found at least one "..k)
-									requirement_failed = false
-								else
-									--print("Failed one of the requirements for "..ability_name..", no "..k.." found")
-									requirement_failed = true
-									break -- Breaks this loop, as the ability failed the requirement check.
-								end
-							end
-						end
-					else
-						--print(ability_name.." has no requirements.")
-					end
+					local player_has_requirements = PlayerHasRequirementForAbility( player, ability_name)
 
 					--[[Act accordingly to the disabled/enabled state of the ability
 						If the ability is _disabled
@@ -90,7 +55,7 @@ function CheckAbilityRequirements( unit, player )
 							Requirements fail: Set disabled (the player lost some requirement due to building destruction)
 					]]
 					if disabled then
-						if not requirement_failed then
+						if player_has_requirements then
 							-- Learn the ability and remove the disabled one (as we might run out of the 16 ability slot limit)
 							--print("SUCCESS, ENABLED "..ability_name)
 							unit:AddAbility(ability_name)
@@ -106,7 +71,7 @@ function CheckAbilityRequirements( unit, player )
 							--print("Ability Still DISABLED "..ability_name)
 						end
 					else
-						if not requirement_failed then
+						if player_has_requirements then
 							--print("Ability Still ENABLED "..ability_name)
 							--ability:SetLevel(1)
 						else	

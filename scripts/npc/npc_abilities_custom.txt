@@ -8444,7 +8444,7 @@
 	"human_train_archmage1"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -8514,7 +8514,7 @@
 	"human_train_mountain_king1"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -8584,7 +8584,7 @@
 	"human_train_paladin1"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -8654,7 +8654,7 @@
 	"human_train_blood_mage1"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -8722,37 +8722,37 @@
 	
 	// Passive version indicates that the hero has already been trained, stopping the next rank of that hero
 	
-	"human_archmage_acquired"
+	"human_train_archmage_acquired"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
-	"human_mountain_king_acquired"
+	"human_train_mountain_king_acquired"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
-	"human_paladin_acquired"
+	"human_train_paladin_acquired"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
-	"human_blood_mage_acquired"
+	"human_train_blood_mage_acquired"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -8763,7 +8763,7 @@
 	"human_train_archmage2"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -8834,7 +8834,7 @@
 	"human_train_mountain_king2"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -8904,7 +8904,7 @@
 	"human_train_paladin2"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -8974,7 +8974,7 @@
 	"human_train_blood_mage2"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -9045,7 +9045,7 @@
 	"human_train_archmage3"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -9115,7 +9115,7 @@
 	"human_train_mountain_king3"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -9185,7 +9185,7 @@
 	"human_train_paladin3"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -9255,7 +9255,7 @@
 	"human_train_blood_mage3"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -9328,7 +9328,7 @@
 	"human_train_archmage2_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -9337,7 +9337,7 @@
 	"human_train_mountain_king2_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -9346,7 +9346,7 @@
 	"human_train_paladin2_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -9355,7 +9355,7 @@
 	"human_train_blood_mage2_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -9365,7 +9365,7 @@
 	"human_train_archmage3_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -9374,7 +9374,7 @@
 	"human_train_mountain_king3_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -9383,7 +9383,7 @@
 	"human_train_paladin3_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -9392,7 +9392,7 @@
 	"human_train_blood_mage3_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -9401,10 +9401,10 @@
 	// Revival, one ability for each level to scale the gold and channel time (volvo pls)
 	
 	//	180 30
-	"human_archmage_revive1"
+	"human_train_archmage_revive1"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"1"
 	
 		"AbilityGoldCost"				"180"
@@ -9464,16 +9464,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 	
 	//	225 35
-	"human_archmage_revive2"
+	"human_train_archmage_revive2"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"2"
 	
 		"AbilityGoldCost"				"225"
@@ -9533,16 +9533,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 	
 	//	270 40
-	"human_archmage_revive3"
+	"human_train_archmage_revive3"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"3"
 	
 		"AbilityGoldCost"				"270"
@@ -9602,16 +9602,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 	
 	//	315 45
-	"human_archmage_revive4"
+	"human_train_archmage_revive4"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"4"
 	
 		"AbilityGoldCost"				"315"
@@ -9671,16 +9671,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 	
 	//	360 50
-	"human_archmage_revive5"
+	"human_train_archmage_revive5"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"5"
 	
 		"AbilityGoldCost"				"360"
@@ -9740,17 +9740,17 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	
 	}
 	
 	//	405 60
-	"human_archmage_revive6"
+	"human_train_archmage_revive6"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"6"
 	
 		"AbilityGoldCost"				"405"
@@ -9810,16 +9810,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 	
 	//	450 70
-	"human_archmage_revive7"
+	"human_train_archmage_revive7"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"7"
 	
 		"AbilityGoldCost"				"450"
@@ -9879,16 +9879,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 	
 	//	495 80
-	"human_archmage_revive8"
+	"human_train_archmage_revive8"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"8"
 	
 		"AbilityGoldCost"				"495"
@@ -9948,16 +9948,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 	
 	//	540 90
-	"human_archmage_revive9"
+	"human_train_archmage_revive9"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"9"
 	
 		"AbilityGoldCost"				"540"
@@ -10017,16 +10017,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 	
 	//	585 100
-	"human_archmage_revive10"
+	"human_train_archmage_revive10"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"10"
 	
 		"AbilityGoldCost"				"585"
@@ -10086,16 +10086,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_archmage"
+				"Hero"			"human_train_archmage"
 			}
 		}
 	}
 		
 	//	180 30
-	"human_mountain_king_revive1"
+	"human_train_mountain_king_revive1"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"1"
 	
 		"AbilityGoldCost"				"180"
@@ -10155,16 +10155,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	225 35
-	"human_mountain_king_revive2"
+	"human_train_mountain_king_revive2"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"2"
 	
 		"AbilityGoldCost"				"225"
@@ -10224,16 +10224,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	270 40
-	"human_mountain_king_revive3"
+	"human_train_mountain_king_revive3"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"3"
 	
 		"AbilityGoldCost"				"270"
@@ -10293,16 +10293,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	315 45
-	"human_mountain_king_revive4"
+	"human_train_mountain_king_revive4"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"4"
 	
 		"AbilityGoldCost"				"315"
@@ -10362,16 +10362,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	360 50
-	"human_mountain_king_revive5"
+	"human_train_mountain_king_revive5"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"5"
 	
 		"AbilityGoldCost"				"360"
@@ -10431,16 +10431,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	405 60
-	"human_mountain_king_revive6"
+	"human_train_mountain_king_revive6"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"6"
 	
 		"AbilityGoldCost"				"405"
@@ -10500,16 +10500,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	450 70
-	"human_mountain_king_revive7"
+	"human_train_mountain_king_revive7"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"7"
 	
 		"AbilityGoldCost"				"450"
@@ -10569,16 +10569,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	495 80
-	"human_mountain_king_revive8"
+	"human_train_mountain_king_revive8"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"8"
 	
 		"AbilityGoldCost"				"495"
@@ -10638,16 +10638,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	540 90
-	"human_mountain_king_revive9"
+	"human_train_mountain_king_revive9"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"9"
 	
 		"AbilityGoldCost"				"540"
@@ -10707,16 +10707,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	585 100
-	"human_mountain_king_revive10"
+	"human_train_mountain_king_revive10"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"10"
 	
 		"AbilityGoldCost"				"585"
@@ -10776,16 +10776,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_mountain_king"
+				"Hero"			"human_train_mountain_king"
 			}
 		}
 	}
 	
 	//	180 30
-	"human_paladin_revive1"
+	"human_train_paladin_revive1"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"1"
 	
 		"AbilityGoldCost"				"180"
@@ -10845,16 +10845,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	225 35
-	"human_paladin_revive2"
+	"human_train_paladin_revive2"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"2"
 	
 		"AbilityGoldCost"				"225"
@@ -10914,16 +10914,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	270 40
-	"human_paladin_revive3"
+	"human_train_paladin_revive3"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"3"
 	
 		"AbilityGoldCost"				"270"
@@ -10983,16 +10983,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	315 45
-	"human_paladin_revive4"
+	"human_train_paladin_revive4"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"4"
 	
 		"AbilityGoldCost"				"315"
@@ -11052,16 +11052,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	360 50
-	"human_paladin_revive5"
+	"human_train_paladin_revive5"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"5"
 	
 		"AbilityGoldCost"				"360"
@@ -11121,16 +11121,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	405 60
-	"human_paladin_revive6"
+	"human_train_paladin_revive6"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"6"
 	
 		"AbilityGoldCost"				"405"
@@ -11190,16 +11190,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	450 70
-	"human_paladin_revive7"
+	"human_train_paladin_revive7"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"7"
 	
 		"AbilityGoldCost"				"450"
@@ -11259,16 +11259,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	495 80
-	"human_paladin_revive8"
+	"human_train_paladin_revive8"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"8"
 	
 		"AbilityGoldCost"				"495"
@@ -11328,16 +11328,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	540 90
-	"human_paladin_revive9"
+	"human_train_paladin_revive9"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"9"
 	
 		"AbilityGoldCost"				"540"
@@ -11397,16 +11397,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	585 100
-	"human_paladin_revive10"
+	"human_train_paladin_revive10"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"10"
 	
 		"AbilityGoldCost"				"585"
@@ -11466,16 +11466,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_paladin"
+				"Hero"			"human_train_paladin"
 			}
 		}
 	}
 	
 	//	180 30
-	"human_blood_mage_revive1"
+	"human_train_blood_mage_revive1"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"1"
 	
 		"AbilityGoldCost"				"180"
@@ -11535,16 +11535,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	225 35
-	"human_blood_mage_revive2"
+	"human_train_blood_mage_revive2"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"2"
 	
 		"AbilityGoldCost"				"225"
@@ -11604,16 +11604,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	270 40
-	"human_blood_mage_revive3"
+	"human_train_blood_mage_revive3"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"3"
 	
 		"AbilityGoldCost"				"270"
@@ -11673,16 +11673,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	315 45
-	"human_blood_mage_revive4"
+	"human_train_blood_mage_revive4"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"4"
 	
 		"AbilityGoldCost"				"315"
@@ -11742,16 +11742,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	360 50
-	"human_blood_mage_revive5"
+	"human_train_blood_mage_revive5"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"5"
 	
 		"AbilityGoldCost"				"360"
@@ -11811,16 +11811,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	405 60
-	"human_blood_mage_revive6"
+	"human_train_blood_mage_revive6"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"6"
 	
 		"AbilityGoldCost"				"405"
@@ -11880,16 +11880,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	450 70
-	"human_blood_mage_revive7"
+	"human_train_blood_mage_revive7"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"7"
 	
 		"AbilityGoldCost"				"450"
@@ -11949,16 +11949,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	495 80
-	"human_blood_mage_revive8"
+	"human_train_blood_mage_revive8"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"8"
 	
 		"AbilityGoldCost"				"495"
@@ -12018,16 +12018,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	540 90
-	"human_blood_mage_revive9"
+	"human_train_blood_mage_revive9"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"9"
 	
 		"AbilityGoldCost"				"540"
@@ -12087,16 +12087,16 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
 	
 	//	585 100
-	"human_blood_mage_revive10"
+	"human_train_blood_mage_revive10"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"10"
 	
 		"AbilityGoldCost"				"585"
@@ -12156,7 +12156,7 @@
 			{
 				"ScriptFile"	"buildings/altar.lua"
 				"Function"		"ReviveHero"
-				"Hero"			"human_blood_mage"
+				"Hero"			"human_train_blood_mage"
 			}
 		}
 	}
@@ -13497,7 +13497,7 @@
 	"human_train_footman"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_footman"
+		"AbilityTextureName"			"human_train_footman"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -13619,7 +13619,7 @@
 	"human_train_rifleman_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_rifleman"
+		"AbilityTextureName"			"human_train_rifleman"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -13635,7 +13635,7 @@
 	"human_train_rifleman"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_rifleman"
+		"AbilityTextureName"			"human_train_rifleman"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -13757,7 +13757,7 @@
 	"human_train_knight_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_knight"
+		"AbilityTextureName"			"human_train_knight"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -13773,7 +13773,7 @@
 	"human_train_knight"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_knight"
+		"AbilityTextureName"			"human_train_knight"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -14803,10 +14803,10 @@
 		}
 	}
 	
-	"build_barracks"
+	"human_build_barracks"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_barracks"
+		"AbilityTextureName"			"human_build_barracks"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -14857,17 +14857,17 @@
 		}
 	}
 	
-	"build_blacksmith_disabled"
+	"human_build_blacksmith_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blacksmith"
+		"AbilityTextureName"			"human_build_blacksmith"
 		"MaxLevel" 						"0"
 	}
 	
-	"build_blacksmith"
+	"human_build_blacksmith"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blacksmith"
+		"AbilityTextureName"			"human_build_blacksmith"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -14918,17 +14918,17 @@
 		}
 	}
 	
-	"build_arcane_sanctum_disabled"
+	"human_build_arcane_sanctum_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_arcane_sanctum"
+		"AbilityTextureName"			"human_build_arcane_sanctum"
 		"MaxLevel" 						"0"
 	}
 	
-	"build_arcane_sanctum"
+	"human_build_arcane_sanctum"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_arcane_sanctum"
+		"AbilityTextureName"			"human_build_arcane_sanctum"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -14979,17 +14979,17 @@
 		}
 	}
 	
-	"build_workshop_disabled"
+	"human_build_workshop_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_workshop"
+		"AbilityTextureName"			"human_build_workshop"
 		"MaxLevel" 						"0"
 	}
 	
-	"build_workshop"
+	"human_build_workshop"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_workshop"
+		"AbilityTextureName"			"human_build_workshop"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -15040,17 +15040,17 @@
 		}
 	}
 	
-	"build_gryphon_aviary_disabled"
+	"human_build_gryphon_aviary_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_gryphon_aviary"
+		"AbilityTextureName"			"human_build_gryphon_aviary"
 		"MaxLevel" 						"0"
 	}
 	
-	"build_gryphon_aviary"
+	"human_build_gryphon_aviary"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_gryphon_aviary"
+		"AbilityTextureName"			"human_build_gryphon_aviary"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -19687,10 +19687,10 @@
 		}
 	}
 	
-	"human_archmage"
+	"human_train_archmage"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_archmage"
+		"AbilityTextureName"			"human_train_archmage"
 		"MaxLevel" 						"1"
 	
 		"AbilitySpecial"
@@ -19718,10 +19718,10 @@
 		}
 	}
 	
-	"human_mountain_king"
+	"human_train_mountain_king"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_mountain_king"
+		"AbilityTextureName"			"human_train_mountain_king"
 		"MaxLevel" 						"1"
 	
 		"AbilitySpecial"
@@ -19749,10 +19749,10 @@
 		}
 	}
 	
-	"human_paladin"
+	"human_train_paladin"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_paladin"
+		"AbilityTextureName"			"human_train_paladin"
 		"MaxLevel" 						"1"
 	
 		"AbilitySpecial"
@@ -19780,10 +19780,10 @@
 		}
 	}
 	
-	"human_blood_mage"
+	"human_train_blood_mage"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_blood_mage"
+		"AbilityTextureName"			"human_train_blood_mage"
 		"MaxLevel" 						"1"
 	
 		"AbilitySpecial"

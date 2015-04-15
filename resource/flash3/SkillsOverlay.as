@@ -19,6 +19,7 @@
 	public class SkillsOverlay extends MovieClip {
 		var gameAPI:Object;
 		var globals:Object;
+		var abilities:Object;
 		
 		public function SkillsOverlay() {
 			// constructor code
@@ -30,17 +31,9 @@
 			this.gameAPI = api;
 			this.globals = globals;
 			
-			var i:int = 0;
-			for (i = 0; i<this.numChildren; i++)
-			{
-				var e:Object = this.getChildAt(i);
-				switch(getQualifiedClassName(e)) {
-					case "AbilityIcon":
-						e.setup(this.gameAPI, this.globals);
-					break;
-				}
-			}
-			
+			// load values from KV
+			loadKV();
+						
 			// Game Event Listening
 			this.gameAPI.SubscribeToGameEvent("show_human_panel", this.showHumanOverview);
 			this.gameAPI.SubscribeToGameEvent("hide_human_panel", this.hideHumanOverview);
@@ -54,6 +47,33 @@
 			if (args.player_ID == pID) {
 				this.visible = true;
 				trace("##Human overview Visible for "+args.player_ID);
+				trace(args.abilities);
+				var ability_array:Array = args.abilities.split(",");
+				/*for (var i = 1; i<ability_array.length; i++) {
+					//trace(ability_array[i-1], abilities["human_race"][i]);
+					if (ability_array[i-1] == "1")
+						trace(abilities["human_race"][i]);
+					else
+						trace(abilities["human_race"][i]+"_disabled");
+				}*/
+				
+				for (var i = 0; i<this.numChildren; i++)
+				{
+					var e:Object = this.getChildAt(i);
+					switch(getQualifiedClassName(e)) {
+						case "AbilityIcon":
+							var splitName:Array = e.name.split("ability");
+							//trace(e.name,abilities["human_race"][splitName[1]]);
+														
+							var index = Number(splitName[1])-1; //One less because the 0,0,0,1 string
+							trace("Checking index "+index+" of abilities, value: ", ability_array[ index ]);
+							var ability_name = abilities["human_race"][splitName[1]]; //This gets changed internally with _disabled
+							e.setup(this.gameAPI, this.globals, ability_name, Number( ability_array[ index ] ));
+							trace(ability_name)							
+								
+						break;
+					}
+				}
 			}
 		}
 		
@@ -64,6 +84,12 @@
 				this.visible = false;
 				trace("##Human overview Hidden for "+args.player_ID);
 			}
+		}
+		
+		// load the abilities
+		private function loadKV() {
+			abilities = Globals.instance.GameInterface.LoadKVFile('scripts/kv/abilities.kv');
+			trace("[SkillsOverlay] KV Loaded");
 		}
 	}
 }

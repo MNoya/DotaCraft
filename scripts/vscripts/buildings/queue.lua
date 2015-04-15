@@ -173,6 +173,11 @@ function AdvanceQueue( event )
 	local ability = event.ability
 	local player = caster:GetPlayerOwner()
 
+	if not IsChanneling( caster ) then
+		caster:SetMana(0)
+		caster:SetBaseManaRegen(0)
+	end
+
 	if not IsChanneling( caster ) and not caster:HasModifier("modifier_construction") then
 		
 		-- RemakeQueue
@@ -187,9 +192,6 @@ function AdvanceQueue( event )
 
 				local item_name = tostring(item:GetAbilityName())
 				if not IsChanneling( caster ) then
-
-					caster:SetMana(0)
-					caster:SetBaseManaRegen(0)
 
 					-- Items that contain "train_" will start a channel of an ability with the same name without the item_ affix
 					if string.find(item_name, "train_") or string.find(item_name, "_revive") then

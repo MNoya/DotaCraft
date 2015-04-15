@@ -122,6 +122,67 @@ function PlayerHasResearch( player, research_name )
 	end
 end
 
+-- Returns bool
+function PlayerHasRequirementForAbility( player, ability_name )
+	local requirements = GameRules.Requirements
+	local buildings = player.buildings
+	local upgrades = player.upgrades
+	local requirement_failed = false
+
+	if requirements[ability_name] then
+
+		-- Go through each requirement line and check if the player has that building on its list
+		for k,v in pairs(requirements[ability_name]) do
+
+			-- If it's an ability tied to a research, check the upgrades table
+			if requirements[ability_name].research then
+				if k ~= "research" and (not upgrades[k] or upgrades[k] == 0) then
+					--print("Failed the research requirements for "..ability_name..", no "..k.." found")
+					return false
+				end
+			else
+				--print("Building Name","Need","Have")
+				--print(k,v,buildings[k])
+
+				-- If its a building, check every building requirement
+				if not buildings[k] or buildings[k] == 0 then
+					--print("Failed one of the requirements for "..ability_name..", no "..k.." found")
+					return false
+				end
+			end
+		end
+	end
+
+	return true
+end
+
+-- Return ability handle or nil
+function FindAbilityOnStructures( player, ability_name )
+	local structures = player.structures
+
+	for _,building in pairs(structures) do
+		local ability_found = building:FindAbilityByName(ability_name)
+		if ability_found then
+			return ability_found
+		end
+	end
+	return nil
+end
+
+-- Return ability handle or nil
+function FindAbilityOnUnits( player, ability_name )
+	local units = player.units
+
+	for _,unit in pairs(units) do
+		local ability_found = unit:FindAbilityByName(ability_name)
+		if ability_found then
+			return ability_found
+		end
+	end
+	return nil
+end
+
+
 -- Returns int, 0 if not PlayerHasResearch()
 function GetCurrentResearchRank( player, research_name )
 	local upgrades = player.upgrades

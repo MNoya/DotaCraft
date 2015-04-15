@@ -9,24 +9,24 @@
 	// To avoid having to search the building every time, each building will run a script on created/destroyed, to keep track of the current tech
 	// The script will compare the requirements for any ability that mentions the created/destroyed unit, and update all builders accordingly.
 	// Requirements aren't recursive, meaning if A is a requirement for B and B is a requirement for C, destroying A won't make you unable to build C as long as B is up.
-	"build_blacksmith"
+	"human_build_blacksmith"
 	{
 		"human_town_hall"	"1"
 	}
 
-	"build_workshop"
+	"human_build_workshop"
 	{
 		"human_blacksmith"	"1"
 		"human_keep"		"1"
 	}
 
-	"build_arcane_sanctum"
+	"human_build_arcane_sanctum"
 	{
 		"human_blacksmith"	"1"
 		"human_keep"		"1"
 	}
 
-	"build_gryphon_aviary"
+	"human_build_gryphon_aviary"
 	{
 		"human_lumber_mill"	"1"
 		"human_keep"		"1"

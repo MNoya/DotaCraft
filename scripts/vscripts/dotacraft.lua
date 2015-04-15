@@ -414,7 +414,6 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	local building = CreateUnitByName("human_town_hall", position, true, hero, hero, hero:GetTeamNumber())
 	building:SetOwner(hero)
-	building:SetHealth(1)
 	building:SetControllableByPlayer(playerID, true)
 	building:SetAbsOrigin(position)
 	building:RemoveModifierByName("modifier_invulnerable")
@@ -445,6 +444,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	ability:UpgradeAbility(true)
 	hero:SetAbilityPoints(0)
 	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 322 ))
+
 end
 
 -- A player killed another player in a multi-team context
@@ -672,10 +672,33 @@ function dotacraft:Initdotacraft()
 
 		if cmdPlayer then
 			local unit = EntIndexToHScript(tonumber(entityIndex))
-
+			if not IsValidEntity(unit) then
+				return
+			end
+			
 			if unit:GetUnitName() == "npc_dota_hero_dragon_knight" then
 				print("SHOW HUMAN PANEL")
-				FireGameEvent( 'show_human_panel', { player_ID = pID } )
+				print("Abilities Available:")
+				local ability_table = GameRules.Abilities.human_race
+				local index = 1
+				local abilities_string = ""
+				while ability_table[tostring(index)] do
+					local ability_name = ability_table[tostring(index)]
+					local ability_available = false
+					if FindAbilityOnStructures(cmdPlayer, ability_name) or FindAbilityOnUnits(cmdPlayer, ability_name) then
+						ability_available = true
+					end
+					index = index + 1
+					if ability_available then
+						print(index,ability_name,ability_available)
+						abilities_string = abilities_string.."1,"
+					else
+						abilities_string = abilities_string.."0,"
+					end
+				end
+
+				FireGameEvent( 'show_human_panel', { player_ID = pID, abilities = abilities_string } )
+
 			else
 				print("HIDE HUMAN PANEL")
 				FireGameEvent( 'hide_human_panel', { player_ID = pID } )
@@ -803,6 +826,7 @@ function dotacraft:Initdotacraft()
   	GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
   	GameRules.Modifiers = LoadKeyValues("scripts/kv/modifiers.kv")
   	GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
+  	GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
 
   	-- Building Helper by Myll
   	BuildingHelper:Init() -- nHalfMapLength

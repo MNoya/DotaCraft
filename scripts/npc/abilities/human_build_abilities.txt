@@ -38,10 +38,10 @@
 	}
 }
 
-"build_barracks"
+"human_build_barracks"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_barracks"
+	"AbilityTextureName"			"human_build_barracks"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -92,17 +92,17 @@
 	}
 }
 
-"build_blacksmith_disabled"
+"human_build_blacksmith_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_blacksmith"
+	"AbilityTextureName"			"human_build_blacksmith"
 	"MaxLevel" 						"0"
 }
 
-"build_blacksmith"
+"human_build_blacksmith"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_blacksmith"
+	"AbilityTextureName"			"human_build_blacksmith"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -153,17 +153,17 @@
 	}
 }
 
-"build_arcane_sanctum_disabled"
+"human_build_arcane_sanctum_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_arcane_sanctum"
+	"AbilityTextureName"			"human_build_arcane_sanctum"
 	"MaxLevel" 						"0"
 }
 
-"build_arcane_sanctum"
+"human_build_arcane_sanctum"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_arcane_sanctum"
+	"AbilityTextureName"			"human_build_arcane_sanctum"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -214,17 +214,17 @@
 	}
 }
 
-"build_workshop_disabled"
+"human_build_workshop_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_workshop"
+	"AbilityTextureName"			"human_build_workshop"
 	"MaxLevel" 						"0"
 }
 
-"build_workshop"
+"human_build_workshop"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_workshop"
+	"AbilityTextureName"			"human_build_workshop"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -275,17 +275,17 @@
 	}
 }
 
-"build_gryphon_aviary_disabled"
+"human_build_gryphon_aviary_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_gryphon_aviary"
+	"AbilityTextureName"			"human_build_gryphon_aviary"
 	"MaxLevel" 						"0"
 }
 
-"build_gryphon_aviary"
+"human_build_gryphon_aviary"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_gryphon_aviary"
+	"AbilityTextureName"			"human_build_gryphon_aviary"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"

@@ -40,7 +40,7 @@
 			
 			//pass the gameAPI on to the modules
 			this.myResource.setup(this.gameAPI, this.globals);		
-			this.humanOverview.setup(this.gameAPI, this.globals);
+			//this.humanOverview.setup(this.gameAPI, this.globals);
 			this.Overlay.setup(this.gameAPI, this.globals);
 			
 
