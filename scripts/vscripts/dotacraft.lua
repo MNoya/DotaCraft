@@ -439,6 +439,12 @@ function dotacraft:OnPlayerPickHero(keys)
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( peasant, player )
 	end
+
+	-- Hide main hero
+	local ability = hero:FindAbilityByName("hide_hero")
+	ability:UpgradeAbility(true)
+	hero:SetAbilityPoints(0)
+	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 322 ))
 end
 
 -- A player killed another player in a multi-team context
@@ -667,6 +673,14 @@ function dotacraft:Initdotacraft()
 		if cmdPlayer then
 			local unit = EntIndexToHScript(tonumber(entityIndex))
 
+			if unit:GetUnitName() == "npc_dota_hero_dragon_knight" then
+				print("SHOW HUMAN PANEL")
+				FireGameEvent( 'show_human_panel', { player_ID = pID } )
+			else
+				print("HIDE HUMAN PANEL")
+				FireGameEvent( 'hide_human_panel', { player_ID = pID } )
+			end
+
 	  		if unit then
 	  			--and (unit:GetUnitName() == "human_peasant"
 		  		local abilityValues = {}
@@ -865,6 +879,8 @@ function dotacraft:OnConnectFull(keys)
 
 	-- The Player ID of the joining player
 	local playerID = ply:GetPlayerID()
+
+	--CreateHeroForPlayer("npc_dota_hero_dragon_knight", ply)
 
 	-- Update the user ID table with this user
 	self.vUserIds[keys.userid] = ply

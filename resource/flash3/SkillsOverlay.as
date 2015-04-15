@@ -40,14 +40,31 @@
 					break;
 				}
 			}
+			
+			// Game Event Listening
+			this.gameAPI.SubscribeToGameEvent("show_human_panel", this.showHumanOverview);
+			this.gameAPI.SubscribeToGameEvent("hide_human_panel", this.hideHumanOverview);
+			
+			this.visible = false;
 		}
 		
-		public function onCloseButtonClicked(event:MouseEvent)
-        {
-            trace("Close Overview Panel");
-            this.visible = false;
-            return;
-        }
+		public function showHumanOverview(args:Object) : void {	
+			// Show for this player
+			var pID:int = globals.Players.GetLocalPlayer();
+			if (args.player_ID == pID) {
+				this.visible = true;
+				trace("##Human overview Visible for "+args.player_ID);
+			}
+		}
+		
+		public function hideHumanOverview(args:Object) : void {	
+			// Show for this player
+			var pID:int = globals.Players.GetLocalPlayer();
+			if (args.player_ID == pID) {
+				this.visible = false;
+				trace("##Human overview Hidden for "+args.player_ID);
+			}
+		}
 	}
 }
 
