@@ -89,6 +89,10 @@ function DequeueUnit( event )
 					train_ability:EndChannel(true)
 					print("Cancel current channel")
 					ReorderItems(caster,caster.queue)
+
+					-- Fake mana channel bar
+					caster:SetMana(0)
+					caster:SetBaseManaRegen(0)
 				else
 					print("Removed unit in queue slot",itemSlot)					
 				end
@@ -184,6 +188,9 @@ function AdvanceQueue( event )
 				local item_name = tostring(item:GetAbilityName())
 				if not IsChanneling( caster ) then
 
+					caster:SetMana(0)
+					caster:SetBaseManaRegen(0)
+
 					-- Items that contain "train_" will start a channel of an ability with the same name without the item_ affix
 					if string.find(item_name, "train_") or string.find(item_name, "_revive") then
 						-- Find the name of the tied ability-item: 
@@ -208,6 +215,11 @@ function AdvanceQueue( event )
 
 							ability_to_channel:SetChanneling(true)
 							print("->"..ability_to_channel:GetAbilityName()," started channel")
+
+							-- Fake mana channel bar
+							local channel_time = ability_to_channel:GetChannelTime()
+							caster:SetMana(0)
+							caster:SetBaseManaRegen(caster:GetMaxMana()/channel_time)
 
 							-- After the channeling time, check if it was cancelled or spawn it
 							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
@@ -236,6 +248,11 @@ function AdvanceQueue( event )
 						if ability_to_channel then
 							ability_to_channel:SetChanneling(true)
 							print("->"..ability_to_channel:GetAbilityName()," started channel")
+
+							-- Fake mana channel bar
+							local channel_time = ability_to_channel:GetChannelTime()
+							caster:SetMana(0)
+							caster:SetBaseManaRegen(caster:GetMaxMana()/channel_time)
 
 							-- After the channeling time, check if it was cancelled or spawn it
 							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
