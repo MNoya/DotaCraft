@@ -42,10 +42,14 @@ package  {
 			//this is our listener for the event, OnHeroLevelUp() is the handler
 			this.gameAPI.SubscribeToGameEvent("cgm_player_lumber_changed", this.lumberEvent);
 			this.gameAPI.SubscribeToGameEvent("cgm_player_food_limit_changed", this.foodLimitEvent);
-			this.gameAPI.SubscribeToGameEvent("cgm_player_food_used_changed", this.foodUsedEvent);										  
+			this.gameAPI.SubscribeToGameEvent("cgm_player_food_used_changed", this.foodUsedEvent);	
 			upkeepTimer.addEventListener(TimerEvent.TIMER_COMPLETE, completeHandler);
 				
 			trace("##Module Setup!");
+		}
+		
+		public function onHumanButtonClicked(event:ButtonEvent) {
+			trace("show UI!");		
 		}
 		
 		public function setLumber(number): void {

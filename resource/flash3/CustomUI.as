@@ -43,6 +43,9 @@
 			//this.humanOverview.setup(this.gameAPI, this.globals);
 			this.Overlay.setup(this.gameAPI, this.globals);
 			
+			this.myHumanBtn.setup(this.gameAPI, this.globals, this.Overlay);
+			trace("mySpellListButton.setup!");
+			
 
 			//this is not needed, but it shows you your UI has loaded (needs 'scaleform_spew 1' in console)
 			trace("Custom UI loaded!");

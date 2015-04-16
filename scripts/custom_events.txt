@@ -116,14 +116,21 @@
 		"player_ID"	"short"
 	}
 
-	"show_human_panel"
+	"show_overview_panel"
 	{
 		"player_ID"	"short"
+		"race"		"string"
 		"abilities"	"string"
 	}
 
-	"hide_human_panel"
+	"hide_overview_panel"
 	{
 		"player_ID"	"short"
+	}
+
+	"player_overview_cast"
+	{
+		"player_ID"	"short"
+		"ability"	"string"
 	}
 }

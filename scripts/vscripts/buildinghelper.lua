@@ -381,8 +381,17 @@ function BuildingHelper:AddBuilding(keys)
 							for y=boundingRect.topBorderY-32,boundingRect.bottomBorderY+32,-64 do
 								if generateParticles then
 									if not modelParticle then
+										
+										-- Added to skip a C++ deleted error when casting through the overview panel. Fix: Ghost doesnt appear!
+										if not mdg or not IsValidEntity(mdg) then
+											print(mdg, player.modelGhostDummy, unitName, caster:GetTeam(), OutOfWorldVector, player)
+											player.modelGhostDummy = CreateUnitByName(unitName, OutOfWorldVector, false, nil, nil, caster:GetTeam())
+											mgd = player.modelGhostDummy
+											mgd.isBuildingDummy = true
+										end
+
 										--<BMD> position is 0, model attach is 1, color is CP2, and alpha is CP3.x
-										modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
+										modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mdg, player)
 										ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true)						
 										ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0))
 										ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0))

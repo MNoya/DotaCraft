@@ -50,7 +50,14 @@
 			// Listeners
 			this.addEventListener(MouseEvent.ROLL_OVER, onMouseRollOver);
 			this.addEventListener(MouseEvent.ROLL_OUT, onMouseRollOut);
+			this.addEventListener(MouseEvent.CLICK, onMouseClick);
 			
+		}
+		
+		public function onMouseClick(keys:MouseEvent){
+       		
+       		trace("SendServerCommand to cast " + this.ability_name);
+			this.gameAPI.SendServerCommand("player_overview_cast "+this.ability_name);
 		}
 		
 		public function onMouseRollOver(keys:MouseEvent){

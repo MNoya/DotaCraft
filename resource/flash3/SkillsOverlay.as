@@ -35,8 +35,8 @@
 			loadKV();
 						
 			// Game Event Listening
-			this.gameAPI.SubscribeToGameEvent("show_human_panel", this.showHumanOverview);
-			this.gameAPI.SubscribeToGameEvent("hide_human_panel", this.hideHumanOverview);
+			this.gameAPI.SubscribeToGameEvent("show_overview_panel", this.showHumanOverview);
+			this.gameAPI.SubscribeToGameEvent("hide_overview_panel", this.hideHumanOverview);
 			
 			this.visible = false;
 		}
@@ -46,17 +46,11 @@
 			var pID:int = globals.Players.GetLocalPlayer();
 			if (args.player_ID == pID) {
 				this.visible = true;
-				trace("##Human overview Visible for "+args.player_ID);
+				var race:String = args.race;
+				trace("##"+race+" overview Visible for "+args.player_ID);
 				trace(args.abilities);
 				var ability_array:Array = args.abilities.split(",");
-				/*for (var i = 1; i<ability_array.length; i++) {
-					//trace(ability_array[i-1], abilities["human_race"][i]);
-					if (ability_array[i-1] == "1")
-						trace(abilities["human_race"][i]);
-					else
-						trace(abilities["human_race"][i]+"_disabled");
-				}*/
-				
+								
 				for (var i = 0; i<this.numChildren; i++)
 				{
 					var e:Object = this.getChildAt(i);
@@ -67,7 +61,7 @@
 														
 							var index = Number(splitName[1])-1; //One less because the 0,0,0,1 string
 							trace("Checking index "+index+" of abilities, value: ", ability_array[ index ]);
-							var ability_name = abilities["human_race"][splitName[1]]; //This gets changed internally with _disabled
+							var ability_name = abilities[race][splitName[1]]; //This gets changed internally with _disabled
 							e.setup(this.gameAPI, this.globals, ability_name, Number( ability_array[ index ] ));
 							trace(ability_name)							
 								

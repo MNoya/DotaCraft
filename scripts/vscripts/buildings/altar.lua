@@ -38,9 +38,8 @@ function BuildHero( event )
 	local ability = event.ability
 	local ability_name = ability:GetAbilityName()
 	
-	-- Cut the _train and rank, add the _acquired suffix
-	local new_ability_name = string.gsub(ability_name, "_train" , "")
-	new_ability_name = string.sub(new_ability_name, 1 , string.len(new_ability_name) - 1).."_acquired"
+	-- Cut the rank, add the _acquired suffix
+	local new_ability_name = string.sub(ability_name, 1 , string.len(ability_name) - 1).."_acquired"
 
 	-- Keep the custom name
 	local dotacraft_hero_name = string.gsub(ability_name, "_train" , "")

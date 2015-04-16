@@ -528,6 +528,15 @@ function dotacraft:OnEntityKilled( event )
 	end
 
 
+	-- Table cleanup
+	if tableContains(player.structures, killedUnit) then
+		table.remove(player.structures, getIndex(player.structures,killedUnit))
+		print("Building removed from the player structures table")
+	elseif tableContains(player.units, killedUnit) then
+		table.remove(player.units, getIndex(player.units,killedUnit))
+		print("Unit removed from the player units table")
+	end
+
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
 	Timers:CreateTimer(1, function() 
 	if LeavesCorpse( killedUnit ) then
@@ -677,7 +686,7 @@ function dotacraft:Initdotacraft()
 			end
 			
 			if unit:GetUnitName() == "npc_dota_hero_dragon_knight" then
-				print("SHOW HUMAN PANEL")
+				local unit_race = "human_race"
 				print("Abilities Available:")
 				local ability_table = GameRules.Abilities.human_race
 				local index = 1
@@ -697,11 +706,11 @@ function dotacraft:Initdotacraft()
 					end
 				end
 
-				FireGameEvent( 'show_human_panel', { player_ID = pID, abilities = abilities_string } )
+				FireGameEvent( 'show_overview_panel', { player_ID = pID, race = unit_race, abilities = abilities_string } )
 
 			else
 				print("HIDE HUMAN PANEL")
-				FireGameEvent( 'hide_human_panel', { player_ID = pID } )
+				FireGameEvent( 'hide_overview_panel', { player_ID = pID } )
 			end
 
 	  		if unit then
@@ -762,6 +771,47 @@ function dotacraft:Initdotacraft()
 		    end
 	  	end
 	end, "Change AbilityValues", 0 )
+
+ 	Convars:RegisterCommand( "player_overview_cast", function(name, ability_to_cast) 
+ 		local cmdPlayer = Convars:GetCommandClient()
+		local pID = cmdPlayer:GetPlayerID()
+
+		if cmdPlayer then
+			print("Recieved command to cast "..ability_to_cast.." - Proceeding to find the ability")
+
+			-- Need to protect against:
+				-- Queing the same research skill twice
+				-- Training peasants after upgrading to keep/castle
+				-- Building ghost not appearing
+				-- Item build abilities not sending
+
+			if string.find(ability_to_cast, "_train") or string.find(ability_to_cast, "_research") then
+				local ability = FindAbilityOnStructures(cmdPlayer, ability_to_cast)
+
+				for _,building in pairs(cmdPlayer.structures) do
+					if building:HasAbility(ability_to_cast) then
+						local ability_cast = building:FindAbilityByName(ability_to_cast)
+						building:CastAbilityImmediately(ability_cast, 0)
+					end
+				end
+
+			-- _build abilities have the issue of BH/Flash not being able to find a handle
+			elseif string.find(ability_to_cast, "_build") then
+				local ability = FindAbilityOnUnits(cmdPlayer, ability_to_cast)
+
+				for _,unit in pairs(cmdPlayer.units) do
+					if unit:HasAbility(ability_to_cast) then
+						local ability_cast = unit:FindAbilityByName(ability_to_cast)
+						unit:CastAbilityImmediately(ability_cast, 0)
+					end
+				end
+			end
+
+		end
+
+
+ 	end, "Send an ability to find and cast", 0)
+
 
 	-- Fill server with fake clients
 	-- Fake clients don't use the default bot AI for buying items or moving down lanes and are sometimes necessary for debugging

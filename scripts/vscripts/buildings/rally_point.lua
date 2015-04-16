@@ -25,6 +25,9 @@ function SetRallyPoint( event )
 		caster.flag = Entities:CreateByClassname("prop_dynamic")
 
 		-- Find vector towards 0,0,0 for the initial rally point
+		if not IsValidEntity(caster) then
+			return
+		end
 		origin = caster:GetOrigin()
 		local forwardVec = Vector(0,0,0) - origin
 		forwardVec = forwardVec:Normalized()
