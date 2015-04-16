@@ -56,6 +56,9 @@ function Precache( context )
 		PrecacheUnitByNameSync("human_peasant", context)
 		PrecacheUnitByNameSync("human_militia", context)
 
+		PrecacheUnitByNameSync("nightelf_tree_of_life", context)
+		PrecacheUnitByNameSync("nightelf_wisp", context)
+
 		-- These should be on PostLoadPrecache, but it's not working inside tools. Just temporary.
 		PrecacheUnitByNameSync("human_barracks", context)
 		PrecacheUnitByNameSync("human_arcane_sanctum", context)
@@ -73,6 +76,8 @@ function Precache( context )
 		PrecacheUnitByNameSync("human_arcane_sanctum", context)
 		PrecacheUnitByNameSync("human_gryphon_aviary", context)
 		PrecacheUnitByNameSync("human_arcane_vault", context)
+
+
 
 		-- HATS
 		PrecacheResource("model_folder", "models/heroes/dragon_knight", context)

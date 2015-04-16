@@ -412,12 +412,17 @@ function dotacraft:OnPlayerPickHero(keys)
     	position = Vector(-5916,5831,128)
     end
 
-	local building = CreateUnitByName("human_town_hall", position, true, hero, hero, hero:GetTeamNumber())
+    -- Define the initial unit names to spawn for this hero_race
+    local hero_race = hero:GetUnitName()
+    local city_center_name = GetCityCenterNameForHeroRace(hero_race)
+    local builder_name = GetBuilderNameForHeroRace(hero_race)
+
+	local building = CreateUnitByName(city_center_name, position, true, hero, hero, hero:GetTeamNumber())
 	building:SetOwner(hero)
 	building:SetControllableByPlayer(playerID, true)
 	building:SetAbsOrigin(position)
 	building:RemoveModifierByName("modifier_invulnerable")
-	player.buildings["human_town_hall"] = 1
+	player.buildings[city_center_name] = 1
 	table.insert(player.structures, building)
 
 	CheckAbilityRequirements( building, player )
@@ -425,9 +430,11 @@ function dotacraft:OnPlayerPickHero(keys)
 	-- Give Initial Food
     ModifyFoodLimit(player, GetFoodProduced(building))
 
+
+
 	-- Create Builders
 	for i=1,5 do
-		local peasant = CreateUnitByName("human_peasant", position+RandomVector(300+i*40), true, hero, hero, hero:GetTeamNumber())
+		local peasant = CreateUnitByName(builder_name, position+RandomVector(300+i*40), true, hero, hero, hero:GetTeamNumber())
 		peasant:SetOwner(hero)
 		peasant:SetControllableByPlayer(playerID, true)
 		table.insert(player.units, peasant)
@@ -673,6 +680,26 @@ function dotacraft:Initdotacraft()
 	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
 	Convars:RegisterCommand( "command_example", Dynamic_Wrap(dotacraft, 'ExampleConsoleCommand'), "A console command example", 0 )
 
+	function GenerateAbilityString(player, ability_table)
+		local abilities_string = ""
+		local index = 1
+		while ability_table[tostring(index)] do
+			local ability_name = ability_table[tostring(index)]
+			local ability_available = false
+			if FindAbilityOnStructures(player, ability_name) or FindAbilityOnUnits(player, ability_name) then
+				ability_available = true
+			end
+			index = index + 1
+			if ability_available then
+				print(index,ability_name,ability_available)
+				abilities_string = abilities_string.."1,"
+			else
+				abilities_string = abilities_string.."0,"
+			end
+		end
+		return abilities_string
+	end
+
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
 	-- Note: When the abilities change, we need to update this value.
 	Convars:RegisterCommand( "ability_values_entity", function(name, entityIndex)
@@ -689,27 +716,20 @@ function dotacraft:Initdotacraft()
 				local unit_race = "human_race"
 				print("Abilities Available:")
 				local ability_table = GameRules.Abilities.human_race
-				local index = 1
-				local abilities_string = ""
-				while ability_table[tostring(index)] do
-					local ability_name = ability_table[tostring(index)]
-					local ability_available = false
-					if FindAbilityOnStructures(cmdPlayer, ability_name) or FindAbilityOnUnits(cmdPlayer, ability_name) then
-						ability_available = true
-					end
-					index = index + 1
-					if ability_available then
-						print(index,ability_name,ability_available)
-						abilities_string = abilities_string.."1,"
-					else
-						abilities_string = abilities_string.."0,"
-					end
-				end
+				local abilities_string = GenerateAbilityString(cmdPlayer, ability_table)		
+
+				FireGameEvent( 'show_overview_panel', { player_ID = pID, race = unit_race, abilities = abilities_string } )
+
+			elseif unit:GetUnitName() == "npc_dota_hero_furion" then
+				local unit_race = "nightelf_race"
+				print("Abilities Available:")
+				local ability_table = GameRules.Abilities.nightelf_race
+				local abilities_string = GenerateAbilityString(cmdPlayer, ability_table)		
 
 				FireGameEvent( 'show_overview_panel', { player_ID = pID, race = unit_race, abilities = abilities_string } )
 
 			else
-				print("HIDE HUMAN PANEL")
+				print("HIDE PANEL")
 				FireGameEvent( 'hide_overview_panel', { player_ID = pID } )
 			end
 

@@ -35,22 +35,23 @@
 			loadKV();
 						
 			// Game Event Listening
-			this.gameAPI.SubscribeToGameEvent("show_overview_panel", this.showHumanOverview);
-			this.gameAPI.SubscribeToGameEvent("hide_overview_panel", this.hideHumanOverview);
+			this.gameAPI.SubscribeToGameEvent("show_overview_panel", this.showOverview);
+			this.gameAPI.SubscribeToGameEvent("hide_overview_panel", this.hideOverview);
 			
 			this.visible = false;
 		}
 		
-		public function showHumanOverview(args:Object) : void {	
+		public function showOverview(args:Object) : void {	
 			// Show for this player
 			var pID:int = globals.Players.GetLocalPlayer();
 			if (args.player_ID == pID) {
 				this.visible = true;
 				var race:String = args.race;
-				trace("##"+race+" overview Visible for "+args.player_ID);
+				trace("##"+race+" overview Visible for player "+args.player_ID);
 				trace(args.abilities);
 				var ability_array:Array = args.abilities.split(",");
-								
+				
+				//might need this.(race)Overlay.numChildren instead
 				for (var i = 0; i<this.numChildren; i++)
 				{
 					var e:Object = this.getChildAt(i);
@@ -61,9 +62,13 @@
 														
 							var index = Number(splitName[1])-1; //One less because the 0,0,0,1 string
 							trace("Checking index "+index+" of abilities, value: ", ability_array[ index ]);
-							var ability_name = abilities[race][splitName[1]]; //This gets changed internally with _disabled
-							e.setup(this.gameAPI, this.globals, ability_name, Number( ability_array[ index ] ));
-							trace(ability_name)							
+							if (ability_array[ index ] != undefined)
+							{
+								var ability_name = abilities[race][splitName[1]]; //This gets changed internally with _disabled
+								e.setup(this.gameAPI, this.globals, ability_name, Number( ability_array[ index ] ));
+								trace(ability_name)
+							}
+													
 								
 						break;
 					}
@@ -71,7 +76,7 @@
 			}
 		}
 		
-		public function hideHumanOverview(args:Object) : void {	
+		public function hideOverview(args:Object) : void {	
 			// Show for this player
 			var pID:int = globals.Players.GetLocalPlayer();
 			if (args.player_ID == pID) {

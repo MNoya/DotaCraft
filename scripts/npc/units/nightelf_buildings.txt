@@ -1,0 +1,96 @@
+//=================================================================================
+// Building: Tree of Life
+// Description: "Primary structure, used to train Wisps and entangle gold mines. Can be upgraded to Tree of Ages and then Tree of Eternity to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_tree_of_life"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature" // allows turning and cosmetics
+	"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+	"ModelScale"				"1.5"
+	"Level"						"1"
+	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"ability_tower"	 //Reference: Aent
+	"Ability2"					""	 //Reference: Aeat
+	"Ability3"					""	 //Reference: Aro1
+	"Ability4"					""	 //Reference: Abdl
+	"Ability5"					""	 //Reference: Atol
+	"Ability6"					""	 //Reference: Arlm
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"2"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"41.0"
+	"AttackDamageMax"			"50.0"
+	"AttackRate"				"2.5"
+	"AttackAnimationPoint"		"0.4"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"128"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+	"RingRadius"				"220"
+	"CollisionSize"				"144"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"340"
+	"LumberCost"				"185"
+	"BuildTime"					"120"
+	"FoodProduced"				"10"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"40"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1300"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+	"Creature"
+	{
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"227"		}
+			"Wearable2"		{	"ItemDef"		"228"		}
+			"Wearable3" 	{	"ItemDef"		"229"		}
+			"Wearable4"		{	"ItemDef"		"230"		}
+		}
+	}
+}

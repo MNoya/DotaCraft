@@ -226,6 +226,29 @@ function GetResearchAbilityName( research_name )
 	return ability_name
 end
 
+-- Returns string with the name of the city center associated with the hero_name
+function GetCityCenterNameForHeroRace( hero_name )
+	local citycenter_name = ""
+	if hero_name == "npc_dota_hero_dragon_knight" then
+		citycenter_name = "human_town_hall"
+	elseif hero_name == "npc_dota_hero_furion" then
+		citycenter_name = "nightelf_tree_of_life"
+	end
+	return citycenter_name
+end
+
+-- Returns string with the name of the builders associated with the hero_name
+function GetBuilderNameForHeroRace( hero_name )
+	local builder_name = ""
+	if hero_name == "npc_dota_hero_dragon_knight" then
+		builder_name = "human_peasant"
+	elseif hero_name == "npc_dota_hero_furion" then
+		builder_name = "nightelf_wisp"
+	end
+	return builder_name
+end
+
+
 -- Custom Corpse Mechanic
 function LeavesCorpse( unit )
 	
