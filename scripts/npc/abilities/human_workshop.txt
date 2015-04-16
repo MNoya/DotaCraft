@@ -1,7 +1,7 @@
 "human_train_flying_machine_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_flying_machine"
+	"AbilityTextureName"			"human_train_flying_machine"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -17,7 +17,7 @@
 "human_train_flying_machine"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_flying_machine"
+	"AbilityTextureName"			"human_train_flying_machine"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -139,7 +139,7 @@
 "human_train_mortar_team_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_mortar_team"
+	"AbilityTextureName"			"human_train_mortar_team"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -155,7 +155,7 @@
 "human_train_mortar_team"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_mortar_team"
+	"AbilityTextureName"			"human_train_mortar_team"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -277,7 +277,7 @@
 "human_train_siege_engine_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_siege_engine"
+	"AbilityTextureName"			"human_train_siege_engine"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -293,7 +293,7 @@
 "human_train_siege_engine"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_siege_engine"
+	"AbilityTextureName"			"human_train_siege_engine"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
