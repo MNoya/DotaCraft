@@ -17,8 +17,6 @@
 
 If you are interested in helping with this project don't hesitate contacting me, either through my email, [Steam](http://steamcommunity.com/id/mnoya), or come chat at the [#dota2mods IRC @ GameSurge.net](kiwiirc.com/client/irc.gamesurge.net/?#dota2mods)
 
-I don't expect this to get DCMD'd since we're not taking directly copyrighted stuff, but the possibility is there. I can't ask you to contribute without making sure you know that this might never go live if blizzard decides it shouldn't.
-
 ---
 
 ### Special Thanks
