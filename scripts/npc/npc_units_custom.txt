@@ -2900,7 +2900,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/courier/carty/carty.vmdl"
-		"ModelScale"				"2"
+		"ModelScale"				"1.8"
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
@@ -2980,7 +2980,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl"
-		"ModelScale"				"2"
+		"ModelScale"				"1.2"
 		"Level"						"5"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"ShouldDoFlyHeightVisual" 	"1"
@@ -3176,7 +3176,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"peasant_gather"	 //Reference: Adtn
+		"Ability1"					"human_build_barracks"	 //Reference: Adtn
 		"Ability2"					""	 //Reference: Aren
 		"Ability3"					""	 //Reference: Awha
 		"Ability4"					""	 //Reference: Ault
@@ -3264,7 +3264,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/windrunner/windrunner.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.8"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
@@ -3292,7 +3292,7 @@
 		"AttackAnimationPoint"		"0.72"
 		"AttackAcquisitionRange"	"800"
 		"AttackRange"				"500"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -3365,7 +3365,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/luna/luna.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		
@@ -3393,7 +3393,7 @@
 		"AttackAnimationPoint"		"0.46"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"225"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -3466,7 +3466,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/creeps/lane_creeps/creep_good_siege/creep_good_siege.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
@@ -3556,7 +3556,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/enchantress/enchantress.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		
@@ -3656,7 +3656,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/lone_druid/lone_druid.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.8"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
 		
@@ -3754,7 +3754,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/tiny_01/tiny_01.vmdl" //Should use the higher level but its bugged
-		"ModelScale"				"1"
+		"ModelScale"				"2.5"
 		"Level"						"6"
 		"HealthBarOffset"			"140"
 		
@@ -3838,7 +3838,7 @@
 				"Wearable2"	{ "ItemDef"	"494" } //Body
 				"Wearable3" { "ItemDef"	"495" } //Left Arm
 				"Wearable4" { "ItemDef"	"496" } //Right Arm
-				"Wearable5"	{ "ItemDef"	"497" } //Tree
+				//"Wearable5"	{ "ItemDef"	"497" } //Tree, doesnt work, try modifier_tiny_grow without the stats
 			}
 		}
 	}
@@ -3853,7 +3853,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/furion/furion.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.6"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
@@ -3903,7 +3903,7 @@
 		
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" //_FLY in Crow Form
 		"MovementSpeed"				"350"
 		"MovementTurnRate"			"0.6"
 		
@@ -4141,7 +4141,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/courier/throe/throe_flying.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.2"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		

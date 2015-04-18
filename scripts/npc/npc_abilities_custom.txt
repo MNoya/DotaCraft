@@ -15909,7 +15909,7 @@
 	"human_storm_hammers_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_storm_hammers"
+		"AbilityTextureName"			"human_research_storm_hammers"
 		"MaxLevel" 						"0"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -15927,7 +15927,7 @@
 	"human_storm_hammers"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_storm_hammers"
+		"AbilityTextureName"			"human_research_storm_hammers"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -19480,7 +19480,7 @@
 	"human_train_castle_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_castle"
+		"AbilityTextureName"			"human_train_castle"
 		"MaxLevel" 						"0"
 	
 		// npc_dota_buildings will override the MaxLevel 0 to 1, so this is needed.
@@ -20623,7 +20623,7 @@
 	"human_flying_machine_bombs_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_flying_machine_bombs"
+		"AbilityTextureName"			"human_research_flying_machine_bombs"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -20640,7 +20640,7 @@
 	// Allows Flying Machines to attack land units. Removes ability_prevent_attack_ground
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_flying_machine_bombs"
+		"AbilityTextureName"			"human_research_flying_machine_bombs"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -20666,7 +20666,7 @@
 	"human_flak_cannons_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_flak_cannons"
+		"AbilityTextureName"			"human_research_flak_cannons"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -20683,7 +20683,7 @@
 	// Uses powerful cannons to deal area of effect damage against air units
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_flak_cannons"
+		"AbilityTextureName"			"human_research_flak_cannons"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
