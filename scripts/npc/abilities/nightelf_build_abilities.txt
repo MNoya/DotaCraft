@@ -1,0 +1,334 @@
+// Night Elf Buildings
+// nightelf_ancient_of_war - No requirements
+// nightelf_ancient_of_lore - Requires Tree of Ages and Hunters Hall
+// nightelf_ancient_of_wind - Requires Tree of Ages
+// nightelf_ancient_protector - Requires Hunters Hall
+// nightelf_chimaera_roost - Requires Tree of Eternity and Ancient of the Wind
+
+// Item Abilities
+// nightelf_tree_of_life - No requirements
+	// nightelf_tree_of_ages - Upgrade
+	// nightelf_tree_of_eternity - Upgrade, Requires Altar of Elders
+// nightelf_altar_of_elders - No requirements
+// nightelf_hunters_hall - No requirements
+// nightelf_moon_well - No requirements
+// nightelf_ancient_of_wonders - No requirements
+
+// nightelf_entangled_gold_mine - Ability through Tree of Life/Ages/Eternity
+
+
+// This ability fills the peasant slot with undroppable build items
+"build_nightelf_items"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"MaxLevel" 						"1"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/items.lua"
+			"Function"		"GiveNightElfBuildingItems"
+		}
+	}
+}
+
+"nightelf_build_ancient_of_war"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_ancient_of_war"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"AbilityCastPoint"				"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5"
+	"BuildTime"						"60.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	"CancelsBuildingGhost"			"1" //bool
+
+	"UnitName"						"nightelf_ancient_of_war"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"160"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"60.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"160"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"60"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+		}
+	}
+}
+
+"nightelf_build_ancient_of_lore_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_ancient_of_lore"
+	"MaxLevel" 						"0"
+}
+
+"nightelf_build_ancient_of_lore"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_ancient_of_lore"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" 
+	"BuildTime"						"70.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	"CancelsBuildingGhost"			"1" //bool
+
+	"UnitName"						"nightelf_ancient_of_lore"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"140"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"70.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"140"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"60"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+		}
+	}
+}
+
+
+"nightelf_build_ancient_of_wind_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_ancient_of_wind"
+	"MaxLevel" 						"0"
+}
+
+"nightelf_build_ancient_of_wind"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_ancient_of_wind"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" 
+	"BuildTime"						"70.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	"CancelsBuildingGhost"			"1" //bool
+
+	"UnitName"						"nightelf_ancient_of_wind"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"140"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"70.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"140"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"60"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+		}
+	}
+}
+
+"nightelf_build_ancient_protector_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_ancient_protector"
+	"MaxLevel" 						"0"
+}
+
+"nightelf_build_ancient_protector"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_ancient_protector"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" 
+	"BuildTime"						"70.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	"CancelsBuildingGhost"			"1" //bool
+
+	"UnitName"						"nightelf_ancient_protector"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"140"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"70.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"140"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"60"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+		}
+	}
+}
+
+"nightelf_build_chimaera_roost_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_chimaera_roost"
+	"MaxLevel" 						"0"
+}
+
+"nightelf_build_chimaera_roost"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_build_chimaera_roost"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" 
+	"BuildTime"						"70.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	"CancelsBuildingGhost"			"1" //bool
+
+	"UnitName"						"nightelf_chimaera_roost"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"140"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"70.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"140"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"60"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+		}
+	}
+}

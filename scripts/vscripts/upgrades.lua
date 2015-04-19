@@ -84,6 +84,7 @@ function CheckAbilityRequirements( unit, player )
 							unit:RemoveAbility(ability_name)
 
 							-- Set the new ability level
+							print("Finding",disabled_ability_name)
 							local disabled_ability = unit:FindAbilityByName(disabled_ability_name)
 							disabled_ability:SetLevel(0)
 						end

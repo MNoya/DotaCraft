@@ -77,7 +77,14 @@ function Precache( context )
 		PrecacheUnitByNameSync("human_gryphon_aviary", context)
 		PrecacheUnitByNameSync("human_arcane_vault", context)
 
-
+		PrecacheUnitByNameSync("nightelf_ancient_of_lore", context)
+		PrecacheUnitByNameSync("nightelf_ancient_of_war", context)
+		PrecacheUnitByNameSync("nightelf_ancient_of_wind", context)
+		PrecacheUnitByNameSync("nightelf_ancient_protector", context)
+		PrecacheUnitByNameSync("nightelf_ancient_of_wonders", context)
+		PrecacheUnitByNameSync("nightelf_tree_of_life", context)
+		PrecacheUnitByNameSync("nightelf_altar_of_elders", context)
+		PrecacheUnitByNameSync("nightelf_chimaera_roost", context)
 
 		-- HATS
 		PrecacheResource("model_folder", "models/heroes/dragon_knight", context)
