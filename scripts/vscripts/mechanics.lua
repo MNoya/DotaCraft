@@ -272,15 +272,15 @@ function LeavesCorpse( unit )
 	elseif unit.no_corpse then
 		return false
 
-	-- ?
-	--elseif unit.AddAbility == nil then
-	--	return false
-
 	-- Leave corpse
 	else
 		print("Leave corpse")
 		return true
 	end
+end
+
+function SetNoCorpse( event )
+	event.target.no_corpse = true
 end
 
 function PrintAbilities( unit )

@@ -10,7 +10,7 @@ function Gather( event )
 	local ability = event.ability
 	local target_class = target:GetClassname()
 
-	print("Gather OnAbilityPhaseStart")
+	--print("Gather OnAbilityPhaseStart")
 
 	-- Initialize variable to keep track of how much resource is the unit carrying
 	if not caster.lumber_gathered then
@@ -23,7 +23,7 @@ function Gather( event )
 	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
 		caster:MoveToTargetToAttack(target)
-		print("Moving to ", target_class)
+		--print("Moving to ", target_class)
 		caster.target_tree = target
 
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
@@ -37,16 +37,16 @@ function Gather( event )
 		local return_ability = caster:FindAbilityByName("human_return_resources")
 		return_ability:SetHidden(true)
 		ability:SetHidden(false)
-		print("Gathering Lumber ON, Return OFF")
+		--print("Gathering Lumber ON, Return OFF")
 
 	-- Gather Gold
 	elseif target_class == "npc_dota_building" then
 		if target:GetUnitName() == "gold_mine" then
-			print("Gathering Gold On")
+			--print("Gathering Gold On")
 			caster.gold_gathered = 0
 
 			caster:MoveToTargetToAttack(target)
-			print("Moving to Gold Mine")
+			--print("Moving to Gold Mine")
 			caster.target_mine = target
 
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {})
@@ -60,10 +60,10 @@ function Gather( event )
 			local return_ability = caster:FindAbilityByName("human_return_resources")
 			return_ability:SetHidden(true)
 			ability:SetHidden(false)
-			print("Gathering Lumber ON, Return OFF")
+			--print("Gathering Lumber ON, Return OFF")
 
 		else
-			print("Not a valid gathering target")
+			--print("Not a valid gathering target")
 			return
 		end
 
@@ -71,14 +71,14 @@ function Gather( event )
 	elseif target_class == "npc_dota_creature" then
 		if target:HasAbility("ability_building") then
 			if target:GetHealthDeficit() ~= 0 then
-				print("Repair Building On")
+				--print("Repair Building On")
 				caster:MoveToNPC(target)
 
 				caster.repair_building = target
 				ability:ApplyDataDrivenModifier(caster, caster, "modifier_moving_to_repair", {})
 
 			else
-				print("Building already on full health")
+				--print("Building already on full health")
 			end
 		end
 	end	
@@ -91,7 +91,7 @@ function ToggleOffGather( event )
 
 	if gather_ability:GetToggleState() == true then
 		gather_ability:ToggleAbility()
-		print("Toggled Off Gather")
+		--print("Toggled Off Gather")
 	end
 
 end
@@ -103,7 +103,7 @@ function ToggleOffReturn( event )
 
 	if return_ability:GetToggleState() == true then 
 		return_ability:ToggleAbility()
-		print("Toggled Off Return")
+		--print("Toggled Off Return")
 	end
 end
 
@@ -127,7 +127,7 @@ function CheckTreePosition( event )
 	elseif not caster:HasModifier("modifier_chopping_wood") then
 		caster:RemoveModifierByName("modifier_gathering_lumber")
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_chopping_wood", {})
-		print("Reached tree")
+		--print("Reached tree")
 	end
 end
 
@@ -146,7 +146,7 @@ function CheckMinePosition( event )
 	else
 		caster:RemoveModifierByName("modifier_gathering_gold")
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_mining_gold", {duration = 2})
-		print("Reached mine, send builder inside")
+		--print("Reached mine, send builder inside")
 		caster:SetAbsOrigin(target:GetAbsOrigin())
 		caster.gold_gathered = 10 --this is instant and uncancellable, no reason to increase it progressively like lumber
 		
@@ -155,7 +155,7 @@ function CheckMinePosition( event )
 
 		-- Fake Toggle the Return ability
 		if return_ability:GetToggleState() == false or return_ability:IsHidden() then
-			print("Gather OFF, Return ON")
+			--print("Gather OFF, Return ON")
 			return_ability:SetHidden(false)
 			if return_ability:GetToggleState() == false then
 				return_ability:ToggleAbility()
@@ -181,7 +181,7 @@ function CheckMinePosition( event )
 			caster:SetAbsOrigin( entrance_position )
 			caster:CastAbilityNoTarget(return_ability, player)
 
-			print("Builder is now outside the mine on ", entrance_position)
+			--print("Builder is now outside the mine on ", entrance_position)
 		end)
 	end
 end
@@ -201,7 +201,7 @@ function Gather1Lumber( event )
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 
 	caster.lumber_gathered = caster.lumber_gathered + 1
-	print("Gathered "..caster.lumber_gathered)
+	--print("Gathered "..caster.lumber_gathered)
 
 	-- Show the stack of resources that the unit is carrying
 	if not caster:HasModifier("modifier_returning_resources") then
@@ -214,7 +214,7 @@ function Gather1Lumber( event )
 
 		-- Fake Toggle the Return ability
 		if return_ability:GetToggleState() == false or return_ability:IsHidden() then
-			print("Gather OFF, Return ON")
+			--print("Gather OFF, Return ON")
 			return_ability:SetHidden(false)
 			if return_ability:GetToggleState() == false then
 				return_ability:ToggleAbility()
@@ -248,12 +248,12 @@ function GatherGold( event )
 		local return_ability = caster:FindAbilityByName("human_return_resources")
 		return_ability:SetHidden(true)
 		ability:SetHidden(false)
-		print("Gathering Lumber ON, Return OFF")
+		--print("Gathering Lumber ON, Return OFF")
 	end
 end
 
 function DestroyMine( event )
-	print("RIP MINE")
+	--print("RIP MINE")
 	event.caster:RemoveSelf()
 end
 
@@ -262,7 +262,7 @@ function ReturnResources( event )
 	local caster = event.caster
 	local ability = event.ability
 
-	print("Return Resources")
+	--print("Return Resources")
 
 	-- LUMBER
 	if caster.lumber_gathered and caster.lumber_gathered > 0 then
@@ -271,13 +271,13 @@ function ReturnResources( event )
 
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster )
-		print("Returning "..caster.lumber_gathered.." Lumber back to "..building:GetUnitName())
+		--print("Returning "..caster.lumber_gathered.." Lumber back to "..building:GetUnitName())
 
 		-- Set On, Wait one frame, as OnOrder gets executed before this is applied.
 		Timers:CreateTimer(0.03, function() 
 			if ability:GetToggleState() == false then
 				ability:ToggleAbility()
-				print("Return Ability Toggled On")
+				--print("Return Ability Toggled On")
 			end
 		end)
 
@@ -290,7 +290,7 @@ function ReturnResources( event )
 
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster )
-		print("Returning "..caster.gold_gathered.." Gold back to "..building:GetUnitName())
+		--print("Returning "..caster.gold_gathered.." Gold back to "..building:GetUnitName())
 
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_returning_gold", {})
 
@@ -298,7 +298,7 @@ function ReturnResources( event )
 		Timers:CreateTimer(0.03, function() 
 			if ability:GetToggleState() == false then
 				ability:ToggleAbility()
-				print("Return Ability Toggled On")
+				--print("Return Ability Toggled On")
 			end
 		end)
 
@@ -317,9 +317,9 @@ function CheckBuildingPosition( event )
 		-- Find where to return the resources
 		caster.target_building = FindClosestResourceDeposit( caster )
 		if caster.target_building then
-			print("Resource delivery position set to "..caster.target_building:GetUnitName())
+			--print("Resource delivery position set to "..caster.target_building:GetUnitName())
 		else
-			print("ERROR finding the closest resource deposit")
+			--print("ERROR finding the closest resource deposit")
 			return
 		end
 	end
@@ -338,10 +338,10 @@ function CheckBuildingPosition( event )
 		local returned_type = nil
 
 		if caster.lumber_gathered and caster.lumber_gathered > 0 then
-			print("Reached building, give resources")
+			--print("Reached building, give resources")
 			
 			caster:RemoveModifierByName("modifier_returning_resources")
-			print("Removed modifier_returning_resources")
+			--print("Removed modifier_returning_resources")
 			PopupLumber(caster, caster.lumber_gathered)
     		ModifyLumber(player, caster.lumber_gathered)
 
@@ -350,7 +350,7 @@ function CheckBuildingPosition( event )
 			returned_type = "lumber"
 		
 		elseif caster.gold_gathered and caster.gold_gathered > 0 then
-			print("Reached building, give resources")
+			--print("Reached building, give resources")
 
 			local upkeep = GetUpkeep( player )
 			local gold_gain = caster.gold_gathered * upkeep
@@ -358,7 +358,7 @@ function CheckBuildingPosition( event )
 			PopupGoldGain(caster, gold_gain)
 
 			caster:RemoveModifierByName("modifier_returning_gold")
-			print("Removed modifier_returning_gold")
+			--print("Removed modifier_returning_gold")
 
 			hero:ModifyGold(gold_gain, false, 0)
 
@@ -370,7 +370,7 @@ function CheckBuildingPosition( event )
 		-- Return Ability Off
 		if ability:ToggleAbility() == true then
 			ability:ToggleAbility()
-			print("Return Ability Toggled Off")
+			--print("Return Ability Toggled Off")
 		end
 
 		-- Gather Ability
@@ -378,15 +378,15 @@ function CheckBuildingPosition( event )
 		if gather_ability:ToggleAbility() == false then
 			-- Fake toggle On
 			gather_ability:ToggleAbility() 
-			print("Gather Ability Toggled On")
+			--print("Gather Ability Toggled On")
 		end
 
 		if returned_type == "lumber" then
 			caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
-			print("Casting ability to target tree")
+			--print("Casting ability to target tree")
 		elseif returned_type == "gold" then
 			caster:CastAbilityOnTarget(caster.target_mine, gather_ability, pID)
-			print("Casting ability to target mine")
+			--print("Casting ability to target mine")
 		end
 		
 

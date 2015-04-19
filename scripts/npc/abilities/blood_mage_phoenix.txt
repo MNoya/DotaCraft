@@ -150,6 +150,12 @@
 					"EffectName"	"Hero_Phoenix.SuperNova.Begin"
 					"Target"		"CASTER"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"mechanics.lua"
+					"Function"		"SetNoCorpse"
+				}
 			}
 		
 

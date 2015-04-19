@@ -220,6 +220,12 @@
 					"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
 					"EffectAttachType"	"follow_origin"
 				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"mechanics.lua"
+					"Function"		"SetNoCorpse"
+				}
 			}
 
 			"OnDeath"

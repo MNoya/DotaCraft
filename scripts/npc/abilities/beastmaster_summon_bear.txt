@@ -218,6 +218,12 @@
 					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
 					"EffectAttachType"	"follow_origin"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"mechanics.lua"
+					"Function"		"SetNoCorpse"
+				}
 			}
 
 			"OnDeath"

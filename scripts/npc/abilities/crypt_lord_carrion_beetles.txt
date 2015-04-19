@@ -89,7 +89,12 @@
 						"TARGET"	"attach_origin"
 					}
 				}
-				
+
+				"RunScript"
+				{
+					"ScriptFile"	"mechanics.lua"
+					"Function"		"SetNoCorpse"
+				}				
 			}
 
 			"States"

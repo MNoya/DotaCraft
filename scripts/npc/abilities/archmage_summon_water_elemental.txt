@@ -158,6 +158,14 @@
 			{
 				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"mechanics.lua"
+					"Function"		"SetNoCorpse"
+				}
+			}
 		}
 	}
 }

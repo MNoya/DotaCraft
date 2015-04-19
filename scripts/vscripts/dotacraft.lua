@@ -51,10 +51,44 @@ MAX_LEVEL = 10                          -- What level should we let heroes get t
 USE_CUSTOM_XP_VALUES = true             -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
 -- Fill this table up with the required XP per level if you want to change it
-XP_PER_LEVEL_TABLE = {}
-for i=1,MAX_LEVEL do
-	XP_PER_LEVEL_TABLE[i] = i * 100
-end
+XP_PER_LEVEL_TABLE = {
+	0, -- 1
+	200, -- 2 +200
+	500, -- 3 +300
+	900, -- 4 +400
+	1400, -- 5 +500
+	2000, -- 6 +600
+	2700, -- 7 +700
+	3500, -- 8 +800
+	4400, -- 9 +900
+	5400 -- 10 +1000
+ }
+
+XP_BOUNTY_TABLE = {
+	25,
+	40,
+	60,
+	85,
+	115,
+	150,
+	190,
+	235,
+	285,
+	340
+}
+
+XP_NEUTRAL_SCALING = {
+	0.80,
+	0.70, 
+	0.62,
+	0.55,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0
+}
 
 -- Generated from template
 if dotacraft == nil then
@@ -124,7 +158,7 @@ print("setting " .. playerID .. " to team: " .. team)
 MultiTeam:SetPlayerTeam(playerID, team)]]
 
 -- This line for example will set the starting gold of every hero to 500 unreliable gold
-hero:SetGold(5000, false)
+hero:SetGold(500, false)
 
 -- These lines will create an item and add it to the player, effectively ensuring they start with the item
 --local item = CreateItem("item_multiteam_action", hero, hero)
@@ -403,7 +437,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
 
 	-- Give Initial Lumber
-	ModifyLumber(player, 5000)
+	ModifyLumber(player, 150)
 
     -- Create Main Building
     -- This position should be dynamic according to the map starting points
@@ -475,8 +509,9 @@ function dotacraft:OnEntityKilled( event )
 	-- The Unit that was Killed
 	local killedUnit = EntIndexToHScript(event.entindex_killed)
 	-- The Killing entity
+	local killerEntity
 	if event.entindex_attacker then
-		local killerEntity = EntIndexToHScript(event.entindex_attacker)
+		killerEntity = EntIndexToHScript(event.entindex_attacker)
 	end
 
 	-- START OF BH SNIPPET
@@ -523,7 +558,7 @@ function dotacraft:OnEntityKilled( event )
 
 	-- Substract the Food Used
 	local food_cost = GetFoodCost(killedUnit)
-	if food_cost > 0 then
+	if food_cost > 0 and player then
 		ModifyFoodUsed(player, - food_cost)
 	end
 
@@ -532,19 +567,42 @@ function dotacraft:OnEntityKilled( event )
 
 		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killedUnit)
-		if food_produced > 0 then
+		if food_produced > 0 and player then
 			ModifyFoodLimit(player, - food_produced)
 		end
 	end
 
+	-- Give Experience to heroes based on the level of the killed creature
+	if not killedUnit.isBuilding then
+		local XPGain = XP_BOUNTY_TABLE[killedUnit:GetLevel()]
+
+		-- Grant XP in AoE
+		local heroesNearby = FindUnitsInRadius( killerEntity:GetTeamNumber(), killedUnit:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		--print("There are ",#heroesNearby," nearby the dead unit, base value for this unit is: "..XPGain)
+		for _,hero in pairs(heroesNearby) do
+			if hero:IsRealHero() and hero:GetTeam() ~= killedUnit:GetTeam() then
+
+				-- Scale XP if neutral
+				local xp = XPGain
+				if killedUnit:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+					xp = ( XPGain * XP_NEUTRAL_SCALING[hero:GetLevel()] ) / #heroesNearby
+				end
+
+				hero:AddExperience(math.floor(xp), false, false)
+				--print("granted "..xp.." to "..hero:GetUnitName())
+			end
+		end		
+	end
 
 	-- Table cleanup
-	if tableContains(player.structures, killedUnit) then
-		table.remove(player.structures, getIndex(player.structures,killedUnit))
-		print("Building removed from the player structures table")
-	elseif tableContains(player.units, killedUnit) then
-		table.remove(player.units, getIndex(player.units,killedUnit))
-		print("Unit removed from the player units table")
+	if player then
+		if tableContains(player.structures, killedUnit) then
+			table.remove(player.structures, getIndex(player.structures,killedUnit))
+			print("Building removed from the player structures table")
+		elseif tableContains(player.units, killedUnit) then
+			table.remove(player.units, getIndex(player.units,killedUnit))
+			print("Unit removed from the player units table")
+		end
 	end
 
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
@@ -575,7 +633,7 @@ function dotacraft:OnEntityKilled( event )
 	end)
 
 	-- Remove from units table
-	if killedUnit:IsCreature() then
+	if killedUnit:IsCreature() and player then
 		local unit = getIndex(player.units, killedUnit)
 		if unit and unit ~= -1 then
 			--DeepPrintTable(player.units)
