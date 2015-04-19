@@ -39,7 +39,9 @@ function BuildHero( event )
 	local ability_name = ability:GetAbilityName()
 	
 	-- Cut the rank, add the _acquired suffix
-	local new_ability_name = string.sub(ability_name, 1 , string.len(ability_name) - 1).."_acquired"
+	local train_ability_name = string.sub(ability_name, 1 , string.len(ability_name) - 1)
+	local new_ability_name = train_ability_name.."_acquired"
+	new_hero.RespawnAbility = train_ability_name
 
 	-- Keep the custom name
 	local dotacraft_hero_name = string.gsub(ability_name, "_train" , "")
@@ -86,7 +88,7 @@ function UpgradeAltarAbilities( event )
 			local ability = altar:GetAbilityByIndex(i)
 			if ability then
 				local ability_name = ability:GetAbilityName()
-				if string.find(ability_name, "_train") then
+				if string.find(ability_name, "_train") and not string.find(ability_name,"_acquired") then
 					if ability_name ~= abilityOnProgress:GetAbilityName() then	
 						if player.AltarLevel == 4	then -- Disable completely
 							ability:SetHidden(true)
@@ -160,9 +162,12 @@ function ReEnableAltarAbilities( event )
 			if ability then
 				local ability_name = ability:GetAbilityName()
 
+				if string.find(ability_name, "_acquired") then
+					--print(ability_name)
+
 				-- Gotta adjust back the abilities
 				-- The hidden train ability was one in the queue
-				if string.find(ability_name, "_train") then
+				elseif string.find(ability_name, "_train") then
 				 	if ability:IsHidden() then
 
 				 		-- The level which abilities have to be downgraded and set visible depends on the current AltarLevel

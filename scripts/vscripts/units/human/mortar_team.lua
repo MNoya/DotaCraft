@@ -40,12 +40,14 @@ function FragmentationShard( event )
 		-- Check the target armor type directly from the KV file (+volvo pls)
 		local unit_name = enemy:GetUnitName()
 		local target_info = GameRules.UnitKV[unit_name]
-		local armor_type = target_info.CombatClassDefend
+		if target_info then
+			local armor_type = target_info.CombatClassDefend
 
-		if armor_type == "DOTA_COMBAT_CLASS_DEFEND_BASIC" or armor_type == "DOTA_COMBAT_CLASS_DEFEND_WEAK" then
-			-- Do extra damage to this unit
-			ApplyDamage({ victim = enemy, attacker = caster, damage = extra_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES})
-			print("FragmentationShard dealt extra damage to "..unit_name)
+			if armor_type == "DOTA_COMBAT_CLASS_DEFEND_BASIC" or armor_type == "DOTA_COMBAT_CLASS_DEFEND_WEAK" then
+				-- Do extra damage to this unit
+				ApplyDamage({ victim = enemy, attacker = caster, damage = extra_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES})
+				print("FragmentationShard dealt extra damage to "..unit_name)
+			end
 		end
 	end
 end

@@ -158,7 +158,7 @@ print("setting " .. playerID .. " to team: " .. team)
 MultiTeam:SetPlayerTeam(playerID, team)]]
 
 -- This line for example will set the starting gold of every hero to 500 unreliable gold
-hero:SetGold(500, false)
+hero:SetGold(5000, false)
 
 -- These lines will create an item and add it to the player, effectively ensuring they start with the item
 --local item = CreateItem("item_multiteam_action", hero, hero)
@@ -437,7 +437,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
 
 	-- Give Initial Lumber
-	ModifyLumber(player, 150)
+	ModifyLumber(player, 5150)
 
     -- Create Main Building
     -- This position should be dynamic according to the map starting points
@@ -530,7 +530,7 @@ function dotacraft:OnEntityKilled( event )
 
 				-- Set the strings for the _acquired ability to find and _revival ability to add
 				local level = killedUnit:GetLevel()
-				local name = killedUnit.RealHeroName
+				local name = killedUnit.RespawnAbility
 				if name then
 					local acquired_ability_name = name.."_acquired"
 					local revival_ability_name = name.."_revive"..level
@@ -968,6 +968,14 @@ function dotacraft:Initdotacraft()
 
   	-- Building Helper by Myll
   	BuildingHelper:Init() -- nHalfMapLength
+
+  	-- Starting positions
+  	GameRules.StartingPositions = {}
+	local targets = Entities:FindAllByName( "starting_position" )
+	for k,v in pairs(targets) do
+		table.insert( GameRules.StartingPositions, v:GetOrigin() )
+	end
+	DeepPrintTable(GameRules.StartingPositions)
 
 	print('[DOTACRAFT] Done loading dotacraft gamemode!\n\n')
 end

@@ -279,36 +279,37 @@ function UpgradeArmorWearables(target, level)
 	print("UAW",unit_name,level)
 	local wearables = GameRules.Wearables
 	local unit_table = wearables[unit_name]
-	local armor_table = unit_table.armor
+	if unit_table then
+		local armor_table = unit_table.armor
 
-	print("Armor Table")
-	for k,armor in pairs(armor_table) do
-		print(k)
-		--DeepPrintTable(armor)
-	
-		local original_armor = armor[tostring(0)]
-		local old_armor = armor[tostring((level)-1)]
-		local new_armor = armor[tostring(level)]
+		print("Armor Table")
+		for k,armor in pairs(armor_table) do
+			print(k)
+			--DeepPrintTable(armor)
 		
-		while wearable ~= nil do
-			if wearable:GetClassname() == "dota_item_wearable" then
-				print("UAW",wearable:GetModelName())
+			local original_armor = armor[tostring(0)]
+			local old_armor = armor[tostring((level)-1)]
+			local new_armor = armor[tostring(level)]
+			
+			while wearable ~= nil do
+				if wearable:GetClassname() == "dota_item_wearable" then
+					print("UAW",wearable:GetModelName())
 
-				-- Unit just spawned, it has the default weapon
-				if original_armor == wearable:GetModelName() then
-					wearable:SetModel( new_armor )
-					print("UAW", "\nSuccessfully swap " .. original_armor .. " with " .. new_armor )
-					break
+					-- Unit just spawned, it has the default weapon
+					if original_armor == wearable:GetModelName() then
+						wearable:SetModel( new_armor )
+						print("UAW", "\nSuccessfully swap " .. original_armor .. " with " .. new_armor )
+						break
 
-				-- In this case, the unit is already on the field and might have an upgrade
-				elseif old_armor and old_armor == wearable:GetModelName() then
-					wearable:SetModel( new_armor )
-					print("UAW", "\nSuccessfully swap " .. old_armor .. " with " .. new_armor )
-					break
+					-- In this case, the unit is already on the field and might have an upgrade
+					elseif old_armor and old_armor == wearable:GetModelName() then
+						wearable:SetModel( new_armor )
+						print("UAW", "\nSuccessfully swap " .. old_armor .. " with " .. new_armor )
+						break
+					end
 				end
+				wearable = wearable:NextMovePeer()
 			end
-			wearable = wearable:NextMovePeer()
 		end
 	end
-
 end
