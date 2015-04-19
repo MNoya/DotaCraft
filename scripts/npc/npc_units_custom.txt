@@ -2894,7 +2894,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/courier/carty/carty.vmdl"
-		"ModelScale"				"1.8"
+		"ModelScale"				"1.5"
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
@@ -3059,6 +3059,7 @@
 	// nightelf_chimaera_roost
 	// nightelf_hunters_hall
 	// nightelf_moon_well
+	// nightelf_entangled_gold_mine
 	
 	// Treant Models for Ancients
 	// models/items/furion/treant/father_treant/father_treant.vmdl (City Center lvl 2)
@@ -3067,11 +3068,11 @@
 	// models/items/furion/treant/eternalseasons_treant/eternalseasons_treant.vmdl (City Center lvl 3)
 	// models/items/furion/treant_stump.vmdl (City Center lvl 1)
 	// models/items/furion/treant_flower_1.vmdl (Wind)
+	// models/items/furion/treant/shroomling_treant/shroomling_treant.vmdl (Wonders)
 	// models/heroes/treant_protector/treant_protector.vmdl + cosmetics (not on source2 yet) (Protector Tower)
 	
 	// Unused
 	// models/items/furion/treant/fungal_lord_shroomthing/fungal_lord_shroomthing.vmdl
-	// models/items/furion/treant/shroomling_treant/shroomling_treant.vmdl
 	// models/items/furion/treant/treant_cis/treant_cis.vmdl
 	// models/items/furion/treant/hallowed_horde/hallowed_horde.vmdl
 	
@@ -3085,7 +3086,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/furion/treant/furion_treant_nelum_red/furion_treant_nelum_red.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
@@ -3166,7 +3167,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/furion/treant/primeval_treant/primeval_treant.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
@@ -3248,7 +3249,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/furion/treant_flower_1.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
@@ -3329,7 +3330,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		
@@ -3412,6 +3413,89 @@
 	}
 	
 	//=================================================================================
+	// Building: Ancient of Wonders
+	// Description: "Creates a shop with purchasable items. The items available depend upon what level of upgrade your Tree of Life has (Tree of Life, Tree of Ages, or Tree of Eternity) and which buildings you have. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"nightelf_ancient_of_wonders"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/furion/treant/shroomling_treant/shroomling_treant.vmdl"
+		"ModelScale"				"1.5"
+		"Level"						"1"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1"					""	 //Reference: Abds
+		"Ability2"					""	 //Reference: Aall
+		"Ability3"					""	 //Reference: Aeat
+		"Ability4"					""	 //Reference: Aro1
+		"Ability5"					""	 //Reference: Apit
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"			"21.0"
+		"AttackDamageMax"			"25.0"
+		"AttackRate"				"2.5"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"128"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"0.0"
+		"BountyGoldMax"				"0.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"220"
+		"CollisionSize"				"144"
+		
+		// Building Cost Stats
+		//----------------------------------------------------------------
+		"GoldCost"					"90"
+		"LumberCost"				"30"
+		"BuildTime"					"60"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"40"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"450"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"
+		"VisionNighttimeRange"		"750"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+	}
+	
+	//=================================================================================
 	// Building: Tree of Life
 	// Description: "Primary structure, used to train Wisps and entangle gold mines. Can be upgraded to Tree of Ages and then Tree of Eternity to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
@@ -3421,7 +3505,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature" // allows turning and cosmetics
 		"Model"						"models/items/furion/treant_stump.vmdl"
-		"ModelScale"				"1.5"
+		"ModelScale"				"2.3"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -3507,7 +3591,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/furion/treant/father_treant/father_treant.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"2.6"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
@@ -3591,7 +3675,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/furion/treant/eternalseasons_treant/eternalseasons_treant.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"3"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		
@@ -3676,7 +3760,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/elven_farm.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -3750,7 +3834,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/good_statue001.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -3825,7 +3909,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/cathedral001.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -3964,6 +4048,83 @@
 		
 	}
 	
+	//=================================================================================
+	// Building: Entangled Gold Mine
+	// Description: "A cluster of roots that allows wisps to mine gold from goldmines."
+	//=================================================================================
+	"nightelf_entangled_gold_mine"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_building"
+		"Model"						"models/props_nature/bad_barracks_roots003.vmdl"
+		"ModelScale"				"1"
+		"Level"						"0"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1"					""	 //Reference: Abds
+		"Ability2"					""	 //Reference: Aenc
+		"Ability3"					""	 //Reference: Slo2
+		"Ability4"					""	 //Reference: Adri
+		"Ability5"					""	 //Reference: Aegm
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"0.0"
+		"BountyGoldMax"				"0.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"CollisionSize"				"50"
+		
+		// Building Cost Stats
+		//----------------------------------------------------------------
+		"GoldCost"					"0"
+		"LumberCost"				"0"
+		"BuildTime"					"60"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"800"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"
+		"VisionNighttimeRange"		"600"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+	}
 	// Night Elf Unit List
 	//	nightelf_wisp -	models/heroes/wisp/wisp.vmdl + particles/units/heroes/hero_wisp/wisp_ambient.vpcf
 	//	nightelf_archer - models/heroes/windrunner/windrunner.vmdl
@@ -9492,7 +9653,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/courier/carty_dire/carty_dire.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
@@ -10622,8 +10783,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_ancient001.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/props_structures/bad_ancient_destruction.vmdl"
+		"ModelScale"				"0.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -10698,8 +10859,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_barracks001_destruction.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/props_structures/bad_ancient001.vmdl"
+		"ModelScale"				"0.5"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
@@ -10783,7 +10944,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/bad_ancient002.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		
@@ -10866,7 +11027,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/statue_dragon003.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -10942,7 +11103,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/statue_mystical001.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -11092,7 +11253,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/well_skull.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"1.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -11395,8 +11556,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_ancient_destruction.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/props_structures/bad_barracks001_destruction.vmdl"
+		"ModelScale"				"0.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -11474,7 +11635,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/buildings/building_racks_melee_reference.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.7"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
 		
@@ -11548,8 +11709,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/tower_bad.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/buildings/building_racks_melee_reference.vmdl" // Get the RetroDota Model with AttackPoint
+		"ModelScale"				"0.7"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
@@ -12713,97 +12874,6 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
-		"ModelScale"				"1"
-		"Level"						"6"
-		"HealthBarOffset"			"140"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Afrz
-		"Ability2"					""	 //Reference: Afrb
-		
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"1"
-		"MagicalResistance"			"0"
-		
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackDamageMin"			"93.0"
-		"AttackDamageMax"			"115.0"
-		"AttackRate"				"3"
-		"AttackAnimationPoint"		"0.5"
-		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"300"
-		"ProjectileModel"			""	 //Add projectile
-		"ProjectileSpeed"			"800"
-		
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
-		
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-		"RingRadius"				"40"
-		"CollisionSize"				"8"
-		"FormationRank"				"2"
-		
-		// Building Cost Stats
-		//----------------------------------------------------------------
-		"GoldCost"					"385"
-		"LumberCost"				"120"
-		"FoodCost"					"7"
-		"BuildTime"					"65"
-		
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"				"270"
-		"MovementTurnRate"			"0.4"
-		
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1350"
-		"StatusHealthRegen"			"2"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1600"
-		"VisionNighttimeRange"		"800"
-		
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
-		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Creature Data
-		//----------------------------------------------------------------
-		"Creature"
-		{
-			"DisableClumpingBehavior"	"1"
-		}
-	}
-	
-	
-	//=================================================================================
-	// Creature: Frost Wyrm
-	// Description: "Flying heavy assault creature. Can learn the Freezing Breath ability. |n|n|cffffcc00Attacks land and air units.|r"
-	//=================================================================================
-	"undead_frost_wyrm"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/courier/drodo/drodo_flying.vmdl" // Placeholder for WW
 		"ModelScale"				"1"
 		"Level"						"6"
 		"HealthBarOffset"			"140"

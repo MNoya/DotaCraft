@@ -412,6 +412,11 @@ function dotacraft:OnPlayerPickHero(keys)
     	position = Vector(-5916,5831,128)
     end
 
+    -- Stop game logic on the model overview map
+    if GetMapName() == "dotacraft" then
+    	return
+    end
+
     -- Define the initial unit names to spawn for this hero_race
     local hero_race = hero:GetUnitName()
     local city_center_name = GetCityCenterNameForHeroRace(hero_race)
@@ -429,8 +434,6 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	-- Give Initial Food
     ModifyFoodLimit(player, GetFoodProduced(building))
-
-
 
 	-- Create Builders
 	for i=1,5 do
