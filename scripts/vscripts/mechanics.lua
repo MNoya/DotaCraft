@@ -77,7 +77,7 @@ function PlayerHasEnoughGold( player, gold_cost )
 	local gold = hero:GetGold()
 
 	if gold < gold_cost then
-		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Gold" } )		
+		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need more Gold" } )		
 		return false
 	else
 		return true
@@ -90,7 +90,7 @@ function PlayerHasEnoughLumber( player, lumber_cost )
 	local pID = player:GetAssignedHero():GetPlayerID()
 
 	if player.lumber < lumber_cost then
-		FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Lumber" } )		
+		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need more Lumber" } )		
 		return false
 	else
 		return true
@@ -104,7 +104,7 @@ function PlayerHasEnoughFood( player, food_cost )
 	if player.food_used + food_cost > player.food_limit then
 		-- send the warning only once every time
 		if not player.need_more_farms then
-			FireGameEvent( 'custom_error_show', { player_ID = playerID, _error = "Need more Farms" } )
+			FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need more Farms" } )
 			player.need_more_farms = true
 		end
 		return false

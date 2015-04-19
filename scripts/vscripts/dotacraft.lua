@@ -599,6 +599,13 @@ function dotacraft:OnEntityKilled( event )
 		if tableContains(player.structures, killedUnit) then
 			table.remove(player.structures, getIndex(player.structures,killedUnit))
 			print("Building removed from the player structures table")
+
+			-- Check for lose condition - All buildings destroyed
+			print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
+			if (#player.structures == 0) then
+				GameRules:MakeTeamLose(player:GetTeamNumber())
+			end
+
 		elseif tableContains(player.units, killedUnit) then
 			table.remove(player.units, getIndex(player.units,killedUnit))
 			print("Unit removed from the player units table")
