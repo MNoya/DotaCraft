@@ -441,10 +441,14 @@ function dotacraft:OnPlayerPickHero(keys)
 
     -- Create Main Building
     -- This position should be dynamic according to the map starting points
-    local position = Vector(6150,5500,128)
-    if playerID > 0 then
-    	position = Vector(-5916,5831,128)
-    end
+    DeepPrintTable(GameRules.StartingPositions)
+    print("There is",#GameRules.StartingPositions," positions available")
+    local random_pos = RandomInt(1, #GameRules.StartingPositions)
+    local position = GameRules.StartingPositions[random_pos]
+    table.remove(GameRules.StartingPositions, random_pos)
+    print("Position for "..playerID..": ",position)
+     DeepPrintTable(GameRules.StartingPositions)
+    print("Remaining",#GameRules.StartingPositions,"positions")
 
     -- Stop game logic on the model overview map
     if GetMapName() == "dotacraft" then
