@@ -600,20 +600,30 @@ function dotacraft:OnEntityKilled( event )
 
 	-- Table cleanup
 	if player then
-		if tableContains(player.structures, killedUnit) then
-			table.remove(player.structures, getIndex(player.structures,killedUnit))
-			print("Building removed from the player structures table")
-
-			-- Check for lose condition - All buildings destroyed
-			print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
-			if (#player.structures == 0) then
-				GameRules:MakeTeamLose(player:GetTeamNumber())
+		-- Remake the tables
+		local table_structures = {}
+		for _,building in pairs(player.structures) do
+			if building and IsValidEntity(building) and building:IsAlive() then
+				print("Valid building: "..building:GetUnitName())
+				table.insert(table_structures, building)
 			end
-
-		elseif tableContains(player.units, killedUnit) then
-			table.remove(player.units, getIndex(player.units,killedUnit))
-			print("Unit removed from the player units table")
 		end
+		player.structures = table_structures
+		print("Building removed from the player structures table")
+
+		-- Check for lose condition - All buildings destroyed
+		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
+		if (#player.structures == 0) then
+			GameRules:MakeTeamLose(player:GetTeamNumber())
+		end
+		
+		local table_units = {}
+		for _,unit in pairs(player.units) do
+			if unit and IsValidEntity(unit) then
+				table.insert(table_units, unit)
+			end
+		end
+		player.units = table_units		
 	end
 
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
