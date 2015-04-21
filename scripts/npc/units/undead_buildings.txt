@@ -22,12 +22,14 @@
 // models/props_structures/bad_barracks001_ranged.vmdl
 // models/props_structures/bad_column001.vmdl
 // models/props_structures/bad_ancient_destruction.vmdl
-// models/props_structures/bad_shop001.vmdl (bad position)
 // models/props_structures/well_skull.vmdl
 // models/props_structures/statue_dragon003.vmdl
 // models/buildings/building_racks_melee_reference.vmdl (needs attack point, available on RetroDota)
 // models/props_structures/tower_bad.vmdl
 // models/props_structures/tower_dragon_black.vmdl
+// models/heroes/undying/undying_tower.vmdl
+// models/items/undying/idol_of_ruination/idol_tower.vmdl
+// models/items/undying/idol_of_ruination/idol_tower_gold.vmdl
 
 
 //=================================================================================
@@ -740,7 +742,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/bad_column001.vmdl"
+	"Model"						"models/heroes/undying/undying_tower.vmdl"
 	"ModelScale"				"1"
 	"Level"						"0"
 	"HealthBarOffset"			"140"
@@ -814,7 +816,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/bad_barracks001_destruction.vmdl"
+	"Model"						"models/items/undying/idol_of_ruination/idol_tower_gold.vmdl"
 	"ModelScale"				"0.9"
 	"Level"						"0"
 	"HealthBarOffset"			"140"
