@@ -1821,8 +1821,9 @@
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/creeps/lane_creeps/creep_good_ranged/creep_good_ranged.vmdl"
 		"ModelScale"				"0.8"
-		"Level"						"1"
+		"Level"						"32"
 		"HealthBarOffset"			"140"
+		"SelectionGroup"            "Human_Peasants"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1917,6 +1918,7 @@
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"SelectionGroup"            "Human_Militia"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2007,6 +2009,12 @@
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
+		"SelectionGroup"            "Human_Footmen"
+	
+		"SoundSet"                     "Hero_DragonKnight"
+		"GameSoundsFile"               "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+		"IdleSoundLoop"                "Hero_DragonKnight.Tutorial_Intro"
+	
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2113,6 +2121,7 @@
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
+		"SelectionGroup"            "Human_Riflemen"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2211,6 +2220,7 @@
 		"Level"						"4"
 		"HealthBarOffset"			"180"
 		"HasInventory"				"1"
+		"SelectionGroup"            "Human_Knights"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2321,6 +2331,7 @@
 		"Level"						"1" //Gets Leveled up to 2 and 3 when trained
 		"HealthBarOffset"			"200"
 		"HasInventory"				"1"
+		"SelectionGroup"            "Human_Sorceress"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2421,6 +2432,7 @@
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
+		"SelectionGroup"            "Human_Priests"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2513,6 +2525,7 @@
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
+		"SelectionGroup"            "Human_Spell_Breakers"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2615,6 +2628,7 @@
 		"ModelScale"				"0.7"
 		"Level"						"1"
 		"HealthBarOffset"			"280"
+		"SelectionGroup"            "Human_Flying_Machines"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2709,6 +2723,7 @@
 		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"280"
+		"SelectionGroup"            "Human_Dragonhawk_Riders"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -2807,6 +2822,7 @@
 		"ModelScale"				"0.6"
 		"Level"						"2"
 		"HealthBarOffset"			"120"
+		"SelectionGroup"            "Human_Mortar_Teams"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2898,6 +2914,7 @@
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"SelectionGroup"            "Human_Siege_Engines"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2979,6 +2996,7 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"ShouldDoFlyHeightVisual" 	"1"
 		"HealthBarOffset"			"140"
+		"SelectionGroup"            "Human_Gryphon_Riders"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3042,7 +3060,155 @@
 		//----------------------------------------------------------------
 	}
 	
+	"human_unita"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl"
+		"ModelScale"				"1.2"
+		"Level"						"5"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"ShouldDoFlyHeightVisual" 	"0"
+		"HealthBarOffset"			"140"
+		"SelectionGroup"            "Human_Gryphon_Riders"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"human_storm_hammers_disabled"	 //Reference: Asth
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"45.0"
+		"AttackDamageMax"			"55.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"2.2"
+		"AttackAnimationPoint"		"0.8"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"450"
+		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"1100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"32.0"
+		"BountyGoldMax"				"46.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"280"
+		"LumberCost"				"70"
+		"FoodCost"					"4"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"825"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1600"
+		"VisionNighttimeRange"		"900"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_COURIER"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
 	
+	"human_unitb"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl"
+		"ModelScale"				"1.2"
+		"Level"						"5"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"ShouldDoFlyHeightVisual" 	"0"
+		"HealthBarOffset"			"140"
+		"SelectionGroup"            "Human_Gryphon_Riders"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"human_storm_hammers_disabled"	 //Reference: Asth
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"45.0"
+		"AttackDamageMax"			"55.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"2.2"
+		"AttackAnimationPoint"		"0.8"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"450"
+		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"1100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"32.0"
+		"BountyGoldMax"				"46.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"280"
+		"LumberCost"				"70"
+		"FoodCost"					"4"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.4"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"825"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1600"
+		"VisionNighttimeRange"		"900"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
 	// Night Elf Buildings
 	// Ancients (Creatures, can move if unrooted)
 	// nightelf_ancient_of_lore
@@ -8363,7 +8529,13 @@
 	
 	// Useable models
 	// models/props_structures/bad_standard001.vmdl
-	// ?? 
+	// models/items/pugna/ward/nether_grandmasters_ward/nether_grandmasters_ward.vmdl
+	// models/items/pugna/ward/nether_heart/nether_heart.vmdl
+	// models/items/pugna/ward/tentaclesofnetherreach/tentaclesofnetherreach.vmdl
+	// models/heroes/witchdoctor/witchdoctor_ward.vmdl
+	// models/items/juggernaut/ward_foo.vmdl
+	// models/items/juggernaut/ward/healing_gills_of_the_lost_isles/healing_gills_of_the_lost_isles.vmdl
+	// models/items/wards/warding_guise/warding_guise.vmdl
 	
 	//=================================================================================
 	// Building: Altar of Storms
@@ -10860,12 +11032,14 @@
 	// models/props_structures/bad_barracks001_ranged.vmdl
 	// models/props_structures/bad_column001.vmdl
 	// models/props_structures/bad_ancient_destruction.vmdl
-	// models/props_structures/bad_shop001.vmdl (bad position)
 	// models/props_structures/well_skull.vmdl
 	// models/props_structures/statue_dragon003.vmdl
 	// models/buildings/building_racks_melee_reference.vmdl (needs attack point, available on RetroDota)
 	// models/props_structures/tower_bad.vmdl
 	// models/props_structures/tower_dragon_black.vmdl
+	// models/heroes/undying/undying_tower.vmdl
+	// models/items/undying/idol_of_ruination/idol_tower.vmdl
+	// models/items/undying/idol_of_ruination/idol_tower_gold.vmdl
 	
 	
 	//=================================================================================
@@ -11578,7 +11752,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_column001.vmdl"
+		"Model"						"models/heroes/undying/undying_tower.vmdl"
 		"ModelScale"				"1"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
@@ -11652,7 +11826,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_barracks001_destruction.vmdl"
+		"Model"						"models/items/undying/idol_of_ruination/idol_tower_gold.vmdl"
 		"ModelScale"				"0.9"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
