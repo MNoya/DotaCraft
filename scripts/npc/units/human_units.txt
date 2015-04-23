@@ -26,6 +26,7 @@
 	"ModelScale"				"0.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"SelectionGroup"            "Human_Peasants"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -120,6 +121,7 @@
 	"ModelScale"				"1"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"SelectionGroup"            "Human_Militia"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -210,6 +212,7 @@
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
+	"SelectionGroup"            "Human_Footmen"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -316,6 +319,7 @@
 	"Level"						"3"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
+	"SelectionGroup"            "Human_Riflemen"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -414,6 +418,7 @@
 	"Level"						"4"
 	"HealthBarOffset"			"180"
 	"HasInventory"				"1"
+	"SelectionGroup"            "Human_Knights"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -524,6 +529,7 @@
 	"Level"						"1" //Gets Leveled up to 2 and 3 when trained
 	"HealthBarOffset"			"200"
 	"HasInventory"				"1"
+	"SelectionGroup"            "Human_Sorceress"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -624,6 +630,7 @@
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
+	"SelectionGroup"            "Human_Priests"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -716,6 +723,7 @@
 	"Level"						"3"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
+	"SelectionGroup"            "Human_Spell_Breakers"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -818,6 +826,7 @@
 	"ModelScale"				"0.7"
 	"Level"						"1"
 	"HealthBarOffset"			"280"
+	"SelectionGroup"            "Human_Flying_Machines"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -912,6 +921,7 @@
 	"ModelScale"				"0.7"
 	"Level"						"3"
 	"HealthBarOffset"			"280"
+	"SelectionGroup"            "Human_Dragonhawk_Riders"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -1010,6 +1020,7 @@
 	"ModelScale"				"0.6"
 	"Level"						"2"
 	"HealthBarOffset"			"120"
+	"SelectionGroup"            "Human_Mortar_Teams"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1101,6 +1112,7 @@
 	"Level"						"3"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"SelectionGroup"            "Human_Siege_Engines"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1182,6 +1194,7 @@
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"ShouldDoFlyHeightVisual" 	"1"
 	"HealthBarOffset"			"140"
+	"SelectionGroup"            "Human_Gryphon_Riders"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1244,5 +1257,3 @@
 	// Creature Data
 	//----------------------------------------------------------------
 }
-
-
