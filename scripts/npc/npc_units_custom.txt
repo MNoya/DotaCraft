@@ -1821,7 +1821,7 @@
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/creeps/lane_creeps/creep_good_ranged/creep_good_ranged.vmdl"
 		"ModelScale"				"0.8"
-		"Level"						"32"
+		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"SelectionGroup"            "Human_Peasants"
 		
@@ -2010,11 +2010,6 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"SelectionGroup"            "Human_Footmen"
-	
-		"SoundSet"                     "Hero_DragonKnight"
-		"GameSoundsFile"               "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
-		"IdleSoundLoop"                "Hero_DragonKnight.Tutorial_Intro"
-	
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3055,156 +3050,6 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Creature Data
-		//----------------------------------------------------------------
-	}
-	
-	"human_unita"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl"
-		"ModelScale"				"1.2"
-		"Level"						"5"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"ShouldDoFlyHeightVisual" 	"0"
-		"HealthBarOffset"			"140"
-		"SelectionGroup"            "Human_Gryphon_Riders"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"human_storm_hammers_disabled"	 //Reference: Asth
-		
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"
-		"MagicalResistance"			"0"
-		
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"45.0"
-		"AttackDamageMax"			"55.0"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"2.2"
-		"AttackAnimationPoint"		"0.8"
-		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"450"
-		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
-		"ProjectileSpeed"			"1100"
-		
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"32.0"
-		"BountyGoldMax"				"46.0"
-		
-		// Gold and Lumber
-		//----------------------------------------------------------------
-		"GoldCost"					"280"
-		"LumberCost"				"70"
-		"FoodCost"					"4"
-		
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"				"320"
-		"MovementTurnRate"			"0.4"
-		
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"825"
-		"StatusHealthRegen"			"0.25"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1600"
-		"VisionNighttimeRange"		"900"
-		
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
-		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_COURIER"
-		
-		// Creature Data
-		//----------------------------------------------------------------
-	}
-	
-	"human_unitb"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl"
-		"ModelScale"				"1.2"
-		"Level"						"5"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"ShouldDoFlyHeightVisual" 	"0"
-		"HealthBarOffset"			"140"
-		"SelectionGroup"            "Human_Gryphon_Riders"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"human_storm_hammers_disabled"	 //Reference: Asth
-		
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"
-		"MagicalResistance"			"0"
-		
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"45.0"
-		"AttackDamageMax"			"55.0"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"2.2"
-		"AttackAnimationPoint"		"0.8"
-		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"450"
-		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
-		"ProjectileSpeed"			"1100"
-		
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"32.0"
-		"BountyGoldMax"				"46.0"
-		
-		// Gold and Lumber
-		//----------------------------------------------------------------
-		"GoldCost"					"280"
-		"LumberCost"				"70"
-		"FoodCost"					"4"
-		
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"				"320"
-		"MovementTurnRate"			"0.4"
-		
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"825"
-		"StatusHealthRegen"			"0.25"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1600"
-		"VisionNighttimeRange"		"900"
-		
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
-		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
 		
 		// Creature Data
 		//----------------------------------------------------------------
