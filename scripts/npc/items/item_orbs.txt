@@ -1,0 +1,587 @@
+// ToDo: Add "Attacks become ranged when attacking Air units" mechanic
+// Each Races Orb:
+// Human: 	Fire
+// Orc: 	Lightning
+// Elf:		Venom
+// Undead: 	Corruption
+
+"item_orb_of_frost"
+{
+   	"BaseClass" 					"item_datadriven"
+   	"AbilityTextureName" 			"item_orb_of_frost"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect"						"particles/econ/courier/courier_greevil_blue/courier_greevil_blue_ambient_3.vpcf"
+
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+
+	"ItemCost"						"800"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	"ItemQuality"					"artifact"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movespeed_slow"		"-50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"attackspeed_slow"		"-25"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_duration"			"3"
+		}
+	}
+		
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	// Adds 6 bonus cold damage to the attacks of a Hero when carried. 
+	// The Hero's attacks also slow the movement speed and attack rate of the enemy for 3 seconds.
+	"Modifiers"
+	{
+		"modifier_orb_of_frost"
+		{
+			"Passive"               "1"
+			"IsHidden"				"1"
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
+			}
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/items2_fx/skadi_projectile.vpcf"
+			}
+			"OnOrbImpact"
+			{
+				"ApplyModifier"
+				{
+					"Target"			"TARGET"
+					"ModifierName"		"modifier_orb_of_frost_slow"
+					"Duration"			"%slow_duration"
+				}		
+			}
+		}
+
+		"modifier_orb_of_frost_slow"
+		{
+			"IsDebuff" 		"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_slow"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attackspeed_slow"
+			}
+			"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"EffectAttachType"      "attach_hitloc"
+		}
+	}
+}
+
+"item_orb_of_fire"
+{
+	"BaseClass" 					"item_datadriven"
+    "AbilityTextureName" 			"item_orb_of_fire"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+   	"ItemCost"						"275"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemQuality"					"artifact"
+	
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect"						"particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf"
+
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"5"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"cleave_damage"			"100.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cleave_radius"			"140"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+	}
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	// Adds 5 bonus fire damage to the attacks of a Hero when carried. 
+	// The Hero's attacks also do splash damage to nearby enemy units.
+	"Modifiers"
+	{
+		"modifier_orb_of_fire"
+		{
+			"Passive"               "1"
+			"IsHidden"				"1"
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
+			}
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+			}
+
+			"OnAttackLanded"
+			{
+				"CleaveAttack"
+				{
+					"CleavePercent"         "%cleave_damage"
+					"CleaveRadius"          "%cleave_radius"
+					"CleaveEffect"          "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+				}
+			}
+		}
+	}
+}
+
+"item_orb_of_venom_wc3"
+{
+	"BaseClass" 					"item_datadriven"
+    "AbilityTextureName" 			"item_orb_of_venom_wc3"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+   	"ItemCost"						"325"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemQuality"					"artifact"
+	
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect"						"particles/items2_fx/orb_of_venom.vpcf"
+
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"5"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_per_second"		"5"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movespeed_slow"		"-30"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"6"
+		}
+	}
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	// Adds 5 bonus damage to the attacks of a Hero when carried. 
+	// The Hero's attacks also poison enemy units for 6 seconds.
+	"Modifiers"
+	{
+		"modifier_orb_of_venom_wc3"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+		
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
+			}
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+			}
+			
+			"OnOrbImpact"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_orb_of_venom_wc3_debuff"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"modifier_orb_of_venom_wc3_debuff"
+		{
+			"IsDebuff"			"1"
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movespeed_slow" 
+			}
+			"EffectName"		"particles/items2_fx/orb_of_venom.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+
+			"ThinkInterval"		"1.0"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage_per_second"
+				}
+			}
+		}
+	}
+}
+
+"item_orb_of_corruption"
+{
+	"BaseClass" 					"item_datadriven"
+    "AbilityTextureName" 			"item_orb_of_corruption"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+   	"ItemCost"						"375"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemQuality"					"artifact"
+	
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect"						"particles/econ/courier/courier_trail_cursed/courier_cursed_ambient.vpcf"
+
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"5"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"armor_reduction"		"5"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"6"
+		}
+	}
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	// Adds 5 bonus damage to the attacks of a Hero when carried. 
+	// The Hero's attacks also reduce the armor of enemy units for 6 seconds.
+	"Modifiers"
+	{
+		"modifier_orb_of_corruption"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
+			}
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/items_fx/desolator_projectile.vpcf"
+			}
+
+			"OnOrbImpact"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_orb_of_corruption_debuff"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"modifier_orb_of_corruption_debuff"
+		{
+			"IsDebuff"		"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+			}
+		}
+	}
+}
+
+"item_orb_of_darkness"
+{
+	"BaseClass" 					"item_datadriven"
+    "AbilityTextureName" 			"item_orb_of_darkness"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+   	"ItemCost"						"600"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemQuality"					"artifact"
+	
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect"						"particles/econ/courier/courier_greevil_black/courier_greevil_black_ambient_3.vpcf"
+
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"minion_hp"				"215"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"minion_damage"			"10"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"80"
+		}
+	}
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	// Adds 5 bonus damage to the attacks of a Hero when carried. 
+	// The Hero's attack also will create a Dark Minion when it is the killing blow on an enemy unit. The Dark Minion lasts 80 seconds.
+	"Modifiers"
+	{
+		"modifier_orb_of_darkness"
+		{
+			"Passive"		"1"
+			"IsHidden"	 	"1"
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+			}
+			
+			"OnOrbImpact"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"		"modifier_orb_of_darkness_spawn"
+					"Target"			"TARGET"
+				}
+				"FireSound"
+				{
+					"EffectName"		"Hero_Medusa.MysticSnake.Target"
+					"Target"			"CASTER"
+				}
+			}
+		}
+
+		"modifier_orb_of_darkness_spawn"
+		{
+			"IsHidden"	"1"
+			"Duration"	"0.1"
+			"OnDeath"
+			{
+				"SpawnUnit"
+				{
+					"UnitName"		"npc_black_arrow_minion_1"
+					"UnitCount"		"1"
+					"SpawnRadius"	"1"
+					"Duration"		"%duration"
+					"Target"
+					{
+						"Center" 	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+
+					"OnSpawn"
+					{
+						"FireSound"
+						{
+							"EffectName" 	"Hero_Medusa.MysticSnake.Return"
+							"Target"		"CASTER"
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+"item_orb_of_lightning"
+{
+	"BaseClass" 					"item_datadriven"
+    "AbilityTextureName" 			"item_orb_of_lightning"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+   	"ItemCost"						"375"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemQuality"					"artifact"
+	
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect"						"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
+
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"5"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"purge_chance"			"25"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movespeed_slow"		"-50"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"3"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_to_summons"		"150"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_orb_of_lightning"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
+			}
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
+			}
+
+			"OnOrbImpact"
+			{
+				"Random"
+				{
+					"Chance"			"%purge_chance"
+					"OnSuccess"
+					{
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_orb_of_lightning_purge"
+							"Target" 		"TARGET"
+							"Duration"		"%duration"
+						}
+						"FireEffect"
+						{
+							"EffectName"        "particles/generic_gameplay/generic_purge.vpcf"
+							"EffectAttachType"  "attach_hitloc"
+							"Target"            "TARGET"
+						}
+						"RunScript"
+						{
+							"ScriptFile"	"items/orb_of_lightning.lua"
+							"Function"		"Purge"
+						}
+						"RunScript"
+						{
+							"ScriptFile"	"items/orb_of_lightning.lua"
+							"Function"		"SummonDamage"
+						}
+					}
+				}
+			}
+		}
+
+		"modifier_orb_of_lightning_purge"
+		{
+			"IsDebuff"		"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
+			}
+		}
+	}
+}

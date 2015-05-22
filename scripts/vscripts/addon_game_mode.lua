@@ -43,6 +43,12 @@ function Precache( context )
 		PrecacheItemByNameSync("example_ability", context)
 		PrecacheItemByNameSync("item_rally", context)
 		PrecacheItemByNameSync("item_apply_modifiers", context)
+		PrecacheItemByNameSync("item_orb_of_frost", context)
+		PrecacheItemByNameSync("item_orb_of_fire", context)
+		PrecacheItemByNameSync("item_orb_of_venom_wc3", context)
+		PrecacheItemByNameSync("item_orb_of_corruption", context)
+		PrecacheItemByNameSync("item_orb_of_darkness", context)
+		PrecacheItemByNameSync("item_orb_of_lightning", context)
 
 		-- Entire heroes (sound effects/voice/models/particles) can be precached with PrecacheUnitByNameSync
 		-- Custom units from npc_units_custom.txt can also have all of their abilities and precache{} blocks precached in this way

@@ -164,6 +164,27 @@ hero:SetGold(5000, false)
 --local item = CreateItem("item_multiteam_action", hero, hero)
 --hero:AddItem(item)
 
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+local item = CreateItem("item_potion_of_omniscience", hero, hero)
+hero:AddItem(item)
+
 --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
 --with the "example_ability" ability
 

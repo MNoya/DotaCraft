@@ -9,7 +9,7 @@ function SetRallyPoint( event )
 	print(origin)
 
 	-- Ignore pure-research buildings
-	if caster:GetUnitName() == "human_lumber_mill" or caster:GetUnitName() == "human_blacksmith" then
+	if caster:GetUnitName() == "human_lumber_mill" or caster:GetUnitName() == "human_blacksmith" or caster:GetUnitName() == "human_scout_tower" then
 		return
 	end
 	

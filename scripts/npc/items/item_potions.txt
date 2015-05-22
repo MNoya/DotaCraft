@@ -1,0 +1,1422 @@
+// List of Potions
+
+// Potion of Healing (250 health)
+// Potion of Mana (150 mana)
+// Potion of Great Healing (500 health)
+// Potion of Great Mana (300 mana)
+// Potion of Restoration (500 health and 200 mana)
+// Lesser Clarity Potion (100 mana over 30 seconds)
+
+// Clarity Potion (200 mana over 45 seconds)
+// Healing Salve (400 health over 45 seconds. 3 Charges)
+// Replenishment Potion (200 health and 75 mana over 30 seconds)
+
+// Anti-magic Potion (15 seconds)
+// Potion of Invisibility (120 seconds)
+// Potion of Lesser Invulnerability (7 seconds)
+// Potion of Invulnerability (15 seconds)
+// Potion of Divinity (Invulnerability for 25 seconds)
+// Potion of Omniscience (Reveals entire map for 5 seconds)
+// Vampiric Potion (12 damage and Lifesteal for 20 seconds)
+
+// Health Stone (1 health regen, consumed for 500 health)
+// Mana Stone (25% mana regen, consumed for 300 mana)
+
+"item_potion_of_healing"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_healing"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/salve.vmdl" //Green
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"AbilityCastRange"				"100"
+	"AbilityCastPoint"				"0.0"
+
+	"ItemCost"						"600"
+	"ItemShopTags"					"consumable"
+	"ItemQuality"					"consumable"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"heal_amount"			"250"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"Heal"
+		{
+			"Target"        	"CASTER"
+			"HealAmount"		"%heal_amount"
+		}
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_treant/treant_overgrowth_vine_glows_corerope.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+		"FireSound"
+		{
+			"Target" 			"CASTER"
+			"EffectName" 		"DOTA_Item.HealingSalve.Activate"
+		}
+		"SpendCharge"
+		{}		
+	}
+}
+
+"item_potion_of_mana"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_mana"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/clarity.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"200"
+	"ItemShopTags"					"consumable"
+	"ItemQuality"					"consumable"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_restored"			"150"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/mana.lua"
+			"Function"			"GiveMana"
+			"Target"			"CASTER"
+			"mana_amount"		"%mana_restored"
+		}
+		"FireEffect"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
+			"EffectAttachType"		"follow_origin"
+		}
+		"FireSound"
+		{
+			"Target" 		"UNIT"
+			"EffectName" 	"DOTA_Item.ClarityPotion.Activate"
+		}
+		"SpendCharge"
+		{}	
+	}
+}
+
+"item_potion_of_great_healing"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_great_healing"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/salve.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"AbilityCooldown"				"8.0"
+	
+	"ItemCost"						"1000"
+	"ItemShopTags"					"consumable"
+	"ItemQuality"					"consumable"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"health_restored"		"500"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"Heal"
+		{
+			"Target"        "CASTER"
+			"HealAmount"	"%health_restored"
+		}
+		"FireEffect"
+		{
+			"Target"					"CASTER"
+			"EffectName"				"particles/units/heroes/hero_treant/treant_overgrowth_vine_glows_corerope.vpcf"
+			"EffectAttachType"			"follow_origin"
+		}
+		"FireSound"
+		{
+			"Target" 		"UNIT"
+			"EffectName" 	"DOTA_Item.HealingSalve.Activate"
+		}
+		"SpendCharge"
+		{}
+	}
+}
+
+"item_potion_of_great_mana"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_great_mana"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/salve_blue.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"AbilityCooldown"				"8.0"
+	
+	"ItemCost"						"800"
+	"ItemShopTags"					"consumable"
+	"ItemQuality"					"consumable"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_restored"			"300"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/mana.lua"
+			"Function"			"GiveMana"
+			"Target"			"CASTER"
+			"mana_amount"		"%mana_restored"
+		}
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+		"FireSound"
+		{
+			"Target" 		"UNIT"
+			"EffectName" 	"DOTA_Item.ClarityPotion.Activate"
+		}
+		"SpendCharge"
+		{}
+	}
+}
+
+"item_potion_of_restoration"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_restoration"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"consumable"
+	"ItemQuality"					"consumable"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"health_restored"		"500"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_restored"			"200"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"Heal"
+		{
+			"Target"        	"CASTER"
+			"HealAmount"		"%health_restored"
+		}
+		"RunScript"
+		{
+			"ScriptFile"		"items/mana.lua"
+			"Function"			"GiveMana"
+			"Target"			"CASTER"
+			"mana_amount"		"%mana_restored"
+		}
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_treant/treant_overgrowth_vine_glow_trail.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+		"FireSound"
+		{
+			"Target" 		"UNIT"
+			"EffectName" 	"DOTA_Item.DustOfAppearance.Activate"
+		}
+		"SpendCharge"
+		{}
+	}
+}
+
+"item_lesser_clarity_potion"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_lesser_clarity_potion"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/clarity.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"200"
+	"ItemShopTags"					"consumable"
+	"ItemQuality"					"consumable"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"30"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"total_mana_regen"		"100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"mana_per_second"		"3.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{			
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_lesser_clarity"
+			"Duration"			"%duration"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"		"DOTA_Item.ClarityPotion.Activate"
+			"Target"			"CASTER"
+		}
+		"SpendCharge"
+		{}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_lesser_clarity"
+		{
+			"EffectName"            	"particles/items_fx/healing_clarity.vpcf"
+			"EffectAttachType"      	"follow_origin"
+					
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%mana_per_second"
+			}
+			
+			"OnTakeDamage"
+			{
+				"RemoveModifier"
+				{
+					"Target"			"UNIT"
+					"ModifierName"		"modifier_lesser_clarity"
+				}
+			}
+		}
+	}
+}
+
+"item_clarity_potion"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_clarity_potion"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/clarity.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"200"
+	"ItemShopTags"					"consumable"
+	"ItemQuality"					"consumable"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"45"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"total_mana_regen"		"200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"mana_per_second"		"4.5"
+		}
+	}
+	
+	"OnSpellStart"
+	{			
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_clarity_potion"
+			"Duration"			"%duration"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"		"DOTA_Item.ClarityPotion.Activate"
+			"Target"			"CASTER"
+		}
+		"SpendCharge"
+		{}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_clarity_potion"
+		{
+			"EffectName"            	"particles/items_fx/healing_clarity.vpcf"
+			"EffectAttachType"      	"follow_origin"
+					
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%mana_per_second"
+			}
+			
+			"OnTakeDamage"
+			{
+				"RemoveModifier"
+				{
+					"Target"			"UNIT"
+					"ModifierName"		"modifier_clarity_potion"
+				}
+			}
+		}
+	}
+}
+
+"item_healing_salve"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_healing_salve"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/salve.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"200"
+	"ItemShopTags"					"consumable"
+	"ItemQuality"					"consumable"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"3"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"45"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"total_health_regen"	"400"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"health_per_second"		"9.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{				
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_healing_salve"
+			"Duration"				"%duration"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"			"DOTA_Item.HealingSalve.Activate"
+			"Target"				"CASTER"
+		}
+		"SpendCharge"
+		{}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_healing_salve"
+		{
+			"Duration"              	"%duration"
+			
+			"EffectName"            	"particles/items_fx/healing_flask.vpcf"
+			"EffectAttachType"      	"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_per_second"
+			}
+			
+			"OnTakeDamage"
+			{
+				"RemoveModifier"
+				{
+					"Target"			"UNIT"
+					"ModifierName"		"modifier_healing_salve"
+				}
+			}
+		}
+	}
+}
+
+"item_replenishment_potion"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_replenishment_potion"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/smoke.vmdl" //"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"common"
+	"ItemQuality"					"common"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"30"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"total_health_regen"	"200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"total_mana_regen"		"75"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"health_per_second"		"6.7"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"mana_per_second"		"2.5"
+		}
+	}
+	
+	"OnSpellStart"
+	{			
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_replenishment_potion"
+			"Duration"			"%duration"
+		}
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_treant/treant_overgrowth_vine_glow_trail.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+		"FireSound"
+		{
+			"Target" 		"UNIT"
+			"EffectName" 	"DOTA_Item.DustOfAppearance.Activate"
+		}
+		"SpendCharge"
+		{}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_replenishment_potion"
+		{
+			"EffectName"            	"particles/items_fx/healing_clarity.vpcf"
+			"EffectAttachType"      	"follow_origin"
+					
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%health_per_second"
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%mana_per_second"
+			}
+			
+			"OnTakeDamage"
+			{
+				"RemoveModifier"
+				{
+					"Target"			"UNIT"
+					"ModifierName"		"modifier_replenishment_potion"
+				}
+			}
+		}
+	}
+}
+
+"item_anti_magic_potion"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_invulnerability"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/smoke.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"common"
+	"ItemQuality"					"common"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"15"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_anti_magic_potion"
+			"Duration"		"%duration"
+		}
+		"SpendCharge"
+		{}	
+	}
+	
+	"Modifiers"
+	{
+		"modifier_anti_magic_potion"
+		{
+			"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"States"
+			{
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
+			}
+		}
+	}
+}
+
+"item_potion_of_invisibility"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_invisibility"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/smoke.vmdl" //"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"common"
+	"ItemQuality"					"common"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"120"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+			"EffectAttachType"	"attach_origin"
+		}
+
+		"FireSound"
+		{
+			"Target"		"CASTER"
+			"EffectName"	"Hero_BountyHunter.WindWalk"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName" 	"modifier_invisible"
+			"Target"		"CASTER"
+			"Duration"		"%duration"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName" 	"modifier_windwalk"
+			"Target"		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_windwalk"
+		{			
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			
+			"OnAttackLanded"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName" 	"modifier_invisible"
+					"Target"		"CASTER"
+				}
+
+				"RemoveModifier"
+				{
+					"ModifierName" 	"modifier_windwalk"
+					"Target"		"CASTER"
+				}
+			}
+
+			"OnAbilityExecuted"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName" 	"modifier_invisible"
+					"Target"		"CASTER"
+				}
+
+				"RemoveModifier"
+				{
+					"ModifierName" 	"modifier_windwalk"
+					"Target"		"CASTER"
+				}
+			}
+		}
+	}
+}
+
+"item_lesser_potion_of_invulnerability"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_invulnerability"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/smoke.vmdl" //"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"common"
+	"ItemQuality"					"common"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"7"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_lesser_potion_of_invulnerability"
+			"Duration"		"%duration"
+		}
+		"FireSound"
+		{
+			"Target" 		"CASTER"
+			"EffectName" 	"Hero_Omniknight.GuardianAngel.Cast"
+		}
+		"SpendCharge"
+		{}		
+	}
+	
+	"Modifiers"
+	{
+		"modifier_lesser_potion_of_invulnerability"
+		{
+			"OnCreated"
+			{
+			 	"AttachEffect"
+				{
+					"Target"					"CASTER"
+					"EffectName"				"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+					"EffectAttachType"			"follow_origin"
+					"EffectRadius"				"300"
+				}
+			}
+
+			"States"
+			{
+				//"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
+			}
+		}
+	}
+}
+
+"item_potion_of_invulnerability"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_invulnerability"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/smoke.vmdl" //"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"common"
+	"ItemQuality"					"common"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"15"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_potion_of_invulnerability"
+			"Duration"		"%duration"
+		}
+		"FireSound"
+		{
+			"Target" 		"CASTER"
+			"EffectName" 	"Hero_Omniknight.GuardianAngel.Cast"
+		}
+		"SpendCharge"
+		{}		
+	}
+	
+	"Modifiers"
+	{
+		"modifier_potion_of_invulnerability"
+		{
+			"OnCreated"
+			{
+			 	"AttachEffect"
+				{
+					"Target"					"CASTER"
+					"EffectName"				"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+					"EffectAttachType"			"follow_origin"
+					"EffectRadius"				"300"
+				}
+			}
+
+			"States"
+			{
+				//"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
+			}
+		}
+	}
+}
+
+"item_potion_of_divinity"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_invulnerability"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/smoke.vmdl" //"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"common"
+	"ItemQuality"					"common"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_potion_of_divinity"
+			"Duration"		"%duration"
+		}
+		"FireSound"
+		{
+			"Target" 		"CASTER"
+			"EffectName" 	"Hero_Omniknight.GuardianAngel.Cast"
+		}
+		"SpendCharge"
+		{}		
+	}
+	
+	"Modifiers"
+	{
+		"modifier_potion_of_divinity"
+		{
+			"OnCreated"
+			{
+			 	"AttachEffect"
+				{
+					"Target"					"CASTER"
+					"EffectName"				"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+					"EffectAttachType"			"follow_origin"
+					"EffectRadius"				"300"
+				}
+			}
+
+			"States"
+			{
+				//"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
+			}
+		}
+	}
+}
+
+"item_potion_of_omniscience"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_invulnerability"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/smoke.vmdl" //"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"common"
+	"ItemQuality"					"common"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"5"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/omniscience.lua"
+			"Function"		"RevealMap"
+		}
+		"SpendCharge"
+		{}		
+	}
+}
+
+"item_vampiric_potion"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_potion_of_invulnerability"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/smoke.vmdl" //"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+
+	"ItemCost"						"1200"
+	"ItemShopTags"					"common"
+	"ItemQuality"					"common"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"12"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lifesteal_percent"		"20"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"20"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_vampiric_potion"
+			"Duration"		"%duration"
+		}
+		"SpendCharge"
+		{}		
+	}
+	
+	"Modifiers"
+	{
+		"modifier_vampiric_potion"
+		{
+			"EffectName"			"particles/items2_fx/mask_of_madness.vpcf"
+			"EffectAttachType"		"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/vampiric.lua"
+					"Function"			"LifestealApply"
+				}
+			}
+		}
+
+		"modifier_vampiric_potion_lifesteal"
+		{
+			"IsHidden"			"1"		
+			"OnDealDamage"
+			{
+				"Lifesteal"
+				{
+					"Target"			"ATTACKER"
+					"LifestealPercent"	"%lifesteal_percent"
+				}
+			}
+		}
+	}
+}
+
+"item_health_stone"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_health_stone"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/salve_red.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+
+	"AbilityCooldown"				"40.0"
+	
+	"ItemCost"						"450"
+	"ItemShopTags"					"rare"
+	"ItemQuality"					"rare"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemStackable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health_regen"	"1"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"health_restored"		"500"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_health_stone"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 	    "%bonus_health_regen"
+			}	
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"Heal"
+		{
+			"Target"        	"CASTER"
+			"HealAmount"		"%health_restored"
+		}
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_treant/treant_overgrowth_vine_glows_corerope.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+		"FireSound"
+		{
+			"Target" 			"CASTER"
+			"EffectName" 		"DOTA_Item.Cheese.Activate"
+		}
+		"SpendCharge"
+		{}	
+	}
+}
+
+"item_mana_stone"
+{
+	"BaseClass"						"item_datadriven"
+	"AbilityTextureName"			"item_mana_stone"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	
+	"Model"							"models/props_gameplay/salve_blue.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+
+	"AbilityCastRange"				"100"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"40.0"
+	
+	"ItemCost"						"450"
+	"ItemShopTags"					"rare"
+	"ItemQuality"					"rare"
+	"ItemStackable"					"1"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_restored"			"300"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_mana_stone"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" 	    "%bonus_mana_regen_pct"
+			}	
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/mana.lua"
+			"Function"			"GiveMana"
+			"Target"			"CASTER"
+			"mana_amount"		"%mana_restored"
+		}
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+		"FireSound"
+		{
+			"Target" 			"CASTER"
+			"EffectName" 		"DOTA_Item.Cheese.Activate"
+		}
+		"SpendCharge"
+		{}		
+	}
+}

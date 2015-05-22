@@ -66,6 +66,108 @@
 	}
 }
 
+"item_human_train_guard_tower"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_keep"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"EnableAbilities"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_building_particle"
+			"Target" 		"CASTER"
+		}
+	}
+}
+
+"item_human_train_cannon_tower"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_keep"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"EnableAbilities"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_building_particle"
+			"Target" 		"CASTER"
+		}
+	}
+}
+
+"item_human_train_arcane_tower"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_keep"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable abilities
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"EnableAbilities"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_building_particle"
+			"Target" 		"CASTER"
+		}
+	}
+}
+
 "item_human_train_peasant"
 {
 	"BaseClass"             		"item_datadriven"

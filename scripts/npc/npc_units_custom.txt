@@ -177,6 +177,16 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"dummy_passive_vulnerable"
 	}
+	"dummy_vision"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"VisionDaytimeRange"		"1800"	
+		"VisionNighttimeRange"		"1800"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"Ability1"					"dummy_passive"
+	}
 	//------------------------------------------------------------------------------------
 	//- Units for firelord_summon_lava_spawn ability 								     -
 	//------------------------------------------------------------------------------------
@@ -1079,9 +1089,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""//upgrade to guard
-		"Ability2"					""//upgrade to cannon
-		"Ability3"					""//upgrade to arcane
+		"Ability1"					"human_train_guard_tower"//upgrade to guard
+		"Ability2"					"human_train_cannon_tower"//upgrade to cannon
+		"Ability3"					"human_train_arcane_tower"//upgrade to arcane
+		"Ability4"					"human_building_queue"
 		"Ability6"					"ability_building"
 		
 		// Armor
@@ -10896,7 +10907,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_ancient_destruction.vmdl"
+		"Model"						"models/heroes/undying/undying_tower.vmdl"
 		"ModelScale"				"0.5"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
@@ -10974,7 +10985,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_ancient001.vmdl"
+		"Model"						"models/items/undying/idol_of_ruination/idol_tower.vmdl"
 		"ModelScale"				"0.5"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
@@ -11058,7 +11069,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_ancient002.vmdl"
+		"Model"						"models/items/undying/idol_of_ruination/idol_tower_gold.vmdl"
 		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
@@ -11597,7 +11608,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/heroes/undying/undying_tower.vmdl"
+		"Model"						"models/props_structures/bad_ancient_destruction.vmdl"
 		"ModelScale"				"1"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
@@ -11671,7 +11682,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/undying/idol_of_ruination/idol_tower_gold.vmdl"
+		"Model"						"models/props_structures/bad_ancient001.vmdl"
 		"ModelScale"				"0.9"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
@@ -11749,7 +11760,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/buildings/building_racks_melee_reference.vmdl"
+		"Model"						"models/props_structures/bad_statue001.vmdl"
 		"ModelScale"				"0.7"
 		"Level"						"0"
 		"HealthBarOffset"			"140"
@@ -11907,7 +11918,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/tower_dragon_black.vmdl"
+		"Model"						"models/props_structures/tower_bad.vmdl"
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"

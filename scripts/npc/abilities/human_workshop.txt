@@ -808,7 +808,7 @@
 "human_barrage_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_barrage"
+	"AbilityTextureName"			"human_research_barrage"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -825,7 +825,7 @@
 // Fires powerful rockets at nearby enemy air units, dealing 25 damage per hit
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_barrage"
+	"AbilityTextureName"			"human_research_barrage"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
