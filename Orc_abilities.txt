@@ -1,0 +1,995 @@
+//=================================================================================
+// Ability: Pillage
+// Description: "Each attack that does damage to an enemy building also gains resources."
+// Code Reference: Asal
+//=================================================================================
+"orc_pillage"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_pillage"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"accumulation_step"		"1"
+		}
+		// For example, after dealing 10% of the building's health, you should already gain 10 gold, but if the accumulation_step is set to 20, you'll need to damage 20% of its health in order to "cash out".
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"salvage_ratio"			"0.5"
+		}
+		// Amount of resource gained = Building's cost * salvage_ratio * Damage dealt to building in percentage
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Berserk
+// Description: "Causes this unit to attack <Absk,DataB1,%>% faster, but take <Absk,DataC1,%>% more damage."
+// Code Reference: Absk
+//=================================================================================
+"orc_berserk"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_berserk"
+	"MaxLevel"					"1"
+	
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"30"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"12"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"damage_taken_increase"			"0.5"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"attack_speed_increase"			"0.2"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"movement_speed_increase"		"0.5"
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Burning Oil
+// Description: "Drenches the Demolisher ammo in burning oil, causing them to light the ground on fire and burn enemy units."
+// Code Reference: Abof
+//=================================================================================
+"orc_burning_oil"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_burning_oil"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		
+	// The ability itself is a passive but there are still values for cooldown, manacost back in WC3, I've taken the liberty to remove them.
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"2.51"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"150"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"half_damage_dealt"			"3"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"half_damage_interval"			"1"
+		}
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"full_damage_dealth"			"6"
+		}
+		"06"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"full_damage_interval"			"0.5"
+		}
+		"07"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"building_reduction"			"1"
+		}
+		// This is a multiplier, if set to 0, then buildings will take no burning damage, if set to 10, the burning damage on buildings is multiplied by 10, etc.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Purge
+// Description: "Removes all buffs from a target unit, and slows its movement speed by a factor of <Aprg,DataA1>. Purged units will slowly regain their movement speed over <Aprg,Dur1> seconds. |n|cffffcc00Deals <Aprg,DataC1> damage to summoned units.|r"
+// Code Reference: Aprg
+//=================================================================================
+"orc_purge"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_purge"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"700"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"1"
+	"AbilityManaCost"			"75"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"15"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration_hero"					"5"
+		}
+		"03"
+		
+		{
+			"var_type"		"FIELD_INTEGER"
+			"summoned_unit_damage"			"400"
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Lightning Shield
+// Description: "Forms a shield of electricity around a target unit, dealing <Alsh,DataA1> damage per second to units around it. |nLasts <Alsh,Dur1> seconds."
+// Code Reference: Alsh
+//=================================================================================
+"orc_lightning_shield"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_lightning_shield"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"600"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"3"
+	"AbilityManaCost"			"100"
+		
+	"AOERadius"					"160"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"20"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"160"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_per_second"			"20"
+		}
+		// It ticks every second Kappa
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Bloodlust
+// Description: "Increases a friendly unit's attack rate by <Ablo,DataA1,%>% and movement speed by <Ablo,DataB1,%>%. |nLasts <Ablo,Dur1> seconds."
+// Code Reference: Ablo
+//=================================================================================
+"orc_bloodlust"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_bloodlust"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"600"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"1"
+	"AbilityManaCost"			"40"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"60"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"attack_speed_increase"			"0.25"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"movement_speed_increase"		"0.4"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"scaling_factor"				"0.3"
+		}
+		// For model scaling.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Sentry Ward
+// Description: "Summons an invisible and immovable ward that provides vision in an area. |nCan see invisible units. |nLasts <Aeye,Dur1> seconds."
+// Code Reference: Aeye
+// NOTE: Back in my days, Sentry Ward wasn't Sentry Ward.
+//=================================================================================
+"orc_sentry_ward"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_sentry_ward"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"50"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"600"
+		}
+	}
+
+	// Done
+}
+
+
+//=================================================================================
+// Ability: Stasis Trap
+// Description: "Summons an invisible and immovable ward that stuns enemy land units around it. The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect. |nThe trap lasts <Asta,Dur1> seconds. |nThe stun lasts <Asta,DataD1> seconds."
+// Code Reference: Asta
+//=================================================================================
+"orc_stasis_trap"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_stasis_trap"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"100"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"150"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"detonation_radius"			"400"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"stun_duration"				"6"
+		}
+		// Phew, I'm glad they balanced Techies.
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"activation_delay"			"10"
+		}
+		// Wew, I'm sad they imbalanced Techies.
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"detection_radius"			"250"
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Healing Ward
+// Description: "Summons an immovable ward that heals <Aoar,DataA1,%>% of a nearby friendly non-mechanical unit's hit points per second. |nLasts <Ahwd,Dur1> seconds."
+// Code Reference: Ahwd
+// NOTE: Goes with the Healing Ward Aura.
+//=================================================================================
+"orc_healing_ward"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_healing_ward"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"200"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"30"
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Healing Ward Aura
+// Code Reference: Aoar
+//=================================================================================
+"orc_healing_ward_aura"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_healing_ward_aura"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"500"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"regeneration"			"0.02"
+		}
+		// % of health regenerated per second
+		// There's an extra boolen to decide if that is a percentage, I've removed it for your convenience.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Spirit Link
+// Description: "Links <Aspl,DataB1> units together in a chain. All units with Spirit Link on them will live longer, by distributing <Aspl,DataA1,%>% of the damage they take across other Spirit Linked units. |nLasts <Aspl,Dur1> seconds."
+// Code Reference: Aspl
+//=================================================================================
+"orc_spirit_link"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_spirit_link"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	// I do not know what damage type is the damage distributed.
+	// THE DAMAGE LINKED IS CALCULATED BEFORE ANY REDUCTION.
+		
+	"AbilityCastRange"			"750"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"75"
+		
+	"AOERadius"					"500"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"75"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"500"
+		}
+		// Centered around the target unit.
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"distribution_factor"			"0.5"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"max_unit"		"4"
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Disenchant
+// Description: "Removes all buffs from units in a target area. |n|cffffcc00Deals <Adcn,DataB1> damage to hostile summoned units.|r"
+// Code Reference: Adis
+//=================================================================================
+"orc_disenchant"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_disenchant"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"650"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"100"
+		
+	"AOERadius"					"250"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"250"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"summoned_unit_damage"			"250"
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Ancestral Spirit
+// Description: "Raises a fallen non-Hero Tauren from the dead. The Tauren is revived with <Aast,DataA1,%>% of its hit points restored."
+// Code Reference: Aast
+//=================================================================================
+"orc_ancestral_spirit"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_ancestral_spirit"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"350"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"30"
+	"AbilityManaCost"			"250"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"life_restored"			"1"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"mana_restored"			"0.25"
+		}
+		// Both are percentages.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Ethereal Form
+// Description: "Turns the Spirit Walker ethereal, making him immune to physical damage but unable to attack. He can cast spells and will take extra damage from Magic attacks and spells."
+// Code Reference: Aetf
+//=================================================================================
+"orc_ethereal_form"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_ethereal_form"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"30"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"0.7"
+		}
+		// Is actually cast time.
+		// There's a boolean that decides if the process is interruptable (default to no), I've removed it for your convenience.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Ensnare
+// Description: "Causes a target enemy unit to be bound to the ground so that it cannot move for <Aens,Dur1> seconds. Air units that are ensnared can be attacked as though they were land units."
+// Code Reference: Aens
+//=================================================================================
+"orc_ensnare"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_ensnare"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"16"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"12"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"lower_duration"			"0.6"
+		}
+		// The duration in which the target is lowered.
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"lower_height"				"200"
+		}
+		// The height to which the target is lowered.
+		// A third value called "Melee Attack Range" apparently doesn't affect anything at all so I've removed it.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Devour
+// Description: "Consumes an enemy land unit, slowly digesting it and dealing <Advc,DataC1> damage per second to it. If the Kodo Beast is killed while the consumed unit is still digesting, the unit that was devoured will be released."
+// Code Reference: Adev
+// NOTE: IMPORTANT!!! Devour and Devour Cargo work in tandem, Devour appears to be a dummy spell that lets Devour Cargo handle targeting and doing actual work.
+//=================================================================================
+"orc_devour"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_devour"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"100"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"max_creep_level"			"5"
+		}
+	}
+
+	// Done
+}
+
+
+//=================================================================================
+// Ability: Devour Cargo
+// Code Reference: Advc
+// NOTE: This is a hidden spell of sort, it will not appear without Devour, Devour will not be able to select a target without it.
+//=================================================================================
+"orc_devour_cargo"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_devour_cargo"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"120"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+	// I don't know what the crap is going on with the different cast range.
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"0.5"
+		}
+		// No idea what this does, it's not the damage interval, not the cast time nor animation delay.
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"250"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_per_second"			"5"
+		}
+		// "Cargo Capacity" doesn't appear to do anything, you can only devour one unit at a time and "devourability" is decided by who-knows-what.
+		// Will playtest later if needed to find out who is not devourable.
+	}
+
+	// Done
+}
+
+
+//=================================================================================
+// Ability: War Drums
+// Description: "Adds a damage increase to the attacks of nearby friendly units."
+// Code Reference: Aakb
+//=================================================================================
+"orc_war_drums"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_war_drums"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	
+	"AbilityCastRange"			"900"
+	// Added for visual indication.
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"900"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"damage_increase"			"0.1"
+		}
+		// There are 2 other values which are booleans that decide if the bonus applies to melee and ranged units respectively. I've removed them for your convenience.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Envenomed Spears
+// Description: "Deals <Aven,DataA1> poison damage per second. |nLasts <Aven,Dur1> seconds."
+// Code Reference: Aven
+//=================================================================================
+"orc_envenomed_spears"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_envenomed_spears"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"25"
+		}
+		// Yes, that long.
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration_hero"				"1"
+		}
+		// Yes, that short.
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_per_second"			"4"
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Unstable Concoction
+// Description: "Causes a powerful explosion that deals <Auco,DataB1> damage to a target air unit, and <Auco,DataD1> damage to nearby enemy air units."
+// Code Reference: Auco
+//=================================================================================
+"orc_unstable_concoction"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_unstable_concoction"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"400"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"partial_damage_amount"			"200"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"partial_damage_radius"			"140"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"full_damage_amount"			"600"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"speed_bonus"			"280"
+		}
+		// The unit will move towards the target unit with an increased speed (base + bonus).
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Liquid Fire
+// Description: "Flings a volatile liquid that causes buildings to take damage over time. Buildings that are currently taking damage from Liquid Fire cannot be repaired, and have their attack rate reduced by <Aliq,DataC1,%>%."
+// Code Reference: Aliq
+// NOTE: Remember the "cannot be repaired" part.
+//=================================================================================
+"orc_liquid_fire"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_liquid_fire"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	// Changed to physical because buildings don't take magical damage.
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"3"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"attack_speed_reduction"		"0.8"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_per_second"				"8"
+		}
+	}
+
+	// Done
+}
+
+
+//=================================================================================
+// Ability: Pulverize
+// Description: "Gives a <Awar,DataA1>% chance that an attack will deal <Awar,DataB1> damage to nearby units."
+// Code Reference: Awar
+//=================================================================================
+"orc_pulverize"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_pulverize"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	// Damage type unknown, can be physical.
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"full_damage_radius"		"250"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"half_damage_radius"		"350"
+		}
+		// Half of extra_damage, of course.
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"chance"					"25"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"extra_damage"				"60"
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Battle Stations
+// Description: "Causes nearby Peons to run into the Burrow so that they can defend their base."
+// Code Reference: Abtl
+//=================================================================================
+"orc_battle_stations"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_battle_stations"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	// Added Targeting for your convenience.
+	
+	"AbilityCastRange"			"2000"
+	// Added for visual indication.
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"2000"
+		}
+		// There's a boolean (default to yes) that decides if you should summon "busy" units, aka units that are mining, lumbering, repairing.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Stand Down
+// Description: "Causes Peons within the Burrow to return to work."
+// Code Reference: Astd
+//=================================================================================
+"orc_stand_down"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"orc_stand_down"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	
+	"AbilitySpecial"
+	{
+	}
+
+	// Done
+}
