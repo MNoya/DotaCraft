@@ -1,13 +1,19 @@
 # Cache crap that Valve autogenerates
 *.bin
 
-# Ignore all particles except the custom folder
+# Compiled formats
 *.vpcf_c
-/particles/*
-!/particles/custom
-!/particles/custom/*
-!/particles/buildinghelper
-!/particles/buildinghelper/*
+*.vtex_c
+*.vsndevts_c
+*.vmat_c
+*.vjs_c
+*.vxml_c
+*.vcss_c
 
-# Map Files
+# Map files
 *.vpk
+
+# Map overviews
+content/dota_addons/dotacraft/materials/overviews/*
+game/dota_addons/dotacraft/materials/overviews/*
+game/dota_addons/dotacraft/resource/overviews/*
