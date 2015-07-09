@@ -1,3 +1,29 @@
+//================================================================================= /
+// Builder modifier to signal that builder is processing a queue
+//================================================================================= /
+"has_build_queue"
+{
+  "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  "BaseClass" "ability_datadriven"
+
+  "Modifiers"
+  {
+    "modifier_has_build_queue"
+    {
+      "Passive" "1"
+      "IsHidden"  "1"
+      "OnOrder"
+      {
+        "RunScript"
+        {
+          "ScriptFile"  "scripts/vscripts/abilities.lua"
+          "Function"    "builder_queue"
+        }
+      }
+    }
+  }
+}
+
 "build_arrow_tower"
 {
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"

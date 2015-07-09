@@ -265,45 +265,6 @@ function dotacraft:InitGameMode()
 	  	end
 	end, "Change AbilityValues", 0 )
 
- 	Convars:RegisterCommand( "player_overview_cast", function(name, ability_to_cast) 
- 		local cmdPlayer = Convars:GetCommandClient()
-		local pID = cmdPlayer:GetPlayerID()
-
-		if cmdPlayer then
-			print("Recieved command to cast "..ability_to_cast.." - Proceeding to find the ability")
-
-			-- Need to protect against:
-				-- Queing the same research skill twice
-				-- Training peasants after upgrading to keep/castle
-				-- Building ghost not appearing
-				-- Item build abilities not sending
-
-			if string.find(ability_to_cast, "_train") or string.find(ability_to_cast, "_research") then
-				local ability = FindAbilityOnStructures(cmdPlayer, ability_to_cast)
-
-				for _,building in pairs(cmdPlayer.structures) do
-					if building:HasAbility(ability_to_cast) then
-						local ability_cast = building:FindAbilityByName(ability_to_cast)
-						building:CastAbilityImmediately(ability_cast, 0)
-					end
-				end
-
-			-- _build abilities have the issue of BH/Flash not being able to find a handle
-			elseif string.find(ability_to_cast, "_build") then
-				local ability = FindAbilityOnUnits(cmdPlayer, ability_to_cast)
-
-				for _,unit in pairs(cmdPlayer.units) do
-					if unit:HasAbility(ability_to_cast) then
-						local ability_cast = unit:FindAbilityByName(ability_to_cast)
-						unit:CastAbilityImmediately(ability_cast, 0)
-					end
-				end
-			end
-		end
-
-
- 	end, "Send an ability to find and cast", 0)
-
 
 	-- Fill server with fake clients
 	-- Fake clients don't use the default bot AI for buying items or moving down lanes and are sometimes necessary for debugging
@@ -576,18 +537,6 @@ function dotacraft:OnAbilityUsed(keys)
 	local player = EntIndexToHScript(keys.PlayerID)
 	local abilityname = keys.abilityname
 
-	-- Cancel the ghost if the player casts another active ability.
-	-- Start of BH Snippet:
-	if player.cursorStream ~= nil then
-		if not (string.len(abilityname) > 14 and string.sub(abilityname,1,14) == "move_to_point_") then
-			if not DontCancelBuildingGhostAbils[abilityname] then
-				player:CancelGhost()
-			else
-				print(abilityname .. " did not cancel building ghost.")
-			end
-		end
-	end
-	-- End of BH Snippet
 end
 
 -- A non-player entity (necro-book, chen creep, etc) used an ability
@@ -790,12 +739,6 @@ function dotacraft:OnEntityKilled( event )
 	if event.entindex_attacker then
 		killerEntity = EntIndexToHScript(event.entindex_attacker)
 	end
-
-	-- START OF BH SNIPPET
-	if BuildingHelper:IsBuilding(killedUnit) then
-		killedUnit:RemoveBuilding(false)
-	end
-	-- END OF BH SNIPPET
 
 	-- Player owner of the unit
 	local player = killedUnit:GetPlayerOwner()

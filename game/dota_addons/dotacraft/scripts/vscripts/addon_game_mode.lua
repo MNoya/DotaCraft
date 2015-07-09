@@ -12,11 +12,7 @@ require('utilities')
 require('upgrades')
 require('mechanics')
 require('orders')
-
--- BuildingHelper by Myll
 require('buildinghelper')
-require('FlashUtil')
-require('abilities')
 
 ---------------------------------------------------------------------------
 

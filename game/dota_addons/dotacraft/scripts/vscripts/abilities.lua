@@ -85,7 +85,7 @@ function build( keys )
 
 		-- Move the units away from the building place
 		for _,unit in pairs(units) do
-			if unit ~= caster and not unit.isBuilding then
+			if unit ~= caster and not IsCustomBuilding(unit) then
 				print(unit:GetUnitName().." moving")
 				local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * hull
 				ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
@@ -158,7 +158,6 @@ function build( keys )
 end
 
 function create_building_entity( keys )
-	print("create_building_entity")
 	BuildingHelper:InitializeBuildingEntity(keys)
 end
 
@@ -166,8 +165,16 @@ function building_canceled( keys )
 	BuildingHelper:CancelBuilding(keys)
 end
 
+function builder_queue( keys )
+	local ability = keys.ability
+  local caster = keys.caster  
 
-
-
-
-
+  if caster.ProcessingBuilding ~= nil then
+    -- caster is probably a builder, stop them
+    player = PlayerResource:GetPlayer(caster:GetMainControllingPlayer())
+    player.activeBuilder:ClearQueue()
+    player.activeBuilding = nil
+    player.activeBuilder:Stop()
+    player.activeBuilder.ProcessingBuilding = false
+  end
+end
