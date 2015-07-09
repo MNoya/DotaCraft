@@ -1,13 +1,11 @@
 "use strict";
 
 var skip = false
-var selectionOverriden = false
 
 function OnUpdateSelectedUnit( event )
 {
 	if (skip == true){
 		skip = false;
-		$.Schedule(0.03, function _override(){ selectionOverriden = false});
 		//$.Msg("skip")
 		return
 	}
@@ -34,21 +32,28 @@ function OnUpdateSelectedUnit( event )
 	//$.Msg( "Player "+iPlayerID+" Selected Entities ("+(selectedEntities.length)+")" );
 	if (selectedEntities.length > 1 && IsMixedBuildingSelectionGroup(selectedEntities) ){
 		$.Msg( "IsMixedBuildingSelectionGroup, proceeding to deselect the buildings and get only the units ")
+
+		skip = true;
+		GameUI.SelectUnit(FirstNonBuildingEntityFromSelection(selectedEntities), false); // Overrides the selection group
+
 		for (var i = 0; i < selectedEntities.length; i++) {
 			skip = true; // Makes it skip an update
-			if (!IsCustomBuilding(selectedEntities[i]) && !selectionOverriden){
-				selectionOverriden = true
-				GameUI.SelectUnit(selectedEntities[i], false);
-				$.Msg( "New selection group");
-			}
-			else if (!IsCustomBuilding(selectedEntities[i]) ){
-				GameUI.SelectUnit(selectedEntities[i], true); //
-				$.Msg( selectedEntities[i]+" added to the selection group");
+			if (!IsCustomBuilding(selectedEntities[i])){
+				GameUI.SelectUnit(selectedEntities[i], true);
 			}
 		}	
 	}
 
 	$.Schedule(0.03, SendSelectedEntities);
+}
+
+function FirstNonBuildingEntityFromSelection( entityList ){
+	for (var i = 0; i < entityList.length; i++) {
+		if (!IsCustomBuilding(entityList[i])){
+			return entityList[i]
+		}
+	}
+	return 0
 }
 
 function SendSelectedEntities (params) {
@@ -62,21 +67,25 @@ function IsBaseName( unitName ){
 		if ( (unitName.indexOf("town_hall") != -1) || (unitName.indexOf("keep")!= -1) || (unitName.indexOf("castle")!= -1) ){
 			return true
 		}
+		else return false
 	}
 	else if (unitName.indexOf("nightelf") != -1){
 		if ( (unitName.indexOf("tree_of_life") != -1) || (unitName.indexOf("tree_of_ages")!= -1) || (unitName.indexOf("tree_of_eternity")!= -1) ){
 			return true
 		}
+		else return false
 	}
 	else if (unitName.indexOf("undead") != -1){
 		if ( (unitName.indexOf("necropolis") != -1) || (unitName.indexOf("halls_of_the_dead")!= -1) || (unitName.indexOf("black_citadel")!= -1) ){
 			return true
 		}
+		else return false
 	}
 	else if (unitName.indexOf("orc") != -1){
 		if ( (unitName.indexOf("great_hall") != -1) || (unitName.indexOf("stronghold")!= -1) || (unitName.indexOf("fortress")!= -1) ){
 			return true
 		}
+		else return false
 	}
 	else return false
 }
@@ -112,11 +121,19 @@ function IsCustomBuilding( entityIndex ){
 		return false
 }
 
+// When a building is upgraded to a new one, we would like to have the upgrade re-selected for us
+// This new unit should only be put into the selection group if a building was previously selected
 function OnNPCSpawned ( event ){
 	var npcIndex = event.entindex
+	var iPlayerID = Players.GetLocalPlayer()
 	var unitName = Entities.GetUnitName( npcIndex )
-	if (IsBaseName(unitName)){
-		GameUI.SelectUnit(npcIndex, true);		
+	var selectedEntities = Players.GetSelectedEntities( iPlayerID );
+	var mainSelected = Players.GetLocalPlayerPortraitUnit(); 
+	var mainSelectedName = Entities.GetUnitName( mainSelected )
+
+	// If the currently selected unit is a building, select the new one
+	if ( IsCustomBuilding(mainSelected) && Entities.IsControllableByPlayer( npcIndex, iPlayerID )){
+		GameUI.SelectUnit(npcIndex, true);
 	}
 }
 
