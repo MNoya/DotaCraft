@@ -1,0 +1,1193 @@
+//=================================================================================
+// Ability: Gather
+// Description: "Mines gold from Entangled Gold Mines and harvests lumber from trees."
+// Code Reference: Awha
+//=================================================================================
+"nightelf_gather"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_gather"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"900"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"8"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataC"			"150"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"5"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"5"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Detonate
+// Description: "Destroys the Wisp, dispelling all magical buffs and draining <Adtn,DataA1> mana from each unit in an area around the Wisp. |n|cffffcc00Deals <Adtn,DataB1> damage to summoned units.|r"
+// Code Reference: Adtn
+//=================================================================================
+"nightelf_detonate"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_detonate"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_TREE"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"100"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AOERadius"					"300"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"300"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"50"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"225"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Renew
+// Description: "Renews friendly Night Elf buildings, allied buildings, and friendly mechanical units."
+// Code Reference: Aren
+//=================================================================================
+"nightelf_renew"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_renew"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"50"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataA"			"0.35"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataB"			"1.5"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataE"			"175"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Shadow Meld
+// Description: "Stops the unit from auto-acquiring enemies, allowing it to Shadowmeld and remain unseen at night."
+// Code Reference: Ashm
+//=================================================================================
+"nightelf_shadow_meld"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_shadow_meld"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataC"			"0.5"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataA"			"1.5"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataB"			"2.5"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Elune's Grace
+// Description: "Reduces the damage taken from Piercing attacks to <Aegr,DataA1,%>%, and spells and Magic attacks to <Aegr,DataE1,%>%."
+// Code Reference: AIdd
+//=================================================================================
+"nightelf_elune's_grace"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_elune's_grace"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataH"			"1"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataA"			"0.65"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"1"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataE"			"0.8"
+		}
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataG"			"1"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Sentinel
+// Description: "Send an owl to a nearby tree to reveal the area around it. |nCan see invisible units."
+// Code Reference: Aesn
+//=================================================================================
+"nightelf_sentinel"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_sentinel"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"800"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"60"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataC"			"275"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"100"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"900"
+		}
+	}
+
+	//ToDo
+
+}
+
+//moon_glaive
+//vorpal_blades
+//=================================================================================
+// Ability: Slow Poison
+// Description: "A poison attack that deals <Aspo,DataA1> damage per second, and slows the target enemy's movement by <Aspo,DataB1,%>% and attack by <Aspo,DataC1,%>% for <Aspo,Dur1> seconds."
+// Code Reference: Aspo
+//=================================================================================
+"nightelf_slow_poison"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_slow_poison"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"5"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataC"			"0.25"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataD"			"1"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"4"
+		}
+		"05"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataB"			"0.5"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Abolish Magic
+// Description: "Dispels positive buffs from enemy units, and negative buffs from friendly units. |n|cffffcc00Deals <Aadm,DataB1> damage to summoned units.|r"
+// Code Reference: Aadm
+//=================================================================================
+"nightelf_abolish_magic"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_abolish_magic"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_TREE"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"50"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataC"			"1"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"300"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Spell Immunity
+// Description: "Renders this unit immune to all spells."
+// Code Reference: Amim
+//=================================================================================
+"nightelf_spell_immunity"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_spell_immunity"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Roar
+// Description: "Gives friendly nearby units a <Ara2,DataA1,%>% bonus to damage. |nLasts <Ara2,Dur1> seconds."
+// Code Reference: Aroa
+//=================================================================================
+"nightelf_roar"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_roar"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"100"
+		
+	"AOERadius"					"500"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"45"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"500"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataA"			"0.25"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Rejuvenation
+// Description: "Heals a target friendly unit for <Arej,DataA1> hit points over <Arej,Dur1> seconds."
+// Code Reference: Arej
+//=================================================================================
+"nightelf_rejuvenation"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_rejuvenation"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"400"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"1"
+	"AbilityManaCost"			"125"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"12"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataC"			"3"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"400"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Bear Form
+// Description: "Transforms the Druid into a bear, slowing mana regeneration, but making him an excellent warrior."
+// Code Reference: Abrf
+//=================================================================================
+"nightelf_bear_form"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_bear_form"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"25"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"1.45"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataD"			" - "
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"edoc"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"1"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Taunt
+// Description: "The closest <Atau,DataA1> enemies are forced to attack this unit."
+// Code Reference: Atau
+//=================================================================================
+"nightelf_taunt"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_taunt"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"15"
+	"AbilityManaCost"			"0"
+		
+	"AOERadius"					"450"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"450"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"10"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: War Club
+// Description: "Picks up a tree to give the Mountain Giant Siege damage, and increased attack range. |nLasts for <Agra,DataE1> strikes."
+// Code Reference: Agra
+//=================================================================================
+"nightelf_war_club"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_war_club"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"32"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"5"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataD"			"1"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataA"			"0.8"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"dataB"			"2.5"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataE"			"15"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Hardened Skin
+// Description: "Reduces all attacks on the Mountain Giant by <Assk,DataC1> damage. Attacks cannot be reduced below <Assk,DataB1> damage."
+// Code Reference: Assk
+//=================================================================================
+"nightelf_hardened_skin"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_hardened_skin"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataC"			"12"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataD"			"1"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"100"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"3"
+		}
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataE"			"1"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Resistant Skin
+// Description: "Reduces the duration of negative spells and renders the Mountain Giant immune to certain spells."
+// Code Reference: Arsk
+//=================================================================================
+"nightelf_resistant_skin"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_resistant_skin"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Pick up Archer
+// Description: "Picks up an Archer so that the Archer can attack from the air. The mounted unit cannot dismount. |n|n|cffffcc00Attacks land and air units.|r"
+// Code Reference: Acoh
+//=================================================================================
+"nightelf_pick_up_archer"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_pick_up_archer"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"100"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"earc"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Dismount
+// Description: "Dismounts the Archer from the Hippogryph."
+// Code Reference: Adec
+//=================================================================================
+"nightelf_dismount"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_dismount"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"30"
+	"AbilityManaCost"			"0"
+		
+	"AOERadius"					"-1"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"-1"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"earc"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"ehip"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Faerie Fire
+// Description: "Reduces a target enemy unit's armor by <Afae,DataA1> and gives vision of that unit. |nLasts <Afae,Dur1> seconds."
+// Code Reference: Afae
+//=================================================================================
+"nightelf_faerie_fire"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_faerie_fire"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"700"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"1"
+	"AbilityManaCost"			"45"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"90"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"4"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"1"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Storm Crow Form
+// Description: "Transforms the Druid into a storm crow, giving him the ability to fly."
+// Code Reference: Arav
+//=================================================================================
+"nightelf_storm_crow_form"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_storm_crow_form"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"1.05"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"50"
+		
+	"AOERadius"					"-1"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"0.6"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"-1"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataC"			"1"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataD"			"1"
+		}
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"edot"
+		}
+		"06"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"5"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Cyclone
+// Description: "Tosses a target non-mechanical enemy unit into the air, rendering it unable to move, attack or cast spells, and stopping others from attacking or casting on it. |nLasts <Acyc,Dur1> seconds."
+// Code Reference: Acyc
+//=================================================================================
+"nightelf_cyclone"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_cyclone"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"600"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"5"
+	"AbilityManaCost"			"150"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"20"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"1"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Phase Shift
+// Description: "Causes this unit to shift out of existence whenever it takes damage, temporarily avoiding any further damage. |nLasts <Apsh,Dur1> second."
+// Code Reference: Apsh
+//=================================================================================
+"nightelf_phase_shift"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_phase_shift"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"6.5"
+	"AbilityManaCost"			"20"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"1.5"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Mana Flare
+// Description: "Causes the Faerie Dragon to channel negative magical energies that damage nearby enemies when they cast spells. Also increases the Faerie Dragon's armor by <Amfl,DataE1>. |nLasts <Amfl,Dur1> seconds."
+// Code Reference: Amfl
+//=================================================================================
+"nightelf_mana_flare"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_mana_flare"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"200"
+	"AbilityCastPoint"			"0.75"
+	"AbilityCooldown"			"20"
+	"AbilityManaCost"			"50"
+		
+	"AOERadius"					"750"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"30"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"750"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataC"			"90"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataD"			"50"
+		}
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"3"
+		}
+		"06"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"1"
+		}
+		"07"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataE"			"12"
+		}
+		"08"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataF"			"1"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Corrosive Breath
+// Description: "Hurls a ball of corrosive bile that is effective against buildings."
+// Code Reference: Acor
+//=================================================================================
+"nightelf_corrosive_breath"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_corrosive_breath"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"5"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"50"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Ultravision
+// Description: "Gives Night Elves the ability to see as far at night as they do during the day."
+//=================================================================================
+"nightelf_ultravision"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_ultravision"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			""
+	"AbilityCooldown"			""
+		
+	"AbilitySpecial"
+	{
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Root
+// Description: "Burrows the Ancient's roots into the ground, rendering it immobile, but allowing it to build units. For the Ancient Protector, this allows it to hurl enormous rocks through the air to damage enemy units. Also gives the Ancient Fortified armor."
+// Code Reference: Aroo
+//=================================================================================
+"nightelf_root"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_root"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"2.5"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataD"			"2"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"1"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"2"
+		}
+	}
+
+	//ToDo
+
+}
+
+//=================================================================================
+// Ability: Nature's Blessing
+// Description: "Upgrades all Ancients' and Treants' movement speed and armor."
+//=================================================================================
+"nightelf_nature's_blessing"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_nature's_blessing"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			""
+	"AbilityCooldown"			""
+		
+	"AbilitySpecial"
+	{
+	}
+
+	//ToDo
+
+}

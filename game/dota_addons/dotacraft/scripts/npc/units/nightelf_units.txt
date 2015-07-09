@@ -1,0 +1,1322 @@
+// Night Elf Unit List
+//	nightelf_wisp -	models/heroes/wisp/wisp.vmdl + particles/units/heroes/hero_wisp/wisp_ambient.vpcf
+//	nightelf_archer - models/heroes/windrunner/windrunner.vmdl
+//	nightelf_huntress - models/heroes/luna/luna.vmdl
+//	nightelf_glaive_thrower - models/creeps/lane_creeps/creep_good_siege/creep_good_siege.vmdl
+//	nightelf_dryad - models/heroes/enchantress/enchantress.vmdl
+//	nightelf_druid_of_the_claw - models/heroes/lone_druid/lone_druid.vmdl
+//	nightelf_mountain_giant - models/heroes/tiny_01/tiny_01.vmdl
+//	nightelf_druid_of_the_talon - models/heroes/furion/furion.vmdl
+//	nightelf_faerie_dragon - models/heroes/puck/puck.vmdl
+//	nightelf_chimaera - models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl
+//	nightelf_hippogryph - models/items/courier/throe/throe_flying.vmdl
+// 	nightelf_hippogryph_rider -- mount archer in hippogryph?
+
+//=================================================================================
+// Creature: Wisp
+// Description: "Basic worker unit. Can harvest gold and lumber, create Night Elf buildings and Renew. |nCan Detonate to dispel magic, hurt summoned creatures and drain mana in an area."
+//=================================================================================
+"nightelf_wisp"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/items/courier/echo_wisp/echo_wisp.vmdl" //"models/heroes/wisp/wisp.vmdl"
+	"ModelScale"				"1"
+	"Level"						"1"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"6"
+	"Ability1"					"nightelf_gather"	 //Reference: Adtn - nightelf_detonate
+	"Ability2"					"nightelf_build_ancient_of_war"	 //Reference: Aren - nightelf_renew
+	"Ability3"					"nightelf_build_ancient_of_lore"	 //Reference: Awha - nightelf_gather
+	"Ability4"					"nightelf_build_ancient_of_wind"	 //Reference: Ault - Ultravision
+	"Ability5"					"nightelf_build_ancient_protector"
+	"Ability6"					"nightelf_build_chimaera_roost"
+
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"0"
+	"AttackDamageMax"			"0"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"20.0"
+	"BountyGoldMax"				"30.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+	"RingRadius"				"50"
+	"CollisionSize"				"16"
+	"FormationRank"				"3"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"60"
+	"LumberCost"				"0"
+	"FoodCost"					"1"
+	"BuildTime"					"14"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"120"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1000"
+	"VisionNighttimeRange"		"750"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"536"		}
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_wisp/wisp_ambient.vpcf"
+	}
+}
+
+//=================================================================================
+// Creature: Archer
+// Description: "Basic long-ranged attacker. Has the Elune's Grace ability. Can learn the Marksmanship, Improved Bows and Hippogryph Taming upgrades.|n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"nightelf_archer"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/windrunner/windrunner.vmdl"
+	"ModelScale"				"0.8"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Aco2 Couple Instant (Archer)
+	"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
+	"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability5"					"nightelf_elune's_grace"	 //Reference: Aegr
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"16.0"
+	"AttackDamageMax"			"18.0"
+	"AttackRate"				"1.5"
+	"AttackAnimationPoint"		"0.72"
+	"AttackAcquisitionRange"	"800"
+	"AttackRange"				"500"
+	"ProjectileModel"			"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"130"
+	"LumberCost"				"10"
+	"FoodCost"					"2"
+	"BuildTime"					"20"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"245"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"21"		}
+			"Wearable2"		{	"ItemDef"		"22"		}
+			"Wearable3" 	{	"ItemDef"		"23"		}
+			"Wearable4"		{	"ItemDef"		"24"		}
+			"Wearable5"		{	"ItemDef"		"25"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Huntress
+// Description: "Agile short-ranged warrior. Can learn the Sentinel ability and the Moon Glaive attack. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_huntress"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/luna/luna.vmdl"
+	"ModelScale"				"0.7"
+	"Level"						"3"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_sentinel"	 //Reference: Aesn
+	"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
+	"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl
+	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability5"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"2"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"16.0"
+	"AttackDamageMax"			"18.0"
+	"AttackRate"				"1.8"
+	"AttackAnimationPoint"		"0.46"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"225"
+	"ProjectileModel"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"195"
+	"LumberCost"				"20"
+	"FoodCost"					"3"
+	"BuildTime"					"30"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"600"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"448"		}
+			"Wearable2"		{	"ItemDef"		"449"		}
+			"Wearable3" 	{	"ItemDef"		"450"		}
+			"Wearable4"		{	"ItemDef"		"451"		}
+			"Wearable5"		{	"ItemDef"		"452"		}
+			"Wearable6"		{	"ItemDef"		"453"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Glaive Thrower
+// Description: "Long-range siege weaponry. Exceptional damage versus buildings. Can gain the Vorpal Blades upgrade to attack trees. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_glaive_thrower"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/lane_creeps/creep_good_siege/creep_good_siege.vmdl"
+	"ModelScale"				"0.7"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_impaling_bolt"	 //Reference: Aimp - Vorpal Blades / Impaling Bolt
+	"Ability2"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"2"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"36.0"
+	"AttackDamageMax"			"53.0"
+	"AttackRate"				"3.5"
+	"AttackAnimationPoint"		"0.1"
+	"AttackAcquisitionRange"	"1150"
+	"AttackRange"				"1150"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1400"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"48"
+	"FormationRank"				"3"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"210"
+	"LumberCost"				"65"
+	"FoodCost"					"3"
+	"BuildTime"					"48"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"220"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"300"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"1200"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+//=================================================================================
+// Creature: Dryad
+// Description: "Anti-spellcaster that has a poison attack which slows and damages enemy units. Also has Spell Immunity which renders her invulnerable to magical effects and damage. Can learn Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"nightelf_dryad"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/enchantress/enchantress.vmdl"
+	"ModelScale"				"0.7"
+	"Level"						"3"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_abolish_magic"	 //Reference: Aadm
+	"Ability2"					"nightelf_spell_immunity"	 //Reference: Amim
+	"Ability3"					"nightelf_slow_poison"	 //Reference: Aspo
+	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability5"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"17.0"
+	"AttackDamageMax"			"19.0"
+	"AttackRate"				"2"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"800"
+	"AttackRange"				"500"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1000"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"145"
+	"LumberCost"				"60"
+	"FoodCost"					"3"
+	"BuildTime"					"30"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"435"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"200"
+	"StatusManaRegen"			"200"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"286"		}
+			"Wearable2"		{	"ItemDef"		"287"		}
+			"Wearable3" 	{	"ItemDef"		"288"		}
+			"Wearable4"		{	"ItemDef"		"289"		}
+			"Wearable5"		{	"ItemDef"		"290"		}
+		}
+	}
+}
+
+
+//=================================================================================
+// Creature: Druid of the Claw
+// Description: "Melee spellcaster. Can initially cast Roar, which increases attack damage. Can also learn Rejuvenation, Bear Form and Mark of the Claw. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_druid_of_the_claw"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						""	 //Add model
+	"ModelScale"				"1"
+	"Level"						"4"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: Abrf
+	"Ability2"					""	 //Reference: Arej
+	"Ability3"					""	 //Reference: Aroa
+	"Ability4"					""	 //Reference: Aien
+	"Ability5"					""	 //Reference: Ault
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"19.0"
+	"AttackDamageMax"			"22.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.5"
+	"AttackAnimationPoint"		"0.33"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"255"
+	"LumberCost"				"255"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"430"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"200"
+	"StatsManaRegen"			"0.666666666666667"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Druid of the Claw
+// Description: "Melee spellcaster. Can initially cast Roar, which increases attack damage. Can also learn Rejuvenation, Bear Form and Mark of the Claw. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_druid_of_the_claw_bear"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/lone_druid/lone_druid.vmdl"
+	"ModelScale"				"0.8"
+	"Level"						"4"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_bear_form"	 //Reference: Abrf
+	"Ability2"					"nightelf_roar"	 //Reference: Ara2
+	"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"3"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"27.0"
+	"AttackDamageMax"			"32.0"
+	"AttackRate"				"1.5"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"255"
+	"LumberCost"				"80"
+	"FoodCost"					"4"
+	"BuildTime"					"30"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"810"
+	"StatusHealthRegen"			"1"
+	"StatusMana"				"200"
+	"StatusManaRegen"			"200"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"107"		}
+			"Wearable2"		{	"ItemDef"		"108"		}
+			"Wearable3" 	{	"ItemDef"		"109"		}
+			"Wearable4"		{	"ItemDef"		"110"		}
+			"Wearable5"		{	"ItemDef"		"219"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Mountain Giant
+// Description: "Massive melee unit that can disrupt enemy attackers and take incredible amounts of punishment. Has the Taunt and War Club abilities. Can learn Hardened Skin, and Resistant Skin. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_mountain_giant"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/tiny_01/tiny_01.vmdl" //Should use the higher level but its bugged
+	"ModelScale"				"2.5"
+	"Level"						"6"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_taunt"	 //Reference: Atau
+	"Ability2"					"nightelf_war_club"	 //Reference: Agra
+	"Ability3"					"nightelf_resistant_skin"	 //Reference: Arsk
+	"Ability4"					"nightelf_hardened_skin"	 //Reference: Assk
+	"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"4"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"28.0"
+	"AttackDamageMax"			"40.0"
+	"AttackRate"				"2.5"
+	"AttackAnimationPoint"		"0.49"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"128"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"48"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"100"
+	"FoodCost"					"7"
+	"BuildTime"					"50"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1600"
+	"StatusHealthRegen"			"1.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1200"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"	{ "ItemDef" "493" } //Head
+			"Wearable2"	{ "ItemDef"	"494" } //Body
+			"Wearable3" { "ItemDef"	"495" } //Left Arm
+			"Wearable4" { "ItemDef"	"496" } //Right Arm
+			//"Wearable5"	{ "ItemDef"	"497" } //Tree, doesnt work, try modifier_tiny_grow without the stats
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Druid of the Talon
+// Description: "Maneuverable spellcaster. Can initially cast Faerie Fire, which reduces armor and gives vision of an enemy unit. Can also learn Storm Crow Form, Cyclone and Mark of the Talon. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"nightelf_druid_of_the_talon"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/furion/furion.vmdl"
+	"ModelScale"				"0.6"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_storm_crow_form"	 //Reference: Arav
+	"Ability2"					"nightelf_faerie_fire"	 //Reference: Afa2
+	"Ability3"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"35.0"
+	"AttackDamageMax"			"41.0"
+	"AttackRate"				"1.75"
+	"AttackAnimationPoint"		"0.6"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"135"
+	"LumberCost"				"20"
+	"FoodCost"					"2"
+	"BuildTime"					"22"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" //_FLY in Crow Form
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"300"
+	"StatusHealthRegen"			"1"
+	"StatusMana"				"200"
+	"StatusManaRegen"			"200"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"	{ "ItemDef"	"29" } //Staff
+			"Wearable2" { "ItemDef"	"30" } //Horns
+			"Wearable3" { "ItemDef"	"31" } //Beard
+			"Wearable4"	{ "ItemDef"	"32" } //Cape
+			"Wearable5"	{ "ItemDef"	"33" } //Necklace
+			"Wearable6"	{ "ItemDef" "49" } //Bracers
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Druid of the Talon
+// Description: "Maneuverable spellcaster. Can initially cast Faerie Fire, which reduces armor and gives vision of an enemy unit. Can also learn Storm Crow Form, Cyclone and Mark of the Talon. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"nightelf_druid_of_the_talon_crow"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						""	 //Add model
+	"ModelScale"				"1"
+	"Level"						"2"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: Arav
+	"Ability2"					""	 //Reference: Afa2
+	"Ability3"					""	 //Reference: Ault
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"35.0"
+	"AttackDamageMax"			"41.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.75"
+	"AttackAnimationPoint"		"0.6"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"135"
+	"LumberCost"				"135"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"300"
+	"StatusHealthRegen"			"1"
+	"StatusMana"				"200"
+	"StatsManaRegen"			"0.666666666666667"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Faerie Dragon
+// Description: "Small flying creature adept at harming spellcasters and avoiding damage. Has Spell Immunity, Phase Shift and Mana Flare. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"nightelf_faerie_dragon"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/puck/puck.vmdl"
+	"ModelScale"				"1"
+	"Level"						"3"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_spell_immunity"	 //Reference: Amim
+	"Ability2"					"nightelf_mana_flare"	 //Reference: Amfl
+	"Ability3"					"nightelf_phase_shift"	 //Reference: Apsh
+	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"14.0"
+	"AttackDamageMax"			"16.0"
+	"AttackRate"				"1.75"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"300"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"155"
+	"LumberCost"				"25"
+	"FoodCost"					"2"
+	"BuildTime"					"25"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"450"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"200"
+	"StatusManaRegen"			"200"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"1000"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"	{ "ItemDef"	"370" } //Wings
+			"Wearable2" { "ItemDef"	"371" } //Tail
+			"Wearable3" { "ItemDef"	"372" } //Antennas
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Chimaera
+// Description: "Flying two headed Dragon. Can learn Corrosive Breath. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_chimaera"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl"
+	"ModelScale"				"1"
+	"Level"						"5"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_corrosive_breath"	 //Reference: Acor
+	"Ability2"					""	 //Reference: Alit //Lightning Attack
+	"Ability3"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"2"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"45.0"
+	"AttackDamageMax"			"55.0"
+	"AttackRate"				"2.5"
+	"AttackAnimationPoint"		"0.7"
+	"AttackAcquisitionRange"	"900"
+	"AttackRange"				"850"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1200,1500"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"330"
+	"LumberCost"				"70"
+	"FoodCost"					"5"
+	"BuildTime"					"60"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"250"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1000"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+//=================================================================================
+// Creature: Hippogryph
+// Description: "Flying melee attack beast. Can learn the Hippogryph Taming ability. |n|n|cffffcc00Attacks air units.|r"
+//=================================================================================
+"nightelf_hippogryph"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/items/courier/throe/throe_flying.vmdl"
+	"ModelScale"				"1.2"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_pick_up_archer"	 //Reference: Acoh
+	"Ability2"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"50.0"
+	"AttackDamageMax"			"57.0"
+	"AttackRate"				"1.05"
+	"AttackAnimationPoint"		"0.6"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"128"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"160"
+	"LumberCost"				"20"
+	"FoodCost"					"2"
+	"BuildTime"					"30"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"400"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"525"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+//=================================================================================
+// Creature: Hippogryph Rider
+// Description: "Archer mounted Hippogryph. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"nightelf_hippogryph_rider"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/items/courier/throe/throe_flying.vmdl"	 //Add mounted hero?
+	"ModelScale"				"1"
+	"Level"						"4"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_dismount"	 //Reference: Adec
+	"Ability2"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"16.0"
+	"AttackDamageMax"			"18.0"
+	"AttackRate"				"1.1"
+	"AttackAnimationPoint"		"0.633"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"400"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1500"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"290"
+	"LumberCost"				"30"
+	"FoodCost"					"4"
+	"BuildTime"					"1"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"765"
+	"StatusHealthRegen"			"1"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+

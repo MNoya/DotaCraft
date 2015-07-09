@@ -1,0 +1,1257 @@
+// Orc Unit List
+//	orc_peon - models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_berserker.vmdl
+//	orc_grunt - models/heroes/axe/axe.vmdl
+//	orc_troll_headhunter/berserker - models/heroes/huskar/huskar.vmdl / models/heroes/troll_warlord/troll_warlord.vmdl
+//	orc_demolisher - models/items/courier/carty_dire/carty_dire.vmdl
+//	orc_shaman - models/heroes/blood_seeker/blood_seeker.vmdl
+//	orc_troll_witch_doctor - models/heroes/witchdoctor/witchdoctor.vmdl
+//	orc_spirit_walker - models/heroes/spirit_breaker/spirit_breaker.vmdl
+//	orc_raider - models/heroes/chen/chen.vmdl
+//	orc_kodo_beast - models/courier/smeevil_mammoth/smeevil_mammoth.vmdl
+//	orc_wind_rider - models/creeps/neutral_creeps/n_creep_gargoyle/n_creep_gargoyle.vmdl
+//	orc_troll_batrider - models/heroes/batrider/batrider.vmdl
+//	orc_tauren - models/heroes/earthshaker/earthshaker.vmdl
+
+
+//=================================================================================
+// Creature: Peon
+// Description: "Basic worker unit. Can harvest gold and lumber, build structures, and Repair. Can also go inside Orc Burrows to give it an attack. |n|n|cffffcc00Attacks land units and trees.|r"
+//=================================================================================
+"orc_peon"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_berserker.vmdl"
+	"ModelScale"				"1"
+	"Level"						"1"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Ahar
+	"Ability2"					""	 //Reference: Arep
+	"Ability3"					"orc_pillage"	 //Reference: Asal
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"7.0"
+	"AttackDamageMax"			"8.0"
+	"AttackRate"				"3"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"90"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"20.0"
+	"BountyGoldMax"				"30.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+	"RingRadius"				"50"
+	"CollisionSize"				"16"
+	"FormationRank"				"3"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"75"
+	"LumberCost"				"0"
+	"FoodCost"					"1"
+	"BuildTime"					"15"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"190"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"250"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"800"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+//=================================================================================
+// Creature: Grunt
+// Description: "Brutish Orc warrior. Can learn Berserker Strength. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"orc_grunt"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/axe/axe.vmdl"
+	"ModelScale"				"1"
+	"Level"						"3"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_pillage"	 //Reference: Asal
+	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"18.0"
+	"AttackDamageMax"			"21.0"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.33"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"200"
+	"LumberCost"				"0"
+	"FoodCost"					"3"
+	"BuildTime"					"30"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"700"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"2"		}
+			"Wearable2"		{	"ItemDef"		"3"		}
+			"Wearable3" 	{	"ItemDef"		"4"		}
+			"Wearable4"		{	"ItemDef"		"5"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Troll Headhunter
+// Description: "Versatile spear-thrower, effective against air units. Can learn Troll Regeneration. Can be upgraded to Troll Berserker, which has the Berserk ability. |n|n|cffffcc00Attacks land and air units.|r "
+//=================================================================================
+"orc_troll_headhunter"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/huskar/huskar.vmdl"
+	"ModelScale"				"1"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					""	 //Reference: Sbsk
+	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"23.0"
+	"AttackDamageMax"			"27.0"
+	"AttackRate"				"2.31"
+	"AttackAnimationPoint"		"0.31"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"450"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"135"
+	"LumberCost"				"20"
+	"FoodCost"					"2"
+	"BuildTime"					"20"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"350"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"268"		}
+			"Wearable2"		{	"ItemDef"		"269"		}
+			"Wearable3" 	{	"ItemDef"		"270"		}
+			"Wearable4"		{	"ItemDef"		"271"		}
+			"Wearable5"		{	"ItemDef"		"272"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Troll Berserker
+// Description: "Versatile spear-thrower, effective against air units. Has the Berserk ability, which allows it to deal more damage, but take more damage when attacked. Can learn Troll Regeneration. |n|n|cffffcc00Attacks land and air units.|r "
+//=================================================================================
+"orc_troll_berserker"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/troll_warlord/troll_warlord.vmdl"
+	"ModelScale"				"1"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_berserk"	 //Reference: Absk
+	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"23.0"
+	"AttackDamageMax"			"27.0"
+	"AttackRate"				"2.31"
+	"AttackAnimationPoint"		"0.31"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"450"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"135"
+	"LumberCost"				"20"
+	"FoodCost"					"2"
+	"BuildTime"					"20"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"450"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"373"		}
+			"Wearable2"		{	"ItemDef"		"374"		}
+			"Wearable3" 	{	"ItemDef"		"410"		}
+			"Wearable4"		{	"ItemDef"		"411"		}
+			"Wearable5" 	{	"ItemDef"		"412"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Demolisher
+// Description: "Long-range siege weaponry. Effective against buildings but slow and vulnerable. Can learn the Burning Oil ability. |n|n|cffffcc00Attacks land units and trees.|r"
+//=================================================================================
+"orc_demolisher"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/items/courier/carty_dire/carty_dire.vmdl"
+	"ModelScale"				"1.5"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_burning_oil"	 //Reference: Abof
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"2"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"72.0"
+	"AttackDamageMax"			"89.0"
+	"AttackRate"				"4.5"
+	"AttackAnimationPoint"		"0.1"
+	"AttackAcquisitionRange"	"1150"
+	"AttackRange"				"1150"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"48"
+	"FormationRank"				"3"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"220"
+	"LumberCost"				"50"
+	"FoodCost"					"4"
+	"BuildTime"					"40"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"220"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"425"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"1200"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+
+//=================================================================================
+// Creature: Shaman
+// Description: "Primary spellcaster. Can initially cast Purge, which dispels magical buffs and can immobilize enemies. Can also learn Lightning Shield and Bloodlust. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"orc_shaman"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/blood_seeker/blood_seeker.vmdl"
+	"ModelScale"				"1"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_bloodlust"	 //Reference: Ablo
+	"Ability2"					"orc_lightning_shield"	 //Reference: Alsh
+	"Ability3"					"orc_purge"	 //Reference: Apg2
+	"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"8.0"
+	"AttackDamageMax"			"9.0"
+	"AttackRate"				"2.1"
+	"AttackAnimationPoint"		"0.43"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+	"RingRadius"				"50"
+	"CollisionSize"				"16"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"130"
+	"LumberCost"				"20"
+	"FoodCost"					"2"
+	"BuildTime"					"30"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"335"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"200"
+	"StatusManaRegen"			"200"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"69"		}
+			"Wearable2"		{	"ItemDef"		"70"		}
+			"Wearable3" 	{	"ItemDef"		"71"		}
+			"Wearable4"		{	"ItemDef"		"72"		}
+			"Wearable5"		{	"ItemDef"		"73"		}
+			"Wearable6"		{	"ItemDef"		"74"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Troll Witch Doctor
+// Description: "Supporting spellcaster. Can initially cast Sentry Ward, which summons an invisible detector. Can also learn Stasis Trap and Healing Ward. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"orc_troll_witch_doctor"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/witchdoctor/witchdoctor.vmdl"
+	"ModelScale"				"1"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_sentry_ward"	 //Reference: Aeye
+	"Ability2"					"orc_healing_ward"	 //Reference: Ahwd
+	"Ability3"					"orc_stasis_trap"	 //Reference: Asta
+	"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"10.0"
+	"AttackDamageMax"			"14.0"
+	"AttackRate"				"1.75"
+	"AttackAnimationPoint"		"0.73"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+	"RingRadius"				"50"
+	"CollisionSize"				"16"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"145"
+	"LumberCost"				"25"
+	"FoodCost"					"2"
+	"BuildTime"					"30"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.6"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"315"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"200"
+	"StatusManaRegen"			"200"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"94"		}
+			"Wearable2"		{	"ItemDef"		"95"		}
+			"Wearable3" 	{	"ItemDef"		"96"		}
+			"Wearable4"		{	"ItemDef"		"97"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Spirit Walker
+// Description: "Mystical Tauren caster. Has Ethereal Form, which allows him to avoid physical damage. Also has Spirit Link, which allows units to distribute incoming damage. Can learn Disenchant, and Ancestral Spirit. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"orc_spirit_walker"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/spirit_breaker/spirit_breaker.vmdl"
+	"ModelScale"				"1"
+	"Level"						"3"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_disenchant"	//Reference: Adis
+	"Ability2"					"orc_spirit_link"	 //Reference: Aspl
+	"Ability3"					"orc_ethereal_form"	 
+	"Ability4"					"orc_ancestral_spirit"	 //Reference: Aast
+	"Ability5"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability6"					""	 //Reference: ACsk - Resistant Skin(3,1 pos, creep)
+	//Reference: Acpf - Corporeal Form
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"17.0"
+	"AttackDamageMax"			"22.0"
+	"AttackRate"				"1.75"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"400"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"195"
+	"LumberCost"				"35"
+	"FoodCost"					"3"
+	"BuildTime"					"38"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"500"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"300"
+	"StatusManaRegen"			"300"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"106"		}
+			"Wearable2"		{	"ItemDef"		"111"		}
+			"Wearable3" 	{	"ItemDef"		"112"		}
+			"Wearable4"		{	"ItemDef"		"113"		}
+			"Wearable5"		{	"ItemDef"		"114"		}
+			"Wearable6"		{	"ItemDef"		"115"		}
+			"Wearable7"		{	"ItemDef"		"116"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Raider
+// Description: "Highly mobile wolf rider. Effective against buildings. Can learn the Ensnare ability. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"orc_raider"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/chen/chen.vmdl"
+	"ModelScale"				"1"
+	"Level"						"3"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_ensnare"	 //Reference: Aens
+	"Ability2"					"orc_pillage"	 //Reference: Asal
+	"Ability3"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"23.0"
+	"AttackDamageMax"			"27.0"
+	"AttackRate"				"1.85"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"180"
+	"LumberCost"				"40"
+	"FoodCost"					"3"
+	"BuildTime"					"28"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"610"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"220"		}
+			"Wearable2"		{	"ItemDef"		"221"		}
+			"Wearable3" 	{	"ItemDef"		"222"		}
+			"Wearable4"		{	"ItemDef"		"223"		}
+			"Wearable5"		{	"ItemDef"		"224"		}
+			"Wearable6"		{	"ItemDef"		"225"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Kodo Beast
+// Description: "Lumbering war beast, mounted by an Orcish drummer. Has the abilities War Drums, and Devour. War Drums gives friendly units nearby a bonus to attack damage. Devour allows the Kodo to eat a target enemy unit. Can gain the War Drums Upgrade. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"orc_kodo_beast"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/courier/smeevil_mammoth/smeevil_mammoth.vmdl"
+	"ModelScale"				"1.7"
+	"Level"						"4"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_war_drums"	 //Reference: Aakb
+	"Ability2"					"orc_devour_cargo"	 //Reference: Advc
+	"Ability3"					"orc_devour"	 //Reference: Adev
+	"Ability4"					""	 //Reference: Apak - Inventory (Pack Mule)
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"16.0"
+	"AttackDamageMax"			"20.0"
+	"AttackRate"				"1.44"
+	"AttackAnimationPoint"		"0.85"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"500"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"48"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"255"
+	"LumberCost"				"60"
+	"FoodCost"					"4"
+	"BuildTime"					"30"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"220"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1000"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+
+//=================================================================================
+// Creature: Wind Rider
+// Description: "Highly mobile flying creature. Excellent at scouting. Can learn Envenomed Spears. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"orc_wind_rider"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_gargoyle/n_creep_gargoyle.vmdl"
+	"ModelScale"				"0.8"
+	"Level"						"4"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_envenomed_spears"	 //Reference: Aven
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"36.0"
+	"AttackDamageMax"			"44.0"
+	"AttackRate"				"2"
+	"AttackAnimationPoint"		"0.6"
+	"AttackAcquisitionRange"	"650"
+	"AttackRange"				"450"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"265"
+	"LumberCost"				"40"
+	"FoodCost"					"4"
+	"BuildTime"					"35"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"570"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+//=================================================================================
+// Creature: Troll Batrider
+// Description: "Light flying unit with incredible perception. Good at destroying buildings. Has the Unstable Concoction ability, which allows the Troll Batrider to explode, dealing damage to nearby enemy air units. Can learn Liquid Fire, and Troll Regeneration. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"orc_troll_batrider"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/batrider/batrider.vmdl"
+	"ModelScale"				"0.8"
+	"Level"						"2"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_liquid_fire"	 //Reference: Aliq
+	"Ability2"					"orc_unstable_concoction"	 //Reference: Auco
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"13.0"
+	"AttackDamageMax"			"15.0"
+	"AttackRate"				"1.8"
+	"AttackAnimationPoint"		"0.6"
+	"AttackAcquisitionRange"	"1000"
+	"AttackRange"				"300"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"32.0"
+	"BountyGoldMax"				"46.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"160"
+	"LumberCost"				"40"
+	"FoodCost"					"2"
+	"BuildTime"					"28"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"325"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"1400"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"375"		}
+			"Wearable2"		{	"ItemDef"		"376"		}
+			"Wearable3" 	{	"ItemDef"		"377"		}
+			"Wearable4"		{	"ItemDef"		"378"		}
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Tauren
+// Description: "Mighty warrior. Can learn the Pulverize ability. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"orc_tauren"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/earthshaker/earthshaker.vmdl"
+	"ModelScale"				"1"
+	"Level"						"5"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"orc_pulverize"	 //Reference: Awar
+	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"3"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"30.0"
+	"AttackDamageMax"			"36.0"
+	"AttackRate"				"1.9"
+	"AttackAnimationPoint"		"0.467"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"70"
+	"CollisionSize"				"48"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"280"
+	"LumberCost"				"80"
+	"FoodCost"					"5"
+	"BuildTime"					"44"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1300"
+	"StatusHealthRegen"			"0.25"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"459"		} //Totem
+			"Wearable2"		{	"ItemDef"		"460"		} //Bracers
+			"Wearable3" 	{	"ItemDef"		"461"		} //Belt
+			"Wearable4"		{	"ItemDef"		"5640"		} //Helm of Impasse
+		}
+	}
+}
