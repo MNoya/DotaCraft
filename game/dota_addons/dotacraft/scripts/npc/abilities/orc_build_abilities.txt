@@ -1,24 +1,21 @@
-// Night Elf Buildings
-// nightelf_ancient_of_war - No requirements
-// nightelf_ancient_of_lore - Requires Tree of Ages and Hunters Hall
-// nightelf_ancient_of_wind - Requires Tree of Ages
-// nightelf_ancient_protector - Requires Hunters Hall
-// nightelf_chimaera_roost - Requires Tree of Eternity and Ancient of the Wind
+// Orc Buildings
+// orc_barracks - No requirements
+// orc_beastiary - Requires orc_stronghold
+// orc_spirit_lodge - Requires orc_stronghold
+// orc_watch_tower - Requires orc_war_mill
+// orc_tauren_totem - Requires orc_fortress and orc_war_mill
 
 // Item Abilities
-// nightelf_tree_of_life - No requirements
-	// nightelf_tree_of_ages - Upgrade
-	// nightelf_tree_of_eternity - Upgrade, Requires Altar of Elders
-// nightelf_altar_of_elders - No requirements
-// nightelf_hunters_hall - No requirements
-// nightelf_moon_well - No requirements
-// nightelf_ancient_of_wonders - No requirements
-
-// nightelf_entangled_gold_mine - Ability through Tree of Life/Ages/Eternity
-
+// orc_burrow - No requirements
+// orc_great_hall - No requirements
+	// orc_stronghold - Upgrade
+	// orc_fortress - Upgrade, requires orc_altar_of_storms
+// orc_altar_of_storms - No requirements
+// orc_vodoo_lounge - No requirements
+// orc_war_mill - No requirements
 
 // This ability fills the peasant slot with undroppable build items
-"build_nightelf_items"
+"build_orc_items"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
@@ -29,15 +26,15 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/items.lua"
-			"Function"		"GiveNightElfBuildingItems"
+			"Function"		"GiveOrcBuildingItems"
 		}
 	}
 }
 
-"nightelf_build_ancient_of_war"
+"orc_build_barracks"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_war"
+	"AbilityTextureName"			"orc_build_barracks"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -54,9 +51,9 @@
 	"PlayerCanControl"				"1" //bool. 
 	"CancelsBuildingGhost"			"1" //bool
 
-	"UnitName"						"nightelf_ancient_of_war"
+	"UnitName"						"orc_barracks"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"150"
+	"AbilityGoldCost"				"180"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -69,12 +66,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"150"
+			"gold_cost"				"180"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"60"
+			"lumber_cost"			"50"
 		}
 	}
 	
@@ -88,77 +85,17 @@
 	}
 }
 
-"nightelf_build_ancient_of_lore_disabled"
+"orc_build_beastiary_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_lore"
+	"AbilityTextureName"			"orc_beastiary"
 	"MaxLevel" 						"0"
 }
 
-"nightelf_build_ancient_of_lore"
+"orc_build_beastiary"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_lore"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildingSize"					"5" 
-	"BuildTime"						"70.0"
-	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
-
-	"UnitName"						"nightelf_ancient_of_lore"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"155"
-	// End of BuildingHelper info
-
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"70.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"155"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"145"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
-		}
-	}
-}
-
-
-"nightelf_build_ancient_of_wind_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_wind"
-	"MaxLevel" 						"0"
-}
-
-"nightelf_build_ancient_of_wind"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_wind"
+	"AbilityTextureName"			"orc_build_beastiary"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -173,9 +110,9 @@
 	"PlayerCanControl"				"1" //bool. 
 	"CancelsBuildingGhost"			"1" //bool
 
-	"UnitName"						"nightelf_ancient_of_wind"
+	"UnitName"						"orc_beastiary"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"150"
+	"AbilityGoldCost"				"145"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -188,7 +125,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"150"
+			"gold_cost"				"145"
 		}
 		"03"
 		{
@@ -207,17 +144,77 @@
 	}
 }
 
-"nightelf_build_ancient_protector_disabled"
+
+"orc_build_spirit_lodge_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_protector"
+	"AbilityTextureName"			"orc_build_spirit_lodge"
 	"MaxLevel" 						"0"
 }
 
-"nightelf_build_ancient_protector"
+"orc_build_spirit_lodge"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_protector"
+	"AbilityTextureName"			"orc_build_spirit_lodge"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" 
+	"BuildTime"						"70.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	"CancelsBuildingGhost"			"1" //bool
+
+	"UnitName"						"orc_spirit_lodge"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"150"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"70.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"150"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"150"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+		}
+	}
+}
+
+"orc_build_watch_tower_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_build_watch_tower"
+	"MaxLevel" 						"0"
+}
+
+"orc_build_watch_tower"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_build_watch_tower"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -232,9 +229,9 @@
 	"PlayerCanControl"				"1" //bool. 
 	"CancelsBuildingGhost"			"1" //bool
 
-	"UnitName"						"nightelf_ancient_protector"
+	"UnitName"						"orc_watch_tower"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"135"
+	"AbilityGoldCost"				"110"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -247,7 +244,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"110"
 		}
 		"03"
 		{
@@ -266,17 +263,17 @@
 	}
 }
 
-"nightelf_build_chimaera_roost_disabled"
+"orc_build_tauren_totem_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_chimaera_roost"
+	"AbilityTextureName"			"orc_build_tauren_totem"
 	"MaxLevel" 						"0"
 }
 
-"nightelf_build_chimaera_roost"
+"orc_build_tauren_totem"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_chimaera_roost"
+	"AbilityTextureName"			"orc_build_tauren_totem"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -284,16 +281,16 @@
 	// BuildingHelper info
 	"Building"						"1" //bool
 	"BuildingSize"					"5" 
-	"BuildTime"						"80.0"
+	"BuildTime"						"70.0"
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
 	"PlayerCanControl"				"1" //bool. 
 	"CancelsBuildingGhost"			"1" //bool
 
-	"UnitName"						"nightelf_chimaera_roost"
+	"UnitName"						"orc_tauren_totem"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"140"
+	"AbilityGoldCost"				"135"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -301,17 +298,17 @@
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"build_time"			"80.0"
+			"build_time"			"70.0"
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"140"
+			"gold_cost"				"135"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"190"
+			"lumber_cost"			"155"
 		}
 	}
 

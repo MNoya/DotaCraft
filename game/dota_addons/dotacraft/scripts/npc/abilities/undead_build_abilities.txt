@@ -1,24 +1,24 @@
-// Night Elf Buildings
-// nightelf_ancient_of_war - No requirements
-// nightelf_ancient_of_lore - Requires Tree of Ages and Hunters Hall
-// nightelf_ancient_of_wind - Requires Tree of Ages
-// nightelf_ancient_protector - Requires Hunters Hall
-// nightelf_chimaera_roost - Requires Tree of Eternity and Ancient of the Wind
+// Undead Buildings
+// undead_crypt - No requirements
+// undead_temple_of_the_damned - Requires undead_graveyard and undead_halls_of_the_dead
+// undead_slaughterhouse - Requires undead_graveyard and undead_halls_of_the_dead
+// undead_sacrificial_pit - Requires undead_halls_of_the_dead
+// undead_boneyard - Requires undead_sacrificial_pit and undead_black_citadel
 
 // Item Abilities
-// nightelf_tree_of_life - No requirements
-	// nightelf_tree_of_ages - Upgrade
-	// nightelf_tree_of_eternity - Upgrade, Requires Altar of Elders
-// nightelf_altar_of_elders - No requirements
-// nightelf_hunters_hall - No requirements
-// nightelf_moon_well - No requirements
-// nightelf_ancient_of_wonders - No requirements
-
-// nightelf_entangled_gold_mine - Ability through Tree of Life/Ages/Eternity
-
+// undead_altar_of_darkness - No requirements
+// undead_haunted_gold_mine - No requirements
+// undead_graveyard - No requirements
+// undead_necropolis - No requirements
+	// undead_halls_of_the_dead - Upgrade
+	// undead_black_citadel - Upgrade, Requires undead_altar_of_darkness
+// undead_ziggurat - No requirements
+	// undead_nerubian_tower - Upgrade
+	// undead_spirit_tower - Upgrade, Requires undead_graveyard
+// undead_tomb_of_relics - No requirements
 
 // This ability fills the peasant slot with undroppable build items
-"build_nightelf_items"
+"build_undead_items"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
@@ -29,15 +29,15 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/items.lua"
-			"Function"		"GiveNightElfBuildingItems"
+			"Function"		"GiveUndeadBuildingItems"
 		}
 	}
 }
 
-"nightelf_build_ancient_of_war"
+"undead_build_crypt"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_war"
+	"AbilityTextureName"			"undead_build_crypt"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -54,9 +54,9 @@
 	"PlayerCanControl"				"1" //bool. 
 	"CancelsBuildingGhost"			"1" //bool
 
-	"UnitName"						"nightelf_ancient_of_war"
+	"UnitName"						"undead_crypt"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"150"
+	"AbilityGoldCost"				"200"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -69,12 +69,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"150"
+			"gold_cost"				"200"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"60"
+			"lumber_cost"			"50"
 		}
 	}
 	
@@ -88,80 +88,22 @@
 	}
 }
 
-"nightelf_build_ancient_of_lore_disabled"
+"undead_build_temple_of_the_damned_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_lore"
+	"AbilityTextureName"			"undead_build_temple_of_the_damned"
 	"MaxLevel" 						"0"
 }
 
-"nightelf_build_ancient_of_lore"
+"undead_build_temple_of_the_damned"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_lore"
+	"AbilityTextureName"			"undead_build_temple_of_the_damned"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildingSize"					"5" 
-	"BuildTime"						"70.0"
-	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
-
-	"UnitName"						"nightelf_ancient_of_lore"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"155"
-	// End of BuildingHelper info
-
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"70.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"155"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"145"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
-		}
-	}
-}
-
-
-"nightelf_build_ancient_of_wind_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_wind"
-	"MaxLevel" 						"0"
-}
-
-"nightelf_build_ancient_of_wind"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_wind"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
@@ -173,9 +115,9 @@
 	"PlayerCanControl"				"1" //bool. 
 	"CancelsBuildingGhost"			"1" //bool
 
-	"UnitName"						"nightelf_ancient_of_wind"
+	"UnitName"						"undead_temple_of_the_damned"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"150"
+	"AbilityGoldCost"				"155"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -188,7 +130,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"150"
+			"gold_cost"				"155"
 		}
 		"03"
 		{
@@ -207,20 +149,22 @@
 	}
 }
 
-"nightelf_build_ancient_protector_disabled"
+"undead_build_slaughterhouse_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_protector"
+	"AbilityTextureName"			"undead_build_slaughterhouse"
 	"MaxLevel" 						"0"
 }
 
-"nightelf_build_ancient_protector"
+"undead_build_slaughterhouse"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_protector"
+	"AbilityTextureName"			"undead_build_slaughterhouse"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
@@ -230,11 +174,11 @@
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
 	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	//"CancelsBuildingGhost"			"0" //bool
 
-	"UnitName"						"nightelf_ancient_protector"
+	"UnitName"						"undead_slaughterhouse"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"135"
+	"AbilityGoldCost"				"140"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -247,12 +191,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"140"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"80"
+			"lumber_cost"			"135"
 		}
 	}
 
@@ -266,34 +210,36 @@
 	}
 }
 
-"nightelf_build_chimaera_roost_disabled"
+"undead_build_sacrificial_pit_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_chimaera_roost"
+	"AbilityTextureName"			"undead_build_sacrificial_pit"
 	"MaxLevel" 						"0"
 }
 
-"nightelf_build_chimaera_roost"
+"undead_build_sacrificial_pit"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_chimaera_roost"
+	"AbilityTextureName"			"undead_build_sacrificial_pit"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
 	"BuildingSize"					"5" 
-	"BuildTime"						"80.0"
+	"BuildTime"						"45.0"
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
 	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	//"CancelsBuildingGhost"			"0" //bool
 
-	"UnitName"						"nightelf_chimaera_roost"
+	"UnitName"						"undead_sacrificial_pit"
 	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"140"
+	"AbilityGoldCost"				"75"
 	// End of BuildingHelper info
 
 	"AbilitySpecial"
@@ -301,17 +247,78 @@
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"build_time"			"80.0"
+			"build_time"			"45.0"
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"140"
+			"gold_cost"				"75"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"190"
+			"lumber_cost"			"150"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+		}
+	}
+}
+
+"undead_build_boneyard_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_build_boneyard"
+	"MaxLevel" 						"0"
+}
+
+"undead_build_boneyard"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_build_boneyard"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityGoldCost"				"180"
+	"AbilityUpgradeGoldCost"		"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" 
+	"BuildTime"						"70.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	//"CancelsBuildingGhost"			"0" //bool
+
+	"UnitName"						"undead_boneyard"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"175"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"70.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"175"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"200"
 		}
 	}
 

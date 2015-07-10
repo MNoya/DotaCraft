@@ -29,10 +29,17 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Ahar
-	"Ability2"					""	 //Reference: Arep
-	"Ability3"					"orc_pillage"	 //Reference: Asal
+	"AbilityLayout"				"6"
+	"Ability1"					"human_gather"
+	"Ability2"					"human_return_resources"
+	"Ability3"					"orc_build_barracks"
+	"Ability4"					"orc_build_beastiary_disabled"
+	"Ability5"					"orc_build_spirit_lodge_disabled"
+	"Ability6"					"orc_build_watch_tower_disabled"
+	"Ability7"					"orc_build_tauren_totem_disabled"				
+	"Ability8"					"build_orc_items" // Provides additional building abilities
+	"Ability9"					"ability_prevent_attack_flying"
+	"Ability10"					"orc_pillage"	 //Reference: Asal
 	
 	// Armor
 	//----------------------------------------------------------------

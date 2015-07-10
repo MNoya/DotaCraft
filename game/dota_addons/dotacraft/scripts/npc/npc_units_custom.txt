@@ -6405,6 +6405,7 @@
 		"Ability4"					"nightelf_build_ancient_of_wind"	 //Reference: Ault - Ultravision
 		"Ability5"					"nightelf_build_ancient_protector"
 		"Ability6"					"nightelf_build_chimaera_roost"
+		"Ability7"					"build_nightelf_items"
 	
 		
 		// Armor
@@ -7700,7 +7701,7 @@
 		// orc_fortress
 	// orc_spirit_lodge
 	// orc_tauren_totem
-	// orc_vodoo_lounge
+	// orc_voodoo_lounge
 	// orc_war_mill
 	// orc_watch_tower
 	
@@ -8685,10 +8686,17 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Ahar
-		"Ability2"					""	 //Reference: Arep
-		"Ability3"					"orc_pillage"	 //Reference: Asal
+		"AbilityLayout"				"6"
+		"Ability1"					"human_gather"
+		"Ability2"					"human_return_resources"
+		"Ability3"					"orc_build_barracks"
+		"Ability4"					"orc_build_beastiary_disabled"
+		"Ability5"					"orc_build_spirit_lodge_disabled"
+		"Ability6"					"orc_build_watch_tower_disabled"
+		"Ability7"					"orc_build_tauren_totem_disabled"				
+		"Ability8"					"build_orc_items" // Provides additional building abilities
+		"Ability9"					"ability_prevent_attack_flying"
+		"Ability10"					"orc_pillage"	 //Reference: Asal
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -10976,6 +10984,7 @@
 	// undead_ziggurat
 		// undead_nerubian_tower
 		// undead_spirit_tower
+	// undead_sacrificial_pit
 	
 	// SemiUsable models
 	// models/props_structures/bad_ancient001.vmdl
@@ -12100,6 +12109,74 @@
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
 		
 	}
+	
+	//=================================================================================
+	// Creature: Sacrificial Pit
+	// Description: "Has the Sacrifice ability for turning Acolytes into Shades. Shades are invisible spirits that can see invisible units, but cannot attack."
+	//=================================================================================
+	"undead_sacrificial_pit"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						""	 //Add model
+		"ModelScale"				"1"
+		"Level"						"0"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Abgs
+		"Ability2"					""	 //Reference: Asac
+		"Ability4"					"ability_building"
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"0.0"
+		"BountyGoldMax"				"0.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"75"
+		"LumberCost"				"150"
+		"BuildTime"					"45"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"900"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"
+		"VisionNighttimeRange"		"600"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
 	// Undead Unit List
 	//	undead_acolyte - models/heroes/warlock/warlock.vmdl
 	//	undead_ghoul - models/heroes/life_stealer/life_stealer.vmdl
@@ -12131,12 +12208,17 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Aaha
+		"AbilityLayout"				"6"
+		"Ability1"					"human_gather"	 //Reference: Aaha
 		"Ability2"					"undead_restore"	 //Reference: Arst
-		"Ability3"					""	 //Reference: Alam
-		"Ability4"					"undead_unsummon_building"	 //Reference: Auns
-		
+		"Ability3"					"undead_build_crypt"	 //Reference: Alam
+		"Ability4"					"undead_build_temple_of_the_damned_disabled"
+		"Ability5"					"undead_build_slaughterhouse_disabled"
+		"Ability6"					"undead_build_sacrificial_pit_disabled"
+		"Ability7"					"undead_build_boneyard_disabled"
+		"Ability8"					"undead_unsummon_building"	 //Reference: Auns	
+		"Ability9"					"build_undead_items"
+			
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"0"

@@ -29,12 +29,17 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Aaha
+	"AbilityLayout"				"6"
+	"Ability1"					"human_gather"	 //Reference: Aaha
 	"Ability2"					"undead_restore"	 //Reference: Arst
-	"Ability3"					""	 //Reference: Alam
-	"Ability4"					"undead_unsummon_building"	 //Reference: Auns
-	
+	"Ability3"					"undead_build_crypt"	 //Reference: Alam
+	"Ability4"					"undead_build_temple_of_the_damned_disabled"
+	"Ability5"					"undead_build_slaughterhouse_disabled"
+	"Ability6"					"undead_build_sacrificial_pit_disabled"
+	"Ability7"					"undead_build_boneyard_disabled"
+	"Ability8"					"undead_unsummon_building"	 //Reference: Auns	
+	"Ability9"					"build_undead_items"
+		
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"0"

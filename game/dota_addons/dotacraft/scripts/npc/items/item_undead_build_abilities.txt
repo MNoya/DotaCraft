@@ -1,0 +1,348 @@
+// Item Abilities
+// undead_altar_of_darkness - No requirements
+// undead_haunted_gold_mine - No requirements
+// undead_graveyard - No requirements
+// undead_necropolis - No requirements
+	// undead_halls_of_the_dead - Upgrade
+	// undead_black_citadel - Upgrade, Requires undead_altar_of_darkness
+// undead_ziggurat - No requirements
+	// undead_nerubian_tower - Upgrade
+	// undead_spirit_tower - Upgrade, Requires undead_graveyard
+// undead_tomb_of_relics - No requirements
+
+"item_build_necropolis"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_necropolis"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+	"BuildTime"						"100.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	//"CancelsBuildingGhost"			"0" //bool
+
+	"UnitName"						"undead_necropolis"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"255"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"100.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"255"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+			"ItemUnitName"		"undead_necropolis"
+		}
+	}
+}
+
+"item_build_ziggurat"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_ziggurat"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"3" // this is (3x64) by (3x64) units, so 9 squares.
+	"BuildTime"						"50.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	//"CancelsBuildingGhost"			"0" //bool
+
+	"UnitName"						"undead_ziggurat"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"150"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"50.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"150"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"50"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+			"ItemUnitName"  "undead_ziggurat"
+		}
+	}
+}
+
+"item_build_altar_of_darkness"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_altar_of_darkness"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+	"BuildTime"						"60.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	//"CancelsBuildingGhost"			"0" //bool
+
+	"UnitName"						"undead_altar_of_darkness"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"180"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"60.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"180"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"50"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+			"ItemUnitName"  "undead_altar_of_darkness"
+		}
+	}
+}
+
+"item_build_graveyard"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_graveyard"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+	"BuildTime"						"80.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	//"CancelsBuildingGhost"			"0" //bool
+
+	"UnitName"						"undead_graveyard"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"215"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"80.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"215"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+			"ItemUnitName"  "undead_graveyard"
+		}
+	}
+}
+
+
+"item_build_tomb_of_relics"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_tomb_of_relics"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+	"BuildTime"						"60.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	//"CancelsBuildingGhost"			"0" //bool
+
+	"UnitName"						"undead_tomb_of_relics"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"130"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"60.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"130"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"30"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+			"ItemUnitName"  "undead_tomb_of_relics"
+		}
+	}
+}
+
+"item_build_haunted_gold_mine"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_build_haunted_gold_mine"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
+	"BuildTime"						"100.0"
+	"AbilityCastRange"				"200"
+	"UpdateHealth"					"1" //bool
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool. 
+	//"CancelsBuildingGhost"			"0" //bool
+
+	"UnitName"						"undead_haunted_gold_mine"
+	"AbilityCooldown"				"0"
+	"AbilityGoldCost"				"255"
+	// End of BuildingHelper info
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"100.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"255"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"220"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"abilities.lua"
+			"Function"		"build"
+			"ItemUnitName"  "undead_haunted_gold_mine"
+		}
+	}
+}

@@ -13,6 +13,7 @@
 // undead_ziggurat
 	// undead_nerubian_tower
 	// undead_spirit_tower
+// undead_sacrificial_pit
 
 // SemiUsable models
 // models/props_structures/bad_ancient001.vmdl
@@ -1136,4 +1137,72 @@
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
 	
+}
+
+//=================================================================================
+// Creature: Sacrificial Pit
+// Description: "Has the Sacrifice ability for turning Acolytes into Shades. Shades are invisible spirits that can see invisible units, but cannot attack."
+//=================================================================================
+"undead_sacrificial_pit"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						""	 //Add model
+	"ModelScale"				"1"
+	"Level"						"0"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: Abgs
+	"Ability2"					""	 //Reference: Asac
+	"Ability4"					"ability_building"
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"75"
+	"LumberCost"				"150"
+	"BuildTime"					"45"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"900"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"900"
+	"VisionNighttimeRange"		"600"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
 }
