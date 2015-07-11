@@ -1,14 +1,26 @@
 // Tech Tree File
 // Defines the requirements for being able to buy certain building/unit/upgrade
 
+// About Building Creation & Builder Abilities
+	// These abilities will show on the builder at all times, but as a disabled version that states the requirements if some of them aren't met.
+	// Every time a building is destroyed the table for the player gets updated, and a script is called to verify every requirement on builders & buildings
+	// Requirements aren't recursive, meaning if A is req for B and B is a req for C, destroying A won't make you unable to build C as long as B is up.
+
+// About Technology Upgrades - Building abilities - Research
+	// Destroying the building doesn't remove the upgrade, these are permanent until the game ends
+	// Having the previous upgrade is not a requirement, as lvl 2-3 tech will only appear on the building whenever the first one is acquired
+	// Tech Upgrade abilities are hidden once they are researched (and should be hidden on every building that has access to such research)
+	// Each time a unit spawns it should check for its upgrades. Each time an upgrade is finished, it should go through all the units and apply it.	
+
 "tech_tree"
 {
-	// Building Creation - Builder Abilities
-	// Treat buildings as Tech that can be destroyed
-	// These abilities will show on the builder at all points, but as a disabled version that states the requirements if some of them aren't met.
-	// To avoid having to search the building every time, each building will run a script on created/destroyed, to keep track of the current tech
-	// The script will compare the requirements for any ability that mentions the created/destroyed unit, and update all builders accordingly.
-	// Requirements aren't recursive, meaning if A is a requirement for B and B is a requirement for C, destroying A won't make you unable to build C as long as B is up.
+	//=================================================================================
+	// 									  Human 									 //
+	//=================================================================================
+
+	// Builder Abilities
+	//--------------------------------------------------------------
+
 	"human_build_blacksmith"
 	{
 		"human_town_hall"	"1"
@@ -32,8 +44,9 @@
 		"human_keep"		"1"
 	}
 
-	// Building Upgrade - Replaces the unit for a new one. Same as Building Creation but updates the building abilities instead
-	// These abilities go on buildings, need to force the Max Level to 0 unlike builders
+	// Building Upgrades
+	//--------------------------------------------------------------
+	
 	"human_train_castle"
 	{
 		"human_altar_of_kings"	"1"
@@ -49,7 +62,9 @@
 		"human_lumber_mill"	"1"
 	}
 
-	// Unit Creation - Disallow queing these units if the player doesnt have the required buildings.
+	// Unit Training
+	//--------------------------------------------------------------
+
 	"human_train_rifleman"
 	{
 		"human_blacksmith"	"1"
@@ -82,28 +97,22 @@
 	{
 		"human_arcane_vault"	"1"
 	}
-
-	// Technology Upgrades - Building abilities - Research
-	// Destroying the building doesn't remove the upgrade, these are permanent until the game ends
-	// Having the previous upgrade is not a requirement, as lvl 2-3 tech will only appear on the building whenever the first one is acquired
-	// Tech Upgrade abilities are hidden once they are researched
-	// Each time a unit spawns it should check for its upgrades. 
-	// Each time an upgrade is finished, it should go through all the units and apply it.	
 	
-	// Town Hall / Keep / Castle
+	// Research Abilities
+	//--------------------------------------------------------------
+
+	// • Town Hall / Keep / Castle
 	"human_research_backpack"
 	{
 		"human_arcane_vault"	"1"
 	}
-
 	"human_backpack"
 	{
 		"research"	"1"
 		"human_research_backpack"	"1"
 	}
 
-
-	// Barracks
+	// • Barracks
 	// "human_research_defend" has no requirements
 	"human_defend"
 	{
@@ -133,7 +142,7 @@
 		"human_research_animal_war_training"	"1"
 	}
 
-	// Lumber Mill: Lumber Harvesting and Masonry.
+	// • Lumber Mill: Lumber Harvesting and Masonry.
 	"human_research_lumber_harvesting1"
 	{
 		"human_keep"		"1"			
@@ -154,8 +163,7 @@
 		"human_castle"	"1"
 	}
 
-	// BlackSmith: 4 Upgrades for Melee, Plate, Ranged and Leather http://puu.sh/g2NQR/9d47f6c538.jpg
-	// 1st level doesn't have requirement, 2nd level has Keep, 3rd level has Castle
+	// • BlackSmith: 4 Upgrades for Melee, Plate, Ranged and Leather
 	"human_research_forged_swords2" 
 	{
 		"human_keep"		"1"
@@ -196,7 +204,7 @@
 		"human_castle"	"1"	
 	}
 
-	// Arcane Sanctum
+	// • Arcane Sanctum
 	"human_dispel_magic"
 	{
 		"research"	"1"
@@ -219,7 +227,6 @@
 		"human_research_sorceress_training1"	"1"
 	}
 	
-
 	"human_research_sorceress_training2" 
 	{
 		"human_castle"	"1"
@@ -254,7 +261,7 @@
 	//	"human_research_magic_sentry"	"1"
 	//}	
 
-	// Workshop
+	// • Workshop
 	"human_research_flare"
 	{
 		"human_keep"		"1"
@@ -305,7 +312,7 @@
 		"human_research_barrage"		"1"
 	}
 
-	// Gryphon Aviary
+	// • Gryphon Aviary
 	"human_research_storm_hammers"
 	{
 		"human_castle"		"1"
@@ -322,7 +329,7 @@
 		"human_arcane_vault"	"1"
 	}
 
-	// Altar of Kings: Each additional hero requires a Town Hall upgrade (So 2nd hero requires a Keep, and 3rd a Castle)
+	// • Altar of Kings: Each additional hero requires a Town Hall upgrade (So 2nd hero requires a Keep, and 3rd a Castle)
 	"human_train_archmage2"
 	{
 		"human_keep"	"1"
@@ -363,15 +370,13 @@
 
 
 
+	//=================================================================================
+	// 									Night Elf									 //
+	//=================================================================================
 
+	// Builder Abilities
+	//--------------------------------------------------------------
 
-
-
-
-
-
-
-	/// NIGHT ELVES ///
 	// "nightelf_build_ancient_of_war" - No requirements
 	"nightelf_build_ancient_of_lore"
 	{
@@ -398,5 +403,722 @@
 	"nightelf_train_tree_of_eternity"
 	{
 		"nightelf_altar_of_elders"	"1"
+	}
+
+	// Building Upgrades
+	//--------------------------------------------------------------
+
+	"nightelf_train_tree_of_eternity"
+	{
+		"undead_altar_of_storms"	"1"
+	}
+
+	// Unit Training
+	//--------------------------------------------------------------
+
+	"nightelf_train_huntress"
+	{
+		"nightelf_hunters_hall"	"1"
+	}
+
+	"nightelf_train_glaive_thrower"
+	{
+		"nightelf_hunters_hall"	"1"
+	}
+	
+	"nightelf_train_druid_of_the_claw"
+	{
+		"nightelf_tree_of_ages"	"1"
+	}
+	
+	"nightelf_train_mountain_giant"
+	{
+		"nightelf_tree_of_ages"	"1"
+		"nightelf_ancient_of_wonders"	"1"
+	}
+	
+	"nightelf_train_faerie_dragon"
+	{
+		"nightelf_ancient_of_wonders"	"1"
+	}
+
+	// Research Abilities
+	//--------------------------------------------------------------
+
+	// • Tree of Life / Ages / Eternity
+	"nightelf_research_natures_blessing"
+	{
+		"nightelf_tree_of_ages"	"1"
+	}
+	"nightelf_natures_blessing"
+	{
+		"research"	"1"
+		"nightelf_research_natures_blessing"	"1"
+	}
+	
+	"nightelf_research_backpack"
+	{
+		"nightelf_ancient_of_wonders"	"1"
+	}
+	"nightelf_backpack"
+	{
+		"research"	"1"
+		"nightelf_research_backpack"	"1"
+	}
+
+	// • Ancient of War
+	"nightelf_research_sentinel"
+	{
+		"nightelf_hunters_hall"	"1"
+		"nightelf_tree_of_ages"	"1"
+	}
+	"nightelf_sentinel"
+	{
+		"research"	"1"
+		"nightelf_research_sentinel"	"1"
+	}
+
+	"nightelf_research_improved_bows"
+	{
+		"nightelf_tree_of_ages"	"1"
+	}
+	"nightelf_improved_bows"
+	{
+		"research"	"1"
+		"nightelf_research_improved_bows"	"1"
+	}
+
+	"nightelf_research_marksmanship"
+	{
+		"nightelf_hunters_hall"	"1"
+		"nightelf_tree_of_eternity"	"1"
+	}
+	"nightelf_marksmanship"
+	{
+		"research"	"1"
+		"nightelf_research_marksmanship"	"1"
+	}
+
+	"nightelf_research_moon_glaive"
+	{
+		"nightelf_hunters_hall"	"1"
+		"nightelf_tree_of_eternity"	"1"
+	}
+	"nightelf_moon_glaive"
+	{
+		"research"	"1"
+		"nightelf_research_moon_glaive"	"1"
+	}
+
+	"nightelf_research_vorpal_blades"
+	{
+		"nightelf_hunters_hall"	"1"
+		"nightelf_tree_of_ages"	"1"
+	}
+	"nightelf_vorpal_blades"
+	{
+		"research"	"1"
+		"nightelf_research_vorpal_blades"	"1"
+	}
+
+	// • Ancient of Lore
+	//"nightelf_research_abolish_magic"
+	//"nightelf_research_druid_of_the_claw_training1" // Rejuvenation
+	"nightelf_research_druid_of_the_claw_training2" // Bear Form
+	{
+		"nightelf_tree_of_eternity"	"1"
+	}
+	"nightelf_research_resistant_skin"
+	{
+		"nightelf_ancient_of_wonders"	"1"
+		"nightelf_tree_of_eternity"	"1"
+	}
+	"nightelf_research_hardened_skin"
+	{
+		"nightelf_ancient_of_wonders"	"1"
+		"nightelf_tree_of_eternity"	"1"
+	}
+	//"nightelf_research_mark_of_the_claw" - Unlocked after training1
+
+	// • Ancient of Wind
+	//"nightelf_research_druid_of_the_talon_training1" // Crow Form
+	"nightelf_research_druid_of_the_talon_training2" // Cyclone
+	{
+		"nightelf_tree_of_eternity"	"1"
+	}
+	//"nightelf_research_hippogryph_taming"
+	//"nightelf_research_mark_of_the_talon" - Unlocked after training1
+
+	// • Chimaera Roost
+	//"nightelf_research_corrosive_breath"
+
+	// • Hunters Hall
+	//"nightelf_research_strength_of_the_moon1"
+	"nightelf_research_strength_of_the_moon2"
+	{
+		"nightelf_tree_of_ages"	"1"
+	}
+	"nightelf_research_strength_of_the_moon3"
+	{
+		"nightelf_tree_of_eternity"	"1"
+	}
+
+	//"nightelf_research_moon_armor1"
+	"nightelf_research_moon_armor2"
+	{
+		"nightelf_tree_of_ages"	"1"
+	}
+	"nightelf_research_moon_armor3"
+	{
+		"nightelf_tree_of_eternity"	"1"
+	}
+
+	//"nightelf_research_strength_of_the_wild1"
+	"nightelf_research_strength_of_the_wild2"
+	{
+		"nightelf_tree_of_ages"	"1"
+	}
+	"nightelf_research_strength_of_the_wild3"
+	{
+		"nightelf_tree_of_eternity"	"1"
+	}
+
+	//"nightelf_research_reinforced_hides1"
+	"nightelf_research_reinforced_hides2"
+	{
+		"nightelf_tree_of_ages"	"1"
+	}
+	"nightelf_research_reinforced_hides3"
+	{
+		"nightelf_tree_of_eternity"	"1"
+	}
+
+	//"nightelf_research_ultravision"
+
+	"nightelf_research_well_spring"
+	{
+		"nightelf_tree_of_eternity"	"1"
+	}
+
+	//=================================================================================
+	// 									   Orc  									 //
+	//=================================================================================
+
+	// Builder Abilities
+	//--------------------------------------------------------------
+
+	// "orc_build_barracks" - No requirements
+	"orc_build_beastiary"
+	{
+		"orc_stronghold"	"1"
+	}
+	
+	"orc_build_spirit_lodge"
+	{
+		"orc_stronghold"	"1"
+	}
+
+	"orc_build_watch_tower"
+	{
+		"orc_war_mill"	"1"
+	}
+
+	"orc_build_tauren_totem"
+	{
+		"orc_fortress"	"1"
+		"orc_war_mill"	"1"
+	}
+
+	// Building Upgrades
+	//--------------------------------------------------------------
+
+	"orc_train_fortress"
+	{
+		"orc_altar_of_storms"	"1"
+	}
+
+	// Unit Training
+	//--------------------------------------------------------------
+
+	"orc_train_troll_headhunter" //berserker
+	{
+		"orc_war_mill"	"1"
+	}
+
+	"orc_train_demolisher"
+	{
+		"orc_war_mill"	"1"
+		"orc_stronghold"	"1"
+	}
+
+	"orc_train_kodo_beast"
+	{
+		"orc_war_mill"	"1"
+	}
+
+	"orc_train_wind_rider"
+	{
+		"orc_war_mill"	"1"
+		"orc_stronghold"	"1"
+	}
+
+	"orc_train_troll_batrider"
+	{
+		"orc_voodoo_lounge"	"1"
+		"orc_stronghold"	"1"
+	}
+
+	// Research Abilities
+	//--------------------------------------------------------------
+
+	// • Great Hall / Stronghold / Fortress
+	//"orc_research_pillage"
+	"orc_pillage"
+	{
+		"research"	"1"
+		"orc_research_pillage"	"1"
+	}
+	"orc_research_backpack"
+	{
+		"orc_voodoo_lounge"		"1"
+	}
+	"orc_backpack"
+	{
+		"research"	"1"
+		"orc_research_backpack"	"1"	
+	}
+
+	// • Barracks
+	"orc_research_berserker_strength"
+	{
+		"orc_stronghold"	"1"
+	}
+	"orc_berserker_strength"
+	{
+		"research"	"1"
+		"orc_research_berserker_strength"	"1"
+	}
+
+	"orc_research_berserker_upgrade"
+	{
+		"orc_fortress"	"1"
+		"orc_war_mill"	"1"
+	}
+	"orc_berserker_upgrade"
+	{
+		"research"	"1"
+		"orc_research_berserker_upgrade"	"1"
+	}
+
+	"orc_research_troll_regeneration"
+	{
+		"orc_stronghold"	"1"
+		"orc_war_mill"	"1"
+	}
+	"orc_troll_regeneration"
+	{
+		"research"	"1"
+		"orc_research_troll_regeneration"	"1"
+	}
+
+	"orc_research_burning_oil"
+	{
+		"orc_fortress"	"1"
+	}
+	"orc_burning_oil"
+	{
+		"research"	"1"
+		"orc_research_burning_oil"	"1"
+	}
+
+	// • Spirit Lodge
+	//"orc_research_shaman_training1" //lightning shield
+	"orc_lightning_shield"
+	{
+		"research"	"1"
+		"orc_research_shaman_training1"	"1"
+	}
+
+	"orc_research_shaman_training2" //bloodlust
+	{
+		"orc_fortress"	"1"
+	}
+	"orc_bloodlust"
+	{
+		"research"	"1"
+		"orc_research_shaman_training2"	"1"
+	}
+
+	//"orc_research_witch_doctor_training1" //stasis trap
+	"orc_stasis_trap"
+	{
+		"research"	"1"
+		"orc_research_witch_doctor_training1"	"1"
+	}
+
+	"orc_research_witch_doctor_training2" //healing ward
+	{
+		"orc_fortress"	"1"
+	}
+	"orc_healing_ward"
+	{
+		"research"	"1"
+		"orc_research_witch_doctor_training2"	"1"
+	}
+
+	//"orc_research_spirit_walker_training1" //disenchant
+	"orc_disenchant"
+	{
+		"research"	"1"
+		"orc_research_witch_doctor_training1"	"1"
+	}
+
+	"orc_research_spirit_walker_training2" //ancestral spirit
+	{
+		"orc_fortress"	"1"
+	}
+	"orc_ancestral_spirit"
+	{
+		"research"	"1"
+		"orc_research_witch_doctor_training2"	"1"
+	}
+
+	// • Beastiary
+	//"orc_research_ensnare"
+	"orc_ensnare"
+	{
+		"research"	"1"
+		"orc_research_ensnare"	"1"
+	}
+
+	"orc_research_improved_war_drums"
+	{
+		"orc_fortress"	"1"
+		"orc_war_mill"	"1"
+	}
+	"orc_improved_war_drums"
+	{
+		"research"	"1"
+		"orc_research_improved_war_drums"	"1"
+	}
+
+	"orc_research_envenomed_spears"
+	{
+		"orc_fortress"	"1"
+	}
+	"orc_envenomed_spears"
+	{
+		"research"	"1"
+		"orc_research_envenomed_spears"	"1"
+	}
+
+	"orc_research_liquid_fire"
+	{
+		"orc_fortress"	"1"
+		"orc_voodoo_lounge"	"1"
+	}
+	"orc_liquid_fire"
+	{
+		"research"	"1"
+		"orc_research_liquid_fire"	"1"
+	}
+
+	// • Tauren Totem
+	//"orc_research_pulverize"
+
+	// • War Mill
+	//"orc_research_melee_weapons1"
+	"orc_research_melee_weapons2"
+	{
+		"orc_stronghold"	"1"
+	}
+	"orc_research_melee_weapons3"
+	{
+		"orc_fortress"		"1"
+	}
+	
+	//"orc_research_unit_armor1"
+	"orc_research_unit_armor2"
+	{
+		"orc_stronghold"	"1"
+	}
+	"orc_research_unit_armor3"
+	{
+		"orc_fortress"		"1"
+	}
+	
+	//"orc_research_ranged_weapons1"
+	"orc_research_ranged_weapons2"
+	{
+		"orc_stronghold"	"1"
+	}
+	"orc_research_ranged_weapons3"
+	{
+		"orc_fortress"		"1"
+	}
+	
+	//"orc_research_spiked_barricades1"
+	"orc_research_spiked_barricades2"
+	{
+		"orc_stronghold"	"1"
+	}
+	"orc_research_spiked_barricades3"
+	{
+		"orc_fortress"		"1"
+	}
+
+	"orc_research_reinforced_defenses"
+	{
+		"orc_fortress"		"1"
+	}
+
+
+	//=================================================================================
+	// 									   Undead  									 //
+	//=================================================================================
+
+	// Builder Abilities
+	//--------------------------------------------------------------
+
+	// "undead_build_crypt" - No requirements
+	"undead_build_temple_of_the_damned"
+	{
+		"undead_graveyard"	"1"
+		"undead_halls_of_the_dead"	"1"
+	}
+	
+	"undead_build_slaughterhouse"
+	{
+		"undead_graveyard"	"1"
+		"undead_halls_of_the_dead"	"1"
+	}
+
+	"undead_build_sacrificial_pit"
+	{
+		"undead_halls_of_the_dead"	"1"
+	}
+
+	"undead_build_boneyard"
+	{
+		"undead_sacrificial_pit"	"1"
+		"undead_black_citadel"		"1"
+	}
+
+	// Building Upgrades
+	//--------------------------------------------------------------
+
+	"undead_train_black_citadel"
+	{
+		"undead_altar_of_darknes"	"1"
+	}
+
+	"undead_train_spirit_tower"
+	{
+		"undead_graveyard"	"1"
+	}
+
+	// Unit Training
+	//--------------------------------------------------------------
+
+	"undead_train_crypt_fiend"
+	{
+		"undead_graveyard"	"1"
+	}
+
+	"undead_train_gargoyle"
+	{
+		"undead_graveyard"	"1"
+		"undead_halls_of_the_dead"	"1"
+	}
+
+	"undead_train_abomination"
+	{
+		"undead_black_citadel"	"1"
+	}
+
+	"undead_train_obsidian_statue"
+	{
+		"undead_tomb_of_relics"	"1"
+	}
+
+	// Research Abilities
+	//--------------------------------------------------------------
+
+	// • Necropolis / Halls of the Dead / Black Cidatel
+	"undead_research_backpack"
+	{
+		"undead_tomb_of_relics"	"1"
+	}
+	"undead_backpack"
+	{
+		"research"	"1"
+		"undead_research_backpack"	"1"
+	}
+
+	// • Crypt
+	//"undead_research_cannibalize"
+	"undead_cannibalize"
+	{
+		"research"	"1"
+		"undead_research_backpack"	"1"
+	}
+
+	"undead_research_ghoul_frenzy"
+	{
+		"undead_graveyard"	"1"
+		"undead_black_citadel"	"1"
+	}
+	"undead_ghoul_frenzy"
+	{
+		"research"	"1"
+		"undead_research_ghoul_frenzy"	"1"
+	}
+
+	"undead_research_stone_form"
+	{
+		"undead_graveyard"	"1"
+		"undead_black_citadel"	"1"
+	}
+	"undead_stone_form"
+	{
+		"research"	"1"
+		"undead_research_stone_form"	"1"
+	}
+
+	"undead_research_burrow"
+	{
+		"undead_graveyard"	"1"
+		"undead_halls_of_the_dead"	"1"
+	}
+	"undead_burrow"
+	{
+		"research"	"1"
+		"undead_research_burrow"	"1"
+	}
+
+	// • Temple of the Damned
+	//"undead_research_necromaster_training1" // Unholy Frenzy
+	"undead_unholy_frenzy"
+	{
+		"research"	"1"
+		"undead_research_burrow"	"1"
+	}
+	"undead_research_necromaster_training2" // Cripple
+	{
+		"undead_black_citadel"	"1"
+	}
+	"undead_cripple"
+	{
+		"research"	"1"
+		"undead_research_burrow"	"1"
+	}
+	
+	//"undead_research_banshee_training1" // Anti-magic shell
+	"undead_anti-magic_shell"
+	{
+		"research"	"1"
+		"undead_research_banshee_training1"	"1"
+	}
+	"undead_research_banshee_training2" // Possession
+	{
+		"undead_black_citadel"	"1"
+	}
+	"undead_possession"
+	{
+		"research"	"1"
+		"undead_research_banshee_training2"	"1"
+	}
+	
+	//"undead_research_skeletal_longevity"
+	"undead_skeletal_longevity"
+	{
+		"research"	"1"
+		"undead_research_skeletal_longevity"	"1"
+	}
+	
+	"undead_research_skeletal_mastery"
+	{
+		"undead_black_citadel"	"1"
+	}
+	"undead_skeletal_mastery"
+	{
+		"research"	"1"
+		"undead_research_skeletal_mastery"	"1"
+	}
+
+	// • Slaughterhouse
+	"undead_research_disease_cloud"
+	{
+		"undead_black_citadel"	"1"
+	}
+	"undead_disease_cloud"
+	{
+		"research"	"1"
+		"undead_research_disease_cloud"	"1"
+	}
+
+	"undead_research_destroyer_form"
+	{
+		"undead_tomb_of_relics"	"1"
+		"undead_black_citadel"	"1"
+	}
+	"undead_destroyer_form"
+	{
+		"research"	"1"
+		"undead_research_destroyer_form"	"1"
+	}
+
+	"undead_research_exhume_corpses"
+	{
+		"undead_halls_of_the_dead"	"1"
+	}
+	"undead_exhume_corpses"
+	{
+		"research"	"1"
+		"undead_research_exhume_corpses"	"1"
+	}
+
+	// • Boneyard
+	//"undead_research_freezing_breath"
+
+	// • Graveyard
+	//"undead_research_unholy_strength1"
+	"undead_research_unholy_strength2"
+	{
+		"undead_halls_of_the_dead"	"1"
+	}
+	"undead_research_unholy_strength3"
+	{
+		"undead_black_citadel"	"1"
+	}
+
+	//"undead_research_unholy_armor1"
+	"undead_research_unholy_armor2"
+	{
+		"undead_halls_of_the_dead"	"1"
+	}
+	"undead_research_unholy_armor3"
+	{
+		"undead_black_citadel"	"1"
+	}
+
+	//"undead_research_creature_attack1"
+	"undead_research_creature_attack2"
+	{
+		"undead_halls_of_the_dead"	"1"
+	}
+	"undead_research_creature_attack3"
+	{
+		"undead_black_citadel"	"1"
+	}
+
+	//"undead_research_creature_carapace1"
+	"undead_research_creature_carapace2"
+	{
+		"undead_halls_of_the_dead"	"1"
+	}
+	"undead_research_creature_carapace3"
+	{
+		"undead_black_citadel"	"1"
 	}
 }
