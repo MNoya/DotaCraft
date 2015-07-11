@@ -112,25 +112,6 @@ function StringStartsWith( fullstring, substring )
     return (first_characters == substring)
 end
 
-function IsCustomBuilding( unit )
-    local ability_building = unit:FindAbilityByName("ability_building")
-    local ability_tower = unit:FindAbilityByName("ability_tower")
-    if ability_building or ability_tower then
-        return true
-    else
-        return false
-    end
-end
-
-function IsCustomTower( unit )
-    local ability_tower = unit:FindAbilityByName("ability_tower")
-    if ability_tower then
-        return true
-    else
-        return false
-    end
-end
-
 function GetTreeHandleFromTreeIndex( targetIndex )
     return GameRules.ALLTREES[targetIndex]
 end

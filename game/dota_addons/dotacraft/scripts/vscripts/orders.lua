@@ -203,7 +203,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     ------------------------------------------------
     elseif units and order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and numBuildings > 0 then
         local first_unit = EntIndexToHScript(units["0"])
-        if IsCustomBuilding(first_unit) then
+        if IsCustomBuilding(first_unit) and not IsCustomTower(first_unit) then
             local x = tonumber(filterTable["position_x"])
             local y = tonumber(filterTable["position_y"])
             local z = tonumber(filterTable["position_z"])
@@ -223,6 +223,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
             ParticleManager:SetParticleControl(particle, 0, point) -- Position
             ParticleManager:SetParticleControl(particle, 1, first_unit:GetAbsOrigin()) --Orientation
             ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
+        elseif IsCustomTower(first_unit) then
+            ExecuteOrderFromTable({ UnitIndex = units["0"], OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = pos, Queue = false})
+            return false
         end
     end
 
