@@ -105,6 +105,8 @@ function dotacraft:InitGameMode()
 	GameMode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
 	GameMode:SetCustomHeroMaxLevel ( 10 )
 
+	
+
 	-- Team Colors
 	for team,color in pairs(TEAM_COLORS) do
       SetTeamCustomHealthbarColor(team, color[1], color[2], color[3])
@@ -155,7 +157,9 @@ function dotacraft:InitGameMode()
     GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap( dotacraft, "FilterExecuteOrder" ), self )
 
     -- Register Listener
-    CustomGameEventManager:RegisterListener("update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPanoramaUpdateSelectedEntities'))
+    CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPanoramaUpdateSelectedEntities'))
+    CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "RegisterLeftClick"))
+	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "RegisterRightClick"))
 
 	-- Remove building invulnerability
 	print("Make buildings vulnerable")
@@ -333,9 +337,6 @@ function dotacraft:InitGameMode()
 
   	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
   	
-  	-- Building Helper by Myll
-  	BuildingHelper:Init() -- nHalfMapLength
-
   	-- Starting positions
   	GameRules.StartingPositions = {}
 	local targets = Entities:FindAllByName( "starting_position" )
