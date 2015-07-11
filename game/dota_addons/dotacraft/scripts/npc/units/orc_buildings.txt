@@ -31,10 +31,12 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
+	"Model"						"models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -42,6 +44,7 @@
 	"Ability1"					""	 //Reference: Abds
 	"Ability2"					""	 //Reference: Aspi
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -74,14 +77,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"900"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -107,17 +110,21 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
+	"Model"						"models/props_structures/dire_barracks_melee001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aspi
+	"Ability1"					"orc_train_grunt"	 //Reference: Abds
+	"Ability2"					"orc_train_troll_headhunter_disabled"	 //Reference: Aspi
+	"Ability3"					"orc_train_demolisher_disabled"
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -150,14 +157,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1200"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -183,17 +190,22 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
+	"Model"						"models/props_structures/horse_statue_white.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aspi
+	"Ability1"					"orc_train_raider"	 //Reference: Abds
+	"Ability2"					"orc_train_kodo_beast_disabled"	 //Reference: Aspi
+	"Ability3"					"orc_train_wind_rider_disabled"
+	"Ability4"					"orc_train_troll_batrider_disabled"
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -226,14 +238,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1100"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -261,16 +273,20 @@
 	"BaseClass"					"npc_dota_building"
 	"Model"						"models/props_structures/bad_standard001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abdl
+	"Ability1"					"orc_train_peon"	 //Reference: Abdl
 	"Ability2"					""	 //Reference: Aspi
 	"Ability3"					""	 //Reference: Argl
+	"Ability4"					"orc_train_stronghold"
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -300,17 +316,18 @@
 	"GoldCost"					"385"
 	"LumberCost"				"185"
 	"BuildTime"					"150"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1500"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -338,16 +355,20 @@
 	"BaseClass"					"npc_dota_building"
 	"Model"						"models/props_structures/bad_standard001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abdl
+	"Ability1"					"orc_train_peon"	 //Reference: Abdl
 	"Ability2"					""	 //Reference: Aspi
 	"Ability3"					""	 //Reference: Argl
+	"Ability4"					"orc_train_fortress"
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -377,17 +398,18 @@
 	"GoldCost"					"700"
 	"LumberCost"				"375"
 	"BuildTime"					"140"
-	
+	"FoodProduced"				"10"
+
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"2000"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -415,16 +437,19 @@
 	"BaseClass"					"npc_dota_building"
 	"Model"						"models/props_structures/bad_standard001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abdl
+	"Ability1"					"orc_train_peon"	 //Reference: Abdl
 	"Ability2"					""	 //Reference: Aspi
 	"Ability3"					""	 //Reference: Argl
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -454,17 +479,18 @@
 	"GoldCost"					"1025"
 	"LumberCost"				"565"
 	"BuildTime"					"140"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"2500"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -491,10 +517,12 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
+	"Model"						"models/props_structures/dire_statue001.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -541,17 +569,18 @@
 	"GoldCost"					"160"
 	"LumberCost"				"40"
 	"BuildTime"					"50"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"600"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -579,15 +608,19 @@
 	"BaseClass"					"npc_dota_building"
 	"Model"						"models/props_structures/bad_standard001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
-	
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
+
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aspi
+	"Ability1"					"orc_train_shaman"	 //Reference: Abds
+	"Ability2"					"orc_train_troll_witch_doctor"	 //Reference: Aspi
+	"Ability3"					"orc_train_spirit_walker"
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -620,14 +653,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"800"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -653,17 +686,20 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
+	"Model"						"models/props_structures/ram_statue.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
+	"Ability1"					"orc_train_tauren"	 //Reference: Abds
 	"Ability2"					""	 //Reference: Aspi
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -696,14 +732,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1200"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -732,8 +768,10 @@
 	"BaseClass"					"npc_dota_building"
 	"Model"						"models/props_structures/bad_standard001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -777,14 +815,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"500"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -813,8 +851,10 @@
 	"BaseClass"					"npc_dota_building"
 	"Model"						"models/props_structures/bad_standard001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -823,6 +863,7 @@
 	"Ability2"					""	 //Reference: Aspi
 	"Ability3"					""	 //Reference: Arlm
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -855,14 +896,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1000"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -888,7 +929,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
+	"Model"						"models/props_structures/dire_tower001.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
@@ -938,14 +979,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"500"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision

@@ -50,10 +50,11 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aeat
-	"Ability3"					""	 //Reference: Aro1
+	"Ability1"					"nightelf_train_dryad"	 //Reference: Abds
+	"Ability2"					"nightelf_train_druid_of_the_claw_disabled"	 //Reference: Aeat
+	"Ability3"					"nightelf_train_mountain_giant_disabled"	 //Reference: Aro1
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -98,7 +99,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"900"
 	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -134,10 +135,11 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aeat
-	"Ability3"					""	 //Reference: Aro1
+	"Ability1"					"nightelf_train_archer"	 //Reference: Abds
+	"Ability2"					"nightelf_train_huntress_disabled"	 //Reference: Aeat
+	"Ability3"					"nightelf_train_glaive_thrower_disabled"	 //Reference: Aro1
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -182,7 +184,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"1000"
 	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -219,10 +221,11 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aeat
-	"Ability3"					""	 //Reference: Aro1
+	"Ability1"					"nightelf_train_druid_of_the_talon"	 //Reference: Abds
+	"Ability2"					"nightelf_train_hippogryph"	 //Reference: Aeat
+	"Ability3"					"nightelf_train_faerie_dragon_disabled"	 //Reference: Aro1
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -267,7 +270,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"900"
 	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -351,7 +354,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"600"
 	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -446,7 +449,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"450"
 	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -482,13 +485,14 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"ability_tower"	 //Reference: Aent
+	"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
 	"Ability2"					""	 //Reference: Aeat
 	"Ability3"					""	 //Reference: Aro1
 	"Ability4"					""	 //Reference: Abdl
 	"Ability5"					""	 //Reference: Atol
-	"Ability6"					""	 //Reference: Arlm
+	"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -534,7 +538,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"1300"
 	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -569,13 +573,14 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Aent
+	"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
 	"Ability2"					""	 //Reference: Aeat
 	"Ability3"					""	 //Reference: Aro1
 	"Ability4"					""	 //Reference: Abdl
 	"Ability5"					""	 //Reference: Atol
-	"Ability6"					""	 //Reference: Arlm
+	"Ability6"					"nightelf_train_tree_of_eternity_disabled"	 //Reference: Arlm
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -609,6 +614,7 @@
 	"GoldCost"					"660"
 	"LumberCost"				"365"
 	"BuildTime"					"140"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -620,7 +626,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"1700"
 	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -656,13 +662,14 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Aent
+	"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
 	"Ability2"					""	 //Reference: Aeat
 	"Ability3"					""	 //Reference: Aro1
 	"Ability4"					""	 //Reference: Abdl
 	"Ability5"					""	 //Reference: Atol
 	"Ability6"					""	 //Reference: Arlm
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -696,6 +703,7 @@
 	"GoldCost"					"990"
 	"LumberCost"				"565"
 	"BuildTime"					"140"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
@@ -707,7 +715,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"2000"
 	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -736,7 +744,7 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/elven_farm.vmdl"
 	"ModelScale"				"1.5"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	"ConsideredHero"			"1"
@@ -746,6 +754,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Abds
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -778,14 +787,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"900"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -813,7 +822,7 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_statue001.vmdl"
 	"ModelScale"				"0.5"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	"ConsideredHero"			"1"
@@ -821,8 +830,9 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
+	"Ability1"					"nightelf_train_chimaera"	 //Reference: Abds
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -855,14 +865,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1200"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -891,7 +901,7 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/cathedral001.vmdl"
 	"ModelScale"				"0.5"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	"ConsideredHero"			"1"
@@ -901,6 +911,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Abds
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -933,14 +944,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1100"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -966,9 +977,9 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/good_statue008.vmdl"
+	"Model"						"models/props_structures/rock_statue001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
@@ -1006,10 +1017,11 @@
 	"GoldCost"					"180"
 	"LumberCost"				"40"
 	"BuildTime"					"50"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
@@ -1044,7 +1056,7 @@
 	"BaseClass"					"npc_dota_building"
 	"Model"						"models/props_nature/bad_barracks_roots003.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	"ConsideredHero"			"1"
@@ -1090,14 +1102,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"800"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision

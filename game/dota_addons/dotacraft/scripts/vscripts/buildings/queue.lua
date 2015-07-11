@@ -78,7 +78,7 @@ function DequeueUnit( event )
 				print("Refund ",gold_cost)
 
 				-- Set not channeling if the cancelled item was the first slot
-				if itemSlot == 1 or itemSlot == 0 then
+				if itemSlot == 0 then
 					-- Refund food used
 					local ability = caster:FindAbilityByName(train_ability_name)
 					local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel() - 1)

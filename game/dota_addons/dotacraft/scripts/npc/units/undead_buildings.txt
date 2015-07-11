@@ -44,7 +44,7 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/heroes/undying/undying_tower.vmdl"
 	"ModelScale"				"1.3"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	"ConsideredHero"			"1"
@@ -52,9 +52,10 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgl
-	"Ability2"					""	 //Reference: Arlm
+	"Ability1"					"undead_train_acolyte"
+	"Ability6"					"undead_train_halls_of_the_dead"
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -88,14 +89,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1500"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -125,14 +126,17 @@
 	"ModelScale"				"1.4"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgl
-	"Ability2"					""	 //Reference: Arlm
+	"Ability1"					"undead_train_acolyte"
 	"Ability3"					""	 //Reference: Afr2
+	"Ability6"					"undead_train_black_citadel_disabled"
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -172,14 +176,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1750"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -210,14 +214,17 @@
 	"ModelScale"				"1.5"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgl
+	"Ability1"					"undead_train_acolyte"	 //Reference: Abgl
 	"Ability2"					""	 //Reference: Arlm
 	"Ability3"					""	 //Reference: Afr2
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 
 	// Armor
 	//----------------------------------------------------------------
@@ -257,14 +264,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"2000"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -292,14 +299,17 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/statue_dragon003.vmdl"
 	"ModelScale"				"1.5"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgs
+	"Ability1"					"undead_train_frost_wyrm"	 //Reference: Abgs
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -334,14 +344,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1500"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -369,14 +379,17 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/statue_mystical001.vmdl"
 	"ModelScale"				"1.4"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Abgs
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -411,14 +424,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"900"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -446,14 +459,22 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/bad_barracks001_melee.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgs
+	"Ability1"					"undead_train_ghoul"	 //Reference: Abgs
+	"Ability2"					"undead_train_crypt_fiend_disabled"
+	"Ability3"					"undead_train_gargoyle_disabled"
+	"Ability4"					""
+	"Ability5"					""
+	"Ability6"					""
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -486,14 +507,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1300"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -521,8 +542,10 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/well_skull.vmdl"
 	"ModelScale"				"1.5"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -531,6 +554,7 @@
 	"Ability2"					""	 //Reference: Agyd
 	"Ability3"					""	 //Reference: Arlm
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -565,14 +589,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"900"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -598,16 +622,24 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/bad_barracks001_ranged.vmdl"
+	"Model"						"models/items/pugna/ward/draining_wight/draining_wight.vmdl" //"models/props_structures/bad_barracks001_ranged.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgs
+	"Ability1"					"undead_train_necromaster"	 //Reference: Abgs
+	"Ability2"					"undead_train_banshee"
+	"Ability3"					""
+	"Ability4"					""
+	"Ability5"					""
+	"Ability6"					""
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -640,14 +672,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1100"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -675,7 +707,7 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/bad_ancient_crystal001.vmdl"
 	"ModelScale"				"1"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
@@ -684,7 +716,7 @@
 	"Ability1"					""	 //Reference: Abgl
 	"Ability2"					""	 //Reference: Abgm
 	"Ability10"					"ability_building"
-	
+
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"5"
@@ -718,14 +750,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"950"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -754,14 +786,22 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/bad_ancient_destruction.vmdl"
 	"ModelScale"				"0.7"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgs
+	"Ability1"					"undead_train_meat_wagon"	 //Reference: Abgs
+	"Ability2"					"undead_train_abomination_disabled"
+	"Ability3"					"undead_train_obsidian_statue_disabled"
+	"Ability4"					""
+	"Ability5"					""
+	"Ability6"					""
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -794,14 +834,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"1200"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -829,8 +869,10 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/bad_ancient001.vmdl"
 	"ModelScale"				"0.7"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -873,14 +915,14 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"475"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -908,14 +950,16 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/bad_statue001.vmdl"
 	"ModelScale"				"0.7"
-	"Level"						"0"
+	"Level"						"1"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgs
+	"Ability1"					"undead_train_nerubian_tower"	 //Reference: Abgs
+	"Ability1"					"undead_train_spirit_tower_disabled"	 //Reference: Abgs
 	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -945,18 +989,18 @@
 	"GoldCost"					"150"
 	"LumberCost"				"50"
 	"BuildTime"					"50"
-	"FoodProduced"				"5"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"550"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -1028,18 +1072,18 @@
 	"GoldCost"					"250"
 	"LumberCost"				"70"
 	"BuildTime"					"30"
-	"FoodProduced"				"5"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"550"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -1111,18 +1155,18 @@
 	"GoldCost"					"295"
 	"LumberCost"				"90"
 	"BuildTime"					"35"
-	"FoodProduced"				"5"
+	"FoodProduced"				"10"
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"550"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	"StatusManaRegen"			"0"
 	
 	// Vision
@@ -1148,9 +1192,9 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						""	 //Add model
-	"ModelScale"				"1"
-	"Level"						"0"
+	"Model"						"models/props_structures/cage001.vmdl"
+	"ModelScale"				"0.8"
+	"Level"						"1"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
 	
@@ -1158,7 +1202,8 @@
 	//----------------------------------------------------------------
 	"Ability1"					""	 //Reference: Abgs
 	"Ability2"					""	 //Reference: Asac
-	"Ability4"					"ability_building"
+	"Ability10"					"ability_building"
+	"Ability11"					"ability_building_queue"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1183,13 +1228,13 @@
 	
 	// Movement
 	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 	
 	// Status
 	//----------------------------------------------------------------
 	"StatusHealth"				"900"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"0"
+	"StatusMana"				"100"
 	
 	// Vision
 	//----------------------------------------------------------------

@@ -1,0 +1,298 @@
+// Necropolis -> Halls of the Dead
+"undead_train_halls_of_the_dead"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_halls_of_the_dead"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"320"
+	"AbilityChannelTime"			"10" //140
+
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"140.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"320"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"205"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		// Need a better method for this
+		//"RunScript"
+		//{
+		//	"ScriptFile"	"buildings/upgrades.lua"
+		//	"Function"		"DisableAbilities"
+		//}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"UpgradeBuilding"
+			"UnitName"		"undead_halls_of_the_dead"
+		}		
+	}
+}
+
+// Requires Altar
+"undead_train_black_citadel_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_black_citadel"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+// Halls of the Dead -> Black Citadel
+"undead_train_black_citadel"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_black_citadel"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"360"
+	"AbilityChannelTime"			"10" //140
+
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"140.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"360"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"210"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		// Need a better method for this
+		//"RunScript"
+		//{
+		//	"ScriptFile"	"buildings/upgrades.lua"
+		//	"Function"		"DisableAbilities"
+		//}
+
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"UpgradeBuilding"
+			"UnitName"		"undead_black_citadel"
+		}		
+	}
+}
+
+// Ziggurat -> Nerubian Tower
+"undead_train_nerubian_tower"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_nerubian_tower"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"320"
+	"AbilityChannelTime"			"10" //140
+
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"140.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"320"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"205"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		// Need a better method for this
+		//"RunScript"
+		//{
+		//	"ScriptFile"	"buildings/upgrades.lua"
+		//	"Function"		"DisableAbilities"
+		//}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"UpgradeBuilding"
+			"UnitName"		"undead_nerubian_tower"
+		}		
+	}
+}
+
+// Ziggurat -> Spirit Tower
+// Requires graveyard
+"undead_train_spirit_tower_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_spirit_tower"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"undead_train_spirit_tower"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_spirit_tower"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"320"
+	"AbilityChannelTime"			"10" //140
+
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"build_time"			"140.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"320"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"205"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		// Need a better method for this
+		//"RunScript"
+		//{
+		//	"ScriptFile"	"buildings/upgrades.lua"
+		//	"Function"		"DisableAbilities"
+		//}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"UpgradeBuilding"
+			"UnitName"		"undead_spirit_tower"
+		}		
+	}
+}

@@ -1,10 +1,1173 @@
 "undead_train_acolyte"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_acolyte"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"undead_acolyte"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
 "undead_train_ghoul"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_ghoul"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"undead_ghoul"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
 "undead_train_crypt_fiend"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_crypt_fiend"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"undead_crypt_fiend"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+"undead_train_crypt_fiend_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_crypt_fiend"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
 "undead_train_gargoyle"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_gargoyle"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"undead_gargoyle"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+"undead_train_gargoyle_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_gargoyle"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
 "undead_train_abomination"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_abomination"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"undead_abomination"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+"undead_train_abomination_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_abomination"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
 "undead_train_meat_wagon"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_meat_wagon"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"undead_meat_wagon"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
 "undead_train_obsidian_statue"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_obsidian_statue"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"undead_obsidian_statue"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+"undead_train_obsidian_statue_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_obsidian_statue"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
 "undead_train_necromaster"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_train_huntress"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"nightelf_huntress"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
 "undead_train_banshee"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_train_huntress"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"nightelf_huntress"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
 "undead_train_frost_wyrm"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"undead_train_frost_wyrm"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityChannelTime"			"20" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"20.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"undead_frost_wyrm"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
