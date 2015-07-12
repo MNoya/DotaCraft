@@ -20,7 +20,7 @@
 			"var_type"		"FIELD_FLOAT"
 			"accumulation_step"		"1"
 		}
-		// For example, after dealing 10% of the building's health, you should already gain 10 gold, but if the accumulation_step is set to 20, you'll need to damage 20% of its health in order to "cash out".
+		// The amount of resources you're supposed to gain have to be equal to or higher than this value in order for you to actually gain it.
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
@@ -424,8 +424,7 @@
 			"var_type"		"FIELD_FLOAT"
 			"regeneration"			"0.02"
 		}
-		// % of health regenerated per second
-		// There's an extra boolen to decide if that is a percentage, I've removed it for your convenience.
+		// % of health regenerated per second.
 	}
 
 	// Done
@@ -586,8 +585,8 @@
 			"var_type"		"FIELD_FLOAT"
 			"duration"		"0.7"
 		}
-		// Is actually cast time.
-		// There's a boolean that decides if the process is interruptable (default to no), I've removed it for your convenience.
+		// Cast time.
+		// The process is uninterruptable.
 	}
 
 	// Done
@@ -705,7 +704,7 @@
 			"var_type"		"FIELD_FLOAT"
 			"duration"		"0.5"
 		}
-		// No idea what this does, it's not the damage interval, not the cast time nor animation delay.
+		// The Kodo Beast will only be able to move after this duration.
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
@@ -754,7 +753,7 @@
 			"var_type"		"FIELD_FLOAT"
 			"damage_increase"			"0.1"
 		}
-		// There are 2 other values which are booleans that decide if the bonus applies to melee and ranged units respectively. I've removed them for your convenience.
+		// The damage increase applies to both melee and ranged.
 	}
 
 	// Done
@@ -965,7 +964,7 @@
 			"var_type"		"FIELD_INTEGER"
 			"radius"		"2000"
 		}
-		// There's a boolean (default to yes) that decides if you should summon "busy" units, aka units that are mining, lumbering, repairing.
+		// Will summon "busy" units, aka units that are mining, lumbering, repairing.
 	}
 
 	// Done
