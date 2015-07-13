@@ -839,10 +839,10 @@
 	}
 }
 
-"undead_train_necromaster"
+"undead_train_necromancer"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_train_huntress"
+	"AbilityTextureName"			"undead_train_necromancer"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -894,7 +894,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"nightelf_huntress"
+			"UnitName"		"undead_necromancer"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -953,7 +953,7 @@
 "undead_train_banshee"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_train_huntress"
+	"AbilityTextureName"			"undead_train_banshee"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -1005,7 +1005,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"nightelf_huntress"
+			"UnitName"		"undead_banshee"
 			"Target"
 			{
 				"Center"		    "CASTER"

@@ -1,41 +1,2344 @@
-// // • Great Hall / Stronghold / Fortress
-// "orc_research_pillage"
-// "orc_research_backpack"
+// • Great Hall / Stronghold / Fortress
+"orc_research_pillage"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_pillage"
+	"MaxLevel" 						"1"
 
-// // • Barracks
-// "orc_research_berserker_strength"
-// "orc_research_berserker_upgrade"
-// "orc_research_troll_regeneration"
-// "orc_research_burning_oil"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-// // • Spirit Lodge
-// "orc_research_shaman_training1" //lightning shield
-// "orc_research_shaman_training2" //bloodlust
-// "orc_research_witch_doctor_training1" //stasis trap
-// "orc_research_witch_doctor_training2" //healing ward
-// "orc_research_spirit_walker_training1" //disenchant
-// "orc_research_spirit_walker_training2" //ancestral spirit
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
 
-// // • Beastiary
-// "orc_research_ensnare"
-// "orc_research_improved_war_drums"
-// "orc_research_envenomed_spears"
-// "orc_research_liquid_fire"
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
 
-// // • Tauren Totem
-// "orc_research_pulverize"
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
 
-// // • War Mill
-// "orc_research_melee_weapons1"
-// "orc_research_melee_weapons2"
-// "orc_research_melee_weapons3"
-// "orc_research_unit_armor1"
-// "orc_research_unit_armor2"
-// "orc_research_unit_armor3"
-// "orc_research_ranged_weapons1"
-// "orc_research_ranged_weapons2"
-// "orc_research_ranged_weapons3"
-// "orc_research_spiked_barricades1"
-// "orc_research_spiked_barricades2"
-// "orc_research_spiked_barricades3"
-// "orc_research_reinforced_defenses"
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_pillage_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_pillage"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_backpack"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_backpack"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_backpack_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_backpack"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+// • Barracks
+"orc_research_berserker_strength"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_berserker_strength"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_berserker_strength_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_berserker_strength"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_berserker_upgrade"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_berserker_upgrade"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_berserker_upgrade_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_berserker_upgrade"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_troll_regeneration"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_troll_regeneration"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_troll_regeneration_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_troll_regeneration"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_burning_oil"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_burning_oil"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_burning_oil_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_burning_oil"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+// • Spirit Lodge
+"orc_research_shaman_training1" //lightning shield
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_shaman_training1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_shaman_training1_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_shaman_training1"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_shaman_training2" //bloodlust
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_shaman_training2"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_shaman_training2_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_shaman_training2"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_witch_doctor_training1" //stasis trap
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_witch_doctor_training1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_witch_doctor_training1_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_witch_doctor_training1"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+"orc_research_witch_doctor_training2" //healing ward
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_witch_doctor_training2"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_witch_doctor_training2_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_witch_doctor_training2"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_spirit_walker_training1" //disenchant
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spirit_walker_training1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_spirit_walker_training1_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spirit_walker_training1"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_spirit_walker_training2" //ancestral spirit
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spirit_walker_training2"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_spirit_walker_training2_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spirit_walker_training2"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+// • Beastiary
+"orc_research_ensnare"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_ensnare"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_ensnare_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_ensnare"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_improved_war_drums"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_improved_war_drums"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_improved_war_drums_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_improved_war_drums"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_envenomed_spears"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_envenomed_spears"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_envenomed_spears_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_envenomed_spears"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_liquid_fire"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_liquid_fire"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_liquid_fire_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_liquid_fire"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+// • Tauren Totem
+"orc_research_pulverize"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_pulverize"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_pulverize_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_pulverize"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+// • War Mill
+"orc_research_melee_weapons1"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_melee_weapons1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_melee_weapons1_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_melee_weapons1"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_melee_weapons2"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_melee_weapons2"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_melee_weapons2_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_melee_weapons2"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_melee_weapons3"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_melee_weapons3"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_melee_weapons3_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_melee_weapons3"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_unit_armor1"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_unit_armor1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_unit_armor1_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_unit_armor1"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_unit_armor2"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_unit_armor2"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_unit_armor2_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_unit_armor2"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_unit_armor3"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_unit_armor3"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_unit_armor3_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_unit_armor3"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_ranged_weapons1"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_ranged_weapons1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_ranged_weapons1_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_ranged_weapons1"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_ranged_weapons2"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_ranged_weapons2"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_ranged_weapons2_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_ranged_weapons2"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_ranged_weapons3"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_ranged_weapons3"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_ranged_weapons3_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_ranged_weapons3"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_spiked_barricades1"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spiked_barricades1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_spiked_barricades1_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spiked_barricades1"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_spiked_barricades2"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spiked_barricades2"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_spiked_barricades2_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spiked_barricades2"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_spiked_barricades3"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spiked_barricades3"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_spiked_barricades3_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_spiked_barricades3"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_research_reinforced_defenses"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_reinforced_defenses"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"50"
+	"AbilityChannelTime"			"20"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"research_time"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"DisableResearch"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		// Add Upgrade and Swap the ability for the next upgrade if there is one
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ResearchComplete"
+		}
+	}
+}
+"orc_research_reinforced_defenses_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_reinforced_defenses"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}

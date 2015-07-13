@@ -49,10 +49,15 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"nightelf_train_dryad"	 //Reference: Abds
-	"Ability2"					"nightelf_train_druid_of_the_claw_disabled"	 //Reference: Aeat
-	"Ability3"					"nightelf_train_mountain_giant_disabled"	 //Reference: Aro1
+	"Ability2"					"nightelf_train_druid_of_the_claw"	 //Reference: Aeat
+	"Ability3"					"nightelf_train_mountain_giant"	 //Reference: Aro1
+	"Ability4"					"nightelf_research_abolish_magic"
+	"Ability5"					"nightelf_research_druid_of_the_claw_training1"
+	"Ability6"					"nightelf_research_resistant_skin"
+	"Ability7"					"nightelf_research_hardened_skin"
+	"Ability8"					"nightelf_research_mark_of_the_claw"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -134,10 +139,15 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"nightelf_train_archer"	 //Reference: Abds
-	"Ability2"					"nightelf_train_huntress_disabled"	 //Reference: Aeat
-	"Ability3"					"nightelf_train_glaive_thrower_disabled"	 //Reference: Aro1
+	"Ability2"					"nightelf_train_huntress"	 //Reference: Aeat
+	"Ability3"					"nightelf_train_glaive_thrower"	 //Reference: Aro1
+	"Ability4"					"nightelf_research_sentinel"
+	"Ability5"					"nightelf_research_improved_bows"
+	"Ability6"					"nightelf_research_marksmanship"
+	"Ability7"					"nightelf_research_moon_glaive"
+	"Ability8"					"nightelf_research_vorpal_blades"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -220,10 +230,13 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"nightelf_train_druid_of_the_talon"	 //Reference: Abds
 	"Ability2"					"nightelf_train_hippogryph"	 //Reference: Aeat
-	"Ability3"					"nightelf_train_faerie_dragon_disabled"	 //Reference: Aro1
+	"Ability3"					"nightelf_train_faerie_dragon"	 //Reference: Aro1
+	"Ability4"					"nightelf_research_druid_of_the_talon_training1"
+	"Ability5"					"nightelf_research_hippogryph_taming"
+	"Ability6"					"nightelf_research_mark_of_the_talon"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -296,7 +309,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+	"Model"						"models/items/furion/treant/fungal_lord_shroomthing/fungal_lord_shroomthing.vmdl"
 	"ModelScale"				"1.5"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
@@ -475,8 +488,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature" // allows turning and cosmetics
-	"Model"						"models/items/furion/treant_stump.vmdl"
-	"ModelScale"				"2.3"
+	"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+	"ModelScale"				"1.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
@@ -486,8 +499,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-	"Ability2"					""	 //Reference: Aeat
-	"Ability3"					""	 //Reference: Aro1
+	"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
+	"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 	"Ability4"					""	 //Reference: Abdl
 	"Ability5"					""	 //Reference: Atol
 	"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
@@ -552,6 +565,17 @@
 	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+
+	"Creature"
+	{
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"227"		}
+			"Wearable2"		{	"ItemDef"		"228"		}
+			"Wearable3" 	{	"ItemDef"		"229"		}
+			"Wearable4"		{	"ItemDef"		"230"		}
+		}
+	}
 }
 
 //=================================================================================
@@ -563,8 +587,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/items/furion/treant/father_treant/father_treant.vmdl"
-	"ModelScale"				"2.6"
+	"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+	"ModelScale"				"2"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
@@ -574,11 +598,11 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-	"Ability2"					""	 //Reference: Aeat
-	"Ability3"					""	 //Reference: Aro1
+	"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
+	"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 	"Ability4"					""	 //Reference: Abdl
 	"Ability5"					""	 //Reference: Atol
-	"Ability6"					"nightelf_train_tree_of_eternity_disabled"	 //Reference: Arlm
+	"Ability6"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -640,7 +664,17 @@
 	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-	
+
+	"Creature"
+	{
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"7298"		} //"Moonshard Claws"
+			"Wearable2"		{	"ItemDef"		"7299"		} //"Moonshard Tusks"
+			"Wearable3" 	{	"ItemDef"		"7300"		} //"Moonshard Roots"
+			"Wearable4"		{	"ItemDef"		"7301"		} //"Canopy of the Moonshard"
+		}
+	}	
 }
 
 //=================================================================================
@@ -652,8 +686,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/items/furion/treant/eternalseasons_treant/eternalseasons_treant.vmdl"
-	"ModelScale"				"3"
+	"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+	"ModelScale"				"2.2"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
@@ -663,8 +697,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-	"Ability2"					""	 //Reference: Aeat
-	"Ability3"					""	 //Reference: Aro1
+	"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
+	"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 	"Ability4"					""	 //Reference: Abdl
 	"Ability5"					""	 //Reference: Atol
 	"Ability6"					""	 //Reference: Arlm
@@ -729,7 +763,17 @@
 	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-	
+
+	"Creature"
+	{
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"7059"		} //"Embrace of the Agaric Flourish"
+			"Wearable2"		{	"ItemDef"		"7060"		} //"Countenance of the Agaric Flourish"
+			"Wearable3" 	{	"ItemDef"		"7061"		} //"Stride of the Agaric Flourish"
+			"Wearable4"		{	"ItemDef"		"7062"		} //"Canopy of the Agaric Flourish"
+		}
+	}
 }
 
 
@@ -831,6 +875,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_train_chimaera"	 //Reference: Abds
+	"Ability2"					"nightelf_research_corrosive_breath"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -908,8 +953,13 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
+	"AbilityLayout"				"6"
+	"Ability1"					"nightelf_research_strength_of_the_moon1"
+	"Ability2"					"nightelf_research_moon_armor1"
+	"Ability3"					"nightelf_research_strength_of_the_wild1"
+	"Ability4"					"nightelf_research_reinforced_hides1"
+	"Ability5"					"nightelf_research_ultravision"
+	"Ability6"					"nightelf_research_well_spring"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	

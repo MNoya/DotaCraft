@@ -33,13 +33,13 @@
 	"Ability1"					"human_gather"
 	"Ability2"					"human_return_resources"
 	"Ability3"					"orc_build_barracks"
-	"Ability4"					"orc_build_beastiary_disabled"
-	"Ability5"					"orc_build_spirit_lodge_disabled"
-	"Ability6"					"orc_build_watch_tower_disabled"
-	"Ability7"					"orc_build_tauren_totem_disabled"				
+	"Ability4"					"orc_build_beastiary"
+	"Ability5"					"orc_build_spirit_lodge"
+	"Ability6"					"orc_build_watch_tower"
+	"Ability7"					"orc_build_tauren_totem"				
 	"Ability8"					"build_orc_items" // Provides additional building abilities
 	"Ability9"					"ability_prevent_attack_flying"
-	//"Ability10"					"orc_pillage"	 //Reference: Asal
+	"Ability10"					"orc_pillage"	 //Reference: Asal
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -126,7 +126,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"" //orc_pillage"	 //Reference: Asal
+	"Ability1"					"orc_pillage"	 //Reference: Asal
 	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
 	
 	// Armor
@@ -507,9 +507,9 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"orc_bloodlust"	 //Reference: Ablo
+	"Ability1"					"orc_purge"	 //Reference: Ablo
 	"Ability2"					"orc_lightning_shield"	 //Reference: Alsh
-	"Ability3"					"orc_purge"	 //Reference: Apg2
+	"Ability3"					"orc_bloodlust"	 //Reference: Apg2
 	"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
 	
 	// Armor
@@ -608,8 +608,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_sentry_ward"	 //Reference: Aeye
-	"Ability2"					"orc_healing_ward"	 //Reference: Ahwd
-	"Ability3"					"orc_stasis_trap"	 //Reference: Asta
+	"Ability2"					"orc_stasis_trap"	 //Reference: Ahwd
+	"Ability3"					"orc_healing_ward"	 //Reference: Asta
 	"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
 	
 	// Armor
@@ -705,10 +705,10 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"orc_disenchant"	//Reference: Adis
-	"Ability2"					"orc_spirit_link"	 //Reference: Aspl
-	"Ability3"					"orc_ethereal_form"	 
-	"Ability4"					"orc_ancestral_spirit"	 //Reference: Aast
+	"Ability1"					"orc_spirit_link"	//Reference: Adis
+	"Ability2"					"orc_disenchant"	 //Reference: Aspl
+	"Ability3"					"orc_ancestral_spirit"	 
+	"Ability4"					"orc_ethereal_form"	 //Reference: Aast
 	"Ability5"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
 	"Ability6"					""	 //Reference: ACsk - Resistant Skin(3,1 pos, creep)
 	//Reference: Acpf - Corporeal Form

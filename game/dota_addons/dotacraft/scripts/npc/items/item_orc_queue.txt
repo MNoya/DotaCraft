@@ -124,6 +124,27 @@
 	}
 }
 
+"item_orc_train_shaman"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_train_shaman"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+	}
+}
+
 "item_orc_train_troll_witch_doctor"
 {
 	"BaseClass"             		"item_datadriven"
@@ -267,6 +288,830 @@
 		{
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
+		}
+	}
+}
+
+// ----------------
+// Research
+// • Great Hall / Stronghold / Fortress
+"item_orc_research_pillage"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_pillage"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_backpack"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_backpack"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+
+// • Barracks
+"item_orc_research_berserker_strength"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_berserker_strength"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_berserker_upgrade"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_berserker_upgrade"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_troll_regeneration"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_troll_regeneration"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_burning_oil"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_burning_oil"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+
+// • Spirit Lodge
+"item_orc_research_shaman_training1" //lightning shield
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_shaman_training1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_shaman_training2" //bloodlust
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_shaman_training2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_witch_doctor_training1" //stasis trap
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_witch_doctor_training1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_witch_doctor_training2" //healing ward
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_witch_doctor_training2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_spirit_walker_training1" //disenchant
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_spirit_walker_training1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_spirit_walker_training2" //ancestral spirit
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_spirit_walker_training2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+
+// • Beastiary
+"item_orc_research_ensnare"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_ensnare"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_improved_war_drums"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_improved_war_drums"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_envenomed_spears"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_envenomed_spears"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_liquid_fire"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_liquid_fire"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+
+// • Tauren Totem
+"item_orc_research_pulverize"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_pulverize"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+
+// • War Mill
+"item_orc_research_melee_weapons1"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_melee_weapons1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_melee_weapons2"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_melee_weapons2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_melee_weapons3"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_melee_weapons3"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_unit_armor1"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_unit_armor1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_unit_armor2"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_unit_armor2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_unit_armor3"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_unit_armor3"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_ranged_weapons1"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_ranged_weapons1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_ranged_weapons2"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_ranged_weapons2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_ranged_weapons3"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_ranged_weapons3"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_spiked_barricades1"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_spiked_barricades1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_spiked_barricades2"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_spiked_barricades2"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_spiked_barricades3"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_spiked_barricades3"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
+		}
+	}
+}
+"item_orc_research_reinforced_defenses"
+{
+	"BaseClass"             		"item_datadriven"
+	"AbilityTextureName"			"item_orc_research_reinforced_defenses"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityCastPoint"				"0"
+
+	"ItemDroppable" 				"0"
+	"ItemPurchasable" 				"0"
+	"ItemSellable"					"0"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"DequeueUnit"
+		}
+
+		// Re-enable research ability
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/research.lua"
+			"Function"		"ReEnableResearch"
 		}
 	}
 }

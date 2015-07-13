@@ -5304,10 +5304,15 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_train_dryad"	 //Reference: Abds
-		"Ability2"					"nightelf_train_druid_of_the_claw_disabled"	 //Reference: Aeat
-		"Ability3"					"nightelf_train_mountain_giant_disabled"	 //Reference: Aro1
+		"Ability2"					"nightelf_train_druid_of_the_claw"	 //Reference: Aeat
+		"Ability3"					"nightelf_train_mountain_giant"	 //Reference: Aro1
+		"Ability4"					"nightelf_research_abolish_magic"
+		"Ability5"					"nightelf_research_druid_of_the_claw_training1"
+		"Ability6"					"nightelf_research_resistant_skin"
+		"Ability7"					"nightelf_research_hardened_skin"
+		"Ability8"					"nightelf_research_mark_of_the_claw"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -5389,10 +5394,15 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_train_archer"	 //Reference: Abds
-		"Ability2"					"nightelf_train_huntress_disabled"	 //Reference: Aeat
-		"Ability3"					"nightelf_train_glaive_thrower_disabled"	 //Reference: Aro1
+		"Ability2"					"nightelf_train_huntress"	 //Reference: Aeat
+		"Ability3"					"nightelf_train_glaive_thrower"	 //Reference: Aro1
+		"Ability4"					"nightelf_research_sentinel"
+		"Ability5"					"nightelf_research_improved_bows"
+		"Ability6"					"nightelf_research_marksmanship"
+		"Ability7"					"nightelf_research_moon_glaive"
+		"Ability8"					"nightelf_research_vorpal_blades"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -5475,10 +5485,13 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_train_druid_of_the_talon"	 //Reference: Abds
 		"Ability2"					"nightelf_train_hippogryph"	 //Reference: Aeat
-		"Ability3"					"nightelf_train_faerie_dragon_disabled"	 //Reference: Aro1
+		"Ability3"					"nightelf_train_faerie_dragon"	 //Reference: Aro1
+		"Ability4"					"nightelf_research_druid_of_the_talon_training1"
+		"Ability5"					"nightelf_research_hippogryph_taming"
+		"Ability6"					"nightelf_research_mark_of_the_talon"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -5551,7 +5564,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+		"Model"						"models/items/furion/treant/fungal_lord_shroomthing/fungal_lord_shroomthing.vmdl"
 		"ModelScale"				"1.5"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
@@ -5730,8 +5743,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature" // allows turning and cosmetics
-		"Model"						"models/items/furion/treant_stump.vmdl"
-		"ModelScale"				"2.3"
+		"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+		"ModelScale"				"1.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -5741,8 +5754,8 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-		"Ability2"					""	 //Reference: Aeat
-		"Ability3"					""	 //Reference: Aro1
+		"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
+		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 		"Ability4"					""	 //Reference: Abdl
 		"Ability5"					""	 //Reference: Atol
 		"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
@@ -5807,6 +5820,17 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"227"		}
+				"Wearable2"		{	"ItemDef"		"228"		}
+				"Wearable3" 	{	"ItemDef"		"229"		}
+				"Wearable4"		{	"ItemDef"		"230"		}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -5818,8 +5842,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/furion/treant/father_treant/father_treant.vmdl"
-		"ModelScale"				"2.6"
+		"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+		"ModelScale"				"2"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -5829,11 +5853,11 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-		"Ability2"					""	 //Reference: Aeat
-		"Ability3"					""	 //Reference: Aro1
+		"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
+		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 		"Ability4"					""	 //Reference: Abdl
 		"Ability5"					""	 //Reference: Atol
-		"Ability6"					"nightelf_train_tree_of_eternity_disabled"	 //Reference: Arlm
+		"Ability6"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -5895,7 +5919,17 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
+	
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"7298"		} //"Moonshard Claws"
+				"Wearable2"		{	"ItemDef"		"7299"		} //"Moonshard Tusks"
+				"Wearable3" 	{	"ItemDef"		"7300"		} //"Moonshard Roots"
+				"Wearable4"		{	"ItemDef"		"7301"		} //"Canopy of the Moonshard"
+			}
+		}	
 	}
 	
 	//=================================================================================
@@ -5907,8 +5941,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/furion/treant/eternalseasons_treant/eternalseasons_treant.vmdl"
-		"ModelScale"				"3"
+		"Model"						"models/heroes/treant_protector/treant_protector.vmdl"
+		"ModelScale"				"2.2"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -5918,8 +5952,8 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-		"Ability2"					""	 //Reference: Aeat
-		"Ability3"					""	 //Reference: Aro1
+		"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
+		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 		"Ability4"					""	 //Reference: Abdl
 		"Ability5"					""	 //Reference: Atol
 		"Ability6"					""	 //Reference: Arlm
@@ -5984,7 +6018,17 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
+	
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"7059"		} //"Embrace of the Agaric Flourish"
+				"Wearable2"		{	"ItemDef"		"7060"		} //"Countenance of the Agaric Flourish"
+				"Wearable3" 	{	"ItemDef"		"7061"		} //"Stride of the Agaric Flourish"
+				"Wearable4"		{	"ItemDef"		"7062"		} //"Canopy of the Agaric Flourish"
+			}
+		}
 	}
 	
 	
@@ -6086,6 +6130,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_train_chimaera"	 //Reference: Abds
+		"Ability2"					"nightelf_research_corrosive_breath"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -6163,8 +6208,13 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
+		"AbilityLayout"				"6"
+		"Ability1"					"nightelf_research_strength_of_the_moon1"
+		"Ability2"					"nightelf_research_moon_armor1"
+		"Ability3"					"nightelf_research_strength_of_the_wild1"
+		"Ability4"					"nightelf_research_reinforced_hides1"
+		"Ability5"					"nightelf_research_ultravision"
+		"Ability6"					"nightelf_research_well_spring"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -7737,7 +7787,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_building"
 		"Model"						"models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"2"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -7824,10 +7874,15 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"orc_train_grunt"	 //Reference: Abds
-		"Ability2"					"orc_train_troll_headhunter_disabled"	 //Reference: Aspi
-		"Ability3"					"orc_train_demolisher_disabled"
+		"Ability2"					"orc_train_troll_headhunter"	 //Reference: Aspi
+		"Ability3"					"orc_train_demolisher"
+		"Ability4"					"orc_research_berserker_strength"
+		"Ability5"					"orc_research_berserker_upgrade"
+		"Ability6"					"orc_research_troll_regeneration"
+		"Ability7"					"orc_research_burning_oil"
+		"Ability8"					""
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -7904,11 +7959,15 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"orc_train_raider"	 //Reference: Abds
-		"Ability2"					"orc_train_kodo_beast_disabled"	 //Reference: Aspi
-		"Ability3"					"orc_train_wind_rider_disabled"
-		"Ability4"					"orc_train_troll_batrider_disabled"
+		"Ability2"					"orc_train_kodo_beast"	 //Reference: Aspi
+		"Ability3"					"orc_train_wind_rider"
+		"Ability4"					"orc_train_troll_batrider"
+		"Ability5"					"orc_research_ensnare"
+		"Ability6"					"orc_research_improved_war_drums"
+		"Ability7"					"orc_research_envenomed_spears"
+		"Ability8"					"orc_research_liquid_fire"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -7987,8 +8046,8 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_train_peon"	 //Reference: Abdl
-		"Ability2"					""	 //Reference: Aspi
-		"Ability3"					""	 //Reference: Argl
+		"Ability2"					"orc_research_pillage"	 //Reference: Aspi
+		"Ability3"					"orc_research_backpack"	 //Reference: Argl
 		"Ability4"					"orc_train_stronghold"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
@@ -8069,8 +8128,8 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_train_peon"	 //Reference: Abdl
-		"Ability2"					""	 //Reference: Aspi
-		"Ability3"					""	 //Reference: Argl
+		"Ability2"					"orc_research_pillage"	 //Reference: Aspi
+		"Ability3"					"orc_research_backpack"	 //Reference: Argl
 		"Ability4"					"orc_train_fortress"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
@@ -8151,8 +8210,8 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_train_peon"	 //Reference: Abdl
-		"Ability2"					""	 //Reference: Aspi
-		"Ability3"					""	 //Reference: Argl
+		"Ability2"					"orc_research_pillage"	 //Reference: Aspi
+		"Ability3"					"orc_research_backpack"	 //Reference: Argl
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -8217,7 +8276,7 @@
 	// Building: Orc Burrow
 	// Description: "Provides food, which increases the maximum number of units that can be trained. Peons can garrison inside to attack enemy units. Can learn the Reinforced Defenses upgrade. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"orc_orc_burrow"
+	"orc_burrow"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -8232,8 +8291,8 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
-		"Ability2"					""	 //Reference: Aspi
+		"Ability1"					"orc_battle_stations"	 //Reference: Abds
+		"Ability2"					"orc_stand_down"	 //Reference: Aspi
 		"Ability3"					""	 //Reference: Abun
 		"Ability4"					""	 //Reference: Abtl
 		"Ability5"					""	 //Reference: Astd
@@ -8320,10 +8379,13 @@
 	
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"orc_train_shaman"	 //Reference: Abds
 		"Ability2"					"orc_train_troll_witch_doctor"	 //Reference: Aspi
 		"Ability3"					"orc_train_spirit_walker"
+		"Ability4"					"orc_research_shaman_training1"
+		"Ability5"					"orc_research_witch_doctor_training1"
+		"Ability6"					"orc_research_spirit_walker_training1"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -8402,7 +8464,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_train_tauren"	 //Reference: Abds
-		"Ability2"					""	 //Reference: Aspi
+		"Ability2"					"orc_research_pulverize"	 //Reference: Aspi
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -8563,10 +8625,12 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
-		"Ability2"					""	 //Reference: Aspi
-		"Ability3"					""	 //Reference: Arlm
+		"AbilityLayout"				"5"
+		"Ability1"					"orc_research_melee_weapons1"	 //Reference: Abds
+		"Ability2"					"orc_research_unit_armor1"	 //Reference: Aspi
+		"Ability3"					"orc_research_ranged_weapons1"	 //Reference: Arlm
+		"Ability4"					"orc_research_spiked_barricades1"
+		"Ability5"					"orc_research_reinforced_defenses"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -8743,13 +8807,13 @@
 		"Ability1"					"human_gather"
 		"Ability2"					"human_return_resources"
 		"Ability3"					"orc_build_barracks"
-		"Ability4"					"orc_build_beastiary_disabled"
-		"Ability5"					"orc_build_spirit_lodge_disabled"
-		"Ability6"					"orc_build_watch_tower_disabled"
-		"Ability7"					"orc_build_tauren_totem_disabled"				
+		"Ability4"					"orc_build_beastiary"
+		"Ability5"					"orc_build_spirit_lodge"
+		"Ability6"					"orc_build_watch_tower"
+		"Ability7"					"orc_build_tauren_totem"				
 		"Ability8"					"build_orc_items" // Provides additional building abilities
 		"Ability9"					"ability_prevent_attack_flying"
-		//"Ability10"					"orc_pillage"	 //Reference: Asal
+		"Ability10"					"orc_pillage"	 //Reference: Asal
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8836,7 +8900,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"" //orc_pillage"	 //Reference: Asal
+		"Ability1"					"orc_pillage"	 //Reference: Asal
 		"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
 		
 		// Armor
@@ -9217,9 +9281,9 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"orc_bloodlust"	 //Reference: Ablo
+		"Ability1"					"orc_purge"	 //Reference: Ablo
 		"Ability2"					"orc_lightning_shield"	 //Reference: Alsh
-		"Ability3"					"orc_purge"	 //Reference: Apg2
+		"Ability3"					"orc_bloodlust"	 //Reference: Apg2
 		"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
 		
 		// Armor
@@ -9318,8 +9382,8 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_sentry_ward"	 //Reference: Aeye
-		"Ability2"					"orc_healing_ward"	 //Reference: Ahwd
-		"Ability3"					"orc_stasis_trap"	 //Reference: Asta
+		"Ability2"					"orc_stasis_trap"	 //Reference: Ahwd
+		"Ability3"					"orc_healing_ward"	 //Reference: Asta
 		"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
 		
 		// Armor
@@ -9415,10 +9479,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"orc_disenchant"	//Reference: Adis
-		"Ability2"					"orc_spirit_link"	 //Reference: Aspl
-		"Ability3"					"orc_ethereal_form"	 
-		"Ability4"					"orc_ancestral_spirit"	 //Reference: Aast
+		"Ability1"					"orc_spirit_link"	//Reference: Adis
+		"Ability2"					"orc_disenchant"	 //Reference: Aspl
+		"Ability3"					"orc_ancestral_spirit"	 
+		"Ability4"					"orc_ethereal_form"	 //Reference: Aast
 		"Ability5"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
 		"Ability6"					""	 //Reference: ACsk - Resistant Skin(3,1 pos, creep)
 		//Reference: Acpf - Corporeal Form
@@ -11077,6 +11141,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"undead_train_acolyte"
+		"Ability2"					"undead_research_backpack"
 		"Ability6"					"undead_train_halls_of_the_dead"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
@@ -11157,8 +11222,9 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"undead_train_acolyte"
+		"Ability2"					"undead_research_backpack"
 		"Ability3"					""	 //Reference: Afr2
-		"Ability6"					"undead_train_black_citadel_disabled"
+		"Ability6"					"undead_train_black_citadel"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -11245,7 +11311,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"undead_train_acolyte"	 //Reference: Abgl
-		"Ability2"					""	 //Reference: Arlm
+		"Ability2"					"undead_research_backpack"
 		"Ability3"					""	 //Reference: Afr2
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
@@ -11490,13 +11556,15 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"undead_train_ghoul"	 //Reference: Abgs
-		"Ability2"					"undead_train_crypt_fiend_disabled"
-		"Ability3"					"undead_train_gargoyle_disabled"
-		"Ability4"					""
-		"Ability5"					""
-		"Ability6"					""
+		"Ability2"					"undead_train_crypt_fiend"
+		"Ability3"					"undead_train_gargoyle"
+		"Ability4"					"undead_research_cannibalize"
+		"Ability5"					"undead_research_web"
+		"Ability6"					"undead_research_ghoul_frenzy"
+		"Ability7"					"undead_research_stone_form"
+		"Ability8"					"undead_research_burrow"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -11574,9 +11642,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abgs
-		"Ability2"					""	 //Reference: Agyd
-		"Ability3"					""	 //Reference: Arlm
+		"Ability1"					"undead_research_unholy_strength1"	 //Reference: Abgs
+		"Ability2"					"undead_research_unholy_armor1"	 //Reference: Agyd
+		"Ability3"					"undead_research_creature_attack1"	 //Reference: Arlm
+		"Ability4"					"undead_research_creature_carapace1"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -11655,13 +11724,13 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					"undead_train_necromaster"	 //Reference: Abgs
+		"AbilityLayout"				"6"
+		"Ability1"					"undead_train_necromancer"	 //Reference: Abgs
 		"Ability2"					"undead_train_banshee"
-		"Ability3"					""
-		"Ability4"					""
-		"Ability5"					""
-		"Ability6"					""
+		"Ability3"					"undead_research_necromancer_training1"
+		"Ability4"					"undead_research_banshee_training1"
+		"Ability5"					"undead_research_skeletal_longevity"
+		"Ability6"					"undead_research_skeletal_mastery"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -11817,13 +11886,13 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"undead_train_meat_wagon"	 //Reference: Abgs
-		"Ability2"					"undead_train_abomination_disabled"
-		"Ability3"					"undead_train_obsidian_statue_disabled"
-		"Ability4"					""
-		"Ability5"					""
-		"Ability6"					""
+		"Ability2"					"undead_train_abomination"
+		"Ability3"					"undead_train_obsidian_statue"
+		"Ability4"					"undead_research_exhume_corpses"
+		"Ability5"					"undead_research_disease_cloud"
+		"Ability6"					"undead_research_destroyer_form"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -11981,7 +12050,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"undead_train_nerubian_tower"	 //Reference: Abgs
-		"Ability1"					"undead_train_spirit_tower_disabled"	 //Reference: Abgs
+		"Ability2"					"undead_train_spirit_tower"	 //Reference: Abgs
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -12288,7 +12357,7 @@
 	//	undead_banshee - models/heroes/death_prophet/death_prophet.vmdl
 	//	undead_skeleton_warrior - models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl
 	//	undead_skeletal_mage - models/heroes/pugna/pugna.vmdl
-	//	undead_frost_wyrm - Valve give Winter Wyvern
+	//	undead_frost_wyrm - models/heroes/winterwyvern/winterwyvern.vmdl
 	
 	//=================================================================================
 	// Creature: Acolyte
@@ -13431,10 +13500,10 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/heroes/winterwyvern/winterwyvern.vmdl"
+		"ModelScale"				"1.2"
 		"Level"						"6"
-		"HealthBarOffset"			"140"
+		"HealthBarOffset"			"180"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -13509,6 +13578,12 @@
 		"Creature"
 		{
 			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"552"		} //"Winter Wyvern's Pelt"
+				"Wearable2"		{	"ItemDef"		"551"		} //"Winter Wyvern's Headdress"
+				"Wearable3"		{	"ItemDef"		"553"		} //"Winter Wyvern''s Ambient Effects"
+			}
 		}
 	}
 	//------------------------------------------------------------------------------------

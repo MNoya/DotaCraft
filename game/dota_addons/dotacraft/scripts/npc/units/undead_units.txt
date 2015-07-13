@@ -11,7 +11,7 @@
 //	undead_banshee - models/heroes/death_prophet/death_prophet.vmdl
 //	undead_skeleton_warrior - models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl
 //	undead_skeletal_mage - models/heroes/pugna/pugna.vmdl
-//	undead_frost_wyrm - Valve give Winter Wyvern
+//	undead_frost_wyrm - models/heroes/winterwyvern/winterwyvern.vmdl
 
 //=================================================================================
 // Creature: Acolyte
@@ -1154,10 +1154,10 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
-	"ModelScale"				"1"
+	"Model"						"models/heroes/winterwyvern/winterwyvern.vmdl"
+	"ModelScale"				"1.2"
 	"Level"						"6"
-	"HealthBarOffset"			"140"
+	"HealthBarOffset"			"180"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1232,5 +1232,11 @@
 	"Creature"
 	{
 		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"552"		} //"Winter Wyvern's Pelt"
+			"Wearable2"		{	"ItemDef"		"551"		} //"Winter Wyvern's Headdress"
+			"Wearable3"		{	"ItemDef"		"553"		} //"Winter Wyvern''s Ambient Effects"
+		}
 	}
 }

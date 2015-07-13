@@ -32,7 +32,7 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
 	"Model"						"models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"2"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
@@ -119,10 +119,15 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"orc_train_grunt"	 //Reference: Abds
-	"Ability2"					"orc_train_troll_headhunter_disabled"	 //Reference: Aspi
-	"Ability3"					"orc_train_demolisher_disabled"
+	"Ability2"					"orc_train_troll_headhunter"	 //Reference: Aspi
+	"Ability3"					"orc_train_demolisher"
+	"Ability4"					"orc_research_berserker_strength"
+	"Ability5"					"orc_research_berserker_upgrade"
+	"Ability6"					"orc_research_troll_regeneration"
+	"Ability7"					"orc_research_burning_oil"
+	"Ability8"					""
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -199,11 +204,15 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"orc_train_raider"	 //Reference: Abds
-	"Ability2"					"orc_train_kodo_beast_disabled"	 //Reference: Aspi
-	"Ability3"					"orc_train_wind_rider_disabled"
-	"Ability4"					"orc_train_troll_batrider_disabled"
+	"Ability2"					"orc_train_kodo_beast"	 //Reference: Aspi
+	"Ability3"					"orc_train_wind_rider"
+	"Ability4"					"orc_train_troll_batrider"
+	"Ability5"					"orc_research_ensnare"
+	"Ability6"					"orc_research_improved_war_drums"
+	"Ability7"					"orc_research_envenomed_spears"
+	"Ability8"					"orc_research_liquid_fire"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -282,8 +291,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_train_peon"	 //Reference: Abdl
-	"Ability2"					""	 //Reference: Aspi
-	"Ability3"					""	 //Reference: Argl
+	"Ability2"					"orc_research_pillage"	 //Reference: Aspi
+	"Ability3"					"orc_research_backpack"	 //Reference: Argl
 	"Ability4"					"orc_train_stronghold"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
@@ -364,8 +373,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_train_peon"	 //Reference: Abdl
-	"Ability2"					""	 //Reference: Aspi
-	"Ability3"					""	 //Reference: Argl
+	"Ability2"					"orc_research_pillage"	 //Reference: Aspi
+	"Ability3"					"orc_research_backpack"	 //Reference: Argl
 	"Ability4"					"orc_train_fortress"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
@@ -446,8 +455,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_train_peon"	 //Reference: Abdl
-	"Ability2"					""	 //Reference: Aspi
-	"Ability3"					""	 //Reference: Argl
+	"Ability2"					"orc_research_pillage"	 //Reference: Aspi
+	"Ability3"					"orc_research_backpack"	 //Reference: Argl
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -512,7 +521,7 @@
 // Building: Orc Burrow
 // Description: "Provides food, which increases the maximum number of units that can be trained. Peons can garrison inside to attack enemy units. Can learn the Reinforced Defenses upgrade. |n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
-"orc_orc_burrow"
+"orc_burrow"
 {
 	// General
 	//----------------------------------------------------------------
@@ -527,8 +536,8 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aspi
+	"Ability1"					"orc_battle_stations"	 //Reference: Abds
+	"Ability2"					"orc_stand_down"	 //Reference: Aspi
 	"Ability3"					""	 //Reference: Abun
 	"Ability4"					""	 //Reference: Abtl
 	"Ability5"					""	 //Reference: Astd
@@ -615,10 +624,13 @@
 
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"orc_train_shaman"	 //Reference: Abds
 	"Ability2"					"orc_train_troll_witch_doctor"	 //Reference: Aspi
 	"Ability3"					"orc_train_spirit_walker"
+	"Ability4"					"orc_research_shaman_training1"
+	"Ability5"					"orc_research_witch_doctor_training1"
+	"Ability6"					"orc_research_spirit_walker_training1"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -697,7 +709,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_train_tauren"	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aspi
+	"Ability2"					"orc_research_pulverize"	 //Reference: Aspi
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -858,10 +870,12 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Aspi
-	"Ability3"					""	 //Reference: Arlm
+	"AbilityLayout"				"5"
+	"Ability1"					"orc_research_melee_weapons1"	 //Reference: Abds
+	"Ability2"					"orc_research_unit_armor1"	 //Reference: Aspi
+	"Ability3"					"orc_research_ranged_weapons1"	 //Reference: Arlm
+	"Ability4"					"orc_research_spiked_barricades1"
+	"Ability5"					"orc_research_reinforced_defenses"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	

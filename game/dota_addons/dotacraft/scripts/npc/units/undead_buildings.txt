@@ -53,6 +53,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_train_acolyte"
+	"Ability2"					"undead_research_backpack"
 	"Ability6"					"undead_train_halls_of_the_dead"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
@@ -133,8 +134,9 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_train_acolyte"
+	"Ability2"					"undead_research_backpack"
 	"Ability3"					""	 //Reference: Afr2
-	"Ability6"					"undead_train_black_citadel_disabled"
+	"Ability6"					"undead_train_black_citadel"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -221,7 +223,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_train_acolyte"	 //Reference: Abgl
-	"Ability2"					""	 //Reference: Arlm
+	"Ability2"					"undead_research_backpack"
 	"Ability3"					""	 //Reference: Afr2
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
@@ -466,13 +468,15 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"undead_train_ghoul"	 //Reference: Abgs
-	"Ability2"					"undead_train_crypt_fiend_disabled"
-	"Ability3"					"undead_train_gargoyle_disabled"
-	"Ability4"					""
-	"Ability5"					""
-	"Ability6"					""
+	"Ability2"					"undead_train_crypt_fiend"
+	"Ability3"					"undead_train_gargoyle"
+	"Ability4"					"undead_research_cannibalize"
+	"Ability5"					"undead_research_web"
+	"Ability6"					"undead_research_ghoul_frenzy"
+	"Ability7"					"undead_research_stone_form"
+	"Ability8"					"undead_research_burrow"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -550,9 +554,10 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abgs
-	"Ability2"					""	 //Reference: Agyd
-	"Ability3"					""	 //Reference: Arlm
+	"Ability1"					"undead_research_unholy_strength1"	 //Reference: Abgs
+	"Ability2"					"undead_research_unholy_armor1"	 //Reference: Agyd
+	"Ability3"					"undead_research_creature_attack1"	 //Reference: Arlm
+	"Ability4"					"undead_research_creature_carapace1"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -631,13 +636,13 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
-	"Ability1"					"undead_train_necromaster"	 //Reference: Abgs
+	"AbilityLayout"				"6"
+	"Ability1"					"undead_train_necromancer"	 //Reference: Abgs
 	"Ability2"					"undead_train_banshee"
-	"Ability3"					""
-	"Ability4"					""
-	"Ability5"					""
-	"Ability6"					""
+	"Ability3"					"undead_research_necromancer_training1"
+	"Ability4"					"undead_research_banshee_training1"
+	"Ability5"					"undead_research_skeletal_longevity"
+	"Ability6"					"undead_research_skeletal_mastery"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -793,13 +798,13 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"undead_train_meat_wagon"	 //Reference: Abgs
-	"Ability2"					"undead_train_abomination_disabled"
-	"Ability3"					"undead_train_obsidian_statue_disabled"
-	"Ability4"					""
-	"Ability5"					""
-	"Ability6"					""
+	"Ability2"					"undead_train_abomination"
+	"Ability3"					"undead_train_obsidian_statue"
+	"Ability4"					"undead_research_exhume_corpses"
+	"Ability5"					"undead_research_disease_cloud"
+	"Ability6"					"undead_research_destroyer_form"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
@@ -957,7 +962,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_train_nerubian_tower"	 //Reference: Abgs
-	"Ability1"					"undead_train_spirit_tower_disabled"	 //Reference: Abgs
+	"Ability2"					"undead_train_spirit_tower"	 //Reference: Abgs
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	
