@@ -10,9 +10,8 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"900"
@@ -27,25 +26,17 @@
 			"var_type"		"FIELD_INTEGER"
 			"duration"		"8"
 		}
+		// This is for lumbering, wisp will gather lumber_per_interval per 8 seconds.
+		// For mining gold, wisp will gather 10 gold per 4 seconds. The values for that are on another spell excluded from parsing.
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataC"			"150"
+			"lumber_per_interval"			"5"
 		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"5"
-		}
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"5"
-		}
+		
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -59,10 +50,9 @@
 	"AbilityTextureName"		"nightelf_detonate"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_TREE"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"100"
@@ -81,17 +71,16 @@
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataA"			"50"
+			"mana_drained"				"50"
 		}
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataB"			"225"
+			"summoned_unit_damage"		"225"
 		}
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -107,8 +96,7 @@
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"50"
@@ -121,22 +109,24 @@
 		"01"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"dataA"			"0.35"
+			"repair_cost_ratio"			"0.35"
 		}
+		// Total cost for a full repair will be repair_cost_ratio times the original gold cost.
 		"02"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"dataB"			"1.5"
+			"repair_time_ratio"			"1.5"
 		}
+		// Total time for a full repair will be repair_time_ratio times the original build time.
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataE"			"175"
+			"naval_repair_range"			"175"
 		}
+		// The range at which the wisps repair naval units.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -165,40 +155,37 @@
 		"01"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"dataC"			"0.5"
+			"inaction_duration"			"0.5"
 		}
+		// Units must stay inactive for this duration in order to start melding.
 		"02"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"dataA"			"1.5"
+			"fade_duration"				"1.5"
 		}
 		"03"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"dataB"			"2.5"
+			"transition_duration"		"2.5"
 		}
+		// If day arrives WHILE the units are still melding, they will automatically reappear after this duration (unless you manually end the melding prematurely).
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
-// Ability: Elune's Grace
+// Ability: Elunes Grace
 // Description: "Reduces the damage taken from Piercing attacks to <Aegr,DataA1,%>%, and spells and Magic attacks to <Aegr,DataE1,%>%."
-// Code Reference: AIdd
+// Code Reference: Aegr
 //=================================================================================
-"nightelf_elune's_grace"
+"nightelf_elunes_grace"
 {
 	"BaseClass"					"ability_datadriven"
 	"AbilityTextureName"		"nightelf_elune's_grace"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
@@ -208,33 +195,19 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"dataH"			"1"
+			"var_type"		"FIELD_FLOAT"
+			"piercing_reduction"			"0.65"
 		}
 		"02"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"dataA"			"0.65"
+			"magical_reduction"				"0.8"
 		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"1"
-		}
-		"04"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"dataE"			"0.8"
-		}
-		"05"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataG"			"1"
-		}
+		// The damage will be reduced TO this value, not BY this value.
+		// There are also 2 values about deflecting those two types of damage but the "Chance To Deflect" is set to 0 so I don't think they do anything.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -249,9 +222,8 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_NONE"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"800"
@@ -264,22 +236,23 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataC"			"275"
+			"hover_height"			"275"
 		}
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataA"			"100"
+			"inflight_sight"		"100"
 		}
+		// Its sight when it's moving.
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataB"			"900"
+			"hover_sight"			"900"
 		}
+		// Its sight when it's standing still, the transition is instant.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //moon_glaive
@@ -299,11 +272,6 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		
-	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
-	"AbilityManaCost"			"0"
 		
 	"AbilitySpecial"
 	{
@@ -314,28 +282,28 @@
 		}
 		"02"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"dataC"			"0.25"
+			"var_type"		"FIELD_INTEGER"
+			"duration_hero"				"1"
 		}
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataD"			"1"
+			"damage_per_second"			"4"
 		}
 		"04"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"4"
+			"var_type"		"FIELD_FLOAT"
+			"movement_speed_reduction"			"0.5"
 		}
 		"05"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"dataB"			"0.5"
+			"attack_speed_reduction"			"0.25"
 		}
+		
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -349,10 +317,9 @@
 	"AbilityTextureName"		"nightelf_abolish_magic"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_TREE"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"500"
@@ -365,17 +332,11 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataC"			"1"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"300"
+			"summoned_unit_damage"			"300"
 		}
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -390,21 +351,17 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		
-	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
-	"AbilityManaCost"			"0"
 		
 	"AbilitySpecial"
 	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"should_nerf"		"1"
 	}
+	// pls do
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -418,7 +375,7 @@
 	"AbilityTextureName"		"nightelf_roar"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
@@ -444,12 +401,11 @@
 		"03"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"dataA"			"0.25"
+			"damage_increase"			"0.25"
 		}
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -484,17 +440,11 @@
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataC"			"3"
-		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"400"
+			"total_heal"	"400"
 		}
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -509,9 +459,6 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
@@ -525,25 +472,11 @@
 			"var_type"		"FIELD_FLOAT"
 			"duration"		"1.45"
 		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataD"			" - "
-		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"edoc"
-		}
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"1"
-		}
+		// Cast time.
+		// The process is uninterruptable.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -557,10 +490,9 @@
 	"AbilityTextureName"		"nightelf_taunt"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
@@ -578,12 +510,12 @@
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataA"			"10"
+			"max_unit"			"10"
 		}
+		// Can only taunt the closest 10 units, as said in the description.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -598,9 +530,8 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_NONE"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"32"
@@ -613,27 +544,21 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataD"			"1"
+			"strikes"			"15"
 		}
+		// Two extra values called "Attach Delay" and "Remove Delay" are set to 0.8 ans 2.5 respectively, I think they are for the model change.
+		// Funny story, setting Attach Delay to higher than 0.8 freezes the Giant and the tree after the animation, up until the duration ends.
+		// "Remove Delay" apparently doesn't do anything.
 		"02"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"dataA"			"0.8"
-		}
-		"03"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"dataB"			"2.5"
-		}
-		"04"
-		{
 			"var_type"		"FIELD_INTEGER"
-			"dataE"			"15"
+			"range"			"250"
 		}
+		// Attack range increased TO this value, not BY this value.
+		// His damage type is changed to Siege, with an increase of 6 in the min end, and 8 in the max end.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -648,46 +573,22 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		
-	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
-	"AbilityManaCost"			"0"
 		
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataC"			"12"
+			"ignored_damage"			"12"
 		}
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataD"			"1"
-		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"100"
-		}
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"3"
-		}
-		"05"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataE"			"1"
+			"minimum_damage"			"3"
 		}
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -702,10 +603,6 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
@@ -713,16 +610,17 @@
 		
 	"AbilitySpecial"
 	{
+		// I don't even know the specific stats and properties lmao
+		// This is quoted from classic.battle.net/war3: "Gives Mountain Giants increased resistance to spell damage. This gives the unit hero magic resistance, similar to the resistance that level 6+ creeps have. Namely, you can't be Polymorphed, Possessed, etc, and all offensive spells have a shorter duration on the target (such as stuns, Ensnare, etc). It DOES NOT reduce damage dealt to the target, however. That’s an effect of hero armor, not hero magic resistance."
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
 // Ability: Pick up Archer
-// Description: "Picks up an Archer so that the Archer can attack from the air. The mounted unit cannot dismount. |n|n|cffffcc00Attacks land and air units.|r"
-// Code Reference: Acoh
+// Description: "Picks up an Archer so that the Archer can attack from the air. |n|n|cffffcc00Attacks land and air units.|r"
+// Code Reference: Aco3
 //=================================================================================
 "nightelf_pick_up_archer"
 {
@@ -731,27 +629,54 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
-	"AbilityCastRange"			"100"
+	"AbilityCastRange"			"900"
 	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
+	"AbilityCooldown"			"30"
 	"AbilityManaCost"			"0"
 		
 	"AbilitySpecial"
 	{
-		"01"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"earc"
-		}
+		// Nothing to put here, basically the Hippogryph moves to the nearest Archer in the 900 radius and picks her up.
+		// The process is interruptable, if so, the ability is treated as not casted.
+		// The Archer moving or doing anything does not interrupt it.
+		// The cooldown is placed on the DISMOUNT ability as soon as Archer gets on the Hippogryph.
 	}
 
-	//ToDo
+	// Done
+}
 
+//=================================================================================
+// Ability: Mount Hippogryph
+// Description: "Mounts a Hippogryph so that the Archer can attack from the air. |n|n|cffffcc00Attacks land and air units.|r"
+// Code Reference: Aco2
+//=================================================================================
+"nightelf_mount_hippogryph"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_mount_hippogryph"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"900"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"30"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		// This activates the ability "Pick up Archer" of the nearest Hippogryph in the 900 radius.
+		// The process is interrupted if either Archer or the Hippogryph is issued another order.
+	}
+
+	// Done
 }
 
 //=================================================================================
@@ -766,37 +691,19 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"30"
 	"AbilityManaCost"			"0"
-		
-	"AOERadius"					"-1"
+	
 	"AbilitySpecial"
 	{
-		"01"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"-1"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"earc"
-		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"ehip"
-		}
+		// The Archer is removed and put RIGHT UNDER the Hippogryph.
+		// The cooldown is placed on BOTH "Pick up Archer" and "Mount Hippogryph" as soon as the Archer is on the ground.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -813,7 +720,6 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"700"
@@ -831,17 +737,12 @@
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataA"			"4"
+			"armor_reduction"			"4"
 		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"1"
-		}
+		// The vision radius is unknown, I would estimate it to be around 400, 500 tops.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -856,16 +757,12 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
-	"AbilityCastPoint"			"1.05"
+	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"50"
-		
-	"AOERadius"					"-1"
+	
 	"AbilitySpecial"
 	{
 		"01"
@@ -873,35 +770,23 @@
 			"var_type"		"FIELD_FLOAT"
 			"duration"		"0.6"
 		}
+		// The Druid will only be able to move after this duration.
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"-1"
+			"var_type"		"FIELD_FLOAT"
+			"transition_start"			"1.05"
 		}
+		// The Druid will start ascending/descending after this duration.
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataC"			"1"
+			"transition_duration"		"1"
 		}
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataD"			"1"
-		}
-		"05"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"edot"
-		}
-		"06"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"5"
-		}
+		// The Druid's height will raise over this duration. The resulting height is unknown.
+		// The process is uninterruptable, and the Druid immediately acquires flying capability.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -918,7 +803,6 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"600"
@@ -933,15 +817,10 @@
 			"var_type"		"FIELD_INTEGER"
 			"duration"		"20"
 		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"1"
-		}
+		// It can be dispelled.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -956,9 +835,6 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
@@ -974,8 +850,7 @@
 		}
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -989,11 +864,12 @@
 	"AbilityTextureName"		"nightelf_mana_flare"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	// This is a toggle ability but the cooldown starts as soon as the spell begins. So after 20s of channeling (as long as the cooldown), the spell should be available again.
 		
 	"AbilityCastRange"			"200"
 	"AbilityCastPoint"			"0.75"
@@ -1016,37 +892,33 @@
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataC"			"90"
+			"max_damage_unit"			"90"
 		}
 		"04"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataD"			"50"
+			"max_damage_hero"			"50"
 		}
 		"05"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataA"			"3"
+			"damager_per_mana_unit"			"3"
 		}
 		"06"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataB"			"1"
+			"damage_per_mana_hero"			"1"
 		}
 		"07"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataE"			"12"
+			"damage_cooldown"			"12"
 		}
-		"08"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataF"			"1"
-		}
+		// A unit can only be hit every 12s by this ability. Not one unit in a group can be hit per 12s.
+		// A final value is called "Caster Only Splash" which is set True, I have no idea what this means and how to test it.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -1060,33 +932,29 @@
 	"AbilityTextureName"		"nightelf_corrosive_breath"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		
-	"AbilityCastRange"			"500"
-	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
-	"AbilityManaCost"			"0"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
+	// Changed to physical because buildings don't take magical damage.
 		
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"duration"		"5"
+			"damage"		"50"
 		}
+		// Damage type is Siege, 45 in the min end, 55 in the max end, 50 if averaged out.
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataA"			"50"
+			"range_increase"			"400"
 		}
+		// Attack range increased by 400, from 450 to 850.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -1099,21 +967,14 @@
 	"AbilityTextureName"		"nightelf_ultravision"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		
-	"AbilityCastPoint"			""
-	"AbilityCooldown"			""
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
 	"AbilitySpecial"
 	{
+		// Easiest parse ever.
 	}
 
-	//ToDo
-
+	// Done
 }
 
 //=================================================================================
@@ -1127,10 +988,7 @@
 	"AbilityTextureName"		"nightelf_root"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
@@ -1144,50 +1002,44 @@
 			"var_type"		"FIELD_FLOAT"
 			"duration"		"2.5"
 		}
+		// Cast time and animation stuff basically.
+		// When uprooted, the defense type is changed to Large.
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Natures Blessing
+// Description: "Upgrades all Ancients' and Treants' movement speed and armor."
+// NOTE: This is a place holder for an upgrade to keep the stats.
+//=================================================================================
+"nightelf_natures_blessing"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_natures_blessing"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_PASSIVE"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"speed_bonus"	"40"
+		}
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataD"			"2"
+			"armor_bonus_tree"			"5"
 		}
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"dataA"			"1"
-		}
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataB"			"2"
+			"armor_bonus_tower"			"2"
 		}
 	}
 
-	//ToDo
-
-}
-
-//=================================================================================
-// Ability: Nature's Blessing
-// Description: "Upgrades all Ancients' and Treants' movement speed and armor."
-//=================================================================================
-"nightelf_nature's_blessing"
-{
-	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_nature's_blessing"
-	"MaxLevel"					"1"
-		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		
-	"AbilityCastPoint"			""
-	"AbilityCooldown"			""
-		
-	"AbilitySpecial"
-	{
-	}
-
-	//ToDo
-
+	// Done
 }
