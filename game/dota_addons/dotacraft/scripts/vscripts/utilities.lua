@@ -112,14 +112,17 @@ function StringStartsWith( fullstring, substring )
     return (first_characters == substring)
 end
 
-function GetTreeHandleFromTreeIndex( targetIndex )
-    return GameRules.ALLTREES[targetIndex]
+function TreeIndexToHScript( targetIndex )
+    --for k,v in pairs(GameRules.ALLTREES) do
+        --DebugDrawText(v:GetAbsOrigin(), tostring(k), true, 10)
+    --end
+    return GameRules.ALLTREES[targetIndex-3]
 end
 
 function GetTreeIndexFromHandle( treeHandle )
     for k,v in pairs(GameRules.ALLTREES) do
         if v == treeHandle then
-            return k
+            return k+3
         end
     end
     return nil

@@ -32,9 +32,13 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
         local unit = EntIndexToHScript(units["0"])
+        print("DOTA_UNIT_ORDER_CAST_TARGET_TREE ",unit)
         if unit.skip_gather_check then
+            print("Skip")
             unit.skip_gather_check = false
             return true
+        else
+            print("Execute this order")
         end
 
         local abilityIndex = filterTable["entindex_ability"]
@@ -42,9 +46,13 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local abilityName = ability:GetAbilityName()
 
         local targetIndex = filterTable["entindex_target"]
-        local tree_handle = GetTreeHandleFromTreeIndex(targetIndex)
+        local tree_handle = TreeIndexToHScript(targetIndex)
         local position = tree_handle:GetAbsOrigin()
+        DebugDrawCircle(position, Vector(255,0,0), 100, 150, true, 5)
+        DebugDrawLine(unit:GetAbsOrigin(), position, 255, 255, 255, true, 5)
         print("Ability "..abilityName.." cast on tree number ",targetIndex, " handle index ",tree_handle:GetEntityIndex(),"position ",position)
+
+        DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10)
         
         -- Get the currently selected units and send new orders
         print("Currently Selected Units:")
@@ -52,17 +60,18 @@ function dotacraft:FilterExecuteOrder( filterTable )
         DeepPrintTable(entityList)
 
         local nearby_trees = GridNav:GetAllTreesAroundPoint(position, 150, true)
+        DebugDrawCircle(position, Vector(0,0,255), 100, 150, true, 5)
         print(#nearby_trees,"trees nearby")
 
         for k,entityIndex in pairs(entityList) do
             print("GatherTreeOrder for unit index ",entityIndex, position)
-            unit.skip_gather_check = true
 
             --Execute the order to this tree or some other, do some logic here to distribute them smartly
             local some_tree = nearby_trees[RandomInt(1, #nearby_trees)]
             DebugDrawCircle(some_tree:GetAbsOrigin(), Vector(0,0,255), 255, 20, true, 5)
             
             local unit = EntIndexToHScript(entityIndex)
+            unit.skip_gather_check = true
             local gather_ability = unit:FindAbilityByName("human_gather")
             local return_ability = unit:FindAbilityByName("human_return_resources")
             if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
