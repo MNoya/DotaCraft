@@ -36,6 +36,8 @@
 	"Ability5"					"nightelf_build_ancient_protector"
 	"Ability6"					"nightelf_build_chimaera_roost"
 	"Ability7"					"build_nightelf_items"
+	//nightelf_detonate
+	//nightelf_renew
 
 	
 	// Armor
@@ -132,7 +134,7 @@
 	"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
 	"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
-	"Ability5"					"nightelf_elune's_grace"	 //Reference: Aegr
+	"Ability5"					"nightelf_elunes_grace"	 //Reference: Aegr
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -330,7 +332,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"nightelf_impaling_bolt"	 //Reference: Aimp - Vorpal Blades / Impaling Bolt
+	"Ability1"					"nightelf_vorpal_blades"	 //Reference: Aimp - Vorpal Blades / Impaling Bolt
 	"Ability2"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
 	
 	// Armor
@@ -513,7 +515,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						""	 //Add model
+	"Model"						"models/heroes/lone_druid/lone_druid.vmdl"
 	"ModelScale"				"1"
 	"Level"						"4"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
@@ -521,8 +523,8 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"Ability1"					""	 //Reference: Abrf
-	"Ability2"					""	 //Reference: Arej
+	"Ability1"					"nightelf_bear_form"	 //Reference: Abrf
+	"Ability2"					"nightelf_rejuvenation"	 //Reference: Arej
 	"Ability3"					""	 //Reference: Aroa
 	"Ability4"					""	 //Reference: Aien
 	"Ability5"					""	 //Reference: Ault
@@ -580,6 +582,18 @@
 	
 	// Creature Data
 	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"107"		}
+			"Wearable2"		{	"ItemDef"		"108"		}
+			"Wearable3" 	{	"ItemDef"		"109"		}
+			"Wearable4"		{	"ItemDef"		"110"		}
+			"Wearable5"		{	"ItemDef"		"219"		}
+		}
+	}
 }
 
 //=================================================================================
@@ -591,7 +605,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/lone_druid/lone_druid.vmdl"
+	"Model"						"models/heroes/lone_druid/true_form.vmdl"
 	"ModelScale"				"0.8"
 	"Level"						"4"
 	"HealthBarOffset"			"140"
@@ -599,7 +613,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"nightelf_bear_form"	 //Reference: Abrf
+	"Ability1"					"nightelf_normal_form"	 //Reference: Abrf
 	"Ability2"					"nightelf_roar"	 //Reference: Ara2
 	"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
@@ -669,14 +683,6 @@
 	"Creature"
 	{
 		"DisableClumpingBehavior"	"1"
-		"AttachWearables"
-		{
-			"Wearable1"		{	"ItemDef"		"107"		}
-			"Wearable2"		{	"ItemDef"		"108"		}
-			"Wearable3" 	{	"ItemDef"		"109"		}
-			"Wearable4"		{	"ItemDef"		"110"		}
-			"Wearable5"		{	"ItemDef"		"219"		}
-		}
 	}
 }
 
@@ -887,7 +893,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						""	 //Add model
+	"Model"						"models/items/courier/shagbark/shagbark_flying.vmdl"
 	"ModelScale"				"1"
 	"Level"						"2"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
@@ -895,9 +901,9 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"Ability1"					""	 //Reference: Arav
-	"Ability2"					""	 //Reference: Afa2
-	"Ability3"					""	 //Reference: Ault
+	"Ability1"					"nightelf_storm_crow_form_off"	 //Reference: Arav
+	"Ability2"					"nightelf_faerie_fire"	 //Reference: Afa2
+	"Ability3"					"nightelf_ultravision"	 //Reference: Ault
 	
 	// Armor
 	//----------------------------------------------------------------

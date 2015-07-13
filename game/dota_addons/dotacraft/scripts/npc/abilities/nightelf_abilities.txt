@@ -218,7 +218,7 @@
 "nightelf_sentinel"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_sentinel"
+	"AbilityTextureName"		"nightelf_research_sentinel"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -255,8 +255,24 @@
 	// Done
 }
 
-//moon_glaive
-//vorpal_blades
+"nightelf_moon_glaive"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_research_moon_glaive"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+"nightelf_vorpal_blades"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_research_vorpal_blades"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
 //=================================================================================
 // Ability: Slow Poison
 // Description: "A poison attack that deals <Aspo,DataA1> damage per second, and slows the target enemy's movement by <Aspo,DataB1,%>% and attack by <Aspo,DataC1,%>% for <Aspo,Dur1> seconds."
@@ -314,7 +330,7 @@
 "nightelf_abolish_magic"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_abolish_magic"
+	"AbilityTextureName"		"nightelf_research_abolish_magic"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST"
@@ -358,6 +374,7 @@
 		{
 			"var_type"		"FIELD_INTEGER"
 			"should_nerf"		"1"
+		}
 	}
 	// pls do
 
@@ -479,6 +496,33 @@
 	// Done
 }
 
+"nightelf_bear_form_off"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_bear_form_off"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"25"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"1.45"
+		}
+		// Cast time.
+		// The process is uninterruptable.
+	}
+
+	// Done
+}
+
 //=================================================================================
 // Ability: Taunt
 // Description: "The closest <Atau,DataA1> enemies are forced to attack this unit."
@@ -569,7 +613,7 @@
 "nightelf_hardened_skin"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_hardened_skin"
+	"AbilityTextureName"		"nightelf_research_hardened_skin"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -599,7 +643,7 @@
 "nightelf_resistant_skin"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_resistant_skin"
+	"AbilityTextureName"		"nightelf_research_resistant_skin"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -608,11 +652,8 @@
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
 		
-	"AbilitySpecial"
-	{
-		// I don't even know the specific stats and properties lmao
-		// This is quoted from classic.battle.net/war3: "Gives Mountain Giants increased resistance to spell damage. This gives the unit hero magic resistance, similar to the resistance that level 6+ creeps have. Namely, you can't be Polymorphed, Possessed, etc, and all offensive spells have a shorter duration on the target (such as stuns, Ensnare, etc). It DOES NOT reduce damage dealt to the target, however. That’s an effect of hero armor, not hero magic resistance."
-	}
+	// I don't even know the specific stats and properties lmao
+	// This is quoted from classic.battle.net/war3: "Gives Mountain Giants increased resistance to spell damage. This gives the unit hero magic resistance, similar to the resistance that level 6+ creeps have. Namely, you can't be Polymorphed, Possessed, etc, and all offensive spells have a shorter duration on the target (such as stuns, Ensnare, etc). It DOES NOT reduce damage dealt to the target, however. That’s an effect of hero armor, not hero magic resistance."
 
 	// Done
 }
@@ -638,13 +679,11 @@
 	"AbilityCooldown"			"30"
 	"AbilityManaCost"			"0"
 		
-	"AbilitySpecial"
-	{
-		// Nothing to put here, basically the Hippogryph moves to the nearest Archer in the 900 radius and picks her up.
-		// The process is interruptable, if so, the ability is treated as not casted.
-		// The Archer moving or doing anything does not interrupt it.
-		// The cooldown is placed on the DISMOUNT ability as soon as Archer gets on the Hippogryph.
-	}
+	// Nothing to put here, basically the Hippogryph moves to the nearest Archer in the 900 radius and picks her up.
+	// The process is interruptable, if so, the ability is treated as not casted.
+	// The Archer moving or doing anything does not interrupt it.
+	// The cooldown is placed on the DISMOUNT ability as soon as Archer gets on the Hippogryph.
+
 
 	// Done
 }
@@ -657,7 +696,7 @@
 "nightelf_mount_hippogryph"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_mount_hippogryph"
+	"AbilityTextureName"		"nightelf_load"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -670,11 +709,9 @@
 	"AbilityCooldown"			"30"
 	"AbilityManaCost"			"0"
 		
-	"AbilitySpecial"
-	{
-		// This activates the ability "Pick up Archer" of the nearest Hippogryph in the 900 radius.
-		// The process is interrupted if either Archer or the Hippogryph is issued another order.
-	}
+	// This activates the ability "Pick up Archer" of the nearest Hippogryph in the 900 radius.
+	// The process is interrupted if either Archer or the Hippogryph is issued another order.
+
 
 	// Done
 }
@@ -687,7 +724,7 @@
 "nightelf_dismount"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_dismount"
+	"AbilityTextureName"		"nightelf_unload"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -697,11 +734,8 @@
 	"AbilityCooldown"			"30"
 	"AbilityManaCost"			"0"
 	
-	"AbilitySpecial"
-	{
-		// The Archer is removed and put RIGHT UNDER the Hippogryph.
-		// The cooldown is placed on BOTH "Pick up Archer" and "Mount Hippogryph" as soon as the Archer is on the ground.
-	}
+	// The Archer is removed and put RIGHT UNDER the Hippogryph.
+	// The cooldown is placed on BOTH "Pick up Archer" and "Mount Hippogryph" as soon as the Archer is on the ground.
 
 	// Done
 }
@@ -754,6 +788,45 @@
 {
 	"BaseClass"					"ability_datadriven"
 	"AbilityTextureName"		"nightelf_storm_crow_form"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"50"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"0.6"
+		}
+		// The Druid will only be able to move after this duration.
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"transition_start"			"1.05"
+		}
+		// The Druid will start ascending/descending after this duration.
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"transition_duration"		"1"
+		}
+		// The Druid's height will raise over this duration. The resulting height is unknown.
+		// The process is uninterruptable, and the Druid immediately acquires flying capability.
+	}
+
+	// Done
+}
+
+"nightelf_storm_crow_form_off"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_storm_crow_form_off"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -929,7 +1002,7 @@
 "nightelf_corrosive_breath"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_corrosive_breath"
+	"AbilityTextureName"		"nightelf_research_corrosive_breath"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -964,7 +1037,7 @@
 "nightelf_ultravision"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_ultravision"
+	"AbilityTextureName"		"nightelf_research_ultravision"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -1017,10 +1090,10 @@
 "nightelf_natures_blessing"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_natures_blessing"
+	"AbilityTextureName"		"nightelf_research_natures_blessing"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_PASSIVE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
 	"AbilitySpecial"
 	{

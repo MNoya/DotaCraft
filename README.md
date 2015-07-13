@@ -27,3 +27,4 @@ If you are interested in helping with this project don't hesitate contacting me,
 * [kritth](https://github.com/kritth), helped a ton with particles and mechanic ideas.
 * [DarkMio](https://github.com/DarkMio), reddit diplomacy frontman.
 * [SQL](https://github.com/justSQL), tooltip hero
+* [Markie](https://github.com/TheMarkie), world editor parser machine
