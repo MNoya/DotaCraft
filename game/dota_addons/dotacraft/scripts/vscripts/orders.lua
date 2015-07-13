@@ -3,6 +3,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
         print("Order: " .. k .. " " .. tostring(v) )
     end]]
 
+    local DEBUG = false
+
     local units = filterTable["units"]
     local order_type = filterTable["order_type"]
     local issuer = filterTable["issuer_player_id_const"]
@@ -48,11 +50,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local targetIndex = filterTable["entindex_target"]
         local tree_handle = TreeIndexToHScript(targetIndex)
         local position = tree_handle:GetAbsOrigin()
-        DebugDrawCircle(position, Vector(255,0,0), 100, 150, true, 5)
-        DebugDrawLine(unit:GetAbsOrigin(), position, 255, 255, 255, true, 5)
+        if DEBUG then DebugDrawCircle(position, Vector(255,0,0), 100, 150, true, 5) end
+        if DEBUG then DebugDrawLine(unit:GetAbsOrigin(), position, 255, 255, 255, true, 5) end
         print("Ability "..abilityName.." cast on tree number ",targetIndex, " handle index ",tree_handle:GetEntityIndex(),"position ",position)
 
-        DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10)
+        if DEBUG then DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10) end
         
         -- Get the currently selected units and send new orders
         print("Currently Selected Units:")
@@ -60,7 +62,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         DeepPrintTable(entityList)
 
         local nearby_trees = GridNav:GetAllTreesAroundPoint(position, 150, true)
-        DebugDrawCircle(position, Vector(0,0,255), 100, 150, true, 5)
+        if DEBUG then DebugDrawCircle(position, Vector(0,0,255), 100, 150, true, 5) end
         print(#nearby_trees,"trees nearby")
 
         for k,entityIndex in pairs(entityList) do
@@ -107,7 +109,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
         ------------------------------------------------
         --           Grid Unit Formation              --
         ------------------------------------------------
-        local DEBUG = false --If enabled it'll show circles and grid positions
         local SQUARE_FACTOR = 1.5 --1 is a perfect square, higher numbers will increase
 
         local navPoints = {}

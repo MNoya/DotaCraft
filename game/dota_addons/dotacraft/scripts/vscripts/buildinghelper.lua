@@ -274,7 +274,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
 
     
   -- Spawn the building
-  local building = CreateUnitByName(unitName, location, false, playersHero, nil, builder:GetTeam())
+  local building = CreateUnitByName(unitName, location, false, playersHero, player, builder:GetTeam())
   building:SetControllableByPlayer(pID, true)
   building.blockers = gridNavBlockers
   building.buildingTable = buildingTable
