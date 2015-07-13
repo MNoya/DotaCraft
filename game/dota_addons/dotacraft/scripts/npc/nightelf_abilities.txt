@@ -50,7 +50,7 @@
 	"AbilityTextureName"		"nightelf_detonate"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -140,7 +140,7 @@
 	"AbilityTextureName"		"nightelf_shadow_meld"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
@@ -182,7 +182,7 @@
 "nightelf_elunes_grace"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_elune's_grace"
+	"AbilityTextureName"		"nightelf_elunes_grace"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
