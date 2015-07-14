@@ -695,8 +695,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/tiny_01/tiny_01.vmdl" //Should use the higher level but its bugged
-	"ModelScale"				"2.5"
+	"Model"						"models/heroes/tiny_04/tiny_04.vmdl"
+	"ModelScale"				"1.35"
 	"Level"						"6"
 	"HealthBarOffset"			"140"
 	
@@ -704,10 +704,11 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_taunt"	 //Reference: Atau
-	"Ability2"					"nightelf_war_club"	 //Reference: Agra
+	"Ability2"					"nightelf_hardened_skin"	 //Reference: Assk
 	"Ability3"					"nightelf_resistant_skin"	 //Reference: Arsk
-	"Ability4"					"nightelf_hardened_skin"	 //Reference: Assk
+	"Ability4"					"nightelf_war_club"	 //Reference: Agra
 	"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability10"					"nightelf_mountain_giant_model"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -780,7 +781,6 @@
 			"Wearable2"	{ "ItemDef"	"494" } //Body
 			"Wearable3" { "ItemDef"	"495" } //Left Arm
 			"Wearable4" { "ItemDef"	"496" } //Right Arm
-			//"Wearable5"	{ "ItemDef"	"497" } //Tree, doesnt work, try modifier_tiny_grow without the stats
 		}
 	}
 }

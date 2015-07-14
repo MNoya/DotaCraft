@@ -23906,6 +23906,31 @@
 		// Done
 	}
 	
+	"nightelf_mountain_giant_model"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"MaxLevel"						"1"
+	
+		"Modifiers"
+		{
+			"modifier_mountain_giant_model"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/mountain_giant.lua"
+						"Function"		"GrowModel"
+					}
+				}
+			}
+		}
+	}
+	
 	//=================================================================================
 	// Ability: Taunt
 	// Description: "The closest <Atau,DataA1> enemies are forced to attack this unit."
@@ -23957,15 +23982,20 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_NONE"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_ATTACK"
 			
-		"AbilityCastRange"			"32"
+		"AbilityCastRange"			"320"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"5"
 		"AbilityManaCost"			"0"
 			
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_tiny/tiny_grow_cleave.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
+		}
+	
 		"AbilitySpecial"
 		{
 			"01"
@@ -23983,9 +24013,71 @@
 			}
 			// Attack range increased TO this value, not BY this value.
 			// His damage type is changed to Siege, with an increase of 6 in the min end, and 8 in the max end.
+	
+			"03"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"bonus_damage"	"7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_building_damage"	"50"
+			}
+			"05"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"bonus_range"	"122"
+			}
 		}
 	
-		// Done
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/mountain_giant.lua"
+				"Function"		"WarClub"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_war_club"
+			{	
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_range"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%bonus_damage"
+				}
+			}
+	
+			"modifier_war_club_strikes"
+			{	
+				"OnAttackStart"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Tiny_Tree.PreAttack"
+						"Target" 		"CASTER"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/mountain_giant.lua"
+						"Function"		"WarClubStrike"
+						"Damage"		"%attack_damage"
+					}
+					"FireSound"
+					{
+						"EffectName"	"Hero_Tiny_Tree.Attack"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
