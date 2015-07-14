@@ -60,6 +60,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
         print("Currently Selected Units:")
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
         DeepPrintTable(entityList)
+        if not entityList then
+            return true
+        end
 
         local nearby_trees = GridNav:GetAllTreesAroundPoint(position, 150, true)
         if DEBUG then DebugDrawCircle(position, Vector(0,0,255), 100, 150, true, 5) end

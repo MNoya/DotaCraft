@@ -4,8 +4,9 @@ if dotacraft == nil then
 end
 ---------------------------------------------------------------------------
 
-require('timers')
-require('physics')
+require('libraries/timers')
+require('libraries/physics')
+require('libraries/animations')
 require('dotacraft')
 require('popups')
 require('utilities')
@@ -27,7 +28,7 @@ function Precache( context )
 
 		-- Models can also be precached by folder or individually
 		-- PrecacheModel should generally used over PrecacheResource for individual models
-		PrecacheResource("model_folder", "particles/heroes/antimage", context)
+		PrecacheResource("model_folder", "models/heroes/tiny_04/", context)
 		PrecacheResource("model", "particles/heroes/viper/viper.vmdl", context)
 		PrecacheModel("models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl", context)
 
