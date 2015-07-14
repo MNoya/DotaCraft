@@ -407,7 +407,7 @@ function dotacraft:OnHeroInGame(hero)
 	print("[DOTACRAFT] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
 	dotacraft:ModifyStatBonuses(hero)
-	hero:SetGold(5000, false)
+	hero:SetGold(50000, false)
 
 	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
 	--local item = CreateItem("item_multiteam_action", hero, hero)

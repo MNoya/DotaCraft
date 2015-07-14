@@ -588,7 +588,7 @@
 "nightelf_train_druid_of_the_claw"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_train_glaive_thrower"
+	"AbilityTextureName"			"nightelf_train_druid_of_the_claw"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -640,7 +640,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"nightelf_glaive_thrower"
+			"UnitName"		"nightelf_druid_of_the_claw"
 			"Target"
 			{
 				"Center"		    "CASTER"

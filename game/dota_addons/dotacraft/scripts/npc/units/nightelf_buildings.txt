@@ -380,19 +380,7 @@
 	"TeamName"					"DOTA_TEAM_NEUTRALS"
 	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-
-	"Creature"
-	{
-		"AttachWearables"
-		{
-			"Wearable1"		{	"ItemDef"		"227"		}
-			"Wearable2"		{	"ItemDef"		"228"		}
-			"Wearable3" 	{	"ItemDef"		"229"		}
-			"Wearable4"		{	"ItemDef"		"230"		}
-		}
-	}
-	
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"	
 }
 
 //=================================================================================
@@ -499,7 +487,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-	"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
+	"Ability2"					""	 //Reference: Aeat
 	"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 	"Ability4"					""	 //Reference: Abdl
 	"Ability5"					""	 //Reference: Atol

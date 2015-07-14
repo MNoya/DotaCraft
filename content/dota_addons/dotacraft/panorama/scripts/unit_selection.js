@@ -121,6 +121,12 @@ function IsCustomBuilding( entityIndex ){
 		return false
 }
 
+function AddToSelection ( args ) {
+	$.Msg("Add To Selection")
+	var entIndex = args.ent_index
+	GameUI.SelectUnit(entIndex, true)
+}
+
 // When a building is upgraded to a new one, we would like to have the upgrade re-selected for us
 // This new unit should only be put into the selection group if a building was previously selected
 function OnNPCSpawned ( event ){
@@ -144,6 +150,7 @@ function OnUpdateQueryUnit( event )
 
 (function () {
 	//GameEvents.Subscribe( "npc_spawned", OnNPCSpawned );
+	GameEvents.Subscribe( "add_to_selection", AddToSelection );
 	GameEvents.Subscribe( "dota_player_update_selected_unit", OnUpdateSelectedUnit );
 	GameEvents.Subscribe( "dota_player_update_query_unit", OnUpdateQueryUnit );
 })();

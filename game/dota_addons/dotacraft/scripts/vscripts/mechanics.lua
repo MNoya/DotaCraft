@@ -338,3 +338,9 @@ function IsCustomTower( unit )
         return false
     end
 end
+
+function AddUnitToSelection( unit )
+	--local player = unit:GetPlayerOwner()
+	local player = PlayerResource:GetPlayer(0)
+	CustomGameEventManager:Send_ServerToPlayer(player, "add_to_selection", { ent_index = unit:GetEntityIndex() })
+end

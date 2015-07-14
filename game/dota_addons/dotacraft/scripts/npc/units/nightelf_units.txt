@@ -130,7 +130,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Aco2 Couple Instant (Archer)
+	"Ability1"					"nightelf_mount_hippogryph"	 //Reference: Aco2 Couple Instant (Archer)
 	"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
 	"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
@@ -1247,7 +1247,7 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/items/courier/throe/throe_flying.vmdl"	 //Add mounted hero?
-	"ModelScale"				"1"
+	"ModelScale"				"1.2"
 	"Level"						"4"
 	"HealthBarOffset"			"140"
 	
@@ -1272,7 +1272,7 @@
 	"AttackAnimationPoint"		"0.633"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"400"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			""
 	"ProjectileSpeed"			"1500"
 	
 	// Bounty

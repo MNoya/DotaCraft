@@ -1,7 +1,7 @@
 "nightelf_sentinel_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_sentinel"
+	"AbilityTextureName"			"nightelf_research_sentinel"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -17,7 +17,7 @@
 "nightelf_improved_bows_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_improved_bows"
+	"AbilityTextureName"			"nightelf_research_improved_bows"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -33,7 +33,7 @@
 "nightelf_marksmanship_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_marksmanship"
+	"AbilityTextureName"			"nightelf_research_marksmanship"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -49,7 +49,7 @@
 "nightelf_moon_glaive_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_moon_glaive"
+	"AbilityTextureName"			"nightelf_research_moon_glaive"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -65,7 +65,7 @@
 "nightelf_vorpal_blades_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_vorpal_blades"
+	"AbilityTextureName"			"nightelf_research_vorpal_blades"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -81,7 +81,7 @@
 "nightelf_abolish_magic_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_abolish_magic"
+	"AbilityTextureName"			"nightelf_research_abolish_magic"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -129,7 +129,7 @@
 "nightelf_resistant_skin_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_resistant_skin"
+	"AbilityTextureName"			"nightelf_research_resistant_skin"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -145,7 +145,7 @@
 "nightelf_hardened_skin_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_hardened_skin"
+	"AbilityTextureName"			"nightelf_research_hardened_skin"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -206,10 +206,26 @@
 	}
 }
 
+"nightelf_mount_hippogryph_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_pick_up_archer"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
 "nightelf_corrosive_breath_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"ightelf_corrosive_breath"
+	"AbilityTextureName"			"nightelf_research_corrosive_breath"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -225,7 +241,7 @@
 "nightelf_ultravision_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_ultravision"
+	"AbilityTextureName"			"nightelf_research_ultravision"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -241,7 +257,7 @@
 "nightelf_well_spring_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_well_spring"
+	"AbilityTextureName"			"nightelf_research_well_spring"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"

@@ -23994,6 +23994,7 @@
 		{
 			"particle"  "particles/units/heroes/hero_tiny/tiny_grow_cleave.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
+			"model"		"models/heroes/tiny_01/tiny_01_tree.vmdl"
 		}
 	
 		"AbilitySpecial"
@@ -24147,7 +24148,6 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
@@ -24159,8 +24159,65 @@
 		// The Archer moving or doing anything does not interrupt it.
 		// The cooldown is placed on the DISMOUNT ability as soon as Archer gets on the Hippogryph.
 	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/hippogryph.lua"
+				"Function"		"PickUpArcher"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_on_order_cancel"
+				"Target" 		"CASTER"
+			}
+		}
 	
-		// Done
+		// Implementation
+		// Find an archer in range, if no archer show an error message
+		// Move the hippogryph towards the archer
+		// Replace by new unit (nightelf_hippogryph_rider)
+		// Mount the archer on top with some angles
+		// Add it to the selection
+		// Disarm and make the mounted archer unselectable with restricted orders
+		// Fake the animation of the mounted archer
+		// The damage of the hippogryph rider is the damage of the archers (modified by any upgrades)
+		// It can attack air and ground units (unlike the hippogryph)
+	
+		"Modifiers"
+		{
+			"modifier_on_order_cancel"
+			{
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/hippogryph.lua"
+						"Function"		"CancelPickup"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+			"modifier_mounted_archer"
+			{
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -24171,7 +24228,7 @@
 	"nightelf_mount_hippogryph"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"nightelf_load"
+		"AbilityTextureName"		"nightelf_pick_up_archer"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -24187,8 +24244,14 @@
 		// This activates the ability "Pick up Archer" of the nearest Hippogryph in the 900 radius.
 		// The process is interrupted if either Archer or the Hippogryph is issued another order.
 	
-	
-		// Done
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/hippogryph.lua"
+				"Function"		"CallHippogryph"
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -24199,7 +24262,7 @@
 	"nightelf_dismount"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"nightelf_unload"
+		"AbilityTextureName"		"nightelf_dismount"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -24212,7 +24275,37 @@
 		// The Archer is removed and put RIGHT UNDER the Hippogryph.
 		// The cooldown is placed on BOTH "Pick up Archer" and "Mount Hippogryph" as soon as the Archer is on the ground.
 	
-		// Done
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/hippogryph.lua"
+				"Function"		"Dismount"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_tamed_hippogryph"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"    "particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
+				}
+				
+				"OnOrbFire"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/hippogryph.lua"
+						"Function"		"FakeArcherAttack"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -24594,7 +24687,7 @@
 	"nightelf_sentinel_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_sentinel"
+		"AbilityTextureName"			"nightelf_research_sentinel"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24610,7 +24703,7 @@
 	"nightelf_improved_bows_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_improved_bows"
+		"AbilityTextureName"			"nightelf_research_improved_bows"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24626,7 +24719,7 @@
 	"nightelf_marksmanship_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_marksmanship"
+		"AbilityTextureName"			"nightelf_research_marksmanship"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24642,7 +24735,7 @@
 	"nightelf_moon_glaive_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_moon_glaive"
+		"AbilityTextureName"			"nightelf_research_moon_glaive"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24658,7 +24751,7 @@
 	"nightelf_vorpal_blades_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_vorpal_blades"
+		"AbilityTextureName"			"nightelf_research_vorpal_blades"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24674,7 +24767,7 @@
 	"nightelf_abolish_magic_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_abolish_magic"
+		"AbilityTextureName"			"nightelf_research_abolish_magic"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24722,7 +24815,7 @@
 	"nightelf_resistant_skin_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_resistant_skin"
+		"AbilityTextureName"			"nightelf_research_resistant_skin"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24738,7 +24831,7 @@
 	"nightelf_hardened_skin_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_hardened_skin"
+		"AbilityTextureName"			"nightelf_research_hardened_skin"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24799,10 +24892,26 @@
 		}
 	}
 	
+	"nightelf_mount_hippogryph_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"nightelf_pick_up_archer"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
 	"nightelf_corrosive_breath_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"ightelf_corrosive_breath"
+		"AbilityTextureName"			"nightelf_research_corrosive_breath"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24818,7 +24927,7 @@
 	"nightelf_ultravision_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_ultravision"
+		"AbilityTextureName"			"nightelf_research_ultravision"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -24834,7 +24943,7 @@
 	"nightelf_well_spring_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_well_spring"
+		"AbilityTextureName"			"nightelf_research_well_spring"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -28386,7 +28495,7 @@
 	"nightelf_train_druid_of_the_claw"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_train_glaive_thrower"
+		"AbilityTextureName"			"nightelf_train_druid_of_the_claw"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -28438,7 +28547,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"nightelf_glaive_thrower"
+				"UnitName"		"nightelf_druid_of_the_claw"
 				"Target"
 				{
 					"Center"		    "CASTER"

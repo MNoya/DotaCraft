@@ -5637,19 +5637,7 @@
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-	
-		"Creature"
-		{
-			"AttachWearables"
-			{
-				"Wearable1"		{	"ItemDef"		"227"		}
-				"Wearable2"		{	"ItemDef"		"228"		}
-				"Wearable3" 	{	"ItemDef"		"229"		}
-				"Wearable4"		{	"ItemDef"		"230"		}
-			}
-		}
-		
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"	
 	}
 	
 	//=================================================================================
@@ -5756,7 +5744,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-		"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
+		"Ability2"					""	 //Reference: Aeat
 		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 		"Ability4"					""	 //Reference: Abdl
 		"Ability5"					""	 //Reference: Atol
@@ -6564,7 +6552,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Aco2 Couple Instant (Archer)
+		"Ability1"					"nightelf_mount_hippogryph"	 //Reference: Aco2 Couple Instant (Archer)
 		"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
 		"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 		"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
@@ -7681,7 +7669,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/courier/throe/throe_flying.vmdl"	 //Add mounted hero?
-		"ModelScale"				"1"
+		"ModelScale"				"1.2"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
 		
@@ -7706,7 +7694,7 @@
 		"AttackAnimationPoint"		"0.633"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"400"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			""
 		"ProjectileSpeed"			"1500"
 		
 		// Bounty

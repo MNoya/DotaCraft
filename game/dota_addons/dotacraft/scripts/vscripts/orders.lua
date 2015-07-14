@@ -53,6 +53,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if DEBUG then DebugDrawCircle(position, Vector(255,0,0), 100, 150, true, 5) end
         if DEBUG then DebugDrawLine(unit:GetAbsOrigin(), position, 255, 255, 255, true, 5) end
         print("Ability "..abilityName.." cast on tree number ",targetIndex, " handle index ",tree_handle:GetEntityIndex(),"position ",position)
+        if abilityName == "nightelf_war_club" then
+            return true
+        end
 
         if DEBUG then DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10) end
         
@@ -327,3 +330,44 @@ function OnEnemyShop( unit )
     end
     return false
 end
+
+
+
+
+
+
+
+
+
+
+--[[
+DOTA_UNIT_ORDER_ATTACK_MOVE: 3
+DOTA_UNIT_ORDER_ATTACK_TARGET: 4
+DOTA_UNIT_ORDER_BUYBACK: 23
+DOTA_UNIT_ORDER_CAST_NO_TARGET: 8
+DOTA_UNIT_ORDER_CAST_POSITION: 5
+DOTA_UNIT_ORDER_CAST_RUNE: 26
+DOTA_UNIT_ORDER_CAST_TARGET: 6
+DOTA_UNIT_ORDER_CAST_TARGET_TREE: 7
+DOTA_UNIT_ORDER_CAST_TOGGLE: 9
+DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO: 20
+DOTA_UNIT_ORDER_DISASSEMBLE_ITEM: 18
+DOTA_UNIT_ORDER_DROP_ITEM: 12
+DOTA_UNIT_ORDER_EJECT_ITEM_FROM_STASH: 25
+DOTA_UNIT_ORDER_GIVE_ITEM: 13
+DOTA_UNIT_ORDER_GLYPH: 24
+DOTA_UNIT_ORDER_HOLD_POSITION: 10
+DOTA_UNIT_ORDER_MOVE_ITEM: 19
+DOTA_UNIT_ORDER_MOVE_TO_DIRECTION: 28
+DOTA_UNIT_ORDER_MOVE_TO_POSITION: 1
+DOTA_UNIT_ORDER_MOVE_TO_TARGET: 2
+DOTA_UNIT_ORDER_NONE: 0
+DOTA_UNIT_ORDER_PICKUP_ITEM: 14
+DOTA_UNIT_ORDER_PICKUP_RUNE: 15
+DOTA_UNIT_ORDER_PING_ABILITY: 27
+DOTA_UNIT_ORDER_PURCHASE_ITEM: 16
+DOTA_UNIT_ORDER_SELL_ITEM: 17
+DOTA_UNIT_ORDER_STOP: 21
+DOTA_UNIT_ORDER_TAUNT: 22
+DOTA_UNIT_ORDER_TRAIN_ABILITY: 11
+]]
