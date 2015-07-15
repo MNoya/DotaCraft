@@ -62,9 +62,6 @@ TEAM_COLORS[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }  --    Purple
 
 --------------
 
--- Store and update selected units of each pID
-SELECTED_UNITS = {}
-
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function dotacraft:InitGameMode()
@@ -336,6 +333,9 @@ function dotacraft:InitGameMode()
   	GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
 
   	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
+
+  	-- Store and update selected units of each pID
+	GameRules.SELECTED_UNITS = {}
   	
   	-- Starting positions
   	GameRules.StartingPositions = {}
@@ -1135,9 +1135,9 @@ function dotacraft:OnPanoramaUpdateSelectedEntities( event )
 	local pID = event.pID
 	--print("Player "..pID.." updated selection:")
 	--DeepPrintTable(event.selected_entities)
-	SELECTED_UNITS[pID] = event.selected_entities
+	GameRules.SELECTED_UNITS[pID] = event.selected_entities
 end
 
 function GetSelectedEntities( playerID )
-	return SELECTED_UNITS[playerID]
+	return GameRules.SELECTED_UNITS[playerID]
 end

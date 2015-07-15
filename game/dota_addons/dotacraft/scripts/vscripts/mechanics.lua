@@ -256,6 +256,15 @@ function GetBuilderNameForHeroRace( hero_name )
 	return builder_name
 end
 
+function IsBuilder( unit )
+	local unitName = unit:GetUnitName()
+	if unitName == "human_peasant" or unitName == "nightelf_wisp" or unitName == "undead_acolyte" or unitName == "orc_peon" then
+		return true
+	else
+		return false
+	end
+end
+
 
 -- Custom Corpse Mechanic
 function LeavesCorpse( unit )
@@ -320,6 +329,12 @@ function GenerateAbilityString(player, ability_table)
 	return abilities_string
 end
 
+function GetUnitRace( unit )
+	local name = unit:GetUnitName()
+	local name_split = split(name, "_")
+	return name_split[1]
+end
+
 function IsCustomBuilding( unit )
     local ability_building = unit:FindAbilityByName("ability_building")
     local ability_tower = unit:FindAbilityByName("ability_tower")
@@ -343,4 +358,49 @@ function AddUnitToSelection( unit )
 	--local player = unit:GetPlayerOwner()
 	local player = PlayerResource:GetPlayer(0)
 	CustomGameEventManager:Send_ServerToPlayer(player, "add_to_selection", { ent_index = unit:GetEntityIndex() })
+end
+
+-- A tree is "empty" if it doesn't have a stored .wisp in it
+function FindEmptyNavigableTreeNearby( origin, position, radius )
+	local nearby_trees = GridNav:GetAllTreesAroundPoint(position, radius, true)
+	--DebugDrawLine(origin, position, 255, 255, 255, true, 10)
+
+ 	for k,tree in pairs(nearby_trees) do
+ 		local tree_point = tree:GetAbsOrigin()
+		if not tree.wisp and IsTreePositionPathAble(origin, tree_point) then
+			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 100, 100, true, 10)
+			return tree
+		else
+			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(255,0,0), 100, 100, true, 10)
+		end
+	end
+	print("NO EMPTY NAVIGABLE TREE NEARBY")
+	return nil
+end
+
+function IsTreePositionPathAble( origin, position )
+	local found_path = false
+	local positions = {}
+	local pos1 = Vector(position.x + 100, position.y, position. z)
+	local pos2 = Vector(position.x - 100, position.y, position. z)
+	local pos3 = Vector(position.x, position.y + 100, position. z)
+	local pos4 = Vector(position.x, position.y - 100, position. z)
+	table.insert(positions, pos1)
+	table.insert(positions, pos2)
+	table.insert(positions, pos3)
+	table.insert(positions, pos4)
+
+	for k,vector in pairs(positions) do
+		if GridNav:CanFindPath(origin, vector) then
+			--DebugDrawCircle(vector, Vector(0, 255, 0), 100, 20, true, 5)
+			found_path = true
+			break
+		else
+			--DebugDrawCircle(vector, Vector(255, 0,0), 100, 20, true, 5)
+		end
+	end
+
+	print("IsTreePositionPathAble",found_path)
+	return found_path
+	
 end

@@ -1,27 +1,3 @@
--- Author: soldiercrabs
---[[
-    Usage
-
-    KV
-    "OnSpellStart"
-    {
-        "RunScript"
-        {
-            "ScriptFile"        "popups.lua"
-            "Function"      "PrintNumbers"
-            "damage"        "%damage"
-        }
-    }
-
-    LUA
-    function PrintNumbers( keys )
-        PopupDamage(keys.target_points[1], keys.damage)
-    end
-        
-
-]]
-
-
 local popup = {}
  
 POPUP_SYMBOL_PRE_PLUS = 0
@@ -131,6 +107,37 @@ function PopupNumbers(target, pfx, color, lifetime, number, presymbol, postsymbo
     ParticleManager:SetParticleControl(pidx, 1, Vector(tonumber(presymbol), tonumber(number), tonumber(postsymbol)))
     ParticleManager:SetParticleControl(pidx, 2, Vector(lifetime, digits, 0))
     ParticleManager:SetParticleControl(pidx, 3, color)
+end
+
+function PopupMultiplier(target, number)
+    local particleName = "particles/custom/alchemist_unstable_concoction_timer.vpcf"
+    local preSymbol = 0 --none
+    local postSymbol = 4 --crit
+    local digits = string.len(number)+1
+    local targetPos = target:GetAbsOrigin()
+
+    local particle = ParticleManager:CreateParticle( particleName, PATTACH_CUSTOMORIGIN, target )
+    ParticleManager:SetParticleControl(particle, 0, Vector(targetPos.x, targetPos.y, targetPos.z+322))
+    ParticleManager:SetParticleControl( particle, 1, Vector( preSymbol, number, postSymbol) )
+    ParticleManager:SetParticleControl( particle, 2, Vector( digits, 0, 0) )
+end
+
+function PopupLegion(target, number)
+    local particleName = "particles/custom/legion_commander_duel_text.vpcf"
+
+    local digits = string.len(number)
+    local targetPos = target:GetAbsOrigin()
+    local particle = ParticleManager:CreateParticle( particleName, PATTACH_CUSTOMORIGIN, target )
+    ParticleManager:SetParticleControl( particle, 1, Vector( 10, number, 0) )
+    ParticleManager:SetParticleControl( particle, 2, Vector( digits, 0, 0) )
+    ParticleManager:SetParticleControl( particle, 3, Vector(targetPos.x, targetPos.y, targetPos.z+322) )
+end
+
+function PopupKillbanner(target, name)
+    -- Possible names: firstblood, doublekill, triplekill, rampage, multikill_generic
+    local particleName = "particles/econ/events/killbanners/screen_killbanner_compendium14_"..name..".vpcf"
+
+    local particle = ParticleManager:CreateParticle( particleName, PATTACH_EYES_FOLLOW, target )
 end
 
 return popups

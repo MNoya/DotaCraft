@@ -60,18 +60,47 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if DEBUG then DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10) end
         
         -- Get the currently selected units and send new orders
-        print("Currently Selected Units:")
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
-        DeepPrintTable(entityList)
+        --print("Currently Selected Units:")
+        --DeepPrintTable(entityList)
         if not entityList then
             return true
         end
 
+        local numBuilders = 0
+        for k,entityIndex in pairs(entityList) do
+            if IsBuilder(EntIndexToHScript(entityIndex)) then
+                numBuilders = numBuilders + 1
+            end
+        end
+
         local nearby_trees = GridNav:GetAllTreesAroundPoint(position, 150, true)
         if DEBUG then DebugDrawCircle(position, Vector(0,0,255), 100, 150, true, 5) end
-        print(#nearby_trees,"trees nearby")
+        print(#nearby_trees,"trees nearby for ",numBuilders," builders")
 
-        for k,entityIndex in pairs(entityList) do
+        if abilityName == "nightelf_gather" then
+            for k,entityIndex in pairs(entityList) do
+                print("GatherTreeOrder for unit index ",entityIndex, position)
+
+                --Execute the order to a navigable tree
+                local unit = EntIndexToHScript(entityIndex)
+                local empty_tree = FindEmptyNavigableTreeNearby(unit:GetAbsOrigin(), position, 150 + 20 * numBuilders)
+                if empty_tree then
+                    local tree_index = GetTreeIndexFromHandle( empty_tree )
+                    empty_tree.wisp = unit -- Assign the wisp to this tree, so next time this isn't empty
+                    unit.skip_gather_check = true
+                    local gather_ability = unit:FindAbilityByName("nightelf_gather")
+                    if gather_ability and gather_ability:IsFullyCastable() then
+                        print("Order: Cast on Tree ",tree_index)
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+                    end
+                else
+                    print("No Empty Tree?")
+                end
+            end
+        elseif abilityName == "human_gather" then
+
+        --[[for k,entityIndex in pairs(entityList) do
             print("GatherTreeOrder for unit index ",entityIndex, position)
 
             --Execute the order to this tree or some other, do some logic here to distribute them smartly
@@ -89,7 +118,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             elseif return_ability then
                 print("Order: Return resources")
                 ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
-            end
+            end]]
         end
 
         -- Drop the original order

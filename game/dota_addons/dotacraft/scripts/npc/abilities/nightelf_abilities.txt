@@ -9,36 +9,123 @@
 	"AbilityTextureName"		"nightelf_gather"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		
-	"AbilityCastRange"			"900"
-	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
-	"AbilityManaCost"			"0"
-		
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"duration"		"8"
+			"var_type"			"FIELD_INTEGER"
+			"lumber_interval"	"8"
 		}
-		// This is for lumbering, wisp will gather lumber_per_interval per 8 seconds.
-		// For mining gold, wisp will gather 10 gold per 4 seconds. The values for that are on another spell excluded from parsing.
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"lumber_per_interval"			"5"
+			"var_type"			"FIELD_INTEGER"
+			"lumber_per_interval"	"5"
 		}
-		
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"gold_interval"		"4"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"gold_per_interval"	"10"
+		}	
 	}
 
-	// Done
-}
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+	}
 
+	// Try to start the skill with multiple-wisps in mind (GetAllSelectedUnits and send orders)
+
+	// Tree targeting
+		// Move towards the tree, repeat until ~100 distance
+		// Only one wisp per tree, if tree busy find another
+		// OnOrder, toggle off and cancel the skill
+		// When close to the tree, give the wisp flying movement and position it on top
+		// Modifier generates lumber every think interval, OnOrder cancels
+		// If possible try to make some circular rotation around the tree
+
+	// Gold mine targeting
+		// Mine has to be entangled (the targeted unit would actually be entangled_mine)
+		// Mine has to have a wisp slot available (5 total)
+		// Move towards the mine, repeat until ~100 distance
+		// OnOrder, toggle off and cancel the skill
+		// When close to the mine, put the wisp inside at some visible position and +1 slots
+		// The entangled mine has some skills to eject the wisps which are unselectable inside
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/wisp.lua"
+			"Function"		"Gather"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_on_order_cancel"
+		{
+			"IsHidden"	"1"
+			"OnOrder"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/wisp.lua"
+					"Function"		"CancelGather"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_on_order_cancel"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+
+		"modifier_gathering_lumber"
+		{
+			"IsHidden"				"1"
+			
+			"OnOrder"
+			{			
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/wisp.lua"
+					"Function"		"ToggleOffGather"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_gathering_lumber"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"ThinkInterval"  "%lumber_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/wisp.lua"
+					"Function"		"LumberGain"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+			}	
+		}
+	}
+
+}
 //=================================================================================
 // Ability: Detonate
 // Description: "Destroys the Wisp, dispelling all magical buffs and draining <Adtn,DataA1> mana from each unit in an area around the Wisp. |n|cffffcc00Deals <Adtn,DataB1> damage to summoned units.|r"
