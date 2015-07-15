@@ -31,7 +31,7 @@
 			"var_type"			"FIELD_INTEGER"
 			"gold_interval"		"4"
 		}
-		"02"
+		"04"
 		{
 			"var_type"			"FIELD_INTEGER"
 			"gold_per_interval"	"10"
@@ -123,9 +123,78 @@
 				"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
 			}	
 		}
+
+		"modifier_gathering_gold"
+		{
+			"IsHidden"				"1"
+			
+			"OnOrder"
+			{			
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/wisp.lua"
+					"Function"		"ToggleOffGather"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_gathering_gold"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"ThinkInterval"  "%gold_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/wisp.lua"
+					"Function"		"GoldGain"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}	
+		}
 	}
 
 }
+
+// Added to a mine once entangled
+"nightelf_entangled_mine"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_gather"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"precache"
+	{
+		"particle"  "particles/nightelf/root_vines.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_entangled_mine"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+	
+			"EffectName"		"particles/nightelf/root_vines.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+	}
+}
+
+
 //=================================================================================
 // Ability: Detonate
 // Description: "Destroys the Wisp, dispelling all magical buffs and draining <Adtn,DataA1> mana from each unit in an area around the Wisp. |n|cffffcc00Deals <Adtn,DataB1> damage to summoned units.|r"

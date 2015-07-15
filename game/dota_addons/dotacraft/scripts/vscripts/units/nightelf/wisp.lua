@@ -54,7 +54,68 @@ function Gather( event )
 		else
 			print(" The Tree already has a wisp in it, find another one!")
 		end
+	elseif target_class == "npc_dota_building" then
+		if target:GetUnitName() == "gold_mine" then
+			local mine = target
+			local mine_pos = mine:GetAbsOrigin()
+			wisp.target_mine = mine
+			
+			-- Initialize mine wisp tracking (this should be on the entangle mine instead)
+			if not mine.wisps then
+				mine.wisps = {}
+			end
+
+			ability.cancelled = false
+
+			if #mine.wisps < 5 then
+				Timers:CreateTimer(function() 
+					-- Move towards the mine until 100 range
+					if not ability.cancelled then
+						local distance = (mine_pos - wisp:GetAbsOrigin()):Length()
+						
+						if distance > 200 then
+							wisp:MoveToPosition(mine_pos)
+							print("Moving to Mine, distance ", distance)
+							return 0.1
+						else
+							print("Mine Reached")
+							
+							ability:ApplyDataDrivenModifier(wisp, wisp, "modifier_gathering_gold", {})
+							mine.wisps[#mine.wisps+1] = wisp						
+
+							local wisp_count = #mine.wisps
+							print(wisp_count, "Wisps inside")
+
+							-- 5 positions = 72 degrees
+							local mine_origin = mine:GetAbsOrigin()
+							local distance = 100
+							local fv = mine:GetForwardVector()
+							local front_position = mine_origin +  fv * distance
+							local pos = RotatePosition(mine_origin, QAngle(0, 72*wisp_count, 0), front_position)
+							wisp:SetAbsOrigin(Vector(pos.x, pos.y, pos.z+25))
+
+							-- Particle Counter on overhead
+							print("SetEntangledGoldMineCounter".. wisp_count)
+							SetEntangledGoldMineCounter(mine, wisp_count)
+							
+							return
+						end
+					else
+						return
+					end
+				end)
+			else
+				print("Mine is full of Wisps!")
+			end
+
+		else
+			print("Other building")
+		end
 	end
+end
+
+function SetEntangledGoldMineCounter( mine, count )
+	print(mine:GetUnitName(), count)
 end
 
 function CancelGather( event )
@@ -87,6 +148,15 @@ function LumberGain( event )
 	local ability = event.ability
 	local wisp = event.caster
 	local lumber_gain = ability:GetSpecialValueFor("lumber_per_interval")
-	ModifyLumber( wisp:GetPlayerOwner(), tonumber(lumber_gain) )
+	ModifyLumber( wisp:GetPlayerOwner(), lumber_gain )
 	PopupLumber( wisp, lumber_gain)
+end
+
+function GoldGain( event )
+	local ability = event.ability
+	local wisp = event.caster
+	local hero = wisp:GetPlayerOwner():GetAssignedHero()
+	local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
+	hero:ModifyGold(gold_gain, false, 0)
+	PopupGoldGain( wisp, gold_gain)
 end
