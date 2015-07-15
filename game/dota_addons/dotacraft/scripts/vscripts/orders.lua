@@ -74,6 +74,10 @@ function dotacraft:FilterExecuteOrder( filterTable )
             end
         end
 
+        if numBuilders == 1 then
+            return true
+        end
+
         local nearby_trees = GridNav:GetAllTreesAroundPoint(position, 150, true)
         if DEBUG then DebugDrawCircle(position, Vector(0,0,255), 100, 150, true, 5) end
         print(#nearby_trees,"trees nearby for ",numBuilders," builders")
