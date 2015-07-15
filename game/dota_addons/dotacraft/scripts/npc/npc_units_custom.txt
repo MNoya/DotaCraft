@@ -5315,6 +5315,7 @@
 		"Ability6"					"nightelf_research_resistant_skin"
 		"Ability7"					"nightelf_research_hardened_skin"
 		"Ability8"					"nightelf_research_mark_of_the_claw"
+		"Ability9"					"nightelf_uproot"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -5405,6 +5406,7 @@
 		"Ability6"					"nightelf_research_marksmanship"
 		"Ability7"					"nightelf_research_moon_glaive"
 		"Ability8"					"nightelf_research_vorpal_blades"
+		"Ability9"					"nightelf_uproot"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -5494,6 +5496,7 @@
 		"Ability4"					"nightelf_research_druid_of_the_talon_training1"
 		"Ability5"					"nightelf_research_hippogryph_taming"
 		"Ability6"					"nightelf_research_mark_of_the_talon"
+		"Ability7"					"nightelf_uproot"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		
@@ -5576,7 +5579,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
+		"Ability1"					"nightelf_uproot"	 //Reference: Abds
 		"Ability2"					""	 //Reference: Aeat
 		"Ability3"					""	 //Reference: Aro2
 		"Ability10"					"ability_building"
@@ -5588,14 +5591,16 @@
 		
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK" // Melee when unrooted
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackDamageMin"			"26.0"
-		"AttackDamageMax"			"33.0"
-		"AttackRate"				"1.5"
+		"AttackDamageMin"			"45.0" // 26 when unrooted
+		"AttackDamageMax"			"54.0" // 33 when unrooted
+		"AttackRate"				"2.0" // 1.5 when unrooted
 		"AttackAnimationPoint"		"0.4"
 		"AttackAcquisitionRange"	"700"
-		"AttackRange"				"128"
+		"AttackRange"				"700" // 128 when rooted
+		"ProjectileModel"			"particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf"
+		"ProjectileSpeed"			"750"
 		
 		// Bounty
 		//----------------------------------------------------------------
@@ -5635,7 +5640,7 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"	
 	}
@@ -5650,14 +5655,14 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/items/furion/treant/shroomling_treant/shroomling_treant.vmdl"
-		"ModelScale"				"1.5"
+		"ModelScale"				"2"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
+		"Ability1"					"nightelf_uproot"	 //Reference: Abds
 		"Ability2"					""	 //Reference: Aall
 		"Ability3"					""	 //Reference: Aeat
 		"Ability4"					""	 //Reference: Aro1
@@ -5744,7 +5749,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-		"Ability2"					""	 //Reference: Aeat
+		"Ability2"					"nightelf_uproot"	 //Reference: Aeat
 		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
 		"Ability4"					""	 //Reference: Abdl
 		"Ability5"					""	 //Reference: Atol
@@ -5841,11 +5846,11 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-		"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
-		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
-		"Ability4"					""	 //Reference: Abdl
+		"AbilityLayout"				"5"
+		"Ability1"					"nightelf_train_wisp"
+		"Ability2"					"nightelf_uproot"
+		"Ability3"					"nightelf_research_natures_blessing"
+		"Ability4"					"nightelf_research_backpack"
 		"Ability5"					""	 //Reference: Atol
 		"Ability6"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 		"Ability10"					"ability_building"
@@ -5941,10 +5946,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
-		"Ability2"					"nightelf_research_natures_blessing"	 //Reference: Aeat
-		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
-		"Ability4"					""	 //Reference: Abdl
+		"Ability1"					"nightelf_train_wisp"
+		"Ability2"					"nightelf_uproot"
+		"Ability3"					"nightelf_research_backpack"
+		"Ability4"					"nightelf_research_natures_blessing"	
 		"Ability5"					""	 //Reference: Atol
 		"Ability6"					""	 //Reference: Arlm
 		"Ability10"					"ability_building"

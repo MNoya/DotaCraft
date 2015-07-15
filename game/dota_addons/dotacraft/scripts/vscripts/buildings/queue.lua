@@ -55,7 +55,7 @@ function DequeueUnit( event )
 	-- Get tied ability
 	local train_ability_name = string.gsub(item_ability_name, "item_", "")
 	local train_ability = caster:FindAbilityByName(train_ability_name)
-	local gold_cost = train_ability:GetGoldCost( train_ability:GetLevel() - 1 )
+	local gold_cost = train_ability:GetGoldCost( train_ability:GetLevel() )
 
 	print("Start dequeue")
 
@@ -81,7 +81,7 @@ function DequeueUnit( event )
 				if itemSlot == 0 then
 					-- Refund food used
 					local ability = caster:FindAbilityByName(train_ability_name)
-					local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel() - 1)
+					local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel())
 					if food_cost and not caster:HasModifier("modifier_construction") and ability:IsChanneling() then
 						ModifyFoodUsed(player, -food_cost)
 					end

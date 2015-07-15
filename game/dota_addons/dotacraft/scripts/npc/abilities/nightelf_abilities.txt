@@ -1237,7 +1237,8 @@
 
 //=================================================================================
 // Ability: Root
-// Description: "Burrows the Ancient's roots into the ground, rendering it immobile, but allowing it to build units. For the Ancient Protector, this allows it to hurl enormous rocks through the air to damage enemy units. Also gives the Ancient Fortified armor."
+// Description: "Burrows the Ancient's roots into the ground, rendering it immobile, but allowing it to build units. 
+// For the Ancient Protector, this allows it to hurl enormous rocks through the air to damage enemy units. Also gives the Ancient Fortified armor."
 // Code Reference: Aroo
 //=================================================================================
 "nightelf_root"
@@ -1246,12 +1247,13 @@
 	"AbilityTextureName"		"nightelf_root"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		
-	"AbilityCastPoint"			"0"
+	"AbilityCastPoint"			"2.5"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
+	"AbilityCastRange"			"1" //On Place
+	"AOERadius"					"200"
 		
 	"AbilitySpecial"
 	{
@@ -1264,7 +1266,99 @@
 		// When uprooted, the defense type is changed to Large.
 	}
 
-	// Done
+	// This should use the same rules as Building Helper, but the building ghosts are not posible yet so there's no point
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/ancients.lua"
+			"Function"		"RootStart"
+		}
+	}
+}
+
+"nightelf_uproot"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_uproot"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+		
+	"AbilityCastPoint"			"2.5"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"precache"
+	{
+		"particle"  "particles/nightelf/root_vines.vpcf"
+	}
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"2.5"
+		}
+		// Cast time and animation stuff basically.
+		// When uprooted, the defense type is changed to Large.
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/ancients.lua"
+			"Function"		"UpRootStart"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_uprooted"
+			"Target" 		"CASTER"
+		}
+
+		// Remove ability_building and add an ability to root it back
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/ancients.lua"
+			"Function"		"UpRoot"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_rooted_ancient"
+		{
+			"Passive"			"1"
+			"EffectName"		"particles/nightelf/root_vines.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+
+		"modifier_uprooted"
+		{
+			"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			"States"
+			{
+				"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_uprooted_ancient_protector"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "-572"
+			    "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "-20"
+			    "MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" "1.5"
+			}
+		}
+	}
 }
 
 //=================================================================================

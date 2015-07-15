@@ -17,7 +17,7 @@ function SetRallyPoint( event )
 	Timers:CreateTimer(0.03, function()
 
 		-- If there's an old flag, remove
-		if caster.flag then
+		if caster.flag and IsValidEntity(caster.flag) then
 			caster.flag:RemoveSelf()
 		end
 

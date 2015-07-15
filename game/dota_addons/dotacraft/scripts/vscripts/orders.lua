@@ -227,7 +227,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 255, 20, true, 3) end
 
             -- If there's an old flag, remove it
-            if first_unit.flag then
+            if first_unit.flag and IsValidEntity(first_unit.flag) then
                 first_unit.flag:RemoveSelf()
             end
 

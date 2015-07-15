@@ -1133,8 +1133,8 @@ end
 
 function dotacraft:OnPanoramaUpdateSelectedEntities( event )
 	local pID = event.pID
-	print("Player "..pID.." updated selection:")
-	DeepPrintTable(event.selected_entities)
+	--print("Player "..pID.." updated selection:")
+	--DeepPrintTable(event.selected_entities)
 	SELECTED_UNITS[pID] = event.selected_entities
 end
 
