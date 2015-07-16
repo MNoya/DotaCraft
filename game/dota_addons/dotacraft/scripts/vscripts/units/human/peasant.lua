@@ -4,6 +4,10 @@
 	- Make the functions a bit cleaner for multiple resources
 --]]
 
+MIN_DISTANCE_TO_TREE = 150
+TREE_HEALTH = 50
+DAMAGE_TO_TREE = 1
+
 function Gather( event )
 	local caster = event.caster
 	local target = event.target
@@ -22,16 +26,42 @@ function Gather( event )
 
 	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
-		caster:MoveToTargetToAttack(target)
+		
 		--print("Moving to ", target_class)
-		caster.target_tree = target
+		local tree = target
+		local tree_pos = tree:GetAbsOrigin()
+		caster.target_tree = tree
+		ability.cancelled = false
+		if not tree.health then
+			tree.health = TREE_HEALTH
+		end
 
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
+		tree.builder = caster
 
-		-- Visual fake toggle
+		-- Fake toggle the ability, cancel if any other order is given
 		if ability:GetToggleState() == false then
 			ability:ToggleAbility()
 		end
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel", {})
+
+		Timers:CreateTimer(function() 
+			-- Move towards the tree until close range
+			if not ability.cancelled then
+				local distance = (tree_pos - caster:GetAbsOrigin()):Length()
+				
+				if distance > MIN_DISTANCE_TO_TREE then
+					caster:MoveToTargetToAttack(target)
+					--print("Moving to Tree, distance ", distance)
+					return 0.1
+				else
+					--print("Tree Reached")
+					ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
+					return
+				end
+			else
+				return
+			end
+		end)
 
 		-- Hide Return
 		local return_ability = caster:FindAbilityByName("human_return_resources")
@@ -85,15 +115,19 @@ function Gather( event )
 end
 
 -- Toggles Off Gather
-function ToggleOffGather( event )
+function CancelGather( event )
 	local caster = event.caster
-	local gather_ability = caster:FindAbilityByName("human_gather")
+	local ability = event.ability
+	ability.cancelled = true
 
-	if gather_ability:GetToggleState() == true then
-		gather_ability:ToggleAbility()
-		--print("Toggled Off Gather")
+	local tree = caster.target_tree
+	if tree then
+		tree.builder = nil
 	end
-
+	
+	if ability:GetToggleState() == true then
+		ability:ToggleAbility()
+	end
 end
 
 -- Toggles Off Return because of an order (e.g. Stop)
@@ -104,30 +138,6 @@ function ToggleOffReturn( event )
 	if return_ability:GetToggleState() == true then 
 		return_ability:ToggleAbility()
 		--print("Toggled Off Return")
-	end
-end
-
-
-function CheckTreePosition( event )
-
-	local caster = event.caster
-	local target = caster.target_tree -- Index tree so we know which target to start with
-	local ability = event.ability
-	local target_class = target:GetClassname()
-
-	if target_class == "ent_dota_tree" then
-		caster:MoveToTargetToAttack(target)
-		--print("Moving to "..target_class)
-	end
-
-	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
-	local collision = distance < 100
-	if not collision then
-		--print("Moving to tree, distance: ",distance)
-	elseif not caster:HasModifier("modifier_chopping_wood") then
-		caster:RemoveModifierByName("modifier_gathering_lumber")
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_chopping_wood", {})
-		--print("Reached tree")
 	end
 end
 
@@ -192,6 +202,9 @@ function Gather1Lumber( event )
 	local ability = event.ability
 	local player = caster:GetPlayerOwner()
 	local max_lumber_carried = 10
+	local tree = caster.target_tree
+
+	--print("Tree Health: ", tree.health)
 
 	-- Upgraded on LumberResearchComplete
 	if player.LumberCarried then 
@@ -201,6 +214,28 @@ function Gather1Lumber( event )
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 
 	caster.lumber_gathered = caster.lumber_gathered + 1
+	if tree and tree.health then
+
+		tree.health = tree.health - DAMAGE_TO_TREE
+		if tree.health <= 0 then
+			tree:CutDown(caster:GetTeamNumber())
+			local a_tree = FindEmptyNavigableTreeNearby(caster:GetAbsOrigin(), tree:GetAbsOrigin(), 200)
+			if a_tree then
+				caster.target_tree = a_tree
+			else
+				-- Increase the radius
+				caster.target_tree = FindEmptyNavigableTreeNearby(caster:GetAbsOrigin(), tree:GetAbsOrigin(), 500)
+				if not caster.target_tree then
+					print("LOOKS LIKE WE CANT FIND A VALID TREE IN 500 RADIUS")
+					--DebugDrawCircle(tree:GetAbsOrigin(), Vector(255,0,0), 100, 500, true, 10)
+					ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
+				end
+
+			end
+			-- Cast gather on the new tree
+		end
+	end
+		
 	--print("Gathered "..caster.lumber_gathered)
 
 	-- Show the stack of resources that the unit is carrying
@@ -210,7 +245,8 @@ function Gather1Lumber( event )
     caster:SetModifierStackCount("modifier_returning_resources", caster, caster.lumber_gathered)
  
 	-- Increase up to the max, or cancel
-	if caster.lumber_gathered < max_lumber_carried then
+	if caster.lumber_gathered < max_lumber_carried and tree:IsStanding() then
+		caster:StartGesture(ACT_DOTA_ATTACK)
 
 		-- Fake Toggle the Return ability
 		if return_ability:GetToggleState() == false or return_ability:IsHidden() then
@@ -222,8 +258,9 @@ function Gather1Lumber( event )
 			ability:SetHidden(true)
 		end
 	else
+		-- RETURN
 		local player = caster:GetOwner():GetPlayerID()
-		caster:RemoveModifierByName("modifier_chopping_wood")
+		caster:RemoveModifierByName("modifier_gathering_lumber")
 
 		-- Return Ability On		
 		caster:CastAbilityNoTarget(return_ability, player)
@@ -304,6 +341,18 @@ function ReturnResources( event )
 
 		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Position = building:GetAbsOrigin(), Queue = false}) 
 		caster.target_building = building
+	
+	-- No resources to return, give the gather ability back
+	else
+		--print("TRIED TO RETURN NO RESOURCES")
+
+		local gather_ability = caster:FindAbilityByName("human_gather")
+		if gather_ability then
+			if gather_ability:GetToggleState() == true then
+				gather_ability:ToggleAbility()
+			end
+			caster:SwapAbilities("human_return_resources", "human_gather", false, true)
+		end
 	end
 
 end
@@ -368,22 +417,38 @@ function CheckBuildingPosition( event )
 		end
 
 		-- Return Ability Off
-		if ability:ToggleAbility() == true then
+		if ability:GetToggleState() == true then
 			ability:ToggleAbility()
 			--print("Return Ability Toggled Off")
 		end
 
 		-- Gather Ability
 		local gather_ability = caster:FindAbilityByName("human_gather")
-		if gather_ability:ToggleAbility() == false then
+		if gather_ability:GetToggleState() == false then
 			-- Fake toggle On
 			gather_ability:ToggleAbility() 
 			--print("Gather Ability Toggled On")
 		end
 
 		if returned_type == "lumber" then
-			caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
-			--print("Casting ability to target tree")
+			if caster.target_tree and caster.target_tree:IsStanding() then
+				caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
+			elseif caster.target_tree then
+				caster.target_tree = FindEmptyNavigableTreeNearby(caster:GetAbsOrigin(), caster.target_tree:GetAbsOrigin(), 200) -- Potential problem here, probably add a recursive check to always get one
+				if caster.target_tree then
+					caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
+				else
+					-- Cancel ability, couldn't find moar trees...
+					print("CANCELERINO")
+					local gather_ability = caster:FindAbilityByName("human_gather")
+					if gather_ability then
+						if gather_ability:GetToggleState() == true then
+							gather_ability:ToggleAbility()
+						end
+						caster:SwapAbilities("human_return_resources", "human_gather", false, true)
+					end
+				end
+			end
 		elseif returned_type == "gold" then
 			caster:CastAbilityOnTarget(caster.target_mine, gather_ability, pID)
 			--print("Casting ability to target mine")
@@ -406,7 +471,7 @@ function FindClosestResourceDeposit( caster )
 	local player = caster:GetPlayerOwner()
 	if not player then print("ERROR, NO PLAYER") return end
 	local buildings = player.structures
-	local distance = 9999
+	local distance = 20000
 	local closest_building = nil
 
 	for _,building in pairs(buildings) do
@@ -430,7 +495,6 @@ function IsValidDepositName( name )
 	local possible_deposits = { "human_town_hall",
 								"human_keep",
 								"human_castle",
-								"human_barracks",
 								"human_lumber_mill"
 							  }
 

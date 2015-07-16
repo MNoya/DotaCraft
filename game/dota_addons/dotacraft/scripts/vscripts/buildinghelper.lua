@@ -535,7 +535,7 @@ function InitializeBuilder( builder )
   end
 
     -- Create model ghost dummy out of the map, then make pretty particles
-    mgd = CreateUnitByName(building, OutOfWorldVector, false, nil, nil, builder:GetTeam())
+    local mgd = CreateUnitByName(building, OutOfWorldVector, false, nil, nil, builder:GetTeam())
 
     --<BMD> position is 0, model attach is 1, color is CP2, alpha is CP3.x, scale is CP4.x
     local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)

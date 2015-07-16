@@ -10,14 +10,17 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
-	"AbilityCastPoint"				"0.1"
-
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"value"			"900"
+			"var_type"				"FIELD_INTEGER"
+			"gold_capacity"			"10"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_capacity"		"10" //Can be upgraded
 		}
 	}
 
@@ -32,54 +35,40 @@
 
 	"Modifiers"
 	{
+		"modifier_on_order_cancel"
+		{
+			"IsHidden"	"1"
+			"OnOrder"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"CancelGather"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_on_order_cancel"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+
 		"modifier_gathering_lumber"
 		{
 			"IsHidden"				"1"
-				
-			"ThinkInterval"  "0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/human/peasant.lua"
-					"Function"		"CheckTreePosition"
-				}
-			}
-
-			"OnOrder"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_gathering_lumber"
-					"Target" 		"CASTER"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"units/human/peasant.lua"
-					"Function"		"ToggleOffGather"
-				}
-			}
-			
-		}
-
-		"modifier_chopping_wood"
-		{
-			"IsHidden"				"1"
-		
 			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
 
 			"OnOrder"
 			{			
 				"RemoveModifier"
 				{
-					"ModifierName"	"modifier_chopping_wood"
+					"ModifierName"	"modifier_gathering_lumber"
 					"Target" 		"CASTER"
 				}
 				"RunScript"
 				{
 					"ScriptFile"	"units/human/peasant.lua"
-					"Function"		"ToggleOffGather"
+					"Function"		"CancelGather"
 				}
 			}
 
@@ -91,33 +80,7 @@
 					"ScriptFile"	"units/human/peasant.lua"
 					"Function"		"Gather1Lumber"
 				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_chopping_wood_animation"
-					"Target" 		"CASTER"
-					"Duration"		"0.9"
-				}
 			}		
-		}
-
-		"modifier_chopping_wood_animation"
-		{
-			"OverrideAnimation"     "ACT_DOTA_ATTACK"
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_chopping_wood_animation"
-					"Target" 		"CASTER"
-				}
-				"RunScript"
-				{
-					"ScriptFile"	"units/human/peasant.lua"
-					"Function"		"ToggleOffGather"
-				}
-			}
 		}
 
 		"modifier_gathering_gold"

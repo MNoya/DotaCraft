@@ -32,6 +32,35 @@ function dotacraft:FilterExecuteOrder( filterTable )
             print(" Order allowed")
         end
 
+    elseif order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+        local unit = EntIndexToHScript(units["0"])
+        if unit.skip then
+            print("Skip")
+            unit.skip = false
+            return true
+        else
+            print("Execute this order")
+        end
+
+        local abilityIndex = filterTable["entindex_ability"]
+        local ability = EntIndexToHScript(abilityIndex) 
+        local abilityName = ability:GetAbilityName()
+
+        local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+
+        if abilityName == "human_return_resources" then
+            for k,entityIndex in pairs(entityList) do
+                local unit = EntIndexToHScript(entityIndex)
+                unit.skip = true
+
+                local return_ability = unit:FindAbilityByName("human_return_resources")
+                if return_ability and not return_ability:IsHidden() then
+                    print("Order: Return resources")
+                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
+                end
+            end
+        end
+
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
         local unit = EntIndexToHScript(units["0"])
         print("DOTA_UNIT_ORDER_CAST_TARGET_TREE ",unit)
@@ -91,7 +120,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 local empty_tree = FindEmptyNavigableTreeNearby(unit:GetAbsOrigin(), position, 150 + 20 * numBuilders)
                 if empty_tree then
                     local tree_index = GetTreeIndexFromHandle( empty_tree )
-                    empty_tree.wisp = unit -- Assign the wisp to this tree, so next time this isn't empty
+                    empty_tree.builder = unit -- Assign the wisp to this tree, so next time this isn't empty
                     unit.skip_gather_check = true
                     local gather_ability = unit:FindAbilityByName("nightelf_gather")
                     if gather_ability and gather_ability:IsFullyCastable() then
@@ -104,25 +133,35 @@ function dotacraft:FilterExecuteOrder( filterTable )
             end
         elseif abilityName == "human_gather" then
 
-        --[[for k,entityIndex in pairs(entityList) do
-            print("GatherTreeOrder for unit index ",entityIndex, position)
+            for k,entityIndex in pairs(entityList) do
+                print("GatherTreeOrder for unit index ",entityIndex, position)
 
-            --Execute the order to this tree or some other, do some logic here to distribute them smartly
-            local some_tree = nearby_trees[RandomInt(1, #nearby_trees)]
-            DebugDrawCircle(some_tree:GetAbsOrigin(), Vector(0,0,255), 255, 20, true, 5)
-            
-            local unit = EntIndexToHScript(entityIndex)
-            unit.skip_gather_check = true
-            local gather_ability = unit:FindAbilityByName("human_gather")
-            local return_ability = unit:FindAbilityByName("human_return_resources")
-            if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-                local tree_index = GetTreeIndexFromHandle( some_tree )
-                print("Order: Cast on Tree ",tree_index)
-                ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
-            elseif return_ability then
-                print("Order: Return resources")
-                ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
-            end]]
+                --Execute the order to a navigable tree
+                local unit = EntIndexToHScript(entityIndex)
+                local tree = FindEmptyNavigableTreeNearby(unit:GetAbsOrigin(), position, 150 + 20 * numBuilders)
+                if tree then 
+                    --[[if not tree.peasants then
+                        tree.peasants = 0
+                    end
+                    tree.peasants = tree.peasants + 1 -- Add one to the peasants assigned to this tree]]
+
+                    tree.builder = unit
+                    unit.skip_gather_check = true
+                    local gather_ability = unit:FindAbilityByName("human_gather")
+                    local return_ability = unit:FindAbilityByName("human_return_resources")
+                    if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
+                        local tree_index = GetTreeIndexFromHandle( tree )
+                        print("Order: Cast on Tree ",tree_index)
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+                    elseif return_ability and not return_ability:IsHidden() then
+                        print("Order: Return resources")
+                        unit.skip_gather_check = false -- Let it propagate to all selected units
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
+                    end
+                else
+                    print("No Empty Tree?")
+                end
+            end
         end
 
         -- Drop the original order

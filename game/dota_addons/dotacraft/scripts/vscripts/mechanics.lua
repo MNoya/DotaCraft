@@ -360,23 +360,58 @@ function AddUnitToSelection( unit )
 	CustomGameEventManager:Send_ServerToPlayer(player, "add_to_selection", { ent_index = unit:GetEntityIndex() })
 end
 
--- A tree is "empty" if it doesn't have a stored .wisp in it
+-- A tree is "empty" if it doesn't have a stored .builder in it
 function FindEmptyNavigableTreeNearby( origin, position, radius )
 	local nearby_trees = GridNav:GetAllTreesAroundPoint(position, radius, true)
 	--DebugDrawLine(origin, position, 255, 255, 255, true, 10)
 
- 	for k,tree in pairs(nearby_trees) do
+	-- Sort by Closest
+	local sorted_list = SortListByClosest(nearby_trees, position)
+
+ 	for _,tree in pairs(sorted_list) do
  		local tree_point = tree:GetAbsOrigin()
-		if not tree.wisp and IsTreePositionPathAble(origin, tree_point) then
+		if not tree.builder and IsTreePositionPathAble(origin, tree_point) then
 			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 100, 100, true, 10)
 			return tree
 		else
 			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(255,0,0), 100, 100, true, 10)
 		end
 	end
+
 	print("NO EMPTY NAVIGABLE TREE NEARBY")
 	return nil
 end
+
+function SortListByClosest( list, position )
+    local trees = {}
+    for _,v in pairs(list) do
+        trees[#trees+1] = v
+    end
+
+    local sorted_list = {}
+    for _,tree in pairs(list) do
+        local closest_tree = GetClosestEntityToPosition(trees, position)
+        sorted_list[#sorted_list+1] = trees[closest_tree]
+        trees[closest_tree] = nil -- Remove it
+    end
+    return sorted_list
+end
+
+function GetClosestEntityToPosition(list, position)
+	local distance = 20000
+	local closest = nil
+
+	for k,ent in pairs(list) do
+		local this_distance = (position - ent:GetAbsOrigin()):Length()
+		if this_distance < distance then
+			distance = this_distance
+			closest = k
+		end
+	end
+
+	return closest	
+end
+
 
 function IsTreePositionPathAble( origin, position )
 	local found_path = false
@@ -400,7 +435,7 @@ function IsTreePositionPathAble( origin, position )
 		end
 	end
 
-	print("IsTreePositionPathAble",found_path)
+	--print("IsTreePositionPathAble",found_path)
 	return found_path
 	
 end

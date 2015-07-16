@@ -23,13 +23,11 @@ function Precache( context )
 		-- Particles can be precached individually or by folder
 		-- It it likely that precaching a single particle system will precache all of its children, but this may not be guaranteed
 		PrecacheResource("particle", "particles/custom/rally_flag.vpcf", context)
-		PrecacheResource("particle_folder", "particles/test_particle", context)
 		PrecacheResource("particle_folder", "particles/buildinghelper", context)
 
 		-- Models can also be precached by folder or individually
 		-- PrecacheModel should generally used over PrecacheResource for individual models
 		PrecacheResource("model_folder", "models/heroes/tiny_04/", context)
-		PrecacheResource("model", "particles/heroes/viper/viper.vmdl", context)
 		PrecacheModel("models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl", context)
 
 		-- Sounds can precached here like anything else

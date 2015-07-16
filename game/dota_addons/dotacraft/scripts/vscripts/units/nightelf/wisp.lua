@@ -17,11 +17,11 @@ function Gather( event )
 		local position = tree:GetAbsOrigin()
 
 		-- Only go to this tree if its empty or its been asigned through the orders
-		if not tree.wisp or tree.wisp == wisp then
+		if not tree.builder or tree.builder == wisp then
 			local tree_pos = tree:GetAbsOrigin()
 			wisp.target_tree = tree
 			
-			tree.wisp = wisp
+			tree.builder = wisp
 			ability.cancelled = false
 
 			Timers:CreateTimer(function() 
@@ -128,7 +128,7 @@ function CancelGather( event )
 	end
 
 	if wisp.target_tree then
-		wisp.target_tree.wisp = nil
+		wisp.target_tree.builder = nil
 		wisp.target_tree = nil
 	end
 
