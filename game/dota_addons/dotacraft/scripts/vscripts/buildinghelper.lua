@@ -201,6 +201,78 @@ function BuildingHelper:AddBuilding(keys)
   CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", {["state"] = "active", ["size"] = size} )
 end
 
+--Places a new building on full health and returns the handle. Places grid nav blockers
+--Skips the construction phase and doesn't require a builder, this is most important to place the "base" buildings for the players when the game starts.
+--Make sure the position is valid before calling this in code.
+function BuildingHelper:PlaceBuilding(player, name, size, location)
+  
+  local pID = player:GetPlayerID()
+  local playersHero = player:GetAssignedHero()
+  print("Place Building, ",pID, playersHero)
+  
+  local gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)  
+
+  -- Spawn the building
+  local building = CreateUnitByName(name, location, false, playersHero, player, playersHero:GetTeamNumber())
+  building:SetControllableByPlayer(pID, true)
+  building:SetOwner(playersHero)
+  building.blockers = gridNavBlockers
+  building.state = "complete"
+
+  function building:RemoveBuilding( bForcedKill )
+    for k, v in pairs(building.blockers) do
+      DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
+      DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
+    end
+
+    if bForcedKill then
+      building:ForceKill(bForcedKill)
+    end
+  end
+
+  -- Return the created building
+  return building
+
+end
+
+function BuildingHelper:BlockGridNavSquare(size, location)
+
+  if size % 2 ~= 0 then
+    location.x = SnapToGrid32(location.x)
+    location.y = SnapToGrid32(location.y)
+  else
+    location.x = SnapToGrid64(location.x)
+    location.y = SnapToGrid64(location.y)
+  end
+
+  local gridNavBlockers = {}
+  if size == 5 then
+    for x = location.x - (size-2) * 32, location.x + (size-2) * 32, 64 do
+      for y = location.y - (size-2) * 32, location.y + (size-2) * 32, 64 do
+        local blockerLocation = Vector(x, y, location.z)
+        local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
+        table.insert(gridNavBlockers, ent)
+      end
+    end
+  elseif size == 3 then
+    for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 64 do
+      for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 64 do
+        local blockerLocation = Vector(x, y, location.z)
+        local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
+        table.insert(gridNavBlockers, ent)
+      end
+    end
+  else
+    for x = location.x - (size / 2) * 32 + 16, location.x + (size / 2) * 32 - 16, 96 do
+      for y = location.y - (size / 2) * 32 + 16, location.y + (size / 2) * 32 - 16, 96 do
+        local blockerLocation = Vector(x, y, location.z)
+        local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
+        table.insert(gridNavBlockers, ent)
+      end
+    end
+  end
+  return gridNavBlockers
+end
 
 --[[
       InitializeBuildingEntity
@@ -251,28 +323,8 @@ function BuildingHelper:InitializeBuildingEntity( keys )
     end
   end
 
-  -- Add gridnav blocker, thanks T__!
-  -- General note: updating the gridnav is expensive for the server so it causes a lot of the <unit> has been thiniking <time>!!! warnings
-  local gridNavBlockers = {}
-  if size % 2 == 1 then
-    for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 64 do
-      for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 64 do
-        local blockerLocation = Vector(x, y, location.z)
-        local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
-        table.insert(gridNavBlockers, ent)
-      end
-    end
-  else
-    for x = location.x - (size / 2) * 32 + 16, location.x + (size / 2) * 32 - 16, 96 do
-      for y = location.y - (size / 2) * 32 + 16, location.y + (size / 2) * 32 - 16, 96 do
-        local blockerLocation = Vector(x, y, location.z)
-        local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
-        table.insert(gridNavBlockers, ent)
-      end
-    end
-  end
+  local gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)
 
-    
   -- Spawn the building
   local building = CreateUnitByName(unitName, location, false, playersHero, player, builder:GetTeam())
   building:SetControllableByPlayer(pID, true)

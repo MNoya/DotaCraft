@@ -2,6 +2,7 @@
 
 var state = 'disabled';
 var size = 0;
+var pressedShift = false;
 
 function StartBuildingHelper( params )
 {
@@ -9,17 +10,33 @@ function StartBuildingHelper( params )
   {
     state = params["state"];
     size = params["size"];
+    pressedShift = GameUI.IsShiftDown();
   }
   if (state === 'active')
   {
-    $.Schedule(0.03, StartBuildingHelper);
+    $.Schedule(0.001, StartBuildingHelper);
     var mPos = GameUI.GetCursorPosition();
 
-    $( "#GreenSquare").style['height'] = String(50 * size) + "px;";
-    $( "#GreenSquare").style['width'] = String(50 * size) + "px;";
-    $( "#GreenSquare").style['margin'] = String(mPos[1] - (25 * size)) + "px 0px 0px " + String(mPos[0] - (25 * size)) + "px;";
+    mPos[0] = (mPos[0] * 1.0 / $( "#BuildingHelperBase").desiredlayoutwidth ) * 1920;
+    mPos[1] = (mPos[1] * 1.0 / $( "#BuildingHelperBase").desiredlayoutheight) * 1080;
+
+    var grid1x1 = 38
+    $( "#GreenSquare").style['height'] = String(grid1x1 * size) + "px;";
+    $( "#GreenSquare").style['width'] = String(grid1x1 * size) + "px;";
+    $( "#GreenSquare").style['margin'] = String(mPos[1] - (grid1x1/2 * size)) + "px 0px 0px " + String(mPos[0] - (grid1x1/2 * size)) + "px;";
     $( "#GreenSquare").style['transform'] = "rotateX( 30deg );";
+
+    if ((!GameUI.IsShiftDown() && pressedShift))
+    {
+      EndBuildingHelper();
+    }
   }
+}
+
+function EndBuildingHelper()
+{
+  state = 'disabled'
+  $( "#GreenSquare").style['margin'] = "-1000px 0px 0px 0px;";
 }
 
 function SendBuildCommand( params )
@@ -27,10 +44,10 @@ function SendBuildCommand( params )
   var mPos = GameUI.GetCursorPosition();
   var GamePos = Game.ScreenXYToWorld(mPos[0], mPos[1]);
   GameEvents.SendCustomGameEventToServer( "building_helper_build_command", { "X" : GamePos[0], "Y" : GamePos[1], "Z" : GamePos[2] } );
+  pressedShift = GameUI.IsShiftDown();
   if (!GameUI.IsShiftDown()) // Remove the green square unless the player is holding shift
   {
-    state = 'disabled'
-    $( "#GreenSquare").style['margin'] = "-1000px 0px 0px 0px;";
+    EndBuildingHelper();
   }
 }
 

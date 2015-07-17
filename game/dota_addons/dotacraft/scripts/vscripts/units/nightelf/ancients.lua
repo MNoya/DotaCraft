@@ -11,6 +11,14 @@ function RootStart( event )
 	local uproot_ability = caster:FindAbilityByName("nightelf_uproot")
 	uproot_ability:ApplyDataDrivenModifier(caster, caster, "modifier_rooted_ancient", {})
 
+	-- Block the area
+	local location = caster:GetAbsOrigin()
+	local size = 5
+	local gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)
+    
+    caster.blockers = gridNavBlockers
+    caster:SetAbsOrigin(location)
+
 	local ability = event.ability
 	local cast_time = ability:GetCastPoint()
 	Timers:CreateTimer(cast_time, function()
@@ -27,32 +35,6 @@ function RootStart( event )
 				ability:SetLevel(1)
 			end
 		end
-
-		local size = 5 --This should be gotten from the ability instead
-		local location = caster:GetAbsOrigin()
-		-- BuildingHelper - GridNav blockers & Placement
-		local gridNavBlockers = {}
-		  if size % 2 == 1 then
-		    for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 64 do
-		      for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 64 do
-		        local blockerLocation = Vector(x, y, location.z)
-		        local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
-		        table.insert(gridNavBlockers, ent)
-		      end
-		    end
-		  else
-		    for x = location.x - (size / 2) * 32 + 16, location.x + (size / 2) * 32 - 16, 96 do
-		      for y = location.y - (size / 2) * 32 + 16, location.y + (size / 2) * 32 - 16, 96 do
-		        local blockerLocation = Vector(x, y, location.z)
-		        local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
-		        table.insert(gridNavBlockers, ent)
-		      end
-		    end
-		  end
-	    
-	    caster.blockers = gridNavBlockers
-	    caster:SetAbsOrigin(location)
-
 	end)
 end
 

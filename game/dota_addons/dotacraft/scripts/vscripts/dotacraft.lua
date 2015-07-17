@@ -102,8 +102,6 @@ function dotacraft:InitGameMode()
 	GameMode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
 	GameMode:SetCustomHeroMaxLevel ( 10 )
 
-	
-
 	-- Team Colors
 	for team,color in pairs(TEAM_COLORS) do
       SetTeamCustomHealthbarColor(team, color[1], color[2], color[3])
@@ -128,6 +126,7 @@ function dotacraft:InitGameMode()
 	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(dotacraft, 'OnAbilityUsed'), self)
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap(dotacraft, 'OnNPCSpawned'), self)
 	ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(dotacraft, 'OnPlayerPickHero'), self)
+	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
 	--ListenToGameEvent('player_disconnect', Dynamic_Wrap(dotacraft, 'OnDisconnect'), self)
 	--ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(dotacraft, 'OnItemPurchased'), self)
 	--ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(dotacraft, 'OnItemPickedUp'), self)
@@ -138,7 +137,6 @@ function dotacraft:InitGameMode()
 	--ListenToGameEvent('dota_player_take_tower_damage', Dynamic_Wrap(dotacraft, 'OnPlayerTakeTowerDamage'), self)
 	--ListenToGameEvent('tree_cut', Dynamic_Wrap(dotacraft, 'OnTreeCut'), self)
 	--ListenToGameEvent('entity_hurt', Dynamic_Wrap(dotacraft, 'OnEntityHurt'), self)
-	--ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
 	--ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(dotacraft, 'OnTeamKillCredit'), self)
 	--ListenToGameEvent("player_reconnected", Dynamic_Wrap(dotacraft, 'OnPlayerReconnect'), self)
 	--ListenToGameEvent('player_spawn', Dynamic_Wrap(dotacraft, 'OnPlayerSpawn'), self)
@@ -166,6 +164,18 @@ function dotacraft:InitGameMode()
 		if building:HasModifier('modifier_invulnerable') then
 			building:RemoveModifierByName('modifier_invulnerable')
 		end
+	end
+
+	-- Add gridnav blockers to the gold mines
+	local allGoldMines = Entities:FindAllByModel('models/mine/mine.vmdl') --Target name in Hammer
+	print("Adding blockers for ",#allGoldMines," mines found")
+	for k,gold_mine in pairs (allGoldMines) do
+		local location = gold_mine:GetAbsOrigin()
+		location.x = SnapToGrid32(location.x)
+    	location.y = SnapToGrid32(location.y)
+		local gridNavBlockers = BuildingHelper:BlockGridNavSquare(5, location)
+		gold_mine:SetAbsOrigin(location)
+	    gold_mine.blockers = gridNavBlockers
 	end
 
 	-- Allow cosmetic swapping
@@ -390,9 +400,49 @@ function dotacraft:OnConnectFull(keys)
 end
 
 function dotacraft:PostLoadPrecache()
-	print("[DOTACRAFT] Performing Post-Load precache")    
-	--PrecacheItemByNameAsync("item_example_item", function(...) end)
-	--PrecacheItemByNameAsync("example_ability", function(...) end)	
+	print("[DOTACRAFT] Performing Post-Load precache")
+
+	PrecacheUnitByNameAsync("human_arcane_sanctum", function(...) end)
+	PrecacheUnitByNameAsync("human_guard_tower", function(...) end)
+	PrecacheUnitByNameAsync("human_cannon_tower", function(...) end)
+	PrecacheUnitByNameAsync("human_arcane_tower", function(...) end)
+	PrecacheUnitByNameAsync("human_workshop", function(...) end)
+	PrecacheUnitByNameAsync("human_gryphon_aviary", function(...) end)
+
+	PrecacheUnitByNameAsync("nightelf_ancient_of_lore", function(...) end)
+	PrecacheUnitByNameAsync("nightelf_ancient_of_wind", function(...) end)
+	PrecacheUnitByNameAsync("nightelf_ancient_protector", function(...) end)
+	PrecacheUnitByNameAsync("nightelf_tree_of_ages", function(...) end)
+	PrecacheUnitByNameAsync("nightelf_tree_of_eternity", function(...) end)
+	PrecacheUnitByNameAsync("nightelf_chimaera_roost", function(...) end)
+
+	PrecacheUnitByNameAsync("undead_halls_of_the_dead", function(...) end)
+	PrecacheUnitByNameAsync("undead_black_citadel", function(...) end)
+	PrecacheUnitByNameAsync("undead_boneyard", function(...) end)
+	PrecacheUnitByNameAsync("undead_temple_of_the_damned", function(...) end)
+	PrecacheUnitByNameAsync("undead_slaughterhouse", function(...) end)
+	PrecacheUnitByNameAsync("undead_nerubian_tower", function(...) end)
+	PrecacheUnitByNameAsync("undead_spirit_tower", function(...) end)
+	PrecacheUnitByNameAsync("undead_sacrificial_pit", function(...) end)
+
+	PrecacheUnitByNameAsync("orc_beastiary", function(...) end)
+	PrecacheUnitByNameAsync("orc_stronghold", function(...) end)
+	PrecacheUnitByNameAsync("orc_fortress", function(...) end)
+	PrecacheUnitByNameAsync("orc_spirit_lodge", function(...) end)
+	PrecacheUnitByNameAsync("orc_tauren_totem", function(...) end)
+	PrecacheUnitByNameAsync("orc_watch_tower", function(...) end)
+
+	PrecacheUnitByNameAsync("npc_dota_hero_keeper_of_the_light", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_zuus", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_omniknight", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_Invoker", function(...) end)
+
+	PrecacheItemByNameAsync("item_orb_of_frost", function(...) end)
+	PrecacheItemByNameAsync("item_orb_of_fire", function(...) end)
+	PrecacheItemByNameAsync("item_orb_of_venom_wc3", function(...) end)
+	PrecacheItemByNameAsync("item_orb_of_corruption", function(...) end)
+	PrecacheItemByNameAsync("item_orb_of_darkness", function(...) end)
+	PrecacheItemByNameAsync("item_orb_of_lightning", function(...) end)
 end
 
 function dotacraft:OnFirstPlayerLoaded()
@@ -644,11 +694,6 @@ function dotacraft:OnPlayerPickHero(keys)
 	local player = EntIndexToHScript(keys.player)
 	local playerID = hero:GetPlayerID()
 
-	--[[local level = MAX_LEVEL
-	for i=1,level-1 do
-		hero:HeroLevelUp(false)
-	end]]
-
 	-- Initialize Variables for Tracking
 	player.lumber = 0
 	player.food_limit = 0 -- The amount of food available to build units
@@ -683,11 +728,7 @@ function dotacraft:OnPlayerPickHero(keys)
     local city_center_name = GetCityCenterNameForHeroRace(hero_race)
     local builder_name = GetBuilderNameForHeroRace(hero_race)
 
-	local building = CreateUnitByName(city_center_name, position, true, hero, hero, hero:GetTeamNumber())
-	building:SetOwner(hero)
-	building:SetControllableByPlayer(playerID, true)
-	building:SetAbsOrigin(position)
-	building:RemoveModifierByName("modifier_invulnerable")
+	local building = BuildingHelper:PlaceBuilding(player, city_center_name, 5, position) 
 	player.buildings[city_center_name] = 1
 	table.insert(player.structures, building)
 
@@ -697,24 +738,26 @@ function dotacraft:OnPlayerPickHero(keys)
     ModifyFoodLimit(player, GetFoodProduced(building))
 
 	-- Create Builders
-	for i=1,5 do
-		local peasant = CreateUnitByName(builder_name, position+RandomVector(300+i*40), true, hero, hero, hero:GetTeamNumber())
-		peasant:SetOwner(hero)
-		peasant:SetControllableByPlayer(playerID, true)
-		table.insert(player.units, peasant)
+	Timers:CreateTimer(function() 
+		for i=1,5 do
+			local builder = CreateUnitByName(builder_name, position+RandomVector(300+i*40), true, hero, hero, hero:GetTeamNumber())
+			builder:SetOwner(hero)
+			builder:SetControllableByPlayer(playerID, true)
+			table.insert(player.units, builder)
 
-		-- Increment food used
-		ModifyFoodUsed(player, GetFoodCost(peasant))
+			-- Increment food used
+			ModifyFoodUsed(player, GetFoodCost(builder))
 
-		-- Go through the abilities and upgrade
-		CheckAbilityRequirements( peasant, player )
-	end
+			-- Go through the abilities and upgrade
+			CheckAbilityRequirements( builder, player )
+		end
+	end)
 
 	-- Hide main hero
 	local ability = hero:FindAbilityByName("hide_hero")
 	ability:UpgradeAbility(true)
 	hero:SetAbilityPoints(0)
-	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 322 ))
+	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
 
 end
 
@@ -744,6 +787,7 @@ function dotacraft:OnEntityKilled( event )
 	-- Player owner of the unit
 	local player = killedUnit:GetPlayerOwner()
 
+	-- Hero Killed
 	if killedUnit:IsRealHero() then
 		if player.altar then
 			for _,altar in pairs(player.altar_structures) do
@@ -783,7 +827,7 @@ function dotacraft:OnEntityKilled( event )
 		ModifyFoodUsed(player, - food_cost)
 	end
 
-	if killedUnit.isBuilding then
+	if IsCustomBuilding(killedUnit) then
 		killedUnit:RemoveBuilding(false) -- Building Helper grid cleanup
 
 		-- Substract the Food Produced

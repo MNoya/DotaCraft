@@ -376,9 +376,10 @@ function CheckBuildingPosition( event )
 	local target = caster.target_building
 
 	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
-	local collision = distance <= (target:GetHullRadius()+100)
+	local collision_size = math.ceil(math.sqrt(#target.blockers)) * 64 --4 for size 3, 8 for size 4, 16 for size 5
+	local collision = distance <= collision_size*1.1
 	if not collision then
-		--print("Moving to building, distance: ",distance)
+		--print("Moving to building, distance: ",distance, "Collision size: ",collision_size)
 	else
 		local hero = caster:GetOwner()
 		local player = caster:GetPlayerOwner()
