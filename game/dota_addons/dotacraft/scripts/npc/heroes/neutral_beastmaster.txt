@@ -2,11 +2,12 @@
 // Creature: Beastmaster
 // Description: "Warrior Hero, adept at summoning beasts into battle. Can learn Summon Bear, Summon Quilbeast, Summon Hawk, and Stampede. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
-"neutral_beastmaster"
+"npc_dota_hero_beastmaster"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_beastmaster"
+	"FormationRank"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -15,8 +16,10 @@
 	"Ability2" 					"beastmaster_summon_quilbeast"
 	"Ability3" 					"beastmaster_summon_hawk"
 	"Ability4" 					"beastmaster_stampede"
-	"Ability5" 					""
+	"Ability5"					""
 	"Ability6" 					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -46,8 +49,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

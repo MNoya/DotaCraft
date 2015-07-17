@@ -439,3 +439,18 @@ function IsTreePositionPathAble( origin, position )
 	return found_path
 	
 end
+
+function GetClosestGoldMineToPosition( position )
+	local allGoldMines = Entities:FindAllByModel('models/mine/mine.vmdl') --Target name in Hammer
+	local distance = 20000
+	local closest_mine = nil
+	for k,gold_mine in pairs (allGoldMines) do
+		local mine_location = gold_mine:GetAbsOrigin()
+		local this_distance = (position - mine_location):Length()
+		if this_distance < distance then
+			distance = this_distance
+			closest_mine = gold_mine
+		end
+	end
+	return closest_mine
+end

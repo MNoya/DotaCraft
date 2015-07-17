@@ -2,11 +2,12 @@
 // Creature: Dark Ranger
 // Description: "Cunning Hero, adept at manipulating opponents. Can learn Silence, Black Arrow, Life Drain, and Charm. |n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
-"neutral_dark_ranger"
+"npc_dota_hero_drow_ranger"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_drow_ranger"	
+	"FormationRank"				"2"
 	
 	// Abilities
 	//----------------------------------------------------------------	
@@ -17,6 +18,8 @@
 	"Ability5"					""
 	"Ability6"					""
 	
+	"PathfindingSearchDepthScale" "0.5"
+
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"0"
@@ -47,8 +50,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

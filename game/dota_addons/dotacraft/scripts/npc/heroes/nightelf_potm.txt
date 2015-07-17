@@ -2,11 +2,12 @@
 // Creature: Priestess of the Moon
 // Description: "Warrior Hero, adept at enhancing ranged attacks and slaying enemies from afar. Can learn Scout, Searing Arrows, Trueshot Aura, and Starfall. |n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
-"nightelf_potm"
+"npc_dota_hero_mirana"
 {
 	// General
 	//----------------------------------------------------------------
-	"override_hero"				"npc_dota_hero_mirana"	 //Add npc_dota_hero internal name
+	"override_hero"				"npc_dota_hero_mirana"
+	"FormationRank"				"2"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -16,6 +17,8 @@
 	"Ability4" 					"potm_starfall"
 	"Ability5"					""
 	"Ability6"					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -47,8 +50,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

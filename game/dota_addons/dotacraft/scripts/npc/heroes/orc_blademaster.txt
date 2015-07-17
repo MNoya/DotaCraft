@@ -2,11 +2,12 @@
 // Creature: Blademaster
 // Description: "Cunning Hero, adept at quickly killing individual units and creating confusion among enemies. Can learn Mirror Image, Wind Walk, Critical Strike and Bladestorm. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
-"orc_blademaster"
+"npc_dota_hero_juggernaut"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_juggernaut"
+	"FormationRank"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -16,6 +17,8 @@
 	"Ability4" 					"blademaster_bladestorm"
 	"Ability5"					""
 	"Ability6"					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -45,8 +48,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

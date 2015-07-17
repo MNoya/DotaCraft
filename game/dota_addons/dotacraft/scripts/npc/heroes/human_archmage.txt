@@ -2,11 +2,12 @@
 // Creature: Archmage
 // Description: "Mystical Hero, adept at ranged assaults. Can learn Blizzard, Summon Water Elemental, Brilliance Aura and Mass Teleport. |n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
-"human_archmage"
+"npc_dota_hero_keeper_of_the_light"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_keeper_of_the_light"
+	"FormationRank"				"2"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -15,9 +16,11 @@
 	"Ability2" 					"archmage_summon_water_elemental"
 	"Ability3" 					"archmage_brilliance_aura"
 	"Ability4" 					"archmage_mass_teleport"
-	"Ability5" 					""
+	"Ability5"					""
 	"Ability6" 					""
 	"Ability10"					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -49,8 +52,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------

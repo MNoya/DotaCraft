@@ -1,8 +1,9 @@
-"orc_tauren_chieftain"
+"npc_dota_hero_elder_titan"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_elder_titan"
+	"FormationRank"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -12,9 +13,10 @@
 	"Ability2" 					"tauren_chieftain_war_stomp"
 	"Ability3" 					"tauren_chieftain_endurance_aura"
 	"Ability4" 					"tauren_chieftain_reincarnation"
-	"Ability5" 					""
+	"Ability5"					""
 	"Ability6" 					""
 
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -44,8 +46,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

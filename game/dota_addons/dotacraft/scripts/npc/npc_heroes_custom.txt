@@ -59,11 +59,12 @@
 	// Creature: Archmage
 	// Description: "Mystical Hero, adept at ranged assaults. Can learn Blizzard, Summon Water Elemental, Brilliance Aura and Mass Teleport. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"human_archmage"
+	"npc_dota_hero_keeper_of_the_light"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_keeper_of_the_light"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -72,9 +73,11 @@
 		"Ability2" 					"archmage_summon_water_elemental"
 		"Ability3" 					"archmage_brilliance_aura"
 		"Ability4" 					"archmage_mass_teleport"
-		"Ability5" 					""
+		"Ability5"					""
 		"Ability6" 					""
 		"Ability10"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -106,8 +109,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -150,11 +153,12 @@
 	// Creature: Blood Mage
 	// Description: "Mystical Hero, adept at controlling magic and ranged assaults. Can learn Flame Strike, Banish, Siphon Mana and Phoenix. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"Blood_Mage"
+	"npc_dota_hero_invoker"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_invoker"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -164,8 +168,10 @@
 		"Ability2" 					"blood_mage_banish"
 		"Ability3" 					"blood_mage_siphon_mana"
 		"Ability4" 					"blood_mage_phoenix"
-		"Ability5" 					""
+		"Ability5"					""
 		"Ability6" 					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -197,8 +203,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -240,11 +246,12 @@
 	//=================================================================================
 	// Creature: Mountain King
 	//=================================================================================
-	"human_mountain_king"
+	"npc_dota_hero_zuus"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_zuus"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -254,6 +261,8 @@
 		"Ability4" 					"mountain_king_avatar"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -283,8 +292,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -327,11 +336,12 @@
 	// Creature: Paladin
 	// Description: "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"human_paladin"
+	"npc_dota_hero_omniknight"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_omniknight"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -341,6 +351,8 @@
 		"Ability4" 					"paladin_resurrection"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -370,8 +382,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -414,11 +426,12 @@
 	// Creature: Alchemist
 	// Description: "Warrior Hero, known for offensive and defensive versatility. Can learn Healing Spray, Chemical Rage, Acid Bomb and Transmute.|n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"neutral_alchemist"
+	"npc_dota_hero_alchemist"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_alchemist"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -428,6 +441,8 @@
 		"Ability4" 					"alchemist_transmute"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -457,8 +472,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -499,11 +514,12 @@
 	// Creature: Beastmaster
 	// Description: "Warrior Hero, adept at summoning beasts into battle. Can learn Summon Bear, Summon Quilbeast, Summon Hawk, and Stampede. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"neutral_beastmaster"
+	"npc_dota_hero_beastmaster"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_beastmaster"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -512,8 +528,10 @@
 		"Ability2" 					"beastmaster_summon_quilbeast"
 		"Ability3" 					"beastmaster_summon_hawk"
 		"Ability4" 					"beastmaster_stampede"
-		"Ability5" 					""
+		"Ability5"					""
 		"Ability6" 					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -543,8 +561,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -585,11 +603,12 @@
 	// Creature: Dark Ranger
 	// Description: "Cunning Hero, adept at manipulating opponents. Can learn Silence, Black Arrow, Life Drain, and Charm. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"neutral_dark_ranger"
+	"npc_dota_hero_drow_ranger"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_drow_ranger"	
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------	
@@ -600,6 +619,8 @@
 		"Ability5"					""
 		"Ability6"					""
 		
+		"PathfindingSearchDepthScale" "0.5"
+	
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"0"
@@ -630,8 +651,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -672,12 +693,13 @@
 	// Creature: Firelord
 	// Description: "Mystical Hero, adept at disrupting spells and dealing large amounts of fire damage.  Can learn Soul Burn, Summon Lava Spawn, Incinerate and Volcano.|n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"neutral_firelord"
+	"npc_dota_hero_nevermore"
 	{
 		// General
 		//----------------------------------------------------------------
-		"override_hero"				"npc_dota_hero_nevermore"	 //Add npc_dota_hero internal name
-		//"Model"					"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+		"override_hero"				"npc_dota_hero_nevermore"
+		//"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -686,8 +708,10 @@
 		"Ability2" 					"firelord_summon_lava_spawn"
 		"Ability3" 					"firelord_incinerate"
 		"Ability4" 					"firelord_volcano"
-		"Ability5" 					""
+		"Ability5"					""
 		"Ability6" 					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -719,8 +743,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -761,11 +785,12 @@
 	// Creature: Naga Sea Witch
 	// Description: "Mystical Hero, adept at ranged combat. Can learn Forked Lightning, Frost Arrows, Mana Shield, and Tornado. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"neutral_naga_sea_witch"
+	"npc_dota_hero_medusa"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_medusa"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -775,6 +800,8 @@
 		"Ability4" 					"naga_sea_witch_tornado"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -806,8 +833,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -848,11 +875,12 @@
 	// Creature: Pandaren Brewmaster
 	// Description: "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Breath of Fire, Drunken Haze, Drunken Brawler and Storm, Earth, And Fire. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"neutral_pandaren"
+	"npc_dota_hero_brewmaster"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_brewmaster"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------	
@@ -862,6 +890,8 @@
 		"Ability4" 					"pandaren_storm_earth_fire"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -891,8 +921,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -932,11 +962,14 @@
 	//=================================================================================
 	// Creature: Pit Lord
 	//=================================================================================
-	"neutral_pit_lord"
+	"npc_dota_hero_undying"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_undying"	 // Placeholder
+		"model"						"models/heroes/abyssal_underlord/abyssal_underlord.vmdl"
+		"FormationRank"				"0"
+		
 		
 		// Abilities
 		//----------------------------------------------------------------	
@@ -946,6 +979,8 @@
 		"Ability4" 					"pit_lord_doom"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -975,8 +1010,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1010,6 +1045,16 @@
 		
 		// Creature Data
 		//----------------------------------------------------------------
+		
+		"Creature"
+		{					
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"	""		}
+				
+			}
+		}
+		
 	}
 	
 	
@@ -1018,11 +1063,12 @@
 	// Creature: Tinker
 	// Description: "Cunning Hero, exceptional at disrupting battles and enduring damage. Can learn Pocket Factory, Cluster Rockets, Engineering Upgrade and Robo-Goblin.|n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"neutral_tinker"
+	"npc_dota_hero_tinker"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_tinker"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1031,8 +1077,10 @@
 		"Ability2" 					"tinker_cluster_rockets"
 		"Ability3" 					"tinker_engineering_upgrade"
 		"Ability4" 					"tinker_robo_goblin"
-		"Ability5" 					"tinker_normal_form"
-		"Ability6"					""
+		"Ability5"					""
+		"Ability6"					"tinker_normal_form"
+	
+		"PathfindingSearchDepthScale" "0.5"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -1062,8 +1110,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1102,11 +1150,12 @@
 	// Creature: Demon Hunter
 	// Description: "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"nightelf_demon_hunter"
+	"npc_dota_hero_terrorblade"
 	{
 		// General
 		//----------------------------------------------------------------
-		"override_hero"				"npc_dota_hero_antimage"
+		"override_hero"				"npc_dota_hero_terrorblade"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1116,6 +1165,8 @@
 		"Ability4" 					"demon_hunter_demon_form"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1146,8 +1197,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1188,11 +1239,12 @@
 	// Creature: Keeper of the Grove
 	// Description: "Mystical Hero, adept at using nature spells. Can learn Entangling Roots, Force of Nature, Thorns Aura, and Tranquility. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"nightelf_keeper"
+	"npc_dota_hero_leshrac"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_leshrac"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1202,6 +1254,8 @@
 		"Ability4" 					"keeper_tranquility"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1233,8 +1287,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1275,11 +1329,12 @@
 	// Creature: Priestess of the Moon
 	// Description: "Warrior Hero, adept at enhancing ranged attacks and slaying enemies from afar. Can learn Scout, Searing Arrows, Trueshot Aura, and Starfall. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"nightelf_potm"
+	"npc_dota_hero_mirana"
 	{
 		// General
 		//----------------------------------------------------------------
-		"override_hero"				"npc_dota_hero_mirana"	 //Add npc_dota_hero internal name
+		"override_hero"				"npc_dota_hero_mirana"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1289,6 +1344,8 @@
 		"Ability4" 					"potm_starfall"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1320,8 +1377,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1362,11 +1419,12 @@
 	// Creature: Warden
 	// Description: "Cunning Hero, adept at entering and escaping combat. Can learn Blink, Fan of Knives, Shadow Strike and Vengeance. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"nightelf_warden"
+	"npc_dota_hero_phantom_assassin"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_phantom_assassin"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1376,6 +1434,8 @@
 		"Ability4" 					"warden_avatar_of_vengeance"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1405,8 +1465,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1447,11 +1507,12 @@
 	// Creature: Blademaster
 	// Description: "Cunning Hero, adept at quickly killing individual units and creating confusion among enemies. Can learn Mirror Image, Wind Walk, Critical Strike and Bladestorm. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"orc_blademaster"
+	"npc_dota_hero_juggernaut"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_juggernaut"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1461,6 +1522,8 @@
 		"Ability4" 					"blademaster_bladestorm"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1490,8 +1553,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1532,11 +1595,12 @@
 	// Creature: Far Seer
 	// Description: "Mystical Hero, effective at ranged attacks and scouting. Can learn Chain Lightning, Far Sight, Feral Spirit and Earthquake. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"orc_far_seer"
+	"npc_dota_hero_disruptor"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_disruptor"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1546,6 +1610,8 @@
 		"Ability4" 					"far_seer_earthquake"
 		"Ability5"					""
 		"Ability6"					""
+		
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1577,8 +1643,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1617,11 +1683,12 @@
 	// Creature: Shadow Hunter
 	// Description: "Cunning Hero, adept at healing magics and voodoo curses. Can learn Healing Wave, Hex, Serpent Ward and Big Bad Voodoo. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"orc_shadow_hunter"
+	"npc_dota_hero_shadow_shaman"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_shadow_shaman"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1631,6 +1698,8 @@
 		"Ability4" 					"shadow_hunter_big_bad_voodoo"
 		"Ability5"					""
 		"Ability6"					""
+	
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1662,8 +1731,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1700,11 +1769,12 @@
 	}
 	
 	
-	"orc_tauren_chieftain"
+	"npc_dota_hero_elder_titan"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_elder_titan"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1714,9 +1784,10 @@
 		"Ability2" 					"tauren_chieftain_war_stomp"
 		"Ability3" 					"tauren_chieftain_endurance_aura"
 		"Ability4" 					"tauren_chieftain_reincarnation"
-		"Ability5" 					""
+		"Ability5"					""
 		"Ability6" 					""
 	
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1746,8 +1817,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1788,11 +1859,12 @@
 	// Creature: Crypt Lord
 	// Description: "Warrior Hero, adept at summoning insect minions and crushing enemies. Can learn Impale, Spiked Carapace, Carrion Beetles and Locust Swarm. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"undead_crypt_lord"
+	"npc_dota_hero_nyx_assassin"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_nyx_assassin"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1802,6 +1874,8 @@
 		"Ability4"					"crypt_lord_locust_swarm"
 		"Ability5"					""
 		"Ability6"					""
+	
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1831,8 +1905,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1873,11 +1947,12 @@
 	// Creature: Death Knight
 	// Description: "Warrior Hero, evil counterpart to the Human Paladin. Can learn Death Coil, Death Pact, Unholy Aura, and Animate Dead. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"undead_death_knight"
+	"npc_dota_hero_abaddon"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_abaddon"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------	
@@ -1887,6 +1962,8 @@
 		"Ability4" 					"death_knight_animate_dead"
 		"Ability5"					""
 		"Ability6"					""
+	
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1916,8 +1993,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -1958,11 +2035,12 @@
 	// Creature: Dreadlord
 	// Description: "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================
-	"undead_dread_lord"
+	"npc_dota_hero_night_stalker"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_night_stalker"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1972,6 +2050,8 @@
 		"Ability4" 					"dread_lord_inferno"
 		"Ability5"					""
 		"Ability6"					""
+	
+		"PathfindingSearchDepthScale" "0.5"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -2001,8 +2081,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------
@@ -2043,11 +2123,12 @@
 	// Creature: Lich
 	// Description: "Mystical Hero, particularly adept at cold magic. Can learn Frost Armor, Frost Nova, Dark Ritual and Death And Decay. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
-	"undead_lich"
+	"npc_dota_hero_lich"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_lich"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2088,8 +2169,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		//"BountyGoldMin"				"38.0"
+		//"BountyGoldMax"				"54.0"
 		
 		// Gold and Lumber
 		//----------------------------------------------------------------

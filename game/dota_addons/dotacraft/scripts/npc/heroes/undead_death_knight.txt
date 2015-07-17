@@ -2,11 +2,12 @@
 // Creature: Death Knight
 // Description: "Warrior Hero, evil counterpart to the Human Paladin. Can learn Death Coil, Death Pact, Unholy Aura, and Animate Dead. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
-"undead_death_knight"
+"npc_dota_hero_abaddon"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_abaddon"
+	"FormationRank"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------	
@@ -16,6 +17,8 @@
 	"Ability4" 					"death_knight_animate_dead"
 	"Ability5"					""
 	"Ability6"					""
+
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -45,8 +48,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

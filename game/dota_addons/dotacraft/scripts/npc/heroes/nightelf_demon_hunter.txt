@@ -2,11 +2,12 @@
 // Creature: Demon Hunter
 // Description: "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
-"nightelf_demon_hunter"
+"npc_dota_hero_terrorblade"
 {
 	// General
 	//----------------------------------------------------------------
-	"override_hero"				"npc_dota_hero_antimage"
+	"override_hero"				"npc_dota_hero_terrorblade"
+	"FormationRank"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -16,6 +17,8 @@
 	"Ability4" 					"demon_hunter_demon_form"
 	"Ability5"					""
 	"Ability6"					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -46,8 +49,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

@@ -2,11 +2,12 @@
 // Creature: Warden
 // Description: "Cunning Hero, adept at entering and escaping combat. Can learn Blink, Fan of Knives, Shadow Strike and Vengeance. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
-"nightelf_warden"
+"npc_dota_hero_phantom_assassin"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_phantom_assassin"
+	"FormationRank"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -16,6 +17,8 @@
 	"Ability4" 					"warden_avatar_of_vengeance"
 	"Ability5"					""
 	"Ability6"					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -45,8 +48,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

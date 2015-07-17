@@ -2,11 +2,12 @@
 // Creature: Lich
 // Description: "Mystical Hero, particularly adept at cold magic. Can learn Frost Armor, Frost Nova, Dark Ritual and Death And Decay. |n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
-"undead_lich"
+"npc_dota_hero_lich"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_lich"
+	"FormationRank"				"2"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -47,8 +48,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

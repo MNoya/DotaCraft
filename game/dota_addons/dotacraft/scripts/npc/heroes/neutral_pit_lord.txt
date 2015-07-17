@@ -1,11 +1,14 @@
 //=================================================================================
 // Creature: Pit Lord
 //=================================================================================
-"neutral_pit_lord"
+"npc_dota_hero_undying"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_undying"	 // Placeholder
+	"model"						"models/heroes/abyssal_underlord/abyssal_underlord.vmdl"
+	"FormationRank"				"0"
+	
 	
 	// Abilities
 	//----------------------------------------------------------------	
@@ -15,6 +18,8 @@
 	"Ability4" 					"pit_lord_doom"
 	"Ability5"					""
 	"Ability6"					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -44,8 +49,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------
@@ -79,6 +84,16 @@
 	
 	// Creature Data
 	//----------------------------------------------------------------
+	
+	"Creature"
+	{					
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"	""		}
+			
+		}
+	}
+	
 }
 
 

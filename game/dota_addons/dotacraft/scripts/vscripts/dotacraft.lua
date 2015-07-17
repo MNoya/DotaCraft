@@ -114,7 +114,7 @@ function dotacraft:InitGameMode()
 	GameMode:SetHUDVisible(8, false) -- Get Rid of Quick Buy
 
 	-- TEST --
-	GameMode:SetCustomGameForceHero("npc_dota_hero_dragon_knight")
+	GameMode:SetCustomGameForceHero("npc_dota_hero_life_stealer")
 	----------
 
 	print('[DOTACRAFT] Game Rules set')
@@ -730,9 +730,9 @@ function dotacraft:OnPlayerPickHero(keys)
     end
 
     -- Define the initial unit names to spawn for this hero_race
-    local hero_race = hero:GetUnitName()
-    local city_center_name = GetCityCenterNameForHeroRace(hero_race)
-    local builder_name = GetBuilderNameForHeroRace(hero_race)
+    local hero_name = hero:GetUnitName()
+    local city_center_name = GetCityCenterNameForHeroRace(hero_name)
+    local builder_name = GetBuilderNameForHeroRace(hero_name)
 
 	local building = BuildingHelper:PlaceBuilding(player, city_center_name, 5, position) 
 	player.buildings[city_center_name] = 1
@@ -743,21 +743,41 @@ function dotacraft:OnPlayerPickHero(keys)
 	-- Give Initial Food
     ModifyFoodLimit(player, GetFoodProduced(building))
 
-	-- Create Builders
-	Timers:CreateTimer(function() 
-		for i=1,5 do
-			local builder = CreateUnitByName(builder_name, position+RandomVector(300+i*40), true, hero, hero, hero:GetTeamNumber())
-			builder:SetOwner(hero)
-			builder:SetControllableByPlayer(playerID, true)
-			table.insert(player.units, builder)
+	-- Create Builders in between the gold mine and the city center
+	local num_builders = 5
+	local angle = 360 / num_builders
+	local closest_mine = GetClosestGoldMineToPosition(position)
+	local closest_mine_pos = closest_mine:GetAbsOrigin()
+	local mid_point = closest_mine_pos + (position-closest_mine_pos)/2
 
-			-- Increment food used
-			ModifyFoodUsed(player, GetFoodCost(builder))
+	-- Undead special worker rules
+	if hero_name == "npc_dota_hero_life_stealer" then
+		num_builders = 3
+		local ghoul = CreateUnitByName("undead_ghoul", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
+		ghoul:SetOwner(hero)
+		ghoul:SetControllableByPlayer(playerID, true)
+	end
 
-			-- Go through the abilities and upgrade
-			CheckAbilityRequirements( builder, player )
-		end
-	end)
+	for i=1,num_builders do	
+		DebugDrawCircle(mid_point, Vector(255, 0 , 0), 255, 100, true, 10)
+		local rotate_pos = mid_point + Vector(1,0,0) * 100
+		local builder_pos = RotatePosition(mid_point, QAngle(0, angle*i, 0), rotate_pos)
+
+		print("BUILDER POS ",i,builder_pos)
+
+		DebugDrawCircle(builder_pos, Vector(255, 255 , 0), 255, 20, true, 10)
+
+		local builder = CreateUnitByName(builder_name, builder_pos, true, hero, hero, hero:GetTeamNumber())
+		builder:SetOwner(hero)
+		builder:SetControllableByPlayer(playerID, true)
+		table.insert(player.units, builder)
+
+		-- Increment food used
+		ModifyFoodUsed(player, GetFoodCost(builder))
+
+		-- Go through the abilities and upgrade
+		CheckAbilityRequirements( builder, player )
+	end
 
 	-- Hide main hero
 	local ability = hero:FindAbilityByName("hide_hero")

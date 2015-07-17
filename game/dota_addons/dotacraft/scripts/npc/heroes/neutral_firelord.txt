@@ -2,12 +2,13 @@
 // Creature: Firelord
 // Description: "Mystical Hero, adept at disrupting spells and dealing large amounts of fire damage.  Can learn Soul Burn, Summon Lava Spawn, Incinerate and Volcano.|n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
-"neutral_firelord"
+"npc_dota_hero_nevermore"
 {
 	// General
 	//----------------------------------------------------------------
-	"override_hero"				"npc_dota_hero_nevermore"	 //Add npc_dota_hero internal name
-	//"Model"					"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+	"override_hero"				"npc_dota_hero_nevermore"
+	//"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+	"FormationRank"				"2"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -16,8 +17,10 @@
 	"Ability2" 					"firelord_summon_lava_spawn"
 	"Ability3" 					"firelord_incinerate"
 	"Ability4" 					"firelord_volcano"
-	"Ability5" 					""
+	"Ability5"					""
 	"Ability6" 					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -49,8 +52,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

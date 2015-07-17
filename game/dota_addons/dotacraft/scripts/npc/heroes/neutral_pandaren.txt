@@ -2,11 +2,12 @@
 // Creature: Pandaren Brewmaster
 // Description: "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Breath of Fire, Drunken Haze, Drunken Brawler and Storm, Earth, And Fire. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
-"neutral_pandaren"
+"npc_dota_hero_brewmaster"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_brewmaster"
+	"FormationRank"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------	
@@ -16,6 +17,8 @@
 	"Ability4" 					"pandaren_storm_earth_fire"
 	"Ability5"					""
 	"Ability6"					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -45,8 +48,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

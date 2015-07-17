@@ -260,9 +260,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
             end
         end
 
-        -- Sort the units by rank (0,1,2,3)
+        -- Sort the units by rank (1)
         unitsByRank = {}
-        for i=0,3 do
+        for i=0,4 do
             local units = GetUnitsWithFormationRank(sortedUnits, i)
             if units then
                 unitsByRank[i] = units
@@ -271,7 +271,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         -- Order each unit sorted to move to its respective Nav Point
         local n = 0
-        for i=0,3 do
+        for i=0,4 do
             if unitsByRank[i] then
                 for _,unit_index in pairs(unitsByRank[i]) do
                     local unit = EntIndexToHScript(unit_index)

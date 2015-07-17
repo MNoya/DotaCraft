@@ -2,11 +2,12 @@
 // Creature: Crypt Lord
 // Description: "Warrior Hero, adept at summoning insect minions and crushing enemies. Can learn Impale, Spiked Carapace, Carrion Beetles and Locust Swarm. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
-"undead_crypt_lord"
+"npc_dota_hero_nyx_assassin"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_nyx_assassin"
+	"FormationRank"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -16,6 +17,8 @@
 	"Ability4"					"crypt_lord_locust_swarm"
 	"Ability5"					""
 	"Ability6"					""
+
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -45,8 +48,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

@@ -2,11 +2,12 @@
 // Creature: Blood Mage
 // Description: "Mystical Hero, adept at controlling magic and ranged assaults. Can learn Flame Strike, Banish, Siphon Mana and Phoenix. |n|n|cffffcc00Attacks land and air units.|r"
 //=================================================================================
-"Blood_Mage"
+"npc_dota_hero_invoker"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_invoker"
+	"FormationRank"				"2"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -16,8 +17,10 @@
 	"Ability2" 					"blood_mage_banish"
 	"Ability3" 					"blood_mage_siphon_mana"
 	"Ability4" 					"blood_mage_phoenix"
-	"Ability5" 					""
+	"Ability5"					""
 	"Ability6" 					""
+	
+	"PathfindingSearchDepthScale" "0.5"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -49,8 +52,8 @@
 	
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
+	//"BountyGoldMin"				"38.0"
+	//"BountyGoldMax"				"54.0"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
