@@ -6,32 +6,10 @@ Right click triggers the gather ability if the unit has it and clicks on a gold 
 
 var inAction = false;
 
-// Gather ability is expected to be on the first slot
-function SendGoldGatherOrder( targetEntIndex )
-{
-	var order = {
-		OrderType : dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TARGET,
-		TargetIndex : targetEntIndex,
-		AbilityIndex : Entities.GetAbility( Players.GetLocalPlayerPortraitUnit(), 0 ),
-		Queue : false,
-		ShowEffects : false
-	};
-
-	$.Msg('trying ', Entities.IsAlive( order.TargetIndex), Abilities.IsCooldownReady( order.AbilityIndex), !Abilities.IsInAbilityPhase( order.AbilityIndex), Abilities.GetAbilityName(order.AbilityIndex) );
-	if ( Entities.IsAlive( order.TargetIndex) && Abilities.IsCooldownReady( order.AbilityIndex ) && !Abilities.IsInAbilityPhase( order.AbilityIndex ) && !Abilities.IsHidden( order.AbilityIndex ))
-	{
-		$.Msg("ORDER");
-		Game.PrepareUnitOrders( order );
-	}
-	else{
-		$.Msg("NO")
-	}
-}
-
 // Handle Right Button events
 function OnRightButtonPressed()
 {
-	$.Msg("OnRightButtonPressed")
+	//$.Msg("OnRightButtonPressed")
 
 	var iPlayerID = Players.GetLocalPlayer();
 	var mainSelected = Players.GetLocalPlayerPortraitUnit(); 
@@ -39,8 +17,8 @@ function OnRightButtonPressed()
 	var mouseEntities = GameUI.FindScreenEntities( GameUI.GetCursorPosition() );
 	mouseEntities = mouseEntities.filter( function(e) { return e.entityIndex != mainSelected; } )
 	
-	$.Msg("entities: ", mouseEntities.length)
-	if (mouseEntities.length == 0 || (mainSelectedName != "human_peasant"))
+	//$.Msg("entities: ", mouseEntities.length)
+	if (mouseEntities.length == 0 || !IsBuilder(mainSelectedName) )
 	{
 		return false;
 	}
@@ -51,7 +29,7 @@ function OnRightButtonPressed()
 				continue;
 			if (Entities.GetUnitName(e.entityIndex) == "gold_mine"){
 				$.Msg("Player "+iPlayerID+" Clicked on a gold mine")
-				SendGoldGatherOrder( e.entityIndex )
+				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
 				return true;
 			}
 			else{
@@ -62,11 +40,15 @@ function OnRightButtonPressed()
 	}
 }
 
+function IsBuilder(name) {
+	return (name == "human_peasant" || name == "nightelf_wisp" || name == "orc_peon" || name == "undead_acolyte")
+}
+
 // Main mouse event callback
 GameUI.SetMouseCallback( function( eventName, arg ) {
 	var CONSUME_EVENT = true;
 	var CONTINUE_PROCESSING_EVENT = false;
-	$.Msg("MOUSE: ", eventName, " -- ", arg, " -- ", GameUI.GetClickBehaviors())
+	//$.Msg("MOUSE: ", eventName, " -- ", arg, " -- ", GameUI.GetClickBehaviors())
 
 	if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
 		return CONTINUE_PROCESSING_EVENT;
@@ -83,7 +65,6 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
 		// Right-click
 		if ( arg === 1 )
 		{
-			$.Msg("OnRightButtonPressed")
 			return OnRightButtonPressed();
 		}
 	}

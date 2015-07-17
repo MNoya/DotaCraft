@@ -371,14 +371,13 @@ function FindEmptyNavigableTreeNearby( unit, position, radius )
 
  	for _,tree in pairs(sorted_list) do
  		local tree_point = tree:GetAbsOrigin()
-		if (not tree.builder or tree.builder == unit )and IsTreePositionPathAble(origin, tree_point) then
+		if (not tree.builder or tree.builder == unit ) and IsTreePositionPathAble(origin, tree_point) then
 			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 100, 100, true, 10)
 			return tree
-		else
-			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(255,0,0), 100, 100, true, 10)
 		end
 	end
 
+	--DebugDrawCircle(position, Vector(255,0,0), radius*2, 100, true, 10)
 	print("NO EMPTY NAVIGABLE TREE NEARBY")
 	return nil
 end
