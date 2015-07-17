@@ -113,6 +113,10 @@ function dotacraft:InitGameMode()
 	GameMode:SetHUDVisible(6, false)  -- Get Rid of Shop button
 	GameMode:SetHUDVisible(8, false) -- Get Rid of Quick Buy
 
+	-- TEST --
+	GameMode:SetCustomGameForceHero("npc_dota_hero_dragon_knight")
+	----------
+
 	print('[DOTACRAFT] Game Rules set')
 
 	-- Multi Team Configuration - Should be acquired from the UI, to allow 1v1v1v1 or 2v2 on the same map for example.
@@ -401,6 +405,8 @@ end
 
 function dotacraft:PostLoadPrecache()
 	print("[DOTACRAFT] Performing Post-Load precache")
+
+	PrecacheUnitByNameAsync("cosmetic_precache", function(...) end) -- Cosmetic model_folders
 
 	PrecacheUnitByNameAsync("human_arcane_sanctum", function(...) end)
 	PrecacheUnitByNameAsync("human_guard_tower", function(...) end)

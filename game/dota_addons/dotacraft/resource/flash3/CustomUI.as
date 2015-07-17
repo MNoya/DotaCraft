@@ -28,23 +28,23 @@
 			Globals.instance.resizeManager.AddListener(this);
 
 			// BMD player_say event.
-			var oldChatSay:Function = globals.Loader_hud_chat.movieClip.gameAPI.ChatSay;
-			globals.Loader_hud_chat.movieClip.gameAPI.ChatSay = function(obj:Object, bool:Boolean) {
+			/*var oldChatSay:Function = globals.Loader_hud_chat.movieClip.gameAPI.ChatSay;
+			/globals.Loader_hud_chat.movieClip.gameAPI.ChatSay = function(obj:Object, bool:Boolean) {
 				var type:int = globals.Loader_hud_chat.movieClip.m_nLastMessageMode
 				if (bool)
 					type = 4
 				
 				gameAPI.SendServerCommand( "player_say " + type + " " + obj.toString());
 				oldChatSay(obj, bool);
-			};
+			};*/
 			
 			//pass the gameAPI on to the modules
 			this.myResource.setup(this.gameAPI, this.globals);		
 			//this.humanOverview.setup(this.gameAPI, this.globals);
-			this.Overlay.setup(this.gameAPI, this.globals);
+			//this.Overlay.setup(this.gameAPI, this.globals);
 			
-			this.myHumanBtn.setup(this.gameAPI, this.globals, this.Overlay);
-			trace("mySpellListButton.setup!");
+			//this.myHumanBtn.setup(this.gameAPI, this.globals, this.Overlay);
+			//trace("mySpellListButton.setup!");
 			
 
 			//this is not needed, but it shows you your UI has loaded (needs 'scaleform_spew 1' in console)

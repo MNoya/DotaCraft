@@ -1224,6 +1224,26 @@
 		// Creature Data
 		//----------------------------------------------------------------
 	}
+	"cosmetic_precache"
+	{	
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/development/invisiblebox.vmdl"
+		"precache"
+		{
+			"model_folder" "models/heroes/dragon_knight"
+			"model_folder" "models/items/dragon_knight"
+			"model_folder" "models/heroes/sniper"
+			"model_folder" "models/items/sniper"
+			"model_folder" "models/heroes/chaos_knight"
+			"model_folder" "models/items/chaos_knight"
+			"model_folder" "models/heroes/silencer"
+			"model_folder" "models/items/silencer"
+			"model_folder" "models/heroes/gyrocopter"
+			"model_folder" "models/items/gyrocopter"
+			"model_folder" "models/heroes/skywrath_mage"
+			"model_folder" "models/items/skywrath_mage"
+		}
+	}
 	//------------------------------------------------------------------------------------
 	//- Units for crypt_lord_carrion_beetles ability 								 	-
 	//------------------------------------------------------------------------------------
@@ -2574,7 +2594,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"220"
 		"CollisionSize"				"176"
 		
@@ -2657,7 +2677,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"220"
 		"CollisionSize"				"176"
 		
@@ -2739,7 +2759,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"220"
 		"CollisionSize"				"172"
 		
@@ -2823,7 +2843,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"220"
 		"CollisionSize"				"144"
 		
@@ -3555,7 +3575,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"220"
 		"CollisionSize"				"144"
 		
@@ -3637,7 +3657,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"220"
 		"CollisionSize"				"144"
 		
