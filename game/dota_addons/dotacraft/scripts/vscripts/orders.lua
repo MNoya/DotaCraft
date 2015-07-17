@@ -117,7 +117,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
                 --Execute the order to a navigable tree
                 local unit = EntIndexToHScript(entityIndex)
-                local empty_tree = FindEmptyNavigableTreeNearby(unit:GetAbsOrigin(), position, 150 + 20 * numBuilders)
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
                 if empty_tree then
                     local tree_index = GetTreeIndexFromHandle( empty_tree )
                     empty_tree.builder = unit -- Assign the wisp to this tree, so next time this isn't empty
@@ -138,7 +138,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
                 --Execute the order to a navigable tree
                 local unit = EntIndexToHScript(entityIndex)
-                local tree = FindEmptyNavigableTreeNearby(unit:GetAbsOrigin(), position, 150 + 20 * numBuilders)
+                local tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
                 if tree then 
                     --[[if not tree.peasants then
                         tree.peasants = 0
@@ -168,7 +168,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         return false
 
 
-    elseif units and (order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or order_type == DOTA_UNIT_ORDER_ATTACK_MOVE) and numUnits > 1 then
+    elseif (order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or order_type == DOTA_UNIT_ORDER_ATTACK_MOVE) and numUnits > 1 then
 
         -- Get buildings out of the units table
         local _units = {}
@@ -289,7 +289,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     ------------------------------------------------
     --          Rally Point Right-Click           --
     ------------------------------------------------
-    elseif units and order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and numBuildings > 0 then
+    elseif order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and numBuildings > 0 then
         local first_unit = EntIndexToHScript(units["0"])
         if IsCustomBuilding(first_unit) and not IsCustomTower(first_unit) then
             local x = tonumber(filterTable["position_x"])
@@ -315,6 +315,34 @@ function dotacraft:FilterExecuteOrder( filterTable )
             ExecuteOrderFromTable({ UnitIndex = units["0"], OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = pos, Queue = false})
             return false
         end
+    
+    
+    ------------------------------------------------
+    --          Tree Gather Right-Click           --
+    ------------------------------------------------
+    elseif order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION then
+        local entityIndex = units["0"]
+        local unit = EntIndexToHScript(entityIndex)
+        local x = tonumber(filterTable["position_x"])
+        local y = tonumber(filterTable["position_y"])
+        local z = tonumber(filterTable["position_z"])
+        local point = Vector(x,y,z) -- initial goal
+        local trees = GridNav:GetAllTreesAroundPoint(point, 100, true)
+        local race = GetUnitRace(unit)
+        local gather_ability = unit:FindAbilityByName(race.."_gather")
+
+        if #trees>0 and gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
+            local empty_tree = FindEmptyNavigableTreeNearby(unit, point, 100)
+            if empty_tree then
+                local tree_index = GetTreeIndexFromHandle( empty_tree )
+                print("Order: Cast on Tree ",tree_index)
+                ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+            end
+            return false
+        else
+            return true
+        end
+        return true
     end
 
     return true

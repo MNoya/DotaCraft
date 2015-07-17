@@ -1,9 +1,10 @@
 <root>
 	<scripts>
 		<include src="file://{resources}/scripts/unit_selection.js" />
+		<include src="file://{resources}/scripts/clicks.js" />
 	</scripts>
 	<script>
-		$.Msg( "Compiled Panorama Scripts" );
+		$.Msg( "Compiled Panorama Scripts!" );
 	</script>
 	<Panel>
 		<!-- (Panel hierarchy goes here.) -->

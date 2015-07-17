@@ -361,8 +361,9 @@ function AddUnitToSelection( unit )
 end
 
 -- A tree is "empty" if it doesn't have a stored .builder in it
-function FindEmptyNavigableTreeNearby( origin, position, radius )
+function FindEmptyNavigableTreeNearby( unit, position, radius )
 	local nearby_trees = GridNav:GetAllTreesAroundPoint(position, radius, true)
+	local origin = unit:GetAbsOrigin()
 	--DebugDrawLine(origin, position, 255, 255, 255, true, 10)
 
 	-- Sort by Closest
@@ -370,7 +371,7 @@ function FindEmptyNavigableTreeNearby( origin, position, radius )
 
  	for _,tree in pairs(sorted_list) do
  		local tree_point = tree:GetAbsOrigin()
-		if not tree.builder and IsTreePositionPathAble(origin, tree_point) then
+		if (not tree.builder or tree.builder == unit )and IsTreePositionPathAble(origin, tree_point) then
 			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 100, 100, true, 10)
 			return tree
 		else

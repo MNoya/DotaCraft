@@ -219,12 +219,12 @@ function Gather1Lumber( event )
 		tree.health = tree.health - DAMAGE_TO_TREE
 		if tree.health <= 0 then
 			tree:CutDown(caster:GetTeamNumber())
-			local a_tree = FindEmptyNavigableTreeNearby(caster:GetAbsOrigin(), tree:GetAbsOrigin(), 200)
+			local a_tree = FindEmptyNavigableTreeNearby(caster, tree:GetAbsOrigin(), 200)
 			if a_tree then
 				caster.target_tree = a_tree
 			else
 				-- Increase the radius
-				caster.target_tree = FindEmptyNavigableTreeNearby(caster:GetAbsOrigin(), tree:GetAbsOrigin(), 500)
+				caster.target_tree = FindEmptyNavigableTreeNearby(caster, tree:GetAbsOrigin(), 500)
 				if not caster.target_tree then
 					print("LOOKS LIKE WE CANT FIND A VALID TREE IN 500 RADIUS")
 					--DebugDrawCircle(tree:GetAbsOrigin(), Vector(255,0,0), 100, 500, true, 10)
@@ -339,6 +339,10 @@ function ReturnResources( event )
 			end
 		end)
 
+		-- Unstuck
+		caster:SetForwardVector(building:GetForwardVector())
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+
 		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Position = building:GetAbsOrigin(), Queue = false}) 
 		caster.target_building = building
 	
@@ -435,7 +439,7 @@ function CheckBuildingPosition( event )
 			if caster.target_tree and caster.target_tree:IsStanding() then
 				caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
 			elseif caster.target_tree then
-				caster.target_tree = FindEmptyNavigableTreeNearby(caster:GetAbsOrigin(), caster.target_tree:GetAbsOrigin(), 200) -- Potential problem here, probably add a recursive check to always get one
+				caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_tree:GetAbsOrigin(), 200) -- Potential problem here, probably add a recursive check to always get one
 				if caster.target_tree then
 					caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
 				else

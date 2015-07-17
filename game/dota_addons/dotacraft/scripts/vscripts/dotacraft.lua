@@ -114,7 +114,7 @@ function dotacraft:InitGameMode()
 	GameMode:SetHUDVisible(8, false) -- Get Rid of Quick Buy
 
 	-- TEST --
-	GameMode:SetCustomGameForceHero("npc_dota_hero_life_stealer")
+	GameMode:SetCustomGameForceHero("npc_dota_hero_dragon_knight")
 	----------
 
 	print('[DOTACRAFT] Game Rules set')
@@ -759,13 +759,13 @@ function dotacraft:OnPlayerPickHero(keys)
 	end
 
 	for i=1,num_builders do	
-		DebugDrawCircle(mid_point, Vector(255, 0 , 0), 255, 100, true, 10)
+		--DebugDrawCircle(mid_point, Vector(255, 0 , 0), 255, 100, true, 10)
 		local rotate_pos = mid_point + Vector(1,0,0) * 100
 		local builder_pos = RotatePosition(mid_point, QAngle(0, angle*i, 0), rotate_pos)
 
 		print("BUILDER POS ",i,builder_pos)
 
-		DebugDrawCircle(builder_pos, Vector(255, 255 , 0), 255, 20, true, 10)
+		--DebugDrawCircle(builder_pos, Vector(255, 255 , 0), 255, 20, true, 10)
 
 		local builder = CreateUnitByName(builder_name, builder_pos, true, hero, hero, hero:GetTeamNumber())
 		builder:SetOwner(hero)
