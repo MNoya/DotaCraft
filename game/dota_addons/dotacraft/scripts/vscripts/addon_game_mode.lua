@@ -22,7 +22,7 @@ function Precache( context )
 
 		-- Particles can be precached individually or by folder
 		-- It it likely that precaching a single particle system will precache all of its children, but this may not be guaranteed
-		PrecacheResource("particle", "particles/custom/rally_flag.vpcf", context)
+		PrecacheResource("particle_folder", "particles/custom", context)
 		PrecacheResource("particle_folder", "particles/buildinghelper", context)
 
 		-- Models can also be precached by folder or individually

@@ -30,6 +30,14 @@ function Gather( event )
 		--print("Moving to ", target_class)
 		local tree = target
 		local tree_pos = tree:GetAbsOrigin()
+		local particleName = "particles/ui_mouseactions/ping_circle_static.vpcf"
+		local particle = ParticleManager:CreateParticleForPlayer(particleName, PATTACH_CUSTOMORIGIN, caster, caster:GetPlayerOwner())
+		ParticleManager:SetParticleControl(particle, 0, Vector(tree_pos.x, tree_pos.y, tree_pos.z+20))
+		ParticleManager:SetParticleControl(particle, 1, Vector(0,255,0))
+		Timers:CreateTimer(3, function() 
+			ParticleManager:DestroyParticle(particle, true)
+		end)
+
 		caster.target_tree = tree
 		ability.cancelled = false
 		if not tree.health then
@@ -215,6 +223,11 @@ function Gather1Lumber( event )
 
 	caster.lumber_gathered = caster.lumber_gathered + 1
 	if tree and tree.health then
+
+		-- Hit particle
+		local particleName = "particles/custom/tree_pine_01_destruction.vpcf"
+		local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(particle, 0, tree:GetAbsOrigin())
 
 		tree.health = tree.health - DAMAGE_TO_TREE
 		if tree.health <= 0 then
