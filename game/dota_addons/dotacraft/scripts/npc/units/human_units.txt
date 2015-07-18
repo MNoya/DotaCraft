@@ -28,6 +28,11 @@
 	"HealthBarOffset"			"140"
 	"SelectionGroup"            "Human_Peasants"
 	"SoundSet"					"Hero_Kunkka"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -237,6 +242,11 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Footmen"
 	"SoundSet"					"Hero_DragonKnight"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -347,6 +357,11 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Riflemen"
 	"SoundSet"					"Hero_Sniper"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -449,6 +464,11 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Knights"
 	"SoundSet"					"Hero_ChaosKnight"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -563,6 +583,11 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Sorceress"
 	"SoundSet"					"Hero_Lina"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -667,6 +692,11 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Priests"
 	"SoundSet"					"Hero_Oracle"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -744,6 +774,14 @@
 	{
 		"DisableClumpingBehavior"	"1"
 		"ManaGain"					"100" //Training
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"546"		}
+			"Wearable2"		{	"ItemDef"		"547"		}
+			"Wearable3" 	{	"ItemDef"		"548"		}
+			"Wearable3" 	{	"ItemDef"		"549"		}
+			"Wearable3" 	{	"ItemDef"		"550"		}
+		}
 	}
 }
 
@@ -763,6 +801,11 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Spell_Breakers"
 	"SoundSet"					"Hero_Silencer"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -869,6 +912,11 @@
 	"HealthBarOffset"			"280"
 	"SelectionGroup"            "Human_Flying_Machines"
 	"SoundSet"					"Hero_Gyrocopter"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -967,6 +1015,11 @@
 	"HealthBarOffset"			"280"
 	"SelectionGroup"            "Human_Dragonhawk_Riders"
 	"SoundSet"					"Hero_SkywrathMage"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 
@@ -1069,6 +1122,11 @@
 	"HealthBarOffset"			"120"
 	"SelectionGroup"            "Human_Mortar_Teams"
 	"SoundSet"					"Hero_Techies"
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
