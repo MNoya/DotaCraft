@@ -23,6 +23,9 @@ function build( keys )
 	local playerID = hero:GetPlayerID()
 	local player = PlayerResource:GetPlayer(playerID)	
 
+	-- Refund the gold, as the building hasn't been placed yet
+	hero:ModifyGold(gold_cost, false, 0)
+
 	if not PlayerHasEnoughLumber( player, lumber_cost ) then
 		return
 	end
@@ -37,6 +40,7 @@ function build( keys )
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 		caster:AddNewModifier(caster, nil, "modifier_phased", {duration=0.03})
 
+		hero:ModifyGold(-gold_cost, false, 0)
     	ModifyLumber( player, -lumber_cost)
 
     	-- Remove invulnerability on npc_dota_building baseclass

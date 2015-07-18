@@ -363,9 +363,10 @@ function ReturnResources( event )
 					if distance > collision_size then
 						caster:MoveToNPC(building)
 						return 0.1
-					else
+					elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
 						--print("Building Reached at ",distance)
 						caster:RemoveModifierByName("modifier_carrying_lumber")
+						print("POPUPERINO "..caster.lumber_gathered)
 						PopupLumber(caster, caster.lumber_gathered)
 						ModifyLumber(player, caster.lumber_gathered)
 
@@ -430,7 +431,7 @@ function ReturnResources( event )
 					if distance > collision_size then
 						caster:MoveToNPC(building)
 						return 0.1
-					else
+					elseif caster.gold_gathered and caster.gold_gathered > 0 then
 						--print("Building Reached at ",distance)
 						local upkeep = GetUpkeep( player )
 						local gold_gain = caster.gold_gathered * upkeep
