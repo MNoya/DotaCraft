@@ -204,19 +204,24 @@ end
 --Places a new building on full health and returns the handle. Places grid nav blockers
 --Skips the construction phase and doesn't require a builder, this is most important to place the "base" buildings for the players when the game starts.
 --Make sure the position is valid before calling this in code.
-function BuildingHelper:PlaceBuilding(player, name, size, location)
+function BuildingHelper:PlaceBuilding(player, name, location, blockGridNav, size)
   
   local pID = player:GetPlayerID()
   local playersHero = player:GetAssignedHero()
   print("Place Building, ",pID, playersHero)
   
-  local gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)  
+  local gridNavBlockers
+  if blockGridNav then
+    gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)
+  end
 
   -- Spawn the building
   local building = CreateUnitByName(name, location, false, playersHero, player, playersHero:GetTeamNumber())
   building:SetControllableByPlayer(pID, true)
   building:SetOwner(playersHero)
-  building.blockers = gridNavBlockers
+  if blockGridNav then
+    building.blockers = gridNavBlockers
+  end
   building.state = "complete"
 
   function building:RemoveBuilding( bForcedKill )

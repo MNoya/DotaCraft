@@ -735,7 +735,7 @@ function dotacraft:OnPlayerPickHero(keys)
     local city_center_name = GetCityCenterNameForHeroRace(hero_name)
     local builder_name = GetBuilderNameForHeroRace(hero_name)
 
-	local building = BuildingHelper:PlaceBuilding(player, city_center_name, 5, position) 
+	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5) 
 	player.buildings[city_center_name] = 1
 	table.insert(player.structures, building)
 
@@ -785,7 +785,6 @@ function dotacraft:OnPlayerPickHero(keys)
 	ability:UpgradeAbility(true)
 	hero:SetAbilityPoints(0)
 	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
-
 end
 
 -- A player killed another player in a multi-team context

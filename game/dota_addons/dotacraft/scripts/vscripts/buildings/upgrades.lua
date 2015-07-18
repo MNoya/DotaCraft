@@ -12,7 +12,10 @@ function UpgradeBuilding( event )
 	local player = PlayerResource:GetPlayer(playerID)
 	local currentHealthPercentage = caster:GetHealth()/caster:GetMaxHealth()
 
-	-- Remove the old building from the structures list and from the game
+	-- Keep the gridnav blockers
+	local blockers = caster.blockers
+
+	-- Remove the old building from the structures list
 	local buildingIndex = getIndex(player.structures, caster)
 	if IsValidEntity(caster) then
         table.remove(player.structures, buildingIndex)
@@ -21,15 +24,15 @@ function UpgradeBuilding( event )
         if caster.flag then
 			caster.flag:RemoveSelf()
 		end
-
-        caster:RemoveSelf()
+		
+		-- Remove old building entity
+		caster:RemoveSelf()
     end
 
-	local building = CreateUnitByName(new_unit, position, true, hero, hero, hero:GetTeamNumber())
-	building:SetOwner(hero)
-	building:SetControllableByPlayer(playerID, true)
-	building:SetAbsOrigin(position)
-	building:RemoveModifierByName("modifier_invulnerable")
+    -- New building
+	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, false, 0) 
+	building.blockers = blockers
+
 	local newRelativeHP = math.ceil(building:GetMaxHealth() * currentHealthPercentage)
 	if newRelativeHP == 0 then newRelativeHP = 1 end --just incase rounding goes wrong
 	building:SetHealth(newRelativeHP)
