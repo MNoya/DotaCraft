@@ -351,7 +351,7 @@ function ReturnResources( event )
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster, "lumber" )
 		caster.target_building = building
-		local collision_size = math.ceil(math.sqrt(#building.blockers)) * 64 --4 for size 3, 8 for size 4, 16 for size 5
+		local collision_size = math.floor(math.sqrt(#building.blockers)) * 64 + 32
 
 		-- Move towards it
 		Timers:CreateTimer(function() 

@@ -346,6 +346,7 @@ function dotacraft:InitGameMode()
 	-- Full units file to get the custom values
 	GameRules.AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
   	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+  	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
   	GameRules.ItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
   	GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
   	GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
