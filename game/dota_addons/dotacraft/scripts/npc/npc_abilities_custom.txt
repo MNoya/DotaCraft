@@ -22099,9 +22099,10 @@
 	
 		"Modifiers"
 		{
-			"modifier_on_order_cancel"
+			// LUMBER GATHER
+			"modifier_on_order_cancel_lumber"
 			{
-				"IsHidden"	"1"
+				"IsHidden"				"1"
 				"OnOrder"
 				{
 					"RunScript"
@@ -22119,9 +22120,8 @@
 	
 			"modifier_gathering_lumber"
 			{
-				"IsHidden"				"1"
 				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
-	
+				"IsHidden"				"1"
 				"OnOrder"
 				{			
 					"RemoveModifier"
@@ -22136,66 +22136,57 @@
 					}
 				}
 	
+				// Lumber Gain
 				"ThinkInterval"  "1.0"
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"Gather1Lumber"
+						"Function"		"GatherLumber"
 					}
 				}		
 			}
+			// END LUMBER GATHER
 	
-			"modifier_gathering_gold"
+			// GOLD GATHER
+			"modifier_on_order_cancel_gold"
 			{
 				"IsHidden"				"1"
-				
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
-				"ThinkInterval"  		"0.033"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CheckMinePosition"
-					}
-				}
-	
 				"OnOrder"
 				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_gathering_gold"
+						"ModifierName"	"modifier_on_order_cancel_gold"
 						"Target" 		"CASTER"
 					}
 	
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"ToggleOffGather"
+						"Function"		"CancelGather"
 					}
+				}
+	
+				// Peasants have no collision while moving in and out of the mine
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	
-			"modifier_mining_gold"
-			{
-				"IsHidden"				"1"
-				
+			"modifier_gathering_gold"
+			{			
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	
+				// Gold Gain
 				"OnDestroy"
 				{
 					"RunScript"
@@ -22205,7 +22196,9 @@
 					}
 				}
 			}
+			// END GOLD GATHER
 	
+			// REPAIR
 			"modifier_moving_to_repair"
 			{
 				"ThinkInterval"  "0.03"
@@ -22279,7 +22272,7 @@
 			"modifier_repairing_animation"
 			{
 				"OverrideAnimation"     "ACT_DOTA_ATTACK"
-				"IsHidden"				"1"
+				"IsHidden"				"0"
 				"OnOrder"
 				{
 					"RemoveModifier"
@@ -22304,6 +22297,7 @@
 					}
 				}
 			}
+			// END REPAIR
 		}
 	}
 	
@@ -22327,38 +22321,24 @@
 	
 		"Modifiers"
 		{
-			"modifier_returning_resources"
+			// Shows the stacks of carried lumber
+			"modifier_carrying_lumber"
 			{
 				"IsHidden"				"0"
 				"TextureName"			"furion_sprout"
-	
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CheckBuildingPosition"
-					}
-				}
 	
 				"OnOrder"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"ToggleOffGather"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"ToggleOffReturn"
+						"Function"		"CancelReturn"
 					}
 				}		
 			}
 	
-			"modifier_returning_gold"
+			// Shows that the builder has acquired gold
+			"modifier_carrying_gold"
 			{
 				"IsHidden"				"0"
 				"TextureName"			"alchemist_goblins_greed"
@@ -22368,28 +22348,12 @@
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CheckBuildingPosition"
-					}
-				}
-	
 				"OnOrder"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"ToggleOffGather"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"ToggleOffReturn"
+						"Function"		"CancelReturn"
 					}
 				}		
 			}

@@ -181,6 +181,12 @@ function dotacraft:InitGameMode()
 		local gridNavBlockers = BuildingHelper:BlockGridNavSquare(5, location)
 		gold_mine:SetAbsOrigin(location)
 	    gold_mine.blockers = gridNavBlockers
+
+	    -- Find and store the mine entrance
+		local mine_entrance = Entities:FindAllByNameWithin("*mine_entrance", location, 300)
+		for k,v in pairs(mine_entrance) do
+			gold_mine.entrance = v:GetAbsOrigin()
+		end
 	end
 
 	-- Allow cosmetic swapping
