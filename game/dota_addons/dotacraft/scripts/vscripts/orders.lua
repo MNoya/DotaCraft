@@ -369,7 +369,32 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
             -- If there's an old flag, remove it
             if first_unit.flag and IsValidEntity(first_unit.flag) then
-                first_unit.flag:RemoveSelf()
+                if first_unit.flag.flag_particle then
+                    ParticleManager:DestroyParticle(first_unit.flag.flag_particle, true)
+                    first_unit.flag.flag_particle = nil
+                end
+                if not first_unit.flag.IsTree and first_unit.flag:GetUnitName() == "dummy_unit" then
+                    first_unit.flag:RemoveSelf()
+                end
+            end
+            
+
+            -- Tree rally
+            local trees = GridNav:GetAllTreesAroundPoint(point, 50, true)
+            DeepPrintTable(trees)
+            if #trees>0 then
+                local target_tree = trees[1]
+                if target_tree then
+                    first_unit.flag = target_tree
+                    first_unit.flag.IsTree = true
+                    local tree_pos = target_tree:GetAbsOrigin()
+                    local color = TEAM_COLORS[first_unit:GetTeamNumber()]
+                    target_tree.flag_particle = ParticleManager:CreateParticleForTeam("particles/custom/rally_flag.vpcf", PATTACH_CUSTOMORIGIN, first_unit, first_unit:GetTeamNumber())
+                    ParticleManager:SetParticleControl(target_tree.flag_particle, 0, Vector(tree_pos.x, tree_pos.y, tree_pos.z+250)) -- Position
+                    ParticleManager:SetParticleControl(target_tree.flag_particle, 1, first_unit:GetAbsOrigin()) --Orientation
+                    ParticleManager:SetParticleControl(target_tree.flag_particle, 15, Vector(color[1], color[2], color[3])) --Color
+                    return false
+                end
             end
 
             -- Make a flag dummy
@@ -386,6 +411,41 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
     
         return false
+
+    ------------------------------------------------
+    --      Rally Point Right-Click Target        --
+    ------------------------------------------------
+    elseif order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET and numBuildings > 0 then
+        
+        local first_unit = EntIndexToHScript(units["0"])
+        if IsCustomBuilding(first_unit) and not IsCustomTower(first_unit) then
+            local targetIndex = tonumber(filterTable["entindex_target"])
+            local target = EntIndexToHScript(targetIndex)
+
+            -- If there's an old flag, remove it
+           -- If there's an old flag, remove it
+            if first_unit.flag and IsValidEntity(first_unit.flag) then
+                if first_unit.flag.flag_particle then
+                    ParticleManager:DestroyParticle(first_unit.flag.flag_particle, true)
+                    first_unit.flag.flag_particle = nil
+                end
+                if not first_unit.flag.IsTree and first_unit.flag:GetUnitName() == "dummy_unit" then
+                    first_unit.flag:RemoveSelf()
+                end
+            end
+
+            -- Attach the flag to the target
+            first_unit.flag = target
+
+            local color = TEAM_COLORS[first_unit:GetTeamNumber()]
+            target.flag_particle = ParticleManager:CreateParticleForTeam("particles/custom/rally_flag.vpcf", PATTACH_OVERHEAD_FOLLOW, target, first_unit:GetTeamNumber())
+            ParticleManager:SetParticleControl(target.flag_particle, 0, target:GetAbsOrigin()) -- Position
+            ParticleManager:SetParticleControl(target.flag_particle, 1, target:GetAbsOrigin() * target:GetForwardVector()) --Orientation
+            ParticleManager:SetParticleControl(target.flag_particle, 15, Vector(color[1], color[2], color[3])) --Color
+            return false
+        else
+            return true
+        end
 
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
         local unit = EntIndexToHScript(units["0"])

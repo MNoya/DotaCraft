@@ -265,6 +265,29 @@ function IsBuilder( unit )
 	end
 end
 
+function IsBase( unit )
+	local race = GetUnitRace(unit)
+	local unitName = unit:GetUnitName()
+	if race == "human" then
+		if unitName == "human_town_hall" or unitName == "human_keep" or unitName == "human_castle" then
+			return true
+		end
+	elseif race == "nightelf" then
+		if unitName == "nightelf_tree_of_life" or unitName == "nightelf_tree_of_ages" or unitName == "nightelf_tree_of_eternity" then
+			return true
+		end
+	elseif race == "orc" then
+		if unitName == "orc_great_hall" or unitName == "orc_stronghold" or unitName == "orc_fortress" then
+			return true
+		end
+	elseif race == "undead" then
+		if unitName == "undead_necropolis" or unitName == "undead_halls_of_the_dead" or unitName == "undead_black_citadel" then
+			return true
+		end
+	end
+	return false
+end
+
 
 -- Custom Corpse Mechanic
 function LeavesCorpse( unit )

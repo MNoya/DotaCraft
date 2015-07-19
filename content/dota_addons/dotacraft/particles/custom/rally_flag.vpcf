@@ -51,6 +51,9 @@
 			_class = "C_OP_EndCapTimedDecay"
 			m_flDecayTime = 0.500000
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers =
 	[
@@ -88,6 +91,7 @@
 			_class = "C_INIT_PositionPlaceOnGround"
 			m_bIncludeWater = true
 			m_flOffset = -10.000000
+			m_bDisableOperator = true
 		},
 		{
 			_class = "C_INIT_RandomSecondSequence"
@@ -128,6 +132,7 @@
 	[
 		{
 			m_ChildRef = resource:"particles/econ/items/undying/undying_manyone/undying_pale_tower_destruction_dust_hit.vpcf"
+			m_bDisableChild = true
 		},
 	]
 }
