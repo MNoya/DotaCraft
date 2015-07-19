@@ -270,14 +270,9 @@ function GatherLumber( event )
 	if caster.lumber_gathered < max_lumber_carried and tree:IsStanding() then
 		caster:StartGesture(ACT_DOTA_ATTACK)
 
-		-- Fake Toggle the Return ability
-		if return_ability:GetToggleState() == false or return_ability:IsHidden() then
-			--print("Gather OFF, Return ON")
-			return_ability:SetHidden(false)
-			if return_ability:GetToggleState() == false then
-				return_ability:ToggleAbility()
-			end
-			ability:SetHidden(true)
+		-- Show the return ability
+		if return_ability:IsHidden() then
+			caster:SwapAbilities("human_gather", "human_return_resources", false, true)
 		end
 	else
 		-- RETURN
@@ -510,7 +505,7 @@ function FindClosestResourceDeposit( caster, resource_type )
 
 	if resource_type == "gold" then
 		for _,building in pairs(buildings) do
-			if IsValidGoldDepositName( building:GetUnitName() ) then
+			if IsValidGoldDepositName( building:GetUnitName() ) and not building:HasModifier("modifier_construction") then
 			   
 				local this_distance = (position - building:GetAbsOrigin()):Length()
 				if this_distance < distance then
@@ -522,7 +517,7 @@ function FindClosestResourceDeposit( caster, resource_type )
 
 	elseif resource_type == "lumber" then
 		for _,building in pairs(buildings) do
-			if IsValidLumberDepositName( building:GetUnitName() ) then
+			if IsValidLumberDepositName( building:GetUnitName() ) and not building:HasModifier("modifier_construction") then
 			   
 				local this_distance = (position - building:GetAbsOrigin()):Length()
 				if this_distance < distance then
@@ -614,7 +609,8 @@ function CheckCityCenterPosition( event )
 	local player = building:GetPlayerOwner()
 
 	local distance = (target:GetAbsOrigin() - building:GetAbsOrigin()):Length()
-	local collision = distance <= (building:GetHullRadius()+100)
+	local collision_size = math.floor(math.sqrt(#building.blockers)) * 64 + 32
+	local collision = distance <= collision_size
 	if not collision then
 		--print("Moving to building, distance: ",distance)
 	else
@@ -900,7 +896,8 @@ function CheckRepairPosition( event )
 	end
 
 	local distance = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length()
-	local collision = distance <= (target:GetHullRadius()+100)
+	local collision_size = math.floor(math.sqrt(#building.blockers)) * 64 + 32
+	local collision = distance <= collision_size
 	if not collision then
 		--print("Moving to building, distance: ",distance)
 	else

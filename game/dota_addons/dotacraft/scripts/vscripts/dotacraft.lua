@@ -1258,7 +1258,7 @@ function dotacraft:UpdateRallyFlagDisplays( playerID )
     end
 
     if mainSelected.flag and IsValidEntity(mainSelected.flag) then
-        if HasTrainAbility(mainSelected) then
+        if HasTrainAbility(mainSelected) and not IsCustomTower(mainSelected) then
             CreateRallyFlagForBuilding(mainSelected)
         end
     end

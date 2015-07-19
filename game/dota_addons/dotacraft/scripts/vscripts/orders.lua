@@ -493,14 +493,13 @@ function dotacraft:OnBuildingRallyOrder( event )
         end
     end
 
-    if HasTrainAbility(building) then
+    if HasTrainAbility(building) and not IsCustomTower(building) then
         EmitSoundOnClient("DOTA_Item.ObserverWard.Activate", player)
         if rally_type == "position" then
             --DebugDrawCircle(position, Vector(255,0,0), 255, 20, true, 3)
            
             -- Tree rally
             local trees = GridNav:GetAllTreesAroundPoint(position, 50, true)
-            DeepPrintTable(trees)
             if #trees>0 then
                 local target_tree = trees[1]
                 if target_tree then
@@ -542,7 +541,6 @@ end
 function CreateRallyFlagForBuilding( building )
     local flag_type = building.flag.type
     local teamNumber = building:GetTeamNumber()
-    print("TEAM NUMBER ",teamNumber)
     local color = TEAM_COLORS[teamNumber]
     local particleName = "particles/custom/rally_flag.vpcf"
     local particle
