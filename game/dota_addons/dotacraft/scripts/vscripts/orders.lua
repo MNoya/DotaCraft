@@ -356,97 +356,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
         return false
     
     ------------------------------------------------
-    --          Rally Point Right-Click           --
+    --          Gold Gather Multi Order           --
     ------------------------------------------------
-    elseif order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and numBuildings > 0 then
-        local first_unit = EntIndexToHScript(units["0"])
-        if IsCustomBuilding(first_unit) and not IsCustomTower(first_unit) then
-            local x = tonumber(filterTable["position_x"])
-            local y = tonumber(filterTable["position_y"])
-            local z = tonumber(filterTable["position_z"])
-            local point = Vector(x,y,z)
-            if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 255, 20, true, 3) end
-
-            -- If there's an old flag, remove it
-            if first_unit.flag and IsValidEntity(first_unit.flag) then
-                if first_unit.flag.flag_particle then
-                    ParticleManager:DestroyParticle(first_unit.flag.flag_particle, true)
-                    first_unit.flag.flag_particle = nil
-                end
-                if not first_unit.flag.IsTree and first_unit.flag:GetUnitName() == "dummy_unit" then
-                    first_unit.flag:RemoveSelf()
-                end
-            end
-            
-
-            -- Tree rally
-            local trees = GridNav:GetAllTreesAroundPoint(point, 50, true)
-            DeepPrintTable(trees)
-            if #trees>0 then
-                local target_tree = trees[1]
-                if target_tree then
-                    first_unit.flag = target_tree
-                    first_unit.flag.IsTree = true
-                    local tree_pos = target_tree:GetAbsOrigin()
-                    local color = TEAM_COLORS[first_unit:GetTeamNumber()]
-                    target_tree.flag_particle = ParticleManager:CreateParticleForTeam("particles/custom/rally_flag.vpcf", PATTACH_CUSTOMORIGIN, first_unit, first_unit:GetTeamNumber())
-                    ParticleManager:SetParticleControl(target_tree.flag_particle, 0, Vector(tree_pos.x, tree_pos.y, tree_pos.z+250)) -- Position
-                    ParticleManager:SetParticleControl(target_tree.flag_particle, 1, first_unit:GetAbsOrigin()) --Orientation
-                    ParticleManager:SetParticleControl(target_tree.flag_particle, 15, Vector(color[1], color[2], color[3])) --Color
-                    return false
-                end
-            end
-
-            -- Make a flag dummy
-            first_unit.flag = CreateUnitByName("dummy_unit", point, false, first_unit, first_unit, first_unit:GetTeamNumber())
-
-            local color = TEAM_COLORS[first_unit:GetTeamNumber()]
-            local particle = ParticleManager:CreateParticleForTeam("particles/custom/rally_flag.vpcf", PATTACH_ABSORIGIN_FOLLOW, first_unit.flag, first_unit:GetTeamNumber())
-            ParticleManager:SetParticleControl(particle, 0, point) -- Position
-            ParticleManager:SetParticleControl(particle, 1, first_unit:GetAbsOrigin()) --Orientation
-            ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
-        elseif IsCustomTower(first_unit) then
-            ExecuteOrderFromTable({ UnitIndex = units["0"], OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = pos, Queue = false})
-            return false
-        end
-    
-        return false
-
-    ------------------------------------------------
-    --      Rally Point Right-Click Target        --
-    ------------------------------------------------
-    elseif order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET and numBuildings > 0 then
-        
-        local first_unit = EntIndexToHScript(units["0"])
-        if IsCustomBuilding(first_unit) and not IsCustomTower(first_unit) then
-            local targetIndex = tonumber(filterTable["entindex_target"])
-            local target = EntIndexToHScript(targetIndex)
-
-            -- If there's an old flag, remove it
-           -- If there's an old flag, remove it
-            if first_unit.flag and IsValidEntity(first_unit.flag) then
-                if first_unit.flag.flag_particle then
-                    ParticleManager:DestroyParticle(first_unit.flag.flag_particle, true)
-                    first_unit.flag.flag_particle = nil
-                end
-                if not first_unit.flag.IsTree and first_unit.flag:GetUnitName() == "dummy_unit" then
-                    first_unit.flag:RemoveSelf()
-                end
-            end
-
-            -- Attach the flag to the target
-            first_unit.flag = target
-
-            local color = TEAM_COLORS[first_unit:GetTeamNumber()]
-            target.flag_particle = ParticleManager:CreateParticleForTeam("particles/custom/rally_flag.vpcf", PATTACH_OVERHEAD_FOLLOW, target, first_unit:GetTeamNumber())
-            ParticleManager:SetParticleControl(target.flag_particle, 0, target:GetAbsOrigin()) -- Position
-            ParticleManager:SetParticleControl(target.flag_particle, 1, target:GetAbsOrigin() * target:GetForwardVector()) --Orientation
-            ParticleManager:SetParticleControl(target.flag_particle, 15, Vector(color[1], color[2], color[3])) --Color
-            return false
-        else
-            return true
-        end
-
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
         local unit = EntIndexToHScript(units["0"])
         if unit.skip_gather_check then
@@ -464,9 +375,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local targetIndex = filterTable["entindex_target"]
         local target_handle = EntIndexToHScript(targetIndex)
 
-         ------------------------------------------------
-        --          Gold Gather Multi Order           --
-        ------------------------------------------------
         if target_handle:GetUnitName() == "gold_mine" then
             local gold_mine = target_handle        
             -- Get the currently selected units and send new orders
@@ -553,6 +461,117 @@ function dotacraft:GoldGatherOrder( event )
     end
 end
 
+------------------------------------------------
+--          Rally Point Right-Click           --
+------------------------------------------------
+function dotacraft:OnBuildingRallyOrder( event )
+    print("OnBuildingRallyOrder")
+
+    -- Arguments
+    local pID = event.pID
+    local mainSelected = event.mainSelected
+    local rally_type = event.rally_type
+    local targetIndex = event.targetIndex -- Only on "mine" or "target" rally type
+    local position = event.position -- Only on "position" rally type
+    if position then
+        position = Vector(position["0"], position["1"], position["2"])
+    end
+
+    local building = EntIndexToHScript(mainSelected)
+    local player = PlayerResource:GetPlayer(pID)
+    --if IsCustomBuilding(building) and not IsCustomTower(building) then
+
+    -- Remove the old flag if there is one
+    if building.flag and IsValidEntity(building.flag) then
+        if player.flagParticle then
+            ParticleManager:DestroyParticle(player.flagParticle, true)
+            player.flagParticle = nil
+        end
+        -- If it has a position flag, remove the dummy (this destroys the particle)
+        if building.flag.type == "position" then
+            building.flag:RemoveSelf()
+        end
+    end
+
+    if HasTrainAbility(building) then
+        EmitSoundOnClient("DOTA_Item.ObserverWard.Activate", player)
+        if rally_type == "position" then
+            --DebugDrawCircle(position, Vector(255,0,0), 255, 20, true, 3)
+           
+            -- Tree rally
+            local trees = GridNav:GetAllTreesAroundPoint(position, 50, true)
+            DeepPrintTable(trees)
+            if #trees>0 then
+                local target_tree = trees[1]
+                if target_tree then
+                    local tree_pos = target_tree:GetAbsOrigin()
+        
+                    building.flag = target_tree
+                    building.flag.type = "tree"
+
+                    -- Custom origin particle on top of the tree
+                    CreateRallyFlagForBuilding( building )
+                end
+            else
+
+                -- Make a flag dummy on the position
+                local teamNumber = building:GetTeamNumber()
+                building.flag = CreateUnitByName("dummy_unit", position, false, building, building, teamNumber)
+                building.flag.type = "position"
+
+                CreateRallyFlagForBuilding( building )
+
+                -- Extra X
+                local color = TEAM_COLORS[teamNumber]
+                local Xparticle = ParticleManager:CreateParticleForTeam("particles/custom/x_marker.vpcf", PATTACH_ABSORIGIN_FOLLOW, building.flag, teamNumber)
+                ParticleManager:SetParticleControl(Xparticle, 15, Vector(color[1], color[2], color[3])) --Color   
+            end
+
+        elseif rally_type == "target" or rally_type == "mine" then
+
+            -- Attach the flag to the target
+            local target = EntIndexToHScript(targetIndex)
+            building.flag = target
+            building.flag.type = rally_type
+           
+            CreateRallyFlagForBuilding( building )
+        end
+    end
+end
+
+function CreateRallyFlagForBuilding( building )
+    local flag_type = building.flag.type
+    local teamNumber = building:GetTeamNumber()
+    print("TEAM NUMBER ",teamNumber)
+    local color = TEAM_COLORS[teamNumber]
+    local particleName = "particles/custom/rally_flag.vpcf"
+    local particle
+    if flag_type == "tree" then
+        local tree_pos = building.flag:GetAbsOrigin()
+        particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_CUSTOMORIGIN, building, teamNumber)
+        ParticleManager:SetParticleControl(particle, 0, Vector(tree_pos.x, tree_pos.y, tree_pos.z+250)) -- Position
+        ParticleManager:SetParticleControl(particle, 1, building:GetAbsOrigin()) --Orientation
+        ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
+    elseif flag_type == "position" then
+        local position = building.flag:GetAbsOrigin()
+        particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_ABSORIGIN_FOLLOW, building.flag, teamNumber)
+        ParticleManager:SetParticleControl(particle, 0, position) -- Position
+        ParticleManager:SetParticleControl(particle, 1, building:GetAbsOrigin()) --Orientation
+        ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
+    elseif flag_type == "target" or flag_type == "mine" then
+        local target = building.flag
+        if target and IsValidEntity(target) then
+            particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_OVERHEAD_FOLLOW, target, teamNumber)
+            ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) -- Position
+            ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin() * target:GetForwardVector()) --Orientation
+            ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
+        end
+    end
+
+    -- Stores the particle on the player handle to remove it when the selection changes
+    local player = building:GetPlayerOwner()
+    player.flagParticle = particle
+end
 
 ------------------------------------------------
 --              Utility functions             --

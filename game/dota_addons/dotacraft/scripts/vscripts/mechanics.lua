@@ -477,3 +477,16 @@ function GetClosestGoldMineToPosition( position )
 	end
 	return closest_mine
 end
+
+function HasTrainAbility( unit )
+	for i=0,15 do
+		local ability = unit:GetAbilityByIndex(i)
+		if ability then
+			local ability_name = ability:GetAbilityName()
+			if string.match(ability_name, "_train_") then
+				return true
+			end
+		end
+	end
+	return false
+end

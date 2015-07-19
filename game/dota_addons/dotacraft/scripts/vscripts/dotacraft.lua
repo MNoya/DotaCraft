@@ -162,8 +162,9 @@ function dotacraft:InitGameMode()
     GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap( dotacraft, "FilterExecuteOrder" ), self )
 
     -- Register Listener
-    CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPanoramaUpdateSelectedEntities'))
+    CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
     CustomGameEventManager:RegisterListener( "gold_gather_order", Dynamic_Wrap(dotacraft, "GoldGatherOrder")) --Right click through panorama
+    CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "RegisterLeftClick"))
 	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "RegisterRightClick"))
 
@@ -1219,13 +1220,46 @@ function dotacraft:ModifyStatBonuses(unit)
 
 end
 
-function dotacraft:OnPanoramaUpdateSelectedEntities( event )
+function dotacraft:OnPlayerSelectedEntities( event )
 	local pID = event.pID
 	--print("Player "..pID.." updated selection:")
 	--DeepPrintTable(event.selected_entities)
 	GameRules.SELECTED_UNITS[pID] = event.selected_entities
+	dotacraft:UpdateRallyFlagDisplays(pID)
 end
 
 function GetSelectedEntities( playerID )
 	return GameRules.SELECTED_UNITS[playerID]
+end
+
+function GetMainSelectedEntity( playerID )
+	if GameRules.SELECTED_UNITS[playerID]["0"] then
+		return EntIndexToHScript(GameRules.SELECTED_UNITS[playerID]["0"])
+	end
+	return nil
+end
+
+-- Hides or shows the rally flag particles for the player (avoids visual clutter)
+function dotacraft:UpdateRallyFlagDisplays( playerID )
+    
+    print("UpdateRallyFlagDisplays")
+    local mainSelected = GetMainSelectedEntity(playerID)
+    if not mainSelected then
+        return
+    end
+    local player = PlayerResource:GetPlayer(playerID)
+
+    -- Destroy the old flag
+    if player.flagParticle then
+        ParticleManager:DestroyParticle(player.flagParticle, true)
+        player.flagParticle = nil
+    else
+        --print("NO PLAYER FLAG PARTICLE TO DESTROY")
+    end
+
+    if mainSelected.flag and IsValidEntity(mainSelected.flag) then
+        if HasTrainAbility(mainSelected) then
+            CreateRallyFlagForBuilding(mainSelected)
+        end
+    end
 end

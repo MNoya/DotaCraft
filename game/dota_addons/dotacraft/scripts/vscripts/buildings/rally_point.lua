@@ -7,11 +7,6 @@ function SetRallyPoint( event )
 	local caster = event.caster
 	local origin = caster:GetOrigin()
 	print(origin)
-
-	-- Ignore pure-research buildings
-	if caster:GetUnitName() == "human_lumber_mill" or caster:GetUnitName() == "human_blacksmith" or caster:GetUnitName() == "human_scout_tower" then
-		return
-	end
 	
 	-- Need to wait one frame for the building to be properly positioned
 	Timers:CreateTimer(0.03, function()
@@ -48,12 +43,13 @@ function SetRallyPoint( event )
 
 		-- Make a flag dummy
         caster.flag = CreateUnitByName("dummy_unit", point, false, caster, caster, caster:GetTeamNumber())
+        caster.flag.type = "position"
 
-        local color = TEAM_COLORS[caster:GetTeamNumber()]
+        --[[local color = TEAM_COLORS[caster:GetTeamNumber()]
         local particle = ParticleManager:CreateParticleForTeam("particles/custom/rally_flag.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster.flag, caster:GetTeamNumber())
         ParticleManager:SetParticleControl(particle, 0, point) -- Position
         ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin()) --Orientation
-        ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
+        ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color]]
 
 		print(caster:GetUnitName().." sets rally point on ",point)
 	end)
@@ -67,44 +63,57 @@ function MoveToRallyPoint( event )
 	local entityIndex = target:GetEntityIndex() -- The spawned unit
 
 	if caster.flag and IsValidEntity(caster.flag) then
+		local flag = caster.flag
 		-- If its a tree and this is a builder, cast gather
-		if caster.flag.IsTree and IsBuilder(target) then
+		if flag.type == "tree" then
 			Timers:CreateTimer(0.05, function() 
-				local race = GetUnitRace(caster)
-				local position = caster.flag:GetAbsOrigin()
-				local empty_tree = FindEmptyNavigableTreeNearby(target, position, 150)
-				if empty_tree then
-					empty_tree.builder = target
-			        target.skip_gather_check = true
-			        local gather_ability = target:FindAbilityByName(race.."_gather")
-			        if gather_ability then
-			        	local tree_index = GetTreeIndexFromHandle(empty_tree)
-			            print("Order: Cast on Tree ",tree_index)
-			            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
-			        end
-			    end
+				if IsBuilder(target) then
+					local race = GetUnitRace(caster)
+					local position = caster.flag:GetAbsOrigin()
+					local empty_tree = FindEmptyNavigableTreeNearby(target, position, 150)
+					if empty_tree then
+						empty_tree.builder = target
+				        target.skip_gather_check = true
+				        local gather_ability = target:FindAbilityByName(race.."_gather")
+				        if gather_ability then
+				        	local tree_index = GetTreeIndexFromHandle(empty_tree)
+				            print("Order: Cast on Tree ",tree_index)
+				            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+				        end
+				    end
+				else
+					-- Move
+					local position = caster.flag:GetAbsOrigin()
+					target:MoveToPosition(position)
+				end
 		    end)
 
-	    elseif caster.flag:GetUnitName() == "gold_mine" then
+	    elseif flag.type == "mine" then
 	    	Timers:CreateTimer(0.05, function() 
-		    	local race = GetUnitRace(target)
-		    	local gather_ability = target:FindAbilityByName(race.."_gather")
-		    	for i=0,15 do
-		    		local ab = target:GetAbilityByIndex(i)
-		    		if ab then print(ab:GetAbilityName()) end
-		    	end
-		        if gather_ability then
-		            print("Order: Cast on Mine ",caster.flag)
-		            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = caster.flag:GetEntityIndex(), AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
-		        end
+	    		if IsBuilder(target) then
+			    	local race = GetUnitRace(target)
+			    	local gather_ability = target:FindAbilityByName(race.."_gather")
+			    	for i=0,15 do
+			    		local ab = target:GetAbilityByIndex(i)
+			    		if ab then print(ab:GetAbilityName()) end
+			    	end
+			        if gather_ability then
+			            print("Order: Cast on Mine ",caster.flag)
+			            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = caster.flag:GetEntityIndex(), AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+			        end
+			    else
+			    	-- Move
+			    	local position = caster.flag:GetAbsOrigin()
+					target:MoveToPosition(position)
+				end
 		    end)
 
 		-- If its a dummy - Move to position
-		elseif caster.flag:GetUnitName() == "dummy_unit" then
+		elseif rally_type == "position" then
 			local position = caster.flag:GetAbsOrigin()
 			Timers:CreateTimer(0.05, function() target:MoveToPosition(position) end)
 			print(target:GetUnitName().." moving to position",position)
-		else
+		elseif rally_type == "target" then
 			-- If its a target unit, Move to follow
 			Timers:CreateTimer(0.05, function() target:MoveToNPC(caster.flag) end)
 			print(target:GetUnitName().." moving to follow",caster.flag:GetUnitName())

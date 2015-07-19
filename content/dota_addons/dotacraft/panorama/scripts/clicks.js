@@ -14,19 +14,16 @@ function OnRightButtonPressed()
 	var iPlayerID = Players.GetLocalPlayer();
 	var mainSelected = Players.GetLocalPlayerPortraitUnit(); 
 	var mainSelectedName = Entities.GetUnitName( mainSelected )
-	var mouseEntities = GameUI.FindScreenEntities( GameUI.GetCursorPosition() );
+	var cursor = GameUI.GetCursorPosition();
+	var mouseEntities = GameUI.FindScreenEntities( cursor );
 	mouseEntities = mouseEntities.filter( function(e) { return e.entityIndex != mainSelected; } )
 	
 	//$.Msg("entities: ", mouseEntities.length)
-	if (mouseEntities.length == 0 || !IsBuilder(mainSelectedName) )
+	// Builder Right Click on gold mine
+	if (mouseEntities.length > 0 && IsBuilder(mainSelectedName) )
 	{
-		return false;
-	}
-	else{
 		for ( var e of mouseEntities )
 		{
-			if ( !e.accurateCollision )
-				continue;
 			if (Entities.GetUnitName(e.entityIndex) == "gold_mine"){
 				$.Msg("Player "+iPlayerID+" Clicked on a gold mine")
 				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
@@ -35,9 +32,41 @@ function OnRightButtonPressed()
 			else{
 				return false;
 			}
-		}
-		return false;
+		}	
 	}
+
+	// Building Right Click
+	else if (IsCustomBuilding(mainSelected))
+	{
+		$.Msg("Building Right Click")
+
+		// Click on a target entity
+		if (mouseEntities.length > 0)
+		{
+			for ( var e of mouseEntities )
+			{
+				if (Entities.GetUnitName(e.entityIndex) == "gold_mine"){
+					$.Msg(" Targeted gold mine")
+					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "mine", targetIndex: e.entityIndex })
+				}
+				else{
+					$.Msg(" Targeted an entity")
+					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "target", targetIndex: e.entityIndex })
+				}
+				return true;
+			}
+		}
+		// Click on a position
+		else
+		{
+			$.Msg(" Targeted position")
+			var GamePos = Game.ScreenXYToWorld(cursor[0], cursor[1]);
+			GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "position", position: GamePos})
+			return true;
+		}
+	}
+
+	return false;
 }
 
 function IsBuilder(name) {

@@ -41,6 +41,7 @@
 		{
 			_class = "C_OP_InterpolateRadius"
 			m_flStartScale = 0.000000
+			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_LerpEndCapScalar"
@@ -91,7 +92,6 @@
 			_class = "C_INIT_PositionPlaceOnGround"
 			m_bIncludeWater = true
 			m_flOffset = -10.000000
-			m_bDisableOperator = true
 		},
 		{
 			_class = "C_INIT_RandomSecondSequence"
@@ -128,11 +128,5 @@
 			m_nParticlesToEmit = 6
 		},
 	]
-	m_Children =
-	[
-		{
-			m_ChildRef = resource:"particles/econ/items/undying/undying_manyone/undying_pale_tower_destruction_dust_hit.vpcf"
-			m_bDisableChild = true
-		},
-	]
+	m_flCullRadius = -1.000000
 }
