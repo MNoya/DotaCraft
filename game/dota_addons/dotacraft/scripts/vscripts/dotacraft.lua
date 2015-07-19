@@ -1,12 +1,13 @@
  print ('[DOTACRAFT] dotacraft.lua' )
 --[[
 	dota_launch_custom_game dotacraft echo_isles
+	dota_launch_custom_game dotacraft hills_of_glory
 ]]
 
 CORPSE_MODEL = "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl"
 CORPSE_DURATION = 88
 
-DISABLE_FOG_OF_WAR_ENTIRELY = false
+DISABLE_FOG_OF_WAR_ENTIRELY = true
 CAMERA_DISTANCE_OVERRIDE = 1600
 
 XP_PER_LEVEL_TABLE = {
@@ -120,8 +121,13 @@ function dotacraft:InitGameMode()
 	print('[DOTACRAFT] Game Rules set')
 
 	-- Multi Team Configuration - Should be acquired from the UI, to allow 1v1v1v1 or 2v2 on the same map for example.
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 2 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 2 )
+	if GetMapName() == "hills_of_glory" then
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
+	else
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 2 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 2 )
+	end
 
 	-- Event Hooks
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
@@ -179,7 +185,7 @@ function dotacraft:InitGameMode()
 		location.x = SnapToGrid32(location.x)
     	location.y = SnapToGrid32(location.y)
 		local gridNavBlockers = BuildingHelper:BlockGridNavSquare(5, location)
-		gold_mine:SetAbsOrigin(location)
+		--gold_mine:SetAbsOrigin(location)
 	    gold_mine.blockers = gridNavBlockers
 
 	    -- Find and store the mine entrance
@@ -361,7 +367,7 @@ function dotacraft:InitGameMode()
   	
   	-- Starting positions
   	GameRules.StartingPositions = {}
-	local targets = Entities:FindAllByName( "starting_position" )
+	local targets = Entities:FindAllByName( "*starting_position" ) --Inside player_start.vmap prefab
 	for k,v in pairs(targets) do
 		table.insert( GameRules.StartingPositions, v:GetOrigin() )
 	end

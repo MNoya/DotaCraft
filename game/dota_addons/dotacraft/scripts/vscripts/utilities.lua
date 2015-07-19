@@ -116,13 +116,13 @@ function TreeIndexToHScript( targetIndex )
     --for k,v in pairs(GameRules.ALLTREES) do
         --DebugDrawText(v:GetAbsOrigin(), tostring(k), true, 10)
     --end
-    return GameRules.ALLTREES[targetIndex-3]
+    return GameRules.ALLTREES[targetIndex]
 end
 
 function GetTreeIndexFromHandle( treeHandle )
     for k,v in pairs(GameRules.ALLTREES) do
         if v == treeHandle then
-            return k+3
+            return k
         end
     end
     return nil
