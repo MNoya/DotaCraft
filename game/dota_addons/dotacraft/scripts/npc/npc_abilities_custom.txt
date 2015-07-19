@@ -19450,11 +19450,16 @@
 				"move_speed"	"-20"
 			}
 	
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"autocast_radius"	"500"
+			}
 		}
 	
 		"precache"
 		{
-			"particle"	"particles/units/human/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+			"particle"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
 		}
 	
@@ -19485,13 +19490,37 @@
 			{
 				"IsDebuff"		"1"
 				"IsPurgable"	"1"
-				"EffectName"	"particles/units/human/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+				"EffectName"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
 				"EffectAttachType"	"attach_hitloc"
 				"Duration"	"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+	
+			"modifier_slow_autocast"
+			{
+				"Passive"		"1"
+				"IsHidden"		"0"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/sorceress.lua"
+						"Function"		"ToggleOnAutocast"
+					}
+				}
+	
+				"ThinkInterval" "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/sorceress.lua"
+						"Function"		"SlowAutocast"
+					}
 				}
 			}
 		}
@@ -19596,7 +19625,7 @@
 	
 			"FireEffect"
 			{
-				"EffectName"		"particles/units/human/heroes/hero_lion/lion_spell_voodoo.vpcf"
+				"EffectName"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Target"			"TARGET"
 			}
@@ -19691,6 +19720,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCastRange"				"250"
@@ -19699,7 +19729,7 @@
 		
 		"precache"
 		{
-			"particle"	"particles/units/human/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 		}
 	
@@ -19709,6 +19739,12 @@
 			{
 				"var_type"		"FIELD_INTEGER"
 				"heal"			"25"
+			}
+	
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"autocast_radius"	"500"
 			}
 		}
 	
@@ -19723,7 +19759,7 @@
 			"FireEffect"
 			{
 				"Target"			"TARGET"
-				"EffectName"		"particles/units/human/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
 				"EffectAttachType"	"follow_origin"
 			}
 	
@@ -19731,6 +19767,33 @@
 			{
 				"EffectName"	"Hero_Omniknight.Purification"
 				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_heal_autocast"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/priest.lua"
+						"Function"		"ToggleOnAutocast"
+					}
+				}
+	
+				"ThinkInterval" "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/priest.lua"
+						"Function"		"HealAutocast"
+					}
+				}
 			}
 		}
 	}
@@ -19781,7 +19844,7 @@
 		{
 			"FireEffect"
 			{
-				"EffectName"        "particles/units/human/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+				"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
 				"EffectAttachType"  "world_origin"
 				"TargetPoint"       "POINT"
 				"ControlPoints"
@@ -19815,6 +19878,11 @@
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_dispel_magic"
 		"MaxLevel" 						"0"
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+		}
 	
 		"OnUpgrade"
 		{
@@ -19859,6 +19927,12 @@
 				"var_type"		"FIELD_INTEGER"
 				"damage_bonus"	"10"
 			}
+	
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"autocast_radius"	"500"
+			}
 		}
 	
 		"OnSpellStart"
@@ -19896,6 +19970,30 @@
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"5"
 					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"10"
+				}
+			}
+	
+			"modifier_inner_fire_autocast"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/priest.lua"
+						"Function"		"ToggleOnAutocast"
+					}
+				}
+	
+				"ThinkInterval" "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/priest.lua"
+						"Function"		"InnerFireAutocast"
+					}
 				}
 			}
 		}
