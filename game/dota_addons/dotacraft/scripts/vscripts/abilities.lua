@@ -178,7 +178,9 @@ function builder_queue( keys )
     player = PlayerResource:GetPlayer(caster:GetMainControllingPlayer())
     player.activeBuilder:ClearQueue()
     player.activeBuilding = nil
-    player.activeBuilder:Stop()
-    player.activeBuilder.ProcessingBuilding = false
+    if player.activeBuilder and IsValidEntity(player.activeBuilder) then
+    	player.activeBuilder:Stop()
+    	player.activeBuilder.ProcessingBuilding = false
+    end
   end
 end

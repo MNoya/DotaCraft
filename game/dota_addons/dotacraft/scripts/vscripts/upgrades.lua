@@ -242,6 +242,10 @@ function UpgradeWeaponWearables(target, level)
 	print("UWW",unit_name,level)
 	local wearables = GameRules.Wearables
 	local unit_table = wearables[unit_name]
+	if not unit_table then
+		print("ERROR, this unit has no entry in the Wearables Weapon table")
+		return
+	end
 	local weapon_table = unit_table.weapon
 
 	local original_weapon = weapon_table[tostring(0)]

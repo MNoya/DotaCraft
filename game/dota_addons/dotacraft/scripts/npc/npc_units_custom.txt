@@ -52,7 +52,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"70"
 		"HealthBarOffset"			"190"
-	
+		"FormationRank"				"2"
 	
 		// Movement
 		//-------------------------------------------------------------------------------------------------------------
@@ -264,67 +264,6 @@
 			}
 		}
 	}
-	"sheep"
-	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/items/hex/sheep_hex/sheep_hex.vmdl"	// Model.
-		"BaseClass"					"npc_dota_creature"
-		"SoundSet"					"n_creep_Melee"
-		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
-		"Level"						"7"
-		"ModelScale" 				"1.3"
-		"ConsideredHero"			"1"
-	
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"run_animation"			// Ability 1
-	
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"2"			// Physical protection.
-	
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"30"		// Damage range min.
-		"AttackDamageMax"			"30"		// Damage range max.	
-		"AttackRate"				"1.35"		// Speed of attack.
-		"AttackAnimationPoint"		"0.38"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"300"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/units/heroes/hero_spectre/spectre_desolate.vpcf"			// Particle system model for projectile.
-		"ProjectileSpeed"			"900"			// Speed of projectile.	
-	
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"100"
-		"HealthBarOffset"			"300"
-	
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"522"		// Speed.
-	
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1200"		// Base health.
-		"StatusHealthRegen"			"2"		// Health regeneration rate.
-		"StatusMana"				"400"			// Base mana.
-		"StatusManaRegen"			"2"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"500"		// Range of vision during day light.
-		"VisionNighttimeRange"		"500"		// Range of vision at night time.
-	
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
 	//=================================================================================
 	//	Unit for beastmaster_summon_bear
 	//=================================================================================
@@ -368,6 +307,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"70"
 		"HealthBarOffset"			"215"
+		"FormationRank"				"0"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -444,6 +384,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"70"
 		"HealthBarOffset"			"215"
+		"FormationRank"				"0"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -520,6 +461,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"70"
 		"HealthBarOffset"			"215"
+		"FormationRank"				"0"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -599,6 +541,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"125"
+		"FormationRank"				"2"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -668,6 +611,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"125"
+		"FormationRank"				"2"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -737,6 +681,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"125"
+		"FormationRank"				"2"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -809,6 +754,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"165"
+		"FormationRank"				"2"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -880,6 +826,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"165"
+		"FormationRank"				"2"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -952,6 +899,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"165"
+		"FormationRank"				"2"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -1081,10 +1029,7 @@
 	//- Units for blood_mage_phoenix ability 								 	-
 	//------------------------------------------------------------------------------------
 	
-	// TODO - Add Abilities
-	// Reborn
-	
-	  	"npc_phoenix"
+	"npc_phoenix"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1118,6 +1063,12 @@
 		"ProjectileModel"		"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
 		"ProjectileSpeed"		"1800"
 		
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"		"250"
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"FormationRank"			"3"
+	
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyGoldMin"			"32.0"
@@ -1147,10 +1098,7 @@
 		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC" // MAGIC ATTACK
 		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
-		"HealthBarOffset"		"140"
-		
+			
 		// Creature Data
 		//----------------------------------------------------------------
 	}
@@ -1220,6 +1168,7 @@
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"		"140"
+		"FormationRank"			"3"
 		
 		// Creature Data
 		//----------------------------------------------------------------
@@ -1256,6 +1205,7 @@
 		"Model"				"models/heroes/weaver/weaver_bug.vmdl"
 		"ModelScale"		"1"
 		"Level"				"1"
+		"FormationRank"		"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1321,6 +1271,7 @@
 		"Model"				"models/heroes/weaver/weaver_bug.vmdl"
 		"ModelScale"		"1"
 		"Level"				"2"
+		"FormationRank"		"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1379,77 +1330,6 @@
 		//----------------------------------------------------------------
 	}
 	
-	//------------------------------------------------------------------------------------
-	//- Unit for crypt_lord_locust_swarm ability 								 	-
-	//------------------------------------------------------------------------------------
-	"npc_crypt_lord_locust"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"			"npc_dota_creature"
-		"Model"				"models/development/invisiblebox.vmdl"
-		"ModelScale"		"1"
-		"Level"				"1"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"			""	 //Reference: Aloc
-		
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"			"0"
-		"MagicalResistance"		"0"
-		
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"		"13.0"
-		"AttackDamageMax"		"14.0"
-		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"			"1"
-		"AttackAnimationPoint"		"0"
-		"AttackAcquisitionRange"	"900"
-		"AttackRange"			"10"
-		"ProjectileModel"		""	 //Add projectile models
-		"ProjectileSpeed"		"500"
-		
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"			"26.0"
-		"BountyGoldMax"			"38.0"
-		
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"			"400"
-		"MovementTurnRate"		"0.2"
-		
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"			"65"
-		"StatusHealthRegen"		"0.25"
-		"StatsManaRegen"		"-"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"0"
-		"VisionNighttimeRange"		"10"
-		
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"			"DOTA_TEAM_BADGUYS"
-		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_WEAK"
-		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
-		"HealthBarOffset"		"140"
-		
-		// Creature Data
-		//----------------------------------------------------------------
-	}
-	
-	
 	"npc_carrion_beetle_3"
 	{
 		// General
@@ -1458,6 +1338,7 @@
 		"Model"				"models/heroes/weaver/weaver_bug.vmdl"
 		"ModelScale"		"1"
 		"Level"				"3"
+		"FormationRank"		"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1517,6 +1398,76 @@
 	}
 	
 	
+	//------------------------------------------------------------------------------------
+	//- Unit for crypt_lord_locust_swarm ability 								 	-
+	//------------------------------------------------------------------------------------
+	"npc_crypt_lord_locust"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/development/invisiblebox.vmdl"
+		"ModelScale"		"1"
+		"Level"				"1"
+		"FormationRank"		"0"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"			""	 //Reference: Aloc
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"0"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"		"13.0"
+		"AttackDamageMax"		"14.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1"
+		"AttackAnimationPoint"		"0"
+		"AttackAcquisitionRange"	"900"
+		"AttackRange"			"10"
+		"ProjectileModel"		""	 //Add projectile models
+		"ProjectileSpeed"		"500"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"26.0"
+		"BountyGoldMax"			"38.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"			"400"
+		"MovementTurnRate"		"0.2"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"65"
+		"StatusHealthRegen"		"0.25"
+		"StatsManaRegen"		"-"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"10"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"			"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
 	//=================================================================================
 	//	Units for dark_ranger_black_arrow
 	//=================================================================================
@@ -1557,6 +1508,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"40"
 		"HealthBarOffset"			"150"
+		"FormationRank"				"0"
 	
 		// Movement
 		//----------------------------------------------------------------
@@ -1619,6 +1571,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"40"
 		"HealthBarOffset"			"150"
+		"FormationRank"				"0"
 	
 		// Movement
 		//----------------------------------------------------------------
@@ -1682,6 +1635,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"40"
 		"HealthBarOffset"			"150"
+		"FormationRank"				"0"
 	
 		// Movement
 		//----------------------------------------------------------------
@@ -1752,6 +1706,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"280"
+		"FormationRank"				"0"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -2052,6 +2007,7 @@
 		"RingRadius"				"70"
 		"HealthBarOffset"			"160"
 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"FormationRank"				"0"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -2127,6 +2083,7 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
 		"RingRadius"				"70"
 		"HealthBarOffset"			"160"
+		"FormationRank"				"0"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -2201,6 +2158,7 @@
 		"RingRadius"				"70"
 		"HealthBarOffset"			"160"
 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"FormationRank"				"0"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -2245,7 +2203,8 @@
 		"Model"				"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
 		"ModelScale"		"1"
 		"Level"				"4"
-		
+		"FormationRank"				"1"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		
@@ -2312,7 +2271,8 @@
 		"Model"				"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
 		"ModelScale"		"1.1"
 		"Level"				"5"
-		
+		"FormationRank"				"1"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		
@@ -2379,6 +2339,7 @@
 		"Model"				"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
 		"ModelScale"		"1.2"
 		"Level"				"6"
+		"FormationRank"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2513,7 +2474,7 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"150000"
+		"StatusHealth"				"15000"
 		"StatusHealthRegen"			"0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -5260,6 +5221,7 @@
 		"Model"				"models/items/furion/treant/father_treant/father_treant.vmdl"
 		"ModelScale"		"1"
 		"Level"				"2"
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -5335,6 +5297,7 @@
 		"ModelScale"				"16.0"
 		"Level"						"10"
 		"IsSummoned"				"1"
+		"FormationRank"				"0"
 				
 		// Abilities
 		//----------------------------------------------------------------
@@ -10197,6 +10160,7 @@
 		"ConsideredHero"			"1"
 		//"IgnoreAddSummonedToSelection" "1"
 		"UnitLabel"					"brewmaster_earth"
+		"FormationRank"				"0"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -10272,6 +10236,7 @@
 		"ConsideredHero"			"1"
 		//"IgnoreAddSummonedToSelection" "1"
 		"UnitLabel"					"brewmaster_storm"
+		"FormationRank"				"2"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -10349,6 +10314,7 @@
 		"ConsideredHero"			"1"
 		//"IgnoreAddSummonedToSelection" "1"
 		"UnitLabel"					"brewmaster_fire"
+		"FormationRank"				"0"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -10421,6 +10387,7 @@
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
 		"IsAncient"					"1"
 		"ConsideredHero"			"1"
+		"FormationRank"				"0"
 		
 		"precache"
 		{
@@ -10539,6 +10506,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"165"
+		"FormationRank"				"1"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -10602,6 +10570,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"165"
+		"FormationRank"				"1"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -10666,6 +10635,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"HealthBarOffset"			"165"
+		"FormationRank"				"1"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -10943,6 +10913,8 @@
 		"Model"				"models/heroes/rattletrap/rattletrap.vmdl"
 		"ModelScale"		"0.7"
 		"Level"				"0"
+	
+		"FormationRank"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -13767,6 +13739,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"100"
 		"HealthBarOffset"			"300"
+		"FormationRank"				"0"
 	
 		// Movement
 		//----------------------------------------------------------------
@@ -13841,6 +13814,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"40"
 		"HealthBarOffset"			"150"
+		"FormationRank"				"2"
 	
 		// Movement
 		//----------------------------------------------------------------

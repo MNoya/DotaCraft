@@ -1,6 +1,6 @@
 MIN_DISTANCE_TO_TREE = 150
 MIN_DISTANCE_TO_MINE = 250
-DURATION_INSIDE_MINE = 2
+DURATION_INSIDE_MINE = 1
 TREE_HEALTH = 50
 DAMAGE_TO_TREE = 1
 DAMAGE_TO_MINE = 10
@@ -26,8 +26,10 @@ function Gather( event )
 		caster.lumber_gathered = 0
 	end
 
-	-- Intialize the variable to stop the return (workaround for ExecuteFromOrder being good and MoveToNPC now working after a Stop)
-	caster.manual_order = false
+	-- Intialize variables to keep track of states
+	caster.moving_to_tree = nil
+	caster.moving_to_mine = nil
+	caster.moving_to_return = nil
 
 	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
@@ -194,6 +196,7 @@ function CancelReturn( event )
 	local ability = event.ability
 	local gather_ability = caster:FindAbilityByName("human_gather")
 	ability.cancelled = true
+	caster.moving_to_return = nil
 
 	local tree = caster.target_tree
 	if tree then
@@ -361,12 +364,14 @@ function ReturnResources( event )
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						caster:MoveToNPC(building)
+						if not caster.moving_to_return then
+							caster.moving_to_return = true
+							caster:MoveToNPC(building)
+						end						
 						return 0.1
 					elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
 						--print("Building Reached at ",distance)
 						caster:RemoveModifierByName("modifier_carrying_lumber")
-						print("POPUPERINO "..caster.lumber_gathered)
 						PopupLumber(caster, caster.lumber_gathered)
 						ModifyLumber(player, caster.lumber_gathered)
 
@@ -429,7 +434,10 @@ function ReturnResources( event )
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						caster:MoveToNPC(building)
+						if not caster.moving_to_return then
+							caster.moving_to_return = true
+							caster:MoveToNPC(building)
+						end
 						return 0.1
 					elseif caster.gold_gathered and caster.gold_gathered > 0 then
 						--print("Building Reached at ",distance)
