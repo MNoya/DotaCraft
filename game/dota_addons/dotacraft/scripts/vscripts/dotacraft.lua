@@ -7,7 +7,7 @@
 CORPSE_MODEL = "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl"
 CORPSE_DURATION = 88
 
-DISABLE_FOG_OF_WAR_ENTIRELY = true
+DISABLE_FOG_OF_WAR_ENTIRELY = false
 CAMERA_DISTANCE_OVERRIDE = 1600
 
 XP_PER_LEVEL_TABLE = {
@@ -477,7 +477,6 @@ function dotacraft:OnHeroInGame(hero)
 	print("[DOTACRAFT] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
 	dotacraft:ModifyStatBonuses(hero)
-	hero:SetGold(50000, false)
 
 	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
 	--local item = CreateItem("item_multiteam_action", hero, hero)
@@ -724,8 +723,14 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
 
-	-- Give Initial Lumber
-	ModifyLumber(player, 5150)
+	-- Give Initial Resources
+	if Convars:GetBool("developer") then
+		hero:SetGold(50000, false)
+		ModifyLumber(player, 50000)
+	else
+		hero:SetGold(500, false)
+		ModifyLumber(player, 150)
+	end
 
     -- Create Main Building
     -- This position should be dynamic according to the map starting points
