@@ -115,7 +115,7 @@ function dotacraft:InitGameMode()
 	GameMode:SetHUDVisible(8, false) -- Get Rid of Quick Buy
 
 	-- TEST --
-	GameMode:SetCustomGameForceHero("npc_dota_hero_dragon_knight")
+	-- GameMode:SetCustomGameForceHero("npc_dota_hero_dragon_knight")
 	----------
 
 	print('[DOTACRAFT] Game Rules set')
