@@ -3937,7 +3937,7 @@
 				"Wearable2"		{	"ItemDef"		"4122"		} //"Seafarer's Shoes"
 				"Wearable3" 	{	"ItemDef"		"11"		} //Hands
 				"Wearable4" 	{	"ItemDef"		"12"		} //Sword
-				"Wearable4" 	{	"ItemDef"		"10"		} //Boots
+				"Wearable5" 	{	"ItemDef"		"10"		} //Boots
 			}
 		}
 	}
@@ -5355,6 +5355,853 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"300"		// Range of vision during day light.
 		"VisionNighttimeRange"		"300"		// Range of vision at night time.
+	}
+	// Hills of Glory
+	// neutral_gnoll
+	// neutral_gnoll_assassin
+	// neutral_gnoll_poacher
+	// neutral_gnoll_overseer
+	
+	// neutral_forest_troll_trapper
+	// neutral_forest_troll_berserker
+	// neutral_forest_troll_high_priest
+	
+	// neutral_red_dragon
+	
+	// neutral_rock_golem
+	
+	// neutral_ogre_magi
+	// neutral_ogre_warrior
+	
+	//=================================================================================
+	// Creature: Gnoll
+	// Description: "Light melee unit. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_gnoll"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_kobold/kobold_c/n_creep_kobold_c.vmdl"
+		"ModelScale"				"1"
+		"Level"						"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"10.0"
+		"AttackDamageMax"			"11.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.35"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"4.0"
+		"BountyGoldMax"				"6.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"105"
+		"LumberCost"				"105"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"240"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Gnoll Assassin
+	// Description: "Light ranged unit that fires envenomed bolts. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_gnoll_assassin"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_gnoll/n_creep_gnoll_frost.vmdl"
+		"ModelScale"				"1"
+		"Level"						"3"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: ACvs
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"21.0"
+		"AttackDamageMax"			"29.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.6"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"500"
+		"ProjectileModel"			"particles/neutral_fx/gnoll_base_attack.vpcf"
+		"ProjectileSpeed"			"1500"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"8.0"
+		"BountyGoldMax"				"10.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"215"
+		"LumberCost"				"215"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"320"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Gnoll Poacher
+	// Description: "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_gnoll_poacher"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_gnoll/n_creep_gnoll.vmdl"
+		"ModelScale"				"1"
+		"Level"						"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"13.0"
+		"AttackDamageMax"			"15.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.6"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"500"
+		"ProjectileModel"			"particles/neutral_fx/gnoll_base_attack.vpcf"
+		"ProjectileSpeed"			"1500"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"4.0"
+		"BountyGoldMax"				"6.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"105"
+		"LumberCost"				"105"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"240"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Gnoll Overseer
+	// Description: "Heavy melee unit with Command Aura. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_gnoll_overseer"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/bristleback/bristleback.vmdl"
+		"ModelScale"				"1.4"
+		"Level"						"5"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+	
+		"SoundSet"					"Hero_Bristleback"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: ACac
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"3"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"24.0"
+		"AttackDamageMax"			"27.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.35"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"20.0"
+		"BountyGoldMax"				"26.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"305"
+		"LumberCost"				"305"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"750"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables" //Heavy Barbed
+			{
+				"Wearable1"		{	"ItemDef"		"5763"		}
+				"Wearable2"		{	"ItemDef"		"5764" 		} 
+				"Wearable3" 	{	"ItemDef"		"5765"		}
+				"Wearable4" 	{	"ItemDef"		"5766"		}
+				"Wearable5"		{	"ItemDef"		"5762"		}
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Forest Troll Trapper
+	// Description: "Medium ranged unit that can Ensnare opponents. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_forest_troll_trapper"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_troll_dark_b/n_creep_troll_dark_b.vmdl"
+		"ModelScale"				"0.75"
+		"Level"						"3"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: ACen
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"21.0"
+		"AttackDamageMax"			"25.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.6"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"500"
+		"ProjectileModel"			"particles/base_attacks/ranged_badguy.vpcf"
+		"ProjectileSpeed"			"1200"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"8.0"
+		"BountyGoldMax"				"10.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"215"
+		"LumberCost"				"215"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"400"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Forest Troll Berserker
+	// Description: "Rabid axe-thrower. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_forest_troll_berserker"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_troll_dark_a/n_creep_troll_dark_a.vmdl"
+		"ModelScale"				"1"
+		"Level"						"4"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"28.0"
+		"AttackDamageMax"			"37.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.6"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"500"
+		"ProjectileModel"			"particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
+		"ProjectileSpeed"			"1200"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"11.0"
+		"BountyGoldMax"				"15.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"245"
+		"LumberCost"				"245"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"450"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Forest Troll High Priest
+	// Description: "High Priest of healing magic. Hurls fiery missiles. Can cast Abolish Magic and Inner Fire. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_forest_troll_high_priest"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_high_priest.vmdl"
+		"ModelScale"				"1.1"
+		"Level"						"4"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Anh2
+		"Ability2"					""	 //Reference: ACif
+		"Ability3"					""	 //Reference: ACd2
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"25.0"
+		"AttackDamageMax"			"32.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.8"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		"ProjectileModel"			"particles/base_attacks/ranged_badguy.vpcf"
+		"ProjectileSpeed"			"900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"11.0"
+		"BountyGoldMax"				"15.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"305"
+		"LumberCost"				"305"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"450"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"300"
+		"StatsManaRegen"			"0.75"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Red Dragon
+	// Description: "Heavy ranged flying unit that can Devour opponents and is immune to magic. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_red_dragon"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
+		"ModelScale"				"1.3"
+		"Level"						"10"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: Advc
+		"Ability2"					""	 //Reference: ACdv
+		"Ability3"					""	 //Reference: ACmi
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"6"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"48.0"
+		"AttackDamageMax"			"81.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.5"
+		"AttackAnimationPoint"		"0.94"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"500"
+		"ProjectileModel"			"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+		"ProjectileSpeed"			"900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"158.0"
+		"BountyGoldMax"				"174.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"745"
+		"LumberCost"				"745"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.1"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2200"
+		"StatusHealthRegen"			"2"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	
+	//=================================================================================
+	// Creature: Rock Golem
+	// Description: "Heavy melee unit that hurls boulders at opponents. Immune to spells. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_rock_golem"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_golem_a/neutral_creep_golem_a.vmdl"
+		"ModelScale"				"1"
+		"Level"						"6"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: ACmi
+		"Ability2"					""	 //Reference: ACtb
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"29.0"
+		"AttackDamageMax"			"33.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.35"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"1000"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"44.0"
+		"BountyGoldMax"				"52.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"365"
+		"LumberCost"				"365"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"675"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"400"
+		"StatsManaRegen"			"1"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Ogre Magi
+	// Description: "Spellcasting warrior of the Ogre Legion. Can cast Bloodlust. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_ogre_magi"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_ogre_lrg/n_creep_ogre_lrg.vmdl"
+		"ModelScale"				"1"
+		"Level"						"5"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: ACbb
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"24.0"
+		"AttackDamageMax"			"27.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.35"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"20.0"
+		"BountyGoldMax"				"26.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"320"
+		"LumberCost"				"320"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"400"
+		"StatsManaRegen"			"1"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Ogre Warrior
+	// Description: "Standard warrior of the Ogre Legion. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_ogre_warrior"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_ogre_med/n_creep_ogre_med.vmdl"
+		"ModelScale"				"1"
+		"Level"						"3"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"14.0"
+		"AttackDamageMax"			"15.0"
+		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackRate"				"1.35"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"8.0"
+		"BountyGoldMax"				"10.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"150"
+		"LumberCost"				"150"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"400"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
 	// Night Elf Buildings
 	// Ancients (Creatures, can move if unrooted)
