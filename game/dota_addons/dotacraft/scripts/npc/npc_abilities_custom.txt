@@ -21737,6 +21737,7 @@
 		"Scale"							"0" //bool
 		"PlayerCanControl"				"1" //bool. 
 		"CancelsBuildingGhost"			"1" //bool
+	
 		"AutoBuild"						"0" //bool (Default is 1)
 	
 		"UnitName"						"human_barracks"
@@ -21800,6 +21801,8 @@
 		"PlayerCanControl"				"1" //bool. 
 		"CancelsBuildingGhost"			"1" //bool
 	
+		"AutoBuild"						"0"
+	
 		"UnitName"						"human_blacksmith"
 		"AbilityCooldown"				"0"
 		"AbilityGoldCost"				"140"
@@ -21860,6 +21863,8 @@
 		"Scale"							"0" //bool
 		"PlayerCanControl"				"1" //bool. 
 		//"CancelsBuildingGhost"			"0" //bool
+	
+		"AutoBuild"						"0"
 	
 		"UnitName"						"human_arcane_sanctum"
 		"AbilityCooldown"				"0"
@@ -21922,6 +21927,8 @@
 		"PlayerCanControl"				"1" //bool. 
 		//"CancelsBuildingGhost"			"0" //bool
 	
+		"AutoBuild"						"0"
+	
 		"UnitName"						"human_workshop"
 		"AbilityCooldown"				"0"
 		"AbilityGoldCost"				"140"
@@ -21982,6 +21989,8 @@
 		"Scale"							"0" //bool
 		"PlayerCanControl"				"1" //bool. 
 		//"CancelsBuildingGhost"			"0" //bool
+	
+		"AutoBuild"						"0"
 	
 		"UnitName"						"human_gryphon_aviary"
 		"AbilityCooldown"				"0"
@@ -22216,15 +22225,19 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CancelGather"
-					}
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_on_order_cancel"
 						"Target" 		"CASTER"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"CancelGather"
 					}
 				}
 			}
@@ -22240,6 +22253,10 @@
 						"ModifierName"	"modifier_gathering_lumber"
 						"Target" 		"CASTER"
 					}
+				}
+	
+				"OnDestroy"
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
@@ -22271,7 +22288,10 @@
 						"ModifierName"	"modifier_on_order_cancel_gold"
 						"Target" 		"CASTER"
 					}
+				}
 	
+				"OnDestroy"
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
@@ -22320,7 +22340,9 @@
 						"ModifierName"	"modifier_on_order_cancel_repair"
 						"Target" 		"CASTER"
 					}
-	
+				}
+				"OnDestroy"
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
@@ -22350,7 +22372,10 @@
 						"ModifierName"	"modifier_peasant_repairing"
 						"Target" 		"CASTER"
 					}
+				}
 	
+				"OnDestroy"
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"

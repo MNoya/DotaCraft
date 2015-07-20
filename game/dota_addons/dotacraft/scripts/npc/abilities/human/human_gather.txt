@@ -41,15 +41,19 @@
 			"IsHidden"				"1"
 			"OnOrder"
 			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/human/peasant.lua"
-					"Function"		"CancelGather"
-				}
 				"RemoveModifier"
 				{
 					"ModifierName"	"modifier_on_order_cancel"
 					"Target" 		"CASTER"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"CancelGather"
 				}
 			}
 		}
@@ -65,6 +69,10 @@
 					"ModifierName"	"modifier_gathering_lumber"
 					"Target" 		"CASTER"
 				}
+			}
+
+			"OnDestroy"
+			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/human/peasant.lua"
@@ -96,7 +104,10 @@
 					"ModifierName"	"modifier_on_order_cancel_gold"
 					"Target" 		"CASTER"
 				}
+			}
 
+			"OnDestroy"
+			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/human/peasant.lua"
@@ -145,7 +156,9 @@
 					"ModifierName"	"modifier_on_order_cancel_repair"
 					"Target" 		"CASTER"
 				}
-
+			}
+			"OnDestroy"
+			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/human/peasant.lua"
@@ -175,7 +188,10 @@
 					"ModifierName"	"modifier_peasant_repairing"
 					"Target" 		"CASTER"
 				}
+			}
 
+			"OnDestroy"
+			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/human/peasant.lua"

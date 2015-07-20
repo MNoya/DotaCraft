@@ -470,7 +470,6 @@ function dotacraft:RepairOrder( event )
     local targetIndex = event.targetIndex
     local building = EntIndexToHScript(targetIndex)
     local selectedEntities = GetSelectedEntities(pID)
-    print("REPAIR")
 
     local unit = EntIndexToHScript(entityIndex)
     local race = GetUnitRace(unit)
@@ -480,6 +479,11 @@ function dotacraft:RepairOrder( event )
     if repair_ability and repair_ability:IsFullyCastable() and not repair_ability:IsHidden() then
         print("Order: Repair ",building:GetUnitName())
         --ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
+
+        -- Kill previous repair process if there is one
+        unit:RemoveModifierByName("modifier_peasant_repairing")
+        unit:RemoveModifierByName("modifier_on_order_cancel_repair")
+        
         unit:CastAbilityOnTarget(EntIndexToHScript(targetIndex), repair_ability, pID)
     elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
         -- Swap to the repair ability and send repair order

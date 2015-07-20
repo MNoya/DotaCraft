@@ -120,7 +120,6 @@ function Gather( event )
 							return
 						else
 							caster:RemoveModifierByName("modifier_on_order_cancel_gold")
-							CancelGather(event)
 						end
 					end
 				else
@@ -154,7 +153,7 @@ function Gather( event )
 			-- Recieving another order will cancel this
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_repair", {})
 
-			local collision_size = math.floor(math.sqrt(#building.blockers)) * 64 + 32
+			local collision_size = building:GetHullRadius()*2 + 64
 
 			Timers:CreateTimer(function() 
 				-- Move towards the building until close range
@@ -174,7 +173,6 @@ function Gather( event )
 					else
 						print("Building was killed in the way of a peasant to repair it")
 						caster:RemoveModifierByName("modifier_on_order_cancel_repair")
-						CancelGather(event)
 					end
 				else
 					return
@@ -366,7 +364,7 @@ function ReturnResources( event )
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster, "lumber" )
 		caster.target_building = building
-		local collision_size = math.floor(math.sqrt(#building.blockers)) * 64 + 32
+		local collision_size = building:GetHullRadius()*2 + 64
 
 		-- Move towards it
 		Timers:CreateTimer(function() 
@@ -433,7 +431,7 @@ function ReturnResources( event )
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster, "gold" )
 		caster.target_building = building
-		local collision_size = math.ceil(math.sqrt(#building.blockers)) * 64 --4 for size 3, 8 for size 4, 16 for size 5
+		local collision_size = building:GetHullRadius()*2 + 64
 
 		-- Move towards it
 		Timers:CreateTimer(function() 
@@ -620,7 +618,7 @@ function CheckCityCenterPosition( event )
 	local player = building:GetPlayerOwner()
 
 	local distance = (target:GetAbsOrigin() - building:GetAbsOrigin()):Length()
-	local collision_size = math.floor(math.sqrt(#building.blockers)) * 64 + 32
+	local collision_size = building:GetHullRadius()*2 + 64
 	local collision = distance <= collision_size
 	if not collision then
 		--print("Moving to building, distance: ",distance)
@@ -753,7 +751,7 @@ end
 -- Values are taken from the UnitKV GoldCost LumberCost and BuildTime
 
 function Repair( event )
-	local caster = event.caster
+	local caster = event.caster -- The builder
 	local ability = event.ability
 	local building = event.target -- The building to repair
 
@@ -798,6 +796,11 @@ function Repair( event )
 		local health_float = health_per_second - math.floor(health_per_second) -- floating point component
 		health_per_second = math.floor(health_per_second) -- round down
 
+		-- Don't expend resources for the first peasant repairing the building if its a construction
+		if not building.constructionCompleted then
+			stack_count = stack_count - 1
+		end
+
 		-- Gold
 		local gold_per_second = gold_cost / ( build_time * 1.5 ) * 0.35 * stack_count
 		local gold_float = gold_per_second - math.floor(gold_per_second) -- floating point component
@@ -806,12 +809,12 @@ function Repair( event )
 		-- Lumber takes floats just fine
 		local lumber_per_second = lumber_cost / ( build_time * 1.5 ) * 0.35 * stack_count
 
-		print("Building is repaired for "..health_per_second)
+		--[[print("Building is repaired for "..health_per_second)
 		if gold_per_second > 0 then
 			print("Cost is "..gold_per_second.." gold and "..lumber_per_second.." lumber per second")
 		else
 			print("Cost is "..gold_float.." gold and "..lumber_per_second.." lumber per second")
-		end
+		end]]
 			
 		local healthGain = 0
 		if PlayerHasEnoughGold( player, math.ceil(gold_per_second+gold_float) ) and PlayerHasEnoughLumber( player, lumber_per_second ) then
@@ -879,7 +882,7 @@ function Repair( event )
 		building.missingHealthToComplete = nil
 		building.constructionCompleted = true -- BuildingHelper will track this and know the building ended
 	else
-		print("Missing Health to Complete building: ",building.missingHealthToComplete)
+		--print("Missing Health to Complete building: ",building.missingHealthToComplete)
 	end
 end
 
