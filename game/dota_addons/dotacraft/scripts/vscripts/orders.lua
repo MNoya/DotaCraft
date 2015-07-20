@@ -483,6 +483,17 @@ function dotacraft:RepairOrder( event )
         -- Kill previous repair process if there is one
         unit:RemoveModifierByName("modifier_peasant_repairing")
         unit:RemoveModifierByName("modifier_on_order_cancel_repair")
+        if unit.repair_building and IsValidEntity(unit.repair_building) then
+            local building = unit.repair_building
+            if building:HasModifier("modifier_repairing_building") then
+                local stack_count = building:GetModifierStackCount( "modifier_repairing_building", repair_ability )
+                if stack_count > 1 then
+                    building:SetModifierStackCount( "modifier_repairing_building", repair_ability, stack_count - 1 )
+                else
+                    building:RemoveModifierByName("modifier_repairing_building")
+                end
+            end
+        end
         
         unit:CastAbilityOnTarget(EntIndexToHScript(targetIndex), repair_ability, pID)
     elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
@@ -491,6 +502,17 @@ function dotacraft:RepairOrder( event )
         -- Kill previous repair process if there is one
         unit:RemoveModifierByName("modifier_peasant_repairing")
         unit:RemoveModifierByName("modifier_on_order_cancel_repair")
+        if unit.repair_building and IsValidEntity(unit.repair_building) then
+            local building = unit.repair_building
+            if building:HasModifier("modifier_repairing_building") then
+                local stack_count = building:GetModifierStackCount( "modifier_repairing_building", repair_ability )
+                if stack_count > 1 then
+                    building:SetModifierStackCount( "modifier_repairing_building", repair_ability, stack_count - 1 )
+                else
+                    building:RemoveModifierByName("modifier_repairing_building")
+                end
+            end
+        end
 
         -- Swap to the repair ability and send repair order
         unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
