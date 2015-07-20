@@ -4,6 +4,7 @@ DURATION_INSIDE_MINE = 1
 TREE_HEALTH = 50
 DAMAGE_TO_TREE = 1
 DAMAGE_TO_MINE = 10
+THINK_INTERVAL = 0.5
 GOLD_DEPOSITS = { 	"human_town_hall",
 					"human_keep",
 					"human_castle"  
@@ -27,9 +28,9 @@ function Gather( event )
 	end
 
 	-- Intialize variables to keep track of states
-	caster.moving_to_tree = nil
+	--[[caster.moving_to_tree = nil
 	caster.moving_to_mine = nil
-	caster.moving_to_return = nil
+	caster.moving_to_return = nil]]
 
 	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
@@ -67,15 +68,15 @@ function Gather( event )
 				local distance = (tree_pos - caster:GetAbsOrigin()):Length()
 				
 				if distance > MIN_DISTANCE_TO_TREE then
-					if not caster.moving_to_tree then
-						caster.moving_to_tree = true
+					--if not caster.moving_to_tree then
+					--	caster.moving_to_tree = true
 						caster:MoveToTargetToAttack(tree)
-					end
+					--end
 					--print("Moving to Tree, distance ", distance)
-					return 0.1
+					return THINK_INTERVAL
 				else
 					--print("Tree Reached")
-					caster.moving_to_tree = nil
+					--caster.moving_to_tree = nil
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
 					return
 				end
@@ -107,24 +108,25 @@ function Gather( event )
 			-- Recieving another order will cancel this
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_gold", {})
 
+			local mine_entrance_pos = mine.entrance+RandomVector(75)
 			Timers:CreateTimer(function() 
 				-- Move towards the mine until close range
 				if not ability.cancelled then
 					local distance = (mine_pos - caster:GetAbsOrigin()):Length()
 					
 					if distance > MIN_DISTANCE_TO_MINE then
-						if not caster.moving_to_mine then
-							caster.moving_to_mine = true
-							caster:MoveToPosition(mine.entrance+RandomVector(75))
-						end
+						--if not caster.moving_to_mine then
+							--caster.moving_to_mine = true
+						caster:MoveToPosition(mine_entrance_pos)
+						--end
 						--print("Moving to Mine, distance ", distance)
-						return 0.1
+						return THINK_INTERVAL
 					else
 						--print("Mine Reached")
-						caster.moving_to_mine = nil
+						--caster.moving_to_mine = nil
 						if mine.builder then
 							--print("Waiting for the builder inside to leave")
-							return 0.1
+							return THINK_INTERVAL
 						elseif mine and IsValidEntity(mine) then
 							mine.builder = caster
 							ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {duration = DURATION_INSIDE_MINE})
@@ -174,8 +176,8 @@ function CancelGather( event )
 	local ability = event.ability
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 	ability.cancelled = true
-	caster.moving_to_tree = nil
-	caster.moving_to_mine = nil
+	--caster.moving_to_tree = nil
+	--caster.moving_to_mine = nil
 
 	local tree = caster.target_tree
 	if tree then
@@ -196,7 +198,7 @@ function CancelReturn( event )
 	local ability = event.ability
 	local gather_ability = caster:FindAbilityByName("human_gather")
 	ability.cancelled = true
-	caster.moving_to_return = nil
+	--caster.moving_to_return = nil
 
 	local tree = caster.target_tree
 	if tree then
@@ -359,11 +361,11 @@ function ReturnResources( event )
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						if not caster.moving_to_return then
-							caster.moving_to_return = true
-							caster:MoveToNPC(building)
-						end						
-						return 0.1
+						--if not caster.moving_to_return then
+						--	caster.moving_to_return = true
+						caster:MoveToNPC(building)
+						--end						
+						return THINK_INTERVAL
 					elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
 						--print("Building Reached at ",distance)
 						caster:RemoveModifierByName("modifier_carrying_lumber")
@@ -406,7 +408,7 @@ function ReturnResources( event )
 					-- Find a new building deposit
 					building = FindClosestResourceDeposit( caster, "lumber" )
 					caster.target_building = building
-					return 0.1
+					return THINK_INTERVAL
 				end
 			else
 				return
@@ -429,11 +431,11 @@ function ReturnResources( event )
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						if not caster.moving_to_return then
-							caster.moving_to_return = true
+						--if not caster.moving_to_return then
+						--	caster.moving_to_return = true
 							caster:MoveToNPC(building)
-						end
-						return 0.1
+						--end
+						return THINK_INTERVAL
 					elseif caster.gold_gathered and caster.gold_gathered > 0 then
 						--print("Building Reached at ",distance)
 						local upkeep = GetUpkeep( player )
@@ -474,7 +476,7 @@ function ReturnResources( event )
 					-- Find a new building deposit
 					building = FindClosestResourceDeposit( caster, "gold" )
 					caster.target_building = building
-					return 0.1
+					return THINK_INTERVAL
 				end
 			else
 				return
@@ -736,7 +738,7 @@ end
 
 -- Humans can assist the construction with multiple peasants
 -- In that case, extra resources are consumed
--- Powerbuild Cost = 0.15 - Added for every extra builder repairing the same building
+-- Powerbuild Cost = THINK_INTERVAL5 - Added for every extra builder repairing the same building
 -- Powerbuild Rate = 0.60 - Fastens the ratio by 60%?
 	
 -- Values are taken from the UnitKV GoldCost LumberCost and BuildTime

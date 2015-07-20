@@ -179,7 +179,7 @@ function AdvanceQueue( event )
 		caster:SetBaseManaRegen(0)
 	end
 
-	if not IsChanneling( caster ) and not caster:HasModifier("modifier_construction") then
+	if caster and IsValidEntity(caster) and not IsChanneling( caster ) and not caster:HasModifier("modifier_construction") then
 		
 		-- RemakeQueue
 		caster.queue = {}
@@ -187,7 +187,7 @@ function AdvanceQueue( event )
 		-- Check the first item that contains "train" on the queue
 		for itemSlot=0,5 do
 			local item = caster:GetItemInSlot(itemSlot)
-			if item ~= nil then
+			if item and IsValidEntity(item) then
 
 				table.insert(caster.queue, item:GetEntityIndex())
 
@@ -226,8 +226,8 @@ function AdvanceQueue( event )
 
 							-- After the channeling time, check if it was cancelled or spawn it
 							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
-							Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
-							function()
+							local time = ability_to_channel:GetChannelTime()
+							Timers:CreateTimer(time, function()
 								--print("===Queue Table====")
 								--DeepPrintTable(caster.queue)
 								if IsValidEntity(item) then
