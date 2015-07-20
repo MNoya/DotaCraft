@@ -22,6 +22,8 @@ function Gather( event )
 	local ability = event.ability
 	local target_class = target:GetClassname()
 
+	caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
+
 	-- Initialize variables to keep track of how much resource is the unit carrying
 	if not caster.lumber_gathered then
 		caster.lumber_gathered = 0
@@ -120,6 +122,7 @@ function Gather( event )
 							return
 						else
 							caster:RemoveModifierByName("modifier_on_order_cancel_gold")
+							CancelGather(event)
 						end
 					end
 				else
@@ -173,6 +176,7 @@ function Gather( event )
 					else
 						print("Building was killed in the way of a peasant to repair it")
 						caster:RemoveModifierByName("modifier_on_order_cancel_repair")
+						CancelGather(event)
 					end
 				else
 					return
@@ -349,6 +353,8 @@ function ReturnResources( event )
 	local hero = caster:GetOwner()
 	local player = caster:GetPlayerOwner()
 	local pID = hero:GetPlayerID()
+	
+	caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
 	
 	-- Return Ability On
 	ability.cancelled = false

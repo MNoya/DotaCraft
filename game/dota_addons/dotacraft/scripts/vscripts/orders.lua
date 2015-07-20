@@ -486,11 +486,15 @@ function dotacraft:RepairOrder( event )
         
         unit:CastAbilityOnTarget(EntIndexToHScript(targetIndex), repair_ability, pID)
     elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
-        -- Swap to the repair ability and send repair order
-        print("HIDDEN")
-        unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
         print("Order: Repair ",building:GetUnitName())
-        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
+        
+        -- Kill previous repair process if there is one
+        unit:RemoveModifierByName("modifier_peasant_repairing")
+        unit:RemoveModifierByName("modifier_on_order_cancel_repair")
+
+        -- Swap to the repair ability and send repair order
+        unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
+        unit:CastAbilityOnTarget(EntIndexToHScript(targetIndex), repair_ability, pID)
     end
 end
 
