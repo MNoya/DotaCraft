@@ -46,7 +46,7 @@ function build( keys )
     	-- Remove invulnerability on npc_dota_building baseclass
     	unit:RemoveModifierByName("modifier_invulnerable")
 
-    	-- Silence the building. Temp solution for not having building_abilities.kv and having them in the npc_unit_custom instead.
+    	-- Particle effect
     	local item = CreateItem("item_apply_modifiers", nil, nil)
     	item:ApplyDataDrivenModifier(caster, unit, "modifier_construction", {})
     	item = nil
@@ -54,11 +54,6 @@ function build( keys )
     	-- Check the abilities of this building, disabling those that don't meet the requirements
     	--print("=Checking Requirements on "..unit:GetUnitName())
     	CheckAbilityRequirements( unit, player )
-
-    	--[[ Some units with multiple upgrade ranks might require an additional ability requirement loop because I suck at programming
-    	if unit:GetUnitName() == "human_lumber_mill" or unit:GetUnitName() == "human_blacksmith" then
-    		CheckAbilityRequirements( unit, player )
-    	end]]
 
     	-- Apply the current level of Masonry to the newly upgraded building
 		local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
@@ -176,9 +171,9 @@ function builder_queue( keys )
   if caster.ProcessingBuilding ~= nil then
     -- caster is probably a builder, stop them
     player = PlayerResource:GetPlayer(caster:GetMainControllingPlayer())
-    player.activeBuilder:ClearQueue()
     player.activeBuilding = nil
     if player.activeBuilder and IsValidEntity(player.activeBuilder) then
+    	player.activeBuilder:ClearQueue()
     	player.activeBuilder:Stop()
     	player.activeBuilder.ProcessingBuilding = false
     end

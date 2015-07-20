@@ -462,6 +462,35 @@ function dotacraft:GoldGatherOrder( event )
 end
 
 ------------------------------------------------
+--             Repair Right-Click             --
+------------------------------------------------
+function dotacraft:RepairOrder( event )
+    local pID = event.pID
+    local entityIndex = event.mainSelected
+    local targetIndex = event.targetIndex
+    local building = EntIndexToHScript(targetIndex)
+    local selectedEntities = GetSelectedEntities(pID)
+    print("REPAIR")
+
+    local unit = EntIndexToHScript(entityIndex)
+    local race = GetUnitRace(unit)
+    local repair_ability = unit:FindAbilityByName(race.."_gather")
+
+    -- Repair
+    if repair_ability and repair_ability:IsFullyCastable() and not repair_ability:IsHidden() then
+        print("Order: Repair ",building:GetUnitName())
+        --ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
+        unit:CastAbilityOnTarget(EntIndexToHScript(targetIndex), repair_ability, pID)
+    elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
+        -- Swap to the repair ability and send repair order
+        print("HIDDEN")
+        unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
+        print("Order: Repair ",building:GetUnitName())
+        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
+    end
+end
+
+------------------------------------------------
 --          Rally Point Right-Click           --
 ------------------------------------------------
 function dotacraft:OnBuildingRallyOrder( event )

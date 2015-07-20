@@ -21737,6 +21737,7 @@
 		"Scale"							"0" //bool
 		"PlayerCanControl"				"1" //bool. 
 		"CancelsBuildingGhost"			"1" //bool
+		"AutoBuild"						"0" //bool (Default is 1)
 	
 		"UnitName"						"human_barracks"
 		"AbilityCooldown"				"0"
@@ -22309,38 +22310,28 @@
 			// END GOLD GATHER
 	
 			// REPAIR
-			"modifier_moving_to_repair"
+			"modifier_on_order_cancel_repair"
 			{
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CheckRepairPosition"
-					}
-				}
-	
+				"IsHidden"				"1"
 				"OnOrder"
 				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_moving_to_repair"
+						"ModifierName"	"modifier_on_order_cancel_repair"
 						"Target" 		"CASTER"
 					}
 	
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"ToggleOffGather"
+						"Function"		"CancelGather"
 					}
 				}
 			}
 	
 			// On the caster, does the animation and removal if killed or moved
-			"modifier_repair_peasant"
+			"modifier_peasant_repairing"
 			{
-				"IsHidden"				"0" //"1"
 				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
 	
 				"OnCreated"
@@ -22356,7 +22347,7 @@
 				{			
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_repair_peasant"
+						"ModifierName"	"modifier_peasant_repairing"
 						"Target" 		"CASTER"
 					}
 	
@@ -22372,22 +22363,22 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"	"modifier_repairing_animation"
+						"ModifierName"	"modifier_peasant_repairing_animation"
 						"Target" 		"CASTER"
 						"Duration"		"0.9"
 					}
 				}		
 			}
 	
-			"modifier_repairing_animation"
+			"modifier_peasant_repairing_animation"
 			{
 				"OverrideAnimation"     "ACT_DOTA_ATTACK"
-				"IsHidden"				"0"
+				"IsHidden"				"1"
 				"OnOrder"
 				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_repairing_animation"
+						"ModifierName"	"modifier_peasant_repairing_animation"
 						"Target" 		"CASTER"
 					}
 				}

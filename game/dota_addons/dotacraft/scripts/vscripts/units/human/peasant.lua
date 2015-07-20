@@ -27,11 +27,6 @@ function Gather( event )
 		caster.lumber_gathered = 0
 	end
 
-	-- Intialize variables to keep track of states
-	--[[caster.moving_to_tree = nil
-	caster.moving_to_mine = nil
-	caster.moving_to_return = nil]]
-
 	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
 		
@@ -68,15 +63,10 @@ function Gather( event )
 				local distance = (tree_pos - caster:GetAbsOrigin()):Length()
 				
 				if distance > MIN_DISTANCE_TO_TREE then
-					--if not caster.moving_to_tree then
-					--	caster.moving_to_tree = true
-						caster:MoveToTargetToAttack(tree)
-					--end
-					--print("Moving to Tree, distance ", distance)
+					caster:MoveToTargetToAttack(tree)
 					return THINK_INTERVAL
 				else
 					--print("Tree Reached")
-					--caster.moving_to_tree = nil
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
 					return
 				end
@@ -115,15 +105,11 @@ function Gather( event )
 					local distance = (mine_pos - caster:GetAbsOrigin()):Length()
 					
 					if distance > MIN_DISTANCE_TO_MINE then
-						--if not caster.moving_to_mine then
-							--caster.moving_to_mine = true
 						caster:MoveToPosition(mine_entrance_pos)
-						--end
 						--print("Moving to Mine, distance ", distance)
 						return THINK_INTERVAL
 					else
 						--print("Mine Reached")
-						--caster.moving_to_mine = nil
 						if mine.builder then
 							--print("Waiting for the builder inside to leave")
 							return THINK_INTERVAL
@@ -152,17 +138,50 @@ function Gather( event )
 
 	-- Repair Building
 	elseif target_class == "npc_dota_creature" then
-		if target:HasAbility("ability_building") then
-			if target:GetHealthDeficit() ~= 0 then
-				--print("Repair Building On")
-				caster:MoveToNPC(target)
+		if IsCustomBuilding(target) and target:GetHealthDeficit() > 0 then
+			local building = target
+			caster.repair_building = building
 
-				caster.repair_building = target
-				ability:ApplyDataDrivenModifier(caster, caster, "modifier_moving_to_repair", {})
+			local building_pos = building:GetAbsOrigin()
+			
+			ability.cancelled = false
 
-			else
-				--print("Building already on full health")
+			-- Fake toggle the ability, cancel if any other order is given
+			if ability:GetToggleState() == false then
+				ability:ToggleAbility()
 			end
+
+			-- Recieving another order will cancel this
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_repair", {})
+
+			local collision_size = math.floor(math.sqrt(#building.blockers)) * 64 + 32
+
+			Timers:CreateTimer(function() 
+				-- Move towards the building until close range
+				if not ability.cancelled then
+					if caster.repair_building and IsValidEntity(caster.repair_building) then
+						local distance = (building_pos - caster:GetAbsOrigin()):Length()
+						
+						if distance > collision_size then
+							caster:MoveToNPC(building)
+							return THINK_INTERVAL
+						else
+							ability:ApplyDataDrivenModifier(caster, caster, "modifier_peasant_repairing", {})
+
+							print("Reached building, starting the Repair process")
+							return
+						end
+					else
+						print("Building was killed in the way of a peasant to repair it")
+						caster:RemoveModifierByName("modifier_on_order_cancel_repair")
+						CancelGather(event)
+					end
+				else
+					return
+				end
+			end)
+		else
+			print("Not a custom building or already on full health")
 		end
 	else
 		print("Not a valid target for this ability")
@@ -176,8 +195,6 @@ function CancelGather( event )
 	local ability = event.ability
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 	ability.cancelled = true
-	--caster.moving_to_tree = nil
-	--caster.moving_to_mine = nil
 
 	local tree = caster.target_tree
 	if tree then
@@ -198,7 +215,6 @@ function CancelReturn( event )
 	local ability = event.ability
 	local gather_ability = caster:FindAbilityByName("human_gather")
 	ability.cancelled = true
-	--caster.moving_to_return = nil
 
 	local tree = caster.target_tree
 	if tree then
@@ -281,9 +297,8 @@ function GatherLumber( event )
 		local player = caster:GetOwner():GetPlayerID()
 		caster:RemoveModifierByName("modifier_gathering_lumber")
 
-		-- Return Ability On		
+		-- Cast Return Resources	
 		caster:CastAbilityNoTarget(return_ability, player)
-		return_ability:ToggleAbility()
 	end
 end
 
@@ -361,10 +376,7 @@ function ReturnResources( event )
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						--if not caster.moving_to_return then
-						--	caster.moving_to_return = true
-						caster:MoveToNPC(building)
-						--end						
+						caster:MoveToNPC(building)					
 						return THINK_INTERVAL
 					elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
 						--print("Building Reached at ",distance)
@@ -431,10 +443,7 @@ function ReturnResources( event )
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						--if not caster.moving_to_return then
-						--	caster.moving_to_return = true
-							caster:MoveToNPC(building)
-						--end
+						caster:MoveToNPC(building)
 						return THINK_INTERVAL
 					elseif caster.gold_gathered and caster.gold_gathered > 0 then
 						--print("Building Reached at ",distance)
@@ -745,34 +754,47 @@ end
 
 function Repair( event )
 	local caster = event.caster
-	local target = event.target -- The building to repair
+	local ability = event.ability
+	local building = event.target -- The building to repair
 
 	local hero = caster:GetOwner()
 	local player = caster:GetPlayerOwner()
 	local pID = hero:GetPlayerID()
 
-	local building_name = target:GetUnitName()
+	local building_name = building:GetUnitName()
 	local building_info = GameRules.UnitKV[building_name]
 	local gold_cost = building_info.GoldCost
 	local lumber_cost = building_info.LumberCost
 	local build_time = building_info.BuildTime
 
+	local state = building.state -- "completed" or "building"
+	local health_deficit = building:GetHealthDeficit()
+
+	if ability:GetToggleState() == false then
+		ability:ToggleAbility()
+	end 
+
+	-- If its an unfinished building, keep track of how much does it require to mark as finished
+	if not building.constructionCompleted and not building.health_deficit then
+		building.missingHealthToComplete = health_deficit
+	end
+
 	-- Scale costs/time according to the stack count of builders reparing this
-	if target:GetHealthDeficit() > 0 then
+	if health_deficit > 0 then
 		-- Initialize the tracking
-		if not target.health_deficit then
-			target.health_deficit = target:GetHealthDeficit()
-			target.gold_used = 0
-			target.lumber_used = 0
-			target.HPAdjustment = 0
-			target.GoldAdjustment = 0
-			target.time_started = GameRules:GetGameTime()
+		if not building.health_deficit then
+			building.health_deficit = health_deficit
+			building.gold_used = 0
+			building.lumber_used = 0
+			building.HPAdjustment = 0
+			building.GoldAdjustment = 0
+			building.time_started = GameRules:GetGameTime()
 		end
 		
-		local stack_count = target:GetModifierStackCount( "modifier_repairing_building", ability )
+		local stack_count = building:GetModifierStackCount( "modifier_repairing_building", ability )
 
 		-- HP
-		local health_per_second = target:GetMaxHealth() /  ( build_time * 1.5 ) * stack_count
+		local health_per_second = building:GetMaxHealth() /  ( build_time * 1.5 ) * stack_count
 		local health_float = health_per_second - math.floor(health_per_second) -- floating point component
 		health_per_second = math.floor(health_per_second) -- round down
 
@@ -791,54 +813,73 @@ function Repair( event )
 			print("Cost is "..gold_float.." gold and "..lumber_per_second.." lumber per second")
 		end
 			
+		local healthGain = 0
 		if PlayerHasEnoughGold( player, math.ceil(gold_per_second+gold_float) ) and PlayerHasEnoughLumber( player, lumber_per_second ) then
-			--target:SetHealth( target:GetHealth() +  health_per_second)
-			target.HPAdjustment = target.HPAdjustment + health_float
-			if target.HPAdjustment > 1 then
-				target:SetHealth(target:GetHealth() + health_per_second + 1)
-				target.HPAdjustment = target.HPAdjustment - 1
+			-- Health
+			building.HPAdjustment = building.HPAdjustment + health_float
+			if building.HPAdjustment > 1 then
+				healthGain = health_per_second + 1
+				building:SetHealth(building:GetHealth() + healthGain)
+				building.HPAdjustment = building.HPAdjustment - 1
 			else
-				target:SetHealth(target:GetHealth() + health_per_second)
+				healthGain = health_per_second
+				building:SetHealth(building:GetHealth() + health_per_second)
 			end
 			
-			--hero:ModifyGold( -gold_per_second, false, 0)
-			target.GoldAdjustment = target.GoldAdjustment + gold_float
-			if target.GoldAdjustment > 1 then
+			-- Consume Resources
+			building.GoldAdjustment = building.GoldAdjustment + gold_float
+			if building.GoldAdjustment > 1 then
 				hero:ModifyGold( -gold_per_second - 1, false, 0)
-				target.GoldAdjustment = target.GoldAdjustment - 1
-				target.gold_used = target.gold_used + gold_per_second + 1
+				building.GoldAdjustment = building.GoldAdjustment - 1
+				building.gold_used = building.gold_used + gold_per_second + 1
 			else
 				hero:ModifyGold( -gold_per_second, false, 0)
-				target.gold_used = target.gold_used + gold_per_second
+				building.gold_used = building.gold_used + gold_per_second
 			end
 			
 			ModifyLumber( player, -lumber_per_second )
-			target.lumber_used = target.lumber_used + lumber_per_second
+			building.lumber_used = building.lumber_used + lumber_per_second
 		else
 			-- Remove the modifiers on the building and the builders
-			target:RemoveModifierByName("modifier_repairing_building")
-			for _,builder in pairs(target.units_repairing) do
+			building:RemoveModifierByName("modifier_repairing_building")
+			for _,builder in pairs(building.units_repairing) do
 				if builder and IsValidEntity(builder) then
-					builder:RemoveModifierByName("modifier_repairing_animation")
-					builder:RemoveModifierByName("modifier_repair_peasant")
+					builder:RemoveModifierByName("modifier_peasant_repairing_animation")
+					builder:RemoveModifierByName("modifier_peasant_repairing")
 				end
 			end
 			print("Repair Ended, not enough resources!")
-			target.health_deficit = nil
+			building.health_deficit = nil
+			building.missingHealthToComplete = nil
 		end
+
+		-- Decrease the health left to finish construction and mark building as complete
+		if building.missingHealthToComplete then
+			building.missingHealthToComplete = building.missingHealthToComplete - healthGain
+		end
+
+	-- Building Fully Healed
 	else
 		-- Remove the modifiers on the building and the builders
-		target:RemoveModifierByName("modifier_repairing_building")
-		for _,builder in pairs(target.units_repairing) do
+		building:RemoveModifierByName("modifier_repairing_building")
+		for _,builder in pairs(building.units_repairing) do
 			if builder and IsValidEntity(builder) then
-				builder:RemoveModifierByName("modifier_repairing_animation")
-				builder:RemoveModifierByName("modifier_repair_peasant")
+				builder:RemoveModifierByName("modifier_peasant_repairing_animation")
+				builder:RemoveModifierByName("modifier_peasant_repairing")
 			end
 		end
 		print("Repair End")
-		print("Start HP/Gold/Lumber/Time: ", target.health_deficit, gold_cost, lumber_cost, build_time)
-		print("Final HP/Gold/Lumber/Time: ", target:GetHealth(), target.gold_used, math.floor(target.lumber_used), GameRules:GetGameTime() - target.time_started)
-		target.health_deficit = nil
+		print("Start HP/Gold/Lumber/Time: ", building.health_deficit, gold_cost, lumber_cost, build_time)
+		print("Final HP/Gold/Lumber/Time: ", building:GetHealth(), building.gold_used, math.floor(building.lumber_used), GameRules:GetGameTime() - building.time_started)
+		building.health_deficit = nil
+	end
+
+	-- Construction Ended
+	if building.missingHealthToComplete and building.missingHealthToComplete <= 0 then
+		building.missingHealthToComplete = nil
+		building.constructionCompleted = true -- BuildingHelper will track this and know the building ended
+	else
+		print("Missing Health to Complete building: ",building.missingHealthToComplete)
 	end
 end
 
@@ -859,6 +900,7 @@ function PeasantRepairing( event )
 	-- Keep a list of the units repairing this building
 	if not target.units_repairing then
 		target.units_repairing = {}
+		table.insert(target.units_repairing, caster)
 	else
 		table.insert(target.units_repairing, caster)
 	end
@@ -867,51 +909,22 @@ end
 function PeasantStopRepairing( event )
 	local caster = event.caster
 	local ability = event.ability
-	local target = caster.repair_building
+	local building = caster.repair_building
 	
 	-- Apply a modifier stack to the building, to show how many peasants are working on it (and scale the Powerbuild costs)
 	local modifierName = "modifier_repairing_building"
-	if target:HasModifier(modifierName) then
-		local current_stack = target:GetModifierStackCount( modifierName, ability )
+	if building and IsValidEntity(building) and building:HasModifier(modifierName) then
+		local current_stack = building:GetModifierStackCount( modifierName, ability )
 		if current_stack > 1 then
-			target:SetModifierStackCount( modifierName, ability, current_stack - 1 )
+			building:SetModifierStackCount( modifierName, ability, current_stack - 1 )
 		else
-			target:RemoveModifierByName( modifierName )
+			building:RemoveModifierByName( modifierName )
 		end
 	end
 
 	-- Remove the builder from the list of units repairing the building
-	local builder = getIndex(target.units_repairing, caster)
+	local builder = getIndex(building.units_repairing, caster)
 	if builder and builder ~= -1 then
-		table.remove(target.units_repairing, builder)
+		table.remove(building.units_repairing, builder)
 	end
-end
-
-function CheckRepairPosition( event )
-	local caster = event.caster
-	local ability = event.ability
-	local target = caster.repair_building
-
-	if not target or not IsValidEntity(target) then
-		print("ERROR, building can't be found")
-		return
-	end
-
-	local distance = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length()
-	local collision_size = math.floor(math.sqrt(#building.blockers)) * 64 + 32
-	local collision = distance <= collision_size
-	if not collision then
-		--print("Moving to building, distance: ",distance)
-	else
-		local hero = caster:GetOwner()
-		local player = caster:GetPlayerOwner()
-		local pID = hero:GetPlayerID()
-
-		-- Apply a modifier on the caster to start repairing
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_repair_peasant", {})
-
-		print("Reached building, starting the Repair process")
-		caster:RemoveModifierByName("modifier_moving_to_repair")
-	end
-		
 end

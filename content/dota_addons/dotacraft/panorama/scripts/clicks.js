@@ -29,9 +29,12 @@ function OnRightButtonPressed()
 				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
 				return true;
 			}
-			else{
-				return false;
+			else if (IsCustomBuilding(e.entityIndex) && Entities.GetHealthPercent(e.entityIndex) < 100 && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) ){
+				$.Msg("Player "+iPlayerID+" Clicked on a building with health missing")
+				GameEvents.SendCustomGameEventToServer( "repair_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
+				return true;
 			}
+			return false;
 		}	
 	}
 
@@ -50,7 +53,7 @@ function OnRightButtonPressed()
 					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "mine", targetIndex: e.entityIndex })
 				}
 				else{
-					$.Msg(" Targeted an entity")
+					$.Msg(" Targeted a building")
 					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "target", targetIndex: e.entityIndex })
 				}
 				return true;

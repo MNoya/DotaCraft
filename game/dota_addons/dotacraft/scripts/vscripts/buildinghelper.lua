@@ -182,6 +182,25 @@ function BuildingHelper:AddBuilding(keys)
   end
   buildingTable:SetVal("MaxScale", fMaxScale)
 
+  ------------------------------------------------------------------
+  -- New Build Behaviours
+  --  AutoBuild: Turned on by default, if set to 0 it will place the building and not update its health nor send the OnConstructionCompleted callback until its fully healed
+  --  BuilderInside: Puts the builder unselectable/invulnerable/nohealthbar inside the building in construction
+  local bAutoBuild = buildingTable:GetVal("AutoBuild", "bool")
+  if bAutoBuild == nil then
+    bAutoBuild = 1
+  end
+  buildingTable:SetVal("AutoBuild", AutoBuild)
+
+  local bBuilderInside = buildingTable:GetVal("BuilderInside", "bool")
+  if bBuilderInside == nil then
+    bBuilderInside = 1
+  end
+  buildingTable:SetVal("BuilderInside", BuilderInside)
+  -------------------------------------------------------------------
+
+
+
   -- Prepare the builder, if it hasn't already been done. Since this would need to be done for every builder in some games, might as well do it here.
   local builder = keys.caster
 
@@ -223,6 +242,9 @@ function BuildingHelper:PlaceBuilding(player, name, location, blockGridNav, size
     building.blockers = gridNavBlockers
   end
   building.state = "complete"
+
+  -- Adjust the Hull Radius according to the gridnav size
+  building:SetHullRadius( size * 32 - 32 )
 
   function building:RemoveBuilding( bForcedKill )
     for k, v in pairs(building.blockers) do
@@ -336,7 +358,9 @@ function BuildingHelper:InitializeBuildingEntity( keys )
   building.blockers = gridNavBlockers
   building.buildingTable = buildingTable
   building.state = "building"
-  
+
+  -- Adjust the Hull Radius according to the gridnav size
+  building:SetHullRadius( size * 32 - 32)
 
   -- Prevent regen messing with the building spawn hp gain
   local regen = building:GetBaseHealthRegen()
@@ -352,6 +376,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
 
   -- whether we should update the building's health over the build time.
   local bUpdateHealth = buildingTable:GetVal("UpdateHealth", "bool")
+  local bAutoBuild = buildingTable:GetVal("AutoBuild", "bool")
   local fMaxHealth = building:GetMaxHealth()
 
   --[[
@@ -377,6 +402,13 @@ function BuildingHelper:InitializeBuildingEntity( keys )
 
   -- whether we should scale the building.
   local bScale = buildingTable:GetVal("Scale", "bool")
+  
+  ----------------- CUSTOM Warcraft 3 Initial Health ------------------
+  local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
+  local fMaxHealth = fMaxHealth * (1 + 0.2 * masonry_rank) 
+  local nInitialHealth = 0.10 * ( fMaxHealth )
+  ---------------------------------------------------------------------
+
   -- the amount to scale to.
   local fMaxScale = buildingTable:GetVal("MaxScale", "float")
   if fMaxScale == nil then
@@ -402,7 +434,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
   building.bUpdatingHealth = false --Keep tracking if we're currently updating health.
 
   if bUpdateHealth then
-    building:SetHealth(1)
+    building:SetHealth(nInitialHealth)
     building.bUpdatingHealth = true
   end
 
@@ -411,73 +443,108 @@ function BuildingHelper:InitializeBuildingEntity( keys )
     bScaling=true
   end
 
-  -- Health Timers
-  -- If the tick would be faster than 1 frame, adjust the HP gained per frame
-  building.updateHealthTimer = DoUniqueString('health') 
-  Timers:CreateTimer(building.updateHealthTimer, {
-    callback = function()
-    if IsValidEntity(building) then
-      local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
-      if not timesUp then
-        if building.bUpdatingHealth then
-          fHPAdjustment = fHPAdjustment + fSmallHealthInterval
-          if fHPAdjustment > 1 then
-            building:SetHealth(building:GetHealth() + nHealthInterval + 1)
-            fHPAdjustment = fHPAdjustment - 1
-            fAddedHealth = fAddedHealth + nHealthInterval + 1
-          else
-            building:SetHealth(building:GetHealth() + nHealthInterval)
-            fAddedHealth = fAddedHealth + nHealthInterval
+  if bAutoBuild then
+
+    -- Health Timers
+    -- If the tick would be faster than 1 frame, adjust the HP gained per frame
+    building.updateHealthTimer = DoUniqueString('health') 
+    Timers:CreateTimer(building.updateHealthTimer, {
+      callback = function()
+      if IsValidEntity(building) then
+        local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
+        if not timesUp then
+          if building.bUpdatingHealth then
+            fHPAdjustment = fHPAdjustment + fSmallHealthInterval
+            if fHPAdjustment > 1 then
+              building:SetHealth(building:GetHealth() + nHealthInterval + 1)
+              fHPAdjustment = fHPAdjustment - 1
+              fAddedHealth = fAddedHealth + nHealthInterval + 1
+            else
+              building:SetHealth(building:GetHealth() + nHealthInterval)
+              fAddedHealth = fAddedHealth + nHealthInterval
+            end
           end
+        else
+          -- completion: timesUp is true
+          building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth) -- round up the last little bit
+          if callbacks.onConstructionCompleted ~= nil and building:IsAlive() then
+            callbacks.onConstructionCompleted(building)
+          end
+          building.constructionCompleted = true
+          print("[BH] HP was off by:", fMaxHealth - fAddedHealth)
+          building.state = "complete"
+          building.bUpdatingHealth = false
+          -- clean up the timer if we don't need it.
+          return nil
         end
       else
-        -- completion: timesUp is true
-        building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth) -- round up the last little bit
-        if callbacks.onConstructionCompleted ~= nil and building:IsAlive() then
-          callbacks.onConstructionCompleted(building)
-        end
-        building.constructionCompleted = true
-        print("[BH] HP was off by:", fMaxHealth - fAddedHealth)
-        building.state = "complete"
-        building.bUpdatingHealth = false
-        -- clean up the timer if we don't need it.
+        -- not valid ent
         return nil
       end
-    else
-      -- not valid ent
-      return nil
+        return fserverFrameRate
+    end})
+  else
+    -- The building will have to be assisted through a repair ability
+    local repair_ability_name = "human_gather"
+    local repair_ability = builder:FindAbilityByName(repair_ability_name)
+    if not repair_ability then
+      print("[BH] Error, can't find "..repair_ability_name.." on the builder ",builder, builder:GetUnitName())
+      return
     end
-      return fserverFrameRate
-  end})
+
+    --[[ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, 
+                            TargetIndex = building:GetEntityIndex(), AbilityIndex = repair_ability:GetEntityIndex(), Queue = false }) ]]
+    builder:CastAbilityOnTarget(building, repair_ability, pID)
+
+    building.updateHealthTimer = DoUniqueString('assisted_construction') 
+    Timers:CreateTimer(building.updateHealthTimer, {
+      callback = function()
+      if IsValidEntity(building) then
+        if building.constructionCompleted then --This is set on the repair ability when the builders have restored the necessary health
+          if callbacks.onConstructionCompleted ~= nil and building:IsAlive() then
+            callbacks.onConstructionCompleted(building)
+          end
+          building.state = "complete"
+          building.bUpdatingHealth = false
+          return nil
+        else
+          return 0.1
+        end
+      end
+    end})
+  end
+
 
   -- scale timer
-  building.updateScaleTimer = DoUniqueString('scale')
-  Timers:CreateTimer(building.updateScaleTimer, {
-    callback = function()
-      if IsValidEntity(building) then
-      local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
-      if not timesUp then
-        if bScaling then
-          if fCurrentScale < fMaxScale then
-            fCurrentScale = fCurrentScale+fScaleInterval
-            building:SetModelScale(fCurrentScale)
-          else
-            building:SetModelScale(fMaxScale)
-            bScaling = false
+  if bScale then
+    building.updateScaleTimer = DoUniqueString('scale')
+    Timers:CreateTimer(building.updateScaleTimer, {
+      callback = function()
+        if IsValidEntity(building) then
+        local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
+        if not timesUp then
+          if bScaling then
+            if fCurrentScale < fMaxScale then
+              fCurrentScale = fCurrentScale+fScaleInterval
+              building:SetModelScale(fCurrentScale)
+            else
+              building:SetModelScale(fMaxScale)
+              bScaling = false
+            end
           end
+        else
+          -- clean up the timer if we don't need it.
+          print("[BH] Scale was off by:", fMaxScale - fCurrentScale)
+          building:SetModelScale(fMaxScale)
+          return nil
         end
       else
-        -- clean up the timer if we don't need it.
-        print("[BH] Scale was off by:", fMaxScale - fCurrentScale)
-        building:SetModelScale(fMaxScale)
+        -- not valid ent
         return nil
       end
-    else
-      -- not valid ent
-      return nil
-    end
-      return fserverFrameRate
-  end})
+        return fserverFrameRate
+    end})
+  end
 
   -- OnBelowHalfHealth timer
   building.onBelowHalfHealthProc = false
