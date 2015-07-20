@@ -5,15 +5,25 @@ TREE_HEALTH = 50
 DAMAGE_TO_TREE = 1
 DAMAGE_TO_MINE = 10
 THINK_INTERVAL = 0.5
+
+-- Temporary Solution for Orc's peons
 GOLD_DEPOSITS = { 	"human_town_hall",
 					"human_keep",
-					"human_castle"  
+					"human_castle",
+					"orc_great_hall",
+					"orc_stronghold",
+					"orc_fortress"    
 				}
 
 LUMBER_DEPOSITS = { "human_lumber_mill",
 					"human_town_hall",
 					"human_keep",
-					"human_castle"  }
+					"human_castle",
+					"orc_war_mill",
+					"orc_great_hall",
+					"orc_stronghold",
+					"orc_fortress"  
+				}
 
 -- Gather Start - Decides what behavior to use
 function Gather( event )
