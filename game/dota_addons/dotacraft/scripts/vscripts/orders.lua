@@ -38,11 +38,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
     elseif order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
         local unit = EntIndexToHScript(units["0"])
         if unit.skip then
-            print("Skip")
+            if DEBUG then print("Skip") end
             unit.skip = false
             return true
         else
-            print("Execute this order")
+            if DEBUG then print("Execute this order") end
         end
 
         local abilityIndex = filterTable["entindex_ability"]
@@ -71,11 +71,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local unit = EntIndexToHScript(units["0"])
         print("DOTA_UNIT_ORDER_CAST_TARGET_TREE ",unit)
         if unit.skip_gather_check then
-            print("Skip")
+            if DEBUG then print("Skip") end
             unit.skip_gather_check = false
             return true
         else
-            print("Execute this order")
+            if DEBUG then print("Execute this order") end
         end
 
         local abilityIndex = filterTable["entindex_ability"]
@@ -181,7 +181,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     local y = tonumber(filterTable["position_y"])
     local z = tonumber(filterTable["position_z"])
     local point = Vector(x,y,z) -- initial goal
-    local TREE_RADIUS = 100
+    local TREE_RADIUS = 50
     local trees = GridNav:GetAllTreesAroundPoint(point, TREE_RADIUS, true)
     local entityIndex = units["0"]
     local unit = EntIndexToHScript(entityIndex)
@@ -361,11 +361,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
         local unit = EntIndexToHScript(units["0"])
         if unit.skip_gather_check then
-            print("Skip")
+            if DEBUG then print("Skip") end
             unit.skip_gather_check = false
             return true
         else
-            print("Execute this order")
+            if DEBUG then print("Execute this order") end
         end
 
         local abilityIndex = filterTable["entindex_ability"]
@@ -477,46 +477,14 @@ function dotacraft:RepairOrder( event )
 
     -- Repair
     if repair_ability and repair_ability:IsFullyCastable() and not repair_ability:IsHidden() then
-        print("Order: Repair ",building:GetUnitName())
-        --ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
-
-        -- Kill previous repair process if there is one
-        unit:RemoveModifierByName("modifier_peasant_repairing")
-        unit:RemoveModifierByName("modifier_on_order_cancel_repair")
-        if unit.repair_building and IsValidEntity(unit.repair_building) then
-            local building = unit.repair_building
-            if building:HasModifier("modifier_repairing_building") then
-                local stack_count = building:GetModifierStackCount( "modifier_repairing_building", repair_ability )
-                if stack_count > 1 then
-                    building:SetModifierStackCount( "modifier_repairing_building", repair_ability, stack_count - 1 )
-                else
-                    building:RemoveModifierByName("modifier_repairing_building")
-                end
-            end
-        end
-        
-        unit:CastAbilityOnTarget(EntIndexToHScript(targetIndex), repair_ability, pID)
+        print("Order: Repairino ",building:GetUnitName())
+        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
     elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
         print("Order: Repair ",building:GetUnitName())
         
-        -- Kill previous repair process if there is one
-        unit:RemoveModifierByName("modifier_peasant_repairing")
-        unit:RemoveModifierByName("modifier_on_order_cancel_repair")
-        if unit.repair_building and IsValidEntity(unit.repair_building) then
-            local building = unit.repair_building
-            if building:HasModifier("modifier_repairing_building") then
-                local stack_count = building:GetModifierStackCount( "modifier_repairing_building", repair_ability )
-                if stack_count > 1 then
-                    building:SetModifierStackCount( "modifier_repairing_building", repair_ability, stack_count - 1 )
-                else
-                    building:RemoveModifierByName("modifier_repairing_building")
-                end
-            end
-        end
-
         -- Swap to the repair ability and send repair order
         unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
-        unit:CastAbilityOnTarget(EntIndexToHScript(targetIndex), repair_ability, pID)
+        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
     end
 end
 

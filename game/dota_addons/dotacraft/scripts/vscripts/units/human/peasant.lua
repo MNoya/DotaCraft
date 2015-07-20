@@ -169,7 +169,6 @@ function Gather( event )
 							return THINK_INTERVAL
 						else
 							ability:ApplyDataDrivenModifier(caster, caster, "modifier_peasant_repairing", {})
-
 							print("Reached building, starting the Repair process")
 							return
 						end
@@ -442,7 +441,7 @@ function ReturnResources( event )
 		-- Move towards it
 		Timers:CreateTimer(function() 
 			if not ability.cancelled then
-				if caster.target_building and IsValidEntity(caster.target_building) then
+				if building and IsValidEntity(building) then
 					local building_pos = building:GetAbsOrigin()
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
