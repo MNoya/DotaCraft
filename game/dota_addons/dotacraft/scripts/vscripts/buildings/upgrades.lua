@@ -12,8 +12,9 @@ function UpgradeBuilding( event )
 	local player = PlayerResource:GetPlayer(playerID)
 	local currentHealthPercentage = caster:GetHealth()/caster:GetMaxHealth()
 
-	-- Keep the gridnav blockers
+	-- Keep the gridnav blockers and hull radius
 	local blockers = caster.blockers
+	local hull_radius = caster:GetHullRadius()
 
 	-- Remove the old building from the structures list
 	local buildingIndex = getIndex(player.structures, caster)
@@ -32,6 +33,7 @@ function UpgradeBuilding( event )
     -- New building
 	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, false, 0) 
 	building.blockers = blockers
+	building:SetHullRadius(hull_radius)
 
 	local newRelativeHP = math.ceil(building:GetMaxHealth() * currentHealthPercentage)
 	if newRelativeHP == 0 then newRelativeHP = 1 end --just incase rounding goes wrong

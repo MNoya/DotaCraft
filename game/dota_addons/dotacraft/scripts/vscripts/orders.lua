@@ -477,7 +477,7 @@ function dotacraft:RepairOrder( event )
 
     -- Repair
     if repair_ability and repair_ability:IsFullyCastable() and not repair_ability:IsHidden() then
-        print("Order: Repairino ",building:GetUnitName())
+        print("Order: Repair ",building:GetUnitName())
         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
     elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
         print("Order: Repair ",building:GetUnitName())

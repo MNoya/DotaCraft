@@ -432,7 +432,6 @@ function ReturnResources( event )
 
 	-- GOLD
 	elseif caster:HasModifier("modifier_carrying_gold") then
-
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster, "gold" )
 		caster.target_building = building
@@ -441,7 +440,7 @@ function ReturnResources( event )
 		-- Move towards it
 		Timers:CreateTimer(function() 
 			if not ability.cancelled then
-				if building and IsValidEntity(building) then
+				if caster.target_building and IsValidEntity(caster.target_building) then
 					local building_pos = building:GetAbsOrigin()
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
@@ -541,7 +540,7 @@ function FindClosestResourceDeposit( caster, resource_type )
 			end
 		end
 	end
-	
+	print(closest_building:GetUnitName())
 	return closest_building		
 
 end
