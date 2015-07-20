@@ -190,13 +190,13 @@ function BuildingHelper:AddBuilding(keys)
   if bAutoBuild == nil then
     bAutoBuild = 1
   end
-  buildingTable:SetVal("AutoBuild", AutoBuild)
+  buildingTable:SetVal("AutoBuild", bAutoBuild)
 
   local bBuilderInside = buildingTable:GetVal("BuilderInside", "bool")
   if bBuilderInside == nil then
     bBuilderInside = 1
   end
-  buildingTable:SetVal("BuilderInside", BuilderInside)
+  buildingTable:SetVal("BuilderInside", bBuilderInside)
   -------------------------------------------------------------------
 
 
