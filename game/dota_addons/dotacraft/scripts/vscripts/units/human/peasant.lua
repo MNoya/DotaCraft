@@ -61,7 +61,7 @@ function Gather( event )
 
 		Timers:CreateTimer(function() 
 			-- Move towards the tree until close range
-			if not ability.cancelled then
+			if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_lumber") then
 				local distance = (tree_pos - caster:GetAbsOrigin()):Length()
 				
 				if distance > MIN_DISTANCE_TO_TREE then
@@ -103,7 +103,7 @@ function Gather( event )
 			local mine_entrance_pos = mine.entrance+RandomVector(75)
 			Timers:CreateTimer(function() 
 				-- Move towards the mine until close range
-				if not ability.cancelled then
+				if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_gold") then
 					local distance = (mine_pos - caster:GetAbsOrigin()):Length()
 					
 					if distance > MIN_DISTANCE_TO_MINE then
@@ -540,7 +540,7 @@ function FindClosestResourceDeposit( caster, resource_type )
 			end
 		end
 	end
-	print(closest_building:GetUnitName())
+
 	return closest_building		
 
 end
