@@ -5,25 +5,15 @@ TREE_HEALTH = 50
 DAMAGE_TO_TREE = 1
 DAMAGE_TO_MINE = 10
 THINK_INTERVAL = 0.5
-
--- Temporary Solution for Orc's peons
 GOLD_DEPOSITS = { 	"human_town_hall",
 					"human_keep",
-					"human_castle",
-					"orc_great_hall",
-					"orc_stronghold",
-					"orc_fortress"    
+					"human_castle"  
 				}
 
 LUMBER_DEPOSITS = { "human_lumber_mill",
 					"human_town_hall",
 					"human_keep",
-					"human_castle",
-					"orc_war_mill",
-					"orc_great_hall",
-					"orc_stronghold",
-					"orc_fortress"  
-				}
+					"human_castle"  }
 
 -- Gather Start - Decides what behavior to use
 function Gather( event )
@@ -868,6 +858,11 @@ function Repair( event )
 			print("Repair Ended, not enough resources!")
 			building.health_deficit = nil
 			building.missingHealthToComplete = nil
+
+			-- Toggle off
+			if ability:GetToggleState() == true then
+				ability:ToggleAbility()
+			end 
 		end
 
 		-- Decrease the health left to finish construction and mark building as complete
@@ -885,6 +880,10 @@ function Repair( event )
 				builder:RemoveModifierByName("modifier_peasant_repairing")
 			end
 		end
+		-- Toggle off
+		if ability:GetToggleState() == true then
+			ability:ToggleAbility()
+		end 
 		print("Repair End")
 		print("Start HP/Gold/Lumber/Time: ", building.health_deficit, gold_cost, lumber_cost, build_time)
 		print("Final HP/Gold/Lumber/Time: ", building:GetHealth(), building.gold_used, math.floor(building.lumber_used), GameRules:GetGameTime() - building.time_started)
