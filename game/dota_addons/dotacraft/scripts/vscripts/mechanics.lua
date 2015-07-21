@@ -70,6 +70,7 @@ function GetLumberCost( unit )
 	return 0
 end
 
+-- Returns float
 function GetBuildTime( unit )
 	if unit and IsValidEntity(unit) then
 		if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].BuildTime then
@@ -77,6 +78,139 @@ function GetBuildTime( unit )
 		end
 	end
 	return 0
+end
+
+-- Returns a string with the wc3 damage name
+function GetAttackType( unit )
+	if unit and IsValidEntity(unit) then
+		local unitName = unit:GetUnitName()
+		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName].CombatClassAttack then
+			local attack_string = GameRules.UnitKV[unitName].CombatClassAttack
+			if attack_string == "DOTA_COMBAT_CLASS_ATTACK_BASIC" then
+				return "normal"
+			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_PIERCE" then
+				return "pierce"
+			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_SIEGE" then
+				return "siege"
+			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_LIGHT" then
+				return "chaos"
+			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_HERO" then
+				return "hero"
+			end
+		end
+	end
+	return 0
+end
+
+-- Returns a string with the wc3 armor name
+function GetArmorType( unit )
+	if unit and IsValidEntity(unit) then
+		local unitName = unit:GetUnitName()
+		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName].CombatClassDefend then
+			local attack_string = GameRules.UnitKV[unitName].CombatClassDefend
+			if attack_string == "DOTA_COMBAT_CLASS_DEFEND_SOFT" then
+				return "unarmored"
+			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_WEAK" then
+				return "light"
+			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_BASIC" then
+				return "medium"
+			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_STRONG" then
+				return "heavy"
+			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE" then
+				return "fortified"
+			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_HERO" then
+				return "hero"
+			end
+		end
+	end
+	return 0
+end
+
+function GetDamageForAttackAndArmor( attack_type, armor_type )
+--[[
+			Unarm	Light	Medium	Heavy	Fort	Hero
+	Normal	100%	100%	150%	125%	70%		75%
+	Pierce	150%	200%	75%		75%		35%		50%
+	Siege	100%	100%	50%		125%	150%	75%
+	Chaos	100%	100%	100%	100%	40%		100%
+	Hero	100%	100%	100%	100%	50%		100%
+]]
+	if attack_type == "normal" then
+		if armor_type == "unarmored" then
+			return 1
+		elseif armor_type == "light" then
+			return 1
+		elseif armor_type == "medium" then
+			return 1.5
+		elseif armor_type == "heavy" then
+			return 1.25
+		elseif armor_type == "fortified" then
+			return 0.7
+		elseif armor_type == "hero" then
+			return 0.75
+		end
+
+	elseif attack_type == "pierce" then
+		if armor_type == "unarmored" then
+			return 1.5
+		elseif armor_type == "light" then
+			return 2
+		elseif armor_type == "medium" then
+			return 0.75
+		elseif armor_type == "heavy" then
+			return 0.75
+		elseif armor_type == "fortified" then
+			return 0.35
+		elseif armor_type == "hero" then
+			return 0.5
+		end
+
+	elseif attack_type == "siege" then
+		if armor_type == "unarmored" then
+			return 1
+		elseif armor_type == "light" then
+			return 1
+		elseif armor_type == "medium" then
+			return 0.5
+		elseif armor_type == "heavy" then
+			return 1.25
+		elseif armor_type == "fortified" then
+			return 1.25
+		elseif armor_type == "hero" then
+			return 1
+		end
+
+	elseif attack_type == "chaos" then
+		if armor_type == "unarmored" then
+			return 1
+		elseif armor_type == "light" then
+			return 1
+		elseif armor_type == "medium" then
+			return 1
+		elseif armor_type == "heavy" then
+			return 1
+		elseif armor_type == "fortified" then
+			return 0.4
+		elseif armor_type == "hero" then
+			return 1
+		end
+
+	elseif attack_type == "hero" then
+		if armor_type == "unarmored" then
+			return 1
+		elseif armor_type == "light" then
+			return 1
+		elseif armor_type == "medium" then
+			return 1
+		elseif armor_type == "heavy" then
+			return 1
+		elseif armor_type == "fortified" then
+			return 0.5
+		elseif armor_type == "hero" then
+			return 1
+		end
+	end
+	return 1
 end
 
 -- Returns float with the percentage to reduce income
