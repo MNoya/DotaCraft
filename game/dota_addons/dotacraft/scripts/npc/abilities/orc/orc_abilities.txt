@@ -17,16 +17,32 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"accumulation_step"		"1"
-		}
-		// The amount of resources you're supposed to gain have to be equal to or higher than this value in order for you to actually gain it.
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"salvage_ratio"			"0.5"
+			"var_type"				"FIELD_INTEGER"
+			"pillage_ratio"			"0.5"
 		}
 		// Amount of resource gained = Building's cost * salvage_ratio * Damage dealt to building in percentage
+	}
+
+	"Modifiers"
+	{
+		"modifier_pillage"		
+		{
+
+			"IsHidden"	"1"
+			"Passive"	"1"
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/pillage.lua"
+					"Function"		"Pillage"
+					"Target"		"TARGET"
+					"attack_damage"	"%attack_damage"
+					"pillage_ratio"	"%pillage_ratio"
+				}
+			} 
+		}
 	}
 
 	// Done
