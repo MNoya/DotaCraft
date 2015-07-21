@@ -9,6 +9,9 @@ CORPSE_DURATION = 88
 
 DISABLE_FOG_OF_WAR_ENTIRELY = false
 CAMERA_DISTANCE_OVERRIDE = 1600
+UNSEEN_FOG_ENABLED = false
+
+UNDER_ATTACK_WARNING_INTERVAL = 60
 
 XP_PER_LEVEL_TABLE = {
 	0, -- 1
@@ -92,7 +95,7 @@ function dotacraft:InitGameMode()
 	GameMode:SetTopBarTeamValuesOverride ( true )
 	GameMode:SetTopBarTeamValuesVisible( true )
 	GameMode:SetUseCustomHeroLevels ( true )
-	GameMode:SetUnseenFogOfWarEnabled( true )	
+	GameMode:SetUnseenFogOfWarEnabled( UNSEEN_FOG_ENABLED )	
 	GameMode:SetTowerBackdoorProtectionEnabled( false )
 	GameMode:SetGoldSoundDisabled( false )
 	GameMode:SetRemoveIllusionsOnDeath( false )
@@ -129,6 +132,10 @@ function dotacraft:InitGameMode()
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 2 )
 	end
 
+	-- Keep track of the last time each player was damaged (to play warnings/"we are under attack")
+	GameRules.PLAYER_BUILDINGS_DAMAGED = {}	
+	GameRules.PLAYER_DAMAGE_WARNING = {}
+
 	-- Event Hooks
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
 	ListenToGameEvent('player_connect_full', Dynamic_Wrap(dotacraft, 'OnConnectFull'), self)
@@ -137,6 +144,7 @@ function dotacraft:InitGameMode()
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap(dotacraft, 'OnNPCSpawned'), self)
 	ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(dotacraft, 'OnPlayerPickHero'), self)
 	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
+	ListenToGameEvent('entity_hurt', Dynamic_Wrap(dotacraft, 'OnEntityHurt'), self)
 	--ListenToGameEvent('player_disconnect', Dynamic_Wrap(dotacraft, 'OnDisconnect'), self)
 	--ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(dotacraft, 'OnItemPurchased'), self)
 	--ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(dotacraft, 'OnItemPickedUp'), self)
@@ -146,7 +154,6 @@ function dotacraft:InitGameMode()
 	--ListenToGameEvent('dota_rune_activated_server', Dynamic_Wrap(dotacraft, 'OnRuneActivated'), self)
 	--ListenToGameEvent('dota_player_take_tower_damage', Dynamic_Wrap(dotacraft, 'OnPlayerTakeTowerDamage'), self)
 	--ListenToGameEvent('tree_cut', Dynamic_Wrap(dotacraft, 'OnTreeCut'), self)
-	--ListenToGameEvent('entity_hurt', Dynamic_Wrap(dotacraft, 'OnEntityHurt'), self)
 	--ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(dotacraft, 'OnTeamKillCredit'), self)
 	--ListenToGameEvent("player_reconnected", Dynamic_Wrap(dotacraft, 'OnPlayerReconnect'), self)
 	--ListenToGameEvent('player_spawn', Dynamic_Wrap(dotacraft, 'OnPlayerSpawn'), self)
@@ -170,7 +177,6 @@ function dotacraft:InitGameMode()
 	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "RegisterRightClick"))
 
 	-- Remove building invulnerability
-	print("Make buildings vulnerable")
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
 	for i = 1, #allBuildings, 1 do
 		local building = allBuildings[i]
@@ -181,7 +187,6 @@ function dotacraft:InitGameMode()
 
 	-- Add gridnav blockers to the gold mines
 	local allGoldMines = Entities:FindAllByModel('models/mine/mine.vmdl') --Target name in Hammer
-	print("Adding blockers for ",#allGoldMines," mines found")
 	for k,gold_mine in pairs (allGoldMines) do
 		local location = gold_mine:GetAbsOrigin()
 		location.x = SnapToGrid32(location.x)
@@ -480,16 +485,12 @@ function dotacraft:OnHeroInGame(hero)
 
 	dotacraft:ModifyStatBonuses(hero)
 
-	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
-	--local item = CreateItem("item_multiteam_action", hero, hero)
-	--hero:AddItem(item)
+	if Convars:GetBool("developer") then
+		for i=1,9 do
+			hero:HeroLevelUp(false)
+		end
+	end
 
-	--[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
-	--with the "example_ability" ability
-
-	local abil = hero:GetAbilityByIndex(1)
-	hero:RemoveAbility(abil:GetAbilityName())
-	hero:AddAbility("example_ability")]]
 end
 
 function dotacraft:OnGameInProgress()
@@ -559,13 +560,62 @@ function dotacraft:OnNPCSpawned(keys)
 	end
 end
 
--- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
--- operations here
+-- An entity somewhere has been hurt.
 function dotacraft:OnEntityHurt(keys)
 	--print("[DOTACRAFT] Entity Hurt")
 	----DeepPrintTable(keys)
-	local entCause = EntIndexToHScript(keys.entindex_attacker)
-	local entVictim = EntIndexToHScript(keys.entindex_killed)
+	local damagebits = keys.damagebits
+  	local attacker = keys.entindex_attacker
+  	local damaged = keys.entindex_killed
+  	local inflictor = keys.entindex_inflictor
+  	local victim
+  	local cause
+  	local damagingAbility
+
+  	if attacker and damaged then
+	    cause = EntIndexToHScript(keys.entindex_attacker)
+	    victim = EntIndexToHScript(keys.entindex_killed)	    
+	    
+	    if inflictor then
+	    	damagingAbility = EntIndexToHScript( keys.entindex_inflictor )
+	    end
+  	end
+
+	local time = GameRules:GetGameTime()
+	if victim and IsCustomBuilding(victim) then
+		local pID = victim:GetPlayerOwnerID()
+		if pID then
+			-- Set the new attack time
+			GameRules.PLAYER_BUILDINGS_DAMAGED[pID] = time	
+
+			-- Define the warning 
+			local last_warning = GameRules.PLAYER_DAMAGE_WARNING[pID]
+
+			-- If its the first time being attacked or its been long since the last warning, show a warning
+			if not last_warning or (time - last_warning) > UNDER_ATTACK_WARNING_INTERVAL then
+
+				-- Damage Particle
+				local particle = ParticleManager:CreateParticle("particles/generic_gameplay/screen_damage_indicator.vpcf", PATTACH_EYES_FOLLOW, victim)
+				ParticleManager:SetParticleControl(particle, 1, victim:GetAbsOrigin())
+				Timers:CreateTimer(3, function() ParticleManager:DestroyParticle(particle, false) end)
+
+				-- Ping
+				local origin = victim:GetAbsOrigin()
+				MinimapEvent( victim:GetTeamNumber(), victim, origin.x, origin.y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 1 )
+				MinimapEvent( victim:GetTeamNumber(), victim, origin.x, origin.y, DOTA_MINIMAP_EVENT_ENEMY_TELEPORTING, 3 )
+
+				-- Update the last warning to the current time
+				GameRules.PLAYER_DAMAGE_WARNING[pID] = time
+			else
+				-- Ping
+				local origin = victim:GetAbsOrigin()
+				MinimapEvent( victim:GetTeamNumber(), victim, origin.x, origin.y, DOTA_MINIMAP_EVENT_ENEMY_TELEPORTING, 1 )
+			end
+		end
+	end
+
+
+
 end
 
 -- An item was picked up off the ground
@@ -802,9 +852,12 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	-- Hide main hero
 	local ability = hero:FindAbilityByName("hide_hero")
-	ability:UpgradeAbility(true)
-	hero:SetAbilityPoints(0)
-	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
+	if ability then
+		ability:UpgradeAbility(true)
+		hero:SetAbilityPoints(0)
+		hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
+		hero:AddNoDraw()
+	end
 end
 
 -- A player killed another player in a multi-team context
