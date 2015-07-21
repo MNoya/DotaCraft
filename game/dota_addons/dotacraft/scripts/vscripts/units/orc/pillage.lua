@@ -1,7 +1,8 @@
 function Pillage(event)
 	local target = event.target
 	local caster = event.caster
-
+	local particle = event.particle
+	
 	if not IsCustomBuilding(target) then
 		return
 	end
