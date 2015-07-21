@@ -5,11 +5,11 @@ function ModifyLumber( player, lumber_value )
 	if lumber_value == 0 then return end
 	if lumber_value > 0 then
 		player.lumber = player.lumber + lumber_value
-	    CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = player.lumber })
+	    CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = math.floor(player.lumber) })
 	else
 		if PlayerHasEnoughLumber( player, math.abs(lumber_value) ) then
 			player.lumber = player.lumber + lumber_value
-		    CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = player.lumber })
+		    CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = math.floor(player.lumber) })
 		end
 	end
 end
@@ -312,8 +312,11 @@ end
 -- Custom Corpse Mechanic
 function LeavesCorpse( unit )
 	
+	if not unit or not IsValidEntity(unit) then
+		return false
+
 	-- Heroes don't leave corpses (includes illusions)
-	if unit:IsHero() then
+	elseif unit:IsHero() then
 		return false
 
 	-- Ignore buildings	

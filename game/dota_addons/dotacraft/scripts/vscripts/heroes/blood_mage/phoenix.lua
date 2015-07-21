@@ -19,7 +19,7 @@ end
 
 -- Set the units looking at the same point of the caster
 function SetUnitsMoveForward( event )
-	local caster = event.caster
+	local caster = event.caster -- The Blood Mage
 	local target = event.target
     local fv = caster:GetForwardVector()
     local origin = caster:GetAbsOrigin()
@@ -28,17 +28,20 @@ function SetUnitsMoveForward( event )
 
 	-- Add the target spawned unit to a table on the caster handle, to find them later
 	table.insert(caster.phoenix, target)
+	target:SetOwner(caster) --The Blood Mage has ownership over this, not the main hero
 end
 
 -- Kills the summoned units after a new spell start
 function KillPhoenix( event )
 	local caster = event.caster
-	local targets = caster.phoenix or {}
+	local targets = caster.phoenix
 
-	for _,unit in pairs(targets) do		
-	   	if unit and IsValidEntity(unit) then
-    	  	unit:RemoveSelf()
-    	end
+	if targets then 
+		for _,unit in pairs(targets) do		
+		   	if unit and IsValidEntity(unit) then
+	    	  	unit:RemoveSelf()
+	    	end
+		end
 	end
 
 	-- Reset table
@@ -69,7 +72,7 @@ end
 function PhoenixEgg( event )
 	local caster = event.caster --the phoenix
 	local ability = event.ability
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	local hero = caster:GetOwner()
 	local phoenix_egg_duration = ability:GetLevelSpecialValueFor( "phoenix_egg_duration", ability:GetLevel() - 1 )
 	local unit_name = "npc_phoenix_egg"
 
@@ -101,14 +104,15 @@ function PhoenixEggCheckReborn( event )
 	local unit = event.unit --the egg
 	local attacker = event.attacker
 	local ability = event.ability
-	local hero = unit:GetPlayerOwner():GetAssignedHero()
+	local hero = unit:GetOwner()
+	local player = hero:GetPlayerOwner()
 	local playerID = hero:GetPlayerID()
 
 	if unit == attacker then
 		print("Spawn a Phoenix")
 		local unit_name = "npc_phoenix"
 
-		local phoenix = CreateUnitByName(unit_name, unit:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
+		local phoenix = CreateUnitByName(unit_name, unit:GetAbsOrigin(), true, player, hero, hero:GetTeamNumber())
 		phoenix:SetControllableByPlayer(playerID, true)
 
 		-- Add the spawned unit to the table

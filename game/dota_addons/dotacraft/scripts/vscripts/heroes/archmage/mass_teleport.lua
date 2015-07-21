@@ -56,10 +56,4 @@ function BuildingCheck( event )
 	local caster = event.caster
 	local target = event.target
 	local pID = caster:GetPlayerID()
-
-	local isBuilding = target:FindAbilityByName("ability_building")
-	if not isBuilding then
-		caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need to target a building" } )
-	end	
 end
