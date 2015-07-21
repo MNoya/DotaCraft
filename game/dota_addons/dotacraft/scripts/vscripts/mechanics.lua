@@ -2,41 +2,32 @@
 
 -- Modifies the lumber of this player. Accepts negative values
 function ModifyLumber( player, lumber_value )
-	local pID = player:GetAssignedHero():GetPlayerID()
-	
+	if lumber_value == 0 then return end
 	if lumber_value > 0 then
 		player.lumber = player.lumber + lumber_value
-	    --print("Lumber Gained. Player " .. pID .. " is currently at " .. player.lumber)
-	    FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
+	    CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = player.lumber })
 	else
 		if PlayerHasEnoughLumber( player, math.abs(lumber_value) ) then
 			player.lumber = player.lumber + lumber_value
-		    --print("Lumber Spend. Player " .. pID .. " is currently at " .. player.lumber)
-		    FireGameEvent('cgm_player_lumber_changed', { player_ID = pID, lumber = player.lumber })
+		    CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = player.lumber })
 		end
 	end
 end
 
 -- Modifies the food limit of this player. Accepts negative values
 function ModifyFoodLimit( player, food_limit_value )
-	local pID = player:GetAssignedHero():GetPlayerID()
-
 	player.food_limit = player.food_limit + food_limit_value
 	if player.food_limit > 100 then
 		player.food_limit = 100
 	end
-	print("Food Limit Changed. Player " .. pID .. " can use up to " .. player.food_limit)
-	FireGameEvent('cgm_player_food_limit_changed', { player_ID = pID, food_used = player.food_used, food_limit = player.food_limit })	
+	CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = player.food_used, food_limit = player.food_limit })	
 end
 
 -- Modifies the food used of this player. Accepts negative values
 -- Can go over the limit if a build is destroyed while the unit is already spawned/training
 function ModifyFoodUsed( player, food_used_value )
-	local pID = player:GetAssignedHero():GetPlayerID()
-
 	player.food_used = player.food_used + food_used_value
-    print("Food Used Changed. Player " .. pID .. " is currently at " .. player.food_used)
-    FireGameEvent('cgm_player_food_used_changed', { player_ID = pID, food_used = player.food_used, food_limit = player.food_limit })
+    CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = player.food_used, food_limit = player.food_limit })
 end
 
 -- Returns Int
@@ -54,6 +45,35 @@ function GetFoodCost( unit )
 	if unit and IsValidEntity(unit) then
 		if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].FoodCost then
 			return GameRules.UnitKV[unit:GetUnitName()].FoodCost
+		end
+	end
+	return 0
+end
+
+-- Returns Int
+function GetGoldCost( unit )
+	if unit and IsValidEntity(unit) then
+		if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].GoldCost then
+			return GameRules.UnitKV[unit:GetUnitName()].GoldCost
+		end
+	end
+	return 0
+end
+
+-- Returns Int
+function GetLumberCost( unit )
+	if unit and IsValidEntity(unit) then
+		if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].LumberCost then
+			return GameRules.UnitKV[unit:GetUnitName()].LumberCost
+		end
+	end
+	return 0
+end
+
+function GetBuildTime( unit )
+	if unit and IsValidEntity(unit) then
+		if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].BuildTime then
+			return GameRules.UnitKV[unit:GetUnitName()].BuildTime
 		end
 	end
 	return 0
