@@ -16,17 +16,14 @@ function Pillage(event)
 	local damage = event.attack_damage
 	local unitName = caster:GetUnitName()
 
-	if unitName == 'orc_raider' then
-		damage = damage * 1.5
-	else
-		damage = damage * 0.7
-	end
+	-- Adjust by damage type
+	damage = damage * GetDamageForAttackAndArmor( GetAttackType(caster), GetArmorType(target) )
 
 	local armor = target:GetPhysicalArmorValue()
 
 	damage = damage * (1 - 0.06 * armor / (1 + 0.06 * math.abs(armor)))
 
-	local pillage = (damage/target:GetMaxHealth()) * event.pillage_ratio * GetGoldCost(target)
+	local pillage = (damage/target:GetMaxHealth()) * pillage_ratio * GetGoldCost(target)
 	caster.pillaged_gold = caster.pillaged_gold + pillage
 	local effective_gold = math.floor(caster.pillaged_gold)
 
