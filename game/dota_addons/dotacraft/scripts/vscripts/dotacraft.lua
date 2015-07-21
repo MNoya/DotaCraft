@@ -376,8 +376,12 @@ function dotacraft:InitGameMode()
   	GameRules.StartingPositions = {}
 	local targets = Entities:FindAllByName( "*starting_position" ) --Inside player_start.vmap prefab
 	for k,v in pairs(targets) do
-		table.insert( GameRules.StartingPositions, v:GetOrigin() )
+		local pos_table = {}
+		pos_table.position = v:GetOrigin()
+		pos_table.playerID = -1
+		GameRules.StartingPositions[k-1] = pos_table
 	end
+	print("[DOTACRAFT] Starting Positions:")
 	DeepPrintTable(GameRules.StartingPositions)
 
 	print('[DOTACRAFT] Done loading dotacraft gamemode!\n\n')
@@ -489,6 +493,32 @@ function dotacraft:OnHeroInGame(hero)
 		for i=1,9 do
 			hero:HeroLevelUp(false)
 		end
+	end
+
+	if hero:HasAbility("hide_hero") then
+		local player = hero:GetPlayerOwner()
+		player.lumber = 0
+		player.food_limit = 0 -- The amount of food available to build units
+		player.food_used = 0 -- The amount of food used by this player creatures
+	
+		-- Give Initial Resources
+		if Convars:GetBool("developer") then
+			hero:SetGold(50000, false)
+			ModifyLumber(player, 50000)
+		else
+			hero:SetGold(500, false)
+			ModifyLumber(player, 150)
+		end
+
+		-- Hide main hero under the main base
+		local pID = hero:GetPlayerOwnerID()
+		local position = GameRules.StartingPositions[pID].position
+		local ability = hero:FindAbilityByName("hide_hero")
+		ability:UpgradeAbility(true)
+		hero:SetAbilityPoints(0)
+		hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
+		Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
+		hero:AddNoDraw()
 	end
 
 end
@@ -607,9 +637,13 @@ function dotacraft:OnEntityHurt(keys)
 				-- Update the last warning to the current time
 				GameRules.PLAYER_DAMAGE_WARNING[pID] = time
 			else
-				-- Ping
-				local origin = victim:GetAbsOrigin()
-				MinimapEvent( victim:GetTeamNumber(), victim, origin.x, origin.y, DOTA_MINIMAP_EVENT_ENEMY_TELEPORTING, 1 )
+				-- Ping on each building, every 2 seconds at most
+				local last_damaged = victim.last_damaged
+				if not last_damaged or (time - last_damaged) > 2 then
+					victim.last_damaged = time
+					local origin = victim:GetAbsOrigin()
+					MinimapEvent( victim:GetTeamNumber(), victim, origin.x, origin.y, DOTA_MINIMAP_EVENT_ENEMY_TELEPORTING, 2 )
+				end
 			end
 		end
 	end
@@ -766,33 +800,19 @@ function dotacraft:OnPlayerPickHero(keys)
 	local playerID = hero:GetPlayerID()
 
 	-- Initialize Variables for Tracking
-	player.lumber = 0
-	player.food_limit = 0 -- The amount of food available to build units
-	player.food_used = 0 -- The amount of food used by this player creatures
 	player.buildings = {} -- This keeps the name and quantity of each building, to access in O(1)
 	player.units = {} -- This keeps the handle of all the units of the player army, to iterate for unlocking upgrades
 	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
 
-	-- Give Initial Resources
-	if Convars:GetBool("developer") then
-		hero:SetGold(50000, false)
-		ModifyLumber(player, 50000)
-	else
-		hero:SetGold(500, false)
-		ModifyLumber(player, 150)
-	end
-
     -- Create Main Building
-    -- This position should be dynamic according to the map starting points
     DeepPrintTable(GameRules.StartingPositions)
-    print("There is",#GameRules.StartingPositions," positions available")
-    local random_pos = RandomInt(1, #GameRules.StartingPositions)
-    local position = GameRules.StartingPositions[random_pos]
-    table.remove(GameRules.StartingPositions, random_pos)
+    local position = GameRules.StartingPositions[playerID].position
+    GameRules.StartingPositions[playerID].playerID = playerID
+
     print("Position for "..playerID..": ",position)
-     DeepPrintTable(GameRules.StartingPositions)
+    DeepPrintTable(GameRules.StartingPositions)
     print("Remaining",#GameRules.StartingPositions,"positions")
 
     -- Stop game logic on the model overview map
@@ -807,6 +827,8 @@ function dotacraft:OnPlayerPickHero(keys)
 
 	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5) 
 	player.buildings[city_center_name] = 1
+	PlayerResource:SetCameraTarget(playerID, building)
+	Timers:CreateTimer(function() PlayerResource:SetCameraTarget(playerID, nil) end)
 	table.insert(player.structures, building)
 
 	CheckAbilityRequirements( building, player )
@@ -848,15 +870,6 @@ function dotacraft:OnPlayerPickHero(keys)
 
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( builder, player )
-	end
-
-	-- Hide main hero
-	local ability = hero:FindAbilityByName("hide_hero")
-	if ability then
-		ability:UpgradeAbility(true)
-		hero:SetAbilityPoints(0)
-		hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
-		hero:AddNoDraw()
 	end
 end
 
