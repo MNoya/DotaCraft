@@ -1,7 +1,9 @@
 function Pillage(event)
 	local target = event.target
 	local caster = event.caster
-	local particle = event.particle
+	local damage = event.attack_damage
+	local pillage_ratio = event.ability:GetSpecialValueFor("pillage_ratio")
+	local particleName = "particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
 	
 	if not IsCustomBuilding(target) then
 		return
@@ -30,7 +32,9 @@ function Pillage(event)
 
 	if effective_gold > 0 then
 		caster:GetPlayerOwner():GetAssignedHero():ModifyGold(effective_gold, false, 0)
-		ParticleManager:CreateParticle("particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf", PATTACH_OVERHEAD_FOLLOW, caster)
+		local particle = ParticleManager:CreateParticle( particleName, PATTACH_OVERHEAD_FOLLOW, caster )
+		ParticleManager:SetParticleControl( particle, 0, caster:GetAbsOrigin() )
+		ParticleManager:SetParticleControl( particle, 1, caster:GetAbsOrigin() )
 		PopupGoldGain(caster, effective_gold)
 		caster.pillaged_gold = caster.pillaged_gold - effective_gold
 	end

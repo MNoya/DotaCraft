@@ -595,7 +595,7 @@ function dotacraft:OnEntityHurt(keys)
 			if not last_warning or (time - last_warning) > UNDER_ATTACK_WARNING_INTERVAL then
 
 				-- Damage Particle
-				local particle = ParticleManager:CreateParticle("particles/generic_gameplay/screen_damage_indicator.vpcf", PATTACH_EYES_FOLLOW, victim)
+				local particle = ParticleManager:CreateParticleForPlayer("particles/generic_gameplay/screen_damage_indicator.vpcf", PATTACH_EYES_FOLLOW, victim, victim:GetPlayerOwner())
 				ParticleManager:SetParticleControl(particle, 1, victim:GetAbsOrigin())
 				Timers:CreateTimer(3, function() ParticleManager:DestroyParticle(particle, false) end)
 
