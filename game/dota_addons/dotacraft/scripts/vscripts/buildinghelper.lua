@@ -366,7 +366,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
   -- whether we should update the building's health over the build time.
   local bUpdateHealth = buildingTable:GetVal("UpdateHealth", "bool")
   local bRequiresRepair = buildingTable:GetVal("RequiresRepair", "bool")
-  print("bRequiresRepair",RequiresRepair)
+  print("bRequiresRepair",bRequiresRepair)
   local fMaxHealth = building:GetMaxHealth()
 
   --[[
@@ -441,18 +441,17 @@ function BuildingHelper:InitializeBuildingEntity( keys )
     item = nil
     builder.entrance_to_build = builder:GetAbsOrigin()
     local location_builder = Vector(location.x, location.y, location.z - 200)
+    AddUnitToSelection(building)
     Timers:CreateTimer(function() 
       builder:SetAbsOrigin(location_builder)
-      AddUnitToSelection(building)
     end)
   end
 
-  if not bRequiresRepair then
-    -- Health Timers
+  if fUpdateHealthInterval <= fserverFrameRate then
     -- If the tick would be faster than 1 frame, adjust the HP gained per frame
-    if fUpdateHealthInterval <= fserverFrameRate then
       print("Building needs float adjust")
-    else
+  else
+    if not bRequiresRepair then
       building.updateHealthTimer = DoUniqueString('health') 
       Timers:CreateTimer(building.updateHealthTimer, {
         callback = function()
@@ -492,38 +491,39 @@ function BuildingHelper:InitializeBuildingEntity( keys )
 
           return nil
         end
-          return fUpdateHealthInterval
-        end})
-    end
+        return fUpdateHealthInterval
+      end})
+    else
 
-    -- The building will have to be assisted through a repair ability
-    local repair_ability_name = "human_gather"
-    local repair_ability = builder:FindAbilityByName(repair_ability_name)
-    if not repair_ability then
-      print("[BH] Error, can't find "..repair_ability_name.." on the builder ",builder, builder:GetUnitName())
-      return
-    end
-
-    --[[ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, 
-                            TargetIndex = building:GetEntityIndex(), AbilityIndex = repair_ability:GetEntityIndex(), Queue = false }) ]]
-    builder:CastAbilityOnTarget(building, repair_ability, pID)
-
-    building.updateHealthTimer = DoUniqueString('assisted_construction') 
-    Timers:CreateTimer(building.updateHealthTimer, {
-      callback = function()
-      if IsValidEntity(building) then
-        if building.constructionCompleted then --This is set on the repair ability when the builders have restored the necessary health
-          if callbacks.onConstructionCompleted ~= nil and building:IsAlive() then
-            callbacks.onConstructionCompleted(building)
-          end
-          building.state = "complete"
-          building.bUpdatingHealth = false
-          return nil
-        else
-          return 0.1
-        end
+      -- The building will have to be assisted through a repair ability
+      local repair_ability_name = "human_gather"
+      local repair_ability = builder:FindAbilityByName(repair_ability_name)
+      if not repair_ability then
+        print("[BH] Error, can't find "..repair_ability_name.." on the builder ",builder, builder:GetUnitName())
+        return
       end
-    end})
+
+      --[[ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, 
+                            TargetIndex = building:GetEntityIndex(), AbilityIndex = repair_ability:GetEntityIndex(), Queue = false }) ]]
+      builder:CastAbilityOnTarget(building, repair_ability, pID)
+
+      building.updateHealthTimer = DoUniqueString('assisted_construction') 
+      Timers:CreateTimer(building.updateHealthTimer, {
+        callback = function()
+        if IsValidEntity(building) then
+          if building.constructionCompleted then --This is set on the repair ability when the builders have restored the necessary health
+            if callbacks.onConstructionCompleted ~= nil and building:IsAlive() then
+              callbacks.onConstructionCompleted(building)
+            end
+            building.state = "complete"
+            building.bUpdatingHealth = false
+            return nil
+          else
+            return 0.1
+          end
+        end
+      end})
+    end
   end
 
 
