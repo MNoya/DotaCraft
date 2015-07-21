@@ -128,12 +128,17 @@ end
 
 function GetDamageForAttackAndArmor( attack_type, armor_type )
 --[[
-			Unarm	Light	Medium	Heavy	Fort	Hero
-	Normal	100%	100%	150%	125%	70%		75%
-	Pierce	150%	200%	75%		75%		35%		50%
-	Siege	100%	100%	50%		125%	150%	75%
-	Chaos	100%	100%	100%	100%	40%		100%
-	Hero	100%	100%	100%	100%	50%		100%
+http://classic.battle.net/war3/basics/armorandweapontypes.shtml
+        Unarm   Light   Medium  Heavy   Fort   Hero   
+Normal  100%    100%    150%    100%    70%    100%   
+Pierce  150%    200%    75%     100%    35%    50%    
+Siege   150%    100%    50%     100%    150%   50%      
+Chaos   100%    100%    100%    100%    100%   100%     
+Hero    100%    100%    100%    100%    50%    100%
+
+-- Custom Attack Types
+Magic   100%    125%    75%     200%    35%    50%
+Spells  100%    100%    100%    100%    100%   70%  
 ]]
 	if attack_type == "normal" then
 		if armor_type == "unarmored" then
@@ -143,11 +148,11 @@ function GetDamageForAttackAndArmor( attack_type, armor_type )
 		elseif armor_type == "medium" then
 			return 1.5
 		elseif armor_type == "heavy" then
-			return 1.25
+			return 1 --1.25 in dota
 		elseif armor_type == "fortified" then
 			return 0.7
 		elseif armor_type == "hero" then
-			return 0.75
+			return 1 --0.75 in dota
 		end
 
 	elseif attack_type == "pierce" then
@@ -158,7 +163,7 @@ function GetDamageForAttackAndArmor( attack_type, armor_type )
 		elseif armor_type == "medium" then
 			return 0.75
 		elseif armor_type == "heavy" then
-			return 0.75
+			return 1 --0.75 in dota
 		elseif armor_type == "fortified" then
 			return 0.35
 		elseif armor_type == "hero" then
@@ -167,17 +172,17 @@ function GetDamageForAttackAndArmor( attack_type, armor_type )
 
 	elseif attack_type == "siege" then
 		if armor_type == "unarmored" then
-			return 1
+			return 1.5 --1 in dota
 		elseif armor_type == "light" then
 			return 1
 		elseif armor_type == "medium" then
 			return 0.5
 		elseif armor_type == "heavy" then
-			return 1.25
+			return 1 --1.25 in dota
 		elseif armor_type == "fortified" then
-			return 1.25
+			return 1.5
 		elseif armor_type == "hero" then
-			return 1
+			return 0.5 --0.75 in dota
 		end
 
 	elseif attack_type == "chaos" then
@@ -190,7 +195,7 @@ function GetDamageForAttackAndArmor( attack_type, armor_type )
 		elseif armor_type == "heavy" then
 			return 1
 		elseif armor_type == "fortified" then
-			return 0.4
+			return 1 --0.4 in Dota
 		elseif armor_type == "hero" then
 			return 1
 		end
