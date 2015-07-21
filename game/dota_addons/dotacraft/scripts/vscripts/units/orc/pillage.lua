@@ -16,6 +16,7 @@ function Pillage(event)
 
 	if effective_gold > 0 then
 		caster:GetPlayerOwner():GetAssignedHero():ModifyGold(effective_gold, false, 0)
+		ParticleManager:CreateParticle(particle, PATTACH_OVERHEAD_FOLLOW, caster)
 		PopupGoldGain(caster, effective_gold)
 		caster.pillaged_gold = caster.pillaged_gold - effective_gold
 	end

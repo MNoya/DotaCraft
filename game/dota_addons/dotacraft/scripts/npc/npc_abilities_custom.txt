@@ -35011,6 +35011,11 @@
 			// Amount of resource gained = Building's cost * salvage_ratio * Damage dealt to building in percentage
 		}
 	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
+		}
+	
 		"Modifiers"
 		{
 			"modifier_pillage"		
@@ -35028,6 +35033,7 @@
 						"Target"		"TARGET"
 						"attack_damage"	"%attack_damage"
 						"pillage_ratio"	"%pillage_ratio"
+						"particle"		"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
 					}
 				} 
 			}
