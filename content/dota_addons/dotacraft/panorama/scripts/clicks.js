@@ -1,11 +1,5 @@
 "use strict";
 
-/* 
-Right click triggers the gather ability if the unit has it and clicks on a gold mine.
-*/
-
-var inAction = false;
-
 // Handle Right Button events
 function OnRightButtonPressed()
 {

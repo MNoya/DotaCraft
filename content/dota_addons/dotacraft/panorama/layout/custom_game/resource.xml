@@ -1,0 +1,24 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/resource.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/resource.js" />
+	</scripts>
+	<script>
+		$.Msg( "Compiled Panorama Resource!" );
+	</script>
+	<Panel hittest="false" class='ResourcePanel'>
+		<Panel class="LumberPanel">
+			<Label id="LumberText" text="" html="true" class="TitleFont" />
+			<Image hittest="false" id="LumberIcon" src="file://{images}/custom_game/lumber_icon.png" />
+		</Panel>
+		<Panel class='FoodPanel Green'>
+			<Label id="FoodText" text= "" html="true" class="TitleFont" />
+			<Image hittest="false" id="FoodIcon" src="file://{images}/custom_game/food_icon.png" />
+		</Panel>
+		<Panel class='UpkeepPanel'>
+			<Label hittest="false" id="UpkeepText" text="" html="true" class="TitleFont"/>
+		</Panel>
+	</Panel>
+</root>

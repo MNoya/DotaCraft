@@ -642,7 +642,9 @@ end
 function GetFormationRank( unit )
     local rank = 0
     if unit:IsHero() then
-        rank = GameRules.HeroKV[unit:GetUnitName()]["FormationRank"]
+        if GameRules.HeroKV[unit] then
+            rank = GameRules.HeroKV[unit:GetUnitName()]["FormationRank"]
+        end
     elseif unit:IsCreature() then
         rank = GameRules.UnitKV[unit:GetUnitName()]["FormationRank"]
     end

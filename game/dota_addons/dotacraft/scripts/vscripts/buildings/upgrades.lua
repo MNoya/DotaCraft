@@ -22,7 +22,7 @@ function UpgradeBuilding( event )
         table.remove(player.structures, buildingIndex)
 
         -- Remove the rally flag if there is one
-        if caster.flag then
+        if caster.flag and IsValidEntity(caster.flag) then
 			caster.flag:RemoveSelf()
 		end
 		
