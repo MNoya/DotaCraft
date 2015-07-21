@@ -397,6 +397,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
   local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
   local fMaxHealth = fMaxHealth * (1 + 0.2 * masonry_rank) 
   local nInitialHealth = 0.10 * ( fMaxHealth )
+  local fUpdateHealthInterval = buildTime / math.floor(fMaxHealth-nInitialHealth) -- health to add every tick until build time is completed.
   ---------------------------------------------------------------------
 
   -- the amount to scale to.
@@ -433,46 +434,68 @@ function BuildingHelper:InitializeBuildingEntity( keys )
     bScaling=true
   end
 
+  -- Put the builder invulnerable inside the building in construction
+  if bBuilderInside then
+    local item = CreateItem("item_apply_modifiers", nil, nil)
+    item:ApplyDataDrivenModifier(builder, builder, "modifier_builder_hidden", {})
+    item = nil
+    builder.entrance_to_build = builder:GetAbsOrigin()
+    local location_builder = Vector(location.x, location.y, location.z - 200)
+    Timers:CreateTimer(function() 
+      builder:SetAbsOrigin(location_builder)
+      AddUnitToSelection(building)
+    end)
+  end
+
   if not bRequiresRepair then
     -- Health Timers
     -- If the tick would be faster than 1 frame, adjust the HP gained per frame
-    building.updateHealthTimer = DoUniqueString('health') 
-    Timers:CreateTimer(building.updateHealthTimer, {
-      callback = function()
-      if IsValidEntity(building) then
-        local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
-        if not timesUp then
-          if building.bUpdatingHealth then
-            fHPAdjustment = fHPAdjustment + fSmallHealthInterval
-            if fHPAdjustment > 1 then
-              building:SetHealth(building:GetHealth() + nHealthInterval + 1)
-              fHPAdjustment = fHPAdjustment - 1
-              fAddedHealth = fAddedHealth + nHealthInterval + 1
-            else
-              building:SetHealth(building:GetHealth() + nHealthInterval)
-              fAddedHealth = fAddedHealth + nHealthInterval
+    if fUpdateHealthInterval <= fserverFrameRate then
+      print("Building needs float adjust")
+    else
+      building.updateHealthTimer = DoUniqueString('health') 
+      Timers:CreateTimer(building.updateHealthTimer, {
+        callback = function()
+        if IsValidEntity(building) and building:IsAlive() then
+          local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
+          if not timesUp then
+            if building.bUpdatingHealth then
+              if building:GetHealth() < fMaxHealth then
+                building:SetHealth(building:GetHealth() + 1)
+              else
+                building.bUpdatingHealth = false
+              end
             end
+          else
+            -- completion: timesUp is true
+            if callbacks.onConstructionCompleted ~= nil then
+              callbacks.onConstructionCompleted(building)
+              building.constructionCompleted = true
+            end
+
+            -- Eject Builder
+            if bBuilderInside then
+              builder:RemoveModifierByName("modifier_builder_hidden")
+              builder:SetAbsOrigin(builder.entrance_to_build)
+            end
+
+            -- clean up the timer if we don't need it.
+            return nil
           end
         else
-          -- completion: timesUp is true
-          building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth) -- round up the last little bit
-          if callbacks.onConstructionCompleted ~= nil and building:IsAlive() then
-            callbacks.onConstructionCompleted(building)
+          -- Building destroyed
+
+          -- Eject Builder
+          if bBuilderInside then
+            builder:RemoveModifierByName("modifier_builder_hidden")
           end
-          building.constructionCompleted = true
-          print("[BH] HP was off by:", fMaxHealth - fAddedHealth)
-          building.state = "complete"
-          building.bUpdatingHealth = false
-          -- clean up the timer if we don't need it.
+
           return nil
         end
-      else
-        -- not valid ent
-        return nil
-      end
-        return fserverFrameRate
-    end})
-  else
+          return fUpdateHealthInterval
+        end})
+    end
+
     -- The building will have to be assisted through a repair ability
     local repair_ability_name = "human_gather"
     local repair_ability = builder:FindAbilityByName(repair_ability_name)

@@ -980,7 +980,9 @@ function dotacraft:OnEntityKilled( event )
 		table.remove(player.structures, building)
 
 		-- Substract 1 to the player building tracking table for that name
-		player.buildings[building_name] = player.buildings[building_name] - 1
+		if player.buildings[building_name] then
+			player.buildings[building_name] = player.buildings[building_name] - 1
+		end
 
     	for k,builder in pairs(player.units) do
     		CheckAbilityRequirements( builder, player )

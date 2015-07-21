@@ -24,9 +24,9 @@ function GiveOrcBuildingItems( event )
 	local owner = caster:GetOwner()
 
 	-- Ordered by most used
-	local itemNames = { "item_build_great_hall",
-						"item_build_burrow",
+	local itemNames = { "item_build_burrow",
 						"item_build_altar_of_storms",	
+						"item_build_great_hall",
 						"item_build_war_mill",					
 						"item_build_voodoo_lounge"
 					  }
