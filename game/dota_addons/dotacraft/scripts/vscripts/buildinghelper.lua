@@ -359,14 +359,14 @@ function BuildingHelper:InitializeBuildingEntity( keys )
   -- New Build Behaviours
   --  RequiresRepair: If set to 1 it will place the building and not update its health nor send the OnConstructionCompleted callback until its fully healed
   --  BuilderInside: Puts the builder unselectable/invulnerable/nohealthbar inside the building in construction
+  --  ConsumesBuilder: Kills the builder after the construction is done
   local bRequiresRepair = buildingTable:GetVal("RequiresRepair", "bool")
   local bBuilderInside = buildingTable:GetVal("BuilderInside", "bool")
+  local bConsumesBuilder = buildingTable:GetVal("ConsumesBuilder", "bool")
   -------------------------------------------------------------------
 
   -- whether we should update the building's health over the build time.
   local bUpdateHealth = buildingTable:GetVal("UpdateHealth", "bool")
-  local bRequiresRepair = buildingTable:GetVal("RequiresRepair", "bool")
-  print("bRequiresRepair",bRequiresRepair)
   local fMaxHealth = building:GetMaxHealth()
 
   --[[
@@ -442,6 +442,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
     builder.entrance_to_build = builder:GetAbsOrigin()
     local location_builder = Vector(location.x, location.y, location.z - 200)
     AddUnitToSelection(building)
+    builder:AddNoDraw()
     Timers:CreateTimer(function() 
       builder:SetAbsOrigin(location_builder)
     end)
@@ -474,8 +475,14 @@ function BuildingHelper:InitializeBuildingEntity( keys )
 
             -- Eject Builder
             if bBuilderInside then
-              builder:RemoveModifierByName("modifier_builder_hidden")
-              builder:SetAbsOrigin(builder.entrance_to_build)
+              -- Consume Builder
+              if bConsumesBuilder then
+                builder:ForceKill(true)
+              else
+                builder:RemoveModifierByName("modifier_builder_hidden")
+                builder:SetAbsOrigin(builder.entrance_to_build)
+                builder:RemoveNoDraw()
+              end              
             end
 
             -- clean up the timer if we don't need it.
@@ -487,6 +494,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
           -- Eject Builder
           if bBuilderInside then
             builder:RemoveModifierByName("modifier_builder_hidden")
+            builder:RemoveNoDraw()
           end
 
           return nil
