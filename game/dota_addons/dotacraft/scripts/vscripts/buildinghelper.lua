@@ -182,26 +182,6 @@ function BuildingHelper:AddBuilding(keys)
   end
   buildingTable:SetVal("MaxScale", fMaxScale)
 
-  ------------------------------------------------------------------
-  -- New Build Behaviours
-  --  AutoBuild: Turned on by default, if set to 0 it will place the building and not update its health nor send the OnConstructionCompleted callback until its fully healed
-  --  BuilderInside: Puts the builder unselectable/invulnerable/nohealthbar inside the building in construction
-  print("NEW BUILD BEHAVIOURS")
-  local bAutoBuild = buildingTable:GetVal("AutoBuild", "bool")
-  if bAutoBuild == nil then
-    bAutoBuild = 1
-  end
-  buildingTable:SetVal("AutoBuild", bAutoBuild)
-
-  local bBuilderInside = buildingTable:GetVal("BuilderInside", "bool")
-  if bBuilderInside == nil then
-    bBuilderInside = 1
-  end
-  buildingTable:SetVal("BuilderInside", bBuilderInside)
-  -------------------------------------------------------------------
-
-
-
   -- Prepare the builder, if it hasn't already been done. Since this would need to be done for every builder in some games, might as well do it here.
   local builder = keys.caster
 
@@ -375,10 +355,18 @@ function BuildingHelper:InitializeBuildingEntity( keys )
   -- the gametime when the building should be completed.
   local fTimeBuildingCompleted=GameRules:GetGameTime()+buildTime
 
+  ------------------------------------------------------------------
+  -- New Build Behaviours
+  --  RequiresRepair: If set to 1 it will place the building and not update its health nor send the OnConstructionCompleted callback until its fully healed
+  --  BuilderInside: Puts the builder unselectable/invulnerable/nohealthbar inside the building in construction
+  local bRequiresRepair = buildingTable:GetVal("RequiresRepair", "bool")
+  local bBuilderInside = buildingTable:GetVal("BuilderInside", "bool")
+  -------------------------------------------------------------------
+
   -- whether we should update the building's health over the build time.
   local bUpdateHealth = buildingTable:GetVal("UpdateHealth", "bool")
-  local bAutoBuild = buildingTable:GetVal("AutoBuild", "bool")
-  print("bAutoBuild",bAutoBuild)
+  local bRequiresRepair = buildingTable:GetVal("RequiresRepair", "bool")
+  print("bRequiresRepair",RequiresRepair)
   local fMaxHealth = building:GetMaxHealth()
 
   --[[
@@ -445,7 +433,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
     bScaling=true
   end
 
-  if bAutoBuild == true then
+  if not bRequiresRepair then
     -- Health Timers
     -- If the tick would be faster than 1 frame, adjust the HP gained per frame
     building.updateHealthTimer = DoUniqueString('health') 
