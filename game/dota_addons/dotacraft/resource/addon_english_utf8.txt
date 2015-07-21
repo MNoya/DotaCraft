@@ -2464,5 +2464,693 @@
 		"DOTA_Tooltip_ability_human_research_cloud_disabled"                              "Cloud"
 		"DOTA_Tooltip_ability_human_research_cloud_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Arcane Vault\n - Castle</font></b>\nCreates a small cloud that stops buildings with ranged attacks that are within it from attacking."
 
+		// **************************************************************************************
+		// ===================================  -ORCS-  =========================================
+		// **************************************************************************************
+
+		///////////////
+		// Item      //
+		///////////////
+		"DOTA_Tooltip_ability_item_orb_of_frost"                                          "Orb Of Frost"
+		"DOTA_Tooltip_ability_item_orb_of_frost_Description"                              ""
+		"DOTA_Tooltip_ability_item_orb_of_frost_bonus_damage"                             "BONUS DAMAGE:"
+		"DOTA_Tooltip_ability_item_orb_of_frost_movespeed_slow"                           "MOVESPEED SLOW:"
+		"DOTA_Tooltip_ability_item_orb_of_frost_attackspeed_slow"                         "ATTACKSPEED SLOW:"
+		"DOTA_Tooltip_ability_item_orb_of_frost_slow_duration"                            "SLOW DURATION:"
+
+		"DOTA_Tooltip_ability_item_orb_of_fire"                                           "Orb Of Fire"
+		"DOTA_Tooltip_ability_item_orb_of_fire_Description"                               ""
+		"DOTA_Tooltip_ability_item_orb_of_fire_bonus_damage"                              "BONUS DAMAGE:"
+		"DOTA_Tooltip_ability_item_orb_of_fire_cleave_damage"                             "CLEAVE DAMAGE:"
+		"DOTA_Tooltip_ability_item_orb_of_fire_cleave_radius"                             "CLEAVE RADIUS:"
+
+		"DOTA_Tooltip_ability_item_orb_of_venom_wc3"                                      "Orb Of Venom Wc3"
+		"DOTA_Tooltip_ability_item_orb_of_venom_wc3_Description"                          ""
+		"DOTA_Tooltip_ability_item_orb_of_venom_wc3_bonus_damage"                         "BONUS DAMAGE:"
+		"DOTA_Tooltip_ability_item_orb_of_venom_wc3_damage_per_second"                    "DAMAGE PER SECOND:"
+		"DOTA_Tooltip_ability_item_orb_of_venom_wc3_movespeed_slow"                       "MOVESPEED SLOW:"
+		"DOTA_Tooltip_ability_item_orb_of_venom_wc3_duration"                             "DURATION:"
+
+		"DOTA_Tooltip_ability_item_orb_of_corruption"                                     "Orb Of Corruption"
+		"DOTA_Tooltip_ability_item_orb_of_corruption_Description"                         ""
+		"DOTA_Tooltip_ability_item_orb_of_corruption_bonus_damage"                        "BONUS DAMAGE:"
+		"DOTA_Tooltip_ability_item_orb_of_corruption_armor_reduction"                     "ARMOR REDUCTION:"
+		"DOTA_Tooltip_ability_item_orb_of_corruption_duration"                            "DURATION:"
+
+		"DOTA_Tooltip_ability_item_orb_of_darkness"                                       "Orb Of Darkness"
+		"DOTA_Tooltip_ability_item_orb_of_darkness_Description"                           ""
+		"DOTA_Tooltip_ability_item_orb_of_darkness_bonus_damage"                          "BONUS DAMAGE:"
+		"DOTA_Tooltip_ability_item_orb_of_darkness_minion_hp"                             "MINION HP:"
+		"DOTA_Tooltip_ability_item_orb_of_darkness_minion_damage"                         "MINION DAMAGE:"
+		"DOTA_Tooltip_ability_item_orb_of_darkness_duration"                              "DURATION:"
+
+		"DOTA_Tooltip_ability_item_orb_of_lightning"                                      "Orb Of Lightning"
+		"DOTA_Tooltip_ability_item_orb_of_lightning_Description"                          ""
+		"DOTA_Tooltip_ability_item_orb_of_lightning_bonus_damage"                         "BONUS DAMAGE:"
+		"DOTA_Tooltip_ability_item_orb_of_lightning_purge_chance"                         "PURGE CHANCE:"
+		"DOTA_Tooltip_ability_item_orb_of_lightning_movespeed_slow"                       "MOVESPEED SLOW:"
+		"DOTA_Tooltip_ability_item_orb_of_lightning_duration"                             "DURATION:"
+		"DOTA_Tooltip_ability_item_orb_of_lightning_damage_to_summons"                    "DAMAGE TO SUMMONS:"
+
+		"DOTA_Tooltip_ability_item_build_great_hall"                                      "Build Great Hall"
+		"DOTA_Tooltip_ability_item_build_great_hall_Description"                          ""
+		"DOTA_Tooltip_ability_item_build_great_hall_build_time"                           "BUILD TIME:"
+		"DOTA_Tooltip_ability_item_build_great_hall_gold_cost"                            "GOLD COST:"
+		"DOTA_Tooltip_ability_item_build_great_hall_lumber_cost"                          "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_item_build_burrow"                                          "Build Burrow"
+		"DOTA_Tooltip_ability_item_build_burrow_Description"                              ""
+		"DOTA_Tooltip_ability_item_build_burrow_build_time"                               "BUILD TIME:"
+		"DOTA_Tooltip_ability_item_build_burrow_gold_cost"                                "GOLD COST:"
+		"DOTA_Tooltip_ability_item_build_burrow_lumber_cost"                              "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_item_build_altar_of_storms"                                 "Build Altar Of Storms"
+		"DOTA_Tooltip_ability_item_build_altar_of_storms_Description"                     ""
+		"DOTA_Tooltip_ability_item_build_altar_of_storms_build_time"                      "BUILD TIME:"
+		"DOTA_Tooltip_ability_item_build_altar_of_storms_gold_cost"                       "GOLD COST:"
+		"DOTA_Tooltip_ability_item_build_altar_of_storms_lumber_cost"                     "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_item_build_war_mill"                                        "Build War Mill"
+		"DOTA_Tooltip_ability_item_build_war_mill_Description"                            ""
+		"DOTA_Tooltip_ability_item_build_war_mill_build_time"                             "BUILD TIME:"
+		"DOTA_Tooltip_ability_item_build_war_mill_gold_cost"                              "GOLD COST:"
+		"DOTA_Tooltip_ability_item_build_war_mill_lumber_cost"                            "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_item_build_voodoo_lounge"                                   "Build Voodoo Lounge"
+		"DOTA_Tooltip_ability_item_build_voodoo_lounge_Description"                       ""
+		"DOTA_Tooltip_ability_item_build_voodoo_lounge_build_time"                        "BUILD TIME:"
+		"DOTA_Tooltip_ability_item_build_voodoo_lounge_gold_cost"                         "GOLD COST:"
+		"DOTA_Tooltip_ability_item_build_voodoo_lounge_lumber_cost"                       "LUMBER COST:"
+
+		///////////////
+		// Abilities //
+		///////////////
+		"DOTA_Tooltip_ability_orc_pillage"                                                "Orc Pillage"
+		"DOTA_Tooltip_ability_orc_pillage_Description"                                    ""
+		"DOTA_Tooltip_ability_orc_pillage_accumulation_step"                              "ACCUMULATION STEP:"
+		"DOTA_Tooltip_ability_orc_pillage_salvage_ratio"                                  "SALVAGE RATIO:"
+
+		"DOTA_Tooltip_ability_orc_berserk"                                                "Orc Berserk"
+		"DOTA_Tooltip_ability_orc_berserk_Description"                                    ""
+		"DOTA_Tooltip_ability_orc_berserk_duration"                                       "DURATION:"
+		"DOTA_Tooltip_ability_orc_berserk_damage_taken_increase"                          "DAMAGE TAKEN INCREASE:"
+		"DOTA_Tooltip_ability_orc_berserk_attack_speed_increase"                          "ATTACK SPEED INCREASE:"
+		"DOTA_Tooltip_ability_orc_berserk_movement_speed_increase"                        "MOVEMENT SPEED INCREASE:"
+
+		"DOTA_Tooltip_ability_orc_burning_oil"                                            "Orc Burning Oil"
+		"DOTA_Tooltip_ability_orc_burning_oil_Description"                                ""
+		"DOTA_Tooltip_ability_orc_burning_oil_duration"                                   "DURATION:"
+		"DOTA_Tooltip_ability_orc_burning_oil_radius"                                     "RADIUS:"
+		"DOTA_Tooltip_ability_orc_burning_oil_half_damage_dealt"                          "HALF DAMAGE DEALT:"
+		"DOTA_Tooltip_ability_orc_burning_oil_half_damage_interval"                       "HALF DAMAGE INTERVAL:"
+		"DOTA_Tooltip_ability_orc_burning_oil_full_damage_dealth"                         "FULL DAMAGE DEALTH:"
+		"DOTA_Tooltip_ability_orc_burning_oil_full_damage_interval"                       "FULL DAMAGE INTERVAL:"
+		"DOTA_Tooltip_ability_orc_burning_oil_building_reduction"                         "BUILDING REDUCTION:"
+
+		"DOTA_Tooltip_ability_orc_purge"                                                  "Orc Purge"
+		"DOTA_Tooltip_ability_orc_purge_Description"                                      ""
+		"DOTA_Tooltip_ability_orc_purge_duration"                                         "DURATION:"
+		"DOTA_Tooltip_ability_orc_purge_duration_hero"                                    "DURATION HERO:"
+		"DOTA_Tooltip_ability_orc_purge_summoned_unit_damage"                             "SUMMONED UNIT DAMAGE:"
+
+		"DOTA_Tooltip_ability_orc_lightning_shield"                                       "Orc Lightning Shield"
+		"DOTA_Tooltip_ability_orc_lightning_shield_Description"                           ""
+		"DOTA_Tooltip_ability_orc_lightning_shield_duration"                              "DURATION:"
+		"DOTA_Tooltip_ability_orc_lightning_shield_radius"                                "RADIUS:"
+		"DOTA_Tooltip_ability_orc_lightning_shield_damage_per_second"                     "DAMAGE PER SECOND:"
+
+		"DOTA_Tooltip_ability_orc_bloodlust"                                              "Orc Bloodlust"
+		"DOTA_Tooltip_ability_orc_bloodlust_Description"                                  ""
+		"DOTA_Tooltip_ability_orc_bloodlust_duration"                                     "DURATION:"
+		"DOTA_Tooltip_ability_orc_bloodlust_attack_speed_increase"                        "ATTACK SPEED INCREASE:"
+		"DOTA_Tooltip_ability_orc_bloodlust_movement_speed_increase"                      "MOVEMENT SPEED INCREASE:"
+		"DOTA_Tooltip_ability_orc_bloodlust_scaling_factor"                               "SCALING FACTOR:"
+
+		"DOTA_Tooltip_ability_orc_sentry_ward"                                            "Orc Sentry Ward"
+		"DOTA_Tooltip_ability_orc_sentry_ward_Description"                                ""
+		"DOTA_Tooltip_ability_orc_sentry_ward_duration"                                   "DURATION:"
+
+		"DOTA_Tooltip_ability_orc_stasis_trap"                                            "Orc Stasis Trap"
+		"DOTA_Tooltip_ability_orc_stasis_trap_Description"                                ""
+		"DOTA_Tooltip_ability_orc_stasis_trap_duration"                                   "DURATION:"
+		"DOTA_Tooltip_ability_orc_stasis_trap_detonation_radius"                          "DETONATION RADIUS:"
+		"DOTA_Tooltip_ability_orc_stasis_trap_stun_duration"                              "STUN DURATION:"
+		"DOTA_Tooltip_ability_orc_stasis_trap_activation_delay"                           "ACTIVATION DELAY:"
+		"DOTA_Tooltip_ability_orc_stasis_trap_detection_radius"                           "DETECTION RADIUS:"
+
+		"DOTA_Tooltip_ability_orc_healing_ward"                                           "Orc Healing Ward"
+		"DOTA_Tooltip_ability_orc_healing_ward_Description"                               ""
+		"DOTA_Tooltip_ability_orc_healing_ward_duration"                                  "DURATION:"
+
+		"DOTA_Tooltip_ability_orc_healing_ward_aura"                                      "Orc Healing Ward Aura"
+		"DOTA_Tooltip_ability_orc_healing_ward_aura_Description"                          ""
+		"DOTA_Tooltip_ability_orc_healing_ward_aura_radius"                               "RADIUS:"
+		"DOTA_Tooltip_ability_orc_healing_ward_aura_regeneration"                         "REGENERATION:"
+
+		"DOTA_Tooltip_ability_orc_spirit_link"                                            "Orc Spirit Link"
+		"DOTA_Tooltip_ability_orc_spirit_link_Description"                                ""
+		"DOTA_Tooltip_ability_orc_spirit_link_duration"                                   "DURATION:"
+		"DOTA_Tooltip_ability_orc_spirit_link_radius"                                     "RADIUS:"
+		"DOTA_Tooltip_ability_orc_spirit_link_distribution_factor"                        "DISTRIBUTION FACTOR:"
+		"DOTA_Tooltip_ability_orc_spirit_link_max_unit"                                   "MAX UNIT:"
+
+		"DOTA_Tooltip_ability_orc_disenchant"                                             "Orc Disenchant"
+		"DOTA_Tooltip_ability_orc_disenchant_Description"                                 ""
+		"DOTA_Tooltip_ability_orc_disenchant_radius"                                      "RADIUS:"
+		"DOTA_Tooltip_ability_orc_disenchant_summoned_unit_damage"                        "SUMMONED UNIT DAMAGE:"
+
+		"DOTA_Tooltip_ability_orc_ancestral_spirit"                                       "Orc Ancestral Spirit"
+		"DOTA_Tooltip_ability_orc_ancestral_spirit_Description"                           ""
+		"DOTA_Tooltip_ability_orc_ancestral_spirit_life_restored"                         "LIFE RESTORED:"
+		"DOTA_Tooltip_ability_orc_ancestral_spirit_mana_restored"                         "MANA RESTORED:"
+
+		"DOTA_Tooltip_ability_orc_ethereal_form"                                          "Orc Ethereal Form"
+		"DOTA_Tooltip_ability_orc_ethereal_form_Description"                              ""
+		"DOTA_Tooltip_ability_orc_ethereal_form_duration"                                 "DURATION:"
+
+		"DOTA_Tooltip_ability_orc_ensnare"                                                "Orc Ensnare"
+		"DOTA_Tooltip_ability_orc_ensnare_Description"                                    ""
+		"DOTA_Tooltip_ability_orc_ensnare_duration"                                       "DURATION:"
+		"DOTA_Tooltip_ability_orc_ensnare_lower_duration"                                 "LOWER DURATION:"
+		"DOTA_Tooltip_ability_orc_ensnare_lower_height"                                   "LOWER HEIGHT:"
+
+		"DOTA_Tooltip_ability_orc_devour"                                                 "Orc Devour"
+		"DOTA_Tooltip_ability_orc_devour_Description"                                     ""
+		"DOTA_Tooltip_ability_orc_devour_max_creep_level"                                 "MAX CREEP LEVEL:"
+
+		"DOTA_Tooltip_ability_orc_devour_cargo"                                           "Orc Devour Cargo"
+		"DOTA_Tooltip_ability_orc_devour_cargo_Description"                               ""
+		"DOTA_Tooltip_ability_orc_devour_cargo_duration"                                  "DURATION:"
+		"DOTA_Tooltip_ability_orc_devour_cargo_radius"                                    "RADIUS:"
+		"DOTA_Tooltip_ability_orc_devour_cargo_damage_per_second"                         "DAMAGE PER SECOND:"
+
+		"DOTA_Tooltip_ability_orc_war_drums"                                              "Orc War Drums"
+		"DOTA_Tooltip_ability_orc_war_drums_Description"                                  ""
+		"DOTA_Tooltip_ability_orc_war_drums_radius"                                       "RADIUS:"
+		"DOTA_Tooltip_ability_orc_war_drums_damage_increase"                              "DAMAGE INCREASE:"
+
+		"DOTA_Tooltip_ability_orc_envenomed_spears"                                       "Orc Envenomed Spears"
+		"DOTA_Tooltip_ability_orc_envenomed_spears_Description"                           ""
+		"DOTA_Tooltip_ability_orc_envenomed_spears_duration"                              "DURATION:"
+		"DOTA_Tooltip_ability_orc_envenomed_spears_duration_hero"                         "DURATION HERO:"
+		"DOTA_Tooltip_ability_orc_envenomed_spears_damage_per_second"                     "DAMAGE PER SECOND:"
+
+		"DOTA_Tooltip_ability_orc_unstable_concoction"                                    "Orc Unstable Concoction"
+		"DOTA_Tooltip_ability_orc_unstable_concoction_Description"                        ""
+		"DOTA_Tooltip_ability_orc_unstable_concoction_partial_damage_amount"              "PARTIAL DAMAGE AMOUNT:"
+		"DOTA_Tooltip_ability_orc_unstable_concoction_partial_damage_radius"              "PARTIAL DAMAGE RADIUS:"
+		"DOTA_Tooltip_ability_orc_unstable_concoction_full_damage_amount"                 "FULL DAMAGE AMOUNT:"
+		"DOTA_Tooltip_ability_orc_unstable_concoction_speed_bonus"                        "SPEED BONUS:"
+
+		"DOTA_Tooltip_ability_orc_liquid_fire"                                            "Orc Liquid Fire"
+		"DOTA_Tooltip_ability_orc_liquid_fire_Description"                                ""
+		"DOTA_Tooltip_ability_orc_liquid_fire_duration"                                   "DURATION:"
+		"DOTA_Tooltip_ability_orc_liquid_fire_attack_speed_reduction"                     "ATTACK SPEED REDUCTION:"
+		"DOTA_Tooltip_ability_orc_liquid_fire_damage_per_second"                          "DAMAGE PER SECOND:"
+
+		"DOTA_Tooltip_ability_orc_pulverize"                                              "Orc Pulverize"
+		"DOTA_Tooltip_ability_orc_pulverize_Description"                                  ""
+		"DOTA_Tooltip_ability_orc_pulverize_full_damage_radius"                           "FULL DAMAGE RADIUS:"
+		"DOTA_Tooltip_ability_orc_pulverize_half_damage_radius"                           "HALF DAMAGE RADIUS:"
+		"DOTA_Tooltip_ability_orc_pulverize_chance"                                       "CHANCE:"
+		"DOTA_Tooltip_ability_orc_pulverize_extra_damage"                                 "EXTRA DAMAGE:"
+
+		"DOTA_Tooltip_ability_orc_battle_stations"                                        "Orc Battle Stations"
+		"DOTA_Tooltip_ability_orc_battle_stations_Description"                            ""
+		"DOTA_Tooltip_ability_orc_battle_stations_radius"                                 "RADIUS:"
+
+		"DOTA_Tooltip_ability_orc_stand_down"                                             "Orc Stand Down"
+		"DOTA_Tooltip_ability_orc_stand_down_Description"                                 ""
+
+		"DOTA_Tooltip_ability_orc_pillage_disabled"                                       "Orc Pillage Disabled"
+		"DOTA_Tooltip_ability_orc_pillage_disabled_Description"                           ""
+
+		"DOTA_Tooltip_ability_orc_burning_oil_disabled"                                   "Orc Burning Oil Disabled"
+		"DOTA_Tooltip_ability_orc_burning_oil_disabled_Description"                       ""
+
+		"DOTA_Tooltip_ability_orc_lightning_shield_disabled"                              "Orc Lightning Shield Disabled"
+		"DOTA_Tooltip_ability_orc_lightning_shield_disabled_Description"                  ""
+
+		"DOTA_Tooltip_ability_orc_bloodlust_disabled"                                     "Orc Bloodlust Disabled"
+		"DOTA_Tooltip_ability_orc_bloodlust_disabled_Description"                         ""
+
+		"DOTA_Tooltip_ability_orc_sentry_ward_disabled"                                   "Orc Sentry Ward Disabled"
+		"DOTA_Tooltip_ability_orc_sentry_ward_disabled_Description"                       ""
+
+		"DOTA_Tooltip_ability_orc_stasis_trap_disabled"                                   "Orc Stasis Trap Disabled"
+		"DOTA_Tooltip_ability_orc_stasis_trap_disabled_Description"                       ""
+
+		"DOTA_Tooltip_ability_orc_healing_ward_disabled"                                  "Orc Healing Ward Disabled"
+		"DOTA_Tooltip_ability_orc_healing_ward_disabled_Description"                      ""
+
+		"DOTA_Tooltip_ability_orc_disenchant_disabled"                                    "Orc Disenchant Disabled"
+		"DOTA_Tooltip_ability_orc_disenchant_disabled_Description"                        ""
+
+		"DOTA_Tooltip_ability_orc_ancestral_spirit_disabled"                              "Orc Ancestral Spirit Disabled"
+		"DOTA_Tooltip_ability_orc_ancestral_spirit_disabled_Description"                  ""
+
+		"DOTA_Tooltip_ability_orc_ensnare_disabled"                                       "Orc Ensnare Disabled"
+		"DOTA_Tooltip_ability_orc_ensnare_disabled_Description"                           ""
+
+		"DOTA_Tooltip_ability_orc_envenomed_spears_disabled"                              "Orc Envenomed Spears Disabled"
+		"DOTA_Tooltip_ability_orc_envenomed_spears_disabled_Description"                  ""
+
+		"DOTA_Tooltip_ability_orc_liquid_fire_disabled"                                   "Orc Liquid Fire Disabled"
+		"DOTA_Tooltip_ability_orc_liquid_fire_disabled_Description"                       ""
+
+		"DOTA_Tooltip_ability_orc_pulverize_disabled"                                     "Orc Pulverize Disabled"
+		"DOTA_Tooltip_ability_orc_pulverize_disabled_Description"                         ""
+
+		"DOTA_Tooltip_ability_orc_train_stronghold"                                       "Orc Train Stronghold"
+		"DOTA_Tooltip_ability_orc_train_stronghold_Description"                           ""
+		"DOTA_Tooltip_ability_orc_train_stronghold_build_time"                            "BUILD TIME:"
+		"DOTA_Tooltip_ability_orc_train_stronghold_gold_cost"                             "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_stronghold_lumber_cost"                           "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_train_fortress_disabled"                                "Orc Train Fortress Disabled"
+		"DOTA_Tooltip_ability_orc_train_fortress_disabled_Description"                    ""
+
+		"DOTA_Tooltip_ability_orc_train_fortress"                                         "Orc Train Fortress"
+		"DOTA_Tooltip_ability_orc_train_fortress_Description"                             ""
+		"DOTA_Tooltip_ability_orc_train_fortress_build_time"                              "BUILD TIME:"
+		"DOTA_Tooltip_ability_orc_train_fortress_gold_cost"                               "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_fortress_lumber_cost"                             "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_build_orc_items"                                            "Build Orc Items"
+		"DOTA_Tooltip_ability_build_orc_items_Description"                                ""
+
+		"DOTA_Tooltip_ability_orc_build_barracks"                                         "Orc Build Barracks"
+		"DOTA_Tooltip_ability_orc_build_barracks_Description"                             ""
+		"DOTA_Tooltip_ability_orc_build_barracks_build_time"                              "BUILD TIME:"
+		"DOTA_Tooltip_ability_orc_build_barracks_gold_cost"                               "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_build_barracks_lumber_cost"                             "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_build_beastiary_disabled"                               "Orc Build Beastiary Disabled"
+		"DOTA_Tooltip_ability_orc_build_beastiary_disabled_Description"                   ""
+
+		"DOTA_Tooltip_ability_orc_build_beastiary"                                        "Orc Build Beastiary"
+		"DOTA_Tooltip_ability_orc_build_beastiary_Description"                            ""
+		"DOTA_Tooltip_ability_orc_build_beastiary_build_time"                             "BUILD TIME:"
+		"DOTA_Tooltip_ability_orc_build_beastiary_gold_cost"                              "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_build_beastiary_lumber_cost"                            "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_build_spirit_lodge_disabled"                            "Orc Build Spirit Lodge Disabled"
+		"DOTA_Tooltip_ability_orc_build_spirit_lodge_disabled_Description"                ""
+
+		"DOTA_Tooltip_ability_orc_build_spirit_lodge"                                     "Orc Build Spirit Lodge"
+		"DOTA_Tooltip_ability_orc_build_spirit_lodge_Description"                         ""
+		"DOTA_Tooltip_ability_orc_build_spirit_lodge_build_time"                          "BUILD TIME:"
+		"DOTA_Tooltip_ability_orc_build_spirit_lodge_gold_cost"                           "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_build_spirit_lodge_lumber_cost"                         "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_build_watch_tower_disabled"                             "Orc Build Watch Tower Disabled"
+		"DOTA_Tooltip_ability_orc_build_watch_tower_disabled_Description"                 ""
+
+		"DOTA_Tooltip_ability_orc_build_watch_tower"                                      "Orc Build Watch Tower"
+		"DOTA_Tooltip_ability_orc_build_watch_tower_Description"                          ""
+		"DOTA_Tooltip_ability_orc_build_watch_tower_build_time"                           "BUILD TIME:"
+		"DOTA_Tooltip_ability_orc_build_watch_tower_gold_cost"                            "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_build_watch_tower_lumber_cost"                          "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_build_tauren_totem_disabled"                            "Orc Build Tauren Totem Disabled"
+		"DOTA_Tooltip_ability_orc_build_tauren_totem_disabled_Description"                ""
+
+		"DOTA_Tooltip_ability_orc_build_tauren_totem"                                     "Orc Build Tauren Totem"
+		"DOTA_Tooltip_ability_orc_build_tauren_totem_Description"                         ""
+		"DOTA_Tooltip_ability_orc_build_tauren_totem_build_time"                          "BUILD TIME:"
+		"DOTA_Tooltip_ability_orc_build_tauren_totem_gold_cost"                           "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_build_tauren_totem_lumber_cost"                         "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_pillage"                                       "Orc Research Pillage"
+		"DOTA_Tooltip_ability_orc_research_pillage_Description"                           ""
+		"DOTA_Tooltip_ability_orc_research_pillage_research_time"                         "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_pillage_gold_cost"                             "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_pillage_lumber_cost"                           "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_pillage_disabled"                              "Orc Research Pillage Disabled"
+		"DOTA_Tooltip_ability_orc_research_pillage_disabled_Description"                  ""
+
+		"DOTA_Tooltip_ability_orc_research_backpack"                                      "Orc Research Backpack"
+		"DOTA_Tooltip_ability_orc_research_backpack_Description"                          ""
+		"DOTA_Tooltip_ability_orc_research_backpack_research_time"                        "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_backpack_gold_cost"                            "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_backpack_lumber_cost"                          "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_backpack_disabled"                             "Orc Research Backpack Disabled"
+		"DOTA_Tooltip_ability_orc_research_backpack_disabled_Description"                 ""
+
+		"DOTA_Tooltip_ability_orc_research_berserker_strength"                            "Orc Research Berserker Strength"
+		"DOTA_Tooltip_ability_orc_research_berserker_strength_Description"                ""
+		"DOTA_Tooltip_ability_orc_research_berserker_strength_research_time"              "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_berserker_strength_gold_cost"                  "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_berserker_strength_lumber_cost"                "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_berserker_strength_disabled"                   "Orc Research Berserker Strength Disabled"
+		"DOTA_Tooltip_ability_orc_research_berserker_strength_disabled_Description"       ""
+
+		"DOTA_Tooltip_ability_orc_research_berserker_upgrade"                             "Orc Research Berserker Upgrade"
+		"DOTA_Tooltip_ability_orc_research_berserker_upgrade_Description"                 ""
+		"DOTA_Tooltip_ability_orc_research_berserker_upgrade_research_time"               "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_berserker_upgrade_gold_cost"                   "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_berserker_upgrade_lumber_cost"                 "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_berserker_upgrade_disabled"                    "Orc Research Berserker Upgrade Disabled"
+		"DOTA_Tooltip_ability_orc_research_berserker_upgrade_disabled_Description"        ""
+
+		"DOTA_Tooltip_ability_orc_research_troll_regeneration"                            "Orc Research Troll Regeneration"
+		"DOTA_Tooltip_ability_orc_research_troll_regeneration_Description"                ""
+		"DOTA_Tooltip_ability_orc_research_troll_regeneration_research_time"              "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_troll_regeneration_gold_cost"                  "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_troll_regeneration_lumber_cost"                "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_troll_regeneration_disabled"                   "Orc Research Troll Regeneration Disabled"
+		"DOTA_Tooltip_ability_orc_research_troll_regeneration_disabled_Description"       ""
+
+		"DOTA_Tooltip_ability_orc_research_burning_oil"                                   "Orc Research Burning Oil"
+		"DOTA_Tooltip_ability_orc_research_burning_oil_Description"                       ""
+		"DOTA_Tooltip_ability_orc_research_burning_oil_research_time"                     "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_burning_oil_gold_cost"                         "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_burning_oil_lumber_cost"                       "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_burning_oil_disabled"                          "Orc Research Burning Oil Disabled"
+		"DOTA_Tooltip_ability_orc_research_burning_oil_disabled_Description"              ""
+
+		"DOTA_Tooltip_ability_orc_research_shaman_training1"                              "Orc Research Shaman Training1"
+		"DOTA_Tooltip_ability_orc_research_shaman_training1_Description"                  ""
+		"DOTA_Tooltip_ability_orc_research_shaman_training1_research_time"                "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_shaman_training1_gold_cost"                    "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_shaman_training1_lumber_cost"                  "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_shaman_training1_disabled"                     "Orc Research Shaman Training1 Disabled"
+		"DOTA_Tooltip_ability_orc_research_shaman_training1_disabled_Description"         ""
+
+		"DOTA_Tooltip_ability_orc_research_shaman_training2"                              "Orc Research Shaman Training2"
+		"DOTA_Tooltip_ability_orc_research_shaman_training2_Description"                  ""
+		"DOTA_Tooltip_ability_orc_research_shaman_training2_research_time"                "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_shaman_training2_gold_cost"                    "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_shaman_training2_lumber_cost"                  "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_shaman_training2_disabled"                     "Orc Research Shaman Training2 Disabled"
+		"DOTA_Tooltip_ability_orc_research_shaman_training2_disabled_Description"         ""
+
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training1"                        "Orc Research Witch Doctor Training1"
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training1_Description"            ""
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training1_research_time"          "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training1_gold_cost"              "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training1_lumber_cost"            "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training1_disabled"               "Orc Research Witch Doctor Training1 Disabled"
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training1_disabled_Description"   ""
+
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training2"                        "Orc Research Witch Doctor Training2"
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training2_Description"            ""
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training2_research_time"          "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training2_gold_cost"              "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training2_lumber_cost"            "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training2_disabled"               "Orc Research Witch Doctor Training2 Disabled"
+		"DOTA_Tooltip_ability_orc_research_witch_doctor_training2_disabled_Description"   ""
+
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training1"                       "Orc Research Spirit Walker Training1"
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training1_Description"           ""
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training1_research_time"         "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training1_gold_cost"             "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training1_lumber_cost"           "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training1_disabled"              "Orc Research Spirit Walker Training1 Disabled"
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training1_disabled_Description"		""
+
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training2"                       "Orc Research Spirit Walker Training2"
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training2_Description"           ""
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training2_research_time"         "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training2_gold_cost"             "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training2_lumber_cost"           "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training2_disabled"              "Orc Research Spirit Walker Training2 Disabled"
+		"DOTA_Tooltip_ability_orc_research_spirit_walker_training2_disabled_Description"		""
+
+		"DOTA_Tooltip_ability_orc_research_ensnare"                                       "Orc Research Ensnare"
+		"DOTA_Tooltip_ability_orc_research_ensnare_Description"                           ""
+		"DOTA_Tooltip_ability_orc_research_ensnare_research_time"                         "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_ensnare_gold_cost"                             "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_ensnare_lumber_cost"                           "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_ensnare_disabled"                              "Orc Research Ensnare Disabled"
+		"DOTA_Tooltip_ability_orc_research_ensnare_disabled_Description"                  ""
+
+		"DOTA_Tooltip_ability_orc_research_improved_war_drums"                            "Orc Research Improved War Drums"
+		"DOTA_Tooltip_ability_orc_research_improved_war_drums_Description"                ""
+		"DOTA_Tooltip_ability_orc_research_improved_war_drums_research_time"              "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_improved_war_drums_gold_cost"                  "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_improved_war_drums_lumber_cost"                "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_improved_war_drums_disabled"                   "Orc Research Improved War Drums Disabled"
+		"DOTA_Tooltip_ability_orc_research_improved_war_drums_disabled_Description"       ""
+
+		"DOTA_Tooltip_ability_orc_research_envenomed_spears"                              "Orc Research Envenomed Spears"
+		"DOTA_Tooltip_ability_orc_research_envenomed_spears_Description"                  ""
+		"DOTA_Tooltip_ability_orc_research_envenomed_spears_research_time"                "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_envenomed_spears_gold_cost"                    "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_envenomed_spears_lumber_cost"                  "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_envenomed_spears_disabled"                     "Orc Research Envenomed Spears Disabled"
+		"DOTA_Tooltip_ability_orc_research_envenomed_spears_disabled_Description"         ""
+
+		"DOTA_Tooltip_ability_orc_research_liquid_fire"                                   "Orc Research Liquid Fire"
+		"DOTA_Tooltip_ability_orc_research_liquid_fire_Description"                       ""
+		"DOTA_Tooltip_ability_orc_research_liquid_fire_research_time"                     "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_liquid_fire_gold_cost"                         "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_liquid_fire_lumber_cost"                       "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_liquid_fire_disabled"                          "Orc Research Liquid Fire Disabled"
+		"DOTA_Tooltip_ability_orc_research_liquid_fire_disabled_Description"              ""
+
+		"DOTA_Tooltip_ability_orc_research_pulverize"                                     "Orc Research Pulverize"
+		"DOTA_Tooltip_ability_orc_research_pulverize_Description"                         ""
+		"DOTA_Tooltip_ability_orc_research_pulverize_research_time"                       "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_pulverize_gold_cost"                           "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_pulverize_lumber_cost"                         "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_pulverize_disabled"                            "Orc Research Pulverize Disabled"
+		"DOTA_Tooltip_ability_orc_research_pulverize_disabled_Description"                ""
+
+		"DOTA_Tooltip_ability_orc_research_melee_weapons1"                                "Orc Research Melee Weapons1"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons1_Description"                    ""
+		"DOTA_Tooltip_ability_orc_research_melee_weapons1_research_time"                  "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons1_gold_cost"                      "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons1_lumber_cost"                    "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_melee_weapons1_disabled"                       "Orc Research Melee Weapons1 Disabled"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons1_disabled_Description"           ""
+
+		"DOTA_Tooltip_ability_orc_research_melee_weapons2"                                "Orc Research Melee Weapons2"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons2_Description"                    ""
+		"DOTA_Tooltip_ability_orc_research_melee_weapons2_research_time"                  "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons2_gold_cost"                      "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons2_lumber_cost"                    "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_melee_weapons2_disabled"                       "Orc Research Melee Weapons2 Disabled"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons2_disabled_Description"           ""
+
+		"DOTA_Tooltip_ability_orc_research_melee_weapons3"                                "Orc Research Melee Weapons3"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons3_Description"                    ""
+		"DOTA_Tooltip_ability_orc_research_melee_weapons3_research_time"                  "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons3_gold_cost"                      "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons3_lumber_cost"                    "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_melee_weapons3_disabled"                       "Orc Research Melee Weapons3 Disabled"
+		"DOTA_Tooltip_ability_orc_research_melee_weapons3_disabled_Description"           ""
+
+		"DOTA_Tooltip_ability_orc_research_unit_armor1"                                   "Orc Research Unit Armor1"
+		"DOTA_Tooltip_ability_orc_research_unit_armor1_Description"                       ""
+		"DOTA_Tooltip_ability_orc_research_unit_armor1_research_time"                     "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_unit_armor1_gold_cost"                         "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_unit_armor1_lumber_cost"                       "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_unit_armor1_disabled"                          "Orc Research Unit Armor1 Disabled"
+		"DOTA_Tooltip_ability_orc_research_unit_armor1_disabled_Description"              ""
+
+		"DOTA_Tooltip_ability_orc_research_unit_armor2"                                   "Orc Research Unit Armor2"
+		"DOTA_Tooltip_ability_orc_research_unit_armor2_Description"                       ""
+		"DOTA_Tooltip_ability_orc_research_unit_armor2_research_time"                     "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_unit_armor2_gold_cost"                         "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_unit_armor2_lumber_cost"                       "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_unit_armor2_disabled"                          "Orc Research Unit Armor2 Disabled"
+		"DOTA_Tooltip_ability_orc_research_unit_armor2_disabled_Description"              ""
+
+		"DOTA_Tooltip_ability_orc_research_unit_armor3"                                   "Orc Research Unit Armor3"
+		"DOTA_Tooltip_ability_orc_research_unit_armor3_Description"                       ""
+		"DOTA_Tooltip_ability_orc_research_unit_armor3_research_time"                     "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_unit_armor3_gold_cost"                         "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_unit_armor3_lumber_cost"                       "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_unit_armor3_disabled"                          "Orc Research Unit Armor3 Disabled"
+		"DOTA_Tooltip_ability_orc_research_unit_armor3_disabled_Description"              ""
+
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons1"                               "Orc Research Ranged Weapons1"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons1_Description"                   ""
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons1_research_time"                 "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons1_gold_cost"                     "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons1_lumber_cost"                   "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons1_disabled"                      "Orc Research Ranged Weapons1 Disabled"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons1_disabled_Description"          ""
+
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons2"                               "Orc Research Ranged Weapons2"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons2_Description"                   ""
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons2_research_time"                 "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons2_gold_cost"                     "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons2_lumber_cost"                   "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons2_disabled"                      "Orc Research Ranged Weapons2 Disabled"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons2_disabled_Description"          ""
+
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons3"                               "Orc Research Ranged Weapons3"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons3_Description"                   ""
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons3_research_time"                 "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons3_gold_cost"                     "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons3_lumber_cost"                   "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons3_disabled"                      "Orc Research Ranged Weapons3 Disabled"
+		"DOTA_Tooltip_ability_orc_research_ranged_weapons3_disabled_Description"          ""
+
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades1"                            "Orc Research Spiked Barricades1"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades1_Description"                ""
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades1_research_time"              "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades1_gold_cost"                  "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades1_lumber_cost"                "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades1_disabled"                   "Orc Research Spiked Barricades1 Disabled"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades1_disabled_Description"       ""
+
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades2"                            "Orc Research Spiked Barricades2"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades2_Description"                ""
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades2_research_time"              "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades2_gold_cost"                  "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades2_lumber_cost"                "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades2_disabled"                   "Orc Research Spiked Barricades2 Disabled"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades2_disabled_Description"       ""
+
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades3"                            "Orc Research Spiked Barricades3"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades3_Description"                ""
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades3_research_time"              "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades3_gold_cost"                  "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades3_lumber_cost"                "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades3_disabled"                   "Orc Research Spiked Barricades3 Disabled"
+		"DOTA_Tooltip_ability_orc_research_spiked_barricades3_disabled_Description"       ""
+
+		"DOTA_Tooltip_ability_orc_research_reinforced_defenses"                           "Orc Research Reinforced Defenses"
+		"DOTA_Tooltip_ability_orc_research_reinforced_defenses_Description"               ""
+		"DOTA_Tooltip_ability_orc_research_reinforced_defenses_research_time"             "RESEARCH TIME:"
+		"DOTA_Tooltip_ability_orc_research_reinforced_defenses_gold_cost"                 "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_research_reinforced_defenses_lumber_cost"               "LUMBER COST:"
+
+		"DOTA_Tooltip_ability_orc_research_reinforced_defenses_disabled"                  "Orc Research Reinforced Defenses Disabled"
+		"DOTA_Tooltip_ability_orc_research_reinforced_defenses_disabled_Description"      ""
+
+		"DOTA_Tooltip_ability_orc_train_peon"                                             "Orc Train Peon"
+		"DOTA_Tooltip_ability_orc_train_peon_Description"                                 ""
+		"DOTA_Tooltip_ability_orc_train_peon_train_time"                                  "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_peon_gold_cost"                                   "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_peon_lumber_cost"                                 "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_peon_food_cost"                                   "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_grunt"                                            "Orc Train Grunt"
+		"DOTA_Tooltip_ability_orc_train_grunt_Description"                                ""
+		"DOTA_Tooltip_ability_orc_train_grunt_train_time"                                 "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_grunt_gold_cost"                                  "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_grunt_lumber_cost"                                "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_grunt_food_cost"                                  "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_troll_headhunter"                                 "Orc Train Troll Headhunter"
+		"DOTA_Tooltip_ability_orc_train_troll_headhunter_Description"                     ""
+		"DOTA_Tooltip_ability_orc_train_troll_headhunter_train_time"                      "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_troll_headhunter_gold_cost"                       "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_troll_headhunter_lumber_cost"                     "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_troll_headhunter_food_cost"                       "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_troll_headhunter_disabled"                        "Orc Train Troll Headhunter Disabled"
+		"DOTA_Tooltip_ability_orc_train_troll_headhunter_disabled_Description"            ""
+
+		"DOTA_Tooltip_ability_orc_train_demolisher"                                       "Orc Train Demolisher"
+		"DOTA_Tooltip_ability_orc_train_demolisher_Description"                           ""
+		"DOTA_Tooltip_ability_orc_train_demolisher_train_time"                            "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_demolisher_gold_cost"                             "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_demolisher_lumber_cost"                           "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_demolisher_food_cost"                             "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_demolisher_disabled"                              "Orc Train Demolisher Disabled"
+		"DOTA_Tooltip_ability_orc_train_demolisher_disabled_Description"                  ""
+
+		"DOTA_Tooltip_ability_orc_train_shaman"                                           "Orc Train Shaman"
+		"DOTA_Tooltip_ability_orc_train_shaman_Description"                               ""
+		"DOTA_Tooltip_ability_orc_train_shaman_train_time"                                "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_shaman_gold_cost"                                 "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_shaman_lumber_cost"                               "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_shaman_food_cost"                                 "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_troll_witch_doctor"                               "Orc Train Troll Witch Doctor"
+		"DOTA_Tooltip_ability_orc_train_troll_witch_doctor_Description"                   ""
+		"DOTA_Tooltip_ability_orc_train_troll_witch_doctor_train_time"                    "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_troll_witch_doctor_gold_cost"                     "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_troll_witch_doctor_lumber_cost"                   "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_troll_witch_doctor_food_cost"                     "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_spirit_walker"                                    "Orc Train Spirit Walker"
+		"DOTA_Tooltip_ability_orc_train_spirit_walker_Description"                        ""
+		"DOTA_Tooltip_ability_orc_train_spirit_walker_train_time"                         "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_spirit_walker_gold_cost"                          "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_spirit_walker_lumber_cost"                        "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_spirit_walker_food_cost"                          "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_raider"                                           "Orc Train Raider"
+		"DOTA_Tooltip_ability_orc_train_raider_Description"                               ""
+		"DOTA_Tooltip_ability_orc_train_raider_train_time"                                "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_raider_gold_cost"                                 "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_raider_lumber_cost"                               "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_raider_food_cost"                                 "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_kodo_beast"                                       "Orc Train Kodo Beast"
+		"DOTA_Tooltip_ability_orc_train_kodo_beast_Description"                           ""
+		"DOTA_Tooltip_ability_orc_train_kodo_beast_train_time"                            "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_kodo_beast_gold_cost"                             "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_kodo_beast_lumber_cost"                           "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_kodo_beast_food_cost"                             "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_kodo_beast_disabled"                              "Orc Train Kodo Beast Disabled"
+		"DOTA_Tooltip_ability_orc_train_kodo_beast_disabled_Description"                  ""
+
+		"DOTA_Tooltip_ability_orc_train_wind_rider"                                       "Orc Train Wind Rider"
+		"DOTA_Tooltip_ability_orc_train_wind_rider_Description"                           ""
+		"DOTA_Tooltip_ability_orc_train_wind_rider_train_time"                            "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_wind_rider_gold_cost"                             "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_wind_rider_lumber_cost"                           "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_wind_rider_food_cost"                             "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_wind_rider_disabled"                              "Orc Train Wind Rider Disabled"
+		"DOTA_Tooltip_ability_orc_train_wind_rider_disabled_Description"                  ""
+
+		"DOTA_Tooltip_ability_orc_train_troll_batrider"                                   "Orc Train Troll Batrider"
+		"DOTA_Tooltip_ability_orc_train_troll_batrider_Description"                       ""
+		"DOTA_Tooltip_ability_orc_train_troll_batrider_train_time"                        "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_troll_batrider_gold_cost"                         "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_troll_batrider_lumber_cost"                       "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_troll_batrider_food_cost"                         "FOOD COST:"
+
+		"DOTA_Tooltip_ability_orc_train_troll_batrider_disabled"                          "Orc Train Troll Batrider Disabled"
+		"DOTA_Tooltip_ability_orc_train_troll_batrider_disabled_Description"              ""
+
+		"DOTA_Tooltip_ability_orc_train_tauren"                                           "Orc Train Tauren"
+		"DOTA_Tooltip_ability_orc_train_tauren_Description"                               ""
+		"DOTA_Tooltip_ability_orc_train_tauren_train_time"                                "TRAIN TIME:"
+		"DOTA_Tooltip_ability_orc_train_tauren_gold_cost"                                 "GOLD COST:"
+		"DOTA_Tooltip_ability_orc_train_tauren_lumber_cost"                               "LUMBER COST:"
+		"DOTA_Tooltip_ability_orc_train_tauren_food_cost"                                 "FOOD COST:"
+
+	
+
 	}
 }
