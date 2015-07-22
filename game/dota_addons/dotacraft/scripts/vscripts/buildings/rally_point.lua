@@ -62,6 +62,11 @@ function MoveToRallyPoint( event )
 	local target = event.target
 	local entityIndex = target:GetEntityIndex() -- The spawned unit
 
+	-- Set the builders idle when they spawn
+	if IsBuilder(target) then 
+		target.state = "idle" 
+	end
+
 	if caster.flag and IsValidEntity(caster.flag) then
 		local flag = caster.flag
 		local rally_type = flag.type

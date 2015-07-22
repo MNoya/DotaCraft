@@ -677,3 +677,8 @@ function HasTrainAbility( unit )
 	end
 	return false
 end
+
+-- Returns if the builder is fully idle (not reparing or in a gathering process)
+function IsIdleBuilder( unit )
+	return (unit.state == "idle" and unit:IsIdle())
+end

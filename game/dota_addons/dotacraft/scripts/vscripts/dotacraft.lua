@@ -850,6 +850,7 @@ function dotacraft:OnPlayerPickHero(keys)
 		builder:SetOwner(hero)
 		builder:SetControllableByPlayer(playerID, true)
 		table.insert(player.units, builder)
+		builder.state = "idle"
 
 		-- Increment food used
 		ModifyFoodUsed(player, GetFoodCost(builder))
@@ -857,6 +858,18 @@ function dotacraft:OnPlayerPickHero(keys)
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( builder, player )
 	end
+
+	Timers:CreateTimer(1, function() 
+		local idle_builders = 0
+		local player_units = player.units
+		for k,unit in pairs(player_units) do
+			if IsBuilder(unit) and IsIdleBuilder(unit) then
+				idle_builders = idle_builders + 1
+			end
+		end
+		--print("#Idle Builders: "..idle_builders)
+		return 1
+	end)
 end
 
 -- A player killed another player in a multi-team context
@@ -1021,37 +1034,40 @@ function dotacraft:OnEntityKilled( event )
 	end)
 
 	-- Remove from units table
-	if killedUnit:IsCreature() and player then
-		local unit = getIndex(player.units, killedUnit)
-		if unit and unit ~= -1 then
-			--DeepPrintTable(player.units)
-			print("Removing "..unit.." from the player builders")
-			table.remove(player.units, unit)
-			--DeepPrintTable(player.units)
+	if killedUnit and player then
+		-- IF BUILDING DESTROYED, CHECK FOR POSSIBLE DOWNGRADES OF ABILITIES THAT CAN'T BE BUILT ANYMORE
+		if IsCustomBuilding(killedUnit) then
+
+			-- Remove from it from player building tables
+			local building = getIndex(player.structures, killedUnit:GetEntityIndex())
+			if building and building ~= -1 then
+				local building_name = killedUnit:GetUnitName()
+				print("Removing "..killedUnit:GetUnitName().." from the player structures")
+				table.remove(player.structures, building)
+
+				-- Substract 1 to the player building tracking table for that name
+				if player.buildings[building_name] then
+					player.buildings[building_name] = player.buildings[building_name] - 1
+				end
+
+		    	for k,builder in pairs(player.units) do
+		    		CheckAbilityRequirements( builder, player )
+		    	end
+
+		    	for k,structure in pairs(player.structures) do
+		    		CheckAbilityRequirements( structure, player )
+		    	end
+		    end
+	    elseif killedUnit:IsCreature() and player then
+			local unit = getIndex(player.units, killedUnit)
+			if unit and unit ~= -1 then
+				--DeepPrintTable(player.units)
+				print("Removing "..unit.." from the player's units")
+				table.remove(player.units, unit)
+				--DeepPrintTable(player.units)
+			end
 		end
-
-	-- IF BUILDING DESTROYED, CHECK FOR POSSIBLE DOWNGRADES OF ABILITIES THAT CAN'T BE BUILT ANYMORE
-	elseif killedUnit.GetInvulnCount ~= nil then
-
-		-- Remove from it from player building tables
-		local building = getIndex(player.structures, killedUnit:GetEntityIndex())
-		local building_name = killedUnit:GetUnitName()
-		print("Removing "..killedUnit:GetUnitName().." from the player structures")
-		table.remove(player.structures, building)
-
-		-- Substract 1 to the player building tracking table for that name
-		if player.buildings[building_name] then
-			player.buildings[building_name] = player.buildings[building_name] - 1
-		end
-
-    	for k,builder in pairs(player.units) do
-    		CheckAbilityRequirements( builder, player )
-    	end
-
-    	for k,structure in pairs(player.structures) do
-    		CheckAbilityRequirements( structure, player )
-    	end
-    end
+	end
 end
 
 -- This is an example console command

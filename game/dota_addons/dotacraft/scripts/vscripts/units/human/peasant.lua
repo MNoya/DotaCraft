@@ -29,6 +29,17 @@ function Gather( event )
 		caster.lumber_gathered = 0
 	end
 
+	-- Possible states
+		-- moving_to_tree
+		-- moving_to_mine
+		-- moving_to_repair
+		-- returning_lumber
+		-- returning_gold
+		-- gathering_lumber
+		-- gathering_gold
+		-- repairing
+		-- idle
+
 	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
 		
@@ -43,6 +54,11 @@ function Gather( event )
 			ParticleManager:DestroyParticle(particle, true)
 		end)
 
+		-- If the caster already had a tree targeted but changed with a right click to another tree, destroy the old move timer
+		if caster.moving_timer then
+			Timers:RemoveTimer(caster.moving_timer)
+		end
+		caster.state = "moving_to_tree"
 		caster.target_tree = tree
 		ability.cancelled = false
 		if not tree.health then
@@ -59,9 +75,9 @@ function Gather( event )
 		-- Recieving another order will cancel this
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_lumber", {})
 
-		Timers:CreateTimer(function() 
+		caster.moving_timer = Timers:CreateTimer(function() 
 			-- Move towards the tree until close range
-			if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_lumber") then
+			if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_lumber") and caster.state == "moving_to_tree" then
 				local distance = (tree_pos - caster:GetAbsOrigin()):Length()
 				
 				if distance > MIN_DISTANCE_TO_TREE then
@@ -91,6 +107,12 @@ function Gather( event )
 			caster.gold_gathered = 0
 			caster.target_mine = mine
 			ability.cancelled = false
+			caster.state = "moving_to_mine"
+
+			-- Destroy any old move timer
+			if caster.moving_timer then
+				Timers:RemoveTimer(caster.moving_timer)
+			end
 
 			-- Fake toggle the ability, cancel if any other order is given
 			if ability:GetToggleState() == false then
@@ -101,9 +123,9 @@ function Gather( event )
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_gold", {})
 
 			local mine_entrance_pos = mine.entrance+RandomVector(75)
-			Timers:CreateTimer(function() 
+			caster.moving_timer = Timers:CreateTimer(function() 
 				-- Move towards the mine until close range
-				if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_gold") then
+				if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_gold") and caster.state == "moving_to_mine" then
 					local distance = (mine_pos - caster:GetAbsOrigin()):Length()
 					
 					if distance > MIN_DISTANCE_TO_MINE then
@@ -147,6 +169,12 @@ function Gather( event )
 			local building_pos = building:GetAbsOrigin()
 			
 			ability.cancelled = false
+			caster.state = "moving_to_repair"
+
+			-- Destroy any old move timer
+			if caster.moving_timer then
+				Timers:RemoveTimer(caster.moving_timer)
+			end
 
 			-- Fake toggle the ability, cancel if any other order is given
 			if ability:GetToggleState() == false then
@@ -158,9 +186,9 @@ function Gather( event )
 
 			local collision_size = building:GetHullRadius()*2 + 64
 
-			Timers:CreateTimer(function() 
+			caster.moving_timer = Timers:CreateTimer(function() 
 				-- Move towards the building until close range
-				if not ability.cancelled then
+				if not ability.cancelled and caster.state == "moving_to_repair" then
 					if caster.repair_building and IsValidEntity(caster.repair_building) then
 						local distance = (building_pos - caster:GetAbsOrigin()):Length()
 						
@@ -196,6 +224,7 @@ function CancelGather( event )
 	local ability = event.ability
 	local return_ability = caster:FindAbilityByName("human_return_resources")
 	ability.cancelled = true
+	caster.state = "idle"
 
 	local tree = caster.target_tree
 	if tree then
@@ -216,6 +245,7 @@ function CancelReturn( event )
 	local ability = event.ability
 	local gather_ability = caster:FindAbilityByName("human_gather")
 	ability.cancelled = true
+	caster.state = "idle"
 
 	local tree = caster.target_tree
 	if tree then
@@ -241,6 +271,8 @@ function GatherLumber( event )
 	local player = caster:GetPlayerOwner()
 	local max_lumber_carried = 10
 	local tree = caster.target_tree
+
+	caster.state = "gathering_lumber"
 
 	--print("Tree Health: ", tree.health)
 
@@ -313,6 +345,7 @@ function GatherGold( event )
 	mine:SetHealth( mine:GetHealth() - DAMAGE_TO_MINE )
 	caster.gold_gathered = DAMAGE_TO_MINE
 	mine.builder = nil --Set the mine free for other builders to enter
+	caster.state = "gathering_gold"
 
 	-- If the gold mine has no health left for another harvest
 	if mine:GetHealth() < DAMAGE_TO_MINE then
@@ -363,18 +396,25 @@ function ReturnResources( event )
 
 	local gather_ability = caster:FindAbilityByName("human_gather")
 
+	-- Destroy any old move timer
+	if caster.moving_timer then
+		Timers:RemoveTimer(caster.moving_timer)
+	end
+
 	-- LUMBER
 	if caster:HasModifier("modifier_carrying_lumber") then
 
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster, "lumber" )
 		caster.target_building = building
+		caster.state = "returning_lumber"
+
 		local collision_size = building:GetHullRadius()*2 + 64
 
 		-- Move towards it
-		Timers:CreateTimer(function() 
+		caster.moving_timer = Timers:CreateTimer(function() 
 			if not ability.cancelled then
-				if caster.target_building and IsValidEntity(caster.target_building) then
+				if caster.target_building and IsValidEntity(caster.target_building) and caster.state == "returning_lumber" then
 					local building_pos = building:GetAbsOrigin()
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
@@ -435,12 +475,13 @@ function ReturnResources( event )
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster, "gold" )
 		caster.target_building = building
+		caster.state = "returning_gold"
 		local collision_size = building:GetHullRadius()*2 + 64
 
 		-- Move towards it
-		Timers:CreateTimer(function() 
+		caster.moving_timer = Timers:CreateTimer(function() 
 			if not ability.cancelled then
-				if caster.target_building and IsValidEntity(caster.target_building) then
+				if caster.target_building and IsValidEntity(caster.target_building) and caster.state == "returning_gold" then
 					local building_pos = building:GetAbsOrigin()
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
@@ -907,6 +948,8 @@ function PeasantRepairing( event )
 	local ability = event.ability
 	local target = caster.repair_building
 	
+	caster.state = "repairing"
+
 	-- Apply a modifier stack to the building, to show how many peasants are working on it (and scale the Powerbuild costs)
 	local modifierName = "modifier_repairing_building"
 	if target:HasModifier(modifierName) then
@@ -930,6 +973,8 @@ function PeasantStopRepairing( event )
 	local ability = event.ability
 	local building = caster.repair_building
 	
+	caster.state = "idle"
+
 	-- Apply a modifier stack to the building, to show how many peasants are working on it (and scale the Powerbuild costs)
 	local modifierName = "modifier_repairing_building"
 	if building and IsValidEntity(building) and building:HasModifier(modifierName) then
