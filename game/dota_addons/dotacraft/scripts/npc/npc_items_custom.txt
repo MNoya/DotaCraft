@@ -317,6 +317,26 @@
 		"ItemDroppable" 				"0"
 		"ItemPurchasable" 				"0"
 	}
+	"item_building_cancel"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_cancel"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities.lua"
+				"Function"		"building_canceled"
+			}
+		}
+	}
 	"item_health_modifier"
 	{
 		"ID"							"2102"
@@ -3750,6 +3770,8 @@
 		"PlayerCanControl"				"1" //bool. 
 		//"CancelsBuildingGhost"			"0" //bool
 	
+		"BuilderInside"					"1"	//bool
+	
 		"UnitName"						"nightelf_moon_well"
 		"AbilityCooldown"				"0"
 		"AbilityGoldCost"				"180"
@@ -3805,6 +3827,8 @@
 		"Scale"							"0" //bool
 		"PlayerCanControl"				"1" //bool. 
 		//"CancelsBuildingGhost"			"0" //bool
+	
+		"BuilderInside"					"1"	//bool
 	
 		"UnitName"						"nightelf_altar_of_elders"
 		"AbilityCooldown"				"0"
@@ -3920,6 +3944,8 @@
 		"Scale"							"0" //bool
 		"PlayerCanControl"				"1" //bool. 
 		//"CancelsBuildingGhost"			"0" //bool
+	
+		"BuilderInside"					"1"	//bool
 	
 		"UnitName"						"nightelf_hunters_hall"
 		"AbilityCooldown"				"0"

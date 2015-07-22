@@ -612,6 +612,55 @@ function BuildingHelper:InitializeBuildingEntity( keys )
 end
 
 --[[
+      CancelBuilding
+      * Cancels the building
+      * Refunds the cost by a factor
+]]
+function BuildingHelper:CancelBuilding(keys)
+    print("CancelBuilding")
+    local building = keys.unit
+    local hero = building:GetOwner()
+
+    -- Refund
+    local refund_factor = 0.75
+    local gold_cost = math.floor(GetGoldCost(building) * refund_factor)
+    local lumber_cost = math.floor(GetLumberCost(building) * refund_factor)
+
+    hero:ModifyGold(gold_cost, true, 0)
+    ModifyLumber( hero:GetPlayerOwner(), lumber_cost)
+    PopupGoldGain(building, gold_cost)
+    PopupLumber(building, lumber_cost)
+
+    -- Refund items (In the item-queue system, units can be queued before the building is finished)
+    for i=0,5 do
+        local item = building:GetItemInSlot(i)
+        if item then
+            if item:GetAbilityName() == "item_building_cancel" then
+                building:RemoveSelf(item)
+            else
+                building:CastAbilityImmediately(item, building:GetPlayerOwnerID())
+            end
+        end
+    end
+
+    -- Special for RequiresRepair
+    local units_repairing = building.units_repairing
+    if units_repairing then
+        for k,builder in pairs(units_repairing) do
+            builder:RemoveModifierByName("modifier_on_order_cancel_repair")
+            builder:RemoveModifierByName("modifier_peasant_repairing")
+            local race = GetUnitRace(builder)
+            local repair_ability = builder:FindAbilityByName(race.."_gather")
+            if repair_ability:GetToggleState() == true then repair_ability:ToggleAbility() end
+        end
+    end
+
+    building.state = "canceled"
+    building:RemoveBuilding(true)
+
+end
+
+--[[
       Builder Functions
       * Sets up all the functions required of a builder. Will run once per builder
       * Manages each workers build queue

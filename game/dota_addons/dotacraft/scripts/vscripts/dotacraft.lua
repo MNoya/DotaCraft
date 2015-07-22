@@ -790,6 +790,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
+	player.altar_structures = {} -- Keeps altars linked
 
     -- Create Main Building
     DeepPrintTable(GameRules.StartingPositions)
@@ -929,7 +930,7 @@ function dotacraft:OnEntityKilled( event )
 
 		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killedUnit)
-		if food_produced > 0 and player then
+		if food_produced > 0 and player and not killedUnit.state == "canceled" then
 			ModifyFoodLimit(player, - food_produced)
 		end
 	end
@@ -966,9 +967,17 @@ function dotacraft:OnEntityKilled( event )
 				table.insert(table_structures, building)
 			end
 		end
-		player.structures = table_structures
-		print("Building removed from the player structures table")
 
+
+		local table_altars = {}
+		for _,altar in pairs(player.altar_structures) do
+			if altar and IsValidEntity(altar) and altar:IsAlive() then
+				print("Valid altar: "..altar:GetUnitName())
+				table.insert(table_structures, altar)
+			end
+		end
+		player.altar_structures = table_altars
+		
 		-- Check for lose condition - All buildings destroyed
 		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
 		if (#player.structures == 0) then

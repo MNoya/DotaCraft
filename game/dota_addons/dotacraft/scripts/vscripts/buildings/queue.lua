@@ -36,7 +36,7 @@ function EnqueueUnit( event )
 	else
 		-- Refund with message
  		PlayerResource:ModifyGold(pID, gold_cost, false, 0)
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Queue is full" } )		
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_queue_full")
 	end
 end
 

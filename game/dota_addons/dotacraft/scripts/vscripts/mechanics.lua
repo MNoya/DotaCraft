@@ -269,7 +269,7 @@ function PlayerHasEnoughFood( player, food_cost )
 	if player.food_used + food_cost > player.food_limit then
 		-- send the warning only once every time
 		if not player.need_more_farms then
-			local race = player:GetAssignedHero()
+			local race = GetPlayerRace(player)
 			SendErrorMessage(pID, "#error_not_enough_food_"..race)
 			player.need_more_farms = true
 		end
@@ -535,6 +535,7 @@ function GetPlayerRace( player )
 	elseif hero_name == "npc_dota_hero_huskar" then
 		race = "orc"
 	end
+	return race
 end
 
 -- Returns a string with the race of the unit

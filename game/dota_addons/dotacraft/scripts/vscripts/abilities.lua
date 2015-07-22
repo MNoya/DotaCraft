@@ -38,6 +38,10 @@ function build( keys )
 		-- Unit is the building be built.
 		-- Play construction sound
 
+		  -- Give item to cancel
+		  local item = CreateItem("item_building_cancel", playersHero, playersHero)
+		  unit:AddItem(item)
+
 		-- FindClearSpace for the builder
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 		caster:AddNewModifier(caster, nil, "modifier_phased", {duration=0.03})
@@ -100,7 +104,10 @@ function build( keys )
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
 	end)
 
-	
+	-- This needs fixing
+	keys:OnConstructionCancelled(function(unit)
+		--print("Construction Cancelled")
+	end)
 
 	keys:OnConstructionCompleted(function(unit)
 		print("[BH] Completed construction of " .. unit:GetUnitName())
@@ -109,6 +116,17 @@ function build( keys )
 
 		-- Let the building cast abilities
 		unit:RemoveModifierByName("modifier_construction")
+
+		-- Remove item_building_cancel
+        for i=0,5 do
+            local item = unit:GetItemInSlot(i)
+            if item then
+            	print(i,item:GetAbilityName())
+            	if item:GetAbilityName() == "item_building_cancel" then
+            		item:RemoveSelf()
+                end
+            end
+        end
 
 		local caster = keys.caster
 		local hero = caster:GetPlayerOwner():GetAssignedHero()

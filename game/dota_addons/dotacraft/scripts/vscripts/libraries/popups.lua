@@ -48,7 +48,7 @@ end
 
 -- e.g. when last-hitting a creep
 function PopupGoldGain(target, amount)
-    PopupNumbers(target, "gold", Vector(255, 200, 33), 1.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
+    PopupNumbers(target, "gold", Vector(255, 200, 33), 2.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
 end
 
 -- e.g. when missing uphill

@@ -14,7 +14,7 @@ function CheckTrees( event )
 		print(ability,"Trees found")
 	else
 		caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Must target a tree." } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_must_target_tree")
 	end
 end
 
