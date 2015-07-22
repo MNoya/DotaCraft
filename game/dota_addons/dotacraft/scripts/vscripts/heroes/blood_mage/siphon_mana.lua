@@ -14,13 +14,13 @@ function SiphonManaStart( event )
 	if target == caster then
 		print("Self Target")
 		caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Can't target self" } )
+		SendErrorMessage(pID, "#error_cant_target_self")
 	elseif target:GetTeamNumber() == caster:GetTeamNumber() then
 		print("Cast on Ally")
 		if target:IsRealHero() then
 			print("Cast on Ally Hero")
 			caster:Interrupt()
-			FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Can't cast on allied heroes" } )
+			SendErrorMessage(pID, "#error_cant_target_allied_hero")
 		else
 			-- Particle from caster to ally
 			caster.ManaDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, caster)

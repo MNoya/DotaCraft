@@ -45,6 +45,6 @@ function AnimateDeadPrecast( event )
 	local pID = event.caster:GetPlayerID()
 	if corpse == nil then
 		event.caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "No Usable Corpses Near" } )
+		SendErrorMessage(pID, "#error_no_usable_corpses")
 	end
 end

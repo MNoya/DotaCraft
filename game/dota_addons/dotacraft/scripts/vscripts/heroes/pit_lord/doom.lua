@@ -16,7 +16,7 @@ function DoomLevelCheck( event )
 	local pID = event.caster:GetPlayerID()
 	
 	if target:GetLevel() > 5 then
-		event.caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Can't target creeps over level 5" } )
+		event.caster:Interrupt()F
+		SendErrorMessage(pID, "#error_cant_target_level6")
 	end
 end

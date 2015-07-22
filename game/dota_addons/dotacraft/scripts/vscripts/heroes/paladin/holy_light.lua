@@ -39,7 +39,6 @@ function HolyLight( event )
 		-- Play Error Sound
 		EmitSoundOnClient("General.CastFail_InvalidTarget_Hero", caster:GetPlayerOwner())
 
-		-- This makes use of the Custom Error Flash module by zedor. https://github.com/zedor/CustomError
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Ability Can't Target Self" } )
+		SendErrorMessage(pID, "#error_cant_target_self")
 	end
 end

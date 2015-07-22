@@ -132,7 +132,7 @@ function ControlMagicCheck( event )
 	
 	if not target:IsSummoned() and not target:IsDominated() then
 		caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need to target a Summoned Unit!" } )
+		SendErrorMessage(pID, "#error_must_target_summon")
 	else
 		local targetHP = target:GetHealth()
 		local casterMana = caster:GetMana()
@@ -141,7 +141,7 @@ function ControlMagicCheck( event )
 		print("Need "..mana_cost.." Have "..casterMana)
 		if mana_cost > casterMana then
 			caster:Interrupt()
-			FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Not enough mana! Need at least "..math.floor(mana_cost) } )
+			SendErrorMessage(pID, "#not_enough_mana")
 		end
 	end
 end

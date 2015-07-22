@@ -18,6 +18,6 @@ end
 function DeathPactPrecast( event )
 	if event.caster:GetHealthPercent() == 100 then
 		event.caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Already on Full Health" } )
+		SendErrorMessage(pID, "#error_full_health")
 	end
 end

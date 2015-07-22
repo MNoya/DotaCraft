@@ -52,7 +52,7 @@ function CarrionBeetlesPrecast( event )
 	local corpse = Entities:FindByModelWithin(nil, CORPSE_MODEL, event.caster:GetAbsOrigin(), ability:GetCastRange()) 
 	if corpse == nil then
 		event.caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "No Usable Corpses Near" } )
+		SendErrorMessage(pID, "#error_no_usable_corpses")
 	end
 end
 

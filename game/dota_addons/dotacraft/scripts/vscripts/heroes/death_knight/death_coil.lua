@@ -22,5 +22,6 @@ function DeathCoilPrecast( event )
 	if event.target == event.caster then
 		event.caster:Interrupt()
 		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Ability Can't Target Self" } )
+		SendErrorMessage(pID, "#error_cant_target_self")
 	end
 end

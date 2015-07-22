@@ -223,27 +223,6 @@ function dotacraft:InitGameMode()
 				return
 			end
 			
-			--[[if unit:GetUnitName() == "npc_dota_hero_dragon_knight" then
-				local unit_race = "human_race"
-				print("Abilities Available:")
-				local ability_table = GameRules.Abilities.human_race
-				local abilities_string = GenerateAbilityString(cmdPlayer, ability_table)		
-
-				FireGameEvent( 'show_overview_panel', { player_ID = pID, race = unit_race, abilities = abilities_string } )
-
-			elseif unit:GetUnitName() == "npc_dota_hero_furion" then
-				local unit_race = "nightelf_race"
-				print("Abilities Available:")
-				local ability_table = GameRules.Abilities.nightelf_race
-				local abilities_string = GenerateAbilityString(cmdPlayer, ability_table)		
-
-				FireGameEvent( 'show_overview_panel', { player_ID = pID, race = unit_race, abilities = abilities_string } )
-
-			else
-				print("HIDE PANEL")
-				FireGameEvent( 'hide_overview_panel', { player_ID = pID } )
-			end]]
-
 	  		if unit then
 	  			--and (unit:GetUnitName() == "human_peasant"
 		  		local abilityValues = {}
@@ -334,11 +313,6 @@ function dotacraft:InitGameMode()
 			end})
 		end
 	end, 'Connects and assigns fake Players.', 0)
-
-	--[[This block is only used for testing events handling in the event that Valve adds more in the future
-	Convars:RegisterCommand('events_test', function()
-	  dotacraft:StartEventTest()
-	  end, "events test", 0)]]
 
 	-- Change random seed
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')

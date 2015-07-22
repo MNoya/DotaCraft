@@ -21,7 +21,7 @@ function Transmute( event )
 		target:Kill(ability, caster) --Kill the creep. This increments the caster's last hit counter.
 	else
 		caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Can't target creeps over level 5" } )
+		SendErrorMessage(pID, "#error_cant_target_level6")
 	end
 
 end

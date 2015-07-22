@@ -57,7 +57,7 @@ function AerialShacklesCheck( event )
 
 	if not target:HasFlyMovementCapability() then
 		caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Ability Needs To Target Air Unit" } )
+		SendErrorMessage(pID, "#error_must_target_air")
 	end
 end
 

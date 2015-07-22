@@ -46,6 +46,7 @@ function MassTeleport( event )
      	ParticleManager:DestroyParticle(unit.teleport_particle,false)
      	unit:Stop()
     end
+    FindClearSpaceForUnit(caster, target:GetAbsOrigin(), true)
     caster:StopSound("Hero_KeeperOfTheLight.Recall.Cast")
     print("Teleported to ",target:GetUnitName())
 end

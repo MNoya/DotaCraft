@@ -53,6 +53,6 @@ function ResurrectionPrecast( event )
 	-- End the spell if no targets found
 	if #targets == 0 then
 		event.caster:Interrupt()
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "No Usable Corpses of Friendly Units Near" } )
+		SendErrorMessage(pID, "#error_no_usable_friendly_corpses")
 	end
 end

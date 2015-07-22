@@ -1,5 +1,11 @@
 -- Contains general mechanics used extensively thourought different scripts
 
+function SendErrorMessage( pID, string )
+	Notifications:ClearBottom(pID)
+	Notifications:Bottom(pID, {text=string, style={color='#E62020'}, duration=2})
+	EmitSoundOnClient("General.Cancel", PlayerResource:GetPlayer(pID))
+end
+
 -- Modifies the lumber of this player. Accepts negative values
 function ModifyLumber( player, lumber_value )
 	if lumber_value == 0 then return end
@@ -236,7 +242,7 @@ function PlayerHasEnoughGold( player, gold_cost )
 	local gold = hero:GetGold()
 
 	if gold < gold_cost then
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need more Gold" } )		
+		SendErrorMessage(pID, "#error_not_enough_gold")
 		return false
 	else
 		return true
@@ -249,7 +255,7 @@ function PlayerHasEnoughLumber( player, lumber_cost )
 	local pID = player:GetAssignedHero():GetPlayerID()
 
 	if player.lumber < lumber_cost then
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need more Lumber" } )		
+		SendErrorMessage(pID, "#error_not_enough_lumber")
 		return false
 	else
 		return true
@@ -263,7 +269,8 @@ function PlayerHasEnoughFood( player, food_cost )
 	if player.food_used + food_cost > player.food_limit then
 		-- send the warning only once every time
 		if not player.need_more_farms then
-			FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Need more Farms" } )
+			local race = player:GetAssignedHero()
+			SendErrorMessage(pID, "#error_not_enough_food_"..race)
 			player.need_more_farms = true
 		end
 		return false
@@ -514,6 +521,23 @@ function GenerateAbilityString(player, ability_table)
 	return abilities_string
 end
 
+-- Returns a string with the race of the player
+function GetPlayerRace( player )
+	local hero = player:GetAssignedHero()
+	local hero_name = hero:GetUnitName()
+	local race
+	if hero_name == "npc_dota_hero_dragon_knight" then
+		race = "human"
+	elseif hero_name == "npc_dota_hero_furion" then
+		race = "nightelf"
+	elseif hero_name == "npc_dota_hero_life_stealer" then
+		race = "undead"
+	elseif hero_name == "npc_dota_hero_huskar" then
+		race = "orc"
+	end
+end
+
+-- Returns a string with the race of the unit
 function GetUnitRace( unit )
 	local name = unit:GetUnitName()
 	local name_split = split(name, "_")
