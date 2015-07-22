@@ -1,19 +1,19 @@
 // Hills of Glory
-// neutral_gnoll
-// neutral_gnoll_assassin
-// neutral_gnoll_poacher
-// neutral_gnoll_overseer
+	// neutral_gnoll
+	// neutral_gnoll_assassin
+	// neutral_gnoll_poacher
+	// neutral_gnoll_overseer
 
-// neutral_forest_troll_trapper
-// neutral_forest_troll_berserker
-// neutral_forest_troll_high_priest
+	// neutral_forest_troll_trapper
+	// neutral_forest_troll_berserker
+	// neutral_forest_troll_high_priest
 
-// neutral_red_dragon
+	// neutral_red_dragon
 
-// neutral_rock_golem
+	// neutral_rock_golem
 
-// neutral_ogre_magi
-// neutral_ogre_warrior
+	// neutral_ogre_magi
+	// neutral_ogre_warrior
 
 //=================================================================================
 // Creature: Gnoll
@@ -844,4 +844,671 @@
 	
 	// Creature Data
 	//----------------------------------------------------------------
+}
+
+///////////////////////////////////////
+// Copper Canyon
+	//neutral_centaur_drudge
+	//neutral_centaur_archer
+	//neutral_centaur_impaler
+	//neutral_centaur_sorcerer
+
+	//neutral_quillboar_hunter
+	//neutral_razormane_scout
+	//neutral_razormane_medicine_man
+	//neutral_razormane_chieftain
+
+//=================================================================================
+// Creature: Centaur Drudge
+// Description: "Light melee unit. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_centaur_drudge"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_centaur_med/n_creep_centaur_med.vmdl"
+	"ModelScale"				"0.8"
+	"Level"						"2"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"12.0"
+	"AttackDamageMax"			"13.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"6.0"
+	"BountyGoldMax"				"8.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"150"
+	"LumberCost"				"150"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"300"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Centaur Archer
+// Description: "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_centaur_archer"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_centaur_med/n_creep_centaur_med.vmdl"
+	"ModelScale"				"1"
+	"Level"						"2"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"17.0"
+	"AttackDamageMax"			"20.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"500"
+	"ProjectileModel"			""	 //Add projectile
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"6.0"
+	"BountyGoldMax"				"8.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"150"
+	"LumberCost"				"150"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"300"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Centaur Impaler
+// Description: "Medium ranged unit with Searing Arrows. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_centaur_impaler"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_centaur_lrg/n_creep_centaur_lrg.vmdl"
+	"ModelScale"				"0.9"
+	"Level"						"4"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACsa
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"25.0"
+	"AttackDamageMax"			"30.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"500"
+	"ProjectileModel"			"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"11.0"
+	"BountyGoldMax"				"15.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"255"
+	"LumberCost"				"255"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"350"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"200"
+	"StatsManaRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Centaur Sorcerer
+// Description: "Medium ranged unit that hurls fiery missiles. Casts Abolish Magic and Bloodlust. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_centaur_sorcerer"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/centaur/centaur.vmdl"
+	"ModelScale"				"1"
+	"Level"						"5"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACbl
+	"Ability2"					""	 //Reference: ACdm
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"28.0"
+	"AttackDamageMax"			"37.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.8"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"20.0"
+	"BountyGoldMax"				"26.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"320"
+	"LumberCost"				"320"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"350"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"600"
+	"StatusHealthRegen"			"1"
+	"StatusMana"				"400"
+	"StatsManaRegen"			"1"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"6500"		} //"Double Edge of the Unbroken Stallion"
+			"Wearable2"		{	"ItemDef"		"6889" 		} //"Shields of the Unbroken Stallion"
+			"Wearable3" 	{	"ItemDef"		"6497"		} //"Helm of the Unbroken Stallion"
+			"Wearable4" 	{	"ItemDef"		"6494"		} //"Armor of the Unbroken Stallion"
+			"Wearable5"		{	"ItemDef"		"6496"		} //"Bracers of the Unbroken Stallion"
+			"Wearable5"		{	"ItemDef"		"6499"		} //"Tail of the Unbroken Stallion"
+			"Wearable5"		{	"ItemDef"		"6495"		} //"Belt of the Unbroken Stallion"
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Razormane Scout
+//=================================================================================
+"neutral_razormane_scout"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/bristleback/bristleback.vmdl"
+	"ModelScale"				"0.8"
+	"Level"						"1"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"10.0"
+	"AttackDamageMax"			"11.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"4.0"
+	"BountyGoldMax"				"6.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"105"
+	"LumberCost"				"105"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"240"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"437"		} //"Bristleback's Back"
+			"Wearable2"		{	"ItemDef"		"437" 		} //"Bristleback's Head"
+			"Wearable3" 	{	"ItemDef"		"438"		} //"Bristleback's Weapon"
+			"Wearable4" 	{	"ItemDef"		"439"		} //"Bristleback's Bracers"
+			"Wearable5"		{	"ItemDef"		"440"		} //"Bristleback's Necklace"
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Quillboar Hunter
+// Description: "Medium ranged unit with Evasion. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_quillboar_hunter"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.vmdl"
+	"ModelScale"				"0.5"
+	"Level"						"3"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACev
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"21.0"
+	"AttackDamageMax"			"25.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.6"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"500"
+	"ProjectileModel"			"particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"
+	"ProjectileSpeed"			"1500"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"8.0"
+	"BountyGoldMax"				"10.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"215"
+	"LumberCost"				"215"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"375"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables" //Heavy Barbed
+		{
+			"Wearable1"		{	"ItemDef"		"5763"		}
+			"Wearable2"		{	"ItemDef"		"5764" 		} 
+			"Wearable3" 	{	"ItemDef"		"5765"		}
+			"Wearable4" 	{	"ItemDef"		"5766"		}
+			"Wearable5"		{	"ItemDef"		"5762"		}
+		}
+	}
+}
+
+
+//=================================================================================
+// Creature: Razormane Medicine Man
+// Description: "Medium melee unit that can cast Healing Ward and Feral Spirit. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_razormane_medicine_man"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/bristleback/bristleback.vmdl"
+	"ModelScale"				"0.9"
+	"Level"						"5"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: AChw
+	"Ability2"					""	 //Reference: ACs9
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"24.0"
+	"AttackDamageMax"			"27.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"20.0"
+	"BountyGoldMax"				"26.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"350"
+	"LumberCost"				"350"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"600"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"400"
+	"StatsManaRegen"			"1"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"5406"		} //"Emerald Frenzy Spikes"
+			"Wearable2"		{	"ItemDef"		"5407"		} //"Emerald Frenzy Flail"
+			"Wearable3" 	{	"ItemDef"		"5408"		} //"Emerald Frenzy Helmet"
+			"Wearable4" 	{	"ItemDef"		"5409"		} //"Emerald Frenzy Glove"
+			"Wearable5"		{	"ItemDef"		"5410"		} //"Emerald Frenzy Amulet"
+		}
+	}
+}
+
+
+//=================================================================================
+// Creature: Razormane Chieftain
+// Description: "Heavy melee unit with Thorns Aura. Can hurl boulders at enemies. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_razormane_chieftain"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/bristleback/bristleback.vmdl"
+	"ModelScale"				"1.3"
+	"Level"						"7"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACah
+	"Ability2"					""	 //Reference: ACtb
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"3"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"39.0"
+	"AttackDamageMax"			"44.0"
+	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.5"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"55.0"
+	"BountyGoldMax"				"65.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"425"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"950"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"500"
+	"StatsManaRegen"			"1.25"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"8391"		} //"Piston Impaler"
+			"Wearable2"		{	"ItemDef"		"5764" 		} 
+			"Wearable3" 	{	"ItemDef"		"5765"		}
+			"Wearable4" 	{	"ItemDef"		"5766"		}
+			"Wearable5"		{	"ItemDef"		"5762"		}
+		}
+	}
 }

@@ -322,7 +322,7 @@ function GatherGold( event )
 	      DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
 	      DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
 	    end
-
+	    print("Gold Mine Collapsed at ", mine:GetHealth())
 	    mine:RemoveSelf()
 
 		caster.target_mine = nil
@@ -518,24 +518,27 @@ function FindClosestResourceDeposit( caster, resource_type )
 
 	if resource_type == "gold" then
 		for _,building in pairs(buildings) do
-			if IsValidGoldDepositName( building:GetUnitName() ) and not building:HasModifier("modifier_construction") then
-			   
-				local this_distance = (position - building:GetAbsOrigin()):Length()
-				if this_distance < distance then
-					distance = this_distance
-					closest_building = building
+			if building and IsValidEntity(building) and building:IsAlive() then
+				if IsValidGoldDepositName( building:GetUnitName() ) and not building:HasModifier("modifier_construction") then
+				   
+					local this_distance = (position - building:GetAbsOrigin()):Length()
+					if this_distance < distance then
+						distance = this_distance
+						closest_building = building
+					end
 				end
 			end
 		end
 
 	elseif resource_type == "lumber" then
 		for _,building in pairs(buildings) do
-			if IsValidLumberDepositName( building:GetUnitName() ) and not building:HasModifier("modifier_construction") then
-			   
-				local this_distance = (position - building:GetAbsOrigin()):Length()
-				if this_distance < distance then
-					distance = this_distance
-					closest_building = building
+			if building and IsValidEntity(building) and building:IsAlive() then
+				if IsValidLumberDepositName( building:GetUnitName() ) and not building:HasModifier("modifier_construction") then
+					local this_distance = (position - building:GetAbsOrigin()):Length()
+					if this_distance < distance then
+						distance = this_distance
+						closest_building = building
+					end
 				end
 			end
 		end

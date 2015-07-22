@@ -116,13 +116,21 @@ function TreeIndexToHScript( targetIndex )
     --for k,v in pairs(GameRules.ALLTREES) do
         --DebugDrawText(v:GetAbsOrigin(), tostring(k), true, 10)
     --end
-    return GameRules.ALLTREES[targetIndex]
+    local adjust = 0
+    if GetMapName() == "copper_canyon" then
+        adjust = -1
+    end
+    return GameRules.ALLTREES[targetIndex+adjust]
 end
 
 function GetTreeIndexFromHandle( treeHandle )
+    local adjust = 0
+    if GetMapName() == "copper_canyon" then
+        adjust = 1
+    end
     for k,v in pairs(GameRules.ALLTREES) do
         if v == treeHandle then
-            return k
+            return k+adjust
         end
     end
     return nil

@@ -127,6 +127,9 @@ function dotacraft:InitGameMode()
 	if GetMapName() == "hills_of_glory" then
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
+	elseif GetMapName() == "copper_canyon" then
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 3 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 3 )
 	else
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 2 )
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 2 )
@@ -519,6 +522,14 @@ function dotacraft:OnHeroInGame(hero)
 		hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
 		Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
 		hero:AddNoDraw()
+
+		-- Find neutrals near the starting zone and remove them
+		local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, true)
+		for k,v in pairs(neutrals) do
+			if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+				v:RemoveSelf()
+			end
+		end
 	end
 
 end

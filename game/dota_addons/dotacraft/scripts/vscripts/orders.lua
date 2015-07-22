@@ -14,10 +14,12 @@ function dotacraft:FilterExecuteOrder( filterTable )
     if units then
         for n,unit_index in pairs(units) do
             local unit = EntIndexToHScript(unit_index)
-            if not unit:IsBuilding() and not IsCustomBuilding(unit) then
-                numUnits = numUnits + 1
-            elseif unit:IsBuilding() or IsCustomBuilding(unit) then
-                numBuildings = numBuildings + 1
+            if unit and IsValidEntity(unit) then
+                if not unit:IsBuilding() and not IsCustomBuilding(unit) then
+                    numUnits = numUnits + 1
+                elseif unit:IsBuilding() or IsCustomBuilding(unit) then
+                    numBuildings = numBuildings + 1
+                end
             end
         end
     end
