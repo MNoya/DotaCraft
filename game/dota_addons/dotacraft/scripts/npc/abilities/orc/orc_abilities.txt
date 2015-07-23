@@ -278,20 +278,26 @@
 		}
 		"02"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"attack_speed_increase"			"0.25"
+			"var_type"						"FIELD_INTEGER"
+			"attack_speed_increase"			"40"
 		}
 		"03"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"movement_speed_increase"		"0.4"
+			"var_type"						"FIELD_INTEGER"
+			"movement_speed_increase"		"25"
 		}
 		"04"
 		{
-			"var_type"		"FIELD_FLOAT"
+			"var_type"						"FIELD_FLOAT"
 			"scaling_factor"				"0.3"
 		}
 		// For model scaling.
+	}
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
+		"soundfile" "sounds/weapons/hero/ogre_magi/bloodlust_target.vsnd"
 	}
 
 	"OnSpellStart"
@@ -307,8 +313,9 @@
 	{
 		"modifier_orc_bloodlust"
 		{
-
+			"IsHidden"			"0"
 			"IsBuff"			"1"
+			"IsPurgable"		"1"
 			"Duration" 			"%duration"
 	
     		"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
@@ -316,8 +323,17 @@
 
     		"Properties"
 	    	{
-	    		//"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_PERCENTAGE" "%attack_speed_increase"
+	    		"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_PERCENTAGE" "%attack_speed_increase"
 	    		"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_increase"
+	    	}
+
+	    	"OnDestroy"
+	    	{
+	    		"RunScript"
+	    		{
+	    			"ScriptFile"	"units/orc/shaman.lua"
+	    			"Function"		"BloodlustDelete"
+	    		}
 	    	}
 		}
 	}
