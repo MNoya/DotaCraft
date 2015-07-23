@@ -1,0 +1,310 @@
+	
+//=================================================================================
+// Ability: Curse
+// Description: "Curses a target enemy unit, causing it to have a <Acrs,DataA1,%>% chance to miss on an attack. |nLasts <Acrs,Dur1> seconds."
+// Code Reference: Acrs
+//=================================================================================
+"undead_curse"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_curse"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"700"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"1"
+	"AbilityManaCost"			"40"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"unit_duration"		"120"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"hero_duration"		"60"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"miss_chance"		"33"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"cast_range"		"700"
+		}
+	}
+	
+	"precache"
+	{	
+		// target particle
+		"particle"  "particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead.vpcf"
+	}
+	
+	"OnSpellStart"
+	{			
+		"RunScript"
+		{
+			"Target"				"TARGET"
+			"caster"				"CASTER"
+			"ScriptFile"			"units/undead/banshee.lua"
+			"Function"				"undead_curse"
+		}			
+	}
+	
+	"OnOwnerSpawned"
+	{
+		"RunScript"
+		{
+			"caster"				"CASTER"
+			"cast_range"			"%cast_range"
+			"ScriptFile"			"units/undead/banshee.lua"
+			"Function"				"BansheeCurseAutoCast"
+		}	
+	}
+
+	"Modifiers"
+	{
+		"modifier_undead_curse"
+		{			
+			"EffectName" 		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead.vpcf"
+			"EffectAttachType" 	"follow_overhead"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MISS_PERCENTAGE" "%miss_chance"		
+			}	
+		}
+
+		"modifier_undead_curse_autocast"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/banshee.lua"
+					"Function"		"ToggleOnAutocast"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/banshee.lua"
+					"Function"		"BansheeCurseAutoCast"
+				}	
+			}			
+		}		
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Anti-magic Shell
+// Description: "Creates a barrier that stops <Aam2,DataC1> points of spell damage from affecting a target unit. |nLasts <Aam2,Dur1> seconds."
+// Code Reference: Aam2
+//=================================================================================
+"undead_anti-magic_shell"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_anti-magic_shell"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"75"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"90"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"spell_absorption"			"-300"
+		}
+	}
+	
+	"precache"
+	{	
+		// target particle
+		"particle"  "particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
+	}
+	
+	
+	"OnSpellStart"
+	{			
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_anti-magic_shell"
+			"Target"		 "TARGET"
+			"Duration"		"%duration"
+		}		
+	}
+
+	"Modifiers"
+	{
+		"modifier_anti-magic_shell"
+		{			
+			"EffectName" 		"particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
+			"EffectAttachType" 	"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT" "%spell_absorption"		
+			}	
+		}
+	}
+
+	// Done
+}
+
+//=================================================================================
+// Ability: Possession
+// Description: "Stuns a target unit and the Banshee for <Aps2,Dur1> seconds, during which the Banshee takes extra damage from attacks. She then displaces the soul of the enemy, giving you permanent control of it, but destroying the caster's body. |nPossession cannot be used on flying units, Heroes, or creeps above level <Aps2,DataA1>."
+// Code Reference: Aps2
+//=================================================================================
+"undead_possession"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_possession"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	
+	"AbilityChannelTime" 			"4"
+	"AbilityCastRange"			"350"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"250"
+	
+	"AnimationPlaybackRate"  		"0.5"
+		
+	"precache"
+	{
+		// caster particle
+		"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_spirit_model.vpcf"
+		
+		// target impact particle
+		"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf"
+		
+		
+		// target particle
+		"particle"  "particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"damage_increase_while_channeling"		"66"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"channel_range"		"35"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"duration"		"4"
+		
+		}
+	}
+
+	"OnSpellStart"
+	{		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_possession_caster"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_possession_target"
+			"Target"		 "TARGET"
+			"Duration"		"%duration"
+		}		
+	}
+
+	"OnChannelInterrupted"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_possession_target"
+			"Target"		 "TARGET"
+		}
+				
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_possession_caster"
+			"Target"		 "CASTER"
+		}
+	}
+	
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"Target"				"TARGET"
+			"Caster"				"CASTER"
+			"ScriptFile"			"units/undead/banshee.lua"
+			"Function"				"undead_possession"
+		}
+	}
+	
+		
+	"Modifiers"
+	{
+		"modifier_possession_target"
+		{			
+			"EffectName" 		"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
+			"EffectAttachType" 	"follow_origin"
+			"OverrideAnimation" "ACT_DOTA_DISABLED"
+				
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED" 			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_PROVIDES_VISION" 	"MODIFIER_STATE_VALUE_ENABLED"
+			
+			}	
+		}
+		
+		"modifier_possession_caster"
+		{			
+			"EffectName" 		"particles/units/heroes/hero_pugna/pugna_ward_orientedrunes.vpcf"
+			"EffectAttachType" 	"follow_origin"
+			
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"		
+			}			
+		}	
+	}
+
+	// Done
+}
