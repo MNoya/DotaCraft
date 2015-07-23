@@ -1,12 +1,13 @@
 MIN_DISTANCE_TO_TREE = 200
 MIN_DISTANCE_TO_MINE = 250
-TREE_FIND_RADIUS_FROM_TREE = 500
+TREE_FIND_RADIUS_FROM_TREE = 200
 TREE_FIND_RADIUS_FROM_TOWN = 2000
 DURATION_INSIDE_MINE = 1
 TREE_HEALTH = 50
 DAMAGE_TO_TREE = 1
 DAMAGE_TO_MINE = 10
 THINK_INTERVAL = 0.5
+DEBUG_TREES = false
 GOLD_DEPOSITS = { 	"human_town_hall",
 					"human_keep",
 					"human_castle"  
@@ -78,6 +79,12 @@ function Gather( event )
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_lumber", {})
 
 		caster.moving_timer = Timers:CreateTimer(function() 
+
+			-- End if killed
+			if not (caster and IsValidEntity(caster) and caster:IsAlive()) then
+				return
+			end
+
 			-- Move towards the tree until close range
 			if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_lumber") and caster.state == "moving_to_tree" then
 				local distance = (tree_pos - caster:GetAbsOrigin()):Length()
@@ -126,6 +133,12 @@ function Gather( event )
 
 			local mine_entrance_pos = mine.entrance+RandomVector(75)
 			caster.moving_timer = Timers:CreateTimer(function() 
+
+				-- End if killed
+				if not (caster and IsValidEntity(caster) and caster:IsAlive()) then
+					return
+				end
+
 				-- Move towards the mine until close range
 				if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_gold") and caster.state == "moving_to_mine" then
 					local distance = (mine_pos - caster:GetAbsOrigin()):Length()
@@ -188,7 +201,13 @@ function Gather( event )
 
 			local collision_size = building:GetHullRadius()*2 + 64
 
-			caster.moving_timer = Timers:CreateTimer(function() 
+			caster.moving_timer = Timers:CreateTimer(function()
+
+				-- End if killed
+				if not (caster and IsValidEntity(caster) and caster:IsAlive()) then
+					return
+				end
+
 				-- Move towards the building until close range
 				if not ability.cancelled and caster.state == "moving_to_repair" then
 					if caster.repair_building and IsValidEntity(caster.repair_building) then
@@ -302,9 +321,15 @@ function GatherLumber( event )
 			if a_tree then
 				caster.target_tree = a_tree
 				caster:MoveToTargetToAttack(a_tree)
-				DebugDrawCircle(a_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
+				print("Moving to tree nearby")
+				if DEBUG_TREES then DebugDrawCircle(a_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
 			else
-				ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
+				-- Go to return resources (where it will find a tree nearby the town instead)
+				local player = caster:GetPlayerOwnerID()
+				return_ability:SetHidden(false)
+				ability:SetHidden(true)
+				
+				caster:CastAbilityNoTarget(return_ability, player)
 			end
 		end
 	end
@@ -401,7 +426,6 @@ function ReturnResources( event )
 
 	-- LUMBER
 	if caster:HasModifier("modifier_carrying_lumber") then
-
 		-- Find where to return the resources
 		local building = FindClosestResourceDeposit( caster, "lumber" )
 		caster.target_building = building
@@ -411,6 +435,12 @@ function ReturnResources( event )
 
 		-- Move towards it
 		caster.moving_timer = Timers:CreateTimer(function() 
+
+			-- End if killed
+			if not (caster and IsValidEntity(caster) and caster:IsAlive()) then
+				return
+			end
+
 			if not ability.cancelled then
 				if caster.target_building and IsValidEntity(caster.target_building) and caster.state == "returning_lumber" then
 					local building_pos = caster.target_building:GetAbsOrigin()
@@ -440,26 +470,26 @@ function ReturnResources( event )
 						if caster.target_tree and caster.target_tree:IsStanding() then
 							caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
 						else
-							-- Tree was cut down, find another
 							-- First near the last target tree if possible
-							if caster.target_tree then
+							--[[if caster.target_tree then
 								caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_tree:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TREE)
-								if caster.target_tree then
-									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 5, TREE_FIND_RADIUS_FROM_TREE, true, 10)
+								if caster.target_tree and DEBUG_TREES then
+									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 5, TREE_FIND_RADIUS_FROM_TREE*2, true, 60)
 									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
 								end
-							end
-							-- Then near the city center in a huge radius
-							if not caster.target_tree  and caster.target_building then
+							end]]
+							-- Then closest near the city center in a huge radius
+							if --[[not caster.target_tree and]] caster.target_building then
+								print("Finding closest tree to down")
 								caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_building:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TOWN)
-								if caster.target_tree then
-									DebugDrawCircle(caster.target_building:GetAbsOrigin(), Vector(255,0,0), 5, TREE_FIND_RADIUS_FROM_TOWN, true, 10)
+								if caster.target_tree and DEBUG_TREES then
+									DebugDrawCircle(caster.target_building:GetAbsOrigin(), Vector(255,0,0), 5, TREE_FIND_RADIUS_FROM_TOWN, true, 60)
 									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
 								end
 							end
 														
 							if caster.target_tree then
-								DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
+								if DEBUG_TREES then DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
 								if caster.target_tree then
 									caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
 								end
@@ -495,6 +525,12 @@ function ReturnResources( event )
 
 		-- Move towards it
 		caster.moving_timer = Timers:CreateTimer(function() 
+
+			-- End if killed
+			if not (caster and IsValidEntity(caster) and caster:IsAlive()) then
+				return
+			end
+
 			if not ability.cancelled then
 				if caster.target_building and IsValidEntity(caster.target_building) and caster.state == "returning_gold" then
 					local building_pos = building:GetAbsOrigin()

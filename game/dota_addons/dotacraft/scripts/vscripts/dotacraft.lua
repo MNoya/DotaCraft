@@ -767,10 +767,8 @@ function dotacraft:OnTreeCut(keys)
 	    if nearbyTree then
 	    	local trees = GridNav:GetAllTreesAroundPoint(pos, 32, true)
 	    	for _,t in pairs(trees) do
-	    		--if GridNav:CanFindPath(Vector(0,0,0), t:GetAbsOrigin()) then
-	    		DebugDrawCircle(t:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
+	    		--DebugDrawCircle(t:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
 	    		t.pathable = true
-	    		--end
 	    	end
 	    end
 	end
@@ -855,7 +853,7 @@ function dotacraft:OnPlayerPickHero(keys)
     ModifyFoodLimit(player, GetFoodProduced(building))
 
 	-- Create Builders in between the gold mine and the city center
-	local num_builders = 30
+	local num_builders = 5
 	local angle = 360 / num_builders
 	local closest_mine = GetClosestGoldMineToPosition(position)
 	local closest_mine_pos = closest_mine:GetAbsOrigin()
@@ -889,7 +887,6 @@ function dotacraft:OnPlayerPickHero(keys)
 
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( builder, player )
-		FindClearSpaceForUnit(builder, builder_pos, true)
 	end
 
 	Timers:CreateTimer(1, function() 
@@ -1451,10 +1448,15 @@ end
 
 function dotacraft:DebugTrees()
 	for k,v in pairs(GameRules.ALLTREES) do
-		if IsTreePathable(v) then
-			DebugDrawCircle(v:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
-		else
-			DebugDrawCircle(v:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 60)
+		if v:IsStanding() then
+			if IsTreePathable(v) then
+				DebugDrawCircle(v:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
+				if not v.builder then
+					DebugDrawText(v:GetAbsOrigin(), "OK", true, 60)
+				end
+			else
+				DebugDrawCircle(v:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 60)
+			end
 		end
 	end
 end

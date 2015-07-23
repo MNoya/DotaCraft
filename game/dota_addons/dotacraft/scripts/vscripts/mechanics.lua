@@ -576,19 +576,34 @@ function FindEmptyNavigableTreeNearby( unit, position, radius )
 	local origin = unit:GetAbsOrigin()
 	--DebugDrawLine(origin, position, 255, 255, 255, true, 10)
 
-	-- Sort by Closest
-	local sorted_list = SortListByClosest(nearby_trees, position)
+	local pathable_trees = GetAllPathableTreesFromList(nearby_trees)
+	if #pathable_trees == 0 then
+		print("FindEmptyNavigableTreeNearby Can't find a pathable tree with radius ",radius," for this position")
+		return nil
+	end
 
- 	for _,tree in pairs(nearby_trees) do
+	-- Sort by Closest
+	local sorted_list = SortListByClosest(pathable_trees, position)
+
+ 	for _,tree in pairs(sorted_list) do
 		if (not tree.builder or tree.builder == unit ) and IsTreePathable(tree) then
 			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 100, 32, true, 10)
 			return tree
 		end
 	end
 
-	--DebugDrawCircle(position, Vector(255,0,0), radius*2, 100, true, 10)
 	--print("NO EMPTY NAVIGABLE TREE NEARBY")
 	return nil
+end
+
+function GetAllPathableTreesFromList( list )
+	local pathable_trees = {}
+	for _,tree in pairs(list) do
+		if IsTreePathable(tree) then
+			table.insert(pathable_trees, tree)
+		end
+	end
+	return pathable_trees
 end
 
 function SortListByClosest( list, position )

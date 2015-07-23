@@ -65,6 +65,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 end
             end
         end
+        return true
 
     ------------------------------------------------
     --          Tree Gather Multi Orders          --
@@ -148,10 +149,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 local unit = EntIndexToHScript(entityIndex)
                 local tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
                 if tree then 
-                    --[[if not tree.peasants then
-                        tree.peasants = 0
-                    end
-                    tree.peasants = tree.peasants + 1 -- Add one to the peasants assigned to this tree]]
 
                     tree.builder = unit
                     unit.skip_gather_check = true
