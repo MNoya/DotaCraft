@@ -175,6 +175,7 @@ function dotacraft:InitGameMode()
     GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap( dotacraft, "FilterExecuteOrder" ), self )
 
     -- Register Listener
+    CustomGameEventManager:RegisterListener( "reposition_player_camera", Dynamic_Wrap(dotacraft, "RepositionPlayerCamera"))
     CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
     CustomGameEventManager:RegisterListener( "gold_gather_order", Dynamic_Wrap(dotacraft, "GoldGatherOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "repair_order", Dynamic_Wrap(dotacraft, "RepairOrder")) --Right click through panorama
@@ -821,6 +822,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
 	player.altar_structures = {} -- Keeps altars linked
+	player.idle_builders = {} -- Keeps indexes of idle builders to send to the panorama UI
 
     -- Create Main Building
     DeepPrintTable(GameRules.StartingPositions)
@@ -889,16 +891,25 @@ function dotacraft:OnPlayerPickHero(keys)
 		CheckAbilityRequirements( builder, player )
 	end
 
+	-- Show UI elements for this race
+	local player_race = GetPlayerRace(player)
+	CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", { race = player_race, initial_builders = num_builders })
+
+	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
 	Timers:CreateTimer(1, function() 
-		local idle_builders = 0
+		local idle_builders = {}
 		local player_units = player.units
 		for k,unit in pairs(player_units) do
 			if IsBuilder(unit) and IsIdleBuilder(unit) then
-				idle_builders = idle_builders + 1
+				table.insert(idle_builders, unit:GetEntityIndex())
 			end
 		end
-		--print("#Idle Builders: "..idle_builders)
-		return 1
+		if #idle_builders ~= #player.idle_builders then
+			--print("#Idle Builders changed: "..#idle_builders..", was "..#player.idle_builders)
+			player.idle_builders = idle_builders
+			CustomGameEventManager:Send_ServerToPlayer(player, "player_update_idle_builders", { idle_builder_entities = idle_builders })
+		end
+		return 0.3
 	end)
 end
 
@@ -1445,5 +1456,17 @@ function dotacraft:DebugTrees()
 				DebugDrawCircle(v:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 60)
 			end
 		end
+	end
+end
+
+function dotacraft:RepositionPlayerCamera( event )
+	local pID = event.pID
+	local entIndex = event.entIndex
+	local entity = EntIndexToHScript(entIndex)
+	if entity and IsValidEntity(entity) then
+		PlayerResource:SetCameraTarget(pID, entity)
+		Timers:CreateTimer(function()
+			PlayerResource:SetCameraTarget(pID, nil)
+		end)
 	end
 end

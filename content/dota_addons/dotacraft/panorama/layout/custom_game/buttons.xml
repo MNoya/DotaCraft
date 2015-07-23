@@ -1,0 +1,33 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/buttons.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/buttons.js" />
+	</scripts>
+	<script>
+		$.Msg( "Compiled Panorama Buttons!" );
+	</script>
+	<Panel hittest="false" class='ButtonPanel'>
+		<Button id="IdleButton" onactivate="OnIdleButtonPressed()">
+			<Image id="IdleButtonImage" /><!-- src="file://{images}/custom_game/human/human_builder.png"/>-->
+			<Label id="IdleNumber" text="" />
+		</Button>
+		<Panel hittest="false" class='HeroButtonsPanel'>
+			<Button class="HeroButton" onactivate="OnHeroButtonPressed(1)">
+				<Image id="IdleButtonImage" src="file://{images}/custom_game/human/invoker.png"/>
+				<Image class"HealthBar" />
+			</Button>
+			<Button class="HeroButton" onactivate="OnHeroButtonPressed(2)">
+				<Image id="IdleButtonImage" src="file://{images}/custom_game/human/invoker.png"/>
+			</Button>
+			<Button class="HeroButton" onactivate="OnHeroButtonPressed(3)">
+				<Image id="IdleButtonImage" src="file://{images}/custom_game/human/invoker.png"/>
+			</Button>
+			<Button class="HeroButton" onactivate="OnHeroButtonPressed(4)">
+				<Image id="IdleButtonImage" src="file://{images}/custom_game/human/invoker.png"/>
+			</Button>
+		</Panel>
+	</Panel>
+</root>
+

@@ -113,9 +113,9 @@ function StringStartsWith( fullstring, substring )
 end
 
 function TreeIndexToHScript( targetIndex )
-    for k,v in pairs(GameRules.ALLTREES) do
-        DebugDrawText(v:GetAbsOrigin(), tostring(k), true, 10)
-    end
+    --for k,v in pairs(GameRules.ALLTREES) do
+        --DebugDrawText(v:GetAbsOrigin(), tostring(k), true, 10)
+    --end
     local adjust = 0
     return GameRules.ALLTREES[targetIndex+adjust]
 end
