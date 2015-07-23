@@ -77,7 +77,7 @@ end
 function BansheeCurseAuto_Cast(keys)
 	local ability = keys.ability
 	local caster = keys.caster
-	local AUTOCAST_RANGE = keys.cast_range
+	local AUTOCAST_RANGE = keys.ability:GetSpecialValueFor("cast_range")
 	local MODIFIER_NAME = "modifier_undead_curse"
 	
 	local target = nil
