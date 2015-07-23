@@ -55,8 +55,10 @@ function OnPlayerStart( args ) {
 	var race = args.race
 	idleCount = args.initial_builders
 	$('#IdleNumber').text = idleCount
-	$('#IdleButtonImage').SetImage( "s2r://panorama/images/custom_game/"+race+"_builder.png" )
+	$('#IdleButtonImage').SetImage( "s2r://panorama/images/custom_game/"+race+"/"+race+"_builder.png" )
 }
+
+Game.AddCommand( "+IdleBuilderSwap", OnIdleButtonPressed, "", 0 );
 
 (function () {
 	GameEvents.Subscribe( "player_show_ui", OnPlayerStart );
