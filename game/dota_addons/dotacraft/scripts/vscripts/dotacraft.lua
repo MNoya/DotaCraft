@@ -995,7 +995,7 @@ function dotacraft:OnEntityKilled( event )
 		for k,structure in pairs(player.structures) do
 			CheckAbilityRequirements( structure, player )
 		end
-		
+
 	-- Unit Killed
 	else
 		-- Give Experience to heroes based on the level of the killed creature
@@ -1033,6 +1033,7 @@ function dotacraft:OnEntityKilled( event )
 				table.insert(table_structures, building)
 			end
 		end
+		player.structures = table_structures
 
 		local table_altars = {}
 		for _,altar in pairs(player.altar_structures) do
