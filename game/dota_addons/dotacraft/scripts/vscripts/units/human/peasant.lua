@@ -321,7 +321,6 @@ function GatherLumber( event )
 			if a_tree then
 				caster.target_tree = a_tree
 				caster:MoveToTargetToAttack(a_tree)
-				print("Moving to tree nearby")
 				if DEBUG_TREES then DebugDrawCircle(a_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
 			else
 				-- Go to return resources (where it will find a tree nearby the town instead)
@@ -470,17 +469,8 @@ function ReturnResources( event )
 						if caster.target_tree and caster.target_tree:IsStanding() then
 							caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
 						else
-							-- First near the last target tree if possible
-							--[[if caster.target_tree then
-								caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_tree:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TREE)
-								if caster.target_tree and DEBUG_TREES then
-									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 5, TREE_FIND_RADIUS_FROM_TREE*2, true, 60)
-									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
-								end
-							end]]
-							-- Then closest near the city center in a huge radius
-							if --[[not caster.target_tree and]] caster.target_building then
-								print("Finding closest tree to down")
+							-- Find closest near the city center in a huge radius
+							if caster.target_building then
 								caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_building:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TOWN)
 								if caster.target_tree and DEBUG_TREES then
 									DebugDrawCircle(caster.target_building:GetAbsOrigin(), Vector(255,0,0), 5, TREE_FIND_RADIUS_FROM_TOWN, true, 60)

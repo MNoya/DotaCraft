@@ -968,6 +968,7 @@ function dotacraft:OnEntityKilled( event )
 		ModifyFoodUsed(player, - food_cost)
 	end
 
+	-- Building Killed
 	if IsCustomBuilding(killedUnit) then
 		killedUnit:RemoveBuilding(false) -- Building Helper grid cleanup
 
@@ -976,29 +977,51 @@ function dotacraft:OnEntityKilled( event )
 		if food_produced > 0 and player and not killedUnit.state == "canceled" then
 			ModifyFoodLimit(player, - food_produced)
 		end
-	end
 
-	-- Give Experience to heroes based on the level of the killed creature
-	if not killedUnit.isBuilding then
-		local XPGain = XP_BOUNTY_TABLE[killedUnit:GetLevel()]
+		-- Check units for downgrades
+		local building_name = killedUnit:GetUnitName()
+				
+		-- Substract 1 to the player building tracking table for that name
+		if player.buildings[building_name] then
+			player.buildings[building_name] = player.buildings[building_name] - 1
+		end
 
-		-- Grant XP in AoE
-		local heroesNearby = FindUnitsInRadius( killerEntity:GetTeamNumber(), killedUnit:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		--print("There are ",#heroesNearby," nearby the dead unit, base value for this unit is: "..XPGain)
-		for _,hero in pairs(heroesNearby) do
-			if hero:IsRealHero() and hero:GetTeam() ~= killedUnit:GetTeam() then
+		-- possible builder downgrades
+		for k,units in pairs(player.units) do
+		    CheckAbilityRequirements( units, player )
+		end
 
-				-- Scale XP if neutral
-				local xp = XPGain
-				if killedUnit:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-					xp = ( XPGain * XP_NEUTRAL_SCALING[hero:GetLevel()] ) / #heroesNearby
+		-- possible structure downgrades
+		for k,structure in pairs(player.structures) do
+			CheckAbilityRequirements( structure, player )
+		end
+		
+	-- Unit Killed
+	else
+		-- Give Experience to heroes based on the level of the killed creature
+		if not IsCustomBuilding(killedUnit) then
+			local XPGain = XP_BOUNTY_TABLE[killedUnit:GetLevel()]
+
+			-- Grant XP in AoE
+			local heroesNearby = FindUnitsInRadius( killerEntity:GetTeamNumber(), killedUnit:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			--print("There are ",#heroesNearby," nearby the dead unit, base value for this unit is: "..XPGain)
+			for _,hero in pairs(heroesNearby) do
+				if hero:IsRealHero() and hero:GetTeam() ~= killedUnit:GetTeam() then
+
+					-- Scale XP if neutral
+					local xp = XPGain
+					if killedUnit:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+						xp = ( XPGain * XP_NEUTRAL_SCALING[hero:GetLevel()] ) / #heroesNearby
+					end
+
+					hero:AddExperience(math.floor(xp), false, false)
+					--print("granted "..xp.." to "..hero:GetUnitName())
 				end
-
-				hero:AddExperience(math.floor(xp), false, false)
-				--print("granted "..xp.." to "..hero:GetUnitName())
-			end
+			end		
 		end		
 	end
+
+	
 
 	-- Table cleanup
 	if player then
@@ -1011,7 +1034,6 @@ function dotacraft:OnEntityKilled( event )
 			end
 		end
 
-
 		local table_altars = {}
 		for _,altar in pairs(player.altar_structures) do
 			if altar and IsValidEntity(altar) and altar:IsAlive() then
@@ -1021,11 +1043,11 @@ function dotacraft:OnEntityKilled( event )
 		end
 		player.altar_structures = table_altars
 		
-		-- Check for lose condition - All buildings destroyed
+		--[[ Check for lose condition - All buildings destroyed
 		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
 		if (#player.structures == 0) then
 			GameRules:MakeTeamLose(player:GetTeamNumber())
-		end
+		end]]
 		
 		local table_units = {}
 		for _,unit in pairs(player.units) do
@@ -1062,42 +1084,6 @@ function dotacraft:OnEntityKilled( event )
 			end)
 		end
 	end)
-
-	-- Remove from units table
-	if killedUnit and player then
-		-- IF BUILDING DESTROYED, CHECK FOR POSSIBLE DOWNGRADES OF ABILITIES THAT CAN'T BE BUILT ANYMORE
-		if IsCustomBuilding(killedUnit) then
-
-			-- Remove from it from player building tables
-			local building = getIndex(player.structures, killedUnit:GetEntityIndex())
-			if building and building ~= -1 then
-				local building_name = killedUnit:GetUnitName()
-				print("Removing "..killedUnit:GetUnitName().." from the player structures")
-				table.remove(player.structures, building)
-
-				-- Substract 1 to the player building tracking table for that name
-				if player.buildings[building_name] then
-					player.buildings[building_name] = player.buildings[building_name] - 1
-				end
-
-		    	for k,builder in pairs(player.units) do
-		    		CheckAbilityRequirements( builder, player )
-		    	end
-
-		    	for k,structure in pairs(player.structures) do
-		    		CheckAbilityRequirements( structure, player )
-		    	end
-		    end
-	    elseif killedUnit:IsCreature() and player then
-			local unit = getIndex(player.units, killedUnit)
-			if unit and unit ~= -1 then
-				--DeepPrintTable(player.units)
-				print("Removing "..unit.." from the player's units")
-				table.remove(player.units, unit)
-				--DeepPrintTable(player.units)
-			end
-		end
-	end
 end
 
 -- This is an example console command
