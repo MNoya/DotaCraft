@@ -579,16 +579,15 @@ function FindEmptyNavigableTreeNearby( unit, position, radius )
 	-- Sort by Closest
 	local sorted_list = SortListByClosest(nearby_trees, position)
 
- 	for _,tree in pairs(sorted_list) do
- 		local tree_point = tree:GetAbsOrigin()
-		if (not tree.builder or tree.builder == unit ) and IsTreePositionPathAble(origin, tree_point) then
-			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 100, 100, true, 10)
+ 	for _,tree in pairs(nearby_trees) do
+		if (not tree.builder or tree.builder == unit ) and IsTreePathable(tree) then
+			--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 100, 32, true, 10)
 			return tree
 		end
 	end
 
 	--DebugDrawCircle(position, Vector(255,0,0), radius*2, 100, true, 10)
-	print("NO EMPTY NAVIGABLE TREE NEARBY")
+	--print("NO EMPTY NAVIGABLE TREE NEARBY")
 	return nil
 end
 
@@ -622,34 +621,6 @@ function GetClosestEntityToPosition(list, position)
 	return closest	
 end
 
-
-function IsTreePositionPathAble( origin, position )
-	local found_path = false
-	local positions = {}
-	local pos1 = Vector(position.x + 100, position.y, position. z)
-	local pos2 = Vector(position.x - 100, position.y, position. z)
-	local pos3 = Vector(position.x, position.y + 100, position. z)
-	local pos4 = Vector(position.x, position.y - 100, position. z)
-	table.insert(positions, pos1)
-	table.insert(positions, pos2)
-	table.insert(positions, pos3)
-	table.insert(positions, pos4)
-
-	for k,vector in pairs(positions) do
-		if GridNav:CanFindPath(origin, vector) then
-			--DebugDrawCircle(vector, Vector(0, 255, 0), 100, 20, true, 5)
-			found_path = true
-			break
-		else
-			--DebugDrawCircle(vector, Vector(255, 0,0), 100, 20, true, 5)
-		end
-	end
-
-	--print("IsTreePositionPathAble",found_path)
-	return found_path
-	
-end
-
 function GetClosestGoldMineToPosition( position )
 	local allGoldMines = Entities:FindAllByModel('models/mine/mine.vmdl') --Target name in Hammer
 	local distance = 20000
@@ -681,4 +652,9 @@ end
 -- Returns if the builder is fully idle (not reparing or in a gathering process)
 function IsIdleBuilder( unit )
 	return (unit.state == "idle" and unit:IsIdle())
+end
+
+-- This is defined on dotacraft:DeterminePathableTrees() and updated on tree_cut
+function IsTreePathable( tree )
+	return tree.pathable
 end

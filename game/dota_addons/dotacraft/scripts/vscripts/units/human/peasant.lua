@@ -1,5 +1,7 @@
-MIN_DISTANCE_TO_TREE = 150
+MIN_DISTANCE_TO_TREE = 200
 MIN_DISTANCE_TO_MINE = 250
+TREE_FIND_RADIUS_FROM_TREE = 500
+TREE_FIND_RADIUS_FROM_TOWN = 2000
 DURATION_INSIDE_MINE = 1
 TREE_HEALTH = 50
 DAMAGE_TO_TREE = 1
@@ -294,20 +296,16 @@ function GatherLumber( event )
 		tree.health = tree.health - DAMAGE_TO_TREE
 		if tree.health <= 0 then
 			tree:CutDown(caster:GetTeamNumber())
-			local a_tree = FindEmptyNavigableTreeNearby(caster, tree:GetAbsOrigin(), 200)
+
+			-- Move to a new tree nearby
+			local a_tree = FindEmptyNavigableTreeNearby(caster, tree:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TREE)
 			if a_tree then
 				caster.target_tree = a_tree
+				caster:MoveToTargetToAttack(a_tree)
+				DebugDrawCircle(a_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
 			else
-				-- Increase the radius
-				caster.target_tree = FindEmptyNavigableTreeNearby(caster, tree:GetAbsOrigin(), 500)
-				if not caster.target_tree then
-					print("LOOKS LIKE WE CANT FIND A VALID TREE IN 500 RADIUS")
-					--DebugDrawCircle(tree:GetAbsOrigin(), Vector(255,0,0), 100, 500, true, 10)
-					ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
-				end
-
+				ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
 			end
-			-- Cast gather on the new tree
 		end
 	end
 		
@@ -415,11 +413,11 @@ function ReturnResources( event )
 		caster.moving_timer = Timers:CreateTimer(function() 
 			if not ability.cancelled then
 				if caster.target_building and IsValidEntity(caster.target_building) and caster.state == "returning_lumber" then
-					local building_pos = building:GetAbsOrigin()
+					local building_pos = caster.target_building:GetAbsOrigin()
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						caster:MoveToNPC(building)					
+						caster:MoveToNPC(caster.target_building)					
 						return THINK_INTERVAL
 					elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
 						--print("Building Reached at ",distance)
@@ -443,13 +441,30 @@ function ReturnResources( event )
 							caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
 						else
 							-- Tree was cut down, find another
-							-- Potential problem here, probably add a recursive check to always get one
-							caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_tree:GetAbsOrigin(), 200)
+							-- First near the last target tree if possible
 							if caster.target_tree then
-								caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
+								caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_tree:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TREE)
+								if caster.target_tree then
+									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 5, TREE_FIND_RADIUS_FROM_TREE, true, 10)
+									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
+								end
+							end
+							-- Then near the city center in a huge radius
+							if not caster.target_tree  and caster.target_building then
+								caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_building:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TOWN)
+								if caster.target_tree then
+									DebugDrawCircle(caster.target_building:GetAbsOrigin(), Vector(255,0,0), 5, TREE_FIND_RADIUS_FROM_TOWN, true, 10)
+									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
+								end
+							end
+														
+							if caster.target_tree then
+								DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
+								if caster.target_tree then
+									caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
+								end
 							else
 								-- Cancel ability, couldn't find moar trees...
-								print("NO MOAR TREES IN 200 RADIUS")
 								if gather_ability:GetToggleState() == true then
 									gather_ability:ToggleAbility()
 								end

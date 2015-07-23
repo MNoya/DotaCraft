@@ -139,6 +139,9 @@ function dotacraft:InitGameMode()
 	GameRules.PLAYER_BUILDINGS_DAMAGED = {}	
 	GameRules.PLAYER_DAMAGE_WARNING = {}
 
+	dotacraft:DeterminePathableTrees()
+	print('[DOTACRAFT] Pathable Trees set')
+
 	-- Event Hooks
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
 	ListenToGameEvent('player_connect_full', Dynamic_Wrap(dotacraft, 'OnConnectFull'), self)
@@ -148,6 +151,7 @@ function dotacraft:InitGameMode()
 	ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(dotacraft, 'OnPlayerPickHero'), self)
 	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
 	ListenToGameEvent('entity_hurt', Dynamic_Wrap(dotacraft, 'OnEntityHurt'), self)
+	ListenToGameEvent('tree_cut', Dynamic_Wrap(dotacraft, 'OnTreeCut'), self)
 	--ListenToGameEvent('player_disconnect', Dynamic_Wrap(dotacraft, 'OnDisconnect'), self)
 	--ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(dotacraft, 'OnItemPurchased'), self)
 	--ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(dotacraft, 'OnItemPickedUp'), self)
@@ -156,7 +160,6 @@ function dotacraft:InitGameMode()
 	--ListenToGameEvent('player_changename', Dynamic_Wrap(dotacraft, 'OnPlayerChangedName'), self)
 	--ListenToGameEvent('dota_rune_activated_server', Dynamic_Wrap(dotacraft, 'OnRuneActivated'), self)
 	--ListenToGameEvent('dota_player_take_tower_damage', Dynamic_Wrap(dotacraft, 'OnPlayerTakeTowerDamage'), self)
-	--ListenToGameEvent('tree_cut', Dynamic_Wrap(dotacraft, 'OnTreeCut'), self)
 	--ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(dotacraft, 'OnTeamKillCredit'), self)
 	--ListenToGameEvent("player_reconnected", Dynamic_Wrap(dotacraft, 'OnPlayerReconnect'), self)
 	--ListenToGameEvent('player_spawn', Dynamic_Wrap(dotacraft, 'OnPlayerSpawn'), self)
@@ -208,8 +211,7 @@ function dotacraft:InitGameMode()
 	-- Allow cosmetic swapping
 	SendToServerConsole( "dota_combines_model 0" )
 
-	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
-	Convars:RegisterCommand( "command_example", Dynamic_Wrap(dotacraft, 'ExampleConsoleCommand'), "A console command example", 0 )
+	Convars:RegisterCommand( "debug_trees", Dynamic_Wrap(dotacraft, 'DebugTrees'), "Prints the trees marked as pathable", 0 )
 
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
 	-- Note: When the abilities change, we need to update this value.
@@ -735,13 +737,43 @@ function dotacraft:OnLastHit(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 end
 
--- A tree was cut down by tango, quelling blade, etc
+-- A tree was cut down
 function dotacraft:OnTreeCut(keys)
 	print ('[DOTACRAFT] OnTreeCut')
 	--DeepPrintTable(keys)
 
 	local treeX = keys.tree_x
 	local treeY = keys.tree_y
+
+	-- Update the pathable trees nearby
+	local vecs = {
+    	Vector(0,64,0),-- N
+    	Vector(64,64,0), -- NE
+    	Vector(64,0,0), -- E
+    	Vector(64,-64,0), -- SE
+    	Vector(0,-64,0), -- S
+    	Vector(-64,-64,0), -- SW
+    	Vector(-64,0,0), -- W
+    	Vector(-64,64,0) -- NW
+  	}
+
+  	for k=1,#vecs do
+  		local vec = vecs[k]
+ 		local xoff = vec.x
+ 		local yoff = vec.y
+ 		local pos = Vector(treeX + xoff, treeY + yoff, 0)
+
+ 		local nearbyTree = GridNav:IsNearbyTree(pos, 64, true)
+	    if nearbyTree then
+	    	local trees = GridNav:GetAllTreesAroundPoint(pos, 32, true)
+	    	for _,t in pairs(trees) do
+	    		--if GridNav:CanFindPath(Vector(0,0,0), t:GetAbsOrigin()) then
+	    		DebugDrawCircle(t:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
+	    		t.pathable = true
+	    		--end
+	    	end
+	    end
+	end
 end
 
 -- A rune was activated by a player
@@ -823,7 +855,7 @@ function dotacraft:OnPlayerPickHero(keys)
     ModifyFoodLimit(player, GetFoodProduced(building))
 
 	-- Create Builders in between the gold mine and the city center
-	local num_builders = 5
+	local num_builders = 30
 	local angle = 360 / num_builders
 	local closest_mine = GetClosestGoldMineToPosition(position)
 	local closest_mine_pos = closest_mine:GetAbsOrigin()
@@ -857,6 +889,7 @@ function dotacraft:OnPlayerPickHero(keys)
 
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( builder, player )
+		FindClearSpaceForUnit(builder, builder_pos, true)
 	end
 
 	Timers:CreateTimer(1, function() 
@@ -1340,4 +1373,88 @@ function dotacraft:UpdateRallyFlagDisplays( playerID )
             CreateRallyFlagForBuilding(mainSelected)
         end
     end
+end
+
+--https://en.wikipedia.org/wiki/Flood_fill
+function dotacraft:DeterminePathableTrees()
+
+	--------------------------
+	--      Flood Fill      --
+	--------------------------
+
+	print("DeterminePathableTrees")
+
+	local world_positions = {}
+	local valid_trees = {}
+	local seen = {}
+
+	--Set Q to the empty queue.
+	local Q = {}
+
+ 	--Add node to the end of Q.
+ 	table.insert(Q, Vector(0,0,0))
+
+ 	local vecs = {
+    	Vector(0,64,0),-- N
+    	Vector(64,64,0), -- NE
+    	Vector(64,0,0), -- E
+    	Vector(64,-64,0), -- SE
+    	Vector(0,-64,0), -- S
+    	Vector(-64,-64,0), -- SW
+    	Vector(-64,0,0), -- W
+    	Vector(-64,64,0) -- NW
+  	}
+
+ 	while #Q > 0 do
+ 		--Set n equal to the first element of Q and Remove first element from Q.
+ 		local position = table.remove(Q)
+
+ 		--If the color of n is equal to target-color:
+ 		local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
+ 		if not blocked then
+ 			--table.insert(world_positions, position)
+
+ 			-- Mark position processed.
+ 			seen[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosX(position.y)] = 1
+
+ 			for k=1,#vecs do
+ 				local vec = vecs[k]
+ 				local xoff = vec.x
+ 				local yoff = vec.y
+ 				local pos = Vector(position.x + xoff, position.y + yoff, position.z)
+
+ 				-- Add unprocessed nodes
+ 				if not seen[GridNav:WorldToGridPosX(pos.x)..","..GridNav:WorldToGridPosX(pos.y)] then
+ 					--table.insert(world_positions, position)
+ 					table.insert(Q, pos)
+ 				end
+ 			end
+	    
+	    else
+	    	local nearbyTree = GridNav:IsNearbyTree(position, 64, true)
+	    	if nearbyTree then
+	    		local trees = GridNav:GetAllTreesAroundPoint(position, 1, true)
+	    		if #trees > 0 then
+	    			local t = trees[1]
+	    			t.pathable = true
+	    			--table.insert(valid_trees,t)
+	    		end
+	    	end
+	    end
+	end
+
+	--DEBUG
+	--for k,tree in pairs(valid_trees) do
+		--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 0, 32, true, 60)
+	--end
+end
+
+function dotacraft:DebugTrees()
+	for k,v in pairs(GameRules.ALLTREES) do
+		if IsTreePathable(v) then
+			DebugDrawCircle(v:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
+		else
+			DebugDrawCircle(v:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 60)
+		end
+	end
 end

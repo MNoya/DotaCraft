@@ -203,7 +203,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         -- If clicking near a tree
         if IsBuilder(unit) and #trees>0 then
             if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-                local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS * 20 + numBuilders)
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS)
                 if empty_tree then
                     local tree_index = GetTreeIndexFromHandle( empty_tree )
                     print("Order: Cast on Tree ",tree_index)
