@@ -35252,7 +35252,7 @@
 	
 	//=================================================================================
 	// Ability: Bloodlust
-	// Description: "Increases a friendly unit's attack rate by <Ablo,DataA1,%>% and movement speed by <Ablo,DataB1,%>%. |nLasts <Ablo,Dur1> seconds."
+	// Description: "Increases a friendly unit's attack rate and movement speed."
 	// Code Reference: Ablo
 	//=================================================================================
 	"orc_bloodlust"
@@ -35294,6 +35294,35 @@
 				"scaling_factor"				"0.3"
 			}
 			// For model scaling.
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/shaman.lua"
+				"Function"		"Bloodlust"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_orc_bloodlust"
+			{
+	
+				"IsBuff"			"1"
+				"Duration" 			"%duration"
+		
+	    		"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+		    	"EffectAttachType"	"follow_origin"
+	
+	    		"Properties"
+		    	{
+		    		"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_PERCENTAGE" "%attack_speed_increase"
+		    		"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_increase"
+		    	}
+				[ACTIONS]
+			}
 		}
 	
 		// Done
