@@ -54,6 +54,12 @@ function CheckAbilityRequirements( unit, player )
 						 	Requirements succeed: Do nothing
 							Requirements fail: Set disabled (the player lost some requirement due to building destruction)
 					]]
+
+					-- Unlock all abilities inside the workshop tools
+					if Convars:GetBool("developer") then
+						player_has_requirements = true
+					end
+
 					if disabled then
 						if player_has_requirements then
 							-- Learn the ability and remove the disabled one (as we might run out of the 16 ability slot limit)
