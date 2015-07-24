@@ -1,7 +1,29 @@
+function VerifyUnitPossession ( keys )
+	local MAX_LEVEL = keys.ability:GetSpecialValueFor("max_level")
+	local PlayerID = keys.caster:GetPlayerOwnerID()
+	local duration = keys.ability:GetSpecialValueFor("duration")
+	
+	if keys.target:GetLevel() > MAX_LEVEL then
+		-- store mana	
+		local mana = keys.caster:GetMana()
+		
+		-- interupt & send error
+		keys.caster:Interrupt()			
+		SendErrorMessage(PlayerID, "#error_cant_target_level6")
+		
+		-- set mana after a frame delay
+		Timers:CreateTimer(function() keys.caster:SetMana(mana) return end)
+	else
+		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_possession_target", {duration=duration})
+		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_possession_caster", {duration=duration})
+	end
+end
+
 function undead_possession( keys )
 	local target = keys.target
 	local caster = keys.caster
-
+	local ability = keys.ability
+	
 	Timers:CreateTimer(function()
 	
 	-- incase the unit has finished channelling but dies mid-possession(highly unlikely but possible)
@@ -118,10 +140,4 @@ function ToggleOnAutocast( event )
 	local ability = event.ability
 
 	ability:ToggleAutoCast()
-end
-
--- Puts a variable at 0 for the damage filter to take it
-function ResetAntiMagicShell( event )
-	local caster = event.caster
-	caster.anti_magic_shell_absorbed = 0
 end

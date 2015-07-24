@@ -644,7 +644,7 @@
 		}		
 	}
 
-	
+	// Done
 }
 
 //=================================================================================
@@ -652,10 +652,10 @@
 // Description: "Creates a barrier that stops <Aam2,DataC1> points of spell damage from affecting a target unit. |nLasts <Aam2,Dur1> seconds."
 // Code Reference: Aam2
 //=================================================================================
-"undead_anti_magic_shell"
+"undead_anti-magic_shell"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_anti_magic_shell"
+	"AbilityTextureName"		"undead_anti-magic_shell"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -672,13 +672,13 @@
 	{
 		"01"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"duration"			"90"
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"90"
 		}
 		"02"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"spell_absorption"	"300"
+			"var_type"		"FIELD_INTEGER"
+			"spell_absorption"			"-300"
 		}
 	}
 	
@@ -690,15 +690,10 @@
 	
 	
 	"OnSpellStart"
-	{	
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_anti_magic_shell"
-			"Target" 		"TARGET"
-		}	
+	{			
 		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_anti_magic_shell"
+			"ModifierName"	"modifier_anti-magic_shell"
 			"Target"		 "TARGET"
 			"Duration"		"%duration"
 		}		
@@ -706,22 +701,19 @@
 
 	"Modifiers"
 	{
-		"modifier_anti_magic_shell"
+		"modifier_anti-magic_shell"
 		{			
 			"EffectName" 		"particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
 			"EffectAttachType" 	"follow_origin"
-			"OnCreated"
+			
+			"Properties"
 			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/undead/banshee.lua"
-					"Function"		"ResetAntiMagicShell"
-				}
-			}
+				"MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT" "%spell_absorption"		
+			}	
 		}
 	}
 
-	
+	// Done
 }
 
 //=================================================================================
@@ -740,13 +732,14 @@
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	
-	"AbilityChannelTime" 			"4"
+	"AbilityChannelTime" 		"4"
 	"AbilityCastRange"			"350"
-	"AbilityCastPoint"			"0"
+	"AbilityCastPoint"			"0.3"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"250"
 	
-	"AnimationPlaybackRate"  		"0.5"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	"AnimationPlaybackRate"  	"0.1"
 		
 	"precache"
 	{
@@ -771,32 +764,31 @@
 		"02"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"channel_range"		"35"
+			"channel_range"		"350"
 		}
 		"03"
 		{
 			"var_type"			"FIELD_INTEGER"
 			"duration"		"4"
-		
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"max_level"		"5"
 		}
 	}
 
-	"OnSpellStart"
-	{		
-		"ApplyModifier"
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
 		{
-			"ModifierName"	"modifier_possession_caster"
-			"Target" 		"CASTER"
-			"Duration"		"%duration"
-		}		
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_possession_target"
-			"Target"		 "TARGET"
-			"Duration"		"%duration"
-		}		
+			"Target"				"TARGET"
+			"Caster"				"CASTER"
+			"ScriptFile"			"units/undead/banshee.lua"
+			"Function"				"VerifyUnitPossession"
+		}	
 	}
-
+	
 	"OnChannelInterrupted"
 	{
 		"RemoveModifier"
@@ -823,7 +815,6 @@
 		}
 	}
 	
-		
 	"Modifiers"
 	{
 		"modifier_possession_target"
@@ -835,8 +826,6 @@
 			"States"
 			{
 				"MODIFIER_STATE_STUNNED" 			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_PROVIDES_VISION" 	"MODIFIER_STATE_VALUE_ENABLED"
-			
 			}	
 		}
 		
@@ -845,12 +834,14 @@
 			"EffectName" 		"particles/units/heroes/hero_pugna/pugna_ward_orientedrunes.vpcf"
 			"EffectAttachType" 	"follow_origin"
 			
-			"States"
+			"Properties"
 			{
-				"MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"		
-			}			
+				//"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%damage_increase_while_channeling"
+			}
 		}	
-	}	
+	}
+
+	// Done
 }
 
 //=================================================================================
