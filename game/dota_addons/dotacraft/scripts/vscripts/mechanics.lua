@@ -431,6 +431,26 @@ function IsBuilder( unit )
 	end
 end
 
+-- Returns true if the unit is a valid lumberjack
+function CanGatherLumber( unit )
+	local unitName = unit:GetUnitName()
+	if unitName == "human_peasant" or unitName == "nightelf_wisp" or unitName == "undead_ghoul" or unitName == "orc_peon" then
+		return true
+	else
+		return false
+	end
+end
+
+-- Returns true if the unit is a gold miner
+function CanGatherGold( unit )
+	local unitName = unit:GetUnitName()
+	if unitName == "human_peasant" or unitName == "nightelf_wisp" or unitName == "undead_acolyte" or unitName == "orc_peon" then
+		return true
+	else
+		return false
+	end
+end
+
 function IsBase( unit )
 	local race = GetUnitRace(unit)
 	local unitName = unit:GetUnitName()

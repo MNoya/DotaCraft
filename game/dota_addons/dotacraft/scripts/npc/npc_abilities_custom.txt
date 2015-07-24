@@ -22212,7 +22212,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/human/peasant.lua"
+				"ScriptFile"	"units/builder.lua"
 				"Function"		"Gather"
 			}
 		}
@@ -22227,7 +22227,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
 					"RemoveModifier"
@@ -22251,7 +22251,7 @@
 					}
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -22262,7 +22262,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"GatherLumber"
 					}
 				}		
@@ -22283,12 +22283,12 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
 				}
 	
-				// Peasants have no collision while moving in and out of the mine
+				// Builders have no collision while moving in and out of the mine
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -22311,7 +22311,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"GatherGold"
 					}
 				}
@@ -22332,14 +22332,14 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
 				}
 			}
 	
 			// On the caster, does the animation and removal if killed or moved
-			"modifier_peasant_repairing"
+			"modifier_builder_repairing"
 			{
 				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
 	
@@ -22347,14 +22347,14 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
 					
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"PeasantRepairing"
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuilderRepairing"
 					}
 				}
 	
@@ -22362,14 +22362,14 @@
 				{			
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_peasant_repairing"
+						"ModifierName"	"modifier_builder_repairing"
 						"Target" 		"CASTER"
 					}
 	
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"PeasantStopRepairing"
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuildersStopRepairing"
 					}
 				}
 	
@@ -22378,14 +22378,14 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"	"modifier_peasant_repairing_animation"
+						"ModifierName"	"modifier_builder_repairing_animation"
 						"Target" 		"CASTER"
 						"Duration"		"0.9"
 					}
 				}		
 			}
 	
-			"modifier_peasant_repairing_animation"
+			"modifier_builder_repairing_animation"
 			{
 				"OverrideAnimation"     "ACT_DOTA_ATTACK"
 				"IsHidden"				"1"
@@ -22393,7 +22393,7 @@
 				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_peasant_repairing_animation"
+						"ModifierName"	"modifier_builder_repairing_animation"
 						"Target" 		"CASTER"
 					}
 				}
@@ -22408,7 +22408,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"Repair"
 					}
 				}
@@ -22430,7 +22430,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/human/peasant.lua"
+				"ScriptFile"	"units/builder.lua"
 				"Function"		"ReturnResources"
 			}
 		}
@@ -22447,7 +22447,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelReturn"
 					}
 				}		
@@ -22468,7 +22468,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/peasant.lua"
+						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelReturn"
 					}
 				}		
@@ -36746,6 +36746,299 @@
 			}
 		}
 	}
+	
+	"orc_gather"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"orc_gather"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_capacity"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_capacity"		"10"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Gather"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// LUMBER GATHER
+			"modifier_on_order_cancel_lumber"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_gathering_lumber"
+			{
+				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+				"IsHidden"				"1"
+				"OnOrder"
+				{			
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_gathering_lumber"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+	
+				// Lumber Gain
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"GatherLumber"
+					}
+				}		
+			}
+			// END LUMBER GATHER
+	
+			// GOLD GATHER
+			"modifier_on_order_cancel_gold"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_gold"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+	
+				// Peasants have no collision while moving in and out of the mine
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_gathering_gold"
+			{			
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				// Gold Gain
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"GatherGold"
+					}
+				}
+			}
+			// END GOLD GATHER
+	
+			// REPAIR
+			"modifier_on_order_cancel_repair"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_repair"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+			}
+	
+			// On the caster, does the animation and removal if killed or moved
+			"modifier_builder_repairing"
+			{
+				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuilderRepairing"
+					}
+				}
+	
+				"OnOrder"
+				{			
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_builder_repairing"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuildersStopRepairing"
+					}
+				}
+	
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_builder_repairing_animation"
+						"Target" 		"CASTER"
+						"Duration"		"0.9"
+					}
+				}		
+			}
+	
+			"modifier_builder_repairing_animation"
+			{
+				"OverrideAnimation"     "ACT_DOTA_ATTACK"
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_builder_repairing_animation"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			// Stackable modifier on the building
+			"modifier_repairing_building"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"Repair"
+					}
+				}
+			}
+			// END REPAIR
+		}
+	}
+	
+	"orc_return_resources"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"orc_return_resources"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle
+	
+		// When the ability is active, it means there are resources left to return (else it will be hidden)
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"ReturnResources"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// Shows the stacks of carried lumber
+			"modifier_carrying_lumber"
+			{
+				"IsHidden"				"0"
+				"TextureName"			"furion_sprout"
+	
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelReturn"
+					}
+				}		
+			}
+	
+			// Shows that the builder has acquired gold
+			"modifier_carrying_gold"
+			{
+				"IsHidden"				"0"
+				"TextureName"			"alchemist_goblins_greed"
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelReturn"
+					}
+				}		
+			}
+		}
+	}
 	// • Great Hall / Stronghold / Fortress
 	"orc_research_pillage"
 	{
@@ -41661,6 +41954,313 @@
 			{
 				"ScriptFile"	"abilities.lua"
 				"Function"		"build"
+			}
+		}
+	}
+	"undead_gather"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_gather"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	
+		"AbilitySpecial"
+		{
+			// Acolyte Only
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"gold_interval"		"4"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"gold_per_interval"	"10"
+			}	
+	
+			// Ghoul Only
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ghoul_lumber_capacity"	"10" //Can be upgraded
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Gather"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// LUMBER GATHER
+			"modifier_on_order_cancel_lumber"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_gathering_lumber"
+			{
+				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+				"IsHidden"				"1"
+				"OnOrder"
+				{			
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_gathering_lumber"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+	
+				// Lumber Gain
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"GatherLumber"
+					}
+				}		
+			}
+			// END LUMBER GATHER
+	
+			// GOLD GATHER
+			"modifier_on_order_cancel_gold"
+			{
+				"IsHidden"	"1"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_gold"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_gathering_gold"
+			{
+				"IsHidden"				"0"
+				"OverrideAnimation"		"ACT_DOTA_CHANNEL_ABILITY_3"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_gathering_gold"
+						"Target" 		"CASTER"
+					}
+				}
+				
+				"ThinkInterval"  "%gold_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"GoldGain"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+	
+			// END GOLD GATHER
+	
+			// REPAIR
+			"modifier_on_order_cancel_repair"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_repair"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+			}
+	
+			// On the caster, does the animation and removal if killed or moved
+			"modifier_builder_repairing"
+			{
+				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuilderRepairing"
+					}
+				}
+	
+				"OnOrder"
+				{			
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_builder_repairing"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuildersStopRepairing"
+					}
+				}
+	
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_builder_repairing_animation"
+						"Target" 		"CASTER"
+						"Duration"		"0.9"
+					}
+				}		
+			}
+	
+			"modifier_builder_repairing_animation"
+			{
+				"OverrideAnimation"     "ACT_DOTA_ATTACK"
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_builder_repairing_animation"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			// Stackable modifier on the building
+			"modifier_repairing_building"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"Repair"
+					}
+				}
+			}
+			// END REPAIR
+		}
+	}
+	
+	"undead_return_resources"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_return_resources"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle
+	
+		// When the ability is active, it means there are resources left to return (else it will be hidden)
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"ReturnResources"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// Shows the stacks of carried lumber
+			"modifier_carrying_lumber"
+			{
+				"IsHidden"				"0"
+				"TextureName"			"furion_sprout"
+	
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelReturn"
+					}
+				}		
+			}
+	
+			// Shows that the builder has acquired gold
+			"modifier_carrying_gold"
+			{
+				"IsHidden"				"0"
+				"TextureName"			"alchemist_goblins_greed"
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelReturn"
+					}
+				}		
 			}
 		}
 	}

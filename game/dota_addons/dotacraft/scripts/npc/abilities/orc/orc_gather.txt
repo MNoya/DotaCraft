@@ -1,8 +1,8 @@
 
-"human_gather"
+"orc_gather"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_gather"
+	"AbilityTextureName"			"orc_gather"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -20,7 +20,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_capacity"		"10" //Can be upgraded
+			"lumber_capacity"		"10"
 		}
 	}
 
@@ -104,7 +104,7 @@
 				}
 			}
 
-			// Builders have no collision while moving in and out of the mine
+			// Peasants have no collision while moving in and out of the mine
 			"States"
 			{
 				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -233,10 +233,10 @@
 	}
 }
 
-"human_return_resources"
+"orc_return_resources"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_return_resources"
+	"AbilityTextureName"			"orc_return_resources"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle

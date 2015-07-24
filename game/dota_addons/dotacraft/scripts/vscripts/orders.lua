@@ -53,12 +53,13 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
 
-        if abilityName == "human_return_resources" then
+        local race = GetUnitRace(unit)
+        if abilityName == race.."_return_resources" then
             for k,entityIndex in pairs(entityList) do
                 local unit = EntIndexToHScript(entityIndex)
                 unit.skip = true
 
-                local return_ability = unit:FindAbilityByName("human_return_resources")
+                local return_ability = unit:FindAbilityByName(race.."_return_resources")
                 if return_ability and not return_ability:IsHidden() then
                     --print("Order: Return resources")
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
@@ -85,8 +86,10 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
 
-        local targetIndex = filterTable["entindex_target"]
-        local tree_handle = TreeIndexToHScript(targetIndex)
+        local treeID = filterTable["entindex_target"]
+        local tree_index = GetEntityIndexForTreeId(treeID)
+        local tree_handle = EntIndexToHScript(tree_index)
+
         local position = tree_handle:GetAbsOrigin()
         if DEBUG then
             DebugDrawCircle(position, Vector(255,0,0), 100, 150, true, 5)
@@ -107,7 +110,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         local numBuilders = 0
         for k,entityIndex in pairs(entityList) do
-            if IsBuilder(EntIndexToHScript(entityIndex)) then
+            if CanGatherLumber(EntIndexToHScript(entityIndex)) then
                 numBuilders = numBuilders + 1
             end
         end
@@ -140,20 +143,22 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     --print("No Empty Tree?")
                 end
             end
-        elseif abilityName == "human_gather" then
+
+        elseif string.match(abilityName,"_gather") then
 
             for k,entityIndex in pairs(entityList) do
                 --print("GatherTreeOrder for unit index ",entityIndex, position)
 
                 --Execute the order to a navigable tree
                 local unit = EntIndexToHScript(entityIndex)
+                local race = GetUnitRace(unit)
                 local tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
                 if tree then 
 
                     tree.builder = unit
                     unit.skip_gather_check = true
-                    local gather_ability = unit:FindAbilityByName("human_gather")
-                    local return_ability = unit:FindAbilityByName("human_return_resources")
+                    local gather_ability = unit:FindAbilityByName(race.."_gather")
+                    local return_ability = unit:FindAbilityByName(race.."_return_resources")
                     if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
                         local tree_index = GetTreeIndexFromHandle( tree )
                         --print("Order: Cast on Tree ",tree_index)
@@ -185,20 +190,20 @@ function dotacraft:FilterExecuteOrder( filterTable )
     local entityIndex = units["0"]
     local unit = EntIndexToHScript(entityIndex)
 
-    if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and IsBuilder(unit) and #trees>0 then
+    if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and CanGatherLumber(unit) and #trees>0 then
         
         local race = GetUnitRace(unit)
         local gather_ability = unit:FindAbilityByName(race.."_gather")
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
         local numBuilders = 0
         for k,entityIndex in pairs(entityList) do
-            if IsBuilder(EntIndexToHScript(entityIndex)) then
+            if CanGatherLumber(EntIndexToHScript(entityIndex)) then
                 numBuilders = numBuilders + 1
             end
         end
 
         -- If clicking near a tree
-        if IsBuilder(unit) and #trees>0 then
+        if CanGatherLumber(unit) and #trees>0 then
             if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
                 local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS)
                 if empty_tree then

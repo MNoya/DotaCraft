@@ -471,6 +471,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
             if callbacks.onConstructionCompleted ~= nil then
               callbacks.onConstructionCompleted(building)
               building.constructionCompleted = true
+              building.state = "complete"
             end
 
             -- Eject Builder

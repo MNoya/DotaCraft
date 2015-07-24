@@ -10420,8 +10420,8 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
-		"Ability1"					"human_gather"
-		"Ability2"					"human_return_resources"
+		"Ability1"					"orc_gather"
+		"Ability2"					"orc_return_resources"
 		"Ability3"					"orc_build_barracks"
 		"Ability4"					"orc_build_beastiary"
 		"Ability5"					"orc_build_spirit_lodge"
@@ -14001,7 +14001,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
-		"Ability1"					"human_gather"	 //Reference: Aaha
+		"Ability1"					"undead_gather"	 // Only Gold and Repair
 		"Ability2"					"undead_restore"	 //Reference: Arst
 		"Ability3"					"undead_build_crypt"	 //Reference: Alam
 		"Ability4"					"undead_build_temple_of_the_damned_disabled"
@@ -14106,9 +14106,9 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"undead_cannibalize"	 //Reference: Acan
-		"Ability2"					""	 //Reference: Ahrl
-		"Ability3"					""	 //Reference: Aiun
+		"Ability1"					"undead_gather" //Only Lumber
+		"Ability2"					"undead_return_resources"	
+		"Ability3"					"undead_cannibalize"	 //Reference: Acan
 		
 		// Armor
 		//----------------------------------------------------------------

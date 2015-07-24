@@ -1,8 +1,7 @@
-
-"human_gather"
+"undead_gather"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_gather"
+	"AbilityTextureName"			"undead_gather"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -12,15 +11,23 @@
 
 	"AbilitySpecial"
 	{
+		// Acolyte Only
 		"01"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_capacity"			"10"
+			"var_type"			"FIELD_INTEGER"
+			"gold_interval"		"4"
 		}
 		"02"
 		{
+			"var_type"			"FIELD_INTEGER"
+			"gold_per_interval"	"10"
+		}	
+
+		// Ghoul Only
+		"03"
+		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_capacity"		"10" //Can be upgraded
+			"ghoul_lumber_capacity"	"10" //Can be upgraded
 		}
 	}
 
@@ -88,50 +95,57 @@
 		// GOLD GATHER
 		"modifier_on_order_cancel_gold"
 		{
-			"IsHidden"				"1"
+			"IsHidden"	"1"
 			"OnOrder"
 			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_on_order_cancel_gold"
-					"Target" 		"CASTER"
-				}
-
 				"RunScript"
 				{
 					"ScriptFile"	"units/builder.lua"
 					"Function"		"CancelGather"
 				}
-			}
-
-			// Builders have no collision while moving in and out of the mine
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_on_order_cancel_gold"
+					"Target" 		"CASTER"
+				}
 			}
 		}
 
 		"modifier_gathering_gold"
-		{			
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-
-			// Gold Gain
-			"OnDestroy"
+		{
+			"IsHidden"				"0"
+			"OverrideAnimation"		"ACT_DOTA_CHANNEL_ABILITY_3"
+			"OnOrder"
 			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/builder.lua"
-					"Function"		"GatherGold"
+					"Function"		"CancelGather"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_gathering_gold"
+					"Target" 		"CASTER"
 				}
 			}
+			
+			"ThinkInterval"  "%gold_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"GoldGain"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+			}	
 		}
+
 		// END GOLD GATHER
 
 		// REPAIR
@@ -233,10 +247,10 @@
 	}
 }
 
-"human_return_resources"
+"undead_return_resources"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_return_resources"
+	"AbilityTextureName"			"undead_return_resources"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle

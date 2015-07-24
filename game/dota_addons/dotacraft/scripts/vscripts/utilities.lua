@@ -120,6 +120,7 @@ function TreeIndexToHScript( targetIndex )
     return GameRules.ALLTREES[targetIndex+adjust]
 end
 
+-- Implemented as GetEntityIndexForTreeId(treeID) by Valve
 function GetTreeIndexFromHandle( treeHandle )
     local adjust = 0
     for k,v in pairs(GameRules.ALLTREES) do
