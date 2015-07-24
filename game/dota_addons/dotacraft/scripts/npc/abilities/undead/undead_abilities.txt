@@ -1,4 +1,543 @@
+
+//=================================================================================
+// Ability: Cannibalize
+// Description: "Consumes a nearby corpse to heal <Acan,DataA1> hit points per second."
+// Code Reference: Acan
+// NOTE: I ain't judgin', ya know, stress builds up when you have to scratch trees with your own fingers all day.
+//=================================================================================
+"undead_cannibalize"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_cannibalize"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"50"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+	// The cast range is the range in which the eating'll happen.
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"33"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"heath_per_second"		"10"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"search_radius"			"800"
+		}
+		// The unit'll find the nearest corpse in this radius.
+		// According to classic.battle.net, they'll also eat corpses from Meat Wagons. The most injured units will be prioritized should you order a group to cannibalize.
+	}
+
 	
+}
+
+//=================================================================================
+// Ability: Ghoul Frenzy
+// Description: "Increases the attack rate of Ghouls by <Rugf,base1,%>%, and increases their movement speed."
+//=================================================================================
+"undead_ghoul_frenzy"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_ghoul_frenzy"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"attack_speed_bonus"	"-0.25"
+		}
+		// This is -0.25 B.A.T
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movement_speed_bonus"	"80"
+		}
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Web
+// Description: "Binds a target enemy air unit in webbing, forcing it to the ground. Webbed units can be hit as though they were land units. |nLasts <Aweb,Dur1> seconds."
+// Code Reference: Aweb
+//=================================================================================
+"undead_web"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_web"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"400"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"12"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"12"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"lower_duration"			"0.6"
+		}
+		// The duration in which the flying unit is lowered.
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"lower_height"			"200"
+		}
+		// The height to which the flying unit is lowered.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Burrow
+// Description: "The Crypt Fiend digs into the ground, becomes invisible, and gains a regeneration rate of <ucrm,regenHP> hit points per second. |nThe Crypt Fiend cannot attack while burrowed."
+// Code Reference: Abur
+//=================================================================================
+"undead_burrow"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_burrow"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"1.45"
+		}
+		// Cast time.
+		// The process is uninterruptable.
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"regeneration"	"10"
+		}
+		// In WC3, a new unit with 10 health regen is swapped in, I don't know what you're gonna do so I'll just put the number here just in case.
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"ucry"
+		}
+		// ugh no go away
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Stone Form
+// Description: "Transforms the Gargoyle into a statue that is immune to spells, gains additional armor and has a regeneration rate of <Astn,DataE1> hit points per second. |nThe Gargoyle cannot attack in this form."
+// Code Reference: Astn
+//=================================================================================
+"undead_stone_form"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_stone_form"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"30"
+	"AbilityManaCost"			"0"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"0.5"
+		}
+		// The Gargoyle'll only be able to move after this duration.
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"regeneration"	"8"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"transition_start"			"0.7"
+		}
+		// The Gargoyle'll start descending/ascending after this duration.
+		"04"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"transition_duration"			"0.5"
+		}
+		// The Gargoyle's height will raise or lower over this duration.
+		// The process is uninterruptable. Just like the standard Dota 2 Stone Form without the stun.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Disease Cloud
+// Description: "Drops a Disease Cloud with each attack. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
+// Code Reference: Apts
+//=================================================================================
+"undead_disease_cloud"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_disease_cloud"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"120"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"cloud_duration"			"10"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_per_second"			"1"
+		}
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Disease Cloud
+// Description: "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
+// Code Reference: Aapl
+//=================================================================================
+"undead_disease_cloud"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_disease_cloud"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		
+	"AbilityCastRange"			"176"
+	// Added for visual indication.
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"176"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"120"
+		}
+		// I mean like WAOW, let's shut down Gnome train stations for one second and start gunning down war vets, no offense but like, wow, crap, this is some sick weapon.
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_per_second"			"1"
+		}
+		// Slow but cold.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Get Corpse
+// Description: "Picks up a nearby corpse for later use."
+// Code Reference: Amel
+//=================================================================================
+"undead_get_corpse"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_get_corpse"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"100"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AOERadius"					"600"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"600"
+		}
+		// Search radius basically, it works like Cannibalize but it can be autocasted.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Drop Corpse
+// Description: "Drops all corpses for immediate use."
+// Code Reference: Amed
+// NOTE: What do you mean by "immediate use"?
+//=================================================================================
+"undead_drop_corpse"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_drop_corpse"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		// Can't be autocasted, of course, that'd be stupid. It also un-autocasts Get Corpse if you happen to make that ability autocast-able.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Exhume Corpses
+// Description: "Gives Meat Wagons the ability to generate corpses."
+//=================================================================================
+"undead_exhume_corpses"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_exhume_corpses"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+}
+
+//=================================================================================
+// Ability: Raise Dead
+// Description: "Raises <Arai,DataA1> skeletons from a corpse."
+// Code Reference: Arai
+//=================================================================================
+"undead_raise_dead"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_raise_dead"
+	"MaxLevel"					"2"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"900 900"
+	"AbilityCastPoint"			"0 0"
+	"AbilityCooldown"			"8 8"
+	"AbilityManaCost"			"75 75"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"40 40"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"900 900"
+		}
+		// It raises 2 melee skeletons at level one then 1 melee skeleton, 1 ranged skeleton at level two.
+		// Can be autocasted to automatically raise corpses in the 600 radius.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Unholy Frenzy
+// Description: "Increases the attack rate of a target unit by <Suhf,DataA1,%>%, but drains <Suhf,DataB1> hit points per second. |nLasts <Suhf,Dur1> seconds."
+// Code Reference: Auhf
+//=================================================================================
+"creeps_unholy_frenzy"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"creeps_unholy_frenzy"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"500"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"3"
+	"AbilityManaCost"			"50"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"45"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"attack_speed_increase"			"0.75"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_per_second"				"4"
+		}
+	}
+
+	
+}
+
+
+//=================================================================================
+// Ability: Cripple
+// Description: "Reduces movement speed by <Acri,DataA1,%>%, attack rate by <Acri,DataB1,%>%, and damage by <Acri,DataC1,%>% of a target enemy unit. |nLasts <Acri,Dur1> seconds."
+// Code Reference: Acri
+//=================================================================================
+"undead_cripple"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_cripple"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"600"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"10"
+	"AbilityManaCost"			"175"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"60"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"attack_speed_reduction"			"0.5"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"movement_speed_reduction"			"0.75"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"damage_reduction"					"0.5"
+		}
+	}
+
+
+}
+
+//=================================================================================
+// Ability: Skeletal Longevity
+// Description: "Increases the duration of raised Skeleton Warriors and Skeletal Mages by <Rusl,base1> seconds."
+//=================================================================================
+"undead_skeletal_longevity"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_skeletal_longevity"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"bonus_duration" "15"
+		}
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Skeletal Mastery
+// Description: "Causes one of the two skeletons created by Raise Dead to be a Skeletal Mage."
+//=================================================================================
+"undead_skeletal_mastery"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_skeletal_mastery"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+	// This basically upgrade the previous Raise Dead spell to level two.
+	
+}
+
 //=================================================================================
 // Ability: Curse
 // Description: "Curses a target enemy unit, causing it to have a <Acrs,DataA1,%>% chance to miss on an attack. |nLasts <Acrs,Dur1> seconds."
@@ -105,7 +644,7 @@
 		}		
 	}
 
-	// Done
+	
 }
 
 //=================================================================================
@@ -174,7 +713,7 @@
 		}
 	}
 
-	// Done
+	
 }
 
 //=================================================================================
@@ -303,7 +842,604 @@
 				"MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"		
 			}			
 		}	
+	}	
+}
+
+//=================================================================================
+// Ability: Freezing Breath
+// Description: "When used on a building, temporarily stops all building activities. |nLasts <Afrz,Dur1> seconds."
+// Code Reference: Afrz
+//=================================================================================
+"undead_freezing_breath"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_freezing_breath"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"5"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"100"
+		}
+		// Affects buildings in the 100 radius around the attacked target.
+		// The adjacent buildings must literally be adjacent, they must be touching it to be frozen.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: True Sight
+// Description: "Reveals nearby invisible units."
+// Code Reference: Atru
+//=================================================================================
+"undead_true_sight"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_true_sight"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+	"AbilityCastRange"			"900"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		// Will detect Burrowed units. Remember that Burrowed is DIFFERENT from Invisible.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Frost Attack
+// Description: "Adds a cold effect to this unit's attacks that slows enemy units' movement speed."
+// Code Reference: Afra
+// NOTE: Can't find anyone using this ability, maybe it's replaced by Frost Breath?
+//=================================================================================
+"undead_frost_attack"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_frost_attack"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"5"
+		}
+		// The real "Frost Breath" for Frost Wyrms actually slow units for 10 seconds and SPLASH across units.
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"movement_speed_reduction"		"0.5"
+		}
+		// I dug through Hive Workshop forums and gameplay constants for this at 2:43AM, holy crap what am I doing with my life.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Essence of Blight
+// Description: "Restores <Arpl,DataA1> hit points to nearby friendly units."
+// Code Reference: Arpl
+//=================================================================================
+"undead_essence_of_blight"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_essence_of_blight"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"700"
+	"AbilityCastPoint"			"6"
+	"AbilityCooldown"			"1"
+	"AbilityManaCost"			"2"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"1"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"700"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"health_restore"			"10"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"max_unit"			"5"
+		}
+		// This does not include the caster, the caster is always healed.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Spirit Touch
+// Description: "Restores <Arpm,DataB1> mana to nearby friendly units."
+// Code Reference: Arpm
+//=================================================================================
+"undead_spirit_touch"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_spirit_touch"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"700"
+	"AbilityCastPoint"			"6"
+	"AbilityCooldown"			"1"
+	"AbilityManaCost"			"2"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"1"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"700"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"mana_restore"		"3"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"max_unit"			"5"
+		}
+		// Doesn't include the caster, just like Essence Of Blight.
+	}
+
+	
+
+}
+
+//=================================================================================
+// Ability: Destroyer Form
+// Code Reference: Aave
+//=================================================================================
+"undead_destroyer_form"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_destroyer_form"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"1.1"
+		}
+		// The unit will be able to move after this duration.
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"transition"	"1"
+		}
+		// The unit will start ascending after 1s, then ascend over 1s.
+		// The process is uninterruptable. The unit immediately gains flying capability.
+		// The change is PERMANENT, there is no changing back.
+		// The Destroyer also has a health regeneration of 8.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Absorb Mana
+// Description: "Takes all mana from one of your units and gives it to the Destroyer."
+// Code Reference: Aabs
+//=================================================================================
+"undead_absorb_mana"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_absorb_mana"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"900"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		// The maximum amount of mana that can be absorbed is 99999, but that's rather a technical limit.
+		// This ability does affect INVUNERABLE units.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Devour Magic
+// Description: "Consumes all magical buffs from units in an area. Each unit that is devoured of magic gives the Destroyer <Advm,DataA1> hit points and <Advm,DataB1> mana. |n|cffffcc00Deals <Advm,DataE1> damage to summoned units.|r"
+// Code Reference: Advm
+//=================================================================================
+"undead_devour_magic"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_devour_magic"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastRange"			"600"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"7"
+	"AbilityManaCost"			"0"
+		
+	"AOERadius"					"200"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"200"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"health_restore"		"50"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"mana_restore"			"75"
+		}
+		// The restoration is per UNIT AFFECTED, not per BUFF DEVOURED.
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"summoned_unit_damage"			"180"
+		}
+		// This IGNORES friendly buffs.
+	}
+
+	
+}
+
+//=================================================================================
+// Ability: Orb of Annihilation
+// Description: "Adds <Afak,DataA1> bonus damage to the Destroyer's attack and causes his attacks to do area of effect damage."
+// Code Reference: Afak
+//=================================================================================
+"undead_orb_of_annihilation"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_orb_of_annihilation"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	// Remember that buildings can't take magical damage.
+		
+	"AbilityCastRange"			"450"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"25"
+	
+	"AOERadius"					"150"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"150"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_bonus"					"20"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"small_damage_factor"			"0.25"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"medium_damage_factor"			"0.45"
+		}
+		// I don't know what the crap these are, apparently there are 3 different zones?
+		// A value called "Full Damage Radius" is set to 1, I believe only the attacked unit can fit in this.
+		// Maybe the damage scales down to medium for the attacked building and then down to small for buildings in half damage radius.
+		// OR MAYBE the damage scales down to small for Small armor type or medium for Medium armor type.
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"half_damage_radius"			"75"
+		}
+	}
+
+	
+}
+
+
+// All undead buildings generate Blight and require blight to be built except for Necropolis and Haunted Gold Mine
+// Everything uses undead_blight_growth_small except for the city center and its upgrades
+
+//=================================================================================
+// Ability: Blighted Gold Mine Ability
+// Code Reference: Abgm
+// This is for particle effects and counter tracking
+//=================================================================================
+"undead_blighted_gold_mine_ability"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_blighted_gold_mine_ability"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"max_miner"			"5"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"mining_radius"			"200"
+		}
+		// Probably the distance which the Acolytes will stand away from the gold mine.
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"gold_per_interval"			"10"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"interval_duration"			"1"
+		}
+		// Works exactly like the Night Elf's gold mine. You get 10 gold per 4 seconds per Acolyte.
 	}
 
 	// Done
+}
+
+//=================================================================================
+// Ability: Blight Growth Small
+// Code Reference: Abli
+//=================================================================================
+"undead_blight_growth_small"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_blight_growth_small"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AOERadius"					"768"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"0.08"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"768"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataA"			"64"
+		}
+		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dataB"			"1"
+		}
+	}
+
+	
+
+}
+
+//=================================================================================
+// Ability: Blight Growth Large
+// Code Reference: Abli
+//=================================================================================
+"undead_blight_growth_large"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_blight_growth_large"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"0.08"
+		}
+		// Doesn't actually do anything, probably the time it takes for Blight to appear.
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"960"
+		}
+		// Changes the terrain in this radius into Blight.
+	}	
+}
+
+
+//=================================================================================
+// Ability: Unsummon Building
+// Description: "Unsummons your building to regain <Auns,DataA1,%>% of the spent resources."
+// Code Reference: Auns
+// NOTE: The ability works like this, the Acolyte casts it on a building and that building gets its health reduced slowly over time (10% per second maybe?) until it's destroyed and the resources are received.
+//=================================================================================
+"undead_unsummon_building"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_unsummon_building"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"accumulation_step"			"50"
+		}
+		// The amount of resources you're supposed to regain has to be equal to or larger than 50 in order for you to regain it.
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"salvage_cost_ratio"			"0.5"
+		}
+	}
+
+	
+}
+
+
+//=================================================================================
+// Ability: Sacrifice
+// Description: "Target an Acolyte to sacrifice it and turn it into a Shade. Shades are invisible spirits that can see invisible units. |nShades cannot attack."
+// Code Reference: Asac
+// NOTE: This is FOR THE BUILDING SACRIFICIAL PIT.
+//=================================================================================
+"undead_sacrifice_pit"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_sacrifice"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+		
+	"AbilityCastRange"			"0"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	// This activates "Sacrifice" of the targeted unit.
+	// Cast range is GLOBAL.
+
+	
+}
+
+//=================================================================================
+// Ability: Sacrifice
+// Description: "Target a Sacrificial Pit to sacrifice the Acolyte and turn it into a Shade. Shades are invisible spirits that can see invisible units. |nShades cannot attack."
+// Code Reference: Alam
+// NOTE: This is FOR THE UNIT ACOLYTE.
+//=================================================================================
+"undead_sacrifice_acolyte"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_sacrifice"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+		
+	"AbilityCastRange"			"0"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+		
+	// The unit will walk towards the targeted Sacrificial Pit and the Shade creation begins.
+	// Cast range is GLOBAL.
+
+
+	
 }
