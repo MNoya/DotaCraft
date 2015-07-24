@@ -577,6 +577,23 @@ function dotacraft:OnNPCSpawned(keys)
 		npc.bFirstSpawned = true
 		dotacraft:OnHeroInGame(npc)
 	end
+
+	-- Apply armor and damage modifier (for visuals)
+	local attack_type = GetAttackType(npc)
+	if attack_type ~= 0 and npc:GetAttackDamage() > 0 then
+		print("Apply modifier_attack_"..attack_type)
+		local item = CreateItem("item_apply_modifiers", nil, nil)
+	    item:ApplyDataDrivenModifier(npc, npc, "modifier_attack_"..attack_type, {})
+    	item:RemoveSelf()
+    end
+
+    local armor_type = GetArmorType(npc)
+	if armor_type ~= 0 then
+		print("Apply modifier_armor_"..armor_type)
+		local item = CreateItem("item_apply_modifiers", nil, nil)
+	    item:ApplyDataDrivenModifier(npc, npc, "modifier_armor_"..armor_type, {})
+    	item:RemoveSelf()
+    end
 end
 
 -- An entity somewhere has been hurt.
@@ -891,10 +908,6 @@ function dotacraft:OnPlayerPickHero(keys)
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( builder, player )
 	end
-
-	local banshee = CreateUnitByName("undead_banshee", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
-	banshee:SetOwner(hero)
-	banshee:SetControllableByPlayer(playerID, true)
 
 	-- Show UI elements for this race
 	local player_race = GetPlayerRace(player)

@@ -1,4 +1,4 @@
-﻿"lang"
+"lang"
 {
 	"Language"		"English"
 	"Tokens"
@@ -3148,5 +3148,46 @@
 		"DOTA_Tooltip_ability_orc_train_tauren_gold_cost"                                 "GOLD COST:"
 		"DOTA_Tooltip_ability_orc_train_tauren_lumber_cost"                               "LUMBER COST:"
 		"DOTA_Tooltip_ability_orc_train_tauren_food_cost"                                 "FOOD COST:"
+
+
+		// Modifiers
+		"DOTA_Tooltip_modifier_attack_normal"                                             "Attack Type: Normal"
+		"DOTA_Tooltip_modifier_attack_normal_Description"                                 "Extra damage to Medium armor\nEffective against ground ranged units"
+
+		"DOTA_Tooltip_modifier_attack_pierce"                                             "Attack Type: Pierce"
+		"DOTA_Tooltip_modifier_attack_pierce_Description"                                 "Extra damage to Unarmored and Light armor\nEffective against air units and spellcasters"
+
+		"DOTA_Tooltip_modifier_attack_siege"                                              "Attack Type: Siege"
+		"DOTA_Tooltip_modifier_attack_siege_Description"                                  "Extra damage to Unarmored and Fortified armor\nEffective against fortifications and spellcasters\nHalf damage to Medium and Hero armor"
+
+		"DOTA_Tooltip_modifier_attack_magic"                                              "Attack Type: Magic"
+		"DOTA_Tooltip_modifier_attack_magic_Description"                                  "Double damage against Heavy armor\nEffective against ground melee units\n"
+
+		"DOTA_Tooltip_modifier_attack_hero"                                               "Attack Type: Hero"
+		"DOTA_Tooltip_modifier_attack_hero_Description"                                   "Full damage to all units except those with Fortified armor"
+
+		"DOTA_Tooltip_modifier_attack_chaos"                                              "Attack Type: Chaos"
+		"DOTA_Tooltip_modifier_attack_chaos_Description"                                  "Full damage to all armor types"
+
+		"DOTA_Tooltip_modifier_armor_unarmored"                                           "Armor Type: Unarmored"
+		"DOTA_Tooltip_modifier_armor_unarmored_Description"                               "Weak against Pierce and Siege"
+
+		"DOTA_Tooltip_modifier_armor_light"                                               "Armor Type: Light"
+		"DOTA_Tooltip_modifier_armor_light_Description"                                   "Takes double damage against Pierce"
+
+		"DOTA_Tooltip_modifier_armor_medium"                                              "Armor Type: Medium"
+		"DOTA_Tooltip_modifier_armor_medium_Description"                                  "Resistant against Pierce, Magic and Siege\nWeak against Normal attack types"
+
+		"DOTA_Tooltip_modifier_armor_heavy"                                               "Armor Type: Heavy"
+		"DOTA_Tooltip_modifier_armor_heavy_Description"                                   "Takes double damage against Magic attacks"
+
+		"DOTA_Tooltip_modifier_armor_fortified"                                           "Armor Type: Fortified"
+		"DOTA_Tooltip_modifier_armor_fortified_Description"                               "Resistant to most types of damage but Siege"
+
+		"DOTA_Tooltip_modifier_armor_hero"                                                "Armor Type: Hero"
+		"DOTA_Tooltip_modifier_armor_hero_Description"                                    "Takes half damage against Pierce, Siege or Magic attacks."
+
+		"DOTA_Tooltip_modifier_armor_divine"                                              "Armor Type: Divine"
+		"DOTA_Tooltip_modifier_armor_divine_Description"                                  "Divine beings take only 5%% damage from attack types other than Chaos, and only half damage from spells."
 	}
 }
