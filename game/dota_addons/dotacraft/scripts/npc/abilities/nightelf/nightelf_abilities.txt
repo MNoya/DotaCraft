@@ -297,10 +297,6 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
@@ -310,24 +306,132 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"inaction_duration"			"0.5"
+			"var_type"			"FIELD_FLOAT"
+			"inaction_duration"	"0.5"
 		}
 		// Units must stay inactive for this duration in order to start melding.
 		"02"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"fade_duration"				"1.5"
+			"var_type"			"FIELD_FLOAT"
+			"fade_duration"		"1.5"
 		}
 		"03"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"transition_duration"		"2.5"
+			"var_type"				"FIELD_FLOAT"
+			"transition_duration"	"2.5"
 		}
 		// If day arrives WHILE the units are still melding, they will automatically reappear after this duration (unless you manually end the melding prematurely).
 	}
 
-	// Done
+	"precache"
+	{
+		"particle"  "particles/econ/items/templar_assassin/templar_assassin_focal/templar_assassin_meld_focal.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/shared.lua"
+			"Function"		"ShadowMeld"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_shadow_meld_passive"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			
+			"ThinkInterval"  	"0.5"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/shared.lua"
+					"Function"		"ShadowMeldThink"
+				}
+			}
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_shadow_meld"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/shared.lua"
+					"Function"		"ShadowMeldRemove"
+				}
+			}
+			"OnUnitMoved"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_shadow_meld"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/shared.lua"
+					"Function"		"ShadowMeldRemove"
+				}
+			}
+			"OnAttack"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_shadow_meld"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/shared.lua"
+					"Function"		"ShadowMeldRemove"
+				}
+			}
+		}
+
+		"modifier_shadow_meld_fade"
+		{
+			"EffectName"		"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_shadow_meld"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+
+		"modifier_shadow_meld"
+		{
+			"IsBuff"			"1"
+			"IsPurgable"		"1"
+			"EffectName"		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_assassin_meld_focal.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Priority"          "MODIFIER_PRIORITY_ULTRA"
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_shadow_meld_active"
+		{
+			"IsHidden"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"	"1"
+			}
+		}
+	}
 }
 
 //=================================================================================

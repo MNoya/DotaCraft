@@ -29099,10 +29099,6 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
@@ -29112,24 +29108,132 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"inaction_duration"			"0.5"
+				"var_type"			"FIELD_FLOAT"
+				"inaction_duration"	"0.5"
 			}
 			// Units must stay inactive for this duration in order to start melding.
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"fade_duration"				"1.5"
+				"var_type"			"FIELD_FLOAT"
+				"fade_duration"		"1.5"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"transition_duration"		"2.5"
+				"var_type"				"FIELD_FLOAT"
+				"transition_duration"	"2.5"
 			}
 			// If day arrives WHILE the units are still melding, they will automatically reappear after this duration (unless you manually end the melding prematurely).
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/econ/items/templar_assassin/templar_assassin_focal/templar_assassin_meld_focal.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/shared.lua"
+				"Function"		"ShadowMeld"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_shadow_meld_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"ThinkInterval"  	"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"ShadowMeldThink"
+					}
+				}
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_shadow_meld"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"ShadowMeldRemove"
+					}
+				}
+				"OnUnitMoved"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_shadow_meld"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"ShadowMeldRemove"
+					}
+				}
+				"OnAttack"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_shadow_meld"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"ShadowMeldRemove"
+					}
+				}
+			}
+	
+			"modifier_shadow_meld_fade"
+			{
+				"EffectName"		"particles/generic_hero_status/status_invisibility_start.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_shadow_meld"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_shadow_meld"
+			{
+				"IsBuff"			"1"
+				"IsPurgable"		"1"
+				"EffectName"		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_assassin_meld_focal.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Priority"          "MODIFIER_PRIORITY_ULTRA"
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_shadow_meld_active"
+			{
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"	"1"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -41484,7 +41588,7 @@
 				"Function"				"BansheeCurseAutoCast"
 			}	
 		}
-
+	
 		"Modifiers"
 		{
 			"modifier_undead_curse"
@@ -41497,7 +41601,7 @@
 					"MODIFIER_PROPERTY_MISS_PERCENTAGE" "%miss_chance"		
 				}	
 			}
-
+	
 			"modifier_undead_curse_autocast"
 			{
 				"Passive"		"1"
@@ -41518,17 +41622,19 @@
 				}			
 			}		
 		}
+	
+		// Done
 	}
-
+	
 	//=================================================================================
 	// Ability: Anti-magic Shell
 	// Description: "Creates a barrier that stops <Aam2,DataC1> points of spell damage from affecting a target unit. |nLasts <Aam2,Dur1> seconds."
 	// Code Reference: Aam2
 	//=================================================================================
-	"undead_anti-magic_shell"
+	"undead_anti_magic_shell"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_anti-magic_shell"
+		"AbilityTextureName"		"undead_anti_magic_shell"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -41545,19 +41651,18 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"90"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"90"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"spell_absorption"			"-300"
+				"var_type"			"FIELD_INTEGER"
+				"spell_absorption"	"300"
 			}
 		}
 		
 		"precache"
 		{	
-			// target particle
 			"particle"  "particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
 		}
 		
@@ -41566,27 +41671,31 @@
 		{			
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_anti-magic_shell"
+				"ModifierName"	"modifier_anti_magic_shell"
 				"Target"		 "TARGET"
 				"Duration"		"%duration"
 			}		
 		}
-
+	
 		"Modifiers"
 		{
-			"modifier_anti-magic_shell"
+			"modifier_anti_magic_shell"
 			{			
 				"EffectName" 		"particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
 				"EffectAttachType" 	"follow_origin"
 				
-				"Properties"
+				"OnCreated"
 				{
-					"MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT" "%spell_absorption"		
-				}	
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/banshee.lua"
+						"Function"		"ResetAntiMagicShell"
+					}
+				}
 			}
 		}
 	}
-
+	
 	//=================================================================================
 	// Ability: Possession
 	// Description: "Stuns a target unit and the Banshee for <Aps2,Dur1> seconds, during which the Banshee takes extra damage from attacks. She then displaces the soul of the enemy, giving you permanent control of it, but destroying the caster's body. |nPossession cannot be used on flying units, Heroes, or creeps above level <Aps2,DataA1>."
@@ -41609,8 +41718,8 @@
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"250"
 		
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-		"AnimationPlaybackRate"  		"0.2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate"  	"0.1"
 			
 		"precache"
 		{
@@ -41648,7 +41757,7 @@
 				"max_level"		"5"
 			}
 		}
-
+	
 		"OnAbilityPhaseStart"
 		{
 			"RunScript"
@@ -41711,8 +41820,10 @@
 				}
 			}	
 		}
+	
+		// Done
 	}
-
+	
 	//=================================================================================
 	// Ability: Freezing Breath
 	// Description: "When used on a building, temporarily stops all building activities. |nLasts <Afrz,Dur1> seconds."
