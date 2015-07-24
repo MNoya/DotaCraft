@@ -22369,7 +22369,7 @@
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
-						"Function"		"BuildersStopRepairing"
+						"Function"		"BuilderStopRepairing"
 					}
 				}
 	
@@ -29133,6 +29133,77 @@
 	}
 	
 	//=================================================================================
+	// Upgrade: Improved Bows
+	// Description: Increases the Archer's and Hippogryph Rider's attack range.
+	//=================================================================================
+	"nightelf_improved_bows"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"nightelf_improved_bows"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			 "FIELD_INTEGER"
+				"bonus_attack_range" "200"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_long_rifles"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Upgrade: Marksmanship
+	// Description: Increases damage of Archers and Hippogryph Riders by <Remk,base1>.
+	//=================================================================================
+	"nightelf_marksmanship"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"nightelf_marksmanship"
+		"MaxLevel"				"1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"3"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// Remember to only add the disabled version on start
+			"modifier_marksmanship"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================
 	// Ability: Elunes Grace
 	// Description: "Reduces the damage taken from Piercing attacks to <Aegr,DataA1,%>%, and spells and Magic attacks to <Aegr,DataE1,%>%."
 	// Code Reference: Aegr
@@ -29153,19 +29224,27 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"piercing_reduction"			"0.65"
+				"var_type"				"FIELD_FLOAT"
+				"piercing_reduction"	"0.65"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"magical_reduction"				"0.8"
+				"var_type"				"FIELD_FLOAT"
+				"magic_resistance"		"20"
 			}
-			// The damage will be reduced TO this value, not BY this value.
-			// There are also 2 values about deflecting those two types of damage but the "Chance To Deflect" is set to 0 so I don't think they do anything.
 		}
 	
-		// Done
+		"modifier_elunes_grace"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" "%magic_resistance"
+			}
+	
+		}
 	}
 	
 	//=================================================================================
@@ -36933,7 +37012,7 @@
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
-						"Function"		"BuildersStopRepairing"
+						"Function"		"BuilderStopRepairing"
 					}
 				}
 	
@@ -41448,10 +41527,10 @@
 	// Description: "Creates a barrier that stops <Aam2,DataC1> points of spell damage from affecting a target unit. |nLasts <Aam2,Dur1> seconds."
 	// Code Reference: Aam2
 	//=================================================================================
-	"undead_anti-magic_shell"
+	"undead_anti_magic_shell"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_anti-magic_shell"
+		"AbilityTextureName"		"undead_anti_magic_shell"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -41468,13 +41547,13 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"90"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"90"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"spell_absorption"			"-300"
+				"var_type"			"FIELD_INTEGER"
+				"spell_absorption"	"300"
 			}
 		}
 		
@@ -41486,10 +41565,15 @@
 		
 		
 		"OnSpellStart"
-		{			
+		{	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_anti_magic_shell"
+				"Target" 		"TARGET"
+			}	
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_anti-magic_shell"
+				"ModifierName"	"modifier_anti_magic_shell"
 				"Target"		 "TARGET"
 				"Duration"		"%duration"
 			}		
@@ -41497,15 +41581,18 @@
 	
 		"Modifiers"
 		{
-			"modifier_anti-magic_shell"
+			"modifier_anti_magic_shell"
 			{			
 				"EffectName" 		"particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
 				"EffectAttachType" 	"follow_origin"
-				
-				"Properties"
+				"OnCreated"
 				{
-					"MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT" "%spell_absorption"		
-				}	
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/banshee.lua"
+						"Function"		"ResetAntiMagicShell"
+					}
+				}
 			}
 		}
 	
@@ -42760,8 +42847,6 @@
 			}		
 		}
 	}
-	
-	
 	// Undead Buildings
 	// undead_crypt - No requirements
 	// undead_temple_of_the_damned - Requires undead_graveyard and undead_halls_of_the_dead
@@ -43296,7 +43381,7 @@
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
-						"Function"		"BuildersStopRepairing"
+						"Function"		"BuilderStopRepairing"
 					}
 				}
 	

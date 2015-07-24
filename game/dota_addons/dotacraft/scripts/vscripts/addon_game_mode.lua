@@ -14,6 +14,7 @@ require('utilities')
 require('upgrades')
 require('mechanics')
 require('orders')
+require('damage')
 require('buildinghelper')
 
 ---------------------------------------------------------------------------

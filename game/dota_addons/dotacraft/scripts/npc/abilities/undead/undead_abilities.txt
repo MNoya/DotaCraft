@@ -652,10 +652,10 @@
 // Description: "Creates a barrier that stops <Aam2,DataC1> points of spell damage from affecting a target unit. |nLasts <Aam2,Dur1> seconds."
 // Code Reference: Aam2
 //=================================================================================
-"undead_anti-magic_shell"
+"undead_anti_magic_shell"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_anti-magic_shell"
+	"AbilityTextureName"		"undead_anti_magic_shell"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -672,13 +672,13 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"duration"		"90"
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"90"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"spell_absorption"			"-300"
+			"var_type"			"FIELD_INTEGER"
+			"spell_absorption"	"300"
 		}
 	}
 	
@@ -690,10 +690,15 @@
 	
 	
 	"OnSpellStart"
-	{			
+	{	
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_anti_magic_shell"
+			"Target" 		"TARGET"
+		}	
 		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_anti-magic_shell"
+			"ModifierName"	"modifier_anti_magic_shell"
 			"Target"		 "TARGET"
 			"Duration"		"%duration"
 		}		
@@ -701,15 +706,18 @@
 
 	"Modifiers"
 	{
-		"modifier_anti-magic_shell"
+		"modifier_anti_magic_shell"
 		{			
 			"EffectName" 		"particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
 			"EffectAttachType" 	"follow_origin"
-			
-			"Properties"
+			"OnCreated"
 			{
-				"MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT" "%spell_absorption"		
-			}	
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/banshee.lua"
+					"Function"		"ResetAntiMagicShell"
+				}
+			}
 		}
 	}
 

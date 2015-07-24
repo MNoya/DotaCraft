@@ -171,8 +171,9 @@ function dotacraft:InitGameMode()
 	--ListenToGameEvent('dota_player_killed', Dynamic_Wrap(dotacraft, 'OnPlayerKilled'), self)
 	--ListenToGameEvent('player_team', Dynamic_Wrap(dotacraft, 'OnPlayerTeam'), self)
 
-	-- Filter Execute Order
-    GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap( dotacraft, "FilterExecuteOrder" ), self )
+	-- Filters
+    GameMode:SetExecuteOrderFilter( Dynamic_Wrap( dotacraft, "FilterExecuteOrder" ), self )
+    GameMode:SetDamageFilter( Dynamic_Wrap( dotacraft, "FilterDamage" ), self )
 
     -- Register Listener
     CustomGameEventManager:RegisterListener( "reposition_player_camera", Dynamic_Wrap(dotacraft, "RepositionPlayerCamera"))
@@ -890,6 +891,10 @@ function dotacraft:OnPlayerPickHero(keys)
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( builder, player )
 	end
+
+	local banshee = CreateUnitByName("undead_banshee", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
+	banshee:SetOwner(hero)
+	banshee:SetControllableByPlayer(playerID, true)
 
 	-- Show UI elements for this race
 	local player_race = GetPlayerRace(player)

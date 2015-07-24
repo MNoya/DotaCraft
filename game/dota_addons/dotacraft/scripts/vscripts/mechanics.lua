@@ -103,6 +103,8 @@ function GetAttackType( unit )
 			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_HERO" then
 				return "hero"
 			end
+		elseif unit:IsHero() then
+			return "hero"
 		end
 	end
 	return 0
@@ -127,6 +129,8 @@ function GetArmorType( unit )
 			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_HERO" then
 				return "hero"
 			end
+		elseif unit:IsHero() then
+			return "hero"
 		end
 	end
 	return 0
