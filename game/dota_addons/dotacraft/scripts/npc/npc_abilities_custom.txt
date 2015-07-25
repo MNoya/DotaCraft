@@ -35461,7 +35461,47 @@
 				"var_type"		"FIELD_INTEGER"
 				"damage_per_second"			"20"
 			}
-			// It ticks every second Kappa
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"think_interval"		"0.1"
+			}
+			// It ticks every second Kappa (actually is 0.1 now Keepo)
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"units/orc/shaman.lua"
+				"Function"				"LightningShieldOnSpellStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_orc_lightning_shield"
+			{
+				"Passive"  			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"1"
+				"Duration"			"%duration"
+				
+				"EffectName"            "particles/custom/orc_lightning_shield.vpcf"
+				"EffectAttachType"      "PATTACH_ABSORIGIN"
+				
+				"ThinkInterval" 		"%think_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"units/orc/shaman.lua"
+						"Function"				"ModifierLightningShieldOnIntervalThink"
+					}
+				}
+			}
 		}
 	
 		// Done
@@ -35526,6 +35566,20 @@
 				"ScriptFile"	"units/orc/shaman.lua"
 				"Function"		"Bloodlust"
 			}
+			
+			"FireEffect"
+		    {
+		        "EffectName"       "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+		        "EffectAttachType" "follow_customorigin"
+		        "Target"           "CASTER"
+		        "ControlPointEntities"
+		        {
+		            "CASTER" "attach_attack1" //Start
+		            "CASTER" "attach_origin"  //Velocity noise, not used
+		            "CASTER" "attach_attack2" //CASTER or TARGET?
+		            "TARGET" "attach_hitloc"  //Hit
+		        }
+		    }
 		}
 	
 		"Modifiers"
@@ -35536,9 +35590,9 @@
 				"IsBuff"			"1"
 				"IsPurgable"		"1"
 				"Duration" 			"%duration"
-		
-	    		"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
-		    	"EffectAttachType"	"follow_origin"
+	
+				"EffectName"			"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
 	
 	    		"Properties"
 		    	{
