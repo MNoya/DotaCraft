@@ -29259,7 +29259,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_long_rifles"
+			"modifier_improved_bows"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -29363,12 +29363,11 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_NONE"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 			
 		"AbilityCastRange"			"800"
-		"AbilityCastPoint"			"0"
+		"AbilityCastPoint"			"0.3"
 		"AbilityCooldown"			"60"
 		"AbilityManaCost"			"0"
 			
@@ -29376,24 +29375,59 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"hover_height"			"275"
+				"var_type"			"FIELD_INTEGER"
+				"vision_aoe"		"900"
 			}
+	
+			// Once the Huntress uses its owl the ability is hidden
+			// I'm not sure about about keeping this mechanic yet or just increase the cooldown
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"inflight_sight"		"100"
+				"var_type"			"FIELD_INTEGER"
+				"charges"			"1"
 			}
-			// Its sight when it's moving.
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"hover_sight"			"900"
-			}
-			// Its sight when it's standing still, the transition is instant.
 		}
 	
-		// Done
+		"precache"
+		{
+			"model"  	"models/items/courier/snowl/snowl_flying.vmdl"
+			"particle"  "particles/econ/courier/courier_greevil_green/courier_greevil_green_ambient_1.vpcf"
+			"particle"  "particles/status_fx/status_effect_wraithking_ghosts.vpcf"
+		}
+	
+		// Sentinel is invulnerable and destroyed after the tree it is attached to its cut down
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/huntress.lua"
+				"Function"		"Sentinel"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_sentinel"
+			{
+				"IsHidden"				"1"
+				"EffectName"			"particles/econ/courier/courier_greevil_green/courier_greevil_green_ambient_1.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"StatusEffectName" 		"particles/status_fx/status_effect_wraithking_ghosts.vpcf" 	   
+				"StatusEffectPriority"  "10"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"  "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
 	
 	"nightelf_moon_glaive"

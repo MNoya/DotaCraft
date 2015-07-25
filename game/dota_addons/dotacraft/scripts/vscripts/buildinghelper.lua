@@ -637,7 +637,7 @@ function BuildingHelper:CancelBuilding(keys)
         local item = building:GetItemInSlot(i)
         if item then
             if item:GetAbilityName() == "item_building_cancel" then
-                item:RemoveSelf(item)
+                item:RemoveSelf()
             else
                 building:CastAbilityImmediately(item, building:GetPlayerOwnerID())
             end

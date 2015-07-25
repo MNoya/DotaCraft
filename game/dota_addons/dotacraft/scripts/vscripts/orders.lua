@@ -96,7 +96,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             DebugDrawLine(unit:GetAbsOrigin(), position, 255, 255, 255, true, 5)
             print("Ability "..abilityName.." cast on tree number ",targetIndex, " handle index ",tree_handle:GetEntityIndex(),"position ",position)
         end
-        if abilityName == "nightelf_war_club" then
+        if not string.match(abilityName, "gather") then
             return true
         end
 
@@ -131,7 +131,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 local unit = EntIndexToHScript(entityIndex)
                 local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
                 if empty_tree then
-                    local tree_index = GetTreeIndexFromHandle( empty_tree )
+                    local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
                     empty_tree.builder = unit -- Assign the wisp to this tree, so next time this isn't empty
                     unit.skip_gather_check = true
                     local gather_ability = unit:FindAbilityByName("nightelf_gather")
@@ -152,15 +152,15 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 --Execute the order to a navigable tree
                 local unit = EntIndexToHScript(entityIndex)
                 local race = GetUnitRace(unit)
-                local tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
-                if tree then 
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
+                if empty_tree then 
 
-                    tree.builder = unit
+                    empty_tree.builder = unit
                     unit.skip_gather_check = true
                     local gather_ability = unit:FindAbilityByName(race.."_gather")
                     local return_ability = unit:FindAbilityByName(race.."_return_resources")
                     if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-                        local tree_index = GetTreeIndexFromHandle( tree )
+                        local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
                         --print("Order: Cast on Tree ",tree_index)
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
                     elseif return_ability and not return_ability:IsHidden() then
@@ -207,7 +207,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
                 local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS)
                 if empty_tree then
-                    local tree_index = GetTreeIndexFromHandle( empty_tree )
+                    local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
                     --print("Order: Cast on Tree ",tree_index)
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
                 end
@@ -219,7 +219,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     -- Swap to a gather ability and keep extracting
                     local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS)
                     if empty_tree then
-                        local tree_index = GetTreeIndexFromHandle( empty_tree )
+                        local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
                         unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
                         --print("Order: Cast on Tree ",tree_index)
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})

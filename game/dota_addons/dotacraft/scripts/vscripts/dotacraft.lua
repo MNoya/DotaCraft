@@ -508,6 +508,17 @@ function dotacraft:OnHeroInGame(hero)
 				v:RemoveSelf()
 			end
 		end
+
+		-- If you want to test an ability of a unit just put its name here
+		local unitName = "nightelf_huntress"
+		PrecacheUnitByNameAsync(unitName, function(...) end)
+
+		local position = GameRules.StartingPositions[pID].position + Vector(0,-300,0)
+		Timers:CreateTimer(1, function() 
+			local unit = CreateUnitByName(unitName, position, true, hero, hero, hero:GetTeamNumber())
+			unit:SetControllableByPlayer(pID, true)
+			FindClearSpaceForUnit(unit, position, true)
+		end)
 	end
 
 end
@@ -759,7 +770,7 @@ end
 -- A tree was cut down
 function dotacraft:OnTreeCut(keys)
 	print ('[DOTACRAFT] OnTreeCut')
-	--DeepPrintTable(keys)
+	DeepPrintTable(keys)
 
 	local treeX = keys.tree_x
 	local treeY = keys.tree_y
@@ -790,6 +801,14 @@ function dotacraft:OnTreeCut(keys)
 	    		t.pathable = true
 	    	end
 	    end
+	end
+	
+	-- Check for Night Elf Sentinels
+	local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(treeX,treeY,0), nil, 64, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
+	for _,v in pairs(units) do
+		if v:GetUnitName() == "nightelf_sentinel_owl" then
+			v:ForceKill(false)
+		end
 	end
 end
 

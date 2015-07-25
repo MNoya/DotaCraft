@@ -112,6 +112,7 @@ function StringStartsWith( fullstring, substring )
     return (first_characters == substring)
 end
 
+-- GetEntityIndexForTreeId(treeID)
 function TreeIndexToHScript( targetIndex )
     --for k,v in pairs(GameRules.ALLTREES) do
         --DebugDrawText(v:GetAbsOrigin(), tostring(k), true, 10)
@@ -120,7 +121,7 @@ function TreeIndexToHScript( targetIndex )
     return GameRules.ALLTREES[targetIndex+adjust]
 end
 
--- Implemented as GetEntityIndexForTreeId(treeID) by Valve
+-- GetEntityIndexForTreeId(treeID)
 function GetTreeIndexFromHandle( treeHandle )
     local adjust = 0
     for k,v in pairs(GameRules.ALLTREES) do
