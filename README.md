@@ -1,17 +1,55 @@
 # DotaCraft
 ## Recreating Warcraft III inside Dota 2
 
-### Heroes - All the Classic Heroes are finished. [Preview here](http://moddota.com/forums/discussion/comment/382/#Comment_382)
+### Heroes - [Preview](http://moddota.com/forums/discussion/comment/382/#Comment_382)
 
-### Core Mechanics Implemented so far:
+### Core Mechanics
 
-* Lumber and Gold Gathering. Missing right-click behavior
-* Building and unit creation, with ghost preview and rally points.
-* Building Queue for Train and Research, being able to add 5~6 items and cancel them at will.
-* Tech Tree
-  * Unlocking buildings and unit production while certain buildings requirements are missing.
-  * Researching upgrades to enhance certain abilities, with multiple levels and requirements.
-  * Generic passive upgrades for Damage/Armor on multiple different units, with multiple rank icons
+- [x] Lumber, Gold Gathering with multiple builders and through right click.
+- [x] Building and unit training, with grid preview and rally points.
+- [x] Building Queue for Train and Research, being able to add 6 items and cancel them at will.
+- [x] Upgrades and Research through Tech Tree
+  - [x] Unlocking buildings and unit production while certain buildings requirements are missing.
+  - [x] Researching upgrades to enhance certain abilities, with multiple levels and requirements.
+  - [x] Generic passive upgrades for Damage/Armor on multiple different units, with multiple rank icons 
+- [x] Altar for hero training with tiers and reviving
+- [x] Unit formations with ranks for melee/midrange/ranged/siege
+- [ ] Legacy attack types including Air-Ground.
+- [ ] Auto gather lumber after Lumber deposit construction
+- [ ] Building placement restrictions (Undead Blight, proximity to Gold Mine)
+- [ ] Occupied Building indicators (Entangled/Haunted Gold Mine/Burrows)
+- [ ] General multi orders for casting certain abilities as a group
+- [ ] Building behavior improvements
+  - [ ] Multiple builder queue with repair
+  - [ ] Uncancelled movements
+  - [ ] Client-side particles
+
+### Race Abilities - [Progress spreadsheet here](https://docs.google.com/spreadsheets/d/1qwyG20YNi88G-SFYbaiyxi11Vtar8kjNXXJCMZyF7Y0/edit#gid=1929065693)
+
+- [x] Human
+- [ ] Night Elf
+- [ ] Orc
+- [ ] Undead
+
+### Interfaces
+
+- [x] Resources
+- [x] Idle Builders
+- [ ] Team + Race+ color picker
+- [ ] Controlled Heroes
+- [ ] Gold/Lumber/Food ability values
+- [ ] Shop & Tavern
+
+### Art
+
+- [ ] Minimap icons for gold mine and Easy/Medium/Hard creep camps
+- [ ] Possible new Models for buildings that require it
+- [ ] Replace the remaining WC3 icons for Dota-styled custom icons
+  - [ ] Upgrade the research cosmetic icons with custom backgrounds 
+- [ ] Generate all the corresponding icons for item queue 
+- [ ] Finishing the list of cosmetic upgrades for all unit weapon/armor tiers
+- [ ] Particle effects for building destruction and construction
+- [ ] More maps, suited for 2v2 and FFA
 
 ---
 
@@ -19,7 +57,7 @@ If you are interested in helping with this project don't hesitate contacting me,
 
 ---
 
-### Special Thanks
+### Credits
 
 * [Myll](https://github.com/Myll), for his incredible hard work and dedication on [ModKit](https://github.com/Myll/Dota-2-ModKit) and [Building Helper](https://github.com/Myll/Dota-2-Building-Helper)
 * [BMD](https://github.com/bmddota), for his invaluable help to the modding community in general.
@@ -28,3 +66,7 @@ If you are interested in helping with this project don't hesitate contacting me,
 * [DarkMio](https://github.com/DarkMio), reddit diplomacy frontman.
 * [SQL](https://github.com/justSQL), tooltip hero
 * [Markie](https://github.com/TheMarkie), world editor parser machine
+* [snipplets](https://github.com/snipplets), for continuing work on Building Helper
+* [Aleteh](https://github.com/Aleteh), gold mine model
+* [wFX](https://github.com/vhpanisa), orc abilities
+* [Infekma](https://github.com/Infekma), undead abilities
