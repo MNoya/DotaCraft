@@ -690,6 +690,11 @@
 	
 	"OnSpellStart"
 	{			
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_anti_magic_shell"
+			"Target" 		"TARGET"
+		}	
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_anti_magic_shell"
