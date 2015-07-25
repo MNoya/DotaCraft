@@ -697,3 +697,21 @@ end
 function IsTreePathable( tree )
 	return tree.pathable
 end
+
+-- Takes a CDOTA_Buff handle and checks the Ability KV table for the IsPurgable key
+function IsPurgableModifier( modifier_handle )
+	local ability = modifier:GetAbility()
+	if ability and IsValidEntity(ability) then
+		local ability_table = GameRules.AbilityKV[ability:GetAbilityName()]
+		local modifier_table = ability_table["Modifiers"][modifier_handle:GetName()]
+		if modifier_table then
+			local IsPurgable = modifier_table["IsPurgable"]
+			if IsPurgable and IsPurgable == "1" then
+				return true
+			end
+		end
+	else
+		print("Modifier isn't tied to a valid ability")
+	end
+	return false
+end
