@@ -616,6 +616,7 @@
 		{			
 			"EffectName" 		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead.vpcf"
 			"EffectAttachType" 	"follow_overhead"
+			"IsPurgable"       "1"
 			
 			"Properties"
 			{
@@ -715,6 +716,7 @@
 		{			
 			"EffectName" 		"particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
 			"EffectAttachType" 	"follow_origin"
+			"IsPurgable"       "1"
 		}
 	}
 }
@@ -958,8 +960,8 @@
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
-	"AbilityCastRange"			"700"
-	"AbilityCastPoint"			"6"
+	"AbilityCastRange"			"600"
+	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"1"
 	"AbilityManaCost"			"2"
 	
@@ -1067,8 +1069,8 @@
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
-	"AbilityCastRange"			"700"
-	"AbilityCastPoint"			"6"
+	"AbilityCastRange"			"600"
+	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"1"
 	"AbilityManaCost"			"2"
 		
@@ -1205,11 +1207,58 @@
 		
 	"AbilitySpecial"
 	{
+		"01"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"duration"		"0.5"
+		}
 		// The maximum amount of mana that can be absorbed is 99999, but that's rather a technical limit.
 		// This ability does affect INVUNERABLE units.
 	}
-
 	
+	"precache"
+	{
+		//caster particle
+		"particle" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"	
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"units/undead/destroyer.lua"
+			"Function"				"undead_absorb_mana"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName" "absorb_mana_caster"
+			"Target" "CASTER"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName" "absorb_mana_target"
+			"Target" "TARGET"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"absorb_mana_target"
+		{
+			"IsHidden" "1"
+			"Effectname" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"
+			"EffectAttachType" "follow_origin"
+			"Duration" "%duration"
+		}
+	
+		"absorb_mana_caster"
+		{
+			"IsHidden" "1"
+			"Effectname" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"
+			"EffectAttachType" "follow_origin"
+			"Duration" "%duration"
+		}	
+	}
 }
 
 //=================================================================================
@@ -1260,8 +1309,45 @@
 		}
 		// This IGNORES friendly buffs.
 	}
-
 	
+	"precache"
+	{
+		// target particle
+		"particle" "particles/generic_gameplay/generic_purge.vpcf"
+	
+		// caster particle
+		"particle" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf"
+		
+		// point particle
+		"particle" "particles/units/heroes/hero_dark_seer/dark_seer_vacuum_shockwave.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"Target" 		"POINT"
+			"ScriptFile" 	"units/undead/destroyer.lua"
+			"Function" 		"undead_devour_magic"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_devour_magic_target"
+		{
+			"IsHidden" "1"
+			"EffectName" 		"particles/generic_gameplay/generic_purge.vpcf"
+			"EffectAttachType" 	"follow_origin"	
+		}
+	
+		"modifier_devour_magic_caster"
+		{
+			"IsHidden" "1"
+			"EffectName" 		"particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf"
+			"EffectAttachType" 	"follow_origin"	
+		}	
+	}
 }
 
 //=================================================================================
@@ -1321,7 +1407,6 @@
 		}
 	}
 
-	
 }
 
 
