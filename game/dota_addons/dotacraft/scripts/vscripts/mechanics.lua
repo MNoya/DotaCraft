@@ -718,7 +718,7 @@ function IsPurgableModifier( modifier_handle )
 			local modifier_table = ability_table["Modifiers"][modifier_name]
 			if modifier_table then
 				local IsPurgable = modifier_table["IsPurgable"]
-				if IsPurgable and IsPurgable == "1" then
+				if IsPurgable and IsPurgable == 1 then
 					print(modifier_name.." from "..ability_name.." is purgable!")
 					return true
 				end
