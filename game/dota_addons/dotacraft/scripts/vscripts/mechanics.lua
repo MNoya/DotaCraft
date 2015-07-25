@@ -700,18 +700,35 @@ end
 
 -- Takes a CDOTA_Buff handle and checks the Ability KV table for the IsPurgable key
 function IsPurgableModifier( modifier_handle )
-	local ability = modifier:GetAbility()
+	local ability = modifier_handle:GetAbility()
+	local modifier_name = modifier_handle:GetName()
+
 	if ability and IsValidEntity(ability) then
-		local ability_table = GameRules.AbilityKV[ability:GetAbilityName()]
-		local modifier_table = ability_table["Modifiers"][modifier_handle:GetName()]
-		if modifier_table then
-			local IsPurgable = modifier_table["IsPurgable"]
-			if IsPurgable and IsPurgable == "1" then
-				return true
+		local ability_name = ability:GetAbilityName()
+		local ability_table = GameRules.AbilityKV[ability_name]
+
+		-- Check for item ability
+		if not ability_table then
+			print(modifier_name.." might be an item")
+			ability_table = GameRules.ItemKV[ability_name]
+		end
+
+		-- Proceed only if the ability is really found
+		if ability_table then
+			local modifier_table = ability_table["Modifiers"][modifier_name]
+			if modifier_table then
+				local IsPurgable = modifier_table["IsPurgable"]
+				if IsPurgable and IsPurgable == "1" then
+					print(modifier_name.." from "..ability_name.." is purgable!")
+					return true
+				end
+			else
+				print("Couldn't find modifier table for "..modifier_name)
 			end
 		end
 	else
-		print("Modifier isn't tied to a valid ability")
+		print(modifier_name.." isn't tied to a valid ability")
 	end
+
 	return false
 end
