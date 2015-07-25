@@ -950,7 +950,7 @@
 "undead_essence_of_blight"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_essence_of_blight"
+	"AbilityTextureName"		"undead_replenish_health"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -973,7 +973,7 @@
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"radius"		"700"
+			"radius"		"600"
 		}
 		"03"
 		{
@@ -983,12 +983,71 @@
 		"04"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"max_unit"			"5"
+			"max_unit"			"6"
+		}
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"mana_per_unit_healed"			"2"
 		}
 		// This does not include the caster, the caster is always healed.
 	}
-
+	"precache"
+	{
+		// caster particle
+		"particle" "particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf"
+		
+		// target particle
+		"particle"   "particles/items_fx/healing_flask.vpcf"
+	}
 	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"units/undead/obsidian_statue.lua"
+			"Function"				"undead_essence_of_blight"
+		}	
+	}
+				
+	"Modifiers"
+	{
+		"modifier_blight_heal_caster"
+		{			
+			"IsHidden" "1"
+			"EffectName" "particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf"
+			"EffectAttachType" "follow_origin"
+		}
+		
+		"modifier_blight_heal_target"
+		{
+			"IsHidden" "1"
+			"Duration" 			"%duration"
+			"EffectName" 		"particles/items_fx/healing_flask.vpcf"
+			"EffectAttachType" 	"follow_origin"		
+		}
+
+		"modifier_blight_spirit_touch_autocast"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/banshee.lua"
+					"Function"		"ToggleOnAutocast"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"			"units/undead/obsidian_statue.lua"
+					"Function"				"undead_essence_of_blight"
+				}
+			}			
+		}		
+	}
 }
 
 //=================================================================================
@@ -999,7 +1058,7 @@
 "undead_spirit_touch"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_spirit_touch"
+	"AbilityTextureName"		"undead_replenish_mana"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -1023,7 +1082,7 @@
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"radius"		"700"
+			"radius"		"600"
 		}
 		"03"
 		{
@@ -1033,13 +1092,52 @@
 		"04"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"max_unit"			"5"
+			"max_unit"			"6"
+		}
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"mana_per_unit_healed"			"2"
 		}
 		// Doesn't include the caster, just like Essence Of Blight.
 	}
-
 	
-
+		"precache"
+	{
+		// caster particle
+		"particle" "particles/units/heroes/hero_medusa/medusa_mana_shield_shatter.vpcf"
+		
+		// target particle
+		"particle" "particles/items_fx/healing_clarity.vpcf"
+	
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"units/undead/obsidian_statue.lua"
+			"Function"				"undead_essence_of_blight"
+		}
+	}
+			
+	"Modifiers"
+	{
+		"modifier_spirit_touch_caster"
+		{		
+			"IsHidden" "1"
+			"EffectName" "particles/units/heroes/hero_medusa/medusa_mana_shield_shatter.vpcf"
+			"EffectAttachType" "follow_origin"
+		}
+		
+		"modifier_spirit_touch_target"
+		{	
+			"IsHidden" "1"
+			"Duration" 			"%duration"
+			"EffectName" 		"particles/items_fx/healing_clarity.vpcf"
+			"EffectAttachType" 	"follow_origin"		
+		}		
+	}
 }
 
 //=================================================================================
