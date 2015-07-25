@@ -306,6 +306,12 @@
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
 				}
+				
+				"RunScript"
+				{
+					"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+					"Function"      "ApplyMoonGlaiveUpgrade"
+				}
 			}
 		}
 	}

@@ -518,6 +518,7 @@ function dotacraft:OnHeroInGame(hero)
 			local unit = CreateUnitByName(unitName, position, true, hero, hero, hero:GetTeamNumber())
 			unit:SetControllableByPlayer(pID, true)
 			FindClearSpaceForUnit(unit, position, true)
+			table.insert(player.units, unit)
 		end)
 	end
 

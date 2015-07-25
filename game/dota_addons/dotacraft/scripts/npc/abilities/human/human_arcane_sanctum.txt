@@ -1102,29 +1102,6 @@
 }
 
 // Spell Breaker Innate Ability
-"human_spell_immunity"
-{
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityTextureName"	"human_spell_immunity"
-	"MaxLevel"				"1"
-
-	"Modifiers"
-	{
-		"modifier_human_spell_immunity"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-	
-			"States"
-			{
-				"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-	}
-}
-
-// Spell Breaker Innate Ability
 "human_feedback"
 {
 	"BaseClass"					"ability_datadriven"

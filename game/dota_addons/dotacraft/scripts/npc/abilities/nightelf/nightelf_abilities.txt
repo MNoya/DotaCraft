@@ -628,13 +628,64 @@
 	}
 }
 
+// Huntress have 1 jump on moon glaive innate, the upgrade gives a second jump
 "nightelf_moon_glaive"
 {
-	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_research_moon_glaive"
+	"BaseClass"					"luna_moon_glaive"
+	"AbilityTextureName"		"nightelf_moon_glaive"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"range"						"500"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bounces"					"1"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_reduction_percent"	"50"
+		}
+	}
+}
+
+// New name, different icon, replaces the basic ability
+"nightelf_upgraded_moon_glaive"
+{
+	"BaseClass"					"luna_moon_glaive"
+	"AbilityTextureName"		"nightelf_research_upgraded_moon_glaive"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"range"						"500"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bounces"					"2"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_reduction_percent"	"50"
+		}
+	}
 }
 
 "nightelf_vorpal_blades"

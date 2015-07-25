@@ -227,15 +227,22 @@
 	"ModelScale"				"0.7"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"SoundSet"					"Hero_Luna"
+	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_sentinel"	 //Reference: Aesn
 	"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
-	"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl
+	"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl - Gets replaced by "nightelf_upgraded_moon_glaive" after the research
 	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 	"Ability5"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	
+	"precache"
+	{
+		"particle_folder"	"particles/units/heroes/hero_luna"
+	}
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -351,7 +358,7 @@
 	"AttackAnimationPoint"		"0.1"
 	"AttackAcquisitionRange"	"1150"
 	"AttackRange"				"1150"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/econ/items/luna/luna_eternal_eclipse/luna_glaive_eternal_eclipse.vpcf"
 	"ProjectileSpeed"			"1400"
 	
 	// Bounty
@@ -424,8 +431,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_abolish_magic"	 //Reference: Aadm
-	"Ability2"					"nightelf_spell_immunity"	 //Reference: Amim
-	"Ability3"					"nightelf_slow_poison"	 //Reference: Aspo
+	"Ability2"					"nightelf_slow_poison"	  	//Reference: Aspo
+	"Ability3"					"generic_spell_immunity"	//Reference: Amim
 	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 	"Ability5"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
 	
@@ -444,7 +451,7 @@
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"800"
 	"AttackRange"				"500"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_enchantress/enchantress_base_attack.vpcf"
 	"ProjectileSpeed"			"1000"
 	
 	// Bounty
@@ -823,7 +830,7 @@
 	"AttackAnimationPoint"		"0.6"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"600"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_furion/furion_base_attack.vpcf"
 	"ProjectileSpeed"			"900"
 	
 	// Bounty
@@ -1002,7 +1009,7 @@
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"300"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_puck/puck_base_attack.vpcf"
 	"ProjectileSpeed"			"900"
 	
 	// Bounty
@@ -1099,8 +1106,8 @@
 	"AttackAnimationPoint"		"0.7"
 	"AttackAcquisitionRange"	"900"
 	"AttackRange"				"850"
-	"ProjectileModel"			""	 //Add projectile
-	"ProjectileSpeed"			"1200,1500"
+	"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
+	"ProjectileSpeed"			"1200"
 	
 	// Bounty
 	//----------------------------------------------------------------

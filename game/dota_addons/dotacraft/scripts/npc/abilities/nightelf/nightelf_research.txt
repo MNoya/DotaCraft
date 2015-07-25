@@ -394,10 +394,10 @@
 	}
 }
 
-"nightelf_research_moon_glaive"
+"nightelf_research_upgraded_moon_glaive"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_moon_glaive"
+	"AbilityTextureName"			"nightelf_research_upgraded_moon_glaive"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -454,12 +454,19 @@
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
 		}
+		
+		// Apply the update on all current huntresses
+		"RunScript"
+		{
+			"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+			"Function"      "UpgradeMoonGlaives"
+		}
 	}
 }
-"nightelf_research_moon_glaive_disabled"
+"nightelf_research_upgraded_moon_glaive_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_moon_glaive"
+	"AbilityTextureName"			"nightelf_research_upgraded_moon_glaive"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
