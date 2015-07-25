@@ -1332,3 +1332,44 @@
 	}
 }
 
+"nightelf_sentinel_owl"
+{										
+	// General
+	//----------------------------------------------------------------
+	"Model"						"models/items/courier/snowl/snowl_flying.vmdl"	// Model.
+	"BaseClass"					"npc_dota_creature"
+	"SoundSet"					"0"			// Name of sound set.
+	"Level"						"1"
+	"ModelScale"				"1.0"
+	"IsSummoned"				"1"
+	"UnitLabel"					"Owl Scout"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"HealthBarOffset"			"165"
+
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"300"		// Speed.
+	"MovementTurnRate"			"0.6"		// Turning rate.
+
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"40"		// Base health.
+	"StatusHealthRegen"			"0.5"		// Health regeneration rate.
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"100"		// Range of vision during day light.
+	"VisionNighttimeRange"		"100"		// Range of vision at night time.
+
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+	"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	"WakesNeutrals"				"0"
+}
