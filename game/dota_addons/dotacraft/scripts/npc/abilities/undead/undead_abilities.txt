@@ -700,7 +700,13 @@
 			"ModifierName"	"modifier_anti_magic_shell"
 			"Target"		 "TARGET"
 			"Duration"		"%duration"
-		}		
+		}
+		"RunScript"
+		{
+			"Target"		"TARGET"
+			"ScriptFile"	"units/undead/banshee.lua"
+			"Function"		"ResetAntiMagicShell"
+		}
 	}
 
 	"Modifiers"
@@ -709,15 +715,6 @@
 		{			
 			"EffectName" 		"particles/units/heroes/hero_medusa/medusa_mana_shield_oldbase.vpcf"
 			"EffectAttachType" 	"follow_origin"
-			
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/undead/banshee.lua"
-					"Function"		"ResetAntiMagicShell"
-				}
-			}
 		}
 	}
 }

@@ -144,6 +144,6 @@ end
 
 -- Puts a variable at 0 for the damage filter to take it
 function ResetAntiMagicShell( event )
-	local caster = event.caster
-	caster.anti_magic_shell_absorbed = 0
+	local target = event.target
+	target.anti_magic_shell_absorbed = 0
 end
