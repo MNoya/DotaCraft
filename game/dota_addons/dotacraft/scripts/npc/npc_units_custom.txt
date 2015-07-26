@@ -4464,7 +4464,8 @@
 		"StatusHealth"				"325"
 		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"0.7"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -4572,7 +4573,8 @@
 		"StatusHealth"				"290"
 		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"200"
-		"StatsManaRegen"			"0.67"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -4630,7 +4632,7 @@
 		//----------------------------------------------------------------
 		"Ability1"					"human_spell_steal"	 //Reference: Asps
 		"Ability2"					"human_control_magic_disabled"	 //Reference: Acmg
-		"Ability3"					"human_spell_immunity"	 //Reference: Amim
+		"Ability3"					"generic_spell_immunity"	 //Reference: Amim
 		"Ability4"					"human_feedback"	 //Reference: Afbk
 		"Ability5"					"human_backpack_disabled"
 		"Ability6"					"ability_prevent_attack_flying"
@@ -4684,6 +4686,7 @@
 		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"250"
 		"StatusManaRegen"			"0.8"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -4894,6 +4897,7 @@
 		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"300"
 		"StatusManaRegen"			"0.75"
+		"StatusStartingMana"		"150"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -7019,7 +7023,7 @@
 		"Ability4"					"nightelf_research_sentinel"
 		"Ability5"					"nightelf_research_improved_bows"
 		"Ability6"					"nightelf_research_marksmanship"
-		"Ability7"					"nightelf_research_moon_glaive"
+		"Ability7"					"nightelf_research_upgraded_moon_glaive"
 		"Ability8"					"nightelf_research_vorpal_blades"
 		"Ability9"					"nightelf_uproot"
 		"Ability10"					"ability_building"
@@ -8269,15 +8273,22 @@
 		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"SoundSet"					"Hero_Luna"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_sentinel"	 //Reference: Aesn
 		"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
-		"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl
+		"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl - Gets replaced by "nightelf_upgraded_moon_glaive" after the research
 		"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 		"Ability5"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+		
+		"precache"
+		{
+			"particle_folder"	"particles/units/heroes/hero_luna"
+		}
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8393,7 +8404,7 @@
 		"AttackAnimationPoint"		"0.1"
 		"AttackAcquisitionRange"	"1150"
 		"AttackRange"				"1150"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/econ/items/luna/luna_eternal_eclipse/luna_glaive_eternal_eclipse.vpcf"
 		"ProjectileSpeed"			"1400"
 		
 		// Bounty
@@ -8466,8 +8477,8 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_abolish_magic"	 //Reference: Aadm
-		"Ability2"					"nightelf_spell_immunity"	 //Reference: Amim
-		"Ability3"					"nightelf_slow_poison"	 //Reference: Aspo
+		"Ability2"					"nightelf_slow_poison"	  	//Reference: Aspo
+		"Ability3"					"generic_spell_immunity"	//Reference: Amim
 		"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 		"Ability5"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
 		
@@ -8486,7 +8497,7 @@
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"800"
 		"AttackRange"				"500"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_enchantress/enchantress_base_attack.vpcf"
 		"ProjectileSpeed"			"1000"
 		
 		// Bounty
@@ -8519,7 +8530,8 @@
 		"StatusHealth"				"435"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"200"
+		"StatusManaRegen"			"0.75"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -8610,7 +8622,8 @@
 		"StatusHealth"				"430"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"200"
-		"StatsManaRegen"			"0.666666666666667"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"100"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -8708,7 +8721,8 @@
 		"StatusHealth"				"810"
 		"StatusHealthRegen"			"1"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"200"
+		"StatusManaRegen"			"0.333333333333333"
+		"StatusStartingMana"		"100"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -8865,7 +8879,7 @@
 		"AttackAnimationPoint"		"0.6"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"600"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_furion/furion_base_attack.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -8898,7 +8912,8 @@
 		"StatusHealth"				"300"
 		"StatusHealthRegen"			"1"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"200"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -8989,7 +9004,8 @@
 		"StatusHealth"				"300"
 		"StatusHealthRegen"			"1"
 		"StatusMana"				"200"
-		"StatsManaRegen"			"0.666666666666667"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -9044,7 +9060,7 @@
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"300"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_puck/puck_base_attack.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -9077,7 +9093,8 @@
 		"StatusHealth"				"450"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"200"
+		"StatusManaRegen"			"0.75"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -9141,8 +9158,8 @@
 		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"900"
 		"AttackRange"				"850"
-		"ProjectileModel"			""	 //Add projectile
-		"ProjectileSpeed"			"1200,1500"
+		"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
+		"ProjectileSpeed"			"1200"
 		
 		// Bounty
 		//----------------------------------------------------------------
@@ -10996,7 +11013,8 @@
 		"StatusHealth"				"335"
 		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"200"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -11096,7 +11114,8 @@
 		"StatusHealth"				"315"
 		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"200"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -11197,7 +11216,8 @@
 		"StatusHealth"				"500"
 		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"300"
-		"StatusManaRegen"			"300"
+		"StatusManaRegen"			"1"
+		"StatusStartingMana"		"100"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -14665,7 +14685,9 @@
 		"StatusHealth"				"550"
 		"StatusHealthRegen"			"0"
 		"StatusMana"				"600"
-		"StatsManaRegen"			"1.5"
+		"StatusMana"				"600"
+		"StatusManaRegen"			"1.5"
+		"StatusStartingMana"		"400"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -14755,7 +14777,7 @@
 		"StatusHealth"				"900"
 		"StatusHealthRegen"			"2"
 		"StatusMana"				"400"
-		"StatusManaRegen"			"0"
+		"StatusStartingMana"		"0"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -14854,7 +14876,8 @@
 		"StatusHealth"				"305"
 		"StatusHealthRegen"			"2"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"200"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -14953,7 +14976,8 @@
 		"StatusHealth"				"285"
 		"StatusHealthRegen"			"2"
 		"StatusMana"				"200"
-		"StatusManaRegen"			"200"
+		"StatusManaRegen"			"0.666666666666667"
+		"StatusStartingMana"		"75"
 		
 		// Vision
 		//----------------------------------------------------------------

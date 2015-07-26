@@ -134,247 +134,6 @@
 			}
 		}
 	}
-	"item_armor_modifier"
-	{
-		"ID"							"2105"
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"BaseClass"						"item_datadriven"
-	
-		"Modifiers"
-		{
-			"modifier_armor_mod_1"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"1"
-				}
-			}
-			"modifier_armor_mod_2"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"2"
-				}
-			}
-			"modifier_armor_mod_4"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"4"
-				}
-			}
-			"modifier_armor_mod_8"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"8"
-				}
-			}
-			"modifier_armor_mod_16"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"16"
-				}
-			}
-			"modifier_armor_mod_32"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-						"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"32"
-				}
-			}
-			"modifier_armor_mod_64"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"64"
-				}
-			}
-	
-			"modifier_negative_armor_mod_1"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-1"
-				}
-			}
-			"modifier_negative_armor_mod_2"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-2"
-				}
-			}
-			"modifier_negative_armor_mod_4"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-4"
-				}
-			}
-			"modifier_negative_armor_mod_8"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-8"
-				}
-			}
-			"modifier_negative_armor_mod_16"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-16"
-				}
-			}
-			"modifier_negative_armor_mod_32"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-32"
-				}
-			}
-			"modifier_negative_armor_mod_64"
-			{
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-64"
-				}
-			}
-		}
-	}
-	
-	"item_attackspeed_modifier"
-	{
-		"ID"							"2104"
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"BaseClass"						"item_datadriven"
-	
-		"Modifiers"
-		{
-	
-			"modifier_attackspeed_mod_1"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"1"
-				}
-			}
-			"modifier_attackspeed_mod_2"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"2"
-				}
-			}
-			"modifier_attackspeed_mod_4"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"4"
-				}
-			}
-			"modifier_attackspeed_mod_8"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"8"
-				}
-			}
-			"modifier_attackspeed_mod_16"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"16"
-				}
-			}
-			"modifier_attackspeed_mod_32"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"32"
-				}
-			}
-			"modifier_attackspeed_mod_64"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"64"
-				}
-			}
-			"modifier_attackspeed_mod_128"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"128"
-				}
-			}
-		}
-	}
-	
 	"item_backpack"
 	{
 		"BaseClass"             		"item_datadriven"
@@ -404,106 +163,6 @@
 			}
 		}
 	}
-	"item_health_modifier"
-	{
-		"ID"							"2102"
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"BaseClass"						"item_datadriven"
-	
-		"Modifiers"
-		{
-			"modifier_health_mod_1"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_HEALTH_BONUS"	"6"
-				}
-			}
-			"modifier_health_mod_2"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS"	"12"
-				}
-			}
-			"modifier_health_mod_4"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_HEALTH_BONUS"	"24"
-				}
-			}
-			"modifier_health_mod_8"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_HEALTH_BONUS"	"48"
-				}
-			}
-			"modifier_health_mod_16"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_HEALTH_BONUS"	"96"
-				}
-			}
-			"modifier_health_mod_32"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_HEALTH_BONUS"	"192"
-				}
-			}
-			"modifier_health_mod_64"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_HEALTH_BONUS"	"384"
-				}
-			}
-			"modifier_health_mod_128"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_HEALTH_BONUS"	"768"
-				}
-			}
-		}
-	}
-	
 	"item_build_town_hall"
 	{
 		"BaseClass"             		"item_datadriven"
@@ -3649,108 +3308,6 @@
 		}
 	}
 	
-	"item_mana_modifier"
-	{
-		"ID"							"2103"
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"BaseClass"						"item_datadriven"
-	
-		"Modifiers"
-		{
-	
-			"modifier_mana_mod_1"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_MANA_BONUS"	"2"
-				}
-			}
-			"modifier_mana_mod_2"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS"	"4"
-				}
-			}
-			"modifier_mana_mod_4"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_MANA_BONUS"	"8"
-				}
-			}
-			"modifier_mana_mod_8"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_MANA_BONUS"	"16"
-				}
-			}
-			"modifier_mana_mod_16"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_MANA_BONUS"	"32"
-				}
-			}
-			"modifier_mana_mod_32"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_MANA_BONUS"	"64"
-				}
-			}
-			"modifier_mana_mod_64"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_MANA_BONUS"	"128"
-				}
-			}
-			"modifier_mana_mod_128"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					
-					"MODIFIER_PROPERTY_MANA_BONUS"	"256"
-				}
-			}
-		}
-	}
-		
-	
 	// nightelf_tree_of_life - No requirements
 	// nightelf_altar_of_elders - No requirements
 	// nightelf_hunters_hall - No requirements
@@ -4509,10 +4066,10 @@
 			}
 		}
 	}
-	"item_nightelf_research_moon_glaive"
+	"item_nightelf_research_upgraded_moon_glaive"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_nightelf_research_moon_glaive"
+		"AbilityTextureName"			"item_nightelf_research_upgraded_moon_glaive"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -8980,6 +8537,80 @@
 	"item_scroll_of_animate_dead"
 	{
 		
+	}
+	"item_stat_modifier"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"item_datadriven"
+	
+		"Modifiers"
+		{
+	
+			"modifier_health_bonus"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_HEALTH_BONUS"	"1"
+				}
+			}
+	
+			"modifier_health_regen_constant"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0.01"
+				}
+			}
+	
+			"modifier_mana_bonus"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_MANA_BONUS"	"1"
+				}
+			}
+	
+			"modifier_base_mana_regen"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_BASE_MANA_REGEN"	"0.01"
+				}
+			}
+	
+			"modifier_physical_armor_bonus"
+			{
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"0.01"
+				}
+			}
+	
+			"modifier_attackspeed_bonus_constant"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"1"
+				}
+			}
+		}
 	}
 	// Item Abilities
 	// undead_altar_of_darkness - No requirements

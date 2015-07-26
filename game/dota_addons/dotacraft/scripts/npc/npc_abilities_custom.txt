@@ -20118,29 +20118,6 @@
 	}
 	
 	// Spell Breaker Innate Ability
-	"human_spell_immunity"
-	{
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"	"human_spell_immunity"
-		"MaxLevel"				"1"
-	
-		"Modifiers"
-		{
-			"modifier_human_spell_immunity"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	// Spell Breaker Innate Ability
 	"human_feedback"
 	{
 		"BaseClass"					"ability_datadriven"
@@ -28687,6 +28664,27 @@
 			}
 		}
 	}
+	"generic_spell_immunity"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"generic_spell_immunity"
+		"MaxLevel"				"1"
+	
+		"Modifiers"
+		{
+			"modifier_spell_immunity"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
 	// Gold Mine Abilities
 	"gold_mine_passive"
 	{
@@ -29430,13 +29428,64 @@
 		}
 	}
 	
+	// Huntress have 1 jump on moon glaive innate, the upgrade gives a second jump
 	"nightelf_moon_glaive"
 	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"nightelf_research_moon_glaive"
+		"BaseClass"					"luna_moon_glaive"
+		"AbilityTextureName"		"nightelf_moon_glaive"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bounces"					"1"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_reduction_percent"	"50"
+			}
+		}
+	}
+	
+	// New name, different icon, replaces the basic ability
+	"nightelf_upgraded_moon_glaive"
+	{
+		"BaseClass"					"luna_moon_glaive"
+		"AbilityTextureName"		"nightelf_research_upgraded_moon_glaive"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bounces"					"2"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_reduction_percent"	"50"
+			}
+		}
 	}
 	
 	"nightelf_vorpal_blades"
@@ -31726,10 +31775,10 @@
 		}
 	}
 	
-	"nightelf_research_moon_glaive"
+	"nightelf_research_upgraded_moon_glaive"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_research_moon_glaive"
+		"AbilityTextureName"			"nightelf_research_upgraded_moon_glaive"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -31786,12 +31835,19 @@
 				"ScriptFile"	"buildings/research.lua"
 				"Function"		"ResearchComplete"
 			}
+			
+			// Apply the update on all current huntresses
+			"RunScript"
+			{
+				"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+				"Function"      "UpgradeMoonGlaives"
+			}
 		}
 	}
-	"nightelf_research_moon_glaive_disabled"
+	"nightelf_research_upgraded_moon_glaive_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_research_moon_glaive"
+		"AbilityTextureName"			"nightelf_research_upgraded_moon_glaive"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -34112,6 +34168,12 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+						"Function"      "ApplyMoonGlaiveUpgrade"
 					}
 				}
 			}
