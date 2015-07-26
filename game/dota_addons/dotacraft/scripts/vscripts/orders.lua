@@ -8,6 +8,12 @@ function dotacraft:FilterExecuteOrder( filterTable )
     local units = filterTable["units"]
     local order_type = filterTable["order_type"]
     local issuer = filterTable["issuer_player_id_const"]
+    local abilityIndex = filterTable["entindex_ability"]
+    local targetIndex = filterTable["entindex_target"]
+    local x = tonumber(filterTable["position_x"])
+    local y = tonumber(filterTable["position_y"])
+    local z = tonumber(filterTable["position_z"])
+    local point = Vector(x,y,z)
 
     local numUnits = 0
     local numBuildings = 0
@@ -22,6 +28,42 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 end
             end
         end
+    end
+
+    ------------------------------------------------
+    --           Ability Multi Order              --
+    ------------------------------------------------
+    if abilityIndex and abilityIndex ~= 0 and IsMultiOrderAbility(EntIndexToHScript(abilityIndex)) then
+        print("Multi Order Ability")
+        local unit = EntIndexToHScript(units["0"])
+        if unit.skip then
+            unit.skip = false
+            return true
+        end
+
+        local ability = EntIndexToHScript(abilityIndex) 
+        local abilityName = ability:GetAbilityName()
+        local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+        for _,entityIndex in pairs(entityList) do
+            local unit = EntIndexToHScript(entityIndex)
+            if unit:HasAbility(abilityName) then
+                local abil = unit:FindAbilityByName(abilityName)
+                if abil and abil:IsFullyCastable() then
+
+                    unit.skip = true
+                    if order_type == DOTA_UNIT_ORDER_CAST_POSITION then
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = order_type, Position = point, AbilityIndex = abil:GetEntityIndex(), Queue = false})
+
+                    elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = order_type, TargetIndex = targetIndex, AbilityIndex = abil:GetEntityIndex(), Queue = false})
+
+                    else --order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET or order_type == DOTA_UNIT_ORDER_CAST_TOGGLE or order_type == DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = order_type, AbilityIndex = abil:GetEntityIndex(), Queue = false})
+                    end
+                end
+            end
+        end
+        return true
     end
 
     if order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or order_type == DOTA_UNIT_ORDER_SELL_ITEM then
@@ -39,6 +81,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     ------------------------------------------------
     elseif order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
         local unit = EntIndexToHScript(units["0"])
+
         if unit.skip then
             if DEBUG then print("Skip") end
             unit.skip = false
@@ -181,10 +224,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
     ------------------------------------------------
     --          Tree Gather Right-Click           --
     ------------------------------------------------
-    local x = tonumber(filterTable["position_x"])
-    local y = tonumber(filterTable["position_y"])
-    local z = tonumber(filterTable["position_z"])
-    local point = Vector(x,y,z) -- initial goal
     local TREE_RADIUS = 50
     local trees = GridNav:GetAllTreesAroundPoint(point, TREE_RADIUS, true)
     local entityIndex = units["0"]
