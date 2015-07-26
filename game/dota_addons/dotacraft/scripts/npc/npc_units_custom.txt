@@ -8386,8 +8386,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"nightelf_vorpal_blades"	 //Reference: Aimp - Vorpal Blades / Impaling Bolt
-		"Ability2"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+		"Ability1"					"nightelf_attack_ground"
+		"Ability2"					"nightelf_vorpal_blades"	 //Reference: Aimp - Vorpal Blades
+		"Ability3"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+		"Ability10"					"nightelf_glaive_thrower_splash_attack"	//Hidden Splash
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8401,7 +8403,7 @@
 		"AttackDamageMin"			"36.0"
 		"AttackDamageMax"			"53.0"
 		"AttackRate"				"3.5"
-		"AttackAnimationPoint"		"0.1"
+		"AttackAnimationPoint"		"0.7" //"0.1" but it looks way off using this model
 		"AttackAcquisitionRange"	"1150"
 		"AttackRange"				"1150"
 		"ProjectileModel"			"particles/econ/items/luna/luna_eternal_eclipse/luna_glaive_eternal_eclipse.vpcf"
@@ -8449,7 +8451,7 @@
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
-		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_SIEGE"
 		
 		// Creature Data
 		//----------------------------------------------------------------

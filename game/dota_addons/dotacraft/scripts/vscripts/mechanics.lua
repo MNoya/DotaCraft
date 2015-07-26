@@ -732,3 +732,33 @@ function IsPurgableModifier( modifier_handle )
 
 	return false
 end
+
+-- ToggleAbility On only if its turned Off
+function ToggleOn( ability )
+	if ability:GetToggleState() == false then
+		ability:ToggleAbility()
+	end
+end
+
+-- ToggleAbility Off only if its turned On
+function ToggleOff( ability )
+	if ability:GetToggleState() == true then
+		ability:ToggleAbility()
+	end
+end
+
+function IsMultiOrderAbility( ability )
+	if IsValidEntity(ability) then
+		local ability_name = ability:GetAbilityName()
+		local ability_table = GameRules.AbilityKV[ability_name]
+		if ability_table then
+			local AbilityMultiOrder = ability_table["AbilityMultiOrder"]
+			if AbilityMultiOrder and AbilityMultiOrder == 1 then
+				return true
+			end
+		else
+			print("Cant find ability table for "..ability_name)
+		end
+	end
+	return false
+end

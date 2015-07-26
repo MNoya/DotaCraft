@@ -21,7 +21,7 @@ function StormHammer( event )
 			iMoveSpeed = 900,
 			iVisionRadius = 0,
 			iVisionTeamNumber = caster:GetTeamNumber(),
-			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_NONE
+			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
 		}
 		ProjectileManager:CreateTrackingProjectile( projTable )
 		print("Storm Hammer Launched to "..next_target:GetUnitName().." number ".. next_target:GetEntityIndex())

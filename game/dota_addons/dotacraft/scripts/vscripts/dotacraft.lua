@@ -13,6 +13,8 @@ UNSEEN_FOG_ENABLED = false
 
 UNDER_ATTACK_WARNING_INTERVAL = 60
 
+TREE_HEALTH = 50
+
 XP_PER_LEVEL_TABLE = {
 	0, -- 1
 	200, -- 2 +200
@@ -349,6 +351,9 @@ function dotacraft:InitGameMode()
   	GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
 
   	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
+  	for _,t in pairs(GameRules.ALLTREES) do
+  		t.health = TREE_HEALTH
+  	end
 
   	-- Store and update selected units of each pID
 	GameRules.SELECTED_UNITS = {}
@@ -508,16 +513,14 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		local unitName = "nightelf_huntress"
-		PrecacheUnitByNameAsync(unitName, function(...) end)
-
-		local position = GameRules.StartingPositions[pID].position + Vector(0,-300,0)
-		Timers:CreateTimer(1, function() 
+		local unitName = "nightelf_glaive_thrower"
+		PrecacheUnitByNameAsync(unitName, function()
+			local position = GameRules.StartingPositions[pID].position + Vector(0,-300,0)
 			local unit = CreateUnitByName(unitName, position, true, hero, hero, hero:GetTeamNumber())
 			unit:SetControllableByPlayer(pID, true)
 			FindClearSpaceForUnit(unit, position, true)
 			table.insert(player.units, unit)
-		end)
+		end, pID)
 	else
 
 		-- A real hero trained through an altar
