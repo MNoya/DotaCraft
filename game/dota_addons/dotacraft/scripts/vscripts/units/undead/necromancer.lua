@@ -10,6 +10,7 @@ function undead_raise_dead ( keys )
 	-- durations have be inverted due to some weird parsing bug
 	local RADIUS = keys.ability:GetSpecialValueFor("radius")
 	local SKELETON_DURATION = keys.ability:GetSpecialValueFor("duration")
+	local duration
 	
 	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), RADIUS)
 	
@@ -22,8 +23,14 @@ function undead_raise_dead ( keys )
 			caster:SetMana(caster:GetMana() - ManaCost)
 			ability:StartCooldown(ability:GetCooldown(-1))
 			
+			if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
+				duration = SKELETON_DURATION + 15
+			else
+				duration = SKELETON_DURATION
+			end
+			
 			-- create units
-			CreateUnit(caster, spawnlocation, abilitylevel, SKELETON_DURATION)
+			CreateUnit(caster, spawnlocation, abilitylevel, duration)
 			
 			-- Leave no corpses
 			corpse.no_corpse = true
@@ -49,6 +56,9 @@ function CreateUnit(caster, spawnlocation, techIndex, duration)
 		CreatedUnit:SetControllableByPlayer(0, true)
 		CreatedUnit:AddNewModifier(CreatedUnit, nil, "modifier_kill", {duration = duration})
 		ParticleManager:CreateParticle("particles/neutral_fx/skeleton_spawn.vpcf", 0, CreatedUnit)
+		
+		CreatedUnit.no_corpse = true
+		table.insert(player.units, CreatedUnit)
 	end
 
 end
@@ -61,6 +71,10 @@ function AnimateDeadPrecast( event )
 	if corpse == nil then
 		event.caster:Interrupt()
 		SendErrorMessage(pID, "#error_no_usable_corpses")
+		
+		local mana = event.caster:GetMana()
+		
+		Timers:CreateTimer(function() event.caster:SetMana(mana) end)
 	end
 end
 
@@ -69,7 +83,6 @@ function undead_raise_dead_autocast(keys)
 	local ability = keys.ability
 	
 	Timers:CreateTimer(function()	
-	print("lol")
 		-- stop timer if the unit doesn't exist
 		if not IsValidEntity(caster) then 
 			--print("deleting banshee(timer)") 

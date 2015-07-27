@@ -70,8 +70,23 @@
 			"movement_speed_bonus"	"80"
 		}
 	}
-
 	
+	"Modifiers"
+	{
+	
+		"modifier_ghoul_frenzy"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%movement_speed_bonus"
+				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" 	"%attack_speed_bonus"			
+			}
+		}	
+	}
+
 }
 
 //=================================================================================
@@ -258,39 +273,80 @@
 "undead_disease_cloud"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_disease_cloud"
-	"MaxLevel"					"1"
-		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		
-	"AbilityCastRange"			"176"
-	// Added for visual indication.
-	
+	"AbilityCastRange"			"%radius"
+	"MaxLevel"					"1"
+	"AbilityTextureName"		"pudge_rot"
+
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"176"
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"200"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"duration"		"120"
+			"var_type"			"FIELD_FLOAT"
+			"damage_per_second"	"1"
 		}
-		// I mean like WAOW, let's shut down Gnome train stations for one second and start gunning down war vets, no offense but like, wow, crap, this is some sick weapon.
-		"04"
+		"03"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"damage_per_second"			"1"
+			"var_type"			"FIELD_FLOAT"
+			"think_interval"	"1"
 		}
-		// Slow but cold.
 	}
 
-	
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_disease_cloud_aura"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"			"CASTER"
+					"EffectName"		"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"ControlPoints"
+					{
+						"00"	"0 0 0"
+						"01"	"%radius 0 0"
+					}
+				}
+			}
+
+			"Aura"          	"modifier_disease_cloud_debuff"
+			"Aura_Radius"   	"%radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+		}
+
+		"modifier_disease_cloud_debuff"
+		{
+			"IsDebuff"			"1"
+			"ThinkInterval"  	"%think_interval"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage_per_second"
+				}
+			}
+		}
+	}
 }
 
 //=================================================================================
@@ -1689,7 +1745,7 @@
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
@@ -1711,7 +1767,20 @@
 		}
 	}
 
+	"precache"
+	{		
+		"particle" "particles/base_destruction_fx/gbm_lvl3_glow.vpcf"
+	}
 	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"Target"	"TARGET"
+			"ScriptFile" "units/undead/acolyte.lua"
+			"Function"	"unsummon"	
+		}
+	}
 }
 
 
