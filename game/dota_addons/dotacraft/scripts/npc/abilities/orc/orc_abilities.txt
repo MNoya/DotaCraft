@@ -217,7 +217,7 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 		
 	"AbilityCastRange"			"600"
 	"AbilityCastPoint"			"0"
@@ -245,9 +245,10 @@
 		"04"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"think_interval"		"0.1"
+			"think_interval"		"0.3"
 		}
 		// It ticks every second Kappa (actually is 0.1 now Keepo)
+		// Edit: 0.3 looks nicer with a particle hit :D
 	}
 
 	"OnSpellStart"
@@ -263,15 +264,11 @@
 	{
 		"modifier_orc_lightning_shield"
 		{
-			"Passive"  			"0"
-			"IsHidden" 			"0"
-			"IsBuff"			"1"
-			"IsDebuff"			"0"
 			"IsPurgable"		"1"
 			"Duration"			"%duration"
 			
-			"EffectName"            "particles/custom/orc_lightning_shield.vpcf"
-			"EffectAttachType"      "PATTACH_ABSORIGIN"
+			"EffectName"            "particles/custom/orc/lightning_shield.vpcf"
+			"EffectAttachType"      "follow_origin"
 			
 			"ThinkInterval" 		"%think_interval"
 			"OnIntervalThink"

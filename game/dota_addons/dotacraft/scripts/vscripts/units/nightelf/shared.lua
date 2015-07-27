@@ -35,7 +35,7 @@ function ShadowMeldThink( event )
 		end
 
 		-- If idle on night time, passively apply the fade out
-		if caster:IsIdle() and not caster:GetAttackTarget() and not caster:HasModifier("modifier_shadow_meld_fade") and not caster:HasModifier("modifier_shadow_meld") then
+		if caster:IsIdle() and not caster:GetAttackTarget() and not caster:HasModifier("modifier_shadow_meld_fade") and not caster:HasModifier("modifier_shadow_meld") and not caster:HasModifier("modifier_mounted_archer") then
 			print("Applying Shadow Meld Passive")
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_fade", {duration = fade_time})
 			caster:SetIdleAcquire(true) -- Autoattack nearby enemies if passively activated
@@ -59,7 +59,5 @@ function ShadowMeldRemove( event )
 	caster:RemoveModifierByName("modifier_shadow_meld")
 	caster:RemoveModifierByName("modifier_invisible")
 
-	if ability:GetToggleState() == true then
-		ability:ToggleAbility()
-	end
+	ToggleOff(ability)
 end

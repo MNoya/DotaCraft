@@ -90,7 +90,7 @@ function build( keys )
 
 		-- Move the units away from the building place
 		for _,unit in pairs(units) do
-			if unit ~= caster and not IsCustomBufilding(unit) then
+			if unit ~= caster and not IsCustomBuilding(unit) then
 				print(unit:GetUnitName().." moving")
 				local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * hull
 				ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})

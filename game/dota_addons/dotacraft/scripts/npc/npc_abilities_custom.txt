@@ -29101,6 +29101,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"			"1"
 			
 		"AbilitySpecial"
 		{
@@ -29717,33 +29719,100 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"5"
+				"var_type"			"FIELD_INTEGER"
+				"creep_duration"	"5"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration_hero"				"1"
+				"var_type"			"FIELD_INTEGER"
+				"hero_duration"		"1"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_per_second"			"4"
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_second"	"4"
 			}
 			"04"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"movement_speed_reduction"			"0.5"
+				"var_type"			"FIELD_INTEGER"
+				"movement_speed_slow"	"-50"
 			}
 			"05"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"attack_speed_reduction"			"0.25"
-			}
-			
+				"var_type"			"FIELD_INTEGER"
+				"attack_speed_slow"	"-25"
+			}	
 		}
 	
-		// Done
+		"precache"
+		{
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_slow_poison_passive"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_slow_poison"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_HERO"
+						}
+						"Duration"		"%hero_duration"
+					}
+					
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_slow_poison"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_BASIC"
+						}
+						"Duration"		"%creep_duration"
+					}
+				}
+			}
+	
+			"modifier_slow_poison"
+			{
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+				"EffectName"		"particles/neutral_fx/gnoll_poison_debuff.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+	
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage_per_second"
+						"Target"	"TARGET"
+					}
+					"FireSound"
+					{
+						"EffectName"	"hero_viper.CorrosiveSkin"
+						"Target" 		"TARGET"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -29756,10 +29825,12 @@
 		"BaseClass"					"ability_datadriven"
 		"AbilityTextureName"		"nightelf_research_abolish_magic"
 		"MaxLevel"					"1"
-			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastRange"			"500"
@@ -29771,12 +29842,59 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"summoned_unit_damage"			"300"
+				"var_type"			"FIELD_INTEGER"
+				"damage_to_summons"	"300"
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_lodestar_transform.vpcf"
+			"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_enchantress.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Enchantress.EnchantCast"
+				"Target" 		"TARGET"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/dryad.lua"
+				"Function"		"AbolishMagic"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_abolish_magic_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/dryad.lua"
+						"Function"		"ToggleOnAutocast"
+					}
+				}
+	
+				"ThinkInterval" "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/dryad.lua"
+						"Function"		"AbolishMagicAutocast"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -29791,18 +29909,6 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"should_nerf"		"1"
-			}
-		}
-		// pls do
-	
-		// Done
 	}
 	
 	//=================================================================================
@@ -30194,6 +30300,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"30"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"			"1"
 			
 		// Nothing to put here, basically the Hippogryph moves to the nearest Archer in the 900 radius and picks her up.
 		// The process is interruptable, if so, the ability is treated as not casted.
@@ -30276,7 +30384,9 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-			
+		
+		"AbilityMultiOrder"			"1"
+	
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"30"
@@ -30312,6 +30422,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"30"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"			"1"
 		
 		// The Archer is removed and put RIGHT UNDER the Hippogryph.
 		// The cooldown is placed on BOTH "Pick up Archer" and "Mount Hippogryph" as soon as the Archer is on the ground.
@@ -35698,7 +35810,7 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 			
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0"
@@ -35726,9 +35838,10 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"think_interval"		"0.1"
+				"think_interval"		"0.3"
 			}
 			// It ticks every second Kappa (actually is 0.1 now Keepo)
+			// Edit: 0.3 looks nicer with a particle hit :D
 		}
 	
 		"OnSpellStart"
@@ -35744,15 +35857,11 @@
 		{
 			"modifier_orc_lightning_shield"
 			{
-				"Passive"  			"0"
-				"IsHidden" 			"0"
-				"IsBuff"			"1"
-				"IsDebuff"			"0"
 				"IsPurgable"		"1"
 				"Duration"			"%duration"
 				
-				"EffectName"            "particles/custom/orc_lightning_shield.vpcf"
-				"EffectAttachType"      "PATTACH_ABSORIGIN"
+				"EffectName"            "particles/custom/orc/lightning_shield.vpcf"
+				"EffectAttachType"      "follow_origin"
 				
 				"ThinkInterval" 		"%think_interval"
 				"OnIntervalThink"

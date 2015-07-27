@@ -513,7 +513,7 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		local unitName = "nightelf_glaive_thrower"
+		local unitName = "nightelf_hippogryph"
 		PrecacheUnitByNameAsync(unitName, function()
 			local position = GameRules.StartingPositions[pID].position + Vector(0,-300,0)
 			local unit = CreateUnitByName(unitName, position, true, hero, hero, hero:GetTeamNumber())

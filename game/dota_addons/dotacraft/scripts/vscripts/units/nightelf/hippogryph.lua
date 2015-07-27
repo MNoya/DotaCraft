@@ -5,10 +5,6 @@ function PickUpArcher( event )
 	local radius = ability:GetCastRange()
 	local origin = caster:GetAbsOrigin()
 
-	-- Fake toggle the ability
-	if ability:GetToggleState() == false then
-		ability:ToggleAbility()
-	end
 	ability:EndCooldown()
 	ability.cancelled = false
 
@@ -17,8 +13,7 @@ function PickUpArcher( event )
 	if not archer then
 		units = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, 0, FIND_CLOSEST, false)
 		for _,unit in pairs(units) do
-			print(unit:GetUnitName())
-			if unit:GetUnitName() == "nightelf_archer" and unit:GetOwner() == owner and not unit:HasModifier("modifier_mounted_archer") then
+			if unit:GetUnitName() == "nightelf_archer" and unit:GetOwner() == owner and not unit:HasModifier("modifier_mounted_archer") and not unit.hippogryph_assigned then
 				archer = unit
 				break
 			end
@@ -27,7 +22,16 @@ function PickUpArcher( event )
 
 	if archer then
 		print("Pick Up Archer")
+		-- Fake toggle the ability
+		ToggleOn(ability)
+		archer.hippogryph_assigned = caster
+		caster.archer = archer -- To let other archers know that this hippo has already acquired 1 archer
 		Timers:CreateTimer(function() 
+			if not IsValidEntity(caster) then 
+				archer.hippogryph_assigned = nil
+				return 
+			end
+
 			-- Move towards the archer until 100 range
 			if archer and IsValidEntity(archer) and not ability.cancelled then
 				local archer_pos = archer:GetAbsOrigin()
@@ -51,6 +55,13 @@ function PickUpArcher( event )
 					if dismount_ability then
 						dismount_ability:StartCooldown(dismount_ability:GetCooldown(1))
 					end
+
+					-- Remove any shadow meld components
+					archer:RemoveModifierByName("modifier_shadow_meld_active")
+					archer:RemoveModifierByName("modifier_shadow_meld_fade")
+					archer:RemoveModifierByName("modifier_shadow_meld")
+					archer:RemoveModifierByName("modifier_invisible")
+					archer:Stop()
 
 					Timers:CreateTimer(0.3, function() 
 						local attach = new_hippo:ScriptLookupAttachment("attach_hitloc") --Hippogryph mount
@@ -77,21 +88,23 @@ function PickUpArcher( event )
 			end
 		end)
 	else
-		if ability:GetToggleState() == true then
-			ability:ToggleAbility()
-		end
+		ToggleOff(ability)
 		ability:EndCooldown()
-		print("No archer nearby")
+		print("No available archer nearby")
 	end
 end
 
 function CancelPickup( event )
+	local caster = event.caster
 	local ability = event.ability
-	if ability:GetToggleState() == false then
-		ability:ToggleAbility()
-	end
+	ToggleOff(ability)
 	ability:EndCooldown()
 	ability.cancelled = true
+	caster.archer = nil
+	if ability.archer then
+		ability.archer.hippogryph_assigned = nil
+		ability.archer = nil
+	end
 end
 
 function FakeArcherAttack( event )
@@ -110,6 +123,7 @@ function Dismount( event )
 	print("Dismount")
 	local caster = event.caster
 	local archer = caster.archer
+	archer.hippogryph_assigned = nil
 
 	local new_hippo = CreateUnitByName("nightelf_hippogryph", caster:GetAbsOrigin(), false, caster:GetOwner(), caster:GetPlayerOwner(), caster:GetTeamNumber())
 	new_hippo:SetControllableByPlayer(0, true)
@@ -142,6 +156,7 @@ function Dismount( event )
 
 		caster:RemoveSelf()
 	end)
+
 end
 
 function CallHippogryph( event )
@@ -154,15 +169,19 @@ function CallHippogryph( event )
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, 0, FIND_CLOSEST, false)
 	local hippo = nil
 	for _,unit in pairs(units) do
-		if unit:GetUnitName() == "nightelf_hippogryph" and unit:FindAbilityByName("nightelf_pick_up_archer"):IsFullyCastable() then
-			hippo = unit
-			break
+		if unit:GetUnitName() == "nightelf_hippogryph" then
+			local pickup_ability = unit:FindAbilityByName("nightelf_pick_up_archer")
+			if pickup_ability:IsFullyCastable() and pickup_ability:GetToggleState() == false and not unit.archer then
+				hippo = unit
+				break
+			end
 		end
 	end
 
 	if hippo then
 		local ability = hippo:FindAbilityByName("nightelf_pick_up_archer")
 		ability.archer = caster -- Tell the hippo to get THIS archer, not anyone
+		hippo.archer = caster -- Other archers will skip this hippo on their search
 		ExecuteOrderFromTable({ UnitIndex = hippo:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = ability:GetEntityIndex(), Queue = false}) 
 	else
 		print("No hippogryph nearby")
