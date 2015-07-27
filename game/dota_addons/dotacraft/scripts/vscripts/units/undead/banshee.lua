@@ -130,7 +130,19 @@ function BansheeCurseAuto_Cast(keys)
 
 	if target ~= nil then
 		--print("target found")
-		caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
+		
+		-- durations have be inverted due to some weird parsing bug
+		local UNIT_DURATION = keys.ability:GetSpecialValueFor("unit_duration")
+		local HERO_DURATION = keys.ability:GetSpecialValueFor("hero_duration")
+		
+		if target:IsHero() then
+		--	print(HERO_DURATION)
+			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_undead_curse", {duration=HERO_DURATION})
+		else
+		--	print(UNIT_DURATION)
+			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_undead_curse", {duration=UNIT_DURATION})
+		end
+		
 	end
 end
 

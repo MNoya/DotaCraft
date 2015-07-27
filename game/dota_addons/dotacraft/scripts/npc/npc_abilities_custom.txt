@@ -41707,7 +41707,7 @@
 		"AbilityTextureName"		"undead_raise_dead"
 		"MaxLevel"					"2"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastRange"			"900 900"
@@ -41730,8 +41730,52 @@
 			// It raises 2 melee skeletons at level one then 1 melee skeleton, 1 ranged skeleton at level two.
 			// Can be autocasted to automatically raise corpses in the 600 radius.
 		}
-	
 		
+		"precache"
+		{
+			"model" "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
+			"model" "models/heroes/pugna/pugna.vmdl"	
+			"particle" "particles/neutral_fx/skeleton_spawn.vpcf"
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"Target" "CASTER"
+				"ScriptFile" "units/undead/necromancer.lua"
+				"Function" "AnimateDeadPrecast"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"		"CASTER"
+				"ScriptFile" 	"units/undead/necromancer.lua"
+				"Function"		"undead_raise_dead"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_raise_dead_autocast"
+			{
+				"Passive" "1"
+				"IsHidden" "1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"Target"		"CASTER"
+						"ScriptFile" 	"units/undead/necromancer.lua"
+						"Function"		"undead_raise_dead_autocast"
+					}
+				}
+			}	
+		}
 	}
 	
 	//=================================================================================
@@ -41739,10 +41783,10 @@
 	// Description: "Increases the attack rate of a target unit by <Suhf,DataA1,%>%, but drains <Suhf,DataB1> hit points per second. |nLasts <Suhf,Dur1> seconds."
 	// Code Reference: Auhf
 	//=================================================================================
-	"creeps_unholy_frenzy"
+	"undead_unholy_frenzy"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"creeps_unholy_frenzy"
+		"AbilityTextureName"		"undead_unholy_frenzy"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -41765,8 +41809,8 @@
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"attack_speed_increase"			"0.75"
+				"var_type"		"FIELD_INTEGER"
+				"attack_speed_increase"			"75"
 			}
 			"03"
 			{
@@ -41774,8 +41818,47 @@
 				"damage_per_second"				"4"
 			}
 		}
-	
 		
+		"precache"
+		{
+			"particle" 		"particles/status_fx/status_effect_gods_strength"
+		}
+		
+		"OnSpellStart"
+		{		
+			"ApplyModifier"
+			{
+				"ModifierName" 	"modifier_unholy_frenzy"
+				"Target" 		"TARGET"	
+				"Duration" 		"%duration"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_unholy_frenzy"
+			{
+				"StatusEffectName" "particles/status_fx/status_effect_gods_strength"
+				"StatusEffectPriority" "10"	
+				"IsPurgable" "1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_increase"
+				}
+				
+				"ThinkInterval" 	"1"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	 "TARGET"
+						"Damage"	 "%damage_per_second"
+						"Type"		 "DAMAGE_TYPE_PURE"
+					}			
+				}
+			}
+		}
 	}
 	
 	
@@ -41805,26 +41888,81 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"duration"		"60"
+				"creep_duration"		"60"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"attack_speed_reduction"			"0.5"
+				"var_type"		"FIELD_INTEGER"
+				"hero_duration"		"10"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"movement_speed_reduction"			"0.75"
+				"var_type"		"FIELD_INTEGER"
+				"attack_speed_reduction"			"-50"
 			}
 			"04"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"damage_reduction"					"0.5"
+				"var_type"		"FIELD_INTEGER"
+				"movement_speed_reduction"			"-75"
+			}
+			"05"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"damage_reduction"					"-50"
+			}
+		}
+		
+		"precache"
+		{
+			// target particle
+			"particle" "particles/units/heroes/hero_oracle/oracle_fatesedict_repel.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_cripple"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%hero_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_cripple"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%creep_duration"
 			}
 		}
 	
-	
+		"Modifiers"
+		{
+			"modifier_cripple"
+			{
+				"IsPurgable" 		"1"
+				"IsDebuff"			"1"
+				
+				"EffectName"	 	"particles/units/heroes/hero_oracle/oracle_fatesedict_repel.vpcf"
+				"EffectAttachType" 	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE" 				"%damage_reduction"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 				"%movement_speed_reduction"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY" 	"%attack_speed_reduction"		
+				}
+			}	
+		}
 	}
 	
 	//=================================================================================
@@ -41887,6 +42025,7 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"1"
 		"AbilityManaCost"			"40"
+		
 			
 		"AbilitySpecial"
 		{
@@ -41945,7 +42084,8 @@
 			{			
 				"EffectName" 		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead.vpcf"
 				"EffectAttachType" 	"follow_overhead"
-				"IsPurgable"       "1"
+				"IsPurgable"      	 "1"
+				"IsDebuff"			"1"
 				
 				"Properties"
 				{
@@ -42156,6 +42296,7 @@
 				"EffectName" 		"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
 				"EffectAttachType" 	"follow_origin"
 				"OverrideAnimation" "ACT_DOTA_DISABLED"
+				"IsDebuff"			 "1"
 					
 				"States"
 				{
