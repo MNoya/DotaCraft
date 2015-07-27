@@ -2,7 +2,7 @@ function unsummon (keys)
 local caster = keys.caster
 local target = keys.target
 local playerID = caster:GetPlayerOwnerID()
-local player = PlayerResource:GetPlayer(0)
+local player = PlayerResource:GetPlayer(playerID)
 local hero = player:GetAssignedHero()
 
 	-- target is already unsummoning
@@ -22,7 +22,7 @@ local hero = player:GetAssignedHero()
 	local lumbercost = (0.5 * GetLumberCost(target))
 	
 	-- calculate refund per tick
-	local StepsNeededToUnsummon = target:GetHealth() / 50
+	local StepsNeededToUnsummon = target:GetMaxHealth() / 50
 	local LumberGain = (lumbercost / StepsNeededToUnsummon)
 	local GoldGain = (goldcost / StepsNeededToUnsummon)
 	
