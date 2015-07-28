@@ -1562,32 +1562,58 @@
 	"AbilityTextureName"		"nightelf_taunt"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"15"
 	"AbilityManaCost"			"0"
 		
-	"AOERadius"					"450"
+	"AbilityCastRange"			"%radius"
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"450"
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"450"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"max_unit"			"10"
+			"var_type"			"FIELD_INTEGER"
+			"max_units"			"10"
 		}
-		// Can only taunt the closest 10 units, as said in the description.
 	}
 
-	// Done
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/custom/axe_beserkers_call_owner.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_portrait"
+				"CASTER"	"attach_portrait"
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/mountain_giant.lua"
+			"Function"		"Taunt"
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"MaxTargets" "%max_units"
+			}
+		}
+	}
 }
 
 //=================================================================================
@@ -1624,9 +1650,6 @@
 			"var_type"		"FIELD_INTEGER"
 			"strikes"			"15"
 		}
-		// Two extra values called "Attach Delay" and "Remove Delay" are set to 0.8 ans 2.5 respectively, I think they are for the model change.
-		// Funny story, setting Attach Delay to higher than 0.8 freezes the Giant and the tree after the animation, up until the duration ends.
-		// "Remove Delay" apparently doesn't do anything.
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
@@ -1703,7 +1726,7 @@
 
 //=================================================================================
 // Ability: Hardened Skin
-// Description: "Reduces all attacks on the Mountain Giant by <Assk,DataC1> damage. Attacks cannot be reduced below <Assk,DataB1> damage."
+// Description: "Reduces all attacks on the Mountain Giant by <Assk,DataC1> damage."
 // Code Reference: Assk
 //=================================================================================
 "nightelf_hardened_skin"
@@ -1718,17 +1741,24 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"ignored_damage"			"12"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"minimum_damage"			"3"
+			"var_type"			"FIELD_INTEGER"
+			"damage_block"		"12"
 		}
 	}
 
-	// Done
+	"Modifiers"
+	{
+		"modifier_hardened_skin"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK" "%damage_block"
+			}
+		}
+	}
 }
 
 //=================================================================================
@@ -1744,14 +1774,12 @@
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
-	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
-	"AbilityManaCost"			"0"
 		
-	// I don't even know the specific stats and properties lmao
-	// This is quoted from classic.battle.net/war3: "Gives Mountain Giants increased resistance to spell damage. This gives the unit hero magic resistance, similar to the resistance that level 6+ creeps have. Namely, you can't be Polymorphed, Possessed, etc, and all offensive spells have a shorter duration on the target (such as stuns, Ensnare, etc). It DOES NOT reduce damage dealt to the target, however. That’s an effect of hero armor, not hero magic resistance."
+	//"Gives Mountain Giants increased resistance to spell damage. This gives the unit hero magic resistance, similar to the resistance that level 6+ creeps have. 
+	//Namely, you can't be Polymorphed, Possessed, etc, and all offensive spells have a shorter duration on the target (such as stuns, Ensnare, etc). 
+	//It DOES NOT reduce damage dealt to the target, however. That’s an effect of hero armor, not hero magic resistance."
 
-	// Done
+	//Replace the giants by a "ConsideredHero" version with 30% magic resistance
 }
 
 //=================================================================================

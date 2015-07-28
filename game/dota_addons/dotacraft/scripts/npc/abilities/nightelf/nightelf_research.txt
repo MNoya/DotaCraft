@@ -908,6 +908,13 @@
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
 		}
+
+		// Apply upgrade on all current Mountain Giants (replace the units)
+		"RunScript"
+		{
+			"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+			"Function"      "UpgradeResistantSkin"
+		}
 	}
 }
 "nightelf_research_resistant_skin_disabled"

@@ -771,40 +771,11 @@
 			"Function"      "NextQueue"
 		}
 
-		"SpawnUnit"
+		"RunScript"
 		{
+			"ScriptFile"	"buildings/rally_point.lua"
+			"Function"		"SpawnUnit"
 			"UnitName"		"nightelf_mountain_giant"
-			"Target"
-			{
-				"Center"		    "CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "GetInitialRallyPoint"
-					"Target"		"CASTER"
-					"Count"			"1"
-				}
-			}
-			"UnitCount"		"1"
-			"UnitLimit"		"0"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "MoveToRallyPoint"
-				}
-			}
 		}
 	}
 
