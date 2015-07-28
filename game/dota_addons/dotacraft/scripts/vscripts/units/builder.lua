@@ -254,7 +254,7 @@ function Gather( event )
 
 	-- Repair Building
 	elseif target_class == "npc_dota_creature" then
-		if IsCustomBuilding(target) and target:GetHealthDeficit() > 0 and not target.unsummoning then
+		if IsCustomBuilding(target) and target:GetHealthDeficit() > 0 and not target.unsummoning and not target.frozen then
 			local building = target
 
 			-- Only Humans can assist building construction

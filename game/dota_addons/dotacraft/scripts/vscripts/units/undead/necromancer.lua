@@ -1,7 +1,3 @@
---[[
-		still need to complete longevity and include it into the duration 
---]]
-
 function undead_raise_dead ( keys )
 	local target = keys.target
 	local caster = keys.caster
@@ -19,15 +15,11 @@ function undead_raise_dead ( keys )
 			local abilitylevel = ability:GetLevel()
 			local spawnlocation = corpse:GetAbsOrigin()
 			
-			local ManaCost = ability:GetManaCost(-1)
-			caster:SetMana(caster:GetMana() - ManaCost)
-			ability:StartCooldown(ability:GetCooldown(-1))
-			
-			if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
-				duration = SKELETON_DURATION + 15
-			else
+			--if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
+			--	duration = SKELETON_DURATION + 15
+			--else
 				duration = SKELETON_DURATION
-			end
+			--end
 			
 			-- create units
 			CreateUnit(caster, spawnlocation, abilitylevel, duration)
@@ -81,6 +73,7 @@ end
 function undead_raise_dead_autocast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local playerID = caster:GetPlayerOwnerID()
 	
 	Timers:CreateTimer(function()	
 		-- stop timer if the unit doesn't exist
@@ -91,7 +84,7 @@ function undead_raise_dead_autocast(keys)
 
 		-- if the ability is not toggled, don't proceed any further
 		if ability:GetAutoCastState() and ability:GetCooldownTimeRemaining() == 0 then
-			undead_raise_dead(keys)
+			caster:CastAbilityNoTarget(ability, 0) 
 		end
 		
 		return 1

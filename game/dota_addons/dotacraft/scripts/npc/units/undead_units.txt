@@ -687,9 +687,8 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_devour_magic"	 //Reference: Advm
 	"Ability2"					"undead_orb_of_annihilation"	 //Reference: Afak
-	"Ability3"					"undead_destroyer_form"	 //Reference: Aave
-	"Ability4"					"undead_absorb_mana"	 //Reference: Aabs
-	"Ability5"					""	 //Reference: ACmi - Magic Immunity (Creep)
+	"Ability3"					"undead_absorb_mana"	 //Reference: Aabs
+	"Ability4"					"undead_spell_immunity"	 //Reference: ACmi - Magic Immunity (Creep)
 	//undead_spirit_touch
 	
 	// Armor
@@ -707,7 +706,7 @@
 	"AttackAnimationPoint"		"0.633"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"450"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"900"
 	
 	// Bounty

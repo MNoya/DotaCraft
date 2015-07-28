@@ -1,4 +1,3 @@
-
 //=================================================================================
 // Ability: Cannibalize
 // Description: "Consumes a nearby corpse to heal <Acan,DataA1> hit points per second."
@@ -42,7 +41,32 @@
 	}
 
 	
-}
+}			
+
+	//=================================================================================
+	// Ability: Destroyer Spell Immunity
+	// Description: "This unit is unaffected by magical abilities"
+	//=================================================================================
+	"undead_spell_immunity"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"		"undead_spell_immunity"
+		"MaxLevel"					"1"
+		
+		"Modifiers"
+		{
+			"modifier_spell_immunity"
+			{
+				"Passive" "1"
+				
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}	
+		}
+	}
 
 //=================================================================================
 // Ability: Ghoul Frenzy
@@ -100,7 +124,7 @@
 	"AbilityTextureName"		"undead_web"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -131,7 +155,75 @@
 		// The height to which the flying unit is lowered.
 	}
 
+	"precache"
+	{
+		//target particle
+		"particle" "particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_webs.vpcf"
+		
+		//caster projectile particle
+		"particle"	"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
+	}
 	
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/undead/crypt_fiend.lua"
+			"Function"		"WebCheck"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"Target" "TARGET"
+			"ScriptFile" "units/undead/crypt_fiend.lua"
+			"Function"	"Web"
+		}
+		
+		"FireEffect"
+        {
+            "EffectName" 			"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
+            "Target" 				"CASTER"
+            "EffectAttachType" 		"attach_hitloc"
+        }
+	}
+
+	"Modifiers"
+	{
+		"modifier_web"
+		{
+			"EffectName"			"particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_webs.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"	
+			}
+		}
+		
+		"modifier_web_autocast"
+		{
+			"IsHidden" "1"
+			"Passive" "1"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile" "units/undead/crypt_fiend.lua"
+					"Function"	"ToggleOnAutocast"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile" "units/undead/crypt_fiend.lua"
+					"Function"	"Web_AutoCast"
+				}				
+			}	
+		}
+	}
 }
 
 //=================================================================================
@@ -145,13 +237,14 @@
 	"AbilityTextureName"		"undead_burrow"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
-		
+	"AbilityChannelTime"		"%duration"
+	
 	"AbilitySpecial"
 	{
 		"01"
@@ -167,14 +260,41 @@
 			"regeneration"	"10"
 		}
 		// In WC3, a new unit with 10 health regen is swapped in, I don't know what you're gonna do so I'll just put the number here just in case.
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dataA"			"ucry"
-		}
-		// ugh no go away
 	}
-
+	
+	"precache"
+	{
+		"model" "models/heroes/nerubian_assassin/mound.vmd"
+		"model_folder" "models/heroes/weaver"
+	}
+	
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile" "units/undead/crypt_fiend.lua"
+			"Function"	"Burrow"	
+		}
+	}
+	
+	
+	"Modifiers"
+	{
+		"modifier_crypt_fiend_burrow"
+		{
+		
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_INVISIBILITY_LEVEL" "1"	
+			}
+			
+			"States"
+			{
+			    "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}	
+	}
 	
 }
 
@@ -222,44 +342,6 @@
 		}
 		// The Gargoyle's height will raise or lower over this duration.
 		// The process is uninterruptable. Just like the standard Dota 2 Stone Form without the stun.
-	}
-
-	
-}
-
-//=================================================================================
-// Ability: Disease Cloud
-// Description: "Drops a Disease Cloud with each attack. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
-// Code Reference: Apts
-//=================================================================================
-"undead_disease_cloud"
-{
-	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_disease_cloud"
-	"MaxLevel"					"1"
-		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"duration"		"120"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"cloud_duration"			"10"
-		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"damage_per_second"			"1"
-		}
 	}
 
 	
@@ -461,7 +543,7 @@
 	"precache"
 	{
 		"model" "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
-		"model" "models/heroes/pugna/pugna.vmdl"	
+		"model_folder" "models/heroes/pugna"	
 		"particle" "particles/neutral_fx/skeleton_spawn.vpcf"
 	}
 	
@@ -549,6 +631,7 @@
 	"precache"
 	{
 		"particle" 		"particles/status_fx/status_effect_gods_strength"
+		"soundfile" 	"sounds/items/mask_of_madness.vsnd"
 	}
 	
 	"OnSpellStart"
@@ -559,6 +642,11 @@
 			"Target" 		"TARGET"	
 			"Duration" 		"%duration"
 		}
+		"FireSound"
+		{
+			"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
+			"Target"			"TARGET"
+		}	
 	}
 	
 	"Modifiers"
@@ -643,10 +731,17 @@
 	{
 		// target particle
 		"particle" "particles/units/heroes/hero_oracle/oracle_fatesedict_repel.vpcf"
+		
+		"soundfile" "sounds/items/rod_of_atos.vsnd"
 	}
 	
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"		"DOTA_Item.RodOfAtos.Activate"
+			"Target"			"TARGET"
+		}	
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_cripple"
@@ -789,7 +884,7 @@
 		"RunScript"
 		{
 			"Target"				"TARGET"
-			"caster"				"CASTER"
+			"Caster"				"CASTER"
 			"ScriptFile"			"units/undead/banshee.lua"
 			"Function"				"undead_curse"
 		}			
@@ -1133,11 +1228,32 @@
 		"02"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"movement_speed_reduction"		"0.5"
+			"movement_speed_reduction"		"-50"
 		}
 		// I dug through Hive Workshop forums and gameplay constants for this at 2:43AM, holy crap what am I doing with my life.
 	}
 
+	"precache"
+	{
+		"particle"		"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_frost_attack"
+		{
+			"IsPurgable" 	"1"
+			"IsDebuff"		"1"
+			
+			"EffectName"			"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+			"EffectAttachType"		"follow_origin"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_speed_reduction" 
+			}
+		}
+	}
 	
 }
 
@@ -1226,7 +1342,7 @@
 			"EffectAttachType" 	"follow_origin"		
 		}
 
-		"modifier_blight_spirit_touch_autocast"
+		"modifier_blight_heal_autocast"
 		{
 			"Passive"		"1"
 			"IsHidden"		"1"
@@ -1235,15 +1351,15 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/undead/banshee.lua"
-					"Function"		"ToggleOnAutocast"
+					"ScriptFile"	"units/undead/obsidian_statue.lua"
+					"Function"		"undead_essence_of_blight_autocast"
 				}
 				
 				"RunScript"
 				{
-					"ScriptFile"			"units/undead/obsidian_statue.lua"
-					"Function"				"undead_essence_of_blight"
-				}
+					"ScriptFile"	"units/undead/obsidian_statue.lua"
+					"Function"		"ToggleOnAutocast"
+				}				
 			}			
 		}		
 	}
@@ -1346,10 +1462,10 @@
 "undead_destroyer_form"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_destroyer_form"
+	"AbilityTextureName"		"undead_research_destroyer_form"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
@@ -1377,7 +1493,44 @@
 		// The change is PERMANENT, there is no changing back.
 		// The Destroyer also has a health regeneration of 8.
 	}
+	
+	"precache"
+	{
+		"model_folder" "models/heroes/obsidian_destroyer"
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName" 	"modifier_destroyer_morph"
 
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_destroyer_morph"
+		{
+			"IsHidden"		"1"
+			"Duration"		"%duration"
+						
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"		
+			}
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile" 	"units/undead/obsidian_statue.lua"
+					"Function" 		"morph_into_destroyer"		
+				}
+			}						
+		}	
+	}
 	
 }
 
@@ -1416,7 +1569,8 @@
 	"precache"
 	{
 		//caster particle
-		"particle" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"	
+		"particle" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"
+		"soundfile" "sounds/weapons/hero/terrorblade/sunder_target.vsnd"
 	}
 	
 	"OnSpellStart"
@@ -1435,6 +1589,11 @@
 		{
 			"ModifierName" "absorb_mana_target"
 			"Target" "TARGET"
+		}
+		"FireSound"
+		{
+			"EffectName"		"Hero_Terrorblade.Sunder.Target"
+			"Target"			"TARGET"
 		}
 	}
 	
@@ -1517,6 +1676,8 @@
 		
 		// point particle
 		"particle" "particles/units/heroes/hero_dark_seer/dark_seer_vacuum_shockwave.vpcf"
+		
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_anti_mage.vsndevts"
 	}
 	
 	"OnSpellStart"
@@ -1526,6 +1687,11 @@
 			"Target" 		"POINT"
 			"ScriptFile" 	"units/undead/destroyer.lua"
 			"Function" 		"undead_devour_magic"
+		}
+		"FireSound"
+		{
+			"EffectName"		"Hero_Antimage.ManaVoidCast"
+			"Target"			"TARGET"
 		}
 	}
 	
@@ -1558,7 +1724,7 @@
 	"AbilityTextureName"		"undead_orb_of_annihilation"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
@@ -1599,8 +1765,68 @@
 		// OR MAYBE the damage scales down to small for Small armor type or medium for Medium armor type.
 		"05"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"half_damage_radius"			"75"
+			"var_type"				"FIELD_INTEGER"
+			"half_damage_radius"	"75"
+		}
+	}
+
+	"precache"
+	{
+		// normal projectile
+		"particle" "particles/units/heroes/hero_bane/bane_projectile.vpcf"
+		
+		// orb projectile
+		"particle" "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+	}
+
+	"Modifiers"
+	{
+		"modifier_magic_orb"
+		{
+			"Passive"		"1"
+			"IsHidden"	 	"1"
+			
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+				"CastAttack"		"1"
+			}
+
+			"OnOrbFire"
+			{
+				"SpendMana"
+				{
+					"Mana"    "%AbilityManaCost"
+				}
+				"FireSound"
+				{
+					"EffectName"		"Hero_ObsidianDestroyer.ArcaneOrb"
+					"Target"			"CASTER"
+				}			
+			}
+			
+			"OnOrbImpact"
+			{
+				"Damage"
+				{
+					"Type"          "DAMAGE_TYPE_MAGICAL"
+					"Damage"        "%damage_bonus"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+				"FireSound"
+				{
+					"EffectName"		"Hero_ObsidianDestroyer.ArcaneOrb.Impact"
+					"Target"			"TARGET"
+				}	
+			}
 		}
 	}
 

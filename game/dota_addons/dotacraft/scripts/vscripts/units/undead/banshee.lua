@@ -70,7 +70,7 @@ function undead_curse ( keys )
 	local UNIT_DURATION = keys.ability:GetSpecialValueFor("unit_duration")
 	local HERO_DURATION = keys.ability:GetSpecialValueFor("hero_duration")
 	
-	if target:IsHero() then
+	if target:IsHero() or target:IsConsideredHero() then
 	--	print(HERO_DURATION)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_undead_curse", {duration=HERO_DURATION})
 	else
@@ -81,16 +81,18 @@ end
 
 function BansheeCurseAutoCast (keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	
-	Timers:CreateTimer(function()
-	
+	Timers:CreateTimer(function()	
 		-- stop timer if the unit doesn't exist
 		if not IsValidEntity(caster) then 
 			--print("deleting banshee(timer)") 
 			return 
 		end
 			
-		BansheeCurseAuto_Cast(keys)
+		if ability:GetAutoCastState() then
+			BansheeCurseAuto_Cast(keys)
+		end
 		
 		return 1
 	end)
@@ -99,16 +101,13 @@ end
 function BansheeCurseAuto_Cast(keys)
 	local ability = keys.ability
 	local caster = keys.caster
-	local AUTOCAST_RANGE = keys.ability:GetSpecialValueFor("cast_range")
+	local AUTOCAST_RANGE = ability:GetSpecialValueFor("cast_range")
 	local MODIFIER_NAME = "modifier_undead_curse"
 	
+	local COOLDOWN = ability:GetCooldown(1)
+	local MANA_COST = ability:GetManaCost(-1)
+	
 	local target = nil
-		
-	-- if the ability is not toggled, don't proceed any further
-	if not ability:GetAutoCastState() then
-		--print("returning to timer, toggle is not enabled")
-		return
-	end
 	
 	-- find all units within 300 range that are enemey
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), 
@@ -127,22 +126,9 @@ function BansheeCurseAuto_Cast(keys)
 			break
 		end
 	end
-
+	
 	if target ~= nil then
-		--print("target found")
-		
-		-- durations have be inverted due to some weird parsing bug
-		local UNIT_DURATION = keys.ability:GetSpecialValueFor("unit_duration")
-		local HERO_DURATION = keys.ability:GetSpecialValueFor("hero_duration")
-		
-		if target:IsHero() then
-		--	print(HERO_DURATION)
-			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_undead_curse", {duration=HERO_DURATION})
-		else
-		--	print(UNIT_DURATION)
-			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_undead_curse", {duration=UNIT_DURATION})
-		end
-		
+		caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())	
 	end
 end
 

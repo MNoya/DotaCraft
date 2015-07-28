@@ -1,67 +1,79 @@
-function undead_essence_of_blight( keys )
-	local target = keys.target
+function undead_essence_of_blight_autocast( keys )
 	local caster = keys.caster
-	local ability = keys.ability
-	local LastState = 0
+	local mana_ability = caster:FindAbilityByName("undead_spirit_touch")
+	local heal_ability = caster:FindAbilityByName("undead_essence_of_blight")
+	AbilityState = 0 -- set initial state to essence_of_blight(since it's the starting autocast)
+	
 	
 	Timers:CreateTimer(function()
-	
 	-- kill timer if unit dies
-		if not IsValidEntity(caster) then 
-			return
-		end
-		
+	if not IsValidEntity(caster) and not caster:IsAlive() then 
+		print("deleting obsidian statue timer, unit is dead")
+		return
+	end
+				
 		-- check that ability is not on cooldown
-		if ability:GetCooldownTimeRemaining() == 0 then
+		if heal_ability:GetCooldownTimeRemaining() == 0 then
 		
-			-- toggle ability off if the other is true
-			if caster:FindAbilityByName("undead_essence_of_blight"):GetAutoCastState() and caster:FindAbilityByName("undead_spirit_touch"):GetAutoCastState() and LastState == 0 then			
-				LastState = 1
-				caster:FindAbilityByName("undead_essence_of_blight"):ToggleAutoCast()
-			elseif caster:FindAbilityByName("undead_essence_of_blight"):GetAutoCastState() and caster:FindAbilityByName("undead_spirit_touch"):GetAutoCastState() and LastState == 1 then 
-				LastState = 0
-				caster:FindAbilityByName("undead_spirit_touch"):ToggleAutoCast()
+			-- toggle ability off if the other is true and vice versa
+			if heal_ability:GetAutoCastState() and mana_ability:GetAutoCastState() and AbilityState == 0 then -- toggle on mana, toggle off health
+				-- toggle off health
+				heal_ability:ToggleAutoCast()
+				-- set ability to mana
+				keys.ability = mana_ability
+				-- set state for next toggle
+				AbilityState = 1 
+			elseif heal_ability:GetAutoCastState() and mana_ability:GetAutoCastState() and AbilityState == 1 then  -- toggle on health, toggle off mana
+				-- toggle off mana
+				mana_ability:ToggleAutoCast()
+				-- set ability to heal 
+				keys.ability = heal_ability
+				-- set state for next toggle
+				AbilityState = 0 
 			end
 			
-			undead_essence_of_blight_autocast(keys)
+			-- cast only if autocast is on for any of the two abilities
+			if heal_ability:GetAutoCastState() or mana_ability:GetAutoCastState() then
+				caster:SetMana(caster:GetMana() - 2)
+				undead_essence_of_blight(keys)
+			end
+			
 		end
 		
-		return 0.1
+		return 0.8
 	end)	
 end
 
-
-function undead_essence_of_blight_autocast(keys)
+function undead_essence_of_blight(keys)
 	local ability = keys.ability
 	local caster = keys.caster
 	local AUTOCAST_RANGE = ability:GetSpecialValueFor("radius")
 	local MAX_TARGETS = ability:GetSpecialValueFor("max_unit")
+	local caster_mana_refund = caster:GetMana() + 2
 	
-	local MODIFIER_NAME = nil	
-	local index = nil
-	local RESTORE_AMOUNT = nil
+	local MODIFIER_NAME
+	local index
+	local RESTORE_AMOUNT
+	local partnerability 
 	
 	-- set values depending on ability
 	if ability:GetAbilityName() == "undead_essence_of_blight" then
 		index = 0 -- set state
 		RESTORE_AMOUNT = ability:GetSpecialValueFor("health_restore")
 		MODIFIER_NAME = "modifier_blight_heal_target"
+		partnerability = caster:FindAbilityByName("undead_spirit_touch")
 	else
 		index = 1 -- set state
 		RESTORE_AMOUNT = ability:GetSpecialValueFor("mana_restore")
 		MODIFIER_NAME = "modifier_spirit_touch_target"
+		partnerability = caster:FindAbilityByName("undead_essence_of_blight")
 	end
 	
 	local DURATION = ability:GetSpecialValueFor("duration")	
 	local MANA_PER_UNIT = ability:GetSpecialValueFor("mana_per_unit_healed")
 	
 	local target = {}
-	local count = 1
-	
-	-- if the ability is not toggled, don't proceed any further
-	if not ability:GetAutoCastState() then	
-		return		
-	end
+	local count = 1	
 	
 	-- find all units within range that are ALLY
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), 
@@ -74,6 +86,10 @@ function undead_essence_of_blight_autocast(keys)
 								FIND_CLOSEST, 
 								false)
 	
+	-- start shared cooldown
+	ability:StartCooldown(DURATION)
+	partnerability:StartCooldown(DURATION)
+		
 	-- store all valid targets(up to 5) into the target table
 	for k,unit in pairs(units) do
 		if not unit:HasModifier(MODIFIER_NAME) and not IsCustomBuilding(unit) and unit ~= caster then	
@@ -121,11 +137,10 @@ function undead_essence_of_blight_autocast(keys)
 		-- return if the caster doesn't have enough mana
 		if caster:GetMana() < manacost then
 			return
-		end
-			
-		-- start cooldown & take away mana
-		Timers:CreateTimer(function() caster:SetMana(caster:GetMana() - manacost) end)
-		ability:StartCooldown(DURATION)
+		end	
+		
+		-- take away mana
+		Timers:CreateTimer(function() caster:SetMana(caster:GetMana() - manacost) end)		
 		
 		-- apply modifier for visual effect + give health to unit
 		for k,unit in pairs(target) do		
@@ -137,6 +152,11 @@ function undead_essence_of_blight_autocast(keys)
 				unit:SetMana(unit:GetMana() + RESTORE_AMOUNT)
 			end		
 		end
+		
+	else -- refund mana & remove cooldown
+		Timers:CreateTimer(function() caster:SetMana(caster_mana_refund) end)
+		ability:EndCooldown()
+		partnerability:EndCooldown()		
 	end
 	
 end
@@ -147,4 +167,20 @@ function ToggleOnAutocast( event )
 	local ability = event.ability
 
 	ability:ToggleAutoCast()
+end
+
+function morph_into_destroyer(keys)
+	local caster = keys.caster
+	local playerID = caster:GetPlayerOwnerID()
+	local player = PlayerResource:GetPlayer(playerID)
+
+	Timers:CreateTimer(1.1, function() -- wait	
+		local CreatedUnit = CreateUnitByName("undead_destroyer", caster:GetAbsOrigin(), true, player:GetAssignedHero(),  player:GetAssignedHero(), caster:GetTeamNumber())
+		CreatedUnit:SetControllableByPlayer(playerID, true)
+		
+		caster.no_corpse = true
+		table.insert(player.units, CreatedUnit)
+		
+		caster:ForceKill(true) 
+	end)
 end

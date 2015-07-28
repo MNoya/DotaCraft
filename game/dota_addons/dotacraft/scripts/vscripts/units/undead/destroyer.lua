@@ -1,20 +1,20 @@
 function undead_absorb_mana(keys)
-local caster = keys.caster
-local target = keys.target
-local PlayerID = caster:GetPlayerOwnerID()
+	local caster = keys.caster
+	local target = keys.target
+	local PlayerID = caster:GetPlayerOwnerID()
 
 	if target:GetMana() == 0 then	
 		SendErrorMessage(PlayerID, "#error_target_has_no_mana")
 	else
 		-- store target mana and set target to 0
-		local target_mana = target:GetMana()
-		target:SetMana(0)
+		local target_mana = target:GetMana()		
+		local mana_to_steal = caster:GetMaxMana() - caster:GetMana() 
 		
 		-- add mana to caster
+		target:SetMana(target_mana - mana_to_steal)
 		caster:SetMana(caster:GetMana() + target_mana)
 	end
 end
-
 
 function undead_devour_magic(keys)
 	local ability = keys.ability
@@ -101,57 +101,4 @@ function undead_devour_magic(keys)
 		-- caster particle
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_devour_magic_caster", {duration=0.5})
 	end
-	
-end
-
-
-function OrbSplash(keys)
-local caster = keys.caster
-local RANGE = keys.ability:GetSpecialValueFor("radius")
-
-	Timers:CreateTimer(function()
-			print("lol")
-		-- stop timer if the unit doesn't exist
-		if not IsValidEntity(caster) then 
-			--print("deleting banshee(timer)") 
-			return 
-		end	
-		
-		-- check state
-		if ability:GetAutoCastState() then
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_orb_of_annihilation", nil)
-		else
-			caster:RemoveModifierByName("modifier_orb_of_annihilation")
-			return
-		end
-			
-		local DAMAGE = caster:GetAttackDamage() + keys.ability:GetSpecialValueFor("damage_bonus")
-		
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), 
-							keys.target, 
-							nil, 
-							RANGE, 
-							DOTA_UNIT_TARGET_TEAM_ENEMY, 
-							DOTA_UNIT_TARGET_ALL, 
-							DOTA_UNIT_TARGET_FLAG_NONE, 
-							FIND_CLOSEST, 
-							false)
-							
-			-- add unit to table if meets requirements
-			for k,unit in pairs(units) do
-				unit:SetHealth(unit:GetHealth() - DAMAGE)
-			end	
-								
-		return 0.2
-	end)
-
-
-end
-
--- Automatically toggled on
-function ToggleOnAutocast( event )
-	local caster = event.caster
-	local ability = event.ability
-
-	ability:ToggleAutoCast()
 end
