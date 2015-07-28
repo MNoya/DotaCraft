@@ -532,25 +532,26 @@
 	"Level"						"4"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"FormationRank"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"Ability1"					"nightelf_bear_form"	 //Reference: Abrf
-	"Ability2"					"nightelf_rejuvenation"	 //Reference: Arej
-	"Ability3"					""	 //Reference: Aroa
-	"Ability4"					""	 //Reference: Aien
-	"Ability5"					""	 //Reference: Ault
+	"Ability1"					"nightelf_roar"	
+	"Ability2"					"nightelf_rejuvenation"	
+	"Ability3"					"nightelf_bear_form"
+	"Ability4"					"nightelf_bear_form_off"	
+	"Ability5"					""	  //Reference: Aien
 	
 	// Armor
 	//----------------------------------------------------------------
-	"ArmorPhysical"				"1"
+	"ArmorPhysical"				"1" //+2 in bear form
 	"MagicalResistance"			"0"
 	
 	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-	"AttackDamageMin"			"19.0"
-	"AttackDamageMax"			"22.0"
+	"AttackDamageMin"			"19.0" //+8 in bear
+	"AttackDamageMax"			"22.0" //+10 in bear
 	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	"AttackRate"				"1.5"
 	"AttackAnimationPoint"		"0.33"
@@ -575,8 +576,8 @@
 	
 	// Status
 	//----------------------------------------------------------------
-	"StatusHealth"				"430"
-	"StatusHealthRegen"			"0.5"
+	"StatusHealth"				"430" //+380 in bear
+	"StatusHealthRegen"			"0.5" //+0.5 in bear
 	"StatusMana"				"200"
 	"StatusManaRegen"			"0.666666666666667"
 	"StatusStartingMana"		"100"
@@ -589,7 +590,7 @@
 	// Team
 	//----------------------------------------------------------------
 	"TeamName"					"DOTA_TEAM_NEUTRALS"
-	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC" 
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
 	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	
@@ -606,97 +607,6 @@
 			"Wearable4"		{	"ItemDef"		"110"		}
 			"Wearable5"		{	"ItemDef"		"219"		}
 		}
-	}
-}
-
-//=================================================================================
-// Creature: Druid of the Claw
-// Description: "Melee spellcaster. Can initially cast Roar, which increases attack damage. Can also learn Rejuvenation, Bear Form and Mark of the Claw. |n|n|cffffcc00Attacks land units.|r"
-//=================================================================================
-"nightelf_druid_of_the_claw_bear"
-{
-	// General
-	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/lone_druid/true_form.vmdl"
-	"ModelScale"				"0.8"
-	"Level"						"4"
-	"HealthBarOffset"			"140"
-	
-	// Abilities
-	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
-	"Ability1"					"nightelf_normal_form"	 //Reference: Abrf
-	"Ability2"					"nightelf_roar"	 //Reference: Ara2
-	"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
-	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
-	
-	// Armor
-	//----------------------------------------------------------------
-	"ArmorPhysical"				"3"
-	"MagicalResistance"			"0"
-	
-	// Attack
-	//----------------------------------------------------------------
-	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-	"AttackDamageMin"			"27.0"
-	"AttackDamageMax"			"32.0"
-	"AttackRate"				"1.5"
-	"AttackAnimationPoint"		"0.5"
-	"AttackAcquisitionRange"	"500"
-	"AttackRange"				"100"
-	
-	// Bounty
-	//----------------------------------------------------------------
-	"BountyGoldMin"				"32.0"
-	"BountyGoldMax"				"46.0"
-	
-	// Bounds
-	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-	"RingRadius"				"70"
-	"CollisionSize"				"32"
-	"FormationRank"				"0"
-	
-	// Building Cost Stats
-	//----------------------------------------------------------------
-	"GoldCost"					"255"
-	"LumberCost"				"80"
-	"FoodCost"					"4"
-	"BuildTime"					"30"
-	
-	// Movement
-	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"270"
-	"MovementTurnRate"			"0.6"
-	
-	// Status
-	//----------------------------------------------------------------
-	"StatusHealth"				"810"
-	"StatusHealthRegen"			"1"
-	"StatusMana"				"200"
-	"StatusManaRegen"			"0.333333333333333"
-	"StatusStartingMana"		"100"
-	
-	// Vision
-	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1400"
-	"VisionNighttimeRange"		"800"
-	
-	// Team
-	//----------------------------------------------------------------
-	"TeamName"					"DOTA_TEAM_NEUTRALS"
-	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
-	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	
-	// Creature Data
-	//----------------------------------------------------------------
-	"Creature"
-	{
-		"DisableClumpingBehavior"	"1"
 	}
 }
 

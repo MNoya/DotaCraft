@@ -30,3 +30,18 @@ function UpgradeMoonGlaives( event )
 		end
 	end
 end
+
+-- Upgrade all transformed Druids of the Claw
+function UpgradeMarkOfTheClaw( event )
+	local caster = event.caster
+	local player = caster:GetPlayerOwner()
+	local units = player.units
+
+	for _,unit in pairs(units) do
+		if IsValidEntity(unit) and unit:HasModifier("modifier_bear_form") then
+			local ability = unit:FindAbilityByName("nightelf_roar")
+			ability:SetLevel(1)
+			ability:SetHidden(false)
+		end
+	end
+end

@@ -29228,6 +29228,7 @@
 			"modifier_shadow_meld_active"
 			{
 				"IsHidden"			"1"
+				"Priority"          "MODIFIER_PRIORITY_ULTRA"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"	"1"
@@ -29925,8 +29926,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_OVERRIDE_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
@@ -29937,22 +29937,88 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"45"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"45"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"500"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"damage_increase"			"0.25"
+				"var_type"			"FIELD_FLOAT"
+				"damage_bonus_pct"	"25.0"
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle" "particles/units/heroes/hero_lone_druid/lone_druid_battle_cry_overhead.vpcf"
+			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_battle_cry_buff.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{		
+			"FireSound"
+			{
+				"EffectName"	"Hero_LoneDruid.BattleCry"
+				"Target"		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/druid_of_the_claw.lua"
+				"Function"		"RoarAnimation"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"TARGET"
+						"ModifierName"		"modifier_roar"
+						"Duration"			"%duration"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"    				
+		{  							
+			"modifier_roar"  
+			{
+				"IsPurgable"				"1"
+	
+				"EffectName" 		"particles/units/heroes/hero_lone_druid/lone_druid_battle_cry_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName" 		"particles/units/heroes/hero_lone_druid/lone_druid_battle_cry_overhead.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"	
+					}				
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_bonus_pct"
+				}	
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -29969,8 +30035,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 			
 		"AbilityCastRange"			"400"
 		"AbilityCastPoint"			"0"
@@ -29991,7 +30056,55 @@
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_treant/treant_livingarmor_regen.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Treant.LivingArmor.Cast"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_rejuvenation"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_rejuvenation"
+			{
+				"IsPurgable"		"1"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_treant/treant_livingarmor_regen.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+			            {
+			                "TARGET"        "attach_origin"
+			                "TARGET"        "attach_origin"
+						}
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%total_heal / %duration"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -30006,24 +30119,132 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"25"
+	
+		"AbilityMultiOrder"			"1"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"1.45"
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.45"
 			}
-			// Cast time.
-			// The process is uninterruptable.
+			"02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_armor"           "2"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_hp"              "380"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_damage"          "10"
+	        }
+	        "05"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "bonus_hp_regen"        "0.5"
+	        }
 		}
 	
-		// Done
+		"precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+	        "particle"  "particles/units/heroes/hero_lone_druid/true_form_lone_druid.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+	        "model"     "models/heroes/lone_druid/true_form.vmdl"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_bear_form_transform"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	        	"ScriptFile"	"units/nightelf/druid_of_the_claw.lua"
+	        	"Function"		"BearFormOn"
+	        }
+	
+	        "FireEffect"
+	        {
+	            "Target"            "CASTER"
+	            "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	            "ControlPointEntities"
+	            {
+	                "CASTER"        "attach_origin"
+	                "CASTER"        "attach_origin"
+	                "CASTER"        "attach_origin"
+	                "CASTER"        "attach_origin" //CP3
+	            }
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_bear_form_transform"
+	        {
+	            "IsHidden"  "1"
+	            "Duration"  "%transformation_time"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_bear_form"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	
+	        "modifier_bear_form"
+	        {
+	            "IsHidden"  "0"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_damage"
+	                "MODIFIER_PROPERTY_HEALTH_BONUS"                "%bonus_hp" //Doesn't work on creature units - Given through Lua
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_hp_regen"
+	            }
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_claw.lua"
+	                    "Function"              "TrueFormStart"
+	                    "model"                 "models/heroes/lone_druid/true_form.vmdl"
+	                    "sub_ability_name"      "nightelf_bear_form_off"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_claw.lua"
+	                    "Function"              "HideWearables"
+	                }
+	            }
+	        }
+	    }
+		
 	}
 	
 	"nightelf_bear_form_off"
@@ -30032,25 +30253,77 @@
 		"AbilityTextureName"		"nightelf_bear_form_off"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"25"
+	
+		"AbilityMultiOrder"			"1"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"1.45"
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.45"
 			}
-			// Cast time.
-			// The process is uninterruptable.
 		}
 	
-		// Done
+		"OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_druid_transform"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	        	"ScriptFile"	"units/nightelf/druid_of_the_claw.lua"
+	        	"Function"		"BearFormOff"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_druid_transform"
+	        {
+	            "Duration"      "%transformation_time"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnCreated"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_invulnerable"
+	                    "Target"        "CASTER"
+	                    "Duration"      "0.03"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_claw.lua"
+	                    "Function"              "TrueFormEnd"
+	                    "main_ability_name"     "nightelf_bear_form"
+	                    "remove_modifier_name"  "modifier_bear_form"                    
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"        "units/nightelf/druid_of_the_claw.lua"
+	                    "Function"          "ShowWearables"
+	                }
+	            }
+	        }
+	    }   
 	}
 	
 	"nightelf_mountain_giant_model"
@@ -32443,6 +32716,92 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"nightelf_research_druid_of_the_claw_training2"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"nightelf_research_mark_of_the_claw" // Roar in Bear Form
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"nightelf_research_mark_of_the_claw"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"50"
+		"AbilityChannelTime"			"20"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"research_time"			"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"25"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/research.lua"
+				"Function"		"DisableResearch"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			// Add Upgrade and Swap the ability for the next upgrade if there is one
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/research.lua"
+				"Function"		"ResearchComplete"
+			}
+	
+			// Apply upgrade on all current transformed druids
+			"RunScript"
+			{
+				"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+				"Function"      "UpgradeMarkOfTheClaw"
+			}
+		}
+	}	
+	
+	"nightelf_research_mark_of_the_claw_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"nightelf_research_mark_of_the_claw"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
