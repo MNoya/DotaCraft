@@ -213,7 +213,7 @@ function dotacraft:InitGameMode()
 	end
 
 	-- Allow cosmetic swapping
-	SendToServerConsole( "dota_combines_model 0" )
+	SendToServerConsole( "dota_combine_models 0" )
 
 	Convars:RegisterCommand( "debug_trees", Dynamic_Wrap(dotacraft, 'DebugTrees'), "Prints the trees marked as pathable", 0 )
 
@@ -513,15 +513,26 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		local unitName = "nightelf_druid_of_the_claw"
+		local unitName = "nightelf_mountain_giant"
 		local num = 3 --Useful to test "AbilityMultiOrder"
+		local numEnemy = 5
 		PrecacheUnitByNameAsync(unitName, function()
 			for i=1,num do
 				local position = GameRules.StartingPositions[pID].position + Vector(0,-300-i*50,0)
 				local unit = CreateUnitByName(unitName, position, true, hero, hero, hero:GetTeamNumber())
+				unit:SetOwner(hero)
 				unit:SetControllableByPlayer(pID, true)
 				FindClearSpaceForUnit(unit, position, true)
+				unit:Hold()
 				table.insert(player.units, unit)
+			end
+
+			for i=1,numEnemy do
+				local position = GameRules.StartingPositions[pID].position + Vector(0,-1000,0)
+				local unit = CreateUnitByName(unitName, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
+				unit:SetControllableByPlayer(pID, true)
+				FindClearSpaceForUnit(unit, position, true)
+				unit:Hold()
 			end
 		end, pID)
 	else

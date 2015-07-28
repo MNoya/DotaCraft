@@ -133,7 +133,7 @@
 	"Ability1"					"nightelf_mount_hippogryph"	 //Reference: Aco2 Couple Instant (Archer)
 	"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
 	"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
-	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	"Ability5"					"nightelf_elunes_grace"	 //Reference: Aegr
 	
 	// Armor
@@ -237,7 +237,7 @@
 	"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
 	"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl - Gets replaced by "nightelf_upgraded_moon_glaive" after the research
 	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
-	"Ability5"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	"precache"
 	{
@@ -341,8 +341,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_attack_ground"
-	"Ability2"					"nightelf_vorpal_blades"	 //Reference: Aimp - Vorpal Blades
-	"Ability3"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability2"					"nightelf_vorpal_blades_disabled"	 //Reference: Aimp - Vorpal Blades
+	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	"Ability10"					"nightelf_glaive_thrower_splash_attack"	//Hidden Splash
 	
 	// Armor
@@ -436,7 +436,7 @@
 	"Ability2"					"nightelf_slow_poison"	  	//Reference: Aspo
 	"Ability3"					"generic_spell_immunity"	//Reference: Amim
 	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
-	"Ability5"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -622,14 +622,14 @@
 	"Model"						"models/heroes/tiny_04/tiny_04.vmdl"
 	"ModelScale"				"1.35"
 	"Level"						"6"
-	"HealthBarOffset"			"140"
+	"HealthBarOffset"			"200"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_taunt"	 //Reference: Atau
-	"Ability2"					"nightelf_hardened_skin"	 //Reference: Assk
-	"Ability3"					"nightelf_resistant_skin"	 //Reference: Arsk
+	"Ability2"					"nightelf_resistant_skin_disabled"	 //Reference: Arsk
+	"Ability3"					"nightelf_hardened_skin_disabled"	 //Reference: Assk
 	"Ability4"					"nightelf_war_club"	 //Reference: Agra
 	"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 	"Ability10"					"nightelf_mountain_giant_model"
@@ -658,7 +658,104 @@
 	// Bounds
 	//----------------------------------------------------------------
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-	"RingRadius"				"70"
+	"RingRadius"				"100"
+	"CollisionSize"				"48"
+	"FormationRank"				"0"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"425"
+	"LumberCost"				"100"
+	"FoodCost"					"7"
+	"BuildTime"					"50"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1600"
+	"StatusHealthRegen"			"1.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1200"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"	{ "ItemDef" "493" } //Head
+			"Wearable2"	{ "ItemDef"	"494" } //Body
+			"Wearable3" { "ItemDef"	"495" } //Left Arm
+			"Wearable4" { "ItemDef"	"496" } //Right Arm
+		}
+	}
+}
+
+// Resistant Skin Version
+"nightelf_mountain_giant_resistant_skin"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/tiny_04/tiny_04.vmdl"
+	"ModelScale"				"1.35"
+	"Level"						"6"
+	"HealthBarOffset"			"200"
+	"ConsideredHero"			"1"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_taunt"	 //Reference: Atau
+	"Ability2"					"nightelf_resistant_skin"	 //Reference: Arsk
+	"Ability3"					"nightelf_hardened_skin"	 //Reference: Assk
+	"Ability4"					"nightelf_war_club"	 //Reference: Agra
+	"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability10"					"nightelf_mountain_giant_model"
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"4"
+	"MagicalResistance"			"30"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"28.0"
+	"AttackDamageMax"			"40.0"
+	"AttackRate"				"2.5"
+	"AttackAnimationPoint"		"0.49"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"128"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"100"
 	"CollisionSize"				"48"
 	"FormationRank"				"0"
 	
@@ -728,7 +825,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_storm_crow_form"	 //Reference: Arav
 	"Ability2"					"nightelf_faerie_fire"	 //Reference: Afa2
-	"Ability3"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -829,7 +926,7 @@
 	//----------------------------------------------------------------
 	"Ability1"					"nightelf_storm_crow_form_off"	 //Reference: Arav
 	"Ability2"					"nightelf_faerie_fire"	 //Reference: Afa2
-	"Ability3"					"nightelf_ultravision"	 //Reference: Ault
+	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -909,7 +1006,7 @@
 	"Ability1"					"nightelf_spell_immunity"	 //Reference: Amim
 	"Ability2"					"nightelf_mana_flare"	 //Reference: Amfl
 	"Ability3"					"nightelf_phase_shift"	 //Reference: Apsh
-	"Ability4"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1007,7 +1104,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_corrosive_breath"	 //Reference: Acor
 	"Ability2"					""	 //Reference: Alit //Lightning Attack
-	"Ability3"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1097,7 +1194,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_pick_up_archer"	 //Reference: Acoh
-	"Ability2"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability2"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1185,7 +1282,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_dismount"	 //Reference: Adec
-	"Ability2"					"nightelf_ultravision"	 //Reference: Ault - Ultravision
+	"Ability2"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	// Armor
 	//----------------------------------------------------------------

@@ -46,7 +46,7 @@ function PickUpArcher( event )
 					ability:ApplyDataDrivenModifier(caster, archer, "modifier_mounted_archer", {})
 
 					local new_hippo = CreateUnitByName("nightelf_hippogryph_rider", caster:GetAbsOrigin(), false, caster:GetOwner(), caster:GetPlayerOwner(), caster:GetTeamNumber())
-					new_hippo:SetControllableByPlayer(0, true)
+					new_hippo:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
 					new_hippo:SetOwner(caster:GetOwner())
 					new_hippo.archer = archer
 					new_hippo:SetHealth(caster:GetHealth() + archer:GetHealth())
