@@ -5,6 +5,7 @@ MANA_PER_INT = 15
 MANA_REGEN_PER_INT = 0.05
 ARMOR_PER_AGI = 0.3
 ATKSPD_PER_AGI = 2
+MAX_MOVE_SPEED = 400
 
 -- Default Dota Values
 DEFAULT_HP_PER_STR = 19
@@ -37,12 +38,14 @@ function dotacraft:ModifyStatBonuses(unit)
 			hero.strength = 0
 			hero.agility = 0
 			hero.intellect = 0
+			hero.movespeed = 0
 		end
 
 		-- Get player attribute values
 		local strength = hero:GetStrength()
 		local agility = hero:GetAgility()
 		local intellect = hero:GetIntellect()
+		local movespeed = hero:GetIdealSpeed()
 		
 		-- Adjustments
 
@@ -107,10 +110,22 @@ function dotacraft:ModifyStatBonuses(unit)
 			hero:SetModifierStackCount("modifier_base_mana_regen", hero, mana_regen_stacks)
 		end
 
+		-- MS limit
+		if movespeed ~= hero.movespeed and movespeed > MAX_MOVE_SPEED then
+
+			if not hero:HasModifier("modifier_movespeed_minus_constant") then
+				applier:ApplyDataDrivenModifier(hero, hero, "modifier_movespeed_minus_constant", {})
+			end
+
+			local minus_ms_stacks = movespeed - MAX_MOVE_SPEED
+			hero:SetModifierStackCount("modifier_movespeed_minus_constant", hero, minus_ms_stacks)
+		end
+
 		-- Update the stored values for next timer cycle
 		hero.strength = strength
 		hero.agility = agility
 		hero.intellect = intellect
+		hero.movespeed = movespeed
 
 		return THINK_INTERVAL
 	end)
