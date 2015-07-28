@@ -815,8 +815,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/furion/furion.vmdl"
-	"ModelScale"				"0.6"
+	"Model"						"models/heroes/furion/furion.vmdl" //"models/items/courier/shagbark/shagbark_flying.vmdl"
+	"ModelScale"				"0.7"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 	
@@ -825,20 +825,22 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"nightelf_storm_crow_form"	 //Reference: Arav
 	"Ability2"					"nightelf_faerie_fire"	 //Reference: Afa2
-	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+	"Ability3"					"nightelf_cyclone"
+	"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+	"Ability10"					"nightelf_storm_crow_form_off"
 	
 	// Armor
 	//----------------------------------------------------------------
-	"ArmorPhysical"				"0"
+	"ArmorPhysical"				"0" //Gains armor from research in crow form
 	"MagicalResistance"			"0"
 	
 	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-	"AttackDamageMin"			"35.0"
-	"AttackDamageMax"			"41.0"
-	"AttackRate"				"1.75"
+	"AttackDamageMin"			"10.0" //+25 Air-only in crow form, and gains damage from weapon research
+	"AttackDamageMax"			"14.0"
+	"AttackRate"				"1.6"
 	"AttackAnimationPoint"		"0.6"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"600"
@@ -867,7 +869,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" //_FLY in Crow Form
-	"MovementSpeed"				"350"
+	"MovementSpeed"				"270" //+80 in Crow Form
 	"MovementTurnRate"			"0.6"
 	
 	// Status
@@ -905,85 +907,6 @@
 			"Wearable6"	{ "ItemDef" "49" } //Bracers
 		}
 	}
-}
-
-//=================================================================================
-// Creature: Druid of the Talon
-// Description: "Maneuverable spellcaster. Can initially cast Faerie Fire, which reduces armor and gives vision of an enemy unit. Can also learn Storm Crow Form, Cyclone and Mark of the Talon. |n|n|cffffcc00Attacks land and air units.|r"
-//=================================================================================
-"nightelf_druid_of_the_talon_crow"
-{
-	// General
-	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/items/courier/shagbark/shagbark_flying.vmdl"
-	"ModelScale"				"1"
-	"Level"						"2"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-	"HealthBarOffset"			"140"
-	
-	// Abilities
-	//----------------------------------------------------------------
-	"Ability1"					"nightelf_storm_crow_form_off"	 //Reference: Arav
-	"Ability2"					"nightelf_faerie_fire"	 //Reference: Afa2
-	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault
-	
-	// Armor
-	//----------------------------------------------------------------
-	"ArmorPhysical"				"0"
-	"MagicalResistance"			"0"
-	
-	// Attack
-	//----------------------------------------------------------------
-	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"AttackDamageMin"			"35.0"
-	"AttackDamageMax"			"41.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
-	"AttackRate"				"1.75"
-	"AttackAnimationPoint"		"0.6"
-	"AttackAcquisitionRange"	"600"
-	"AttackRange"				"600"
-	"ProjectileModel"			""	 //Add projectile
-	"ProjectileSpeed"			"900"
-	
-	// Bounty
-	//----------------------------------------------------------------
-	"BountyGoldMin"				"26.0"
-	"BountyGoldMax"				"38.0"
-	
-	// Gold and Lumber
-	//----------------------------------------------------------------
-	"GoldCost"					"135"
-	"LumberCost"				"135"
-	
-	// Movement
-	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-	"MovementSpeed"				"350"
-	"MovementTurnRate"			"0.6"
-	
-	// Status
-	//----------------------------------------------------------------
-	"StatusHealth"				"300"
-	"StatusHealthRegen"			"1"
-	"StatusMana"				"200"
-	"StatusManaRegen"			"0.666666666666667"
-	"StatusStartingMana"		"75"
-	
-	// Vision
-	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1600"
-	"VisionNighttimeRange"		"800"
-	
-	// Team
-	//----------------------------------------------------------------
-	"TeamName"					"DOTA_TEAM_NEUTRALS"
-	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"	 //MAGIC - Attacks deal magic damage, ignores physical armor
-	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	
-	// Creature Data
-	//----------------------------------------------------------------
 }
 
 //=================================================================================
@@ -1203,7 +1126,7 @@
 	
 	// Attack
 	//----------------------------------------------------------------
-	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK" //Air Only...
 	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackDamageMin"			"50.0"
 	"AttackDamageMax"			"57.0"

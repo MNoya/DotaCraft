@@ -30776,7 +30776,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 			
 		"AbilityCastRange"			"700"
 		"AbilityCastPoint"			"0"
@@ -30787,18 +30787,61 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"90"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"90"
 			}
-			"02"
+			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"armor_reduction"			"4"
+				"var_type"			"FIELD_INTEGER"
+				"hero_duration"		"45"
 			}
-			// The vision radius is unknown, I would estimate it to be around 400, 500 tops.
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_reduction"	"-4"
+			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/custom/nightelf/faerie_fire.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/druid_of_the_talon.lua"
+				"Function"		"ApplyFaerieFire"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_faerie_fire"
+			{
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+		
+				"EffectName"		"particles/custom/nightelf/faerie_fire.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+				}
+	
+				"ThinkInterval"  "0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/druid_of_the_talon.lua"
+						"Function"		"FaerieFireVision"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -30813,36 +30856,129 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate"		"0.1"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"50"
+	
+		"AbilityMultiOrder"			"1"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"0.6"
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.45"
 			}
-			// The Druid will only be able to move after this duration.
+			// The process is uninterruptable, and the Druid immediately acquires flying capability.
+	
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"transition_start"			"1.05"
-			}
-			// The Druid will start ascending/descending after this duration.
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"transition_duration"		"1"
-			}
-			// The Druid's height will raise over this duration. The resulting height is unknown.
-			// The process is uninterruptable, and the Druid immediately acquires flying capability.
+	            "var_type"          "FIELD_INTEGER"
+	            "bonus_air_damage"  "25"
+	        }
+	        "03"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "bonus_movespeed"   "80"
+	        }
 		}
 	
-		// Done
+		"precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
+	        "particle"  "particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf"
+	        "particle"  "particles/econ/courier/courier_shagbark/courier_shagbark_firefly_big.vpcf"
+	        "model"     "models/items/courier/shagbark/shagbark_flying.vmdl"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_crow_form_transform"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	        	"ScriptFile"	"units/nightelf/druid_of_the_talon.lua"
+	        	"Function"		"CrowFormOn"
+	        }
+	
+	        "FireEffect"
+	        {
+	            "Target"            "CASTER"
+	            "EffectName"        "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	            "ControlPointEntities"
+	            {
+	                "CASTER"        "attach_hitloc"
+	                "CASTER"        "attach_weapon"
+	            }
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_crow_form_transform"
+	        {
+	            "IsHidden"  "1"
+	            "Duration"  "%transformation_time"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_crow_form"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	
+	        "modifier_crow_form"
+	        {
+	            "IsHidden"  "0"
+	
+	            "EffectName"		"particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf"
+	            "EffectAttachType"	"follow_origin"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_air_damage"
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"
+	            }
+	
+	            "States"
+	            {
+	            	"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_talon.lua"
+	                    "Function"              "CrowFormStart"
+	                    "model"                 "models/items/courier/shagbark/shagbark_flying.vmdl"
+	                    "sub_ability_name"      "nightelf_storm_crow_form_off"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_talon.lua"
+	                    "Function"              "HideWearables"
+	                }
+	            }
+	        }
+	    }
+		
 	}
 	
 	"nightelf_storm_crow_form_off"
@@ -30851,37 +30987,80 @@
 		"AbilityTextureName"		"nightelf_storm_crow_form_off"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"50"
+	
+		"AbilityMultiOrder"			"1"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"0.6"
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.45"
 			}
-			// The Druid will only be able to move after this duration.
-			"02"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"transition_start"			"1.05"
-			}
-			// The Druid will start ascending/descending after this duration.
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"transition_duration"		"1"
-			}
-			// The Druid's height will raise over this duration. The resulting height is unknown.
-			// The process is uninterruptable, and the Druid immediately acquires flying capability.
 		}
 	
-		// Done
+		"OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_druid_transform"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	        	"ScriptFile"	"units/nightelf/druid_of_the_talon.lua"
+	        	"Function"		"CrowFormOff"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_druid_transform"
+	        {
+	            "Duration"      "%transformation_time"
+	
+	            "EffectName"		"particles/econ/courier/courier_shagbark/courier_shagbark_firefly_big.vpcf"
+	            "EffectAttachType"	"follow_origin"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnCreated"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_invulnerable"
+	                    "Target"        "CASTER"
+	                    "Duration"      "0.03"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_talon.lua"
+	                    "Function"              "CrowFormEnd"
+	                    "main_ability_name"     "nightelf_storm_crow_form"
+	                    "remove_modifier_name"  "modifier_crow_form"                    
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"        "units/nightelf/druid_of_the_talon.lua"
+	                    "Function"          "ShowWearables"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	//=================================================================================
@@ -30898,7 +31077,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 			
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0"
@@ -30912,10 +31091,45 @@
 				"var_type"		"FIELD_INTEGER"
 				"duration"		"20"
 			}
-			// It can be dispelled.
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"hero_duration"	"6"
+			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_brewmaster_storm_cyclone"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%hero_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_brewmaster_storm_cyclone"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration"
+			}
+		}
 	}
 	
 	//=================================================================================

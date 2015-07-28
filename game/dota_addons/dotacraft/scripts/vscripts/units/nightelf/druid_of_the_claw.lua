@@ -43,6 +43,8 @@ function BearFormOff( event )
     if PlayerHasResearch(player, "nightelf_research_druid_of_the_claw_training1") then
         local rejuvenation = caster:FindAbilityByName("nightelf_rejuvenation")
         rejuvenation:SetHidden(false)
+    else
+        CheckAbilityRequirements( caster, player )
     end
 
     -- Enable roar
@@ -111,12 +113,21 @@ end
 function HideWearables( event )
     local hero = event.caster
     local ability = event.ability
-    local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
 
+    hero.wearableNames = {} -- In here we'll store the wearable names to revert the change
+    hero.hiddenWearables = {} -- Keep every wearable handle in a table, as its way better to iterate than in the MovePeer system
     local model = hero:FirstMoveChild()
     while model ~= nil do
         if model:GetClassname() ~= "" and model:GetClassname() == "dota_item_wearable" then
-            model:AddEffects(EF_NODRAW)
+            local modelName = model:GetModelName()
+            if string.find(modelName, "invisiblebox") == nil then
+                -- Add the original model name to revert later
+                table.insert(hero.wearableNames,modelName)
+
+                -- Set model invisible
+                model:SetModel("models/development/invisiblebox.vmdl")
+                table.insert(hero.hiddenWearables,model)
+            end
         end
         model = model:NextMovePeer()
     end
@@ -125,11 +136,12 @@ end
 function ShowWearables( event )
     local hero = event.caster
 
-    local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() ~= "" and model:GetClassname() == "dota_item_wearable" then
-            model:RemoveEffects(EF_NODRAW)
+    -- Iterate on both tables to set each item back to their original modelName
+    for i,v in ipairs(hero.hiddenWearables) do
+        for index,modelName in ipairs(hero.wearableNames) do
+            if i==index then
+                v:SetModel(modelName)
+            end
         end
-        model = model:NextMovePeer()
     end
 end

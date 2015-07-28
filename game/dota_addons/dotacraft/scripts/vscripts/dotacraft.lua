@@ -513,9 +513,8 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		local unitName = "nightelf_mountain_giant"
+		local unitName = "nightelf_druid_of_the_talon"
 		local num = 3 --Useful to test "AbilityMultiOrder"
-		local numEnemy = 5
 		PrecacheUnitByNameAsync(unitName, function()
 			for i=1,num do
 				local position = GameRules.StartingPositions[pID].position + Vector(0,-300-i*50,0)
@@ -525,11 +524,16 @@ function dotacraft:OnHeroInGame(hero)
 				FindClearSpaceForUnit(unit, position, true)
 				unit:Hold()
 				table.insert(player.units, unit)
+				unit:SetMana(unit:GetMaxMana())
 			end
+		end, pID)
 
+		local enemyUnitName = "nightelf_mountain_giant_resistant_skin"
+		local numEnemy = 3
+		PrecacheUnitByNameAsync(enemyUnitName, function()
 			for i=1,numEnemy do
 				local position = GameRules.StartingPositions[pID].position + Vector(0,-1000,0)
-				local unit = CreateUnitByName(unitName, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
+				local unit = CreateUnitByName(enemyUnitName, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
 				unit:SetControllableByPlayer(pID, true)
 				FindClearSpaceForUnit(unit, position, true)
 				unit:Hold()
