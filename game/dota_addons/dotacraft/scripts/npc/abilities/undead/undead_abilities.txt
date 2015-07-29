@@ -238,12 +238,14 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"		"ACT_DOTA_TELEPORT"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
 	"AbilityChannelTime"		"%duration"
+	
+	"AbilityMultiOrder" 		"1"
 	
 	"AbilitySpecial"
 	{
@@ -257,43 +259,48 @@
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"regeneration"	"10"
+			"regeneration"	"5"
 		}
-		// In WC3, a new unit with 10 health regen is swapped in, I don't know what you're gonna do so I'll just put the number here just in case.
 	}
 	
 	"precache"
 	{
-		"model" "models/heroes/nerubian_assassin/mound.vmd"
-		"model_folder" "models/heroes/weaver"
+		// set models
+		"model"				"models/heroes/nerubian_assassin/mound.vmdl"
+		"model_folder"		"models/heroes/weaver"
+		
+		// dust particle
+		"particle" "particles/custom/sandking_sandstorm_eruption_dust.vpcf"
 	}
 	
 	"OnChannelSucceeded"
 	{
 		"RunScript"
 		{
-			"ScriptFile" "units/undead/crypt_fiend.lua"
-			"Function"	"Burrow"	
+			"ScriptFile"	"units/undead/crypt_fiend.lua"
+			"Function"		"Burrow"
 		}
 	}
-	
 	
 	"Modifiers"
 	{
 		"modifier_crypt_fiend_burrow"
 		{
-		
-		
+			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_INVISIBILITY_LEVEL" "1"	
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%regeneration"
+				"MODIFIER_PROPERTY_DISABLE_TURNING" 			"1"
 			}
-			
+
 			"States"
 			{
-			    "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
 			}
-		}	
+		}
 	}
 	
 }
@@ -1474,6 +1481,7 @@
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
+	"AbilityMultiOrder"			"1"
 	
 	"AbilitySpecial"
 	{
@@ -1497,6 +1505,7 @@
 	"precache"
 	{
 		"model_folder" "models/heroes/obsidian_destroyer"
+		"particle" 		"particles/siege_fx/siege_bad_death_01.vpcf"
 	}
 	
 	"OnSpellStart"

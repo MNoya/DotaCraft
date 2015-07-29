@@ -181,7 +181,8 @@ function morph_into_destroyer(keys)
 		caster.no_corpse = true
 		table.insert(player.units, CreatedUnit)
 		
-		caster:ForceKill(true) 
+		ParticleManager:CreateParticle("particles/siege_fx/siege_bad_death_01.vpcf", 0, CreatedUnit)
+		caster:RemoveSelf()
 	end)
 end
 
