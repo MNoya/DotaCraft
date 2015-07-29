@@ -513,7 +513,7 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		local unitName = "nightelf_druid_of_the_talon"
+		local unitName = "undead_obsidian_statue"
 		local num = 3 --Useful to test "AbilityMultiOrder"
 		PrecacheUnitByNameAsync(unitName, function()
 			for i=1,num do

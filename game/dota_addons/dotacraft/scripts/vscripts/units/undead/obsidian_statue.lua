@@ -184,3 +184,24 @@ function morph_into_destroyer(keys)
 		caster:ForceKill(true) 
 	end)
 end
+
+
+-- Attaches a catapult
+function Model( event )
+	local caster = event.caster
+	local ability = event.ability
+
+	--models/creeps/lane_creeps/creep_bad_siege/creep_bad_siege.vmdl
+	
+	local statue = CreateUnitByName("undead_obsidian_statue_dummy", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber())
+	ability:ApplyDataDrivenModifier(caster, statue, "modifier_disable_statue", {})
+
+	local attach = caster:ScriptLookupAttachment("attach_hitloc")
+	local origin = caster:GetAttachmentOrigin(attach)
+	local fv = caster:GetForwardVector()
+
+	statue:SetAbsOrigin(Vector(origin.x, origin.y, origin.z-130))
+	statue:SetParent(caster, "attach_hitloc")
+	statue:SetAngles(0,0,0)
+
+end
