@@ -513,7 +513,7 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		local unitName = "undead_obsidian_statue"
+		local unitName = "human_sorceress"
 		local num = 3 --Useful to test "AbilityMultiOrder"
 		PrecacheUnitByNameAsync(unitName, function()
 			for i=1,num do
@@ -525,6 +525,7 @@ function dotacraft:OnHeroInGame(hero)
 				unit:Hold()
 				table.insert(player.units, unit)
 				unit:SetMana(unit:GetMaxMana())
+				unit:SetHealth(unit:GetMaxHealth()/2)
 			end
 		end, pID)
 

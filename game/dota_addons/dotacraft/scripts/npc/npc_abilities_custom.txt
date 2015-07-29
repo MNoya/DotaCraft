@@ -29880,7 +29880,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/nightelf/dryad.lua"
+						"ScriptFile"	"units/nightelf/shared.lua"
 						"Function"		"ToggleOnAutocast"
 					}
 				}
@@ -31143,12 +31143,12 @@
 		"AbilityTextureName"		"nightelf_phase_shift"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"6.5"
 		"AbilityManaCost"			"20"
+		"AbilityChannelTime"		"1.5"
 			
 		"AbilitySpecial"
 		{
@@ -31159,7 +31159,103 @@
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+			"particle"	"particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_phase_shift"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_phase_shift"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_phase_shift"
+			{
+				"Duration"		"%duration"
+				
+				"EffectName"		"particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+				"EffectAttachType"	"attach_origin"
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Puck.Phase_Shift"
+						"Target"		"CASTER"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"units/nightelf/faerie_dragon.lua"
+						"Function"			"HideCaster"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/faerie_dragon.lua"
+						"Function"		"StopSound"
+						"Target"		"CASTER"
+						"sound_name"	"Hero_Puck.Phase_Shift"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"units/nightelf/faerie_dragon.lua"
+						"Function"			"ShowCaster"
+					}
+				}
+				
+				"States"
+				{			
+					"MODIFIER_STATE_ATTACK_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_phase_shift_autocast"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"units/nightelf/shared.lua"
+						"Function"			"ToggleOnAutocast"
+					}
+				}
+	
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"units/nightelf/faerie_dragon.lua"
+						"Function"			"PhaseShiftAutocast"
+						"Damage"			"%attack_damage"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -31173,61 +31269,132 @@
 		"AbilityTextureName"		"nightelf_mana_flare"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELED"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		// This is a toggle ability but the cooldown starts as soon as the spell begins. So after 20s of channeling (as long as the cooldown), the spell should be available again.
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate"		"0.3"
 			
 		"AbilityCastRange"			"200"
 		"AbilityCastPoint"			"0.75"
 		"AbilityCooldown"			"20"
 		"AbilityManaCost"			"50"
+		"AbilityChannelTime"		"30"
 			
 		"AOERadius"					"750"
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"30"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"750"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"750"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"max_damage_unit"			"90"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_armor"		"12"
 			}
 			"04"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"max_damage_hero"			"50"
+				"var_type"			"FIELD_INTEGER"
+				"max_damage_unit"	"90"
 			}
 			"05"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damager_per_mana_unit"			"3"
+				"var_type"			"FIELD_INTEGER"
+				"max_damage_hero"	"50"
 			}
 			"06"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_per_mana_hero"			"1"
+				"var_type"			"FIELD_INTEGER"
+				"damager_per_mana_unit"			"3"
 			}
 			"07"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_cooldown"			"12"
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_mana_hero"			"1"
 			}
-			// A unit can only be hit every 12s by this ability. Not one unit in a group can be hit per 12s.
-			// A final value is called "Caster Only Splash" which is set True, I have no idea what this means and how to test it.
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/econ/items/puck/puck_alliance_set/puck_dreamcoil_aproset.vpcf"
+			"particle"  "particles/units/heroes/hero_puck/puck_dreamcoil_emit.vpcf"
+	        "particle"  "particles/econ/items/puck/puck_alliance_set/puck_dreamcoil_tether_aproset.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/faerie_dragon.lua"
+				"Function"		"ManaFlareStart"
+				"Target"		"POINT"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_flare_caster"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/faerie_dragon.lua"
+				"Function"		"ManaFlareEnd"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_flare_caster"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mana_flare_caster"
+			{			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+				}
+			}
+	
+			"modifier_mana_flare"
+			{
+				"IsHidden"			"1"
+	            "Aura"              "modifier_mana_flare_debuff"
+	            "Aura_Radius"       "%radius"
+	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	
+	            "EffectName"        "particles/econ/items/puck/puck_alliance_set/puck_dreamcoil_aproset.vpcf"
+	            "EffectAttachType"  "follow_origin"
+			}
+	
+	        "modifier_mana_flare_debuff"
+	        {
+	            "IsDebuff"          "1"
+	        
+	            "OnSpentMana"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/nightelf/faerie_dragon.lua"
+	                    "Function"      "ManaFlareDamage"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	//=================================================================================
@@ -31245,25 +31412,93 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
-		// Changed to physical because buildings don't take magical damage.
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage"		"50"
+				"var_type"			"FIELD_INTEGER"
+				"siege_damage"		"50"
 			}
-			// Damage type is Siege, 45 in the min end, 55 in the max end, 50 if averaged out.
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"range_increase"			"400"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_range"		"400"
 			}
-			// Attack range increased by 400, from 450 to 850.
+			// Attack range increased by 400, from 450 to 850, only against buildings
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_corrosive_breath"
+			{
+				"Passive"			"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_range"
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/chimaera.lua"
+						"Function"		"CorrosiveBreathAttack"
+					}
+				}
+	
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/chimaera.lua"
+						"Function"		"CorrosiveBreathDamage"
+						"Damage"		"%attack_damage"
+					}
+				}
+			}
+	
+			"modifier_corrosive_breath_adjustment"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "-400"
+				}
+			}
+		}
+	}
+	
+	"nightelf_chimaera_attack"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_chimaera_attack"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/chimaera.lua"
+						"Function"		"ChimaeraAttack"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -31278,12 +31513,22 @@
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 			
-		"AbilitySpecial"
+		"Modifiers"
 		{
-			// Easiest parse ever.
+			"modifier_ultravision"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0" //show on the modifier bar?
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"SetNightVision"
+					}
+				}
+			}
 		}
-	
-		// Done
 	}
 	
 	//=================================================================================
@@ -31445,6 +31690,134 @@
 		}
 	
 		// Done
+	}
+	
+	//=================================================================================
+	// Ability: Replenish
+	// Replenish the life and mana of a target friendly unit.
+	// Moon Wells only regenerate mana at night (same as units should only regenerate HP at night)
+	//=================================================================================
+	"nightelf_replenish_mana_and_life"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_replenish_mana_and_life"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+			
+		"AbilityCastRange"			"500"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hp_per_mana"		"2"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mp_per_mana"		"0.5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/moon_well.lua"
+				"Function"		"Replenish"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_replenish_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"ToggleOnAutocast"
+					}
+				}
+	
+				"ThinkInterval" "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/moon_well.lua"
+						"Function"		"ReplenishAutocast"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/moon_well.lua"
+						"Function"		"CheckTimeOfDay"
+					}
+				}
+			}
+	
+			"modifier_mana_regeneration_daytime"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "-100"
+				}
+	
+			}
+		}
+	}
+	
+	
+	"nightelf_well_spring"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_research_well_spring"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_mana"		"125"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_mana_regen"	"0.5"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_well_spring"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+					
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/moon_well.lua"
+						"Function"		"WellSpringBonus"
+					}
+				}
+			}
+		}
 	}
 	"nightelf_sentinel_disabled"
 	{
@@ -45239,6 +45612,47 @@
 						"Function"		"CancelReturn"
 					}
 				}		
+			}
+		}
+	}
+	"undead_obsidian_statue_model"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"MaxLevel"						"1"
+	
+		"Modifiers"
+		{
+			"modifier_obsidian_statue_model"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"OverrideAnimation"	"ACT_DOTA_LOADOUT"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/obsidian_statue.lua"
+						"Function"		"Model"
+					}
+				}
+			}
+			"modifier_disable_statue"
+			{
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}

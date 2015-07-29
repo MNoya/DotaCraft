@@ -926,9 +926,9 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"nightelf_spell_immunity"	 //Reference: Amim
-	"Ability2"					"nightelf_mana_flare"	 //Reference: Amfl
-	"Ability3"					"nightelf_phase_shift"	 //Reference: Apsh
+	"Ability1"					"nightelf_mana_flare"
+	"Ability2"					"generic_spell_immunity"	
+	"Ability3"					"nightelf_phase_shift"
 	"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	// Armor
@@ -1025,8 +1025,8 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"nightelf_corrosive_breath"	 //Reference: Acor
-	"Ability2"					""	 //Reference: Alit //Lightning Attack
+	"Ability1"					"nightelf_corrosive_breath_disabled"	 //Reference: Acor
+	"Ability2"					"nightelf_chimaera_attack"	 //Reference: Alit //Lightning Attack
 	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	
 	// Armor
@@ -1038,12 +1038,12 @@
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-	"AttackDamageMin"			"45.0"
-	"AttackDamageMax"			"55.0"
+	"AttackDamageMin"			"70.0"
+	"AttackDamageMax"			"80.0"
 	"AttackRate"				"2.5"
 	"AttackAnimationPoint"		"0.7"
 	"AttackAcquisitionRange"	"900"
-	"AttackRange"				"850"
+	"AttackRange"				"450" //850 vs buildings
 	"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
 	"ProjectileSpeed"			"1200"
 	
@@ -1087,7 +1087,7 @@
 	// Team
 	//----------------------------------------------------------------
 	"TeamName"					"DOTA_TEAM_NEUTRALS"
-	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO" //MAGIC Splash 125
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	

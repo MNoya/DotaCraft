@@ -76,10 +76,3 @@ function UnitHasPurgableModifiers( unit, caster )
 	end
 	return false
 end
-
--- Automatically toggled on
-function ToggleOnAutocast( event )
-	local ability = event.ability
-
-	ability:ToggleAutoCast()
-end

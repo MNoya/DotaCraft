@@ -61,3 +61,18 @@ function ShadowMeldRemove( event )
 
 	ToggleOff(ability)
 end
+
+-- For Ultravision
+function SetNightVision( event )
+	local caster = event.caster
+
+	caster:SetNightTimeVisionRange(caster:GetDayTimeVisionRange())
+end
+
+-- Automatically toggled on
+function ToggleOnAutocast( event )
+	local ability = event.ability
+
+	ability:ToggleAutoCast()
+end
+

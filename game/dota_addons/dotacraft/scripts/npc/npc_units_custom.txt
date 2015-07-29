@@ -7900,12 +7900,13 @@
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"ConsideredHero"			"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
-		"Ability2"					""	 //Reference: Ambt
+		"Ability1"					"nightelf_replenish_mana_and_life"	 //Reference: Abds
+		"Ability2"					"nightelf_well_spring_disabled"	 //Reference: Ambt
 		"Ability10"					"ability_building"
 		
 		// Armor
@@ -7948,7 +7949,8 @@
 		"StatusHealth"				"600"
 		"StatusHealthRegen"			"0"
 		"StatusMana"				"300"
-		"StatusManaRegen"			"300"
+		"StatusManaRegen"			"1.25" //Only at night
+		"StatusStartingMana"		"100"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -7961,6 +7963,11 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+	
+		"Creature"
+		{
+			"ManaGain"				"125" //Well Sprig
+		}
 		
 	}
 	
@@ -8972,9 +8979,9 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"nightelf_spell_immunity"	 //Reference: Amim
-		"Ability2"					"nightelf_mana_flare"	 //Reference: Amfl
-		"Ability3"					"nightelf_phase_shift"	 //Reference: Apsh
+		"Ability1"					"nightelf_mana_flare"
+		"Ability2"					"generic_spell_immunity"	
+		"Ability3"					"nightelf_phase_shift"
 		"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 		
 		// Armor
@@ -9071,8 +9078,8 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"nightelf_corrosive_breath"	 //Reference: Acor
-		"Ability2"					""	 //Reference: Alit //Lightning Attack
+		"Ability1"					"nightelf_corrosive_breath_disabled"	 //Reference: Acor
+		"Ability2"					"nightelf_chimaera_attack"	 //Reference: Alit //Lightning Attack
 		"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 		
 		// Armor
@@ -9084,12 +9091,12 @@
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackDamageMin"			"45.0"
-		"AttackDamageMax"			"55.0"
+		"AttackDamageMin"			"70.0"
+		"AttackDamageMax"			"80.0"
 		"AttackRate"				"2.5"
 		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"900"
-		"AttackRange"				"850"
+		"AttackRange"				"450" //850 vs buildings
 		"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
 		"ProjectileSpeed"			"1200"
 		
@@ -9133,7 +9140,7 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO" //MAGIC Splash 125
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
@@ -14566,17 +14573,19 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/courier/gnomepig/gnomepig.vmdl"	 //Add model
+		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl"
 		"ModelScale"				"1"
 		"Level"						"2"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"HealthBarOffset"			"140"
+		"HealthBarOffset"			"180"
+		"FormationRank"				"2"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"undead_essence_of_blight"	 //Reference: Arpl
 		"Ability2"					"undead_spirit_touch"	 //Reference: Arpm
 		"Ability3"					"undead_destroyer_form"	 //Reference: Aave
+		"Ability10"					"undead_obsidian_statue_model"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14588,7 +14597,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"7.0"
 		"AttackDamageMax"			"8.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2.1"
 		"AttackAnimationPoint"		"0.53"
 		"AttackAcquisitionRange"	"600"
@@ -14635,6 +14644,30 @@
 		
 		// Creature Data
 		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"187"		}
+				"Wearable2"		{	"ItemDef"		"188"		}
+				"Wearable3" 	{	"ItemDef"		"189"		}
+				"Wearable4"		{	"ItemDef"		"190"		}
+				"Wearable5"		{	"ItemDef"		"226"		}
+				"Wearable6"		{	"ItemDef"		"533"		}
+			}
+		}
+	}
+	
+	"undead_obsidian_statue_dummy"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/lane_creeps/creep_bad_siege/creep_bad_siege.mdl"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"VisionDaytimeRange"		"0"	
+		"VisionNighttimeRange"		"0"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 	}
 	
 	//=================================================================================
@@ -14649,7 +14682,7 @@
 		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl"
 		"ModelScale"				"1"
 		"Level"						"5"
-		"HealthBarOffset"			"140"
+		"HealthBarOffset"			"300"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14733,6 +14766,8 @@
 				"Wearable2"		{	"ItemDef"		"188"		}
 				"Wearable3" 	{	"ItemDef"		"189"		}
 				"Wearable4"		{	"ItemDef"		"190"		}
+				"Wearable5"		{	"ItemDef"		"226"		}
+				"Wearable6"		{	"ItemDef"		"533"		}
 			}
 		}
 	}

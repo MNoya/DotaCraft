@@ -1024,12 +1024,13 @@
 	"ModelScale"				"1"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
+	"ConsideredHero"			"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
-	"Ability2"					""	 //Reference: Ambt
+	"Ability1"					"nightelf_replenish_mana_and_life"	 //Reference: Abds
+	"Ability2"					"nightelf_well_spring_disabled"	 //Reference: Ambt
 	"Ability10"					"ability_building"
 	
 	// Armor
@@ -1072,7 +1073,8 @@
 	"StatusHealth"				"600"
 	"StatusHealthRegen"			"0"
 	"StatusMana"				"300"
-	"StatusManaRegen"			"300"
+	"StatusManaRegen"			"1.25" //Only at night
+	"StatusStartingMana"		"100"
 	
 	// Vision
 	//----------------------------------------------------------------
@@ -1085,6 +1087,11 @@
 	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
 	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+
+	"Creature"
+	{
+		"ManaGain"				"125" //Well Sprig
+	}
 	
 }
 
