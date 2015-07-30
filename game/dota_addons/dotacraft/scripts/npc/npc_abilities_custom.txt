@@ -29101,6 +29101,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"			"1"
 			
 		"AbilitySpecial"
 		{
@@ -29226,6 +29228,7 @@
 			"modifier_shadow_meld_active"
 			{
 				"IsHidden"			"1"
+				"Priority"          "MODIFIER_PRIORITY_ULTRA"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"	"1"
@@ -29717,33 +29720,100 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"5"
+				"var_type"			"FIELD_INTEGER"
+				"creep_duration"	"5"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration_hero"				"1"
+				"var_type"			"FIELD_INTEGER"
+				"hero_duration"		"1"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_per_second"			"4"
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_second"	"4"
 			}
 			"04"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"movement_speed_reduction"			"0.5"
+				"var_type"			"FIELD_INTEGER"
+				"movement_speed_slow"	"-50"
 			}
 			"05"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"attack_speed_reduction"			"0.25"
-			}
-			
+				"var_type"			"FIELD_INTEGER"
+				"attack_speed_slow"	"-25"
+			}	
 		}
 	
-		// Done
+		"precache"
+		{
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_slow_poison_passive"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_slow_poison"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_HERO"
+						}
+						"Duration"		"%hero_duration"
+					}
+					
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_slow_poison"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_BASIC"
+						}
+						"Duration"		"%creep_duration"
+					}
+				}
+			}
+	
+			"modifier_slow_poison"
+			{
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+				"EffectName"		"particles/neutral_fx/gnoll_poison_debuff.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+	
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage_per_second"
+						"Target"	"TARGET"
+					}
+					"FireSound"
+					{
+						"EffectName"	"hero_viper.CorrosiveSkin"
+						"Target" 		"TARGET"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -29756,10 +29826,12 @@
 		"BaseClass"					"ability_datadriven"
 		"AbilityTextureName"		"nightelf_research_abolish_magic"
 		"MaxLevel"					"1"
-			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastRange"			"500"
@@ -29771,12 +29843,59 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"summoned_unit_damage"			"300"
+				"var_type"			"FIELD_INTEGER"
+				"damage_to_summons"	"300"
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_lodestar_transform.vpcf"
+			"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_enchantress.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Enchantress.EnchantCast"
+				"Target" 		"TARGET"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/dryad.lua"
+				"Function"		"AbolishMagic"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_abolish_magic_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"ToggleOnAutocast"
+					}
+				}
+	
+				"ThinkInterval" "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/dryad.lua"
+						"Function"		"AbolishMagicAutocast"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -29791,18 +29910,6 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"should_nerf"		"1"
-			}
-		}
-		// pls do
-	
-		// Done
 	}
 	
 	//=================================================================================
@@ -29819,8 +29926,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_OVERRIDE_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
@@ -29831,22 +29937,88 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"45"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"45"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"500"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"damage_increase"			"0.25"
+				"var_type"			"FIELD_FLOAT"
+				"damage_bonus_pct"	"25.0"
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle" "particles/units/heroes/hero_lone_druid/lone_druid_battle_cry_overhead.vpcf"
+			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_battle_cry_buff.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{		
+			"FireSound"
+			{
+				"EffectName"	"Hero_LoneDruid.BattleCry"
+				"Target"		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/druid_of_the_claw.lua"
+				"Function"		"RoarAnimation"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"TARGET"
+						"ModifierName"		"modifier_roar"
+						"Duration"			"%duration"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"    				
+		{  							
+			"modifier_roar"  
+			{
+				"IsPurgable"				"1"
+	
+				"EffectName" 		"particles/units/heroes/hero_lone_druid/lone_druid_battle_cry_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName" 		"particles/units/heroes/hero_lone_druid/lone_druid_battle_cry_overhead.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"	
+					}				
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_bonus_pct"
+				}	
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -29863,8 +30035,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 			
 		"AbilityCastRange"			"400"
 		"AbilityCastPoint"			"0"
@@ -29885,7 +30056,55 @@
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_treant/treant_livingarmor_regen.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Treant.LivingArmor.Cast"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_rejuvenation"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_rejuvenation"
+			{
+				"IsPurgable"		"1"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_treant/treant_livingarmor_regen.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+			            {
+			                "TARGET"        "attach_origin"
+			                "TARGET"        "attach_origin"
+						}
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%total_heal / %duration"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -29900,24 +30119,132 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"25"
+	
+		"AbilityMultiOrder"			"1"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"1.45"
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.45"
 			}
-			// Cast time.
-			// The process is uninterruptable.
+			"02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_armor"           "2"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_hp"              "380"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_damage"          "10"
+	        }
+	        "05"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "bonus_hp_regen"        "0.5"
+	        }
 		}
 	
-		// Done
+		"precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+	        "particle"  "particles/units/heroes/hero_lone_druid/true_form_lone_druid.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+	        "model"     "models/heroes/lone_druid/true_form.vmdl"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_bear_form_transform"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	        	"ScriptFile"	"units/nightelf/druid_of_the_claw.lua"
+	        	"Function"		"BearFormOn"
+	        }
+	
+	        "FireEffect"
+	        {
+	            "Target"            "CASTER"
+	            "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	            "ControlPointEntities"
+	            {
+	                "CASTER"        "attach_origin"
+	                "CASTER"        "attach_origin"
+	                "CASTER"        "attach_origin"
+	                "CASTER"        "attach_origin" //CP3
+	            }
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_bear_form_transform"
+	        {
+	            "IsHidden"  "1"
+	            "Duration"  "%transformation_time"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_bear_form"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	
+	        "modifier_bear_form"
+	        {
+	            "IsHidden"  "0"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_damage"
+	                "MODIFIER_PROPERTY_HEALTH_BONUS"                "%bonus_hp" //Doesn't work on creature units - Given through Lua
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_hp_regen"
+	            }
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_claw.lua"
+	                    "Function"              "TrueFormStart"
+	                    "model"                 "models/heroes/lone_druid/true_form.vmdl"
+	                    "sub_ability_name"      "nightelf_bear_form_off"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_claw.lua"
+	                    "Function"              "HideWearables"
+	                }
+	            }
+	        }
+	    }
+		
 	}
 	
 	"nightelf_bear_form_off"
@@ -29926,25 +30253,77 @@
 		"AbilityTextureName"		"nightelf_bear_form_off"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"25"
+	
+		"AbilityMultiOrder"			"1"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"1.45"
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.45"
 			}
-			// Cast time.
-			// The process is uninterruptable.
 		}
 	
-		// Done
+		"OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_druid_transform"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	        	"ScriptFile"	"units/nightelf/druid_of_the_claw.lua"
+	        	"Function"		"BearFormOff"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_druid_transform"
+	        {
+	            "Duration"      "%transformation_time"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnCreated"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_invulnerable"
+	                    "Target"        "CASTER"
+	                    "Duration"      "0.03"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_claw.lua"
+	                    "Function"              "TrueFormEnd"
+	                    "main_ability_name"     "nightelf_bear_form"
+	                    "remove_modifier_name"  "modifier_bear_form"                    
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"        "units/nightelf/druid_of_the_claw.lua"
+	                    "Function"          "ShowWearables"
+	                }
+	            }
+	        }
+	    }   
 	}
 	
 	"nightelf_mountain_giant_model"
@@ -29983,32 +30362,58 @@
 		"AbilityTextureName"		"nightelf_taunt"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"15"
 		"AbilityManaCost"			"0"
 			
-		"AOERadius"					"450"
+		"AbilityCastRange"			"%radius"
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"450"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"450"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"max_unit"			"10"
+				"var_type"			"FIELD_INTEGER"
+				"max_units"			"10"
 			}
-			// Can only taunt the closest 10 units, as said in the description.
 		}
 	
-		// Done
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/custom/axe_beserkers_call_owner.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_portrait"
+					"CASTER"	"attach_portrait"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/mountain_giant.lua"
+				"Function"		"Taunt"
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"MaxTargets" "%max_units"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -30045,9 +30450,6 @@
 				"var_type"		"FIELD_INTEGER"
 				"strikes"			"15"
 			}
-			// Two extra values called "Attach Delay" and "Remove Delay" are set to 0.8 ans 2.5 respectively, I think they are for the model change.
-			// Funny story, setting Attach Delay to higher than 0.8 freezes the Giant and the tree after the animation, up until the duration ends.
-			// "Remove Delay" apparently doesn't do anything.
 			"02"
 			{
 				"var_type"		"FIELD_INTEGER"
@@ -30124,7 +30526,7 @@
 	
 	//=================================================================================
 	// Ability: Hardened Skin
-	// Description: "Reduces all attacks on the Mountain Giant by <Assk,DataC1> damage. Attacks cannot be reduced below <Assk,DataB1> damage."
+	// Description: "Reduces all attacks on the Mountain Giant by <Assk,DataC1> damage."
 	// Code Reference: Assk
 	//=================================================================================
 	"nightelf_hardened_skin"
@@ -30139,17 +30541,24 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"ignored_damage"			"12"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"minimum_damage"			"3"
+				"var_type"			"FIELD_INTEGER"
+				"damage_block"		"12"
 			}
 		}
 	
-		// Done
+		"Modifiers"
+		{
+			"modifier_hardened_skin"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK" "%damage_block"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -30165,14 +30574,12 @@
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 			
-		"AbilityCastPoint"			"0"
-		"AbilityCooldown"			"0"
-		"AbilityManaCost"			"0"
 			
-		// I don't even know the specific stats and properties lmao
-		// This is quoted from classic.battle.net/war3: "Gives Mountain Giants increased resistance to spell damage. This gives the unit hero magic resistance, similar to the resistance that level 6+ creeps have. Namely, you can't be Polymorphed, Possessed, etc, and all offensive spells have a shorter duration on the target (such as stuns, Ensnare, etc). It DOES NOT reduce damage dealt to the target, however. That’s an effect of hero armor, not hero magic resistance."
+		//"Gives Mountain Giants increased resistance to spell damage. This gives the unit hero magic resistance, similar to the resistance that level 6+ creeps have. 
+		//Namely, you can't be Polymorphed, Possessed, etc, and all offensive spells have a shorter duration on the target (such as stuns, Ensnare, etc). 
+		//It DOES NOT reduce damage dealt to the target, however. That’s an effect of hero armor, not hero magic resistance."
 	
-		// Done
+		//Replace the giants by a "ConsideredHero" version with 30% magic resistance
 	}
 	
 	//=================================================================================
@@ -30194,6 +30601,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"30"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"			"1"
 			
 		// Nothing to put here, basically the Hippogryph moves to the nearest Archer in the 900 radius and picks her up.
 		// The process is interruptable, if so, the ability is treated as not casted.
@@ -30276,7 +30685,9 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-			
+		
+		"AbilityMultiOrder"			"1"
+	
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"30"
@@ -30312,6 +30723,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"30"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"			"1"
 		
 		// The Archer is removed and put RIGHT UNDER the Hippogryph.
 		// The cooldown is placed on BOTH "Pick up Archer" and "Mount Hippogryph" as soon as the Archer is on the ground.
@@ -30363,7 +30776,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 			
 		"AbilityCastRange"			"700"
 		"AbilityCastPoint"			"0"
@@ -30374,18 +30787,61 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"90"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"90"
 			}
-			"02"
+			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"armor_reduction"			"4"
+				"var_type"			"FIELD_INTEGER"
+				"hero_duration"		"45"
 			}
-			// The vision radius is unknown, I would estimate it to be around 400, 500 tops.
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_reduction"	"-4"
+			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/custom/nightelf/faerie_fire.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/druid_of_the_talon.lua"
+				"Function"		"ApplyFaerieFire"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_faerie_fire"
+			{
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+		
+				"EffectName"		"particles/custom/nightelf/faerie_fire.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+				}
+	
+				"ThinkInterval"  "0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/druid_of_the_talon.lua"
+						"Function"		"FaerieFireVision"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -30400,36 +30856,129 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate"		"0.1"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"50"
+	
+		"AbilityMultiOrder"			"1"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"0.6"
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.45"
 			}
-			// The Druid will only be able to move after this duration.
+			// The process is uninterruptable, and the Druid immediately acquires flying capability.
+	
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"transition_start"			"1.05"
-			}
-			// The Druid will start ascending/descending after this duration.
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"transition_duration"		"1"
-			}
-			// The Druid's height will raise over this duration. The resulting height is unknown.
-			// The process is uninterruptable, and the Druid immediately acquires flying capability.
+	            "var_type"          "FIELD_INTEGER"
+	            "bonus_air_damage"  "25"
+	        }
+	        "03"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "bonus_movespeed"   "80"
+	        }
 		}
 	
-		// Done
+		"precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
+	        "particle"  "particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf"
+	        "particle"  "particles/econ/courier/courier_shagbark/courier_shagbark_firefly_big.vpcf"
+	        "model"     "models/items/courier/shagbark/shagbark_flying.vmdl"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_crow_form_transform"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	        	"ScriptFile"	"units/nightelf/druid_of_the_talon.lua"
+	        	"Function"		"CrowFormOn"
+	        }
+	
+	        "FireEffect"
+	        {
+	            "Target"            "CASTER"
+	            "EffectName"        "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	            "ControlPointEntities"
+	            {
+	                "CASTER"        "attach_hitloc"
+	                "CASTER"        "attach_weapon"
+	            }
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_crow_form_transform"
+	        {
+	            "IsHidden"  "1"
+	            "Duration"  "%transformation_time"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_crow_form"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	
+	        "modifier_crow_form"
+	        {
+	            "IsHidden"  "0"
+	
+	            "EffectName"		"particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf"
+	            "EffectAttachType"	"follow_origin"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_air_damage"
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"
+	            }
+	
+	            "States"
+	            {
+	            	"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_talon.lua"
+	                    "Function"              "CrowFormStart"
+	                    "model"                 "models/items/courier/shagbark/shagbark_flying.vmdl"
+	                    "sub_ability_name"      "nightelf_storm_crow_form_off"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_talon.lua"
+	                    "Function"              "HideWearables"
+	                }
+	            }
+	        }
+	    }
+		
 	}
 	
 	"nightelf_storm_crow_form_off"
@@ -30438,37 +30987,80 @@
 		"AbilityTextureName"		"nightelf_storm_crow_form_off"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"50"
+	
+		"AbilityMultiOrder"			"1"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"0.6"
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"1.45"
 			}
-			// The Druid will only be able to move after this duration.
-			"02"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"transition_start"			"1.05"
-			}
-			// The Druid will start ascending/descending after this duration.
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"transition_duration"		"1"
-			}
-			// The Druid's height will raise over this duration. The resulting height is unknown.
-			// The process is uninterruptable, and the Druid immediately acquires flying capability.
 		}
 	
-		// Done
+		"OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_druid_transform"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	        	"ScriptFile"	"units/nightelf/druid_of_the_talon.lua"
+	        	"Function"		"CrowFormOff"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_druid_transform"
+	        {
+	            "Duration"      "%transformation_time"
+	
+	            "EffectName"		"particles/econ/courier/courier_shagbark/courier_shagbark_firefly_big.vpcf"
+	            "EffectAttachType"	"follow_origin"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnCreated"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_invulnerable"
+	                    "Target"        "CASTER"
+	                    "Duration"      "0.03"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/nightelf/druid_of_the_talon.lua"
+	                    "Function"              "CrowFormEnd"
+	                    "main_ability_name"     "nightelf_storm_crow_form"
+	                    "remove_modifier_name"  "modifier_crow_form"                    
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"        "units/nightelf/druid_of_the_talon.lua"
+	                    "Function"          "ShowWearables"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	//=================================================================================
@@ -30485,7 +31077,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 			
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0"
@@ -30499,10 +31091,45 @@
 				"var_type"		"FIELD_INTEGER"
 				"duration"		"20"
 			}
-			// It can be dispelled.
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"hero_duration"	"6"
+			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_brewmaster_storm_cyclone"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%hero_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_brewmaster_storm_cyclone"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration"
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -30516,12 +31143,12 @@
 		"AbilityTextureName"		"nightelf_phase_shift"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"6.5"
 		"AbilityManaCost"			"20"
+		"AbilityChannelTime"		"1.5"
 			
 		"AbilitySpecial"
 		{
@@ -30532,7 +31159,103 @@
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+			"particle"	"particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_phase_shift"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_phase_shift"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_phase_shift"
+			{
+				"Duration"		"%duration"
+				
+				"EffectName"		"particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+				"EffectAttachType"	"attach_origin"
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Puck.Phase_Shift"
+						"Target"		"CASTER"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"units/nightelf/faerie_dragon.lua"
+						"Function"			"HideCaster"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/faerie_dragon.lua"
+						"Function"		"StopSound"
+						"Target"		"CASTER"
+						"sound_name"	"Hero_Puck.Phase_Shift"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"units/nightelf/faerie_dragon.lua"
+						"Function"			"ShowCaster"
+					}
+				}
+				
+				"States"
+				{			
+					"MODIFIER_STATE_ATTACK_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_phase_shift_autocast"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"units/nightelf/shared.lua"
+						"Function"			"ToggleOnAutocast"
+					}
+				}
+	
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"units/nightelf/faerie_dragon.lua"
+						"Function"			"PhaseShiftAutocast"
+						"Damage"			"%attack_damage"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -30546,61 +31269,132 @@
 		"AbilityTextureName"		"nightelf_mana_flare"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELED"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		// This is a toggle ability but the cooldown starts as soon as the spell begins. So after 20s of channeling (as long as the cooldown), the spell should be available again.
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate"		"0.3"
 			
 		"AbilityCastRange"			"200"
 		"AbilityCastPoint"			"0.75"
 		"AbilityCooldown"			"20"
 		"AbilityManaCost"			"50"
+		"AbilityChannelTime"		"30"
 			
 		"AOERadius"					"750"
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"30"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"750"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"750"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"max_damage_unit"			"90"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_armor"		"12"
 			}
 			"04"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"max_damage_hero"			"50"
+				"var_type"			"FIELD_INTEGER"
+				"max_damage_unit"	"90"
 			}
 			"05"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damager_per_mana_unit"			"3"
+				"var_type"			"FIELD_INTEGER"
+				"max_damage_hero"	"50"
 			}
 			"06"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_per_mana_hero"			"1"
+				"var_type"			"FIELD_INTEGER"
+				"damager_per_mana_unit"			"3"
 			}
 			"07"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_cooldown"			"12"
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_mana_hero"			"1"
 			}
-			// A unit can only be hit every 12s by this ability. Not one unit in a group can be hit per 12s.
-			// A final value is called "Caster Only Splash" which is set True, I have no idea what this means and how to test it.
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/econ/items/puck/puck_alliance_set/puck_dreamcoil_aproset.vpcf"
+			"particle"  "particles/units/heroes/hero_puck/puck_dreamcoil_emit.vpcf"
+	        "particle"  "particles/econ/items/puck/puck_alliance_set/puck_dreamcoil_tether_aproset.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/faerie_dragon.lua"
+				"Function"		"ManaFlareStart"
+				"Target"		"POINT"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_flare_caster"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/faerie_dragon.lua"
+				"Function"		"ManaFlareEnd"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_flare_caster"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mana_flare_caster"
+			{			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+				}
+			}
+	
+			"modifier_mana_flare"
+			{
+				"IsHidden"			"1"
+	            "Aura"              "modifier_mana_flare_debuff"
+	            "Aura_Radius"       "%radius"
+	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	
+	            "EffectName"        "particles/econ/items/puck/puck_alliance_set/puck_dreamcoil_aproset.vpcf"
+	            "EffectAttachType"  "follow_origin"
+			}
+	
+	        "modifier_mana_flare_debuff"
+	        {
+	            "IsDebuff"          "1"
+	        
+	            "OnSpentMana"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/nightelf/faerie_dragon.lua"
+	                    "Function"      "ManaFlareDamage"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	//=================================================================================
@@ -30618,25 +31412,93 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
-		// Changed to physical because buildings don't take magical damage.
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage"		"50"
+				"var_type"			"FIELD_INTEGER"
+				"siege_damage"		"50"
 			}
-			// Damage type is Siege, 45 in the min end, 55 in the max end, 50 if averaged out.
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"range_increase"			"400"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_range"		"400"
 			}
-			// Attack range increased by 400, from 450 to 850.
+			// Attack range increased by 400, from 450 to 850, only against buildings
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_corrosive_breath"
+			{
+				"Passive"			"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_range"
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/chimaera.lua"
+						"Function"		"CorrosiveBreathAttack"
+					}
+				}
+	
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/chimaera.lua"
+						"Function"		"CorrosiveBreathDamage"
+						"Damage"		"%attack_damage"
+					}
+				}
+			}
+	
+			"modifier_corrosive_breath_adjustment"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "-400"
+				}
+			}
+		}
+	}
+	
+	"nightelf_chimaera_attack"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_chimaera_attack"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/chimaera.lua"
+						"Function"		"ChimaeraAttack"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -30651,12 +31513,22 @@
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 			
-		"AbilitySpecial"
+		"Modifiers"
 		{
-			// Easiest parse ever.
+			"modifier_ultravision"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0" //show on the modifier bar?
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"SetNightVision"
+					}
+				}
+			}
 		}
-	
-		// Done
 	}
 	
 	//=================================================================================
@@ -30818,6 +31690,134 @@
 		}
 	
 		// Done
+	}
+	
+	//=================================================================================
+	// Ability: Replenish
+	// Replenish the life and mana of a target friendly unit.
+	// Moon Wells only regenerate mana at night (same as units should only regenerate HP at night)
+	//=================================================================================
+	"nightelf_replenish_mana_and_life"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_replenish_mana_and_life"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+			
+		"AbilityCastRange"			"500"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hp_per_mana"		"2"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mp_per_mana"		"0.5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/moon_well.lua"
+				"Function"		"Replenish"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_replenish_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"ToggleOnAutocast"
+					}
+				}
+	
+				"ThinkInterval" "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/moon_well.lua"
+						"Function"		"ReplenishAutocast"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/moon_well.lua"
+						"Function"		"CheckTimeOfDay"
+					}
+				}
+			}
+	
+			"modifier_mana_regeneration_daytime"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "-100"
+				}
+	
+			}
+		}
+	}
+	
+	
+	"nightelf_well_spring"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_research_well_spring"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_mana"		"125"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_mana_regen"	"0.5"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_well_spring"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+					
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/moon_well.lua"
+						"Function"		"WellSpringBonus"
+					}
+				}
+			}
+		}
 	}
 	"nightelf_sentinel_disabled"
 	{
@@ -32343,6 +33343,92 @@
 		}
 	}
 	
+	"nightelf_research_mark_of_the_claw" // Roar in Bear Form
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"nightelf_research_mark_of_the_claw"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"50"
+		"AbilityChannelTime"			"20"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"research_time"			"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"25"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/research.lua"
+				"Function"		"DisableResearch"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			// Add Upgrade and Swap the ability for the next upgrade if there is one
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/research.lua"
+				"Function"		"ResearchComplete"
+			}
+	
+			// Apply upgrade on all current transformed druids
+			"RunScript"
+			{
+				"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+				"Function"      "UpgradeMarkOfTheClaw"
+			}
+		}
+	}	
+	
+	"nightelf_research_mark_of_the_claw_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"nightelf_research_mark_of_the_claw"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
 	"nightelf_research_resistant_skin"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -32402,6 +33488,13 @@
 			{
 				"ScriptFile"	"buildings/research.lua"
 				"Function"		"ResearchComplete"
+			}
+	
+			// Apply upgrade on all current Mountain Giants (replace the units)
+			"RunScript"
+			{
+				"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+				"Function"      "UpgradeResistantSkin"
 			}
 		}
 	}
@@ -34834,40 +35927,11 @@
 				"Function"      "NextQueue"
 			}
 	
-			"SpawnUnit"
+			"RunScript"
 			{
+				"ScriptFile"	"buildings/rally_point.lua"
+				"Function"		"SpawnUnit"
 				"UnitName"		"nightelf_mountain_giant"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "GetInitialRallyPoint"
-						"Target"		"CASTER"
-						"Count"			"1"
-					}
-				}
-				"UnitCount"		"1"
-				"UnitLimit"		"0"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "MoveToRallyPoint"
-					}
-				}
 			}
 		}
 	
@@ -35779,7 +36843,7 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 			
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0"
@@ -35807,9 +36871,10 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"think_interval"		"0.1"
+				"think_interval"		"0.3"
 			}
 			// It ticks every second Kappa (actually is 0.1 now Keepo)
+			// Edit: 0.3 looks nicer with a particle hit :D
 		}
 	
 		"OnSpellStart"
@@ -35825,15 +36890,11 @@
 		{
 			"modifier_orc_lightning_shield"
 			{
-				"Passive"  			"0"
-				"IsHidden" 			"0"
-				"IsBuff"			"1"
-				"IsDebuff"			"0"
 				"IsPurgable"		"1"
 				"Duration"			"%duration"
 				
-				"EffectName"            "particles/custom/orc_lightning_shield.vpcf"
-				"EffectAttachType"      "PATTACH_ABSORIGIN"
+				"EffectName"            "particles/custom/orc/lightning_shield.vpcf"
+				"EffectAttachType"      "follow_origin"
 				
 				"ThinkInterval" 		"%think_interval"
 				"OnIntervalThink"
@@ -41408,7 +42469,6 @@
 			}
 		}
 	}
-	
 	//=================================================================================
 	// Ability: Cannibalize
 	// Description: "Consumes a nearby corpse to heal <Acan,DataA1> hit points per second."
@@ -41452,7 +42512,32 @@
 		}
 	
 		
-	}
+	}			
+	
+		//=================================================================================
+		// Ability: Destroyer Spell Immunity
+		// Description: "This unit is unaffected by magical abilities"
+		//=================================================================================
+		"undead_spell_immunity"
+		{
+			"BaseClass"					"ability_datadriven"
+			"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			"AbilityTextureName"		"undead_spell_immunity"
+			"MaxLevel"					"1"
+			
+			"Modifiers"
+			{
+				"modifier_spell_immunity"
+				{
+					"Passive" "1"
+					
+					"States"
+					{
+						"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					}
+				}	
+			}
+		}
 	
 	//=================================================================================
 	// Ability: Ghoul Frenzy
@@ -41480,8 +42565,23 @@
 				"movement_speed_bonus"	"80"
 			}
 		}
-	
 		
+		"Modifiers"
+		{
+		
+			"modifier_ghoul_frenzy"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%movement_speed_bonus"
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" 	"%attack_speed_bonus"			
+				}
+			}	
+		}
+	
 	}
 	
 	//=================================================================================
@@ -41495,7 +42595,7 @@
 		"AbilityTextureName"		"undead_web"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -41526,7 +42626,75 @@
 			// The height to which the flying unit is lowered.
 		}
 	
+		"precache"
+		{
+			//target particle
+			"particle" "particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_webs.vpcf"
+			
+			//caster projectile particle
+			"particle"	"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
+		}
 		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/undead/crypt_fiend.lua"
+				"Function"		"WebCheck"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target" "TARGET"
+				"ScriptFile" "units/undead/crypt_fiend.lua"
+				"Function"	"Web"
+			}
+			
+			"FireEffect"
+	        {
+	            "EffectName" 			"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
+	            "Target" 				"CASTER"
+	            "EffectAttachType" 		"attach_hitloc"
+	        }
+		}
+	
+		"Modifiers"
+		{
+			"modifier_web"
+			{
+				"EffectName"			"particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_webs.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"	
+				}
+			}
+			
+			"modifier_web_autocast"
+			{
+				"IsHidden" "1"
+				"Passive" "1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" "units/undead/crypt_fiend.lua"
+						"Function"	"ToggleOnAutocast"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile" "units/undead/crypt_fiend.lua"
+						"Function"	"Web_AutoCast"
+					}				
+				}	
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -41540,13 +42708,16 @@
 		"AbilityTextureName"		"undead_burrow"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityCastAnimation"		"ACT_DOTA_TELEPORT"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
-			
+		"AbilityChannelTime"		"%duration"
+		
+		"AbilityMultiOrder" 		"1"
+		
 		"AbilitySpecial"
 		{
 			"01"
@@ -41559,17 +42730,49 @@
 			"02"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"regeneration"	"10"
+				"regeneration"	"5"
 			}
-			// In WC3, a new unit with 10 health regen is swapped in, I don't know what you're gonna do so I'll just put the number here just in case.
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"dataA"			"ucry"
-			}
-			// ugh no go away
 		}
+		
+		"precache"
+		{
+			// set models
+			"model"				"models/heroes/nerubian_assassin/mound.vmdl"
+			"model_folder"		"models/heroes/weaver"
+			
+			// dust particle
+			"particle" "particles/custom/sandking_sandstorm_eruption_dust.vpcf"
+		}
+		
+		"OnChannelSucceeded"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/undead/crypt_fiend.lua"
+				"Function"		"Burrow"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_crypt_fiend_burrow"
+			{
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%regeneration"
+					"MODIFIER_PROPERTY_DISABLE_TURNING" 			"1"
+				}
 	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 		
 	}
 	
@@ -41624,83 +42827,86 @@
 	
 	//=================================================================================
 	// Ability: Disease Cloud
-	// Description: "Drops a Disease Cloud with each attack. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
-	// Code Reference: Apts
-	//=================================================================================
-	"undead_disease_cloud"
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_disease_cloud"
-		"MaxLevel"					"1"
-			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-			
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"120"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"cloud_duration"			"10"
-			}
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_per_second"			"1"
-			}
-		}
-	
-		
-	}
-	
-	//=================================================================================
-	// Ability: Disease Cloud
 	// Description: "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
 	// Code Reference: Aapl
 	//=================================================================================
 	"undead_disease_cloud"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_disease_cloud"
-		"MaxLevel"					"1"
-			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-			
-		"AbilityCastRange"			"176"
-		// Added for visual indication.
-		
+		"AbilityCastRange"			"%radius"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"pudge_rot"
+	
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"176"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"200"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"120"
+				"var_type"			"FIELD_FLOAT"
+				"damage_per_second"	"1"
 			}
-			// I mean like WAOW, let's shut down Gnome train stations for one second and start gunning down war vets, no offense but like, wow, crap, this is some sick weapon.
-			"04"
+			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_per_second"			"1"
+				"var_type"			"FIELD_FLOAT"
+				"think_interval"	"1"
 			}
-			// Slow but cold.
 		}
 	
-		
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_disease_cloud_aura"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"ControlPoints"
+						{
+							"00"	"0 0 0"
+							"01"	"%radius 0 0"
+						}
+					}
+				}
+	
+				"Aura"          	"modifier_disease_cloud_debuff"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+	
+			"modifier_disease_cloud_debuff"
+			{
+				"IsDebuff"			"1"
+				"ThinkInterval"  	"%think_interval"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%damage_per_second"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -41788,7 +42994,7 @@
 		"AbilityTextureName"		"undead_raise_dead"
 		"MaxLevel"					"2"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastRange"			"900 900"
@@ -41811,8 +43017,52 @@
 			// It raises 2 melee skeletons at level one then 1 melee skeleton, 1 ranged skeleton at level two.
 			// Can be autocasted to automatically raise corpses in the 600 radius.
 		}
-	
 		
+		"precache"
+		{
+			"model" "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
+			"model_folder" "models/heroes/pugna"	
+			"particle" "particles/neutral_fx/skeleton_spawn.vpcf"
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"Target" "CASTER"
+				"ScriptFile" "units/undead/necromancer.lua"
+				"Function" "AnimateDeadPrecast"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"		"CASTER"
+				"ScriptFile" 	"units/undead/necromancer.lua"
+				"Function"		"undead_raise_dead"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_raise_dead_autocast"
+			{
+				"Passive" "1"
+				"IsHidden" "1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"Target"		"CASTER"
+						"ScriptFile" 	"units/undead/necromancer.lua"
+						"Function"		"undead_raise_dead_autocast"
+					}
+				}
+			}	
+		}
 	}
 	
 	//=================================================================================
@@ -41820,10 +43070,10 @@
 	// Description: "Increases the attack rate of a target unit by <Suhf,DataA1,%>%, but drains <Suhf,DataB1> hit points per second. |nLasts <Suhf,Dur1> seconds."
 	// Code Reference: Auhf
 	//=================================================================================
-	"creeps_unholy_frenzy"
+	"undead_unholy_frenzy"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"creeps_unholy_frenzy"
+		"AbilityTextureName"		"undead_unholy_frenzy"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -41846,8 +43096,8 @@
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"attack_speed_increase"			"0.75"
+				"var_type"		"FIELD_INTEGER"
+				"attack_speed_increase"			"75"
 			}
 			"03"
 			{
@@ -41855,8 +43105,53 @@
 				"damage_per_second"				"4"
 			}
 		}
-	
 		
+		"precache"
+		{
+			"particle" 		"particles/status_fx/status_effect_gods_strength"
+			"soundfile" 	"sounds/items/mask_of_madness.vsnd"
+		}
+		
+		"OnSpellStart"
+		{		
+			"ApplyModifier"
+			{
+				"ModifierName" 	"modifier_unholy_frenzy"
+				"Target" 		"TARGET"	
+				"Duration" 		"%duration"
+			}
+			"FireSound"
+			{
+				"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
+				"Target"			"TARGET"
+			}	
+		}
+		
+		"Modifiers"
+		{
+			"modifier_unholy_frenzy"
+			{
+				"StatusEffectName" "particles/status_fx/status_effect_gods_strength"
+				"StatusEffectPriority" "10"	
+				"IsPurgable" "1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_increase"
+				}
+				
+				"ThinkInterval" 	"1"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	 "TARGET"
+						"Damage"	 "%damage_per_second"
+						"Type"		 "DAMAGE_TYPE_PURE"
+					}			
+				}
+			}
+		}
 	}
 	
 	
@@ -41886,26 +43181,88 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"duration"		"60"
+				"creep_duration"		"60"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"attack_speed_reduction"			"0.5"
+				"var_type"		"FIELD_INTEGER"
+				"hero_duration"		"10"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"movement_speed_reduction"			"0.75"
+				"var_type"		"FIELD_INTEGER"
+				"attack_speed_reduction"			"-50"
 			}
 			"04"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"damage_reduction"					"0.5"
+				"var_type"		"FIELD_INTEGER"
+				"movement_speed_reduction"			"-75"
+			}
+			"05"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"damage_reduction"					"-50"
+			}
+		}
+		
+		"precache"
+		{
+			// target particle
+			"particle" "particles/units/heroes/hero_oracle/oracle_fatesedict_repel.vpcf"
+			
+			"soundfile" "sounds/items/rod_of_atos.vsnd"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"DOTA_Item.RodOfAtos.Activate"
+				"Target"			"TARGET"
+			}	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_cripple"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%hero_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_cripple"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%creep_duration"
 			}
 		}
 	
-	
+		"Modifiers"
+		{
+			"modifier_cripple"
+			{
+				"IsPurgable" 		"1"
+				"IsDebuff"			"1"
+				
+				"EffectName"	 	"particles/units/heroes/hero_oracle/oracle_fatesedict_repel.vpcf"
+				"EffectAttachType" 	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE" 				"%damage_reduction"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 				"%movement_speed_reduction"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY" 	"%attack_speed_reduction"		
+				}
+			}	
+		}
 	}
 	
 	//=================================================================================
@@ -41968,6 +43325,7 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"1"
 		"AbilityManaCost"			"40"
+		
 			
 		"AbilitySpecial"
 		{
@@ -42004,7 +43362,7 @@
 			"RunScript"
 			{
 				"Target"				"TARGET"
-				"caster"				"CASTER"
+				"Caster"				"CASTER"
 				"ScriptFile"			"units/undead/banshee.lua"
 				"Function"				"undead_curse"
 			}			
@@ -42026,7 +43384,8 @@
 			{			
 				"EffectName" 		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead.vpcf"
 				"EffectAttachType" 	"follow_overhead"
-				"IsPurgable"       "1"
+				"IsPurgable"      	 "1"
+				"IsDebuff"			"1"
 				
 				"Properties"
 				{
@@ -42237,6 +43596,7 @@
 				"EffectName" 		"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
 				"EffectAttachType" 	"follow_origin"
 				"OverrideAnimation" "ACT_DOTA_DISABLED"
+				"IsDebuff"			 "1"
 					
 				"States"
 				{
@@ -42346,11 +43706,32 @@
 			"02"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"movement_speed_reduction"		"0.5"
+				"movement_speed_reduction"		"-50"
 			}
 			// I dug through Hive Workshop forums and gameplay constants for this at 2:43AM, holy crap what am I doing with my life.
 		}
 	
+		"precache"
+		{
+			"particle"		"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_frost_attack"
+			{
+				"IsPurgable" 	"1"
+				"IsDebuff"		"1"
+				
+				"EffectName"			"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+				"EffectAttachType"		"follow_origin"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_speed_reduction" 
+				}
+			}
+		}
 		
 	}
 	
@@ -42439,7 +43820,7 @@
 				"EffectAttachType" 	"follow_origin"		
 			}
 	
-			"modifier_blight_spirit_touch_autocast"
+			"modifier_blight_heal_autocast"
 			{
 				"Passive"		"1"
 				"IsHidden"		"1"
@@ -42448,15 +43829,15 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/undead/banshee.lua"
-						"Function"		"ToggleOnAutocast"
+						"ScriptFile"	"units/undead/obsidian_statue.lua"
+						"Function"		"undead_essence_of_blight_autocast"
 					}
 					
 					"RunScript"
 					{
-						"ScriptFile"			"units/undead/obsidian_statue.lua"
-						"Function"				"undead_essence_of_blight"
-					}
+						"ScriptFile"	"units/undead/obsidian_statue.lua"
+						"Function"		"ToggleOnAutocast"
+					}				
 				}			
 			}		
 		}
@@ -42559,10 +43940,10 @@
 	"undead_destroyer_form"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_destroyer_form"
+		"AbilityTextureName"		"undead_research_destroyer_form"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
@@ -42571,6 +43952,7 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
+		"AbilityMultiOrder"			"1"
 		
 		"AbilitySpecial"
 		{
@@ -42590,7 +43972,45 @@
 			// The change is PERMANENT, there is no changing back.
 			// The Destroyer also has a health regeneration of 8.
 		}
+		
+		"precache"
+		{
+			"model_folder" "models/heroes/obsidian_destroyer"
+			"particle" 		"particles/siege_fx/siege_bad_death_01.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName" 	"modifier_destroyer_morph"
 	
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_destroyer_morph"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+							
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"		
+				}
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"units/undead/obsidian_statue.lua"
+						"Function" 		"morph_into_destroyer"		
+					}
+				}						
+			}	
+		}
 		
 	}
 	
@@ -42629,7 +44049,8 @@
 		"precache"
 		{
 			//caster particle
-			"particle" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"	
+			"particle" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"
+			"soundfile" "sounds/weapons/hero/terrorblade/sunder_target.vsnd"
 		}
 		
 		"OnSpellStart"
@@ -42648,6 +44069,11 @@
 			{
 				"ModifierName" "absorb_mana_target"
 				"Target" "TARGET"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Terrorblade.Sunder.Target"
+				"Target"			"TARGET"
 			}
 		}
 		
@@ -42730,6 +44156,8 @@
 			
 			// point particle
 			"particle" "particles/units/heroes/hero_dark_seer/dark_seer_vacuum_shockwave.vpcf"
+			
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_anti_mage.vsndevts"
 		}
 		
 		"OnSpellStart"
@@ -42739,6 +44167,11 @@
 				"Target" 		"POINT"
 				"ScriptFile" 	"units/undead/destroyer.lua"
 				"Function" 		"undead_devour_magic"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoidCast"
+				"Target"			"TARGET"
 			}
 		}
 		
@@ -42771,7 +44204,7 @@
 		"AbilityTextureName"		"undead_orb_of_annihilation"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
@@ -42812,8 +44245,68 @@
 			// OR MAYBE the damage scales down to small for Small armor type or medium for Medium armor type.
 			"05"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"half_damage_radius"			"75"
+				"var_type"				"FIELD_INTEGER"
+				"half_damage_radius"	"75"
+			}
+		}
+	
+		"precache"
+		{
+			// normal projectile
+			"particle" "particles/units/heroes/hero_bane/bane_projectile.vpcf"
+			
+			// orb projectile
+			"particle" "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_magic_orb"
+			{
+				"Passive"		"1"
+				"IsHidden"	 	"1"
+				
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"    "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+					"CastAttack"		"1"
+				}
+	
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"    "%AbilityManaCost"
+					}
+					"FireSound"
+					{
+						"EffectName"		"Hero_ObsidianDestroyer.ArcaneOrb"
+						"Target"			"CASTER"
+					}			
+				}
+				
+				"OnOrbImpact"
+				{
+					"Damage"
+					{
+						"Type"          "DAMAGE_TYPE_MAGICAL"
+						"Damage"        "%damage_bonus"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+					"FireSound"
+					{
+						"EffectName"		"Hero_ObsidianDestroyer.ArcaneOrb.Impact"
+						"Target"			"TARGET"
+					}	
+				}
 			}
 		}
 	
@@ -42958,7 +44451,7 @@
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
@@ -42980,7 +44473,20 @@
 			}
 		}
 	
+		"precache"
+		{		
+			"particle" "particles/base_destruction_fx/gbm_lvl3_glow.vpcf"
+		}
 		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"	"TARGET"
+				"ScriptFile" "units/undead/acolyte.lua"
+				"Function"	"unsummon"	
+			}
+		}
 	}
 	
 	
@@ -44196,6 +45702,47 @@
 						"Function"		"CancelReturn"
 					}
 				}		
+			}
+		}
+	}
+	"undead_obsidian_statue_model"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"MaxLevel"						"1"
+	
+		"Modifiers"
+		{
+			"modifier_obsidian_statue_model"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"OverrideAnimation"	"ACT_DOTA_LOADOUT"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/obsidian_statue.lua"
+						"Function"		"Model"
+					}
+				}
+			}
+			"modifier_disable_statue"
+			{
+				"IsHidden"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}

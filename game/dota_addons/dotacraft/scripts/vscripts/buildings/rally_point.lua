@@ -1,3 +1,28 @@
+function SpawnUnit( event )
+	local caster = event.caster
+	local owner = caster:GetOwner()
+	local player = caster:GetPlayerOwner()
+	local playerID = player:GetPlayerID()
+	local hero = player:GetAssignedHero()
+	local unit_name = event.UnitName
+	local position = caster.initial_spawn_position
+	local teamID = caster:GetTeam()
+
+	-- Adjust Mountain Giant secondary unit
+	if PlayerHasResearch(player, "nightelf_research_resistant_skin") then
+		unit_name = unit_name.."_resistant_skin"
+	end
+		
+	local unit = CreateUnitByName(unit_name, position, true, owner, owner, caster:GetTeamNumber())
+	unit:AddNewModifier(caster, nil, "modifier_phased", { duration = 0.03 })
+	unit:SetOwner(hero)
+	unit:SetControllableByPlayer(playerID, true)
+	table.insert(player.units, unit)
+	
+	event.target = unit
+	MoveToRallyPoint(event)
+end
+
 --[[
 	Author: Noya
 	Date: 11.02.2015.

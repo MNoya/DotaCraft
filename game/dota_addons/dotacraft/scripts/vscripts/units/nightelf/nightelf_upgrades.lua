@@ -30,3 +30,37 @@ function UpgradeMoonGlaives( event )
 		end
 	end
 end
+
+-- Upgrade all transformed Druids of the Claw
+function UpgradeMarkOfTheClaw( event )
+	local caster = event.caster
+	local player = caster:GetPlayerOwner()
+	local units = player.units
+
+	for _,unit in pairs(units) do
+		if IsValidEntity(unit) and unit:HasModifier("modifier_bear_form") then
+			local ability = unit:FindAbilityByName("nightelf_roar")
+			ability:SetLevel(1)
+			ability:SetHidden(false)
+		end
+	end
+end
+
+-- Upgrade all Mountain Giants with Resistant Skin by replacing them
+function UpgradeResistantSkin( event )
+	local caster = event.caster
+	local player = caster:GetPlayerOwner()
+	local units = player.units
+
+	for _,unit in pairs(units) do
+		if IsValidEntity(unit) and unit:GetUnitName() == "nightelf_mountain_giant" then
+			local hp = unit:GetHealth()
+			local new_giant = CreateUnitByName("nightelf_mountain_giant_resistant_skin", unit:GetAbsOrigin(), false, unit:GetOwner(), unit:GetPlayerOwner(), unit:GetTeamNumber())
+			new_giant:SetControllableByPlayer(unit:GetPlayerOwnerID(), true)
+			new_giant:SetOwner(unit:GetOwner())
+			new_giant:SetHealth(hp)
+			new_giant:SetForwardVector(unit:GetForwardVector())
+			unit:RemoveSelf()
+		end
+	end
+end

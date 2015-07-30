@@ -249,7 +249,7 @@
 	"AttackAnimationPoint"		"0.64"
 	"AttackAcquisitionRange"	"700"
 	"AttackRange"				"550"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"500"
 	
 	// Bounty
@@ -597,17 +597,19 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/items/courier/gnomepig/gnomepig.vmdl"	 //Add model
+	"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl"
 	"ModelScale"				"1"
 	"Level"						"2"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-	"HealthBarOffset"			"140"
+	"HealthBarOffset"			"180"
+	"FormationRank"				"2"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"undead_essence_of_blight"	 //Reference: Arpl
 	"Ability2"					"undead_spirit_touch"	 //Reference: Arpm
 	"Ability3"					"undead_destroyer_form"	 //Reference: Aave
+	"Ability10"					"undead_obsidian_statue_model"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -619,13 +621,13 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"7.0"
 	"AttackDamageMax"			"8.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"2.1"
 	"AttackAnimationPoint"		"0.53"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"575"
 	"ProjectileModel"			""	 //Add projectile
-	"ProjectileSpeed"			"1200"
+	"ProjectileSpeed"			"900"
 	
 	// Bounty
 	//----------------------------------------------------------------
@@ -666,6 +668,30 @@
 	
 	// Creature Data
 	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"187"		}
+			"Wearable2"		{	"ItemDef"		"188"		}
+			"Wearable3" 	{	"ItemDef"		"189"		}
+			"Wearable4"		{	"ItemDef"		"190"		}
+			"Wearable5"		{	"ItemDef"		"226"		}
+			"Wearable6"		{	"ItemDef"		"533"		}
+		}
+	}
+}
+
+"undead_obsidian_statue_dummy"
+{
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/lane_creeps/creep_bad_siege/creep_bad_siege.mdl"
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"VisionDaytimeRange"		"0"	
+	"VisionNighttimeRange"		"0"
+	"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 }
 
 //=================================================================================
@@ -680,16 +706,15 @@
 	"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl"
 	"ModelScale"				"1"
 	"Level"						"5"
-	"HealthBarOffset"			"140"
+	"HealthBarOffset"			"300"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_devour_magic"	 //Reference: Advm
 	"Ability2"					"undead_orb_of_annihilation"	 //Reference: Afak
-	"Ability3"					"undead_destroyer_form"	 //Reference: Aave
-	"Ability4"					"undead_absorb_mana"	 //Reference: Aabs
-	"Ability5"					""	 //Reference: ACmi - Magic Immunity (Creep)
+	"Ability3"					"undead_absorb_mana"	 //Reference: Aabs
+	"Ability4"					"undead_spell_immunity"	 //Reference: ACmi - Magic Immunity (Creep)
 	//undead_spirit_touch
 	
 	// Armor
@@ -707,7 +732,7 @@
 	"AttackAnimationPoint"		"0.633"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"450"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"900"
 	
 	// Bounty
@@ -765,6 +790,8 @@
 			"Wearable2"		{	"ItemDef"		"188"		}
 			"Wearable3" 	{	"ItemDef"		"189"		}
 			"Wearable4"		{	"ItemDef"		"190"		}
+			"Wearable5"		{	"ItemDef"		"226"		}
+			"Wearable6"		{	"ItemDef"		"533"		}
 		}
 	}
 }
@@ -806,8 +833,8 @@
 	"AttackAnimationPoint"		"0.53"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"600"
-	"ProjectileModel"			""	 //Add projectile
-	"ProjectileSpeed"			"900"
+	"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka_glow.vpcf"	 //Add projectile
+	"ProjectileSpeed"			"700"
 	
 	// Bounty
 	//----------------------------------------------------------------
@@ -906,7 +933,7 @@
 	"AttackAnimationPoint"		"0.56"
 	"AttackAcquisitionRange"	"700"
 	"AttackRange"				"600"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"900"
 	
 	// Bounty
@@ -1085,7 +1112,7 @@
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"700"
 	"AttackRange"				"500"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"900"
 	
 	// Bounty
@@ -1184,7 +1211,7 @@
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"300"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/neutral_fx/ghost_frost_attack.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"800"
 	
 	// Bounty

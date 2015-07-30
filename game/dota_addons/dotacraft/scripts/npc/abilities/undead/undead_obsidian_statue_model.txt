@@ -1,0 +1,41 @@
+"undead_obsidian_statue_model"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+	"MaxLevel"						"1"
+
+	"Modifiers"
+	{
+		"modifier_obsidian_statue_model"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"OverrideAnimation"	"ACT_DOTA_LOADOUT"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/obsidian_statue.lua"
+					"Function"		"Model"
+				}
+			}
+		}
+		"modifier_disable_statue"
+		{
+			"IsHidden"			"1"
+	
+			"States"
+			{
+				"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}

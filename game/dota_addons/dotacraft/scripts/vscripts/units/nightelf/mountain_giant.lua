@@ -82,3 +82,13 @@ function WarClubStrike( event )
 		caster.tree:RemoveSelf()
 	end	
 end
+
+function Taunt( event )
+	local caster = event.caster
+	local targets = event.target_entities
+	caster:StartGesture(ACT_TINY_GROWL)
+
+	for _,unit in pairs(targets) do
+		unit:MoveToTargetToAttack(caster)
+	end
+end

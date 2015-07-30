@@ -45,12 +45,12 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local abilityName = ability:GetAbilityName()
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
         for _,entityIndex in pairs(entityList) do
-            local unit = EntIndexToHScript(entityIndex)
-            if unit:HasAbility(abilityName) then
-                local abil = unit:FindAbilityByName(abilityName)
+            local caster = EntIndexToHScript(entityIndex)
+            if caster and caster:HasAbility(abilityName) then
+                local abil = caster:FindAbilityByName(abilityName)
                 if abil and abil:IsFullyCastable() then
 
-                    unit.skip = true
+                    caster.skip = true
                     if order_type == DOTA_UNIT_ORDER_CAST_POSITION then
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = order_type, Position = point, AbilityIndex = abil:GetEntityIndex(), Queue = false})
 
