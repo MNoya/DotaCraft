@@ -16,6 +16,7 @@
 		"Level"						"1"
 		"ModelScale" 				"0.84"
 		"CanBeDominated"			"0"
+		"IsSummoned"				"1"
 	
 		"precache"
 		{
@@ -103,6 +104,7 @@
 		"Level"						"4"
 		"ModelScale" 				".94"
 		"CanBeDominated"			"0"
+		"IsSummoned"				"1"
 	
 		"precache"
 		{
@@ -190,6 +192,7 @@
 		"Level"						"4"
 		"ModelScale" 				"1.04"
 		"CanBeDominated"			"0"
+		"IsSummoned"				"1"
 	
 		"precache"
 		{
@@ -279,6 +282,7 @@
 		"ModelScale" 				".65"
 		"ConsideredHero"			"1"
 		"UnitLabel"					"spirit_bear"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -356,6 +360,7 @@
 		"ModelScale" 				"0.75"
 		"ConsideredHero"			"1"
 		"UnitLabel"					"spirit_bear"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -433,6 +438,7 @@
 		"ModelScale" 				".85"
 		"ConsideredHero"			"1"
 		"UnitLabel"					"spirit_bear"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -1037,6 +1043,7 @@
 		"Model"				"models/heroes/phoenix/phoenix_bird.vmdl"
 		"ModelScale"		"1"
 		"Level"				"6"
+		"IsSummoned"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1206,6 +1213,7 @@
 		"ModelScale"		"1"
 		"Level"				"1"
 		"FormationRank"		"0"
+		"IsSummoned"		"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1272,6 +1280,7 @@
 		"ModelScale"		"1"
 		"Level"				"2"
 		"FormationRank"		"0"
+		"IsSummoned"		"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1339,6 +1348,7 @@
 		"ModelScale"		"1"
 		"Level"				"3"
 		"FormationRank"		"0"
+		"IsSummoned"		"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1483,6 +1493,7 @@
 		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
 		"Level"						"2"
 		"ModelScale" 				"1"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -1546,6 +1557,7 @@
 		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
 		"Level"						"3"
 		"ModelScale" 				"1.1"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -1610,6 +1622,7 @@
 		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
 		"Level"						"4"
 		"ModelScale" 				"1.2"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -2204,6 +2217,7 @@
 		"ModelScale"		"1"
 		"Level"				"4"
 		"FormationRank"				"1"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -2272,6 +2286,7 @@
 		"ModelScale"		"1.1"
 		"Level"				"5"
 		"FormationRank"				"1"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -2340,6 +2355,7 @@
 		"ModelScale"		"1.2"
 		"Level"				"6"
 		"FormationRank"				"1"
+		"IsSummoned"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -5226,6 +5242,7 @@
 		"ModelScale"		"1"
 		"Level"				"2"
 		"FormationRank"				"0"
+		"IsSummoned"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -6937,6 +6954,8 @@
 		"Ability9"					"nightelf_uproot"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
+		"Ability12"					"nightelf_natures_blessing_disabled"
+		"Ability13"					"nightelf_eat_tree"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -6974,7 +6993,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"40"
+		"MovementSpeed"				"100" //40
 		"MovementTurnRate"			"0.4"
 		
 		// Status
@@ -7028,6 +7047,8 @@
 		"Ability9"					"nightelf_uproot"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
+		"Ability12"					"nightelf_natures_blessing_disabled"
+		"Ability13"					"nightelf_eat_tree"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7065,7 +7086,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"40"
+		"MovementSpeed"				"100" //40
 		"MovementTurnRate"			"0.4"
 		
 		// Status
@@ -7118,6 +7139,8 @@
 		"Ability7"					"nightelf_uproot"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
+		"Ability12"					"nightelf_natures_blessing_disabled"
+		"Ability13"					"nightelf_eat_tree"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7155,7 +7178,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"40"
+		"MovementSpeed"				"100" //40
 		"MovementTurnRate"			"0.4"
 		
 		// Status
@@ -7202,6 +7225,8 @@
 		"Ability2"					""	 //Reference: Aeat
 		"Ability3"					""	 //Reference: Aro2
 		"Ability10"					"ability_building"
+		"Ability12"					"nightelf_natures_blessing_disabled"
+		"Ability13"					"nightelf_eat_tree"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7241,7 +7266,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"40"
+		"MovementSpeed"				"100" //40
 		"MovementTurnRate"			"0.4"
 		
 		// Status
@@ -7287,6 +7312,8 @@
 		"Ability4"					""	 //Reference: Aro1
 		"Ability5"					""	 //Reference: Apit
 		"Ability10"					"ability_building"
+		"Ability12"					"nightelf_natures_blessing_disabled"
+		"Ability13"					"nightelf_eat_tree"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7324,7 +7351,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"40"
+		"MovementSpeed"				"100" //40
 		"MovementTurnRate"			"0.4"
 		
 		// Status
@@ -7375,6 +7402,8 @@
 		"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
+		"Ability12"					"nightelf_natures_blessing_disabled"
+		"Ability13"					"nightelf_eat_tree"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7413,7 +7442,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"40"
+		"MovementSpeed"				"100" //40
 		"MovementTurnRate"			"0.4"
 		
 		// Status
@@ -7474,7 +7503,9 @@
 		"Ability6"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		
+		"Ability12"					"nightelf_natures_blessing_disabled"
+		"Ability13"					"nightelf_eat_tree"
+	
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"2"
@@ -7512,7 +7543,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"40"
+		"MovementSpeed"				"100" //40
 		"MovementTurnRate"			"0.4"
 		
 		// Status
@@ -7573,6 +7604,8 @@
 		"Ability6"					""	 //Reference: Arlm
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
+		"Ability12"					"nightelf_natures_blessing_disabled"
+		"Ability13"					"nightelf_eat_tree"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7611,7 +7644,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"40"
+		"MovementSpeed"				"100" //40
 		"MovementTurnRate"			"0.4"
 		
 		// Status
@@ -7980,8 +8013,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_building"
-		"Model"						"models/props_nature/bad_barracks_roots003.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/props_structures/good_ancient001.vmdl"
+		"ModelScale"				"0.6"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -8074,7 +8107,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/courier/echo_wisp/echo_wisp.vmdl" //"models/heroes/wisp/wisp.vmdl"
+		"Model"						"models/heroes/wisp/wisp.vmdl"
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
@@ -8083,13 +8116,13 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_gather"	 //Reference: Adtn - nightelf_detonate
-		"Ability2"					"nightelf_build_ancient_of_war"	 //Reference: Aren - nightelf_renew
+		"Ability2"					"nightelf_detonate"	 //Reference: Aren - nightelf_renew
 		"Ability3"					"nightelf_build_ancient_of_lore"	 //Reference: Awha - nightelf_gather
 		"Ability4"					"nightelf_build_ancient_of_wind"	 //Reference: Ault - Ultravision
 		"Ability5"					"nightelf_build_ancient_protector"
 		"Ability6"					"nightelf_build_chimaera_roost"
 		"Ability7"					"build_nightelf_items"
-		//nightelf_detonate
+		//
 		//nightelf_renew
 	
 		
@@ -11907,6 +11940,7 @@
 		"IsAncient"					"1"
 		"ConsideredHero"			"1"
 		"FormationRank"				"0"
+		"IsSummoned"				"1"
 		
 		"precache"
 		{
@@ -12434,6 +12468,7 @@
 		"Level"				"0"
 	
 		"FormationRank"				"0"
+		"IsSummoned"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -15263,6 +15298,7 @@
 		"Level"						"7"
 		"ModelScale" 				"1.3"
 		"ConsideredHero"			"1"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -15339,6 +15375,7 @@
 		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
 		"Level"						"2"
 		"ModelScale" 				"0.8"
+		"IsSummoned"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------

@@ -29009,7 +29009,6 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastRange"			"100"
 		"AbilityCastPoint"			"0"
@@ -29021,22 +29020,38 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"300"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"mana_drained"				"50"
+				"var_type"			"FIELD_INTEGER"
+				"mana_drained"		"50"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"summoned_unit_damage"		"225"
+				"var_type"			"FIELD_INTEGER"
+				"damage_to_summons"	"225"
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle" "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+			"particle" "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+			"particle" "particles/units/heroes/hero_wisp/wisp_death.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/wisp.lua"
+				"Function"		"Detonate"
+				"Target"		"POINT"
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -31660,7 +31675,6 @@
 	//=================================================================================
 	// Ability: Natures Blessing
 	// Description: "Upgrades all Ancients' and Treants' movement speed and armor."
-	// NOTE: This is a place holder for an upgrade to keep the stats.
 	//=================================================================================
 	"nightelf_natures_blessing"
 	{
@@ -31674,22 +31688,56 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"speed_bonus"	"40"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_movespeed"	"40"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"armor_bonus_tree"			"5"
+				"var_type"			"FIELD_INTEGER"
+				"armor_bonus_tree"	"5"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"armor_bonus_tower"			"2"
+				"var_type"			"FIELD_INTEGER"
+				"armor_bonus_tower"	"2"
 			}
 		}
 	
-		// Done
+		"Modifiers"
+		{
+			"modifier_natures_blessing_apply"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/ancients.lua"
+						"Function"		"NaturesBlessing"
+					}
+				}
+			}
+	
+			"modifier_natures_blessing_tree"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_bonus_tree"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"		
+				}
+			}
+	
+			"modifier_natures_blessing_tower"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_bonus_tower"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -31773,7 +31821,6 @@
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "-100"
 				}
-	
 			}
 		}
 	}
@@ -31818,6 +31865,93 @@
 				}
 			}
 		}
+	}
+	
+	//=================================================================================
+	// Ability: Eat Tree
+	// Description: "Consume a tree to restore <Aeat,DataC1> hit points over <Aeat,Dur1> seconds."
+	// Code Reference: Aeat
+	//=================================================================================
+	"nightelf_eat_tree"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_eat_tree"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TREE"
+			
+		"AbilityCastRange"			"320"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"30"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"total_heal"	"500"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
+			"particle"	"particles/units/heroes/hero_treant/treant_leech_seed_projectile_heal_explode.vpcf"
+			"particle"  "particles/units/heroes/hero_treant/treant_leech_seed.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
+		}	
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/ancients.lua"
+				"Function"		"EatTree"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_eat_tree"
+			{	
+				"Duration"		"%duration"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "CASTER"
+					}
+				}
+	
+				"ThinkInterval"  "0.5"
+				"OnIntervalThink"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_treant/treant_leech_seed_projectile_heal_explode.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_hitloc"
+							"CASTER"	"attach_hitloc"
+						}
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%total_heal / %duration"
+				}
+			}
+		}
+	
 	}
 	"nightelf_sentinel_disabled"
 	{
@@ -32079,6 +32213,23 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"nightelf_research_well_spring"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"nightelf_natures_blessing_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"			"nightelf_research_natures_blessing"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -36718,9 +36869,8 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		"AbilityUnitTargetFlag"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 	
 		"AbilityCastRange"			"700"
