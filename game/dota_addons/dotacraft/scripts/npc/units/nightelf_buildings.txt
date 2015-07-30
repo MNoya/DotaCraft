@@ -61,6 +61,8 @@
 	"Ability9"					"nightelf_uproot"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
+	"Ability12"					"nightelf_natures_blessing_disabled"
+	"Ability13"					"nightelf_eat_tree"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -98,7 +100,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"40"
+	"MovementSpeed"				"100" //40
 	"MovementTurnRate"			"0.4"
 	
 	// Status
@@ -152,6 +154,8 @@
 	"Ability9"					"nightelf_uproot"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
+	"Ability12"					"nightelf_natures_blessing_disabled"
+	"Ability13"					"nightelf_eat_tree"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -189,7 +193,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"40"
+	"MovementSpeed"				"100" //40
 	"MovementTurnRate"			"0.4"
 	
 	// Status
@@ -242,6 +246,8 @@
 	"Ability7"					"nightelf_uproot"
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
+	"Ability12"					"nightelf_natures_blessing_disabled"
+	"Ability13"					"nightelf_eat_tree"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -279,7 +285,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"40"
+	"MovementSpeed"				"100" //40
 	"MovementTurnRate"			"0.4"
 	
 	// Status
@@ -326,6 +332,8 @@
 	"Ability2"					""	 //Reference: Aeat
 	"Ability3"					""	 //Reference: Aro2
 	"Ability10"					"ability_building"
+	"Ability12"					"nightelf_natures_blessing_disabled"
+	"Ability13"					"nightelf_eat_tree"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -365,7 +373,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"40"
+	"MovementSpeed"				"100" //40
 	"MovementTurnRate"			"0.4"
 	
 	// Status
@@ -411,6 +419,8 @@
 	"Ability4"					""	 //Reference: Aro1
 	"Ability5"					""	 //Reference: Apit
 	"Ability10"					"ability_building"
+	"Ability12"					"nightelf_natures_blessing_disabled"
+	"Ability13"					"nightelf_eat_tree"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -448,7 +458,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"40"
+	"MovementSpeed"				"100" //40
 	"MovementTurnRate"			"0.4"
 	
 	// Status
@@ -499,6 +509,8 @@
 	"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
+	"Ability12"					"nightelf_natures_blessing_disabled"
+	"Ability13"					"nightelf_eat_tree"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -537,7 +549,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"40"
+	"MovementSpeed"				"100" //40
 	"MovementTurnRate"			"0.4"
 	
 	// Status
@@ -598,7 +610,9 @@
 	"Ability6"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
-	
+	"Ability12"					"nightelf_natures_blessing_disabled"
+	"Ability13"					"nightelf_eat_tree"
+
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"2"
@@ -636,7 +650,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"40"
+	"MovementSpeed"				"100" //40
 	"MovementTurnRate"			"0.4"
 	
 	// Status
@@ -697,6 +711,8 @@
 	"Ability6"					""	 //Reference: Arlm
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
+	"Ability12"					"nightelf_natures_blessing_disabled"
+	"Ability13"					"nightelf_eat_tree"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -735,7 +751,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"40"
+	"MovementSpeed"				"100" //40
 	"MovementTurnRate"			"0.4"
 	
 	// Status
@@ -1104,8 +1120,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_nature/bad_barracks_roots003.vmdl"
-	"ModelScale"				"1"
+	"Model"						"models/props_structures/good_ancient001.vmdl"
+	"ModelScale"				"0.6"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"

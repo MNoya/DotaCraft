@@ -27,12 +27,15 @@ function RootStart( event )
 		caster:AddAbility("ability_building")
 		caster:AddAbility("ability_building_queue")
 
-		-- Set all abilities back to level 1 except the possibly _disabled abilities
+		-- Show all train and research abilities
 		for i=0,15 do
 			local ability = caster:GetAbilityByIndex(i)
 			if ability then
-				--if and not string.match(ability:GetAbilityName(), "_disabled") then
-				ability:SetLevel(1)
+				if ability:IsHidden() and ( string.match(ability:GetAbilityName(), "train_") or string.match(ability:GetAbilityName(), "research_")) then
+					ability:SetHidden(false)
+				elseif ability:GetAbilityName() == "nightelf_eat_tree" then
+					ability:SetHidden(true)
+				end
 			end
 		end
 	end)
@@ -77,11 +80,15 @@ function UpRoot( event )
 		caster.flag:RemoveSelf()
 	end
 
-	-- Set all abilities to level 0 except the root ability
+	-- Hide all train and research abilities, show eat tree
 	for i=0,15 do
 		local ability = caster:GetAbilityByIndex(i)
-		if ability and ability:GetAbilityName() ~= "nightelf_root" then
-			ability:SetLevel(0)
+		if ability then
+			if ( string.match(ability:GetAbilityName(), "train_") or string.match(ability:GetAbilityName(), "research_")) then
+				ability:SetHidden(true)
+			elseif ability:GetAbilityName() == "nightelf_eat_tree" then
+				ability:SetHidden(false)
+			end
 		end
 	end
 
@@ -103,4 +110,37 @@ function UpRoot( event )
 	if item then
 		caster:CastAbilityImmediately(item, caster:GetPlayerOwner():GetEntityIndex())
 	end
+end
+
+function NaturesBlessing( event )
+	local building = event.caster
+	local ability = event.ability
+
+	if building:GetUnitName() == "nightelf_ancient_protector" then
+		ability:ApplyDataDrivenModifier(building, building, "modifier_natures_blessing_tower", {})
+	else
+		ability:ApplyDataDrivenModifier(building, building, "modifier_natures_blessing_tree", {})
+	end
+
+end
+
+-- Cuts down a tree
+function EatTree( event )	
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+
+	caster:StartGesture(ACT_DOTA_ATTACK)
+	
+	Timers:CreateTimer(0.5, function()
+		target:CutDown(caster:GetTeamNumber())
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_treant/treant_leech_seed.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle, 3, target:GetAbsOrigin())
+	end)
+
+	Timers:CreateTimer(1, function()
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_eat_tree", {})
+	end)
 end

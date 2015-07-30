@@ -21,7 +21,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/items/courier/echo_wisp/echo_wisp.vmdl" //"models/heroes/wisp/wisp.vmdl"
+	"Model"						"models/heroes/wisp/wisp.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
@@ -30,13 +30,13 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"6"
 	"Ability1"					"nightelf_gather"	 //Reference: Adtn - nightelf_detonate
-	"Ability2"					"nightelf_build_ancient_of_war"	 //Reference: Aren - nightelf_renew
+	"Ability2"					"nightelf_detonate"	 //Reference: Aren - nightelf_renew
 	"Ability3"					"nightelf_build_ancient_of_lore"	 //Reference: Awha - nightelf_gather
 	"Ability4"					"nightelf_build_ancient_of_wind"	 //Reference: Ault - Ultravision
 	"Ability5"					"nightelf_build_ancient_protector"
 	"Ability6"					"nightelf_build_chimaera_roost"
 	"Ability7"					"build_nightelf_items"
-	//nightelf_detonate
+	//
 	//nightelf_renew
 
 	

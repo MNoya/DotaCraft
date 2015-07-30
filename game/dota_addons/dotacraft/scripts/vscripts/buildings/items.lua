@@ -45,6 +45,7 @@ function GiveNightElfBuildingItems( event )
 	local itemNames = { "item_build_moon_well",
 						"item_build_altar_of_elders",
 						"item_build_tree_of_life",	
+						"item_build_ancient_of_war"
 						"item_build_ancient_of_wonders",					
 						"item_build_hunters_hall"
 					  }
