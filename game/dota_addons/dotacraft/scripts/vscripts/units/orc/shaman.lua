@@ -98,6 +98,14 @@ function PurgeStart( event )
 	local ability = event.ability
 	local bRemovePositiveBuffs = false
 	local bRemoveDebuffs = false
+	
+	-- Note: I really need to make a filter for buildings...
+	if IsCustomBuilding(target) then
+		ability:RefundManaCost()
+		ability:EndCooldown()
+		return
+	end
+	
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		bRemovePositiveBuffs = true
 	else
@@ -112,7 +120,7 @@ function PurgeStart( event )
 				victim = target,
 				attacker = caster,
 				damage = ability:GetSpecialValueFor('summoned_unit_damage'),
-				damage_type = ability:GetAbilityDamageType(),
+				damage_type = DAMAGE_TYPE_PURE, --Goes through MI
 				ability = ability
 			})
 		end
