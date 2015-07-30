@@ -35640,7 +35640,9 @@
 	
 	//=================================================================================
 	// Ability: Purge
-	// Description: "Removes all buffs from a target unit, and slows its movement speed by a factor of <Aprg,DataA1>. Purged units will slowly regain their movement speed over <Aprg,Dur1> seconds. |n|cffffcc00Deals <Aprg,DataC1> damage to summoned units.|r"
+	// Description: "Removes all buffs from a target unit, and slows its movement speed by a factor
+	// of <Aprg,DataA1>. Purged units will slowly regain their movement speed over <Aprg,Dur1> seconds.
+	// |n|cffffcc00Deals <Aprg,DataC1> damage to summoned units.|r"
 	// Code Reference: Aprg
 	//=================================================================================
 	"orc_purge"
@@ -35650,11 +35652,13 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-			
+		"AbilityUnitTargetFlag"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+	
 		"AbilityCastRange"			"700"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"1"
@@ -35670,17 +35674,94 @@
 			"02"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"duration_hero"					"5"
+				"duration_hero"	"5"
 			}
 			"03"
-			
 			{
 				"var_type"		"FIELD_INTEGER"
 				"summoned_unit_damage"			"400"
 			}
+			"04"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"slow_per_stack"	"-20"	
+			}
+			"05"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"stack_multi"	"5"	
+			}
+			"06"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"think_interval"	"1"	
+			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/generic_gameplay/generic_purge.vpcf"
+			"soundfile" "soundevents/game_sounds_creeps.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/shaman.lua"
+				"Function"		"PurgeStart"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_purge"
+			{
+				"IsHidden"			"0"
+				"TextureName" 		"orc_purge"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/shaman.lua"
+						"Function"		"ApplyPurge"	
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_purge_slow"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_purge_slow"
+			{
+				"IsHidden"			"1"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+	
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_per_stack" 
+				}
+	
+				"ThinkInterval"  "%think_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/shaman.lua"
+						"Function"		"PurgeThink"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -35858,7 +35939,7 @@
 	
 	    		"Properties"
 		    	{
-		    		"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_PERCENTAGE" "%attack_speed_increase"
+		    		"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_increase"
 		    		"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_increase"
 		    	}
 	

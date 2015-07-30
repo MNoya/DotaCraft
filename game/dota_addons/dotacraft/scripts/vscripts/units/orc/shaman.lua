@@ -11,7 +11,7 @@ function Bloodlust(event)
 		Timers:RemoveTimer(target.bloodlust_timer)
 	end
 
-	local scaling_factor = ability:GetLevelSpecialValueFor('scaling_factor', 0)
+	local scaling_factor = ability:GetSpecialValueFor('scaling_factor')
 	local final_model_scale = GameRules.UnitKV[target:GetUnitName()]["ModelScale"] + scaling_factor
 	local model_size_interval = scaling_factor/25
 	local interval = 0.03
@@ -35,7 +35,7 @@ end
 function BloodlustDelete(event)	
 	local target = event.target
 	local ability = event.ability
-	local scaling_factor = ability:GetLevelSpecialValueFor('scaling_factor', 0)
+	local scaling_factor = ability:GetSpecialValueFor('scaling_factor')
 	local final_model_scale = GameRules.UnitKV[target:GetUnitName()]["ModelScale"]
 	local model_size_interval = scaling_factor/50
 	
@@ -61,7 +61,7 @@ function LightningShieldOnSpellStart(event)
 	local caster = event.caster
 	local ability = event.ability
 	local target = event.target
-	local duration = ability:GetLevelSpecialValueFor("duration", 0)
+	local duration = ability:GetSpecialValueFor("duration")
 	target:EmitSound("Hero_Zuus.StaticField")
 	ability:ApplyDataDrivenModifier(caster, target, 'modifier_orc_lightning_shield', nil)		
 end
@@ -70,9 +70,9 @@ function ModifierLightningShieldOnIntervalThink(event)
 	local caster = event.caster
 	local target = event.target
 	local ability = event.ability
-	local radius = ability:GetLevelSpecialValueFor("radius", 0)
-	local dps = ability:GetLevelSpecialValueFor("damage_per_second", 0)
-	local factor = ability:GetLevelSpecialValueFor("think_interval", 0)
+	local radius = ability:GetSpecialValueFor("radius")
+	local dps = ability:GetSpecialValueFor("damage_per_second")
+	local factor = ability:GetSpecialValueFor("think_interval")
 	local damage = dps*factor
 
 	local nearby_units = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH,
@@ -82,5 +82,61 @@ function ModifierLightningShieldOnIntervalThink(event)
 		if target ~= nUnit then  --The carrier of Lightning Shield cannot damage itself.
 			ApplyDamage({victim = nUnit, attacker = caster:GetOwner(), damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		end
+	end
+end
+
+
+function PurgeStart( event )
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+	local bRemovePositiveBuffs = false
+	local bRemoveDebuffs = false
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		bRemovePositiveBuffs = true
+	else
+		bRemoveDebuffs = true
+	end
+	target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
+	target:EmitSound('n_creep_SatyrTrickster.Cast')
+	ParticleManager:CreateParticle('particles/generic_gameplay/generic_purge.vpcf', PATTACH_ABSORIGIN_FOLLOW, target)
+	if bRemovePositiveBuffs then
+		if target:IsSummoned() or target:IsDominated() then
+			ApplyDamage({
+				victim = target,
+				attacker = caster,
+				damage = ability:GetSpecialValueFor('summoned_unit_damage'),
+				damage_type = ability:GetAbilityDamageType(),
+				ability = ability
+			})
+		end
+		local duration = 0
+		if target:IsHero() or target:IsConsideredHero() then
+			duration = ability:GetSpecialValueFor('duration_hero')
+		else
+			duration = ability:GetSpecialValueFor('duration')
+		end
+		ability:ApplyDataDrivenModifier(caster, target, 'modifier_purge', {duration = duration}) 
+	end
+end
+
+function ApplyPurge( event )
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+	local duration = 0 
+	local modifier = 'modifier_purge_slow'
+	ability:ApplyDataDrivenModifier(caster, target, modifier, nil) 
+	local stacks = ability:GetSpecialValueFor('stack_multi')
+	target:SetModifierStackCount(modifier, ability, stacks)
+end
+
+function PurgeThink( event )
+	local target = event.target
+	local ability = event.ability
+	local modifier = 'modifier_purge_slow'
+	local new_stack = target:GetModifierStackCount(modifier, nil) - 1
+	if new_stack > 0 then
+		target:SetModifierStackCount(modifier, ability, new_stack)
 	end
 end
