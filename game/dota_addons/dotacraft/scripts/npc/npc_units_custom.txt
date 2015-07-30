@@ -1780,6 +1780,19 @@
 		"Ability1"					"dummy_passive_vulnerable"
 	}
 	
+	"dummy_unit_disease_cloud"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"VisionDaytimeRange"		"0"	
+		"VisionNighttimeRange"		"0"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"AbilityLayout"				"4"
+		"Ability1"					"dummy_passive_vulnerable"
+		"Ability2"					"undead_disease_cloud"
+	}
+	
 	"dummy_vision"
 	{
 		"BaseClass"					"npc_dota_creature"
@@ -14523,11 +14536,12 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Sch2
-		"Ability2"					"undead_get_corpse"	 //Reference: Amel
-		"Ability3"					"undead_drop_corpse"	 //Reference: Amed
-		"Ability4"					"undead_disease_cloud" //CATAPULT VERSION	 //Reference: Apts
-		"Ability5"					""	 //Reference: Aexh
+		"Ability1"					"undead_get_corpse"	 //Reference: Sch2
+		"Ability2"					"undead_drop_corpse"	 //Reference: Amel
+		"Ability3"					"undead_exhume_corpses"	 //Reference: Amed
+		"Ability4"					"nightelf_attack_ground"	 //Reference: Apts
+		"Ability5"					"undead_meat_wagon_disease_cloud"	 //Reference: Aexh
+		"Ability10" 				"nightelf_glaive_thrower_splash_attack"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14544,8 +14558,8 @@
 		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"1150"
 		"AttackRange"				"1150"
-		"ProjectileModel"			""	 //Add projectile
-		"ProjectileSpeed"			"900"
+		"ProjectileModel"			"particles/neutral_fx/mud_golem_hurl_boulder.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"700"
 		
 		// Bounty
 		//----------------------------------------------------------------
@@ -14637,8 +14651,8 @@
 		"AttackAnimationPoint"		"0.53"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"575"
-		"ProjectileModel"			""	 //Add projectile
-		"ProjectileSpeed"			"900"
+		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
+		"ProjectileSpeed"			"700"
 		
 		// Bounty
 		//----------------------------------------------------------------
@@ -14726,7 +14740,6 @@
 		"Ability2"					"undead_orb_of_annihilation"	 //Reference: Afak
 		"Ability3"					"undead_absorb_mana"	 //Reference: Aabs
 		"Ability4"					"undead_spell_immunity"	 //Reference: ACmi - Magic Immunity (Creep)
-		//undead_spirit_touch
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14844,7 +14857,7 @@
 		"AttackAnimationPoint"		"0.53"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"600"
-		"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka_glow.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka.vpcf"	 //Add projectile
 		"ProjectileSpeed"			"700"
 		
 		// Bounty

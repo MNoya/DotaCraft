@@ -11,10 +11,10 @@ function undead_raise_dead ( keys )
 	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), RADIUS)
 	
 	for k,corpse in pairs(targets) do
-		if corpse.corpse_expiration ~= nil then		
-			local abilitylevel = ability:GetLevel()
-			local spawnlocation = corpse:GetAbsOrigin()
-			
+		local abilitylevel = ability:GetLevel()
+		local spawnlocation = corpse:GetAbsOrigin()
+		
+		if corpse.corpse_expiration ~= nil then					
 			--if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
 			--	duration = SKELETON_DURATION + 15
 			--else
@@ -29,6 +29,25 @@ function undead_raise_dead ( keys )
 			corpse:RemoveSelf()
 			return
 		end
+		
+		if corpse:GetUnitName() == "undead_meat_wagon" and corpse:GetModifierStackCount("modifier_corpses", corpse) > 0 and caster:GetPlayerOwnerID() == corpse:GetPlayerOwnerID() then	
+			local StackCount = corpse:GetModifierStackCount("modifier_corpses", corpse)
+			if  StackCount > 0 then
+				corpse:SetModifierStackCount("modifier_corpses",corpse, StackCount - 1)
+					print("stackcount is greatert then 0")
+					
+				--if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
+				--	duration = SKELETON_DURATION + 15
+				--else
+					duration = SKELETON_DURATION
+				--end
+				
+				-- create units
+				CreateUnit(caster, spawnlocation, abilitylevel, duration)		
+				return
+			end		
+		end
+		
 	end
 end
 
@@ -58,13 +77,26 @@ end
 -- Denies casting if no corpses near, with a message
 function AnimateDeadPrecast( event )
 	local ability = event.ability
-	local corpse = Entities:FindByModelWithin(nil, CORPSE_MODEL, event.caster:GetAbsOrigin(), ability:GetCastRange()) 
+	local RADIUS = event.ability:GetSpecialValueFor("radius")
+	local targets = Entities:FindAllByNameWithin("npc_dota_creature", event.caster:GetAbsOrigin(), RADIUS)
 	local pID = event.caster:GetPlayerOwnerID()
-	if corpse == nil then
+	
+	-- check if there's any valid targets around
+	local targetfound = false
+	for k,corpse in pairs(targets) do
+		if corpse.corpse_expiration ~= nil or (corpse:GetUnitName() == "undead_meat_wagon" and corpse:GetModifierStackCount("modifier_corpses", corpse) > 0 and event.caster:GetPlayerOwnerID() == corpse:GetPlayerOwnerID()) then
+			targetfound = true
+			break
+		end
+	end
+	
+	-- if no targets are found then
+	if not targetfound then
 		event.caster:Interrupt()
 		SendErrorMessage(pID, "#error_no_usable_corpses")
 		
 		local mana = event.caster:GetMana()
+		ability:EndCooldown()
 		
 		Timers:CreateTimer(function() event.caster:SetMana(mana) end)
 	end

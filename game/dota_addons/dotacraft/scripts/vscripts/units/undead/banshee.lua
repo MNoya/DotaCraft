@@ -38,15 +38,16 @@ function undead_possession( keys )
 			-- particle management
 			ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf", 1, target)
 			
-			-- kill and set body underground
-			caster:ForceKill(true)
-			caster:SetAbsOrigin(Vector(0,0,-900))
+			-- kill and set selection
+			AddUnitToSelection(target)
+			caster:RemoveSelf()
 			
 			-- convert target unit information to match caster
 			target:SetOwner(caster:GetOwner())
 			target:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
 			target:SetControllableByPlayer(target:GetPlayerOwnerID(), false)
 			target:SetTeam(PlayerResource:GetTeam(caster:GetPlayerOwnerID()))
+
 			
 			--kill timer
 			return nil

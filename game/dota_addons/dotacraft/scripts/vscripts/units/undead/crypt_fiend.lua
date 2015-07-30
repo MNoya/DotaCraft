@@ -1,24 +1,43 @@
+-- it is possible that the burrow animations might cause crashes in the future, atm it has a crashing behaviour if spammed
+
+function BurrowVisual ( keys )
+local caster = keys.caster
+local duration = keys.ability:GetSpecialValueFor("duration") - 0.1
+
+	-- end any animation
+	EndAnimation(caster)
+	
+	if not caster:FindModifierByName("modifier_crypt_fiend_burrow") then -- if not burrowed, burrow
+		StartAnimation(caster, {duration=duration, activity=ACT_DOTA_CAST_ABILITY_4, rate=0.6, translate="stalker_exo"})
+		ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_burrow.vpcf", 1, caster)
+	end
+	
+end
+
 function Burrow ( keys )
 local caster = keys.caster
 local ability = keys.ability
 keys.hero_model = "models/heroes/weaver/weaver.vmdl"
 
-	ParticleManager:CreateParticle("particles/custom/sandking_sandstorm_eruption_dust.vpcf", 1, caster)
+	-- toggle state(purely visual)
+	ability:ToggleAbility()
 	
 	if not caster:FindModifierByName("modifier_crypt_fiend_burrow") then -- if not burrowed, burrow
-		print("burrowing")
 		caster:SetModel("models/heroes/nerubian_assassin/mound.vmdl")
 		caster:SetOriginalModel("models/heroes/nerubian_assassin/mound.vmdl")
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_crypt_fiend_burrow", nil)
 		HideWearables(keys)
 	else -- if burrowed, revert
-		print("unburrowing")
 		ShowWearables(keys)
 		caster:SetModel(keys.hero_model)
 		caster:SetOriginalModel(keys.hero_model)
 		caster:RemoveModifierByName("modifier_crypt_fiend_burrow")
+		
+		ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_burrow_exit.vpcf", 1, caster)
+		StartAnimation(caster, {duration=1, activity=ACT_DOTA_TELEPORT_END, rate=1})
 	end
 
+	caster:Stop()
 end
 
 function HideWearables( event )

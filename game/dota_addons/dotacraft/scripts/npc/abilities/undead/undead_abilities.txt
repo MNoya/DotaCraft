@@ -43,30 +43,30 @@
 	
 }			
 
-	//=================================================================================
-	// Ability: Destroyer Spell Immunity
-	// Description: "This unit is unaffected by magical abilities"
-	//=================================================================================
-	"undead_spell_immunity"
+//=================================================================================
+// Ability: Destroyer Spell Immunity
+// Description: "This unit is unaffected by magical abilities"
+//=================================================================================
+"undead_spell_immunity"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"		"undead_spell_immunity"
+	"MaxLevel"					"1"
+	
+	"Modifiers"
 	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"		"undead_spell_immunity"
-		"MaxLevel"					"1"
-		
-		"Modifiers"
+		"modifier_spell_immunity"
 		{
-			"modifier_spell_immunity"
+			"Passive" "1"
+			
+			"States"
 			{
-				"Passive" "1"
-				
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}	
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
+}
 
 //=================================================================================
 // Ability: Ghoul Frenzy
@@ -121,7 +121,7 @@
 "undead_web"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_web"
+	"AbilityTextureName"		"undead_research_web"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
@@ -234,16 +234,14 @@
 "undead_burrow"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_burrow"
+	"AbilityTextureName"		"crypt_lord_beetle_burrow"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-	"AbilityCastAnimation"		"ACT_DOTA_TELEPORT"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
-	"AbilityChannelTime"		"%duration"
 	
 	"AbilityMultiOrder" 		"1"
 	
@@ -269,21 +267,48 @@
 		"model"				"models/heroes/nerubian_assassin/mound.vmdl"
 		"model_folder"		"models/heroes/weaver"
 		
-		// dust particle
-		"particle" "particles/custom/sandking_sandstorm_eruption_dust.vpcf"
+		// burrow particles
+		"particle"	"particles/units/heroes/hero_nyx_assassin/nyx_assassin_burrow_exit.vpcf"
+		"particle"	"particles/units/heroes/hero_nyx_assassin/nyx_assassin_burrow.vpcf"
 	}
 	
-	"OnChannelSucceeded"
+	"OnSpellStart"
 	{
+       "ApplyModifier"
+        {
+            "ModifierName"  "modifier_burrowing"
+            "Target"        "CASTER"
+			"Duration"		"%duration"
+        }
+
 		"RunScript"
 		{
 			"ScriptFile"	"units/undead/crypt_fiend.lua"
-			"Function"		"Burrow"
+			"Function"		"BurrowVisual"
 		}
 	}
 	
 	"Modifiers"
 	{
+		"modifier_burrowing"
+		{
+            "IsHidden"  "1"
+
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "OnDestroy"
+            {
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/crypt_fiend.lua"
+					"Function"		"Burrow"
+				}
+            }
+		}
+		
 		"modifier_crypt_fiend_burrow"
 		{
 			
@@ -439,6 +464,56 @@
 }
 
 //=================================================================================
+// Ability: Disease Cloud
+// Description: "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
+// Code Reference: Aapl
+//=================================================================================
+"undead_meat_wagon_disease_cloud"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"MaxLevel"					"1"
+	"AbilityTextureName"		"pudge_rot"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"maximum_clouds"		"3"
+		}
+	}
+	
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+	}
+	
+	"Modifiers"
+	{	
+		"modifier_disease_orb"
+		{	
+			"Passive"						"1"
+			"IsHidden"						"1"
+		
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"Target"		"TARGET"
+					"ScriptFile"	"units/undead/meat_wagon.lua"
+					"Function"		"meat_wagon_disease_cloud"
+				}
+			}
+		}
+	}
+
+}
+
+
+//=================================================================================
 // Ability: Get Corpse
 // Description: "Picks up a nearby corpse for later use."
 // Code Reference: Amel
@@ -449,7 +524,7 @@
 	"AbilityTextureName"		"undead_get_corpse"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"100"
@@ -457,18 +532,67 @@
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
 		
-	"AOERadius"					"600"
+	"AOERadius"					"200"
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"radius"		"600"
+			"radius"		"200"
 		}
 		// Search radius basically, it works like Cannibalize but it can be autocasted.
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"max_corpses"	"8"
+		}
 	}
-
 	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/undead/meat_wagon.lua"
+			"Function"		"get_corpse"			
+		}	
+	}
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/undead/meat_wagon.lua"
+			"Function"		"drop_all_corps"			
+		}
+	}
+	
+	"Modifiers"
+	{	
+		"modifier_corpses"
+		{
+			"Passive" 	"1"
+		
+		}
+		
+		"modifier_get_corpse_autocast"
+		{
+			"Passive" "1"
+			"IsHidden" "1"
+					
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile" "units/undead/meat_wagon.lua"
+					"Function"		"ToggleOnAutocast"			
+				}		
+				"RunScript"
+				{
+					"ScriptFile" "units/undead/meat_wagon.lua"
+					"Function"		"get_corpse_autocast"			
+				}	
+			}
+		}
+	}
 }
 
 //=================================================================================
@@ -495,7 +619,33 @@
 		// Can't be autocasted, of course, that'd be stupid. It also un-autocasts Get Corpse if you happen to make that ability autocast-able.
 	}
 
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName" "modifier_prevent_spam_click"
+			"Target" "CASTER"
+			"Duration" "0.5"
+		}
+	}
 	
+	"Modifiers"
+	{
+		"modifier_prevent_spam_click"
+		{
+			"IsHidden" "1"
+		
+			"ThinkInterval" "0.5"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile" "units/undead/meat_wagon.lua"
+					"Function"	"drop_corpse"
+				}
+			}
+		}
+	}
 }
 
 //=================================================================================
@@ -505,11 +655,38 @@
 "undead_exhume_corpses"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_exhume_corpses"
+	"AbilityTextureName"		"undead_research_exhume_corpses"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"interval"		"15"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_exhume_corpse"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			
+			"ThinkInterval" "%interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile" "units/undead/meat_wagon.lua"
+					"Function" "exhume_corpse"
+				}
+			}
+		}
+	}
 }
 
 //=================================================================================
@@ -551,7 +728,10 @@
 	{
 		"model" "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
 		"model_folder" "models/heroes/pugna"	
+		
+		// particle precaches
 		"particle" "particles/neutral_fx/skeleton_spawn.vpcf"
+		"particle" "particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"
 	}
 	
 	"OnAbilityPhaseStart"
@@ -1506,6 +1686,9 @@
 	{
 		"model_folder" "models/heroes/obsidian_destroyer"
 		"particle" 		"particles/siege_fx/siege_bad_death_01.vpcf"
+		
+		// destroyer projectile
+		"particle"		"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
 	
 	"OnSpellStart"
