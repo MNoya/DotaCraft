@@ -12,17 +12,31 @@ function OnRightButtonPressed()
 	var mouseEntities = GameUI.FindScreenEntities( cursor );
 	mouseEntities = mouseEntities.filter( function(e) { return e.entityIndex != mainSelected; } )
 	
-	//$.Msg("entities: ", mouseEntities.length)
-	// Builder Right Click on gold mine
+	// Builder Right Click
 	if (mouseEntities.length > 0 && IsBuilder(mainSelectedName) )
 	{
 		for ( var e of mouseEntities )
 		{
-			if (Entities.GetUnitName(e.entityIndex) == "gold_mine"){
+			var entityName = Entities.GetUnitName(e.entityIndex)
+			// Gold mine rightclick
+			if (entityName == "gold_mine"){
 				$.Msg("Player "+iPlayerID+" Clicked on a gold mine")
 				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
 				return true;
 			}
+			// Entangled gold mine rightclick
+			else if (mainSelectedName == "nightelf_wisp" && entityName == "nightelf_entangled_gold_mine" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID )){
+				$.Msg("Player "+iPlayerID+" Clicked on a entangled gold mine")
+				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
+				return true;
+			}
+			// Haunted gold mine rightclick
+			else if (mainSelectedName == "undead_acolyte" && entityName == "undead_haunted_gold_mine" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID )){
+				$.Msg("Player "+iPlayerID+" Clicked on a haunted gold mine")
+				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
+				return true;
+			}
+			// Repair rightclick
 			else if (IsCustomBuilding(e.entityIndex) && Entities.GetHealthPercent(e.entityIndex) < 100 && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) ){
 				$.Msg("Player "+iPlayerID+" Clicked on a building with health missing")
 				GameEvents.SendCustomGameEventToServer( "repair_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
@@ -42,7 +56,9 @@ function OnRightButtonPressed()
 		{
 			for ( var e of mouseEntities )
 			{
-				if (Entities.GetUnitName(e.entityIndex) == "gold_mine"){
+				var entityName = Entities.GetUnitName(e.entityIndex)
+				if ( entityName == "gold_mine" || ( Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) && (entityName == "nightelf_entangled_gold_mine" || entityName == "undead_haunted_gold_mine")))
+				{
 					$.Msg(" Targeted gold mine")
 					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "mine", targetIndex: e.entityIndex })
 				}
@@ -60,6 +76,20 @@ function OnRightButtonPressed()
 			var GamePos = Game.ScreenXYToWorld(cursor[0], cursor[1]);
 			GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "position", position: GamePos})
 			return true;
+		}
+	}
+
+	// Unit rightclick
+	if (mouseEntities.length > 0)
+	{
+		for ( var e of mouseEntities )
+		{
+			// Moonwell rightclick
+			if (IsCustomBuilding(e.entityIndex) && Entities.GetUnitName(e.entityIndex) == "nightelf_moon_well" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) ){
+				$.Msg("Player "+iPlayerID+" Clicked on moon well to replenish")
+				GameEvents.SendCustomGameEventToServer( "moonwell_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
+				return false; //Keep the unit order
+			}
 		}
 	}
 

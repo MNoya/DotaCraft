@@ -30,16 +30,21 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
     end
 
+    -- Skip Prevents order loops
+    local unit = EntIndexToHScript(units["0"])
+    if unit and unit.skip then
+        if DEBUG then print("Skip") end
+            unit.skip = false
+        return true
+    else
+        if DEBUG then print("Execute this order") end
+    end
+
     ------------------------------------------------
     --           Ability Multi Order              --
     ------------------------------------------------
     if abilityIndex and abilityIndex ~= 0 and IsMultiOrderAbility(EntIndexToHScript(abilityIndex)) then
         print("Multi Order Ability")
-        local unit = EntIndexToHScript(units["0"])
-        if unit.skip then
-            unit.skip = false
-            return true
-        end
 
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
@@ -80,16 +85,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     --             No Target Orders               --
     ------------------------------------------------
     elseif order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
-        local unit = EntIndexToHScript(units["0"])
-
-        if unit.skip then
-            if DEBUG then print("Skip") end
-            unit.skip = false
-            return true
-        else
-            if DEBUG then print("Execute this order") end
-        end
-
+        
         local abilityIndex = filterTable["entindex_ability"]
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
@@ -117,14 +113,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
         local unit = EntIndexToHScript(units["0"])
         if DEBUG then print("DOTA_UNIT_ORDER_CAST_TARGET_TREE ",unit) end
-        if unit.skip_gather_check then
-            if DEBUG then print("Skip") end
-            unit.skip_gather_check = false
-            return true
-        else
-            if DEBUG then print("Execute this order") end
-        end
-
+    
         local abilityIndex = filterTable["entindex_ability"]
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
@@ -176,7 +165,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 if empty_tree then
                     local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
                     empty_tree.builder = unit -- Assign the wisp to this tree, so next time this isn't empty
-                    unit.skip_gather_check = true
+                    unit.skip = true
                     local gather_ability = unit:FindAbilityByName("nightelf_gather")
                     if gather_ability and gather_ability:IsFullyCastable() then
                         --print("Order: Cast on Tree ",tree_index)
@@ -199,7 +188,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 if empty_tree then 
 
                     empty_tree.builder = unit
-                    unit.skip_gather_check = true
+                    unit.skip = true
                     local gather_ability = unit:FindAbilityByName(race.."_gather")
                     local return_ability = unit:FindAbilityByName(race.."_return_resources")
                     if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
@@ -208,7 +197,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
                     elseif return_ability and not return_ability:IsHidden() then
                         --print("Order: Return resources")
-                        unit.skip_gather_check = false -- Let it propagate to all selected units
+                        unit.skip = false -- Let it propagate to all selected units
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
                     end
                 else
@@ -269,7 +258,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS)
                     unit.target_tree = empty_tree --The new selected tree
                     --print("Order: Return resources")
-                    unit.skip_gather_check = false -- Let it propagate to all selected units
+                    unit.skip = false -- Let it propagate to all selected units
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
                 end
             end
@@ -399,17 +388,10 @@ function dotacraft:FilterExecuteOrder( filterTable )
         return false
     
     ------------------------------------------------
-    --          Gold Gather Multi Order           --
+    --        Gold Gather/Repair Multi Order      --
     ------------------------------------------------
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
         local unit = EntIndexToHScript(units["0"])
-        if unit.skip_gather_check then
-            if DEBUG then print("Skip") end
-            unit.skip_gather_check = false
-            return true
-        else
-            if DEBUG then print("Execute this order") end
-        end
 
         local abilityIndex = filterTable["entindex_ability"]
         local ability = EntIndexToHScript(abilityIndex) 
@@ -417,8 +399,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         local targetIndex = filterTable["entindex_target"]
         local target_handle = EntIndexToHScript(targetIndex)
+        local target_name = target_handle:GetUnitName()
 
-        if target_handle:GetUnitName() == "gold_mine" then
+        if target_name == "gold_mine" or
+          ( (target_name == "nightelf_entangled_gold_mine" or target_name == "undead_haunted_mine" ) and target_handle:GetTeamNumber() == unit:GetTeamNumber()) then
+
             local gold_mine = target_handle        
             -- Get the currently selected units and send new orders
             local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
@@ -433,7 +418,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
                 -- Gold gather
                 if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-                    unit.skip_gather_check = true
+                    unit.skip = true
                     --print("Order: Cast on ",gold_mine:GetUnitName())
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
                 elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
@@ -442,7 +427,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                         --print("Keep gathering")
 
                         -- Swap to a gather ability and keep extracting
-                        unit.skip_gather_check = true
+                        unit.skip = true
                         unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
                         --print("Order: Cast on ",gold_mine:GetUnitName())
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
@@ -451,9 +436,40 @@ function dotacraft:FilterExecuteOrder( filterTable )
                         local return_ability = unit:FindAbilityByName(race.."_return_resources")
                         unit.target_mine = gold_mine
                         --print("Order: Return resources")
-                        unit.skip_gather_check = false -- Let it propagate to all selected units
+                        unit.skip = false -- Let it propagate to all selected units
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
                     end
+                end
+            end
+            
+        elseif IsCustomBuilding(target_handle) and target_handle:GetTeamNumber() == unit:GetTeamNumber() then
+            --print("Order: Repair ",target_handle:GetUnitName())
+
+            -- Get the currently selected units and send new orders
+            local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+            if not entityList then
+                return true
+            end
+
+            for k,entityIndex in pairs(entityList) do
+
+                local unit = EntIndexToHScript(entityIndex)
+                local race = GetUnitRace(unit)
+                local repair_ability = unit:FindAbilityByName(race.."_gather")
+
+                -- Repair
+                if repair_ability and repair_ability:IsFullyCastable() and not repair_ability:IsHidden() then
+                    --print("Order: Repair ",building:GetUnitName())
+                    unit.skip = true
+                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
+                
+                elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
+                    --print("Order: Repair ",building:GetUnitName())
+        
+                    -- Swap to the repair ability and send repair order
+                    unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
+                    unit.skip = true
+                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = false})
                 end
             end
         end
@@ -494,10 +510,24 @@ function dotacraft:GoldGatherOrder( event )
             local return_ability = unit:FindAbilityByName(race.."_return_resources")
             unit.target_mine = gold_mine
             --print("Order: Return resources")
-            unit.skip_gather_check = false -- Let it propagate to all selected units
+            unit.skip = false -- Let it propagate to all selected units
             ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
         end
     end
+end
+
+------------------------------------------------
+--              Replenish Right-Click         --
+------------------------------------------------
+function dotacraft:MoonWellOrder( event )
+    local pID = event.pID
+    local entityIndex = event.mainSelected
+    local target = EntIndexToHScript(entityIndex)
+    local targetIndex = event.targetIndex
+    local moon_well = EntIndexToHScript(targetIndex)
+
+    local replenish = moon_well:FindAbilityByName("nightelf_replenish_mana_and_life")
+    moon_well:CastAbilityOnTarget(target, replenish, moon_well:GetPlayerOwnerID())
 end
 
 ------------------------------------------------
@@ -614,22 +644,28 @@ function CreateRallyFlagForBuilding( building )
         particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_CUSTOMORIGIN, building, teamNumber)
         ParticleManager:SetParticleControl(particle, 0, Vector(tree_pos.x, tree_pos.y, tree_pos.z+250)) -- Position
         ParticleManager:SetParticleControl(particle, 1, building:GetAbsOrigin()) --Orientation
-        ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
     elseif flag_type == "position" then
         local position = building.flag:GetAbsOrigin()
         particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_ABSORIGIN_FOLLOW, building.flag, teamNumber)
         ParticleManager:SetParticleControl(particle, 0, position) -- Position
         ParticleManager:SetParticleControl(particle, 1, building:GetAbsOrigin()) --Orientation
-        ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
     elseif flag_type == "target" or flag_type == "mine" then
         local target = building.flag
         if target and IsValidEntity(target) then
-            particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_OVERHEAD_FOLLOW, target, teamNumber)
-            ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) -- Position
+            local origin = target:GetAbsOrigin()
+                        
+            if flag_type == "mine" then
+                particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_CUSTOMORIGIN, target, teamNumber)
+                ParticleManager:SetParticleControl(particle, 0, Vector(origin.x, origin.y, origin.z+350))
+            else
+                particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_OVERHEAD_FOLLOW, target, teamNumber)
+                ParticleManager:SetParticleControl(particle, 0, origin)
+            end
+
             ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin() * target:GetForwardVector()) --Orientation
-            ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
         end
     end
+    ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
 
     -- Stores the particle on the player handle to remove it when the selection changes
     local player = building:GetPlayerOwner()

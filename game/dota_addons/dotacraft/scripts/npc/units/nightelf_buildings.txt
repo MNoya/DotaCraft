@@ -504,13 +504,14 @@
 	"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
 	"Ability2"					"nightelf_uproot"	 //Reference: Aeat
 	"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
-	"Ability4"					""	 //Reference: Abdl
-	"Ability5"					""	 //Reference: Atol
+	"Ability4"					"" 
+	"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
 	"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	"Ability12"					"nightelf_natures_blessing_disabled"
 	"Ability13"					"nightelf_eat_tree"
+
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -606,7 +607,7 @@
 	"Ability2"					"nightelf_uproot"
 	"Ability3"					"nightelf_research_natures_blessing"
 	"Ability4"					"nightelf_research_backpack"
-	"Ability5"					""	 //Reference: Atol
+	"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
 	"Ability6"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
@@ -707,7 +708,7 @@
 	"Ability2"					"nightelf_uproot"
 	"Ability3"					"nightelf_research_backpack"
 	"Ability4"					"nightelf_research_natures_blessing"	
-	"Ability5"					""	 //Reference: Atol
+	"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
 	"Ability6"					""	 //Reference: Arlm
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
@@ -1119,8 +1120,8 @@
 {
 	// General
 	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_building"
-	"Model"						"models/props_structures/good_ancient001.vmdl"
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/mine/mine.vmdl"
 	"ModelScale"				"0.6"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
@@ -1130,10 +1131,10 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"nigthelf_load_wisp"	
-	"Ability2"					"nigthelf_unload_wisp1"
+	"Ability1"					"nightelf_load"	
+	"Ability2"					"nightelf_unload"
 	"Ability3"					"nightelf_entangled_mine"
-	"Ability4"					"nigthelf_unload_all_wisps"
+	"Ability4"					"nightelf_unload_all"
 	"Ability5"					""
 	"Ability10"					"ability_building"
 	
@@ -1175,7 +1176,7 @@
 	//----------------------------------------------------------------
 	"StatusHealth"				"800"
 	"StatusHealthRegen"			"0"
-	"StatusMana"				"100"
+	"StatusMana"				"15000" //Shows gold left (health) on the mine that is entangling
 	"StatusManaRegen"			"0"
 	
 	// Vision

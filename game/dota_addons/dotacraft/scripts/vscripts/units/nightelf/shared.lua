@@ -62,6 +62,25 @@ function ShadowMeldRemove( event )
 	ToggleOff(ability)
 end
 
+
+-- Only regen at night time
+function NightRegenThink( event )
+	local caster = event.caster
+
+	if GameRules:IsDaytime() then
+		if not caster:HasModifier("modifier_night_regen_disabled") then
+			local ability = event.ability
+			local base_regen = caster:GetBaseHealthRegen()
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_night_regen_disabled", {})
+			caster:SetModifierStackCount("modifier_night_regen_disabled", caster, base_regen*10)
+		end
+	else
+		if caster:HasModifier("modifier_night_regen_disabled") then
+			caster:RemoveModifierByName("modifier_night_regen_disabled")
+		end
+	end
+end
+
 -- For Ultravision
 function SetNightVision( event )
 	local caster = event.caster
@@ -75,4 +94,3 @@ function ToggleOnAutocast( event )
 
 	ability:ToggleAutoCast()
 end
-

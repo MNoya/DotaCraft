@@ -49,15 +49,23 @@ function Gather( event )
 	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
 		
+		local tree = target
+
 		-- Disable this for Acolytes
-		if caster:GetUnitName() == "undead_acolyte" then
+		if IsUndead(caster) then
 			print("Interrupt")
 			caster:Interrupt()
 			return
 		end
 
+		-- Check for empty tree for Wisps
+		if IsNightElf(caster) and (tree.builder ~= nil and tree.builder ~= caster) then
+			print(" The Tree already has a wisp in it, find another one!")
+			caster:Interrupt()
+			return
+		end
+
 		print("Moving to ", target_class)
-		local tree = target
 		local tree_pos = tree:GetAbsOrigin()
 		local particleName = "particles/ui_mouseactions/ping_circle_static.vpcf"
 		local particle = ParticleManager:CreateParticleForPlayer(particleName, PATTACH_CUSTOMORIGIN, caster, caster:GetPlayerOwner())
@@ -79,11 +87,10 @@ function Gather( event )
 		end
 
 		tree.builder = caster
+		local tree_pos = tree:GetAbsOrigin()
 
 		-- Fake toggle the ability, cancel if any other order is given
-		if ability:GetToggleState() == false then
-			ability:ToggleAbility()
-		end
+		ToggleOn(ability)
 
 		-- Recieving another order will cancel this
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_lumber", {})
@@ -100,10 +107,18 @@ function Gather( event )
 				local distance = (tree_pos - caster:GetAbsOrigin()):Length()
 				
 				if distance > MIN_DISTANCE_TO_TREE then
-					caster:MoveToTargetToAttack(tree)
+					caster:MoveToPosition(tree_pos)
 					return THINK_INTERVAL
 				else
 					--print("Tree Reached")
+
+					if IsNightElf(caster) then
+						tree_pos.z = tree_pos.z - 28
+						caster:SetAbsOrigin(tree_pos)
+
+						tree.wisp_gathering = true
+					end
+
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
 					return
 				end
@@ -113,13 +128,15 @@ function Gather( event )
 		end)
 
 		-- Hide Return
-		local return_ability = caster:FindAbilityByName(race.."_return_resources")
-		return_ability:SetHidden(true)
-		ability:SetHidden(false)
-		--print("Gathering Lumber ON, Return OFF")
+		if IsHuman(caster) or IsOrc(caster) then
+			local return_ability = caster:FindAbilityByName(race.."_return_resources")
+			return_ability:SetHidden(true)
+			ability:SetHidden(false)
+			--print("Gathering Lumber ON, Return OFF")
+		end
 
 	-- Gather Gold
-	elseif target_class == "npc_dota_building" then
+	elseif string.match(target:GetUnitName(),"gold_mine") then
 
 		-- Disable this for Ghouls
 		if caster:GetUnitName() == "undead_ghoul" then
@@ -127,129 +144,145 @@ function Gather( event )
 			return
 		end
 
-		if target:GetUnitName() == "gold_mine" then
-			local mine = target
+		local mine
+		if IsHuman(caster) or IsOrc(caster) then
+			if target:GetUnitName() ~= "gold_mine" then
+				print("Must target a gold mine, not a "..target:GetUnitName())
+				return
+			else
+				mine = target
+			end
+		elseif IsNightElf(caster) then
+			if target:GetUnitName() ~= "nightelf_entangled_gold_mine" then
+				print("Must target a entangled gold mine, not a "..target:GetUnitName())
+				return
+			else
+				mine = target.mine
+			end
+		elseif IsUndead(caster) then
+			if target:GetUnitName() ~= "undead_haunted_gold_mine" then
+				print("Must target a haunted gold mine, not a "..target:GetUnitName())
+				return
+			else
+				mine = target.mine
+			end
+		end		
 
-			local mine_pos = mine:GetAbsOrigin()
-			caster.gold_gathered = 0
-			caster.target_mine = mine
-			ability.cancelled = false
-			caster.state = "moving_to_mine"
+		local mine_pos = mine:GetAbsOrigin()
+		caster.gold_gathered = 0
+		caster.target_mine = mine
+		ability.cancelled = false
+		caster.state = "moving_to_mine"
 
-			-- Destroy any old move timer
-			if caster.moving_timer then
-				Timers:RemoveTimer(caster.moving_timer)
+		-- Destroy any old move timer
+		if caster.moving_timer then
+			Timers:RemoveTimer(caster.moving_timer)
+		end
+
+		-- Fake toggle the ability, cancel if any other order is given
+		if ability:GetToggleState() == false then
+			ability:ToggleAbility()
+		end
+
+		-- Recieving another order will cancel this
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_gold", {})
+
+		local mine_entrance_pos = mine.entrance+RandomVector(75)
+		caster.moving_timer = Timers:CreateTimer(function() 
+
+			-- End if killed
+			if not (caster and IsValidEntity(caster) and caster:IsAlive()) then
+				return
 			end
 
-			-- Fake toggle the ability, cancel if any other order is given
-			if ability:GetToggleState() == false then
-				ability:ToggleAbility()
-			end
-
-			-- Recieving another order will cancel this
-			ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_gold", {})
-
-			local mine_entrance_pos = mine.entrance+RandomVector(75)
-			caster.moving_timer = Timers:CreateTimer(function() 
-
-				-- End if killed
-				if not (caster and IsValidEntity(caster) and caster:IsAlive()) then
-					return
-				end
-
-				-- Move towards the mine until close range
-				if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_gold") and caster.state == "moving_to_mine" then
-					local distance = (mine_pos - caster:GetAbsOrigin()):Length()
-					
-					if distance > MIN_DISTANCE_TO_MINE then
-						caster:MoveToPosition(mine_entrance_pos)
-						--print("Moving to Mine, distance ", distance)
-						return THINK_INTERVAL
-					else
-						--print("Mine Reached")
-
-						-- 2 Possible behaviours: Human/Orc vs NE/UD
-						-- NE/UD requires another building on top (Missing at the moment)
-	
-						if race == "human" or race == "orc" then
-							if mine.builder then
-								--print("Waiting for the builder inside to leave")
-								return THINK_INTERVAL
-							elseif mine and IsValidEntity(mine) then
-								mine.builder = caster
-								ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {duration = DURATION_INSIDE_MINE})
-								caster:SetAbsOrigin(mine:GetAbsOrigin()) -- Send builder inside
-								return
-							else
-								caster:RemoveModifierByName("modifier_on_order_cancel_gold")
-								CancelGather(event)
-							end
-
-						elseif race == "undead" or race == "nightelf" then
-							--[[if mine.entangled or haunted by this player continue]]
-							if not mine.builders then
-								mine.builders = {}
-							end
-
-							local counter = #mine.builders
-							print(counter, "Builders inside")
-							if counter >= 5 then
-								print(" Mine full")
-								return
-							end
-
-							local distance = 0
-							local height = 0
-							if race == "undead" then
-								distance = 250
-							elseif race == "nightelf" then
-								distance = 100
-								height = 25
-							end
-							
-							ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {})
-							-- Find first empty position
-							local free_pos
-							for i=1,5 do
-								if not mine.builders[i] then
-									mine.builders[i] = caster
-									free_pos = i
-									break
-								end
-							end		
-
-							-- 5 positions = 72 degrees
-							local mine_origin = mine:GetAbsOrigin()
-							local fv = mine:GetForwardVector()
-							local front_position = mine_origin + fv * distance
-							local pos = RotatePosition(mine_origin, QAngle(0, 72*free_pos, 0), front_position)
-							caster:Stop()
-							caster:SetAbsOrigin(Vector(pos.x, pos.y, pos.z+height))
-							caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
-							Timers:CreateTimer(0.06, function() 
-								caster:Stop() 
-								caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() ) 
-							end)
-
-							-- Particle Counter on overhead
-							print("SetGoldMineCounter".. counter)
-							SetGoldMineCounter(mine, counter)
-
-						end
-					end
-				else
-					return
-				end
-			end)
+			-- Move towards the mine until close range
+			if not ability.cancelled and caster:HasModifier("modifier_on_order_cancel_gold") and caster.state == "moving_to_mine" then
+				local distance = (mine_pos - caster:GetAbsOrigin()):Length()
 				
-			-- Hide Return
-			local return_ability = caster:FindAbilityByName(race.."_return_resources")
-			if return_ability then
-				return_ability:SetHidden(true)
+				if distance > MIN_DISTANCE_TO_MINE then
+					caster:MoveToPosition(mine_entrance_pos)
+					--print("Moving to Mine, distance ", distance)
+					return THINK_INTERVAL
+				else
+					--print("Mine Reached")
+
+					-- 2 Possible behaviours: Human/Orc vs NE/UD
+					-- NE/UD requires another building on top (Missing at the moment)
+
+					if race == "human" or race == "orc" then
+						if mine.builder then
+							--print("Waiting for the builder inside to leave")
+							return THINK_INTERVAL
+						elseif mine and IsValidEntity(mine) then
+							mine.builder = caster
+							ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {duration = DURATION_INSIDE_MINE})
+							caster:SetAbsOrigin(mine:GetAbsOrigin()) -- Send builder inside
+							return
+						else
+							caster:RemoveModifierByName("modifier_on_order_cancel_gold")
+							CancelGather(event)
+						end
+
+					elseif race == "undead" or race == "nightelf" then
+						--[[if mine.entangled or haunted by this player continue]]
+						if not mine.builders then
+							mine.builders = {}
+						end
+
+						local counter = #mine.builders
+						print(counter, "Builders inside")
+						if counter >= 5 then
+							print(" Mine full")
+							return
+						end
+
+						local distance = 0
+						local height = 0
+						if race == "undead" then
+							distance = 250
+						elseif race == "nightelf" then
+							distance = 100
+							height = 25
+						end
+						
+						ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {})
+						-- Find first empty position
+						local free_pos
+						for i=1,5 do
+							if not mine.builders[i] then
+								mine.builders[i] = caster
+								free_pos = i
+								break
+							end
+						end		
+
+						-- 5 positions = 72 degrees
+						local mine_origin = mine:GetAbsOrigin()
+						local fv = mine:GetForwardVector()
+						local front_position = mine_origin + fv * distance
+						local pos = RotatePosition(mine_origin, QAngle(0, 72*free_pos, 0), front_position)
+						caster:Stop()
+						caster:SetAbsOrigin(Vector(pos.x, pos.y, pos.z+height))
+						caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
+						Timers:CreateTimer(0.06, function() 
+							caster:Stop() 
+							caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() ) 
+						end)
+
+						-- Particle Counter on overhead
+						SetGoldMineCounter(mine, counter+1)
+
+					end
+				end
+			else
+				return
 			end
-		else
-			--print("Not a valid gathering target")
-			return
+		end)
+			
+		-- Hide Return
+		local return_ability = caster:FindAbilityByName(race.."_return_resources")
+		if return_ability then
+			return_ability:SetHidden(true)
 		end
 
 	-- Repair Building
@@ -417,6 +450,11 @@ function GatherLumber( event )
 		max_lumber_carried = player.LumberCarried
 	end
 
+	-- Undead Ghouls can carry up to 20
+	if IsUndead(caster) then
+		max_lumber_carried = 20
+	end
+
 	local return_ability = caster:FindAbilityByName(race.."_return_resources")
 
 	caster.lumber_gathered = caster.lumber_gathered + 1
@@ -537,10 +575,37 @@ function GoldGain( event )
 	local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
 	hero:ModifyGold(gold_gain, false, 0)
 	PopupGoldGain( caster, gold_gain)
+
+	-- Reduce the health of the main and mana on the entangled/haunted mine to show the remaining gold
+	local mine = caster.target_mine
+	mine:SetHealth( mine:GetHealth() - gold_gain )
+	mine.building_on_top:SetMana( mine:GetHealth() - gold_gain )
+	print(mine.building_on_top:GetUnitName())
+
+	-- If the gold mine has no health left for another harvest
+	if mine:GetHealth() < gold_gain then
+
+		-- Destroy the nav blockers associated with it
+		for k, v in pairs(mine.blockers) do
+	      DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
+	      DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
+	    end
+	    print("Gold Mine Collapsed at ", mine:GetHealth())
+
+	    mine.building_on_top:RemoveSelf()
+
+	    mine:RemoveSelf()
+
+		caster.target_mine = nil
+	end
 end
 
 function SetGoldMineCounter( mine, count )
 	print(mine:GetUnitName(), count)
+
+	for i=1,count do
+		ParticleManager:SetParticleControl(mine.counter_particle, i, Vector(1,0,0))
+	end
 end
 
 -- Called when the race_return_resources ability is cast
@@ -797,7 +862,6 @@ function IsValidLumberDepositName( building_name, race )
 
 	return false
 end
-
 
 --------------------------------
 --       Repair Scripts       --

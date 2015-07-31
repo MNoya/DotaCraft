@@ -1,0 +1,166 @@
+//=================================================================================
+// Ability: Gather
+// Description: "Mines gold from Entangled Gold Mines and harvests lumber from trees."
+//=================================================================================
+"nightelf_gather"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_gather"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"lumber_interval"	"8"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"lumber_per_interval"	"5"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"gold_interval"		"4"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"gold_per_interval"	"10"
+		}	
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+	}
+
+	// Tree targeting
+		// Move towards the tree, repeat until ~100 distance
+		// Only one wisp per tree, if tree busy find another
+		// OnOrder, toggle off and cancel the skill
+		// When close to the tree, give the wisp flying movement and position it on top
+		// Modifier generates lumber every think interval, OnOrder cancels
+		// If possible try to make some circular rotation around the tree
+
+	// Gold mine targeting
+		// Mine has to be entangled (the targeted unit would actually be entangled_mine)
+		// Mine has to have a wisp slot available (5 total)
+		// Move towards the mine, repeat until ~100 distance
+		// OnOrder, toggle off and cancel the skill
+		// When close to the mine, put the wisp inside at some visible position and +1 slots
+		// The entangled mine has some skills to eject the wisps which are unselectable inside
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Gather"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_on_order_cancel_lumber"
+		{
+			"IsHidden"				"1"
+			"OnOrder"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"CancelGather"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_on_order_cancel_lumber"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+
+		"modifier_gathering_lumber"
+		{			
+			"OnOrder"
+			{			
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"CancelGather"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_gathering_lumber"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"ThinkInterval"  "%lumber_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"LumberGain"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+			}	
+		}
+
+		"modifier_on_order_cancel_gold"
+		{
+			"IsHidden"				"1"
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_on_order_cancel_gold"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"CancelGather"
+				}
+			}
+		}
+
+		"modifier_gathering_gold"
+		{
+			"IsHidden"				"1"
+			
+			"ThinkInterval"  		"%gold_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/wisp.lua"
+					"Function"		"GoldGain"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}	
+		}
+	}
+
+}

@@ -1,201 +1,4 @@
 //=================================================================================
-// Ability: Gather
-// Description: "Mines gold from Entangled Gold Mines and harvests lumber from trees."
-// Code Reference: Awha
-//=================================================================================
-"nightelf_gather"
-{
-	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_gather"
-	"MaxLevel"					"1"
-		
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"lumber_interval"	"8"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"lumber_per_interval"	"5"
-		}
-		"03"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"gold_interval"		"4"
-		}
-		"04"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"gold_per_interval"	"10"
-		}	
-	}
-
-	"precache"
-	{
-		"particle"  "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
-	}
-
-	// Try to start the skill with multiple-wisps in mind (GetAllSelectedUnits and send orders)
-
-	// Tree targeting
-		// Move towards the tree, repeat until ~100 distance
-		// Only one wisp per tree, if tree busy find another
-		// OnOrder, toggle off and cancel the skill
-		// When close to the tree, give the wisp flying movement and position it on top
-		// Modifier generates lumber every think interval, OnOrder cancels
-		// If possible try to make some circular rotation around the tree
-
-	// Gold mine targeting
-		// Mine has to be entangled (the targeted unit would actually be entangled_mine)
-		// Mine has to have a wisp slot available (5 total)
-		// Move towards the mine, repeat until ~100 distance
-		// OnOrder, toggle off and cancel the skill
-		// When close to the mine, put the wisp inside at some visible position and +1 slots
-		// The entangled mine has some skills to eject the wisps which are unselectable inside
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/nightelf/wisp.lua"
-			"Function"		"Gather"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_on_order_cancel"
-		{
-			"IsHidden"	"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/wisp.lua"
-					"Function"		"CancelGather"
-				}
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_on_order_cancel"
-					"Target" 		"CASTER"
-				}
-			}
-		}
-
-		"modifier_gathering_lumber"
-		{
-			"IsHidden"				"1"
-			
-			"OnOrder"
-			{			
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/wisp.lua"
-					"Function"		"CancelGather"
-				}
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_gathering_lumber"
-					"Target" 		"CASTER"
-				}
-			}
-
-			"ThinkInterval"  "%lumber_interval"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/wisp.lua"
-					"Function"		"LumberGain"
-				}
-			}
-
-			"States"
-			{
-				"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
-			}	
-		}
-
-		"modifier_gathering_gold"
-		{
-			"IsHidden"				"1"
-			
-			"OnOrder"
-			{			
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/wisp.lua"
-					"Function"		"ToggleOffGather"
-				}
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_gathering_gold"
-					"Target" 		"CASTER"
-				}
-			}
-
-			"ThinkInterval"  "%gold_interval"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/wisp.lua"
-					"Function"		"GoldGain"
-				}
-			}
-
-			"States"
-			{
-				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-				//"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
-			}	
-		}
-	}
-
-}
-
-// Added to a mine once entangled
-"nightelf_entangled_mine"
-{
-	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_gather"
-	"MaxLevel"					"1"
-		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-	"precache"
-	{
-		"particle"  "particles/nightelf/root_vines.vpcf"
-	}
-
-	"Modifiers"
-	{
-		"modifier_entangled_mine"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"IsDebuff"			"0"
-	
-			"EffectName"		"particles/nightelf/root_vines.vpcf"
-			"EffectAttachType"	"follow_origin"
-		}
-	}
-}
-
-
-//=================================================================================
 // Ability: Detonate
 // Description: "Destroys the Wisp, dispelling all magical buffs and draining <Adtn,DataA1> mana from each unit in an area around the Wisp. |n|cffffcc00Deals <Adtn,DataB1> damage to summoned units.|r"
 // Code Reference: Adtn
@@ -2803,7 +2606,7 @@
 		
 	"precache"
 	{
-		"particle"  "particles/nightelf/root_vines.vpcf"
+		"particle"  "particles/custom/nightelf/root_vines.vpcf"
 	}
 
 	"AbilitySpecial"
@@ -2847,7 +2650,7 @@
 		"modifier_rooted_ancient"
 		{
 			"Passive"			"1"
-			"EffectName"		"particles/nightelf/root_vines.vpcf"
+			"EffectName"		"particles/custom/nightelf/root_vines.vpcf"
 			"EffectAttachType"	"follow_origin"
 		}
 
@@ -2944,6 +2747,8 @@
 // Ability: Replenish
 // Replenish the life and mana of a target friendly unit.
 // Moon Wells only regenerate mana at night (same as units should only regenerate HP at night)
+// These are not set to autocast automatically because some players wish to only use them for Heroes and wish to have more control over how they are used.
+// Right-clicking a friendly moon well with a unit will set it to cast replenish whenever that unit gets close
 //=================================================================================
 "nightelf_replenish_mana_and_life"
 {
@@ -2988,14 +2793,14 @@
 			"Passive"			"1"
 			"IsHidden"			"1"
 			
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/shared.lua"
-					"Function"		"ToggleOnAutocast"
-				}
-			}
+			//"OnCreated"
+			//{
+			//	"RunScript"
+			//	{
+			//		"ScriptFile"	"units/nightelf/shared.lua"
+			//		"Function"		"ToggleOnAutocast"
+			//	}
+			//}
 
 			"ThinkInterval" "1.0"
 			"OnIntervalThink"
@@ -3099,7 +2904,6 @@
 
 	"precache"
 	{
-		"particle"  "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
 		"particle"	"particles/units/heroes/hero_treant/treant_leech_seed_projectile_heal_explode.vpcf"
 		"particle"  "particles/units/heroes/hero_treant/treant_leech_seed.vpcf"
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
@@ -3119,15 +2923,6 @@
 		"modifier_eat_tree"
 		{	
 			"Duration"		"%duration"
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "CASTER"
-				}
-			}
 
 			"ThinkInterval"  "0.5"
 			"OnIntervalThink"
@@ -3151,5 +2946,43 @@
 			}
 		}
 	}
+}
 
+
+
+// Night Elf Regen is disabled at day time
+"nightelf_night_regen"
+{
+
+	"BaseClass"					"ability_datadriven"		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"Modifiers"
+	{
+		"modifier_night_regen"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			
+			"ThinkInterval"  	"1.0"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/shared.lua"
+					"Function"		"NightRegenThink"
+				}
+			}
+		}
+
+		//Stacks of this modifier are applied to nullify base regen at daytime
+		"modifier_night_regen_disabled"
+		{
+			"IsHidden"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0.1"
+			}
+		}
+	}
 }

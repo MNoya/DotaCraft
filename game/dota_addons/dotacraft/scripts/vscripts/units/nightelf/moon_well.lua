@@ -15,6 +15,11 @@ function Replenish( event )
 	local missing_hp = target:GetHealthDeficit()
 	local missing_mana = target:GetMaxMana() - target:GetMana()
 
+	-- Don't ever cast on full health and mana
+	if missing_hp == 0 and missing_mana == 0 then
+		return
+	end
+
 	-- Best effort to fully replenish the unit
 	local replenish_life = 0
 	local replenish_mana = 0
@@ -42,12 +47,14 @@ function Replenish( event )
 		Timers:CreateTimer(0.2, function() PopupMana(target, math.floor(replenish_mana)) end)
 	end
 
-	moon_well:SpendMana(mana_needed, ability)
+	if mana_needed > 0 then
+		moon_well:SpendMana(mana_needed, ability)
 
-	print("Replenished ",target:GetUnitName()," for "..replenish_life.." HP and "..replenish_mana.." MP")
+		print("Replenished ",target:GetUnitName()," for "..replenish_life.." HP and "..replenish_mana.." MP")
 
-	ParticleManager:CreateParticle("particles/items3_fx/mango_active.vpcf", PATTACH_ABSORIGIN_FOLLOW, moon_well)
-	target:EmitSound("DOTA_Item.Mango.Activate")
+		ParticleManager:CreateParticle("particles/items3_fx/mango_active.vpcf", PATTACH_ABSORIGIN_FOLLOW, moon_well)
+		target:EmitSound("DOTA_Item.Mango.Activate")
+	end
 
 end
 

@@ -182,6 +182,7 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
     CustomGameEventManager:RegisterListener( "gold_gather_order", Dynamic_Wrap(dotacraft, "GoldGatherOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "repair_order", Dynamic_Wrap(dotacraft, "RepairOrder")) --Right click through panorama
+    CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "RegisterLeftClick"))
 	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "RegisterRightClick"))
@@ -923,12 +924,26 @@ function dotacraft:OnPlayerPickHero(keys)
 	local closest_mine_pos = closest_mine:GetAbsOrigin()
 	local mid_point = closest_mine_pos + (position-closest_mine_pos)/2
 
-	-- Undead special worker rules
+	-- Undead special rules
 	if hero_name == "npc_dota_hero_life_stealer" then
 		num_builders = 3
 		local ghoul = CreateUnitByName("undead_ghoul", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
 		ghoul:SetOwner(hero)
 		ghoul:SetControllableByPlayer(playerID, true)
+
+		-- Haunt the closest gold mine
+	end
+
+	-- Night Elf special rules
+	if hero_name == "npc_dota_hero_furion" then
+		-- Entangle the closest gold mine
+		local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
+		entangled_gold_mine:SetOwner(hero)
+		entangled_gold_mine:SetControllableByPlayer(playerID, true)
+
+		entangled_gold_mine.mine = closest_mine -- A reference to the mine that the entangled mine is associated with
+		building.entangled_gold_mine = entangled_gold_mine -- A reference to the entangled building of the city center
+		closest_mine.building_on_top = entangled_gold_mine -- A reference to the building that entangles this gold mine
 	end
 
 	for i=1,num_builders do	
@@ -1043,7 +1058,9 @@ function dotacraft:OnEntityKilled( event )
 
 	-- Building Killed
 	if IsCustomBuilding(killedUnit) then
-		killedUnit:RemoveBuilding(false) -- Building Helper grid cleanup
+		if killedUnit.RemoveBuilding then
+			killedUnit:RemoveBuilding(false) -- Building Helper grid cleanup
+		end
 
 		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killedUnit)

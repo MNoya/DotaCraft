@@ -1,0 +1,181 @@
+// On Tree of Life/Ages/Eternity. Places a nightelf_entangled_gold_mine and being construction
+// Must target a gold mine. Gold mine is already entangled when the game starts
+// Will auto start when the tree roots in radius of a gold mine
+"nightelf_entangle_gold_mine"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_entangle_gold_mine"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	"AbilityCastAnimation"			"ACT_DOTA_IDLE"
+
+	"AbilityCastRange"				"900"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"build_time"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hit_points"			"800"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/custom/nightelf/root_vines.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/ancients.lua"
+			"Function"		"EntangleGoldMine"
+		}
+	}
+}
+
+// Effects on the nightelf_entangled_gold_mine
+"nightelf_entangled_mine"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_entangle_gold_mine"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
+	}
+	
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/ancients.lua"
+			"Function"		"DestroyEntangledMine"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_entangled_mine"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"EffectName"		"particles/custom/nightelf/root_vines.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/ancients.lua"
+					"Function"		"HideGoldMine"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/ancients.lua"
+					"Function"		"GoldMineCounter"
+				}
+			}
+		}
+
+		// Mine "behind" the entangled is unselectable
+		"modifier_unselectable_mine"
+		{
+			"IsHidden"			"1"
+			"States"
+			{
+				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		// Construction process
+		"modifier_entangling"
+		{
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "CASTER"
+				}
+			}
+		}
+	}
+}
+
+
+// Order a wisp to cast gather on the mine
+// Also available through right click
+"nightelf_load"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_load"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/ancients.lua"
+			"Function"		"LoadWisp"
+		}
+	}
+}
+
+// Order one wisp to exit the mine
+"nightelf_unload"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_train_wisp"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/ancients.lua"
+			"Function"		"UnloadWisp"
+		}
+	}
+}
+
+// Order all wisps to exit the mine
+// Used when the building is killed (either through damage or tree uprooting) or when the mine collapses
+"nightelf_unload_all"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_unload"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/nightelf/ancients.lua"
+			"Function"		"UnloadAll"
+		}
+	}
+}

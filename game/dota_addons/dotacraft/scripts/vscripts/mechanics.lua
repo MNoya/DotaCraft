@@ -569,6 +569,22 @@ function GetUnitRace( unit )
 	return name_split[1]
 end
 
+function IsHuman( unit )
+	return GetUnitRace(unit)=="human"
+end
+
+function IsOrc( unit )
+	return GetUnitRace(unit)=="orc"
+end
+
+function IsNightElf( unit )
+	return GetUnitRace(unit)=="nightelf"
+end
+
+function IsUndead( unit )
+	return GetUnitRace(unit)=="undead"
+end
+
 function IsCustomBuilding( unit )
     local ability_building = unit:FindAbilityByName("ability_building")
     local ability_tower = unit:FindAbilityByName("ability_tower")
