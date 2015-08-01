@@ -7406,12 +7406,12 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"5"
 		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
 		"Ability2"					"nightelf_uproot"	 //Reference: Aeat
 		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
-		"Ability4"					"" 
-		"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
+		"Ability4"					"nightelf_entangle_gold_mine_passive" //Shows while the tree has a mine entangled
+		"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while the tree has a mine entangled
 		"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
@@ -8063,7 +8063,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"70"
 		"CollisionSize"				"50"
 		

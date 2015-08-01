@@ -27844,6 +27844,7 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED" // Prevents moving
 					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED" // Allows attacking own buildings
 					"MODIFIER_STATE_LOW_ATTACK_PRIORITY" "MODIFIER_STATE_VALUE_ENABLED" // Makes it a secondary target when A-clicking ground
+					//"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED" // GridNav is blocked
 				}
 				"Properties"
 				{
@@ -32609,6 +32610,15 @@
 		}
 	}
 	
+	// Passive ability to indicate that this ancient has an entangled gold mine active
+	"nightelf_entangle_gold_mine_passive"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"nightelf_entangle_gold_mine"
+		"MaxLevel" 						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
 	// Effects on the nightelf_entangled_gold_mine
 	"nightelf_entangled_mine"
 	{
@@ -32623,15 +32633,6 @@
 			"particle"  "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
 		}
 		
-		"OnOwnerDied"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"units/nightelf/ancients.lua"
-				"Function"		"DestroyEntangledMine"
-			}
-		}
-	
 		"Modifiers"
 		{
 			"modifier_entangled_mine"
@@ -32649,10 +32650,13 @@
 						"ScriptFile"	"units/nightelf/ancients.lua"
 						"Function"		"HideGoldMine"
 					}
+				}
+				"OnDestroy"
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/nightelf/ancients.lua"
-						"Function"		"GoldMineCounter"
+						"Function"		"ShowGoldMine"
 					}
 				}
 			}
@@ -32786,6 +32790,7 @@
 		"precache"
 		{
 			"particle"  "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+			"particle"  "particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 		}
 	
 		// Tree targeting
@@ -32907,6 +32912,83 @@
 					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}	
 			}
+	
+			// REPAIR (Renew)
+			"modifier_on_order_cancel_repair"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_repair"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+			}
+	
+			// On the caster
+			"modifier_builder_repairing"
+			{
+				"EffectName"			"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+				"EffectAttachType"		"follow_overhead"
+	
+				"TextureName"			"nightelf_renew"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuilderRepairing"
+					}
+				}
+	
+				"OnOrder"
+				{			
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_builder_repairing"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuilderStopRepairing"
+					}
+				}		
+			}
+	
+			// Stackable modifier on the building
+			"modifier_repairing_building"
+			{
+				"TextureName"			"nightelf_renew"
+				
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"Repair"
+					}
+				}
+			}
+			// END REPAIR
 		}
 	
 	}

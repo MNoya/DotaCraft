@@ -18,6 +18,27 @@
 	
 				"OnCreated"
 				{
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/items.lua"
+						"Function"		"ApplyConstructionEffect"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/items.lua"
+						"Function"		"RemoveConstructionEffect"
+					}
+				}
+			}
+	
+			"modifier_construction_human"
+			{
+				"IsHidden"				"1"
+				"OnCreated"
+				{
 					"AttachEffect"
 					{
 						"EffectName"        "particles/custom/sandking_sandstorm.vpcf"
@@ -25,7 +46,65 @@
 						"Target"            "TARGET"
 						"ControlPoints"
 						{
-							"01"			"0 300 0"
+							"01"			"0 250 0"
+						}
+					}
+				}
+			}
+	
+			"modifier_construction_orc"
+			{
+				"IsHidden"				"1"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/custom/sandking_sandstorm.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPoints"
+						{
+							"01"			"0 250 0"
+						}
+					}
+				}
+			}
+	
+			"modifier_construction_nightelf"
+			{
+				"IsHidden"				"1"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/custom/nightelf/lucent_beam_impact_shared_ti_5.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}
+				}
+			}
+	
+			"modifier_construction_undead"
+			{
+				"IsHidden"				"1"
+				"EffectName"			"particles/custom/undead/weird.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/custom/undead/shield.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPoints"
+						{
+							"01"	"200 1 1"
 						}
 					}
 				}
