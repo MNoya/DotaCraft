@@ -128,7 +128,7 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/heroes/life_stealer/life_stealer.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.7"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 	
@@ -138,6 +138,7 @@
 	"Ability1"					"undead_gather" //Only Lumber
 	"Ability2"					"undead_return_resources"	
 	"Ability3"					"undead_cannibalize"	 //Reference: Acan
+	"Ability4"					"undead_ghoul_frenzy"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -511,12 +512,13 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Sch2
-	"Ability2"					"undead_get_corpse"	 //Reference: Amel
-	"Ability3"					"undead_drop_corpse"	 //Reference: Amed
-	"Ability4"					"undead_disease_cloud" //CATAPULT VERSION	 //Reference: Apts
-	"Ability5"					""	 //Reference: Aexh
+	"AbilityLayout"				"6"
+	"Ability1"					"undead_get_corpse"	 //Reference: Sch2
+	"Ability2"					"undead_drop_corpse"	 //Reference: Amel
+	"Ability3"					"undead_attack_ground"	 //Reference: Amed
+	"Ability4"					"undead_exhume_corpses" //Reference: Apts
+	"Ability5"					"undead_meat_wagon_disease_cloud"
+	"Ability10"					"undead_splash_attack"	 //Reference: Aexh
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -533,8 +535,8 @@
 	"AttackAnimationPoint"		"0.7"
 	"AttackAcquisitionRange"	"1150"
 	"AttackRange"				"1150"
-	"ProjectileModel"			""	 //Add projectile
-	"ProjectileSpeed"			"900"
+	"ProjectileModel"			"particles/neutral_fx/mud_golem_hurl_boulder.vpcf"	 //Add projectile
+	"ProjectileSpeed"			"700"
 	
 	// Bounty
 	//----------------------------------------------------------------
@@ -626,8 +628,8 @@
 	"AttackAnimationPoint"		"0.53"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"575"
-	"ProjectileModel"			""	 //Add projectile
-	"ProjectileSpeed"			"900"
+	"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
+	"ProjectileSpeed"			"700"
 	
 	// Bounty
 	//----------------------------------------------------------------
@@ -733,7 +735,7 @@
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"450"
 	"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"	 //Add projectile
-	"ProjectileSpeed"			"900"
+	"ProjectileSpeed"			"700"
 	
 	// Bounty
 	//----------------------------------------------------------------
@@ -833,7 +835,7 @@
 	"AttackAnimationPoint"		"0.53"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"600"
-	"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka_glow.vpcf"	 //Add projectile
+	"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"700"
 	
 	// Bounty
@@ -1194,7 +1196,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_freezing_breath"	 //Reference: Afrz
-	"Ability2"					""	 //Reference: Afrb
+	"Ability10"					"undead_freezing_splash"
 	
 	// Armor
 	//----------------------------------------------------------------

@@ -7410,13 +7410,14 @@
 		"Ability1"					"nightelf_train_wisp"	 //Reference: Aent
 		"Ability2"					"nightelf_uproot"	 //Reference: Aeat
 		"Ability3"					"nightelf_research_backpack"	 //Reference: Aro1
-		"Ability4"					""	 //Reference: Abdl
-		"Ability5"					""	 //Reference: Atol
+		"Ability4"					"" 
+		"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
 		"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
 		"Ability12"					"nightelf_natures_blessing_disabled"
 		"Ability13"					"nightelf_eat_tree"
+	
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7512,7 +7513,7 @@
 		"Ability2"					"nightelf_uproot"
 		"Ability3"					"nightelf_research_natures_blessing"
 		"Ability4"					"nightelf_research_backpack"
-		"Ability5"					""	 //Reference: Atol
+		"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
 		"Ability6"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
@@ -7613,7 +7614,7 @@
 		"Ability2"					"nightelf_uproot"
 		"Ability3"					"nightelf_research_backpack"
 		"Ability4"					"nightelf_research_natures_blessing"	
-		"Ability5"					""	 //Reference: Atol
+		"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
 		"Ability6"					""	 //Reference: Arlm
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
@@ -8025,8 +8026,8 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_building"
-		"Model"						"models/props_structures/good_ancient001.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/mine/mine.vmdl"
 		"ModelScale"				"0.6"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
@@ -8036,10 +8037,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"nigthelf_load_wisp"	
-		"Ability2"					"nigthelf_unload_wisp1"
+		"Ability1"					"nightelf_load"	
+		"Ability2"					"nightelf_unload"
 		"Ability3"					"nightelf_entangled_mine"
-		"Ability4"					"nigthelf_unload_all_wisps"
+		"Ability4"					"nightelf_unload_all"
 		"Ability5"					""
 		"Ability10"					"ability_building"
 		
@@ -8081,7 +8082,7 @@
 		//----------------------------------------------------------------
 		"StatusHealth"				"800"
 		"StatusHealthRegen"			"0"
-		"StatusMana"				"100"
+		"StatusMana"				"15000" //Shows gold left (health) on the mine that is entangling
 		"StatusManaRegen"			"0"
 		
 		// Vision
@@ -8135,8 +8136,7 @@
 		"Ability5"					"nightelf_build_ancient_protector"
 		"Ability6"					"nightelf_build_chimaera_roost"
 		"Ability7"					"build_nightelf_items"
-		//
-		//nightelf_renew
+		"Ability11"					"nightelf_night_regen"
 	
 		
 		// Armor
@@ -8234,6 +8234,7 @@
 		"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 		"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 		"Ability5"					"nightelf_elunes_grace"	 //Reference: Aegr
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8337,6 +8338,7 @@
 		"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl - Gets replaced by "nightelf_upgraded_moon_glaive" after the research
 		"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 		"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability11"					"nightelf_night_regen"
 		
 		"precache"
 		{
@@ -8536,6 +8538,7 @@
 		"Ability3"					"generic_spell_immunity"	//Reference: Amim
 		"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 		"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8640,6 +8643,7 @@
 		"Ability3"					"nightelf_bear_form"
 		"Ability4"					"nightelf_bear_form_off"	
 		"Ability5"					""	  //Reference: Aien
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8732,6 +8736,7 @@
 		"Ability4"					"nightelf_war_club"	 //Reference: Agra
 		"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 		"Ability10"					"nightelf_mountain_giant_model"
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8829,6 +8834,7 @@
 		"Ability4"					"nightelf_war_club"	 //Reference: Agra
 		"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
 		"Ability10"					"nightelf_mountain_giant_model"
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8927,6 +8933,7 @@
 		"Ability3"					"nightelf_cyclone"
 		"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 		"Ability10"					"nightelf_storm_crow_form_off"
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -9029,6 +9036,7 @@
 		"Ability2"					"generic_spell_immunity"	
 		"Ability3"					"nightelf_phase_shift"
 		"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -9127,6 +9135,7 @@
 		"Ability1"					"nightelf_corrosive_breath_disabled"	 //Reference: Acor
 		"Ability2"					"nightelf_chimaera_attack"	 //Reference: Alit //Lightning Attack
 		"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -9217,6 +9226,7 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_pick_up_archer"	 //Reference: Acoh
 		"Ability2"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -9305,6 +9315,7 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_dismount"	 //Reference: Adec
 		"Ability2"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13805,7 +13816,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abgs
+		"Ability1"					"undead_frost_attack"	 //Reference: Abgs
 		"Ability2"					""	 //Reference: Afra
 		"Ability10"					"ability_building"
 		
@@ -14152,7 +14163,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/life_stealer/life_stealer.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
@@ -14162,6 +14173,7 @@
 		"Ability1"					"undead_gather" //Only Lumber
 		"Ability2"					"undead_return_resources"	
 		"Ability3"					"undead_cannibalize"	 //Reference: Acan
+		"Ability4"					"undead_ghoul_frenzy"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14535,13 +14547,13 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"undead_get_corpse"	 //Reference: Sch2
 		"Ability2"					"undead_drop_corpse"	 //Reference: Amel
-		"Ability3"					"undead_exhume_corpses"	 //Reference: Amed
-		"Ability4"					"nightelf_attack_ground"	 //Reference: Apts
-		"Ability5"					"undead_meat_wagon_disease_cloud"	 //Reference: Aexh
-		"Ability10" 				"nightelf_glaive_thrower_splash_attack"
+		"Ability3"					"undead_attack_ground"	 //Reference: Amed
+		"Ability4"					"undead_exhume_corpses" //Reference: Apts
+		"Ability5"					"undead_meat_wagon_disease_cloud"
+		"Ability10"					"undead_splash_attack"	 //Reference: Aexh
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14740,6 +14752,7 @@
 		"Ability2"					"undead_orb_of_annihilation"	 //Reference: Afak
 		"Ability3"					"undead_absorb_mana"	 //Reference: Aabs
 		"Ability4"					"undead_spell_immunity"	 //Reference: ACmi - Magic Immunity (Creep)
+		//undead_spirit_touch
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14757,7 +14770,7 @@
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"450"
 		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"	 //Add projectile
-		"ProjectileSpeed"			"900"
+		"ProjectileSpeed"			"700"
 		
 		// Bounty
 		//----------------------------------------------------------------
@@ -15218,7 +15231,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"undead_freezing_breath"	 //Reference: Afrz
-		"Ability2"					""	 //Reference: Afrb
+		"Ability10"					"undead_freezing_splash"
 		
 		// Armor
 		//----------------------------------------------------------------

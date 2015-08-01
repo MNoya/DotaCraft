@@ -29,7 +29,7 @@
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"heath_per_second"		"10"
+			"health_per_second"		"10"
 		}
 		"03"
 		{
@@ -39,7 +39,41 @@
 		// The unit'll find the nearest corpse in this radius.
 		// According to classic.battle.net, they'll also eat corpses from Meat Wagons. The most injured units will be prioritized should you order a group to cannibalize.
 	}
+	
+	"precache"
+	{
+		"particle"  "particles/items2_fx/soul_ring_blood.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile" "units/undead/ghoul.lua"
+			"Function"	"cannibalize"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_cannibalize"
+		{
 
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_cannibalize"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/ghoul.lua"
+					"Function"		"stop_cannibalize"
+				}		
+			}
+		}
+	}
 	
 }			
 
@@ -85,7 +119,7 @@
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"attack_speed_bonus"	"-0.25"
+			"attack_speed_bonus"	"0.25"
 		}
 		// This is -0.25 B.A.T
 		"02"
@@ -1336,19 +1370,19 @@
 "undead_freezing_breath"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_freezing_breath"
+	"AbilityTextureName"		"undead_research_freezing_breath"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"duration"		"5"
+			"duration"		"10"
 		}
 		"02"
 		{
@@ -1357,8 +1391,173 @@
 		}
 		// Affects buildings in the 100 radius around the attacked target.
 		// The adjacent buildings must literally be adjacent, they must be touching it to be frozen.
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"movement_speed_reduction"		"-25"
+		}
+	}
+	
+	"precache"
+	{
+		// unit freeze particles
+		"particle"		"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+		"particle" 		"particles/status_fx/status_effect_frost_lich.vpcf"
+		
+		// building freeze particle
+		"particle"		"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff_model.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_frozen_attack_passive"
+		{
+			"Passive" "1"
+			"IsHidden" "1"
+		
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/frost_wyrm.lua"
+					"Function"		"freezing_attack"
+				}
+			}
+		}
+		
+		"modifier_frozen"
+		{
+			"IsDebuff" "1"
+			
+			"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
+			"StatusEffectPriority" "10"
+			
+			"EffectName"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff_model.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/frost_wyrm.lua"
+					"Function"		"freeze"
+				}
+			}
+			
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/frost_wyrm.lua"
+					"Function"		"unfreeze"
+				}
+			}
+		}
+	}
+	
+}
+
+//=================================================================================
+// Ability: Freezing Splash - HIDDEN
+//=================================================================================
+"undead_freezing_splash"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_research_freezing_breath"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"10"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"100"
+		}
+		// Affects buildings in the 100 radius around the attacked target.
+		// The adjacent buildings must literally be adjacent, they must be touching it to be frozen.
+		"03"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"movement_speed_reduction"		"-25"
+		}
 	}
 
+	"precache"
+	{
+		// unit freeze particles
+		"particle"		"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+		"particle" 		"particles/status_fx/status_effect_frost_lich.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_freezing_attack_passive"
+		{
+			"Passive" "1"
+			"IsHidden" "1"
+		
+			"OnAttackLanded"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_freezing_attack"
+					"Duration" "%duration"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+					}
+				}
+				
+				"Damage"
+				{
+					"Damage" 	"20"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+					}
+				}
+				"FireEffect"
+				{
+					"EffectName" "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast_explosion.vpcf"
+					"Target" "TARGET"
+				}
+			}
+		}
+	
+		"modifier_freezing_attack"
+		{
+			"IsPurgable" 	"1"
+			"IsDebuff"		"1"
+			
+			"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
+			"StatusEffectPriority" "10"
+			
+			"EffectName"			"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+			"EffectAttachType"		"follow_origin"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_speed_reduction" 
+			}
+		}
+	}
 	
 }
 
@@ -1373,7 +1572,7 @@
 	"AbilityTextureName"		"undead_true_sight"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AOE"
 		
 	"AbilityCastRange"			"900"
 	"AbilityCastPoint"			"0"
@@ -1403,6 +1602,11 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	
+	"AbilityCastRange"			"600"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
 		
 	"AbilitySpecial"
 	{
@@ -1423,14 +1627,35 @@
 	"precache"
 	{
 		"particle"		"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+		"particle" 		"particles/status_fx/status_effect_frost_lich.vpcf"
 	}
 	
 	"Modifiers"
 	{
+	
+		"modifier_frost_attack_passive"
+		{
+			"Passive" "1"
+			"IsHidden" "1"
+		
+			"OnAttackLanded"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_frost_attack"
+					"Duration" "%duration"
+					"Target" "TARGET"
+				}
+			}
+		}
+	
 		"modifier_frost_attack"
 		{
 			"IsPurgable" 	"1"
 			"IsDebuff"		"1"
+			
+			"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
+			"StatusEffectPriority" "10"
 			
 			"EffectName"			"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
 			"EffectAttachType"		"follow_origin"
@@ -2253,6 +2478,157 @@
 	// The unit will walk towards the targeted Sacrificial Pit and the Shade creation begins.
 	// Cast range is GLOBAL.
 
+}
 
+
+// Glaive Thrower attacks should have a Splash of 25/50/150 (just full damage to main target damage & 1/4 damage in the splash_radius)
+"undead_splash_attack"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+	"MaxLevel"				"1"
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_magnataur/magnus_dust_hit.vpcf"
+	}
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"minimum_range"		"250"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"splash_radius"		"150"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"splash_dmg_pct"	"25"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_undead_splash_attack"
+		{
+			"IsHidden"			"1"
+			"Passive"			"1"
 	
+			// Check Min-Range "OnAttackStart"
+
+			"OnAttackLanded"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_magnataur/magnus_dust_hit.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/meat_wagon.lua"
+					"Function"		"SplashAttack"
+					"Damage"		"%attack_damage"
+				}				
+			}
+		}
+	}
+}
+
+// Attack ground fakes attacks to a dummy
+"undead_attack_ground"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+	"AbilityTextureName"	"attack_ground"
+	"MaxLevel"				"1"
+
+	"AbilityCastRange"		"1150"
+	"AOERadius"				"150"
+
+	"AbilityMultiOrder"		"1" //Extend this ability cast to other units with the ability in the current selection group
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"minimum_range"		"250"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"splash_radius"		"150" //full damage
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/undead/meat_wagon.lua"
+			"Function"		"AttackGround"
+			"Target"		"POINT"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+		"RunScript"
+		{
+			"ScriptFile"	"units/undead/meat_wagon.lua"
+			"Function"		"AttackGroundDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_attacking_ground"
+		{
+			"IsHidden"			"1"
+	
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_attacking_ground"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/meat_wagon.lua"
+					"Function"		"StopAttackGround"
+				}
+			}
+
+			// Attacking ground is a fake attack
+			"OnAttack"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_attacking_ground"
+					"Target" 		"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/meat_wagon.lua"
+					"Function"		"StopAttackGround"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"	"1"
+			}
+		}
+	}
 }

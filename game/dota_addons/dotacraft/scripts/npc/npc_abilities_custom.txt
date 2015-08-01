@@ -22209,7 +22209,7 @@
 					}
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_on_order_cancel"
+						"ModifierName"	"modifier_on_order_cancel_lumber"
 						"Target" 		"CASTER"
 					}
 				}
@@ -28799,203 +28799,6 @@
 		}	
 	}
 	//=================================================================================
-	// Ability: Gather
-	// Description: "Mines gold from Entangled Gold Mines and harvests lumber from trees."
-	// Code Reference: Awha
-	//=================================================================================
-	"nightelf_gather"
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"nightelf_gather"
-		"MaxLevel"					"1"
-			
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-					
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"lumber_interval"	"8"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"lumber_per_interval"	"5"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"gold_interval"		"4"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"gold_per_interval"	"10"
-			}	
-		}
-	
-		"precache"
-		{
-			"particle"  "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
-		}
-	
-		// Try to start the skill with multiple-wisps in mind (GetAllSelectedUnits and send orders)
-	
-		// Tree targeting
-			// Move towards the tree, repeat until ~100 distance
-			// Only one wisp per tree, if tree busy find another
-			// OnOrder, toggle off and cancel the skill
-			// When close to the tree, give the wisp flying movement and position it on top
-			// Modifier generates lumber every think interval, OnOrder cancels
-			// If possible try to make some circular rotation around the tree
-	
-		// Gold mine targeting
-			// Mine has to be entangled (the targeted unit would actually be entangled_mine)
-			// Mine has to have a wisp slot available (5 total)
-			// Move towards the mine, repeat until ~100 distance
-			// OnOrder, toggle off and cancel the skill
-			// When close to the mine, put the wisp inside at some visible position and +1 slots
-			// The entangled mine has some skills to eject the wisps which are unselectable inside
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"units/nightelf/wisp.lua"
-				"Function"		"Gather"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_on_order_cancel"
-			{
-				"IsHidden"	"1"
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/nightelf/wisp.lua"
-						"Function"		"CancelGather"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel"
-						"Target" 		"CASTER"
-					}
-				}
-			}
-	
-			"modifier_gathering_lumber"
-			{
-				"IsHidden"				"1"
-				
-				"OnOrder"
-				{			
-					"RunScript"
-					{
-						"ScriptFile"	"units/nightelf/wisp.lua"
-						"Function"		"CancelGather"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_gathering_lumber"
-						"Target" 		"CASTER"
-					}
-				}
-	
-				"ThinkInterval"  "%lumber_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/nightelf/wisp.lua"
-						"Function"		"LumberGain"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
-				}	
-			}
-	
-			"modifier_gathering_gold"
-			{
-				"IsHidden"				"1"
-				
-				"OnOrder"
-				{			
-					"RunScript"
-					{
-						"ScriptFile"	"units/nightelf/wisp.lua"
-						"Function"		"ToggleOffGather"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_gathering_gold"
-						"Target" 		"CASTER"
-					}
-				}
-	
-				"ThinkInterval"  "%gold_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/nightelf/wisp.lua"
-						"Function"		"GoldGain"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}	
-			}
-		}
-	
-	}
-	
-	// Added to a mine once entangled
-	"nightelf_entangled_mine"
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"nightelf_gather"
-		"MaxLevel"					"1"
-			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		"precache"
-		{
-			"particle"  "particles/nightelf/root_vines.vpcf"
-		}
-	
-		"Modifiers"
-		{
-			"modifier_entangled_mine"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-		
-				"EffectName"		"particles/nightelf/root_vines.vpcf"
-				"EffectAttachType"	"follow_origin"
-			}
-		}
-	}
-	
-	
-	//=================================================================================
 	// Ability: Detonate
 	// Description: "Destroys the Wisp, dispelling all magical buffs and draining <Adtn,DataA1> mana from each unit in an area around the Wisp. |n|cffffcc00Deals <Adtn,DataB1> damage to summoned units.|r"
 	// Code Reference: Adtn
@@ -31603,7 +31406,7 @@
 			
 		"precache"
 		{
-			"particle"  "particles/nightelf/root_vines.vpcf"
+			"particle"  "particles/custom/nightelf/root_vines.vpcf"
 		}
 	
 		"AbilitySpecial"
@@ -31647,7 +31450,7 @@
 			"modifier_rooted_ancient"
 			{
 				"Passive"			"1"
-				"EffectName"		"particles/nightelf/root_vines.vpcf"
+				"EffectName"		"particles/custom/nightelf/root_vines.vpcf"
 				"EffectAttachType"	"follow_origin"
 			}
 	
@@ -31744,6 +31547,8 @@
 	// Ability: Replenish
 	// Replenish the life and mana of a target friendly unit.
 	// Moon Wells only regenerate mana at night (same as units should only regenerate HP at night)
+	// These are not set to autocast automatically because some players wish to only use them for Heroes and wish to have more control over how they are used.
+	// Right-clicking a friendly moon well with a unit will set it to cast replenish whenever that unit gets close
 	//=================================================================================
 	"nightelf_replenish_mana_and_life"
 	{
@@ -31788,14 +31593,14 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 				
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/nightelf/shared.lua"
-						"Function"		"ToggleOnAutocast"
-					}
-				}
+				//"OnCreated"
+				//{
+				//	"RunScript"
+				//	{
+				//		"ScriptFile"	"units/nightelf/shared.lua"
+				//		"Function"		"ToggleOnAutocast"
+				//	}
+				//}
 	
 				"ThinkInterval" "1.0"
 				"OnIntervalThink"
@@ -31899,7 +31704,6 @@
 	
 		"precache"
 		{
-			"particle"  "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
 			"particle"	"particles/units/heroes/hero_treant/treant_leech_seed_projectile_heal_explode.vpcf"
 			"particle"  "particles/units/heroes/hero_treant/treant_leech_seed.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
@@ -31919,15 +31723,6 @@
 			"modifier_eat_tree"
 			{	
 				"Duration"		"%duration"
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "CASTER"
-					}
-				}
 	
 				"ThinkInterval"  "0.5"
 				"OnIntervalThink"
@@ -31951,7 +31746,45 @@
 				}
 			}
 		}
+	}
 	
+	
+	
+	// Night Elf Regen is disabled at day time
+	"nightelf_night_regen"
+	{
+	
+		"BaseClass"					"ability_datadriven"		
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_night_regen"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"NightRegenThink"
+					}
+				}
+			}
+	
+			//Stacks of this modifier are applied to nullify base regen at daytime
+			"modifier_night_regen_disabled"
+			{
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0.1"
+				}
+			}
+		}
 	}
 	"nightelf_sentinel_disabled"
 	{
@@ -32729,6 +32562,353 @@
 				"Function"		"build"
 			}
 		}
+	}
+	// On Tree of Life/Ages/Eternity. Places a nightelf_entangled_gold_mine and being construction
+	// Must target a gold mine. Gold mine is already entangled when the game starts
+	// Will auto start when the tree roots in radius of a gold mine
+	"nightelf_entangle_gold_mine"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"nightelf_entangle_gold_mine"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityCastAnimation"			"ACT_DOTA_IDLE"
+	
+		"AbilityCastRange"				"900"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"build_time"			"60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hit_points"			"800"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/custom/nightelf/root_vines.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/ancients.lua"
+				"Function"		"EntangleGoldMine"
+			}
+		}
+	}
+	
+	// Effects on the nightelf_entangled_gold_mine
+	"nightelf_entangled_mine"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_entangle_gold_mine"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/ancients.lua"
+				"Function"		"DestroyEntangledMine"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_entangled_mine"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"EffectName"		"particles/custom/nightelf/root_vines.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/ancients.lua"
+						"Function"		"HideGoldMine"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/ancients.lua"
+						"Function"		"GoldMineCounter"
+					}
+				}
+			}
+	
+			// Mine "behind" the entangled is unselectable
+			"modifier_unselectable_mine"
+			{
+				"IsHidden"			"1"
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			// Construction process
+			"modifier_entangling"
+			{
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "CASTER"
+					}
+				}
+			}
+		}
+	}
+	
+	
+	// Order a wisp to cast gather on the mine
+	// Also available through right click
+	"nightelf_load"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_load"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/ancients.lua"
+				"Function"		"LoadWisp"
+			}
+		}
+	}
+	
+	// Order one wisp to exit the mine
+	"nightelf_unload"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_train_wisp"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/ancients.lua"
+				"Function"		"UnloadWisp"
+			}
+		}
+	}
+	
+	// Order all wisps to exit the mine
+	// Used when the building is killed (either through damage or tree uprooting) or when the mine collapses
+	"nightelf_unload_all"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_unload"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/ancients.lua"
+				"Function"		"UnloadAll"
+			}
+		}
+	}
+	//=================================================================================
+	// Ability: Gather
+	// Description: "Mines gold from Entangled Gold Mines and harvests lumber from trees."
+	//=================================================================================
+	"nightelf_gather"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"nightelf_gather"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"lumber_interval"	"8"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"lumber_per_interval"	"5"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"gold_interval"		"4"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"gold_per_interval"	"10"
+			}	
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+		}
+	
+		// Tree targeting
+			// Move towards the tree, repeat until ~100 distance
+			// Only one wisp per tree, if tree busy find another
+			// OnOrder, toggle off and cancel the skill
+			// When close to the tree, give the wisp flying movement and position it on top
+			// Modifier generates lumber every think interval, OnOrder cancels
+			// If possible try to make some circular rotation around the tree
+	
+		// Gold mine targeting
+			// Mine has to be entangled (the targeted unit would actually be entangled_mine)
+			// Mine has to have a wisp slot available (5 total)
+			// Move towards the mine, repeat until ~100 distance
+			// OnOrder, toggle off and cancel the skill
+			// When close to the mine, put the wisp inside at some visible position and +1 slots
+			// The entangled mine has some skills to eject the wisps which are unselectable inside
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Gather"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_on_order_cancel_lumber"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_lumber"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_gathering_lumber"
+			{			
+				"OnOrder"
+				{			
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_gathering_lumber"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"ThinkInterval"  "%lumber_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"LumberGain"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+	
+			"modifier_on_order_cancel_gold"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_gold"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+			}
+	
+			"modifier_gathering_gold"
+			{
+				"IsHidden"				"1"
+				
+				"ThinkInterval"  		"%gold_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/wisp.lua"
+						"Function"		"GoldGain"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+		}
+	
 	}
 	//==========================================================//
 	//               NIGHT ELF RESEARCH ABILITIES               //
@@ -42650,7 +42830,7 @@
 			"02"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"heath_per_second"		"10"
+				"health_per_second"		"10"
 			}
 			"03"
 			{
@@ -42660,7 +42840,41 @@
 			// The unit'll find the nearest corpse in this radius.
 			// According to classic.battle.net, they'll also eat corpses from Meat Wagons. The most injured units will be prioritized should you order a group to cannibalize.
 		}
+		
+		"precache"
+		{
+			"particle"  "particles/items2_fx/soul_ring_blood.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" "units/undead/ghoul.lua"
+				"Function"	"cannibalize"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_cannibalize"
+			{
 	
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_cannibalize"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/ghoul.lua"
+						"Function"		"stop_cannibalize"
+					}		
+				}
+			}
+		}
 		
 	}			
 	
@@ -42706,7 +42920,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"attack_speed_bonus"	"-0.25"
+				"attack_speed_bonus"	"0.25"
 			}
 			// This is -0.25 B.A.T
 			"02"
@@ -43957,19 +44171,19 @@
 	"undead_freezing_breath"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_freezing_breath"
+		"AbilityTextureName"		"undead_research_freezing_breath"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"duration"		"5"
+				"duration"		"10"
 			}
 			"02"
 			{
@@ -43978,8 +44192,173 @@
 			}
 			// Affects buildings in the 100 radius around the attacked target.
 			// The adjacent buildings must literally be adjacent, they must be touching it to be frozen.
+			"03"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"movement_speed_reduction"		"-25"
+			}
+		}
+		
+		"precache"
+		{
+			// unit freeze particles
+			"particle"		"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+			"particle" 		"particles/status_fx/status_effect_frost_lich.vpcf"
+			
+			// building freeze particle
+			"particle"		"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff_model.vpcf"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_frozen_attack_passive"
+			{
+				"Passive" "1"
+				"IsHidden" "1"
+			
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/frost_wyrm.lua"
+						"Function"		"freezing_attack"
+					}
+				}
+			}
+			
+			"modifier_frozen"
+			{
+				"IsDebuff" "1"
+				
+				"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
+				"StatusEffectPriority" "10"
+				
+				"EffectName"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff_model.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/frost_wyrm.lua"
+						"Function"		"freeze"
+					}
+				}
+				
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/frost_wyrm.lua"
+						"Function"		"unfreeze"
+					}
+				}
+			}
+		}
+		
+	}
+	
+	//=================================================================================
+	// Ability: Freezing Splash - HIDDEN
+	//=================================================================================
+	"undead_freezing_splash"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"undead_research_freezing_breath"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"10"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"100"
+			}
+			// Affects buildings in the 100 radius around the attacked target.
+			// The adjacent buildings must literally be adjacent, they must be touching it to be frozen.
+			"03"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"movement_speed_reduction"		"-25"
+			}
 		}
 	
+		"precache"
+		{
+			// unit freeze particles
+			"particle"		"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+			"particle" 		"particles/status_fx/status_effect_frost_lich.vpcf"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_freezing_attack_passive"
+			{
+				"Passive" "1"
+				"IsHidden" "1"
+			
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_freezing_attack"
+						"Duration" "%duration"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+						}
+					}
+					
+					"Damage"
+					{
+						"Damage" 	"20"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+						}
+					}
+					"FireEffect"
+					{
+						"EffectName" "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast_explosion.vpcf"
+						"Target" "TARGET"
+					}
+				}
+			}
+		
+			"modifier_freezing_attack"
+			{
+				"IsPurgable" 	"1"
+				"IsDebuff"		"1"
+				
+				"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
+				"StatusEffectPriority" "10"
+				
+				"EffectName"			"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+				"EffectAttachType"		"follow_origin"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_speed_reduction" 
+				}
+			}
+		}
 		
 	}
 	
@@ -43994,7 +44373,7 @@
 		"AbilityTextureName"		"undead_true_sight"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AOE"
 			
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
@@ -44024,6 +44403,11 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		
+		"AbilityCastRange"			"600"
+		"AbilityCastPoint"			"0"
+		"AbilityCooldown"			"0"
+		"AbilityManaCost"			"0"
 			
 		"AbilitySpecial"
 		{
@@ -44044,14 +44428,35 @@
 		"precache"
 		{
 			"particle"		"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
+			"particle" 		"particles/status_fx/status_effect_frost_lich.vpcf"
 		}
 		
 		"Modifiers"
 		{
+		
+			"modifier_frost_attack_passive"
+			{
+				"Passive" "1"
+				"IsHidden" "1"
+			
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_frost_attack"
+						"Duration" "%duration"
+						"Target" "TARGET"
+					}
+				}
+			}
+		
 			"modifier_frost_attack"
 			{
 				"IsPurgable" 	"1"
 				"IsDebuff"		"1"
+				
+				"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
+				"StatusEffectPriority" "10"
 				
 				"EffectName"			"particles/econ/courier/courier_roshan_frost/courier_roshan_frost_steam.vpcf"
 				"EffectAttachType"		"follow_origin"
@@ -44874,8 +45279,159 @@
 		// The unit will walk towards the targeted Sacrificial Pit and the Shade creation begins.
 		// Cast range is GLOBAL.
 	
+	}
 	
+	
+	// Glaive Thrower attacks should have a Splash of 25/50/150 (just full damage to main target damage & 1/4 damage in the splash_radius)
+	"undead_splash_attack"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				"1"
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_magnataur/magnus_dust_hit.vpcf"
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"minimum_range"		"250"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"splash_radius"		"150"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"splash_dmg_pct"	"25"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_undead_splash_attack"
+			{
+				"IsHidden"			"1"
+				"Passive"			"1"
 		
+				// Check Min-Range "OnAttackStart"
+	
+				"OnAttackLanded"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_magnataur/magnus_dust_hit.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/meat_wagon.lua"
+						"Function"		"SplashAttack"
+						"Damage"		"%attack_damage"
+					}				
+				}
+			}
+		}
+	}
+	
+	// Attack ground fakes attacks to a dummy
+	"undead_attack_ground"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"	"attack_ground"
+		"MaxLevel"				"1"
+	
+		"AbilityCastRange"		"1150"
+		"AOERadius"				"150"
+	
+		"AbilityMultiOrder"		"1" //Extend this ability cast to other units with the ability in the current selection group
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"minimum_range"		"250"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"splash_radius"		"150" //full damage
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/undead/meat_wagon.lua"
+				"Function"		"AttackGround"
+				"Target"		"POINT"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+			"RunScript"
+			{
+				"ScriptFile"	"units/undead/meat_wagon.lua"
+				"Function"		"AttackGroundDamage"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_attacking_ground"
+			{
+				"IsHidden"			"1"
+		
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_attacking_ground"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/meat_wagon.lua"
+						"Function"		"StopAttackGround"
+					}
+				}
+	
+				// Attacking ground is a fake attack
+				"OnAttack"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_attacking_ground"
+						"Target" 		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/meat_wagon.lua"
+						"Function"		"StopAttackGround"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"	"1"
+				}
+			}
+		}
 	}
 	"undead_cannibalize_disabled"
 	{
