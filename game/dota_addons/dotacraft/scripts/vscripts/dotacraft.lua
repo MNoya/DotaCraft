@@ -211,6 +211,9 @@ function dotacraft:InitGameMode()
 		for k,v in pairs(mine_entrance) do
 			gold_mine.entrance = v:GetAbsOrigin()
 		end
+
+		-- Find and store the mine light
+		print(gold_mine.light)
 	end
 
 	-- Allow cosmetic swapping
@@ -976,6 +979,15 @@ function dotacraft:OnPlayerPickHero(keys)
 		ghoul:SetControllableByPlayer(playerID, true)
 
 		-- Haunt the closest gold mine
+		local haunted_gold_mine = CreateUnitByName("undead_haunted_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
+		haunted_gold_mine:SetOwner(hero)
+		haunted_gold_mine:SetControllableByPlayer(playerID, true)
+		haunted_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
+		ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
+		haunted_gold_mine.builders = {}
+
+		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
+		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine
 	end
 
 	-- Night Elf special rules

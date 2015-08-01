@@ -13487,15 +13487,16 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_ancient_crystal001.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/props_structures/bad_ancient002.vmdl" //"models/props_structures/bad_ancient_crystal001.vmdl"
+		"ModelScale"				"0.64"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"ConsideredHero"			"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abgl
+		"Ability1"					"undead_haunt_mine" //Effects and logic
 		"Ability2"					""	 //Reference: Abgm
 		"Ability10"					"ability_building"
 	
@@ -13539,7 +13540,7 @@
 		//----------------------------------------------------------------
 		"StatusHealth"				"950"
 		"StatusHealthRegen"			"0"
-		"StatusMana"				"100"
+		"StatusMana"				"15000"
 		"StatusManaRegen"			"0"
 		
 		// Vision
@@ -14058,7 +14059,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/warlock/warlock.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
@@ -14198,8 +14199,8 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"70"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"RingRadius"				"60"
 		"CollisionSize"				"31"
 		"FormationRank"				"0"
 		

@@ -1,0 +1,51 @@
+// Effects on the undead_haunted_gold_mine
+"undead_haunt_mine"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_haunt_mine"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"precache"
+	{
+		"model"  "models/props_magic/bad_sigil_ancient001.vmdl"
+	}
+
+	"Modifiers"
+	{
+		"modifier_haunted_mine"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/acolyte.lua"
+					"Function"		"HideGoldMine"
+				}
+			}
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/acolyte.lua"
+					"Function"		"ShowGoldMine"
+				}
+			}
+		}
+
+		// Mine "behind" the entangled is unselectable
+		"modifier_unselectable_mine"
+		{
+			"IsHidden"			"0"
+			"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			"States"
+			{
+				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}

@@ -52,7 +52,7 @@ function Gather( event )
 		local tree = target
 
 		-- Disable this for Acolytes
-		if IsUndead(caster) then
+		if caster:GetUnitName() == "undead_acolyte" then
 			print("Interrupt")
 			caster:Interrupt()
 			return
@@ -65,7 +65,6 @@ function Gather( event )
 			return
 		end
 
-		print("Moving to ", target_class)
 		local tree_pos = tree:GetAbsOrigin()
 		local particleName = "particles/ui_mouseactions/ping_circle_static.vpcf"
 		local particle = ParticleManager:CreateParticleForPlayer(particleName, PATTACH_CUSTOMORIGIN, caster, caster:GetPlayerOwner())
@@ -399,7 +398,9 @@ function CancelGather( event )
 			if caster_key then
 				mine.builders[caster_key] = nil
 			end
-			-- Probably need to check for dead units too
+			
+			local count = #mine.builders
+			SetGoldMineCounter(mine, count)
 		end
 	end
 	
@@ -581,6 +582,7 @@ function GoldGain( event )
 	local ability = event.ability
 	local caster = event.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	local race = GetUnitRace(caster)
 	local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
 	hero:ModifyGold(gold_gain, false, 0)
 	PopupGoldGain( caster, gold_gain)
@@ -589,7 +591,6 @@ function GoldGain( event )
 	local mine = caster.target_mine
 	mine:SetHealth( mine:GetHealth() - gold_gain )
 	mine.building_on_top:SetMana( mine:GetHealth() - gold_gain )
-	print(mine.building_on_top:GetUnitName())
 
 	-- If the gold mine has no health left for another harvest
 	if mine:GetHealth() < gold_gain then
@@ -601,6 +602,25 @@ function GoldGain( event )
 	    end
 	    print("Gold Mine Collapsed at ", mine:GetHealth())
 
+	    -- Stop all builders
+		local builders = mine.builders
+		for k,builder in pairs(builders) do
+
+			-- Cancel gather effects
+			builder:RemoveModifierByName("modifier_on_order_cancel_gold")
+			builder:RemoveModifierByName("modifier_gathering_gold")
+			builder.state = "idle"
+
+			local ability = builder:FindAbilityByName(race.."_gather")
+			ability.cancelled = true
+			ToggleOff(ability)
+
+			if race == "nightelf" then
+				FindClearSpaceForUnit(builder, mine.entrance, true)
+			end
+		end
+
+		ParticleManager:DestroyParticle(mine.building_on_top.counter_particle, true)
 	    mine.building_on_top:RemoveSelf()
 
 	    mine:RemoveSelf()
@@ -610,10 +630,17 @@ function GoldGain( event )
 end
 
 function SetGoldMineCounter( mine, count )
-	local entangled_gold_mine = mine.building_on_top
+	local building_on_top = mine.building_on_top
+
+	print("SetGoldMineCounter ",count)
 
 	for i=1,count do
-		ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, i, Vector(1,0,0))
+		print("Set ",i," turned on")
+		ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(1,0,0))
+	end
+	for i=count+1,5 do
+		print("Set ",i," turned off")
+		ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(0,0,0))
 	end
 end
 

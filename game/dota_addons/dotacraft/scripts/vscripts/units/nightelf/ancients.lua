@@ -158,7 +158,7 @@ function EntangleGoldMine( event )
 
 			local entangle_ability = caster:FindAbilityByName("nightelf_entangle_gold_mine")
 			local build_time = entangle_ability:GetSpecialValueFor("build_time")
-			local hit_points = entangle_ability:GetSpecialValueFor("hit_points")
+			local hit_points = building:GetMaxHealth()
 
 			-- Start building construction ---
 			local initial_health = 0.10 * hit_points
@@ -190,6 +190,8 @@ function EntangleGoldMine( event )
 
 	        			building.constructionCompleted = true
 	       				building.state = "complete"
+
+	       				return
 	        		end
 	    		
 	    		else
@@ -321,7 +323,6 @@ function UnloadWisp( event )
 	local count = #builders
 	print(count,"builders left inside ", entangled_gold_mine:GetUnitName())
 	for i=count+1,5 do
-		print(i,entangled_gold_mine.counter_particle)
 		ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, i, Vector(0,0,0))
 	end
 end

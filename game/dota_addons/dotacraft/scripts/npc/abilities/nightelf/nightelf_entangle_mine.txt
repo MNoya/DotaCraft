@@ -104,20 +104,6 @@
 				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
-
-		// Construction process
-		"modifier_entangling"
-		{
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "CASTER"
-				}
-			}
-		}
 	}
 }
 
