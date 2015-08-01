@@ -10,10 +10,10 @@
 	</script>
 	<Panel hittest="false" class='ButtonPanel'>
 		<Button id="IdleButton" onactivate="OnIdleButtonPressed()">
-			<Image id="IdleButtonImage" /><!-- src="file://{images}/custom_game/human/human_builder.png"/>-->
+			<Image id="IdleButtonImage" />
 			<Label id="IdleNumber" text="" />
 		</Button>
-		<Panel hittest="false" class='HeroButtonsPanel'>
+		<!--<Panel hittest="false" class='HeroButtonsPanel'>
 			<Button class="HeroButton" onactivate="OnHeroButtonPressed(1)">
 				<Image id="IdleButtonImage" src="file://{images}/custom_game/human/invoker.png"/>
 			</Button>
@@ -26,7 +26,7 @@
 			<Button class="HeroButton" onactivate="OnHeroButtonPressed(4)">
 				<Image id="IdleButtonImage" src="file://{images}/custom_game/human/invoker.png"/>
 			</Button>
-		</Panel>
+		</Panel>-->
 	</Panel>
 </root>
 
