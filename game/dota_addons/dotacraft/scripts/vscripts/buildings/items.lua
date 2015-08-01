@@ -75,3 +75,18 @@ function GiveUndeadBuildingItems( event )
 		caster:AddItem(item)
 	end
 end
+
+function ApplyConstructionEffect( event )
+	local ability = event.ability
+	local target = event.target
+
+	local race = GetUnitRace(target)
+	ability:ApplyDataDrivenModifier(target, target, "modifier_construction_"..race, {})
+end
+
+function RemoveConstructionEffect( event )
+	local target = event.target
+
+	local race = GetUnitRace(target)
+	target:RemoveModifierByName("modifier_construction_"..race)
+end

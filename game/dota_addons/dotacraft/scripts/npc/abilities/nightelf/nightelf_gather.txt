@@ -40,6 +40,7 @@
 	"precache"
 	{
 		"particle"  "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+		"particle"  "particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 	}
 
 	// Tree targeting
@@ -161,6 +162,83 @@
 				"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
 			}	
 		}
+
+		// REPAIR (Renew)
+		"modifier_on_order_cancel_repair"
+		{
+			"IsHidden"				"1"
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_on_order_cancel_repair"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"CancelGather"
+				}
+			}
+		}
+
+		// On the caster
+		"modifier_builder_repairing"
+		{
+			"EffectName"			"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+			"EffectAttachType"		"follow_overhead"
+
+			"TextureName"			"nightelf_renew"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"CancelGather"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"BuilderRepairing"
+				}
+			}
+
+			"OnOrder"
+			{			
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_builder_repairing"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"BuilderStopRepairing"
+				}
+			}		
+		}
+
+		// Stackable modifier on the building
+		"modifier_repairing_building"
+		{
+			"TextureName"			"nightelf_renew"
+			
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"ThinkInterval"  	"1.0"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"Repair"
+				}
+			}
+		}
+		// END REPAIR
 	}
 
 }

@@ -224,7 +224,16 @@ function Gather( event )
 						end
 
 					elseif race == "undead" or race == "nightelf" then
-						--[[if mine.entangled or haunted by this player continue]]
+						if not IsMineOccupiedByTeam(mine, caster:GetTeamNumber()) then
+							print("Mine must be occupied by your team, fool")
+							return
+						end
+
+						if target.state == "building" then
+							--print("Extraction Building is still in construction, wait...")
+							return THINK_INTERVAL
+						end
+
 						if not mine.builders then
 							mine.builders = {}
 						end
@@ -601,10 +610,10 @@ function GoldGain( event )
 end
 
 function SetGoldMineCounter( mine, count )
-	print(mine:GetUnitName(), count)
+	local entangled_gold_mine = mine.building_on_top
 
 	for i=1,count do
-		ParticleManager:SetParticleControl(mine.counter_particle, i, Vector(1,0,0))
+		ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, i, Vector(1,0,0))
 	end
 end
 
@@ -814,7 +823,6 @@ function FindClosestResourceDeposit( caster, resource_type )
 		for _,building in pairs(buildings) do
 			if building and IsValidEntity(building) and building:IsAlive() then
 				if IsValidGoldDepositName( building:GetUnitName(), race ) and building.state == "complete" then
-				   
 					local this_distance = (position - building:GetAbsOrigin()):Length()
 					if this_distance < distance then
 						distance = this_distance
@@ -837,6 +845,9 @@ function FindClosestResourceDeposit( caster, resource_type )
 			end
 		end
 	end
+	if not closest_building then
+		print("[ERROR] CANT FIND A DEPOSIT RESOURCE FOR "..resource_type.."! This shouldn't happen")
+	end
 	return closest_building		
 
 end
@@ -844,7 +855,7 @@ end
 function IsValidGoldDepositName( building_name, race )
 	local GOLD_DEPOSITS = VALID_DEPOSITS[race]["gold"]
 	for name,_ in pairs(GOLD_DEPOSITS) do
-		if GOLD_DEPOSITS[name] == building_name then
+		if GOLD_DEPOSITS[name] then
 			return true
 		end
 	end

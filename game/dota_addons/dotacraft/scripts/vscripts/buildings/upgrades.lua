@@ -30,6 +30,9 @@ function UpgradeBuilding( event )
 		caster:RemoveSelf()
     end
 
+    -- For night elf entangled mines, keep the references
+    local entangled_gold_mine = caster.entangled_gold_mine
+
     -- New building
 	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, false, 0) 
 	building.blockers = blockers
@@ -38,6 +41,12 @@ function UpgradeBuilding( event )
 	local newRelativeHP = math.ceil(building:GetMaxHealth() * currentHealthPercentage)
 	if newRelativeHP == 0 then newRelativeHP = 1 end --just incase rounding goes wrong
 	building:SetHealth(newRelativeHP)
+
+	-- Update the references to the new building
+	if entangled_gold_mine then
+		entangled_gold_mine.city_center = building
+    	building.entangled_gold_mine = entangled_gold_mine
+    end
 
 	-- Add 1 to the buildings list for that name. The old name still remains
 	if not player.buildings[new_unit] then

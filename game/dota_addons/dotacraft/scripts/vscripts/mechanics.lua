@@ -825,3 +825,17 @@ function IsChanneling ( hero )
 
 	return false
 end
+
+function IsMineOccupiedByTeam( mine, teamID )
+	return (IsValidEntity(mine.building_on_top) and mine.building_on_top:GetTeamNumber() == teamID)
+end
+
+function ApplyConstructionEffect( unit )
+	local item = CreateItem("item_apply_modifiers", nil, nil)
+	item:ApplyDataDrivenModifier(unit, unit, "modifier_construction", {})
+	item = nil
+end
+
+function RemoveConstructionEffect( unit )
+	unit:RemoveModifierByName("modifier_construction")
+end

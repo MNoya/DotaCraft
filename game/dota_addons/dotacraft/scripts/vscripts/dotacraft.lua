@@ -551,6 +551,50 @@ end
 
 function dotacraft:OnGameInProgress()
 	print("[DOTACRAFT] The game has officially begun")
+
+	GameRules.DayTime = true
+	Timers:CreateTimer(240, function() 
+		if GameRules.DayTime then
+			LightsOut()
+		else
+			RiseAndShine()
+		end
+		return 240
+	end)
+end
+
+-- Creeps go into sleep mode
+function LightsOut()
+	print("[DOTACRAFT] Night Time")
+	GameRules.DayTime = false
+
+	local creeps = Entities:FindAllByClassname("npc_dota_creature")
+	for _,v in pairs(creeps) do
+		if IsValidEntity(v) and v:IsAlive() and v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+			local ability = v:FindAbilityByName("neutral_sleep")
+			if ability then
+				print(v:GetUnitName().." is now sleeping")
+			end
+		end
+	end
+
+end
+
+-- Wake up creeps
+function RiseAndShine()
+	print("[DOTACRAFT] Day Time")
+	GameRules.DayTime = true
+
+	local creeps = Entities:FindAllByClassname("npc_dota_creature")
+	for _,v in pairs(creeps) do
+		if IsValidEntity(v) and v:IsAlive() and v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+			local ability = v:FindAbilityByName("neutral_sleep")
+			if ability then
+				print(v:GetUnitName().." is now awake")
+			end
+		end
+	end
+
 end
 
 -- Cleanup a player when they leave
@@ -940,10 +984,16 @@ function dotacraft:OnPlayerPickHero(keys)
 		local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
 		entangled_gold_mine:SetOwner(hero)
 		entangled_gold_mine:SetControllableByPlayer(playerID, true)
+		entangled_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
+		ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
+		entangled_gold_mine.builders = {}
 
 		entangled_gold_mine.mine = closest_mine -- A reference to the mine that the entangled mine is associated with
+		entangled_gold_mine.city_center = building -- A reference to the city center that entangles this mine
 		building.entangled_gold_mine = entangled_gold_mine -- A reference to the entangled building of the city center
 		closest_mine.building_on_top = entangled_gold_mine -- A reference to the building that entangles this gold mine
+
+		building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
 	end
 
 	for i=1,num_builders do	

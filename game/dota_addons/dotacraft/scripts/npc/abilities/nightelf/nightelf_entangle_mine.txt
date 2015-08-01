@@ -44,6 +44,15 @@
 	}
 }
 
+// Passive ability to indicate that this ancient has an entangled gold mine active
+"nightelf_entangle_gold_mine_passive"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_entangle_gold_mine"
+	"MaxLevel" 						"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
 // Effects on the nightelf_entangled_gold_mine
 "nightelf_entangled_mine"
 {
@@ -58,15 +67,6 @@
 		"particle"  "particles/units/heroes/hero_treant/treant_eyesintheforest_d.vpcf"
 	}
 	
-	"OnOwnerDied"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/nightelf/ancients.lua"
-			"Function"		"DestroyEntangledMine"
-		}
-	}
-
 	"Modifiers"
 	{
 		"modifier_entangled_mine"
@@ -84,10 +84,13 @@
 					"ScriptFile"	"units/nightelf/ancients.lua"
 					"Function"		"HideGoldMine"
 				}
+			}
+			"OnDestroy"
+			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/nightelf/ancients.lua"
-					"Function"		"GoldMineCounter"
+					"Function"		"ShowGoldMine"
 				}
 			}
 		}
