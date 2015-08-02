@@ -2,6 +2,7 @@ function PickUpArcher( event )
 	local caster = event.caster
 	local ability = event.ability
 	local owner = caster:GetOwner()
+	local player = caster:GetPlayerOwner()
 	local radius = ability:GetCastRange()
 	local origin = caster:GetAbsOrigin()
 
@@ -47,7 +48,7 @@ function PickUpArcher( event )
 
 					local new_hippo = CreateUnitByName("nightelf_hippogryph_rider", caster:GetAbsOrigin(), false, caster:GetOwner(), caster:GetPlayerOwner(), caster:GetTeamNumber())
 					new_hippo:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
-					new_hippo:SetOwner(caster:GetOwner())
+					new_hippo:SetOwner(owner)
 					new_hippo.archer = archer
 					new_hippo:SetHealth(caster:GetHealth() + archer:GetHealth())
 
@@ -75,6 +76,30 @@ function PickUpArcher( event )
 					end)
 
 					AddUnitToSelection(new_hippo)
+
+					-- Add the archer upgrades to the new hippo rider
+					table.insert(player.units, new_hippo)
+
+					local upgrades = player.upgrades
+				    if player.upgrades["nightelf_research_strength_of_the_moon3"] then
+				        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_strength_of_the_moon3" )      
+				    elseif player.upgrades["nightelf_research_strength_of_the_moon2"] then
+				        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_strength_of_the_moon2" )     
+				    elseif player.upgrades["nightelf_research_strength_of_the_moon1"] then
+				        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_strength_of_the_moon1" )
+				    end
+
+				   if player.upgrades["nightelf_research_moon_armor3"] then
+				        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_moon_armor3" )      
+				    elseif player.upgrades["nightelf_research_moon_armor2"] then
+				        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_moon_armor2" )     
+				    elseif player.upgrades["nightelf_research_moon_armor1"] then
+				        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_moon_armor1" )
+				    end
+
+				    -- Marksmanship, Improved Bows
+				    CheckAbilityRequirements( new_hippo, player )
+
 					caster:RemoveSelf()
 				end
 			else
@@ -153,6 +178,29 @@ function Dismount( event )
 		end
 		AddUnitToSelection(new_hippo)
 		AddUnitToSelection(archer)
+	
+
+		-- Add weapon/armor upgrade benefits
+	    local player = caster:GetPlayerOwner()
+
+	    table.insert(player.units, new_hippo)
+
+	    local upgrades = player.upgrades
+	    if player.upgrades["nightelf_research_strength_of_the_wild3"] then
+	        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_strength_of_the_wild3" )      
+	    elseif player.upgrades["nightelf_research_strength_of_the_wild2"] then
+	        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_strength_of_the_wild2" )     
+	    elseif player.upgrades["nightelf_research_strength_of_the_wild1"] then
+	        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_strength_of_the_wild1" )
+	    end
+
+	   if player.upgrades["nightelf_research_reinforced_hides3"] then
+	        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_reinforced_hides3" )      
+	    elseif player.upgrades["nightelf_research_reinforced_hides2"] then
+	        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_reinforced_hides2" )     
+	    elseif player.upgrades["nightelf_research_reinforced_hides1"] then
+	        UpdateUnitUpgrades( new_hippo, player, "nightelf_research_reinforced_hides1" )
+	    end
 
 		caster:RemoveSelf()
 	end)

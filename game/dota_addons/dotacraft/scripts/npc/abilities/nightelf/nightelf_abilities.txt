@@ -262,7 +262,7 @@
 "nightelf_improved_bows"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_improved_bows"
+	"AbilityTextureName"			"nightelf_research_improved_bows"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -299,7 +299,7 @@
 {
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityTextureName"	"nightelf_marksmanship"
+	"AbilityTextureName"	"nightelf_research_marksmanship"
 	"MaxLevel"				"1"
 
 	"AbilitySpecial"
@@ -1154,12 +1154,12 @@
 		"02"
         {
             "var_type"              "FIELD_INTEGER"
-            "bonus_armor"           "2"
+            "bear_hp"               "960"
         }
         "03"
         {
             "var_type"              "FIELD_INTEGER"
-            "bonus_hp"              "380"
+            "bonus_armor"           "2"
         }
         "04"
         {

@@ -8228,13 +8228,15 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_mount_hippogryph"	 //Reference: Aco2 Couple Instant (Archer)
 		"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
-		"Ability3"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
-		"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
-		"Ability5"					"nightelf_elunes_grace"	 //Reference: Aegr
+		"Ability3"					"nightelf_marksmanship_disabled"
+		"Ability4"					"nightelf_improved_bows_disabled"	
+		"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability6"					"nightelf_elunes_grace"	 //Reference: Aegr
 		"Ability11"					"nightelf_night_regen"
+		 //Reference: Aien Inventory(2 slot unit) Night Elf
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8332,7 +8334,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_sentinel"	 //Reference: Aesn
 		"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
 		"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl - Gets replaced by "nightelf_upgraded_moon_glaive" after the research
@@ -8532,7 +8534,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_abolish_magic"	 //Reference: Aadm
 		"Ability2"					"nightelf_slow_poison"	  	//Reference: Aspo
 		"Ability3"					"generic_spell_immunity"	//Reference: Amim
@@ -8638,6 +8640,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_roar"	
 		"Ability2"					"nightelf_rejuvenation"	
 		"Ability3"					"nightelf_bear_form"
@@ -8710,6 +8713,10 @@
 				"Wearable4"		{	"ItemDef"		"110"		}
 				"Wearable5"		{	"ItemDef"		"219"		}
 			}
+	
+			//Training
+			"HPGain"				"75"
+			"ManaGain"				"100" 
 		}
 	}
 	
@@ -8729,7 +8736,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_taunt"	 //Reference: Atau
 		"Ability2"					"nightelf_resistant_skin_disabled"	 //Reference: Arsk
 		"Ability3"					"nightelf_hardened_skin_disabled"	 //Reference: Assk
@@ -8827,7 +8834,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_taunt"	 //Reference: Atau
 		"Ability2"					"nightelf_resistant_skin"	 //Reference: Arsk
 		"Ability3"					"nightelf_hardened_skin"	 //Reference: Assk
@@ -8927,7 +8934,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_storm_crow_form"	 //Reference: Arav
 		"Ability2"					"nightelf_faerie_fire"	 //Reference: Afa2
 		"Ability3"					"nightelf_cyclone"
@@ -9012,6 +9019,10 @@
 				"Wearable5"	{ "ItemDef"	"33" } //Necklace
 				"Wearable6"	{ "ItemDef" "49" } //Bracers
 			}
+	
+			//Training
+			"HPGain"				"40"
+			"ManaGain"				"100" 
 		}
 	}
 	
@@ -9031,7 +9042,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_mana_flare"
 		"Ability2"					"generic_spell_immunity"	
 		"Ability3"					"nightelf_phase_shift"
@@ -9312,9 +9323,11 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"nightelf_dismount"	 //Reference: Adec
 		"Ability2"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability3"					"nightelf_marksmanship_disabled"
+		"Ability4"					"nightelf_improved_bows_disabled"
 		"Ability11"					"nightelf_night_regen"
 		
 		// Armor

@@ -77,6 +77,25 @@ function CrowFormStart( event )
     caster:SetModel(model)
     caster:SetOriginalModel(model)
 
+    -- Add weapon/armor upgrade benefits
+    local player = caster:GetPlayerOwner()
+    local upgrades = player.upgrades
+    if player.upgrades["nightelf_research_strength_of_the_wild3"] then
+        UpdateUnitUpgrades( caster, player, "nightelf_research_strength_of_the_wild3" )      
+    elseif player.upgrades["nightelf_research_strength_of_the_wild2"] then
+        UpdateUnitUpgrades( caster, player, "nightelf_research_strength_of_the_wild2" )     
+    elseif player.upgrades["nightelf_research_strength_of_the_wild1"] then
+        UpdateUnitUpgrades( caster, player, "nightelf_research_strength_of_the_wild1" )
+    end
+
+   if player.upgrades["nightelf_research_reinforced_hides3"] then
+        UpdateUnitUpgrades( caster, player, "nightelf_research_reinforced_hides3" )      
+    elseif player.upgrades["nightelf_research_reinforced_hides2"] then
+        UpdateUnitUpgrades( caster, player, "nightelf_research_reinforced_hides2" )     
+    elseif player.upgrades["nightelf_research_reinforced_hides1"] then
+        UpdateUnitUpgrades( caster, player, "nightelf_research_reinforced_hides1" )
+    end
+
     -- Swap sub_ability
     local sub_ability_name = event.sub_ability_name
     local main_ability_name = ability:GetAbilityName()
@@ -96,7 +115,22 @@ function CrowFormEnd( event )
     caster:SetModelScale(0.7)
 
     caster:SetModel(caster.caster_model)
-    caster:SetOriginalModel(caster.caster_model) 
+    caster:SetOriginalModel(caster.caster_model)
+
+    -- Remove abilities and modifiers from weapon/armor upgrades
+    for i=0,15 do
+        local ability = caster:GetAbilityByIndex(i)
+        if ability then
+            local ability_name = ability:GetAbilityName()
+            if ( string.match(ability_name, "nightelf_strength_of_the_wild") or string.match(ability_name, "nightelf_reinforced_hides") ) then
+                caster:RemoveAbility(ability:GetAbilityName())
+            end
+        end
+    end
+
+    caster:RemoveModifierByName("modifier_strength_of_the_wild")
+    caster:RemoveModifierByName("modifier_druids_mountain_giant_damage")
+    caster:RemoveModifierByName("modifier_reinforced_hides")
 
     -- Swap the sub_ability back to normal
     local main_ability_name = event.main_ability_name

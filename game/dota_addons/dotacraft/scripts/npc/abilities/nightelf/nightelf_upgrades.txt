@@ -1,0 +1,806 @@
+// nightelf_strength_of_the_moon
+// nightelf_moon_armor
+// nightelf_strength_of_the_wild
+// nightelf_reinforced_hides
+
+"nightelf_strength_of_the_moon1"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_strength_of_the_moon1"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"glaive_thrower_damage" "10 20 30"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_strength_of_the_moon"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_glaive_thrower_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%glaive_thrower_damage"
+			}
+		}
+	}
+}
+"nightelf_strength_of_the_moon2"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_strength_of_the_moon2"
+	"MaxLevel"				"2"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"glaive_thrower_damage" "10 20 30"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_strength_of_the_moon"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_glaive_thrower_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%glaive_thrower_damage"
+			}
+		}
+	}
+}
+"nightelf_strength_of_the_moon3"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_strength_of_the_moon3"
+	"MaxLevel"				"3"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"glaive_thrower_damage" "10 20 30"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_strength_of_the_moon"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_glaive_thrower_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%glaive_thrower_damage"
+			}
+		}
+	}
+}
+"nightelf_moon_armor1"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_moon_armor1"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_moon_armor"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"nightelf_moon_armor2"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_moon_armor2"
+	"MaxLevel"				"2"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_moon_armor"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"nightelf_moon_armor3"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_moon_armor3"
+	"MaxLevel"				"3"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_moon_armor"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"nightelf_strength_of_the_wild1"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_strength_of_the_wild1"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"druids_mountain_giant_damage"  "4 8 12"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"chimaera_damage"  		"9 18 27"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_strength_of_the_wild"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_druids_mountain_giant_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%druids_mountain_giant_damage"
+			}
+		}
+		"modifier_chimaera_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%chimaera_damage"
+			}
+		}
+	}
+}
+"nightelf_strength_of_the_wild2"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_strength_of_the_wild2"
+	"MaxLevel"				"2"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"druids_mountain_giant_damage"  "4 8 12"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"chimaera_damage"  		"9 18 27"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_strength_of_the_wild"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_druids_mountain_giant_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%druids_mountain_giant_damage"
+			}
+		}
+		"modifier_chimaera_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%chimaera_damage"
+			}
+		}
+	}
+}
+"nightelf_strength_of_the_wild3"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_strength_of_the_wild3"
+	"MaxLevel"				"3"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"2 4 6"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"druids_mountain_giant_damage"  "4 8 12"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"chimaera_damage"  		"9 18 27"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_strength_of_the_wild"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyModifierUpgrade"
+				}
+			}
+		}
+
+		"modifier_bonus_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+			}
+		}
+		"modifier_druids_mountain_giant_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%druids_mountain_giant_damage"
+			}
+		}
+		"modifier_chimaera_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%chimaera_damage"
+			}
+		}
+	}
+}
+"nightelf_reinforced_hides1"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_reinforced_hides1"
+	"MaxLevel"				"1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_reinforced_hides"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"nightelf_reinforced_hides2"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_reinforced_hides2"
+	"MaxLevel"				"2"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_reinforced_hides"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+"nightelf_reinforced_hides3"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"nightelf_research_reinforced_hides3"
+	"MaxLevel"				"3"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"2 4 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_reinforced_hides"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+
+
+//Druid of the Claw Adept Training
+	//Increases mana capacity by 100, mana regeneration rate by 25%, hit points by 75, minimum and maximum attack (+3 each level), and gives them the ability to cast Rejuvenation.
+"nightelf_druid_of_the_claw_training1"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_research_druid_of_the_claw_training1"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"100"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"25"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"75"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"3"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_druid_of_the_claw_training1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyDruidTraining"
+					"LevelUp"		"5" //Set the creature to this level
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%bonus_damage"
+				//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+			}
+		}
+	}
+}
+
+//Druid of the Claw Master Training
+	//Further increases mana capacity by 100, mana regeneration rate by 25%, hit points by 75, minimum and maximum attack, and allows them to transform into Bear Form.
+"nightelf_druid_of_the_claw_training2"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_research_druid_of_the_claw_training2"
+	"MaxLevel"					"2"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"100 200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"25 50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"75 150"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"3 6"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_druid_of_the_claw_training2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyDruidTraining"
+					"LevelUp"		"6" //Set the creature to this level
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%bonus_damage"
+				//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+			}
+		}
+	}
+}
+
+//Druid of the Talon Adept Training
+	//Increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40 and gives them the ability Storm Crow Form.
+"nightelf_druid_of_the_talon_training1"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_research_druid_of_the_talon_training1"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"100"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"30"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"80"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_druid_of_the_talon_training1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyDruidTraining"
+					"LevelUp"		"3" //Set the creature to this level
+				}
+			}
+
+			"Properties"
+			{
+				//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+			}
+		}
+	}
+}
+
+//Druid of the Talon Master Training
+	//Further increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40 and gives them the ability to cast Cyclone.
+"nightelf_druid_of_the_talon_training2"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"nightelf_research_druid_of_the_talon_training2"
+	"MaxLevel"					"2"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"100 200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"30 60"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"40 80"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_druid_of_the_talon_training2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
+					"Function"		"ApplyDruidTraining"
+					"LevelUp"		"4" //Set the creature to this level
+				}
+			}
+
+			"Properties"
+			{
+				//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+			}
+		}
+	}
+}

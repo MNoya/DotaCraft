@@ -73,16 +73,18 @@
 			"IsHidden"				"1"
 			"OnCreated"
 			{
-				"AttachEffect"
+				"RunScript"
 				{
-					"EffectName"        "particles/custom/nightelf/lucent_beam_impact_shared_ti_5.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-					"ControlPointEntities"
-					{
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-					}
+					"ScriptFile"	"buildings/items.lua"
+					"Function"		"NightElfConstructionParticle"
+				}
+			}
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"buildings/items.lua"
+					"Function"		"NightElfConstructionParticleEnd"
 				}
 			}
 		}

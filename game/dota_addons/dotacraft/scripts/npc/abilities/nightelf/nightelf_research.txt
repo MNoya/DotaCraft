@@ -1384,6 +1384,13 @@
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
 		}
+
+		// Apply upgrade on all current transformed druids
+		"RunScript"
+		{
+			"ScriptFile"    "units/nightelf/nightelf_upgrades.lua"
+			"Function"      "UpgradeMarkOfTheTalon"
+		}
 	}
 }
 "nightelf_research_mark_of_the_talon_disabled"
@@ -1564,7 +1571,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_research_strength_of_the_moon2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -1642,7 +1649,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_research_strength_of_the_moon3"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -1798,7 +1805,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_research_moon_armor2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -1876,7 +1883,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_research_moon_armor3"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -2032,7 +2039,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_research_strength_of_the_wild2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -2110,7 +2117,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_research_strength_of_the_wild3"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -2266,7 +2273,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_research_reinforced_hides2"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
@@ -2344,7 +2351,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_research_reinforced_hides3"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 

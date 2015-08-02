@@ -56,9 +56,9 @@ function CheckAbilityRequirements( unit, player )
 					]]
 
 					-- Unlock all abilities inside the workshop tools
-					if Convars:GetBool("developer") then
+					--[[if Convars:GetBool("developer") then
 						player_has_requirements = true
-					end
+					end]]
 
 					if disabled then
 						if player_has_requirements then
@@ -177,6 +177,14 @@ function UpdateUnitUpgrades( unit, player, research_name )
 
 	if unit_upgrades[ability_name] and unit_upgrades[ability_name][unit_name] then
 
+		-- Handle upgrades that only upgrade the unit if it has a certain modifier
+		if string.match(unit_upgrades[ability_name][unit_name], "modifier") then
+			if not unit:HasModifier(unit_upgrades[ability_name][unit_name]) then
+				print("UUU", unit_name.." doesnt have "..unit_upgrades[ability_name][unit_name])
+				return
+			end
+		end
+
 		print("UUU",unit_name.." - "..ability_name.." - rank "..rank)
 
 		-- If its the first rank of the ability, simply add it
@@ -225,11 +233,10 @@ function UpdateUnitUpgrades( unit, player, research_name )
 	end
 end
 
--- Removes the modifiers defined in the unit_upgrades.kv table for this unit
+-- Removes the modifiers associated to the ability name this unit
 function RemoveAssociatedModifiers( unit, ability_name, table )
 	local modifiers = table.modifiers
 
-	DeepPrintTable(modifiers)
 	if modifiers then
 		for k,v in pairs(modifiers) do
 			if unit:HasModifier(k) then
