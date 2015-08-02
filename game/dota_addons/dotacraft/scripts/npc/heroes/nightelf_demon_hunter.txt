@@ -2,11 +2,11 @@
 // Creature: Demon Hunter
 // Description: "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r"
 //=================================================================================
-"npc_dota_hero_terrorblade"
+"npc_dota_hero_antimage"
 {
 	// General
 	//----------------------------------------------------------------
-	"override_hero"				"npc_dota_hero_terrorblade"
+	"override_hero"				"npc_dota_hero_antimage"
 	"FormationRank"				"0"
 	
 	// Abilities
@@ -56,6 +56,7 @@
 	//----------------------------------------------------------------
 	"GoldCost"					"425"
 	"LumberCost"				"100"
+	"FoodCost"					"5"
 	
 	// Movement
 	//----------------------------------------------------------------
