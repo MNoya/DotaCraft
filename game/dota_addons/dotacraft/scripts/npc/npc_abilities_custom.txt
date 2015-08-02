@@ -15266,32 +15266,6 @@
 			}
 		}
 	}
-	// Link the Altars together with this ability
-	"ability_altar"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		"Modifiers"
-		{
-			"modifier_altar"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"buildings/altar.lua"
-						"Function"		"LinkAltar"
-					}
-				}
-			}
-		}		
-	}
-	
 	// Heroes
 	
 	"human_train_archmage1"
@@ -27824,6 +27798,31 @@
 			}
 		}
 	}
+	// Link the Altars together with this ability
+	"ability_altar"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"Modifiers"
+		{
+			"modifier_altar"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/altar.lua"
+						"Function"		"LinkAltar"
+					}
+				}
+			}
+		}		
+	}
 	"ability_building"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -32075,32 +32074,6 @@
 			}
 		}
 	}
-	// Link the Altars together with this ability
-	"ability_altar"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		"Modifiers"
-		{
-			"modifier_altar"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"buildings/altar.lua"
-						"Function"		"LinkAltar"
-					}
-				}
-			}
-		}		
-	}
-	
 	// Heroes
 	
 	"nightelf_train_demon_hunter1"
@@ -50164,6 +50137,3727 @@
 			{
 				"ScriptFile"	"buildings/upgrades.lua"
 				"Function"		"SetLevel0"
+			}
+		}
+	}
+	// Heroes
+	
+	"undead_train_death_knight1"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"0" // First hero is free
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_abaddon"
+			}
+		}
+		
+	}
+	
+	"undead_train_dread_lord1"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"0" // First hero is free
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_night_stalker"
+			}
+		}
+		
+	}
+	
+	"undead_train_lich1"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"0" // First hero is free
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_lich"
+			}
+		}
+		
+	}
+	
+	"undead_train_crypt_lord1"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"0" // First hero is free
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_nyx_assassin"
+			}
+		}
+	}
+	
+	// Passive version indicates that the hero has already been trained, stopping the next rank of that hero
+	
+	"undead_train_death_knight_acquired"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_dread_lord_acquired"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_lich_acquired"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_crypt_lord_acquired"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	// Version 2 costs 450g and 100lumber and requires to have upgraded the city level 2
+	
+	"undead_train_death_knight2"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"2"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+	
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_abaddon"
+			}
+		}
+		
+	}
+	
+	"undead_train_dread_lord2"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"2"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_night_stalker"
+			}
+		}
+		
+	}
+	
+	"undead_train_lich2"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"2"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_lich"
+			}
+		}
+		
+	}
+	
+	"undead_train_crypt_lord2"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"2"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_nyx_assassin"
+			}
+		}
+	}
+	
+	// Version 3 costs the same but requires City Hall level 3
+	
+	"undead_train_death_knight3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_abaddon"
+			}
+		}
+		
+	}
+	
+	"undead_train_dread_lord3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_night_stalker"
+			}
+		}
+		
+	}
+	
+	"undead_train_lich3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_lich"
+			}
+		}
+		
+	}
+	
+	"undead_train_crypt_lord3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"3"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityUpgradeGoldCost"		"0"
+		"AbilityChannelTime"			"55"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"train_time"			"55.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"UpgradeAltarAbilities"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"BuildHero"
+				"Hero"			"npc_dota_hero_nyx_assassin"
+			}
+		}
+	}
+	
+	
+	// Disabled Versions
+	
+	//Ranks 2
+	"undead_train_death_knight2_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_dread_lord2_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_lich2_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_crypt_lord2_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	// Ranks 3
+	"undead_train_death_knight3_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_dread_lord3_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_lich3_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	"undead_train_crypt_lord3_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"0"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	
+	// Revival, one ability for each level to scale the gold and channel time (volvo pls)
+	
+	//	180 30
+	"undead_train_death_knight_revive1"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityChannelTime"			"30"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"30.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"180"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+	
+	//	225 35
+	"undead_train_death_knight_revive2"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"2"
+	
+		"AbilityGoldCost"				"225"
+		"AbilityChannelTime"			"35"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"35.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"225"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+	
+	//	270 40
+	"undead_train_death_knight_revive3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"3"
+	
+		"AbilityGoldCost"				"270"
+		"AbilityChannelTime"			"40"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"40.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"270"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+	
+	//	315 45
+	"undead_train_death_knight_revive4"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"4"
+	
+		"AbilityGoldCost"				"315"
+		"AbilityChannelTime"			"45"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"45.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"315"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+	
+	//	360 50
+	"undead_train_death_knight_revive5"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"5"
+	
+		"AbilityGoldCost"				"360"
+		"AbilityChannelTime"			"50"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"50.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"360"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	
+	}
+	
+	//	405 60
+	"undead_train_death_knight_revive6"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"6"
+	
+		"AbilityGoldCost"				"405"
+		"AbilityChannelTime"			"60"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"60.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"405"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+	
+	//	450 70
+	"undead_train_death_knight_revive7"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"7"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityChannelTime"			"70"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"70.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+	
+	//	495 80
+	"undead_train_death_knight_revive8"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"8"
+	
+		"AbilityGoldCost"				"495"
+		"AbilityChannelTime"			"80"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"80.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"495"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+	
+	//	540 90
+	"undead_train_death_knight_revive9"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"9"
+	
+		"AbilityGoldCost"				"540"
+		"AbilityChannelTime"			"90"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"90.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"540"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+	
+	//	585 100
+	"undead_train_death_knight_revive10"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_death_knight"
+		"MaxLevel" 						"10"
+	
+		"AbilityGoldCost"				"585"
+		"AbilityChannelTime"			"100"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"100.0"
+	 		}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"585"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_death_knight"
+			}
+		}
+	}
+		
+	//	180 30
+	"undead_train_dread_lord_revive1"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityChannelTime"			"30"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"30.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"180"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	225 35
+	"undead_train_dread_lord_revive2"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"2"
+	
+		"AbilityGoldCost"				"225"
+		"AbilityChannelTime"			"35"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"35.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"225"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	270 40
+	"undead_train_dread_lord_revive3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"3"
+	
+		"AbilityGoldCost"				"270"
+		"AbilityChannelTime"			"40"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"40.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"270"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	315 45
+	"undead_train_dread_lord_revive4"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"4"
+	
+		"AbilityGoldCost"				"315"
+		"AbilityChannelTime"			"45"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"45.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"315"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	360 50
+	"undead_train_dread_lord_revive5"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"5"
+	
+		"AbilityGoldCost"				"360"
+		"AbilityChannelTime"			"50"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"50.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"360"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	405 60
+	"undead_train_dread_lord_revive6"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"6"
+	
+		"AbilityGoldCost"				"405"
+		"AbilityChannelTime"			"60"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"60.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"405"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	450 70
+	"undead_train_dread_lord_revive7"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"7"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityChannelTime"			"70"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"70.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	495 80
+	"undead_train_dread_lord_revive8"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"8"
+	
+		"AbilityGoldCost"				"495"
+		"AbilityChannelTime"			"80"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"80.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"495"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	540 90
+	"undead_train_dread_lord_revive9"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"9"
+	
+		"AbilityGoldCost"				"540"
+		"AbilityChannelTime"			"90"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"90.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"540"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	585 100
+	"undead_train_dread_lord_revive10"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_dread_lord"
+		"MaxLevel" 						"10"
+	
+		"AbilityGoldCost"				"585"
+		"AbilityChannelTime"			"100"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"100.0"
+	 		}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"585"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_dread_lord"
+			}
+		}
+	}
+	
+	//	180 30
+	"undead_train_lich_revive1"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityChannelTime"			"30"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"30.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"180"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	225 35
+	"undead_train_lich_revive2"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"2"
+	
+		"AbilityGoldCost"				"225"
+		"AbilityChannelTime"			"35"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"35.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"225"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	270 40
+	"undead_train_lich_revive3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"3"
+	
+		"AbilityGoldCost"				"270"
+		"AbilityChannelTime"			"40"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"40.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"270"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	315 45
+	"undead_train_lich_revive4"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"4"
+	
+		"AbilityGoldCost"				"315"
+		"AbilityChannelTime"			"45"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"45.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"315"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	360 50
+	"undead_train_lich_revive5"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"5"
+	
+		"AbilityGoldCost"				"360"
+		"AbilityChannelTime"			"50"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"50.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"360"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	405 60
+	"undead_train_lich_revive6"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"6"
+	
+		"AbilityGoldCost"				"405"
+		"AbilityChannelTime"			"60"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"60.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"405"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	450 70
+	"undead_train_lich_revive7"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"7"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityChannelTime"			"70"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"70.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	495 80
+	"undead_train_lich_revive8"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"8"
+	
+		"AbilityGoldCost"				"495"
+		"AbilityChannelTime"			"80"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"80.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"495"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	540 90
+	"undead_train_lich_revive9"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"9"
+	
+		"AbilityGoldCost"				"540"
+		"AbilityChannelTime"			"90"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"90.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"540"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	585 100
+	"undead_train_lich_revive10"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_lich"
+		"MaxLevel" 						"10"
+	
+		"AbilityGoldCost"				"585"
+		"AbilityChannelTime"			"100"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"100.0"
+	 		}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"585"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_lich"
+			}
+		}
+	}
+	
+	//	180 30
+	"undead_train_crypt_lord_revive1"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"1"
+	
+		"AbilityGoldCost"				"180"
+		"AbilityChannelTime"			"30"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"30.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"180"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	225 35
+	"undead_train_crypt_lord_revive2"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"2"
+	
+		"AbilityGoldCost"				"225"
+		"AbilityChannelTime"			"35"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"35.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"225"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	270 40
+	"undead_train_crypt_lord_revive3"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"3"
+	
+		"AbilityGoldCost"				"270"
+		"AbilityChannelTime"			"40"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"40.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"270"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	315 45
+	"undead_train_crypt_lord_revive4"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"4"
+	
+		"AbilityGoldCost"				"315"
+		"AbilityChannelTime"			"45"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"45.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"315"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	360 50
+	"undead_train_crypt_lord_revive5"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"5"
+	
+		"AbilityGoldCost"				"360"
+		"AbilityChannelTime"			"50"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"50.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"360"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	405 60
+	"undead_train_crypt_lord_revive6"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"6"
+	
+		"AbilityGoldCost"				"405"
+		"AbilityChannelTime"			"60"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"60.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"405"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	450 70
+	"undead_train_crypt_lord_revive7"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"7"
+	
+		"AbilityGoldCost"				"450"
+		"AbilityChannelTime"			"70"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"70.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	495 80
+	"undead_train_crypt_lord_revive8"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"8"
+	
+		"AbilityGoldCost"				"495"
+		"AbilityChannelTime"			"80"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"80.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"495"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	540 90
+	"undead_train_crypt_lord_revive9"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"9"
+	
+		"AbilityGoldCost"				"540"
+		"AbilityChannelTime"			"90"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"90.0" 
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"540"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
+			}
+		}
+	}
+	
+	//	585 100
+	"undead_train_crypt_lord_revive10"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_train_crypt_lord"
+		"MaxLevel" 						"10"
+	
+		"AbilityGoldCost"				"585"
+		"AbilityChannelTime"			"100"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"revive_time"			"100.0"
+	 		}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_cost"				"585"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_cost"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"food_cost"				"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/queue.lua"
+				"Function"		"EnqueueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"HideReviveAbility"
+			}
+		}
+	
+		"OnChannelSucceeded"
+		{
+			// Consume the first item in the queue
+			"RunScript"
+			{
+				"ScriptFile"   	"buildings/queue.lua"
+				"Function"      "NextQueue"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/altar.lua"
+				"Function"		"ReviveHero"
+				"Hero"			"undead_crypt_lord"
 			}
 		}
 	}

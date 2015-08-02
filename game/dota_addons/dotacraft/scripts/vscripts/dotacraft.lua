@@ -463,6 +463,11 @@ function dotacraft:PostLoadPrecache()
 	PrecacheUnitByNameAsync("npc_dota_hero_leshrac", function(...) end)
 	PrecacheUnitByNameAsync("npc_dota_hero_phantom_assassin", function(...) end)
 
+	PrecacheUnitByNameAsync("npc_dota_hero_abaddon", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_night_stalker", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_lich", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_nyx_assassin", function(...) end)
+
 	PrecacheItemByNameAsync("item_orb_of_frost", function(...) end)
 	PrecacheItemByNameAsync("item_orb_of_fire", function(...) end)
 	PrecacheItemByNameAsync("item_orb_of_venom_wc3", function(...) end)

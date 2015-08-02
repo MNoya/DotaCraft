@@ -1,9 +1,9 @@
 // Heroes
 
-"human_train_archmage1"
+"undead_train_death_knight1"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -64,16 +64,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_keeper_of_the_light"
+			"Hero"			"npc_dota_hero_abaddon"
 		}
 	}
 	
 }
 
-"human_train_mountain_king1"
+"undead_train_dread_lord1"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -134,16 +134,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_zuus"
+			"Hero"			"npc_dota_hero_night_stalker"
 		}
 	}
 	
 }
 
-"human_train_paladin1"
+"undead_train_lich1"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -204,16 +204,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_omniknight"
+			"Hero"			"npc_dota_hero_lich"
 		}
 	}
 	
 }
 
-"human_train_blood_mage1"
+"undead_train_crypt_lord1"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -274,44 +274,44 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_Invoker"
+			"Hero"			"npc_dota_hero_nyx_assassin"
 		}
 	}
 }
 
 // Passive version indicates that the hero has already been trained, stopping the next rank of that hero
 
-"human_train_archmage_acquired"
+"undead_train_death_knight_acquired"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_mountain_king_acquired"
+"undead_train_dread_lord_acquired"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_paladin_acquired"
+"undead_train_lich_acquired"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_blood_mage_acquired"
+"undead_train_crypt_lord_acquired"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -319,10 +319,10 @@
 
 // Version 2 costs 450g and 100lumber and requires to have upgraded the city level 2
 
-"human_train_archmage2"
+"undead_train_death_knight2"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -384,16 +384,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_keeper_of_the_light"
+			"Hero"			"npc_dota_hero_abaddon"
 		}
 	}
 	
 }
 
-"human_train_mountain_king2"
+"undead_train_dread_lord2"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -454,16 +454,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_zuus"
+			"Hero"			"npc_dota_hero_night_stalker"
 		}
 	}
 	
 }
 
-"human_train_paladin2"
+"undead_train_lich2"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -524,16 +524,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_omniknight"
+			"Hero"			"npc_dota_hero_lich"
 		}
 	}
 	
 }
 
-"human_train_blood_mage2"
+"undead_train_crypt_lord2"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"2"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -594,17 +594,17 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_Invoker"
+			"Hero"			"npc_dota_hero_nyx_assassin"
 		}
 	}
 }
 
 // Version 3 costs the same but requires City Hall level 3
 
-"human_train_archmage3"
+"undead_train_death_knight3"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -665,16 +665,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_keeper_of_the_light"
+			"Hero"			"npc_dota_hero_abaddon"
 		}
 	}
 	
 }
 
-"human_train_mountain_king3"
+"undead_train_dread_lord3"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -735,16 +735,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_zuus"
+			"Hero"			"npc_dota_hero_night_stalker"
 		}
 	}
 	
 }
 
-"human_train_paladin3"
+"undead_train_lich3"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -805,16 +805,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_omniknight"
+			"Hero"			"npc_dota_hero_lich"
 		}
 	}
 	
 }
 
-"human_train_blood_mage3"
+"undead_train_crypt_lord3"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -875,7 +875,7 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"BuildHero"
-			"Hero"			"npc_dota_hero_Invoker"
+			"Hero"			"npc_dota_hero_nyx_assassin"
 		}
 	}
 }
@@ -884,74 +884,74 @@
 // Disabled Versions
 
 //Ranks 2
-"human_train_archmage2_disabled"
+"undead_train_death_knight2_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_mountain_king2_disabled"
+"undead_train_dread_lord2_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_paladin2_disabled"
+"undead_train_lich2_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_blood_mage2_disabled"
+"undead_train_crypt_lord2_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
 // Ranks 3
-"human_train_archmage3_disabled"
+"undead_train_death_knight3_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_mountain_king3_disabled"
+"undead_train_dread_lord3_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_paladin3_disabled"
+"undead_train_lich3_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 }
 
-"human_train_blood_mage3_disabled"
+"undead_train_crypt_lord3_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"0"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -960,10 +960,10 @@
 // Revival, one ability for each level to scale the gold and channel time (volvo pls)
 
 //	180 30
-"human_train_archmage_revive1"
+"undead_train_death_knight_revive1"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"1"
 
 	"AbilityGoldCost"				"180"
@@ -1023,16 +1023,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 
 //	225 35
-"human_train_archmage_revive2"
+"undead_train_death_knight_revive2"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"2"
 
 	"AbilityGoldCost"				"225"
@@ -1092,16 +1092,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 
 //	270 40
-"human_train_archmage_revive3"
+"undead_train_death_knight_revive3"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"3"
 
 	"AbilityGoldCost"				"270"
@@ -1161,16 +1161,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 
 //	315 45
-"human_train_archmage_revive4"
+"undead_train_death_knight_revive4"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"4"
 
 	"AbilityGoldCost"				"315"
@@ -1230,16 +1230,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 
 //	360 50
-"human_train_archmage_revive5"
+"undead_train_death_knight_revive5"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"5"
 
 	"AbilityGoldCost"				"360"
@@ -1299,17 +1299,17 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 
 }
 
 //	405 60
-"human_train_archmage_revive6"
+"undead_train_death_knight_revive6"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"6"
 
 	"AbilityGoldCost"				"405"
@@ -1369,16 +1369,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 
 //	450 70
-"human_train_archmage_revive7"
+"undead_train_death_knight_revive7"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"7"
 
 	"AbilityGoldCost"				"450"
@@ -1438,16 +1438,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 
 //	495 80
-"human_train_archmage_revive8"
+"undead_train_death_knight_revive8"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"8"
 
 	"AbilityGoldCost"				"495"
@@ -1507,16 +1507,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 
 //	540 90
-"human_train_archmage_revive9"
+"undead_train_death_knight_revive9"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"9"
 
 	"AbilityGoldCost"				"540"
@@ -1576,16 +1576,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 
 //	585 100
-"human_train_archmage_revive10"
+"undead_train_death_knight_revive10"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_archmage"
+	"AbilityTextureName"			"undead_train_death_knight"
 	"MaxLevel" 						"10"
 
 	"AbilityGoldCost"				"585"
@@ -1645,16 +1645,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_archmage"
+			"Hero"			"undead_death_knight"
 		}
 	}
 }
 	
 //	180 30
-"human_train_mountain_king_revive1"
+"undead_train_dread_lord_revive1"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"1"
 
 	"AbilityGoldCost"				"180"
@@ -1714,16 +1714,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	225 35
-"human_train_mountain_king_revive2"
+"undead_train_dread_lord_revive2"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"2"
 
 	"AbilityGoldCost"				"225"
@@ -1783,16 +1783,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	270 40
-"human_train_mountain_king_revive3"
+"undead_train_dread_lord_revive3"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"3"
 
 	"AbilityGoldCost"				"270"
@@ -1852,16 +1852,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	315 45
-"human_train_mountain_king_revive4"
+"undead_train_dread_lord_revive4"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"4"
 
 	"AbilityGoldCost"				"315"
@@ -1921,16 +1921,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	360 50
-"human_train_mountain_king_revive5"
+"undead_train_dread_lord_revive5"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"5"
 
 	"AbilityGoldCost"				"360"
@@ -1990,16 +1990,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	405 60
-"human_train_mountain_king_revive6"
+"undead_train_dread_lord_revive6"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"6"
 
 	"AbilityGoldCost"				"405"
@@ -2059,16 +2059,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	450 70
-"human_train_mountain_king_revive7"
+"undead_train_dread_lord_revive7"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"7"
 
 	"AbilityGoldCost"				"450"
@@ -2128,16 +2128,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	495 80
-"human_train_mountain_king_revive8"
+"undead_train_dread_lord_revive8"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"8"
 
 	"AbilityGoldCost"				"495"
@@ -2197,16 +2197,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	540 90
-"human_train_mountain_king_revive9"
+"undead_train_dread_lord_revive9"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"9"
 
 	"AbilityGoldCost"				"540"
@@ -2266,16 +2266,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	585 100
-"human_train_mountain_king_revive10"
+"undead_train_dread_lord_revive10"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_mountain_king"
+	"AbilityTextureName"			"undead_train_dread_lord"
 	"MaxLevel" 						"10"
 
 	"AbilityGoldCost"				"585"
@@ -2335,16 +2335,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_mountain_king"
+			"Hero"			"undead_dread_lord"
 		}
 	}
 }
 
 //	180 30
-"human_train_paladin_revive1"
+"undead_train_lich_revive1"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"1"
 
 	"AbilityGoldCost"				"180"
@@ -2404,16 +2404,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	225 35
-"human_train_paladin_revive2"
+"undead_train_lich_revive2"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"2"
 
 	"AbilityGoldCost"				"225"
@@ -2473,16 +2473,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	270 40
-"human_train_paladin_revive3"
+"undead_train_lich_revive3"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"3"
 
 	"AbilityGoldCost"				"270"
@@ -2542,16 +2542,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	315 45
-"human_train_paladin_revive4"
+"undead_train_lich_revive4"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"4"
 
 	"AbilityGoldCost"				"315"
@@ -2611,16 +2611,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	360 50
-"human_train_paladin_revive5"
+"undead_train_lich_revive5"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"5"
 
 	"AbilityGoldCost"				"360"
@@ -2680,16 +2680,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	405 60
-"human_train_paladin_revive6"
+"undead_train_lich_revive6"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"6"
 
 	"AbilityGoldCost"				"405"
@@ -2749,16 +2749,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	450 70
-"human_train_paladin_revive7"
+"undead_train_lich_revive7"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"7"
 
 	"AbilityGoldCost"				"450"
@@ -2818,16 +2818,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	495 80
-"human_train_paladin_revive8"
+"undead_train_lich_revive8"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"8"
 
 	"AbilityGoldCost"				"495"
@@ -2887,16 +2887,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	540 90
-"human_train_paladin_revive9"
+"undead_train_lich_revive9"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"9"
 
 	"AbilityGoldCost"				"540"
@@ -2956,16 +2956,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	585 100
-"human_train_paladin_revive10"
+"undead_train_lich_revive10"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_paladin"
+	"AbilityTextureName"			"undead_train_lich"
 	"MaxLevel" 						"10"
 
 	"AbilityGoldCost"				"585"
@@ -3025,16 +3025,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_paladin"
+			"Hero"			"undead_lich"
 		}
 	}
 }
 
 //	180 30
-"human_train_blood_mage_revive1"
+"undead_train_crypt_lord_revive1"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"1"
 
 	"AbilityGoldCost"				"180"
@@ -3094,16 +3094,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	225 35
-"human_train_blood_mage_revive2"
+"undead_train_crypt_lord_revive2"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"2"
 
 	"AbilityGoldCost"				"225"
@@ -3163,16 +3163,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	270 40
-"human_train_blood_mage_revive3"
+"undead_train_crypt_lord_revive3"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"3"
 
 	"AbilityGoldCost"				"270"
@@ -3232,16 +3232,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	315 45
-"human_train_blood_mage_revive4"
+"undead_train_crypt_lord_revive4"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"4"
 
 	"AbilityGoldCost"				"315"
@@ -3301,16 +3301,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	360 50
-"human_train_blood_mage_revive5"
+"undead_train_crypt_lord_revive5"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"5"
 
 	"AbilityGoldCost"				"360"
@@ -3370,16 +3370,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	405 60
-"human_train_blood_mage_revive6"
+"undead_train_crypt_lord_revive6"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"6"
 
 	"AbilityGoldCost"				"405"
@@ -3439,16 +3439,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	450 70
-"human_train_blood_mage_revive7"
+"undead_train_crypt_lord_revive7"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"7"
 
 	"AbilityGoldCost"				"450"
@@ -3508,16 +3508,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	495 80
-"human_train_blood_mage_revive8"
+"undead_train_crypt_lord_revive8"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"8"
 
 	"AbilityGoldCost"				"495"
@@ -3577,16 +3577,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	540 90
-"human_train_blood_mage_revive9"
+"undead_train_crypt_lord_revive9"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"9"
 
 	"AbilityGoldCost"				"540"
@@ -3646,16 +3646,16 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
 
 //	585 100
-"human_train_blood_mage_revive10"
+"undead_train_crypt_lord_revive10"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_train_blood_mage"
+	"AbilityTextureName"			"undead_train_crypt_lord"
 	"MaxLevel" 						"10"
 
 	"AbilityGoldCost"				"585"
@@ -3715,8 +3715,7 @@
 		{
 			"ScriptFile"	"buildings/altar.lua"
 			"Function"		"ReviveHero"
-			"Hero"			"human_blood_mage"
+			"Hero"			"undead_crypt_lord"
 		}
 	}
 }
-	

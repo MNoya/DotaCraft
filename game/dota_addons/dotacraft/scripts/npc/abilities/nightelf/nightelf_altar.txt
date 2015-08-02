@@ -1,29 +1,3 @@
-// Link the Altars together with this ability
-"ability_altar"
-{
-	"BaseClass"             		"ability_datadriven"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-
-	"Modifiers"
-	{
-		"modifier_altar"
-		{
-			"Passive"	"1"
-			"IsHidden"	"1"
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"buildings/altar.lua"
-					"Function"		"LinkAltar"
-				}
-			}
-		}
-	}		
-}
-
 // Heroes
 
 "nightelf_train_demon_hunter1"
