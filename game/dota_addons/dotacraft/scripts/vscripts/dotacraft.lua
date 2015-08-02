@@ -458,6 +458,11 @@ function dotacraft:PostLoadPrecache()
 	PrecacheUnitByNameAsync("npc_dota_hero_omniknight", function(...) end)
 	PrecacheUnitByNameAsync("npc_dota_hero_Invoker", function(...) end)
 
+	PrecacheUnitByNameAsync("npc_dota_hero_antimage", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_mirana", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_leshrac", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_phantom_assassin", function(...) end)
+
 	PrecacheItemByNameAsync("item_orb_of_frost", function(...) end)
 	PrecacheItemByNameAsync("item_orb_of_fire", function(...) end)
 	PrecacheItemByNameAsync("item_orb_of_venom_wc3", function(...) end)
@@ -1080,7 +1085,9 @@ function dotacraft:OnEntityKilled( event )
 
 	-- Hero Killed
 	if killedUnit:IsRealHero() then
-		if player.altar then
+		print("A Hero was killed")
+		if IsValidEntity(player.altar) then
+			print("Player has "..#player.altar_structures.." valid "..player.altar:GetUnitName())
 			for _,altar in pairs(player.altar_structures) do
 				print("ALLOW REVIVAL OF THIS THIS HERO AT THIS ALTAR")
 
@@ -1109,6 +1116,8 @@ function dotacraft:OnEntityKilled( event )
 					end
 				end
 			end
+		else
+			print("Hero Killed but player doesn't have an altar to revive it")
 		end
 	end
 
@@ -1191,7 +1200,7 @@ function dotacraft:OnEntityKilled( event )
 		for _,altar in pairs(player.altar_structures) do
 			if altar and IsValidEntity(altar) and altar:IsAlive() then
 				print("Valid altar: "..altar:GetUnitName())
-				table.insert(table_structures, altar)
+				table.insert(table_altars, altar)
 			end
 		end
 		player.altar_structures = table_altars

@@ -254,6 +254,7 @@ function LinkAltar( event )
 	if not player.altar then
 		player.altar = altar
 		player.altar_structures = {}
+		print("Initialized player.altar")
 	end
 
 	-- Keep all altars in a separate structure list
@@ -315,9 +316,14 @@ function ReviveHero( event )
 	for _,hero in pairs(player.heroes) do
 		print(_,hero.RealHeroName)
 		if hero.RealHeroName == hero_name then
-			print("reviving "..hero_name)
 			hero:RespawnUnit()
-			hero:SetAbsOrigin(caster.flag:GetAbsOrigin()) --This should be a move order towards the flag instead
+			FindClearSpaceForUnit(hero, caster:GetAbsOrigin(), true)
+			Timers:CreateTimer(function() 
+				if IsValidEntity(caster.flag) then 
+					hero:MoveToPositionAggressive(caster.flag:GetAbsOrigin())
+				end
+			end)
+			print("Revived "..hero_name)
 		end
 	end
 
@@ -329,7 +335,8 @@ function ReviveHero( event )
 
 	for _,altar in pairs(player.altar_structures) do
 		local new_ability_name = string.gsub(ability_name, "_revive" , "")
-		new_ability_name = string.sub(new_ability_name, 1 , string.len(new_ability_name) - 1).."_acquired"
+		new_ability_name = GetResearchAbilityName(new_ability_name) --Take away numbers or research
+		new_ability_name = new_ability_name.."_acquired"
 
 		print("new_ability_name is "..new_ability_name.." finding it")
 

@@ -51,6 +51,8 @@ function GetFoodCost( unit )
 	if unit and IsValidEntity(unit) then
 		if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].FoodCost then
 			return GameRules.UnitKV[unit:GetUnitName()].FoodCost
+		elseif GameRules.HeroKV[unit:GetUnitName()] and GameRules.HeroKV[unit:GetUnitName()].FoodCost then
+			return GameRules.HeroKV[unit:GetUnitName()].FoodCost
 		end
 	end
 	return 0
@@ -389,6 +391,7 @@ function GetResearchAbilityName( research_name )
 
 	local ability_name = string.gsub(research_name, "_research" , "")
 	ability_name = string.gsub(ability_name, "_disabled" , "")
+	ability_name = string.gsub(ability_name, "0" , "")
 	ability_name = string.gsub(ability_name, "1" , "")
 	ability_name = string.gsub(ability_name, "2" , "")
 	ability_name = string.gsub(ability_name, "3" , "")
