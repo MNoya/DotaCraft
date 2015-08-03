@@ -4153,33 +4153,7 @@
 			}
 		}
 	}
-	"item_nightelf_improved_bows"
-	{
-		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_nightelf_improved_bows"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-		"AbilityCastPoint"				"0"
 	
-		"ItemDroppable" 				"0"
-		"ItemPurchasable" 				"0"
-		"ItemSellable"					"0"
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"DequeueUnit"
-			}
-	
-			// Re-enable research ability
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"ReEnableResearch"
-			}
-		}
-	}
 	"item_nightelf_research_marksmanship"
 	{
 		"BaseClass"             		"item_datadriven"

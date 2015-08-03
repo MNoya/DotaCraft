@@ -602,13 +602,14 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"5"
+	"AbilityLayout"				"6"
 	"Ability1"					"nightelf_train_wisp"
 	"Ability2"					"nightelf_uproot"
 	"Ability3"					"nightelf_research_natures_blessing"
 	"Ability4"					"nightelf_research_backpack"
-	"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
-	"Ability6"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
+	"Ability5"					"nightelf_entangle_gold_mine_passive" //Shows while the tree has a mine entangled
+	"Ability6"					"nightelf_entangle_gold_mine"	//Hidden while the tree has a mine entangled
+	"Ability7"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	"Ability12"					"nightelf_natures_blessing_disabled"
@@ -703,13 +704,13 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"5"
 	"Ability1"					"nightelf_train_wisp"
 	"Ability2"					"nightelf_uproot"
 	"Ability3"					"nightelf_research_backpack"
 	"Ability4"					"nightelf_research_natures_blessing"	
-	"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while rooted
-	"Ability6"					""	 //Reference: Arlm
+	"Ability4"					"nightelf_entangle_gold_mine_passive" //Shows while the tree has a mine entangled
+	"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while the tree has a mine entangled
 	"Ability10"					"ability_building"
 	"Ability11"					"ability_building_queue"
 	"Ability12"					"nightelf_natures_blessing_disabled"

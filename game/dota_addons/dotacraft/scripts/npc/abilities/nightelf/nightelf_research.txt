@@ -1011,84 +1011,6 @@
 	}
 }
 
-"nightelf_research_mark_of_the_claw"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_mark_of_the_claw"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-
-	"AbilityGoldCost"				"50"
-	"AbilityChannelTime"			"20"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"research_time"			"20"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"50"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"25"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/queue.lua"
-			"Function"		"EnqueueUnit"
-		}
-
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/research.lua"
-			"Function"		"DisableResearch"
-		}
-	}
-
-	"OnChannelSucceeded"
-	{
-		// Consume the first item in the queue
-		"RunScript"
-		{
-			"ScriptFile"   	"buildings/queue.lua"
-			"Function"      "NextQueue"
-		}
-
-		// Add Upgrade and Swap the ability for the next upgrade if there is one
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/research.lua"
-			"Function"		"ResearchComplete"
-		}
-	}
-}
-"nightelf_research_mark_of_the_claw_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_mark_of_the_claw"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
 // • Ancient of Wind
 "nightelf_research_druid_of_the_talon_training1" // Crow Form
 {
@@ -1308,21 +1230,6 @@
 		}
 	}
 }
-"nightelf_research_hippogryph_taming_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_hippogryph_taming"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
 
 "nightelf_research_mark_of_the_talon"
 {
@@ -1472,21 +1379,6 @@
 		}
 	}
 }
-"nightelf_research_corrosive_breath_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_corrosive_breath"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
 
 // • Hunters Hall
 "nightelf_research_strength_of_the_moon1"
@@ -1548,21 +1440,6 @@
 		{
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
-		}
-	}
-}
-"nightelf_research_strength_of_the_moon1_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_strength_of_the_moon1"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
 		}
 	}
 }
@@ -1785,21 +1662,6 @@
 		}
 	}
 }
-"nightelf_research_moon_armor1_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_moon_armor1"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
 
 "nightelf_research_moon_armor2"
 {
@@ -2016,21 +1878,6 @@
 		{
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
-		}
-	}
-}
-"nightelf_research_strength_of_the_wild1_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_strength_of_the_wild1"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
 		}
 	}
 }
@@ -2253,21 +2100,6 @@
 		}
 	}
 }
-"nightelf_research_reinforced_hides1_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_reinforced_hides1"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
 
 "nightelf_research_reinforced_hides2"
 {
@@ -2484,21 +2316,6 @@
 		{
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
-		}
-	}
-}
-"nightelf_research_ultravision_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_ultravision"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
 		}
 	}
 }

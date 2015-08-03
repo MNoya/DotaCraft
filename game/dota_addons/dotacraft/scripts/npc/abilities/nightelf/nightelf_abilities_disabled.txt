@@ -46,10 +46,10 @@
 	}
 }
 
-"nightelf_moon_glaive_disabled"
+"nightelf_upgraded_moon_glaive_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_research_moon_glaive"
+	"AbilityTextureName"			"nightelf_research_upgraded_moon_glaive"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"
@@ -114,6 +114,22 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"nightelf_bear_form"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"nightelf_war_club_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"nightelf_research_war_club"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"

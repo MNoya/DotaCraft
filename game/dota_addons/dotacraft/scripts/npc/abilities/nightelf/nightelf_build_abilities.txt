@@ -1,5 +1,4 @@
 // Night Elf Buildings
-// nightelf_ancient_of_war - No requirements
 // nightelf_ancient_of_lore - Requires Tree of Ages and Hunters Hall
 // nightelf_ancient_of_wind - Requires Tree of Ages
 // nightelf_ancient_protector - Requires Hunters Hall
@@ -10,6 +9,7 @@
 	// nightelf_tree_of_ages - Upgrade
 	// nightelf_tree_of_eternity - Upgrade, Requires Altar of Elders
 // nightelf_altar_of_elders - No requirements
+// nightelf_ancient_of_war - No requirements
 // nightelf_hunters_hall - No requirements
 // nightelf_moon_well - No requirements
 // nightelf_ancient_of_wonders - No requirements
@@ -30,63 +30,6 @@
 		{
 			"ScriptFile"	"buildings/items.lua"
 			"Function"		"GiveNightElfBuildingItems"
-		}
-	}
-}
-
-"nightelf_build_ancient_of_war"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"nightelf_build_ancient_of_war"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
-	"AbilityCastPoint"				"0"
-
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildingSize"					"5"
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
-
-	"BuilderInside"					"1"	//bool
-	"ConsumesBuilder"				"1" //bool
-
-	"UnitName"						"nightelf_ancient_of_war"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"150"
-	// End of BuildingHelper info
-
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"150"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"60"
-		}
-	}
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
 		}
 	}
 }
