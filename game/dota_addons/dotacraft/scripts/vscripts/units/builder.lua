@@ -254,6 +254,7 @@ function Gather( event )
 						end
 						
 						ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {})
+
 						-- Find first empty position
 						local free_pos
 						for i=1,5 do
@@ -586,6 +587,8 @@ function GoldGain( event )
 	local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
 	hero:ModifyGold(gold_gain, false, 0)
 	PopupGoldGain( caster, gold_gain)
+
+	print("Gold Gain")
 
 	-- Reduce the health of the main and mana on the entangled/haunted mine to show the remaining gold
 	local mine = caster.target_mine
