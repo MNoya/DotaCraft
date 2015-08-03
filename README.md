@@ -17,7 +17,7 @@
 - [ ] Legacy attack types including Air-Ground.
 - [ ] Auto gather lumber after Lumber deposit construction
 - [ ] Building placement restrictions (Undead Blight, proximity to Gold Mine)
-- [ ] Occupied Building indicators (Entangled/Haunted Gold Mine/Burrows)
+- [x] Occupied Building indicators (Entangled/Haunted Gold Mine/Burrows)
 - [ ] General multi orders for casting certain abilities as a group
 - [ ] Building behavior improvements
   - [ ] Multiple builder queue with repair
@@ -27,7 +27,7 @@
 ### Race Abilities - [Progress spreadsheet here](https://docs.google.com/spreadsheets/d/1qwyG20YNi88G-SFYbaiyxi11Vtar8kjNXXJCMZyF7Y0/edit#gid=1929065693)
 
 - [x] Human
-- [ ] Night Elf
+- [x] Night Elf
 - [ ] Orc
 - [ ] Undead
 
