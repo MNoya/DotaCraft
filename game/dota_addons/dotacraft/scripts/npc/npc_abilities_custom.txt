@@ -47218,7 +47218,7 @@
 	"undead_cannibalize"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_cannibalize"
+		"AbilityTextureName"		"undead_research_cannibalize"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -47228,6 +47228,7 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
+		"AbilityMultiOrder"			"1"
 		// The cast range is the range in which the eating'll happen.
 			
 		"AbilitySpecial"
@@ -47270,6 +47271,12 @@
 			"modifier_cannibalize"
 			{
 	
+			}
+	
+			"modifier_cannibalize_properties"
+			{
+				"IsHidden" "1"
+				
 				"OnOrder"
 				{
 					"RemoveModifier"
@@ -47277,12 +47284,19 @@
 						"ModifierName"	"modifier_cannibalize"
 						"Target" 		"CASTER"
 					}
+					
 					"RunScript"
 					{
 						"ScriptFile"	"units/undead/ghoul.lua"
 						"Function"		"stop_cannibalize"
 					}		
 				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"
+				}
+				
 			}
 		}
 		
@@ -47320,7 +47334,7 @@
 	"undead_ghoul_frenzy"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_ghoul_frenzy"
+		"AbilityTextureName"		"undead_research_ghoul_frenzy"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -49459,7 +49473,6 @@
 		}
 	
 	}
-	
 	
 	//=================================================================================
 	// Ability: Unsummon Building

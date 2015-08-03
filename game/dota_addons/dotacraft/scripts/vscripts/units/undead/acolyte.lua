@@ -196,4 +196,3 @@ function ShowGoldMine( event )
 
 	print("Removed Haunted Gold Mine successfully")
 end
-

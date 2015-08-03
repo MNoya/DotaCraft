@@ -16,7 +16,7 @@ function get_corpse(keys)
 	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), RADIUS)
 	
 	for k,corpse in pairs(targets) do
-		if corpse.corpse_expiration ~= nil then		
+		if corpse.corpse_expiration ~= nil and not corpse.being_eaten then		
 
 			-- increase count by 1
 			IncreaseCorpseCount(keys)
@@ -53,7 +53,7 @@ function get_corpse_autocast(keys)
 				local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), RADIUS)
 				
 				for k,corpse in pairs(targets) do
-					if corpse.corpse_expiration ~= nil then
+					if corpse.corpse_expiration ~= nil and not corpse.being_eaten then
 						caster:CastAbilityNoTarget(ability, caster:GetPlayerOwnerID())			
 					end	
 				end						
@@ -63,6 +63,12 @@ function get_corpse_autocast(keys)
 		return 0.2
 	end)
 	
+end
+
+function drop_single_corpse(keys)
+	DecreaseCorpseCount(keys, 3)
+	
+	return CreateCorpses(keys, 3)
 end
 
 -- dropses corses periodically
@@ -85,7 +91,7 @@ function drop_corpse(keys)
 			return
 		end
 	
-		DecreaseCorpseCount(keys)
+		DecreaseCorpseCount(keys, 1)
 		CreateCorpses(keys, 1)
 		
 		return 0.5
@@ -113,12 +119,11 @@ function drop_all_corpse(keys)
 		end
 	
 		-- remove 1 modifier stack and create corpses accordingly
-		DecreaseCorpseCount(keys)		
+		DecreaseCorpseCount(keys, 1)		
 		CreateCorpses(keys, 1)
 		
 		return 0.04
 	end)
-
 end
 
 -- create the corpses
@@ -126,14 +131,24 @@ function CreateCorpses(keys, state)
 	local caster = keys.caster
 	local randomX = RandomInt(-100,100)
 	local randomY = RandomInt(-100,100)
-	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster) 
-		
+	local StackCount 
+	
+	-- state 3 is from cannibalize
+	if state ~= 3 then 
+		caster:GetModifierStackCount("modifier_corpses", caster) 
+	else
+		keys.ability.corpse:GetModifierStackCount("modifier_corpses", keys.ability.corpse) 
+	end	
+	
 -- taken from dotacraft.lua with some changes
 	-- Create and set model
 	local targetposition
 	if state == 1 then
 		targetposition = keys.caster:GetAbsOrigin()
-	else -- if 2(can be anything else to)
+	elseif state == 3 then
+		targetposition = keys.ability.corpse:GetAbsOrigin()
+	else
+	-- if 2(can be anything else to)
 		targetposition = keys.target:GetAbsOrigin()
 	end
 	
@@ -142,7 +157,14 @@ function CreateCorpses(keys, state)
 	
 	-- Keep a reference to its name and expire time
 	corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
-	corpse.unit_name = caster.corpse_name[StackCount]
+	
+	-- state 3 is from cannibalize
+	if state ~= 3 then
+		corpse.unit_name = caster.corpse_name[StackCount]
+	else
+		corpse.unit_name = keys.ability.corpse.corpse_name[StackCount]
+		corpse.being_eaten = true
+	end
 	
 	-- corpse timer
 	Timers:CreateTimer(CORPSE_DURATION, function()
@@ -151,6 +173,8 @@ function CreateCorpses(keys, state)
 			corpse:RemoveSelf()
 		end
 	end)
+	
+	return corpse
 end
 
 function meat_wagon_disease_cloud(keys)
@@ -196,7 +220,7 @@ function meat_wagon_disease_cloud(keys)
 	-- if he has stacks, throw corpse
 	if StackCount > 0 then
 		CreateCorpses(keys, 2)
-		DecreaseCorpseCount(keys)
+		DecreaseCorpseCount(keys, 1)
 	end
 end
 
@@ -260,8 +284,14 @@ function IncreaseCorpseCount(keys)
 	end
 end
 
-function DecreaseCorpseCount (keys)
-	local caster = keys.caster
+function DecreaseCorpseCount (keys, state)
+local caster
+	if state == 1 then
+		caster = keys.caster
+	else
+		caster = keys.ability.corpse
+	end
+	
 	local get_corpse_ability = caster:FindAbilityByName("undead_get_corpse")
 	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster)
 		

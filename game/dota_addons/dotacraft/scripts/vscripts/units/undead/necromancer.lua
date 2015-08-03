@@ -14,7 +14,7 @@ function undead_raise_dead ( keys )
 		local abilitylevel = ability:GetLevel()
 		local spawnlocation = corpse:GetAbsOrigin()
 		
-		if corpse.corpse_expiration ~= nil then					
+		if corpse.corpse_expiration ~= nil and not corpse.being_eaten then					
 			--if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
 			--	duration = SKELETON_DURATION + 15
 			--else
