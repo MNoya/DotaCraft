@@ -519,7 +519,7 @@ function dotacraft:OnHeroInGame(hero)
 		hero:AddNoDraw()
 
 		-- Find neutrals near the starting zone and remove them
-		local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, true)
+		local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
 		for k,v in pairs(neutrals) do
 			if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
 				v:RemoveSelf()
