@@ -41364,22 +41364,62 @@
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"damage_taken_increase"			"0.5"
+				"var_type"		"FIELD_INTEGER"
+				"damage_taken_increase"			"50"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"attack_speed_increase"			"0.2"
+				"var_type"		"FIELD_INTEGER"
+				"attack_speed_increase"			"50"
 			}
 			"04"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"movement_speed_increase"		"0.5"
+				"var_type"		"FIELD_INTEGER"
+				"movement_speed_increase"		"20"
 			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/items2_fx/mask_of_madness.vpcf"
+			"soundfile" "soundevents/game_sounds_items.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_orc_berserk"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.MaskOfMadness.Activate"
+				"Target" 		"TARGET"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_orc_berserk"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/items2_fx/mask_of_madness.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%damage_taken_increase"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_increase" 
+				    "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_increase"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
