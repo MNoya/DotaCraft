@@ -153,8 +153,16 @@
 		
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%movement_speed_bonus"
-				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" 	"%attackspeed - %attack_speed_bonus"			
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%movement_speed_bonus"		
+			}
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/ghoul.lua"
+					"Function"		"frenzy"
+				}
 			}
 		}	
 	}

@@ -195,3 +195,11 @@ function stop_cannibalize(keys)
 	end
 
 end
+
+function frenzy ( keys )
+	local caster = keys.caster
+	local base_attack_time = caster:GetBaseAttackTime()
+	local attack_speed_bonus = keys.ability:GetSpecialValueFor("attack_speed_bonus")
+
+	caster:SetBaseAttackTime(base_attack_time - attack_speed_bonus)
+end
