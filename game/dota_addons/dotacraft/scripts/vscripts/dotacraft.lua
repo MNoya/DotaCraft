@@ -527,7 +527,7 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		local unitName = "human_sorceress"
+		--[[local unitName = "human_sorceress"
 		local num = 3 --Useful to test "AbilityMultiOrder"
 		PrecacheUnitByNameAsync(unitName, function()
 			for i=1,num do
@@ -553,7 +553,7 @@ function dotacraft:OnHeroInGame(hero)
 				FindClearSpaceForUnit(unit, position, true)
 				unit:Hold()
 			end
-		end, pID)
+		end, pID)]]
 	else
 
 		-- A real hero trained through an altar

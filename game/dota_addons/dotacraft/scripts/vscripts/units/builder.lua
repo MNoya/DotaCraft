@@ -588,8 +588,6 @@ function GoldGain( event )
 	hero:ModifyGold(gold_gain, false, 0)
 	PopupGoldGain( caster, gold_gain)
 
-	print("Gold Gain")
-
 	-- Reduce the health of the main and mana on the entangled/haunted mine to show the remaining gold
 	local mine = caster.target_mine
 	mine:SetHealth( mine:GetHealth() - gold_gain )
