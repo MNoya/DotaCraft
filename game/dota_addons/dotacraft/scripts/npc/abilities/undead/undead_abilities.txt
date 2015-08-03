@@ -154,7 +154,7 @@
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%movement_speed_bonus"
-				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" 	"%attack_speed_bonus"			
+				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" 	"%attackspeed - %attack_speed_bonus"			
 			}
 		}	
 	}
@@ -386,14 +386,14 @@
 "undead_stone_form"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_stone_form"
+	"AbilityTextureName"		"undead_research_stone_form"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"30"
+	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
 	
 	"AbilitySpecial"
@@ -422,8 +422,43 @@
 		}
 		// The Gargoyle's height will raise or lower over this duration.
 		// The process is uninterruptable. Just like the standard Dota 2 Stone Form without the stun.
+		"05"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"bonus_armor"			"12"		
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile" "units/undead/gargoyle.lua"
+			"Function"	"stone_form"
+		}
 	}
 
+	"Modifiers"
+	{
+	
+		"modifier_stone_form"
+		{
+			
+			"States"
+			{
+				"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%regeneration"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"		"1"
+				"MODIFIER_PROPERTY_DISABLE_TURNING"			"1"
+			}
+		}
+	}
 	
 }
 
