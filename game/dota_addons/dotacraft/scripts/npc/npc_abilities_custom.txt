@@ -19817,13 +19817,18 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"200"
+				"damage_to_summons"			"200"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"200"
 			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf"
 		}
 	
 		"OnSpellStart"
@@ -19847,15 +19852,9 @@
 	
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/pandaren/storm_earth_fire.lua"
+				"ScriptFile"	"units/human/priest.lua"
 				"Function"		"DispelMagic"
-				"Target"
-				{
-					"Center"  	"POINT"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
+				"Target"		"POINT"
 			}
 		}
 	}

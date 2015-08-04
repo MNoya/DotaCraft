@@ -531,45 +531,47 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		--[[local unitName = "human_sorceress"
-		local num = 3 --Useful to test "AbilityMultiOrder"
-		PrecacheUnitByNameAsync(unitName, function()
-			for i=1,num do
-				local position = GameRules.StartingPositions[pID].position + Vector(0,-300-i*50,0)
-				local unit = CreateUnitByName(unitName, position, true, hero, hero, hero:GetTeamNumber())
-				unit:SetOwner(hero)
-				unit:SetControllableByPlayer(pID, true)
-				FindClearSpaceForUnit(unit, position, true)
-				unit:Hold()
-				table.insert(player.units, unit)
-				unit:SetMana(unit:GetMaxMana())
-				unit:SetHealth(unit:GetMaxHealth()/2)
-			end
-		end, pID)]]
+		if Convars:GetBool("developer") then
+			local unitName = "human_sorceress"
+			local num = 3 --Useful to test "AbilityMultiOrder"
+			PrecacheUnitByNameAsync(unitName, function()
+				for i=1,num do
+					local position = GameRules.StartingPositions[pID].position + Vector(0,-300-i*50,0)
+					local unit = CreateUnitByName(unitName, position, true, hero, hero, hero:GetTeamNumber())
+					unit:SetOwner(hero)
+					unit:SetControllableByPlayer(pID, true)
+					FindClearSpaceForUnit(unit, position, true)
+					unit:Hold()
+					table.insert(player.units, unit)
+					unit:SetMana(unit:GetMaxMana())
+					unit:SetHealth(unit:GetMaxHealth()/2)
+				end
+			end, pID)
 
-		local enemyUnitName = "nightelf_mountain_giant_resistant_skin"
-		local numEnemy = 3
-		PrecacheUnitByNameAsync(enemyUnitName, function()
-			for i=1,numEnemy do
-				local position = GameRules.StartingPositions[pID].position + Vector(0,-1000,0)
-				local unit = CreateUnitByName(enemyUnitName, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
-				unit:SetControllableByPlayer(pID, true)
-				FindClearSpaceForUnit(unit, position, true)
-				unit:Hold()
-			end
-		end, pID)
+			local enemyUnitName = "nightelf_mountain_giant_resistant_skin"
+			local numEnemy = 3
+			PrecacheUnitByNameAsync(enemyUnitName, function()
+				for i=1,numEnemy do
+					local position = GameRules.StartingPositions[pID].position + Vector(0,-1000,0)
+					local unit = CreateUnitByName(enemyUnitName, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
+					unit:SetControllableByPlayer(pID, true)
+					FindClearSpaceForUnit(unit, position, true)
+					unit:Hold()
+				end
+			end, pID)
 
-		local enemyUnitName2 = "nightelf_wisp"
-		local numEnemy2 = 3
-		PrecacheUnitByNameAsync(enemyUnitName2, function()
-			for i=1,numEnemy2 do
-				local position = GameRules.StartingPositions[pID].position + Vector(0,-1200,0)
-				local unit = CreateUnitByName(enemyUnitName2, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
-				unit:SetControllableByPlayer(pID, true)
-				FindClearSpaceForUnit(unit, position, true)
-				unit:Hold()
-			end
-		end, pID)
+			local enemyUnitName2 = "nightelf_wisp"
+			local numEnemy2 = 3
+			PrecacheUnitByNameAsync(enemyUnitName2, function()
+				for i=1,numEnemy2 do
+					local position = GameRules.StartingPositions[pID].position + Vector(0,-1200,0)
+					local unit = CreateUnitByName(enemyUnitName2, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
+					unit:SetControllableByPlayer(pID, true)
+					FindClearSpaceForUnit(unit, position, true)
+					unit:Hold()
+				end
+			end, pID)
+		end
 	else
 
 		-- A real hero trained through an altar
