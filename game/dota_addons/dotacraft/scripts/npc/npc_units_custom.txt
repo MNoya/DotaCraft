@@ -5080,6 +5080,8 @@
 		"HealthBarOffset"			"140"
 		"SelectionGroup"            "Human_Siege_Engines"
 		"SoundSet"					"Creep_Good_Engine"
+	
+		"IsMechanical"				"1"
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -8493,6 +8495,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	
+		"IsMechanical"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -10929,6 +10933,8 @@
 		"ModelScale"				"1.5"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	
+		"IsMechanical"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -12901,7 +12907,6 @@
 		"Ability6"					"undead_train_halls_of_the_dead"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_large"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -12984,7 +12989,6 @@
 		"Ability6"					"undead_train_black_citadel"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_large"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13001,7 +13005,7 @@
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"800"
 		"AttackRange"				"800"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/neutral_fx/satyr_trickster_projectile.vpcf"	 //Add projectile
 		"ProjectileSpeed"			"1200"
 		
 		// Bounty
@@ -13073,7 +13077,6 @@
 		"Ability3"					""	 //Reference: Afr2
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_large"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -13090,7 +13093,7 @@
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"800"
 		"AttackRange"				"800"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/neutral_fx/satyr_trickster_projectile.vpcf"	 //Add projectile
 		"ProjectileSpeed"			"1200"
 		
 		// Bounty
@@ -13159,7 +13162,6 @@
 		"Ability1"					"undead_train_frost_wyrm"	 //Reference: Abgs
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13243,7 +13245,6 @@
 		"Ability4"					"undead_train_crypt_lord1"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13331,7 +13332,6 @@
 		"Ability8"					"undead_research_burrow"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13413,7 +13413,6 @@
 		"Ability4"					"undead_research_creature_carapace1"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13499,7 +13498,6 @@
 		"Ability6"					"undead_research_skeletal_mastery"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13576,7 +13574,6 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"undead_haunt_mine" //Effects and logic
 		"Ability10"					"ability_building"
-		"Ability12"					"undead_blight_growth_small"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -13663,7 +13660,6 @@
 		"Ability6"					"undead_research_destroyer_form"
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13743,7 +13739,6 @@
 		"Ability2"					""	 //Reference: Abgs
 		"Ability3"					""	 //Reference: Apit
 		"Ability10"					"ability_building"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13823,7 +13818,6 @@
 		"Ability2"					"undead_train_spirit_tower"	 //Reference: Abgs
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13901,7 +13895,6 @@
 		"Ability1"					"undead_frost_attack"	 //Reference: Abgs
 		"Ability2"					""	 //Reference: Afra
 		"Ability10"					"ability_building"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -13918,7 +13911,7 @@
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"900"
 		"AttackRange"				"700"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf"	 //Add projectile
 		"ProjectileSpeed"			"1200"
 		
 		// Bounty
@@ -13985,7 +13978,6 @@
 		"AbilityLayout"				"4"
 		"Ability1"					""	 //Reference: Abgs
 		"Ability10"					"ability_building"
-		"Ability12"					"undead_blight_growth_small"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -14002,7 +13994,7 @@
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"900"
 		"AttackRange"				"700"
-		"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/neutral_fx/satyr_trickster_projectile.vpcf"	 //Add projectile
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -14070,7 +14062,6 @@
 		"Ability2"					""	 //Reference: Asac
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
-		"Ability12"					"undead_blight_growth_small"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14159,6 +14150,7 @@
 		"Ability7"					"undead_build_boneyard_disabled"
 		"Ability8"					"undead_unsummon_building"	 //Reference: Auns	
 		"Ability9"					"build_undead_items"
+		"Ability11"					"undead_blight_regen"
 			
 		// Armor
 		//----------------------------------------------------------------
@@ -14259,6 +14251,7 @@
 		"Ability2"					""	 //Reference: Arst
 		"Ability3"					""	 //Reference: Alam
 		"Ability4"					""
+		"Ability11"					"undead_blight_regen"
 			
 		// Armor
 		//----------------------------------------------------------------
@@ -14349,6 +14342,7 @@
 		"Ability2"					"undead_return_resources"	
 		"Ability3"					"undead_cannibalize"	 //Reference: Acan
 		"Ability4"					"undead_ghoul_frenzy"
+		"Ability11"					"undead_blight_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14444,6 +14438,7 @@
 		"Ability2"					""	 //Reference: Aspa
 		"Ability3"					"undead_burrow"	 //Reference: Abur
 		"Ability4"					""	 //Reference: Aiun
+		"Ability11"					"undead_blight_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14540,6 +14535,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"undead_stone_form"	 //Reference: Astn
+		"Ability11"					"undead_blight_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14628,7 +14624,8 @@
 		"Ability1"					"undead_cannibalize"	 //Reference: Aap1
 		"Ability2"					"undead_disease_cloud"	 //Reference: Aiun
 		"Ability3"					""	 //Reference: Acn2
-		
+		"Ability11"					"undead_blight_regen"
+	
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"2"
@@ -14719,6 +14716,8 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	
+		"IsMechanical"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14816,6 +14815,8 @@
 		"HealthBarOffset"			"180"
 		"FormationRank"				"2"
 		
+		"IsMechanical"				"1"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"undead_essence_of_blight"	 //Reference: Arpl
@@ -14927,7 +14928,7 @@
 		"Ability2"					"undead_orb_of_annihilation"	 //Reference: Afak
 		"Ability3"					"undead_absorb_mana"	 //Reference: Aabs
 		"Ability4"					"undead_spell_immunity"	 //Reference: ACmi - Magic Immunity (Creep)
-		//undead_spirit_touch
+		"Ability11"					"undead_blight_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -15029,6 +15030,7 @@
 		"Ability2"					"undead_raise_dead"	 //Reference: Arai
 		"Ability3"					"undead_unholy_frenzy"	 //Reference: Auhf
 		"Ability4"					""	 //Reference: Aiun
+		"Ability11"					"undead_blight_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -15129,6 +15131,7 @@
 		"Ability2"					"undead_curse"	 //Reference: Acrs
 		"Ability3"					"undead_possession"	 //Reference: Aps2
 		"Ability4"					""	 //Reference: Aiun
+		"Ability11"					"undead_blight_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -15223,7 +15226,8 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		
+		"Ability11"					"undead_blight_regen"
+	
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"1"
@@ -15308,6 +15312,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
+		"Ability11"					"undead_blight_regen"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -15407,6 +15412,7 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"undead_freezing_breath"	 //Reference: Afrz
 		"Ability10"					"undead_freezing_splash"
+		"Ability11"					"undead_blight_regen"
 		
 		// Armor
 		//----------------------------------------------------------------

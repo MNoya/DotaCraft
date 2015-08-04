@@ -39,6 +39,7 @@
 	"Ability7"					"undead_build_boneyard_disabled"
 	"Ability8"					"undead_unsummon_building"	 //Reference: Auns	
 	"Ability9"					"build_undead_items"
+	"Ability11"					"undead_blight_regen"
 		
 	// Armor
 	//----------------------------------------------------------------
@@ -127,8 +128,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/nevermore/nevermore.vmdl"
-	"ModelScale"				"0.8"
+	"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_b.vmdl"
+	"ModelScale"				"1.5"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	
@@ -139,6 +140,7 @@
 	"Ability2"					""	 //Reference: Arst
 	"Ability3"					""	 //Reference: Alam
 	"Ability4"					""
+	"Ability11"					"undead_blight_regen"
 		
 	// Armor
 	//----------------------------------------------------------------
@@ -229,6 +231,7 @@
 	"Ability2"					"undead_return_resources"	
 	"Ability3"					"undead_cannibalize"	 //Reference: Acan
 	"Ability4"					"undead_ghoul_frenzy"
+	"Ability11"					"undead_blight_regen"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -324,6 +327,7 @@
 	"Ability2"					""	 //Reference: Aspa
 	"Ability3"					"undead_burrow"	 //Reference: Abur
 	"Ability4"					""	 //Reference: Aiun
+	"Ability11"					"undead_blight_regen"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -420,6 +424,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_stone_form"	 //Reference: Astn
+	"Ability11"					"undead_blight_regen"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -508,7 +513,8 @@
 	"Ability1"					"undead_cannibalize"	 //Reference: Aap1
 	"Ability2"					"undead_disease_cloud"	 //Reference: Aiun
 	"Ability3"					""	 //Reference: Acn2
-	
+	"Ability11"					"undead_blight_regen"
+
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"2"
@@ -599,6 +605,8 @@
 	"ModelScale"				"1"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+
+	"IsMechanical"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -696,6 +704,8 @@
 	"HealthBarOffset"			"180"
 	"FormationRank"				"2"
 	
+	"IsMechanical"				"1"
+
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"undead_essence_of_blight"	 //Reference: Arpl
@@ -807,7 +817,7 @@
 	"Ability2"					"undead_orb_of_annihilation"	 //Reference: Afak
 	"Ability3"					"undead_absorb_mana"	 //Reference: Aabs
 	"Ability4"					"undead_spell_immunity"	 //Reference: ACmi - Magic Immunity (Creep)
-	//undead_spirit_touch
+	"Ability11"					"undead_blight_regen"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -909,6 +919,7 @@
 	"Ability2"					"undead_raise_dead"	 //Reference: Arai
 	"Ability3"					"undead_unholy_frenzy"	 //Reference: Auhf
 	"Ability4"					""	 //Reference: Aiun
+	"Ability11"					"undead_blight_regen"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1009,6 +1020,7 @@
 	"Ability2"					"undead_curse"	 //Reference: Acrs
 	"Ability3"					"undead_possession"	 //Reference: Aps2
 	"Ability4"					""	 //Reference: Aiun
+	"Ability11"					"undead_blight_regen"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1103,7 +1115,8 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	
+	"Ability11"					"undead_blight_regen"
+
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"1"
@@ -1188,6 +1201,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
+	"Ability11"					"undead_blight_regen"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1287,6 +1301,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_freezing_breath"	 //Reference: Afrz
 	"Ability10"					"undead_freezing_splash"
+	"Ability11"					"undead_blight_regen"
 	
 	// Armor
 	//----------------------------------------------------------------

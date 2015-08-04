@@ -48942,12 +48942,12 @@
 						{
 							"RemoveModifier"
 							{
-								"ModifierName"	"modifier_truesight_reveal"
+								"ModifierName"	"modifier_true_sight_reveal"
 								"Target" 		"TARGET"
 							}
 							"ApplyModifier"
 							{
-								"ModifierName"	"modifier_truesight_reveal"
+								"ModifierName"	"modifier_true_sight_reveal"
 								"Target" 		"TARGET"
 							}
 						}
@@ -53866,82 +53866,36 @@
 	// All undead buildings generate Blight and require blight to be built except for Necropolis and Haunted Gold Mine
 	// Everything uses undead_blight_growth_small except for the city center and its upgrades
 	
-	//=================================================================================
-	// Ability: Blight Growth Small
-	// Code Reference: Abli
-	//=================================================================================
-	"undead_blight_growth_small"
+	"undead_blight_regen"
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-			
+		"AbilityTextureName"		"undying_decay"	
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-				
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"768"
-			}
-		}
 	
 		"Modifiers"
 		{
-			"modifier_blight_aura"
+			"modifier_blight_thinker"
 			{
-				"Passive"			"1"
+				"ThinkInterval"  	"0.5"
 				"IsHidden"			"1"
-		
-				"Aura"          	"modifier_blight"
-				"Aura_Radius"   	"%radius"
-				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"    	"DOTA_UNIT_TARGET_BASIC"
-			}
-	
-			"modifier_blight"
-			{
-				"TextureName"		"undying_decay"
-			}
-		}
-	}
-	
-	//=================================================================================
-	// Ability: Blight Growth Large
-	// Code Reference: Abli
-	//=================================================================================
-	"undead_blight_growth_large"
-	{
-		"BaseClass"					"ability_datadriven"
-		"MaxLevel"					"1"
-			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-				
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"960"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_blight_aura"
-			{
 				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"Aura"          	"modifier_blight"
-				"Aura_Radius"   	"%radius"
-				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"    	"DOTA_UNIT_TARGET_BASIC"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/blight.lua"
+						"Function"		"BlightRegen"
+					}
+				}
 			}
 	
-			"modifier_blight"
+			"modifier_blight_regen"
 			{
-				"TextureName"		"undying_decay"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "2"
+				}
 			}
 		}
 	}

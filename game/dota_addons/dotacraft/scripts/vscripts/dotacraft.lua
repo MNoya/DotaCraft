@@ -986,6 +986,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	PlayerResource:SetCameraTarget(playerID, building)
 	Timers:CreateTimer(function() PlayerResource:SetCameraTarget(playerID, nil) end)
 	table.insert(player.structures, building)
+	player.main_city_center = building
 
 	CheckAbilityRequirements( building, player )
 
@@ -1015,8 +1016,8 @@ function dotacraft:OnPlayerPickHero(keys)
 		haunted_gold_mine.builders = {}
 
 		Timers:CreateTimer(function() 
-			CreateBlight(haunted_gold_mine:GetAbsOrigin(), 768)
-			CreateBlight(building:GetAbsOrigin(), 960)
+			--CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
+			CreateBlight(building:GetAbsOrigin(), "large")
 		end)
 
 		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
@@ -1435,7 +1436,11 @@ function dotacraft:DebugBlight()
 		for j=(boundY1+1),boundY2-1 do
       		local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
 			if HasBlight(position) then
-				DebugDrawCircle(position, Vector(128,0,128), 50, 32, true, 60)
+				if HasBlightParticle(position) then
+					DebugDrawCircle(position, Vector(128,128,128), 50, 256, true, 60)
+				else
+					DebugDrawCircle(position, Vector(128,0,128), 50, 32, true, 60)
+				end
 			end
 		end
 	end

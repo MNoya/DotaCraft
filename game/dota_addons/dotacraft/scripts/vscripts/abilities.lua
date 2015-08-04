@@ -156,9 +156,9 @@ function build( keys )
 
 		-- Add blight if its an undead building
 		if IsUndead(unit) then
-			local radius = 768
+			local size = "small"
 			if unit:GetUnitName() == "undead_necropolis" then
-				radius = 960
+				radius = "large"
 			end
 			CreateBlight(unit:GetAbsOrigin(), radius)
 		end
