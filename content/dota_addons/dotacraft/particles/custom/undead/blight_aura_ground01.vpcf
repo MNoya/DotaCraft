@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 32
+	m_nMaxParticles = 16
 	m_BoundingBoxMin =
 	[
 		-400.000000,
@@ -34,6 +34,12 @@
 			m_flDepthBias = 1.000000
 			m_bParticleFeathering = true
 		},
+		{
+			_class = "C_OP_RenderProjected"
+			m_flMaxProjectionDepth = 256.000000
+			m_hProjectedMaterial = resource:"materials/particle/dirt/ground_decay/ground_decay01_projected.vmat"
+			m_bDisableOperator = true
+		},
 	]
 	m_Operators =
 	[
@@ -51,16 +57,19 @@
 		},
 		{
 			_class = "C_OP_DistanceCull"
-			m_flDistance = 800.000000
+			m_flDistance = 256.000000
+			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_FadeIn"
 			m_flFadeInTimeMin = 0.300000
 			m_flFadeInTimeMax = 0.400000
 			m_bProportional = false
+			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_AlphaDecay"
+			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_EndCapTimedDecay"
@@ -70,13 +79,14 @@
 			_class = "C_OP_LerpEndCapScalar"
 			m_flOutput = 0.000000
 			m_nFieldOutput = 7
+			m_bDisableOperator = true
 		},
 	]
 	m_Initializers =
 	[
 		{
 			_class = "C_INIT_CreateWithinSphere"
-			m_fRadiusMax = 700.000000
+			m_fRadiusMax = 256.000000
 			m_vecDistanceBias =
 			[
 				1.000000,
@@ -97,8 +107,8 @@
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMax = 500.000000
-			m_flRadiusMin = 500.000000
+			m_flRadiusMax = 256.000000
+			m_flRadiusMin = 256.000000
 		},
 		{
 			_class = "C_INIT_RandomColor"
@@ -141,7 +151,7 @@
 	[
 		{
 			_class = "C_OP_MaintainEmitter"
-			m_nParticlesToMaintain = 32
+			m_nParticlesToMaintain = 16
 		},
 	]
 }

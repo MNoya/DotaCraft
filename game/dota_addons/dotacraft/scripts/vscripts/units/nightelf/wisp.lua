@@ -44,6 +44,8 @@ function Detonate( event )
 	local particle3 = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_death.vpcf", PATTACH_CUSTOMORIGIN, caster)
 	ParticleManager:SetParticleControl(particle3, 0, point)
 
+	RemoveBlight(point, radius)
+
 	caster:EmitSound("Hero_Wisp.TeleportOut")
 	caster:ForceKill(true)
 	caster:AddNoDraw()

@@ -53883,7 +53883,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"760"
+				"radius"			"768"
 			}
 		}
 	
@@ -53892,10 +53892,8 @@
 			"modifier_blight_aura"
 			{
 				"Passive"			"1"
+				"IsHidden"			"1"
 		
-				"EffectName"		"particles/custom/undead/blight_aura.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
 				"Aura"          	"modifier_blight"
 				"Aura_Radius"   	"%radius"
 				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -53905,7 +53903,6 @@
 			"modifier_blight"
 			{
 				"TextureName"		"undying_decay"
-				"IsHidden"			"0"
 			}
 		}
 	}
@@ -53935,10 +53932,8 @@
 			"modifier_blight_aura"
 			{
 				"Passive"			"1"
+				"IsHidden"			"1"
 		
-				"EffectName"		"particles/custom/undead/blight_aura.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
 				"Aura"          	"modifier_blight"
 				"Aura_Radius"   	"%radius"
 				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -53948,7 +53943,6 @@
 			"modifier_blight"
 			{
 				"TextureName"		"undying_decay"
-				"IsHidden"			"0"
 			}
 		}
 	}

@@ -20,9 +20,11 @@
 		},
 		{
 			m_ChildRef = resource:"particles/custom/undead/blight_aura_smoke01.vpcf"
+			m_bDisableChild = true
 		},
 		{
 			m_ChildRef = resource:"particles/custom/undead/blight_aura_smoke02.vpcf"
+			m_bDisableChild = true
 		},
 		{
 			m_ChildRef = resource:"particles/custom/undead/blight_ambient_mouthgas.vpcf"
@@ -41,4 +43,5 @@
 			m_ChildRef = resource:"particles/custom/undead/blight_transform_reverse.vpcf"
 		},
 	]
+	m_flConstantLifespan = 99999.000000
 }

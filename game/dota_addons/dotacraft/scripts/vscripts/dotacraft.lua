@@ -220,6 +220,7 @@ function dotacraft:InitGameMode()
 	SendToServerConsole( "dota_combine_models 0" )
 
 	Convars:RegisterCommand( "debug_trees", Dynamic_Wrap(dotacraft, 'DebugTrees'), "Prints the trees marked as pathable", 0 )
+	Convars:RegisterCommand( "debug_blight", Dynamic_Wrap(dotacraft, 'DebugBlight'), "Prints the positions marked for undead buildings", 0 )
 
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
 	-- Note: When the abilities change, we need to update this value.
@@ -361,6 +362,9 @@ function dotacraft:InitGameMode()
 
   	-- Store and update selected units of each pID
 	GameRules.SELECTED_UNITS = {}
+
+	-- Keeps the blighted gridnav positions
+	GameRules.Blight = {}
   	
   	-- Starting positions
   	GameRules.StartingPositions = {}
@@ -541,7 +545,7 @@ function dotacraft:OnHeroInGame(hero)
 				unit:SetMana(unit:GetMaxMana())
 				unit:SetHealth(unit:GetMaxHealth()/2)
 			end
-		end, pID)
+		end, pID)]]
 
 		local enemyUnitName = "nightelf_mountain_giant_resistant_skin"
 		local numEnemy = 3
@@ -553,7 +557,19 @@ function dotacraft:OnHeroInGame(hero)
 				FindClearSpaceForUnit(unit, position, true)
 				unit:Hold()
 			end
-		end, pID)]]
+		end, pID)
+
+		local enemyUnitName2 = "nightelf_wisp"
+		local numEnemy2 = 3
+		PrecacheUnitByNameAsync(enemyUnitName2, function()
+			for i=1,numEnemy2 do
+				local position = GameRules.StartingPositions[pID].position + Vector(0,-1200,0)
+				local unit = CreateUnitByName(enemyUnitName2, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
+				unit:SetControllableByPlayer(pID, true)
+				FindClearSpaceForUnit(unit, position, true)
+				unit:Hold()
+			end
+		end, pID)
 	else
 
 		-- A real hero trained through an altar
@@ -996,6 +1012,11 @@ function dotacraft:OnPlayerPickHero(keys)
 		ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
 		haunted_gold_mine.builders = {}
 
+		Timers:CreateTimer(function() 
+			CreateBlight(haunted_gold_mine:GetAbsOrigin(), 768)
+			CreateBlight(building:GetAbsOrigin(), 960)
+		end)
+
 		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
 		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine
 	end
@@ -1395,6 +1416,24 @@ function dotacraft:DebugTrees()
 				end
 			else
 				DebugDrawCircle(v:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 60)
+			end
+		end
+	end
+end
+
+function dotacraft:DebugBlight()
+	local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
+	local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
+	local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
+	local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
+	local boundY1 = GridNav:WorldToGridPosX(worldMin.y)
+	local boundY2 = GridNav:WorldToGridPosX(worldMax.y)
+
+	for i=boundX1+1,boundX2-1 do
+		for j=(boundY1+1),boundY2-1 do
+      		local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
+			if HasBlight(position) then
+				DebugDrawCircle(position, Vector(128,0,128), 50, 32, true, 60)
 			end
 		end
 	end

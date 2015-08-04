@@ -33,6 +33,20 @@ function build( keys )
 	end
 
 	BuildingHelper:AddBuilding(keys)
+
+	keys:OnPreConstruction(function(vPos)
+
+       	-- Blight check
+       	if string.match(building_name, "undead") and building_name ~= "undead_necropolis" then
+       		local bHasBlight = HasBlight(vPos)
+       		print("Blight check for "..building_name..":", bHasBlight)
+       		if not bHasBlight then
+       			SendErrorMessage(caster:GetPlayerOwnerID(), "#error_must_build_on_bligth")
+       			return false
+       		end
+       	end
+    end)
+
 	keys:OnConstructionStarted(function(unit)
 		print("Started construction of " .. unit:GetUnitName())
 		-- Unit is the building be built.
@@ -82,7 +96,6 @@ function build( keys )
 	end)
 
 	keys:OnBuildingPosChosen(function(vPos)
-		--print("OnBuildingPosChosen")
 		-- in WC3 some build sound was played here.
 
 		local hull = unit_table.CollisionSize*2
@@ -139,6 +152,15 @@ function build( keys )
 			player.buildings[building_name] = 1
 		else
 			player.buildings[building_name] = player.buildings[building_name] + 1
+		end
+
+		-- Add blight if its an undead building
+		if IsUndead(unit) then
+			local radius = 768
+			if unit:GetUnitName() == "undead_necropolis" then
+				radius = 960
+			end
+			CreateBlight(unit:GetAbsOrigin(), radius)
 		end
 
 		-- Add to the Food Limit if possible

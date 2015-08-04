@@ -78,7 +78,44 @@ end
 function BuildingHelper:AddBuilding(keys)
 
   -- Callbacks
-  callbacks = {}
+  callbacks = BuildingHelper:SetCallbacks(keys)
+
+  local ability = keys.ability
+  local abilName = ability:GetAbilityName()
+  local buildingTable = BuildingHelper:SetupBuildingTable(abilName) 
+
+  buildingTable:SetVal("AbilityHandle", ability)
+
+  local size = buildingTable:GetVal("BuildingSize", "number")
+  local unitName = buildingTable:GetVal("UnitName", "string")
+
+  -- Prepare the builder, if it hasn't already been done. Since this would need to be done for every builder in some games, might as well do it here.
+  local builder = keys.caster
+
+  if builder.buildingQueue == nil or Timers.timers[builder.workTimer] == nil then    
+    InitializeBuilder(builder)
+  end
+
+  -- Get the local player, this assumes the player is only placing one building at a time
+  local player = PlayerResource:GetPlayer(builder:GetMainControllingPlayer())
+  
+  player.buildingPosChosen = false
+  player.activeBuilder = builder
+  player.activeBuilding = unitName
+  player.activeBuildingTable = buildingTable
+  player.activeCallbacks = callbacks
+
+
+  CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", {["state"] = "active", ["size"] = size} )
+end
+
+function BuildingHelper:SetCallbacks(keys)
+  local callbacks = {}
+
+  function keys:OnPreConstruction( callback )
+    callbacks.onPreConstruction = callback -- Return false to abort the build
+  end
+
   function keys:OnConstructionStarted( callback )
     callbacks.onConstructionStarted = callback
   end
@@ -111,12 +148,17 @@ function BuildingHelper:AddBuilding(keys)
     callbacks.onBuildingPosChosen = callback
   end
 
-  local ability = keys.ability
-  local abilName = ability:GetAbilityName()
-  local buildingTable = BuildingAbilities[abilName]
+  return callbacks
+end
+
+-- Setup building table, returns a constructed table.
+function BuildingHelper:SetupBuildingTable( abilityName )
+
+  local buildingTable = BuildingAbilities[abilityName]
 
   function buildingTable:GetVal( key, expectedType )
     local val = buildingTable[key]
+
     --print('val: ' .. tostring(val))
     if val == nil and expectedType == "bool" then
       return false
@@ -127,6 +169,10 @@ function BuildingHelper:AddBuilding(keys)
 
     if tostring(val) == "" then
       return nil
+    end
+
+    if expectedType == "handle" then
+      return val
     end
 
     local sVal = tostring(val)
@@ -182,23 +228,7 @@ function BuildingHelper:AddBuilding(keys)
   end
   buildingTable:SetVal("MaxScale", fMaxScale)
 
-  -- Prepare the builder, if it hasn't already been done. Since this would need to be done for every builder in some games, might as well do it here.
-  local builder = keys.caster
-
-  if builder.buildingQueue == nil or Timers.timers[builder.workTimer] == nil then    
-    InitializeBuilder(builder)
-  end
-
-  -- Get the local player, this assumes the player is only placing one building at a time
-  local player = PlayerResource:GetPlayer(builder:GetMainControllingPlayer())
-  
-  player.buildingPosChosen = false
-  player.activeBuilder = builder
-  player.activeBuilding = unitName
-  player.activeBuildingTable = buildingTable
-  player.activeCallbacks = callbacks
-
-  CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", {["state"] = "active", ["size"] = size} )
+  return buildingTable
 end
 
 --Places a new building on full health and returns the handle. Places grid nav blockers
@@ -703,30 +733,39 @@ function InitializeBuilder( builder )
     end
 
     if size % 2 == 1 then
-    for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 32 do
-      for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 32 do
-        local testLocation = Vector(x, y, location.z)
-        if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
-          if callbacks.onConstructionFailed ~= nil then
-            callbacks.onConstructionFailed(work)
+      for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 32 do
+        for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 32 do
+          local testLocation = Vector(x, y, location.z)
+          if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
+            if callbacks.onConstructionFailed ~= nil then
+              callbacks.onConstructionFailed(work)
+            end
+            return
           end
+        end
+      end
+    else
+      for x = location.x - (size / 2) * 32 - 16, location.x + (size / 2) * 32 + 16, 32 do
+        for y = location.y - (size / 2) * 32 - 16, location.y + (size / 2) * 32 + 16, 32 do
+          local testLocation = Vector(x, y, location.z)
+           if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
+            if callbacks.onConstructionFailed ~= nil then
+              callbacks.onConstructionFailed(work)
+            end
+            return
+          end
+        end
+      end
+    end
+
+    if callbacks.onPreConstruction ~= nil then
+      local result = callbacks.onPreConstruction(location)
+      if result ~= nil then
+        if result == false then
           return
         end
       end
     end
-  else
-    for x = location.x - (size / 2) * 32 - 16, location.x + (size / 2) * 32 + 16, 32 do
-      for y = location.y - (size / 2) * 32 - 16, location.y + (size / 2) * 32 + 16, 32 do
-        local testLocation = Vector(x, y, location.z)
-         if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
-          if callbacks.onConstructionFailed ~= nil then
-            callbacks.onConstructionFailed(work)
-          end
-          return
-        end
-      end
-    end
-  end
 
     -- Create model ghost dummy out of the map, then make pretty particles
     local mgd = CreateUnitByName(building, OutOfWorldVector, false, nil, nil, builder:GetTeam())
@@ -771,7 +810,6 @@ function InitializeBuilder( builder )
     local callbacks = work.callbacks
     local location = work.location
     builder.work = work
-
 
     -- Make the caster move towards the point
     local abilName = "move_to_point_" .. tostring(castRange)
