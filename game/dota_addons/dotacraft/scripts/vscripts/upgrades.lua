@@ -56,9 +56,9 @@ function CheckAbilityRequirements( unit, player )
 					]]
 
 					-- Unlock all abilities inside the workshop tools
-					--[[if Convars:GetBool("developer") then
+					if Convars:GetBool("developer") then
 						player_has_requirements = true
-					end]]
+					end
 
 					if disabled then
 						if player_has_requirements then
