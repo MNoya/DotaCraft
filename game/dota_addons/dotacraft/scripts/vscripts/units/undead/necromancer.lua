@@ -64,7 +64,7 @@ function CreateUnit(caster, spawnlocation, techIndex, duration)
 		end
 	
 		local CreatedUnit = CreateUnitByName(unitname, spawnlocation, true, player:GetAssignedHero(),  player:GetAssignedHero(), caster:GetTeamNumber())
-		CreatedUnit:SetControllableByPlayer(0, true)
+		CreatedUnit:SetControllableByPlayer(playerID, true)
 		CreatedUnit:AddNewModifier(CreatedUnit, nil, "modifier_kill", {duration = duration})
 		ParticleManager:CreateParticle("particles/neutral_fx/skeleton_spawn.vpcf", 0, CreatedUnit)
 		

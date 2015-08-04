@@ -48892,7 +48892,71 @@
 			// Will detect Burrowed units. Remember that Burrowed is DIFFERENT from Invisible.
 		}
 	
+		"precache"
+		{
+			"particle" "particles/units/heroes/hero_bane/bane_slime_trail_b.vpcf"
+		}
+		"Modifiers"
+		{
+			"modifier_invisibility_shade"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				
+				"EffectName"			"particles/units/heroes/hero_bane/bane_slime_trail_b.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+			
+			"modifier_true_sight_shade"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
 		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"900"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+						}
+					}			
+				}
+			}
+			
+			"modifier_true_sight_reveal"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.03"
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -49633,7 +49697,39 @@
 			
 		// This activates "Sacrifice" of the targeted unit.
 		// Cast range is GLOBAL.
-	
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/undead/acolyte.lua"
+				"Function"		"sacrifice"
+				"Target"		"TARGET"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_sacrificing"
+			{
+				"IsHidden"		"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"	
+				}
+				
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/acolyte.lua"
+						"Function"		"stop_sacrifice"
+						"Target"		"CASTER"
+					}
+				}
+			}	
+		}
 		
 	}
 	

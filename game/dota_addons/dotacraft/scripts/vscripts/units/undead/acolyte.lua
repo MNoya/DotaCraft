@@ -57,6 +57,56 @@ function GiveResources(gold, lumber, hero)
 	ModifyLumber(hero:GetPlayerOwner(), lumber)
 end
 
+function sacrifice ( keys )
+	local target = keys.target
+	local caster = keys.caster
+	
+	if caster:GetPlayerOwnerID() == target:GetPlayerOwnerID() and target:GetUnitName() == "undead_acolyte" then
+	
+		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_sacrificing", nil) 
+		target:MoveToPosition(caster:GetAbsOrigin())
+		
+		keys.ability.sacrifice = Timers:CreateTimer(function()
+			if not IsValidEntity(target) or not IsValidEntity(caster) then
+				return
+			end
+		
+			local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
+			
+			
+			if distance < 300 then
+				print("in range")
+				target:Stop()
+				create_shade(keys)
+			end
+			
+			return 1
+		end)
+		
+	end
+end
+
+function create_shade(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local playerID = caster:GetPlayerOwnerID()
+	local player = PlayerResource:GetPlayer(playerID)
+	
+	local shade = CreateUnitByName("undead_shade", target:GetAbsOrigin(), true, player:GetAssignedHero(),  player:GetAssignedHero(), caster:GetTeamNumber())
+	shade:SetControllableByPlayer(playerID, true)
+	
+	target.no_corpse = true
+	target:RemoveSelf()
+end
+
+function stop_sacrifice ( keys )
+	local caster = keys.caster
+
+	caster:RemoveModifierByName("modifier_sacrificing")	
+	
+	Timers:RemoveTimer(keys.ability.sacrifice)
+end
+
 function HauntGoldMine( event )
 
 	local caster = event.caster

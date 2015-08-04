@@ -14066,7 +14066,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""	 //Reference: Abgs
+		"Ability1"					"undead_sacrifice_pit"	 //Reference: Abgs
 		"Ability2"					""	 //Reference: Asac
 		"Ability10"					"ability_building"
 		"Ability11"					"ability_building_queue"
@@ -14235,6 +14235,96 @@
 				"Wearable6"		{	"ItemDef"		"244"		}
 				"Wearable7"		{	"ItemDef"		"245"		}
 			}
+		}
+	}
+	
+	//=================================================================================
+	// Creature: Shade
+	// Description: "A Shade is an invisible ground unit without an attack that can see invisible units. This unit is used to spy on the enemy or to look for other invisible units. "
+	//=================================================================================
+	"undead_shade"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_b.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"1"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1"					"undead_true_sight"	 // Only Gold and Repair
+		"Ability2"					""	 //Reference: Arst
+		"Ability3"					""	 //Reference: Alam
+		"Ability4"					""
+			
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"			"1"
+		"AttackDamageMax"			"1"
+		"AttackRate"				"1"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"20.0"
+		"BountyGoldMax"				"30.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+		"RingRadius"				"50"
+		"CollisionSize"				"16"
+		"FormationRank"				"1"
+		
+		// Building Cost Stats
+		//----------------------------------------------------------------
+		"GoldCost"					"0"
+		"LumberCost"				"0"
+		"FoodCost"					"1"
+		"BuildTime"					"15"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"125"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"800"
+		"VisionNighttimeRange"		"600"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
 		}
 	}
 	
