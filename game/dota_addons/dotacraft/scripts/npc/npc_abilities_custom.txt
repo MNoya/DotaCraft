@@ -47350,7 +47350,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"		"undead_spell_immunity"
+		"AbilityTextureName"		"generic_spell_immunity"
 		"MaxLevel"					"1"
 		
 		"Modifiers"
@@ -47699,7 +47699,16 @@
 	
 		"Modifiers"
 		{
-		
+			"modifier_stone_form_freeze"
+			{
+				"IsHidden"		"1"
+				
+				"States"
+				{
+					"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
 			"modifier_stone_form"
 			{
 				
@@ -49331,7 +49340,7 @@
 	"undead_absorb_mana"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_absorb_mana"
+		"AbilityTextureName"		"undead_absorb_magic"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"

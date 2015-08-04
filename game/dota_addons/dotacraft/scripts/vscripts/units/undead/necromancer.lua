@@ -21,6 +21,9 @@ function undead_raise_dead ( keys )
 				duration = SKELETON_DURATION
 			--end
 			
+			-- mana and cooldown cost
+			cooldown_and_mana_cost(keys)
+			
 			-- create units
 			CreateUnit(caster, spawnlocation, abilitylevel, duration)
 			
@@ -42,6 +45,7 @@ function undead_raise_dead ( keys )
 					duration = SKELETON_DURATION
 				--end
 				
+				cooldown_and_mana_cost(keys)
 				-- create units
 				CreateUnit(caster, spawnlocation, abilitylevel, duration)		
 				return
@@ -49,6 +53,23 @@ function undead_raise_dead ( keys )
 		end
 		
 	end
+end
+
+function cooldown_and_mana_cost(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()
+	local ability_mana_cost = ability:GetManaCost(ability_level)
+	local cooldown_cost = ability:GetCooldown(ability_level)
+	print(cooldown_cost)
+	
+	Timers:CreateTimer(function() 
+		caster:SetMana(caster:GetMana() - ability_mana_cost) 
+		ability:StartCooldown(cooldown_cost)
+	end)
+	
+	caster:Stop()
+	caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
 end
 
 function CreateUnit(caster, spawnlocation, techIndex, duration)
@@ -116,7 +137,7 @@ function undead_raise_dead_autocast(keys)
 
 		-- if the ability is not toggled, don't proceed any further
 		if ability:GetAutoCastState() and ability:GetCooldownTimeRemaining() == 0 then
-			caster:CastAbilityNoTarget(ability, 0) 
+			undead_raise_dead(keys) 
 		end
 		
 		return 1

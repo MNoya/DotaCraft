@@ -71,6 +71,9 @@ function undead_curse ( keys )
 	local UNIT_DURATION = keys.ability:GetSpecialValueFor("unit_duration")
 	local HERO_DURATION = keys.ability:GetSpecialValueFor("hero_duration")
 	
+	caster:Stop()
+	caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+	
 	if target:IsHero() or target:IsConsideredHero() then
 	--	print(HERO_DURATION)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_undead_curse", {duration=HERO_DURATION})

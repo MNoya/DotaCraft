@@ -21,6 +21,9 @@ local ability = keys.ability
 		StartAnimation(caster, {duration=30, activity=ACT_DOTA_CAST_ABILITY_1, rate=1})
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_stone_form",  nil)
 		
+		-- freeze animation
+		Timers:CreateTimer(2, function() ability:ApplyDataDrivenModifier(caster, caster, "modifier_stone_form_freeze", nil) end)
+		
 		-- set cooldown var to 30
 		caster.cooldown = 30
 		
@@ -40,6 +43,8 @@ local ability = keys.ability
 		end})
 	else -- give flying capabilities and remove modifier & animation
 		ReGainFlying(caster)
+		
+		caster:RemoveModifierByName("modifier_stone_form_freeze")
 		
 		-- set cooldown
 		ability:StartCooldown(caster.cooldown)

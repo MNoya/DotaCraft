@@ -3,8 +3,9 @@ function undead_absorb_mana(keys)
 	local target = keys.target
 	local PlayerID = caster:GetPlayerOwnerID()
 
-	if target:GetMana() == 0 then	
+	if target:GetMana() == 0 or IsCustomBuilding(target) then	
 		SendErrorMessage(PlayerID, "#error_target_has_no_mana")
+		return
 	else
 		-- store target mana and set target to 0
 		local target_mana = target:GetMana()		
