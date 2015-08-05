@@ -414,7 +414,9 @@ function AttackGroundDamage( event )
 
 	-- Hit ground particle
 	ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnus_dust_hit.vpcf", PATTACH_ABSORIGIN, target)
-
+	
+	meat_wagon_disease_cloud(event)
+	
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), position, nil, splash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 		print(_,enemy,enemy:GetUnitName(),enemy:GetHealth())
@@ -425,10 +427,10 @@ function AttackGroundDamage( event )
 	
 end
 
-function StopAttackGround( event )
+function StopAttackGround( event )	
 	local caster = event.caster
 	local ability = event.ability
-
+	
 	if IsValidEntity(ability.attack_ground_dummy) then ability.attack_ground_dummy:RemoveSelf() end
 
 	Timers:RemoveTimer(ability.attack_ground_timer)
@@ -437,5 +439,4 @@ function StopAttackGround( event )
 	ToggleOff(ability)
 
 	caster:RemoveGesture(ACT_DOTA_ATTACK)
-
 end
