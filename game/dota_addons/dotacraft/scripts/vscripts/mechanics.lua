@@ -941,3 +941,44 @@ end
 function HasBlightParticle( position )
 	return GameRules.Blight[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosY(position.y)]
 end
+
+
+-- Ground/Air Attack mechanics
+function UnitCanAttackTarget( unit, target )
+	local enabled_attacks = GetEnabledAttacks(unit)
+	local target_type = GetMovementCapability(target)
+
+	if string.match(enabled_attacks, target_type) then
+		return true
+	else
+		return false
+	end
+end
+
+-- Returns "air" if the unit can fly
+function GetMovementCapability( unit )
+	if unit:HasFlyMovementCapability() then
+		return "air"
+	else 
+		return "ground"
+	end
+end
+
+-- Searches for "EnabledAttacks" in the KV files
+-- Default by omission is "ground", other possible returns should be "ground,air" or "air"
+function GetEnabledAttacks( unit )
+	local unitName = unit:GetUnitName()
+	local enabled_attacks
+
+	if unit:IsHero() then
+		enabled_attacks = GameRules.HeroKV[unitName]["EnabledAttacks"]
+	else
+		enabled_attacks = GameRules.UnitKV[unitName]["EnabledAttacks"]
+	end
+
+	if enabled_attacks then
+		return enabled_attacks
+	else
+		return "ground"
+	end
+end

@@ -26,6 +26,8 @@
 	"ModelScale"				"0.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
+
+	"EnabledAttacks"			"ground"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -128,8 +130,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_b.vmdl"
-	"ModelScale"				"1.5"
+	"Model"						"models/heroes/nevermore/nevermore.vmdl"
+	"ModelScale"				"0.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	
@@ -223,6 +225,8 @@
 	"ModelScale"				"0.7"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+
+	"EnabledAttacks"			"ground"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -320,6 +324,8 @@
 	"Level"						"3"
 	"HealthBarOffset"			"140"
 	
+	"EnabledAttacks"			"ground"
+
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
@@ -420,6 +426,8 @@
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 	
+	"EnabledAttacks"			"ground, air"
+
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
@@ -506,6 +514,8 @@
 	"ModelScale"				"1"
 	"Level"						"4"
 	"HealthBarOffset"			"140"
+
+	"EnabledAttacks"			"ground"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -606,7 +616,7 @@
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 
-	"IsMechanical"				"1"
+	"EnabledAttacks"			"ground"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -617,6 +627,7 @@
 	"Ability4"					"undead_exhume_corpses" //Reference: Apts
 	"Ability5"					"undead_meat_wagon_disease_cloud"
 	"Ability10"					"undead_splash_attack"	 //Reference: Aexh
+	"Ability11"					"ability_siege"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -704,7 +715,7 @@
 	"HealthBarOffset"			"180"
 	"FormationRank"				"2"
 	
-	"IsMechanical"				"1"
+	"EnabledAttacks"			"ground, air"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -712,6 +723,7 @@
 	"Ability2"					"undead_spirit_touch"	 //Reference: Arpm
 	"Ability3"					"undead_destroyer_form"	 //Reference: Aave
 	"Ability10"					"undead_obsidian_statue_model"
+	"Ability11"					"ability_siege"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -808,7 +820,9 @@
 	"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl"
 	"ModelScale"				"1"
 	"Level"						"5"
-	"HealthBarOffset"			"300"
+	"HealthBarOffset"			"350"
+
+	"EnabledAttacks"			"ground, air"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -911,6 +925,8 @@
 	"ModelScale"				"0.8"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+
+	"EnabledAttacks"			"ground, air"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1017,6 +1033,8 @@
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 	
+	"EnabledAttacks"			"ground, air"
+
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
@@ -1119,6 +1137,8 @@
 	"ModelScale"				"1"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
+
+	"EnabledAttacks"			"ground"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1206,6 +1226,8 @@
 	"ModelScale"				"0.7"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
+
+	"EnabledAttacks"			"ground, air"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1305,6 +1327,8 @@
 	"ModelScale"				"1.2"
 	"Level"						"6"
 	"HealthBarOffset"			"180"
+
+	"EnabledAttacks"			"ground, air"
 	
 	// Abilities
 	//----------------------------------------------------------------

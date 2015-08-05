@@ -27955,54 +27955,6 @@
 			}
 		}
 	}
-	// By default, any unit can attack everything
-	// This disallows attacking air units by stopping their attacks before they go off
-	"ability_prevent_attack_flying"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		"Modifiers"
-		{
-			"modifier_prevent_attack_flying"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/flying.lua"
-						"Function"		"CheckFlyingAttack"
-					}
-				}
-			}
-		}
-	}
-	
-	// Used to disallow attacking land units
-	"ability_prevent_attack_ground"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		"Modifiers"
-		{
-			"modifier_prevent_attack_ground"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/flying.lua"
-						"Function"		"CheckGroundAttack"
-					}
-				}
-			}
-		}
-	}
 	// Attack Abilities:
 	// 	Magic Attack
 	// 	Siege Attack

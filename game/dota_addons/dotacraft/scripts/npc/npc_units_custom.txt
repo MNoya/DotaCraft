@@ -8281,6 +8281,8 @@
 		"ModelScale"				"0.8"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8388,6 +8390,8 @@
 		"SoundSet"					"Hero_Luna"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 		
+		"EnabledAttacks"			"ground"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
@@ -8496,7 +8500,7 @@
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 	
-		"IsMechanical"				"1"
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8505,6 +8509,7 @@
 		"Ability2"					"nightelf_vorpal_blades_disabled"	 //Reference: Aimp - Vorpal Blades
 		"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 		"Ability10"					"nightelf_glaive_thrower_splash_attack"	//Hidden Splash
+		"Ability11"					"ability_siege"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8589,6 +8594,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8695,6 +8702,8 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"FormationRank"				"1"
+	
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8791,6 +8800,8 @@
 		"ModelScale"				"1.35"
 		"Level"						"6"
 		"HealthBarOffset"			"200"
+	
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8889,6 +8900,8 @@
 		"Level"						"6"
 		"HealthBarOffset"			"200"
 		"ConsideredHero"			"1"
+	
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8989,6 +9002,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9097,6 +9112,8 @@
 		"ModelScale"				"1"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9197,6 +9214,8 @@
 		"ModelScale"				"1"
 		"Level"						"5"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9289,6 +9308,8 @@
 		"ModelScale"				"1.2"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9310,7 +9331,7 @@
 		"AttackDamageMax"			"57.0"
 		"AttackRate"				"1.05"
 		"AttackAnimationPoint"		"0.6"
-		"AttackAcquisitionRange"	"500"
+		"AttackAcquisitionRange"	"0"
 		"AttackRange"				"128"
 		
 		// Bounty
@@ -9374,10 +9395,12 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/courier/throe/throe_flying.vmdl"	 //Add mounted hero?
+		"Model"						"models/items/courier/throe/throe_flying.vmdl"
 		"ModelScale"				"1.2"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14138,6 +14161,8 @@
 		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14240,8 +14265,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_b.vmdl"
-		"ModelScale"				"1.5"
+		"Model"						"models/heroes/nevermore/nevermore.vmdl"
+		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
@@ -14335,6 +14360,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14432,6 +14459,8 @@
 		"Level"						"3"
 		"HealthBarOffset"			"140"
 		
+		"EnabledAttacks"			"ground"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
@@ -14532,6 +14561,8 @@
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
+		"EnabledAttacks"			"ground, air"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
@@ -14618,6 +14649,8 @@
 		"ModelScale"				"1"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14718,7 +14751,7 @@
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 	
-		"IsMechanical"				"1"
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14729,6 +14762,7 @@
 		"Ability4"					"undead_exhume_corpses" //Reference: Apts
 		"Ability5"					"undead_meat_wagon_disease_cloud"
 		"Ability10"					"undead_splash_attack"	 //Reference: Aexh
+		"Ability11"					"ability_siege"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14816,7 +14850,7 @@
 		"HealthBarOffset"			"180"
 		"FormationRank"				"2"
 		
-		"IsMechanical"				"1"
+		"EnabledAttacks"			"ground, air"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -14824,6 +14858,7 @@
 		"Ability2"					"undead_spirit_touch"	 //Reference: Arpm
 		"Ability3"					"undead_destroyer_form"	 //Reference: Aave
 		"Ability10"					"undead_obsidian_statue_model"
+		"Ability11"					"ability_siege"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14920,7 +14955,9 @@
 		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl"
 		"ModelScale"				"1"
 		"Level"						"5"
-		"HealthBarOffset"			"300"
+		"HealthBarOffset"			"350"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -15023,6 +15060,8 @@
 		"ModelScale"				"0.8"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -15129,6 +15168,8 @@
 		"Level"						"2"
 		"HealthBarOffset"			"140"
 		
+		"EnabledAttacks"			"ground, air"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
@@ -15231,6 +15272,8 @@
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -15318,6 +15361,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -15417,6 +15462,8 @@
 		"ModelScale"				"1.2"
 		"Level"						"6"
 		"HealthBarOffset"			"180"
+	
+		"EnabledAttacks"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------

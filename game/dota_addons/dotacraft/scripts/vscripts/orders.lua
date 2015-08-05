@@ -81,6 +81,43 @@ function dotacraft:FilterExecuteOrder( filterTable )
             print(" Order allowed")
         end
 
+
+    ------------------------------------------------
+    --               Attack Orders                --
+    ------------------------------------------------
+    elseif order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
+        local target = EntIndexToHScript(targetIndex)
+        local errorMsg = nil
+        for n, unit_index in pairs(units) do 
+            local unit = EntIndexToHScript(unit_index)
+            if UnitCanAttackTarget(unit, target) then
+                unit.skip = true
+                ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = targetIndex, Queue = false})
+            else
+                print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetEnabledAttacks(unit),"-",GetMovementCapability(target))
+                
+                -- Move to position
+                ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, TargetIndex = targetIndex, Position = target:GetAbsOrigin(), Queue = false})
+
+                -- Stop idle acquire
+                unit:SetIdleAcquire(false)
+                
+                if not errorMsg then
+                    local error_type = GetMovementCapability(target)
+                    if error_type == "air" then
+                        errorMsg = "#error_cant_target_air"
+                    elseif error_type == "ground" then
+                        errorMsg = "#error_must_target_air"
+                    end
+
+                    SendErrorMessage( unit:GetPlayerOwnerID(), errorMsg )
+                end
+
+            end
+        end
+        errorMsg = nil
+        return false
+
     ------------------------------------------------
     --             No Target Orders               --
     ------------------------------------------------

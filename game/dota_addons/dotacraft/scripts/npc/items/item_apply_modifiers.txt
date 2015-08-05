@@ -211,5 +211,18 @@
 		{
 			"TextureName"	"modifiers/armor_divine"
 		}
+
+		"modifier_attack_filter"
+		{
+			"IsHidden"	"1"
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/flying.lua"
+					"Function"		"AttackFilter"
+				}
+			}
+		}
 	}
 }

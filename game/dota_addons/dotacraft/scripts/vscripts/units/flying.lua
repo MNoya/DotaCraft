@@ -1,36 +1,20 @@
--- When the unit tries to attack a flying unit, disable it
-function CheckFlyingAttack( event )
-	local target = event.target -- The target of the attack
-	local attacker = event.attacker
+-- When the unit starts attacking another, check if its enabled attacks actually allow it
+function AttackFilter( event )
+	local unit = event.attacker
+	local target = event.target
 
-	if target and target:GetName() ~= "" and target:HasFlyMovementCapability() then
-		if not attacker:HasAbility("ability_attack_flying") then
+	print("AttackFilter: ",unit, target, UnitCanAttackTarget(unit, target))
 
-			-- Send a move-to-target order.
-			-- Could also be a move-aggresive/swap target so it still attacks other valid targets
-			ExecuteOrderFromTable({ UnitIndex = attacker:GetEntityIndex(), 
-									OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
-									TargetIndex = target:GetEntityIndex(), 
-									Position = target:GetAbsOrigin(), 
-									Queue = false
-								}) 
-		end
-	end
-end
+	--print(unit:GetAttackTarget():GetUnitName())
 
--- When the unit tries to attack a ground unit, disable it
-function CheckGroundAttack( event )
-	local target = event.target -- The target of the attack
-	local attacker = event.attacker
+	if UnitCanAttackTarget(unit, target) then
+        ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = target:GetEntityIndex(), Queue = false})
+    else
+        -- Move to position
+        --ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, TargetIndex = target:GetEntityIndex(), Position = target:GetAbsOrigin(), Queue = false})
 
-	if target and target:IsCreature() and target:HasGroundMovementCapability() then
-
-		-- Send a move-to-target order.
-		ExecuteOrderFromTable({ UnitIndex = attacker:GetEntityIndex(), 
-								OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
-								TargetIndex = target:GetEntityIndex(), 
-								Position = target:GetAbsOrigin(), 
-								Queue = false
-							}) 
-	end
+        -- Stop idle acquire
+        unit:Stop()
+        unit:SetIdleAcquire(false)
+    end
 end

@@ -532,8 +532,8 @@ function dotacraft:OnHeroInGame(hero)
 
 		-- If you want to test an ability of a unit just put its name here
 		if Convars:GetBool("developer") then
-			local unitName = "undead_necromancer"
-			local num = 3 --Useful to test "AbilityMultiOrder"
+			local unitName = "undead_ghoul"
+			local num = 5 --Useful to test "AbilityMultiOrder"
 			PrecacheUnitByNameAsync(unitName, function()
 				for i=1,num do
 					local position = GameRules.StartingPositions[pID].position + Vector(0,-300-i*50,0)
@@ -548,8 +548,8 @@ function dotacraft:OnHeroInGame(hero)
 				end
 			end, pID)
 
-			local enemyUnitName = "nightelf_wisp"
-			local numEnemy = 10
+			local enemyUnitName = "nightelf_hippogryph"
+			local numEnemy = 5
 			PrecacheUnitByNameAsync(enemyUnitName, function()
 				for i=1,numEnemy do
 					local position = GameRules.StartingPositions[pID].position + Vector(0,-1000,0)
@@ -694,6 +694,11 @@ function dotacraft:OnNPCSpawned(keys)
 	    item:ApplyDataDrivenModifier(npc, npc, "modifier_armor_"..armor_type, {})
     	item:RemoveSelf()
     end
+
+    -- Apply attack modifier
+    local item = CreateItem("item_apply_modifiers", nil, nil)
+	item:ApplyDataDrivenModifier(npc, npc, "modifier_attack_filter", {})
+    item:RemoveSelf()
 end
 
 -- An entity somewhere has been hurt.
