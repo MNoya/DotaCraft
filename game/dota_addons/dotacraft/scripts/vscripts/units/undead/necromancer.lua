@@ -26,7 +26,7 @@ function undead_raise_dead ( keys )
 			cooldown_and_mana_cost(keys)
 			
 			-- create units
-			CreateUnit(caster, spawnlocation, abilitylevel, duration)
+			CreateUnit(caster, spawnlocation, duration)
 			
 			-- Leave no corpses
 			corpse.no_corpse = true
@@ -49,7 +49,7 @@ function undead_raise_dead ( keys )
 				
 				cooldown_and_mana_cost(keys)
 				-- create units
-				CreateUnit(caster, spawnlocation, abilitylevel, duration)		
+				CreateUnit(caster, spawnlocation, duration)		
 				return
 			end		
 		end
@@ -73,7 +73,7 @@ function cooldown_and_mana_cost(keys)
 	caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
 end
 
-function CreateUnit(caster, spawnlocation, techIndex, duration)
+function CreateUnit(caster, spawnlocation, duration)
 	local playerID = caster:GetPlayerOwnerID()
 	local player = PlayerResource:GetPlayer(playerID)
 	local warrior = "undead_skeleton_warrior"
@@ -81,7 +81,7 @@ function CreateUnit(caster, spawnlocation, techIndex, duration)
 
 	for i=0, 1, 1 do
 		local unitname = warrior
-		if i == 1 and techIndex == 2 then
+		if i == 1 and PlayerHasResearch( player, "undead_research_skeletal_mastery" ) then
 			unitname = mage
 		end
 	
