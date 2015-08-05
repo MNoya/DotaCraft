@@ -195,6 +195,22 @@
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_unholy_strength"
+					"WearableType"	"weapon"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_unholy_armor"
+					"WearableType"	"armor"
+				}
 			}
 		}
 	}
@@ -305,6 +321,22 @@
 				{
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_creature_attack"
+					"WearableType"	"weapon"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_creature_carapace"
+					"WearableType"	"armor"
 				}
 			}
 		}
@@ -433,6 +465,22 @@
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_creature_attack"
+					"WearableType"	"weapon"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_creature_carapace"
+					"WearableType"	"armor"
+				}
 			}
 		}
 	}
@@ -560,6 +608,22 @@
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_unholy_strength"
+					"WearableType"	"weapon"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_unholy_armor"
+					"WearableType"	"armor"
+				}
 			}
 		}
 	}
@@ -686,6 +750,13 @@
 				{
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_unholy_strength"
 				}
 			}
 		}
@@ -1160,6 +1231,22 @@
 				{
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_creature_attack"
+					"WearableType"	"weapon"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/undead/undead_upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_creature_carapace"
+					"WearableType"	"armor"
 				}
 			}
 		}

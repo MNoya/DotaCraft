@@ -75,23 +75,8 @@ function TrueFormStart( event )
     caster:SetHealth(relative_hp)
 
     -- Add weapon/armor upgrade benefits
-    local player = caster:GetPlayerOwner()
-    local upgrades = player.upgrades
-    if player.upgrades["nightelf_research_strength_of_the_wild3"] then
-        UpdateUnitUpgrades( caster, player, "nightelf_research_strength_of_the_wild3" )      
-    elseif player.upgrades["nightelf_research_strength_of_the_wild2"] then
-        UpdateUnitUpgrades( caster, player, "nightelf_research_strength_of_the_wild2" )     
-    elseif player.upgrades["nightelf_research_strength_of_the_wild1"] then
-        UpdateUnitUpgrades( caster, player, "nightelf_research_strength_of_the_wild1" )
-    end
-
-   if player.upgrades["nightelf_research_reinforced_hides3"] then
-        UpdateUnitUpgrades( caster, player, "nightelf_research_reinforced_hides3" )      
-    elseif player.upgrades["nightelf_research_reinforced_hides2"] then
-        UpdateUnitUpgrades( caster, player, "nightelf_research_reinforced_hides2" )     
-    elseif player.upgrades["nightelf_research_reinforced_hides1"] then
-        UpdateUnitUpgrades( caster, player, "nightelf_research_reinforced_hides1" )
-    end
+    ApplyMultiRankUpgrade(caster, "nightelf_research_strength_of_the_wild", "weapon")
+    ApplyMultiRankUpgrade(caster, "nightelf_research_reinforced_hides", "armor")
 
     -- Swap sub_ability
     local sub_ability_name = event.sub_ability_name

@@ -178,6 +178,9 @@ function morph_into_destroyer(keys)
 		local CreatedUnit = CreateUnitByName("undead_destroyer", caster:GetAbsOrigin(), true, player:GetAssignedHero(),  player:GetAssignedHero(), caster:GetTeamNumber())
 		CreatedUnit:SetControllableByPlayer(playerID, true)
 		
+		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_creature_attack", "weapon")
+		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_creature_carapace", "armor")
+
 		caster.no_corpse = true
 		table.insert(player.units, CreatedUnit)
 		

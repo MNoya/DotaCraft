@@ -226,7 +226,7 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"5"
 	"Ability1"					"undead_gather" //Only Lumber
 	"Ability2"					"undead_return_resources"	
 	"Ability3"					"undead_cannibalize"	 //Reference: Acan
@@ -316,7 +316,7 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/heroes/weaver/weaver.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.85"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
 	
@@ -511,7 +511,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_cannibalize"	 //Reference: Aap1
-	"Ability2"					"undead_disease_cloud"	 //Reference: Aiun
+	"Ability2"					"undead_disease_cloud_disabled"	 //Reference: Aiun
 	"Ability3"					""	 //Reference: Acn2
 	"Ability11"					"undead_blight_regen"
 
@@ -812,7 +812,7 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
+	"AbilityLayout"				"6"
 	"Ability1"					"undead_devour_magic"	 //Reference: Advm
 	"Ability2"					"undead_orb_of_annihilation"	 //Reference: Afak
 	"Ability3"					"undead_absorb_mana"	 //Reference: Aabs

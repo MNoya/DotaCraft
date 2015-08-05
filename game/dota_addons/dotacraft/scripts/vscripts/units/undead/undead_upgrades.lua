@@ -1,3 +1,36 @@
+-- Missing: Destroyer transformation and both Skeletons
+
+function ApplyModifierUpgrade( event )
+	local caster = event.caster
+	local ability = event.ability
+	local unit_name = caster:GetUnitName()
+	local ability_name = ability:GetAbilityName()
+
+	print("Applying "..ability_name.." to "..unit_name)
+
+	-- Unholy Strength
+	if string.find(ability_name,"unholy_strength") then
+		if unit_name == "undead_meat_wagon" then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_meat_wagon_damage", {})
+		elseif unit_name == "undead_abomination" then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_abomination_damage", {})
+		else
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_bonus_damage", {})
+		end
+
+	-- Creature Attack
+	elseif string.find(ability_name,"creature_attack") then
+		if unit_name == "undead_frost_wyrm" then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_frost_wyrm_damage", {})
+		elseif unit_name == "undead_gargoyle" then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_destroyer_damage", {})
+		else
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_bonus_damage", {})
+		end
+	end
+end
+
+
 -- ManaGain and HPGain values are defined in the npc_units_custom file
 function ApplyUndeadTraining( event )
 	local caster = event.caster

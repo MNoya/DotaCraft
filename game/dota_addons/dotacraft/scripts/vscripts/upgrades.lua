@@ -330,3 +330,31 @@ function UpgradeArmorWearables(target, level)
 		end
 	end
 end
+
+-- This directly applies the current lvl 1/2/3, from the player upgrades table
+function ApplyMultiRankUpgrade( unit, research_name, cosmetic_type )
+	local player = unit:GetPlayerOwner()
+	local upgrades = player.upgrades
+	local ability_name = string.gsub(research_name, "research_" , "")
+	local level = 0
+
+	if player.upgrades[research_name.."3"] then
+		level = 3		
+	elseif player.upgrades[research_name.."2"] then
+		level = 2		
+	elseif player.upgrades[research_name.."1"] then
+		level = 1
+	end
+
+	if level ~= 0 then
+		unit:AddAbility(ability_name..level)
+		local ability = unit:FindAbilityByName(ability_name..level)
+		ability:SetLevel(level)
+
+		if cosmetic_type == "weapon" then
+			UpgradeWeaponWearables(unit, level)
+		elseif cosmetic_type == "armor" then
+			UpgradeArmorWearables(unit, level)
+		end
+	end
+end

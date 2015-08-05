@@ -98,6 +98,8 @@ function CreateUnit(caster, spawnlocation, duration)
 
 		-- Apply upgrades
 		CheckAbilityRequirements(CreatedUnit, player)
+		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_unholy_strength", "weapon")
+		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_unholy_armor", "armor")
 	end
 
 end

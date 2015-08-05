@@ -21,6 +21,13 @@ function SpawnUnit( event )
 	
 	event.target = unit
 	MoveToRallyPoint(event)
+
+	-- Add MG upgrades
+	if string.match(unit_name, "mountain_giant") then
+		ApplyMultiRankUpgrade(unit, "nightelf_research_strength_of_the_wild", "weapon")
+   		ApplyMultiRankUpgrade(unit, "nightelf_research_reinforced_hides", "armor")
+   	end
+
 end
 
 --[[
