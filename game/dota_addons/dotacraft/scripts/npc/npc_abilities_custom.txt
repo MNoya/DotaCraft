@@ -48073,6 +48073,8 @@
 		"precache"
 		{
 			"model" "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
+			"model"	"models/items/wraith_king/regalia_of_the_bonelord_cape.vmdl"
+			"model"	"models/items/pugna/ashborn_horns/ashborn_horns.vmdl"
 			"model_folder" "models/heroes/pugna"	
 			
 			// particle precaches
@@ -48327,11 +48329,11 @@
 	"undead_skeletal_longevity"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_skeletal_longevity"
+		"AbilityTextureName"		"undead_research_skeletal_longevity"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			
+	
 		"AbilitySpecial"
 		{
 			"01"
@@ -48341,7 +48343,23 @@
 			}
 		}
 	
-		
+		"Modifiers"
+		{
+			"modifier_skeletal_longevity"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/undead_upgrades.lua"
+						"Function"		"SkeletalLongevity"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================

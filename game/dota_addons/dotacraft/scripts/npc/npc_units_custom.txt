@@ -15226,6 +15226,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
+		"Ability1"					"undead_skeletal_longevity_disabled"
 		"Ability11"					"undead_blight_regen"
 	
 		// Armor
@@ -15305,13 +15306,14 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/pugna/pugna.vmdl"
-		"ModelScale"				"0.8"
+		"ModelScale"				"0.7"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
+		"Ability1"					"undead_skeletal_longevity_disabled"
 		"Ability11"					"undead_blight_regen"
 		
 		// Armor
@@ -15329,7 +15331,7 @@
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"700"
 		"AttackRange"				"500"
-		"ProjectileModel"			"particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -15383,12 +15385,12 @@
 			"DisableClumpingBehavior"	"1"
 			"AttachWearables"
 			{
-				"Wearable1"		{	"ItemDef"		"153"		}
-				"Wearable2"		{	"ItemDef"		"154"		}
-				"Wearable3" 	{	"ItemDef"		"155"		}
-				"Wearable4"		{	"ItemDef"		"156"		}
-				"Wearable5"		{	"ItemDef"		"157"		}
-				"Wearable6"		{	"ItemDef"		"167"		}
+				"Wearable1"		{	"ItemDef"		"153"		} //Head
+				//"Wearable2"		{	"ItemDef"		"154"		} //Cape
+				//"Wearable3" 	{	"ItemDef"		"155"		} //Bracers
+				"Wearable2"		{	"ItemDef"		"156"		} //Weapon
+				//"Wearable5"		{	"ItemDef"		"157"		} //Belt
+				//"Wearable6"		{	"ItemDef"		"167"		} //Shoulder
 			}
 		}
 	}

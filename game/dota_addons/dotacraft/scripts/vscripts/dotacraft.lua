@@ -532,7 +532,7 @@ function dotacraft:OnHeroInGame(hero)
 
 		-- If you want to test an ability of a unit just put its name here
 		if Convars:GetBool("developer") then
-			local unitName = "human_sorceress"
+			local unitName = "undead_necromancer"
 			local num = 3 --Useful to test "AbilityMultiOrder"
 			PrecacheUnitByNameAsync(unitName, function()
 				for i=1,num do
@@ -548,24 +548,12 @@ function dotacraft:OnHeroInGame(hero)
 				end
 			end, pID)
 
-			local enemyUnitName = "nightelf_mountain_giant_resistant_skin"
-			local numEnemy = 3
+			local enemyUnitName = "nightelf_wisp"
+			local numEnemy = 10
 			PrecacheUnitByNameAsync(enemyUnitName, function()
 				for i=1,numEnemy do
 					local position = GameRules.StartingPositions[pID].position + Vector(0,-1000,0)
 					local unit = CreateUnitByName(enemyUnitName, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
-					unit:SetControllableByPlayer(pID, true)
-					FindClearSpaceForUnit(unit, position, true)
-					unit:Hold()
-				end
-			end, pID)
-
-			local enemyUnitName2 = "nightelf_wisp"
-			local numEnemy2 = 3
-			PrecacheUnitByNameAsync(enemyUnitName2, function()
-				for i=1,numEnemy2 do
-					local position = GameRules.StartingPositions[pID].position + Vector(0,-1200,0)
-					local unit = CreateUnitByName(enemyUnitName2, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
 					unit:SetControllableByPlayer(pID, true)
 					FindClearSpaceForUnit(unit, position, true)
 					unit:Hold()
@@ -1016,7 +1004,7 @@ function dotacraft:OnPlayerPickHero(keys)
 		haunted_gold_mine.builders = {}
 
 		Timers:CreateTimer(function() 
-			--CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
+			CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
 			CreateBlight(building:GetAbsOrigin(), "large")
 		end)
 
@@ -1264,7 +1252,7 @@ function dotacraft:OnEntityKilled( event )
 			corpse.unit_name = killedUnit:GetUnitName()
 
 			-- Set custom corpse visible
-			Timers:CreateTimer(3, function() corpse:RemoveNoDraw() end)
+			Timers:CreateTimer(3, function() if IsValidEntity(corpse) then corpse:RemoveNoDraw() end end)
 
 			-- Remove itself after the corpse duration
 			Timers:CreateTimer(CORPSE_DURATION, function()

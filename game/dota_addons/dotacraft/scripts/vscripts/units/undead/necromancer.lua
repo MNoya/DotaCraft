@@ -2,6 +2,7 @@ function undead_raise_dead ( keys )
 	local target = keys.target
 	local caster = keys.caster
 	local ability = keys.ability
+	local player = caster:GetPlayerOwner()
 
 	-- durations have be inverted due to some weird parsing bug
 	local RADIUS = keys.ability:GetSpecialValueFor("radius")
@@ -15,11 +16,11 @@ function undead_raise_dead ( keys )
 		local spawnlocation = corpse:GetAbsOrigin()
 		
 		if corpse.corpse_expiration ~= nil and not corpse.being_eaten then					
-			--if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
-			--	duration = SKELETON_DURATION + 15
-			--else
+			if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
+				duration = SKELETON_DURATION + 15
+			else
 				duration = SKELETON_DURATION
-			--end
+			end
 			
 			-- mana and cooldown cost
 			cooldown_and_mana_cost(keys)
@@ -30,6 +31,7 @@ function undead_raise_dead ( keys )
 			-- Leave no corpses
 			corpse.no_corpse = true
 			corpse:RemoveSelf()
+
 			return
 		end
 		
@@ -39,11 +41,11 @@ function undead_raise_dead ( keys )
 				corpse:SetModifierStackCount("modifier_corpses",corpse, StackCount - 1)
 					print("stackcount is greatert then 0")
 					
-				--if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
-				--	duration = SKELETON_DURATION + 15
-				--else
+				if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
+					duration = SKELETON_DURATION + 15
+				else
 					duration = SKELETON_DURATION
-				--end
+				end
 				
 				cooldown_and_mana_cost(keys)
 				-- create units
@@ -61,7 +63,6 @@ function cooldown_and_mana_cost(keys)
 	local ability_level = ability:GetLevel()
 	local ability_mana_cost = ability:GetManaCost(ability_level)
 	local cooldown_cost = ability:GetCooldown(ability_level)
-	print(cooldown_cost)
 	
 	Timers:CreateTimer(function() 
 		caster:SetMana(caster:GetMana() - ability_mana_cost) 
@@ -89,8 +90,14 @@ function CreateUnit(caster, spawnlocation, techIndex, duration)
 		CreatedUnit:AddNewModifier(CreatedUnit, nil, "modifier_kill", {duration = duration})
 		ParticleManager:CreateParticle("particles/neutral_fx/skeleton_spawn.vpcf", 0, CreatedUnit)
 		
+		CreatedUnit:SetIdleAcquire(false)
+		Timers:CreateTimer(0.5, function() CreatedUnit:SetIdleAcquire(true) end)
+
 		CreatedUnit.no_corpse = true
 		table.insert(player.units, CreatedUnit)
+
+		-- Apply upgrades
+		CheckAbilityRequirements(CreatedUnit, player)
 	end
 
 end
@@ -117,8 +124,7 @@ function AnimateDeadPrecast( event )
 		SendErrorMessage(pID, "#error_no_usable_corpses")
 		
 		local mana = event.caster:GetMana()
-		ability:EndCooldown()
-		
+		Timers:CreateTimer(function() ability:EndCooldown() end)		
 		Timers:CreateTimer(function() event.caster:SetMana(mana) end)
 	end
 end
