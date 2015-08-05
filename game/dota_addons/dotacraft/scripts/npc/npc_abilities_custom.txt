@@ -48044,7 +48044,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityTextureName"		"undead_raise_dead"
-		"MaxLevel"					"2"
+		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -50064,7 +50064,7 @@
 	"undead_skeletal_longevity_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"undead_skeletal_longevity"
+		"AbilityTextureName"			"undead_research_skeletal_longevity"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -50080,7 +50080,7 @@
 	"undead_skeletal_mastery_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"undead_skeletal_mastery"
+		"AbilityTextureName"			"undead_research_skeletal_mastery"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -58062,6 +58062,13 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/undead_upgrades.lua"
+						"Function"		"ApplyMultiRankUpgrade"
+						"ResearchName"	"undead_research_necromancer_training"
+					}
 				}
 			}
 		}
@@ -58172,6 +58179,13 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/undead_upgrades.lua"
+						"Function"		"ApplyMultiRankUpgrade"
+						"ResearchName"	"undead_research_banshee_training"
 					}
 				}
 			}
@@ -58304,6 +58318,231 @@
 						"ScriptFile"    "buildings/autocast.lua"
 						"Function"      "BuildingAutocast"
 					}
+				}
+			}
+		}
+	}
+	
+	
+	//Necromancer Adept Training
+	//ncreases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives them the ability to cast Unholy Frenzy.
+	"undead_necromancer_training1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"undead_research_necromancer_training1"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"40"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_necromancer_training1"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/undead_upgrades.lua"
+						"Function"		"ApplyUndeadTraining"
+						"LevelUp"		"3" //Set the creature to this level
+					}
+				}
+	
+				"Properties"
+				{
+					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	//Necromancer Master Training
+	//Further increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives them the ability to cast Cripple.
+	"undead_necromancer_training2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"undead_research_necromancer_training2"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"80"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_necromancer_training2"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/undead_upgrades.lua"
+						"Function"		"ApplyUndeadTraining"
+						"LevelUp"		"4" //Set the creature to this level
+					}
+				}
+	
+				"Properties"
+				{
+					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	//Banshee Master Training
+	//Increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives them the ability to cast Anti-magic Shell.
+	"undead_banshee_training1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"undead_research_banshee_training1"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"40"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_banshee_training2"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/undead_upgrades.lua"
+						"Function"		"ApplyUndeadTraining"
+						"LevelUp"		"3" //Set the creature to this level
+					}
+				}
+	
+				"Properties"
+				{
+					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	//Banshee Adept Training
+	//Further increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives them the ability to cast Possession
+	"undead_banshee_training2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"undead_research_banshee_training2"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"80"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_banshee_training1"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/undead/undead_upgrades.lua"
+						"Function"		"ApplyUndeadTraining"
+						"LevelUp"		"4" //Set the creature to this level
+					}
+				}
+	
+				"Properties"
+				{
+					//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+				    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
 				}
 			}
 		}

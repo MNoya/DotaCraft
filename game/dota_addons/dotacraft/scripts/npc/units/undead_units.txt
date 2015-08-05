@@ -7,7 +7,7 @@
 //	undead_meat_wagon - Dire Catapult
 // 	undead_obsidian_statue - ?
 //	undead_destroyer - models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl
-//	undead_necromaster - models/heroes/necrolyte/necrolyte.vmdl
+//	undead_necromancer - models/heroes/necrolyte/necrolyte.vmdl
 //	undead_banshee - models/heroes/death_prophet/death_prophet.vmdl
 //	undead_skeleton_warrior - models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl
 //	undead_skeletal_mage - models/heroes/pugna/pugna.vmdl
@@ -995,6 +995,10 @@
 			"Wearable3" 	{	"ItemDef"		"213"		}
 			"Wearable4"		{	"ItemDef"		"214"		}
 		}
+
+		//Training
+		"HPGain"					"40"
+		"ManaGain"                  "100"
 	}
 }
 
@@ -1096,6 +1100,10 @@
 			"Wearable3" 	{	"ItemDef"		"170"		}
 			"Wearable4"		{	"ItemDef"		"171"		}
 		}
+
+		//Training
+		"HPGain"					"40"
+		"ManaGain"                  "100"
 	}
 }
 

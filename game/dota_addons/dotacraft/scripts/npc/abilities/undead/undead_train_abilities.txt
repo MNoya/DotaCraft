@@ -925,6 +925,13 @@
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/undead_upgrades.lua"
+					"Function"		"ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_necromancer_training"
+				}
 			}
 		}
 	}
@@ -1035,6 +1042,13 @@
 				{
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/undead_upgrades.lua"
+					"Function"		"ApplyMultiRankUpgrade"
+					"ResearchName"	"undead_research_banshee_training"
 				}
 			}
 		}
