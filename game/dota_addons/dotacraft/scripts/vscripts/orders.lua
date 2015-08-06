@@ -40,6 +40,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if DEBUG then print("Execute this order") end
     end
 
+     -- Set movement aggresive
+    unit.bAttackMove = (order_type == DOTA_UNIT_ORDER_ATTACK_MOVE)
+
     ------------------------------------------------
     --           Ability Multi Order              --
     ------------------------------------------------

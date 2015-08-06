@@ -430,6 +430,9 @@ function GetBuilderNameForHeroRace( hero_name )
 end
 
 function IsBuilder( unit )
+	if not IsValidEntity(unit) then
+		return
+	end
 	local unitName = unit:GetUnitName()
 	if unitName == "human_peasant" or unitName == "nightelf_wisp" or unitName == "undead_acolyte" or unitName == "orc_peon" then
 		return true
@@ -945,6 +948,9 @@ end
 
 -- Ground/Air Attack mechanics
 function UnitCanAttackTarget( unit, target )
+	if not unit:HasAttackCapability() then
+		return false
+	end
 	local enabled_attacks = GetEnabledAttacks(unit)
 	local target_type = GetMovementCapability(target)
 

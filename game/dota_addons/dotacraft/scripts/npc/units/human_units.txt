@@ -29,6 +29,8 @@
 	"SelectionGroup"            "Human_Peasants"
 	"SoundSet"					"Hero_Kunkka"
 
+	"EnabledAttacks"			"ground"
+
 	"precache"
 	{
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
@@ -47,7 +49,6 @@
 	"Ability6"					"human_build_workshop_disabled"
 	"Ability7"					"human_build_gryphon_aviary_disabled"				
 	"Ability8"					"build_human_items" // Provides 6 additional building abilities
-	"Ability9"					"ability_prevent_attack_flying"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -140,6 +141,8 @@
 	"SelectionGroup"            "Human_Militia"
 	"SoundSet"					"Hero_Kunkka"
 
+	"EnabledAttacks"			"ground"
+
 	"PathfindingSearchDepthScale" "0.5"
 
 	// Abilities
@@ -147,7 +150,6 @@
 	"Ability1"					"human_back_to_work"	 //Reference: Ahar
 	"Ability2"					"militia_upgrades"	 //Reference: Amil
 	"Ability3"					""	 //Reference: Ahrp
-	"Ability4"					"ability_prevent_attack_flying"
 		
 	// Armor
 	//----------------------------------------------------------------
@@ -243,6 +245,8 @@
 	"SelectionGroup"            "Human_Footmen"
 	"SoundSet"					"Hero_DragonKnight"
 
+	"EnabledAttacks"			"ground"
+
 	"precache"
 	{
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
@@ -254,7 +258,6 @@
 	//----------------------------------------------------------------
 	"Ability1"					"human_defend_disabled"
 	"Ability2"					"human_backpack_disabled"	 //Reference: Aihn
-	"Ability3"					"ability_prevent_attack_flying"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -357,6 +360,8 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Riflemen"
 	"SoundSet"					"Hero_Sniper"
+
+	"EnabledAttacks"			"ground, air"
 
 	"precache"
 	{
@@ -465,6 +470,8 @@
 	"SelectionGroup"            "Human_Knights"
 	"SoundSet"					"Hero_ChaosKnight"
 
+	"EnabledAttacks"			"ground"
+
 	"precache"
 	{
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
@@ -476,7 +483,6 @@
 	//----------------------------------------------------------------
 	"Ability1"					"human_animal_war_training_disabled"	 //Reference: Aihn
 	"Ability2"					"human_backpack_disabled"
-	"Ability3"					"ability_prevent_attack_flying"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -583,6 +589,8 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Sorceress"
 	"SoundSet"					"Hero_Lina"
+
+	"EnabledAttacks"			"ground, air"
 
 	"precache"
 	{
@@ -694,6 +702,8 @@
 	"SelectionGroup"            "Human_Priests"
 	"SoundSet"					"Hero_Oracle"
 
+	"EnabledAttacks"			"ground, air"
+
 	"precache"
 	{
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
@@ -804,6 +814,8 @@
 	"SelectionGroup"            "Human_Spell_Breakers"
 	"SoundSet"					"Hero_Silencer"
 
+	"EnabledAttacks"			"ground"
+
 	"precache"
 	{
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
@@ -818,7 +830,6 @@
 	"Ability3"					"generic_spell_immunity"	 //Reference: Amim
 	"Ability4"					"human_feedback"	 //Reference: Afbk
 	"Ability5"					"human_backpack_disabled"
-	"Ability6"					"ability_prevent_attack_flying"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -916,6 +927,8 @@
 	"SelectionGroup"            "Human_Flying_Machines"
 	"SoundSet"					"Hero_Gyrocopter"
 
+	"EnabledAttacks"			"air"
+
 	"precache"
 	{
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
@@ -928,7 +941,6 @@
 	"Ability1"					"human_true_sight"	 //Reference: Agyb
 	"Ability2"					"human_flying_machine_bombs_disabled"	 //Reference: Agyv
 	"Ability3"					"human_flak_cannons_disabled"	 //Reference: Aflk
-	"Ability4"					"ability_prevent_attack_ground" //Removed after learning machine bombs
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1018,6 +1030,8 @@
 	"HealthBarOffset"			"280"
 	"SelectionGroup"            "Human_Dragonhawk_Riders"
 	"SoundSet"					"Hero_SkywrathMage"
+
+	"EnabledAttacks"			"ground, air"
 
 	"precache"
 	{
@@ -1127,6 +1141,8 @@
 	"SelectionGroup"            "Human_Mortar_Teams"
 	"SoundSet"					"Hero_Techies"
 
+	"EnabledAttacks"			"ground"
+
 	"precache"
 	{
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
@@ -1234,6 +1250,8 @@
 	"SelectionGroup"            "Human_Siege_Engines"
 	"SoundSet"					"Creep_Good_Engine"
 
+	"EnabledAttacks"			"ground"
+
 	"IsMechanical"				"1"
 	
 	"PathfindingSearchDepthScale" "0.5"
@@ -1242,8 +1260,6 @@
 	//----------------------------------------------------------------
 	"Ability1"					"human_barrage_disabled"	 //Reference: Srtt
 	"Ability2"					""	 //Reference: Aroc
-	"Ability3"					"ability_prevent_attack_flying"
-	"Ability3"					"ability_prevent_attack_ground" //Need a building-only version?
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1327,6 +1343,8 @@
 	"HealthBarOffset"			"140"
 	"SelectionGroup"            "Human_Gryphon_Riders"
 	"SoundSet"					"n_creep_Melee"
+
+	"EnabledAttacks"			"ground, air"
 	
 	"PathfindingSearchDepthScale" "0.5"
 	

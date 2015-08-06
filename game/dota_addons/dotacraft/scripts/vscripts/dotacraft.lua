@@ -556,6 +556,7 @@ function dotacraft:OnHeroInGame(hero)
 					local unit = CreateUnitByName(enemyUnitName, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
 					unit:SetControllableByPlayer(pID, true)
 					FindClearSpaceForUnit(unit, position, true)
+					unit:SetTeam(DOTA_TEAM_BADGUYS)
 					unit:Hold()
 				end
 			end, pID)
@@ -695,10 +696,15 @@ function dotacraft:OnNPCSpawned(keys)
     	item:RemoveSelf()
     end
 
-    -- Apply attack modifier
+    -- Attack system
+    npc:SetIdleAcquire(false)
+    npc.AcquisitionRange = npc:GetAcquisitionRange()
+    npc:SetAcquisitionRange(0)
+
     local item = CreateItem("item_apply_modifiers", nil, nil)
-	item:ApplyDataDrivenModifier(npc, npc, "modifier_attack_filter", {})
+	item:ApplyDataDrivenModifier(npc, npc, "modifier_attack_system", {})
     item:RemoveSelf()
+
 end
 
 -- An entity somewhere has been hurt.

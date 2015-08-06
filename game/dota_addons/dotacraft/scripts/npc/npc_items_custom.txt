@@ -214,15 +214,40 @@
 				"TextureName"	"modifiers/armor_divine"
 			}
 	
-			"modifier_attack_filter"
+			"modifier_attack_system"
 			{
 				"IsHidden"	"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"
+				}
+	
 				"OnAttackStart"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/flying.lua"
+						"ScriptFile"	"units/attacks.lua"
 						"Function"		"AttackFilter"
+					}
+				}
+	
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/attacks.lua"
+						"Function"		"AttackAggro"
+					}
+				}
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/attacks.lua"
+						"Function"		"AutoAcquire"
 					}
 				}
 			}

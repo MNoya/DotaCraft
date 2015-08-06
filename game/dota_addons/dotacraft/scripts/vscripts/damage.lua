@@ -43,7 +43,7 @@ function dotacraft:FilterDamage( filterTable )
 			damage = damage * 0.65
 		end	
 
-		print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. autoattack_damage .. " reduced by "..damage_reduction..") * ".. multiplier.. " = " .. damage )
+		--print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. autoattack_damage .. " reduced by "..damage_reduction..") * ".. multiplier.. " = " .. damage )
 		
 		-- Reassign the new damage
 		filterTable["damage"] = damage
