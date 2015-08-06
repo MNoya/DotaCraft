@@ -27848,6 +27848,7 @@
 				{
 					"MODIFIER_PROPERTY_DISABLE_TURNING" "1"
 					"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE" "1"
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"0.1"
 				}
 			}
 		}		
@@ -27877,6 +27878,7 @@
 				{
 					"MODIFIER_PROPERTY_DISABLE_TURNING" "1"
 					"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE" "1"
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"0.1"
 				}
 			}
 		}		
@@ -31438,6 +31440,10 @@
 				{
 					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
 				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"40"
+				}
 			}
 	
 			"modifier_uprooted_ancient_protector"
@@ -31481,6 +31487,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"armor_bonus_tower"	"2"
 			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"abs_movespeed"		"80"
+			}
 		}
 	
 		"Modifiers"
@@ -31505,7 +31516,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_bonus_tree"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"		
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"%abs_movespeed"
 				}
 			}
 	
@@ -31514,7 +31525,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_bonus_tower"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"%abs_movespeed"
 				}
 			}
 		}

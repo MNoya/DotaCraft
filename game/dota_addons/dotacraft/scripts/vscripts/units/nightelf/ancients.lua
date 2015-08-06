@@ -19,15 +19,15 @@ function RootStart( event )
     caster.blockers = gridNavBlockers
     caster:SetAbsOrigin(location)
 
+    caster:AddAbility("ability_building")
+	caster:AddAbility("ability_building_queue")
+	caster:FindAbilityByName("ability_building"):SetLevel(1)
+	caster:FindAbilityByName("ability_building_queue"):SetLevel(1)
+
 	local ability = event.ability
 	local cast_time = 2--ability:GetCastPoint()
 	Timers:CreateTimer(cast_time, function()
 		print("Root End")
-
-		caster:AddAbility("ability_building")
-		caster:AddAbility("ability_building_queue")
-		caster:FindAbilityByName("ability_building"):SetLevel(1)
-		caster:FindAbilityByName("ability_building_queue"):SetLevel(1)
 
 		-- Show all train and research abilities
 		for i=0,15 do
@@ -63,7 +63,6 @@ function UpRootStart( event )
 	end
 
 	caster:RemoveAbility("ability_building")
-	caster:RemoveModifierByName("modifier_building")
 	caster:RemoveAbility("ability_building_queue")
 	caster:RemoveModifierByName("modifier_building_queue")
 	caster:RemoveBuilding( false )
@@ -85,6 +84,8 @@ function UpRoot( event )
 		event.ability:ApplyDataDrivenModifier(caster, caster, "modifier_uprooted_ancient_protector", {})
 		caster:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
 	end
+
+	caster:RemoveModifierByName("modifier_building")
 
 	-- There's no way to change the armor/unit type...
 	
