@@ -41747,7 +41747,9 @@
 	
 	//=================================================================================
 	// Ability: Sentry Ward
-	// Description: "Summons an invisible and immovable ward that provides vision in an area. |nCan see invisible units. |nLasts <Aeye,Dur1> seconds."
+	// Description: "Summons an invisible and immovable ward that provides vision in an area.
+	// Can see invisible units.
+	// Lasts <Aeye,Dur1> seconds."
 	// Code Reference: Aeye
 	// NOTE: Back in my days, Sentry Ward wasn't Sentry Ward.
 	//=================================================================================
@@ -41772,15 +41774,48 @@
 				"var_type"		"FIELD_INTEGER"
 				"duration"		"600"
 			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"1600"	
+			}
 		}
 	
-		// Done
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/witchdoctor.lua"
+				"Function"		"SentryStart"
+				"Target" 		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_orc_sentry_ward"
+			{
+				"IsPurgable"		"0"
+				"IsBuff"			"1"
+				"ThinkInterval"		"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/witchdoctor.lua"
+						"Function"		"SentrySight"
+					}
+				}
+			}
+		}
 	}
 	
 	
 	//=================================================================================
 	// Ability: Stasis Trap
-	// Description: "Summons an invisible and immovable ward that stuns enemy land units around it. The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect. |nThe trap lasts <Asta,Dur1> seconds. |nThe stun lasts <Asta,DataD1> seconds."
+	// Description: "Summons an invisible and immovable ward that stuns enemy land units around it.
+	// The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect.
+	// The trap lasts <Asta,Dur1> seconds. |nThe stun lasts <Asta,DataD1> seconds."
 	// Code Reference: Asta
 	//=================================================================================
 	"orc_stasis_trap"
@@ -41835,7 +41870,8 @@
 	
 	//=================================================================================
 	// Ability: Healing Ward
-	// Description: "Summons an immovable ward that heals <Aoar,DataA1,%>% of a nearby friendly non-mechanical unit's hit points per second. |nLasts <Ahwd,Dur1> seconds."
+	// Description: "Summons an immovable ward that heals <Aoar,DataA1,%>% of a nearby friendly non-mechanical unit's hit points per second.
+	// Lasts <Ahwd,Dur1> seconds."
 	// Code Reference: Ahwd
 	// NOTE: Goes with the Healing Ward Aura.
 	//=================================================================================
@@ -41894,6 +41930,47 @@
 			// % of health regenerated per second.
 		}
 	
+		"Modifiers"
+		{
+			"modifier_orc_healing_ward_aura"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"	
+				"EffectName"		"particle_name"
+				"EffectAttachType"	"follow_origin"
+	
+				"Aura"          	"modifier_orc_healing_ward"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster" "0"
+			}
+	
+			"modifier_orc_healing_ward"
+			{
+				"IsHidden"			"1"
+				"EffectName"		"particle_name"
+				"EffectAttachType"	"follow_origin"
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_truesight"
+						"Target" 		"TARGET"
+						"Duration"		"0.03"
+					}
+				}
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_truesight"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+		}
 		// Done
 	}
 	
@@ -41947,7 +42024,31 @@
 			}
 		}
 	
-		// Done
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_orc_healing_ward"
+				"Target" 		"POINT"
+				"Duration"		"%duration"
+				"UnitCount"		"1"
+				"UnitLimit"		"0"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_orc_healing_ward_aura"
+						"Target"		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+			}
+		}
+	
+		
 	}
 	
 	//=================================================================================
