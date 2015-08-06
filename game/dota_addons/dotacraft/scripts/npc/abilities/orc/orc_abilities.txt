@@ -544,6 +544,12 @@
 		}
 	}
 
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_items.vsndevts"
+		"model"		"models/items/wards/esl_wardchest_ward_of_foresight/esl_wardchest_ward_of_foresight.vmdl"
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -556,7 +562,7 @@
 
 	"Modifiers"
 	{
-		"modifier_orc_sentry_ward"
+		"modifier_sentry_ward"
 		{
 			"IsPurgable"		"0"
 			"IsBuff"			"1"
@@ -659,107 +665,105 @@
 			"var_type"		"FIELD_INTEGER"
 			"duration"		"30"
 		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"500"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"regeneration"	"2"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+		"model"		"models/heroes/juggernaut/jugg_healing_ward.vmdl"
 	}
 
 	"OnSpellStart"
 	{
-		"SpawnUnit"
+		"RunScript"
 		{
-			"UnitName"		"npc_orc_healing_ward"
+			"ScriptFile"	"units/orc/witchdoctor.lua"
+			"Function"		"HealingStart"
 			"Target" 		"POINT"
-			"Duration"		"%duration"
-			"UnitCount"		"1"
-			"UnitLimit"		"0"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_orc_healing_ward_aura"
-					"Target"		"TARGET"
-					"Duration"		"%duration"
-				}
-			}
 		}
 	}
 
-	
+	"Modifiers"
+	{
+		"modifier_healing_ward"
+		{
+			"IsPurgable"		"0"
+			"IsBuff"			"1"
+			"ThinkInterval"		"1"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/witchdoctor.lua"
+					"Function"		"HealingThink"
+				}
+			}
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/witchdoctor.lua"
+					"Function"		"HealingEnd"
+				}
+			}
+		}
+
+		"modifier_healing_ward_regen"
+		{
+
+			"IsPurgable"		"1"
+			"IsBuff"			"1"
+			"IsHidden"			"1"
+			"Duration"			"0.5"  // Aura linger
+			"Properties"
+			{	
+				"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%regeneration"
+			}		
+		}
+	}
 }
 
 //=================================================================================
 // Ability: Healing Ward Aura
 // Code Reference: Aoar
+// NOTE: IS HERE JUST FOR SAKE OF REFERENCE, LOOK ON ABILITY ABOVE
 //=================================================================================
-"orc_healing_ward_aura"
-{
-	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"orc_healing_ward_aura"
-	"MaxLevel"					"1"
+//"orc_healing_ward_aura"
+//{
+//	"BaseClass"					"ability_datadriven"
+//	"AbilityTextureName"		"orc_healing_ward_aura"
+//	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+//	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+//	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+//	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"500"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"regeneration"			"0.02"
-		}
+//	"AbilitySpecial"
+//	{
+//		"01"
+//		{
+//			"var_type"		"FIELD_INTEGER"
+//			"radius"		"500"
+//		}
+//		"02"
+//		{
+//			"var_type"		"FIELD_FLOAT"
+//			"regeneration"	"0.02"
+//		}
 		// % of health regenerated per second.
-	}
-
-	"Modifiers"
-	{
-		"modifier_orc_healing_ward_aura"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"	
-			"EffectName"		"particle_name"
-			"EffectAttachType"	"follow_origin"
-
-			"Aura"          	"modifier_orc_healing_ward"
-			"Aura_Radius"   	"%radius"
-			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
-			"Aura_ApplyToCaster" "0"
-		}
-
-		"modifier_orc_healing_ward"
-		{
-			"IsHidden"			"1"
-			"EffectName"		"particle_name"
-			"EffectAttachType"	"follow_origin"
-			"OnCreated"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_truesight"
-					"Target" 		"TARGET"
-					"Duration"		"0.03"
-				}
-			}
-			"OnDestroy"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_truesight"
-					"Target" 		"TARGET"
-				}
-			}
-		}
-	}
+//	}
 	// Done
-}
+//}
 
 //=================================================================================
 // Ability: Spirit Link
