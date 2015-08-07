@@ -29,6 +29,8 @@ function RootStart( event )
 	Timers:CreateTimer(cast_time, function()
 		print("Root End")
 
+		SetArmorType(caster, "fortified")
+
 		-- Show all train and research abilities
 		for i=0,15 do
 			local ability = caster:GetAbilityByIndex(i)
@@ -87,7 +89,7 @@ function UpRoot( event )
 
 	caster:RemoveModifierByName("modifier_building")
 
-	-- There's no way to change the armor/unit type...
+	SetArmorType(caster, "heavy")
 	
 	if not caster:HasAbility("nightelf_root") then
 		caster:AddAbility("nightelf_root")

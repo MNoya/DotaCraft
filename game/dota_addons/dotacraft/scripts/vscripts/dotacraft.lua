@@ -683,18 +683,14 @@ function dotacraft:OnNPCSpawned(keys)
 	-- Apply armor and damage modifier (for visuals)
 	local attack_type = GetAttackType(npc)
 	if attack_type ~= 0 and npc:GetAttackDamage() > 0 then
-		print("Apply modifier_attack_"..attack_type)
-		local item = CreateItem("item_apply_modifiers", nil, nil)
-	    item:ApplyDataDrivenModifier(npc, npc, "modifier_attack_"..attack_type, {})
-    	item:RemoveSelf()
+		print("Apply modifier_attack_"..attack_type.." to "..npc:GetUnitName())
+		ApplyModifier(npc, "modifier_attack_"..attack_type)
     end
 
     local armor_type = GetArmorType(npc)
 	if armor_type ~= 0 then
-		print("Apply modifier_armor_"..armor_type)
-		local item = CreateItem("item_apply_modifiers", nil, nil)
-	    item:ApplyDataDrivenModifier(npc, npc, "modifier_armor_"..armor_type, {})
-    	item:RemoveSelf()
+		print("Apply modifier_armor_"..armor_type.." to "..npc:GetUnitName())
+		ApplyModifier(npc, "modifier_armor_"..armor_type)
     end
 
     -- Attack system

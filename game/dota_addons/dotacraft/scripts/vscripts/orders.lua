@@ -33,7 +33,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             if unit and IsValidEntity(unit) then
                 if not unit:IsBuilding() and not IsCustomBuilding(unit) then
 
-                    print( unit:GetUnitName(),ORDERS[order_type])
+                    --print( unit:GetUnitName(),ORDERS[order_type])
 
                     -- Set movement aggresive
                     unit.bAttackMove = (order_type == DOTA_UNIT_ORDER_ATTACK_MOVE)

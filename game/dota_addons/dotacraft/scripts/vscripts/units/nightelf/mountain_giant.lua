@@ -56,6 +56,8 @@ function WarClub( event )
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_war_club_strikes", {})
 		local strikes = ability:GetSpecialValueFor("strikes")
 		caster:SetModifierStackCount("modifier_war_club_strikes", caster, strikes)
+
+		SetAttackType(caster, "siege")
 	end)
 end
 
@@ -65,11 +67,9 @@ function WarClubStrike( event )
 	local target = event.target
 	local damage = event.Damage
 	local strikes = ability:GetSpecialValueFor("strikes")
-	local bonus_building_damage = ability:GetSpecialValueFor("bonus_building_damage")*0.01
 	local stack_count = caster:GetModifierStackCount("modifier_war_club_strikes", caster)
 
 	if IsCustomBuilding(target) then
-		ApplyDamage({ victim = target, attacker = caster, damage = damage*bonus_building_damage, damage_type = DAMAGE_TYPE_PHYSICAL, ability = ability})
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_grow_cleave.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
 	end
 
@@ -80,6 +80,8 @@ function WarClubStrike( event )
 		caster:RemoveModifierByName("modifier_war_club_strikes")
 		caster:RemoveModifierByName("modifier_animation_translate")
 		caster.tree:RemoveSelf()
+
+		SetAttackType(caster, "normal")
 	end	
 end
 

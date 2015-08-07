@@ -88,25 +88,31 @@ function GetBuildTime( unit )
 	return 0
 end
 
+ATTACK_TYPES = {
+	["DOTA_COMBAT_CLASS_ATTACK_BASIC"] = "normal",
+	["DOTA_COMBAT_CLASS_ATTACK_PIERCE"] = "pierce",
+	["DOTA_COMBAT_CLASS_ATTACK_SIEGE"] = "siege",
+	["DOTA_COMBAT_CLASS_ATTACK_LIGHT"] = "chaos",
+	["DOTA_COMBAT_CLASS_ATTACK_HERO"] = "hero",
+	["DOTA_COMBAT_CLASS_ATTACK_MAGIC"] = "magic",
+}
+
+ARMOR_TYPES = {
+	["DOTA_COMBAT_CLASS_DEFEND_SOFT"] = "unarmored",
+	["DOTA_COMBAT_CLASS_DEFEND_WEAK"] = "light",
+	["DOTA_COMBAT_CLASS_DEFEND_BASIC"] = "medium",
+	["DOTA_COMBAT_CLASS_DEFEND_STRONG"] = "heavy",
+	["DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"] = "fortified",
+	["DOTA_COMBAT_CLASS_DEFEND_HERO"] = "hero",
+}
+
 -- Returns a string with the wc3 damage name
 function GetAttackType( unit )
 	if unit and IsValidEntity(unit) then
 		local unitName = unit:GetUnitName()
 		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName].CombatClassAttack then
 			local attack_string = GameRules.UnitKV[unitName].CombatClassAttack
-			if attack_string == "DOTA_COMBAT_CLASS_ATTACK_BASIC" then
-				return "normal"
-			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_PIERCE" then
-				return "pierce"
-			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_SIEGE" then
-				return "siege"
-			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_LIGHT" then
-				return "chaos"
-			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_HERO" then
-				return "hero"
-			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_MAGIC" then
-				return "magic"
-			end
+			return ATTACK_TYPES[attack_string]
 		elseif unit:IsHero() then
 			return "hero"
 		end
@@ -119,25 +125,43 @@ function GetArmorType( unit )
 	if unit and IsValidEntity(unit) then
 		local unitName = unit:GetUnitName()
 		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName].CombatClassDefend then
-			local attack_string = GameRules.UnitKV[unitName].CombatClassDefend
-			if attack_string == "DOTA_COMBAT_CLASS_DEFEND_SOFT" then
-				return "unarmored"
-			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_WEAK" then
-				return "light"
-			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_BASIC" then
-				return "medium"
-			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_STRONG" then
-				return "heavy"
-			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE" then
-				return "fortified"
-			elseif attack_string == "DOTA_COMBAT_CLASS_DEFEND_HERO" then
-				return "hero"
-			end
+			local armor_string = GameRules.UnitKV[unitName].CombatClassDefend
+			return ARMOR_TYPES[armor_string]
 		elseif unit:IsHero() then
 			return "hero"
 		end
 	end
 	return 0
+end
+
+-- Changes the Attack Type string defined in the KV, and the current visual tooltip
+-- attack_type can be normal/pierce/siege/chaos/magic/hero
+function SetAttackType( unit, attack_type )
+	local unitName = unit:GetUnitName()
+	if GameRules.UnitKV[unitName].CombatClassAttack then
+		local current_attack_type = GetAttackType(unit)
+		unit:RemoveModifierByName("modifier_attack_"..current_attack_type)
+
+		local attack_key = getIndexTable(ATTACK_TYPES, attack_type)
+		GameRules.UnitKV[unitName].CombatClassAttack = attack_key		
+
+		ApplyModifier(unit, "modifier_attack_"..attack_type)
+	end
+end
+
+-- Changes the Armor Type string defined in the KV, and the current visual tooltip
+-- attack_type can be unarmored/light/medium/heavy/fortified/hero
+function SetArmorType( unit, armor_type )
+	local unitName = unit:GetUnitName()
+	if GameRules.UnitKV[unitName].CombatClassDefend then
+		local current_armor_type = GetArmorType(unit)
+		unit:RemoveModifierByName("modifier_armor_"..current_armor_type)
+
+		local armor_key = getIndexTable(ATTACK_TYPES, armor_type)
+		GameRules.UnitKV[unitName].CombatClassDefend = armor_key
+
+		ApplyModifier(unit, "modifier_armor_"..armor_type)
+	end
 end
 
 function GetDamageForAttackAndArmor( attack_type, armor_type )
@@ -1021,7 +1045,12 @@ function GetEnabledAttacks( unit )
 end
 
 function HoldPosition( unit )
+	ApplyModifier(unit, "modifier_hold_position")
+end
+
+-- Global item applier
+function ApplyModifier( unit, modifier_name )
 	local item = CreateItem("item_apply_modifiers", nil, nil)
-	item:ApplyDataDrivenModifier(unit, unit, "modifier_hold_position", {})
+	item:ApplyDataDrivenModifier(unit, unit, modifier_name, {})
 	item:RemoveSelf()
 end
