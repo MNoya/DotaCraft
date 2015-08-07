@@ -10,10 +10,10 @@ function dotacraft:FilterDamage( filterTable )
 
 	local victim = EntIndexToHScript( victim_index )
 	local attacker = EntIndexToHScript( attacker_index )
-	local damagetype = filterTable["damagetype_const"] 
+	local damagetype = filterTable["damagetype_const"]
 
 	-- Physical attack damage filtering
-	if damagetype == DAMAGE_TYPE_NONE then
+	if damagetype == DAMAGE_TYPE_NONE or damagetype == DAMAGE_TYPE_PHYSICAL then
 		local original_damage = filterTable["damage"] --Post reduction
 		local autoattack_damage = attacker:GetAttackDamage() --Random new damage between max-min of the attacker
 

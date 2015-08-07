@@ -104,6 +104,8 @@ function GetAttackType( unit )
 				return "chaos"
 			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_HERO" then
 				return "hero"
+			elseif attack_string == "DOTA_COMBAT_CLASS_ATTACK_MAGIC" then
+				return "magic"
 			end
 		elseif unit:IsHero() then
 			return "hero"
@@ -225,6 +227,21 @@ Spells  100%    100%    100%    100%    100%   70%
 			return 0.5
 		elseif armor_type == "hero" then
 			return 1
+		end
+
+	elseif attack_type == "magic" then
+		if armor_type == "unarmored" then
+			return 1
+		elseif armor_type == "light" then
+			return 1.25
+		elseif armor_type == "medium" then
+			return 0.75
+		elseif armor_type == "heavy" then
+			return 2
+		elseif armor_type == "fortified" then
+			return 0.35
+		elseif armor_type == "hero" then
+			return 0.5
 		end
 	end
 	return 1
@@ -987,4 +1004,10 @@ function GetEnabledAttacks( unit )
 	else
 		return "ground"
 	end
+end
+
+function HoldPosition( unit )
+	local item = CreateItem("item_apply_modifiers", nil, nil)
+	item:ApplyDataDrivenModifier(unit, unit, "modifier_hold_position", {})
+	item:RemoveSelf()
 end

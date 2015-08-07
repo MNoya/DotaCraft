@@ -24,9 +24,24 @@ function AutoAcquire( event )
     if unit:IsIdle() or unit.bAttackMove then
         local target = FindAttackableEnemies(unit, unit.bAttackMove)
         if target then
-            --print(unit:GetUnitName()," now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
+            print(unit:GetUnitName()," now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
             unit.bAttackMove = false
             unit:MoveToTargetToAttack(target)
+        end
+    end
+end
+
+-- When holding position, only attack units within attack range
+function HoldAcquire( event )
+    local unit = event.target
+
+    if unit:AttackReady() and not unit:IsAttacking() then
+        local target = FindAttackableEnemies(unit, unit.bAttackMove)
+        if target and unit:GetRangeToUnit(target) <= unit:GetAttackRange() then
+            ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = target:GetEntityIndex(), Queue = false}) 
+            HoldPosition(unit)
+        else
+            unit:SetAttacking(nil)
         end
     end
 end
@@ -62,7 +77,7 @@ function AttackAggro( event )
             local unit_origin = unit:GetAbsOrigin()
             local target_origin = target:GetAbsOrigin() 
             local flee_position = unit_origin + (unit_origin - target_origin):Normalized() * 200
-            print(unit_origin, target_origin, flee_position)
+
             unit:MoveToPosition(flee_position) 
         end
     end

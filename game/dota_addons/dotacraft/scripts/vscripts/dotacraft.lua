@@ -183,6 +183,7 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "gold_gather_order", Dynamic_Wrap(dotacraft, "GoldGatherOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "repair_order", Dynamic_Wrap(dotacraft, "RepairOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
+    CustomGameEventManager:RegisterListener( "right_click_order", Dynamic_Wrap(dotacraft, "RightClickOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "RegisterLeftClick"))
 	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "RegisterRightClick"))
@@ -532,7 +533,7 @@ function dotacraft:OnHeroInGame(hero)
 
 		-- If you want to test an ability of a unit just put its name here
 		if Convars:GetBool("developer") then
-			local unitName = "undead_ghoul"
+			local unitName = "undead_frost_wyrm"
 			local num = 5 --Useful to test "AbilityMultiOrder"
 			PrecacheUnitByNameAsync(unitName, function()
 				for i=1,num do
@@ -548,7 +549,7 @@ function dotacraft:OnHeroInGame(hero)
 				end
 			end, pID)
 
-			local enemyUnitName = "nightelf_hippogryph"
+			local enemyUnitName = "nightelf_mountain_giant"
 			local numEnemy = 5
 			PrecacheUnitByNameAsync(enemyUnitName, function()
 				for i=1,numEnemy do

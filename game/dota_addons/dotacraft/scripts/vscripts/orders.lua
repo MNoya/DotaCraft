@@ -15,21 +15,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
     local z = tonumber(filterTable["position_z"])
     local point = Vector(x,y,z)
 
-    local numUnits = 0
-    local numBuildings = 0
-    if units then
-        for n,unit_index in pairs(units) do
-            local unit = EntIndexToHScript(unit_index)
-            if unit and IsValidEntity(unit) then
-                if not unit:IsBuilding() and not IsCustomBuilding(unit) then
-                    numUnits = numUnits + 1
-                elseif unit:IsBuilding() or IsCustomBuilding(unit) then
-                    numBuildings = numBuildings + 1
-                end
-            end
-        end
-    end
-
     -- Skip Prevents order loops
     local unit = EntIndexToHScript(units["0"])
     if unit and unit.skip then
@@ -40,8 +25,33 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if DEBUG then print("Execute this order") end
     end
 
-     -- Set movement aggresive
-    unit.bAttackMove = (order_type == DOTA_UNIT_ORDER_ATTACK_MOVE)
+    local numUnits = 0
+    local numBuildings = 0
+    if units then
+        for n,unit_index in pairs(units) do
+            local unit = EntIndexToHScript(unit_index)
+            if unit and IsValidEntity(unit) then
+                if not unit:IsBuilding() and not IsCustomBuilding(unit) then
+
+                    print( unit:GetUnitName(),ORDERS[order_type])
+
+                    -- Set movement aggresive
+                    unit.bAttackMove = (order_type == DOTA_UNIT_ORDER_ATTACK_MOVE)
+
+                    -- Set hold position
+                    if order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+                        HoldPosition(unit)
+                    elseif order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
+                        unit:RemoveModifierByName("modifier_hold_position")
+                    end
+
+                    numUnits = numUnits + 1
+                elseif unit:IsBuilding() or IsCustomBuilding(unit) then
+                    numBuildings = numBuildings + 1
+                end
+            end
+        end
+    end
 
     ------------------------------------------------
     --           Ability Multi Order              --
@@ -598,6 +608,21 @@ function dotacraft:RepairOrder( event )
 end
 
 ------------------------------------------------
+--             Generic Right-Click            --
+------------------------------------------------ 
+function dotacraft:RightClickOrder( event )
+    local pID = event.pID
+    local selectedEntities = GetSelectedEntities(pID)
+
+    for _,entityIndex in pairs(selectedEntities) do
+        local unit = EntIndexToHScript(entityIndex)
+        if unit:HasModifier("modifier_hold_position") then
+            unit:RemoveModifierByName("modifier_hold_position")
+        end
+    end
+end
+
+------------------------------------------------
 --          Rally Point Right-Click           --
 ------------------------------------------------
 function dotacraft:OnBuildingRallyOrder( event )
@@ -672,6 +697,7 @@ function dotacraft:OnBuildingRallyOrder( event )
         end
     end
 end
+
 
 function CreateRallyFlagForBuilding( building )
     local flag_type = building.flag.type
@@ -797,42 +823,34 @@ function OnEnemyShop( unit )
 end
 
 
-
-
-
-
-
-
-
-
---[[
-DOTA_UNIT_ORDER_ATTACK_MOVE: 3
-DOTA_UNIT_ORDER_ATTACK_TARGET: 4
-DOTA_UNIT_ORDER_BUYBACK: 23
-DOTA_UNIT_ORDER_CAST_NO_TARGET: 8
-DOTA_UNIT_ORDER_CAST_POSITION: 5
-DOTA_UNIT_ORDER_CAST_RUNE: 26
-DOTA_UNIT_ORDER_CAST_TARGET: 6
-DOTA_UNIT_ORDER_CAST_TARGET_TREE: 7
-DOTA_UNIT_ORDER_CAST_TOGGLE: 9
-DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO: 20
-DOTA_UNIT_ORDER_DISASSEMBLE_ITEM: 18
-DOTA_UNIT_ORDER_DROP_ITEM: 12
-DOTA_UNIT_ORDER_EJECT_ITEM_FROM_STASH: 25
-DOTA_UNIT_ORDER_GIVE_ITEM: 13
-DOTA_UNIT_ORDER_GLYPH: 24
-DOTA_UNIT_ORDER_HOLD_POSITION: 10
-DOTA_UNIT_ORDER_MOVE_ITEM: 19
-DOTA_UNIT_ORDER_MOVE_TO_DIRECTION: 28
-DOTA_UNIT_ORDER_MOVE_TO_POSITION: 1
-DOTA_UNIT_ORDER_MOVE_TO_TARGET: 2
-DOTA_UNIT_ORDER_NONE: 0
-DOTA_UNIT_ORDER_PICKUP_ITEM: 14
-DOTA_UNIT_ORDER_PICKUP_RUNE: 15
-DOTA_UNIT_ORDER_PING_ABILITY: 27
-DOTA_UNIT_ORDER_PURCHASE_ITEM: 16
-DOTA_UNIT_ORDER_SELL_ITEM: 17
-DOTA_UNIT_ORDER_STOP: 21
-DOTA_UNIT_ORDER_TAUNT: 22
-DOTA_UNIT_ORDER_TRAIN_ABILITY: 11
-]]
+ORDERS = {
+    [0] = "DOTA_UNIT_ORDER_NONE",
+    [1] = "DOTA_UNIT_ORDER_MOVE_TO_POSITION",
+    [2] = "DOTA_UNIT_ORDER_MOVE_TO_TARGET",
+    [3] = "DOTA_UNIT_ORDER_ATTACK_MOVE",
+    [4] = "DOTA_UNIT_ORDER_ATTACK_TARGET",
+    [5] = "DOTA_UNIT_ORDER_CAST_POSITION",
+    [6] = "DOTA_UNIT_ORDER_CAST_TARGET",
+    [7] = "DOTA_UNIT_ORDER_CAST_TARGET_TREE",
+    [8] = "DOTA_UNIT_ORDER_CAST_NO_TARGET",
+    [9] = "DOTA_UNIT_ORDER_CAST_TOGGLE",
+    [10] = "DOTA_UNIT_ORDER_HOLD_POSITION",
+    [11] = "DOTA_UNIT_ORDER_TRAIN_ABILITY",
+    [12] = "DOTA_UNIT_ORDER_DROP_ITEM",
+    [13] = "DOTA_UNIT_ORDER_GIVE_ITEM",
+    [14] = "DOTA_UNIT_ORDER_PICKUP_ITEM",
+    [15] = "DOTA_UNIT_ORDER_PICKUP_RUNE",
+    [16] = "DOTA_UNIT_ORDER_PURCHASE_ITEM",
+    [17] = "DOTA_UNIT_ORDER_SELL_ITEM",
+    [18] = "DOTA_UNIT_ORDER_DISASSEMBLE_ITEM",
+    [19] = "DOTA_UNIT_ORDER_MOVE_ITEM",
+    [20] = "DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO",
+    [21] = "DOTA_UNIT_ORDER_STOP",
+    [22] = "DOTA_UNIT_ORDER_TAUNT",
+    [23] = "DOTA_UNIT_ORDER_BUYBACK",
+    [24] = "DOTA_UNIT_ORDER_GLYPH",
+    [25] = "DOTA_UNIT_ORDER_EJECT_ITEM_FROM_STASH",
+    [26] = "DOTA_UNIT_ORDER_CAST_RUNE",
+    [27] = "DOTA_UNIT_ORDER_PING_ABILITY",
+    [28] = "DOTA_UNIT_ORDER_MOVE_TO_DIRECTION",
+}

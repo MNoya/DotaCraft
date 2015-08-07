@@ -81,14 +81,20 @@ function OnRightButtonPressed()
 
 	// Unit rightclick
 	if (mouseEntities.length > 0)
-	{
+	{	
 		for ( var e of mouseEntities )
 		{
 			// Moonwell rightclick
-			if (IsCustomBuilding(e.entityIndex) && Entities.GetUnitName(e.entityIndex) == "nightelf_moon_well" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) ){
+			if (IsCustomBuilding(e.entityIndex) && Entities.GetUnitName(e.entityIndex) == "nightelf_moon_well" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) )
+			{
 				$.Msg("Player "+iPlayerID+" Clicked on moon well to replenish")
 				GameEvents.SendCustomGameEventToServer( "moonwell_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
 				return false; //Keep the unit order
+			}
+
+			else
+			{
+				GameEvents.SendCustomGameEventToServer( "right_click_order", { pID: iPlayerID })
 			}
 		}
 	}

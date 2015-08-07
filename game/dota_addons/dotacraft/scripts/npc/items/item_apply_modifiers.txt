@@ -220,6 +220,10 @@
 			{
 				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"
 			}
+			"States"
+			{
+				"MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 
 			"OnAttackStart"
 			{
@@ -246,6 +250,25 @@
 				{
 					"ScriptFile"	"units/attacks.lua"
 					"Function"		"AutoAcquire"
+				}
+			}
+		}
+
+		"modifier_hold_position"
+		{
+			"TextureName"	"modifiers/hold_position"
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"ThinkInterval"  "0.1"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/attacks.lua"
+					"Function"		"HoldAcquire"
 				}
 			}
 		}
