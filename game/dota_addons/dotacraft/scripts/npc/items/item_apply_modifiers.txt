@@ -225,15 +225,6 @@
 				"MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 
-			"OnAttackStart"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/attacks.lua"
-					"Function"		"AttackFilter"
-				}
-			}
-
 			"OnAttacked"
 			{
 				"RunScript"

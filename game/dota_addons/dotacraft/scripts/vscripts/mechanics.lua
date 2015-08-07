@@ -638,6 +638,20 @@ function IsMechanical( unit )
 	return false
 end
 
+-- Shortcut for a very common check
+function IsValidAlive( unit )
+	return (IsValidEntity(unit) and unit:IsAlive())
+end
+
+-- Returns all visible enemies in radius of the unit
+function FindEnemiesInRadius( unit, radius )
+	local team = unit:GetTeamNumber()
+	local position = unit:GetAbsOrigin()
+	local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE
+	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_CLOSEST, false)
+end
+
 function AddUnitToSelection( unit )
 	--local player = unit:GetPlayerOwner()
 	local player = PlayerResource:GetPlayer(0)
@@ -924,12 +938,12 @@ function RemoveBlight( location, radius )
         for y = location.y - radius, location.y + radius, 64 do
         	local dispelBlight = true
         	local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, 900, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-			--[[for _,unit in pairs(units) do
+			for _,unit in pairs(units) do
 				if IsCustomBuilding(unit) and IsUndead(unit) then
 					dispelBlight = false
 					break
 				end
-			end]]
+			end
 
 			-- No undead building was found nearby this gridnav position, remove blight around the position
 			local position = Vector(x, y, location.z)
