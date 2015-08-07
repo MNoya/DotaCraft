@@ -14,11 +14,15 @@
   - [x] Generic passive upgrades for Damage/Armor on multiple different units, with multiple rank icons 
 - [x] Altar for hero training with tiers and reviving
 - [x] Unit formations with ranks for melee/midrange/ranged/siege
-- [ ] Legacy attack types including Air-Ground.
+- [x] Legacy attack types
+  - [x] [Armor/Damage type](http://classic.battle.net/war3/basics/armorandweapontypes.shtml) parity, including Magic attacks
+  - [x] Air-Ground attacks, auto attack acquisition.
 - [ ] Auto gather lumber after Lumber deposit construction
-- [ ] Building placement restrictions (Undead Blight, proximity to Gold Mine)
+- [ ] Building placement restrictions
+  - [x] Undead Blight gridnav
+  - [ ] Proximity to Gold Mine
 - [x] Occupied Building indicators (Entangled/Haunted Gold Mine/Burrows)
-- [ ] General multi orders for casting certain abilities as a group
+- [x] General multi orders for casting certain abilities as a group
 - [ ] Building behavior improvements
   - [ ] Multiple builder queue with repair
   - [ ] Uncancelled movements
@@ -29,7 +33,7 @@
 - [x] Human
 - [x] Night Elf
 - [ ] Orc
-- [ ] Undead
+- [x] Undead
 
 ### Interfaces
 
