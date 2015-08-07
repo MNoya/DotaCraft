@@ -662,6 +662,16 @@ function IsMechanical( unit )
 	return false
 end
 
+function HasGoldMineDistanceRestriction( unit_name )
+	if GameRules.UnitKV[unit_name] then
+		local bRestrictGoldMineDistance = GameRules.UnitKV[unit_name]["RestrictGoldMineDistance"]
+		if bRestrictGoldMineDistance and bRestrictGoldMineDistance == 1 then
+			return true
+		end
+	end
+	return false
+end
+
 -- Shortcut for a very common check
 function IsValidAlive( unit )
 	return (IsValidEntity(unit) and unit:IsAlive())

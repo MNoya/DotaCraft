@@ -18,9 +18,9 @@
   - [x] [Armor/Damage type](http://classic.battle.net/war3/basics/armorandweapontypes.shtml) parity, including Magic attacks
   - [x] Air-Ground attacks, auto attack acquisition.
 - [ ] Auto gather lumber after Lumber deposit construction
-- [ ] Building placement restrictions
+- [x] Building placement restrictions
   - [x] Undead Blight gridnav
-  - [ ] Proximity to Gold Mine
+  - [x] Proximity to Gold Mine
 - [x] Occupied Building indicators (Entangled/Haunted Gold Mine/Burrows)
 - [x] General multi orders for casting certain abilities as a group
 - [ ] Building behavior improvements

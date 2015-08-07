@@ -22186,6 +22186,12 @@
 						"Target" 		"CASTER"
 					}
 				}
+	
+				// Builders have no collision while moving to gather
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 	
 			"modifier_gathering_lumber"
@@ -22238,7 +22244,7 @@
 					}
 				}
 	
-				// Builders have no collision while moving in and out of the mine
+				// Builders have no collision while moving to gather
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -36485,6 +36491,11 @@
 						"Target" 		"CASTER"
 					}
 				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 	
 			"modifier_gathering_lumber"
@@ -36535,6 +36546,11 @@
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	
@@ -43313,6 +43329,11 @@
 						"Target" 		"CASTER"
 					}
 				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 	
 			"modifier_gathering_lumber"
@@ -43365,7 +43386,6 @@
 					}
 				}
 	
-				// Peasants have no collision while moving in and out of the mine
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -54683,6 +54703,11 @@
 						"ModifierName"	"modifier_on_order_cancel"
 						"Target" 		"CASTER"
 					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	

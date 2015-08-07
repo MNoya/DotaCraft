@@ -198,8 +198,8 @@ function dotacraft:InitGameMode()
 	end
 
 	-- Add gridnav blockers to the gold mines
-	local allGoldMines = Entities:FindAllByModel('models/mine/mine.vmdl') --Target name in Hammer
-	for k,gold_mine in pairs (allGoldMines) do
+	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
+	for k,gold_mine in pairs (GameRules.GoldMines) do
 		local location = gold_mine:GetAbsOrigin()
 		location.x = SnapToGrid32(location.x)
     	location.y = SnapToGrid32(location.y)
@@ -214,7 +214,6 @@ function dotacraft:InitGameMode()
 		end
 
 		-- Find and store the mine light
-		print(gold_mine.light)
 	end
 
 	-- Allow cosmetic swapping

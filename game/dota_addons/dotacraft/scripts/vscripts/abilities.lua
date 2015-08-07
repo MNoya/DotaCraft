@@ -36,14 +36,25 @@ function build( keys )
 
 	keys:OnPreConstruction(function(vPos)
 
+		print('preconstruction')
+
        	-- Blight check
        	if string.match(building_name, "undead") and building_name ~= "undead_necropolis" then
        		local bHasBlight = HasBlight(vPos)
        		print("Blight check for "..building_name..":", bHasBlight)
        		if not bHasBlight then
-       			SendErrorMessage(caster:GetPlayerOwnerID(), "#error_must_build_on_bligth")
+       			SendErrorMessage(caster:GetPlayerOwnerID(), "#error_must_build_on_blight")
        			return false
        		end
+       	end
+
+       	-- Proximity to gold mine check for Human/Orc: Main Buildings can be as close as 768.015 towards the center of the Gold Mine.
+       	if HasGoldMineDistanceRestriction(building_name) then
+			local nearby_mine = Entities:FindAllByNameWithin("*gold_mine", vPos, 768)
+			if #nearby_mine > 0 then
+				SendErrorMessage(caster:GetPlayerOwnerID(), "#error_too_close_to_goldmine")
+       			return false
+			end
        	end
     end)
 
