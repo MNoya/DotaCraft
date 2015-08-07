@@ -58,7 +58,57 @@ function BuildHero( event )
 	end
 
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
+	
+	Setup_Hero_Panel(new_hero)
+	
+	-- register panaroma listener
+	CustomGameEventManager:RegisterListener( "center_hero_camera", CenterCamera)
+end
 
+function Setup_Hero_Panel(hero)
+	local playerid = hero:GetPlayerOwnerID()
+	local heroid = PlayerResource:GetSelectedHeroID(playerid)
+	local heroname = hero:GetUnitName()
+
+	-- get hero entindex and create hero panel
+	local HeroIndex = hero:GetEntityIndex()
+	Create_Hero_Panel(playerid, heroid, heroname, "landscape", HeroIndex)
+
+	-- update hero panel
+	Timers:CreateTimer(function()
+		local player = PlayerResource:GetPlayer(playerid)
+		
+		CustomGameEventManager:Send_ServerToPlayer(player, "update_hero", {playerid = playerid, heroname=heroname, hero=HeroIndex})
+		return 0.5
+	end)
+end
+
+function Create_Hero_Panel(playerid, heroID, heroname, imagestyle, HeroIndex)
+	local player = PlayerResource:GetPlayer(playerid)
+
+	CustomGameEventManager:Send_ServerToPlayer(player, "create_hero", {heroid=heroID, heroname=heroname, imagestyle=imagestyle, playerid = playerid, hero=HeroIndex})
+end
+
+function CenterCamera(eventSourceIndex, args )
+	local heroname = args.heroname
+	local heroes = Entities:FindAllByName(heroname)
+	-- can use eventSourceIndex-1 || args.playerid
+	local playerid = args.playerid
+	
+	for k,foundhero in pairs(heroes) do
+		if foundhero:GetPlayerOwnerID() == playerid then		
+			-- add camera modifier to instantly move camera
+			print("hero found")
+			
+			PlayerResource:SetCameraTarget(playerid, foundhero)
+			Timers:CreateTimer(function()
+				PlayerResource:SetCameraTarget(playerid, nil)
+			end)
+			
+			--foundhero:AddNewModifier(foundhero, nil, "modifier_camera_follow", {})
+			return
+		end	
+	end
 end
 
 function UpgradeAltarAbilities( event )

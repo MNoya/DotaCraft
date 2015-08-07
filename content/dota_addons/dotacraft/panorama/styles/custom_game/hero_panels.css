@@ -1,0 +1,78 @@
+.HeroPanelsRoot
+{
+	width: 100%;
+	height: 100%;
+}
+
+#HeroPanelsContainer
+{	
+	flow-children: down;	
+
+	visibility: visible;
+	
+	margin-top: 50px;
+	margin-left: 10px;
+	
+
+}
+
+.HeroSection{
+	flow-children: down;
+	
+	margin-top: 50px;	
+	
+	padding: 0 20px 20px 20px;
+
+	opacity: 0.95;
+	
+}
+
+.HeroImage
+{	
+	margin-top: 10px;
+    vertical-align: center;
+    horizontal-align: center;
+
+	flow-children: down;
+	border: 3px solid grey;
+	border-bottom: 0px;
+}
+
+.HeroImageDead{
+
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	opacity: 0.8;
+	
+}
+
+.HeroStatusContainer{
+	vertical-align: bottom;	
+	height: 24px;   
+	width: 100%;
+	flow-children: down;
+	
+	background-color: #191919;
+	border: 1px solid #464646;
+	border-top: 0px;
+}
+ 
+.HeroHealthBar
+{
+	height: 12px;
+	width: 100%;
+
+	background-image: url("file://{images}/health_bar.png"); 
+	/*background-color: #12B212; */
+	border-bottom: 2px solid black;
+}
+
+.HeroManaBar
+{
+	height: 8px;
+	width: 100%;
+	
+	background-image: url("file://{images}/mana_bar.png"); 
+	/*background-color: #0073E5;*/
+}
