@@ -63,30 +63,27 @@ function BuildHero( event )
 	
 	-- register panaroma listener
 	CustomGameEventManager:RegisterListener( "center_hero_camera", CenterCamera)
+	CustomGameEventManager:RegisterListener( "revive_hero", Revive_Hero)
 end
 
-function Setup_Hero_Panel(hero)
-	local playerid = hero:GetPlayerOwnerID()
-	local heroid = PlayerResource:GetSelectedHeroID(playerid)
-	local heroname = hero:GetUnitName()
+function Revive_Hero(eventSourceIndex, args)
+	local heroname = args.heroname
+	local heroes = Entities:FindAllByName(heroname)
 
-	-- get hero entindex and create hero panel
-	local HeroIndex = hero:GetEntityIndex()
-	Create_Hero_Panel(playerid, heroid, heroname, "landscape", HeroIndex)
-
-	-- update hero panel
-	Timers:CreateTimer(function()
-		local player = PlayerResource:GetPlayer(playerid)
+	-- hero handle/object & playerid
+	local heroHandle
+	local playerid = args.playerid
 		
-		CustomGameEventManager:Send_ServerToPlayer(player, "update_hero", {playerid = playerid, heroname=heroname, hero=HeroIndex})
-		return 0.5
-	end)
-end
+	-- find hero using his name and verifying player id
+	for k,foundhero in pairs(heroes) do
+		if foundhero:GetPlayerOwnerID() == playerid then		
+			heroHandle = foundhero
+		end	
+	end
 
-function Create_Hero_Panel(playerid, heroID, heroname, imagestyle, HeroIndex)
-	local player = PlayerResource:GetPlayer(playerid)
-
-	CustomGameEventManager:Send_ServerToPlayer(player, "create_hero", {heroid=heroID, heroname=heroname, imagestyle=imagestyle, playerid = playerid, hero=HeroIndex})
+	-- do your shi here :D
+	
+	print("reviving hero")
 end
 
 function CenterCamera(eventSourceIndex, args )
@@ -109,6 +106,53 @@ function CenterCamera(eventSourceIndex, args )
 			return
 		end	
 	end
+end
+
+function Setup_Hero_Panel(hero)
+	local playerid = hero:GetPlayerOwnerID()
+	local heroid = PlayerResource:GetSelectedHeroID(playerid)
+	local heroname = hero:GetUnitName()
+
+	-- get hero entindex and create hero panel
+	local HeroIndex = hero:GetEntityIndex()
+	Create_Hero_Panel(playerid, heroid, heroname, "landscape", HeroIndex)
+
+	local hero_health = hero:GetHealth()
+	local damagedbool = false
+	local grace_peroid = false
+	-- update hero panel
+	Timers:CreateTimer(function()
+		local player = PlayerResource:GetPlayer(playerid)
+		local unspentpoints = hero:GetAbilityPoints()
+		local current_hero_health = hero:GetHealth()
+		
+		-- if not grace peroid, check for health difference
+		if not grace_peroid then
+			if current_hero_health < hero_health and damagedbool == false then
+				damagedbool = true
+				
+				-- set delay for the red to stay
+				Timers:CreateTimer(1, function()
+					hero_health = current_hero_health
+					damagedbool = false
+					grace_peroid = true
+					-- set grace peroid
+					Timers:CreateTimer(1, function() grace_peroid = false end)
+				end)
+			else
+				hero_health = current_hero_health
+			end
+		end
+		
+		CustomGameEventManager:Send_ServerToPlayer(player, "update_hero", {playerid = playerid, heroname=heroname, hero=HeroIndex, damaged=damagedbool, unspent_points=unspentpoints})
+		return 0.1
+	end)
+end
+
+function Create_Hero_Panel(playerid, heroID, heroname, imagestyle, HeroIndex)
+	local player = PlayerResource:GetPlayer(playerid)
+
+	CustomGameEventManager:Send_ServerToPlayer(player, "create_hero", {heroid=heroID, heroname=heroname, imagestyle=imagestyle, playerid = playerid, hero=HeroIndex})
 end
 
 function UpgradeAltarAbilities( event )
