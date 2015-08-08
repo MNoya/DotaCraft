@@ -110,8 +110,8 @@ ARMOR_TYPES = {
 function GetAttackType( unit )
 	if unit and IsValidEntity(unit) then
 		local unitName = unit:GetUnitName()
-		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName].CombatClassAttack then
-			local attack_string = GameRules.UnitKV[unitName].CombatClassAttack
+		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName]["CombatClassAttack"] then
+			local attack_string = GameRules.UnitKV[unitName]["CombatClassAttack"]
 			return ATTACK_TYPES[attack_string]
 		elseif unit:IsHero() then
 			return "hero"
@@ -124,8 +124,9 @@ end
 function GetArmorType( unit )
 	if unit and IsValidEntity(unit) then
 		local unitName = unit:GetUnitName()
-		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName].CombatClassDefend then
-			local armor_string = GameRules.UnitKV[unitName].CombatClassDefend
+		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName]["CombatClassDefend"] then
+			local armor_string = GameRules.UnitKV[unitName]["CombatClassDefend"]
+			print("GetArmorType: ",ARMOR_TYPES[armor_string])
 			return ARMOR_TYPES[armor_string]
 		elseif unit:IsHero() then
 			return "hero"
@@ -138,12 +139,12 @@ end
 -- attack_type can be normal/pierce/siege/chaos/magic/hero
 function SetAttackType( unit, attack_type )
 	local unitName = unit:GetUnitName()
-	if GameRules.UnitKV[unitName].CombatClassAttack then
+	if GameRules.UnitKV[unitName]["CombatClassAttack"] then
 		local current_attack_type = GetAttackType(unit)
 		unit:RemoveModifierByName("modifier_attack_"..current_attack_type)
 
 		local attack_key = getIndexTable(ATTACK_TYPES, attack_type)
-		GameRules.UnitKV[unitName].CombatClassAttack = attack_key		
+		GameRules.UnitKV[unitName]["CombatClassAttack"] = attack_key		
 
 		ApplyModifier(unit, "modifier_attack_"..attack_type)
 	end
@@ -153,12 +154,12 @@ end
 -- attack_type can be unarmored/light/medium/heavy/fortified/hero
 function SetArmorType( unit, armor_type )
 	local unitName = unit:GetUnitName()
-	if GameRules.UnitKV[unitName].CombatClassDefend then
+	if GameRules.UnitKV[unitName]["CombatClassDefend"] then
 		local current_armor_type = GetArmorType(unit)
 		unit:RemoveModifierByName("modifier_armor_"..current_armor_type)
 
-		local armor_key = getIndexTable(ATTACK_TYPES, armor_type)
-		GameRules.UnitKV[unitName].CombatClassDefend = armor_key
+		local armor_key = getIndexTable(ARMOR_TYPES, armor_type)
+		GameRules.UnitKV[unitName]["CombatClassDefend"] = armor_key
 
 		ApplyModifier(unit, "modifier_armor_"..armor_type)
 	end
@@ -1101,10 +1102,10 @@ function UnitCanAttackTarget( unit, target )
 	if not unit:HasAttackCapability() then
 		return false
 	end
-	local enabled_attacks = GetEnabledAttacks(unit)
+	local attacks_enabled = GetAttacksEnabled(unit)
 	local target_type = GetMovementCapability(target)
 
-	return string.match(enabled_attacks, target_type)
+	return string.match(attacks_enabled, target_type)
 end
 
 -- Returns "air" if the unit can fly
@@ -1116,22 +1117,22 @@ function GetMovementCapability( unit )
 	end
 end
 
--- Searches for "EnabledAttacks" in the KV files
+-- Searches for "AttacksEnabled" in the KV files
 -- Default by omission is "ground", other possible returns should be "ground,air" or "air"
-function GetEnabledAttacks( unit )
+function GetAttacksEnabled( unit )
 	local unitName = unit:GetUnitName()
-	local enabled_attacks
+	local attacks_enabled
 
 	if unit:IsHero() then
-		enabled_attacks = GameRules.HeroKV[unitName]["EnabledAttacks"]
+		attacks_enabled = GameRules.HeroKV[unitName]["AttacksEnabled"]
 	else
-		enabled_attacks = GameRules.UnitKV[unitName]["EnabledAttacks"]
+		attacks_enabled = GameRules.UnitKV[unitName]["AttacksEnabled"]
 	end
 
-	return enabled_attacks or "ground"
+	return attacks_enabled or "ground"
 end
 
--- Searches for "EnabledAttacks", false by omission
+-- Searches for "AttacksEnabled", false by omission
 function HasSplashAttack( unit )
 	local unitName = unit:GetUnitName()
 	local unit_table = GameRules.UnitKV[unitName]
