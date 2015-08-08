@@ -926,6 +926,73 @@ function IsMineOccupiedByTeam( mine, teamID )
 	return (IsValidEntity(mine.building_on_top) and mine.building_on_top:GetTeamNumber() == teamID)
 end
 
+-- Goes through the structures of the player finding the closest valid resource deposit of this type
+function FindClosestResourceDeposit( caster, resource_type )
+	local position = caster:GetAbsOrigin()
+	
+	-- Find a building to deliver
+	local player = caster:GetPlayerOwner()
+	local race = GetPlayerRace(player)
+	if not player then print("ERROR, NO PLAYER") return end
+	local buildings = player.structures
+	local distance = 20000
+	local closest_building = nil
+
+	if resource_type == "gold" then
+		for _,building in pairs(buildings) do
+			if building and IsValidEntity(building) and building:IsAlive() then
+				if IsValidGoldDepositName( building:GetUnitName(), race ) and building.state == "complete" then
+					local this_distance = (position - building:GetAbsOrigin()):Length()
+					if this_distance < distance then
+						distance = this_distance
+						closest_building = building
+					end
+				end
+			end
+		end
+
+	elseif resource_type == "lumber" then
+		for _,building in pairs(buildings) do
+			if building and IsValidEntity(building) and building:IsAlive() then
+				if IsValidLumberDepositName( building:GetUnitName(), race ) and building.state == "complete" then
+					local this_distance = (position - building:GetAbsOrigin()):Length()
+					if this_distance < distance then
+						distance = this_distance
+						closest_building = building
+					end
+				end
+			end
+		end
+	end
+	if not closest_building then
+		print("[ERROR] CANT FIND A DEPOSIT RESOURCE FOR "..resource_type.."! This shouldn't happen")
+	end
+	return closest_building		
+
+end
+
+function IsValidGoldDepositName( building_name, race )
+	local GOLD_DEPOSITS = GameRules.Buildings[race]["gold"]
+	for name,_ in pairs(GOLD_DEPOSITS) do
+		if GOLD_DEPOSITS[name] then
+			return true
+		end
+	end
+
+	return false
+end
+
+function IsValidLumberDepositName( building_name, race )
+	local LUMBER_DEPOSITS = GameRules.Buildings[race]["lumber"]
+	for name,_ in pairs(LUMBER_DEPOSITS) do
+		if LUMBER_DEPOSITS[building_name] then
+			return true
+		end
+	end
+
+	return false
+end
+
 function ApplyConstructionEffect( unit )
 	local item = CreateItem("item_apply_modifiers", nil, nil)
 	item:ApplyDataDrivenModifier(unit, unit, "modifier_construction", {})

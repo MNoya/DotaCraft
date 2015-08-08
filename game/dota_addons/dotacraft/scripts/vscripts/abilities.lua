@@ -157,6 +157,52 @@ function build( keys )
 		local playerID = hero:GetPlayerID()
 		local player = PlayerResource:GetPlayer(playerID)
 		local building_name = unit:GetUnitName()
+		local builders = {}
+		if unit.builder then
+			table.insert(builders, unit.builder)
+		elseif unit.units_repairing then
+			builders = unit.units_repairing
+		end
+
+		-- When building one of the lumber-only buildings, send the builder(s) to auto-gather lumber after the building is done
+		Timers:CreateTimer(0.5, function() 
+		if builders and building_name == "human_lumber_mill" or building_name == "orc_war_mill" then
+			print("Sending "..#builders.." builders to gather lumber after finishing "..building_name)
+			
+			for k,builder in pairs(builders) do
+				print("Builder ",k)
+				local race = GetUnitRace(builder)
+				local gather_ability = builder:FindAbilityByName(race.."_gather")
+				if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
+	                local empty_tree = FindEmptyNavigableTreeNearby(builder, unit:GetAbsOrigin(), 2000)
+	                if empty_tree then
+	                	print(" gathering")
+	                    local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
+	                    ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+	                end
+	            elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
+	                -- Can the unit still gather more resources?
+	                if (builder.lumber_gathered and builder.lumber_gathered < 10) and not builder:HasModifier("modifier_returning_gold") then
+	                    local empty_tree = FindEmptyNavigableTreeNearby(builder, unit:GetAbsOrigin(), 2000)
+	                    if empty_tree then
+	                    	print(" gathering")
+	                        local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
+	                        builder:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
+	                        ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+	                    end
+	                else
+	                    -- Return
+	                    print(" returning")
+	                    local return_ability = builder:FindAbilityByName(race.."_return_resources")
+	                    local empty_tree = FindEmptyNavigableTreeNearby(builder, point, TREE_RADIUS)
+	                    builder.target_tree = empty_tree --The new selected tree
+	                    ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = false})
+	                end
+	            end
+	        end
+            return false
+		end
+		end)
 
 		-- Add 1 to the player building tracking table for that name
 		if not player.buildings[building_name] then

@@ -499,9 +499,10 @@ function BuildingHelper:InitializeBuildingEntity( keys )
           else
             -- completion: timesUp is true
             if callbacks.onConstructionCompleted ~= nil then
-              callbacks.onConstructionCompleted(building)
               building.constructionCompleted = true
               building.state = "complete"
+              building.builder = builder
+              callbacks.onConstructionCompleted(building)
             end
 
             -- Eject Builder
@@ -555,7 +556,6 @@ function BuildingHelper:InitializeBuildingEntity( keys )
               callbacks.onConstructionCompleted(building)
             end
             building.state = "complete"
-            building.bUpdatingHealth = false
             return nil
           else
             return 0.1

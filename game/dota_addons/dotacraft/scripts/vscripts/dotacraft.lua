@@ -354,6 +354,7 @@ function dotacraft:InitGameMode()
   	GameRules.Modifiers = LoadKeyValues("scripts/kv/modifiers.kv")
   	GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
   	GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
+  	GameRules.Buildings = LoadKeyValues("scripts/kv/buildings.kv")
 
   	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
   	for _,t in pairs(GameRules.ALLTREES) do

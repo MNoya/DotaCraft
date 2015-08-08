@@ -17,7 +17,7 @@
 - [x] Legacy attack types
   - [x] [Armor/Damage type](http://classic.battle.net/war3/basics/armorandweapontypes.shtml) parity, including Magic attacks
   - [x] Air-Ground attacks, auto attack acquisition.
-- [ ] Auto gather lumber after Lumber deposit construction
+- [x] Auto gather lumber after Lumber deposit construction
 - [x] Building placement restrictions
   - [x] Undead Blight gridnav
   - [x] Proximity to Gold Mine
