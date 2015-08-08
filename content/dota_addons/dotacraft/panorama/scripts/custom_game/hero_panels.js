@@ -1,4 +1,5 @@
 
+
 var rootparentORG = $('#HeroPanelsRoot')
 
 var HeroPanelID = 1
@@ -125,7 +126,6 @@ function update_hero(data){
 		overlay.visible = true
 		var overlaytext = overlay.GetChild(0)
 		overlaytext.text = data.unspent_points
-		$.Msg(overlaytext)
 	}
 	else{
 		overlay.visible = false
