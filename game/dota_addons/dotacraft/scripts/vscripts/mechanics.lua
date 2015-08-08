@@ -616,6 +616,15 @@ function GetUnitRace( unit )
 	return name_split[1]
 end
 
+function GetInternalHeroName( hero_name )
+	local hero_table = GameRules.HeroKV[hero_name]
+	if hero_table and hero_table["InternalName"] then
+		return hero_table["InternalName"]
+	else
+		return hero_name
+	end
+end
+
 function IsHuman( unit )
 	return GetUnitRace(unit)=="human"
 end
@@ -1095,11 +1104,7 @@ function UnitCanAttackTarget( unit, target )
 	local enabled_attacks = GetEnabledAttacks(unit)
 	local target_type = GetMovementCapability(target)
 
-	if string.match(enabled_attacks, target_type) then
-		return true
-	else
-		return false
-	end
+	return string.match(enabled_attacks, target_type)
 end
 
 -- Returns "air" if the unit can fly
@@ -1123,11 +1128,7 @@ function GetEnabledAttacks( unit )
 		enabled_attacks = GameRules.UnitKV[unitName]["EnabledAttacks"]
 	end
 
-	if enabled_attacks then
-		return enabled_attacks
-	else
-		return "ground"
-	end
+	return enabled_attacks or "ground"
 end
 
 -- Searches for "EnabledAttacks", false by omission

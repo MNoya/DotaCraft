@@ -66,26 +66,40 @@ function BuildHero( event )
 	CustomGameEventManager:RegisterListener( "revive_hero", Revive_Hero)
 end
 
+-- Panorama action: Click on the Revive button
 function Revive_Hero(eventSourceIndex, args)
 	local heroname = args.heroname
-	local heroes = Entities:FindAllByName(heroname)
-
-	-- hero handle/object & playerid
-	local heroHandle
 	local playerid = args.playerid
-		
-	-- find hero using his name and verifying player id
-	for k,foundhero in pairs(heroes) do
-		if foundhero:GetPlayerOwnerID() == playerid then		
-			heroHandle = foundhero
-		end	
-	end
+	local hero_internal_name = GetInternalHeroName(heroname)
+	local player = PlayerResource:GetPlayer(playerid)
 
-	-- do your shi here :D
-	
-	print("reviving hero")
+	-- Find a valid ability to revive this hero on the altar
+	local revive_ability
+	if IsValidEntity(player.altar) then
+		for i=0,15 do
+			local ability = player.altar:GetAbilityByIndex(i)
+			if ability then
+				local ability_name = ability:GetAbilityName()
+				ability_name = string.gsub(ability_name, "_revive" , "")
+				ability_name = string.gsub(ability_name, "_train" , "")
+				print(ability_name, hero_internal_name, "revive")
+				if string.match(ability_name, hero_internal_name) and not ability:IsHidden() and ability:IsFullyCastable() then
+					revive_ability = ability
+					break
+				end
+			end
+		end
+		if revive_ability then
+			player.altar:CastAbilityImmediately(revive_ability, player:GetPlayerID())
+		else
+			print("No valid ability to revive")
+		end
+	else	
+		print("Not valid altar")
+	end
 end
 
+-- Panorama action: Double click on the hero portrait
 function CenterCamera(eventSourceIndex, args )
 	local heroname = args.heroname
 	local heroes = Entities:FindAllByName(heroname)
@@ -108,6 +122,7 @@ function CenterCamera(eventSourceIndex, args )
 	end
 end
 
+-- Notify Panorama that the player acquired a new hero
 function Setup_Hero_Panel(hero)
 	local playerid = hero:GetPlayerOwnerID()
 	local heroid = PlayerResource:GetSelectedHeroID(playerid)
@@ -403,7 +418,7 @@ end
 -- The cost to revive a Hero will be ~half the cost for building the Hero plus 10% more per level of Hero to be revived.
 -- Hero revive time is capped at 100 seconds.
 function ReviveHero( event )
-	local caster = event.caster
+	local caster = event.caster -- An Altar
 	local player = caster:GetPlayerOwner()
 	local hero_name = event.Hero
 
