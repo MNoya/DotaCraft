@@ -686,6 +686,15 @@ function FindEnemiesInRadius( unit, radius )
 	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_CLOSEST, false)
 end
 
+-- Returns all units (friendly and enemy) in radius of the unit
+function FindAllUnitsInRadius( unit, radius )
+	local team = unit:GetTeamNumber()
+	local position = unit:GetAbsOrigin()
+	local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
+end
+
 function AddUnitToSelection( unit )
 	--local player = unit:GetPlayerOwner()
 	local player = PlayerResource:GetPlayer(0)
@@ -1052,6 +1061,56 @@ function GetEnabledAttacks( unit )
 	else
 		return "ground"
 	end
+end
+
+-- Searches for "EnabledAttacks", false by omission
+function HasSplashAttack( unit )
+	local unitName = unit:GetUnitName()
+	local unit_table = GameRules.UnitKV[unitName]
+	
+	if unit_table then
+		if unit_table["SplashAttack"] and unit_table["SplashAttack"] == 1 then
+			return true
+		end
+	end
+
+	return false
+end
+
+function GetMediumSplashRadius( unit )
+	local unitName = unit:GetUnitName()
+	local unit_table = GameRules.UnitKV[unitName]
+	if unit_table["SplashMediumRadius"] then
+		return unit_table["SplashMediumRadius"]
+	end
+	return 0
+end
+
+function GetSmallSplashRadius( unit )
+	local unitName = unit:GetUnitName()
+	local unit_table = GameRules.UnitKV[unitName]
+	if unit_table["SplashSmallRadius"] then
+		return unit_table["SplashSmallRadius"]
+	end
+	return 0
+end
+
+function GetMediumSplashDamage( unit )
+	local unitName = unit:GetUnitName()
+	local unit_table = GameRules.UnitKV[unitName]
+	if unit_table["SplashMediumDamage"] then
+		return unit_table["SplashMediumDamage"]
+	end
+	return 0
+end
+
+function GetSmallSplashDamage( unit )
+	local unitName = unit:GetUnitName()
+	local unit_table = GameRules.UnitKV[unitName]
+	if unit_table["SplashSmallDamage"] then
+		return unit_table["SplashSmallDamage"]
+	end
+	return 0
 end
 
 function HoldPosition( unit )

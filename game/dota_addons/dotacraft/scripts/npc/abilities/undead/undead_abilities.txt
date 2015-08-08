@@ -1240,8 +1240,6 @@
 			}			
 		}		
 	}
-
-	// Done
 }
 
 //=================================================================================
@@ -1442,8 +1440,6 @@
 			}
 		}	
 	}
-
-	// Done
 }
 
 //=================================================================================
@@ -1605,18 +1601,6 @@
 					}
 				}
 				
-				"Damage"
-				{
-					"Damage" 	"20"
-					"Type"		"DAMAGE_TYPE_MAGICAL"
-					"Target"
-					{
-						"Center"  	"TARGET"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-					}
-				}
 				"FireEffect"
 				{
 					"EffectName" "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast_explosion.vpcf"

@@ -15,7 +15,15 @@ function dotacraft:FilterDamage( filterTable )
 	-- Physical attack damage filtering
 	if damagetype == DAMAGE_TYPE_NONE or damagetype == DAMAGE_TYPE_PHYSICAL then
 		local original_damage = filterTable["damage"] --Post reduction
-		local autoattack_damage = attacker:GetAttackDamage() --Random new damage between max-min of the attacker
+		local attack_damage = attacker:GetAttackDamage() --Random new damage between max-min of the attacker
+
+		-- Adjust if the damage comes from splash
+		if victim.damage_from_splash then
+			attack_damage = victim.damage_from_splash
+			victim.damage_from_splash = nil
+		elseif HasSplashAttack(attacker) then
+			SplashAttack(attack_damage, attacker, victim)
+		end
 
 		local armor = victim:GetPhysicalArmorValue()
 		local damage_reduction
@@ -29,7 +37,7 @@ function dotacraft:FilterDamage( filterTable )
 		local armor_type = GetArmorType( victim )
 		local multiplier = GetDamageForAttackAndArmor(attack_type, armor_type)
 
-		local damage = ( autoattack_damage - autoattack_damage * damage_reduction ) * multiplier
+		local damage = ( attack_damage - attack_damage * damage_reduction ) * multiplier
 
 		-- Extra rules for certain ability modifiers
 		-- modifier_defend (50% less damage from Piercing attacks)
@@ -43,7 +51,7 @@ function dotacraft:FilterDamage( filterTable )
 			damage = damage * 0.65
 		end	
 
-		--print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. autoattack_damage .. " reduced by "..damage_reduction..") * ".. multiplier.. " = " .. damage )
+		--print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. attack_damage .. " reduced by "..damage_reduction..") * ".. multiplier.. " = " .. damage )
 		
 		-- Reassign the new damage
 		filterTable["damage"] = damage
@@ -87,6 +95,35 @@ function dotacraft:FilterDamage( filterTable )
 	end
 
 	return true
+end
+
+function SplashAttack( attack_damage, attacker, victim )
+	local target = victim
+	local medium_radius = GetMediumSplashRadius(attacker)
+    local medium_damage = attack_damage * GetMediumSplashDamage(attacker)
+
+    local small_radius = GetSmallSplashRadius(attacker)
+    local small_damage = attack_damage * GetSmallSplashDamage(attacker)
+
+    --print("Attacked for "..attack_damage.." - Splashing "..medium_damage.." damage in "..medium_radius.." (medium radius) and "..small_damage.." in "..small_radius.." (small radius)")
+
+    local targets_medium_radius = FindAllUnitsInRadius(target, medium_radius)
+    --DebugDrawCircle(target:GetAbsOrigin(), Vector(255,0,0), 100, medium_radius, true, 3)
+    for _,v in pairs(targets_medium_radius) do
+        if v ~= attacker and v ~= target then
+        	v.damage_from_splash = medium_damage
+            ApplyDamage({ victim = v, attacker = attacker, damage = medium_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+        end
+    end
+
+    local targets_small_radius = FindAllUnitsInRadius(target, small_radius)
+    --DebugDrawCircle(target:GetAbsOrigin(), Vector(255,0,0), 100, small_radius, true, 3)
+    for _,v in pairs(targets_small_radius) do
+        if v ~= attacker and v ~= target then
+        	v.damage_from_splash = medium_damage
+            ApplyDamage({ victim = v, attacker = attacker, damage = small_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+        end
+    end
 end
 
 

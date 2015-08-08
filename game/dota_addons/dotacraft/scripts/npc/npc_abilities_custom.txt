@@ -27479,68 +27479,6 @@
 		}
 	}
 	
-	// This is an innate hidden ability of the Mortar Team units, which causes their ranged attacks to splash on impact
-	// TODO: Impact-crater particle, review balance
-	"human_mortar_team_attack"
-	{
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL" //Siege
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"aoe_medium_damage" "150" // 1/2 damage
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"aoe_small_damage" "250" // 1/4 damage
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_mortar_team_attack"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/mortar_team.lua"
-						"Function"		"MortarSplashMedium"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%aoe_medium_damage"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/mortar_team.lua"
-						"Function"		"MortarSplashSmall"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%aoe_small_damage"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					}
-				}	
-			}
-		}
-	}
-	
 	"human_fragmentation_shards_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -48569,8 +48507,6 @@
 				}			
 			}		
 		}
-	
-		// Done
 	}
 	
 	//=================================================================================
@@ -48771,8 +48707,6 @@
 				}
 			}	
 		}
-	
-		// Done
 	}
 	
 	//=================================================================================
@@ -48934,18 +48868,6 @@
 						}
 					}
 					
-					"Damage"
-					{
-						"Damage" 	"20"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-						}
-					}
 					"FireEffect"
 					{
 						"EffectName" "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast_explosion.vpcf"
