@@ -40,7 +40,7 @@
 - [x] Resources
 - [x] Idle Builders
 - [ ] Team + Race+ color picker
-- [ ] Controlled Heroes
+- [x] Controlled Heroes
 - [ ] Gold/Lumber/Food ability values
 - [ ] Shop & Tavern
 
@@ -73,4 +73,4 @@ If you are interested in helping with this project don't hesitate contacting me,
 * [snipplets](https://github.com/snipplets), for continuing work on Building Helper
 * [Aleteh](https://github.com/Aleteh), gold mine model
 * [wFX](https://github.com/vhpanisa), orc abilities
-* [Infekma](https://github.com/Infekma), undead abilities
+* [Infekma](https://github.com/Infekma), undead abilities and UI
