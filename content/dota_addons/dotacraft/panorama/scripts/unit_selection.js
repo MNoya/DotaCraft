@@ -56,6 +56,15 @@ function FirstNonBuildingEntityFromSelection( entityList ){
 	return 0
 }
 
+function GetFirstUnitFromSelectionSkipUnit ( entityList, entIndex ) {
+	for (var i = 0; i < entityList.length; i++) {
+		if ((entityList[i]) != entIndex){
+			return entityList[i]
+		}
+	}
+	return 0
+}
+
 function SendSelectedEntities (params) {
 	var iPlayerID = Players.GetLocalPlayer();
 	var newSelectedEntities = Players.GetSelectedEntities( iPlayerID );
@@ -130,6 +139,26 @@ function AddToSelection ( args ) {
 	$.Msg("Add To Selection")
 	var entIndex = args.ent_index
 	GameUI.SelectUnit(entIndex, true)
+	OnUpdateSelectedUnit( args )
+}
+
+function RemoveFromSelection ( args ) {
+	$.Msg("Remove From Selection")
+	var entIndex = args.ent_index
+
+	var iPlayerID = Players.GetLocalPlayer();
+	var selectedEntities = Players.GetSelectedEntities( iPlayerID );
+
+	skip = true;
+	GameUI.SelectUnit(GetFirstUnitFromSelectionSkipUnit(selectedEntities, entIndex), false); // Overrides the selection group
+
+	for (var i = 0; i < selectedEntities.length; i++) {
+		skip = true; // Makes it skip an update
+		if ((selectedEntities[i]) != entIndex){
+			GameUI.SelectUnit(selectedEntities[i], true);
+		}
+	}
+	OnUpdateSelectedUnit( args )
 }
 
 // When a building is upgraded to a new one, we would like to have the upgrade re-selected for us
@@ -156,6 +185,7 @@ function OnUpdateQueryUnit( event )
 (function () {
 	//GameEvents.Subscribe( "npc_spawned", OnNPCSpawned );
 	GameEvents.Subscribe( "add_to_selection", AddToSelection );
+	GameEvents.Subscribe( "remove_from_selection", RemoveFromSelection);
 	GameEvents.Subscribe( "dota_player_update_selected_unit", OnUpdateSelectedUnit );
 	GameEvents.Subscribe( "dota_player_update_query_unit", OnUpdateQueryUnit );
 })();

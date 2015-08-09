@@ -508,6 +508,7 @@ function dotacraft:OnHeroInGame(hero)
 		if Convars:GetBool("developer") then
 			hero:SetGold(50000, false)
 			ModifyLumber(player, 50000)
+			ModifyFoodLimit(player, 100)
 		else
 			hero:SetGold(500, false)
 			ModifyLumber(player, 150)
@@ -1001,6 +1002,7 @@ function dotacraft:OnPlayerPickHero(keys)
 		local ghoul = CreateUnitByName("undead_ghoul", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
 		ghoul:SetOwner(hero)
 		ghoul:SetControllableByPlayer(playerID, true)
+		ModifyFoodUsed(player, GetFoodCost(ghoul))
 
 		-- Haunt the closest gold mine
 		local haunted_gold_mine = CreateUnitByName("undead_haunted_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
@@ -1014,6 +1016,8 @@ function dotacraft:OnPlayerPickHero(keys)
 			CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
 			CreateBlight(building:GetAbsOrigin(), "large")
 		end)
+
+		player.LumberCarried = 20 -- Ghouls carry harder
 
 		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
 		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine
@@ -1147,7 +1151,7 @@ function dotacraft:OnEntityKilled( event )
 
 	-- Substract the Food Used
 	local food_cost = GetFoodCost(killedUnit)
-	if food_cost > 0 and player then
+	if food_cost > 0 and player and tableContains(player.units, killedUnit) then
 		ModifyFoodUsed(player, - food_cost)
 	end
 
@@ -1293,17 +1297,6 @@ function dotacraft:OnPlayerSelectedEntities( event )
 	--DeepPrintTable(event.selected_entities)
 	GameRules.SELECTED_UNITS[pID] = event.selected_entities
 	dotacraft:UpdateRallyFlagDisplays(pID)
-end
-
-function GetSelectedEntities( playerID )
-	return GameRules.SELECTED_UNITS[playerID]
-end
-
-function GetMainSelectedEntity( playerID )
-	if GameRules.SELECTED_UNITS[playerID]["0"] then
-		return EntIndexToHScript(GameRules.SELECTED_UNITS[playerID]["0"])
-	end
-	return nil
 end
 
 -- Hides or shows the rally flag particles for the player (avoids visual clutter)

@@ -275,11 +275,13 @@ function Gather( event )
 						caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
 						Timers:CreateTimer(0.06, function() 
 							caster:Stop() 
-							caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() ) 
+							caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
+							RemoveUnitFromSelection(caster)
 						end)
 
 						-- Particle Counter on overhead
-						SetGoldMineCounter(mine, counter+1)
+						counter = #mine.builders
+						SetGoldMineCounter(mine, counter)
 
 					end
 				end
@@ -403,10 +405,16 @@ function CancelGather( event )
 			local caster_key = TableFindKey(mine.builders, caster)
 			if caster_key then
 				mine.builders[caster_key] = nil
+
+				local count = 0
+				for k,v in pairs(mine.builders) do
+					count=count+1
+				end
+				print("Count is ", count, "key removed was ",caster_key)
+				SetGoldMineCounter(mine, count)
+
+				
 			end
-			
-			local count = #mine.builders
-			SetGoldMineCounter(mine, count)
 		end
 	end
 	
@@ -641,11 +649,11 @@ function SetGoldMineCounter( mine, count )
 	print("SetGoldMineCounter ",count)
 
 	for i=1,count do
-		print("Set ",i," turned on")
+		--print("Set ",i," turned on")
 		ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(1,0,0))
 	end
 	for i=count+1,5 do
-		print("Set ",i," turned off")
+		--print("Set ",i," turned off")
 		ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(0,0,0))
 	end
 end

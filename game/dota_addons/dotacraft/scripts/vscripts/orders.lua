@@ -272,7 +272,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
         
         local race = GetUnitRace(unit)
         local gather_ability = unit:FindAbilityByName(race.."_gather")
-        local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+        local pID = unit:GetPlayerOwnerID()
+        local player = PlayerResource:GetPlayer(pID)
+        local entityList = GetSelectedEntities(pID)
         local numBuilders = 0
         for k,entityIndex in pairs(entityList) do
             if CanGatherLumber(EntIndexToHScript(entityIndex)) then
@@ -291,7 +293,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 end
             elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
                 -- Can the unit still gather more resources?
-                if (unit.lumber_gathered and unit.lumber_gathered < 10) and not unit:HasModifier("modifier_returning_gold") then
+                if (unit.lumber_gathered and unit.lumber_gathered < player.LumberCarried) and not unit:HasModifier("modifier_returning_gold") then
                     --print("Keep gathering")
 
                     -- Swap to a gather ability and keep extracting
@@ -442,7 +444,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     ------------------------------------------------
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
         local unit = EntIndexToHScript(units["0"])
-
+    
         local abilityIndex = filterTable["entindex_ability"]
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
@@ -454,9 +456,12 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if target_name == "gold_mine" or
           ( (target_name == "nightelf_entangled_gold_mine" or target_name == "undead_haunted_mine" ) and target_handle:GetTeamNumber() == unit:GetTeamNumber()) then
 
-            local gold_mine = target_handle        
+            local gold_mine = target_handle
+            
             -- Get the currently selected units and send new orders
-            local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+            local pID = unit:GetPlayerOwnerID()
+            local player = PlayerResource:GetPlayer(pID)
+            local entityList = GetSelectedEntities(pID)
             if not entityList then
                 return true
             end
@@ -473,7 +478,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
                 elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
                     -- Can the unit still gather more resources?
-                    if (unit.lumber_gathered and unit.lumber_gathered < 10) and not unit:HasModifier("modifier_returning_gold") then
+                    if (unit.lumber_gathered and unit.lumber_gathered < player.LumberCarried) and not unit:HasModifier("modifier_returning_gold") then
                         --print("Keep gathering")
 
                         -- Swap to a gather ability and keep extracting
@@ -533,6 +538,7 @@ end
 ------------------------------------------------
 function dotacraft:GoldGatherOrder( event )
     local pID = event.pID
+    local player = PlayerResource:GetPlayer(pID)
     local entityIndex = event.mainSelected
     local targetIndex = event.targetIndex
     local gold_mine = EntIndexToHScript(targetIndex)
@@ -548,7 +554,7 @@ function dotacraft:GoldGatherOrder( event )
         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
     elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
         -- Can the unit still gather more resources?
-        if (unit.lumber_gathered and unit.lumber_gathered < 10) and not unit:HasModifier("modifier_returning_gold") then
+        if (unit.lumber_gathered and unit.lumber_gathered < player.LumberCarried) and not unit:HasModifier("modifier_returning_gold") then
             --print("Keep gathering")
 
             -- Swap to a gather ability and keep extracting
