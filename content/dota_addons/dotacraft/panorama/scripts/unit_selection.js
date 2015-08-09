@@ -121,6 +121,11 @@ function IsCustomBuilding( entityIndex ){
 		return false
 }
 
+function IsMechanical( entityIndex ) {
+	var ability_siege = Entities.GetAbilityByName( entityIndex, "ability_siege")
+	return (ability_siege != -1)
+}
+
 function AddToSelection ( args ) {
 	$.Msg("Add To Selection")
 	var entIndex = args.ent_index

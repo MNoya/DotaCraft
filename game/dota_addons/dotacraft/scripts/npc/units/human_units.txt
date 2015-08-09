@@ -1256,8 +1256,6 @@
 	"SoundSet"					"Creep_Good_Engine"
 
 	"AttacksEnabled"			"ground"
-
-	"IsMechanical"				"1"
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -1265,6 +1263,7 @@
 	//----------------------------------------------------------------
 	"Ability1"					"human_barrage_disabled"	 //Reference: Srtt
 	"Ability2"					""	 //Reference: Aroc
+	"Ability11"					"ability_siege"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1301,6 +1300,7 @@
 	"GoldCost"					"195"
 	"LumberCost"				"60"
 	"FoodCost"					"3"
+	"BuildTime"					"55"
 	
 	// Movement
 	//----------------------------------------------------------------

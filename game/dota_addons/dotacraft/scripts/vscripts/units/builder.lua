@@ -294,20 +294,25 @@ function Gather( event )
 			return_ability:SetHidden(true)
 		end
 
-	-- Repair Building
+	-- Repair Building / Siege
 	elseif target_class == "npc_dota_creature" then
-		if IsCustomBuilding(target) and target:GetHealthDeficit() > 0 and not target.unsummoning and not target.frozen then
-			local building = target
+		if (IsCustomBuilding(target) or IsMechanical(target)) and target:GetHealthDeficit() > 0 and not target.unsummoning and not target.frozen then
 
 			-- Only Humans can assist building construction
-			if race ~= "human" and building.state == "building" then
+			if race ~= "human" and target.state == "building" then
 				caster:Interrupt()
 				return
 			end
 
-			caster.repair_building = building
+			-- Ghouls don't repair
+			if caster:GetUnitName() == "undead_ghoul" then
+				caster:Interrupt()
+				return
+			end
 
-			local building_pos = building:GetAbsOrigin()
+			caster.repair_target = target
+
+			local target_pos = target:GetAbsOrigin()
 			
 			ability.cancelled = false
 			caster.state = "moving_to_repair"
@@ -325,7 +330,7 @@ function Gather( event )
 			-- Recieving another order will cancel this
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_repair", {})
 
-			local collision_size = building:GetHullRadius()*2 + 64
+			local collision_size = GetCollisionSize(target)*2 + 64
 
 			caster.moving_timer = Timers:CreateTimer(function()
 
@@ -334,17 +339,17 @@ function Gather( event )
 					return
 				end
 
-				-- Move towards the building until close range
+				-- Move towards the target until close range
 				if not ability.cancelled and caster.state == "moving_to_repair" then
-					if caster.repair_building and IsValidEntity(caster.repair_building) then
-						local distance = (building_pos - caster:GetAbsOrigin()):Length()
+					if caster.repair_target and IsValidEntity(caster.repair_target) then
+						local distance = (target_pos - caster:GetAbsOrigin()):Length()
 						
 						if distance > collision_size then
-							caster:MoveToNPC(building)
+							caster:MoveToNPC(target)
 							return THINK_INTERVAL
 						else
 							ability:ApplyDataDrivenModifier(caster, caster, "modifier_builder_repairing", {})
-							print("Reached building, starting the Repair process")
+							print("Reached target, starting the Repair process")
 							return
 						end
 					else
@@ -357,7 +362,7 @@ function Gather( event )
 				end
 			end)
 		else
-			print("Not a custom building or already on full health")
+			print("Not a valid repairable unit or already on full health")
 		end
 	else
 		print("Not a valid target for this ability")
@@ -999,7 +1004,7 @@ end
 function BuilderRepairing( event )
 	local caster = event.caster
 	local ability = event.ability
-	local target = caster.repair_building
+	local target = caster.repair_target
 	
 	caster.state = "repairing"
 
@@ -1024,7 +1029,7 @@ end
 function BuilderStopRepairing( event )
 	local caster = event.caster
 	local ability = event.ability
-	local building = caster.repair_building
+	local building = caster.repair_target
 	
 	caster.state = "idle"
 

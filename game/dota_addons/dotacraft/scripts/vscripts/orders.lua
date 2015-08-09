@@ -492,7 +492,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 end
             end
             
-        elseif IsCustomBuilding(target_handle) and target_handle:GetTeamNumber() == unit:GetTeamNumber() then
+        elseif (IsCustomBuilding(target_handle) or IsMechanical(target_handle)) and target_handle:GetTeamNumber() == unit:GetTeamNumber() then
             --print("Order: Repair ",target_handle:GetUnitName())
 
             -- Get the currently selected units and send new orders
@@ -536,7 +536,7 @@ function dotacraft:GoldGatherOrder( event )
     local entityIndex = event.mainSelected
     local targetIndex = event.targetIndex
     local gold_mine = EntIndexToHScript(targetIndex)
-    local selectedEntities = GetSelectedEntities(pID)
+    dotacraft:RightClickOrder(event)
 
     local unit = EntIndexToHScript(entityIndex)
     local race = GetUnitRace(unit)
@@ -575,6 +575,7 @@ function dotacraft:MoonWellOrder( event )
     local target = EntIndexToHScript(entityIndex)
     local targetIndex = event.targetIndex
     local moon_well = EntIndexToHScript(targetIndex)
+    dotacraft:RightClickOrder(event)
 
     local replenish = moon_well:FindAbilityByName("nightelf_replenish_mana_and_life")
     moon_well:CastAbilityOnTarget(target, replenish, moon_well:GetPlayerOwnerID())
@@ -589,6 +590,7 @@ function dotacraft:RepairOrder( event )
     local targetIndex = event.targetIndex
     local building = EntIndexToHScript(targetIndex)
     local selectedEntities = GetSelectedEntities(pID)
+    dotacraft:RightClickOrder(event)
 
     local unit = EntIndexToHScript(entityIndex)
     local race = GetUnitRace(unit)

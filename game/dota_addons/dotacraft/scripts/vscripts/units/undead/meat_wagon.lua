@@ -317,28 +317,6 @@ function ToggleOnAutocast(event)
 	ability:ToggleAutoCast()
 end
 
-
--- take from glaive thrower
-function SplashAttack( event )
-	local caster = event.caster
-	local ability = event.ability
-	local splash_radius = ability:GetSpecialValueFor("splash_radius")
-	local splash_damage_pct = ability:GetSpecialValueFor("splash_dmg_pct") * 0.01
-	local position = event.target:GetAbsOrigin()
-	local damage = caster:GetAttackDamage()
-	
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), position, nil, splash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for _,enemy in pairs(enemies) do
-		-- Don't damage the main target of the attack
-		if enemy ~= target then
-			print(_,enemy,enemy:GetUnitName(),enemy:GetHealth())
-			damage = damage * GetDamageForAttackAndArmor( GetAttackType(caster), GetArmorType(enemy) )
-
-			ApplyDamage({ victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
-		end
-	end
-end
-
 function AttackGround( event )
 	local caster = event.caster
 	local ability = event.ability

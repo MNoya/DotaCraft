@@ -533,7 +533,7 @@ function dotacraft:OnHeroInGame(hero)
 
 		-- If you want to test an ability of a unit just put its name here
 		if Convars:GetBool("developer") then
-			local unitName = "undead_frost_wyrm"
+			local unitName = "nightelf_glaive_thrower"
 			local num = 5 --Useful to test "AbilityMultiOrder"
 			PrecacheUnitByNameAsync(unitName, function()
 				for i=1,num do

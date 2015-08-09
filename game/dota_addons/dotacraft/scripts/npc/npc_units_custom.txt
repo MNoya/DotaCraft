@@ -5159,8 +5159,6 @@
 		"SoundSet"					"Creep_Good_Engine"
 	
 		"AttacksEnabled"			"ground"
-	
-		"IsMechanical"				"1"
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -5168,6 +5166,7 @@
 		//----------------------------------------------------------------
 		"Ability1"					"human_barrage_disabled"	 //Reference: Srtt
 		"Ability2"					""	 //Reference: Aroc
+		"Ability11"					"ability_siege"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -5204,6 +5203,7 @@
 		"GoldCost"					"195"
 		"LumberCost"				"60"
 		"FoodCost"					"3"
+		"BuildTime"					"55"
 		
 		// Movement
 		//----------------------------------------------------------------
@@ -11108,13 +11108,12 @@
 		"SplashMediumDamage"		"0.4" //65%
 		"SplashSmallRadius"			"150"
 		"SplashSmallDamage"			"0.25"
-	
-		"IsMechanical"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_burning_oil"	 //Reference: Abof
+		"Ability11"					"ability_siege"
 		
 		// Armor
 		//----------------------------------------------------------------

@@ -88,6 +88,15 @@ function GetBuildTime( unit )
 	return 0
 end
 
+function GetCollisionSize( unit )
+	if unit and IsValidEntity(unit) then
+		if GameRules.UnitKV[unit:GetUnitName()]["CollisionSize"] and GameRules.UnitKV[unit:GetUnitName()]["CollisionSize"] then
+			return GameRules.UnitKV[unit:GetUnitName()]["CollisionSize"]
+		end
+	end
+	return 0
+end
+
 ATTACK_TYPES = {
 	["DOTA_COMBAT_CLASS_ATTACK_BASIC"] = "normal",
 	["DOTA_COMBAT_CLASS_ATTACK_PIERCE"] = "pierce",
@@ -126,7 +135,6 @@ function GetArmorType( unit )
 		local unitName = unit:GetUnitName()
 		if GameRules.UnitKV[unitName] and GameRules.UnitKV[unitName]["CombatClassDefend"] then
 			local armor_string = GameRules.UnitKV[unitName]["CombatClassDefend"]
-			print("GetArmorType: ",ARMOR_TYPES[armor_string])
 			return ARMOR_TYPES[armor_string]
 		elseif unit:IsHero() then
 			return "hero"
@@ -653,23 +661,11 @@ function IsCustomBuilding( unit )
 end
 
 function IsCustomTower( unit )
-    local ability_tower = unit:FindAbilityByName("ability_tower")
-    if ability_tower then
-        return true
-    else
-        return false
-    end
+    return unit:HasAbility("ability_tower")
 end
 
 function IsMechanical( unit )
-	local unit_name = unit:GetUnitName()
-	if GameRules.UnitKV[unit_name] then
-		local bMechanical = GameRules.UnitKV[unit_name]["IsMechanical"]
-		if bMechanical and bMechanical == "1" then
-			return true
-		end
-	end
-	return false
+	return unit:HasAbility("ability_siege")
 end
 
 function HasGoldMineDistanceRestriction( unit_name )

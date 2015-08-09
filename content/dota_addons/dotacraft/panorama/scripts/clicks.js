@@ -37,8 +37,8 @@ function OnRightButtonPressed()
 				return true;
 			}
 			// Repair rightclick
-			else if (IsCustomBuilding(e.entityIndex) && Entities.GetHealthPercent(e.entityIndex) < 100 && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) ){
-				$.Msg("Player "+iPlayerID+" Clicked on a building with health missing")
+			else if ( (IsCustomBuilding(e.entityIndex) || IsMechanical(e.entityIndex)) && Entities.GetHealthPercent(e.entityIndex) < 100 && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) ){
+				$.Msg("Player "+iPlayerID+" Clicked on a building or mechanical unit with health missing")
 				GameEvents.SendCustomGameEventToServer( "repair_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
 				return true;
 			}

@@ -1,0 +1,21 @@
+// Siege units can be repaired
+"ability_siege"
+{
+	"BaseClass"             		"ability_datadriven"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"Modifiers"
+	{
+		"modifier_siege_unit"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"States"
+			{
+				"MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED" // Makes most abilities don't affect this. Use custom damage
+			}
+		}
+	}		
+}
