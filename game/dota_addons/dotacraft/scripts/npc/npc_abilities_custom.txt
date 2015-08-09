@@ -5261,9 +5261,9 @@
 			}
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
+	// Demon Hunter Demon Form
+	// Author: Noya
+	// Date: 09.08.2015.
 	// Notes: Transforms the Demon Hunter into a powerful demon with a ranged attack (60 range) and 500 bonus hit points.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	60 sec.	180 sec.	150	N/A	N/A	Self	+500 HP, 3 HP regenerated/sec	6
@@ -5274,8 +5274,7 @@
 		"MaxLevel"						"1"
 		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"	
 	
 		"AbilityCooldown"				"180"
 	
@@ -5308,6 +5307,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"range_tooltip"			"600"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"0.8"
+			}
 		}
 	
 		"precache"
@@ -5335,13 +5339,35 @@
 			}
 			"ApplyModifier"
 			{
-				"ModifierName"		"modifier_demon_form"
+				"ModifierName"		"modifier_demon_form_transform"
 				"Target"			"CASTER"
 			}
 		}
 	
 		"Modifiers"
 		{
+			"modifier_demon_form_transform"
+	        {
+	            "IsHidden"  "1"
+	            "Duration"  "%transformation_time"
+	
+	            "OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_2"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_demon_form"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	
 			"modifier_demon_form"
 			{
 				"Duration"	"%duration"
@@ -5552,7 +5578,7 @@
 	}
 	// Demon Hunter Mana Burn
 	// Author: Noya
-	// Date: 14.1.2015.
+	// Date: 09.08.2015.
 	// Notes: Sends a bolt of negative energy that burns a target enemy unit's mana. Burned mana combusts, dealing damage to the target equal to the amount of mana burned.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	7 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 50 mana	1
@@ -5568,6 +5594,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 	
 		"AbilityCastRange"				"300"
@@ -5593,6 +5620,15 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"damage_per_mana"	"1"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "heroes/demon_hunter/mana_burn.lua"
+				"Function"      "ManaBurnCheck"
 			}
 		}
 	
@@ -7977,9 +8013,7 @@
 			}
 	
 			"modifiers_thorns_aura_buff"
-			{
-				"IsBuff"				"1"
-				
+			{			
 				"OnAttacked"
 				{
 					"RunScript"
@@ -8021,7 +8055,6 @@
 		{
 			"particle"				"particles/units/heroes/hero_luna/luna_eclipse.vpcf"
 			"particle"				"particles/neutral_fx/troll_heal.vpcf"
-			"particle"				"particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
 		}
 	
 		"AbilitySpecial"
@@ -8059,7 +8092,6 @@
 				"Target"			"CASTER"
 				"ModifierName"		"modifier_tranquility_aura"
 			}	
-	
 		}
 	
 		"Modifiers"
@@ -8073,15 +8105,22 @@
 				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
 	
-				"EffectName"		"particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
+				"EffectName"		"particles/items2_fx/tranquil_boots_healing.vpcf"
 				"EffectAttachType"	"follow_origin"
 	
 				"OnCreated"
 				{
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/keeper/tranquility.lua"
+						"Function"		"TranquilityStart"
+					}
+	
 					"AttachEffect"
 					{
 						"Target" 			"CASTER"
-						"EffectName"		"particles/units/heroes/hero_luna/luna_eclipse.vpcf"
+						"EffectName"		"particles/custom/nightelf/tranquility.vpcf"
 						"EffectAttachType"	"follow_origin"
 						"ControlPoints"
 						{
@@ -8094,23 +8133,15 @@
 						"Target" 		"CASTER"
 						"EffectName" 	"leshrac_lesh_respawn_09"
 					}
-	
 				}
 	
-				// Just for looping sound and animation
 				"ThinkInterval"		"2"
 				"OnIntervalThink"
 				{
-					"FireSound"
+					"RunScript"
 					{
-						"Target"		"CASTER"
-						"EffectName" 	"n_creep_ForestTrollHighPriest.Heal"
-					}
-	
-					"ApplyModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName" 	"modifier_tranquility_animation"
+						"ScriptFile"	"heroes/keeper/tranquility.lua"
+						"Function"		"TranquilityThink"
 					}
 				}
 			}
@@ -8132,12 +8163,6 @@
 						"EffectAttachType"	"follow_origin"
 					}
 				}
-			}
-	
-			"modifier_tranquility_animation"
-			{
-				"Duration"				"1.9"
-				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			}
 		}
 	}
@@ -13096,7 +13121,7 @@
 	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 	    		"Aura_Flags" 		"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
 	
-	            "EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_cyclone_swirl.vpcf"
+	            "EffectName"		"particles/custom/aura_trueshot.vpcf"
 				"EffectAttachType" 	"follow_origin"
 	   		}
 			
@@ -14772,10 +14797,6 @@
 	// Notes: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//N/A	N/A	180 sec.	200	N/A	N/A	N/A	Creates Avatar of Vengeance	6
-	
-	// TODO: Make AI for Autocast
-	//		 Give Spirit of Vengeance an icon
-	//		 Make a corpse mechanic that actually works like intended
 	"warden_avatar_of_vengeance"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -14865,6 +14886,15 @@
 				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
 				"EffectAttachType"	"follow_origin"
 	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+						"Function"		"InitializeSpiritCount"
+					}
+				}
+	
 				"OnDeath"
 				{
 					"RunScript"
@@ -14878,7 +14908,6 @@
 	}
 	
 	// Spirit Spawn - Spaws a Spirit of Vengeance near a corpse
-	// AUTOCAST doesn't work currently, would need some lua AI.
 	"avatar_of_vengeance_spirit_spawn"
 	{
 	
@@ -14909,6 +14938,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"900"
 			}
+			"03"	
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"50"
+			}
 		}
 	
 		"OnAbilityPhaseStart"
@@ -14926,6 +14960,34 @@
 			{
 				"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
 				"Function"		"SpiritOfVengeanceSpawn"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spirit_spawn_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+					
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/shared.lua"
+						"Function"		"ToggleOnAutocast"
+					}
+				}
+	
+				"ThinkInterval"  "0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+						"Function"		"SpiritOfVengeanceAutocast"
+					}
+				}
 			}
 		}		
 	}
@@ -14964,12 +15026,20 @@
 						"Target"			"CASTER"
 					}
 				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+						"Function"		"UpdateSpirits"
+					}
+				}
 			}
 		}
 	}
 	// Warden Blink
 	// Author: Noya
-	// Date: 14.1.2015.
+	// Date: 09.08.2015
 	// Notes: Short distance teleportation that allows the Warden to move in and out of combat.
 	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 	//1	N/A	10 sec.	50	9999.9	N/A	Self	Teleport	1
@@ -14987,13 +15057,13 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"10.0 10.0 1.0"
 	
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"				"50 10 10"
 	
 		"precache"
 		{
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
-			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
-			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -15022,7 +15092,7 @@
 	
 			"AttachEffect"
 			{
-				"EffectName"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+				"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
 				"Target"			"CASTER"
 				"EffectAttachType"	"attach_hitloc"
 			}
@@ -15035,7 +15105,7 @@
 	
 			"AttachEffect"
 			{
-				"EffectName"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+				"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 				"Target"			"CASTER"
 				"EffectAttachType"	"follow_origin"
 			}
@@ -15070,7 +15140,7 @@
 	
 		"precache"
 		{
-			"particle" 	"particles/custom/bristleback_quill_spray.vpcf"
+			"particle" 	"particles/custom/warden_fan_of_knives.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 		}
 		
@@ -15087,7 +15157,7 @@
 		{
 			"AttachEffect"
 			{
-				"EffectName"		"particles/custom/bristleback_quill_spray.vpcf"
+				"EffectName"		"particles/custom/warden_fan_of_knives.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Target"			"CASTER"
 			}

@@ -572,6 +572,10 @@ function SetNoCorpse( event )
 	event.target.no_corpse = true
 end
 
+function FindCorpseInRadius( origin, radius )
+	return Entities:FindByModelWithin(nil, CORPSE_MODEL, origin, radius) 
+end
+
 function PrintAbilities( unit )
 	print("List of Abilities in "..unit:GetUnitName())
 	for i=0,15 do
@@ -1116,7 +1120,7 @@ end
 
 -- Ground/Air Attack mechanics
 function UnitCanAttackTarget( unit, target )
-	if not unit:HasAttackCapability() then
+	if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune() then
 		return false
 	end
 	local attacks_enabled = GetAttacksEnabled(unit)
@@ -1142,7 +1146,7 @@ function GetAttacksEnabled( unit )
 
 	if unit:IsHero() then
 		attacks_enabled = GameRules.HeroKV[unitName]["AttacksEnabled"]
-	else
+	elseif GameRules.UnitKV[unitName] then
 		attacks_enabled = GameRules.UnitKV[unitName]["AttacksEnabled"]
 	end
 

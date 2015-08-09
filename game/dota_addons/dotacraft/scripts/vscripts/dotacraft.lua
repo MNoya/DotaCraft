@@ -1218,7 +1218,7 @@ function dotacraft:OnEntityKilled( event )
 		local table_structures = {}
 		for _,building in pairs(player.structures) do
 			if building and IsValidEntity(building) and building:IsAlive() then
-				print("Valid building: "..building:GetUnitName())
+				--print("Valid building: "..building:GetUnitName())
 				table.insert(table_structures, building)
 			end
 		end
@@ -1227,7 +1227,7 @@ function dotacraft:OnEntityKilled( event )
 		local table_altars = {}
 		for _,altar in pairs(player.altar_structures) do
 			if altar and IsValidEntity(altar) and altar:IsAlive() then
-				print("Valid altar: "..altar:GetUnitName())
+				--print("Valid altar: "..altar:GetUnitName())
 				table.insert(table_altars, altar)
 			end
 		end

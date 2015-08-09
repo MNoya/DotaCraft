@@ -27,7 +27,6 @@
 	{
 		"particle"				"particles/units/heroes/hero_luna/luna_eclipse.vpcf"
 		"particle"				"particles/neutral_fx/troll_heal.vpcf"
-		"particle"				"particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
 	}
 
 	"AbilitySpecial"
@@ -65,7 +64,6 @@
 			"Target"			"CASTER"
 			"ModifierName"		"modifier_tranquility_aura"
 		}	
-
 	}
 
 	"Modifiers"
@@ -79,15 +77,22 @@
 			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
 
-			"EffectName"		"particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
+			"EffectName"		"particles/items2_fx/tranquil_boots_healing.vpcf"
 			"EffectAttachType"	"follow_origin"
 
 			"OnCreated"
 			{
+				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/keeper/tranquility.lua"
+					"Function"		"TranquilityStart"
+				}
+
 				"AttachEffect"
 				{
 					"Target" 			"CASTER"
-					"EffectName"		"particles/units/heroes/hero_luna/luna_eclipse.vpcf"
+					"EffectName"		"particles/custom/nightelf/tranquility.vpcf"
 					"EffectAttachType"	"follow_origin"
 					"ControlPoints"
 					{
@@ -100,23 +105,15 @@
 					"Target" 		"CASTER"
 					"EffectName" 	"leshrac_lesh_respawn_09"
 				}
-
 			}
 
-			// Just for looping sound and animation
 			"ThinkInterval"		"2"
 			"OnIntervalThink"
 			{
-				"FireSound"
+				"RunScript"
 				{
-					"Target"		"CASTER"
-					"EffectName" 	"n_creep_ForestTrollHighPriest.Heal"
-				}
-
-				"ApplyModifier"
-				{
-					"Target"		"CASTER"
-					"ModifierName" 	"modifier_tranquility_animation"
+					"ScriptFile"	"heroes/keeper/tranquility.lua"
+					"Function"		"TranquilityThink"
 				}
 			}
 		}
@@ -138,12 +135,6 @@
 					"EffectAttachType"	"follow_origin"
 				}
 			}
-		}
-
-		"modifier_tranquility_animation"
-		{
-			"Duration"				"1.9"
-			"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		}
 	}
 }

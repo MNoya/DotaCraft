@@ -1,6 +1,6 @@
 // Warden Blink
 // Author: Noya
-// Date: 14.1.2015.
+// Date: 09.08.2015
 // Notes: Short distance teleportation that allows the Warden to move in and out of combat.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	N/A	10 sec.	50	9999.9	N/A	Self	Teleport	1
@@ -18,13 +18,13 @@
 	"AbilityCastPoint"				"0.3"
 	"AbilityCooldown"				"10.0 10.0 1.0"
 
-	"AbilityManaCost"				"50"
+	"AbilityManaCost"				"50 10 10"
 
 	"precache"
 	{
 		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
-		"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
-		"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+		"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
+		"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 	}
 	
 	"AbilitySpecial"
@@ -53,7 +53,7 @@
 
 		"AttachEffect"
 		{
-			"EffectName"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+			"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
 			"Target"			"CASTER"
 			"EffectAttachType"	"attach_hitloc"
 		}
@@ -66,7 +66,7 @@
 
 		"AttachEffect"
 		{
-			"EffectName"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 			"Target"			"CASTER"
 			"EffectAttachType"	"follow_origin"
 		}

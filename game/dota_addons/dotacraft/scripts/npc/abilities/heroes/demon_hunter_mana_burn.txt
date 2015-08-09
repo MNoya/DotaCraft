@@ -1,6 +1,6 @@
 // Demon Hunter Mana Burn
 // Author: Noya
-// Date: 14.1.2015.
+// Date: 09.08.2015.
 // Notes: Sends a bolt of negative energy that burns a target enemy unit's mana. Burned mana combusts, dealing damage to the target equal to the amount of mana burned.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //1	N/A	7 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 50 mana	1
@@ -16,6 +16,7 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 	"AbilityCastRange"				"300"
@@ -41,6 +42,15 @@
 		{
 			"var_type"			"FIELD_INTEGER"
 			"damage_per_mana"	"1"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"    "heroes/demon_hunter/mana_burn.lua"
+			"Function"      "ManaBurnCheck"
 		}
 	}
 

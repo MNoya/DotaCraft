@@ -27,3 +27,13 @@ function ManaBurn( event )
 	ApplyDamage({ victim = target, attacker = caster, damage = mana_burn, damage_type = abilityDamageType })
 
 end
+
+-- Checks if the target has a mana pool
+function ManaBurnCheck( event )
+	local caster = event.caster
+	local target = event.target
+	if target:GetMana() == 0 then
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_must_target_mana_unit")
+		caster:Interrupt()
+	end
+end

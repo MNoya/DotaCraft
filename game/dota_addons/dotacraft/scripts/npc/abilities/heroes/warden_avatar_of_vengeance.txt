@@ -4,10 +4,6 @@
 // Notes: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
 //Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
 //N/A	N/A	180 sec.	200	N/A	N/A	N/A	Creates Avatar of Vengeance	6
-
-// TODO: Make AI for Autocast
-//		 Give Spirit of Vengeance an icon
-//		 Make a corpse mechanic that actually works like intended
 "warden_avatar_of_vengeance"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -97,6 +93,15 @@
 			"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
 			"EffectAttachType"	"follow_origin"
 
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+					"Function"		"InitializeSpiritCount"
+				}
+			}
+
 			"OnDeath"
 			{
 				"RunScript"
@@ -110,7 +115,6 @@
 }
 
 // Spirit Spawn - Spaws a Spirit of Vengeance near a corpse
-// AUTOCAST doesn't work currently, would need some lua AI.
 "avatar_of_vengeance_spirit_spawn"
 {
 
@@ -141,6 +145,11 @@
 			"var_type"				"FIELD_INTEGER"
 			"radius"				"900"
 		}
+		"03"	
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"50"
+		}
 	}
 
 	"OnAbilityPhaseStart"
@@ -158,6 +167,34 @@
 		{
 			"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
 			"Function"		"SpiritOfVengeanceSpawn"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_spirit_spawn_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+				
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/nightelf/shared.lua"
+					"Function"		"ToggleOnAutocast"
+				}
+			}
+
+			"ThinkInterval"  "0.5"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+					"Function"		"SpiritOfVengeanceAutocast"
+				}
+			}
 		}
 	}		
 }
@@ -194,6 +231,14 @@
 					"EffectName"		"particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
 					"EffectAttachType"	"attach_uppertorso"
 					"Target"			"CASTER"
+				}
+			}
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
+					"Function"		"UpdateSpirits"
 				}
 			}
 		}
