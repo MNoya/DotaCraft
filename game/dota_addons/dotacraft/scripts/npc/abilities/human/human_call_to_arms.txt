@@ -143,13 +143,18 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"    "units/human/human_upgrades.lua"
-					"Function"      "ApplyForgedSwordsUpgrade"
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_forged_swords"
+					"WearableType"	"weapon"
 				}
+
 				"RunScript"
 				{
-					"ScriptFile"    "units/human/human_upgrades.lua"
-					"Function"      "ApplyPlatingUpgrade"
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_plating"
+					"WearableType"	"armor"
 				}
 			}
 		}

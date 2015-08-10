@@ -2,6 +2,8 @@
 // nightelf_moon_armor
 // nightelf_strength_of_the_wild
 // nightelf_reinforced_hides
+// nightelf_druid_of_the_claw_training
+// nightelf_druid_of_the_talon_training
 
 "nightelf_strength_of_the_moon1"
 {
@@ -614,8 +616,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
-					"Function"		"ApplyDruidTraining"
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
 					"LevelUp"		"5" //Set the creature to this level
 				}
 			}
@@ -676,8 +678,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
-					"Function"		"ApplyDruidTraining"
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
 					"LevelUp"		"6" //Set the creature to this level
 				}
 			}
@@ -733,8 +735,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
-					"Function"		"ApplyDruidTraining"
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
 					"LevelUp"		"3" //Set the creature to this level
 				}
 			}
@@ -789,8 +791,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/nightelf/nightelf_upgrades.lua"
-					"Function"		"ApplyDruidTraining"
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
 					"LevelUp"		"4" //Set the creature to this level
 				}
 			}

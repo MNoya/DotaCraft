@@ -1,0 +1,315 @@
+// Ability on Footmen, unlocked by human_research_defend
+"human_defend_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_defend"
+	"MaxLevel" 						"0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"piercing_damage_reduction"	"30"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movement_speed_reduction"	"-30"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"reflect_chance"			"30"
+		}
+	}
+}
+
+
+
+// Ability on Riflemen, unlocked by human_research_long_rifles
+"human_long_rifles_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_long_rifles"
+	"MaxLevel" 						"0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			 "FIELD_INTEGER"
+			"bonus_attack_range" "200"
+		}
+	}
+}
+
+
+
+// Ability on Knights, unlocked by human_research_animal_war_training
+"human_animal_war_training_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_animal_war_training"
+	"MaxLevel" 						"0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"	   "FIELD_INTEGER"
+			"bonus_health" "150"
+		}
+	}
+}
+
+
+"human_invisibility_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_invisibility"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+
+"human_polymorph_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_polymorph"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+"human_dispel_magic_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_dispel_magic"
+	"MaxLevel" 						"0"
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+"human_inner_fire_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_inner_fire"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+"human_control_magic_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_control_magic"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+"human_flying_machine_bombs_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_flying_machine_bombs"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+"human_flak_cannons_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_flak_cannons"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+
+"human_flare_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_flare"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+
+"human_fragmentation_shards_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_fragmentation_shards"
+	"MaxLevel" 						"0"
+
+	"precache"
+	{
+		"particle"  "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+"human_barrage_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_barrage"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+
+"human_storm_hammers_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_storm_hammers"
+	"MaxLevel" 						"0"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
+"human_cloud_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_cloud"
+	"MaxLevel" 						"0"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"human_backpack_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_backpack"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+
+	"Modifiers"
+	{
+		"modifier_backpack_disabled"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/human_upgrades.lua"
+					"Function"		"Backpack"
+					"Action"		"Disable"
+				}
+			}
+		}
+	}
+}

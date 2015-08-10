@@ -853,15 +853,19 @@ function IsPurgableModifier( modifier_handle )
 
 		-- Proceed only if the ability is really found
 		if ability_table then
-			local modifier_table = ability_table["Modifiers"][modifier_name]
+			local modifier_table = ability_table["Modifiers"]
 			if modifier_table then
-				local IsPurgable = modifier_table["IsPurgable"]
-				if IsPurgable and IsPurgable == 1 then
-					--print(modifier_name.." from "..ability_name.." is purgable!")
-					return true
+				modifier_subtable = ability_table["Modifiers"][modifier_name]
+
+				if modifier_subtable then
+					local IsPurgable = modifier_subtable["IsPurgable"]
+					if IsPurgable and IsPurgable == 1 then
+						--print(modifier_name.." from "..ability_name.." is purgable!")
+						return true
+					end
+				else
+					--print("Couldn't find modifier table for "..modifier_name)
 				end
-			else
-				--print("Couldn't find modifier table for "..modifier_name)
 			end
 		end
 	end
@@ -1212,4 +1216,17 @@ function ApplyModifier( unit, modifier_name )
 	local item = CreateItem("item_apply_modifiers", nil, nil)
 	item:ApplyDataDrivenModifier(unit, unit, modifier_name, {})
 	item:RemoveSelf()
+end
+
+function SwapWearable( unit, target_model, new_model )
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			if wearable:GetModelName() == target_model then
+				wearable:SetModel( new_model )
+				return
+			end
+		end
+		wearable = wearable:NextMovePeer()
+	end
 end

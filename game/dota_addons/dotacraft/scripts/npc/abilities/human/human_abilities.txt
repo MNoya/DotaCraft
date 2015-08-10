@@ -1,0 +1,1699 @@
+// Ability researched by human_research_backpack
+"human_backpack"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_backpack"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"Modifiers"
+	{
+		"modifier_backpack"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/human_upgrades.lua"
+					"Function"		"Backpack"
+					"Action"		"Enable"
+				}
+			}
+
+			"OnDeath"
+			{
+				// Item drops when unit is killed
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/human_upgrades.lua"
+					"Function"		"BackpackDrop"
+				}
+			}
+		}
+	}
+}
+
+
+"human_defend"
+//Activate to take 50% less damage from Piercing attacks, but have 30% reduced movement speed. 
+//Defend does not reflect attacks to buildings, and its chance of reflection against units is 30%.
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_defend"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"piercing_damage_reduction"	"30"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movement_speed_reduction"	"-30"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"reflect_chance"			"30"
+		}
+	}
+
+	"OnToggleOn"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_defend"
+			"Target"		"CASTER"
+		}
+	}
+
+	"OnToggleOff"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_defend"
+			"Target"		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_defend"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_reduction" 
+			}
+			"OnAttacked"
+			// "%attack_damage" is set to the damage value after mitigation
+			{
+				"Random"
+				{
+					"Chance"			"%reflect_chance"
+					"OnSuccess"
+					{
+						"Damage"
+						{
+							"Target"
+							{
+								"Center"  	"ATTACKER"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							}
+							"Type"			"DAMAGE_TYPE_MAGICAL"
+							"Damage"		"%attack_damage"
+						}
+					}
+				}
+
+				//Check the type of the attack, if its piercing, reduce it by piercing_damage_reduction
+			}
+		}
+	}
+}
+
+"human_long_rifles"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_long_rifles"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			 "FIELD_INTEGER"
+			"bonus_attack_range" "200"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_long_rifles"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+			}
+		}
+	}
+}
+
+"human_animal_war_training"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_animal_war_training"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"	   "FIELD_INTEGER"
+			"bonus_health" "150"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_animal_war_training"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/human_upgrades.lua"
+					"Function"		"ApplyAnimalWarTraining"
+				}
+			}
+		}
+	}
+}
+
+// Sorceress Innate ability
+"human_slow"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_slow"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+	"AbilityCastRange"				"600"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"10"
+	"AbilityManaCost"				"50"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"10"
+		}
+
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"attack_speed"	"-25"
+		}
+
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"move_speed"	"-20"
+		}
+
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"autocast_radius"	"500"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_human_slow"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_human_slow"
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"DOTA_Item.RodOfAtos.Activate"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_slow"
+		{
+			"IsDebuff"		"1"
+			"IsPurgable"	"1"
+			"EffectName"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+			"Duration"	"%duration"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+			}
+		}
+
+		"modifier_slow_autocast"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/sorceress.lua"
+					"Function"		"ToggleOnAutocast"
+				}
+			}
+
+			"ThinkInterval" "1.0"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/sorceress.lua"
+					"Function"		"SlowAutocast"
+				}
+			}
+		}
+	}
+}
+
+// Ability Researched by sorceress train 1
+"human_invisibility"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_invisibility"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"120"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_invisible"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+	}
+}
+
+// Ability Researched by sorceress train 2
+"human_polymorph"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_polymorph"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC" //Level 5 or below
+	"AbilityCastPoint"				"0.1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movespeed"				"100"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/sorceress.lua"
+			"Function"		"PolymorphLevelCheck"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		// Replace for sheep sounds
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.Voodoo"
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.Hex.Target"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"TARGET"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_hex"
+			"Target"		"TARGET"
+			"Duration"		"%duration"
+		}
+	}	
+
+	"Modifiers"
+	{
+		"modifier_hex"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"voodoo_start"
+					"model"			"models/props_gameplay/frog.vmdl"	//sheep
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/shadow_hunter/hex.lua"
+					"Function"			"HideWearables"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"voodoo_end"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
+					"Function"		"ShowWearables"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"%movespeed"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MUTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_HEXED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_EVADE_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_BLOCK_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
+
+// Priest Innate Ability
+"human_heal"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityTextureName"			"human_heal"
+
+	"MaxLevel"						"1"
+	
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+	
+	"AbilityCastPoint"				"0.0"
+	"AbilityCastRange"				"250"
+	"AbilityCooldown"				"1"
+	"AbilityManacost"				"5"
+	
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+	}
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"heal"			"25"
+		}
+
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"autocast_radius"	"500"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"Heal"
+		{
+			"HealAmount"	"%heal"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_d_glow.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Omniknight.Purification"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_heal_autocast"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/priest.lua"
+					"Function"		"ToggleOnAutocast"
+				}
+			}
+
+			"ThinkInterval" "1.0"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/priest.lua"
+					"Function"		"HealAutocast"
+				}
+			}
+		}
+	}
+}
+
+// Ability Researched by priest train 1
+"human_dispel_magic"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"pandaren_storm_dispel_magic"
+	"MaxLevel"						"1"
+
+	"AbilityCastRange"				"500"
+
+	"AOERadius"						"%radius"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"8.0"
+	"AbilityCastPoint"				"0.4"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"75"		
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_to_summons"			"200"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"200"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+			"EffectAttachType"  "world_origin"
+			"TargetPoint"       "POINT"
+			"ControlPoints"
+			{
+				"01"	"%radius 0 0"
+			}
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Brewmaster_Storm.DispelMagic"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/priest.lua"
+			"Function"		"DispelMagic"
+			"Target"		"POINT"
+		}
+	}
+}
+
+// Ability Researched by priest train 2
+"human_inner_fire"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_inner_fire"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+	"AbilityCastPoint"			"0.0"
+	"AbilityCastRange"			"500"
+	"AbilityCooldown"			"5"
+	"AbilityManaCost"			"35"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"60"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"armor_bonus"	"5"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"damage_bonus"	"10"
+		}
+
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"autocast_radius"	"500"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"		"TARGET"
+			"ModifierName"	"modifier_inner_fire"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"DOTA_Item.Buckler.Activate"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_inner_fire"
+		{
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/items_fx/buckler.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+				}
+			}
+
+			"IsPurgable"	"1"
+			"Duration"		"%duration"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"5"
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"10"
+			}
+		}
+
+		"modifier_inner_fire_autocast"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/priest.lua"
+					"Function"		"ToggleOnAutocast"
+				}
+			}
+
+			"ThinkInterval" "1.0"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/priest.lua"
+					"Function"		"InnerFireAutocast"
+				}
+			}
+		}
+	}
+}
+
+// Spell Breaker Innate Ability
+"human_spell_steal"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_spell_steal"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+	//Need parity values
+	"AbilityCastPoint"			"0.0"
+	"AbilityCastRange"			"500"
+	"AbilityCooldown"			"5"
+	"AbilityManaCost"			"35"
+
+	//OnSpellStart, RunScript, check if casted on friend or enemy
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/spell_breaker.lua"
+			"Function"		"SpellSteal"
+		}
+	}
+}
+
+// Ability Researched by human_research_control_magic
+"human_control_magic"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_control_magic"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+
+	//Need parity values
+	"AbilityCastPoint"			"0.1"
+	"AbilityCastRange"			"700"
+	"AbilityCooldown"			"5"
+	"AbilityManaCost"			"25"
+
+	//Mana cost is .45 mana per hit point.
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"mana_control_rate"	"0.45"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/spell_breaker.lua"
+			"Function"		"ControlMagicCheck"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/spell_breaker.lua"
+			"Function"		"ControlMagic"
+		}
+	}
+
+}
+
+// Spell Breaker Innate Ability
+"human_feedback"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_feedback"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"		
+
+	"precache"
+	{
+		"particle"	"particles/generic_gameplay/generic_manaburn.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+	}
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_per_burn"		"1.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_per_hit"			"20"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_per_hit_heroes"	"4"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_feedback"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"Orb"
+			{
+				"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+			}
+
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/spell_breaker.lua"
+					"Function"		"ManaBreak"
+					"Target"		"TARGET"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Antimage.ManaBreak"
+					"Target"		"TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"			"TARGET"
+				}
+			}
+		}
+	}
+}
+
+"human_true_sight"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_true_sight"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"Modifiers"
+	{
+		"modifier_true_sight"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"900"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_true_sight_reveal"
+							"Target" 		"TARGET"
+						}
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_true_sight_reveal"
+							"Target" 		"TARGET"
+						}
+					}
+				}			
+			}
+		}
+
+		"modifier_true_sight_reveal"
+		{
+			"IsHidden"			"1"
+			"Duration"			"0.03"
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}	
+}
+
+"human_flying_machine_bombs"
+// Allows Flying Machines to attack land units. Removes ability_prevent_attack_ground
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_flying_machine_bombs"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"Modifiers"
+	{
+		"modifier_flying_machine_bombs"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/flying_machine.lua"
+					"Function"		"AllowGroundAttack"
+				}
+			}
+		}
+	}
+}
+
+"human_flak_cannons"
+// Uses powerful cannons to deal area of effect damage against air units
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_flak_cannons"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"medium_damage_radius"	"150" //half damage
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"small_damage_radius"	"325" // 1/4 damage
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/flying_machine.lua"
+			"Function"		"FlakCannonDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_flak_cannons"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
+				"CastAttack"		"0"
+			}
+			
+			"OnOrbFire"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/flying_machine.lua"
+					"Function"		"FireFlakCannons"
+					"MediumRadius"	"%medium_damage_radius"
+				}
+			}	
+		}
+	}
+}
+"human_flare"
+// Launches a Dwarven flare above the target point, which reveals that area for 15 seconds.\nReveals invisible units
+// TODO: Better particle and cast animation
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_flare"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCooldown"				"120.0"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"reveal_radius"	"1800"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"15"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		// Review this function with dummies and a visual projectile effect
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/far_seer/far_sight.lua"
+			"Function"		"FarSight"
+			"Target"		"POINT"
+		}
+
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_flare"
+			"Target" 		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_flare"
+		{	
+			"IsHidden"			"1"
+			"Duration"			"%duration"
+			"Aura"          	"modifier_flare_vision"
+			"Aura_Radius"   	"%reveal_radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+		}
+
+		"modifier_flare_vision"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}
+}
+"human_fragmentation_shards"
+// Uses fragmentation mortars to increase damage dealt to Unarmored and Medium armor units. 
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_fragmentation_shards"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"250"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_fragmentation_shards"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
+				"CastAttack"		"0"
+			}
+			
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/mortar_team.lua"
+					"Function"		"FragmentationShard"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}
+			
+		}
+	}
+}
+
+"human_barrage"
+// Fires powerful rockets at nearby enemy air units, dealing 25 damage per hit
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_barrage"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityDamage"					"25"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"500"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+		"Damage"
+		{
+			"Target"		"TARGET"
+			"Type"			"DAMAGE_TYPE_PHYSICAL"
+			"Damage"		"%AbilityDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_barrage"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"	//"1"
+	
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/base_attacks/ranged_siege_good.vpcf"
+				"CastAttack"		"0"
+			}
+			
+			"OnOrbFire"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/siege_engine.lua"
+					"Function"		"Barrage"
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}			
+		}
+	}
+}
+
+"human_storm_hammers"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_storm_hammers"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+		"RunScript"
+		{
+			"ScriptFile"	"units/gryphon_rider.lua"
+			"Function"		"StormHammerDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_storm_hammers"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/gryphon_rider.lua"
+					"Function"		"StormHammer"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Line"
+						{
+							"Length" 		"600"
+							"Thickness" 	"300"
+						}
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}	
+		}
+	}
+}
+"human_cloud"
+// Cast on enemy buildings with ranged attacks to stop the buildings from attacking. Lasts 30 seconds.
+// TODO: More dense particle, recolor blue
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_cloud"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE "
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING" //Just for tooltip
+
+	"AbilityCastRange"				"800"
+	"AbilityCooldown"				"20.0"
+	"AbilityManaCost"				"100"
+	"AbilityChannelTime"			"30.0"
+	"AOERadius"						"%radius"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"cloud_duration"	"30"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"300"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/dragonhawk_rider.lua"
+			"Function"		"CloudStart"
+			"Target"		"POINT"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_cloud_channelling"
+			"Target" 		"CASTER"
+		}
+	}
+
+    "OnChannelFinish"
+    {
+    	"RunScript"
+    	{
+    		"ScriptFile"	"units/human/dragonhawk_rider.lua"
+			"Function"		"CloudEnd"
+    	}
+
+    	"RemoveModifier"
+		{
+			"ModifierName"	"modifier_cloud_channelling"
+			"Target" 		"CASTER"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_channeling_animation"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_cloud_thinker"
+		{
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"            "TARGET"
+					"ControlPoints"
+					{
+						"01"	"%radius %radius %radius"
+					}
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/dragonhawk_rider.lua"
+					"Function"		"ApplyCloud"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC" //Filter for ranged buildings
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_cloud"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+				}
+			}	
+		}
+
+		"modifier_cloud"
+		{
+			"IsDebuff"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"			
+			}
+		}
+
+		"modifier_cloud_channelling"
+		{
+			"Ishidden"			"1"	
+			"ThinkInterval"  "1.2"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_channeling_animation"
+					"Target" 		"CASTER"
+					"Duration"		"1.1"
+				}
+			}
+		
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		}
+		"modifier_channeling_animation"
+		{
+			"IsHidden"				"1"
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		}
+	}
+}
+
+"human_aerial_shackles"
+// Magically binds a target enemy air unit, so that it cannot move or attack and takes 30 damage per second. Lasts 40 seconds.
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_aerial_shackles"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+	"AbilityCastRange"				"550"
+	"AbilityCastPoint"				"0.1"
+	"AbilityCooldown"				"30.0"
+	"AbilityManaCost"				"75"
+	"AbilityChannelTime"			"40.0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"duration"			"40.0"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_per_second"	"30.0"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"tick_rate"			"0.1"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/human/dragonhawk_rider.lua"
+			"Function"		"AerialShacklesCheck"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_aerial_shackles"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_aerial_shackles_channeling"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_aerial_shackles_channeling"
+			"Target" 		"CASTER"
+		}
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_aerial_shackles"
+			"Target" 		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_aerial_shackles"
+		{
+			"IsDebuff"			"1"
+	
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			"OverrideAnimation"     "ACT_DOTA_DISABLED"
+
+			"ThinkInterval"  "%tick_rate"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage_per_second * %tick_rate"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/dragonhawk_rider.lua"
+					"Function"		"LoseHeight"
+				}
+			}
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"			"particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+					"EffectAttachType"		"follow_origin"
+					"Target"				"TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_hitloc"
+						"TARGET"	"attach_hitloc"
+						"TARGET"	"attach_hitloc"
+						"TARGET"	"attach_hitloc"
+						"TARGET"	"attach_hitloc"
+						"CASTER"	"attach_staff_generic" //start
+						"TARGET"	"attach_hitloc"
+					}
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/dragonhawk_rider.lua"
+					"Function"		"LoseFlying"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/dragonhawk_rider.lua"
+					"Function"		"ReGainFlying"
+				}
+			}
+		}
+		"modifier_aerial_shackles_channeling"
+		{
+			"ThinkInterval"  "1.2"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_channeling_animation"
+					"Target" 		"CASTER"
+					"Duration"		"1.1"
+				}
+			}
+		
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		}
+		"modifier_channeling_animation"
+		{
+			"IsHidden"				"1"
+			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		}
+	}
+}
+
+"human_magic_sentry"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_magic_sentry"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"900"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_magic_sentry"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_true_sight_reveal"
+							"Target" 		"TARGET"
+						}
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_true_sight_reveal"
+							"Target" 		"TARGET"
+						}
+					}
+				}			
+			}
+		}
+
+		"modifier_true_sight_reveal"
+		{
+			"IsHidden"			"1"
+			"Duration"			"0.03"
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}	
+}
+
+"human_reveal"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_flare"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"180"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"reveal_radius"	"1800"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"15"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/far_seer/far_sight.lua"
+			"Function"		"FarSight"
+			"Target"		"POINT"
+		}
+
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_reveal"
+			"Target" 		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_reveal"
+		{	
+			"IsHidden"			"1"
+			"Duration"			"%duration"
+			"Aura"          	"modifier_reveal_vision"
+			"Aura_Radius"   	"%reveal_radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+		}
+
+		"modifier_reveal_vision"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}
+}

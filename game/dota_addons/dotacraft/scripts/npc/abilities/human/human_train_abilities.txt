@@ -1,20 +1,20 @@
-"undead_train_acolyte"
+"human_train_peasant"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_acolyte"
+	"AbilityTextureName"			"human_train_peasant"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"75" // From "GoldCost"
+	"AbilityChannelTime"			"15" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"15.0" 
 		}
 		"02"
 		{
@@ -29,7 +29,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"1"
 		}
 	}
 
@@ -53,7 +53,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"undead_acolyte"
+			"UnitName"		"human_peasant"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -109,10 +109,11 @@
 	}
 }
 
-"undead_train_ghoul"
+
+"human_train_footman"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_ghoul"
+	"AbilityTextureName"			"human_train_footman"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
@@ -164,7 +165,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"undead_ghoul"
+			"UnitName"		"human_footman"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -200,7 +201,7 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_unholy_strength"
+					"ResearchName"	"human_research_forged_swords"
 					"WearableType"	"weapon"
 				}
 
@@ -208,7 +209,7 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_unholy_armor"
+					"ResearchName"	"human_research_plating"
 					"WearableType"	"armor"
 				}
 			}
@@ -236,38 +237,38 @@
 	}
 }
 
-"undead_train_crypt_fiend"
+"human_train_rifleman"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_crypt_fiend"
+	"AbilityTextureName"			"human_train_rifleman"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"205" // From "GoldCost"
+	"AbilityChannelTime"			"26" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"26.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"205"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"30"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"3"
 		}
 	}
 
@@ -291,7 +292,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"undead_crypt_fiend"
+			"UnitName"		"human_rifleman"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -327,7 +328,7 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_creature_attack"
+					"ResearchName"	"human_research_ranged_weapons"
 					"WearableType"	"weapon"
 				}
 
@@ -335,7 +336,7 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_creature_carapace"
+					"ResearchName"	"human_research_leather_armor"
 					"WearableType"	"armor"
 				}
 			}
@@ -363,32 +364,17 @@
 	}
 }
 
-"undead_train_crypt_fiend_disabled"
+
+"human_train_knight"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_crypt_fiend"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
-"undead_train_gargoyle"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_gargoyle"
+	"AbilityTextureName"			"human_train_knight"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"245" // From "GoldCost"
+	"AbilityChannelTime"			"40" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -400,17 +386,17 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"245"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"60"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"4"
 		}
 	}
 
@@ -434,7 +420,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"undead_gargoyle"
+			"UnitName"		"human_knight"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -470,7 +456,7 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_creature_attack"
+					"ResearchName"	"human_research_forged_swords"
 					"WearableType"	"weapon"
 				}
 
@@ -478,7 +464,7 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_creature_carapace"
+					"ResearchName"	"human_research_plating"
 					"WearableType"	"armor"
 				}
 			}
@@ -506,49 +492,34 @@
 	}
 }
 
-"undead_train_gargoyle_disabled"
+"human_train_sorceress"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_gargoyle"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
-"undead_train_abomination"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_abomination"
+	"AbilityTextureName"			"human_train_sorceress"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"155" // From "GoldCost"
+	"AbilityChannelTime"			"30" // From "BuildTime"
+	"AbilityUpgradeGoldCost"		"0"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"30.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"155"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"20"
 		}
 		"04"
 		{
@@ -577,7 +548,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"undead_abomination"
+			"UnitName"		"human_sorceress"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -609,11 +580,250 @@
 					"Function"      "MoveToRallyPoint"
 				}
 
+				// Level up the creature to the appropiate train level
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/human_upgrades.lua"
+					"Function"		"TrainSorceress"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+
+"human_train_priest"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_train_priest"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"135" // From "GoldCost"
+	"AbilityUpgradeGoldCost"		"0"
+	"AbilityChannelTime"			"26" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"26.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"135"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"10"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"human_priest"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+
+				// Level up the creature to the appropiate train level
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/human_upgrades.lua"
+					"Function"		"TrainPriest"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+"human_train_spell_breaker"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_train_spell_breaker"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"215" // From "GoldCost"
+	"AbilityUpgradeGoldCost"		"0"
+	"AbilityChannelTime"			"28" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"28.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"215"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"30"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"3"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"human_spell_breaker"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+				
 				"RunScript"
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_unholy_strength"
+					"ResearchName"	"human_research_forged_swords"
 					"WearableType"	"weapon"
 				}
 
@@ -621,7 +831,7 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_unholy_armor"
+					"ResearchName"	"human_research_leather_armor"
 					"WearableType"	"armor"
 				}
 			}
@@ -649,54 +859,39 @@
 	}
 }
 
-"undead_train_abomination_disabled"
+
+"human_train_flying_machine"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_abomination"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
-"undead_train_meat_wagon"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_meat_wagon"
+	"AbilityTextureName"			"human_train_flying_machine"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"90" // From "GoldCost"
+	"AbilityChannelTime"			"13" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"13.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"90"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"30"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"1"
 		}
 	}
 
@@ -720,7 +915,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"		"undead_meat_wagon"
+			"UnitName"		"human_flying_machine"
 			"Target"
 			{
 				"Center"		    "CASTER"
@@ -756,490 +951,135 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_unholy_strength"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
-}
-
-"undead_train_obsidian_statue"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_obsidian_statue"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/queue.lua"
-			"Function"		"EnqueueUnit"
-		}
-	}
-
-	"OnChannelSucceeded"
-	{
-		// Consume the first item in the queue
-		"RunScript"
-		{
-			"ScriptFile"   	"buildings/queue.lua"
-			"Function"      "NextQueue"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"		"undead_obsidian_statue"
-			"Target"
-			{
-				"Center"		    "CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "GetInitialRallyPoint"
-					"Target"		"CASTER"
-					"Count"			"1"
-				}
-			}
-			"UnitCount"		"1"
-			"UnitLimit"		"0"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "MoveToRallyPoint"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
-}
-
-"undead_train_obsidian_statue_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_obsidian_statue"
-	"MaxLevel" 						"0"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"SetLevel0"
-		}
-	}
-}
-
-"undead_train_necromancer"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_necromancer"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/queue.lua"
-			"Function"		"EnqueueUnit"
-		}
-	}
-
-	"OnChannelSucceeded"
-	{
-		// Consume the first item in the queue
-		"RunScript"
-		{
-			"ScriptFile"   	"buildings/queue.lua"
-			"Function"      "NextQueue"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"		"undead_necromancer"
-			"Target"
-			{
-				"Center"		    "CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "GetInitialRallyPoint"
-					"Target"		"CASTER"
-					"Count"			"1"
-				}
-			}
-			"UnitCount"		"1"
-			"UnitLimit"		"0"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "MoveToRallyPoint"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"units/upgrades.lua"
-					"Function"		"ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_necromancer_training"
-					"WearableType"	"training"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
-}
-
-"undead_train_banshee"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_banshee"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/queue.lua"
-			"Function"		"EnqueueUnit"
-		}
-	}
-
-	"OnChannelSucceeded"
-	{
-		// Consume the first item in the queue
-		"RunScript"
-		{
-			"ScriptFile"   	"buildings/queue.lua"
-			"Function"      "NextQueue"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"		"undead_banshee"
-			"Target"
-			{
-				"Center"		    "CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "GetInitialRallyPoint"
-					"Target"		"CASTER"
-					"Count"			"1"
-				}
-			}
-			"UnitCount"		"1"
-			"UnitLimit"		"0"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "MoveToRallyPoint"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"units/upgrades.lua"
-					"Function"		"ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_banshee_training"
-					"WearableType"	"training"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
-}
-
-"undead_train_frost_wyrm"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"undead_train_frost_wyrm"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/queue.lua"
-			"Function"		"EnqueueUnit"
-		}
-	}
-
-	"OnChannelSucceeded"
-	{
-		// Consume the first item in the queue
-		"RunScript"
-		{
-			"ScriptFile"   	"buildings/queue.lua"
-			"Function"      "NextQueue"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"		"undead_frost_wyrm"
-			"Target"
-			{
-				"Center"		    "CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "GetInitialRallyPoint"
-					"Target"		"CASTER"
-					"Count"			"1"
-				}
-			}
-			"UnitCount"		"1"
-			"UnitLimit"		"0"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/rally_point.lua"
-					"Function"      "MoveToRallyPoint"
+					"ResearchName"	"human_research_plating"
+					"WearableType"	"armor"
 				}
 
 				"RunScript"
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_creature_attack"
+					"ResearchName"	"human_research_ranged_weapons"
+					"WearableType"	"weapon"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+"human_train_mortar_team"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_train_mortar_team"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"180" // From "GoldCost"
+	"AbilityChannelTime"			"40" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"40.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"180"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"70"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"3"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"human_mortar_team"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_ranged_weapons"
 					"WearableType"	"weapon"
 				}
 
@@ -1247,7 +1087,389 @@
 				{
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
-					"ResearchName"	"undead_research_creature_carapace"
+					"ResearchName"	"human_research_leather_armor"
+					"WearableType"	"armor"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+"human_train_siege_engine"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_train_siege_engine"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"195" // From "GoldCost"
+	"AbilityChannelTime"			"55" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"55.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"195"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"60"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"3"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"human_siege_engine"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_plating"
+					"WearableType"	"armor"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_ranged_weapons"
+					"WearableType"	"weapon"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+
+
+
+
+"human_train_gryphon_rider"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_train_gryphon_rider"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"280" // From "GoldCost"
+	"AbilityChannelTime"			"45" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"26.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"280"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"70"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"4"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"human_gryphon_rider"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_forged_swords"
+					"WearableType"	"weapon"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_leather_armor"
+					"WearableType"	"armor"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_building_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"ThinkInterval"  	"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/autocast.lua"
+					"Function"      "BuildingAutocast"
+				}
+			}
+		}
+	}
+}
+"human_train_dragonhawk_rider"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_train_dragonhawk_rider"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+	"AbilityGoldCost"				"200" // From "GoldCost"
+	"AbilityChannelTime"			"28" // From "BuildTime"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"train_time"			"28.0" 
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"gold_cost"				"200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_cost"			"30"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"food_cost"				"3"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/queue.lua"
+			"Function"		"EnqueueUnit"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		// Consume the first item in the queue
+		"RunScript"
+		{
+			"ScriptFile"   	"buildings/queue.lua"
+			"Function"      "NextQueue"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"human_dragonhawk_rider"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "GetInitialRallyPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+				}
+			}
+			"UnitCount"		"1"
+			"UnitLimit"		"0"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "buildings/rally_point.lua"
+					"Function"      "MoveToRallyPoint"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_forged_swords"
+					"WearableType"	"weapon"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_leather_armor"
 					"WearableType"	"armor"
 				}
 			}

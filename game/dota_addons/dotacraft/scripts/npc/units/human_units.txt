@@ -674,7 +674,11 @@
 	"Creature"
 	{
 		"DisableClumpingBehavior"	"1"
-		"ManaGain"					"100" //Training
+
+		//Training
+		"ManaGain"					"100"
+		"HPGain"					"40"
+		
 		"AttachWearables"
 		{
 			"Wearable1"		{	"ItemDef"		"4794"		} //"Fiery Soul of the Slayer"
@@ -785,7 +789,11 @@
 	"Creature"
 	{
 		"DisableClumpingBehavior"	"1"
-		"ManaGain"					"100" //Training
+
+		//Training
+		"ManaGain"					"100"
+		"HPGain"					"40"
+
 		"AttachWearables"
 		{
 			"Wearable1"		{	"ItemDef"		"546"		}
@@ -938,6 +946,7 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
+	"AbilityLayout"				"5"
 	"Ability1"					"human_true_sight"	 //Reference: Agyb
 	"Ability2"					"human_flying_machine_bombs_disabled"	 //Reference: Agyv
 	"Ability3"					"human_flak_cannons_disabled"	 //Reference: Aflk

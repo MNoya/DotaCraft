@@ -224,11 +224,7 @@ function UpdateUnitUpgrades( unit, player, research_name )
 		-- Update cosmetics of the unit if possible
 		local wearable_upgrade_type = unit_upgrades[ability_name].wearable_upgrade_type
 		if wearable_upgrade_type then
-			if wearable_upgrade_type == "weapon" then
-				UpgradeWeaponWearables(unit, rank)
-			elseif wearable_upgrade_type == "armor" then
-				UpgradeArmorWearables(unit, rank)
-			end	
+			UpgradeWearables(unit, rank, wearable_upgrade_type)
 		end
 	end
 end
@@ -247,49 +243,8 @@ function RemoveAssociatedModifiers( unit, ability_name, table )
 end
 
 
--- Read the wearables.kv, check the unit name, swap weapon to the next level
-function UpgradeWeaponWearables(target, level)
-	
-	local wearable = target:FirstMoveChild()
-	local unit_name = target:GetUnitName()
-	print("UWW",unit_name,level)
-	local wearables = GameRules.Wearables
-	local unit_table = wearables[unit_name]
-	if not unit_table then
-		print("ERROR, this unit has no entry in the Wearables Weapon table")
-		return
-	end
-	local weapon_table = unit_table.weapon
-
-	local original_weapon = weapon_table[tostring(0)]
-	local old_weapon = weapon_table[tostring((level)-1)]
-	local new_weapon = weapon_table[tostring(level)]
-
-	print("UWW",old_weapon,new_weapon)
-	
-	while wearable ~= nil do
-		if wearable:GetClassname() == "dota_item_wearable" then
-			print("UWW",wearable:GetModelName())
-
-			-- Unit just spawned, it has the default weapon
-			if original_weapon == wearable:GetModelName() then
-				wearable:SetModel( new_weapon )
-				print("UWW", "\nSuccessfully swap " .. original_weapon .. " with " .. new_weapon )
-				break
-
-			-- In this case, the unit is already on the field and might have an upgrade
-			elseif old_weapon and old_weapon == wearable:GetModelName() then
-				wearable:SetModel( new_weapon )
-				print("UWW", "\nSuccessfully swap " .. old_weapon .. " with " .. new_weapon )
-				break
-			end
-		end
-		wearable = wearable:NextMovePeer()
-	end
-end
-
--- Read the wearables.kv, check the unit name, swap all armors to the next level
-function UpgradeArmorWearables(target, level)
+-- Read the wearables.kv, check the unit name, swap all models to the next level
+function UpgradeWearables(target, level, subtable)
 	
 	local wearable = target:FirstMoveChild()
 	local unit_name = target:GetUnitName()
@@ -297,34 +252,35 @@ function UpgradeArmorWearables(target, level)
 	local wearables = GameRules.Wearables
 	local unit_table = wearables[unit_name]
 	if unit_table then
-		local armor_table = unit_table.armor
+		local sub_table = unit_table[subtable]
+		if not sub_table then
+			return
+		end
 
-		print("Armor Table")
-		for k,armor in pairs(armor_table) do
-			print(k)
-			--DeepPrintTable(armor)
+		for k,v in pairs(sub_table) do
 		
-			local original_armor = armor[tostring(0)]
-			local old_armor = armor[tostring((level)-1)]
-			local new_armor = armor[tostring(level)]
+			local original_wearable = v[tostring(0)]
+			local old_wearable = v[tostring((level)-1)]
+			local new_wearable = v[tostring(level)]
 			
 			while wearable ~= nil do
 				if wearable:GetClassname() == "dota_item_wearable" then
 					print("UAW",wearable:GetModelName())
 
 					-- Unit just spawned, it has the default weapon
-					if original_armor == wearable:GetModelName() then
-						wearable:SetModel( new_armor )
-						print("UAW", "\nSuccessfully swap " .. original_armor .. " with " .. new_armor )
+					if original_wearable == wearable:GetModelName() then
+						wearable:SetModel( new_wearable )
+						print("UAW", "\nSuccessfully swap " .. original_wearable .. " with " .. new_wearable )
 						break
 
 					-- In this case, the unit is already on the field and might have an upgrade
-					elseif old_armor and old_armor == wearable:GetModelName() then
-						wearable:SetModel( new_armor )
-						print("UAW", "\nSuccessfully swap " .. old_armor .. " with " .. new_armor )
+					elseif old_wearable and old_wearable == wearable:GetModelName() then
+						wearable:SetModel( new_wearable )
+						print("UAW", "\nSuccessfully swap " .. old_wearable .. " with " .. new_wearable )
 						break
 					end
 				end
+				wearable:RemoveEffects(EF_NODRAW)
 				wearable = wearable:NextMovePeer()
 			end
 		end
@@ -351,10 +307,8 @@ function ApplyMultiRankUpgrade( unit, research_name, cosmetic_type )
 		local ability = unit:FindAbilityByName(ability_name..level)
 		ability:SetLevel(level)
 
-		if cosmetic_type == "weapon" then
-			UpgradeWeaponWearables(unit, level)
-		elseif cosmetic_type == "armor" then
-			UpgradeArmorWearables(unit, level)
+		if cosmetic_type then
+			UpgradeWearables(unit, level, cosmetic_type)
 		end
 	end
 end

@@ -1222,6 +1222,49 @@
 			"model_folder" "models/items/gyrocopter"
 			"model_folder" "models/heroes/skywrath_mage"
 			"model_folder" "models/items/skywrath_mage"
+	
+			"model_folder" "models/heroes/axe"
+			"model_folder" "models/items/axe"
+			"model_folder" "models/heroes/huskar"
+			"model_folder" "models/items/huskar"
+			"model_folder" "models/heroes/blood_seeker"
+			"model_folder" "models/items/blood_seeker"
+			"model_folder" "models/heroes/witchdoctor"
+			"model_folder" "models/items/witchdoctor"
+			"model_folder" "models/heroes/spirit_breaker"
+			"model_folder" "models/items/spirit_breaker"
+			"model_folder" "models/heroes/chen"
+			"model_folder" "models/items/chen"
+			"model_folder" "models/heroes/batrider"
+			"model_folder" "models/items/batrider"
+			"model_folder" "models/heroes/earthshaker"
+			"model_folder" "models/items/earthshaker"
+	
+			"model_folder" "models/heroes/windrunner"
+			"model_folder" "models/items/windrunner"
+			"model_folder" "models/heroes/luna"
+			"model_folder" "models/items/luna"
+			"model_folder" "models/heroes/enchantress"
+			"model_folder" "models/items/enchantress"
+			"model_folder" "models/heroes/lone_druid"
+			"model_folder" "models/items/lone_druid"
+			"model_folder" "models/heroes/furion"
+			"model_folder" "models/items/furion"
+			"model_folder" "models/heroes/puck"
+			"model_folder" "models/items/puck"
+	
+			"model_folder" "models/heroes/life_stealer"
+			"model_folder" "models/items/lifestealer"
+			"model_folder" "models/heroes/weaver"
+			"model_folder" "models/items/weaver"
+			"model_folder" "models/heroes/pudge"
+			"model_folder" "models/items/pudge"
+			"model_folder" "models/heroes/obsidian_destroyer"
+			"model_folder" "models/items/obsidian_destroyer"
+			"model_folder" "models/heroes/necrolyte"
+			"model_folder" "models/items/necrolyte"
+			"model_folder" "models/heroes/death_prophet"
+			"model_folder" "models/items/death_prophet"
 		}
 	}
 	//------------------------------------------------------------------------------------
@@ -4577,7 +4620,11 @@
 		"Creature"
 		{
 			"DisableClumpingBehavior"	"1"
-			"ManaGain"					"100" //Training
+	
+			//Training
+			"ManaGain"					"100"
+			"HPGain"					"40"
+			
 			"AttachWearables"
 			{
 				"Wearable1"		{	"ItemDef"		"4794"		} //"Fiery Soul of the Slayer"
@@ -4688,7 +4735,11 @@
 		"Creature"
 		{
 			"DisableClumpingBehavior"	"1"
-			"ManaGain"					"100" //Training
+	
+			//Training
+			"ManaGain"					"100"
+			"HPGain"					"40"
+	
 			"AttachWearables"
 			{
 				"Wearable1"		{	"ItemDef"		"546"		}
@@ -4841,6 +4892,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
+		"AbilityLayout"				"5"
 		"Ability1"					"human_true_sight"	 //Reference: Agyb
 		"Ability2"					"human_flying_machine_bombs_disabled"	 //Reference: Agyv
 		"Ability3"					"human_flak_cannons_disabled"	 //Reference: Aflk
@@ -8722,7 +8774,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
-		"Ability1"					"nightelf_abolish_magic"	 //Reference: Aadm
+		"Ability1"					"nightelf_abolish_magic_disabled"	 //Reference: Aadm
 		"Ability2"					"nightelf_slow_poison"	  	//Reference: Aspo
 		"Ability3"					"generic_spell_immunity"	//Reference: Amim
 		"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
@@ -8835,6 +8887,7 @@
 		"Ability3"					"nightelf_bear_form"
 		"Ability4"					"nightelf_bear_form_off"	
 		"Ability5"					""	  //Reference: Aien
+		"Ability6"					"nightelf_ultravision_disabled"
 		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
@@ -9207,7 +9260,7 @@
 			"DisableClumpingBehavior"	"1"
 			"AttachWearables"
 			{
-				"Wearable1"	{ "ItemDef"	"29" } //Staff
+				"Wearable1"	{ "ItemDef"	"4108" } //"Staff of the Eagle"
 				"Wearable2" { "ItemDef"	"30" } //Horns
 				"Wearable3" { "ItemDef"	"31" } //Beard
 				"Wearable4"	{ "ItemDef"	"32" } //Cape
@@ -11972,7 +12025,7 @@
 				"Wearable1"		{	"ItemDef"		"459"		} //Totem
 				"Wearable2"		{	"ItemDef"		"460"		} //Bracers
 				"Wearable3" 	{	"ItemDef"		"461"		} //Belt
-				"Wearable4"		{	"ItemDef"		"5640"		} //Helm of Impasse
+				"Wearable4"		{	"ItemDef"		"5709"		} //Stoneforged Horns
 			}
 		}
 	}
@@ -14623,6 +14676,8 @@
 			{
 				"Wearable1"		{	"ItemDef"		"443"		}
 				"Wearable2"		{	"ItemDef"		"444"		}
+				"Wearable3"		{	"ItemDef"		"7393"		} //Back: Blades of the Bloody Ripper - Hidden, just for swapping purposes
+				"Wearable4"		{	"ItemDef"		"7395"		} //Head: Mask of the Bloody Ripper - Hidden, just for swapping purposes
 			}
 		}
 	}
@@ -14646,9 +14701,9 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"undead_web"	 //Reference: Aweb
+		"Ability1"					"undead_web_disabled"	 //Reference: Aweb
 		"Ability2"					""	 //Reference: Aspa
-		"Ability3"					"undead_burrow"	 //Reference: Abur
+		"Ability3"					"undead_burrow_disabled"	 //Reference: Abur
 		"Ability4"					""	 //Reference: Aiun
 		"Ability11"					"undead_blight_regen"
 		
@@ -14725,6 +14780,7 @@
 				"Wearable2"		{	"ItemDef"		"278"		}
 				"Wearable3" 	{	"ItemDef"		"279"		}
 				"Wearable4"		{	"ItemDef"		"280"		}
+				"Wearable4"		{	"ItemDef"		"5566"		}//"Stinger of Entwined Fate"
 			}
 		}
 	}
@@ -14914,7 +14970,8 @@
 				"Wearable3" 	{	"ItemDef"		"260"		}
 				"Wearable4"		{	"ItemDef"		"261"		}
 				"Wearable5"		{	"ItemDef"		"262"		}
-				"Wearable6"		{	"ItemDef"		"470"		}
+				"Wearable6"		{	"ItemDef"		"470"		} //Belt
+				"Wearable7"		{	"ItemDef"		"47"		} //Hook
 			}
 		}
 	}

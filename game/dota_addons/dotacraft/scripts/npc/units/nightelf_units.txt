@@ -449,7 +449,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"6"
-	"Ability1"					"nightelf_abolish_magic"	 //Reference: Aadm
+	"Ability1"					"nightelf_abolish_magic_disabled"	 //Reference: Aadm
 	"Ability2"					"nightelf_slow_poison"	  	//Reference: Aspo
 	"Ability3"					"generic_spell_immunity"	//Reference: Amim
 	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
@@ -562,6 +562,7 @@
 	"Ability3"					"nightelf_bear_form"
 	"Ability4"					"nightelf_bear_form_off"	
 	"Ability5"					""	  //Reference: Aien
+	"Ability6"					"nightelf_ultravision_disabled"
 	"Ability11"					"nightelf_night_regen"
 	
 	// Armor
@@ -934,7 +935,7 @@
 		"DisableClumpingBehavior"	"1"
 		"AttachWearables"
 		{
-			"Wearable1"	{ "ItemDef"	"29" } //Staff
+			"Wearable1"	{ "ItemDef"	"4108" } //"Staff of the Eagle"
 			"Wearable2" { "ItemDef"	"30" } //Horns
 			"Wearable3" { "ItemDef"	"31" } //Beard
 			"Wearable4"	{ "ItemDef"	"32" } //Cape

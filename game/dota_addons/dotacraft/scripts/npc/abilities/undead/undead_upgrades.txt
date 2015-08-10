@@ -1,3 +1,10 @@
+//undead_unholy_strength
+//undead_unholy_armor
+//undead_creature_attack
+//undead_creature_carapace
+//undead_necromancer_training
+//undead_banshee_training
+
 "undead_unholy_strength1"
 {
 	"BaseClass"				"ability_datadriven"
@@ -651,8 +658,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/undead/undead_upgrades.lua"
-					"Function"		"ApplyUndeadTraining"
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
 					"LevelUp"		"3" //Set the creature to this level
 				}
 			}
@@ -707,8 +714,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/undead/undead_upgrades.lua"
-					"Function"		"ApplyUndeadTraining"
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
 					"LevelUp"		"4" //Set the creature to this level
 				}
 			}
@@ -763,8 +770,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/undead/undead_upgrades.lua"
-					"Function"		"ApplyUndeadTraining"
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
 					"LevelUp"		"3" //Set the creature to this level
 				}
 			}
@@ -819,8 +826,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/undead/undead_upgrades.lua"
-					"Function"		"ApplyUndeadTraining"
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
 					"LevelUp"		"4" //Set the creature to this level
 				}
 			}

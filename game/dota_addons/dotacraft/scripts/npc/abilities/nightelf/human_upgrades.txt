@@ -1,3 +1,11 @@
+//human_forged_swords
+//human_plating
+//human_ranged_weapons
+//human_leather_armor
+//human_masonry
+//human_lumber_harvesting
+//human_priest_training
+//human_sorceress_training
 
 "human_forged_swords1"
 {
@@ -601,6 +609,474 @@
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+
+//Each Level of Masonry is 20% extra Health and 1 extra armor (2 for Scout tower)
+"human_masonry1"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_masonry1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_health_pct"	"20 40 60"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_armor"		"1 2 3"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_masonry"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/lumber_mill.lua"
+					"Function"		"Masonry"
+					"Level"			"1"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+
+		"modifier_human_masonry_light_armor"
+		{
+			"IsHidden"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+
+"human_masonry2"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_masonry2"
+	"MaxLevel" 						"2"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"			
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_health_pct"	"20 40 60"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_armor"		"1 2 3"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_masonry"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/lumber_mill.lua"
+					"Function"		"Masonry"
+					"Level"			"2"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+
+		"modifier_human_masonry_light_armor"
+		{
+			"IsHidden"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+
+"human_masonry3"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_masonry3"
+	"MaxLevel" 						"3"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"			
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_health_pct"	"20 40 60"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_armor"		"1 2 3"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_masonry"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/lumber_mill.lua"
+					"Function"		"Masonry"
+					"Level"			"3"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+
+		// Give 1 extra source of armor to light armored buildings (i.e. Scout Tower)
+		"modifier_human_masonry_light_armor"
+		{
+			"IsHidden"			"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+			}
+		}
+	}
+}
+
+"human_lumber_harvesting1"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_lumber_harvesting1"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"extra_lumber_carried"	"10 20"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_lumber_harvesting1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"LumberHarvesting"
+					"Level"			"1"
+				}
+			}
+		}
+	}
+}
+
+"human_lumber_harvesting2"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"human_research_lumber_harvesting2"
+	"MaxLevel" 						"2"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"extra_lumber_carried"	"10 20"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_human_lumber_harvesting2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/human/peasant.lua"
+					"Function"		"LumberHarvesting"
+					"Level"			"2"
+				}
+			}
+		}
+	}
+}
+
+//Priest Adept Training
+	//Increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives Priests the ability to cast Dispel Magic.
+"human_priest_training1"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_priest_training1"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"100"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"30"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"40"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_priest_training1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
+					"LevelUp"		"2" //Set the creature to this level
+				}
+			}
+
+			"Properties"
+			{
+				//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+			}
+		}
+	}
+}
+
+//Priest Master Training
+	//Further increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives him the ability to cast Inner Fire.
+"human_priest_training2"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_priest_training2"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"60"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"80"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_priest_training2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
+					"LevelUp"		"3" //Set the creature to this level
+				}
+			}
+
+			"Properties"
+			{
+				//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+			}
+		}
+	}
+}
+
+//Sorceress Adept Training
+	//Increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives the Sorceress the ability to cast Invisibility.
+"human_sorceress_training1"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_sorceress_training1"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"100"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"30"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"40"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_sorceress_training1"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
+					"LevelUp"		"2" //Set the creature to this level
+				}
+			}
+	
+			"Properties"
+			{
+				//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+			}
+		}
+	}
+}
+
+//Sorceress Master Training
+	//Further increases mana capacity by 100, mana regeneration rate by 30%, hit points by 40, and gives the Sorceress the ability to cast Polymorph.
+"human_sorceress_training2"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"human_research_sorceress_training2"
+	"MaxLevel"					"1"
+
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"60"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"80"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_sorceress_training2"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/upgrades.lua"
+					"Function"		"ApplyTraining"
+					"LevelUp"		"3" //Set the creature to this level
+				}
+			}
+	
+			"Properties"
+			{
+				//"MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+			    //"MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+			    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
 			}
 		}
 	}
