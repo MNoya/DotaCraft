@@ -39,7 +39,7 @@
 
 - [x] Resources
 - [x] Idle Builders
-- [ ] Team + Race+ color picker
+- [ ] Team + Race + color picker
 - [x] Controlled Heroes
 - [ ] Gold/Lumber/Food ability values
 - [ ] Shop & Tavern
@@ -51,7 +51,7 @@
 - [ ] Replace the remaining WC3 icons for Dota-styled custom icons
   - [ ] Upgrade the research cosmetic icons with custom backgrounds 
 - [ ] Generate all the corresponding icons for item queue 
-- [ ] Finishing the list of cosmetic upgrades for all unit weapon/armor tiers
+- [x] Finishing the list of cosmetic upgrades for all unit weapon/armor tiers
 - [ ] Particle effects for building destruction and construction
 - [ ] More maps, suited for 2v2 and FFA
 
