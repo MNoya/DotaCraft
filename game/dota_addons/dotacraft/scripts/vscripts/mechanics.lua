@@ -1009,7 +1009,7 @@ end
 function IsValidGoldDepositName( building_name, race )
 	local GOLD_DEPOSITS = GameRules.Buildings[race]["gold"]
 	for name,_ in pairs(GOLD_DEPOSITS) do
-		if GOLD_DEPOSITS[name] then
+		if GOLD_DEPOSITS[building_name] then
 			return true
 		end
 	end

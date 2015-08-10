@@ -1041,6 +1041,10 @@ function dotacraft:OnPlayerPickHero(keys)
 		building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
 	end
 
+	if hero_name == "npc_dota_hero_dragon_knight" or hero_name == "npc_dota_hero_huskar" then
+		player.LumberCarried = 10
+	end
+
 	for i=1,num_builders do	
 		--DebugDrawCircle(mid_point, Vector(255, 0 , 0), 255, 100, true, 10)
 		local rotate_pos = mid_point + Vector(1,0,0) * 100
