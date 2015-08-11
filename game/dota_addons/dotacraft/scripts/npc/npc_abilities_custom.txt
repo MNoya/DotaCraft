@@ -41818,7 +41818,6 @@
 		{
 			"modifier_orc_bloodlust"
 			{
-				"IsHidden"			"0"
 				"IsBuff"			"1"
 				"IsPurgable"		"1"
 				"Duration" 			"%duration"
@@ -41853,7 +41852,6 @@
 	// Lasts <Aeye,Dur1> seconds."
 	// Code Reference: Aeye
 	// NOTE: Back in my days, Sentry Ward wasn't Sentry Ward.
-	// NOTE2: Isn't working on anything but _BASIC and _HERO.
 	//=================================================================================
 	"orc_sentry_ward"
 	{
@@ -41997,7 +41995,6 @@
 		{
 			"modifier_stasis_ward"
 			{
-				"Passive"			"0"
 				"IsHidden"			"1"
 	
 				"Duration"			"%activation_delay"
@@ -42013,7 +42010,6 @@
 	
 			"modifier_stasis_ward_trigger"
 			{
-				"Passive"			"0"
 				"IsHidden"			"1"
 	
 				"ThinkInterval"  "0.1"
