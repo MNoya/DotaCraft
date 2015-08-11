@@ -15,28 +15,26 @@ function UpgradeBuilding( event )
 	-- Keep the gridnav blockers and hull radius
 	local blockers = caster.blockers
 	local hull_radius = caster:GetHullRadius()
+	local flag = caster.flag
 
 	-- Remove the old building from the structures list
 	local buildingIndex = getIndex(player.structures, caster)
 	if IsValidEntity(caster) then
         table.remove(player.structures, buildingIndex)
-
-        -- Remove the rally flag if there is one
-        if caster.flag and IsValidEntity(caster.flag) then
-			caster.flag:RemoveSelf()
-		end
 		
 		-- Remove old building entity
 		caster:RemoveSelf()
     end
 
-    -- For night elf entangled mines, keep the references
-    local entangled_gold_mine = caster.entangled_gold_mine
-
     -- New building
 	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, false, 0) 
 	building.blockers = blockers
 	building:SetHullRadius(hull_radius)
+
+	-- Keep the rally flag reference if there is one
+    if IsValidEntity(flag) then
+		building.flag = flag
+	end
 
 	local newRelativeHP = math.ceil(building:GetMaxHealth() * currentHealthPercentage)
 	if newRelativeHP == 0 then newRelativeHP = 1 end --just incase rounding goes wrong

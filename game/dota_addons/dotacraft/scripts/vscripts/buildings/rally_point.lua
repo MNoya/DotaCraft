@@ -43,10 +43,18 @@ function SetRallyPoint( event )
 	-- Need to wait one frame for the building to be properly positioned
 	Timers:CreateTimer(0.03, function()
 
-		-- If there's an old flag, remove
-		if caster.flag and IsValidEntity(caster.flag) then
-			caster.flag:RemoveSelf()
-		end
+		 -- Remove the old flag if there is one
+	    if caster.flag and IsValidEntity(caster.flag) then
+	    	local player = caster:GetPlayerOwner()
+	        if player.flagParticle then
+	            ParticleManager:DestroyParticle(player.flagParticle, true)
+	            player.flagParticle = nil
+	        end
+	        -- If it has a position flag, remove the dummy (this destroys the particle)
+	        if caster.flag.type == "position" then
+	            caster.flag:RemoveSelf()
+	        end
+	    end
 
 		-- Make a new one
 		caster.flag = Entities:CreateByClassname("prop_dynamic")
@@ -70,7 +78,6 @@ function SetRallyPoint( event )
 			caster.initial_spawn_position = point
 		else
 			point = event.target_points[1]
-			--caster.flag = nil
 		end
 
 		-- Make a flag dummy
@@ -82,8 +89,6 @@ function SetRallyPoint( event )
         ParticleManager:SetParticleControl(particle, 0, point) -- Position
         ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin()) --Orientation
         ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color]]
-
-		print(caster:GetUnitName().." sets rally point on ",point)
 	end)
 end
 
@@ -112,7 +117,7 @@ function MoveToRallyPoint( event )
 					local empty_tree = FindEmptyNavigableTreeNearby(target, position, 150)
 					if empty_tree then
 						empty_tree.builder = target
-				        target.skip_gather_check = true
+				        target.skip = true
 				        local gather_ability = target:FindAbilityByName(race.."_gather")
 				        if gather_ability then
 				        	local tree_index = GetTreeIndexFromHandle(empty_tree)
@@ -139,6 +144,7 @@ function MoveToRallyPoint( event )
 			    	end
 			        if gather_ability then
 			            print("Order: Cast on Mine ",flag)
+			            target.skip = true
 			            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = flag:GetEntityIndex(), AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
 			        end
 			    else
