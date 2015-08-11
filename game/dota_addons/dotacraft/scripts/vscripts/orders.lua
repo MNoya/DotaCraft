@@ -339,7 +339,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local y = tonumber(filterTable["position_y"])
         local z = tonumber(filterTable["position_z"])
 
-        local SQUARE_FACTOR = 1.5 --1 is a perfect square, higher numbers will increase
+        local SQUARE_FACTOR = 1.3 --1 is a perfect square, higher numbers will increase the units per row
 
         local navPoints = {}
         local first_unit = EntIndexToHScript(units[1])
@@ -359,8 +359,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local curX = start
         local curY = 0
 
-        local offsetX = 100
-        local offsetY = 100
+        local offsetX = 150
+        local offsetY = 150
         local forward = (point-origin):Normalized()
         local right = RotatePosition(Vector(0,0,0), QAngle(0,90,0), forward)
 

@@ -533,7 +533,7 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		if Convars:GetBool("developer") then
+		--[[if Convars:GetBool("developer") then
 			local unitName = "nightelf_glaive_thrower"
 			local num = 5 --Useful to test "AbilityMultiOrder"
 			PrecacheUnitByNameAsync(unitName, function()
@@ -562,7 +562,7 @@ function dotacraft:OnHeroInGame(hero)
 					unit:Hold()
 				end
 			end, pID)
-		end
+		end]]
 	else
 
 		-- A real hero trained through an altar
