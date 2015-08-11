@@ -569,6 +569,10 @@ function dotacraft:OnHeroInGame(hero)
 		dotacraft:ModifyStatBonuses(hero)
 	end
 
+	if hero:HasAbility("nightelf_shadow_meld") then
+		hero:FindAbilityByName("nightelf_shadow_meld"):SetLevel(1)
+	end
+
 end
 
 function dotacraft:OnGameInProgress()

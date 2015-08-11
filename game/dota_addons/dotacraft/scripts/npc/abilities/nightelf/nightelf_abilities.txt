@@ -114,7 +114,7 @@
 	"AbilityTextureName"		"nightelf_shadow_meld"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
@@ -216,9 +216,7 @@
 
 		"modifier_shadow_meld_fade"
 		{
-			"EffectName"		"particles/generic_hero_status/status_invisibility_start.vpcf"
-			"EffectAttachType"	"follow_origin"
-
+			"IsHidden"		"1"
 			"OnDestroy"
 			{
 				"ApplyModifier"
@@ -226,15 +224,19 @@
 					"ModifierName"	"modifier_shadow_meld"
 					"Target" 		"CASTER"
 				}
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_invisible"
+					"Target" 		"CASTER"
+				}
 			}
 		}
 
 		"modifier_shadow_meld"
 		{
+			"IsHidden"			"1"
 			"IsBuff"			"1"
 			"IsPurgable"		"1"
-			"EffectName"		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_assassin_meld_focal.vpcf"
-			"EffectAttachType"	"follow_origin"
 
 			"Priority"          "MODIFIER_PRIORITY_ULTRA"
 			"States"

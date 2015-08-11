@@ -2,6 +2,10 @@
 function AutoAcquire( event )
     local unit = event.target
 
+    if unit:HasModifier("modifier_shadow_meld_active") then
+        return
+    end
+
     if unit:IsIdle() or unit.bAttackMove then
         local target = FindAttackableEnemies(unit, unit.bAttackMove)
         if target then
