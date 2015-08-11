@@ -64,10 +64,10 @@ function UpRootStart( event )
 		return
 	end
 
+	caster:RemoveBuilding( false )
 	caster:RemoveAbility("ability_building")
 	caster:RemoveAbility("ability_building_queue")
 	caster:RemoveModifierByName("modifier_building_queue")
-	caster:RemoveBuilding( false )
 
 	if IsValidEntity(caster.entangled_gold_mine) then
 		caster.entangled_gold_mine:RemoveModifierByName("modifier_entangled_mine")

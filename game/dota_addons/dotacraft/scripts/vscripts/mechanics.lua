@@ -705,6 +705,13 @@ function FindAllUnitsInRadius( unit, radius )
 	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
 end
 
+function FindAlliesInRadius( unit, radius )
+	local team = unit:GetTeamNumber()
+	local position = unit:GetAbsOrigin()
+	local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, 0, FIND_ANY_ORDER, false)
+end
+
 function AddUnitToSelection( unit )
 	local player = unit:GetPlayerOwner()
 	CustomGameEventManager:Send_ServerToPlayer(player, "add_to_selection", { ent_index = unit:GetEntityIndex() })
@@ -720,6 +727,18 @@ function GetSelectedEntities( playerID )
 	return GameRules.SELECTED_UNITS[playerID]
 end
 
+function IsCurrentlySelected( unit )
+	local entIndex = unit:GetEntityIndex()
+	local playerID = unit:GetPlayerOwnerID()
+	local selectedEntities = GetSelectedEntities( playerID )
+	for _,v in pairs(selectedEntities) do
+		if v==entIndex then
+			return true
+		end
+	end
+	return false
+end
+
 -- Force-check the game event
 function UpdateSelectedEntities()
 	FireGameEvent("dota_player_update_selected_unit", {})
@@ -730,6 +749,31 @@ function GetMainSelectedEntity( playerID )
 		return EntIndexToHScript(GameRules.SELECTED_UNITS[playerID]["0"])
 	end
 	return nil
+end
+
+function ReplaceUnit( unit, new_unit_name )
+	--print("Replacing "..unit:GetUnitName().." with "..new_unit_name)
+
+	local hero = unit:GetOwner()
+	local pID = hero:GetPlayerOwnerID()
+
+	local position = unit:GetAbsOrigin()
+	local relative_health = unit:GetHealthPercent()
+	local bSelected = IsCurrentlySelected(unit)
+
+	local new_unit = CreateUnitByName(new_unit_name, position, true, hero, hero, hero:GetTeamNumber())
+	new_unit:SetOwner(hero)
+	new_unit:SetControllableByPlayer(pID, true)
+	new_unit:SetHealth(new_unit:GetMaxHealth() * relative_health)
+	FindClearSpaceForUnit(new_unit, position, true)
+
+	if bSelected then
+		AddUnitToSelection(new_unit)
+	end
+
+	unit:RemoveSelf()
+
+	return new_unit
 end
 
 -- A tree is "empty" if it doesn't have a stored .builder in it

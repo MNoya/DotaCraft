@@ -418,11 +418,9 @@ function CancelGather( event )
 		end
 	end
 	
-	if ability:GetToggleState() == true then
-		ability:ToggleAbility()
-	end
-	if return_ability and return_ability:GetToggleState() == true then
-		return_ability:ToggleAbility()
+	ToggleOff(ability)
+	if gather_ability then
+		ToggleOff(gather_ability)
 	end
 end
 
@@ -443,11 +441,9 @@ function CancelReturn( event )
 		tree.builder = nil
 	end
 	
-	if ability:GetToggleState() == true then
-		ability:ToggleAbility()
-	end
-	if gather_ability and gather_ability:GetToggleState() == true then
-		gather_ability:ToggleAbility()
+	ToggleOff(ability)
+	if gather_ability then
+		ToggleOff(gather_ability)
 	end
 end
 
@@ -746,9 +742,7 @@ function ReturnResources( event )
 								end
 							else
 								-- Cancel ability, couldn't find moar trees...
-								if gather_ability:GetToggleState() == true then
-									gather_ability:ToggleAbility()
-								end
+								ToggleOff(gather_ability)
 
 								caster:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
 							end
@@ -818,9 +812,7 @@ function ReturnResources( event )
 							caster:CastAbilityOnTarget(caster.target_mine, gather_ability, pID)
 						else
 							--print("Mine Collapsed")
-							if gather_ability:GetToggleState() == true then
-								gather_ability:ToggleAbility()
-							end
+							ToggleOff(gather_ability)
 							caster:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
 							caster:RemoveModifierByName("modifier_on_order_cancel_gold")
 						end
@@ -840,9 +832,7 @@ function ReturnResources( event )
 	-- No resources to return, give the gather ability back
 	else
 		--print("TRIED TO RETURN NO RESOURCES")
-		if gather_ability:GetToggleState() == true then
-			gather_ability:ToggleAbility()
-		end
+		ToggleOff(gather_ability)
 		caster:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
 		caster:RemoveModifierByName("modifier_on_order_cancel_gold")
 	end
@@ -882,9 +872,7 @@ function Repair( event )
 	local state = building.state -- "completed" or "building"
 	local health_deficit = building:GetHealthDeficit()
 
-	if ability:GetToggleState() == false then
-		ability:ToggleAbility()
-	end 
+	ToggleOn(ability)
 
 	-- If its an unfinished building, keep track of how much does it require to mark as finished
 	if not building.constructionCompleted and not building.health_deficit then
@@ -970,9 +958,7 @@ function Repair( event )
 			building.missingHealthToComplete = nil
 
 			-- Toggle off
-			if ability:GetToggleState() == true then
-				ability:ToggleAbility()
-			end 
+			ToggleOff(ability)
 		end
 
 		-- Decrease the health left to finish construction and mark building as complete
@@ -991,9 +977,8 @@ function Repair( event )
 			end
 		end
 		-- Toggle off
-		if ability:GetToggleState() == true then
-			ability:ToggleAbility()
-		end 
+		ToggleOff(ability)
+
 		print("Repair End")
 		print("Start HP/Gold/Lumber/Time: ", building.health_deficit, gold_cost, lumber_cost, build_time)
 		print("Final HP/Gold/Lumber/Time: ", building:GetHealth(), building.gold_used, math.floor(building.lumber_used), GameRules:GetGameTime() - building.time_started)

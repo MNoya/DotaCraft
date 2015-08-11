@@ -35,6 +35,7 @@ end
 -- Neutrals shouldn't be autoacquired unless its a move-attack order or they attack first
 function FindAttackableEnemies( unit, bIncludeNeutrals )
     local radius = unit.AcquisitionRange
+    if not radius then return end
     local enemies = FindEnemiesInRadius( unit, radius )
     for _,target in pairs(enemies) do
         if UnitCanAttackTarget(unit, target) then

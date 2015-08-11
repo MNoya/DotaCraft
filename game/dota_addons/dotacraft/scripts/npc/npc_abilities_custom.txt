@@ -21945,6 +21945,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
+		"AbilityMultiOrder"				"1"
+	
 		"AbilitySpecial"
 		{
 			"01"
@@ -21965,42 +21967,26 @@
 	
 		"Modifiers"
 		{
-			"modifier_calling_to_arms"
+			"modifier_on_order_cancel_call_to_arms"
 			{
-				"IsHidden"			"1"
-		
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
+				"IsHidden"				"1"
+				"OnOrder"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CheckCityCenterPosition"
+						"Function"		"CancelCallToArms"
 					}
-				}
-	
-				"OnOrder"
-				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_calling_to_arms"
+						"ModifierName"	"modifier_on_order_cancel_call_to_arms"
 						"Target" 		"CASTER"
 					}
 				}
-			}
 	
-			"modifier_militia"
-			{
-				"IsHidden"			"0"
-				"Duration"			"%duration"
-	
-				"OnDestroy"
+				"States"
 				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CallToArmsEnd"
-					}
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -22016,6 +22002,17 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	
+		"AbilityMultiOrder"				"1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"45"
+			}
+		}
+	
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -22027,56 +22024,34 @@
 	
 		"Modifiers"
 		{
-			"modifier_back_to_work"
+			"modifier_on_order_back_to_work"
 			{
-				"IsHidden"			"1"
-		
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
+				"IsHidden"				"1"
+				"OnOrder"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CheckCityCenterPosition"
+						"Function"		"CancelCallToArms"
 					}
-				}
-	
-				"OnOrder"
-				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_back_to_work"
+						"ModifierName"	"modifier_on_order_back_to_work"
 						"Target" 		"CASTER"
 					}
 				}
 	
-				"OnDestroy"
+				"States"
 				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CallToArmsEnd"
-					}
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
-		}
-	}
 	
-	
-	// When the Militia is created, this will apply the proper level of Forged and Plating research
-	"militia_upgrades"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		"Modifiers"
-		{
-			"modifier_militia_upgrades"
+			"modifier_militia"
 			{
-				"IsHidden"			"1"
+				"Duration"			"%duration"
 				"Passive"			"1"
+				"TextureName"		"human_call_to_arms"
 				"OnCreated"
 				{
 					"RunScript"
@@ -22093,6 +22068,15 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"human_research_plating"
 						"WearableType"	"armor"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"CallToArmsEnd"
 					}
 				}
 			}
@@ -27920,7 +27904,7 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED" // Prevents moving
 					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED" // Allows attacking own buildings
 					"MODIFIER_STATE_LOW_ATTACK_PRIORITY" "MODIFIER_STATE_VALUE_ENABLED" // Makes it a secondary target when A-clicking ground
-					//"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED" // GridNav is blocked
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED" // GridNav is blocked
 				}
 				"Properties"
 				{
@@ -27951,6 +27935,7 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED" // Prevents moving
 					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED" // Allows attacking own buildings
 					"MODIFIER_STATE_LOW_ATTACK_PRIORITY" "MODIFIER_STATE_VALUE_ENABLED" // Makes it a secondary target when A-clicking ground
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED" // GridNav is blocked
 				}
 				"Properties"
 				{
