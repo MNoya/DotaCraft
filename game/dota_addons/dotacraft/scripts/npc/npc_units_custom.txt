@@ -15979,7 +15979,7 @@
 	
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 	
 		// Status
 		//----------------------------------------------------------------
@@ -16001,6 +16001,46 @@
 		"VisionNighttimeRange"		"1600"
 	}
 	
+	"orc_stasis_ward_unit"
+	{										
+		// General
+		"BaseClass"					"npc_dota_ward_base_truesight"
+		"Model"						"models/heroes/techies/fx_techiesfx_stasis.vmdl"
+		"SoundSet"					""
+		"Level"						"0"
+		"ModelScale"					"1"
+		"MinimapIcon"					"minimap_ward_invis"
+		"MinimapIconSize"				"300"
+	
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"140"
+	
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+	
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+	
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"400"
+		"VisionNighttimeRange"		"400"
+	}
+	
 	"orc_healing_ward_unit"
 	{										
 		// General
@@ -16019,7 +16059,7 @@
 	
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 	
 		// Status
 		//----------------------------------------------------------------
@@ -16038,6 +16078,6 @@
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"500"
-		"VisionNighttimeRange"		"500"
+		"VisionNighttimeRange"		"500"	
 	}
 }

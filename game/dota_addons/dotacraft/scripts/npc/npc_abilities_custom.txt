@@ -41853,6 +41853,7 @@
 	// Lasts <Aeye,Dur1> seconds."
 	// Code Reference: Aeye
 	// NOTE: Back in my days, Sentry Ward wasn't Sentry Ward.
+	// NOTE2: Isn't working on anything but _BASIC and _HERO.
 	//=================================================================================
 	"orc_sentry_ward"
 	{
@@ -41955,7 +41956,7 @@
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
+				"var_type"		"FIELD_FLOAT"
 				"stun_duration"				"6"
 			}
 			// Phew, I'm glad they balanced Techies.
@@ -41970,9 +41971,62 @@
 				"var_type"		"FIELD_INTEGER"
 				"detection_radius"			"250"
 			}
+			"06"
+			{
+				"var_type"		  		"FIELD_FLOAT"
+				"stun_duration_hero"	"2.5"
+			}
 		}
 	
-		// Done
+		"precache"
+		{
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/witchdoctor.lua"
+				"Function"		"StasisStart"
+				"Target"		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_stasis_ward"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+	
+				"Duration"			"%activation_delay"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/witchdoctor.lua"
+						"Function"		"StasisSetup"
+					}
+				}
+			}
+	
+			"modifier_stasis_ward_trigger"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/witchdoctor.lua"
+						"Function"		"StasisThink"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
