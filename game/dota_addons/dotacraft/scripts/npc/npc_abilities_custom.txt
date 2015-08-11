@@ -42122,38 +42122,6 @@
 	}
 	
 	//=================================================================================
-	// Ability: Healing Ward Aura
-	// Code Reference: Aoar
-	// NOTE: IS HERE JUST FOR SAKE OF REFERENCE, LOOK ON ABILITY ABOVE
-	//=================================================================================
-	//"orc_healing_ward_aura"
-	//{
-	//	"BaseClass"					"ability_datadriven"
-	//	"AbilityTextureName"		"orc_healing_ward_aura"
-	//	"MaxLevel"					"1"
-			
-	//	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	//	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	//	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		
-	//	"AbilitySpecial"
-	//	{
-	//		"01"
-	//		{
-	//			"var_type"		"FIELD_INTEGER"
-	//			"radius"		"500"
-	//		}
-	//		"02"
-	//		{
-	//			"var_type"		"FIELD_FLOAT"
-	//			"regeneration"	"0.02"
-	//		}
-			// % of health regenerated per second.
-	//	}
-		// Done
-	//}
-	
-	//=================================================================================
 	// Ability: Spirit Link
 	// Description: "Links <Aspl,DataB1> units together in a chain. All units with Spirit Link on them will live longer, by distributing <Aspl,DataA1,%>% of the damage they take across other Spirit Linked units. |nLasts <Aspl,Dur1> seconds."
 	// Code Reference: Aspl
