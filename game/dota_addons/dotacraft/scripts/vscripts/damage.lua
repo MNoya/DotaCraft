@@ -13,10 +13,23 @@ function dotacraft:FilterDamage( filterTable )
 	local damagetype = filterTable["damagetype_const"]
 
 	-- Physical attack damage filtering
-	if damagetype == DAMAGE_TYPE_NONE or damagetype == DAMAGE_TYPE_PHYSICAL then
+	if damagetype == DAMAGE_TYPE_PHYSICAL then
 		local original_damage = filterTable["damage"] --Post reduction
-		local attack_damage = attacker:GetAttackDamage() --Random new damage between max-min of the attacker
+		local inflictor = filterTable["entindex_inflictor_const"]
 
+		local armor = victim:GetPhysicalArmorValue()
+		local damage_reduction = ((armor)*0.06) / (1+0.06*(armor))
+
+		-- If there is an inflictor, the damage came from an ability
+		local attack_damage
+		if inflictor then
+			--Remake the full damage to apply our custom handling
+			attack_damage = original_damage / ( 1 - damage_reduction )
+			--print(original_damage,"=",attack_damage,"*",1-damage_reduction)
+		else
+			attack_damage = attacker:GetAttackDamage()
+		end
+	
 		-- Adjust if the damage comes from splash
 		if victim.damage_from_splash then
 			attack_damage = victim.damage_from_splash
@@ -25,19 +38,11 @@ function dotacraft:FilterDamage( filterTable )
 			SplashAttack(attack_damage, attacker, victim)
 		end
 
-		local armor = victim:GetPhysicalArmorValue()
-		local damage_reduction
-		if armor >= 0 then
-			damage_reduction = ((armor)*0.06) / (1+0.06*(armor))
-		else
-			damage_reduction = 2-0.94^(-armor) --Damage increase
-		end
-
 		local attack_type  = GetAttackType( attacker )
 		local armor_type = GetArmorType( victim )
 		local multiplier = GetDamageForAttackAndArmor(attack_type, armor_type)
 
-		local damage = ( attack_damage - attack_damage * damage_reduction ) * multiplier
+		local damage = ( attack_damage * (1 - damage_reduction)) * multiplier
 
 		-- Extra rules for certain ability modifiers
 		-- modifier_defend (50% less damage from Piercing attacks)
@@ -49,9 +54,13 @@ function dotacraft:FilterDamage( filterTable )
 		elseif victim:HasModifier("modifier_elunes_grace") and attack_type == "pierce" then
 			print("Elunes Grace reduces this piercing attack to 65%")
 			damage = damage * 0.65
-		end	
+		
+		-- modifier_possession_caster (All attacks to 166%)
+		elseif victim:HasModifier("modifier_possession_caster") then
+			damage = damage * 1.66
+		end
 
-		--print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. attack_damage .. " reduced by "..damage_reduction..") * ".. multiplier.. " = " .. damage )
+		--print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. attack_damage .. " * "..1-damage_reduction..") * ".. multiplier.. " = " .. damage )
 		
 		-- Reassign the new damage
 		filterTable["damage"] = damage
@@ -127,11 +136,11 @@ function SplashAttack( attack_damage, attacker, victim )
 end
 
 
---[[
-DAMAGE_TYPE_NONE		0
-DAMAGE_TYPE_PHYSICAL	1	
-DAMAGE_TYPE_MAGICAL		2	
-DAMAGE_TYPE_PURE		4	
-DAMAGE_TYPE_ALL			7	
-DAMAGE_TYPE_HP_REMOVAL	8
-]]
+DAMAGE_TYPES = {
+    [0] = "DAMAGE_TYPE_NONE",
+    [1] = "DAMAGE_TYPE_PHYSICAL",
+    [2] = "DAMAGE_TYPE_MAGICAL",
+    [4] = "DAMAGE_TYPE_PURE",
+    [7] = "DAMAGE_TYPE_ALL",
+    [8] = "DAMAGE_TYPE_HP_REMOVAL",
+}
