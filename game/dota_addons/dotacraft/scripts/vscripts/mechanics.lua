@@ -692,7 +692,7 @@ function FindEnemiesInRadius( unit, radius )
 	local team = unit:GetTeamNumber()
 	local position = unit:GetAbsOrigin()
 	local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE
+	local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
 	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_CLOSEST, false)
 end
 
@@ -1168,13 +1168,32 @@ end
 
 -- Ground/Air Attack mechanics
 function UnitCanAttackTarget( unit, target )
-	if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune() then
+	if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune() or not unit:CanEntityBeSeenByMyTeam(target) then
 		return false
 	end
 	local attacks_enabled = GetAttacksEnabled(unit)
 	local target_type = GetMovementCapability(target)
 
 	return string.match(attacks_enabled, target_type)
+end
+
+-- Check the Acquisition Range (stored on spawn) for valid targets that can be attacked by this unit
+-- Neutrals shouldn't be autoacquired unless its a move-attack order or they attack first
+function FindAttackableEnemies( unit, bIncludeNeutrals )
+    local radius = unit.AcquisitionRange
+    if not radius then return end
+    local enemies = FindEnemiesInRadius( unit, radius )
+    for _,target in pairs(enemies) do
+        if UnitCanAttackTarget(unit, target) then
+        	--DebugDrawCircle(target:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 1)
+            if bIncludeNeutrals then
+                return target
+            elseif target:GetTeamNumber() ~= DOTA_TEAM_NEUTRALS then
+                return target
+            end
+        end
+    end
+    return nil
 end
 
 -- Returns "air" if the unit can fly

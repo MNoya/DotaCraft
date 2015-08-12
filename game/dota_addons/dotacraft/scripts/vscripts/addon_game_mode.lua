@@ -16,6 +16,7 @@ require('mechanics')
 require('orders')
 require('damage')
 require('stats')
+require('neutral_ai')
 require('buildinghelper')
 
 ---------------------------------------------------------------------------

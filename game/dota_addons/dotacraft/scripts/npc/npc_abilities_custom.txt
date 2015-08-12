@@ -28944,18 +28944,11 @@
 				"var_type"			"FIELD_FLOAT"
 				"inaction_duration"	"0.5"
 			}
-			// Units must stay inactive for this duration in order to start melding.
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"fade_duration"		"1.5"
+				"fade_time"			"1.5"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"transition_duration"	"2.5"
-			}
-			// If day arrives WHILE the units are still melding, they will automatically reappear after this duration (unless you manually end the melding prematurely).
 		}
 	
 		"precache"
@@ -28990,11 +28983,6 @@
 				}
 				"OnOrder"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_shadow_meld"
-						"Target" 		"CASTER"
-					}
 					"RunScript"
 					{
 						"ScriptFile"	"units/nightelf/shared.lua"
@@ -29003,11 +28991,6 @@
 				}
 				"OnUnitMoved"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_shadow_meld"
-						"Target" 		"CASTER"
-					}
 					"RunScript"
 					{
 						"ScriptFile"	"units/nightelf/shared.lua"
@@ -29016,11 +28999,6 @@
 				}
 				"OnAttack"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_shadow_meld"
-						"Target" 		"CASTER"
-					}
 					"RunScript"
 					{
 						"ScriptFile"	"units/nightelf/shared.lua"

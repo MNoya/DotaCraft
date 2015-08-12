@@ -270,6 +270,25 @@
 			{
 				"TextureName"	"modifiers/splash_attack"
 			}
+	
+			"modifier_neutral_sleep"
+			{
+				"TextureName"	"bane_nightmare"
+				"EffectName"	"particles/generic_gameplay/generic_sleep.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_NIGHTMARED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/attacks.lua"
+						"Function"		"WakeUp"
+					}
+				}
+			}
 		}
 	}
 	"item_backpack"

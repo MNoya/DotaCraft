@@ -221,6 +221,8 @@ function dotacraft:InitGameMode()
 
 	Convars:RegisterCommand( "debug_trees", Dynamic_Wrap(dotacraft, 'DebugTrees'), "Prints the trees marked as pathable", 0 )
 	Convars:RegisterCommand( "debug_blight", Dynamic_Wrap(dotacraft, 'DebugBlight'), "Prints the positions marked for undead buildings", 0 )
+	Convars:RegisterCommand( "night", Dynamic_Wrap(dotacraft, 'DebugNight'), "Makes Night Time", 0 )
+	Convars:RegisterCommand( "day", Dynamic_Wrap(dotacraft, 'DebugDay'), "Makes Day Time", 0 )
 
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
 	-- Note: When the abilities change, we need to update this value.
@@ -487,6 +489,35 @@ end
 
 function dotacraft:OnAllPlayersLoaded()
 	print("[DOTACRAFT] All Players have loaded into the game")
+
+	print("[DOTACRAFT] Initializigin Neutrals")
+	GameRules.ALLNEUTRALS = Entities:FindAllByClassname("npc_dota_creature")
+	for k,npc in pairs(GameRules.ALLNEUTRALS) do
+		if npc:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+
+			-- Apply armor and damage modifier (for visuals)
+			local attack_type = GetAttackType(npc)
+			if attack_type ~= 0 and npc:GetAttackDamage() > 0 then
+				ApplyModifier(npc, "modifier_attack_"..attack_type)
+		    end
+
+		    local armor_type = GetArmorType(npc)
+			if armor_type ~= 0 then
+				ApplyModifier(npc, "modifier_armor_"..armor_type)
+		    end
+
+		    if HasSplashAttack(npc) then
+		    	ApplyModifier(npc, "modifier_splash_attack")
+		    end
+
+		    -- Attack system
+		    npc:SetIdleAcquire(false)
+		    npc.AcquisitionRange = npc:GetAcquisitionRange()
+		    npc:SetAcquisitionRange(0)
+
+		    NeutralAI:Start( npc )
+		end
+	end
 end
 
 function dotacraft:OnHeroInGame(hero)
@@ -533,9 +564,9 @@ function dotacraft:OnHeroInGame(hero)
 		end
 
 		-- If you want to test an ability of a unit just put its name here
-		--[[if Convars:GetBool("developer") then
-			local unitName = "nightelf_glaive_thrower"
-			local num = 5 --Useful to test "AbilityMultiOrder"
+		if Convars:GetBool("developer") then
+			local unitName = "nightelf_archer"
+			local num = 10 --Useful to test "AbilityMultiOrder"
 			PrecacheUnitByNameAsync(unitName, function()
 				for i=1,num do
 					local position = GameRules.StartingPositions[pID].position + Vector(0,-300-i*50,0)
@@ -562,7 +593,7 @@ function dotacraft:OnHeroInGame(hero)
 					unit:Hold()
 				end
 			end, pID)
-		end]]
+		end
 	else
 
 		-- A real hero trained through an altar
@@ -1440,6 +1471,14 @@ function dotacraft:DebugBlight()
 			end
 		end
 	end
+end
+
+function dotacraft:DebugNight()
+	GameRules:SetTimeOfDay( 0.8 )
+end
+
+function dotacraft:DebugDay()
+	GameRules:SetTimeOfDay( 0.3 )
 end
 
 function dotacraft:RepositionPlayerCamera( event )

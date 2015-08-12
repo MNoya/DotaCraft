@@ -2,9 +2,9 @@
 function ShadowMeld( event )
 	local caster = event.caster
 	local ability = event.ability
-	local fade_time = ability:GetSpecialValueFor("fade_duration")
+	local fade_time = ability:GetSpecialValueFor("fade_time")
 
-	if not GameRules:IsDaytime() then
+	if not GameRules:IsDaytime() and not caster:HasModifier("modifier_shadow_meld_fade") then
 		local animation
 		local unitName = caster:GetUnitName()
 		if unitName == "nightelf_archer" then
@@ -20,13 +20,9 @@ function ShadowMeld( event )
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_fade", {duration = fade_time})
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_active", {})
 
-		if ability:GetToggleState() == false then
-			ability:ToggleAbility()
-		end
+		ToggleOn(ability)
 
-		caster:Stop()
-	else
-		print("Ability shouldn't be usable in daytime")
+		caster:Stop()		
 	end
 
 end
@@ -35,7 +31,7 @@ end
 function ShadowMeldThink( event )
 	local caster = event.caster	
 	local ability = event.ability
-	local fade_time = ability:GetSpecialValueFor("fade_duration")
+	local fade_time = ability:GetSpecialValueFor("fade_time")
 
 	-- Only available at night time
 	if not GameRules:IsDaytime() then
@@ -59,14 +55,16 @@ end
 function ShadowMeldRemove( event )
 	local caster = event.caster
 	local ability = event.ability
-	--caster.shadow_meld_removed = GameRules:GetGameTime()
-
-	caster:RemoveModifierByName("modifier_shadow_meld_active")
-	caster:RemoveModifierByName("modifier_shadow_meld_fade")
-	caster:RemoveModifierByName("modifier_shadow_meld")
-	caster:RemoveModifierByName("modifier_invisible")
-
-	ToggleOff(ability)
+	local order = event.event_ability
+	if order and order:GetAbilityName() == "nightelf_shadow_meld" then
+		return
+	else
+		caster:RemoveModifierByName("modifier_shadow_meld_active")
+		caster:RemoveModifierByName("modifier_shadow_meld_fade")
+		caster:RemoveModifierByName("modifier_shadow_meld")
+		caster:RemoveModifierByName("modifier_invisible")
+		ToggleOff(ability)
+	end
 end
 
 

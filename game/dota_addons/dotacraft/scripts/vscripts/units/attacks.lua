@@ -23,6 +23,7 @@ function HoldAcquire( event )
     if unit:AttackReady() and not unit:IsAttacking() then
         local target = FindAttackableEnemies(unit, unit.bAttackMove)
         if target and unit:GetRangeToUnit(target) <= unit:GetAttackRange() then
+            --print(unit:GetUnitName()," now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
             ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = target:GetEntityIndex(), Queue = false}) 
             HoldPosition(unit)
         else
@@ -31,32 +32,19 @@ function HoldAcquire( event )
     end
 end
 
--- Check the Acquisition Range (stored on spawn) for valid targets that can be attacked by this unit
--- Neutrals shouldn't be autoacquired unless its a move-attack order or they attack first
-function FindAttackableEnemies( unit, bIncludeNeutrals )
-    local radius = unit.AcquisitionRange
-    if not radius then return end
-    local enemies = FindEnemiesInRadius( unit, radius )
-    for _,target in pairs(enemies) do
-        if UnitCanAttackTarget(unit, target) then
-            if bIncludeNeutrals then
-                return target
-            elseif target:GetTeamNumber() ~= DOTA_TEAM_NEUTRALS then
-                return target
-            end
-        end
-    end
-    return nil
-end
-
 -- If attacked and not currently attacking a unit
 function AttackAggro( event )
     local unit = event.target
     local target = event.attacker
 
+    if unit:HasModifier("modifier_shadow_meld_active") then
+        return
+    end
+
     if unit:IsIdle() then
         --print(unit:GetUnitName(), " was attacked by ", target:GetUnitName()," while idling")
         if UnitCanAttackTarget(unit, target) then
+            --print(unit:GetUnitName()," now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
             unit:MoveToTargetToAttack(target)
         else
             -- Run away from the unit that attacked this
@@ -66,5 +54,18 @@ function AttackAggro( event )
 
             unit:MoveToPosition(flee_position) 
         end
+    end
+end
+
+function WakeUp( event )
+    local unit = event.unit
+    local attacker = event.attacker
+
+    local allies = FindAlliesInRadius( unit, unit.AcquisitionRange)
+    for _,v in pairs(allies) do
+        v:RemoveModifierByName("modifier_neutral_sleep")
+        v:MoveToTargetToAttack(attacker)
+        v.aggroTarget = attacker
+        v.state = AI_STATE_AGGRESSIVE
     end
 end
