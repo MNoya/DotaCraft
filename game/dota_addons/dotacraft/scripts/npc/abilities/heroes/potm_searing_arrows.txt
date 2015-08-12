@@ -9,9 +9,10 @@
 //3	N/A	N/A	8	70	Unit	N/A	30 bonus damage	5
 
 // BUG: Orb doesn't fire on Magic Immune targets
+// Edit: August 2015, removed datadriven version in favor of the dota ability which properly fires to magic immune units
 "potm_searing_arrows"
 {
-	"BaseClass"             		"ability_datadriven"
+	"BaseClass"             		"clinkz_searing_arrows"
 	"AbilityTextureName"			"potm_searing_arrows"
 	"MaxLevel" 						"3"
 
@@ -19,13 +20,13 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 
 	"AbilityCastPoint"          	"0"
     "AbilityCastRange"          	"600 700 700"
 
 	"AbilityManaCost"				"8"
-	"AbilityDamage"					"10 20 30"
 
 	"precache"
 	{
@@ -38,57 +39,13 @@
 	{
 		"01"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"bonus_range"		"0 100 100"
+			"var_type"				"FIELD_INTEGER"
+			"damage_bonus"			"10 20 30"
 		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_snake_searing_arrow"
+		"02"
 		{
-			"Passive"               "1"
-			"IsHidden"				"1"
-			"TextureName"			"potm_searing_arrows"
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"		"%bonus_range"
-			}
-
-			"Orb"
-			{
-				"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
-				"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-				"CastAttack"		"1"
-			}
-			"OnOrbFire"
-			{
-				"SpendMana"
-				{
-					"Mana"    		"%AbilityManaCost"
-				}
-				"FireSound"
-				{
-					"EffectName"	"Hero_Clinkz.SearingArrows"
-					"Target"		"CASTER"
-				}
-			}
-			
-			"OnOrbImpact"
-			{
-				"Damage"
-				{
-					"Type"          "DAMAGE_TYPE_PHYSICAL"
-					"Damage"        "%AbilityDamage"
-					"Target"		"TARGET"
-				}
-				"FireSound"
-				{
-					"EffectName"	"Hero_Clinkz.SearingArrows.Impact"
-					"Target"		"CASTER"
-				}
-			}
+			"var_type"				"FIELD_INTEGER"
+			"bonus_range"			"0 100 100"
 		}
 	}
 }
