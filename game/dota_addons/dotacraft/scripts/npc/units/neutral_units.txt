@@ -45,7 +45,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"10.0"
 	"AttackDamageMax"			"11.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"500"
@@ -102,6 +102,7 @@
 	"Level"						"3"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -119,7 +120,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"21.0"
 	"AttackDamageMax"			"29.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.6"
 	"AttackAnimationPoint"		"0.4"
 	"AttackAcquisitionRange"	"500"
@@ -178,6 +179,7 @@
 	"Level"						"1"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -194,7 +196,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"13.0"
 	"AttackDamageMax"			"15.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.6"
 	"AttackAnimationPoint"		"0.4"
 	"AttackAcquisitionRange"	"600"
@@ -253,6 +255,7 @@
 	"Level"						"5"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 
@@ -273,7 +276,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"24.0"
 	"AttackDamageMax"			"27.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"500"
@@ -342,6 +345,7 @@
 	"Level"						"3"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -359,7 +363,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"21.0"
 	"AttackDamageMax"			"25.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.6"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"600"
@@ -419,6 +423,7 @@
 	"Level"						"4"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground"
 	
@@ -435,7 +440,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"28.0"
 	"AttackDamageMax"			"37.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.6"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"500"
@@ -495,6 +500,7 @@
 	"Level"						"4"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -514,7 +520,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"25.0"
 	"AttackDamageMax"			"32.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.8"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"600"
@@ -575,6 +581,7 @@
 	"Level"						"10"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -594,7 +601,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"48.0"
 	"AttackDamageMax"			"81.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.5"
 	"AttackAnimationPoint"		"0.94"
 	"AttackAcquisitionRange"	"500"
@@ -654,6 +661,7 @@
 	"Level"						"6"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground"
 	
@@ -672,7 +680,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"29.0"
 	"AttackDamageMax"			"33.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"500"
@@ -732,6 +740,7 @@
 	"Level"						"5"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground"
 	
@@ -749,7 +758,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"24.0"
 	"AttackDamageMax"			"27.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"500"
@@ -808,6 +817,7 @@
 	"Level"						"3"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground"
 	
@@ -824,7 +834,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"14.0"
 	"AttackDamageMax"			"15.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"500"
@@ -893,6 +903,7 @@
 	"Level"						"2"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground"
 	
@@ -909,7 +920,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"12.0"
 	"AttackDamageMax"			"13.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"500"
@@ -966,6 +977,7 @@
 	"Level"						"2"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -982,7 +994,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"17.0"
 	"AttackDamageMax"			"20.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.6"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"600"
@@ -1041,6 +1053,7 @@
 	"Level"						"4"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -1058,7 +1071,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"25.0"
 	"AttackDamageMax"			"30.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.6"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"500"
@@ -1119,6 +1132,7 @@
 	"Level"						"5"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -1137,7 +1151,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"28.0"
 	"AttackDamageMax"			"37.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.8"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"600"
@@ -1211,6 +1225,7 @@
 	"Level"						"1"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground"
 	
@@ -1227,7 +1242,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"10.0"
 	"AttackDamageMax"			"11.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"500"
@@ -1296,6 +1311,7 @@
 	"Level"						"3"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground, air"
 	
@@ -1313,7 +1329,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageMin"			"21.0"
 	"AttackDamageMax"			"25.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.6"
 	"AttackAnimationPoint"		"0.6"
 	"AttackAcquisitionRange"	"500"
@@ -1385,6 +1401,7 @@
 	"Level"						"5"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground"
 	
@@ -1403,7 +1420,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"24.0"
 	"AttackDamageMax"			"27.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"500"
@@ -1475,6 +1492,7 @@
 	"Level"						"7"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"UseNeutralCreepBehavior" 	"0"
 
 	"AttacksEnabled"			"ground"
 	
@@ -1493,7 +1511,7 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"39.0"
 	"AttackDamageMax"			"44.0"
-	"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"500"

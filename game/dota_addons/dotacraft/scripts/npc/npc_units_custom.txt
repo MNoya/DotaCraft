@@ -36,6 +36,7 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"20"									// Damage range min.
 		"AttackDamageMax"			"20"									// Damage range max.
 		"AttackRate"				"1.7"									// Speed of attack.
@@ -126,6 +127,7 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"35"									// Damage range min.
 		"AttackDamageMax"			"35"									// Damage range max.
 		"AttackRate"				"1.7"									// Speed of attack.
@@ -216,6 +218,7 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"45"									// Damage range min.
 		"AttackDamageMax"			"45"									// Damage range max.
 		"AttackRate"				"1.7"									// Speed of attack.
@@ -306,6 +309,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"19"		// Damage range min.
 		"AttackDamageMax"			"21"		// Damage range max.	
 		"AttackRate"				"1.5"		// Speed of attack.
@@ -386,6 +390,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"28"		// Damage range min.
 		"AttackDamageMax"			"30"		// Damage range max.	
 		"AttackRate"				"1.5"		// Speed of attack.
@@ -466,6 +471,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"38"		// Damage range min.
 		"AttackDamageMax"			"40"		// Damage range max.	
 		"AttackRate"				"1.5"		// Speed of attack.
@@ -549,6 +555,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"14"		// Damage range min.
 		"AttackDamageMax"			"14"		// Damage range max.	
 		"AttackRate"				"1.5"		// Speed of attack.
@@ -621,6 +628,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"28"		// Damage range min.
 		"AttackDamageMax"			"28"		// Damage range max.	
 		"AttackRate"				"1.5"		// Speed of attack.
@@ -693,6 +701,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"42"		// Damage range min.
 		"AttackDamageMax"			"42"		// Damage range max.	
 		"AttackRate"				"1.5"		// Speed of attack.
@@ -840,6 +849,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"42"		// Damage range min.
 		"AttackDamageMax"			"42"		// Damage range max.	
 		"AttackRate"				"1.5"		// Speed of attack.
@@ -914,6 +924,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"		"21.0"
 		"AttackDamageMax"		"25.0"
 		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
@@ -1126,7 +1137,7 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"			"DOTA_TEAM_BADGUYS"
-		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_BASIC" // MAGIC ATTACK
+		"CombatClassAttack"		"DOTA_COMBAT_CLASS_ATTACK_MAGIC"
 		"CombatClassDefend"		"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 			
@@ -1581,6 +1592,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"9"		// Damage range min.
 		"AttackDamageMax"			"11"		// Damage range max.	
 		"AttackRate"				"2"		// Speed of attack.
@@ -1647,6 +1659,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"15"		// Damage range min.
 		"AttackDamageMax"			"17"		// Damage range max.	
 		"AttackRate"				"2"		// Speed of attack.
@@ -1714,6 +1727,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"17"		// Damage range min.
 		"AttackDamageMax"			"19"		// Damage range max.	
 		"AttackRate"				"2"		// Speed of attack.
@@ -1788,6 +1802,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"55"		// Damage range min.
 		"AttackDamageMax"			"56"		// Damage range max.	
 		"AttackRate"				"1.35"		// Speed of attack.
@@ -2102,6 +2117,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"11"		// Damage range min.
 		"AttackDamageMax"			"12"		// Damage range max.	
 		"AttackRate"				"1.25"		// Speed of attack.
@@ -2180,6 +2196,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"21"		// Damage range min.
 		"AttackDamageMax"			"22"		// Damage range max.	
 		"AttackRate"				"1.15"		// Speed of attack.
@@ -2257,6 +2274,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"16"		// Damage range min.
 		"AttackDamageMax"			"17"		// Damage range max.	
 		"AttackRate"				"1.2"		// Speed of attack.
@@ -2332,6 +2350,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"		"11.0"
 		"AttackDamageMax"		"27.0"
 		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
@@ -2403,6 +2422,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"		"21.0"
 		"AttackDamageMax"		"45.0"
 		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
@@ -2474,6 +2494,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"		"32.0"
 		"AttackDamageMax"		"56.0"
 		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
@@ -4613,6 +4634,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_MAGIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Creature Data
@@ -4728,6 +4750,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_MAGIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Creature Data
@@ -5620,7 +5643,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"10.0"
 		"AttackDamageMax"			"11.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
@@ -5677,6 +5700,7 @@
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -5694,7 +5718,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"21.0"
 		"AttackDamageMax"			"29.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.6"
 		"AttackAnimationPoint"		"0.4"
 		"AttackAcquisitionRange"	"500"
@@ -5753,6 +5777,7 @@
 		"Level"						"1"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -5769,7 +5794,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"13.0"
 		"AttackDamageMax"			"15.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.6"
 		"AttackAnimationPoint"		"0.4"
 		"AttackAcquisitionRange"	"600"
@@ -5828,6 +5853,7 @@
 		"Level"						"5"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 	
@@ -5848,7 +5874,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"24.0"
 		"AttackDamageMax"			"27.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
@@ -5917,6 +5943,7 @@
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -5934,7 +5961,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"21.0"
 		"AttackDamageMax"			"25.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.6"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"600"
@@ -5994,6 +6021,7 @@
 		"Level"						"4"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -6010,7 +6038,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"28.0"
 		"AttackDamageMax"			"37.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.6"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
@@ -6070,6 +6098,7 @@
 		"Level"						"4"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -6089,7 +6118,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"25.0"
 		"AttackDamageMax"			"32.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.8"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"600"
@@ -6150,6 +6179,7 @@
 		"Level"						"10"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -6169,7 +6199,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"48.0"
 		"AttackDamageMax"			"81.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.94"
 		"AttackAcquisitionRange"	"500"
@@ -6229,6 +6259,7 @@
 		"Level"						"6"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -6247,7 +6278,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"29.0"
 		"AttackDamageMax"			"33.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
@@ -6307,6 +6338,7 @@
 		"Level"						"5"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -6324,7 +6356,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"24.0"
 		"AttackDamageMax"			"27.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
@@ -6383,6 +6415,7 @@
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -6399,7 +6432,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"14.0"
 		"AttackDamageMax"			"15.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
@@ -6468,6 +6501,7 @@
 		"Level"						"2"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -6484,7 +6518,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"12.0"
 		"AttackDamageMax"			"13.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"500"
@@ -6541,6 +6575,7 @@
 		"Level"						"2"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -6557,7 +6592,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"17.0"
 		"AttackDamageMax"			"20.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.6"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"600"
@@ -6616,6 +6651,7 @@
 		"Level"						"4"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -6633,7 +6669,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"25.0"
 		"AttackDamageMax"			"30.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.6"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
@@ -6694,6 +6730,7 @@
 		"Level"						"5"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -6712,7 +6749,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"28.0"
 		"AttackDamageMax"			"37.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.8"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"600"
@@ -6786,6 +6823,7 @@
 		"Level"						"1"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -6802,7 +6840,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"10.0"
 		"AttackDamageMax"			"11.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"500"
@@ -6871,6 +6909,7 @@
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -6888,7 +6927,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"21.0"
 		"AttackDamageMax"			"25.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.6"
 		"AttackAnimationPoint"		"0.6"
 		"AttackAcquisitionRange"	"500"
@@ -6960,6 +6999,7 @@
 		"Level"						"5"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -6978,7 +7018,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"24.0"
 		"AttackDamageMax"			"27.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"500"
@@ -7050,6 +7090,7 @@
 		"Level"						"7"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -7068,7 +7109,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"39.0"
 		"AttackDamageMax"			"44.0"
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"500"
@@ -8900,9 +8941,9 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"19.0" //+8 in bear
 		"AttackDamageMax"			"22.0" //+10 in bear
-		"AttackDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
@@ -12071,6 +12112,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"50"		// Damage range min.
 		"AttackDamageMax"			"56"		// Damage range max.	
 		"AttackRate"				"1.35"		// Speed of attack.
@@ -12149,6 +12191,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"50"		// Damage range min.
 		"AttackDamageMax"			"56"		// Damage range max.	
 		"AttackRate"				"1.5"		// Speed of attack.
@@ -12227,6 +12270,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"72"		// Damage range min.
 		"AttackDamageMax"			"82"		// Damage range max.	
 		"AttackRate"				"1.35"		// Speed of attack.
@@ -15826,11 +15870,12 @@
 	
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"2"			// Physical protection.
+		"ArmorPhysical"				"-2"			// Physical protection.
 	
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"30"		// Damage range min.
 		"AttackDamageMax"			"30"		// Damage range max.	
 		"AttackRate"				"1.35"		// Speed of attack.
@@ -15909,6 +15954,7 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackDamageMin"			"15"		// Damage range min.
 		"AttackDamageMax"			"15"		// Damage range max.	
 		"AttackRate"				"1.35"		// Speed of attack.
