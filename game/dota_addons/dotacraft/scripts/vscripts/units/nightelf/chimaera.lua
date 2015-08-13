@@ -18,11 +18,6 @@ function CorrosiveBreathDamage( event )
 	local autoattack_damage = event.Damage --Magic attacks deal 35% to Fortified so this skill should greatly increase the damage output to buildings
 
 	if IsCustomBuilding(target) then
-		local damage = event.ability:GetSpecialValueFor("siege_damage")
-		local armor_type = GetArmorType(target)
-		local multiplier = GetDamageForAttackAndArmor("siege", armor_type)
-		damage = damage * multiplier
-
 		ApplyDamage({ victim = target, attacker = chimaera, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL, ability = event.ability})
 	else
 		chimaera:RemoveModifierByName("modifier_corrosive_breath_adjustment")

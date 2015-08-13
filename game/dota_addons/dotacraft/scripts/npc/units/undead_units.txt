@@ -233,8 +233,8 @@
 	"AbilityLayout"				"5"
 	"Ability1"					"undead_gather" //Only Lumber
 	"Ability2"					"undead_return_resources"	
-	"Ability3"					"undead_cannibalize"	 //Reference: Acan
-	"Ability4"					"undead_ghoul_frenzy"
+	"Ability3"					"undead_cannibalize_disabled"	 //Reference: Acan
+	"Ability4"					"undead_ghoul_frenzy_disabled"
 	"Ability11"					"undead_blight_regen"
 	
 	// Armor
@@ -523,7 +523,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"undead_cannibalize"	 //Reference: Aap1
+	"Ability1"					"undead_cannibalize_disabled"	 //Reference: Aap1
 	"Ability2"					"undead_disease_cloud_disabled"	 //Reference: Aiun
 	"Ability3"					""	 //Reference: Acn2
 	"Ability11"					"undead_blight_regen"
@@ -634,8 +634,8 @@
 	"Ability1"					"undead_get_corpse"	 //Reference: Sch2
 	"Ability2"					"undead_drop_corpse"	 //Reference: Amel
 	"Ability3"					"undead_attack_ground"	 //Reference: Amed
-	"Ability4"					"undead_exhume_corpses" //Reference: Apts
-	"Ability5"					"undead_meat_wagon_disease_cloud"
+	"Ability4"					"undead_exhume_corpses_disabled" //Reference: Apts
+	"Ability5"					"undead_meat_wagon_disease_cloud_disabled"
 	"Ability11"					"ability_siege"
 	
 	// Armor
@@ -730,7 +730,7 @@
 	//----------------------------------------------------------------
 	"Ability1"					"undead_essence_of_blight"	 //Reference: Arpl
 	"Ability2"					"undead_spirit_touch"	 //Reference: Arpm
-	"Ability3"					"undead_destroyer_form"	 //Reference: Aave
+	"Ability3"					"undead_destroyer_form_disabled"	 //Reference: Aave
 	"Ability10"					"undead_obsidian_statue_model"
 	"Ability11"					"ability_siege"
 	
@@ -941,8 +941,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_cripple"	 //Reference: Acri
-	"Ability2"					"undead_raise_dead"	 //Reference: Arai
-	"Ability3"					"undead_unholy_frenzy"	 //Reference: Auhf
+	"Ability2"					"undead_raise_dead_disabled"	 //Reference: Arai
+	"Ability3"					"undead_unholy_frenzy_disabled"	 //Reference: Auhf
 	"Ability4"					""	 //Reference: Aiun
 	"Ability11"					"undead_blight_regen"
 	
@@ -1048,8 +1048,8 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_anti_magic_shell"	 //Reference: Aam2
-	"Ability2"					"undead_curse"	 //Reference: Acrs
-	"Ability3"					"undead_possession"	 //Reference: Aps2
+	"Ability2"					"undead_curse_disabled"	 //Reference: Acrs
+	"Ability3"					"undead_possession_disabled"	 //Reference: Aps2
 	"Ability4"					""	 //Reference: Aiun
 	"Ability11"					"undead_blight_regen"
 	
@@ -1348,7 +1348,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"undead_freezing_breath"	 //Reference: Afrz
+	"Ability1"					"undead_freezing_breath_disabled"	 //Reference: Afrz
 	"Ability10"					"undead_freezing_splash"
 	"Ability11"					"undead_blight_regen"
 	
