@@ -1,0 +1,15 @@
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/pre_game_selection.css" />
+	<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/team_selection/dotacraft_pre_selection.js" /> 
+  </scripts>
+	<Panel class="PreGameSelectionRoot">
+  
+
+		<Panel id="PlayerListContainer"/>
+	
+	</Panel>
+</root>

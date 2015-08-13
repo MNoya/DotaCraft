@@ -127,11 +127,25 @@ function dotacraft:InitGameMode()
 
 	-- Multi Team Configuration - Should be acquired from the UI, to allow 1v1v1v1 or 2v2 on the same map for example.
 	if GetMapName() == "hills_of_glory" then
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1,	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 	10 )
+	
+		-- Spectator
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_NOTEAM, 10 )
 	elseif GetMapName() == "copper_canyon" then
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 3 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 3 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1,	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 	10 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 	10 )
+	
+		-- Spectator
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_NOTEAM, 10 )
 	else
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 2 )
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 2 )
@@ -188,6 +202,11 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "RegisterLeftClick"))
 	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "RegisterRightClick"))
 
+	-- Listeners for Pre_Game_Selection
+	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
+	CustomGameEventManager:RegisterListener( "selection_over", Dynamic_Wrap(dotacraft, "Create_Players"))	
+	CustomGameEventManager:RegisterListener( "player_ready", Dynamic_Wrap(dotacraft, "Player_Ready"))	
+	
 	-- Remove building invulnerability
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
 	for i = 1, #allBuildings, 1 do
@@ -223,7 +242,8 @@ function dotacraft:InitGameMode()
 	Convars:RegisterCommand( "debug_blight", Dynamic_Wrap(dotacraft, 'DebugBlight'), "Prints the positions marked for undead buildings", 0 )
 	Convars:RegisterCommand( "night", Dynamic_Wrap(dotacraft, 'DebugNight'), "Makes Night Time", 0 )
 	Convars:RegisterCommand( "day", Dynamic_Wrap(dotacraft, 'DebugDay'), "Makes Day Time", 0 )
-
+	Convars:RegisterCommand( "skip_selection", Dynamic_Wrap(dotacraft, 'Skip_Selection'), "Skip Selection", 0 )
+	
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
 	-- Note: When the abilities change, we need to update this value.
 	Convars:RegisterCommand( "ability_values_entity", function(name, entityIndex)
@@ -1491,4 +1511,85 @@ function dotacraft:RepositionPlayerCamera( event )
 			PlayerResource:SetCameraTarget(pID, nil)
 		end)
 	end
+end
+
+--[[
+
+Pre_Game_Selection
+
+]]
+function dotacraft:Skip_Selection()
+	CustomGameEventManager:Send_ServerToAllClients("dotacraft_skip_selection", {}) 
+end
+
+function dotacraft:Create_Players(data)
+print("create players")
+	for i = 0, PlayerResource:GetPlayerCount()-1, 1 do
+		local playerID = i
+		local color = GameRules.colorTable[GameRules.playerTable[playerID].color_index]
+		local team = GameRules.playerTable[playerID].team_index
+		local race = GameRules.raceTable[GameRules.playerTable[playerID].race_index]
+
+		-- if race is nil it means that the id supplied is random since that is the only fallout index
+		if race == nil then
+			race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
+		end
+		
+		-- player stuff
+		PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
+		PlayerResource:SetCustomTeamAssignment(playerID, team)
+		CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
+	end
+end
+
+function dotacraft:Selection_Update_Player(args)
+	print("updating player")
+	if GameRules.playerTable == nil or GameRules.raceTable == nil or GameRules.colorTable == nil then
+		dotacraft:Setup_Tables()
+	end
+	
+	local PlayerID = args.ID
+	
+	-- save update to player table
+	GameRules.playerTable[PlayerID] = {
+		color_index = args.Color,
+		team_index = args.Team,
+		race_index = args.Race	
+	}
+
+	CustomGameEventManager:Send_ServerToAllClients("dotacraft_update_player", {PlayerID = args.ID, Team = args.Team, Race = args.Race, Color=args.Color, Ready=args.Ready}) 
+end
+
+function dotacraft:Setup_Tables()
+	if GameRules.colorTable == nil then
+		GameRules.colorTable = {}
+		
+		GameRules.colorTable[0] = {r=255, 	g=255, 	b=255	}
+		GameRules.colorTable[1] = {r=0, 	g=0, 	b=0		}
+		GameRules.colorTable[2] = {r=255,	g=0, 	b=0		}
+		GameRules.colorTable[3] = {r=0, 	g=255, 	b=0		}
+		GameRules.colorTable[4] = {r=120, 	g=120, 	b=255	}
+		GameRules.colorTable[5] = {r=255, 	g=120, 	b=120	}
+		GameRules.colorTable[6] = {r=120, 	g=255, 	b=120	}
+		GameRules.colorTable[7] = {r=120, 	g=255, 	b=120	}
+		GameRules.colorTable[8] = {r=120, 	g=255,	b=120	}
+		GameRules.colorTable[9] = {r=0, 	g=0, 	b=255	}
+	end
+	
+	if GameRules.raceTable == nil then
+		GameRules.raceTable = {}
+		
+		GameRules.raceTable[1] = "npc_dota_hero_dragon_knight"
+		GameRules.raceTable[2] = "npc_dota_hero_huskar"
+		GameRules.raceTable[3] = "npc_dota_hero_furion"
+		GameRules.raceTable[4] = "npc_dota_hero_life_stealer"
+	end
+	
+	if GameRules.playerTable == nil then
+		GameRules.playerTable = {}
+	end
+	
+	DeepPrintTable(GameRules.colorTable)
+	DeepPrintTable(GameRules.raceTable)
+	DeepPrintTable(GameRules.playerTable)
 end

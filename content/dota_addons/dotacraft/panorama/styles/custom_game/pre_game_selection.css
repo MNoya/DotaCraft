@@ -1,0 +1,258 @@
+.PreGameSelectionRoot
+{
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+	flow-children: down;
+}
+
+#PlayerListContainer
+{	
+	flow-children: down;	
+
+	visibility: visible;
+	
+	vertical-align: middle;
+	horizontal-align: middle;
+}
+
+.Player{
+	margin-top: 10px;
+	flow-children: right;
+	height: 85px;
+	width: 1000px;
+	
+	background-color:red;
+
+	padding: 10px;
+	
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
+	border: 2px solid #5e686966;
+	
+}
+
+#PlayerName{
+
+	margin-left: 5px;
+	margin-right: 5px;
+	
+	width: 200px;
+	height: 100%;
+
+	padding: 5px;
+}
+
+#PlayerName Label{
+	font-size: 20px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #d5d7d7;
+	
+    vertical-align: middle;
+	margin-left: 5px;
+}
+
+#PlayerAvatar{
+	height: 100%;
+	width: 65px;
+	vertical-align: middle; 
+}
+
+#HudButton{
+	height: 41px;
+	width: 100px;
+	margin-top: 10px;
+	margin-left: 5px;
+	
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #5A615Ecc ), to( #879695cc ));
+	box-shadow: fill #002a6644 -4px -4px 8px 9px;
+	border-top: 1px solid #ffffff44;
+	border-right: 1px solid #00000088;
+	border-left: 1px solid #ffffff44;
+	border-bottom: 1px solid #00000088;
+	
+	transition-property: background-color;
+	transition-duration: .2s;
+
+    wash-color: #99999922;
+}
+
+#Hudbutton:enabled:hover
+{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #5f6663 ), to( #b4c2c1 ));
+}
+
+#HudButton Label{
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #d5d7d7;
+	
+    vertical-align: middle;
+	horizontal-align: middle;
+}
+
+#HudButton:enabled:hover Label{
+    color: white;
+}
+
+#HudButton:active 
+{
+    wash-color: #ffffff;
+}
+
+#HudButton:disabled
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+	border: 2px solid #3b414266;
+}
+
+/* ------------------------------------------------------------------------- */
+/*  DropDown                                                                 */
+/* ------------------------------------------------------------------------- */
+@define drop_down_width: 125px;
+@define drop_down_height: 41px;
+
+DropDown
+{
+margin-left: 5px;
+	background-color: #292e2e;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+
+	background-image: url("s2r://panorama/images/control_icons/arrow_dropdown_png.vtex");
+	
+	background-repeat: no-repeat;
+	background-position: right 38px 35%;
+	background-size: 32px 32px;
+	box-shadow: #00000055 -2px -2px 1px 4px;
+	
+	border: 2px solid #5e686966;
+	
+	font-size: 24px;
+	width: drop_down_width;
+	height: drop_down_height;
+	padding: 4px 8px;
+	z-index: 1;
+	vertical-align: center;
+	
+	transition-property: background-color, border;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
+}
+
+DropDown:enabled:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #393e3e ), to( #292e2e ) );
+}
+
+DropDown:focus .TickBox
+{
+	text-overflow: clip;
+	white-space: nowrap;
+}
+
+DropDown:focus
+{	
+
+}
+
+DropDown:disabled
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+	border: 2px solid #3b414266;
+	background-image: url("s2r://panorama/images/control_icons/arrow_dropdown_disabled_png.vtex");
+}
+
+DropDown:disabled Label
+{
+	color: #444444;
+}
+
+DropDown.DropDownMenuVisible:hover
+{
+
+}
+
+DropDown.DropDownMenuVisible:focus
+{
+	animation-name: none;
+}
+
+DropDown Label
+{
+	width: 100%;
+	margin: 3px 29px 0px 6px;
+	font-size: 18px;
+		
+	transition-property: color;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
+}
+
+DropDown:focus Label
+{
+	color: white;
+}
+
+DropDown.DropDownMenuVisible:focus Label
+{
+	color: white;
+}
+
+DropDownMenu
+{ 
+	width: drop_down_width;
+	
+	flow-children: down;
+	background-color: #3d4448;
+	color: #e1e1e1;
+	font-size: 28px;
+	overflow: squish scroll;
+	z-index: 0;
+	transform: translateY(-40px);
+	opacity: 0.0;
+
+	transition-property: opacity, transform;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in;
+	
+	box-shadow: fill #00000066 -3px -3px 6px 6px;
+}
+
+DropDownMenu Label
+{
+	width: 100%;
+	padding: 6px 0px 2px 0px;
+	margin-top: 0px 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-left: 16px;
+
+	color: #ffffff99;
+	background-color: #3d4448;
+
+	font-size: 18px;
+	font-weight: normal;
+	z-index: 0;
+	border-top: 1px solid #00000066;
+	border-bottom: 1px solid #00000066;
+
+	transition-property: background-color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+DropDownMenu Label:hover
+{
+	background-color: #585e62;
+}
+
+DropDownMenu.DropDownMenuVisible
+{
+	opacity: 1.0;
+
+	max-height: 444px;
+	transition-property: box-shadow;
+	transform: translateY(0px);
+}
