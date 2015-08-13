@@ -238,6 +238,7 @@ function dotacraft:InitGameMode()
 	-- Allow cosmetic swapping
 	SendToServerConsole( "dota_combine_models 0" )
 
+	-- Console Commands
 	Convars:RegisterCommand( "debug_trees", Dynamic_Wrap(dotacraft, 'DebugTrees'), "Prints the trees marked as pathable", 0 )
 	Convars:RegisterCommand( "debug_blight", Dynamic_Wrap(dotacraft, 'DebugBlight'), "Prints the positions marked for undead buildings", 0 )
 	Convars:RegisterCommand( "night", Dynamic_Wrap(dotacraft, 'DebugNight'), "Makes Night Time", 0 )
@@ -550,73 +551,7 @@ function dotacraft:OnHeroInGame(hero)
 		end
 	end
 
-	if hero:HasAbility("hide_hero") then
-		local player = hero:GetPlayerOwner()
-		player.lumber = 0
-		player.food_limit = 0 -- The amount of food available to build units
-		player.food_used = 0 -- The amount of food used by this player creatures
-	
-		-- Give Initial Resources
-		if Convars:GetBool("developer") then
-			hero:SetGold(50000, false)
-			ModifyLumber(player, 50000)
-			ModifyFoodLimit(player, 100)
-		else
-			hero:SetGold(500, false)
-			ModifyLumber(player, 150)
-		end
-
-		-- Hide main hero under the main base
-		local pID = hero:GetPlayerOwnerID()
-		local position = GameRules.StartingPositions[pID].position
-		local ability = hero:FindAbilityByName("hide_hero")
-		ability:UpgradeAbility(true)
-		hero:SetAbilityPoints(0)
-		hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
-		Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
-		hero:AddNoDraw()
-
-		-- Find neutrals near the starting zone and remove them
-		local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
-		for k,v in pairs(neutrals) do
-			if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-				v:RemoveSelf()
-			end
-		end
-
-		-- If you want to test an ability of a unit just put its name here
-		if Convars:GetBool("developer") then
-			local unitName = "nightelf_archer"
-			local num = 20
-			PrecacheUnitByNameAsync(unitName, function()
-				for i=1,num do
-					local position = GameRules.StartingPositions[pID].position + Vector(0,-300-i*50,0)
-					local unit = CreateUnitByName(unitName, position, true, hero, hero, hero:GetTeamNumber())
-					unit:SetOwner(hero)
-					unit:SetControllableByPlayer(pID, true)
-					FindClearSpaceForUnit(unit, position, true)
-					unit:Hold()
-					table.insert(player.units, unit)
-					unit:SetMana(unit:GetMaxMana())
-				end
-			end, pID)
-
-			--[[local enemyUnitName = "nightelf_mountain_giant"
-			local numEnemy = 5
-			PrecacheUnitByNameAsync(enemyUnitName, function()
-				for i=1,numEnemy do
-					local position = GameRules.StartingPositions[pID].position + Vector(0,-1000,0)
-					local unit = CreateUnitByName(enemyUnitName, position, true, hero, hero, DOTA_TEAM_NEUTRALS)
-					unit:SetControllableByPlayer(pID, true)
-					FindClearSpaceForUnit(unit, position, true)
-					unit:SetTeam(DOTA_TEAM_BADGUYS)
-					unit:Hold()
-				end
-			end, pID)]]
-		end
-	else
-
-		-- A real hero trained through an altar
+	if not hero:HasAbility("hide_hero") then
 		dotacraft:ModifyStatBonuses(hero)
 	end
 
@@ -644,34 +579,12 @@ end
 function LightsOut()
 	print("[DOTACRAFT] Night Time")
 	GameRules.DayTime = false
-
-	local creeps = Entities:FindAllByClassname("npc_dota_creature")
-	for _,v in pairs(creeps) do
-		if IsValidEntity(v) and v:IsAlive() and v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-			local ability = v:FindAbilityByName("neutral_sleep")
-			if ability then
-				print(v:GetUnitName().." is now sleeping")
-			end
-		end
-	end
-
 end
 
 -- Wake up creeps
 function RiseAndShine()
 	print("[DOTACRAFT] Day Time")
 	GameRules.DayTime = true
-
-	local creeps = Entities:FindAllByClassname("npc_dota_creature")
-	for _,v in pairs(creeps) do
-		if IsValidEntity(v) and v:IsAlive() and v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-			local ability = v:FindAbilityByName("neutral_sleep")
-			if ability then
-				print(v:GetUnitName().." is now awake")
-			end
-		end
-	end
-
 end
 
 -- Cleanup a player when they leave
@@ -1012,6 +925,9 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
 	player.altar_structures = {} -- Keeps altars linked
 	player.idle_builders = {} -- Keeps indexes of idle builders to send to the panorama UI
+	player.lumber = 0
+	player.food_limit = 0 -- The amount of food available to build units
+	player.food_used = 0 -- The amount of food used by this player creatures
 
     -- Create Main Building
     DeepPrintTable(GameRules.StartingPositions)
@@ -1105,10 +1021,6 @@ function dotacraft:OnPlayerPickHero(keys)
 		local rotate_pos = mid_point + Vector(1,0,0) * 100
 		local builder_pos = RotatePosition(mid_point, QAngle(0, angle*i, 0), rotate_pos)
 
-		print("BUILDER POS ",i,builder_pos)
-
-		--DebugDrawCircle(builder_pos, Vector(255, 255 , 0), 255, 20, true, 10)
-
 		local builder = CreateUnitByName(builder_name, builder_pos, true, hero, hero, hero:GetTeamNumber())
 		builder:SetOwner(hero)
 		builder:SetControllableByPlayer(playerID, true)
@@ -1120,6 +1032,31 @@ function dotacraft:OnPlayerPickHero(keys)
 
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( builder, player )
+	end
+
+	-- Give Initial Resources
+	hero:SetGold(500, false)
+	ModifyLumber(player, 150)
+
+	-- Hide main hero under the main base
+	local ability = hero:FindAbilityByName("hide_hero")
+	ability:UpgradeAbility(true)
+	hero:SetAbilityPoints(0)
+	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
+	Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
+	hero:AddNoDraw()
+
+	-- Find neutrals near the starting zone and remove them
+	local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
+	for k,v in pairs(neutrals) do
+		if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+			v:RemoveSelf()
+		end
+	end
+
+	-- Test options
+	if Convars:GetBool("developer") then
+		dotacraft:DeveloperMode(player)
 	end
 
 	-- Show UI elements for this race
@@ -1335,21 +1272,6 @@ function dotacraft:OnEntityKilled( event )
 	end)
 end
 
--- This is an example console command
-function dotacraft:ExampleConsoleCommand()
-	print( '******* Example Console Command ***************' )
-	local cmdPlayer = Convars:GetCommandClient()
-	if cmdPlayer then
-		local playerID = cmdPlayer:GetPlayerID()
-		if playerID ~= nil and playerID ~= -1 then
-	  	-- Do something here for the player who called this command
-	  	PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
-		end
-	end
-
-	print( '*********************************************' )
-end
-
 function dotacraft:OnPlayerSelectedEntities( event )
 	local pID = event.pID
 	--print("Player "..pID.." updated selection:")
@@ -1456,51 +1378,6 @@ function dotacraft:DeterminePathableTrees()
 	--end
 end
 
-function dotacraft:DebugTrees()
-	for k,v in pairs(GameRules.ALLTREES) do
-		if v:IsStanding() then
-			if IsTreePathable(v) then
-				DebugDrawCircle(v:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
-				if not v.builder then
-					DebugDrawText(v:GetAbsOrigin(), "OK", true, 60)
-				end
-			else
-				DebugDrawCircle(v:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 60)
-			end
-		end
-	end
-end
-
-function dotacraft:DebugBlight()
-	local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
-	local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
-	local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
-	local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
-	local boundY1 = GridNav:WorldToGridPosX(worldMin.y)
-	local boundY2 = GridNav:WorldToGridPosX(worldMax.y)
-
-	for i=boundX1+1,boundX2-1 do
-		for j=(boundY1+1),boundY2-1 do
-      		local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
-			if HasBlight(position) then
-				if HasBlightParticle(position) then
-					DebugDrawCircle(position, Vector(128,128,128), 50, 256, true, 60)
-				else
-					DebugDrawCircle(position, Vector(128,0,128), 50, 32, true, 60)
-				end
-			end
-		end
-	end
-end
-
-function dotacraft:DebugNight()
-	GameRules:SetTimeOfDay( 0.8 )
-end
-
-function dotacraft:DebugDay()
-	GameRules:SetTimeOfDay( 0.3 )
-end
-
 function dotacraft:RepositionPlayerCamera( event )
 	local pID = event.pID
 	local entIndex = event.entIndex
@@ -1538,7 +1415,9 @@ print("create players")
 		-- player stuff
 		PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
 		PlayerResource:SetCustomTeamAssignment(playerID, team)
-		CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
+		PrecacheUnitByNameAsync(race, function()
+			CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
+		end, pID)
 	end
 end
 
