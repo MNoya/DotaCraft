@@ -15,10 +15,10 @@ function NeutralAI:Start( unit )
 
 	ai.unit = unit --The unit this AI is controlling
 	ai.stateThinks = { --Add thinking functions for each state
-		[AI_STATE_IDLE] = Dynamic_Wrap(NeutralAI, 'IdleThink'),
-		[AI_STATE_AGGRESSIVE] = Dynamic_Wrap(NeutralAI, 'AggressiveThink'),
-		[AI_STATE_RETURNING] = Dynamic_Wrap(NeutralAI, 'ReturningThink'),
-		[AI_STATE_SLEEPING] = Dynamic_Wrap(NeutralAI, 'SleepThink')
+		[AI_STATE_IDLE] = 'IdleThink',
+		[AI_STATE_AGGRESSIVE] = 'AggressiveThink',
+		[AI_STATE_RETURNING] = 'ReturningThink',
+		[AI_STATE_SLEEPING] = 'SleepThink'
 	}
 
 	unit.state = AI_STATE_IDLE
@@ -41,7 +41,7 @@ function NeutralAI:GlobalThink()
 	end
 
 	--Execute the think function that belongs to the current state
-	self.stateThinks[ unit.state ]( self )
+	Dynamic_Wrap(NeutralAI, self.stateThinks[ unit.state ])( self )
 
 	return AI_THINK_INTERVAL
 end
@@ -63,12 +63,14 @@ function NeutralAI:IdleThink()
 	--Start attacking as a group
 	if target then
 		local allies = FindAlliesInRadius( unit, unit.AcquisitionRange)
+		print(unit:GetUnitName()..	" "..unit:GetEntityIndex().." aggro triggered, found allies: ",#allies)
 		for _,v in pairs(allies) do
+			print(v:GetUnitName()..	" "..v:GetEntityIndex().." "..v.state)
 			if v.state == AI_STATE_IDLE then
-				--print(unit:GetUnitName()," now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
-		        unit:MoveToTargetToAttack(target)
-		        unit.aggroTarget = target
-				unit.state = AI_STATE_AGGRESSIVE
+				print(v:GetUnitName()..	" "..v:GetEntityIndex().." now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
+		        v:MoveToTargetToAttack(target)
+		        v.aggroTarget = target
+				v.state = AI_STATE_AGGRESSIVE
 			end
 		end   
     else	
@@ -82,7 +84,6 @@ function NeutralAI:SleepThink()
 
 	-- Wake up
 	if GameRules:IsDaytime() then
-		--print("Removed Sleep from "..unit:GetUnitName().." "..unit:GetEntityIndex())
 		unit:RemoveModifierByName("modifier_neutral_sleep")
 
 		unit.state = AI_STATE_IDLE
@@ -99,38 +100,53 @@ function NeutralAI:AggressiveThink()
 	if ( unit.spawnPos - unit:GetAbsOrigin() ):Length() > unit.leashRange then
 		unit:MoveToPosition( unit.spawnPos )
 		unit.state = AI_STATE_RETURNING
-		--print("Returning")
+		unit.aggroTarget = nil
 		return true
 	end
 	
 	local target = FindAttackableEnemies( unit, false )
 	
-	--Check if the unit's target is still alive, find new targets and return otherwise
+	--Check if the unit's target is still alive, find new target or return otherwise
 	if not unit.aggroTarget or not unit.aggroTarget:IsAlive() then
-		if target then
-			--print("New target ", target:GetUnitName())
-	        unit:MoveToTargetToAttack(target)
-	        unit.aggroTarget = target
-			unit.state = AI_STATE_AGGRESSIVE
-		else
+		if not target then
 			unit:MoveToPosition( unit.spawnPos )
 			unit.state = AI_STATE_RETURNING
-			--print("Returning")
+			unit.aggroTarget = nil
 			return true
 		end	
 	end
 	
-	
+	-- Find a new target nearby if the current target moves too far away
+	if target then
+		local range_to_current_target = unit:GetRangeToUnit(unit.aggroTarget)
+		local range_to_closest_target = unit:GetRangeToUnit(target)
+
+		-- If the range to the current target exceeds the attack range of the attacker, and there is a possible target closer to it, attack that one instead
+		if range_to_current_target > unit:GetAttackRange() and range_to_current_target > range_to_closest_target then
+			print("New target ", target:GetUnitName())
+
+	   		unit:MoveToTargetToAttack(target)
+        	unit.aggroTarget = target
+        end
+	else
+		-- Can't attack the current target and there aren't more targets
+		if not UnitCanAttackTarget(unit, unit.aggroTarget) then
+			unit:MoveToPosition( unit.spawnPos )
+			unit.state = AI_STATE_RETURNING
+			unit.aggroTarget = nil
+		end
+	end
+
+	return true
 end
 
 function NeutralAI:ReturningThink()
 	local unit = self.unit
 
-	print("ReturningThink")
-
 	--Check if the AI unit has reached its spawn location yet
 	if ( unit.spawnPos - unit:GetAbsOrigin() ):Length() < 10 then
 		--Go into the idle state
+		print("Returned")
 		unit.state = AI_STATE_IDLE
 		return true
 	end
