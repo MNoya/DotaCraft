@@ -510,7 +510,7 @@ end
 function dotacraft:OnAllPlayersLoaded()
 	print("[DOTACRAFT] All Players have loaded into the game")
 
-	print("[DOTACRAFT] Initializigin Neutrals")
+	print("[DOTACRAFT] Initializing Neutrals")
 	GameRules.ALLNEUTRALS = Entities:FindAllByClassname("npc_dota_creature")
 	for k,npc in pairs(GameRules.ALLNEUTRALS) do
 		if npc:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
@@ -534,7 +534,8 @@ function dotacraft:OnAllPlayersLoaded()
 		    npc:SetIdleAcquire(false)
 		    npc.AcquisitionRange = npc:GetAcquisitionRange()
 		    npc:SetAcquisitionRange(0)
-
+		    ApplyModifier(npc,"modifier_neutral_idle_aggro")
+		    
 		    NeutralAI:Start( npc )
 		end
 	end
@@ -586,7 +587,7 @@ function dotacraft:OnHeroInGame(hero)
 		-- If you want to test an ability of a unit just put its name here
 		if Convars:GetBool("developer") then
 			local unitName = "nightelf_archer"
-			local num = 10 --Useful to test "AbilityMultiOrder"
+			local num = 20
 			PrecacheUnitByNameAsync(unitName, function()
 				for i=1,num do
 					local position = GameRules.StartingPositions[pID].position + Vector(0,-300-i*50,0)
@@ -597,11 +598,10 @@ function dotacraft:OnHeroInGame(hero)
 					unit:Hold()
 					table.insert(player.units, unit)
 					unit:SetMana(unit:GetMaxMana())
-					unit:SetHealth(unit:GetMaxHealth()/2)
 				end
 			end, pID)
 
-			local enemyUnitName = "nightelf_mountain_giant"
+			--[[local enemyUnitName = "nightelf_mountain_giant"
 			local numEnemy = 5
 			PrecacheUnitByNameAsync(enemyUnitName, function()
 				for i=1,numEnemy do
@@ -612,7 +612,7 @@ function dotacraft:OnHeroInGame(hero)
 					unit:SetTeam(DOTA_TEAM_BADGUYS)
 					unit:Hold()
 				end
-			end, pID)
+			end, pID)]]
 		end
 	else
 

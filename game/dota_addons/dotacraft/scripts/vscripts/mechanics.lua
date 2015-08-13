@@ -1184,7 +1184,7 @@ function FindAttackableEnemies( unit, bIncludeNeutrals )
     if not radius then return end
     local enemies = FindEnemiesInRadius( unit, radius )
     for _,target in pairs(enemies) do
-        if UnitCanAttackTarget(unit, target) then
+        if UnitCanAttackTarget(unit, target) and not target:HasModifier("modifier_invisible") then
         	--DebugDrawCircle(target:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 1)
             if bIncludeNeutrals then
                 return target

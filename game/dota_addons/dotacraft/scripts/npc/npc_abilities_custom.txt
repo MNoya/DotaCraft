@@ -42243,25 +42243,65 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"12"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"12"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"lower_duration"			"0.6"
+				"var_type"			"FIELD_FLOAT"
+				"lower_duration"	"0.6"
 			}
 			// The duration in which the target is lowered.
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"lower_height"				"200"
+				"var_type"			"FIELD_INTEGER"
+				"lower_height"		"200"
 			}
 			// The height to which the target is lowered.
 			// A third value called "Melee Attack Range" apparently doesn't affect anything at all so I've removed it.
 		}
 	
-		// Done
+		"precache"
+		{
+			"particle"  "particles/neutral_fx/dark_troll_ensnare.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/ensnare.lua"
+				"Function"		"OnSpellStart"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ensnare"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/neutral_fx/dark_troll_ensnare.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/ensnare.lua"
+						"Function"		"OnModifierDestroy"
+					}
+				}
+			}
+		}
 	}
 	
 	//=================================================================================

@@ -289,6 +289,20 @@
 					}
 				}
 			}
+	
+			// Answer an attack
+			"modifier_neutral_idle_aggro"
+			{
+				"IsHidden"	"1"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/attacks.lua"
+						"Function"		"NeutralAggro"
+					}
+				}
+			}
 		}
 	}
 	"item_backpack"

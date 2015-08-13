@@ -64,8 +64,27 @@ function WakeUp( event )
     local allies = FindAlliesInRadius( unit, unit.AcquisitionRange)
     for _,v in pairs(allies) do
         v:RemoveModifierByName("modifier_neutral_sleep")
-        v:MoveToTargetToAttack(attacker)
-        v.aggroTarget = attacker
         v.state = AI_STATE_AGGRESSIVE
+        if not IsValidAlive(v.aggroTarget) then
+            v:MoveToTargetToAttack(attacker)
+            v.aggroTarget = attacker
+        end
+    end
+end
+
+function NeutralAggro( event )
+    local unit = event.unit
+    local attacker = event.attacker
+
+    local allies = FindAlliesInRadius( unit, unit.AcquisitionRange)
+    for _,v in pairs(allies) do
+        if v.state == AI_STATE_IDLE then
+            v:RemoveModifierByName("modifier_neutral_idle_aggro")
+            v.state = AI_STATE_AGGRESSIVE
+            if not IsValidAlive(v.aggroTarget) then
+                v:MoveToTargetToAttack(attacker)
+                v.aggroTarget = attacker
+            end
+        end
     end
 end

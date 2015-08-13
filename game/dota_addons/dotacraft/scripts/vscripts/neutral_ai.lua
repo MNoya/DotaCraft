@@ -8,7 +8,7 @@ NeutralAI = {}
 NeutralAI.__index = NeutralAI
 
 function NeutralAI:Start( unit )
-	print("Starting NeutralAI for "..unit:GetUnitName().." "..unit:GetEntityIndex())
+	--print("Starting NeutralAI for "..unit:GetUnitName().." "..unit:GetEntityIndex())
 
 	local ai = {}
 	setmetatable( ai, NeutralAI )
@@ -51,7 +51,7 @@ function NeutralAI:IdleThink()
 
 	-- Sleep
 	if not GameRules:IsDaytime() then
-		print("Applied Sleep to "..unit:GetUnitName().." "..unit:GetEntityIndex())
+		--print("Applied Sleep to "..unit:GetUnitName().." "..unit:GetEntityIndex())
 		ApplyModifier(unit, "modifier_neutral_sleep")
 
 		unit.state = AI_STATE_SLEEPING
@@ -63,17 +63,16 @@ function NeutralAI:IdleThink()
 	--Start attacking as a group
 	if target then
 		local allies = FindAlliesInRadius( unit, unit.AcquisitionRange)
-		print(unit:GetUnitName()..	" "..unit:GetEntityIndex().." aggro triggered, found allies: ",#allies)
+		--print(unit:GetUnitName()..	" "..unit:GetEntityIndex().." aggro triggered, found allies: ",#allies)
 		for _,v in pairs(allies) do
-			print(v:GetUnitName()..	" "..v:GetEntityIndex().." "..v.state)
+			--print(v:GetUnitName()..	" "..v:GetEntityIndex().." "..v.state)
 			if v.state == AI_STATE_IDLE then
-				print(v:GetUnitName()..	" "..v:GetEntityIndex().." now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
+				--print(v:GetUnitName()..	" "..v:GetEntityIndex().." now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
 		        v:MoveToTargetToAttack(target)
 		        v.aggroTarget = target
 				v.state = AI_STATE_AGGRESSIVE
 			end
-		end   
-    else	
+		end	
 		return true
 	end
 end
@@ -97,7 +96,7 @@ function NeutralAI:AggressiveThink()
 	--print("AggressiveThink")
 
 	--Check if the unit has walked outside its leash range
-	if ( unit.spawnPos - unit:GetAbsOrigin() ):Length() > unit.leashRange then
+	if ( unit.spawnPos - unit:GetAbsOrigin() ):Length2D() >= unit.leashRange then
 		unit:MoveToPosition( unit.spawnPos )
 		unit.state = AI_STATE_RETURNING
 		unit.aggroTarget = nil
@@ -106,37 +105,42 @@ function NeutralAI:AggressiveThink()
 	
 	local target = FindAttackableEnemies( unit, false )
 	
-	--Check if the unit's target is still alive, find new target or return otherwise
-	if not unit.aggroTarget or not unit.aggroTarget:IsAlive() then
+	--Check if the unit's target is still alive
+	if not IsValidAlive(unit.aggroTarget) then
+		-- If there is no other valid target, return
 		if not target then
 			unit:MoveToPosition( unit.spawnPos )
 			unit.state = AI_STATE_RETURNING
-			unit.aggroTarget = nil
-			return true
-		end	
-	end
-	
-	-- Find a new target nearby if the current target moves too far away
-	if target then
-		local range_to_current_target = unit:GetRangeToUnit(unit.aggroTarget)
-		local range_to_closest_target = unit:GetRangeToUnit(target)
-
-		-- If the range to the current target exceeds the attack range of the attacker, and there is a possible target closer to it, attack that one instead
-		if range_to_current_target > unit:GetAttackRange() and range_to_current_target > range_to_closest_target then
-			print("New target ", target:GetUnitName())
-
-	   		unit:MoveToTargetToAttack(target)
+			unit.aggroTarget = nil	
+		else
+			--print("New target ", target:GetUnitName())
+			unit:MoveToTargetToAttack(target)
         	unit.aggroTarget = target
-        end
+		end
+		return true
+	
+	-- If the current aggro target is still valid
 	else
-		-- Can't attack the current target and there aren't more targets
-		if not UnitCanAttackTarget(unit, unit.aggroTarget) then
-			unit:MoveToPosition( unit.spawnPos )
-			unit.state = AI_STATE_RETURNING
-			unit.aggroTarget = nil
+		if target then
+			local range_to_current_target = unit:GetRangeToUnit(unit.aggroTarget)
+			local range_to_closest_target = unit:GetRangeToUnit(target)
+
+			-- If the range to the current target exceeds the attack range of the attacker, and there is a possible target closer to it, attack that one instead
+			if range_to_current_target > unit:GetAttackRange() and range_to_current_target > range_to_closest_target then
+				--print("New target ", target:GetUnitName())
+
+	   			unit:MoveToTargetToAttack(target)
+        		unit.aggroTarget = target
+        	end
+		else	
+			-- Can't attack the current target and there aren't more targets close
+			if not UnitCanAttackTarget(unit, unit.aggroTarget) or unit.aggroTarget:HasModifier("modifier_invisible") or unit:GetRangeToUnit(unit.aggroTarget) > unit.leashRange then
+				unit:MoveToPosition( unit.spawnPos )
+				unit.state = AI_STATE_RETURNING
+				unit.aggroTarget = nil
+			end
 		end
 	end
-
 	return true
 end
 
@@ -144,10 +148,11 @@ function NeutralAI:ReturningThink()
 	local unit = self.unit
 
 	--Check if the AI unit has reached its spawn location yet
-	if ( unit.spawnPos - unit:GetAbsOrigin() ):Length() < 10 then
+	if ( unit.spawnPos - unit:GetAbsOrigin() ):Length2D() < 10 then
 		--Go into the idle state
-		print("Returned")
+		--print("Returned")
 		unit.state = AI_STATE_IDLE
+		ApplyModifier(unit, "modifier_neutral_idle_aggro")
 		return true
 	end
 end

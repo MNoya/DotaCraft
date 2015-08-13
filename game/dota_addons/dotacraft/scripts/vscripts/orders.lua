@@ -624,7 +624,7 @@ function dotacraft:RightClickOrder( event )
 
     for _,entityIndex in pairs(selectedEntities) do
         local unit = EntIndexToHScript(entityIndex)
-        if unit:HasModifier("modifier_hold_position") then
+        if IsValidAlive(unit) and unit:HasModifier("modifier_hold_position") then
             unit:RemoveModifierByName("modifier_hold_position")
         end
     end
