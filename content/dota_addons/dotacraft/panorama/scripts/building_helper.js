@@ -69,19 +69,21 @@ function StartBuildingHelper( params )
             boundingRect["topBorderY"] = GamePos[1]+halfSide
             boundingRect["bottomBorderY"] = GamePos[1]-halfSide
 
+            if (GamePos[0] > 10000000) return
+
             for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
             {
                 for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
                 {
                     var pos = [x,y,GamePos[2]]
-                    var gridParticle = gridParticles[part]
-                    Particles.SetParticleControl(gridParticle, 0, pos)     
-                    part++;
-
                     if (part>size*size)
                     {
+                        $.Msg(pos)
                         return
-                    }    
+                    } 
+                    var gridParticle = gridParticles[part]
+                    Particles.SetParticleControl(gridParticle, 0, pos)     
+                    part++; 
 
                     $.Msg("Put Grid Particle ["+part+"] on ",pos)
                     var screenX = Game.WorldToScreenX( pos[0], pos[1], pos[2] );
