@@ -108,27 +108,40 @@ function IsBuilder(name) {
 
 // Main mouse event callback
 GameUI.SetMouseCallback( function( eventName, arg ) {
-	var CONSUME_EVENT = true;
-	var CONTINUE_PROCESSING_EVENT = false;
-	//$.Msg("MOUSE: ", eventName, " -- ", arg, " -- ", GameUI.GetClickBehaviors())
+    var CONSUME_EVENT = true;
+    var CONTINUE_PROCESSING_EVENT = false;
 
-	if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
-		return CONTINUE_PROCESSING_EVENT;
+    if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
+        return CONTINUE_PROCESSING_EVENT;
 
-	if ( eventName === "pressed" || eventName === "doublepressed")
-	{
-		// Left-click
-		if ( arg === 0 )
-		{
-			//OnLeftButtonPressed();
-			return CONTINUE_PROCESSING_EVENT;
-		}
+    if ( eventName === "pressed" && state === 'active')
+    {
+        // Left-click
+        if ( arg === 0 )
+        {
+            return SendBuildCommand();
+        }
 
-		// Right-click
-		if ( arg === 1 )
-		{
-			return OnRightButtonPressed();
-		}
-	}
-	return CONTINUE_PROCESSING_EVENT;
+        // Right-click
+        if ( arg === 1 )
+        {
+            return SendCancelCommand();
+        }
+    }
+    else if ( eventName === "pressed" || eventName === "doublepressed")
+    {
+        // Left-click
+        if ( arg === 0 )
+        {
+            //OnLeftButtonPressed();
+            return CONTINUE_PROCESSING_EVENT;
+        }
+
+        // Right-click
+        if ( arg === 1 )
+        {
+            return OnRightButtonPressed();
+        }
+    }
+    return CONTINUE_PROCESSING_EVENT;
 } );

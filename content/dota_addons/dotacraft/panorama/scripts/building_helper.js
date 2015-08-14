@@ -146,31 +146,6 @@ function SendCancelCommand( params )
     GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
 })();
 
-// Main mouse event callback
-GameUI.SetMouseCallback( function( eventName, arg ) {
-    var CONSUME_EVENT = true;
-    var CONTINUE_PROCESSING_EVENT = false;
-
-    if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
-        return CONTINUE_PROCESSING_EVENT;
-
-    if ( eventName === "pressed" && state === 'active')
-    {
-        // Left-click
-        if ( arg === 0 )
-        {
-            return SendBuildCommand();
-        }
-
-        // Right-click
-        if ( arg === 1 )
-        {
-            return SendCancelCommand();
-        }
-    }
-    return CONTINUE_PROCESSING_EVENT;
-} );
-
 //-----------------------------------
 
 function SnapToGrid(vec, size) {
