@@ -163,9 +163,9 @@ function SnapToGrid(vec, size) {
 }
 
 function SnapToGrid64(coord) {
-    return 64*Math.round(0.5+coord/64);
+    return 64*Math.floor(0.5+coord/64);
 }
 
 function SnapToGrid32(coord) {
-    return 32+64*Math.round(coord/64);
+    return 32+64*Math.floor(coord/64);
 }
