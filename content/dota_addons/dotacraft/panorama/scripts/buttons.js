@@ -18,25 +18,16 @@ function OnIdleButtonPressed( data ) {
 	GameEvents.SendCustomGameEventToServer( "reposition_player_camera", { pID: iPlayerID, entIndex: nextBuilder })
 }
 
-function OnHeroButtonPressed ( data ) {
-	$.Msg("OnHeroButtonPressed "+data)
-
-}
-
-function OnPlayerUpdateOwnedHeroes( args ) {
-	$.Msg("OnPlayerUpdateOwnedHeroes")
-}
-
 function OnPlayerUpdateIdleBuilders( args ) {
 	var iPlayerID = Players.GetLocalPlayer();
-	$.Msg("OnPlayerUpdateIdleBuilders")
+	//$.Msg("OnPlayerUpdateIdleBuilders")
 
 	builderList = args.idle_builder_entities
 	idleCount = 0
 
 	for (var key in builderList) {
 		var idleBuilderIndex = builderList[key]
-		$.Msg("Idle Builder "+idleBuilderIndex)
+		//$.Msg("Idle Builder "+idleBuilderIndex)
 		idleCount++
 	}
 
@@ -62,6 +53,5 @@ Game.AddCommand( "+IdleBuilderSwap", OnIdleButtonPressed, "", 0 );
 
 (function () {
 	GameEvents.Subscribe( "player_show_ui", OnPlayerStart );
-	GameEvents.Subscribe( "player_update_heroes", OnPlayerUpdateOwnedHeroes );
 	GameEvents.Subscribe( "player_update_idle_builders", OnPlayerUpdateIdleBuilders );
 })();
