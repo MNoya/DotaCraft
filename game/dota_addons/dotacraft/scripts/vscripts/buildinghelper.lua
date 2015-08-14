@@ -69,9 +69,7 @@ function BuildingHelper:RegisterRightClick( args )
   if cmdPlayer then
     cmdPlayer.activeBuilder:ClearQueue()
     cmdPlayer.activeBuilding = nil
-    cmdPlayer.activeBuilder:Stop()
     cmdPlayer.activeBuilder.ProcessingBuilding = false
-    
   end
 end
 

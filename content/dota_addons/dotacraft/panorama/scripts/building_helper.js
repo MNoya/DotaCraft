@@ -85,7 +85,7 @@ function StartBuildingHelper( params )
                     Particles.SetParticleControl(gridParticle, 0, pos)     
                     part++; 
 
-                    $.Msg("Put Grid Particle ["+part+"] on ",pos)
+                    //$.Msg("Put Grid Particle ["+part+"] on ",pos)
                     var screenX = Game.WorldToScreenX( pos[0], pos[1], pos[2] );
                     var screenY = Game.WorldToScreenY( pos[0], pos[1], pos[2] );
                     var mouseEntities = GameUI.FindScreenEntities( [screenX,screenY] );
@@ -133,6 +133,7 @@ function SendBuildCommand( params )
         EndBuildingHelper(params);
         return true;
     }
+    return true;
 }
 
 function SendCancelCommand( params )
