@@ -6,6 +6,9 @@ var pressedShift = false;
 var modelParticle;
 var gridParticles;
 
+// Ghost Building Preferences
+var GRID_ALPHA = 30 // Defines the transparency of the ghost squares
+
 function StartBuildingHelper( params )
 {
     if (params !== undefined)
@@ -14,33 +17,36 @@ function StartBuildingHelper( params )
         size = params["size"];
         pressedShift = GameUI.IsShiftDown();
 
+        var scale = params["scale"]
         var entindex = params["entindex"];
+
         var localHeroIndex = Players.GetPlayerHeroEntityIndex( Players.GetLocalPlayer() );
 
-        /*if (modelParticle !== undefined) {
+        if (modelParticle !== undefined) {
             Particles.DestroyParticleEffect(modelParticle, true)
         }
         if (gridParticles !== undefined) {
             for (var i in gridParticles) {
                 Particles.DestroyParticleEffect(gridParticles[i], true)
             }
-        }*/
+        }
 
         // Building Ghost
         modelParticle = Particles.CreateParticle("particles/buildinghelper/ghost_model.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN, localHeroIndex);
         Particles.SetParticleControlEnt(modelParticle, 1, entindex, ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, "follow_origin", Entities.GetAbsOrigin(entindex), true)
-        Particles.SetParticleControl(modelParticle, 3, [255,0,0])
-        Particles.SetParticleControl(modelParticle, 4, [1,0,0])
+        Particles.SetParticleControl(modelParticle, 2, [255,255,255]) //Keep the original color
+        Particles.SetParticleControl(modelParticle, 3, [100,0,0]) //Grid Alpha
+        Particles.SetParticleControl(modelParticle, 4, [scale,0,0]) //Model Scale
 
         // Grid squares
         gridParticles = [];
         for (var x=0; x < size*size; x++)
         {
             var particle = Particles.CreateParticle("particles/buildinghelper/square_sprite.vpcf", ParticleAttachment_t.PATTACH_CUSTOMORIGIN, 0)
+            Particles.SetParticleControl(particle, 1, [32,0,0])
+            Particles.SetParticleControl(particle, 3, [GRID_ALPHA,0,0])
             gridParticles.push(particle)
-        }        
-
-        //lastCursorPosition =  GameUI.GetCursorPosition();
+        }
     } 
     
     if (state == 'active')
@@ -69,15 +75,13 @@ function StartBuildingHelper( params )
                 {
                     var pos = [x,y,GamePos[2]]
                     var gridParticle = gridParticles[part]
-                    Particles.SetParticleControl(gridParticle, 0, pos)
-                    Particles.SetParticleControl(gridParticle, 1, [32,0,0])
-                    Particles.SetParticleControl(gridParticle, 3, [60,0,0])
+                    Particles.SetParticleControl(gridParticle, 0, pos)     
                     part++;
-                    
+
                     if (part>size*size)
                     {
                         return
-                    }
+                    }    
 
                     $.Msg("Put Grid Particle ["+part+"] on ",pos)
                     var screenX = Game.WorldToScreenX( pos[0], pos[1], pos[2] );
@@ -95,7 +99,6 @@ function StartBuildingHelper( params )
 
             // Update the model particle
             Particles.SetParticleControl(modelParticle, 0, GamePos)
-            Particles.SetParticleControl(modelParticle, 2, color)
         }
 
         if (!GameUI.IsShiftDown() && pressedShift)
