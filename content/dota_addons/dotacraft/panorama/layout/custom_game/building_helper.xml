@@ -1,13 +1,9 @@
 <root>
-  <styles>
-    <include src="file://{resources}/styles/custom_game/building_helper.css" />
-  </styles>
-  <scripts>
-    <include src="file://{resources}/scripts/custom_game/building_helper.js" />
-  </scripts>
-  <Panel hittest="false" class="BuildingHelperBase">
-    <Panel hittest="false" class="BuildingHelperBase" id="BuildingHelperBase">
-      <Button hittest="true" id="GreenSquare" class="GreenSquare" onmouseactivate="SendBuildCommand()" oncontextmenu="SendCancelCommand()" />
-    </Panel>
-  </Panel>
+    <scripts>
+        <include src="file://{resources}/scripts/building_helper.js" />
+    </scripts>
+    <script>
+        $.Msg( "Compiled Building Helper!" );
+    </script>
+    <Panel></Panel>
 </root>

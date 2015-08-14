@@ -96,6 +96,18 @@ function BuildingHelper:AddBuilding(keys)
     InitializeBuilder(builder)
   end
 
+  local fMaxScale = buildingTable:GetVal("MaxScale", "float")
+  if fMaxScale == nil then
+    -- If no MaxScale is defined, check the "ModelScale" KeyValue. Otherwise just default to 1
+    local fModelScale = GameMode.UnitKVs[unitName].ModelScale
+    if fModelScale then
+      fMaxScale = fModelScale
+    else
+      fMaxScale = 1
+    end
+  end
+  buildingTable:SetVal("MaxScale", fMaxScale)
+
   -- Get the local player, this assumes the player is only placing one building at a time
   local player = PlayerResource:GetPlayer(builder:GetMainControllingPlayer())
   
@@ -105,8 +117,18 @@ function BuildingHelper:AddBuilding(keys)
   player.activeBuildingTable = buildingTable
   player.activeCallbacks = callbacks
 
+  -- Make a model dummy to pass it to panorama
+  player.activeBuildingTable.mgd = CreateUnitByName(unitName, OutOfWorldVector, false, nil, nil, builder:GetTeam())
 
-  CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", {["state"] = "active", ["size"] = size} )
+  --<BMD> position is 0, model attach is 1, color is CP2, alpha is CP3.x, scale is CP4.x
+  player.activeBuildingTable.modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, player.activeBuildingTable.mgd, player)
+  ParticleManager:SetParticleControlEnt(player.activeBuildingTable.modelParticle, 1, player.activeBuildingTable.mgd, 1, "follow_origin", player.activeBuildingTable.mgd:GetAbsOrigin(), true)            
+  ParticleManager:SetParticleControl(player.activeBuildingTable.modelParticle, 3, Vector(MODEL_ALPHA,0,0))
+  ParticleManager:SetParticleControl(player.activeBuildingTable.modelParticle, 4, Vector(fMaxScale,0,0))
+
+  ParticleManager:SetParticleControl(player.activeBuildingTable.modelParticle, 2, Vector(0,255,0))
+
+  CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", {["state"] = "active", ["size"] = size, ["entindex"] = player.activeBuildingTable.mgd:entindex()})
 end
 
 function BuildingHelper:SetCallbacks(keys)
