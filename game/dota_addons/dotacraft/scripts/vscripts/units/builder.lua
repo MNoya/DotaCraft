@@ -971,7 +971,6 @@ function Repair( event )
 			building:RemoveModifierByName("modifier_repairing_building")
 			for _,builder in pairs(building.units_repairing) do
 				if builder and IsValidEntity(builder) then
-					builder:RemoveModifierByName("modifier_builder_repairing_animation")
 					builder:RemoveModifierByName("modifier_builder_repairing")
 				end
 			end
@@ -994,7 +993,6 @@ function Repair( event )
 		building:RemoveModifierByName("modifier_repairing_building")
 		for _,builder in pairs(building.units_repairing) do
 			if builder and IsValidEntity(builder) then
-				builder:RemoveModifierByName("modifier_builder_repairing_animation")
 				builder:RemoveModifierByName("modifier_builder_repairing")
 			end
 		end

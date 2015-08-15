@@ -492,6 +492,7 @@ function BuildingHelper:InitializeBuildingEntity( keys )
     builder.entrance_to_build = builder:GetAbsOrigin()
     local location_builder = Vector(location.x, location.y, location.z - 200)
     AddUnitToSelection(building)
+    building.builder_inside = builder
     builder:AddNoDraw()
     Timers:CreateTimer(function() 
       builder:SetAbsOrigin(location_builder)
@@ -682,6 +683,30 @@ function BuildingHelper:CancelBuilding(keys)
     PopupGoldGain(building, gold_cost)
     PopupLumber(building, lumber_cost)
 
+    -- Eject builder
+    local builder = building.builder_inside
+    if builder then   
+      builder:SetAbsOrigin(building:GetAbsOrigin())
+    end
+
+    -- Cancel builders repairing
+    local builders = building.units_repairing
+    if builders then
+      -- Remove the modifiers on the building and the builders
+      building:RemoveModifierByName("modifier_repairing_building")
+      for _,builder in pairs(builders) do
+        if builder and IsValidEntity(builder) then
+          builder:RemoveModifierByName("modifier_builder_repairing")
+
+          local ability = builder:FindAbilityByName("human_gather")
+          if ability then 
+            ToggleOff(ability)
+          end
+        end
+      end
+      
+    end
+
     -- Refund items (In the item-queue system, units can be queued before the building is finished)
     for i=0,5 do
         local item = building:GetItemInSlot(i)
@@ -702,7 +727,7 @@ function BuildingHelper:CancelBuilding(keys)
             builder:RemoveModifierByName("modifier_peasant_repairing")
             local race = GetUnitRace(builder)
             local repair_ability = builder:FindAbilityByName(race.."_gather")
-            if repair_ability:GetToggleState() == true then repair_ability:ToggleAbility() end
+            ToggleOff(repair_ability)
         end
     end
 
