@@ -1407,7 +1407,7 @@ end
 function dotacraft:Create_Players(data)
 	print("[DOTACRAFT] Create Players")
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS, 1 do
-		if IsValidPlayerID(playerID) then
+		if PlayerResource:IsValidPlayerID(playerID) then
 			local color = GameRules.colorTable[GameRules.playerTable[playerID].color_index]
 			local team = GameRules.playerTable[playerID].team_index
 			local race = GameRules.raceTable[GameRules.playerTable[playerID].race_index]
