@@ -1405,24 +1405,25 @@ function dotacraft:Skip_Selection()
 end
 
 function dotacraft:Create_Players(data)
-print("create players")
-	for i = 0, PlayerResource:GetPlayerCount()-1, 1 do
-		local playerID = i
-		local color = GameRules.colorTable[GameRules.playerTable[playerID].color_index]
-		local team = GameRules.playerTable[playerID].team_index
-		local race = GameRules.raceTable[GameRules.playerTable[playerID].race_index]
+	print("[DOTACRAFT] Create Players")
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS, 1 do
+		if IsValidPlayerID(playerID) then
+			local color = GameRules.colorTable[GameRules.playerTable[playerID].color_index]
+			local team = GameRules.playerTable[playerID].team_index
+			local race = GameRules.raceTable[GameRules.playerTable[playerID].race_index]
 
-		-- if race is nil it means that the id supplied is random since that is the only fallout index
-		if race == nil then
-			race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
+			-- if race is nil it means that the id supplied is random since that is the only fallout index
+			if race == nil then
+				race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
+			end
+			
+			-- player stuff
+			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
+			PlayerResource:SetCustomTeamAssignment(playerID, team)
+			PrecacheUnitByNameAsync(race, function()
+				CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
+			end, pID)
 		end
-		
-		-- player stuff
-		PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
-		PlayerResource:SetCustomTeamAssignment(playerID, team)
-		PrecacheUnitByNameAsync(race, function()
-			CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
-		end, pID)
 	end
 end
 
