@@ -39,6 +39,7 @@ function Gather( event )
 		-- moving_to_tree
 		-- moving_to_mine
 		-- moving_to_repair
+		-- moving_to_build (set on Building Helper when a order is confirmed)
 		-- returning_lumber
 		-- returning_gold
 		-- gathering_lumber
@@ -200,7 +201,7 @@ function Gather( event )
 				
 				if distance > MIN_DISTANCE_TO_MINE then
 					caster:MoveToPosition(mine_entrance_pos)
-					--print("Moving to Mine, distance ", distance)
+					print("Moving to Mine, distance ", distance)
 					return THINK_INTERVAL
 				else
 					--print("Mine Reached")
@@ -377,12 +378,33 @@ function CancelGather( event )
 	local caster = event.caster
 	local ability = event.ability
 
-	-- Builder race
-	local race = GetUnitRace(caster)
+	local ability_order = event.event_ability
+	if ability_order then
+		local order_name = ability_order:GetAbilityName()
+		--print("CancelGather Order: "..order_name)
+		if string.match(order_name,"build_") then
+			--print(" return")
+			return
+		end
+	end
 
-	local return_ability = caster:FindAbilityByName(race.."_return_resources")
+	print("CancelGather")
+	if not caster.state_timer then 
+		caster.state_timer = Timers:CreateTimer(function()
+			print(caster.state) 
+			return THINK_INTERVAL 
+		end)
+	end
+	caster:RemoveModifierByName("modifier_on_order_cancel_lumber")
+	caster:RemoveModifierByName("modifier_gathering_lumber")
+	caster:RemoveModifierByName("modifier_on_order_cancel_gold")
+
 	ability.cancelled = true
 	caster.state = "idle"
+	print("CancelGather set Idle!")
+
+	-- Builder race
+	local race = GetUnitRace(caster)
 
 	local tree = caster.target_tree
 	if tree then
@@ -429,12 +451,23 @@ function CancelReturn( event )
 	local caster = event.caster
 	local ability = event.ability
 
+	local ability_order = event.event_ability
+	if ability_order then
+		local order_name = ability_order:GetAbilityName()
+		print("CancelReturn Order: "..order_name)
+		if string.match(order_name,"build_") then
+			print(" return")
+			return
+		end
+	end
+
 	-- Builder race
 	local race = GetUnitRace(caster)
 
 	local gather_ability = caster:FindAbilityByName(race.."_gather")
-	ability.cancelled = true
+	gather_ability.cancelled = true
 	caster.state = "idle"
+	print("BuilderStopRepairing set Idle!")
 
 	local tree = caster.target_tree
 	if tree then
@@ -1023,8 +1056,23 @@ function BuilderStopRepairing( event )
 	local caster = event.caster
 	local ability = event.ability
 	local building = caster.repair_target
+
+	local ability_order = event.event_ability
+	if ability_order then
+		local order_name = ability_order:GetAbilityName()
+		print("BuilderStopRepairing Order: "..order_name)
+		if string.match(order_name,"build_") then
+			print(" return")
+			return
+		end
+	end
 	
+	caster:RemoveModifierByName("modifier_on_order_cancel_repair")
+	caster:RemoveModifierByName("modifier_builder_repairing")
+	caster:RemoveGesture(ACT_DOTA_ATTACK)
+
 	caster.state = "idle"
+	print("BuilderStopRepairing set Idle!")
 
 	-- Apply a modifier stack to the building, to show how many builders are working on it (and scale the Powerbuild costs)
 	local modifierName = "modifier_repairing_building"
@@ -1042,4 +1090,9 @@ function BuilderStopRepairing( event )
 	if builder and builder ~= -1 then
 		table.remove(building.units_repairing, builder)
 	end
+end
+
+function RepairAnimation( event )
+	local caster = event.caster
+	caster:StartGesture(ACT_DOTA_ATTACK)
 end

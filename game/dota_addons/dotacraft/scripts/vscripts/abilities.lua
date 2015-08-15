@@ -7,8 +7,6 @@ function build( keys )
 	local AbilityKV = GameRules.AbilityKV
 	local UnitKV = GameRules.UnitKV
 
-	caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
-
 	-- Handle the name for item-ability build
 	local building_name
 	if keys.ItemUnitName then

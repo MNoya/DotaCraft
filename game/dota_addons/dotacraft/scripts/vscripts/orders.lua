@@ -1,7 +1,10 @@
 function dotacraft:FilterExecuteOrder( filterTable )
-    --[[for k, v in pairs( filterTable ) do
+    --[[
+    print("-----------------------------------------")
+    for k, v in pairs( filterTable ) do
         print("Order: " .. k .. " " .. tostring(v) )
-    end]]
+    end
+    ]]
 
     local DEBUG = false
 

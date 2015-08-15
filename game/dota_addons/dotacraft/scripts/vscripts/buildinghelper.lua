@@ -800,6 +800,7 @@ function InitializeBuilder( builder )
     ParticleManager:SetParticleControl(modelParticle, 2, Vector(0,255,0))
 
     table.insert(builder.buildingQueue, {["location"] = location, ["name"] = building, ["buildingTable"] = buildingTable, ["particles"] = modelParticle, ["callbacks"] = callbacks})
+
   end
 
   -- Clear the build queue, the player right clicked
@@ -855,6 +856,10 @@ function InitializeBuilder( builder )
 
     Timers:CreateTimer(.03, function()
       builder:CastAbilityOnPosition(location, abil, 0)
+        
+      -- Change builder state
+      builder.state = "moving_to_build"
+
       if callbacks.onBuildingPosChosen ~= nil then
         callbacks.onBuildingPosChosen(location)
         callbacks.onBuildingPosChosen = nil
