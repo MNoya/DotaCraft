@@ -10,7 +10,7 @@ MIN_DISTANCE_TO_TREE = 200
 MIN_DISTANCE_TO_MINE = 250
 TREE_FIND_RADIUS_FROM_TREE = 200
 TREE_FIND_RADIUS_FROM_TOWN = 2000
-DURATION_INSIDE_MINE = 1
+DURATION_INSIDE_MINE = 0.5
 BASE_LUMBER_CARGO = 10
 DAMAGE_TO_TREE = 1
 DAMAGE_TO_MINE = 10
@@ -201,7 +201,7 @@ function Gather( event )
 				
 				if distance > MIN_DISTANCE_TO_MINE then
 					caster:MoveToPosition(mine_entrance_pos)
-					print("Moving to Mine, distance ", distance)
+					--print("Moving to Mine, distance ", distance)
 					return THINK_INTERVAL
 				else
 					--print("Mine Reached")
