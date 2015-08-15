@@ -3646,8 +3646,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/water_wheel.vmdl"
-		"ModelScale"				"0.5"
+		"Model"						"models/heroes/disruptor/disruptor_thunderator.vmdl"
+		"ModelScale"				"7"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -3978,7 +3978,7 @@
 	//	human_priest - models/heroes/oracle/oracle.vmdl
 	//	human_mortar_team - models/heroes/techies/techies.vmdl
 	//	human_siege_engine - models/items/courier/carty/carty.vmdl
-	//	human_gryphon_rider - models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl
+	//	human_gryphon_rider - models/items/courier/royal_griffin_cub/royal_griffin_cub_flying.vmdl + meepo/tusk
 	
 	//=================================================================================
 	// Creature: Peasant
@@ -5317,7 +5317,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/courier/blue_lightning_horse/blue_lightning_horse_flying.vmdl"
+		"Model"						"models/items/courier/royal_griffin_cub/royal_griffin_cub.vmdl"
 		"ModelScale"				"1.2"
 		"Level"						"5"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
@@ -9771,6 +9771,10 @@
 	// models/items/juggernaut/ward/healing_gills_of_the_lost_isles/healing_gills_of_the_lost_isles.vmdl
 	// models/items/wards/warding_guise/warding_guise.vmdl
 	
+	// models/props_structures/dire_ancient_base001.vmdl
+	// models/props_structures/dire_barracks_melee001.vmdl
+	// models/props_structures/dire_barracks_ranged001.vmdl
+	
 	//=================================================================================
 	// Building: Altar of Storms
 	// Description: "Summons Heroes. Revives slain Heroes."
@@ -10031,8 +10035,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_standard001.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/props_structures/dire_ancient_base001.vmdl"
+		"ModelScale"				"0.7"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -10115,8 +10119,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_standard001.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/props_structures/dire_ancient_base001.vmdl"
+		"ModelScale"				"0.75"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -10199,8 +10203,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_standard001.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/props_structures/dire_ancient_base001.vmdl"
+		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -10372,7 +10376,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_standard001.vmdl"
+		"Model"						"models/props_structures/dire_barracks_ranged001.vmdl"
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
@@ -10535,8 +10539,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_standard001.vmdl"
-		"ModelScale"				"1"
+		"Model"						"models/items/wards/warding_guise/warding_guise.vmdl"
+		"ModelScale"				"2"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -10619,7 +10623,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/bad_standard001.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -13456,7 +13460,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/statue_dragon003.vmdl"
-		"ModelScale"				"1.5"
+		"ModelScale"				"1.3"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -13787,7 +13791,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/pugna/ward/draining_wight/draining_wight.vmdl" //"models/props_structures/bad_barracks001_ranged.vmdl"
+		"Model"						"models/props_structures/bad_barracks001_ranged.vmdl"
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
@@ -13949,8 +13953,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/bad_ancient_destruction.vmdl"
-		"ModelScale"				"0.5"
+		"Model"						"models/items/pugna/ward/draining_wight/draining_wight.vmdl"
+		"ModelScale"				"1.5"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
@@ -14033,7 +14037,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/props_structures/bad_ancient001.vmdl"
-		"ModelScale"				"0.5"
+		"ModelScale"				"0.4"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
