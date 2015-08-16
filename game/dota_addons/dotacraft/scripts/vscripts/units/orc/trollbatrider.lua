@@ -5,8 +5,8 @@ function SpellStart( event )
 	local ability = event.ability
 	ability:ApplyDataDrivenModifier(caster, caster, 'modifier_unstable_concoction', {})
 	caster:EmitSound('Hero_Huskar.Life_Break') 
-	caster:MoveToPosition(target:GetAbsOrigin())
 	Timers:CreateTimer(function()
+		caster:MoveToPosition(target:GetAbsOrigin())
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 20, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(enemies) do
 			if enemy == target then
