@@ -32,6 +32,7 @@ function build( keys )
 
 	BuildingHelper:AddBuilding(keys)
 
+
 	keys:OnPreConstruction(function(vPos)
 
 		print('preconstruction')

@@ -381,6 +381,13 @@ function BuildingHelper:InitializeBuildingEntity( keys )
     end
   end
 
+  if GameRules.WarpTen then
+    local building = BuildingHelper:PlaceBuilding(player, unitName, location, true, size)
+    ParticleManager:DestroyParticle(work.particles, true)
+    callbacks.onConstructionCompleted(building)
+    return
+  end
+
   local gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)
 
   -- Spawn the building

@@ -103,6 +103,14 @@ function dotacraft:FilterDamage( filterTable )
 
 	end
 
+	-- Cheat code host only
+  	if GameRules.WhosYourDaddy then
+  		local victimID = EntIndexToHScript(victim_index):GetPlayerOwnerID()
+  		if victimID == 0 then
+  			filterTable["damage"] = 0
+  		end
+  	end
+
 	return true
 end
 

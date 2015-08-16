@@ -55,10 +55,10 @@ function CheckAbilityRequirements( unit, player )
 							Requirements fail: Set disabled (the player lost some requirement due to building destruction)
 					]]
 
-					-- Unlock all abilities inside the workshop tools
-					--[[if Convars:GetBool("developer") then
+					-- Unlock all abilities cheat
+					if GameRules.Synergy then
 						player_has_requirements = true
-					end]]
+					end
 
 					if disabled then
 						if player_has_requirements then

@@ -100,7 +100,7 @@ function dotacraft:InitGameMode()
 	GameMode:SetUnseenFogOfWarEnabled( UNSEEN_FOG_ENABLED )	
 	GameMode:SetTowerBackdoorProtectionEnabled( false )
 	GameMode:SetGoldSoundDisabled( false )
-	GameMode:SetRemoveIllusionsOnDeath( false )
+	GameMode:SetRemoveIllusionsOnDeath( true )
 	GameMode:SetAnnouncerDisabled( true )
 	GameMode:SetLoseGoldOnDeath( false )
 	GameMode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
@@ -241,8 +241,6 @@ function dotacraft:InitGameMode()
 	-- Console Commands
 	Convars:RegisterCommand( "debug_trees", Dynamic_Wrap(dotacraft, 'DebugTrees'), "Prints the trees marked as pathable", 0 )
 	Convars:RegisterCommand( "debug_blight", Dynamic_Wrap(dotacraft, 'DebugBlight'), "Prints the positions marked for undead buildings", 0 )
-	Convars:RegisterCommand( "night", Dynamic_Wrap(dotacraft, 'DebugNight'), "Makes Night Time", 0 )
-	Convars:RegisterCommand( "day", Dynamic_Wrap(dotacraft, 'DebugDay'), "Makes Day Time", 0 )
 	Convars:RegisterCommand( "skip_selection", Dynamic_Wrap(dotacraft, 'Skip_Selection'), "Skip Selection", 0 )
 	
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
@@ -696,6 +694,14 @@ function dotacraft:OnEntityHurt(keys)
 	    if inflictor then
 	    	damagingAbility = EntIndexToHScript( keys.entindex_inflictor )
 	    end
+  	end
+
+  	-- Cheat code host only
+  	if GameRules.WhosYourDaddy and victim and attacker then
+  		local attackerID = cause:GetPlayerOwnerID()
+  		if attackerID == 0 then
+  			victim:Kill(nil, cause)
+  		end
   	end
 
 	local time = GameRules:GetGameTime()

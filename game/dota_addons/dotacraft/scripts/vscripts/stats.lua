@@ -32,6 +32,10 @@ function dotacraft:ModifyStatBonuses(unit)
 
 	Timers:CreateTimer(function()
 
+		if not IsValidEntity(hero) then
+			return
+		end
+
 		-- Initialize value tracking
 		if not hero.custom_stats then
 			hero.custom_stats = true
