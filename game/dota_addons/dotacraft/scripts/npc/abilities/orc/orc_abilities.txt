@@ -1216,6 +1216,7 @@
 		
 	"AbilitySpecial"
 	{
+		// NOTE: Causes a powerful explosion that deals 600 damage to a target air unit and 140 damage to nearby air units. Using this ability destroys the Troll Batrider. The splash radius is 20. ????
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
@@ -1239,7 +1240,55 @@
 		// The unit will move towards the target unit with an increased speed (base + bonus).
 	}
 
-	// Done
+	"precache"
+	{
+		"particle"  "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_life_break.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+		
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/orc/trollbatrider.lua"
+			"Function"		"SpellStart"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_unstable_concoction"
+		{
+			"IsPurgable"		"0"
+			"IsBuff"			"1"
+
+			"EffectName"		"particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_life_break.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%speed_bonus"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MUTED"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_SILENCED"				"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/trollbatrider.lua"
+					"Function"		"ModDeath"
+				}
+			}
+		}
+	}
 }
 
 //=================================================================================
