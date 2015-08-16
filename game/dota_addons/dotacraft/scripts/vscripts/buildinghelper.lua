@@ -9,8 +9,10 @@
 ]]
 -- Rewritten with multiplayer + shift queue in mind
 
-BuildingHelper = {}
-BuildingAbilities = {}
+if not BuildingHelper then
+  BuildingHelper = class({})
+  BuildingAbilities = class({})
+end
 
 if not OutOfWorldVector then
   OutOfWorldVector = Vector(11000,11000,0)
@@ -57,6 +59,8 @@ function BuildingHelper:RegisterLeftClick( args )
     builder:FindAbilityByName("has_build_queue"):SetLevel(1)
   end
 
+  
+
   -- Cancel current repair
   if builder:HasModifier("modifier_builder_repairing") then
     local race = GetUnitRace(builder)
@@ -67,17 +71,14 @@ function BuildingHelper:RegisterLeftClick( args )
     BuilderStopRepairing(event)
   end
 
-  builder:AddToQueue(location)
+  BuildingHelper:AddToQueue(builder, location)
 end
 
 function BuildingHelper:RegisterRightClick( args )
-  --get the player that sent the command
-  local cmdPlayer = PlayerResource:GetPlayer(args['PlayerID'])
-  if cmdPlayer then
-    cmdPlayer.activeBuilder:ClearQueue()
-    cmdPlayer.activeBuilding = nil
-    cmdPlayer.activeBuilder.ProcessingBuilding = false
-  end
+  local player = PlayerResource:GetPlayer(args['PlayerID'])
+  BuildingHelper:ClearQueue(player.activeBuilder)
+  player.activeBuilding = nil
+  player.activeBuilder.ProcessingBuilding = false
 end
 
 function BuildingHelper:AddBuilding(keys)
@@ -98,7 +99,7 @@ function BuildingHelper:AddBuilding(keys)
   local builder = keys.caster
 
   if builder.buildingQueue == nil or Timers.timers[builder.workTimer] == nil then    
-    InitializeBuilder(builder)
+    BuildingHelper:InitializeBuilder(builder)
   end
 
   local fMaxScale = buildingTable:GetVal("MaxScale", "float")
@@ -764,8 +765,9 @@ end
       * Sets up all the functions required of a builder. Will run once per builder
       * Manages each workers build queue
 ]]--
-function InitializeBuilder( builder )
-  
+
+function BuildingHelper:InitializeBuilder(builder)
+
   builder.ProcessingBuilding = false
 
   if builder.buildingQueue == nil then
@@ -776,104 +778,85 @@ function InitializeBuilder( builder )
   builder.workTimer = Timers:CreateTimer(0.1, function ()
     if #builder.buildingQueue > 0 and builder.ProcessingBuilding == false then    
       builder.ProcessingBuilding = true
-      builder:AddToGrid(builder.buildingQueue[1])
+      BuildingHelper:AddToGrid(builder, builder.buildingQueue[1])
       table.remove(builder.buildingQueue, 1)
     end
     return 0.1
   end)
 
-  function builder:AddToQueue( location )
-    -- Adds a location to the builders work queue
+end
 
-    local player = PlayerResource:GetPlayer(builder:GetMainControllingPlayer())
-    local building = player.activeBuilding
-    local buildingTable = player.activeBuildingTable
-    local fMaxScale = buildingTable:GetVal("MaxScale", "float")
-    local size = buildingTable:GetVal("BuildingSize", "number")
-    local callbacks = player.activeCallbacks
+-- Adds a location to the builders work queue
+function BuildingHelper:AddToQueue( builder, location )
 
-    if size % 2 ~= 0 then
-      location.x = SnapToGrid32(location.x)
-      location.y = SnapToGrid32(location.y)
-    else
-      location.x = SnapToGrid64(location.x)
-      location.y = SnapToGrid64(location.y)
-    end
+  local player = PlayerResource:GetPlayer(builder:GetMainControllingPlayer())
+  local building = player.activeBuilding
+  local buildingTable = player.activeBuildingTable
+  local fMaxScale = buildingTable:GetVal("MaxScale", "float")
+  local size = buildingTable:GetVal("BuildingSize", "number")
+  local callbacks = player.activeCallbacks
 
-    if size % 2 == 1 then
-      for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 32 do
-        for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 32 do
-          local testLocation = Vector(x, y, location.z)
-          if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
-            if callbacks.onConstructionFailed ~= nil then
-              callbacks.onConstructionFailed(work)
-            end
-            return
+  if size % 2 ~= 0 then
+    location.x = SnapToGrid32(location.x)
+    location.y = SnapToGrid32(location.y)
+  else
+    location.x = SnapToGrid64(location.x)
+    location.y = SnapToGrid64(location.y)
+  end
+
+  if size % 2 == 1 then
+    for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 32 do
+      for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 32 do
+        local testLocation = Vector(x, y, location.z)
+        if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
+          if callbacks.onConstructionFailed ~= nil then
+            callbacks.onConstructionFailed(work)
           end
-        end
-      end
-    else
-      for x = location.x - (size / 2) * 32 - 16, location.x + (size / 2) * 32 + 16, 32 do
-        for y = location.y - (size / 2) * 32 - 16, location.y + (size / 2) * 32 + 16, 32 do
-          local testLocation = Vector(x, y, location.z)
-           if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
-            if callbacks.onConstructionFailed ~= nil then
-              callbacks.onConstructionFailed(work)
-            end
-            return
-          end
-        end
-      end
-    end
-
-    if callbacks.onPreConstruction ~= nil then
-      local result = callbacks.onPreConstruction(location)
-      if result ~= nil then
-        if result == false then
           return
         end
       end
     end
-
-    -- Create model ghost dummy out of the map, then make pretty particles
-    local mgd = CreateUnitByName(building, OutOfWorldVector, false, nil, nil, builder:GetTeam())
-
-    --<BMD> position is 0, model attach is 1, color is CP2, alpha is CP3.x, scale is CP4.x
-    local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
-    ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true)            
-    ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0))
-    ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0))
-
-    ParticleManager:SetParticleControl(modelParticle, 0, location)
-    ParticleManager:SetParticleControl(modelParticle, 2, Vector(0,255,0))
-
-    table.insert(builder.buildingQueue, {["location"] = location, ["name"] = building, ["buildingTable"] = buildingTable, ["particles"] = modelParticle, ["callbacks"] = callbacks})
-
-  end
-
-  -- Clear the build queue, the player right clicked
-  function builder:ClearQueue()
-    
-    if builder.work ~= nil then
-      ParticleManager:DestroyParticle(builder.work.particles, true)
-      if builder.work.callbacks.onConstructionCancelled ~= nil then
-        builder.work.callbacks.onConstructionCancelled(work)
-      end
-    end
-
-    while #builder.buildingQueue > 0 do
-      local work = builder.buildingQueue[1]
-      print(work.particles)
-      ParticleManager:DestroyParticle(work.particles, true)
-      table.remove(builder.buildingQueue, 1)
-      if work.callbacks.onConstructionCancelled ~= nil then
-        work.callbacks.onConstructionCancelled(work)
+  else
+    for x = location.x - (size / 2) * 32 - 16, location.x + (size / 2) * 32 + 16, 32 do
+      for y = location.y - (size / 2) * 32 - 16, location.y + (size / 2) * 32 + 16, 32 do
+        local testLocation = Vector(x, y, location.z)
+         if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
+          if callbacks.onConstructionFailed ~= nil then
+            callbacks.onConstructionFailed(work)
+          end
+          return
+        end
       end
     end
   end
 
-  function builder:AddToGrid( work )
-    -- Processes an item of the builders work queue
+  if callbacks.onPreConstruction ~= nil then
+    local result = callbacks.onPreConstruction(location)
+    if result ~= nil then
+      if result == false then
+        return
+      end
+    end
+  end
+
+  -- Create model ghost dummy out of the map, then make pretty particles
+  local mgd = CreateUnitByName(building, OutOfWorldVector, false, nil, nil, builder:GetTeam())
+
+  --<BMD> position is 0, model attach is 1, color is CP2, alpha is CP3.x, scale is CP4.x
+  local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
+  ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true)            
+  ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0))
+  ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0))
+
+  ParticleManager:SetParticleControl(modelParticle, 0, location)
+  ParticleManager:SetParticleControl(modelParticle, 2, Vector(0,255,0))
+
+  table.insert(builder.buildingQueue, {["location"] = location, ["name"] = building, ["buildingTable"] = buildingTable, ["particles"] = modelParticle, ["callbacks"] = callbacks})
+
+end
+
+-- Processes an item of the builders work queue
+function BuildingHelper:AddToGrid( builder, work )
     local buildingTable = work.buildingTable
     local castRange = buildingTable:GetVal("AbilityCastRange", "number")
     local callbacks = work.callbacks
@@ -913,6 +896,25 @@ function InitializeBuilder( builder )
         callbacks.onBuildingPosChosen = nil
       end
     end)
+end
+
+-- Clear the build queue, the player right clicked
+function BuildingHelper:ClearQueue(builder)
+  if builder.work ~= nil then
+    ParticleManager:DestroyParticle(builder.work.particles, true)
+    if builder.work.callbacks.onConstructionCancelled ~= nil then
+      builder.work.callbacks.onConstructionCancelled(work)
+    end
+  end
+
+  while #builder.buildingQueue > 0 do
+    local work = builder.buildingQueue[1]
+    print(work.particles)
+    ParticleManager:DestroyParticle(work.particles, true)
+    table.remove(builder.buildingQueue, 1)
+    if work.callbacks.onConstructionCancelled ~= nil then
+      work.callbacks.onConstructionCancelled(work)
+    end
   end
 end
 

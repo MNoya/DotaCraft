@@ -278,11 +278,11 @@ function builder_queue( keys )
     player.activeBuilding = nil
     if player.activeBuilder and IsValidEntity(player.activeBuilder) then
     	if player.activeBuilder == caster then
-            player.activeBuilder:ClearQueue()
+            BuildingHelper:ClearQueue(player.activeBuilder)
             player.activeBuilder.ProcessingBuilding = false
         else
             player.activeBuilder = caster
-            player.activeBuilder:ClearQueue()
+            BuildingHelper:ClearQueue(player.activeBuilder)
             player.activeBuilder.ProcessingBuilding = false
        end
     end
