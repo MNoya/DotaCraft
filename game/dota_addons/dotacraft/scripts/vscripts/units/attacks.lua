@@ -90,7 +90,6 @@ function NeutralAggro( event )
 end
 
 function CheatCheck( event )
-    print("Cheat Check")
     local ability_executed = event.event_ability
     if ability_executed and GameRules.ThereIsNoSpoon then
         ability_executed:RefundManaCost()

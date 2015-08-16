@@ -49,18 +49,25 @@ function BuildingHelper:RegisterLeftClick( args )
   local z = args['Z']
   local location = Vector(x, y, z)
 
-  --get the player that sent the command
-  local cmdPlayer = PlayerResource:GetPlayer(args['PlayerID'])
-  
-  if cmdPlayer.activeBuilder:HasAbility("has_build_queue") == false then
-    cmdPlayer.activeBuilder:AddAbility("has_build_queue")
-    local abil = cmdPlayer.activeBuilder:FindAbilityByName("has_build_queue")
-    abil:SetLevel(1)
+  local player = PlayerResource:GetPlayer(args['PlayerID'])
+  local builder = player.activeBuilder
+
+  if not builder:HasAbility("has_build_queue") then
+    builder:AddAbility("has_build_queue")
+    builder:FindAbilityByName("has_build_queue"):SetLevel(1)
   end
 
-  if cmdPlayer then
-    cmdPlayer.activeBuilder:AddToQueue(location)
+  -- Cancel current repair
+  if builder:HasModifier("modifier_builder_repairing") then
+    local race = GetUnitRace(builder)
+    local repair_ability = builder:FindAbilityByName(race.."_gather")
+    local event = {}
+    event.caster = builder
+    event.ability = repair_ability
+    BuilderStopRepairing(event)
   end
+
+  builder:AddToQueue(location)
 end
 
 function BuildingHelper:RegisterRightClick( args )
@@ -349,9 +356,6 @@ function BuildingHelper:InitializeBuildingEntity( keys )
   local buildingTable = work.buildingTable
   local size = buildingTable:GetVal("BuildingSize", "number")
 
-  -- Worker is done with this building
-  builder.ProcessingBuilding = false
-
   -- Check gridnav.
   if size % 2 == 1 then
     for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 32 do
@@ -511,6 +515,10 @@ function BuildingHelper:InitializeBuildingEntity( keys )
       print("Building needs float adjust")
   else
     if not bRequiresRepair then
+
+      -- Worker is done with this building
+      builder.ProcessingBuilding = false
+
       building.updateHealthTimer = DoUniqueString('health') 
       Timers:CreateTimer(building.updateHealthTimer, {
         callback = function()
@@ -557,6 +565,9 @@ function BuildingHelper:InitializeBuildingEntity( keys )
             builder:RemoveNoDraw()
           end
 
+          -- Worker is done with this building
+          builder.ProcessingBuilding = false
+
           return nil
         end
         return fUpdateHealthInterval
@@ -582,6 +593,9 @@ function BuildingHelper:InitializeBuildingEntity( keys )
           if building.constructionCompleted then --This is set on the repair ability when the builders have restored the necessary health
             if callbacks.onConstructionCompleted ~= nil and building:IsAlive() then
               callbacks.onConstructionCompleted(building)
+
+              -- Worker is done with this building (finished repairing)
+              builder.ProcessingBuilding = false
             end
             building.state = "complete"
             return nil
@@ -705,13 +719,15 @@ function BuildingHelper:CancelBuilding(keys)
         if builder and IsValidEntity(builder) then
           builder:RemoveModifierByName("modifier_builder_repairing")
 
+          -- Worker is done with this building
+          builder.ProcessingBuilding = false
+
           local ability = builder:FindAbilityByName("human_gather")
           if ability then 
             ToggleOff(ability)
           end
         end
       end
-      
     end
 
     -- Refund items (In the item-queue system, units can be queued before the building is finished)
@@ -756,7 +772,7 @@ function InitializeBuilder( builder )
     builder.buildingQueue = {}
   end
 
-
+  -- Repeating timer to move to the next queued building
   builder.workTimer = Timers:CreateTimer(0.1, function ()
     if #builder.buildingQueue > 0 and builder.ProcessingBuilding == false then    
       builder.ProcessingBuilding = true
