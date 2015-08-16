@@ -111,10 +111,110 @@ function dotacraft:DebugBlight()
 	end
 end
 
-function dotacraft:DebugNight()
+-- Legacy Cheat Codes
+if not GameRules.RegisteredCheats then
+	Convars:RegisterCommand( "warpten", Dynamic_Wrap(dotacraft, 'WarpTen'), "Speeds construction of buildings and units", 0 )
+	Convars:RegisterCommand( "greedisgood", Dynamic_Wrap(dotacraft, 'GreedIsGood'), "Gives you X gold and lumber", 0 )
+	Convars:RegisterCommand( "whosyourdaddy", Dynamic_Wrap(dotacraft, 'WhosYourDaddy'), "God Mode", 0 )
+	Convars:RegisterCommand( "thereisnospoon", Dynamic_Wrap(dotacraft, 'ThereIsNoSpoon'), "Unlimited Mana", 0 )
+	Convars:RegisterCommand( "iseedeadpeople", Dynamic_Wrap(dotacraft, 'ISeeDeadPeople'), "Remove fog of war", 0 )
+	Convars:RegisterCommand( "pointbreak", Dynamic_Wrap(dotacraft, 'PointBreak'), "Sets food limit to 1000", 0 )
+	Convars:RegisterCommand( "synergy", Dynamic_Wrap(dotacraft, 'Synergy'), "Disable tech tree requirements", 0 )
+	Convars:RegisterCommand( "riseandshine", Dynamic_Wrap(dotacraft, 'RiseAndShine'), "Set time of day to dawn", 0 )
+	Convars:RegisterCommand( "lightsout", Dynamic_Wrap(dotacraft, 'LightsOut'), "Set time of day to dusk", 0 )
+	GameRules.RegisteredCheats = true
+end
+
+function dotacraft:WarpTen()
+	if not GameRules.WarpTen then
+		print('Cheat enabled!')
+		GameRules.WarpTen = true
+	else
+		print("Cheat disabled!")
+		GameRules.WarpTen = false
+	end
+end
+
+function dotacraft:GreedIsGood(value)
+	local cmdPlayer = Convars:GetCommandClient()
+	local pID = cmdPlayer:GetPlayerID()
+	
+	PlayerResource:ModifyGold(pID, tonumber(value), true, 0)
+	ModifyLumber(cmdPlayer, tonumber(value))
+end
+
+function dotacraft:WhosYourDaddy()
+	if not GameRules.WhosYourDaddy then
+		print('Cheat enabled!')
+		GameRules.WhosYourDaddy = true
+	else
+		print("Cheat disabled!")
+		GameRules.WhosYourDaddy = false
+	end
+end
+
+function dotacraft:ThereIsNoSpoon()
+	if not GameRules.ThereIsNoSpoon then
+		print('Cheat enabled!')
+		GameRules.ThereIsNoSpoon = true
+	else
+		print("Cheat disabled!")
+		GameRules.ThereIsNoSpoon = false
+	end
+end
+
+function dotacraft:ISeeDeadPeople()	
+	GameRules.ISeeDeadPeople = not GameRules.ISeeDeadPeople
+	GameMode:SetFogOfWarDisabled( GameRules.ISeeDeadPeople )
+end
+
+function dotacraft:PointBreak()
+	GameRules.PointBreak = true
+	for i=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(i) then
+			local player = PlayerResource:GetPlayer(i)
+			ModifyFoodLimit(player, 1000-player.food_limit)
+		end
+	end
+end
+
+function dotacraft:Synergy()
+	if not GameRules.Synergy then
+		print('Cheat enabled!')
+		GameRules.Synergy = true
+	else
+		print("Cheat disabled!")
+		GameRules.Synergy = false
+	end
+
+	for i=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(i) then
+			local player = PlayerResource:GetPlayer(i)
+			for _,v in pairs(player.units) do
+				CheckAbilityRequirements(v, player)
+			end
+			for _,v in pairs(player.structures) do
+				CheckAbilityRequirements(v, player)
+			end
+		end
+	end
+
+end
+
+function dotacraft:RiseAndShine()
+	GameRules:SetTimeOfDay( 0.3 )
+end
+
+function dotacraft:LightsOut()
 	GameRules:SetTimeOfDay( 0.8 )
 end
 
-function dotacraft:DebugDay()
-	GameRules:SetTimeOfDay( 0.3 )
-end
+--[[ 
+StrengthAndHonor - No defeat
+Motherland [race] [level] - level jump
+SomebodySetUpUsTheBomb - Instant defeat
+AllYourBaseAreBelongToUs - Instant victory
+WhoIsJohnGalt - Enable research
+SharpAndShiny - Research upgrades
+DayLightSavings [time] - If a time is specified, time of day is set to that, otherwise time of day is alternately halted/resumed
+]]

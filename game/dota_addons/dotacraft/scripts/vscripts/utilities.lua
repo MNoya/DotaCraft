@@ -112,22 +112,13 @@ function StringStartsWith( fullstring, substring )
     return (first_characters == substring)
 end
 
--- GetEntityIndexForTreeId(treeID)
-function TreeIndexToHScript( targetIndex )
-    --for k,v in pairs(GameRules.ALLTREES) do
-        --DebugDrawText(v:GetAbsOrigin(), tostring(k), true, 10)
-    --end
-    local adjust = 0
-    return GameRules.ALLTREES[targetIndex+adjust]
-end
+function DebugPrint(...)
+  local spew = Convars:GetInt('debug_spew') or -1
+  if spew == -1 and DEBUG_SPEW then
+    spew = 1
+  end
 
--- GetEntityIndexForTreeId(treeID)
-function GetTreeIndexFromHandle( treeHandle )
-    local adjust = 0
-    for k,v in pairs(GameRules.ALLTREES) do
-        if v == treeHandle then
-            return k+adjust
-        end
-    end
-    return nil
+  if spew == 1 then
+    print(...)
+  end
 end

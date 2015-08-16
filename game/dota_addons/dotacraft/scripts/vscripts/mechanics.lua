@@ -23,7 +23,7 @@ end
 -- Modifies the food limit of this player. Accepts negative values
 function ModifyFoodLimit( player, food_limit_value )
 	player.food_limit = player.food_limit + food_limit_value
-	if player.food_limit > 100 then
+	if player.food_limit > 100 and not GameRules.PointBreak then
 		player.food_limit = 100
 	end
 	CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = player.food_used, food_limit = player.food_limit })	

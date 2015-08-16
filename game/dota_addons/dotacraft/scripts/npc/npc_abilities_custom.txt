@@ -22087,11 +22087,6 @@
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_lumber"
-						"Target" 		"CASTER"
-					}
 				}
 	
 				// Builders have no collision while moving to gather
@@ -22106,12 +22101,7 @@
 				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
 				"IsHidden"				"1"
 				"OnOrder"
-				{			
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_gathering_lumber"
-						"Target" 		"CASTER"
-					}
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -22138,12 +22128,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_gold"
-						"Target" 		"CASTER"
-					}
-	
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -22187,12 +22171,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_repair"
-						"Target" 		"CASTER"
-					}
-	
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -22222,13 +22200,7 @@
 				}
 	
 				"OnOrder"
-				{			
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_builder_repairing"
-						"Target" 		"CASTER"
-					}
-	
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -22239,27 +22211,12 @@
 				"ThinkInterval"  	"1.0"
 				"OnIntervalThink"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"	"modifier_builder_repairing_animation"
-						"Target" 		"CASTER"
-						"Duration"		"0.9"
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"RepairAnimation"
 					}
 				}		
-			}
-	
-			"modifier_builder_repairing_animation"
-			{
-				"OverrideAnimation"     "ACT_DOTA_ATTACK"
-				"IsHidden"				"1"
-				"OnOrder"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_builder_repairing_animation"
-						"Target" 		"CASTER"
-					}
-				}
 			}
 	
 			// Stackable modifier on the building
@@ -36444,7 +36401,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"gold_interval"		"4"
+				"gold_interval"		"5"
 			}
 			"04"
 			{
@@ -36496,11 +36453,6 @@
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_lumber"
-						"Target" 		"CASTER"
-					}
 				}
 	
 				"States"
@@ -36517,11 +36469,6 @@
 					{
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_gathering_lumber"
-						"Target" 		"CASTER"
 					}
 				}
 	
@@ -36546,12 +36493,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_gold"
-						"Target" 		"CASTER"
-					}
-	
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -36595,12 +36536,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_repair"
-						"Target" 		"CASTER"
-					}
-	
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -36634,12 +36569,6 @@
 	
 				"OnOrder"
 				{			
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_builder_repairing"
-						"Target" 		"CASTER"
-					}
-	
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -47118,11 +47047,6 @@
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel"
-						"Target" 		"CASTER"
-					}
 				}
 	
 				"States"
@@ -47137,11 +47061,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{			
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_gathering_lumber"
-						"Target" 		"CASTER"
-					}
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -47168,12 +47087,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_gold"
-						"Target" 		"CASTER"
-					}
-	
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -47181,6 +47094,7 @@
 					}
 				}
 	
+				// Builders have no collision while moving to gather
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -47216,12 +47130,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_repair"
-						"Target" 		"CASTER"
-					}
-	
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -47251,13 +47159,7 @@
 				}
 	
 				"OnOrder"
-				{			
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_builder_repairing"
-						"Target" 		"CASTER"
-					}
-	
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -47268,27 +47170,12 @@
 				"ThinkInterval"  	"1.0"
 				"OnIntervalThink"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"	"modifier_builder_repairing_animation"
-						"Target" 		"CASTER"
-						"Duration"		"0.9"
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"RepairAnimation"
 					}
 				}		
-			}
-	
-			"modifier_builder_repairing_animation"
-			{
-				"OverrideAnimation"     "ACT_DOTA_ATTACK"
-				"IsHidden"				"1"
-				"OnOrder"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_builder_repairing_animation"
-						"Target" 		"CASTER"
-					}
-				}
 			}
 	
 			// Stackable modifier on the building
@@ -58377,7 +58264,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"gold_interval"		"4"
+				"gold_interval"		"5"
 			}
 			"02"
 			{
@@ -58389,7 +58276,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ghoul_lumber_capacity"	"10" //Can be upgraded
+				"ghoul_lumber_capacity"	"20" //Can be upgraded
 			}
 		}
 	
@@ -58434,11 +58321,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{			
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_gathering_lumber"
-						"Target" 		"CASTER"
-					}
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -58470,11 +58352,6 @@
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
 					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_gold"
-						"Target" 		"CASTER"
-					}
 				}
 			}
 	
@@ -58488,11 +58365,6 @@
 					{
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelGather"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_gathering_gold"
-						"Target" 		"CASTER"
 					}
 				}
 				
@@ -58521,12 +58393,6 @@
 				"IsHidden"				"1"
 				"OnOrder"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_repair"
-						"Target" 		"CASTER"
-					}
-	
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -58535,7 +58401,6 @@
 				}
 			}
 	
-			// On the caster, does the animation and removal if killed or moved
 			"modifier_builder_repairing"
 			{
 				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
@@ -58556,13 +58421,7 @@
 				}
 	
 				"OnOrder"
-				{			
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_builder_repairing"
-						"Target" 		"CASTER"
-					}
-	
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/builder.lua"
@@ -58573,27 +58432,12 @@
 				"ThinkInterval"  	"1.0"
 				"OnIntervalThink"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"	"modifier_builder_repairing_animation"
-						"Target" 		"CASTER"
-						"Duration"		"0.9"
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"RepairAnimation"
 					}
 				}		
-			}
-	
-			"modifier_builder_repairing_animation"
-			{
-				"OverrideAnimation"     "ACT_DOTA_ATTACK"
-				"IsHidden"				"1"
-				"OnOrder"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_builder_repairing_animation"
-						"Target" 		"CASTER"
-					}
-				}
 			}
 	
 			// Stackable modifier on the building

@@ -236,6 +236,15 @@
 					}
 				}
 	
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/attacks.lua"
+						"Function"		"CheatCheck"
+					}
+				}
+	
 				"ThinkInterval"  "0.1"
 				"OnIntervalThink"
 				{

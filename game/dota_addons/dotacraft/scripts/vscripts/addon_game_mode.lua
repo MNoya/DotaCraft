@@ -19,6 +19,7 @@ require('stats')
 require('neutral_ai')
 require('developer')
 require('buildinghelper')
+require('units/builder')
 
 ---------------------------------------------------------------------------
 

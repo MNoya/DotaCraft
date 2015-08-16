@@ -15,6 +15,8 @@ UNDER_ATTACK_WARNING_INTERVAL = 60
 
 TREE_HEALTH = 50
 
+DEBUG_SPEW = 1
+
 XP_PER_LEVEL_TABLE = {
 	0, -- 1
 	200, -- 2 +200
@@ -100,7 +102,7 @@ function dotacraft:InitGameMode()
 	GameMode:SetUnseenFogOfWarEnabled( UNSEEN_FOG_ENABLED )	
 	GameMode:SetTowerBackdoorProtectionEnabled( false )
 	GameMode:SetGoldSoundDisabled( false )
-	GameMode:SetRemoveIllusionsOnDeath( false )
+	GameMode:SetRemoveIllusionsOnDeath( true )
 	GameMode:SetAnnouncerDisabled( true )
 	GameMode:SetLoseGoldOnDeath( false )
 	GameMode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
@@ -122,6 +124,9 @@ function dotacraft:InitGameMode()
 	-- TEST --
 	-- GameMode:SetCustomGameForceHero("npc_dota_hero_dragon_knight")
 	----------
+
+	-- DebugPrint
+	Convars:RegisterConvar('debug_spew', tostring(DEBUG_SPEW), 'Set to 1 to start spewing debug info. Set to 0 to disable.', 0)
 
 	print('[DOTACRAFT] Game Rules set')
 
@@ -241,8 +246,6 @@ function dotacraft:InitGameMode()
 	-- Console Commands
 	Convars:RegisterCommand( "debug_trees", Dynamic_Wrap(dotacraft, 'DebugTrees'), "Prints the trees marked as pathable", 0 )
 	Convars:RegisterCommand( "debug_blight", Dynamic_Wrap(dotacraft, 'DebugBlight'), "Prints the positions marked for undead buildings", 0 )
-	Convars:RegisterCommand( "night", Dynamic_Wrap(dotacraft, 'DebugNight'), "Makes Night Time", 0 )
-	Convars:RegisterCommand( "day", Dynamic_Wrap(dotacraft, 'DebugDay'), "Makes Day Time", 0 )
 	Convars:RegisterCommand( "skip_selection", Dynamic_Wrap(dotacraft, 'Skip_Selection'), "Skip Selection", 0 )
 	
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
@@ -696,6 +699,14 @@ function dotacraft:OnEntityHurt(keys)
 	    if inflictor then
 	    	damagingAbility = EntIndexToHScript( keys.entindex_inflictor )
 	    end
+  	end
+
+  	-- Cheat code host only
+  	if GameRules.WhosYourDaddy and victim and attacker then
+  		local attackerID = cause:GetPlayerOwnerID()
+  		if attackerID == 0 then
+  			victim:Kill(nil, cause)
+  		end
   	end
 
 	local time = GameRules:GetGameTime()
@@ -1405,24 +1416,25 @@ function dotacraft:Skip_Selection()
 end
 
 function dotacraft:Create_Players(data)
-print("create players")
-	for i = 0, PlayerResource:GetPlayerCount()-1, 1 do
-		local playerID = i
-		local color = GameRules.colorTable[GameRules.playerTable[playerID].color_index]
-		local team = GameRules.playerTable[playerID].team_index
-		local race = GameRules.raceTable[GameRules.playerTable[playerID].race_index]
+	print("[DOTACRAFT] Create Players")
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS, 1 do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local color = GameRules.colorTable[GameRules.playerTable[playerID].color_index]
+			local team = GameRules.playerTable[playerID].team_index
+			local race = GameRules.raceTable[GameRules.playerTable[playerID].race_index]
 
-		-- if race is nil it means that the id supplied is random since that is the only fallout index
-		if race == nil then
-			race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
+			-- if race is nil it means that the id supplied is random since that is the only fallout index
+			if race == nil then
+				race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
+			end
+			
+			-- player stuff
+			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
+			PlayerResource:SetCustomTeamAssignment(playerID, team)
+			PrecacheUnitByNameAsync(race, function()
+				CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
+			end, pID)
 		end
-		
-		-- player stuff
-		PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
-		PlayerResource:SetCustomTeamAssignment(playerID, team)
-		PrecacheUnitByNameAsync(race, function()
-			CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
-		end, pID)
 	end
 end
 

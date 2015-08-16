@@ -89,7 +89,6 @@ function DequeueUnit( event )
 					train_ability:SetChanneling(false)
 					train_ability:EndChannel(true)
 					print("Cancel current channel")
-					ReorderItems(caster,caster.queue)
 
 					-- Fake mana channel bar
 					caster:SetMana(0)
@@ -97,6 +96,7 @@ function DequeueUnit( event )
 				else
 					print("Removed unit in queue slot",itemSlot)					
 				end
+				ReorderItems(caster)
 				break
 			end
         end
@@ -104,9 +104,8 @@ function DequeueUnit( event )
 end
 
 -- Auxiliar function, takes all items and puts them 1 slot back
-function ReorderItems( caster, queue )
-	queue = {}
-	--print("Reordering Items...")
+function ReorderItems( caster )
+	local slots = {}
 	for itemSlot = 0, 5, 1 do
 
 		-- Handle the case in which the caster is removed
@@ -116,16 +115,13 @@ function ReorderItems( caster, queue )
 		end
 
        	if item ~= nil then
-       		print("========>REMOVING",item:GetEntityIndex())   		
-    		local new_item = CreateItem(item:GetName(), caster, caster)
-       		
-			table.insert(queue, new_item:GetEntityIndex())
-			print("========>ADDED",new_item:GetEntityIndex())   		
-       		caster:AddItem(new_item)
-       		caster:RemoveItem(item)
+			table.insert(slots, itemSlot)
        	end
     end
-    --print("Done Reordering items")
+
+    for k,itemSlot in pairs(slots) do
+    	caster:SwapItems(itemSlot,k-1)
+    end
 end
 
 
@@ -194,8 +190,8 @@ function AdvanceQueue( event )
 				local item_name = tostring(item:GetAbilityName())
 				if not IsChanneling( caster ) then
 
-					-- Items that contain "train_" will start a channel of an ability with the same name without the item_ affix
-					if string.find(item_name, "train_") or string.find(item_name, "_revive") then
+					-- Items that contain "train" "revive" or "research" will start a channel of an ability with the same name without the item_ affix
+					if string.find(item_name, "train_") or string.find(item_name, "_revive") or string.find(item_name, "research_") then
 						-- Find the name of the tied ability-item: 
 						--	ability = human_train_footman
 						-- 	item = item_human_train_footman
@@ -224,6 +220,13 @@ function AdvanceQueue( event )
 							caster:SetMana(0)
 							caster:SetBaseManaRegen(caster:GetMaxMana()/channel_time)
 
+							-- Cheats
+							if GameRules.WarpTen then
+								ability_to_channel:EndChannel(false)
+								ReorderItems(caster)
+								return
+							end
+
 							-- After the channeling time, check if it was cancelled or spawn it
 							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
 							local time = ability_to_channel:GetChannelTime()
@@ -232,7 +235,7 @@ function AdvanceQueue( event )
 								--DeepPrintTable(caster.queue)
 								if IsValidEntity(item) then
 									ability_to_channel:EndChannel(false)
-									ReorderItems(caster, caster.queue)
+									ReorderItems(caster)
 									--print("Unit finished building")
 								else
 									--print("This unit was interrupted")
@@ -257,6 +260,13 @@ function AdvanceQueue( event )
 							caster:SetMana(0)
 							caster:SetBaseManaRegen(caster:GetMaxMana()/channel_time)
 
+							-- Cheats
+							if GameRules.WarpTen then
+								ability_to_channel:EndChannel(false)
+								ReorderItems(caster)
+								return
+							end
+
 							-- After the channeling time, check if it was cancelled or spawn it
 							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
 							Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
@@ -265,7 +275,7 @@ function AdvanceQueue( event )
 								--DeepPrintTable(caster.queue)
 								if IsValidEntity(item) then
 									ability_to_channel:EndChannel(false)
-									ReorderItems(caster, caster.queue)
+									ReorderItems(caster)
 									print("Research complete!")
 								else
 									--print("This Research was interrupted")

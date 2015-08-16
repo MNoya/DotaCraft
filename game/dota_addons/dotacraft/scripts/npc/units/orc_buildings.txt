@@ -22,6 +22,10 @@
 // models/items/juggernaut/ward/healing_gills_of_the_lost_isles/healing_gills_of_the_lost_isles.vmdl
 // models/items/wards/warding_guise/warding_guise.vmdl
 
+// models/props_structures/dire_ancient_base001.vmdl
+// models/props_structures/dire_barracks_melee001.vmdl
+// models/props_structures/dire_barracks_ranged001.vmdl
+
 //=================================================================================
 // Building: Altar of Storms
 // Description: "Summons Heroes. Revives slain Heroes."
@@ -282,8 +286,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
-	"ModelScale"				"1"
+	"Model"						"models/props_structures/dire_ancient_base001.vmdl"
+	"ModelScale"				"0.7"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
@@ -366,8 +370,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
-	"ModelScale"				"1"
+	"Model"						"models/props_structures/dire_ancient_base001.vmdl"
+	"ModelScale"				"0.75"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
@@ -450,8 +454,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
-	"ModelScale"				"1"
+	"Model"						"models/props_structures/dire_ancient_base001.vmdl"
+	"ModelScale"				"0.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
@@ -623,7 +627,7 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
+	"Model"						"models/props_structures/dire_barracks_ranged001.vmdl"
 	"ModelScale"				"1"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
@@ -786,8 +790,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/props_structures/bad_standard001.vmdl"
-	"ModelScale"				"1"
+	"Model"						"models/items/wards/warding_guise/warding_guise.vmdl"
+	"ModelScale"				"2"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
@@ -870,7 +874,7 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/bad_standard001.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"

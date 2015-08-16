@@ -28,7 +28,7 @@
 		"03"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"gold_interval"		"4"
+			"gold_interval"		"5"
 		}
 		"04"
 		{
@@ -80,11 +80,6 @@
 					"ScriptFile"	"units/builder.lua"
 					"Function"		"CancelGather"
 				}
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_on_order_cancel_lumber"
-					"Target" 		"CASTER"
-				}
 			}
 
 			"States"
@@ -101,11 +96,6 @@
 				{
 					"ScriptFile"	"units/builder.lua"
 					"Function"		"CancelGather"
-				}
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_gathering_lumber"
-					"Target" 		"CASTER"
 				}
 			}
 
@@ -130,12 +120,6 @@
 			"IsHidden"				"1"
 			"OnOrder"
 			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_on_order_cancel_gold"
-					"Target" 		"CASTER"
-				}
-
 				"RunScript"
 				{
 					"ScriptFile"	"units/builder.lua"
@@ -179,12 +163,6 @@
 			"IsHidden"				"1"
 			"OnOrder"
 			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_on_order_cancel_repair"
-					"Target" 		"CASTER"
-				}
-
 				"RunScript"
 				{
 					"ScriptFile"	"units/builder.lua"
@@ -218,12 +196,6 @@
 
 			"OnOrder"
 			{			
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_builder_repairing"
-					"Target" 		"CASTER"
-				}
-
 				"RunScript"
 				{
 					"ScriptFile"	"units/builder.lua"
