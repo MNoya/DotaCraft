@@ -34,13 +34,10 @@ function build( keys )
 
 
 	keys:OnPreConstruction(function(vPos)
-
-		print('preconstruction')
-
        	-- Blight check
        	if string.match(building_name, "undead") and building_name ~= "undead_necropolis" then
        		local bHasBlight = HasBlight(vPos)
-       		print("Blight check for "..building_name..":", bHasBlight)
+       		DebugPrint("[BH] Blight check for "..building_name..":", bHasBlight)
        		if not bHasBlight then
        			SendErrorMessage(caster:GetPlayerOwnerID(), "#error_must_build_on_blight")
        			return false
@@ -58,7 +55,7 @@ function build( keys )
     end)
 
 	keys:OnConstructionStarted(function(unit)
-		print("Started construction of " .. unit:GetUnitName())
+		DebugPrint("[BH] Started construction of " .. unit:GetUnitName() .. " " .. unit:GetEntityIndex())
 		-- Unit is the building be built.
 		-- Play construction sound
 
@@ -88,7 +85,7 @@ function build( keys )
     	-- Apply the current level of Masonry to the newly upgraded building
 		local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
 		if masonry_rank and masonry_rank > 0 then
-			print("Applying masonry rank "..masonry_rank.." to this building construction")
+			DebugPrint("[BH] Applying masonry rank "..masonry_rank.." to this building construction")
 			UpdateUnitUpgrades( unit, player, "human_research_masonry"..masonry_rank )
 		end
 
@@ -114,7 +111,7 @@ function build( keys )
 		-- Move the units away from the building place
 		for _,unit in pairs(units) do
 			if unit ~= caster and not IsCustomBuilding(unit) then
-				print(unit:GetUnitName().." moving")
+				DebugPrint("[BH] Moving unit "..unit:GetUnitName().." outside of the building area")
 				local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * hull
 				ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
 				unit:AddNewModifier(caster, nil, "modifier_phased", {duration=1})
@@ -123,17 +120,19 @@ function build( keys )
 
 	end)
 
-	keys:OnConstructionFailed(function(unit)
+	keys:OnConstructionFailed(function(work)
+		local name = work.name
+		DebugPrint("[BH] Failed placement of " .. name)
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
 	end)
 
-	-- This needs fixing
-	keys:OnConstructionCancelled(function(unit)
-		--print("Construction Cancelled")
+	keys:OnConstructionCancelled(function(work)
+		local name = work.name
+		DebugPrint("[BH] Cancelled construction of " .. name)
 	end)
 
 	keys:OnConstructionCompleted(function(unit)
-		print("[BH] Completed construction of " .. unit:GetUnitName())
+		DebugPrint("[BH] Completed construction of " .. unit:GetUnitName() .. " " .. unit:GetEntityIndex())
 		-- Play construction complete sound.
 		-- Give building its abilities
 
@@ -144,7 +143,6 @@ function build( keys )
         for i=0,5 do
             local item = unit:GetItemInSlot(i)
             if item then
-            	print(i,item:GetAbilityName())
             	if item:GetAbilityName() == "item_building_cancel" then
             		item:RemoveSelf()
                 end
@@ -166,16 +164,14 @@ function build( keys )
 		-- When building one of the lumber-only buildings, send the builder(s) to auto-gather lumber after the building is done
 		Timers:CreateTimer(0.5, function() 
 		if builders and building_name == "human_lumber_mill" or building_name == "orc_war_mill" then
-			print("Sending "..#builders.." builders to gather lumber after finishing "..building_name)
+			DebugPrint("[BH] Sending "..#builders.." builders to gather lumber after finishing "..building_name)
 			
 			for k,builder in pairs(builders) do
-				print("Builder ",k)
 				local race = GetUnitRace(builder)
 				local gather_ability = builder:FindAbilityByName(race.."_gather")
 				if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
 	                local empty_tree = FindEmptyNavigableTreeNearby(builder, unit:GetAbsOrigin(), 2000)
 	                if empty_tree then
-	                	print(" gathering")
 	                    local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
 	                    ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
 	                end
@@ -184,14 +180,12 @@ function build( keys )
 	                if (builder.lumber_gathered and builder.lumber_gathered < 10) and not builder:HasModifier("modifier_returning_gold") then
 	                    local empty_tree = FindEmptyNavigableTreeNearby(builder, unit:GetAbsOrigin(), 2000)
 	                    if empty_tree then
-	                    	print(" gathering")
 	                        local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
 	                        builder:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
 	                        ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
 	                    end
 	                else
 	                    -- Return
-	                    print(" returning")
 	                    local return_ability = builder:FindAbilityByName(race.."_return_resources")
 	                    local empty_tree = FindEmptyNavigableTreeNearby(builder, point, TREE_RADIUS)
 	                    builder.target_tree = empty_tree --The new selected tree
@@ -239,7 +233,7 @@ function build( keys )
 	-- These callbacks will only fire when the state between below half health/above half health changes.
 	-- i.e. it won't fire multiple times unnecessarily.
 	keys:OnBelowHalfHealth(function(unit)
-		print(unit:GetUnitName() .. " is below half health.")
+		DebugPrint("[BH] " .. unit:GetUnitName() .. " is below half health.")
 				
 		local item = CreateItem("item_apply_modifiers", nil, nil)
     	item:ApplyDataDrivenModifier(unit, unit, "modifier_onfire", {})
@@ -248,7 +242,7 @@ function build( keys )
 	end)
 
 	keys:OnAboveHalfHealth(function(unit)
-		print(unit:GetUnitName() .. " is above half health.")
+		DebugPrint("[BH] " ..unit:GetUnitName().. " is above half health.")
 
 		unit:RemoveModifierByName("modifier_onfire")
 		

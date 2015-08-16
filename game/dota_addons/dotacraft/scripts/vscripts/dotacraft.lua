@@ -15,6 +15,8 @@ UNDER_ATTACK_WARNING_INTERVAL = 60
 
 TREE_HEALTH = 50
 
+DEBUG_SPEW = 1
+
 XP_PER_LEVEL_TABLE = {
 	0, -- 1
 	200, -- 2 +200
@@ -122,6 +124,9 @@ function dotacraft:InitGameMode()
 	-- TEST --
 	-- GameMode:SetCustomGameForceHero("npc_dota_hero_dragon_knight")
 	----------
+
+	-- DebugPrint
+	Convars:RegisterConvar('debug_spew', tostring(DEBUG_SPEW), 'Set to 1 to start spewing debug info. Set to 0 to disable.', 0)
 
 	print('[DOTACRAFT] Game Rules set')
 
