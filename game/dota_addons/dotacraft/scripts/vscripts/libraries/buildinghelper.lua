@@ -600,7 +600,7 @@ function BuildingHelper:StartBuilding( keys )
         local repair_ability_name = "human_gather"
         local repair_ability = builder:FindAbilityByName(repair_ability_name)
         if not repair_ability then
-            DebugPrint("[BH] Error, can't find "..repair_ability_name.." on the builder ",builder, builder:GetUnitName())
+            DebugPrint("[BH] Error, can't find "..repair_ability_name.." on the builder ", builder:GetUnitName(), builder:GetEntityIndex())
             return
         end
 
@@ -952,12 +952,13 @@ function BuildingHelper:AdvanceQueue(builder)
             -- Change builder state
             builder.state = "moving_to_build"
 
-            DebugPrint("[BH] AdvanceQueue - "..builder:GetUnitName().." moving to build "..work.name.." at "..VectorString(location))
+            DebugPrint("[BH] AdvanceQueue - "..builder:GetUnitName().." "..builder:GetEntityIndex().." moving to build "..work.name.." at "..VectorString(location))
         end)
     
     else
         -- Set the builder work to nil to accept next work directly
         DebugPrint("[BH] Builder "..builder:GetUnitName().." "..builder:GetEntityIndex().." finished its building Queue")
+        builder.state = "idle"
         builder.work = nil
     end
 end
@@ -967,7 +968,10 @@ end
     * Clear the build queue, the player right clicked
 ]]--
 function BuildingHelper:ClearQueue(builder)
-    if not builder.buildingQueue then
+    builder.work = nil
+    builder.state = "idle"
+
+    if not builder.buildingQueue or (not work and #builder.buildingQueue == 0) then
         return
     end
 
@@ -999,8 +1003,6 @@ function BuildingHelper:ClearQueue(builder)
             work.callbacks.onConstructionCancelled(work)
         end
     end
-    builder.work = nil
-    builder.state = "idle"
 end
 
 --[[

@@ -647,7 +647,9 @@ function Gather( event )
                             if caster:HasModifier("modifier_builder_repairing") then
                                 caster:RemoveModifierByName("modifier_builder_repairing")
                             end
-							ability:ApplyDataDrivenModifier(caster, caster, "modifier_builder_repairing", {})
+                            Timers:CreateTimer(function()
+								ability:ApplyDataDrivenModifier(caster, caster, "modifier_builder_repairing", {})
+							end)
 							return
 						end
 					else
@@ -1289,6 +1291,12 @@ function Repair( event )
 		for _,builder in pairs(building.units_repairing) do
 			if builder and IsValidEntity(builder) then
 				builder:RemoveModifierByName("modifier_builder_repairing")
+				builder.state = "idle"
+
+				--This should only be done to the additional assisting builders, not the main one that started the construction
+				if not builder.work then
+                	BuildingHelper:AdvanceQueue(builder)
+                end
 			end
 		end
 		-- Toggle off
