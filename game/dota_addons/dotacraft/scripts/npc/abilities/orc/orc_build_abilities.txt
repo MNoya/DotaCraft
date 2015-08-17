@@ -48,8 +48,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -81,8 +80,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -109,8 +108,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -142,8 +140,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -171,8 +169,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -204,8 +201,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -232,8 +229,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -265,8 +261,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -293,8 +289,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -326,8 +321,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }

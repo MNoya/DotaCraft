@@ -120,11 +120,12 @@
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED" //Builder can send build orders while inside the building
+					//"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED" //Builder is selectable while inside the building
 				}
 			}
 	
@@ -361,8 +362,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -394,8 +394,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"		"human_town_hall"
 			}
 		}
@@ -419,8 +419,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -452,8 +451,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "human_farm"
 			}
 		}
@@ -477,8 +476,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -510,8 +508,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "human_altar_of_kings"
 			}
 		}
@@ -535,8 +533,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -568,8 +565,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "human_lumber_mill"
 			}
 		}
@@ -594,8 +591,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -627,8 +623,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "human_arcane_vault"
 			}
 		}
@@ -652,8 +648,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -685,8 +680,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "human_scout_tower"
 			}
 		}
@@ -3513,8 +3508,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
@@ -3547,8 +3541,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"		"nightelf_tree_of_life"
 			}
 		}
@@ -3572,8 +3566,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -3605,8 +3598,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "nightelf_moon_well"
 			}
 		}
@@ -3630,8 +3623,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -3663,8 +3655,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "nightelf_altar_of_elders"
 			}
 		}
@@ -3688,8 +3680,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
@@ -3722,8 +3713,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "nightelf_ancient_of_wonders"
 			}
 		}
@@ -3747,8 +3738,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -3780,8 +3770,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "nightelf_hunters_hall"
 			}
 		}
@@ -3805,8 +3795,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
@@ -3839,8 +3828,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "nightelf_ancient_of_war"
 			}
 		}
@@ -7055,8 +7044,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -7088,8 +7076,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"		"orc_great_hall"
 			}
 		}
@@ -7113,8 +7101,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -7146,8 +7133,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "orc_burrow"
 			}
 		}
@@ -7171,8 +7158,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -7204,8 +7190,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "orc_altar_of_storms"
 			}
 		}
@@ -7229,8 +7215,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -7262,8 +7247,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "orc_war_mill"
 			}
 		}
@@ -7288,8 +7273,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -7321,8 +7305,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "orc_voodoo_lounge"
 			}
 		}
@@ -11707,8 +11691,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_necropolis"
 		"AbilityCooldown"				"0"
@@ -11738,8 +11721,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"		"undead_necropolis"
 			}
 		}
@@ -11763,8 +11746,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_ziggurat"
 		"AbilityCooldown"				"0"
@@ -11794,8 +11776,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "undead_ziggurat"
 			}
 		}
@@ -11819,8 +11801,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_altar_of_darkness"
 		"AbilityCooldown"				"0"
@@ -11850,8 +11831,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "undead_altar_of_darkness"
 			}
 		}
@@ -11875,8 +11856,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_graveyard"
 		"AbilityCooldown"				"0"
@@ -11906,8 +11886,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "undead_graveyard"
 			}
 		}
@@ -11932,8 +11912,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_tomb_of_relics"
 		"AbilityCooldown"				"0"
@@ -11963,8 +11942,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 				"ItemUnitName"  "undead_tomb_of_relics"
 			}
 		}

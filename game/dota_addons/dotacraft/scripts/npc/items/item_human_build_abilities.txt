@@ -16,8 +16,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -49,8 +48,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"		"human_town_hall"
 		}
 	}
@@ -74,8 +73,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -107,8 +105,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "human_farm"
 		}
 	}
@@ -132,8 +130,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -165,8 +162,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "human_altar_of_kings"
 		}
 	}
@@ -190,8 +187,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -223,8 +219,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "human_lumber_mill"
 		}
 	}
@@ -249,8 +245,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -282,8 +277,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "human_arcane_vault"
 		}
 	}
@@ -307,8 +302,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -340,8 +334,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "human_scout_tower"
 		}
 	}

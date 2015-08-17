@@ -45,7 +45,6 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
 	"AbilityCastPoint"				"0"
 
 	// BuildingHelper info
@@ -55,8 +54,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1" //bool
 
@@ -88,8 +86,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -108,8 +106,6 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityGoldCost"				"180"
-	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
@@ -118,8 +114,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -151,8 +146,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -171,8 +166,6 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityGoldCost"				"180"
-	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
@@ -214,8 +207,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -234,8 +227,6 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityGoldCost"				"180"
-	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
@@ -244,8 +235,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -277,8 +267,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -297,8 +287,6 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityGoldCost"				"180"
-	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
@@ -307,8 +295,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -340,8 +327,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }

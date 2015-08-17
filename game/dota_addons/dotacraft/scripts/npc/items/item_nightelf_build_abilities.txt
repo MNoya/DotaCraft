@@ -23,8 +23,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 	"ConsumesBuilder"				"1" //bool
@@ -57,8 +56,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"		"nightelf_tree_of_life"
 		}
 	}
@@ -82,8 +81,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -115,8 +113,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "nightelf_moon_well"
 		}
 	}
@@ -140,8 +138,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -173,8 +170,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "nightelf_altar_of_elders"
 		}
 	}
@@ -198,8 +195,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 	"ConsumesBuilder"				"1" //bool
@@ -232,8 +228,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "nightelf_ancient_of_wonders"
 		}
 	}
@@ -257,8 +253,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -290,8 +285,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "nightelf_hunters_hall"
 		}
 	}
@@ -315,8 +310,7 @@
 	"AbilityCastRange"				"200"
 	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 	"ConsumesBuilder"				"1" //bool
@@ -349,8 +343,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "nightelf_ancient_of_war"
 		}
 	}
