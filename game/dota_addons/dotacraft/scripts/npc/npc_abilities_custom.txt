@@ -21593,7 +21593,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	
 		"AbilityCastPoint"				"0"
 	
 		// BuildingHelper info
@@ -21603,8 +21602,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1" //bool
 	
@@ -21636,8 +21634,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -21656,8 +21654,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
@@ -21666,8 +21662,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -21699,8 +21694,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -21719,8 +21714,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
@@ -21762,8 +21755,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -21782,8 +21775,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
@@ -21792,8 +21783,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -21825,8 +21815,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -21845,8 +21835,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
@@ -21855,8 +21843,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
 	
@@ -21888,8 +21875,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -27956,313 +27943,7 @@
 			}
 		}		
 	}
-	//================================================================================= /
-	// Builder modifier to signal that builder is processing a queue
-	//================================================================================= /
-	"has_build_queue"
-	{
-	  "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	  "BaseClass" "ability_datadriven"
-	
-	  "Modifiers"
-	  {
-	    "modifier_has_build_queue"
-	    {
-	      "Passive" "1"
-	      "IsHidden"  "1"
-	      "OnOrder"
-	      {
-	        "RunScript"
-	        {
-	          "ScriptFile"  "scripts/vscripts/abilities.lua"
-	          "Function"    "builder_queue"
-	        }
-	      }
-	    }
-	  }
-	}
-	
-	"build_arrow_tower"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"build_arrow_tower"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
-		// BuildingHelper info
-		"Building"						"1" //bool
-		"BuildingSize"					"3" // this is (3x64) by (3x64) units, so 9 squares.
-		"BuildTime"						"2.0"
-		"AbilityCastRange"				"200"
-		"UpdateHealth"					"1" //bool
-		"Scale"							"1" //bool
-		"MaxScale"						"1.3"
-		"CasterCanControl"				"1" //bool. This will automatically run SetControllableByPlayer and let the caster of this ability to control the building.
-		//"CancelsBuildingGhost"			"0" //bool
-		// Note: if unit uses a npc_dota_hero baseclass, you must use the npc_dota_hero name.
-		"UnitName"						"human_barracks"
-		"AbilityCooldown"				"3"
-		"AbilityGoldCost"				"10"
-		// End of BuildingHelper info
-	
-		"AbilityCastPoint"				"0.0"
-		"MaxLevel"						"1"
-	
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"scripts/vscripts/abilities.lua"
-				"Function"				"build"
-			}
-		}
-	}
-	
-	"build_rocket_launcher"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"build_rocket_launcher"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
-		// BuildingHelper info
-		"Building"						"1"
-		"BuildingSize"					"3"
-		"BuildTime"						"4.0"
-		"AbilityCastRange"				"200"
-		"UpdateHealth"					"1"
-		"Scale"							"1"
-		"MaxScale"						".5"
-		"CasterCanControl"				"1"
-	
-		"AbilityCooldown"				"2.0"
-		"AbilityGoldCost"				"10"
-		
-		// Note: if unit uses a npc_dota_hero baseclass, you must use the npc_dota_hero name.
-		"UnitName"						"npc_dota_hero_tinker"
-		// End of BuildingHelper info
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
-		"MaxLevel"						"1"
-	
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"scripts/vscripts/abilities.lua"
-				"Function"				"build"
-			}
-		}
-	}
-	
-	"example_ability"
-	{
-		"ID"							"1852"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"holdout_blade_fury"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"10.0"
-		"AbilityChannelTime"			"2.0 1.8 1.6 1.5"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
-		"AbilityDamage"					"400 600 800 1000"
-		// this ability won't cancel an active building ghost.
-		"CancelsBuildingGhost"			"0" //bool
-		
-		"precache"
-		{
-			"particle"					"particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
-		}
-	
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"300"
-		"SideShop"						"1"
-		
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_channel_start"
-			}
-			"FireSound"
-			{
-				"EffectName"		"Hero_Gyrocopter.CallDown.Fire"
-				"Target"			"CASTER"
-			}
-		}
-		
-		"OnChannelSucceeded"
-		{
-			"RemoveModifier"
-			{
-				"Target"				"CASTER"
-				"ModifierName"			"modifier_channel_start"
-			}
-			"AttachEffect"
-			{
-				"EffectName"			"particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"EffectRadius"			"%radius"
-				"EffectDurationScale"	"1"
-				"EffectLifeDurationScale" "1"
-				"EffectColorA"			"255 0 0"
-				"EffectColorB"			"255 0 0"
-				"Target"			"CASTER"
-			}
-			
-			"Damage"
-			{
-				"Type"					"DAMAGE_TYPE_PURE"
-				"Damage"				"%damage"
-				"Target"
-				{
-					"Center"			"CASTER"
-					"Radius"			"%radius"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-			}
-			
-			"Knockback"
-			{
-				"Center" 	"CASTER"
-				"Target"
-				{
-					"Center"	"CASTER"
-					"Radius"	"%radius"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				}
-				"Duration"	"%duration"
-				"Distance"	"%distance"
-				"Height"	"%height"
-			}
-			
-			"FireSound"
-			{
-				"EffectName"		"Hero_Gyrocopter.CallDown.Damage"
-				"Target"			"CASTER"
-			}
-		}
-		
-		"OnChannelFinish"
-		{
-			"RemoveModifier"
-			{
-				"Target"				"CASTER"
-				"ModifierName"			"modifier_channel_start"
-			}
-		}
-		
-		"OnChannelInterrupted"
-		{
-			"RemoveModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_channel_start"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_channel_start"
-			{
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"IsHidden" "1"
-						"EffectName"		"particles/test_particle/channel_field_2.vpcf"//"gyro_calldown_marker_c"//"gyrocopter_call_down"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"CASTER"
-						
-						"EffectRadius"			"%radius"
-						"EffectColorA"			"255 0 0"
-						"EffectColorB"			"255 0 0"
-					
-						"ControlPoints"
-						{
-							"00"		"50 100 5"
-						}
-					}
-				}
-			}
-		}
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.5"
-			}
-			
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 600 800 1000"
-			}
-			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"550 550 600 650"
-			}
-			
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"distance"				"400 500 600 700"
-			}
-			
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"height"				"100 200 300 400"
-			}
-		}
-	}
-	
 	// move_to_point abilities are for BuildingHelper.
-	"move_to_point_70"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"BaseClass"						"ability_datadriven"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"0"
-		"AbilityCastRange"				"70"
-		"MaxLevel"						"1"
-	
-		"AbilityManaCost"				"0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"Target"		"POINT"
-				"ScriptFile"	"scripts/vscripts/abilities.lua"
-				"Function"		"create_building_entity"
-			}
-		}
-	}
-	
 	"move_to_point_100"
 	{
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
@@ -28279,8 +27960,8 @@
 			"RunScript"
 			{
 				"Target"		"POINT"
-				"ScriptFile"	"scripts/vscripts/abilities.lua"
-				"Function"		"create_building_entity"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"StartBuilding"
 			}
 		}
 	}
@@ -28301,8 +27982,8 @@
 			"RunScript"
 			{
 				"Target"		"POINT"
-				"ScriptFile"	"scripts/vscripts/abilities.lua"
-				"Function"		"create_building_entity"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"StartBuilding"
 			}
 		}
 	}
@@ -28323,8 +28004,8 @@
 			"RunScript"
 			{
 				"Target"		"POINT"
-				"ScriptFile"	"scripts/vscripts/abilities.lua"
-				"Function"		"create_building_entity"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"StartBuilding"
 			}
 		}
 	}
@@ -28345,8 +28026,8 @@
 			"RunScript"
 			{
 				"Target"		"POINT"
-				"ScriptFile"	"scripts/vscripts/abilities.lua"
-				"Function"		"create_building_entity"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"StartBuilding"
 			}
 		}
 	}
@@ -28367,144 +28048,10 @@
 			"RunScript"
 			{
 				"Target"		"POINT"
-				"ScriptFile"	"scripts/vscripts/abilities.lua"
-				"Function"		"create_building_entity"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"StartBuildingEntity"
 			}
 		}
-	}
-	
-	"bh_dummy"
-	{
-		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-		"MaxLevel"                      "1"
-	
-		"Modifiers"
-		{
-			"dummy_unit"
-			{
-				"Passive"                        "1"
-				"IsHidden"                       "1"    
-				"States"
-				{
-					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"building_canceled"
-			{
-				"Passive"                        "0"
-				"IsHidden"                       "1"
-				"OnOrder"
-				// Triggers on Move/Casting/Hold/Stop
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/abilities.lua"
-						"Function"		"building_canceled"
-					}
-				}
-	
-			} 
-		}
-	}
-	  
-	
-	//-------------------
-	// Dummy stuff
-	//-------------------
-	
-	"samplerts_dummy_unit"
-	{
-		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-		"MaxLevel"                      "1"
-	
-		"Modifiers"
-		{
-			"dummy_unit"
-			{
-				"Passive"                        "1"
-				"IsHidden"                        "1"    
-				"States"
-				{
-					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	"samplerts_empty1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"samplerts_empty2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"samplerts_empty3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"samplerts_empty4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"samplerts_empty5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"samplerts_empty6"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
 	}
 	"dummy_passive"
 	{
@@ -35976,8 +35523,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
@@ -36010,8 +35556,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -36039,8 +35585,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
@@ -36073,8 +35618,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -36101,8 +35646,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
@@ -36135,8 +35679,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -36163,8 +35707,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -36196,8 +35739,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -46765,8 +46308,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -46798,8 +46340,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -46826,8 +46368,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -46859,8 +46400,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -46888,8 +46429,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -46921,8 +46461,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -46949,8 +46489,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -46982,8 +46521,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -47010,8 +46549,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"BuilderInside"					"1"	//bool
 	
@@ -47043,8 +46581,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -58007,8 +57545,6 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	
-		"AbilityCastPoint"				"0"
-	
 		// BuildingHelper info
 		"Building"						"1" //bool
 		"BuildingSize"					"5"
@@ -58016,8 +57552,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_crypt"
 		"AbilityCooldown"				"0"
@@ -58047,8 +57582,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -58067,8 +57602,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
@@ -58077,8 +57610,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		"CancelsBuildingGhost"			"1" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_temple_of_the_damned"
 		"AbilityCooldown"				"0"
@@ -58108,8 +57640,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -58128,8 +57660,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
@@ -58138,8 +57668,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_slaughterhouse"
 		"AbilityCooldown"				"0"
@@ -58169,8 +57698,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -58189,8 +57718,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
@@ -58199,8 +57726,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_sacrificial_pit"
 		"AbilityCooldown"				"0"
@@ -58230,8 +57756,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
@@ -58250,8 +57776,6 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityGoldCost"				"180"
-		"AbilityUpgradeGoldCost"		"0"
 	
 		// BuildingHelper info
 		"Building"						"1" //bool
@@ -58260,8 +57784,7 @@
 		"AbilityCastRange"				"200"
 		"UpdateHealth"					"1" //bool
 		"Scale"							"0" //bool
-		"PlayerCanControl"				"1" //bool. 
-		//"CancelsBuildingGhost"			"0" //bool
+		"PlayerCanControl"				"1" //bool
 	
 		"UnitName"						"undead_boneyard"
 		"AbilityCooldown"				"0"
@@ -58291,8 +57814,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities.lua"
-				"Function"		"build"
+				"ScriptFile"	"units/builder.lua"
+				"Function"		"Build"
 			}
 		}
 	}
