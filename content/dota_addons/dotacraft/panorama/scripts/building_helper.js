@@ -13,6 +13,7 @@ function StartBuildingHelper( params )
 {
     if (params !== undefined)
     {
+        $.Msg("StartBuildingHelper")
         state = params["state"];
         size = params["size"];
         pressedShift = GameUI.IsShiftDown();
@@ -112,8 +113,11 @@ function StartBuildingHelper( params )
 
 function EndBuildingHelper()
 {
+    $.Msg("EndBuildingHelper")
     state = 'disabled'
-    Particles.DestroyParticleEffect(modelParticle, true)
+    if (modelParticle !== undefined){
+         Particles.DestroyParticleEffect(modelParticle, true)
+    }
     for (var i in gridParticles) {
         Particles.DestroyParticleEffect(gridParticles[i], true)
     }
@@ -121,11 +125,13 @@ function EndBuildingHelper()
 
 function SendBuildCommand( params )
 {
-    $.Msg("Send Build command")
+    pressedShift = GameUI.IsShiftDown();
+
+    $.Msg("Send Build command. Queue: "+pressedShift)
     var mPos = GameUI.GetCursorPosition();
     var GamePos = Game.ScreenXYToWorld(mPos[0], mPos[1]);
-    GameEvents.SendCustomGameEventToServer( "building_helper_build_command", { "X" : GamePos[0], "Y" : GamePos[1], "Z" : GamePos[2] } );
-    pressedShift = GameUI.IsShiftDown();
+
+    GameEvents.SendCustomGameEventToServer( "building_helper_build_command", { "X" : GamePos[0], "Y" : GamePos[1], "Z" : GamePos[2] , "Queue" : pressedShift } );
 
     // Cancel unless the player is holding shift
     if (!GameUI.IsShiftDown())
@@ -138,6 +144,7 @@ function SendBuildCommand( params )
 
 function SendCancelCommand( params )
 {
+    $.Msg("Send Cancel command")
     EndBuildingHelper();
     GameEvents.SendCustomGameEventToServer( "building_helper_cancel_command", {} );
 }

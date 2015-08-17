@@ -204,8 +204,8 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "right_click_order", Dynamic_Wrap(dotacraft, "RightClickOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
-    CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "RegisterLeftClick"))
-	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "RegisterRightClick"))
+    CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
+	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
 
 	-- Listeners for Pre_Game_Selection
 	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
@@ -1169,9 +1169,9 @@ function dotacraft:OnEntityKilled( event )
 
 	-- Building Killed
 	if IsCustomBuilding(killedUnit) then
-		if killedUnit.RemoveBuilding then
-			killedUnit:RemoveBuilding(false) -- Building Helper grid cleanup
-		end
+
+		 -- Building Helper grid cleanup
+		BuildingHelper:RemoveBuilding(killedUnit, true)
 
 		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killedUnit)
@@ -1290,10 +1290,16 @@ end
 
 function dotacraft:OnPlayerSelectedEntities( event )
 	local pID = event.pID
-	--print("Player "..pID.." updated selection:")
-	--DeepPrintTable(event.selected_entities)
+
 	GameRules.SELECTED_UNITS[pID] = event.selected_entities
 	dotacraft:UpdateRallyFlagDisplays(pID)
+
+	-- This is for Building Helper to know which is the currently active builder
+	local mainSelected = GetMainSelectedEntity(pID)
+	if IsValidEntity(mainSelected) and IsBuilder(mainSelected) then
+		local player = PlayerResource:GetPlayer(pID)
+		player.activeBuilder = mainSelected
+	end
 end
 
 -- Hides or shows the rally flag particles for the player (avoids visual clutter)

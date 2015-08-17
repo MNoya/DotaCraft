@@ -1271,6 +1271,7 @@ function GetSmallSplashDamage( unit )
 end
 
 function HoldPosition( unit )
+	unit.bHold = true
 	ApplyModifier(unit, "modifier_hold_position")
 end
 

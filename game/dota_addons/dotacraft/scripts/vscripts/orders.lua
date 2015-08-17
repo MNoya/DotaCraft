@@ -104,6 +104,16 @@ function dotacraft:FilterExecuteOrder( filterTable )
             print(" Order allowed")
         end
 
+    ------------------------------------------------
+    --          Stop/Hold ClearQueue Order        --
+    ------------------------------------------------
+    elseif order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+        for n, unit_index in pairs(units) do 
+            local unit = EntIndexToHScript(unit_index)
+            if IsBuilder(unit) then
+                BuildingHelper:ClearQueue(unit)
+            end
+        end        
 
     ------------------------------------------------
     --               Attack Orders                --
@@ -552,6 +562,7 @@ function dotacraft:GoldGatherOrder( event )
     local entityIndex = event.mainSelected
     local targetIndex = event.targetIndex
     local gold_mine = EntIndexToHScript(targetIndex)
+    local queue = tobool(event.queue)
     dotacraft:RightClickOrder(event)
 
     local unit = EntIndexToHScript(entityIndex)
@@ -606,6 +617,7 @@ function dotacraft:RepairOrder( event )
     local targetIndex = event.targetIndex
     local building = EntIndexToHScript(targetIndex)
     local selectedEntities = GetSelectedEntities(pID)
+    local queue = tobool(event.queue)
     dotacraft:RightClickOrder(event)
 
     local unit = EntIndexToHScript(entityIndex)
