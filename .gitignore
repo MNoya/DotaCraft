@@ -10,6 +10,10 @@
 *.vxml_c
 *.vcss_c
 
+# Commit panorama compiled textures
+!game/dota_addons/dotacraft/panorama/images/*.vtex_c
+!game/dota_addons/dotacraft/panorama/images/custom_game/*.vtex_c
+
 # Map files
 *.vpk
 
