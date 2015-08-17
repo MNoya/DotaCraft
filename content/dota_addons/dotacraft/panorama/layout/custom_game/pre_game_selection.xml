@@ -7,9 +7,27 @@
     <include src="file://{resources}/scripts/team_selection/dotacraft_pre_selection.js" /> 
   </scripts>
 	<Panel class="PreGameSelectionRoot">
-  
+	
+	<Panel id="Right_Bar">
+		<Label id="Addon_Name" text="Dotacraft"/>
+		<Panel id="Minimap" />
+		<Label id="Minimap_Name" />
+		<Panel id="Suggested_Players" >
+			<Label id="Description_Header" text="Suggested Players:"/> 
+			<Label id="Suggested_Players_Text" /> 
+		</Panel>
+		
+		<Panel id="Map_Description">
+			<Label id="Description_Header" text="Map Description:"/> 
+			<Label id="Map_Description_Text" /> 
+		</Panel>
+	</Panel>	
 
-		<Panel id="PlayerListContainer"/>
+	<Button id="StartButton" onactivate="Start_Game()">
+		<Label text="Start Game"/>
+	</Button>
+	
+	<Panel id="PlayerListContainer"/>  
 	
 	</Panel>
 </root>

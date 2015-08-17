@@ -210,7 +210,9 @@ function dotacraft:InitGameMode()
 	-- Listeners for Pre_Game_Selection
 	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
 	CustomGameEventManager:RegisterListener( "selection_over", Dynamic_Wrap(dotacraft, "Create_Players"))	
-	CustomGameEventManager:RegisterListener( "player_ready", Dynamic_Wrap(dotacraft, "Player_Ready"))	
+	
+	-- register panaroma tables
+	dotacraft:Setup_Tables()
 	
 	-- Remove building invulnerability
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
@@ -1425,15 +1427,17 @@ function dotacraft:Create_Players(data)
 	print("[DOTACRAFT] Create Players")
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS, 1 do
 		if PlayerResource:IsValidPlayerID(playerID) then
-			local color = GameRules.colorTable[GameRules.playerTable[playerID].color_index]
-			local team = GameRules.playerTable[playerID].team_index
-			local race = GameRules.raceTable[GameRules.playerTable[playerID].race_index]
+			local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
+			
+			local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
+			local team = Player_Table.Team
+			local race = GameRules.raceTable[Player_Table.Race]
 
 			-- if race is nil it means that the id supplied is random since that is the only fallout index
 			if race == nil then
 				race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
 			end
-			
+
 			-- player stuff
 			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
@@ -1446,38 +1450,16 @@ end
 
 function dotacraft:Selection_Update_Player(args)
 	print("updating player")
-	if GameRules.playerTable == nil or GameRules.raceTable == nil or GameRules.colorTable == nil then
-		dotacraft:Setup_Tables()
-	end
-	
 	local PlayerID = args.ID
-	
-	-- save update to player table
-	GameRules.playerTable[PlayerID] = {
-		color_index = args.Color,
-		team_index = args.Team,
-		race_index = args.Race	
-	}
-
-	CustomGameEventManager:Send_ServerToAllClients("dotacraft_update_player", {PlayerID = args.ID, Team = args.Team, Race = args.Race, Color=args.Color, Ready=args.Ready}) 
+		
+	SetNetTableValue("dotacraft_player_table", tostring(PlayerID), {Team = args.Team, Color = args.Color, Race = args.Race, Ready = args.Ready})
 end
 
 function dotacraft:Setup_Tables()
-	if GameRules.colorTable == nil then
-		GameRules.colorTable = {}
-		
-		GameRules.colorTable[0] = {r=255, 	g=255, 	b=255	}
-		GameRules.colorTable[1] = {r=0, 	g=0, 	b=0		}
-		GameRules.colorTable[2] = {r=255,	g=0, 	b=0		}
-		GameRules.colorTable[3] = {r=0, 	g=255, 	b=0		}
-		GameRules.colorTable[4] = {r=120, 	g=120, 	b=255	}
-		GameRules.colorTable[5] = {r=255, 	g=120, 	b=120	}
-		GameRules.colorTable[6] = {r=120, 	g=255, 	b=120	}
-		GameRules.colorTable[7] = {r=120, 	g=255, 	b=120	}
-		GameRules.colorTable[8] = {r=120, 	g=255,	b=120	}
-		GameRules.colorTable[9] = {r=0, 	g=0, 	b=255	}
-	end
+	-- setup color table
+	dotacraft:Setup_Color_Table()
 	
+	-- setup race reference table
 	if GameRules.raceTable == nil then
 		GameRules.raceTable = {}
 		
@@ -1486,12 +1468,26 @@ function dotacraft:Setup_Tables()
 		GameRules.raceTable[3] = "npc_dota_hero_furion"
 		GameRules.raceTable[4] = "npc_dota_hero_life_stealer"
 	end
-	
-	if GameRules.playerTable == nil then
-		GameRules.playerTable = {}
-	end
-	
-	DeepPrintTable(GameRules.colorTable)
-	DeepPrintTable(GameRules.raceTable)
-	DeepPrintTable(GameRules.playerTable)
+end
+
+function dotacraft:Setup_Color_Table()
+	print("creating color table")
+	SetNetTableValue("dotacraft_color_table", "0", 	{r=255, g=0,   b=0	, taken = false})	-- red
+	SetNetTableValue("dotacraft_color_table", "1", 	{r=0, 	g=0,   b=255, taken = false})	-- blue
+	SetNetTableValue("dotacraft_color_table", "2", 	{r=0, 	g=255, b=255, taken = false})	-- teal
+	SetNetTableValue("dotacraft_color_table", "3", 	{r=125, g=0,   b=255, taken = false})	-- purple
+	SetNetTableValue("dotacraft_color_table", "4", 	{r=255, g=255, b=0	, taken = false})	-- yellow
+	SetNetTableValue("dotacraft_color_table", "5", 	{r=255, g=125, b=0	, taken = false})	-- orange
+	SetNetTableValue("dotacraft_color_table", "6", 	{r=0, 	g=255, b=0	, taken = false})	-- green
+	SetNetTableValue("dotacraft_color_table", "7",	{r=255, g=100, b=255, taken = false})	-- pink
+	SetNetTableValue("dotacraft_color_table", "8",	{r=125, g=125, b=125, taken = false})	-- gray	
+end
+
+function SetNetTableValue(NetTableName, key, table)
+	CustomNetTables:SetTableValue(NetTableName, key, table)
+end
+
+function GetNetTableValue(NetTableName, key)
+    --print("NetTable", key, CustomNetTables:GetTableValue("dotacraft_color_table", key))
+    return CustomNetTables:GetTableValue(NetTableName, key)
 end
