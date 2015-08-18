@@ -194,6 +194,7 @@ function Update_Player(TableName, Key, Value){
 		}
 	}
 	
+	// disable colors that are already taken
 	Update_Available_Colors()
 	
 	// ready status for local player
@@ -207,12 +208,13 @@ function Update_Player(TableName, Key, Value){
 // function which sets the local background image to that of the race
 function SetRaceBackgroundImage(race){
 	// if race is not 0, which is the random race
+	var Left_Bar = Root.FindChildTraverse("Left_Bar")
 	if(race != 0){
 		// save image path and then assign it in the style
-		var team_path = "url('file://{images}/background_"+race+".vtex')"
-		Root.style["background-image"] = team_path
+		var team_path = "url('s2r://panorama/images/selection/background_"+race+".vtex')"
+		Left_Bar.style["background-image"] = team_path
 	}else{ // if random
-		Root.style["background-image"] = "url('s2r://panorama/images/backgrounds/gallery_background.png')"
+		Left_Bar.style["background-image"] = "url('s2r://panorama/images/backgrounds/gallery_background.png')"
 	}
 }
 
@@ -234,6 +236,7 @@ function Update_Available_Colors(){
 			var dropdown_child = dropdown.FindDropDownMenuChild(color_index)
 			dropdown_child.enabled = false
 			dropdown_child.style["border"] = "3px solid black"
+
 		}
 	}	
 }
@@ -279,15 +282,17 @@ function CountDown(){
 	$.Msg("Countdown Time: "+Root.time_left)
 	// set countdown true so that this function will start scheduling itself
 	Root.CountDown = true
-
+	
+	var Left_Bar = Root.FindChildTraverse("Left_Bar")
+	
 	// create header
-	var Timer_Header = $.CreatePanel("Label", Root, "CountDownHeader")
+	var Timer_Header = $.CreatePanel("Label", Left_Bar, "CountDownHeader")
 	Timer_Header.text = "Map starts in:"
 
 	//create text
-	var Timer_Text = $.CreatePanel("Label", Root, "CountDown")
+	var Timer_Text = $.CreatePanel("Label", Left_Bar, "CountDown")
 	if(Root.time_left != 0){
-	Timer_Text.text = Root.time_left
+		Timer_Text.text = Root.time_left
 	}else{
 		Timer_Text.text = "GL & HF"
 	}
@@ -345,7 +350,7 @@ function Setup_Minimap(){
 	var Suggested_Players = Root.FindChildTraverse("Suggested_Players_Text")
 	var Map_Description = Root.FindChildTraverse("Map_Description_Text")
 	
-	var Minimap_Image_Path = "url('file://{images}/"+Map_Name+".vtex');"
+	var Minimap_Image_Path = "url('file://{images}/selection/"+Map_Name+".vtex');"
 	//$.Msg(Minimap_Image_Path)
 	 
 	// set minimap image path
