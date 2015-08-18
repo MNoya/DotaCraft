@@ -21606,12 +21606,14 @@
 		// BuildingHelper info
 		"Building"						"1" //bool
 		"BuildingSize"					"5"
-		"BuildTime"						"0.0"
+		"BuildTime"						"60.0"
 		"AbilityCastRange"				"200"
 		"Scale"							"0" //bool
 		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1" //bool
+	
+		"ModelRotation"					"90.0"
 	
 		"UnitName"						"human_barracks"
 		"AbilityCooldown"				"0"
@@ -21672,6 +21674,8 @@
 	
 		"RequiresRepair"				"1"
 	
+		"ModelRotation"					"270.0"
+	
 		"UnitName"						"human_blacksmith"
 		"AbilityCooldown"				"0"
 		"AbilityGoldCost"				"140"
@@ -21731,6 +21735,8 @@
 		//"CancelsBuildingGhost"			"0" //bool
 	
 		"RequiresRepair"				"1"
+	
+		"ModelRotation"					"90.0"
 	
 		"UnitName"						"human_arcane_sanctum"
 		"AbilityCooldown"				"0"
@@ -21849,6 +21855,8 @@
 		"PlayerCanControl"				"1" //bool
 	
 		"RequiresRepair"				"1"
+	
+		"ModelRotation"					"135.0"
 	
 		"UnitName"						"human_gryphon_aviary"
 		"AbilityCooldown"				"0"
@@ -35530,6 +35538,8 @@
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
 	
+		"ModelRotation"					"90.0"
+	
 		"UnitName"						"nightelf_ancient_of_lore"
 		"AbilityCooldown"				"0"
 		"AbilityGoldCost"				"155"
@@ -35591,6 +35601,8 @@
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
 	
+		"ModelRotation"					"90.0"
+	
 		"UnitName"						"nightelf_ancient_of_wind"
 		"AbilityCooldown"				"0"
 		"AbilityGoldCost"				"150"
@@ -35650,6 +35662,8 @@
 	
 		"BuilderInside"					"1"	//bool
 		"ConsumesBuilder"				"1" //bool
+	
+		"ModelRotation"					"90.0"
 		
 		"UnitName"						"nightelf_ancient_protector"
 		"AbilityCooldown"				"0"

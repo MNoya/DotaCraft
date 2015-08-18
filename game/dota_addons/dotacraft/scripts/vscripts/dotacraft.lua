@@ -966,7 +966,7 @@ function dotacraft:OnPlayerPickHero(keys)
     local city_center_name = GetCityCenterNameForHeroRace(hero_name)
     local builder_name = GetBuilderNameForHeroRace(hero_name)
 
-	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5) 
+	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5, 0) 
 	player.buildings[city_center_name] = 1
 	PlayerResource:SetCameraTarget(playerID, building)
 	Timers:CreateTimer(function() PlayerResource:SetCameraTarget(playerID, nil) end)
@@ -1028,6 +1028,8 @@ function dotacraft:OnPlayerPickHero(keys)
 		closest_mine.building_on_top = entangled_gold_mine -- A reference to the building that entangles this gold mine
 
 		building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
+
+		building:SetAngles(0,-90,0)
 	end
 
 	if hero_name == "npc_dota_hero_dragon_knight" or hero_name == "npc_dota_hero_huskar" then

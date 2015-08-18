@@ -30,6 +30,7 @@ function BuildingHelper:Init()
 
     DebugPrint("[BH] BuildingHelper Init")
 
+    -- Merge Building abilities coming from both the Ability and Unit KVs
     for i=1,2 do
         local t = AbilityKVs
         if i == 2 then
@@ -151,6 +152,10 @@ function BuildingHelper:AddBuilding(keys)
 
     -- Make a model dummy to pass it to panorama
     player.activeBuildingTable.mgd = CreateUnitByName(unitName, OutOfWorldVector, false, nil, nil, builder:GetTeam())
+
+    -- Adjust the Model Orientation
+    local yaw = buildingTable:GetVal("ModelRotation", "float")
+    player.activeBuildingTable.mgd:SetAngles(0, -yaw, 0)
 
     -- Position is CP0, model attach is CP1, color is CP2, alpha is CP3.x, scale is CP4.x
     player.activeBuildingTable.modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, player.activeBuildingTable.mgd, player)
@@ -291,6 +296,12 @@ function BuildingHelper:SetupBuildingTable( abilityName )
     end
     buildingTable:SetVal("MaxScale", fMaxScale)
 
+    local fModelRotation = buildingTable:GetVal("ModelRotation", "float")
+    if fModelRotation == nil then
+        fModelRotation = 0
+    end
+    buildingTable:SetVal("ModelRotation", fModelRotation)
+
     return buildingTable
 end
 
@@ -301,7 +312,7 @@ end
     * Skips the construction phase and doesn't require a builder, this is most important to place the "base" buildings for the players when the game starts.
     * Make sure the position is valid before calling this in code.
 ]]--
-function BuildingHelper:PlaceBuilding(player, name, location, blockGridNav, size)
+function BuildingHelper:PlaceBuilding(player, name, location, blockGridNav, size, angle)
   
     local pID = player:GetPlayerID()
     local playersHero = player:GetAssignedHero()
@@ -319,10 +330,12 @@ function BuildingHelper:PlaceBuilding(player, name, location, blockGridNav, size
     if blockGridNav then
         building.blockers = gridNavBlockers
     end
-    building.state = "complete"
 
-    -- Adjust the Hull Radius according to the gridnav size
-    building:SetHullRadius( size * 32 - 32 )
+    if angle then
+        building:SetAngles(0,-angle,0)
+    end
+
+    building.state = "complete"
 
     -- Return the created building
     return building
@@ -387,8 +400,9 @@ function BuildingHelper:StartBuilding( keys )
     building.buildingTable = buildingTable
     building.state = "building"
 
-    -- Adjust the Hull Radius according to the gridnav size
-    building:SetHullRadius( size * 32 - 32)
+    -- Adjust the Model Orientation
+    local yaw = buildingTable:GetVal("ModelRotation", "float")
+    building:SetAngles(0, -yaw, 0)
 
     -- Prevent regen messing with the building spawn hp gain
     local regen = building:GetBaseHealthRegen()
@@ -879,6 +893,10 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true) -- Model attach          
     ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0)) -- Alpha
     ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0)) -- Scale
+
+    -- Adjust the Model Orientation
+    local yaw = buildingTable:GetVal("ModelRotation", "float")
+    mgd:SetAngles(0, -yaw, 0)
     
     local color = Vector(255,255,255)
     if RECOLOR_BUILDING_PLACED then
