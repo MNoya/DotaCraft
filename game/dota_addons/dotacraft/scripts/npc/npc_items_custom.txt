@@ -709,13 +709,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"EnableAbilities"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_building_particle"
-				"Target" 		"CASTER"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}
@@ -743,13 +737,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"EnableAbilities"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_building_particle"
-				"Target" 		"CASTER"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}
@@ -777,13 +765,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"EnableAbilities"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_building_particle"
-				"Target" 		"CASTER"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}
@@ -811,13 +793,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"EnableAbilities"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_building_particle"
-				"Target" 		"CASTER"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}
@@ -845,13 +821,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"EnableAbilities"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_building_particle"
-				"Target" 		"CASTER"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}
@@ -3852,6 +3822,12 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"DequeueUnit"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"CancelUpgrade"
+			}
 		}
 	}
 	
@@ -3872,6 +3848,12 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"DequeueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}
@@ -7329,6 +7311,12 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"DequeueUnit"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"CancelUpgrade"
+			}
 		}
 	}
 	
@@ -7349,6 +7337,12 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"DequeueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}
@@ -12011,6 +12005,12 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"DequeueUnit"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"CancelUpgrade"
+			}
 		}
 	}
 	
@@ -12031,6 +12031,12 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"DequeueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}
@@ -12053,6 +12059,12 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"DequeueUnit"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"CancelUpgrade"
+			}
 		}
 	}
 	
@@ -12073,6 +12085,12 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"DequeueUnit"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"CancelUpgrade"
 			}
 		}
 	}

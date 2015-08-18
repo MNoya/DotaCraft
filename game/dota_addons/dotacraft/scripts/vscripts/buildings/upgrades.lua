@@ -1,7 +1,6 @@
 --[[
-	Author: Noya
 	Replaces the building to the upgraded unit name
-]]
+]]--
 function UpgradeBuilding( event )
 	local caster = event.caster
 	local new_unit = event.UnitName
@@ -9,7 +8,7 @@ function UpgradeBuilding( event )
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()
 	local player = PlayerResource:GetPlayer(playerID)
-	local currentHealthPercentage = caster:GetHealth()/caster:GetMaxHealth()
+	local currentHealthPercentage = caster:GetHealthPercent() * 0.01
 
 	-- Keep the gridnav blockers and hull radius
 	local blockers = caster.blockers
@@ -40,7 +39,7 @@ function UpgradeBuilding( event )
 		caster:RemoveSelf()
     end
 
-	local newRelativeHP = math.ceil(building:GetMaxHealth() * currentHealthPercentage)
+	local newRelativeHP = building:GetMaxHealth() * currentHealthPercentage
 	if newRelativeHP == 0 then newRelativeHP = 1 end --just incase rounding goes wrong
 	building:SetHealth(newRelativeHP)
 
@@ -75,68 +74,75 @@ function UpgradeBuilding( event )
 		print("Applying masonry rank "..masonry_rank.." to this building upgrade")
 		UpdateUnitUpgrades( building, player, "human_research_masonry"..masonry_rank )
 	end
-
-
 end
 
-
-
--- Disable any queue-able ability that the building could have, because the caster will be removed after the channel ends.
-function DisableAbilities( event )
-	
+--[[
+	Disable any queue-able ability that the building could have, because the caster will be removed when the channel ends
+	A modifier from the ability can also be passed here to attach particle effects
+]]--
+function StartUpgrade( event )	
 	local caster = event.caster
 	local ability = event.ability
-	local abilities = { "human_train_peasant", 
-						"human_train_keep",
-						"human_train_castle" }
+	local modifier_name = event.ModifierName
+	local abilities = {}
 
 	-- Check to not disable when the queue was full
 	if #caster.queue < 5 then
 
-		-- Harcoded as fuck particle attachment
-		if not caster:HasModifier("modifier_building_particle") then
-			ability:ApplyDataDrivenModifier(caster, caster, "modifier_building_particle", {})
-		else
-			-- Reapply
-			caster:RemoveModifierByName("modifier_building_particle")
-			ability:ApplyDataDrivenModifier(caster, caster, "modifier_building_particle", {})
+		-- Iterate through abilities marking those to disable
+		for i=0,15 do
+			local abil = caster:GetAbilityByIndex(i)
+			if abil then
+				local ability_name = abil:GetName()
+
+				-- Abilities to hide include the strings train_ and research_, the rest remain available
+				if string.match(ability_name, "train_") or string.match(ability_name, "research_") then
+					table.insert(abilities, abil)
+				end
+			end
 		end
 
-		for i=1,#abilities do
-			local ability = caster:FindAbilityByName(abilities[i])
-			if ability then
-				ability:SetHidden(true)
-			end			
+		-- Keep the references to enable if the upgrade gets canceled
+		caster.disabled_abilities = abilities
+
+		for k,disable_ability in pairs(abilities) do
+			disable_ability:SetHidden(true)		
 		end
+
+		-- Pass a modifier with particle(s) of choice to show that the building is upgrading. Remove it on CancelUpgrade
+		if modifier_name then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_name, {})
+			caster.upgrade_modifier = modifier_name
+		end
+
 	end
 
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()
-	--print("##Firing ability_values_force_check for "..caster:GetUnitName().." and player "..playerID)
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
--- Shows abilities from a list
-function EnableAbilities( event )
+--[[
+	Replaces the building to the upgraded unit name
+]]--
+function CancelUpgrade( event )
 	
 	local caster = event.caster
-	local abilities = { "human_train_peasant", 
-						"human_train_keep",
-						"human_train_castle" }
+	local abilities = caster.disabled_abilities
 
-	for i=1,#abilities do
-		local ability = caster:FindAbilityByName(abilities[i])
-		if ability then
-			ability:SetHidden(false)
-		end
+	for k,ability in pairs(abilities) do
+		ability:SetHidden(false)		
+	end
+
+	local upgrade_modifier = caster.upgrade_modifier
+	if upgrade_modifier and caster:HasModifier(upgrade_modifier) then
+		caster:RemoveModifierByName(upgrade_modifier)
 	end
 
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()
-	print("##Firing ability_values_force_check for "..caster:GetUnitName())
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
-
 
 -- Forces an ability to level 0
 function SetLevel0( event )

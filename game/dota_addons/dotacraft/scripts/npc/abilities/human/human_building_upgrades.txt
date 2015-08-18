@@ -48,7 +48,8 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
+			"ModifierName"	"modifier_building_particle"
 		}
 	}
 
@@ -159,7 +160,8 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
+			"ModifierName"	"modifier_building_particle"
 		}
 
 	}
@@ -326,7 +328,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
 		}
 	}
 
@@ -413,7 +415,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
 		}
 	}
 
@@ -500,7 +502,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
 		}
 	}
 

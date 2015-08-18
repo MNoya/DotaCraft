@@ -39,12 +39,11 @@
 			"Function"		"EnqueueUnit"
 		}
 
-		// Need a better method for this
-		//"RunScript"
-		//{
-		//	"ScriptFile"	"buildings/upgrades.lua"
-		//	"Function"		"DisableAbilities"
-		//}
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"StartUpgrade"
+		}
 	}
 
 	"OnChannelSucceeded"
@@ -123,12 +122,11 @@
 			"Function"		"EnqueueUnit"
 		}
 
-		// Need a better method for this
-		//"RunScript"
-		//{
-		//	"ScriptFile"	"buildings/upgrades.lua"
-		//	"Function"		"DisableAbilities"
-		//}
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"StartUpgrade"
+		}
 
 	}
 
@@ -191,12 +189,11 @@
 			"Function"		"EnqueueUnit"
 		}
 
-		// Need a better method for this
-		//"RunScript"
-		//{
-		//	"ScriptFile"	"buildings/upgrades.lua"
-		//	"Function"		"DisableAbilities"
-		//}
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"StartUpgrade"
+		}
 	}
 
 	"OnChannelSucceeded"

@@ -16,6 +16,12 @@
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
 		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"CancelUpgrade"
+		}
 	}
 }
 
@@ -36,6 +42,12 @@
 		{
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"CancelUpgrade"
 		}
 	}
 }
@@ -58,6 +70,12 @@
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
 		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"CancelUpgrade"
+		}
 	}
 }
 
@@ -78,6 +96,12 @@
 		{
 			"ScriptFile"	"buildings/queue.lua"
 			"Function"		"DequeueUnit"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"CancelUpgrade"
 		}
 	}
 }

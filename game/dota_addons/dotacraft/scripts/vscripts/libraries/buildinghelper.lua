@@ -916,7 +916,7 @@ end
       * Processes an item of the builders work queue
 ]]--
 function BuildingHelper:AdvanceQueue(builder)
-    if #builder.buildingQueue > 0 then
+    if builder.buildingQueue and #builder.buildingQueue > 0 then
         BuildingHelper:PrintQueue(builder)
 
         local work = builder.buildingQueue[1]
