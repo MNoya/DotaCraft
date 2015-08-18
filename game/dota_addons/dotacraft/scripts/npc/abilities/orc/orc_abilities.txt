@@ -1253,7 +1253,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"units/orc/trollbatrider.lua"
-			"Function"		"SpellStart"
+			"Function"		"UnstableSpellStart"
 		}
 	}
 
@@ -1284,7 +1284,7 @@
 				"RunScript"
 				{
 					"ScriptFile"	"units/orc/trollbatrider.lua"
-					"Function"		"ModDeath"
+					"Function"		"UnstableDeath"
 				}
 			}
 		}
@@ -1306,9 +1306,8 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-	// Changed to physical because buildings don't take magical damage.
 	
 	"AbilitySpecial"
 	{
@@ -1320,7 +1319,7 @@
 		"02"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"attack_speed_reduction"		"0.8"
+			"attack_speed_reduction"		"-80"
 		}
 		"03"
 		{
@@ -1329,7 +1328,59 @@
 		}
 	}
 
-	// Done
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+		"particle"					"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_liquid_fire_orb"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_name/ability_name.lua"
+					"Function"		"AbilityName"
+				}
+			}						
+		}
+
+		"modifier_liquid_fire_debuff"
+		{
+
+			"IsPurgable"		"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+
+			"Duration"			"%duration"
+
+			"EffectName"		"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"ThinkInterval"		"0.5"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%damage / 2"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_reduction"
+			}
+		}
+	}
 }
 
 

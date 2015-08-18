@@ -1,5 +1,4 @@
--- NOTE: OnPhaseStart preventing to cast on ground units ?!
-function SpellStart( event )
+function UnstableSpellStart( event )
 	local caster = event.caster
 	local target = event.target
 	local ability = event.ability
@@ -19,7 +18,7 @@ function SpellStart( event )
 	end)
 end
 
-function ModDeath( event )
+function UnstableDeath( event )
 	local caster = event.caster
 	local target = caster.target
 	local ability = event.ability
@@ -46,4 +45,15 @@ function ModDeath( event )
 	caster:EmitSound('Hero_Techies.Suicide')
 	caster:ForceKill(true)
 	ParticleManager:CreateParticle('particles/units/heroes/hero_techies/techies_suicide.vpcf', PATTACH_ABSORIGIN, target)
+end
+
+function LiquidOrb( event )
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+
+	if IsCustomBuilding(unit) then
+		ability:ApplyDataDrivenModifier(caster, target, 'modifier_liquid_fire_debuff', nil) 
+		target:EmitSound('Hero_Jakiro.LiquidFire')
+	end
 end
