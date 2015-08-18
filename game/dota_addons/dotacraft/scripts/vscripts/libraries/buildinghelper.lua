@@ -823,27 +823,20 @@ end
       * Sends onConstructionFailed if invalid
 ]]--
 function BuildingHelper:ValidPosition(size, location, callbacks)
-    if size % 2 == 1 then
-        for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 32 do
-            for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 32 do
-                local testLocation = Vector(x, y, location.z)
-                if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
-                    if callbacks.onConstructionFailed then
-                        callbacks.onConstructionFailed()
-                        return false
-                    end
-                end
-            end
-        end
-    else
-        for x = location.x - (size / 2) * 32 - 16, location.x + (size / 2) * 32 + 16, 32 do
-            for y = location.y - (size / 2) * 32 - 16, location.y + (size / 2) * 32 + 16, 32 do
-                local testLocation = Vector(x, y, location.z)
-                if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
-                    if callbacks.onConstructionFailed then
-                        callbacks.onConstructionFailed()
-                        return false
-                    end
+
+    local halfSide = (size/2)*64
+    local boundingRect = {  leftBorderX = location.x-halfSide, 
+                            rightBorderX = location.x+halfSide, 
+                            topBorderY = location.y+halfSide,
+                            bottomBorderY = location.y-halfSide }
+
+    for x=boundingRect.leftBorderX+32,boundingRect.rightBorderX-32,64 do
+        for y=boundingRect.topBorderY-32,boundingRect.bottomBorderY+32,-64 do
+            local testLocation = Vector(x, y, location.z)
+            if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
+                if callbacks.onConstructionFailed then
+                    callbacks.onConstructionFailed()
+                    return false
                 end
             end
         end
