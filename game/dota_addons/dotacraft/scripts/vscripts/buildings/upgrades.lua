@@ -1,6 +1,5 @@
 --[[
 	Author: Noya
-	Date: 19.02.2015.
 	Replaces the building to the upgraded unit name
 ]]
 function UpgradeBuilding( event )
@@ -17,15 +16,6 @@ function UpgradeBuilding( event )
 	local hull_radius = caster:GetHullRadius()
 	local flag = caster.flag
 
-	-- Remove the old building from the structures list
-	local buildingIndex = getIndex(player.structures, caster)
-	if IsValidEntity(caster) then
-        table.remove(player.structures, buildingIndex)
-		
-		-- Remove old building entity
-		caster:RemoveSelf()
-    end
-
     -- New building
 	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, false, 0) 
 	building.blockers = blockers
@@ -35,6 +25,20 @@ function UpgradeBuilding( event )
     if IsValidEntity(flag) then
 		building.flag = flag
 	end
+
+	-- If the building to ugprade is selected, change the selection to the new one
+	if IsCurrentlySelected(caster) then
+		AddUnitToSelection(building)
+	end
+
+	-- Remove the old building from the structures list
+	if IsValidEntity(caster) then
+		local buildingIndex = getIndex(player.structures, caster)
+        table.remove(player.structures, buildingIndex)
+		
+		-- Remove old building entity
+		caster:RemoveSelf()
+    end
 
 	local newRelativeHP = math.ceil(building:GetMaxHealth() * currentHealthPercentage)
 	if newRelativeHP == 0 then newRelativeHP = 1 end --just incase rounding goes wrong
@@ -55,10 +59,6 @@ function UpgradeBuilding( event )
 
 	-- Add the new building to the structures list
 	table.insert(player.structures, building)
-
-	print("Building upgrade complete. Player current building list:")
-	DeepPrintTable(player.buildings)
-	print("==========================")
 
 	-- Update the abilities of the units and structures
 	for k,unit in pairs(player.units) do

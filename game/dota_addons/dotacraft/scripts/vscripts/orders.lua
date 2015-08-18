@@ -74,7 +74,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
         for _,entityIndex in pairs(entityList) do
             local caster = EntIndexToHScript(entityIndex)
-            if caster and caster:HasAbility(abilityName) then
+            -- Make sure the original caster unit doesn't cast twice
+            if caster and caster ~= unit and caster:HasAbility(abilityName) then
                 local abil = caster:FindAbilityByName(abilityName)
                 if abil and abil:IsFullyCastable() then
 
