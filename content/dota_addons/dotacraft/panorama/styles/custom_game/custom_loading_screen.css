@@ -1,0 +1,59 @@
+.AddonLoadingRoot
+{
+    width: 100%;
+    height: 100%;
+    overflow: clip;
+}
+
+#HintPanel{
+	horizontal-align: middle;
+	vertical-align: top;
+  
+	margin-top: 50px;
+	
+	flow-children: right;
+}
+
+#HintText{
+	vertical-align: middle;
+	horizontal-align: middle;
+  
+	text-transform: uppercase;
+	font-size: 30px;
+	color: #cccccc;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+#TitlePanel
+{
+	horizontal-align: left;
+	vertical-align: bottom;
+  
+	margin-bottom: 100px;
+	margin-left: 100px;
+	flow-children: right;
+}
+
+#AddonTitle
+{
+	margin-bottom: -15px;
+	vertical-align: center;
+  
+	text-transform: uppercase;
+	font-size: 80px;
+	color: #cccccc;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+#LoadingScreenPosition
+{
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#LoadingScreen
+{	
+	width: 100%;
+	height: 100%;
+}

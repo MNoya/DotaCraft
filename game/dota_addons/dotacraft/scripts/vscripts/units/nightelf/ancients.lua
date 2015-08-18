@@ -64,7 +64,7 @@ function UpRootStart( event )
 		return
 	end
 
-	caster:RemoveBuilding( false )
+	BuildingHelper:RemoveBuilding( caster, false )
 	caster:RemoveAbility("ability_building")
 	caster:RemoveAbility("ability_building_queue")
 	caster:RemoveModifierByName("modifier_building_queue")

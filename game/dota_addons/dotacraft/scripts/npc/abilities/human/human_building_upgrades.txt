@@ -11,6 +11,7 @@
 	"AbilityGoldCost"				"320"
 	"AbilityChannelTime"			"10" //140
 
+	"AbilityMultiOrder"				"1"
 
 	"AbilitySpecial"
 	{
@@ -47,7 +48,8 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
+			"ModifierName"	"modifier_building_particle"
 		}
 	}
 
@@ -121,6 +123,7 @@
 	"AbilityGoldCost"				"360"
 	"AbilityChannelTime"			"10" //140
 
+	"AbilityMultiOrder"				"1"
 
 	"AbilitySpecial"
 	{
@@ -157,7 +160,8 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
+			"ModifierName"	"modifier_building_particle"
 		}
 
 	}
@@ -292,6 +296,8 @@
 	"AbilityGoldCost"				"100"
 	"AbilityChannelTime"			"50"
 
+	"AbilityMultiOrder"				"1"
+
 	"AbilitySpecial"
 	{
 		"01"
@@ -322,7 +328,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
 		}
 	}
 
@@ -372,6 +378,7 @@
 	"AbilityGoldCost"				"200"
 	"AbilityChannelTime"			"75"
 
+	"AbilityMultiOrder"				"1"
 
 	"AbilitySpecial"
 	{
@@ -408,7 +415,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
 		}
 	}
 
@@ -458,6 +465,7 @@
 	"AbilityGoldCost"				"100"
 	"AbilityChannelTime"			"50"
 
+	"AbilityMultiOrder"				"1"
 
 	"AbilitySpecial"
 	{
@@ -494,7 +502,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"DisableAbilities"
+			"Function"		"StartUpgrade"
 		}
 	}
 

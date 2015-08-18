@@ -21,13 +21,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"EnableAbilities"
-		}
-
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_building_particle"
-			"Target" 		"CASTER"
+			"Function"		"CancelUpgrade"
 		}
 	}
 }
@@ -55,13 +49,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"EnableAbilities"
-		}
-
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_building_particle"
-			"Target" 		"CASTER"
+			"Function"		"CancelUpgrade"
 		}
 	}
 }
@@ -89,13 +77,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"EnableAbilities"
-		}
-
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_building_particle"
-			"Target" 		"CASTER"
+			"Function"		"CancelUpgrade"
 		}
 	}
 }
@@ -123,13 +105,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"EnableAbilities"
-		}
-
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_building_particle"
-			"Target" 		"CASTER"
+			"Function"		"CancelUpgrade"
 		}
 	}
 }
@@ -157,13 +133,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"buildings/upgrades.lua"
-			"Function"		"EnableAbilities"
-		}
-
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_building_particle"
-			"Target" 		"CASTER"
+			"Function"		"CancelUpgrade"
 		}
 	}
 }

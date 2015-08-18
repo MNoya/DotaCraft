@@ -103,28 +103,6 @@ function DequeueUnit( event )
     end
 end
 
--- Auxiliar function, takes all items and puts them 1 slot back
-function ReorderItems( caster )
-	local slots = {}
-	for itemSlot = 0, 5, 1 do
-
-		-- Handle the case in which the caster is removed
-		local item
-		if IsValidEntity(caster) then
-			item = caster:GetItemInSlot( itemSlot )
-		end
-
-       	if item ~= nil then
-			table.insert(slots, itemSlot)
-       	end
-    end
-
-    for k,itemSlot in pairs(slots) do
-    	caster:SwapItems(itemSlot,k-1)
-    end
-end
-
-
 -- Moves on to the next element of the queue
 function NextQueue( event )
 	local caster = event.caster

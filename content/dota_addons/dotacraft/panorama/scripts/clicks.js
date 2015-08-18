@@ -3,7 +3,7 @@
 // Handle Right Button events
 function OnRightButtonPressed()
 {
-	//$.Msg("OnRightButtonPressed")
+	$.Msg("OnRightButtonPressed")
 
 	var iPlayerID = Players.GetLocalPlayer();
 	var mainSelected = Players.GetLocalPlayerPortraitUnit(); 
@@ -12,38 +12,48 @@ function OnRightButtonPressed()
 	var mouseEntities = GameUI.FindScreenEntities( cursor );
 	mouseEntities = mouseEntities.filter( function(e) { return e.entityIndex != mainSelected; } )
 	
+	var pressedShift = GameUI.IsShiftDown();
+
 	// Builder Right Click
-	if (mouseEntities.length > 0 && IsBuilder(mainSelectedName) )
+	if ( IsBuilder(mainSelectedName) )
 	{
-		for ( var e of mouseEntities )
+		// Cancel BH
+		SendCancelCommand();
+
+		// If it's mousing over entities
+		if (mouseEntities.length > 0)
 		{
-			var entityName = Entities.GetUnitName(e.entityIndex)
-			// Gold mine rightclick
-			if (entityName == "gold_mine"){
-				$.Msg("Player "+iPlayerID+" Clicked on a gold mine")
-				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
-				return true;
+			for ( var e of mouseEntities )
+			{
+				var entityName = Entities.GetUnitName(e.entityIndex)
+				// Gold mine rightclick
+				if (entityName == "gold_mine"){
+					$.Msg("Player "+iPlayerID+" Clicked on a gold mine")
+					GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex, queue: pressedShift})
+					return true;
+				}
+				// Entangled gold mine rightclick
+				else if (mainSelectedName == "nightelf_wisp" && entityName == "nightelf_entangled_gold_mine" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID )){
+					$.Msg("Player "+iPlayerID+" Clicked on a entangled gold mine")
+					GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex, queue: pressedShift })
+					return true;
+				}
+				// Haunted gold mine rightclick
+				else if (mainSelectedName == "undead_acolyte" && entityName == "undead_haunted_gold_mine" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID )){
+					$.Msg("Player "+iPlayerID+" Clicked on a haunted gold mine")
+					GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex, queue: pressedShift })
+					return true;
+				}
+				// Repair rightclick
+				else if ( (IsCustomBuilding(e.entityIndex) || IsMechanical(e.entityIndex)) && Entities.GetHealthPercent(e.entityIndex) < 100 && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) ){
+					$.Msg("Player "+iPlayerID+" Clicked on a building or mechanical unit with health missing")
+					GameEvents.SendCustomGameEventToServer( "repair_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex, queue: pressedShift })
+					return true;
+				}
+				return false;
 			}
-			// Entangled gold mine rightclick
-			else if (mainSelectedName == "nightelf_wisp" && entityName == "nightelf_entangled_gold_mine" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID )){
-				$.Msg("Player "+iPlayerID+" Clicked on a entangled gold mine")
-				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
-				return true;
-			}
-			// Haunted gold mine rightclick
-			else if (mainSelectedName == "undead_acolyte" && entityName == "undead_haunted_gold_mine" && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID )){
-				$.Msg("Player "+iPlayerID+" Clicked on a haunted gold mine")
-				GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
-				return true;
-			}
-			// Repair rightclick
-			else if ( (IsCustomBuilding(e.entityIndex) || IsMechanical(e.entityIndex)) && Entities.GetHealthPercent(e.entityIndex) < 100 && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID ) ){
-				$.Msg("Player "+iPlayerID+" Clicked on a building or mechanical unit with health missing")
-				GameEvents.SendCustomGameEventToServer( "repair_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
-				return true;
-			}
-			return false;
-		}	
+		}
+			
 	}
 
 	// Building Right Click
@@ -114,18 +124,20 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
     if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
         return CONTINUE_PROCESSING_EVENT;
 
-    if ( eventName === "pressed" && state === 'active')
+    var mainSelectedName = Entities.GetUnitName( Players.GetLocalPlayerPortraitUnit())
+
+    if ( eventName === "pressed" && IsBuilder(mainSelectedName))
     {
-        // Left-click
-        if ( arg === 0 )
+        // Left-click with a builder while BH is active
+        if ( arg === 0 && state == "active")
         {
             return SendBuildCommand();
         }
 
-        // Right-click
+        // Right-click (Cancel & Repair)
         if ( arg === 1 )
         {
-            return SendCancelCommand();
+            return OnRightButtonPressed();
         }
     }
     else if ( eventName === "pressed" || eventName === "doublepressed")

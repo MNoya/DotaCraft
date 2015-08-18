@@ -54,13 +54,13 @@
 	"BuildingSize"					"5" 
 	"BuildTime"						"70.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 	"ConsumesBuilder"				"1" //bool
+
+	"ModelRotation"					"90.0"
 
 	"UnitName"						"nightelf_ancient_of_lore"
 	"AbilityCooldown"				"0"
@@ -90,8 +90,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -117,13 +117,13 @@
 	"BuildingSize"					"5" 
 	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 	"ConsumesBuilder"				"1" //bool
+
+	"ModelRotation"					"90.0"
 
 	"UnitName"						"nightelf_ancient_of_wind"
 	"AbilityCooldown"				"0"
@@ -153,8 +153,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -179,13 +179,13 @@
 	"BuildingSize"					"5" 
 	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 	"ConsumesBuilder"				"1" //bool
+
+	"ModelRotation"					"90.0"
 	
 	"UnitName"						"nightelf_ancient_protector"
 	"AbilityCooldown"				"0"
@@ -215,8 +215,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -241,10 +241,8 @@
 	"BuildingSize"					"5" 
 	"BuildTime"						"80.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -276,8 +274,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }

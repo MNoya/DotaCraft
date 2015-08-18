@@ -45,7 +45,6 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
 	"AbilityCastPoint"				"0"
 
 	// BuildingHelper info
@@ -53,12 +52,12 @@
 	"BuildingSize"					"5"
 	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1" //bool
+
+	"ModelRotation"					"90.0"
 
 	"UnitName"						"human_barracks"
 	"AbilityCooldown"				"0"
@@ -88,8 +87,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -108,20 +107,18 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityGoldCost"				"180"
-	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
 	"BuildingSize"					"3" 
 	"BuildTime"						"70.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	"CancelsBuildingGhost"			"1" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
+
+	"ModelRotation"					"270.0"
 
 	"UnitName"						"human_blacksmith"
 	"AbilityCooldown"				"0"
@@ -151,8 +148,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -171,20 +168,19 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityGoldCost"				"180"
-	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
 	"BuildingSize"					"5" 
 	"BuildTime"						"70.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
 	"PlayerCanControl"				"1" //bool. 
 	//"CancelsBuildingGhost"			"0" //bool
 
 	"RequiresRepair"				"1"
+
+	"ModelRotation"					"90.0"
 
 	"UnitName"						"human_arcane_sanctum"
 	"AbilityCooldown"				"0"
@@ -214,8 +210,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -234,18 +230,14 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityGoldCost"				"180"
-	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
 	"BuildingSize"					"5" 
 	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
 
@@ -277,8 +269,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }
@@ -297,20 +289,18 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityGoldCost"				"180"
-	"AbilityUpgradeGoldCost"		"0"
 
 	// BuildingHelper info
 	"Building"						"1" //bool
 	"BuildingSize"					"3" 
 	"BuildTime"						"75.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"RequiresRepair"				"1"
+
+	"ModelRotation"					"135.0"
 
 	"UnitName"						"human_gryphon_aviary"
 	"AbilityCooldown"				"0"
@@ -340,8 +330,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 		}
 	}
 }

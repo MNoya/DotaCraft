@@ -20,10 +20,8 @@
 	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"150.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -55,8 +53,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"		"orc_great_hall"
 		}
 	}
@@ -78,10 +76,8 @@
 	"BuildingSize"					"3" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"50.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -113,8 +109,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "orc_burrow"
 		}
 	}
@@ -136,10 +132,8 @@
 	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -171,8 +165,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "orc_altar_of_storms"
 		}
 	}
@@ -194,10 +188,8 @@
 	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"70.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -229,8 +221,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "orc_war_mill"
 		}
 	}
@@ -253,10 +245,8 @@
 	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"BuilderInside"					"1"	//bool
 
@@ -288,8 +278,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "orc_voodoo_lounge"
 		}
 	}

@@ -26,21 +26,21 @@
 	</DropDown>		
 		
 	<DropDown id="ColorDropDown" oninputsubmit="PlayerColorChanged()">
-		<Label text="1" id="color_0" />
-		<Label text="2" id="color_1" />
-		<Label text="3" id="color_2" />
-		<Label text="4" id="color_3" />
-		<Label text="5" id="color_4" />
-		<Label text="6" id="color_5" />
-		<Label text="7" id="color_6" />
-		<Label text="8" id="color_7" />
-		<Label text="9" id="color_8" />
-		<Label text="10" id="color_9" />
+		<Label text="" id="0" />
+		<Label text="" id="1" />
+		<Label text="" id="2" />
+		<Label text="" id="3" />
+		<Label text="" id="4" />
+		<Label text="" id="5" />
+		<Label text="" id="6" />
+		<Label text="" id="7" />
+		<Label text="" id="8" />
 	</DropDown>
 	
+	<!--
 	<Button id="HudButton" onactivate="ReadyUp()">
 		<Label id="PlayerScoreButtonLabel" text="Ready" />
 	</Button>
-		
+	-->
 	</Panel>
 </root>

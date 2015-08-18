@@ -26,10 +26,8 @@
 	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"100.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"UnitName"						"undead_necropolis"
 	"AbilityCooldown"				"0"
@@ -59,8 +57,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"		"undead_necropolis"
 		}
 	}
@@ -82,10 +80,8 @@
 	"BuildingSize"					"3" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"50.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"UnitName"						"undead_ziggurat"
 	"AbilityCooldown"				"0"
@@ -115,8 +111,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "undead_ziggurat"
 		}
 	}
@@ -138,10 +134,8 @@
 	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"UnitName"						"undead_altar_of_darkness"
 	"AbilityCooldown"				"0"
@@ -171,8 +165,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "undead_altar_of_darkness"
 		}
 	}
@@ -194,10 +188,8 @@
 	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"80.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"UnitName"						"undead_graveyard"
 	"AbilityCooldown"				"0"
@@ -227,8 +219,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "undead_graveyard"
 		}
 	}
@@ -251,10 +243,8 @@
 	"BuildingSize"					"5" // this is (3x64) by (3x64) units, so 9 squares.
 	"BuildTime"						"60.0"
 	"AbilityCastRange"				"200"
-	"UpdateHealth"					"1" //bool
 	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool. 
-	//"CancelsBuildingGhost"			"0" //bool
+	"PlayerCanControl"				"1" //bool
 
 	"UnitName"						"undead_tomb_of_relics"
 	"AbilityCooldown"				"0"
@@ -284,8 +274,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"abilities.lua"
-			"Function"		"build"
+			"ScriptFile"	"units/builder.lua"
+			"Function"		"Build"
 			"ItemUnitName"  "undead_tomb_of_relics"
 		}
 	}
