@@ -1168,13 +1168,14 @@ end
 
 -- Ground/Air Attack mechanics
 function UnitCanAttackTarget( unit, target )
-	if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune() or not unit:CanEntityBeSeenByMyTeam(target) then
-		return false
-	end
-	local attacks_enabled = GetAttacksEnabled(unit)
-	local target_type = GetMovementCapability(target)
+  if not unit:HasAttackCapability() 
+    or (target.IsInvulnerable and target:IsInvulnerable()) 
+    or (target.IsAttackImmune and target:IsAttackImmune()) 
+    or not unit:CanEntityBeSeenByMyTeam(target) then
+    return false
+  end
 
-	return string.match(attacks_enabled, target_type)
+  return true
 end
 
 -- Check the Acquisition Range (stored on spawn) for valid targets that can be attacked by this unit
