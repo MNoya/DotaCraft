@@ -417,10 +417,6 @@ function BuildingHelper:StartBuilding( keys )
     local bConsumesBuilder = buildingTable:GetVal("ConsumesBuilder", "bool")
     -------------------------------------------------------------------
 
-    -- whether we should update the building's health over the build time.
-    local bUpdateHealth = buildingTable:GetVal("UpdateHealth", "bool")
-    local fMaxHealth = building:GetMaxHealth()
-
     -- whether we should scale the building.
     local bScale = buildingTable:GetVal("Scale", "bool")
 
@@ -440,9 +436,9 @@ function BuildingHelper:StartBuilding( keys )
     -- Dota server updates at 30 frames per second
     local fserverFrameRate = 1/30
 
-    -- Initial Health adjustment
+    -- Max and Initial Health factor
     local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
-    local fMaxHealth = fMaxHealth * (1 + 0.2 * masonry_rank) 
+    local fMaxHealth = building:GetMaxHealth() * (1 + 0.2 * masonry_rank) 
     local nInitialHealth = 0.10 * ( fMaxHealth )
     local fUpdateHealthInterval = buildTime / math.floor(fMaxHealth-nInitialHealth) -- health to add every tick until build time is completed.
     ---------------------------------------------------------------------
@@ -457,13 +453,8 @@ function BuildingHelper:StartBuilding( keys )
     local fCurrentScale = fInitialModelScale
     local bScaling = false -- Keep tracking if we're currently model scaling.
     
-    building.bUpdatingHealth = false --Keep tracking if we're currently updating health.
-
-    -- Set initial health
-    if bUpdateHealth then
-        building:SetHealth(nInitialHealth)
-        building.bUpdatingHealth = true
-    end
+    building:SetHealth(nInitialHealth)
+    building.bUpdatingHealth = true
 
     -- Set initial scale
     if bScale then
