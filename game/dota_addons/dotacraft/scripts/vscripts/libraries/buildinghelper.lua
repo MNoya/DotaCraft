@@ -750,7 +750,9 @@ function BuildingHelper:CancelBuilding(keys)
             if item:GetAbilityName() == "item_building_cancel" then
                 item:RemoveSelf()
             else
-                building:CastAbilityImmediately(item, building:GetPlayerOwnerID())
+                Timers:CreateTimer(i*1/30, function() 
+                    building:CastAbilityImmediately(item, building:GetPlayerOwnerID())
+                end)
             end
         end
     end
@@ -768,7 +770,9 @@ function BuildingHelper:CancelBuilding(keys)
     end
 
     building.state = "canceled"
-    BuildingHelper:RemoveBuilding(building, true)
+    Timers:CreateTimer(1/5, function() 
+        BuildingHelper:RemoveBuilding(building, true)
+    end)
 end
 
 --[[
