@@ -3,7 +3,8 @@
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t. DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );
 	</script>		
 	<Panel>
-		<CustomUIElement type="GameSetup" 				layoutfile="file://{resources}/layout/custom_game/pre_game_selection.xml" />
+		<CustomUIElement type="GameSetup" 			layoutfile="file://{resources}/layout/custom_game/pre_game_selection.xml" />
+		<CustomUIElement type="LoadingScreen" 		layoutfile="file://{resources}/layout/custom_game/custom_loading_screen.xml" />
 		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/scripts.xml" />
 		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/resource.xml" />
 		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/notifications.xml" /> 
