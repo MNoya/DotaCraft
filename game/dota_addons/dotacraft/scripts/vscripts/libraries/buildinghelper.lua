@@ -4,9 +4,11 @@
     Version: 1.0.0
 ]]--
 
-GRID_ALPHA = 60 -- Defines the transparency of the ghost squares
-MODEL_ALPHA = 100 -- Defines the transparency of the ghost model
-RECOLOR_GHOST_MODEL = true -- Whether to recolor the ghost model green/red or not
+-- Building Particle Settings
+GRID_ALPHA = 30 -- Defines the transparency of the ghost squares (Panorama)
+MODEL_ALPHA = 100 -- Defines the transparency of both the ghost model (Panorama) and Building Placed (Lua)
+RECOLOR_GHOST_MODEL = false -- Whether to recolor the ghost model green/red or not
+RECOLOR_BUILDING_PLACED = true -- Whether to recolor the queue of buildings placed (Lua)
 
 if not BuildingHelper then
     BuildingHelper = class({})
@@ -162,7 +164,11 @@ function BuildingHelper:AddBuilding(keys)
     end
     ParticleManager:SetParticleControl(player.activeBuildingTable.modelParticle, 2, color)
 
-    CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", {["state"] = "active", ["size"] = size, ["scale"] = fMaxScale, ["entindex"] = player.activeBuildingTable.mgd:entindex()})
+    local paramsTable = { state = "active", size = size, scale = fMaxScale, 
+                          grid_alpha = GRID_ALPHA, model_alpha = MODEL_ALPHA, recolor_ghost = RECOLOR_GHOST_MODEL,
+                          entindex = player.activeBuildingTable.mgd:GetEntityIndex(), builderIndex = builder:GetEntityIndex()
+                        }
+    CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", paramsTable)
 end
 
 --[[
@@ -880,7 +886,7 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0)) -- Scale
     
     local color = Vector(255,255,255)
-    if RECOLOR_GHOST_MODEL then
+    if RECOLOR_BUILDING_PLACED then
         color = Vector(0,255,0)
     end
     ParticleManager:SetParticleControl(modelParticle, 2, color) -- Color
@@ -968,17 +974,19 @@ end
     * Clear the build queue, the player right clicked
 ]]--
 function BuildingHelper:ClearQueue(builder)
+
+    local work = builder.work
     builder.work = nil
     builder.state = "idle"
 
+    -- Skip if there's nothing to clear
     if not builder.buildingQueue or (not work and #builder.buildingQueue == 0) then
         return
     end
 
     DebugPrint("[BH] ClearQueue "..builder:GetUnitName().." "..builder:GetEntityIndex())
 
-    -- Main work
-    local work = builder.work
+    -- Main work  
     if work then
         ParticleManager:DestroyParticle(work.particleIndex, true)
 

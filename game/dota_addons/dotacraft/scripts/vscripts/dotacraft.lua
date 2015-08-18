@@ -1221,7 +1221,11 @@ function dotacraft:OnEntityKilled( event )
 					--print("granted "..xp.." to "..hero:GetUnitName())
 				end
 			end		
-		end		
+		end
+
+		if IsBuilder(killedUnit) then
+			BuildingHelper:ClearQueue(killedUnit)
+		end
 	end
 
 	
