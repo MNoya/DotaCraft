@@ -394,11 +394,13 @@ function BuildingHelper:StartBuilding( keys )
     local gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)
 
     -- Spawn the building
-    local building = CreateUnitByName(unitName, location, false, playersHero, player, builder:GetTeam())
+    local building = CreateUnitByName(unitName, OutOfWorldVector, false, playersHero, player, builder:GetTeam())
     building:SetControllableByPlayer(pID, true)
     building.blockers = gridNavBlockers
     building.buildingTable = buildingTable
     building.state = "building"
+
+    Timers:CreateTimer(function() building:SetAbsOrigin(location) end)
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
