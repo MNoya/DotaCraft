@@ -173,15 +173,9 @@ function Build( event )
 		-- Let the building cast abilities
 		unit:RemoveModifierByName("modifier_construction")
 
-		-- Remove item_building_cancel
-        for i=0,5 do
-            local item = unit:GetItemInSlot(i)
-            if item then
-            	if item:GetAbilityName() == "item_building_cancel" then
-            		item:RemoveSelf()
-                end
-            end
-        end
+		-- Remove item_building_cancel and reorder
+        RemoveItemByName(unit, "item_building_cancel")
+        ReorderItems(unit)
 
 		local building_name = unit:GetUnitName()
 		local builders = {}

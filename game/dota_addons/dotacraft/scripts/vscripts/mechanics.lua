@@ -1294,3 +1294,36 @@ function SwapWearable( unit, target_model, new_model )
 		wearable = wearable:NextMovePeer()
 	end
 end
+
+-- Removes the first item by name if found on the unit. Returns true if removed
+function RemoveItemByName( unit, item_name )
+	for i=0,15 do
+		local item = unit:GetItemInSlot(i)
+		if item and item:GetAbilityName() == item_name then
+			item:RemoveSelf()
+			return true
+		end
+	end
+	return false
+end
+
+-- Takes all items and puts them 1 slot back
+function ReorderItems( caster )
+	local slots = {}
+	for itemSlot = 0, 5, 1 do
+
+		-- Handle the case in which the caster is removed
+		local item
+		if IsValidEntity(caster) then
+			item = caster:GetItemInSlot( itemSlot )
+		end
+
+       	if item ~= nil then
+			table.insert(slots, itemSlot)
+       	end
+    end
+
+    for k,itemSlot in pairs(slots) do
+    	caster:SwapItems(itemSlot,k-1)
+    end
+end
