@@ -32,6 +32,7 @@ var dotacraft_Colors = {}
 
 var current_TeamIndex = 0
 var current_ColorIndex = 0
+var DEVELOPER = false
 
 ///////////////////////////////////////////////
 // 		Player Panel State Management		 //
@@ -202,7 +203,7 @@ function Update_Player(TableName, Key, Value){
 	if(PlayerID == LocalPlayerID){
 		// toggle the player panel
 		Player_Status(PlayerID, !ready, ready) 
-	} 
+	}
 }
 
 // function which sets the local background image to that of the race
@@ -232,8 +233,9 @@ function Update_Available_Colors(){
 		for(var PlayerID of PlayerIDList){
 			// color index to disable
 			var color_index = PlayerColors[PlayerID].value.Color
+
 			// find dropdown child
-			var dropdown_child = dropdown.FindDropDownMenuChild(color_index)
+			var dropdown_child = dropdown.FindDropDownMenuChild(color_index) 
 			dropdown_child.enabled = false
 			dropdown_child.style["border"] = "3px solid black"
 
@@ -251,6 +253,11 @@ function Start_Game(){
 	$.Msg("Game Starting")
 	//$.Msg(Root.CountDown)
 	//$.Msg(Root.Game_Started)
+
+	if(DEVELOPER){
+		Initiate_Game()
+		return;
+	}
 	
 	// disable start button
 	var Button = Root.FindChildTraverse("StartButton")
@@ -321,6 +328,15 @@ function CountDown(){
 // 				Setup & Commands			 //
 ///////////////////////////////////////////////
 
+function Developer_Mode(args){
+	if(args.developer){
+		$.Msg("[Panaroma Developer Mode]")
+		DEVELOPER = true
+	}else{
+		Developer = false
+	}
+}
+
 // this is a function called by a command from console "skip_selection"
 // it essentially forces the ready up stage and sends in current information
 // PURELY DEBUG
@@ -343,7 +359,6 @@ function Setup_Panaroma_Color_Table(){
 function Setup_Minimap(){
 	var Map_Info = Game.GetMapInfo()
 	var Map_Name = Map_Info.map_display_name
-	$.Msg(Map_Name)
 	
 	var Minimap_Panel = Root.FindChildTraverse("Minimap")
 	var Minimap_Name = Root.FindChildTraverse("Minimap_Name")
@@ -364,6 +379,7 @@ function Setup_Minimap(){
 }
 
 (function () {
+	GameEvents.Subscribe( "panaroma_developer", Developer_Mode );
 	//GameEvents subscribes
 	GameEvents.Subscribe( "dotacraft_update_player", Update_Player );
 	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );

@@ -1478,15 +1478,31 @@ end
 
 function dotacraft:Setup_Color_Table()
 	print("creating color table")
-	SetNetTableValue("dotacraft_color_table", "0", 	{r=255, g=0,   b=0	, taken = false})	-- red
-	SetNetTableValue("dotacraft_color_table", "1", 	{r=0, 	g=0,   b=255, taken = false})	-- blue
-	SetNetTableValue("dotacraft_color_table", "2", 	{r=0, 	g=255, b=255, taken = false})	-- teal
-	SetNetTableValue("dotacraft_color_table", "3", 	{r=125, g=0,   b=255, taken = false})	-- purple
-	SetNetTableValue("dotacraft_color_table", "4", 	{r=255, g=255, b=0	, taken = false})	-- yellow
-	SetNetTableValue("dotacraft_color_table", "5", 	{r=255, g=125, b=0	, taken = false})	-- orange
-	SetNetTableValue("dotacraft_color_table", "6", 	{r=0, 	g=255, b=0	, taken = false})	-- green
-	SetNetTableValue("dotacraft_color_table", "7",	{r=255, g=100, b=255, taken = false})	-- pink
-	SetNetTableValue("dotacraft_color_table", "8",	{r=125, g=125, b=125, taken = false})	-- gray	
+		
+	SetNetTableValue("dotacraft_color_table", "0", 	{r=255, g=0,   b=0	})	-- red
+	SetNetTableValue("dotacraft_color_table", "1", 	{r=0, 	g=0,   b=255})	-- blue
+	SetNetTableValue("dotacraft_color_table", "2", 	{r=0, 	g=255, b=255})	-- teal
+	SetNetTableValue("dotacraft_color_table", "3", 	{r=125, g=0,   b=255})	-- purple
+	SetNetTableValue("dotacraft_color_table", "4", 	{r=255, g=255, b=0	})	-- yellow
+	SetNetTableValue("dotacraft_color_table", "5", 	{r=255, g=125, b=0	})	-- orange
+	SetNetTableValue("dotacraft_color_table", "6", 	{r=0, 	g=255, b=0	})	-- green
+	SetNetTableValue("dotacraft_color_table", "7",	{r=255, g=100, b=255})	-- pink
+	SetNetTableValue("dotacraft_color_table", "8",	{r=125, g=125, b=125})	-- gray	
+	
+	-- check developer mode
+	local developer = false
+	if Convars:GetBool("developer") then	
+		
+		-- keep checking untill it reaches this state then send the info
+		Timers:CreateTimer(function()
+			if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+				CustomGameEventManager:Send_ServerToAllClients("panaroma_developer", {developer = true})
+				return
+			end
+			return 0.5
+		end)
+		
+	end
 end
 
 function SetNetTableValue(NetTableName, key, table)
