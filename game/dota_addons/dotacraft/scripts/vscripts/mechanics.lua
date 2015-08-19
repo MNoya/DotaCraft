@@ -479,16 +479,12 @@ function GetBuilderNameForHeroRace( hero_name )
 	return builder_name
 end
 
+-- Builders require the "builder" label in its unit definition
 function IsBuilder( unit )
 	if not IsValidEntity(unit) then
 		return
 	end
-	local unitName = unit:GetUnitName()
-	if unitName == "human_peasant" or unitName == "nightelf_wisp" or unitName == "undead_acolyte" or unitName == "orc_peon" then
-		return true
-	else
-		return false
-	end
+	return (unit:GetUnitLabel() == "builder")
 end
 
 -- Returns true if the unit is a valid lumberjack

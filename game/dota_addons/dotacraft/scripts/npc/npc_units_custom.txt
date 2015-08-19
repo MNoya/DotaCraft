@@ -3996,6 +3996,8 @@
 		"SelectionGroup"            "Human_Peasants"
 		"SoundSet"					"Hero_Kunkka"
 	
+		"UnitLabel"					"builder"
+	
 		"AttacksEnabled"			"ground"
 	
 		"precache"
@@ -8391,6 +8393,8 @@
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+	
+		"UnitLabel"					"builder"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -10807,6 +10811,8 @@
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 	
+		"UnitLabel"					"builder"
+	
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -11901,9 +11907,9 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
-		"Ability1"					"orc_liquid_fire_disabled"	 //Reference: Aliq
-		"Ability2"					"orc_unstable_concoction"	 //Reference: Auco
+			"AbilityLayout"				"4"
+			"Ability1"					"orc_unstable_concoction"	 //Reference: Auco
+			"Ability2"					"orc_liquid_fire_disabled"	 //Reference: Aliq
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14448,6 +14454,8 @@
 		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		
+		"UnitLabel"					"builder"
 	
 		"AttacksEnabled"			"ground"
 		

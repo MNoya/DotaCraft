@@ -15,7 +15,7 @@ function OnRightButtonPressed()
 	var pressedShift = GameUI.IsShiftDown();
 
 	// Builder Right Click
-	if ( IsBuilder(mainSelectedName) )
+	if ( IsBuilder( mainSelected ) )
 	{
 		// Cancel BH
 		SendCancelCommand();
@@ -112,8 +112,8 @@ function OnRightButtonPressed()
 	return false;
 }
 
-function IsBuilder(name) {
-	return (name == "human_peasant" || name == "nightelf_wisp" || name == "orc_peon" || name == "undead_acolyte")
+function IsBuilder(entIndex) {
+	return (Entities.GetUnitLabel( entIndex ) == "builder")
 }
 
 // Main mouse event callback
@@ -124,9 +124,9 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
     if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
         return CONTINUE_PROCESSING_EVENT;
 
-    var mainSelectedName = Entities.GetUnitName( Players.GetLocalPlayerPortraitUnit())
+    var mainSelected = Players.GetLocalPlayerPortraitUnit()
 
-    if ( eventName === "pressed" && IsBuilder(mainSelectedName))
+    if ( eventName === "pressed" && IsBuilder(mainSelected))
     {
         // Left-click with a builder while BH is active
         if ( arg === 0 && state == "active")
