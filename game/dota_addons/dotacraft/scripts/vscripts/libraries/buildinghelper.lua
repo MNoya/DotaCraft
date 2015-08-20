@@ -150,6 +150,9 @@ function BuildingHelper:AddBuilding(keys)
     player.activeBuildingTable = buildingTable
     player.activeCallbacks = callbacks
 
+    -- Remove old ghost model dummy
+    UTIL_Remove(player.activeBuildingTable.mgd)
+
     -- Make a model dummy to pass it to panorama
     player.activeBuildingTable.mgd = CreateUnitByName(unitName, OutOfWorldVector, false, nil, nil, builder:GetTeam())
 
@@ -400,7 +403,12 @@ function BuildingHelper:StartBuilding( keys )
     building.buildingTable = buildingTable
     building.state = "building"
 
-    Timers:CreateTimer(function() building:SetAbsOrigin(location) end)
+    Timers:CreateTimer(function() 
+        building:SetAbsOrigin(location)
+
+        -- Remove ghost model
+        UTIL_Remove(buildingTable.mgd)
+    end)
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
@@ -645,7 +653,8 @@ function BuildingHelper:StartBuilding( keys )
     else
 
         -- The building will have to be assisted through a repair ability
-        local repair_ability_name = "repair"
+        local race = GetUnitRace(builder)
+        local repair_ability_name = race.."_repair"
         local repair_ability = builder:FindAbilityByName(repair_ability_name)
         if not repair_ability then
             DebugPrint("[BH] Error, can't find "..repair_ability_name.." on the builder ", builder:GetUnitName(), builder:GetEntityIndex())
