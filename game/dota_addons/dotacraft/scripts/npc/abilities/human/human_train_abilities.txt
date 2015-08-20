@@ -7,7 +7,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"75" // From "GoldCost"
-	"AbilityChannelTime"			"15" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -119,7 +119,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -246,7 +246,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"205" // From "GoldCost"
-	"AbilityChannelTime"			"26" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -374,7 +374,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"245" // From "GoldCost"
-	"AbilityChannelTime"			"40" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -501,8 +501,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"155" // From "GoldCost"
-	"AbilityChannelTime"			"30" // From "BuildTime"
-	"AbilityUpgradeGoldCost"		"0"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -621,15 +620,14 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityUpgradeGoldCost"		"0"
-	"AbilityChannelTime"			"26" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"26.0" 
+			"train_time"			"28.0" 
 		}
 		"02"
 		{
@@ -741,7 +739,7 @@
 
 	"AbilityGoldCost"				"215" // From "GoldCost"
 	"AbilityUpgradeGoldCost"		"0"
-	"AbilityChannelTime"			"28" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -869,7 +867,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"90" // From "GoldCost"
-	"AbilityChannelTime"			"13" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -996,7 +994,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"180" // From "GoldCost"
-	"AbilityChannelTime"			"40" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -1123,7 +1121,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"195" // From "GoldCost"
-	"AbilityChannelTime"			"55" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -1253,7 +1251,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"280" // From "GoldCost"
-	"AbilityChannelTime"			"45" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
@@ -1379,7 +1377,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
 	"AbilityGoldCost"				"200" // From "GoldCost"
-	"AbilityChannelTime"			"28" // From "BuildTime"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
