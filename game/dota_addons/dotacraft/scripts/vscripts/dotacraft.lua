@@ -1177,6 +1177,10 @@ function dotacraft:OnEntityKilled( event )
 		 -- Building Helper grid cleanup
 		BuildingHelper:RemoveBuilding(killedUnit, true)
 
+		local particle = ParticleManager:CreateParticle("particles/world_destruction_fx/base_statue_destruction_generic_c.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(particle,0 , killedUnit:GetAbsOrigin())
+		killedUnit:AddNoDraw()
+
 		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killedUnit)
 		if food_produced > 0 and player and not killedUnit.state == "canceled" then

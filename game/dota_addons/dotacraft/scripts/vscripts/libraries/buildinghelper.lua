@@ -7,7 +7,7 @@
 -- Building Particle Settings
 GRID_ALPHA = 30 -- Defines the transparency of the ghost squares (Panorama)
 MODEL_ALPHA = 100 -- Defines the transparency of both the ghost model (Panorama) and Building Placed (Lua)
-RECOLOR_GHOST_MODEL = false -- Whether to recolor the ghost model green/red or not
+RECOLOR_GHOST_MODEL = true -- Whether to recolor the ghost model green/red or not
 RECOLOR_BUILDING_PLACED = true -- Whether to recolor the queue of buildings placed (Lua)
 
 if not BuildingHelper then
@@ -654,7 +654,7 @@ function BuildingHelper:StartBuilding( keys )
 
         -- The building will have to be assisted through a repair ability
         local race = GetUnitRace(builder)
-        local repair_ability_name = race.."_repair"
+        local repair_ability_name = race.."_gather"
         local repair_ability = builder:FindAbilityByName(repair_ability_name)
         if not repair_ability then
             DebugPrint("[BH] Error, can't find "..repair_ability_name.." on the builder ", builder:GetUnitName(), builder:GetEntityIndex())
