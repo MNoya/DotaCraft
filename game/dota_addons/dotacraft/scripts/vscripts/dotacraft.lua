@@ -159,7 +159,7 @@ function dotacraft:InitGameMode()
 	-- Keep track of the last time each player was damaged (to play warnings/"we are under attack")
 	GameRules.PLAYER_BUILDINGS_DAMAGED = {}	
 	GameRules.PLAYER_DAMAGE_WARNING = {}
-
+	
 	dotacraft:DeterminePathableTrees()
 	print('[DOTACRAFT] Pathable Trees set')
 
@@ -615,6 +615,10 @@ function dotacraft:OnGameRulesStateChange(keys)
 	--DeepPrintTable(keys)
 
 	local newState = GameRules:State_Get()
+		
+	-- send the panaroma developer at each stage to ensure all js are exposed to it
+	dotacraft:Panaroma_Developer_Mode(newState)
+	
 	if newState == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
 		self.bSeenWaitForPlayers = true
 	elseif newState == DOTA_GAMERULES_STATE_INIT then
@@ -1492,20 +1496,19 @@ function dotacraft:Setup_Color_Table()
 	SetNetTableValue("dotacraft_color_table", "6", 	{r=0, 	g=255, b=0	})	-- green
 	SetNetTableValue("dotacraft_color_table", "7",	{r=255, g=100, b=255})	-- pink
 	SetNetTableValue("dotacraft_color_table", "8",	{r=125, g=125, b=125})	-- gray	
-	
-	-- check developer mode
-	local developer = false
+
+end
+
+-- this function is called every state change so that each JS file will recieve the developer args
+function dotacraft:Panaroma_Developer_Mode(state)
+	-- the reason for this function is that some JS are initialised later at the given state defined in the uimanifest.
+	-- use this event inside your JS to catch it: 	GameEvents.Subscribe( "panaroma_developer", Developer_Mode ); Developer_Mode is the function inside js
+
+	-- check if developer mode
 	if Convars:GetBool("developer") then	
-		
-		-- keep checking untill it reaches this state then send the info
-		Timers:CreateTimer(function()
-			if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-				CustomGameEventManager:Send_ServerToAllClients("panaroma_developer", {developer = true})
-				return
-			end
-			return 0.5
+		Timers:CreateTimer(1, function()
+			CustomGameEventManager:Send_ServerToAllClients("panaroma_developer", {developer = true})
 		end)
-		
 	end
 end
 
