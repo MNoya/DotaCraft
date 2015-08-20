@@ -22158,7 +22158,7 @@
 					{
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"GatherGold"
-					}
+					}			
 				}
 			}
 			// END GOLD GATHER
@@ -22232,6 +22232,21 @@
 				}
 			}
 			// END REPAIR
+	
+			// Cosmetic Backpack
+			"modifier_cosmetic_backpack"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"HideBackpack"
+					}
+				}
+			}
 		}
 	}
 	
@@ -22268,6 +22283,24 @@
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelReturn"
 					}
+				}
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"ShowBackpack"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"HideBackpack"
+					}
 				}		
 			}
 	
@@ -22288,6 +22321,24 @@
 					{
 						"ScriptFile"	"units/builder.lua"
 						"Function"		"CancelReturn"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"ShowBackpack"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/peasant.lua"
+						"Function"		"HideBackpack"
 					}
 				}		
 			}
