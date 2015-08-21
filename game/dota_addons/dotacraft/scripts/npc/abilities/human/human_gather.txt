@@ -10,6 +10,9 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
+	// Mark this as a BuildingHelper ability to skip CancelQueue when cast
+	"Building"						"1"
+
 	"AbilitySpecial"
 	{
 		"01"
