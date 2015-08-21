@@ -487,6 +487,26 @@ function IsBuilder( unit )
 	return (unit:GetUnitLabel() == "builder")
 end
 
+-- A BuildingHelper ability is identified by the "Building" key.
+function IsBuildingAbility( ability )
+	if not IsValidEntity(ability) then
+		return
+	end
+
+	local ability_name = ability:GetAbilityName()
+	local ability_table = GameRules.AbilityKV[ability_name]
+	if ability_table and ability_table["Building"] then
+		return true
+	else
+		ability_table = GameRules.ItemKV[ability_name]
+		if ability_table and ability_table["Building"] then
+			return true
+		end
+	end
+
+	return false
+end
+
 -- Returns true if the unit is a valid lumberjack
 function CanGatherLumber( unit )
 	local unitName = unit:GetUnitName()

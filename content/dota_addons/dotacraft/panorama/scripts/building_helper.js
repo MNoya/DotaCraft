@@ -103,9 +103,8 @@ function StartBuildingHelper( params )
                 {
                     var pos = [x,y,GamePos[2]]
                     if (part>size*size)
-                    {
                         return
-                    } 
+
                     var gridParticle = gridParticles[part]
                     Particles.SetParticleControl(gridParticle, 0, pos)     
                     part++; 
@@ -132,10 +131,7 @@ function StartBuildingHelper( params )
 
             // Overlay Grid, visible with Alt pressed
             // Keep in mind that a particle with 0 alpha does still eat frame rate.
-             if (GameUI.IsAltDown())
-                overlay_alpha = 90;                
-            else
-                overlay_alpha = 0;            
+            overlay_alpha = GameUI.IsAltDown() ? 90 : 0;
 
             color = [255,255,255]
             var part2 = 0
@@ -234,6 +230,7 @@ function SendCancelCommand( params )
 
 (function () {
     GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
+    GameEvents.Subscribe( "building_helper_end", EndBuildingHelper);
 })();
 
 //-----------------------------------

@@ -6,20 +6,20 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"75" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"15.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"75"
 		}
 		"03"
 		{
@@ -29,7 +29,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"1"
 		}
 	}
 
@@ -117,20 +117,20 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"120" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"18.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"120"
 		}
 		"03"
 		{
@@ -244,30 +244,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"215" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"30.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"215"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"40"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"3"
 		}
 	}
 
@@ -387,25 +387,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"185" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"35.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"185"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"20"
 		}
 		"04"
 		{
@@ -530,30 +530,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"240" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"40.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"240"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"70"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"4"
 		}
 	}
 
@@ -673,30 +673,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"230" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"45.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"230"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"50"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"4"
 		}
 	}
 
@@ -791,30 +791,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"200" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"45.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"200"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"35"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"3"
 		}
 	}
 
@@ -918,25 +918,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"145" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"24.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"145"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"20"
 		}
 		"04"
 		{
@@ -1037,25 +1037,25 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"155" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"28.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"155"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"30"
 		}
 		"04"
 		{
@@ -1156,30 +1156,30 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
-	"AbilityGoldCost"				"135" // From "GoldCost"
-	"AbilityChannelTime"			"20" // From "BuildTime"
+	"AbilityGoldCost"				"385" // From "GoldCost"
+	"AbilityChannelTime"			"%train_time" // From "BuildTime"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"train_time"			"20.0" 
+			"train_time"			"65.0" 
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"135"
+			"gold_cost"				"385"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
+			"lumber_cost"			"120"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"food_cost"				"2"
+			"food_cost"				"7"
 		}
 	}
 

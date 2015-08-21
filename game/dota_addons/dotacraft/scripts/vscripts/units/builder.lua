@@ -335,6 +335,9 @@ function Gather( event )
 	-- Gather Lumber
 	if target_class == "ent_dota_tree" then
 		
+		-- Gather cancels queue
+		BuildingHelper:ClearQueue(caster)
+
 		local tree = target
 
 		-- Disable this for Acolytes
@@ -422,6 +425,9 @@ function Gather( event )
 
 	-- Gather Gold
 	elseif string.match(target:GetUnitName(),"gold_mine") then
+
+		-- Gather cancels queue
+		BuildingHelper:ClearQueue(caster)
 
 		-- Disable this for Ghouls
 		if caster:GetUnitName() == "undead_ghoul" then

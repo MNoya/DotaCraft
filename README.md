@@ -1,11 +1,12 @@
 # DotaCraft
-## Recreating Warcraft III inside Dota 2
+Recreating Warcraft III inside Dota 2
 
-### Heroes - [Preview](http://moddota.com/forums/discussion/comment/382/#Comment_382)
+### Heroes
+See a preview of our progress [here.](http://moddota.com/forums/discussion/comment/382/#Comment_382) Every hero ability has been finished, including sub abilities.
 
 ### Core Mechanics
 
-- [x] Lumber, Gold Gathering with multiple builders and through right click.
+- [x] Lumber/Gold gathering through right click and with multiple builders.
 - [x] Building and unit training, with grid preview and rally points.
 - [x] Building Queue for Train and Research, being able to add 6 items and cancel them at will.
 - [x] Upgrades and Research through Tech Tree
@@ -17,18 +18,19 @@
 - [x] Legacy attack types
   - [x] [Armor/Damage type](http://classic.battle.net/war3/basics/armorandweapontypes.shtml) parity, including Magic attacks
   - [x] Air-Ground attacks, auto attack acquisition.
-- [x] Auto gather lumber after Lumber deposit construction
+- [x] Auto-gather Lumber after Lumber deposit construction
 - [x] Building placement restrictions
   - [x] Undead Blight gridnav
   - [x] Proximity to Gold Mine
 - [x] Occupied Building indicators (Entangled/Haunted Gold Mine/Burrows)
-- [x] General multi orders for casting certain abilities as a group
+- [x] General multi-orders for casting certain abilities as a group
 - [ ] Building behavior improvements
   - [ ] Multiple builder queue with repair
   - [ ] Uncancelled movements
   - [ ] Client-side particles
 
-### Race Abilities - [Progress spreadsheet here](https://docs.google.com/spreadsheets/d/1qwyG20YNi88G-SFYbaiyxi11Vtar8kjNXXJCMZyF7Y0/edit#gid=1929065693)
+### Race Abilities
+See the spreadsheet tracking our progress [here.](https://docs.google.com/spreadsheets/d/1qwyG20YNi88G-SFYbaiyxi11Vtar8kjNXXJCMZyF7Y0/edit#gid=1929065693)
 
 - [x] Human
 - [x] Night Elf
@@ -47,9 +49,9 @@
 ### Art
 
 - [ ] Minimap icons for gold mine and Easy/Medium/Hard creep camps
-- [ ] Possible new Models for buildings that require it
-- [ ] Replace the remaining WC3 icons for Dota-styled custom icons
-  - [ ] Upgrade the research cosmetic icons with custom backgrounds 
+- [ ] Possible new models for buildings that require it
+- [ ] Replace the remaining WC3 icons with Dota-style custom icons
+  - [ ] Upgrade Research cosmetic icons with custom backgrounds 
 - [ ] Generate all the corresponding icons for item queue 
 - [x] Finishing the list of cosmetic upgrades for all unit weapon/armor tiers
 - [ ] Particle effects for building destruction and construction
