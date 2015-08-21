@@ -278,6 +278,9 @@ function Initiate_Game(){
 	// set Game_Started state to true
 	Root.Game_Started = true
 	
+	// delete 
+	Root.DeleteAsync(0.1)
+	
 	$.Msg("Everyone is ready")
 	// this will make the game_setup state go further and tells lua about this and then makes players
 	Game.SetRemainingSetupTime(0);	
@@ -385,7 +388,7 @@ function Setup_Minimap(){
 	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
 	CustomNetTables.SubscribeNetTableListener("dotacraft_player_table", Update_Player);
 	CustomNetTables.SubscribeNetTableListener("dotacraft_color_table", Update_Available_Colors);
-	
+
 	Root.CountDown = false
 	Root.Game_Started = false
 
