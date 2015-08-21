@@ -67,7 +67,7 @@ function Build( event )
        	end
 
        	-- If not enough resources to queue, stop
-       	if not PlayerHasEnoughGold( player, lumber_cost ) then
+       	if not PlayerHasEnoughGold( player, gold_cost ) then
        		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_not_enough_gold")
 			return false
 		end
