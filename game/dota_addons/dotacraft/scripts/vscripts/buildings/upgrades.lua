@@ -10,15 +10,17 @@ function UpgradeBuilding( event )
 	local player = PlayerResource:GetPlayer(playerID)
 	local currentHealthPercentage = caster:GetHealthPercent() * 0.01
 
-	-- Keep the gridnav blockers and hull radius
+	-- Keep the gridnav blockers, hull radius and orientation
 	local blockers = caster.blockers
 	local hull_radius = caster:GetHullRadius()
 	local flag = caster.flag
+	local angle = caster:GetAngles()
 
     -- New building
 	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, false, 0) 
 	building.blockers = blockers
 	building:SetHullRadius(hull_radius)
+	building:SetAngles(0, -angle.y, 0)
 
 	-- Keep the rally flag reference if there is one
     if IsValidEntity(flag) then

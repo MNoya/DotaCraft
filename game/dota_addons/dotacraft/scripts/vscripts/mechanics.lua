@@ -479,16 +479,12 @@ function GetBuilderNameForHeroRace( hero_name )
 	return builder_name
 end
 
+-- Builders require the "builder" label in its unit definition
 function IsBuilder( unit )
 	if not IsValidEntity(unit) then
 		return
 	end
-	local unitName = unit:GetUnitName()
-	if unitName == "human_peasant" or unitName == "nightelf_wisp" or unitName == "undead_acolyte" or unitName == "orc_peon" then
-		return true
-	else
-		return false
-	end
+	return (unit:GetUnitLabel() == "builder")
 end
 
 -- Returns true if the unit is a valid lumberjack
@@ -1168,13 +1164,14 @@ end
 
 -- Ground/Air Attack mechanics
 function UnitCanAttackTarget( unit, target )
-	if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune() or not unit:CanEntityBeSeenByMyTeam(target) then
-		return false
-	end
-	local attacks_enabled = GetAttacksEnabled(unit)
-	local target_type = GetMovementCapability(target)
+  if not unit:HasAttackCapability() 
+    or (target.IsInvulnerable and target:IsInvulnerable()) 
+    or (target.IsAttackImmune and target:IsAttackImmune()) 
+    or not unit:CanEntityBeSeenByMyTeam(target) then
+    return false
+  end
 
-	return string.match(attacks_enabled, target_type)
+  return true
 end
 
 -- Check the Acquisition Range (stored on spawn) for valid targets that can be attacked by this unit
@@ -1288,6 +1285,46 @@ function SwapWearable( unit, target_model, new_model )
 		if wearable:GetClassname() == "dota_item_wearable" then
 			if wearable:GetModelName() == target_model then
 				wearable:SetModel( new_model )
+				return
+			end
+		end
+		wearable = wearable:NextMovePeer()
+	end
+end
+
+-- Returns a wearable handle if its the passed target_model
+function GetWearable( unit, target_model )
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			if wearable:GetModelName() == target_model then
+				return wearable
+			end
+		end
+		wearable = wearable:NextMovePeer()
+	end
+	return false
+end
+
+function HideWearable( unit, target_model )
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			if wearable:GetModelName() == target_model then
+				wearable:AddEffects(EF_NODRAW)
+				return
+			end
+		end
+		wearable = wearable:NextMovePeer()
+	end
+end
+
+function ShowWearable( unit, target_model )
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			if wearable:GetModelName() == target_model then
+				wearable:RemoveEffects(EF_NODRAW)
 				return
 			end
 		end

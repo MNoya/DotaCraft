@@ -7,7 +7,7 @@ function undead_essence_of_blight_autocast( keys )
 	
 	Timers:CreateTimer(function()
 	-- kill timer if unit dies
-	if not IsValidEntity(caster) and not caster:IsAlive() then 
+	if not IsValidEntity(caster) or not caster:IsAlive() then 
 		print("deleting obsidian statue timer, unit is dead")
 		return
 	end
@@ -173,10 +173,13 @@ function morph_into_destroyer(keys)
 	local caster = keys.caster
 	local playerID = caster:GetPlayerOwnerID()
 	local player = PlayerResource:GetPlayer(playerID)
+	StartAnimation(caster, {duration=5, activity=ACT_DOTA_SPAWN, rate=1.1, translate="loadout"})
+	local fv = caster:GetForwardVector()
 
 	Timers:CreateTimer(1.1, function() -- wait	
 		local CreatedUnit = CreateUnitByName("undead_destroyer", caster:GetAbsOrigin(), true, player:GetAssignedHero(),  player:GetAssignedHero(), caster:GetTeamNumber())
 		CreatedUnit:SetControllableByPlayer(playerID, true)
+		CreatedUnit:SetForwardVector(fv)
 		
 		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_creature_attack", "weapon")
 		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_creature_carapace", "armor")

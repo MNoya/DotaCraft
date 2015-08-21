@@ -7,7 +7,7 @@
 -- Building Particle Settings
 GRID_ALPHA = 30 -- Defines the transparency of the ghost squares (Panorama)
 MODEL_ALPHA = 100 -- Defines the transparency of both the ghost model (Panorama) and Building Placed (Lua)
-RECOLOR_GHOST_MODEL = false -- Whether to recolor the ghost model green/red or not
+RECOLOR_GHOST_MODEL = true -- Whether to recolor the ghost model green/red or not
 RECOLOR_BUILDING_PLACED = true -- Whether to recolor the queue of buildings placed (Lua)
 
 if not BuildingHelper then
@@ -149,6 +149,9 @@ function BuildingHelper:AddBuilding(keys)
     player.activeBuilding = unitName
     player.activeBuildingTable = buildingTable
     player.activeCallbacks = callbacks
+
+    -- Remove old ghost model dummy
+    UTIL_Remove(player.activeBuildingTable.mgd)
 
     -- Make a model dummy to pass it to panorama
     player.activeBuildingTable.mgd = CreateUnitByName(unitName, OutOfWorldVector, false, nil, nil, builder:GetTeam())
@@ -400,7 +403,12 @@ function BuildingHelper:StartBuilding( keys )
     building.buildingTable = buildingTable
     building.state = "building"
 
-    Timers:CreateTimer(function() building:SetAbsOrigin(location) end)
+    Timers:CreateTimer(function() 
+        building:SetAbsOrigin(location)
+
+        -- Remove ghost model
+        UTIL_Remove(buildingTable.mgd)
+    end)
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
@@ -492,10 +500,20 @@ function BuildingHelper:StartBuilding( keys )
         end)
     end
 
-    -- Health Update Timer
+     -- Health Update Timer and Behaviors
+    -- If BuildTime*30 > Health, the tick would be faster than 1 frame, adjust the HP gained per frame (This doesn't work well with repair)
+    -- Otherwise just add 1 health each frame.
     if fUpdateHealthInterval <= fserverFrameRate then
-        -- If the tick would be faster than 1 frame, adjust the HP gained per frame
+
         DebugPrint("[BH] Building needs float adjust")
+        if bRequiresRepair then
+            DebugPrint("[BH] Error: Don't use Repair with fast-ticking buildings!")
+        end
+
+        if not bBuilderInside then
+            -- Advance Queue
+            BuildingHelper:AdvanceQueue(builder)
+        end
 
         local fAddedHealth = 0
         local nHealthInterval = fMaxHealth / (buildTime / fserverFrameRate)
@@ -504,7 +522,7 @@ function BuildingHelper:StartBuilding( keys )
         local fHPAdjustment = 0
 
         building.updateHealthTimer = Timers:CreateTimer(function()
-            if IsValidEntity(building) then
+            if IsValidEntity(building) and building:IsAlive() then
                 local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
                 if not timesUp then
                     if building.bUpdatingHealth then
@@ -519,24 +537,49 @@ function BuildingHelper:StartBuilding( keys )
                         end
                     end
                 else
-                    -- completion: timesUp is true
                     building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth) -- round up the last little bit
-                    if callbacks.onConstructionCompleted ~= nil and building:IsAlive() then
+
+                     -- completion: timesUp is true
+                    if callbacks.onConstructionCompleted then
+                        building.constructionCompleted = true
+                        building.state = "complete"
+                        building.builder = builder
                         callbacks.onConstructionCompleted(building)
                     end
-                    building.constructionCompleted = true
                     
                     DebugPrint("[BH] HP was off by:", fMaxHealth - fAddedHealth)
-                    building.state = "complete"
-                    building.bUpdatingHealth = false
 
-                    -- Worker is done with this building
-                    BuildingHelper:AdvanceQueue(builder)
+                    -- Eject Builder
+                    if bBuilderInside then
+                    
+                        -- Consume Builder
+                        if bConsumesBuilder then
+                            builder:ForceKill(true)
+                        else
+                        
+                            builder:RemoveModifierByName("modifier_builder_hidden")
+                            builder:SetAbsOrigin(builder.entrance_to_build)
+                            builder:RemoveNoDraw()
+                        end
+
+                        -- Advance Queue
+                        BuildingHelper:AdvanceQueue(builder)           
+                    end
                 
                     return
                 end
             else
-                -- not valid ent
+                -- Building destroyed
+
+                -- Eject Builder
+                if bBuilderInside then
+                    builder:RemoveModifierByName("modifier_builder_hidden")
+                    builder:RemoveNoDraw()
+                end
+
+                -- Advance Queue
+                BuildingHelper:AdvanceQueue(builder)
+
                 return nil
             end
             return fserverFrameRate
@@ -610,7 +653,8 @@ function BuildingHelper:StartBuilding( keys )
     else
 
         -- The building will have to be assisted through a repair ability
-        local repair_ability_name = "human_gather"
+        local race = GetUnitRace(builder)
+        local repair_ability_name = race.."_gather"
         local repair_ability = builder:FindAbilityByName(repair_ability_name)
         if not repair_ability then
             DebugPrint("[BH] Error, can't find "..repair_ability_name.." on the builder ", builder:GetUnitName(), builder:GetEntityIndex())

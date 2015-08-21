@@ -31,9 +31,22 @@ function Count_Localized_Strings(){
 	}
 }
 
+function Check_Loading(){
+	var GameState = Game.GetState()
+
+	if(GameState == DOTA_GameState.DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP){
+		var Load_Screen = Root.FindChildTraverse("LoadingScreen")
+		Load_Screen.visible = false		
+		Root.SetHasClass("Done_Loading", true)
+	}	
+	else{
+		$.Schedule(0.1, Check_Loading)
+	}
+}
 // root panel
 var Root = $.GetContextPanel();
 
 (function () {
 	Choose_Hint()
+	Check_Loading()
 })();

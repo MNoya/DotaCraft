@@ -111,3 +111,19 @@ function CallToArmsEnd( event )
 	CheckAbilityRequirements(peasant, player)
 	table.insert(player.units, peasant)
 end
+
+function HideBackpack( event )
+	Timers:CreateTimer(function() 
+		local peasant = event.caster
+		local wearableName = "models/items/kunkka/claddish_back/claddish_back.vmdl"
+		if not peasant.backpack then
+			peasant.backpack = GetWearable(peasant, wearableName)
+		end
+		peasant.backpack:SetModel("models/development/invisiblebox.vmdl")
+	end)
+end
+
+function ShowBackpack( event )
+	local peasant = event.caster
+	peasant.backpack:SetModel("models/items/kunkka/claddish_back/claddish_back.vmdl")
+end

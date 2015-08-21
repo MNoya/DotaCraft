@@ -1,15 +1,14 @@
 .AddonLoadingRoot
 {
-    width: 100%;
-    height: 100%;
-    overflow: clip;
+	width: 100%;
+	height: 100%;
 }
 
 #HintPanel{
 	horizontal-align: middle;
 	vertical-align: top;
   
-	margin-top: 50px;
+	margin-top: 50px;  
 	
 	flow-children: right;
 }
@@ -17,8 +16,7 @@
 #HintText{
 	vertical-align: middle;
 	horizontal-align: middle;
-  
-	text-transform: uppercase;
+	
 	font-size: 30px;
 	color: #cccccc;
 	text-shadow: 2px 2px 2px #000000;
@@ -56,4 +54,9 @@
 {	
 	width: 100%;
 	height: 100%;
+}
+
+.Done_Loading{
+	background-image: url("file://{images}/selection/pattern.png");
+	background-size: 100px;
 }

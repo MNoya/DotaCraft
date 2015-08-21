@@ -160,6 +160,11 @@
     background-image: url("s2r://panorama/images/backgrounds/gallery_background.png");
 	background-repeat: no-repeat;
 	background-size: cover;
+	
+	border-left: 3px solid #444444; 
+	/*
+		This border is used to give the impression it's for the loading_screens panel
+	*/
 }
 
 #Right_Bar {

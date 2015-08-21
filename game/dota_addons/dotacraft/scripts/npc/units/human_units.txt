@@ -29,6 +29,8 @@
 	"SelectionGroup"            "Human_Peasants"
 	"SoundSet"					"Hero_Kunkka"
 
+	"UnitLabel"					"builder"
+
 	"AttacksEnabled"			"ground"
 
 	"precache"
@@ -122,6 +124,7 @@
 			"Wearable3" 	{	"ItemDef"		"11"		} //Hands
 			"Wearable4" 	{	"ItemDef"		"12"		} //Sword
 			"Wearable5" 	{	"ItemDef"		"10"		} //Boots
+			"Wearable6"		{	"ItemDef"		"6184"		} //Back - Only visible while carrying resources
 		}
 	}
 }
