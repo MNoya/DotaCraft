@@ -32,8 +32,8 @@
 	</Panel>	
 
 	<Panel id="HostPanel">		
-		<Panel id="HostContainer" class="Open">
-				<Label id="Host_Header" text="Host Control Panel" />
+		<Panel id="HostContainer" class="HostContainer">
+			<Label id="Host_Header" text="Host Control Panel" />
 				
 			<Button id="LockTeamButton" onactivate="Lock_Teams()">
 				<Label id="LockTeamButtonText" text="Lock Teams"/>

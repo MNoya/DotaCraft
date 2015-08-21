@@ -44,6 +44,19 @@
 	}
 }
 
+@keyframes 'Drop_In_Animation'
+{
+	0%
+	{
+		transform: rotateX( 90deg );
+	}
+				
+	100%
+	{
+		transform: rotateX( 0deg );
+	}
+}
+
 #CountDown{
 	font-size: 150px;
 	color: gold;
@@ -79,17 +92,20 @@
 	
 	horizontal-align: left;
 	vertical-align: middle;
+	
+	visibility: collapse;
 }
 
-#HostContainer{
+.HostContainer{
 	height: 100%;
+	width: 90%;
 	
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
 	border-right: 2px solid #ffffff44;	
 }
 
-.Open{
-	width: 90%;
+.Closed{
+	visibility: collapse;
 }
 
 #Host_Header{

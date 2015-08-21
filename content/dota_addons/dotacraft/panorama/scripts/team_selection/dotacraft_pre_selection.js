@@ -40,7 +40,11 @@ var DEVELOPER = false
 
 function Toggle_Host_Container(){
 	var container = Root.FindChildTraverse("HostContainer")	
-	container.ToggleClass("Open")
+	if(!container.BHasClass("Closed")){
+		container.AddClass("Closed")
+	}else{
+		container.ToggleClass("Closed")
+	}
 }
 
 function Lock_Teams(){
@@ -177,6 +181,9 @@ function Create_Players(){
 				// set the start button visible to the host
 				var Force_Start_Button = Root.FindChildTraverse("StartButton")
 				Force_Start_Button.visible = true
+				
+				var Host_Panel = Root.FindChildTraverse("HostPanel")
+				Host_Panel.visible = true
 			}
 			// set initial starting variables + PlayerID
 			PlayerPanel.PlayerID = PlayerID
