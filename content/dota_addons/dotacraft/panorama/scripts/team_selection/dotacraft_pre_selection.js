@@ -35,6 +35,33 @@ var current_ColorIndex = 0
 var DEVELOPER = false
 
 ///////////////////////////////////////////////
+// 					Buttons			 		 //
+///////////////////////////////////////////////
+
+function Toggle_Host_Container(){
+	var container = Root.FindChildTraverse("HostContainer")	
+	container.ToggleClass("Open")
+}
+
+function Lock_Teams(){
+	GameEvents.SendCustomGameEventToServer("update_team_lock", {});
+}
+
+function Update_Team_Lock(args){
+	var TeamLockState = args.Locked
+	var Players = Game.GetAllPlayerIDs()
+	var LocalPlayerID = Game.GetLocalPlayerID()
+	
+	if(!isHost(LocalPlayerID)){
+		for(var PlayerID in Players){
+			var PlayerPanel = PlayerContainer.FindChildTraverse(PlayerID)
+			var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[2])	
+			Toggle_Enabled_Panel(dropdown, TeamLockState) 		
+		}
+	}
+}
+
+///////////////////////////////////////////////
 // 		Player Panel State Management		 //
 ///////////////////////////////////////////////
 
@@ -278,7 +305,6 @@ function Initiate_Game(){
 	// set Game_Started state to true
 	Root.Game_Started = true
 	
-	// delete 
 	Root.DeleteAsync(0.1)
 	
 	$.Msg("Everyone is ready")
@@ -386,9 +412,11 @@ function Setup_Minimap(){
 	//GameEvents subscribes
 	GameEvents.Subscribe( "dotacraft_update_player", Update_Player );
 	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
+	GameEvents.Subscribe( "dotacraft_lock_teams", Update_Team_Lock );
+	
 	CustomNetTables.SubscribeNetTableListener("dotacraft_player_table", Update_Player);
 	CustomNetTables.SubscribeNetTableListener("dotacraft_color_table", Update_Available_Colors);
-
+	
 	Root.CountDown = false
 	Root.Game_Started = false
 

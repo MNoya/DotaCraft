@@ -210,6 +210,7 @@ function dotacraft:InitGameMode()
 	-- Listeners for Pre_Game_Selection
 	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
 	CustomGameEventManager:RegisterListener( "selection_over", Dynamic_Wrap(dotacraft, "Create_Players"))	
+	CustomGameEventManager:RegisterListener( "update_team_lock", Dynamic_Wrap(dotacraft, "Lock_Teams"))	
 	
 	-- register panaroma tables
 	dotacraft:Setup_Tables()
@@ -1435,6 +1436,23 @@ Pre_Game_Selection
 ]]
 function dotacraft:Skip_Selection()
 	CustomGameEventManager:Send_ServerToAllClients("dotacraft_skip_selection", {}) 
+end
+
+function dotacraft:Lock_Teams(data)
+
+	if GameRules.LockTeams == nil then
+		print("Creating lockteams")
+		GameRules.LockTeams = false
+	end
+	
+	-- toggle
+	if GameRules.LockTeams then
+		GameRules.LockTeams = false
+	else
+		GameRules.LockTeams = true
+	end
+
+	CustomGameEventManager:Send_ServerToAllClients("dotacraft_lock_teams", {Locked = GameRules.LockTeams})
 end
 
 function dotacraft:Create_Players(data)
