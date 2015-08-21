@@ -1306,7 +1306,7 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_PURE"  // Buildings can't take magical damage
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	
 	"AbilitySpecial"
@@ -1364,14 +1364,12 @@
 			"EffectAttachType"	"follow_origin"
 
 			"ThinkInterval"		"0.5"
-
 			"OnIntervalThink"
 			{
-				"Damage"
+				"RunScript"
 				{
-					"Target"	"TARGET"
-					"Type"		"DAMAGE_TYPE_MAGICAL"
-					"Damage"	"%damage / 2"
+					"ScriptFile"	"units/orc/trollbatrider.lua"
+					"Function"		"LiquidOrbThink"
 				}
 			}
 

@@ -7,7 +7,7 @@ function dotacraft:DeveloperMode(player)
 	ModifyFoodLimit(player, 100)
 
 	local position = GameRules.StartingPositions[pID].position
-	dotacraft:SpawnTestUnits("nightelf_archer", 16, player, position + Vector(0,-600,0), false)
+	dotacraft:SpawnTestUnits("orc_troll_batrider", 16, player, position + Vector(0,-600,0), false)
 	--dotacraft:SpawnTestUnits("nightelf_mountain_giant", 10, player, position + Vector(0,-1000,0), true)
 end
 

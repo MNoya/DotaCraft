@@ -52,8 +52,23 @@ function LiquidOrb( event )
 	local target = event.target
 	local ability = event.ability
 
-	if IsCustomBuilding(unit) then
+	if IsCustomBuilding(target) then
 		ability:ApplyDataDrivenModifier(caster, target, 'modifier_liquid_fire_debuff', nil) 
 		target:EmitSound('Hero_Jakiro.LiquidFire')
 	end
+end
+
+function LiquidOrbThink( event )
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+    local damage = ability:GetSpecialValueFor('damage_per_second')/2
+    damage = damage * GetDamageForAttackAndArmor('magic', GetArmorType(target))
+	ApplyDamage({
+		victim = target,
+		attacker = caster,
+		damage = damage,
+		damage_type = ability:GetAbilityDamageType(),
+		ability = ability
+	})
 end
