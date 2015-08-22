@@ -928,7 +928,7 @@
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"30"
+	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
 		
 	"AbilitySpecial"
@@ -936,10 +936,57 @@
 		"01"
 		{
 			"var_type"		"FIELD_FLOAT"
-			"duration"		"0.7"
+			"delay"		"0.7"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_FLOAT"
+			"cooldown"		"30"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_spell_damage"		"-66"
 		}
 		// Cast time.
 		// The process is uninterruptable.
+	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/orc/spiritwalker.lua"
+			"Function"		"EtherStart"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_etheral_form"
+		{
+	
+			"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}	
+
+		}
 	}
 
 	// Done
@@ -1305,7 +1352,7 @@
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_PURE"  // Buildings can't take magical damage
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	
