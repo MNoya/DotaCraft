@@ -24,10 +24,10 @@ See a preview of our progress [here.](http://moddota.com/forums/discussion/comme
   - [x] Proximity to Gold Mine
 - [x] Occupied Building indicators (Entangled/Haunted Gold Mine/Burrows)
 - [x] General multi-orders for casting certain abilities as a group
-- [ ] Building behavior improvements
-  - [ ] Multiple builder queue with repair
-  - [ ] Uncancelled movements
-  - [ ] Client-side particles
+- [x] Building behavior improvements
+  - [x] Multiple builder queue with repair
+  - [x] Uncancelled movements
+  - [x] Client-side particles
 
 ### Race Abilities
 See the spreadsheet tracking our progress [here.](https://docs.google.com/spreadsheets/d/1qwyG20YNi88G-SFYbaiyxi11Vtar8kjNXXJCMZyF7Y0/edit#gid=1929065693)
@@ -48,7 +48,7 @@ See the spreadsheet tracking our progress [here.](https://docs.google.com/spread
 
 ### Art
 
-- [ ] Minimap icons for gold mine and Easy/Medium/Hard creep camps
+- [  ] Minimap icons for gold mine and Easy/Medium/Hard creep camps
 - [ ] Possible new models for buildings that require it
 - [ ] Replace the remaining WC3 icons with Dota-style custom icons
   - [ ] Upgrade Research cosmetic icons with custom backgrounds 
