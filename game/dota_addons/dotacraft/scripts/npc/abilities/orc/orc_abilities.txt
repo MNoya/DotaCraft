@@ -851,33 +851,31 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"		"ACT_DOTA_ATTACK"
 		
 	"AbilityCastRange"			"650"
-	"AbilityCastPoint"			"0"
+	"AbilityCastPoint"			"0.35"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"100"
 		
-	"AOERadius"					"250"
+	"AOERadius"					"%radius"
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"250"
+			"var_type"					"FIELD_INTEGER"
+			"damage_to_summons"			"250"
 		}
 		"02"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"damage_to_summons"	"250"
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"250"
 		}
 	}
 
 	"precache"
 	{
-		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
 		"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf"
-		"sound"		"soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
 	}
 
 	"OnSpellStart"
@@ -902,11 +900,10 @@
 		"RunScript"
 		{
 			"ScriptFile"	"units/orc/spiritwalker.lua"
-			"Function"		"DispelMagic"
+			"Function"		"Disenchant"
 			"Target"		"POINT"
 		}
 	}
-	// Done
 }
 
 //=================================================================================
@@ -1285,24 +1282,80 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"duration"		"25"
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"25"
 		}
-		// Yes, that long.
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"duration_hero"				"1"
+			"var_type"			"FIELD_INTEGER"
+			"duration_hero"		"1"
 		}
-		// Yes, that short.
 		"03"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"damage_per_second"			"4"
+			"var_type"			"FIELD_INTEGER"
+			"damage_per_second"	"4"
 		}
 	}
 
-	// Done
+	"Modifiers"
+	{
+		"modifier_envenomed_spears"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			"OnAttackLanded"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_envenomed_spears_slow"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"		"DOTA_UNIT_TARGET_HERO"
+					}
+					"Duration"		"%duration_hero"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_envenomed_spears_slow"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"		"DOTA_UNIT_TARGET_BASIC"
+					}
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"modifier_envenomed_spears_slow"
+		{
+			"IsDebuff"			"1"
+			"IsPurgable"		"1"
+			"EffectName"		"particles/neutral_fx/gnoll_poison_debuff.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage_per_second"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+			}
+		}
+	}
 }
 
 //=================================================================================
@@ -1509,36 +1562,116 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-	// Damage type unknown, can be physical.
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
 		
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"full_damage_radius"		"250"
+			"var_type"				"FIELD_INTEGER"
+			"extra_damage"			"60"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"half_damage_radius"		"350"
+			"var_type"				"FIELD_INTEGER"
+			"chance"				"25"
 		}
-		// Half of extra_damage, of course.
 		"03"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"chance"					"25"
+			"var_type"				"FIELD_INTEGER"
+			"full_damage_radius"	"250"
 		}
 		"04"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"extra_damage"				"60"
-		}
+			"var_type"				"FIELD_INTEGER"
+			"half_damage_radius"	"350"
+		}		
 	}
 
-	// Done
+	"precache"
+	{
+		"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_egset.vpcf"
+		"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_totem_buff_egset.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_pulverize"		
+		{
+			"IsHidden"	"1"
+			"Passive"	"1"
+
+			"OnAttackStart"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_pulverize_attack"
+					"Target" 		"CASTER"
+				}
+				"Random"
+				{
+					"Chance" "%chance"
+					"OnSuccess"
+					{
+						"ApplyModifier"
+						{
+							"ModifierName" "modifier_pulverize_attack"
+							"Target"	   "CASTER"	
+						}
+					}
+				}
+			}
+		}
+
+		"modifier_pulverize_attack"
+		{
+			"IsHidden"	"1"
+			"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
+			"OnAttackLanded"
+			{	
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%half_damage_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+					"Type"				"DAMAGE_TYPE_PHYSICAL"
+					"Damage"			"%extra_damage / 2"
+				}
+				// Another damage instance in full radius
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%full_damage_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+					"Type"				"DAMAGE_TYPE_PHYSICAL"
+					"Damage"			"%extra_damage / 2"
+				}
+				"FireEffect"
+				{
+					"EffectName"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_egset.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+					"ControlPoints"
+					{
+						"01"	"%half_damage_radius 1 1"
+					}
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_pulverize_attack"
+					"Target" 		"CASTER"
+				}
+			} 
+		}
+	}
 }
 
 //=================================================================================
