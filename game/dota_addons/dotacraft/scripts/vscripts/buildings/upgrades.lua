@@ -153,3 +153,9 @@ function SetLevel0( event )
 		ability:SetLevel(0)	
 	end
 end
+
+-- Hides an ability
+function HideAbility( event )
+	local ability = event.ability
+	ability:SetHidden(true)
+end

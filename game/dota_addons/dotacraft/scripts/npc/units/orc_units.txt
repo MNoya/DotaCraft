@@ -133,7 +133,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_pillage_disabled"	 //Reference: Asal
-	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability2"					"orc_berserker_strength_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -199,6 +199,10 @@
 	//----------------------------------------------------------------
 	"Creature"
 	{
+		// Training
+		"HPGain"		"100"
+		"DamageGain"	"0"
+
 		"DisableClumpingBehavior"	"1"
 		"AttachWearables"
 		{
@@ -220,7 +224,7 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/heroes/huskar/huskar.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.75"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 
@@ -231,6 +235,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Sbsk
 	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability3"					"orc_troll_regeneration_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -302,10 +307,9 @@
 		"AttachWearables"
 		{
 			"Wearable1"		{	"ItemDef"		"268"		}
-			"Wearable2"		{	"ItemDef"		"269"		}
-			"Wearable3" 	{	"ItemDef"		"270"		}
-			"Wearable4"		{	"ItemDef"		"271"		}
-			"Wearable5"		{	"ItemDef"		"272"		}
+			"Wearable2" 	{	"ItemDef"		"270"		}
+			"Wearable3"		{	"ItemDef"		"271"		}
+			"Wearable4"		{	"ItemDef"		"272"		}
 		}
 	}
 }
@@ -319,8 +323,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/troll_warlord/troll_warlord.vmdl"
-	"ModelScale"				"1"
+	"Model"						"models/heroes/huskar/huskar.vmdl"
+	"ModelScale"				"0.9"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
 
@@ -331,6 +335,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_berserk"	 //Reference: Absk
 	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability3"					"orc_troll_regeneration_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -401,11 +406,11 @@
 		"DisableClumpingBehavior"	"1"
 		"AttachWearables"
 		{
-			"Wearable1"		{	"ItemDef"		"373"		}
-			"Wearable2"		{	"ItemDef"		"374"		}
-			"Wearable3" 	{	"ItemDef"		"410"		}
-			"Wearable4"		{	"ItemDef"		"411"		}
-			"Wearable5" 	{	"ItemDef"		"412"		}
+			"Wearable1"		{	"ItemDef"		"268"		}
+			"Wearable2"		{	"ItemDef"		"269"		}
+			"Wearable3" 	{	"ItemDef"		"270"		}
+			"Wearable4"		{	"ItemDef"		"271"		}
+			"Wearable5"		{	"ItemDef"		"272"		}
 		}
 	}
 }
@@ -599,6 +604,10 @@
 	//----------------------------------------------------------------
 	"Creature"
 	{
+		// Training
+		"HPGain"	"40"
+		"ManaGain"	"100"
+
 		"DisableClumpingBehavior"	"1"
 		"AttachWearables"
 		{
@@ -608,6 +617,7 @@
 			"Wearable4"		{	"ItemDef"		"72"		}
 			"Wearable5"		{	"ItemDef"		"73"		}
 			"Wearable6"		{	"ItemDef"		"74"		}
+			"Wearable7"		{   "ItemDef"		"257"		}
 		}
 	}
 }
@@ -635,6 +645,7 @@
 	"Ability2"					"orc_stasis_trap"	 //Reference: Ahwd
 	"Ability3"					"orc_healing_ward"	 //Reference: Asta
 	"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability5"					"orc_troll_regeneration_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -702,6 +713,10 @@
 	//----------------------------------------------------------------
 	"Creature"
 	{
+		// Training
+		"HPGain"	"40"
+		"ManaGain"	"100"
+
 		"DisableClumpingBehavior"	"1"
 		"AttachWearables"
 		{
@@ -806,6 +821,9 @@
 	//----------------------------------------------------------------
 	"Creature"
 	{
+		"HPGain"	"60"
+		"ManaGain"	"150"
+
 		"DisableClumpingBehavior"	"1"
 		"AttachWearables"
 		{
@@ -1126,6 +1144,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_unstable_concoction"	 //Reference: Auco
 	"Ability2"					"orc_liquid_fire_disabled"	 //Reference: Aliq
+	"Ability3"					"orc_troll_regeneration_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------

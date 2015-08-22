@@ -14,6 +14,39 @@
 	}
 }
 
+"orc_berserker_strength_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_berserker_strength"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_troll_regeneration_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_troll_regeneration"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+
 "orc_burning_oil_disabled"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -194,6 +227,22 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"orc_research_pulverize"
+	"MaxLevel" 						"0"
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"buildings/upgrades.lua"
+			"Function"		"SetLevel0"
+		}
+	}
+}
+
+"orc_reinforced_defenses_disabled"
+{
+	"BaseClass"             		"ability_datadriven"
+	"AbilityTextureName"			"orc_research_reinforced_defenses"
 	"MaxLevel" 						"0"
 
 	"OnUpgrade"

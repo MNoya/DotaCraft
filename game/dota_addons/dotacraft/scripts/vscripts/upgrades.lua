@@ -248,7 +248,7 @@ function UpgradeWearables(target, level, subtable)
 	
 	local wearable = target:FirstMoveChild()
 	local unit_name = target:GetUnitName()
-	print("UAW",unit_name,level)
+	print("UAW",unit_name,level,subtable)
 	local wearables = GameRules.Wearables
 	local unit_table = wearables[unit_name]
 	if unit_table then
@@ -267,8 +267,12 @@ function UpgradeWearables(target, level, subtable)
 				if wearable:GetClassname() == "dota_item_wearable" then
 					print("UAW",wearable:GetModelName())
 
+					-- Skip if the model to change is already equipped
+					if new_wearable == old_wearable then
+						break
+
 					-- Unit just spawned, it has the default weapon
-					if original_wearable == wearable:GetModelName() then
+					elseif original_wearable == wearable:GetModelName() then
 						wearable:SetModel( new_wearable )
 						print("UAW", "\nSuccessfully swap " .. original_wearable .. " with " .. new_wearable )
 						break

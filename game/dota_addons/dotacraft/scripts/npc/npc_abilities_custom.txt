@@ -21040,7 +21040,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"320"
-		"AbilityChannelTime"			"10" //140
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -21049,7 +21049,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"120.0" 
 			}
 			"02"
 			{
@@ -21145,14 +21145,14 @@
 	// Keep -> Castle Upgrade.
 	"human_train_castle"
 	{
-		"BaseClass"             		"ability_datadriven"
+		"BaseClass"             		"ability_datad3riven"
 		"AbilityTextureName"			"human_train_castle"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"360"
-		"AbilityChannelTime"			"10" //140
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -21161,7 +21161,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"120.0" 
 			}
 			"02"
 			{
@@ -21324,8 +21324,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"50"
+		"AbilityGoldCost"				"70"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -21339,12 +21339,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"100"
+				"gold_cost"				"70"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"70"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -21406,8 +21406,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"200"
-		"AbilityChannelTime"			"75"
+		"AbilityGoldCost"				"170"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -21421,12 +21421,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"200"
+				"gold_cost"				"170"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"120"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -21493,8 +21493,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"50"
+		"AbilityGoldCost"				"40"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -21508,12 +21508,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"100"
+				"gold_cost"				"40"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"70"
+				"lumber_cost"			"30"
 			}
 		}
 	
@@ -22049,7 +22049,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	
-		// Mark this as a BuildingHelper ability to skip cancelling the queue when cast
+		// Mark this as a BuildingHelper ability to skip CancelQueue when cast
 		"Building"						"1"
 	
 		"AbilitySpecial"
@@ -22363,7 +22363,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -22444,7 +22444,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"150"
-		"AbilityChannelTime"			"45"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -22523,7 +22523,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"75"
-		"AbilityChannelTime"			"30"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -22602,7 +22602,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"125"
-		"AbilityChannelTime"			"40"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -22685,7 +22685,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"60"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -22771,7 +22771,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"200"
-		"AbilityChannelTime"			"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -22858,7 +22858,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"60"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -22938,7 +22938,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"125"
-		"AbilityChannelTime"			"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23016,7 +23016,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"150"
-		"AbilityChannelTime"			"90"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23098,7 +23098,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"60"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23176,7 +23176,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"175"
-		"AbilityChannelTime"			"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23254,7 +23254,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"250"
-		"AbilityChannelTime"			"90"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23333,7 +23333,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"125"
-		"AbilityChannelTime"			"60"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23411,7 +23411,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"150"
-		"AbilityChannelTime"			"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23489,7 +23489,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"175"
-		"AbilityChannelTime"			"90"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23568,7 +23568,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"60"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23646,7 +23646,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"175"
-		"AbilityChannelTime"			"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23724,7 +23724,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"250"
-		"AbilityChannelTime"			"90"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23803,7 +23803,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"60"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23881,7 +23881,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"150"
-		"AbilityChannelTime"			"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -23959,7 +23959,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"200"
-		"AbilityChannelTime"			"90"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24041,7 +24041,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"60"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24118,7 +24118,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24197,7 +24197,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"60"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24274,7 +24274,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24353,7 +24353,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"75"
-		"AbilityChannelTime"			"45"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24433,14 +24433,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"30"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"30"
 			}
 			"02"
 			{
@@ -24510,7 +24510,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"100"
-		"AbilityChannelTime"			"40"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24587,7 +24587,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"150"
-		"AbilityChannelTime"			"35"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24664,7 +24664,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"40"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24741,7 +24741,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"40"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24822,7 +24822,7 @@
 		"AbilityDamageType"				"DAMAGE_TYPE_MAGICAL"
 	
 		"AbilityGoldCost"				"125"
-		"AbilityChannelTime"			"45"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -24899,7 +24899,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"35"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -27551,7 +27551,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityTextureName"		"human_research_priest_training2"
-		"MaxLevel"					"1"
+		"MaxLevel"					"2"
 	
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
 	
@@ -27663,7 +27663,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityTextureName"		"human_research_sorceress_training2"
-		"MaxLevel"					"1"
+		"MaxLevel"					"2"
 	
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
 	
@@ -31086,6 +31086,15 @@
 					{
 						"ScriptFile"	"units/nightelf/ancients.lua"
 						"Function"		"NaturesBlessing"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/upgrades.lua"
+						"Function"		"HideAbility"
 					}
 				}
 			}
@@ -35389,7 +35398,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"320"
-		"AbilityChannelTime"			"10" //140
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -35398,7 +35407,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"120.0" 
 			}
 			"02"
 			{
@@ -35408,7 +35417,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"205"
+				"lumber_cost"			"180"
 			}
 		}
 		
@@ -35471,8 +35480,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"360"
-		"AbilityChannelTime"			"10" //140
+		"AbilityGoldCost"				"330"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -35481,17 +35490,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"120.0" 
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"360"
+				"gold_cost"				"330"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"210"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -36218,25 +36227,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -36297,7 +36306,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -36376,7 +36385,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -36388,12 +36397,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -36454,14 +36463,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"35"
 			}
 			"02"
 			{
@@ -36471,7 +36480,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -36531,25 +36540,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"175"
 			}
 		}
 	
@@ -36609,25 +36618,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"35"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -36694,25 +36703,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"125"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"125"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -36774,14 +36783,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"45"
 			}
 			"02"
 			{
@@ -36791,7 +36800,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -36836,25 +36845,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"25"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -36895,29 +36904,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"nightelf_research_druid_of_the_claw_training2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"35"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -36973,12 +36982,12 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"nightelf_research_mark_of_the_claw"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"25"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -36990,12 +36999,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -37064,14 +37073,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
@@ -37081,7 +37090,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -37148,25 +37157,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"175"
 			}
 		}
 	
@@ -37227,25 +37236,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -37301,29 +37310,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"nightelf_research_druid_of_the_talon_training2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"65"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -37383,25 +37392,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -37442,12 +37451,12 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"nightelf_research_mark_of_the_talon"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"25"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -37459,12 +37468,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -37532,25 +37541,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"125"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"125"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"225"
 			}
 		}
 	
@@ -37596,25 +37605,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"125"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"125"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -37659,25 +37668,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"175"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"175"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"175"
 			}
 		}
 	
@@ -37737,25 +37746,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"225"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"225"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"275"
 			}
 		}
 	
@@ -37815,25 +37824,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -37878,25 +37887,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"200"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -37956,25 +37965,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"250"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"250"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"225"
 			}
 		}
 	
@@ -38034,25 +38043,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -38097,25 +38106,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"175"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"175"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"175"
 			}
 		}
 	
@@ -38175,25 +38184,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"250"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"250"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"275"
 			}
 		}
 	
@@ -38253,25 +38262,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -38316,25 +38325,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"200"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -38394,25 +38403,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"250"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"250"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -38473,14 +38482,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"45"
 			}
 			"02"
 			{
@@ -38490,7 +38499,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -38535,25 +38544,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -41739,7 +41748,7 @@
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
-		"AbilityCooldown"			"30"
+		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
 			
 		"AbilitySpecial"
@@ -41747,10 +41756,57 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"duration"		"0.7"
+				"delay"		"0.7"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"cooldown"		"30"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_spell_damage"		"-66"
 			}
 			// Cast time.
 			// The process is uninterruptable.
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/spiritwalker.lua"
+				"Function"		"EtherStart"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_etheral_form"
+			{
+		
+				"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+	
+			}
 		}
 	
 		// Done
@@ -42116,8 +42172,8 @@
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_PURE"  // Buildings can't take magical damage
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 		"AbilitySpecial"
@@ -42156,8 +42212,8 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_name/ability_name.lua"
-						"Function"		"AbilityName"
+						"ScriptFile"	"units/orc/trollbatrider.lua"
+						"Function"		"LiquidOrb"
 					}
 				}						
 			}
@@ -42175,14 +42231,12 @@
 				"EffectAttachType"	"follow_origin"
 	
 				"ThinkInterval"		"0.5"
-	
 				"OnIntervalThink"
 				{
-					"Damage"
+					"RunScript"
 					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%damage / 2"
+						"ScriptFile"	"units/orc/trollbatrider.lua"
+						"Function"		"LiquidOrbThink"
 					}
 				}
 	
@@ -42311,6 +42365,39 @@
 			}
 		}
 	}
+	
+	"orc_berserker_strength_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"orc_research_berserker_strength"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"orc_troll_regeneration_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"orc_research_troll_regeneration"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
 	
 	"orc_burning_oil_disabled"
 	{
@@ -42492,6 +42579,22 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_pulverize"
+		"MaxLevel" 						"0"
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"SetLevel0"
+			}
+		}
+	}
+	
+	"orc_reinforced_defenses_disabled"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"orc_research_reinforced_defenses"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -46234,8 +46337,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"320"
-		"AbilityChannelTime"			"10" //140
+		"AbilityGoldCost"				"315"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -46244,17 +46347,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"120.0" 
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"320"
+				"gold_cost"				"315"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"205"
+				"lumber_cost"			"190"
 			}
 		}
 	
@@ -46317,8 +46420,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"360"
-		"AbilityChannelTime"			"10" //140
+		"AbilityGoldCost"				"325"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -46327,17 +46430,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"120.0" 
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"360"
+				"gold_cost"				"325"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"210"
+				"lumber_cost"			"190"
 			}
 		}
 	
@@ -46961,20 +47064,20 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"45"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
@@ -47040,7 +47143,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -47119,14 +47222,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
@@ -47136,7 +47239,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -47196,25 +47299,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"175"
 			}
 		}
 	
@@ -47274,25 +47377,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"35"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -47353,14 +47456,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"30"
 			}
 			"02"
 			{
@@ -47370,7 +47473,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -47431,25 +47534,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -47505,29 +47608,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_shaman_training2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -47587,25 +47690,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -47660,29 +47763,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_witch_doctor_training2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -47742,25 +47845,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -47816,29 +47919,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_spirit_walker_training2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -47900,14 +48003,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
@@ -47917,7 +48020,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -47977,25 +48080,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -48055,25 +48158,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -48133,25 +48236,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"125"
 			}
 		}
 	
@@ -48212,25 +48315,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"250"
 			}
 		}
 	
@@ -48291,25 +48394,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -48365,29 +48468,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_melee_weapons2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"175"
 			}
 		}
 	
@@ -48443,29 +48546,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_melee_weapons3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"200"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"275"
 			}
 		}
 	
@@ -48525,25 +48628,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -48599,29 +48702,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_unit_armor2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"225"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"225"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"225"
 			}
 		}
 	
@@ -48677,29 +48780,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_unit_armor3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"300"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"300"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"300"
 			}
 		}
 	
@@ -48759,25 +48862,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"100"
 			}
 		}
 	
@@ -48833,29 +48936,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_ranged_weapons2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -48911,29 +49014,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_ranged_weapons3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"200"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"300"
 			}
 		}
 	
@@ -48993,25 +49096,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"25"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -49067,19 +49170,19 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_spiked_barricades2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
@@ -49089,7 +49192,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"175"
 			}
 		}
 	
@@ -49145,29 +49248,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_spiked_barricades3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"275"
 			}
 		}
 	
@@ -49228,14 +49331,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
@@ -49245,7 +49348,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -49493,6 +49596,22 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_melee_weapons"
+						"WearableType"	"weapon"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_unit_armor"
+						"WearableType"	"armor"
+					}
 				}
 			}
 		}
@@ -49571,40 +49690,11 @@
 				"Function"      "NextQueue"
 			}
 	
-			"SpawnUnit"
+			"RunScript"
 			{
+				"ScriptFile"	"buildings/rally_point.lua"
+				"Function"		"SpawnUnit"
 				"UnitName"		"orc_troll_headhunter"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "GetInitialRallyPoint"
-						"Target"		"CASTER"
-						"Count"			"1"
-					}
-				}
-				"UnitCount"		"1"
-				"UnitLimit"		"0"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/rally_point.lua"
-						"Function"      "MoveToRallyPoint"
-					}
-				}
 			}
 		}
 	
@@ -49730,6 +49820,20 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_ranged_weapons"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_unit_armor"
 					}
 				}
 			}
@@ -49858,6 +49962,14 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_shaman_training"
+						"wearable_type"	"training"
+					}
 				}
 			}
 		}
@@ -49968,6 +50080,14 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_witch_doctor_training"
+						"wearable_type"	"training"
 					}
 				}
 			}
@@ -50080,6 +50200,14 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_spirit_walker_training"
+						"wearable_type"	"training"
+					}
 				}
 			}
 		}
@@ -50190,6 +50318,22 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_melee_weapons"
+						"WearableType"	"weapon"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_unit_armor"
+						"WearableType"	"armor"
 					}
 				}
 			}
@@ -50429,6 +50573,20 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_ranged_weapons"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_unit_armor"
+					}
 				}
 			}
 		}
@@ -50555,6 +50713,22 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_ranged_weapons"
+						"WearableType"	"weapon"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_unit_armor"
+						"WearableType"	"armor"
 					}
 				}
 			}
@@ -50683,6 +50857,22 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_melee_weapons"
+						"WearableType"	"weapon"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"orc_research_unit_armor"
+						"WearableType"	"armor"
+					}
 				}
 			}
 		}
@@ -50702,6 +50892,1127 @@
 					{
 						"ScriptFile"    "buildings/autocast.lua"
 						"Function"      "BuildingAutocast"
+					}
+				}
+			}
+		}
+	}
+	//berserker_strength
+	//troll_regeneration
+	//reinforced_defenses
+	
+	//shaman_training1/2
+	//witch_doctor_training1/2
+	//spirit_walker_training1/2
+	
+	//steel_melee_weapons1/2/3
+	//steel_ranged_weapons1/2/3
+	//steel_unit_armor1/2/3
+	//spiked_barricades1/2/3
+	
+	// Improves the fighting capabilities of Grunts with a 100 hit point increase, and 3 bonus attack damage.
+	"orc_berserker_strength"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_berserker_strength"
+		"MaxLevel"				"1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"  		"3"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_berserker_strength"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyTraining"
+						"LevelUp"		"4" //Set the creature to this level
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+				}
+			}
+		}
+	
+	}
+	
+	"orc_troll_regeneration"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_troll_regeneration"
+		"MaxLevel"				"1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"1.25"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_troll_regeneration"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%bonus_health_regen"
+				}
+			}
+		}
+	}
+	
+	// Upgrades Burrows and Watch Towers so that they have Fortified armor.
+	"orc_reinforced_defenses"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_research_reinforced_defenses"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"Modifiers"
+		{
+			"modifier_reinforced_defenses"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/orc_upgrades.lua"
+						"Function"		"ReinforcedDefenses"
+					}
+				}
+			}
+		}
+	}
+	
+	"orc_shaman_training1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_research_shaman_training1"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"40"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_shaman_training1"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyTraining"
+						"LevelUp"		"3" //Set the creature to this level
+					}
+				}
+		
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	"orc_shaman_training2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_research_shaman_training2"
+		"MaxLevel"					"2"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"80"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_shaman_training2"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyTraining"
+						"LevelUp"		"4" //Set the creature to this level
+					}
+				}
+		
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	"orc_witch_doctor_training1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_research_witch_doctor_training1"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"40"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_witch_doctor_training1"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyTraining"
+						"LevelUp"		"3" //Set the creature to this level
+					}
+				}
+		
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	"orc_witch_doctor_training2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_research_witch_doctor_training2"
+		"MaxLevel"					"2"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"80"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_witch_doctor_training2"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyTraining"
+						"LevelUp"		"4" //Set the creature to this level
+					}
+				}
+		
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	"orc_spirit_walker_training1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_research_spirit_walker_training1"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"150"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"60"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spirit_walker_training1"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyTraining"
+						"LevelUp"		"4" //Set the creature to this level
+					}
+				}
+		
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	"orc_spirit_walker_training2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_research_spirit_walker_training2"
+		"MaxLevel"					"2"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"80"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"120"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spirit_walker_training2"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/upgrades.lua"
+						"Function"		"ApplyTraining"
+						"LevelUp"		"5" //Set the creature to this level
+					}
+				}
+		
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen_pct"
+				}
+			}
+		}
+	}
+	
+	
+	// Grunts get 2.5
+	// Raiders get 3
+	// Taurens get 4
+	"orc_melee_weapons1"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_melee_weapons1"
+		"MaxLevel"				"1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"grunt_damage"			"2 5 7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"raider_damage" 		"3 6 9"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tauren_damage" 		"4 6 12"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_melee_weapons"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/orc_upgrades.lua"
+						"Function"		"ApplyModifierUpgrade"
+					}
+				}
+			}
+	
+			"modifier_grunt_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%grunt_damage"
+				}
+			}
+			"modifier_raider_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%raider_damage"
+				}
+			}
+			"modifier_tauren_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%tauren_damage"
+				}
+			}
+		}
+	}
+	"orc_melee_weapons2"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_melee_weapons2"
+		"MaxLevel"				"2"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"grunt_damage"			"2 5 7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"raider_damage" 		"3 6 9"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tauren_damage" 		"4 6 12"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_melee_weapons"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/orc_upgrades.lua"
+						"Function"		"ApplyModifierUpgrade"
+					}
+				}
+			}
+	
+			"modifier_grunt_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%grunt_damage"
+				}
+			}
+			"modifier_raider_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%raider_damage"
+				}
+			}
+			"modifier_tauren_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%tauren_damage"
+				}
+			}
+		}
+	}
+	"orc_melee_weapons3"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_melee_weapons3"
+		"MaxLevel"				"3"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"1 3 5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"raider_damage" 		"4 8 12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tauren_damage" 		"10 20 30"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_melee_weapons"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/orc_upgrades.lua"
+						"Function"		"ApplyModifierUpgrade"
+					}
+				}
+			}
+	
+			"modifier_bonus_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+				}
+			}
+			"modifier_raider_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%raider_damage"
+				}
+			}
+			"modifier_tauren_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%tauren_damage"
+				}
+			}
+		}
+	}
+	
+	// Grunts, Raiders, Troll Batriders, Tauren, Troll Headhunters, Troll Berserkers, Wind Riders, and Demolishers 2/4/6
+	"orc_unit_armor1"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_unit_armor1"
+		"MaxLevel"				"1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"2 4 6"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_unit_armor"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+				}
+			}
+		}
+	}
+	"orc_unit_armor2"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_unit_armor2"
+		"MaxLevel"				"2"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"2 4 6"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_unit_armor"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+				}
+			}
+		}
+	}
+	"orc_unit_armor3"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_unit_armor3"
+		"MaxLevel"				"3"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"2 4 6"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_unit_armor"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+				}
+			}
+		}
+	}
+	
+	// Troll Headhunters, Troll Berserkers, Wind Riders get 3 
+	// Troll Batriders 2
+	// Demolishers 9
+	"orc_ranged_weapons1"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_ranged_weapons1"
+		"MaxLevel"				"1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"3 6 9"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"batrider_damage" 		"2 4 6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"demolisher_damage" 	"9 18 27"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ranged_weapons"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/orc_upgrades.lua"
+						"Function"		"ApplyModifierUpgrade"
+					}
+				}
+			}
+	
+			"modifier_bonus_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+				}
+			}
+			"modifier_batrider_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%batrider_damage"
+				}
+			}
+			"modifier_demolisher_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%demolisher_damage"
+				}
+			}
+		}
+	}
+	"orc_ranged_weapons2"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_ranged_weapons2"
+		"MaxLevel"				"2"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"3 6 9"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"batrider_damage" 		"2 4 6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"demolisher_damage" 	"9 18 27"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ranged_weapons"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/orc_upgrades.lua"
+						"Function"		"ApplyModifierUpgrade"
+					}
+				}
+			}
+	
+			"modifier_bonus_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+				}
+			}
+			"modifier_batrider_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%batrider_damage"
+				}
+			}
+			"modifier_demolisher_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%demolisher_damage"
+				}
+			}
+		}
+	}
+	"orc_ranged_weapons3"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_ranged_weapons3"
+		"MaxLevel"				"3"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"3 6 10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"batrider_damage" 		"2 4 6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"demolisher_damage" 	"6 12 18"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ranged_weapons"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/orc_upgrades.lua"
+						"Function"		"ApplyModifierUpgrade"
+					}
+				}
+			}
+	
+			"modifier_bonus_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%bonus_damage"
+				}
+			}
+			"modifier_batrider_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%batrider_damage"
+				}
+			}
+			"modifier_demolisher_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%demolisher_damage"
+				}
+			}
+		}
+	}
+	
+	// Troll Headhunters, Troll Berserkers, Wind Riders get 3 
+	// Troll Batriders 2
+	// Demolishers 9
+	"orc_spiked_barricades1"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_spiked_barricades1"
+		"MaxLevel"				"1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_to_attackers"	"4 10 16"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spiked_barricades"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0"
+	
+				"OnAttacked"
+				// "%attack_damage" is set to the damage value after mitigation
+				{
+					"Damage"
+					{
+						"Target"		"ATTACKER"
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%damage_to_attackers"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/items_fx/blademail_b.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target"            "TARGET"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/upgrades.lua"
+						"Function"		"HideAbility"
+					}
+				}
+			}
+		}
+	}
+	"orc_spiked_barricades2"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_spiked_barricades2"
+		"MaxLevel"				"2"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_to_attackers"	"4 10 16"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spiked_barricades"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0"
+	
+				"OnAttacked"
+				// "%attack_damage" is set to the damage value after mitigation
+				{
+					"Damage"
+					{
+						"Target"		"ATTACKER"
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%damage_to_attackers"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/items_fx/blademail_b.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target"            "TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/upgrades.lua"
+						"Function"		"HideAbility"
+					}
+				}
+			}
+		}
+	}
+	"orc_spiked_barricades3"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"orc_research_spiked_barricades3"
+		"MaxLevel"				"3"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_to_attackers"	"4 10 16"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spiked_barricades"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0"
+	
+				"OnAttacked"
+				// "%attack_damage" is set to the damage value after mitigation
+				{
+					"Damage"
+					{
+						"Target"		"ATTACKER"
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%damage_to_attackers"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/items_fx/blademail_b.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target"            "TARGET"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/upgrades.lua"
+						"Function"		"HideAbility"
 					}
 				}
 			}
@@ -57324,7 +58635,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"320"
-		"AbilityChannelTime"			"10" //140
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -57333,7 +58644,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"120.0" 
 			}
 			"02"
 			{
@@ -57343,7 +58654,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"205"
+				"lumber_cost"			"210"
 			}
 		}
 		
@@ -57406,8 +58717,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"360"
-		"AbilityChannelTime"			"10" //140
+		"AbilityGoldCost"				"325"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -57416,17 +58727,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"120.0" 
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"360"
+				"gold_cost"				"325"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"210"
+				"lumber_cost"			"230"
 			}
 		}
 	
@@ -57473,8 +58784,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"320"
-		"AbilityChannelTime"			"10" //140
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -57483,17 +58794,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"35.0" 
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"320"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"205"
+				"lumber_cost"			"20"
 			}
 		}
 		
@@ -57556,8 +58867,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"320"
-		"AbilityChannelTime"			"10" //140
+		"AbilityGoldCost"				"145"
+		"AbilityChannelTime"			"%build_time"
 	
 		"AbilityMultiOrder"				"1"
 	
@@ -57566,17 +58877,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"build_time"			"140.0" 
+				"build_time"			"35.0" 
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"320"
+				"gold_cost"				"145"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"205"
+				"lumber_cost"			"40"
 			}
 		}
 		
@@ -57588,12 +58899,11 @@
 				"Function"		"EnqueueUnit"
 			}
 	
-			// Need a better method for this
-			//"RunScript"
-			//{
-			//	"ScriptFile"	"buildings/upgrades.lua"
-			//	"Function"		"DisableAbilities"
-			//}
+			"RunScript"
+			{
+				"ScriptFile"	"buildings/upgrades.lua"
+				"Function"		"StartUpgrade"
+			}
 		}
 	
 		"OnChannelSucceeded"
@@ -58297,7 +59607,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -58375,25 +59685,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"0"
 			}
 		}
 	
@@ -58453,25 +59763,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -58531,25 +59841,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"45"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -58609,25 +59919,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -58687,25 +59997,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"45"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -58767,25 +60077,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -58841,29 +60151,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_necromancer_training2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"45"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -58923,25 +60233,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -58997,29 +60307,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_banshee_training2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -59080,14 +60390,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
 		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"15"
 			}
 			"02"
 			{
@@ -59097,7 +60407,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -59157,25 +60467,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"125"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"125"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -59237,25 +60547,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"100"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"45"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -59315,25 +60625,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -59393,8 +60703,8 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"75"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -59406,12 +60716,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -59472,25 +60782,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"275"
 			}
 		}
 	
@@ -59551,25 +60861,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"125"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"125"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -59625,29 +60935,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_unholy_strength2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"200"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -59703,29 +61013,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_unholy_strength3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"275"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"275"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -59785,25 +61095,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"125"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"125"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -59859,29 +61169,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_unholy_armor2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"200"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"150"
 			}
 		}
 	
@@ -59937,29 +61247,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_unholy_armor3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"275"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"275"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -60020,25 +61330,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"50"
 			}
 		}
 	
@@ -60094,12 +61404,12 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_creature_attack2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"200"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
@@ -60111,12 +61421,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"125"
 			}
 		}
 	
@@ -60172,29 +61482,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_creature_attack3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"250"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"250"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -60254,25 +61564,25 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"150"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"75"
 			}
 		}
 	
@@ -60328,29 +61638,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_creature_carapace2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"200"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"200"
 			}
 		}
 	
@@ -60406,29 +61716,29 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"undead_research_creature_carapace3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"20"
+		"AbilityGoldCost"				"250"
+		"AbilityChannelTime"			"%research_time"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
+				"research_time"			"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
+				"gold_cost"				"250"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
+				"lumber_cost"			"275"
 			}
 		}
 	
@@ -62085,12 +63395,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"3 6 10"
 			}
-			"03"
+			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"destroyer_damage" 		"2 4 6"
 			}
-			"04"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"frost_wyrm_damage" 	"6 12 18"
@@ -62157,12 +63467,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"3 6 10"
 			}
-			"03"
+			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"destroyer_damage" 		"2 4 6"
 			}
-			"04"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"frost_wyrm_damage" 	"6 12 18"
@@ -62229,12 +63539,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"3 6 10"
 			}
-			"03"
+			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"destroyer_damage" 		"2 4 6"
 			}
-			"04"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"frost_wyrm_damage" 	"6 12 18"
