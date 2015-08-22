@@ -1045,6 +1045,12 @@
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/orc_upgrades.lua"
+					"Function"		"ApplyWarDrumsUpgrade"
+				}
 			}
 		}
 	}

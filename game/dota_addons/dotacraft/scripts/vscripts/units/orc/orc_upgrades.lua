@@ -30,6 +30,53 @@ function ApplyModifierUpgrade( event )
 end
 
 
+-- Puts War Drums at level 2 if the player has the research
+function ApplyWarDrumsUpgrade( event )
+	local caster = event.caster
+	local target = event.target
+	local player = caster:GetPlayerOwner()
+	local upgrades = player.upgrades
+	
+	if player.upgrades["orc_research_improved_war_drums"] then
+		caster:RemoveModifierByName("modifier_war_drums_aura")
+		
+		-- Find all units nearby and remove the buff to re-apply
+		local allies_nearby = FindAlliesInRadius(caster, 900)
+		for _,ally in pairs(allies_nearby) do
+			if ally:HasModifier("modifier_war_drums") then
+				ally:RemoveModifierByName("modifier_war_drums")
+			end
+		end
+
+		local ability = target:FindAbilityByName("orc_war_drums")
+		ability:UpgradeAbility(true)
+	end
+end
+
+-- Upgrade all Kodo Beasts
+function UpgradeWarDrums( event )
+	local caster = event.caster
+	local player = caster:GetPlayerOwner()
+	local units = player.units
+
+	for _,unit in pairs(units) do
+		if IsValidEntity(unit) and unit:HasAbility("orc_war_drums") then
+			unit:RemoveModifierByName("modifier_war_drums_aura")
+
+			-- Find all units nearby and remove the buff to re-apply
+			local allies_nearby = FindAlliesInRadius(unit, 900)
+			for _,ally in pairs(allies_nearby) do
+				if ally:HasModifier("modifier_war_drums") then
+					ally:RemoveModifierByName("modifier_war_drums")
+				end
+			end
+
+			local ability = unit:FindAbilityByName("orc_war_drums")
+			ability:UpgradeAbility(true)
+		end
+	end
+end
+
 function ReinforcedDefenses( event )
 	local building = event.caster
 	SetArmorType(building, "fortified")

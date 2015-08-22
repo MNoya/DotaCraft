@@ -1075,6 +1075,13 @@
 			"ScriptFile"	"buildings/research.lua"
 			"Function"		"ResearchComplete"
 		}
+
+		// Apply the level update on all current kodo beasts
+		"RunScript"
+		{
+			"ScriptFile"    "units/orc/orc_upgrades.lua"
+			"Function"      "UpgradeWarDrums"
+		}
 	}
 }
 "orc_research_improved_war_drums_disabled"
