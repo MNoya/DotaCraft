@@ -41991,7 +41991,7 @@
 	"orc_war_drums"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"orc_research_war_drums"
+		"AbilityTextureName"		"orc_research_improved_war_drums"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -42010,12 +42010,45 @@
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"damage_increase"			"0.1"
+				"var_type"				"FIELD_INTEGER"
+				"damage_increase"		"10"
 			}
 			// The damage increase applies to both melee and ranged.
 		}
 	
+		"precache"
+		{
+			"particle"  "particles/custom/aura_endurance.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_war_drums_aura"
+			{
+	
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"EffectName"		"particles/custom/aura_endurance.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Aura"          	"modifier_war_drums"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster" "1"
+			}
+	
+			"modifier_war_drums"
+			{
+				"IsBuff"			"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_increase"
+				}
+			}
+		}
 		// Done
 	}
 	
