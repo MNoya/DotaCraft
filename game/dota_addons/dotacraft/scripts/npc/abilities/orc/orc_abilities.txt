@@ -868,11 +868,44 @@
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"summoned_unit_damage"			"250"
+			"var_type"			"FIELD_INTEGER"
+			"damage_to_summons"	"250"
 		}
 	}
 
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+		"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf"
+		"sound"		"soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+			"EffectAttachType"  "world_origin"
+			"TargetPoint"       "POINT"
+			"ControlPoints"
+			{
+				"01"	"%radius 0 0"
+			}
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Brewmaster_Storm.DispelMagic"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"units/orc/spiritwalker.lua"
+			"Function"		"DispelMagic"
+			"Target"		"POINT"
+		}
+	}
 	// Done
 }
 
