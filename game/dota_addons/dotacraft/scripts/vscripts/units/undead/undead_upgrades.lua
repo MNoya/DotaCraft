@@ -21,7 +21,7 @@ function ApplyModifierUpgrade( event )
 	elseif string.find(ability_name,"creature_attack") then
 		if unit_name == "undead_frost_wyrm" then
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_frost_wyrm_damage", {})
-		elseif unit_name == "undead_gargoyle" then
+		elseif unit_name == "undead_destroyer" then
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_destroyer_damage", {})
 		else
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_bonus_damage", {})

@@ -2705,6 +2705,15 @@
 					"Function"		"NaturesBlessing"
 				}
 			}
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"buildings/upgrades.lua"
+					"Function"		"HideAbility"
+				}
+			}
 		}
 
 		"modifier_natures_blessing_tree"

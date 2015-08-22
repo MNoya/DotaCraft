@@ -12,12 +12,16 @@ function SpawnUnit( event )
 	if PlayerHasResearch(player, "nightelf_research_resistant_skin") then
 		unit_name = unit_name.."_resistant_skin"
 	end
+
+	-- Adjust Troll Berkserker upgraded unit
+	if PlayerHasResearch(player, "orc_research_berserker_upgrade") then
+		unit_name = "orc_troll_berserker"
+	end
 		
 	local unit = CreateUnitByName(unit_name, position, true, owner, owner, caster:GetTeamNumber())
 	unit:AddNewModifier(caster, nil, "modifier_phased", { duration = 0.03 })
 	unit:SetOwner(hero)
 	unit:SetControllableByPlayer(playerID, true)
-	table.insert(player.units, unit)
 	
 	event.target = unit
 	MoveToRallyPoint(event)
@@ -26,6 +30,17 @@ function SpawnUnit( event )
 	if string.match(unit_name, "mountain_giant") then
 		ApplyMultiRankUpgrade(unit, "nightelf_research_strength_of_the_wild", "weapon")
    		ApplyMultiRankUpgrade(unit, "nightelf_research_reinforced_hides", "armor")
+   	end
+
+   	-- Recolor Huskar
+   	if string.match(unit_name, "orc_troll_berserker") then
+   		unit:SetRenderColor(255, 255, 0)
+   	end
+
+   	-- Add Troll Headhunter/Berserker upgrades
+   	if string.match(unit_name, "orc_troll") then
+   		ApplyMultiRankUpgrade(unit, "orc_research_ranged_weapons", "weapon")
+   		ApplyMultiRankUpgrade(unit, "orc_research_unit_armor", "armor")
    	end
 
 end
