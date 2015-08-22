@@ -147,50 +147,82 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		
-	// The ability itself is a passive but there are still values for cooldown, manacost back in WC3, I've taken the liberty to remove them.
-	
+			
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"duration"		"2.51"
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"2.5" //Total Duration of Flame Strike
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"150"
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"150"
 		}
 		"03"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"half_damage_dealt"			"3"
+			"var_type"				"FIELD_FLOAT"
+			"damage_per_second"		"5"
 		}
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"half_damage_interval"			"1"
-		}
-		"05"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"full_damage_dealth"			"6"
-		}
-		"06"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"full_damage_interval"			"0.5"
-		}
-		"07"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"building_reduction"			"1"
-		}
-		// This is a multiplier, if set to 0, then buildings will take no burning damage, if set to 10, the burning damage on buildings is multiplied by 10, etc.
 	}
 
-	// Done
+	"precache"
+	{
+		"particle"  "particles/custom/sf_fire_arcana_wings_grow_rope.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_burning_oil"
+		{
+			"Passive"			"1"
+			"IsHidden"			"0"
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"    "particles/custom/orc/burning_oil.vpcf"
+				"CastAttack"		"0"
+			}
+		
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/demolisher.lua"
+					"Function"		"BurningOil"
+				}
+			}					
+		}
+
+		"modifier_burning_oil_thinker"
+		{
+			"IsHidden"			"1"
+			"EffectName"		"particles/custom/orc/burning_oil_ground.vpcf"
+			"EffectAttachType"	"attach_hitloc"		
+
+			"Aura"          	"modifier_burning_oil_damage"
+			"Aura_Radius"   	"%radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+		}
+
+		"modifier_burning_oil_damage"
+		{
+			"IsDebuff"		"1"
+			"ThinkInterval"  "0.5"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage_per_second / 2"
+				}
+			}
+		}
+	}
 }
 
 //=================================================================================
