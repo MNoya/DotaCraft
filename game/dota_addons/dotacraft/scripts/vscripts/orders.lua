@@ -620,6 +620,45 @@ function dotacraft:MoonWellOrder( event )
 end
 
 ------------------------------------------------
+--                Burrow Right-Click          --
+------------------------------------------------
+function dotacraft:BurrowOrder( event )
+    local pID = event.pID
+    local entityIndex = event.mainSelected
+    local burrowIndex = event.targetIndex
+    local burrow = EntIndexToHScript(burrowIndex)
+    dotacraft:RightClickOrder(event)
+
+    if not burrow.peons_inside then
+        burrow.peons_inside = {}
+    end
+
+    local peons_inside = #burrow.peons_inside
+
+    if peons_inside < 4 then
+        local ability = burrow:FindAbilityByName("orc_burrow_peon")
+        local selectedEntities = GetSelectedEntities(pID)
+
+        -- Send the main unit
+        ExecuteOrderFromTable({ UnitIndex = burrowIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = entityIndex, AbilityIndex = ability:GetEntityIndex(), Queue = false})
+        
+        -- Send the others
+        local maxPeons = 4 - peons_inside
+        for _,entityIndex in pairs(selectedEntities) do
+            local unit = EntIndexToHScript(entityIndex)
+            if unit:GetUnitName() == "orc_peon" then
+                if maxPeons > 0 then
+                    maxPeons = maxPeons - 1
+                    ExecuteOrderFromTable({ UnitIndex = burrowIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = entityIndex, AbilityIndex = ability:GetEntityIndex(), Queue = false})
+                else
+                    break
+                end
+            end
+        end
+    end
+end
+
+------------------------------------------------
 --             Repair Right-Click             --
 ------------------------------------------------
 function dotacraft:RepairOrder( event )

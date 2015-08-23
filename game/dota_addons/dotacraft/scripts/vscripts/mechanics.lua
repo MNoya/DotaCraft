@@ -725,7 +725,7 @@ function FindAlliesInRadius( unit, radius )
 	local team = unit:GetTeamNumber()
 	local position = unit:GetAbsOrigin()
 	local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, 0, FIND_ANY_ORDER, false)
+	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, 0, FIND_CLOSEST, false)
 end
 
 function AddUnitToSelection( unit )

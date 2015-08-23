@@ -42587,11 +42587,8 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		// Added Targeting for your convenience.
 		
 		"AbilityCastRange"			"2000"
-		// Added for visual indication.
 		
 		"AbilitySpecial"
 		{
@@ -42600,10 +42597,134 @@
 				"var_type"		"FIELD_INTEGER"
 				"radius"		"2000"
 			}
-			// Will summon "busy" units, aka units that are mining, lumbering, repairing.
 		}
 	
-		// Done
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/burrow.lua"
+				"Function"		"BattleStations"
+			}
+		}
+	
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/burrow.lua"
+				"Function"		"Eject"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// On each peon
+			"modifier_on_order_cancel_battle_stations"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/burrow.lua"
+						"Function"		"CancelBattleStations"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_battle_stations"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_builder_burrowed"
+			{
+				"IsHidden"				"1"  
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			// On the building
+			// BAT: 2, 1.7, 1.4, 1.1, 0.8
+			"modifier_battle_stations"
+			{
+	
+			}
+	
+			"modifier_battle_stations1"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" "1.7"
+				}
+			}
+	
+			"modifier_battle_stations2"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" "1.4"
+				}
+			}
+	
+			"modifier_battle_stations3"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" "1.1"
+				}
+			}
+	
+			"modifier_battle_stations4"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" "0.8"
+				}
+			}
+		}
+	}
+	
+	// Hidden orders for a single peon to get inside
+	"orc_burrow_peon"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+	
+		"IsCastableWhileHidden"     "1"
+			
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/burrow.lua"
+				"Function"		"BurrowPeon"
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -42617,16 +42738,35 @@
 		"AbilityTextureName"		"orc_stand_down"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		
-		"AbilitySpecial"
+		"OnSpellStart"
 		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/burrow.lua"
+				"Function"		"StandDown"
+			}
 		}
+	}
 	
-		// Done
+	// Orders a single peon to return to work
+	"orc_back_to_work"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_train_peon"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/burrow.lua"
+				"Function"		"BackToWork"
+			}
+		}
 	}
 	"orc_pillage_disabled"
 	{

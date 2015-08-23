@@ -50,6 +50,10 @@ function OnRightButtonPressed()
 					GameEvents.SendCustomGameEventToServer( "repair_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex, queue: pressedShift })
 					return true;
 				}
+				else if (IsCustomBuilding(e.entityIndex) && mainSelectedName == "orc_peon" && Entities.GetUnitName( e.entityIndex ) == "orc_burrow"){
+					$.Msg(" Targeted orc burrow")
+					GameEvents.SendCustomGameEventToServer( "burrow_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
+				}
 				return false;
 			}
 		}
