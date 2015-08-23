@@ -688,6 +688,42 @@ function dotacraft:RepairOrder( event )
 end
 
 ------------------------------------------------
+--            Shop->Unit Right-Click          --
+------------------------------------------------
+function dotacraft:ShopActiveOrder( event )
+    local shop = EntIndexToHScript(event.shop)
+    local unit = EntIndexToHScript(event.unit)
+
+    -- Send true in panorama order, false if autoassigned
+    shop.targeted = event.targeted or false
+
+    -- Replicate the items of the selected unit in the shop inventory
+    -- Old items are removed. Items are muted
+    shop.current_unit = unit
+    
+    for i=0,5 do
+        local item = shop:GetItemInSlot(i)
+        if item then
+            item:RemoveSelf()
+        end
+    end
+
+    for j=0,5 do
+        local unit_item = unit:GetItemInSlot(j)
+        if unit_item then
+            local new_item = CreateItem(unit_item:GetAbilityName(), nil, nil)
+            shop:AddItem(new_item)
+        end
+    end
+
+    if shop.active_particle then
+        ParticleManager:DestroyParticle(shop.active_particle, true)
+    end
+    shop.active_particle = ParticleManager:CreateParticle("particles/custom/shop_arrow.vpcf", PATTACH_OVERHEAD_FOLLOW, unit)
+    ParticleManager:SetParticleControl(shop.active_particle, 0, unit:GetAbsOrigin())
+end
+
+------------------------------------------------
 --             Generic Right-Click            --
 ------------------------------------------------ 
 function dotacraft:RightClickOrder( event )

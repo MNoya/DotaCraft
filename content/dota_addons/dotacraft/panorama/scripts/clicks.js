@@ -76,8 +76,14 @@ function OnRightButtonPressed()
 					$.Msg(" Targeted gold mine")
 					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "mine", targetIndex: e.entityIndex })
 				}
-				else{
-					$.Msg(" Targeted a building")
+				else if ( IsShop( mainSelected ) && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID )  && ( Entities.IsHero( e.entityIndex ) || Entities.IsInventoryEnabled( e.entityIndex )) && Entities.GetRangeToUnit( mainSelected, e.entityIndex) <= 900)
+				{
+					$.Msg(" Targeted unit to shop")
+					GameEvents.SendCustomGameEventToServer( "shop_active_order", { shop: mainSelected, unit: e.entityIndex, targeted: true})
+				}
+				else
+				{
+					$.Msg(" Targeted some entity to rally point")
 					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "target", targetIndex: e.entityIndex })
 				}
 				return true;
@@ -118,6 +124,10 @@ function OnRightButtonPressed()
 
 function IsBuilder(entIndex) {
 	return (Entities.GetUnitLabel( entIndex ) == "builder")
+}
+
+function IsShop(entIndex) {
+	return (Entities.GetUnitLabel( entIndex ).indexOf("shop") > -1)
 }
 
 // Main mouse event callback

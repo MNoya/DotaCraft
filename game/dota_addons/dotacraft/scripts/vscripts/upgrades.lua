@@ -72,6 +72,13 @@ function CheckAbilityRequirements( unit, player )
 
 							-- Set the new ability level
 							local ability = unit:FindAbilityByName(ability_name)
+							print(ability_name,ability, unit:GetUnitName())
+							for i=0,15 do
+								local ability = unit:GetAbilityByIndex(i)
+								if ability then
+									print(ability:GetAbilityName())
+								end
+							end
 							ability:SetLevel(ability:GetMaxLevel())
 						else
 							--print("Ability Still DISABLED "..ability_name)

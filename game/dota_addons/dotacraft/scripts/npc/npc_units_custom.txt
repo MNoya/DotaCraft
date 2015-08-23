@@ -3900,11 +3900,13 @@
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
+	
+		"UnitLabel"					"human_shop"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
+		"Ability1"					"ability_shop"
 		"Ability2"					""	 //Reference: Aall
 		"Ability3"					""	 //Reference: Apit
 		"Ability6"					"ability_building"
@@ -7579,12 +7581,14 @@
 		"ModelScale"				"2.5"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+	
+		"UnitLabel"					"nightelf_shop"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"nightelf_uproot"	 //Reference: Abds
-		"Ability2"					""	 //Reference: Aall
+		"Ability2"					"ability_shop"
 		"Ability3"					""	 //Reference: Aeat
 		"Ability4"					""	 //Reference: Aro1
 		"Ability5"					""	 //Reference: Apit
@@ -10550,11 +10554,13 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"UnitLabel"					"orc_shop"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Abds
+		"Ability1"					"ability_shop"
 		"Ability2"					""	 //Reference: Aall
 		"Ability3"					""	 //Reference: Aspi
 		"Ability4"					""	 //Reference: Apit
@@ -14067,11 +14073,13 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"UnitLabel"					"undead_shop"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					""	 //Reference: Aall
+		"Ability1"					"ability_shop"
 		"Ability2"					""	 //Reference: Abgs
 		"Ability3"					""	 //Reference: Apit
 		"Ability10"					"ability_building"
