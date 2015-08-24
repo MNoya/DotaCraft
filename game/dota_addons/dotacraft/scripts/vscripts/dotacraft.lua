@@ -515,6 +515,15 @@ function dotacraft:PostLoadPrecache()
 	PrecacheItemByNameAsync("item_orb_of_corruption", function(...) end)
 	PrecacheItemByNameAsync("item_orb_of_darkness", function(...) end)
 	PrecacheItemByNameAsync("item_orb_of_lightning", function(...) end)
+
+	PrecacheItemByNameAsync("item_scroll_of_regeneration", function(...) end)
+	PrecacheItemByNameAsync("item_mechanical_critter", function(...) end)
+	PrecacheItemByNameAsync("item_lesser_clarity_potion", function(...) end)
+	PrecacheItemByNameAsync("item_potion_of_healing", function(...) end)
+	PrecacheItemByNameAsync("item_potion_of_mana", function(...) end)
+	PrecacheItemByNameAsync("item_scroll_of_town_portal", function(...) end)
+	PrecacheItemByNameAsync("item_build_ivory_tower", function(...) end)
+	PrecacheItemByNameAsync("item_staff_of_sanctuary", function(...) end)
 end
 
 function dotacraft:OnFirstPlayerLoaded()
@@ -664,6 +673,10 @@ function dotacraft:OnNPCSpawned(keys)
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
 		dotacraft:OnHeroInGame(npc)
+	end
+
+	if IsBuilder(npc) then
+		BuildingHelper:InitializeBuilder(npc)
 	end
 
 	-- Apply armor and damage modifier (for visuals)
@@ -1539,4 +1552,12 @@ end
 function GetNetTableValue(NetTableName, key)
     --print("NetTable", key, CustomNetTables:GetTableValue("dotacraft_color_table", key))
     return CustomNetTables:GetTableValue(NetTableName, key)
+end
+
+-- Returns a Vector with the color of the player
+function dotacraft:ColorForPlayer( playerID )
+	local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
+	local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
+	
+	return Vector(color.r, color.g, color.b)
 end

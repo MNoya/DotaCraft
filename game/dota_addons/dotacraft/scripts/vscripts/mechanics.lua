@@ -484,8 +484,12 @@ function GetBuilderNameForHeroRace( hero_name )
 	return builder_name
 end
 
--- Builders are stored in a nettable
+-- Builders are stored in a nettable in addition to the builder label
 function IsBuilder( unit )
+	local label = unit:GetUnitLabel()
+	if label == "builder" then
+		return true
+	end
 	local table = CustomNetTables:GetTableValue("builders", tostring(unit:GetEntityIndex()))
 	if table then
 		return tobool(table["IsBuilder"])
