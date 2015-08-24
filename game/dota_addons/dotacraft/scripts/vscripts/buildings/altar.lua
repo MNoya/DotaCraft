@@ -31,6 +31,10 @@ function BuildHero( event )
 		print(new_hero:GetUnitName().." moving to position",position)
 	end
 
+	-- Add a teleport scroll
+	new_hero:AddItem(CreateItem("item_scroll_of_town_portal", new_hero, new_hero))
+
+
 	-- Add the hero to the table of heroes acquired by the player
 	table.insert(player.heroes, new_hero)
 
