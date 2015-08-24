@@ -345,6 +345,8 @@ function Gather( event )
 
 		local tree = target
 
+		caster.last_resource_gathered = "lumber"
+
 		-- Disable this for Acolytes
 		if caster:GetUnitName() == "undead_acolyte" then
 			print("Interrupt")
@@ -431,6 +433,8 @@ function Gather( event )
 	-- Gather Gold
 	elseif string.match(target:GetUnitName(),"gold_mine") then
 
+		caster.last_resource_gathered = "gold"
+
 		-- Gather cancels queue
 		BuildingHelper:ClearQueue(caster)
 
@@ -467,6 +471,7 @@ function Gather( event )
 		local mine_pos = mine:GetAbsOrigin()
 		caster.gold_gathered = 0
 		caster.target_mine = mine
+		caster.target_tree = nil -- Forget the tree
 		ability.cancelled = false
 		caster.state = "moving_to_mine"
 
@@ -991,6 +996,8 @@ function ReturnResources( event )
 	-- Builder race
 	local race = GetUnitRace(caster)
 
+	print("Return Resources of type ",caster.last_resource_gathered)
+
 	-- Return Ability On
 	ability.cancelled = false
 	if ability:GetToggleState() == false then
@@ -1004,6 +1011,9 @@ function ReturnResources( event )
 		Timers:RemoveTimer(caster.moving_timer)
 	end
 
+	-- Send back to the last resource gathered
+	local coming_from = caster.last_resource_gathered
+
 	-- LUMBER
 	if caster:HasModifier("modifier_carrying_lumber") then
 		-- Find where to return the resources
@@ -1011,7 +1021,7 @@ function ReturnResources( event )
 		caster.target_building = building
 		caster.state = "returning_lumber"
 
-		local collision_size = building:GetHullRadius()*2 + 64
+		local collision_size = building:GetHullRadius()*2 + 100
 
 		-- Move towards it
 		caster.moving_timer = Timers:CreateTimer(function() 
@@ -1027,7 +1037,7 @@ function ReturnResources( event )
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						caster:MoveToNPC(caster.target_building)					
+						caster:MoveToNPC(caster.target_building)				
 						return THINK_INTERVAL
 					elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
 						--print("Building Reached at ",distance)
@@ -1038,39 +1048,20 @@ function ReturnResources( event )
 						-- Also handle possible gold leftovers if its being deposited in a city center
 						if caster:HasModifier("modifier_carrying_gold") then
 							caster:RemoveModifierByName("modifier_carrying_gold")
-							local upkeep = GetUpkeep( player )
-							local gold_gain = caster.gold_gathered * upkeep
-							hero:ModifyGold(gold_gain, false, 0)
-							PopupGoldGain(caster, gold_gain)
+							local gold_building = FindClosestResourceDeposit( caster, "gold" )
+							if gold_building == caster.target_building then 
+								local upkeep = GetUpkeep( player )
+								local gold_gain = caster.gold_gathered * upkeep
+								hero:ModifyGold(gold_gain, false, 0)
+								PopupGoldGain(caster, gold_gain)
+							end
 							caster.gold_gathered = 0
 						end
 
 						caster.lumber_gathered = 0
-						--print("Back to the trees")
-						if caster.target_tree and caster.target_tree:IsStanding() then
-							caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
-						else
-							-- Find closest near the city center in a huge radius
-							if caster.target_building then
-								caster.target_tree = FindEmptyNavigableTreeNearby(caster, caster.target_building:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TOWN)
-								if caster.target_tree and DEBUG_TREES then
-									DebugDrawCircle(caster.target_building:GetAbsOrigin(), Vector(255,0,0), 5, TREE_FIND_RADIUS_FROM_TOWN, true, 60)
-									DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
-								end
-							end
-														
-							if caster.target_tree then
-								if DEBUG_TREES then DebugDrawCircle(caster.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
-								if caster.target_tree then
-									caster:CastAbilityOnTarget(caster.target_tree, gather_ability, pID)
-								end
-							else
-								-- Cancel ability, couldn't find moar trees...
-								ToggleOff(gather_ability)
 
-								caster:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
-							end
-						end
+						SendBackToGather(caster, gather_ability, caster.last_resource_gathered)
+					
 						return
 					end
 				else
@@ -1128,19 +1119,7 @@ function ReturnResources( event )
 
 						caster.gold_gathered = 0
 
-						if caster.target_mine and IsValidEntity(caster.target_mine) then
-							--print("Back to the Mine")
-
-							caster:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
-
-							caster:CastAbilityOnTarget(caster.target_mine, gather_ability, pID)
-						else
-							--print("Mine Collapsed")
-							ToggleOff(gather_ability)
-							caster:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
-							caster:RemoveModifierByName("modifier_on_order_cancel_gold")
-						end
-						return
+						SendBackToGather(caster, gather_ability, caster.last_resource_gathered)
 					end
 				else
 					-- Find a new building deposit
@@ -1159,6 +1138,54 @@ function ReturnResources( event )
 		ToggleOff(gather_ability)
 		caster:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
 		caster:RemoveModifierByName("modifier_on_order_cancel_gold")
+	end
+end
+
+function SendBackToGather( unit, ability, resource_type )
+	local race = GetUnitRace(unit)
+	local pID = unit:GetPlayerOwnerID()
+
+	if resource_type == "lumber" then
+		--print("Back to the trees")
+		if unit.target_tree and unit.target_tree:IsStanding() then
+			unit:CastAbilityOnTarget(unit.target_tree, ability, pID)
+		else
+			-- Find closest near the city center in a huge radius
+			if unit.target_building then
+				unit.target_tree = FindEmptyNavigableTreeNearby(unit, unit.target_building:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TOWN)
+				if unit.target_tree and DEBUG_TREES then
+					DebugDrawCircle(unit.target_building:GetAbsOrigin(), Vector(255,0,0), 5, TREE_FIND_RADIUS_FROM_TOWN, true, 60)
+					DebugDrawCircle(unit.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
+				end
+			end
+										
+			if unit.target_tree then
+				if DEBUG_TREES then DebugDrawCircle(unit.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
+				if unit.target_tree then
+					unit:CastAbilityOnTarget(unit.target_tree, ability, pID)
+				end
+			else
+				-- Cancel ability, couldn't find moar trees...
+				ToggleOff(ability)
+
+				unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
+			end
+		end
+
+	elseif resource_type == "gold" then
+
+		if unit.target_mine and IsValidEntity(unit.target_mine) then
+			print("Back to the Mine", unit.target_mine:GetClassname())
+
+			unit:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
+
+			unit:CastAbilityOnTarget(unit.target_mine, ability, pID)
+		else
+			print("Mine Collapsed")
+			ToggleOff(ability)
+			unit:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
+			unit:RemoveModifierByName("modifier_on_order_cancel_gold")
+		end
 	end
 end
 
