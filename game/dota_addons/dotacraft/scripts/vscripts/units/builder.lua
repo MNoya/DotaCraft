@@ -129,6 +129,17 @@ function Build( event )
 		DebugPrint("[BH] Started construction of " .. unit:GetUnitName() .. " " .. unit:GetEntityIndex())
 		-- Play construction sound
 
+		-- If it's an item-ability and has charges, remove a charge or remove the item if no charges left
+		if ability.GetCurrentCharges and not ability:IsPermanent() then
+			local charges = ability:GetCurrentCharges()
+			charges = charges-1
+			if charges == 0 then
+				ability:RemoveSelf()
+			else
+				ability:SetCurrentCharges(charges)
+			end
+		end
+
 		-- Give item to cancel
 		local item = CreateItem("item_building_cancel", playersHero, playersHero)
 		unit:AddItem(item)

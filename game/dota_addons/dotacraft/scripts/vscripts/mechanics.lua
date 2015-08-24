@@ -464,6 +464,11 @@ function GetCityCenterNameForHeroRace( hero_name )
 	return citycenter_name
 end
 
+-- Checks the UnitLabel for "city_center"
+function IsCityCenter( unit )
+	return IsCustomBuilding(unit) and string.match(unit:GetUnitLabel(), "city_center")
+end
+
 -- Returns string with the name of the builders associated with the hero_name
 function GetBuilderNameForHeroRace( hero_name )
 	local builder_name = ""
@@ -479,12 +484,14 @@ function GetBuilderNameForHeroRace( hero_name )
 	return builder_name
 end
 
--- Builders require the "builder" label in its unit definition
+-- Builders are stored in a nettable
 function IsBuilder( unit )
-	if not IsValidEntity(unit) then
-		return
+	local table = CustomNetTables:GetTableValue("builders", tostring(unit:GetEntityIndex()))
+	if table then
+		return tobool(table["IsBuilder"])
+	else
+		return false
 	end
-	return (unit:GetUnitLabel() == "builder")
 end
 
 -- A BuildingHelper ability is identified by the "Building" key.
@@ -1097,6 +1104,28 @@ function IsValidLumberDepositName( building_name, race )
 	end
 
 	return false
+end
+
+function FindHighestLevelCityCenter( caster )
+	local player = caster:GetPlayerOwner()
+	local position = caster:GetAbsOrigin()
+	if not player then print("ERROR, NO PLAYER") return end
+	local buildings = player.structures
+	local level = 0 --Priority to the highest level city center
+	local distance = 20000
+	local closest_building = nil
+
+	for _,building in pairs(buildings) do
+		if IsValidAlive(building) and IsCityCenter(building) and building.state == "complete" and building:GetLevel() > level then
+			level = building:GetLevel()
+			local this_distance = (position - building:GetAbsOrigin()):Length()
+			if this_distance < distance then
+				distance = this_distance
+				closest_building = building
+			end
+		end
+	end
+	return closest_building
 end
 
 function ApplyConstructionEffect( unit )

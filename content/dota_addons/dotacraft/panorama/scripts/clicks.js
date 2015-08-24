@@ -123,7 +123,7 @@ function OnRightButtonPressed()
 }
 
 function IsBuilder(entIndex) {
-	return (Entities.GetUnitLabel( entIndex ) == "builder")
+	return (CustomNetTables.GetTableValue( "builders", entIndex.toString()))
 }
 
 function IsShop(entIndex) {
