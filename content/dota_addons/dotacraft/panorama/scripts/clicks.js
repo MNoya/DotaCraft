@@ -127,7 +127,7 @@ function IsBuilder(entIndex) {
 }
 
 function IsShop(entIndex) {
-	return (Entities.GetUnitLabel( entIndex ).indexOf("shop") > -1)
+	return ( Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
 }
 
 // Main mouse event callback

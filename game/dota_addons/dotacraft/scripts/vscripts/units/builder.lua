@@ -237,6 +237,11 @@ function Build( event )
 			CreateBlight(unit:GetAbsOrigin(), radius)
 		end
 
+		-- Add ability_shop on buildings labeled with _shop
+		if string.match( unit:GetUnitLabel(), "_shop") then
+			TeachAbility(unit, "ability_shop")
+		end
+
 		-- Add to the Food Limit if possible
 		local food_produced = GetFoodProduced(unit)
 		if food_produced ~= 0 then

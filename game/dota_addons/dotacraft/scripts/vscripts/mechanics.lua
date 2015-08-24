@@ -601,6 +601,17 @@ function PrintAbilities( unit )
 	print("---------------------")
 end
 
+-- Adds an ability to the unit by its name
+function TeachAbility( unit, ability_name )
+	unit:AddAbility(ability_name)
+	local ability = unit:FindAbilityByName(ability_name)
+	if ability then
+		ability:SetLevel(1)
+	else
+		print("ERROR, failed to teach ability "..ability_name)
+	end
+end
+
 function GenerateAbilityString(player, ability_table)
 	local abilities_string = ""
 	local index = 1
@@ -1382,5 +1393,48 @@ function ReorderItems( caster )
 
     for k,itemSlot in pairs(slots) do
     	caster:SwapItems(itemSlot,k-1)
+    end
+end
+
+function GetItemSlot( unit, target_item )
+	for itemSlot = 0,5 do
+		local item = unit:GetItemInSlot(itemSlot)
+		if item and item == target_item then
+			return itemSlot
+		end
+	end
+	return -1
+end
+
+function StartItemGhosting(shop, unit)
+    if shop.ghost_items then
+        Timers:RemoveTimer(shop.ghost_items)
+    end
+
+    shop.ghost_items = Timers:CreateTimer(function()
+        if IsValidAlive(shop) and IsValidAlive(unit) then
+            ClearItems(shop)
+            for j=0,5 do
+                local unit_item = unit:GetItemInSlot(j)
+                if unit_item then
+                    local item_name = unit_item:GetAbilityName()
+                    local new_item = CreateItem(item_name, nil, nil)
+                    shop:AddItem(new_item)
+                    shop:SwapItems(j, GetItemSlot(shop, new_item))
+                end
+            end
+            return 0.1
+        else
+            return nil
+        end
+    end)
+end
+
+function ClearItems(unit)
+     for i=0,5 do
+        local item = unit:GetItemInSlot(i)
+        if item then
+            item:RemoveSelf()
+        end
     end
 end

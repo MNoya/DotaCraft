@@ -701,20 +701,7 @@ function dotacraft:ShopActiveOrder( event )
     -- Old items are removed. Items are muted
     shop.current_unit = unit
     
-    for i=0,5 do
-        local item = shop:GetItemInSlot(i)
-        if item then
-            item:RemoveSelf()
-        end
-    end
-
-    for j=0,5 do
-        local unit_item = unit:GetItemInSlot(j)
-        if unit_item then
-            local new_item = CreateItem(unit_item:GetAbilityName(), nil, nil)
-            shop:AddItem(new_item)
-        end
-    end
+    StartItemGhosting(shop, unit)
 
     if shop.active_particle then
         ParticleManager:DestroyParticle(shop.active_particle, true)
