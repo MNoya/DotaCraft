@@ -23,27 +23,27 @@ POPUP_SYMBOL_POST_POINTFIVE = 8
 
 -- e.g. when healed by an ability
 function PopupHealing(target, amount)
-    PopupNumbers(target, "heal", Vector(0, 255, 0), 1.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
+    PopupNumbers(target, "heal", Vector(0, 255, 0), 3.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
 end
 
 -- e.g. the popup you get when you suddenly take a large portion of your health pool in damage at once
 function PopupDamage(target, amount)
-    PopupNumbers(target, "damage", Vector(255, 0, 0), 1.0, amount, nil, POPUP_SYMBOL_POST_DROP)
+    PopupNumbers(target, "damage", Vector(255, 0, 0), 3.0, amount, nil, POPUP_SYMBOL_POST_DROP)
 end
 
 -- e.g. when dealing critical damage
 function PopupCriticalDamage(target, amount)
-    PopupNumbers(target, "crit", Vector(255, 0, 0), 1.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
+    PopupNumbers(target, "crit", Vector(255, 0, 0), 3.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
 end
 
 -- e.g. when taking damage over time from a poison type spell
 function PopupDamageOverTime(target, amount)
-    PopupNumbers(target, "poison", Vector(215, 50, 248), 1.0, amount, nil, POPUP_SYMBOL_POST_EYE)
+    PopupNumbers(target, "poison", Vector(215, 50, 248), 3.0, amount, nil, POPUP_SYMBOL_POST_EYE)
 end
 
 -- e.g. when blocking damage with a stout shield
 function PopupDamageBlock(target, amount)
-    PopupNumbers(target, "block", Vector(255, 255, 255), 1.0, amount, POPUP_SYMBOL_PRE_MINUS, nil)
+    PopupNumbers(target, "block", Vector(255, 255, 255), 3.0, amount, POPUP_SYMBOL_PRE_MINUS, nil)
 end
 
 -- e.g. when last-hitting a creep
@@ -53,31 +53,31 @@ end
 
 -- e.g. when missing uphill
 function PopupMiss(target)
-    PopupNumbers(target, "miss", Vector(255, 0, 0), 1.0, nil, POPUP_SYMBOL_PRE_MISS, nil)
+    PopupNumbers(target, "miss", Vector(255, 0, 0), 3.0, nil, POPUP_SYMBOL_PRE_MISS, nil)
 end
 
 function PopupExperience(target, amount)
-    PopupNumbers(target, "miss", Vector(154, 46, 254), 1.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
+    PopupNumbers(target, "miss", Vector(154, 46, 254), 3.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
 end
 
 function PopupMana(target, amount)
-    PopupNumbers(target, "heal", Vector(0, 176, 246), 1.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
+    PopupNumbers(target, "heal", Vector(0, 176, 246), 3.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
 end
 
 function PopupHealthTome(target, amount)
-    PopupNumbers(target, "miss", Vector(255, 255, 255), 1.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
+    PopupNumbers(target, "miss", Vector(255, 255, 255), 3.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
 end
 
 function PopupStrTome(target, amount)
-    PopupNumbers(target, "miss", Vector(255, 0, 0), 1.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
+    PopupNumbers(target, "miss", Vector(255, 0, 0), 3.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
 end
 
 function PopupAgiTome(target, amount)
-    PopupNumbers(target, "miss", Vector(0, 255, 0), 1.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
+    PopupNumbers(target, "miss", Vector(0, 255, 0), 3.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
 end
 
 function PopupIntTome(target, amount)
-    PopupNumbers(target, "miss", Vector(0, 176, 246), 1.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
+    PopupNumbers(target, "miss", Vector(0, 176, 246), 3.0, amount, nil, POPUP_SYMBOL_POST_LIGHTNING)
 end
 
 function PopupHPRemovalDamage(target, amount)
