@@ -95,21 +95,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
         return true
     end
 
-    if order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or order_type == DOTA_UNIT_ORDER_SELL_ITEM then
-        local purchaser = EntIndexToHScript(units["0"])
-        print(purchaser:GetUnitName().." order item purchase/sell")
-        if OnEnemyShop(purchaser) then
-            print(" Order denied")
-            return false
-        else
-            print(" Order allowed")
-        end
-
     ------------------------------------------------
     --              ClearQueue Order              --
     ------------------------------------------------
     -- Cancel queue on Stop and Hold
-    elseif order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+    if order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
             if IsBuilder(unit) then
@@ -124,7 +114,17 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if not IsBuildingAbility(ability) then
             BuildingHelper:ClearQueue(unit)
         end
-        return true   
+    end
+
+    if order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or order_type == DOTA_UNIT_ORDER_SELL_ITEM then
+        local purchaser = EntIndexToHScript(units["0"])
+        print(purchaser:GetUnitName().." order item purchase/sell")
+        if OnEnemyShop(purchaser) then
+            print(" Order denied")
+            return false
+        else
+            print(" Order allowed")
+        end
 
     ------------------------------------------------
     --               Attack Orders                --
