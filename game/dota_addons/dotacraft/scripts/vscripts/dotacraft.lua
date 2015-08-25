@@ -1108,7 +1108,7 @@ function dotacraft:OnPlayerPickHero(keys)
 		local idle_builders = {}
 		local player_units = player.units
 		for k,unit in pairs(player_units) do
-			if IsBuilder(unit) and IsIdleBuilder(unit) then
+			if IsValidAlive(unit) and IsBuilder(unit) and IsIdleBuilder(unit) then
 				table.insert(idle_builders, unit:GetEntityIndex())
 			end
 		end

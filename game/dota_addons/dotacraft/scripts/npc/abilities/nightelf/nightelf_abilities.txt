@@ -114,7 +114,7 @@
 	"AbilityTextureName"		"nightelf_shadow_meld"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
@@ -216,7 +216,6 @@
 			"IsBuff"			"1"
 			"IsPurgable"		"1"
 
-			"Priority"          "MODIFIER_PRIORITY_ULTRA"
 			"States"
 			{
 				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -226,7 +225,6 @@
 		"modifier_shadow_meld_active"
 		{
 			"IsHidden"			"1"
-			"Priority"          "MODIFIER_PRIORITY_ULTRA"
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"	"1"

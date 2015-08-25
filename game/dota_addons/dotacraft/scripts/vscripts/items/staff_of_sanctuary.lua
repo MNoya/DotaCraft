@@ -7,6 +7,7 @@ function Teleport( event )
 		ability:EndCooldown()
 	else
 		local city_center = FindHighestLevelCityCenter(target)
+		caster:EmitSound("Hero_Chen.TeleportOut")
 		ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_test_of_faith.vpcf", PATTACH_ABSORIGIN, target)
 		FindClearSpaceForUnit(target, city_center:GetAbsOrigin(), true)
 		ability:ApplyDataDrivenModifier(caster, target, "modifier_staff_of_sanctuary_heal", {})

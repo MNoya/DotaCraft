@@ -60,6 +60,7 @@
 	}
 }
 
+// Makes Blight on a small zone
 "item_sacrificial_skull"
 {
     "BaseClass"                     "item_datadriven"
@@ -97,8 +98,13 @@
         "01"
         {
             "var_type"      "FIELD_INTEGER"
-            "radius"        "350"
+            "radius"        "400"
         }
+    }
+
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
     }
     
     "OnSpellStart"
@@ -106,16 +112,25 @@
         "RunScript"
         {
             "ScriptFile"    "items/sacrificial_skull.lua"
-            "Function"      "CreateBlight"
+            "Function"      "MakeBlight"
             "Target"        "POINT"
         }
+
+        "FireSound"
+        {
+            "EffectName"    "Hero_Nightstalker.Trickling_Fear"
+            "Target"        "CASTER"
+        }
+
+        "SpendCharge" 
+        {}
     }
 }
 
 "item_scroll_of_healing"
 {
     "BaseClass"                     "item_datadriven"
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
     "AbilityTextureName"            "item_scroll_of_healing"

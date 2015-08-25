@@ -1,4 +1,3 @@
-// ToDo: Add "Attacks become ranged when attacking Air units" mechanic
 // Each Races Orb:
 // Human: 	Fire
 // Orc: 	Lightning
@@ -48,6 +47,24 @@
 			"slow_duration"			"3"
 		}
 	}
+
+	"OnEquip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"EquipOrb"
+		}
+	}
+
+	"OnUnequip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"UnequipOrb"
+		}
+	}
 		
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
@@ -59,7 +76,7 @@
 		{
 			"Passive"               "1"
 			"IsHidden"				"1"
-			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -70,6 +87,16 @@
 				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 				"ProjectileName"    "particles/items2_fx/skadi_projectile.vpcf"
 			}
+
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"items/orbs.lua"
+					"Function"		"OrbAirCheck"
+				}
+			}
+
 			"OnOrbImpact"
 			{
 				"ApplyModifier"
@@ -101,12 +128,19 @@
     "AbilityTextureName" 			"item_orb_of_fire"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-   	"ItemCost"						"275"
-	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+   	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+	"ItemShopTags"					"cleave"
+	"ItemQuality"                   "artifact"
+	"ItemPermanent"                 "1"
+    "ItemStackable"                 "0"
 	"ItemKillable"                  "1"
 	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
-	"ItemQuality"					"artifact"
+	"ItemDroppable"                 "1" 
+
+    "ItemCost"                      "275"
+	"ItemStockMax"                  "1" 
+	"ItemStockTime"                 "120"
+	"ItemStockInitial"              "1"
 	
 	"Model"							"models/props_gameplay/red_box.vmdl"
 	"Effect"						"particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf"
@@ -137,6 +171,25 @@
 	"precache"
 	{
 		"particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+		"particle"  "particles/custom/items/orb/orb_of_fire/exort_orb_fire.vpcf"
+	}
+
+	"OnEquip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"EquipOrb"
+		}
+	}
+
+	"OnUnequip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"UnequipOrb"
+		}
 	}
 
 	// Item Info
@@ -149,7 +202,10 @@
 		{
 			"Passive"               "1"
 			"IsHidden"				"1"
-			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"EffectName"			"particles/custom/items/orb/orb_of_fire/exort_orb_fire.vpcf"
+			"EffectAttachType"		"follow_origin"
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -159,6 +215,15 @@
 			{
 				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 				"ProjectileName"    "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+			}
+
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"items/orbs.lua"
+					"Function"		"OrbAirCheck"
+				}
 			}
 
 			"OnAttackLanded"
@@ -180,12 +245,19 @@
     "AbilityTextureName" 			"item_orb_of_venom_wc3"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-   	"ItemCost"						"325"
-	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+   	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+	"ItemShopTags"					"slow"
+	"ItemQuality"                   "artifact"
+	"ItemPermanent"                 "1"
+    "ItemStackable"                 "0"
 	"ItemKillable"                  "1"
 	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
-	"ItemQuality"					"artifact"
+	"ItemDroppable"                 "1" 
+
+    "ItemCost"                      "325"
+	"ItemStockMax"                  "1" 
+	"ItemStockTime"                 "120"
+	"ItemStockInitial"              "1"
 	
 	"Model"							"models/props_gameplay/red_box.vmdl"
 	"Effect"						"particles/items2_fx/orb_of_venom.vpcf"
@@ -218,6 +290,24 @@
 		}
 	}
 
+	"OnEquip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"EquipOrb"
+		}
+	}
+
+	"OnUnequip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"UnequipOrb"
+		}
+	}
+
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
 	// Adds 5 bonus damage to the attacks of a Hero when carried. 
@@ -228,8 +318,7 @@
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-		
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -239,6 +328,15 @@
 			{
 				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 				"ProjectileName"    "particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+			}
+
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"items/orbs.lua"
+					"Function"		"OrbAirCheck"
+				}
 			}
 			
 			"OnOrbImpact"
@@ -282,12 +380,19 @@
     "AbilityTextureName" 			"item_orb_of_corruption"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-   	"ItemCost"						"375"
-	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+   	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+	"ItemShopTags"					"desolator"
+	"ItemQuality"                   "artifact"
+	"ItemPermanent"                 "1"
+    "ItemStackable"                 "0"
 	"ItemKillable"                  "1"
 	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
-	"ItemQuality"					"artifact"
+	"ItemDroppable"                 "1" 
+
+    "ItemCost"                      "375"
+	"ItemStockMax"                  "1" 
+	"ItemStockTime"                 "120"
+	"ItemStockInitial"              "1"
 	
 	"Model"							"models/props_gameplay/red_box.vmdl"
 	"Effect"						"particles/econ/courier/courier_trail_cursed/courier_cursed_ambient.vpcf"
@@ -315,6 +420,24 @@
 		}
 	}
 
+	"OnEquip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"EquipOrb"
+		}
+	}
+
+	"OnUnequip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"UnequipOrb"
+		}
+	}
+
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
 	// Adds 5 bonus damage to the attacks of a Hero when carried. 
@@ -325,8 +448,7 @@
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-	
-			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -336,6 +458,15 @@
 			{
 				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 				"ProjectileName"    "particles/items_fx/desolator_projectile.vpcf"
+			}
+
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"items/orbs.lua"
+					"Function"		"OrbAirCheck"
+				}
 			}
 
 			"OnOrbImpact"
@@ -404,6 +535,24 @@
 		}
 	}
 
+	"OnEquip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"EquipOrb"
+		}
+	}
+
+	"OnUnequip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"UnequipOrb"
+		}
+	}
+
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
 	// Adds 5 bonus damage to the attacks of a Hero when carried. 
@@ -418,6 +567,15 @@
 			{
 				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 				"ProjectileName"    "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+			}
+
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"items/orbs.lua"
+					"Function"		"OrbAirCheck"
+				}
 			}
 			
 			"OnOrbImpact"
@@ -473,12 +631,19 @@
     "AbilityTextureName" 			"item_orb_of_lightning"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-   	"ItemCost"						"375"
-	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+   	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+	"ItemShopTags"					"purge"
+	"ItemQuality"                   "artifact"
+	"ItemPermanent"                 "1"
+    "ItemStackable"                 "0"
 	"ItemKillable"                  "1"
 	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
-	"ItemQuality"					"artifact"
+	"ItemDroppable"                 "1" 
+
+    "ItemCost"                      "375"
+	"ItemStockMax"                  "1" 
+	"ItemStockTime"                 "120"
+	"ItemStockInitial"              "1"
 	
 	"Model"							"models/props_gameplay/red_box.vmdl"
 	"Effect"						"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
@@ -522,14 +687,31 @@
 		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
 	}
 
+	"OnEquip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"EquipOrb"
+		}
+	}
+
+	"OnUnequip"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"items/orbs.lua"
+			"Function"		"UnequipOrb"
+		}
+	}
+
 	"Modifiers"
 	{
 		"modifier_orb_of_lightning"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-	
-			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -539,6 +721,15 @@
 			{
 				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 				"ProjectileName"    "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
+			}
+
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"items/orbs.lua"
+					"Function"		"OrbAirCheck"
+				}
 			}
 
 			"OnOrbImpact"

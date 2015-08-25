@@ -5439,8 +5439,8 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-		"RingRadius"				"20"
-		"CollisionSize"				"8"
+		"RingRadius"				"30"
+		"CollisionSize"				"16"
 		"FormationRank"				"4"
 			
 		// Movement
@@ -5451,20 +5451,20 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"50"
+		"StatusHealth"				"15"
 		"StatusHealthRegen"			"0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"
-		"VisionNighttimeRange"		"900"
+		"VisionDaytimeRange"		"350"
+		"VisionNighttimeRange"		"350"
 		
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Creature Data

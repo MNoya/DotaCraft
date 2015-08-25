@@ -4,14 +4,16 @@
 	"item_scroll_of_regeneration"
 	{
 		"BaseClass"                     "item_datadriven"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"            "item_scroll_of_regeneration"
 		"AbilityCooldown"               "60"
 	    "AbilitySharedCooldown"         "scroll_of_regeneration"
 		"AbilityManaCost"               "0"
-			
+		
+	    "AbilityCastRange"              "600"
+	    	
 		"Model"							"models/props_gameplay/tpscroll01.vmdl"
 		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
 		
@@ -46,7 +48,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"900"
+				"radius"			"600"
 			}
 	        "04"
 	        {
@@ -116,7 +118,7 @@
 	"item_mechanical_critter"
 	{
 	    "BaseClass"                     "item_datadriven"
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	    "AbilityTextureName"            "item_mechanical_critter"
@@ -173,6 +175,12 @@
 	                   "ModifierName"    "modifier_mechanical_critter"
 	                   "Target"          "TARGET"
 	                   "Duration"        "%duration"
+	               }
+	
+	               "FireSound"
+	               {
+	                   "EffectName"     "Courier.Spawn"
+	                   "Target"         "TARGET"
 	               }
 	            }
 	        }   
@@ -518,6 +526,7 @@
 	    "ItemAlertable"                 "1" 
 	
 	    "ItemCost"                      "40"
+	    "LumberCost"                    "20" //Extra for Shop
 	    "ItemStockMax"                  "3" 
 	    "ItemStockTime"                 "30"
 	    "ItemStockInitial"              "3"
@@ -570,14 +579,16 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityTextureName"            "item_staff_of_sanctuary"
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	
 	    "AbilityCooldown"               "45"
+	    "AbilityCastPoint"              "0.2"
+	    "AbilityCastRange"              "700"   
 	    
-	    "Model"                         "models/props_gameplay/tpscroll01.vmdl"
+	    "Model"                         "models/props_gameplay/red_box.vmdl"
 	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
 	
 	    "UIPickupSound"                 "Item.PickUpRingShop"
@@ -612,6 +623,8 @@
 	    "precache"
 	    {
 	        "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+	        "particle"  "particles/units/heroes/hero_oracle/oracle_false_promise_bot_steam.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 	    }
 	
 	    "OnSpellStart"
@@ -625,9 +638,10 @@
 	
 	    "Modifiers"
 	    {
-	        // Can't be cancelled - Caster is invulnerable
 	        "modifier_staff_of_sanctuary_heal"
 	        {
+	            "EffectName"        "particles/units/heroes/hero_oracle/oracle_false_promise_bot_steam.vpcf"
+	            "EffectAttachType"  "follow_origin"
 	            "States"
 	            {
 	                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
@@ -637,12 +651,978 @@
 	                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%heal_per_second"
 	            }
 	            "ThinkInterval"  "0.1"
-	            "RunScript"
+	            "OnIntervalThink"
 	            {
-	                "ScriptFile"    "items/staff_of_sanctuary.lua"
-	                "Function"      "HealCheck"
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "items/staff_of_sanctuary.lua"
+	                    "Function"      "HealCheck"
+	                }
 	            }
 	        }
+	    }
+	}
+	// Causes an eclipse that blocks out the sun and creates an artificial night. Lasts 30 seconds.
+	"item_moonstone"
+	{
+		"BaseClass"                     "item_datadriven"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	
+		"AbilityTextureName"            "item_moonstone"
+		"AbilityCooldown"               "0"
+	    "AbilitySharedCooldown"         "moonstone"
+		"AbilityManaCost"               "0"
+			
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+		
+		"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+		"ItemShopTags"					"night"
+		"ItemQuality"                   "common"
+		"ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemInitialCharges"            "1"
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "50"
+		"ItemStockMax"                  "1" 
+		"ItemStockTime"                 "90"
+		"ItemStockInitial"              "1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"night_duration"	"30"
+			}
+		}
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireEffect"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	            "Target"            "CASTER"
+	        }
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/moonstone.lua"
+	            "Function"      "Moonstone"
+	        }
+	
+	        "SpendCharge" 
+	        {}
+	    }
+	}
+	
+	"item_dust_of_appearance"
+	{
+	    "BaseClass"                     "item_dust"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityTextureName"            "item_dust_of_appearance"
+	    "AbilityCooldown"               "20"
+	    "AbilitySharedCooldown"         "dust"
+	    "AbilityManaCost"               "0"
+	        
+	    "Model"                         "models/props_gameplay/dust.vmdl"
+	    "Effect"                        "particles/generic_gameplay/dropped_dust.vpcf"
+	    
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "invis"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "2"
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "75"
+	    "ItemStockMax"                  "1" 
+	    "ItemStockTime"                 "60"
+	    "ItemStockInitial"              "1"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "20"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "1000"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "movespeed"             "0"
+	        }
+	    }
+	}
+	
+	// Teleports a target friendly unit to its highest level town hall. This item won't affect allied units (due to abuse reasons).
+	"item_staff_of_preservation"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_staff_of_sanctuary"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+	
+	    "AbilityCooldown"               "30"
+	    "AbilityCastRange"              "700"
+	    
+	    "Model"                         "models/props_gameplay/red_box.vmdl"
+	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+	
+	    "UIPickupSound"                 "Item.PickUpRingShop"
+	    "UIDropSound"                   "Item.DropRingShop"
+	    "WorldDropSound"                "Item.DropRingWorld"  
+	            
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "teleport"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "1"
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "150"
+	    "ItemStockMax"                  "1" 
+	    "ItemStockTime"                 "120"
+	    "ItemStockInitial"              "1"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/staff_of_preservation.lua"
+	            "Function"      "Teleport"
+	        }          
+	    }
+	}
+	
+	// Gives the Hero immunity to magical spells for 15 seconds.
+	"item_anti_magic_potion"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_anti_magic_potion"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+	    
+	    "Model"                         "models/props_gameplay/smoke.vmdl"
+	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+	
+	    "UIPickupSound"                 "Item.PickUpRingShop"
+	    "UIDropSound"                   "Item.DropRingShop"
+	    "WorldDropSound"                "Item.DropRingWorld"
+	    
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	
+	    "ItemCost"                      "100"
+	    "ItemShopTags"                  "common"
+	    "ItemQuality"                   "common"
+	    "ItemStackable"                 "1"
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE_STACKING"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "ItemCost"                      "100"
+	    "ItemStockMax"                  "2" 
+	    "ItemStockTime"                 "120"
+	    "ItemStockInitial"              "2"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "15"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "Target"        "CASTER"
+	            "ModifierName"  "modifier_anti_magic_potion"
+	            "Duration"      "%duration"
+	        }
+	        "FireSound"
+	        {
+	            "EffectName"    "DOTA_Item.BlackKingBar.Activate"
+	            "Target"        "CASTER"
+	        }
+	        "SpendCharge"
+	        {}
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_anti_magic_potion"
+	        {
+	            "EffectName"        "particles/items_fx/black_king_bar_avatar.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"  
+	            }
+	        }
+	    }
+	}
+	// 400 over 45 seconds. Cancel on damage
+	"item_healing_salve"
+	{
+		"BaseClass"                     "item_datadriven"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"            "item_healing_salve"
+		"AbilityCooldown"               "0"
+	    "AbilitySharedCooldown"         "healing"
+		"AbilityManaCost"               "0"
+		"AbilityCastRange"				"500"
+			
+		"Model"                         "models/props_gameplay/salve.vmdl" //Green
+	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+		
+		"ItemShareability"              "ITEM_FULLY_SHAREABLE_STACKING"		
+		"ItemShopTags"					"flask"
+		"ItemQuality"                   "common"
+		"ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemInitialCharges"            "3"
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "100"
+		"ItemStockMax"                  "2" 
+		"ItemStockTime"                 "60"
+		"ItemStockInitial"              "2"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"45"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_health_regen"	"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"health_per_second"		"9.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{				
+			"ApplyModifier"
+			{
+				"Target"				"TARGET"
+				"ModifierName"			"modifier_healing_salve"
+				"Duration"				"%duration"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"			"DOTA_Item.HealingSalve.Activate"
+				"Target"				"CASTER"
+			}
+			"SpendCharge"
+			{}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_healing_salve"
+			{
+				"Duration"              	"%duration"
+				
+				"EffectName"            	"particles/items_fx/healing_flask.vpcf"
+				"EffectAttachType"      	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_per_second"
+				}
+				
+				"OnTakeDamage"
+				{
+					"RemoveModifier"
+					{
+						"Target"			"UNIT"
+						"ModifierName"		"modifier_healing_salve"
+					}
+				}
+			}
+		}
+	}
+	
+	"item_scroll_of_speed"
+	{
+		"BaseClass"                     "item_datadriven"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"            "item_scroll_of_speed"
+		"AbilityCooldown"               "60"
+	    "AbilitySharedCooldown"         "scroll_of_speed"
+		"AbilityManaCost"               "0"
+		
+		"AbilityCastRange"				"600"
+	
+		"Model"							"models/props_gameplay/tpscroll01.vmdl"
+		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+		
+		"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+		"ItemShopTags"					"scroll"
+		"ItemQuality"                   "common"
+		"ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemInitialCharges"            "1"
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "50"
+		"ItemStockMax"                  "1" 
+		"ItemStockTime"                 "60"
+		"ItemStockInitial"              "1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed_bonus_pct"	"20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"   		"10"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"600"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_centaur/centaur_stampede_cast.vpcf"
+			"particle"  "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"Target" 			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_centaur/centaur_stampede_cast.vpcf"
+				"EffectAttachType" 	"follow_origin"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_scroll_of_speed"
+				"Target"
+				{
+					"Center" 	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+				}
+				"Duration"		"%duration"
+			}			
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.DoE.Activate"
+				"Target" 		"CASTER"
+			}
+	
+			"SpendCharge"
+			{}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_scroll_of_speed"
+			{
+				"EffectName"		"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	            "TextureName"       "item_scroll_of_speed"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus_pct"
+				}
+			}
+		}
+	}
+	
+	// Creates a Great Hall at a target location. Human, Night Elf, and Undead players will get their racial equivalent town hall.
+	"item_build_tiny_great_hall_orc"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_build_great_hall"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	            
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "build"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "600"
+	    "LumberCost"					"185"
+	    "ItemStockMax"                  "1" 
+	    "ItemStockTime"                 "30"
+	    "ItemStockInitial"              "3"
+	
+	    // BuildingHelper info
+	    "Building"                      "1" //bool
+	    "BuildingSize"                  "5"
+	    "BuildTime"                     "120.0"
+	    "AbilityCastRange"              "200"
+	    "Scale"                         "0" //bool
+	    "PlayerCanControl"              "1" //bool
+	
+	    "BuilderInside"					"0"	
+	
+	    "UnitName"                      "orc_great_hall"
+	    "AbilityCooldown"               "0"
+	    "AbilityGoldCost"               "0"
+	    // End of BuildingHelper info
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "build_time"            "120.0" //check parity
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "gold_cost"             "0"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lumber_cost"           "0"
+	        }
+	    }
+	
+	    "OnEquip"
+	    {
+	    	"RunScript"
+	    	{
+	    		"ScriptFile"	"items/great_hall.lua"
+	    		"Function"		"ChangeGreatHall"
+	    	}
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/builder.lua"
+	            "Function"      "Build"
+	            "ItemUnitName"  "orc_great_hall"
+	        }
+	    }
+	}
+	"item_build_tiny_great_hall_human"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_build_great_hall"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	            
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "build"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "600"
+	    "LumberCost"					"185"
+	    "ItemStockMax"                  "1" 
+	    "ItemStockTime"                 "30"
+	    "ItemStockInitial"              "3"
+	
+	    // BuildingHelper info
+	    "Building"                      "1" //bool
+	    "BuildingSize"                  "5"
+	    "BuildTime"                     "120.0"
+	    "AbilityCastRange"              "200"
+	    "Scale"                         "0" //bool
+	    "PlayerCanControl"              "1" //bool
+	
+	    "BuilderInside"					"0"	
+	
+	    "UnitName"                      "human_town_hall"
+	    "AbilityCooldown"               "0"
+	    "AbilityGoldCost"               "0"
+	    // End of BuildingHelper info
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "build_time"            "120.0" //check parity
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "gold_cost"             "0"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lumber_cost"           "0"
+	        }
+	    }
+	
+	    "OnEquip"
+	    {
+	    	"RunScript"
+	    	{
+	    		"ScriptFile"	"items/great_hall.lua"
+	    		"Function"		"ChangeGreatHall"
+	    	}
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/builder.lua"
+	            "Function"      "Build"
+	            "ItemUnitName"  "human_town_hall"
+	        }
+	    }
+	}
+	
+	"item_build_tiny_great_hall_nightelf"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_build_great_hall"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	            
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "build"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "600"
+	    "LumberCost"					"185"
+	    "ItemStockMax"                  "1" 
+	    "ItemStockTime"                 "30"
+	    "ItemStockInitial"              "3"
+	
+	    // BuildingHelper info
+	    "Building"                      "1" //bool
+	    "BuildingSize"                  "5"
+	    "BuildTime"                     "120.0"
+	    "AbilityCastRange"              "200"
+	    "Scale"                         "0" //bool
+	    "PlayerCanControl"              "1" //bool
+	
+	    "BuilderInside"					"0"	
+	
+	    "UnitName"                      "nightelf_tree_of_life"
+	    "AbilityCooldown"               "0"
+	    "AbilityGoldCost"               "0"
+	    // End of BuildingHelper info
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "build_time"            "120.0" //check parity
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "gold_cost"             "0"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lumber_cost"           "0"
+	        }
+	    }
+	
+	    "OnEquip"
+	    {
+	    	"RunScript"
+	    	{
+	    		"ScriptFile"	"items/great_hall.lua"
+	    		"Function"		"ChangeGreatHall"
+	    	}
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/builder.lua"
+	            "Function"      "Build"
+	            "ItemUnitName"  "nightelf_tree_of_life"
+	        }
+	    }
+	}
+	
+	"item_build_tiny_great_hall_undead"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_build_great_hall"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	            
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "build"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "600"
+	    "LumberCost"					"185"
+	    "ItemStockMax"                  "1" 
+	    "ItemStockTime"                 "30"
+	    "ItemStockInitial"              "3"
+	
+	    // BuildingHelper info
+	    "Building"                      "1" //bool
+	    "BuildingSize"                  "5"
+	    "BuildTime"                     "120.0"
+	    "AbilityCastRange"              "200"
+	    "Scale"                         "0" //bool
+	    "PlayerCanControl"              "1" //bool
+	
+	    "BuilderInside"					"0"	
+	
+	    "UnitName"                      "orc_great_hall"
+	    "AbilityCooldown"               "0"
+	    "AbilityGoldCost"               "0"
+	    // End of BuildingHelper info
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "build_time"            "120.0" //check parity
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "gold_cost"             "0"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lumber_cost"           "0"
+	        }
+	    }
+	
+	    "OnEquip"
+	    {
+	    	"RunScript"
+	    	{
+	    		"ScriptFile"	"items/great_hall.lua"
+	    		"Function"		"ChangeGreatHall"
+	    	}
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/builder.lua"
+	            "Function"      "Build"
+	            "ItemUnitName"  "undead_necropolis"
+	        }
+	    }
+	}
+	// Creates two Skeleton Warriors from a corpse.
+	"item_rod_of_necromancy"
+	{
+		"BaseClass"                     "item_datadriven"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"            "item_rod_of_necromancy"
+		
+		"AbilityCooldown"               "22"
+	    "AbilitySharedCooldown"         "summon"
+		"AbilityCastRange"				"900"
+			
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+		
+		"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+		"ItemShopTags"					"summon"
+		"ItemQuality"                   "common"
+		"ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemInitialCharges"            "4"
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "150"
+		"ItemStockMax"                  "1" 
+		"ItemStockTime"                 "60"
+		"ItemStockInitial"              "1"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"60"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"900"
+			}
+		}
+		
+		"precache"
+		{
+			"model" "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
+			"particle" "particles/neutral_fx/skeleton_spawn.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"items/rod_of_necromancy.lua"
+				"Function"		"RaiseDead"
+			}
+		}
+	}
+	
+	// Makes Blight on a small zone
+	"item_sacrificial_skull"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "item_sacrificial_skull"
+	    
+	    "AbilityCooldown"               "0" //?
+	    "AbilitySharedCooldown"         "blight"
+	    "AbilityCastRange"              "500" //?
+	    "AOERadius"                     "%radius"
+	        
+	    "Model"                         "models/props_gameplay/red_box.vmdl"
+	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+	    
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "blight"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "1"
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "50"
+	    "ItemStockMax"                  "2" 
+	    "ItemStockTime"                 "60"
+	    "ItemStockInitial"              "2"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "400"
+	        }
+	    }
+	
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+	    }
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/sacrificial_skull.lua"
+	            "Function"      "MakeBlight"
+	            "Target"        "POINT"
+	        }
+	
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Nightstalker.Trickling_Fear"
+	            "Target"        "CASTER"
+	        }
+	
+	        "SpendCharge" 
+	        {}
+	    }
+	}
+	
+	"item_scroll_of_healing"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "item_scroll_of_healing"
+	    
+	    "AbilityCooldown"               "0" //?
+	    "AbilitySharedCooldown"         "scroll"
+	    "AbilityCastRange"              "600"
+	        
+	    "Model"                         "models/props_gameplay/tpscroll01.vmdl"
+	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+	    
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "scroll"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
+	    "ItemStackable"                 "0"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "1"
+	    "ItemAlertable"                 "1" 
+	
+	    "ItemCost"                      "250"
+	    "ItemStockMax"                  "2" 
+	    "ItemStockTime"                 "120"
+	    "ItemStockInitial"              "2"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "health_restored"   "150"
+	        }
+	        "02"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "radius"            "600"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireEffect"
+	        {
+	            "Target"            "CASTER"
+	            "EffectName"        "particles/items2_fx/mekanism.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	        }
+	        "ActOnTargets"
+	        {
+	            "Target"
+	            {
+	                "Center"    "CASTER"
+	                "Radius"    "%radius"
+	                "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+	            }
+	        
+	            "Action"    
+	            {
+	                "Heal"
+	                {
+	                    "Target"        "TARGET"
+	                    "HealAmount"    "%health_restored"
+	                }
+	            }
+	        }
+	            
+	        "FireSound"
+	        {
+	            "EffectName"    "DOTA_Item.Mekansm.Activate"
+	            "Target"        "CASTER"
+	        }
+	
+	        "SpendCharge"
+	        {}
 	    }
 	}
 	"item_apply_modifiers"
@@ -7058,7 +8038,6 @@
 		}
 	}
 	
-	// ToDo: Add "Attacks become ranged when attacking Air units" mechanic
 	// Each Races Orb:
 	// Human: 	Fire
 	// Orc: 	Lightning
@@ -7108,6 +8087,24 @@
 				"slow_duration"			"3"
 			}
 		}
+	
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"EquipOrb"
+			}
+		}
+	
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"UnequipOrb"
+			}
+		}
 			
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7119,7 +8116,7 @@
 			{
 				"Passive"               "1"
 				"IsHidden"				"1"
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -7130,6 +8127,16 @@
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/items2_fx/skadi_projectile.vpcf"
 				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/orbs.lua"
+						"Function"		"OrbAirCheck"
+					}
+				}
+	
 				"OnOrbImpact"
 				{
 					"ApplyModifier"
@@ -7161,12 +8168,19 @@
 	    "AbilityTextureName" 			"item_orb_of_fire"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-	   	"ItemCost"						"275"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	   	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+		"ItemShopTags"					"cleave"
+		"ItemQuality"                   "artifact"
+		"ItemPermanent"                 "1"
+	    "ItemStackable"                 "0"
 		"ItemKillable"                  "1"
 		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
-		"ItemQuality"					"artifact"
+		"ItemDroppable"                 "1" 
+	
+	    "ItemCost"                      "275"
+		"ItemStockMax"                  "1" 
+		"ItemStockTime"                 "120"
+		"ItemStockInitial"              "1"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf"
@@ -7197,6 +8211,25 @@
 		"precache"
 		{
 			"particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+			"particle"  "particles/custom/items/orb/orb_of_fire/exort_orb_fire.vpcf"
+		}
+	
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"EquipOrb"
+			}
+		}
+	
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"UnequipOrb"
+			}
 		}
 	
 		// Item Info
@@ -7209,7 +8242,10 @@
 			{
 				"Passive"               "1"
 				"IsHidden"				"1"
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"EffectName"			"particles/custom/items/orb/orb_of_fire/exort_orb_fire.vpcf"
+				"EffectAttachType"		"follow_origin"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -7219,6 +8255,15 @@
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/orbs.lua"
+						"Function"		"OrbAirCheck"
+					}
 				}
 	
 				"OnAttackLanded"
@@ -7240,12 +8285,19 @@
 	    "AbilityTextureName" 			"item_orb_of_venom_wc3"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-	   	"ItemCost"						"325"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	   	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+		"ItemShopTags"					"slow"
+		"ItemQuality"                   "artifact"
+		"ItemPermanent"                 "1"
+	    "ItemStackable"                 "0"
 		"ItemKillable"                  "1"
 		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
-		"ItemQuality"					"artifact"
+		"ItemDroppable"                 "1" 
+	
+	    "ItemCost"                      "325"
+		"ItemStockMax"                  "1" 
+		"ItemStockTime"                 "120"
+		"ItemStockInitial"              "1"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/items2_fx/orb_of_venom.vpcf"
@@ -7278,6 +8330,24 @@
 			}
 		}
 	
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"EquipOrb"
+			}
+		}
+	
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"UnequipOrb"
+			}
+		}
+	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		// Adds 5 bonus damage to the attacks of a Hero when carried. 
@@ -7288,8 +8358,7 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-			
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -7299,6 +8368,15 @@
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/orbs.lua"
+						"Function"		"OrbAirCheck"
+					}
 				}
 				
 				"OnOrbImpact"
@@ -7342,12 +8420,19 @@
 	    "AbilityTextureName" 			"item_orb_of_corruption"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-	   	"ItemCost"						"375"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	   	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+		"ItemShopTags"					"desolator"
+		"ItemQuality"                   "artifact"
+		"ItemPermanent"                 "1"
+	    "ItemStackable"                 "0"
 		"ItemKillable"                  "1"
 		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
-		"ItemQuality"					"artifact"
+		"ItemDroppable"                 "1" 
+	
+	    "ItemCost"                      "375"
+		"ItemStockMax"                  "1" 
+		"ItemStockTime"                 "120"
+		"ItemStockInitial"              "1"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/econ/courier/courier_trail_cursed/courier_cursed_ambient.vpcf"
@@ -7375,6 +8460,24 @@
 			}
 		}
 	
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"EquipOrb"
+			}
+		}
+	
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"UnequipOrb"
+			}
+		}
+	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		// Adds 5 bonus damage to the attacks of a Hero when carried. 
@@ -7385,8 +8488,7 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-		
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -7396,6 +8498,15 @@
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/items_fx/desolator_projectile.vpcf"
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/orbs.lua"
+						"Function"		"OrbAirCheck"
+					}
 				}
 	
 				"OnOrbImpact"
@@ -7464,6 +8575,24 @@
 			}
 		}
 	
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"EquipOrb"
+			}
+		}
+	
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"UnequipOrb"
+			}
+		}
+	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		// Adds 5 bonus damage to the attacks of a Hero when carried. 
@@ -7478,6 +8607,15 @@
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/orbs.lua"
+						"Function"		"OrbAirCheck"
+					}
 				}
 				
 				"OnOrbImpact"
@@ -7533,12 +8671,19 @@
 	    "AbilityTextureName" 			"item_orb_of_lightning"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-	   	"ItemCost"						"375"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	   	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+		"ItemShopTags"					"purge"
+		"ItemQuality"                   "artifact"
+		"ItemPermanent"                 "1"
+	    "ItemStackable"                 "0"
 		"ItemKillable"                  "1"
 		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
-		"ItemQuality"					"artifact"
+		"ItemDroppable"                 "1" 
+	
+	    "ItemCost"                      "375"
+		"ItemStockMax"                  "1" 
+		"ItemStockTime"                 "120"
+		"ItemStockInitial"              "1"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
@@ -7582,14 +8727,31 @@
 			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
 		}
 	
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"EquipOrb"
+			}
+		}
+	
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/orbs.lua"
+				"Function"		"UnequipOrb"
+			}
+		}
+	
 		"Modifiers"
 		{
 			"modifier_orb_of_lightning"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-		
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 	    "%bonus_damage"
@@ -7599,6 +8761,15 @@
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
 					"ProjectileName"    "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/orbs.lua"
+						"Function"		"OrbAirCheck"
+					}
 				}
 	
 				"OnOrbImpact"
@@ -11069,69 +12240,6 @@
 		}
 	}
 	
-	"item_anti_magic_potion"
-	{
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_potion_of_invulnerability"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		
-		"Model"							"models/props_gameplay/smoke.vmdl"
-		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
-	
-		"UIPickupSound"					"Item.PickUpRingShop"
-		"UIDropSound"					"Item.DropRingShop"
-		"WorldDropSound"				"Item.DropRingWorld"
-		
-		"ItemKillable"                  "1"
-		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
-	
-		"ItemCost"						"1200"
-		"ItemShopTags"					"common"
-		"ItemQuality"					"common"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"15"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_anti_magic_potion"
-				"Duration"		"%duration"
-			}
-			"SpendCharge"
-			{}	
-		}
-		
-		"Modifiers"
-		{
-			"modifier_anti_magic_potion"
-			{
-				"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
-				}
-			}
-		}
-	}
-	
 	"item_potion_of_invisibility"
 	{
 		"BaseClass"						"item_datadriven"
@@ -11888,82 +12996,6 @@
 						"ScriptFile"	"items/mana.lua"
 						"Function"		"GiveMana"
 						"mana_amount"	"%mana_restored"
-					}
-				}
-			}
-				
-			"FireSound"
-			{
-				"EffectName"	"DOTA_Item.Mekansm.Activate"
-				"Target" 		"CASTER"
-			}
-	
-			"SpendCharge"
-			{}
-		}
-	}
-	
-	"item_scroll_of_healing"
-	{
-		"BaseClass"                     "item_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName"            "item_scroll_of_healing"
-		"AbilityCooldown"               "60"
-		"AbilityManaCost"               "0"
-			
-		"Model"							"models/props_gameplay/tpscroll01.vmdl"
-		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
-		
-		"ItemCost"                      "1900"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-		"ItemShopTags"					"rare"
-		"ItemQuality"					"rare"
-		"ItemPermanent"					"0"
-		"ItemKillable"                  "1"
-		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
-		"ItemInitialCharges"            "1"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"health_restored"	"150"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"600"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"Target" 			"CASTER"
-				"EffectName"		"particles/items2_fx/mekanism.vpcf"
-				"EffectAttachType" 	"follow_origin"
-			}
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center" 	"CASTER"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-				}
-			
-				"Action"    
-				{
-					"Heal"
-					{
-						"Target"        "TARGET"
-						"HealAmount"	"%health_restored"
 					}
 				}
 			}

@@ -2,9 +2,8 @@
 "item_moonstone"
 {
 	"BaseClass"                     "item_datadriven"
-	"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
 	"AbilityTextureName"            "item_moonstone"
 	"AbilityCooldown"               "0"
     "AbilitySharedCooldown"         "moonstone"
@@ -38,13 +37,27 @@
 		}
 	}
 
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+    }
+
     "OnSpellStart"
     {
+        "FireEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "Target"            "CASTER"
+        }
         "RunScript"
         {
             "ScriptFile"    "items/moonstone.lua"
-            "Function"      "MoonStone"
+            "Function"      "Moonstone"
         }
+
+        "SpendCharge" 
+        {}
     }
 }
 
@@ -101,7 +114,7 @@
 {
     "BaseClass"                     "item_datadriven"
     "AbilityTextureName"            "item_staff_of_sanctuary"
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
     "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
@@ -197,8 +210,13 @@
             "ModifierName"  "modifier_anti_magic_potion"
             "Duration"      "%duration"
         }
+        "FireSound"
+        {
+            "EffectName"    "DOTA_Item.BlackKingBar.Activate"
+            "Target"        "CASTER"
+        }
         "SpendCharge"
-        {}  
+        {}
     }
     
     "Modifiers"

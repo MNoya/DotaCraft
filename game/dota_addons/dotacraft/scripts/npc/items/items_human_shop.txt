@@ -2,14 +2,16 @@
 "item_scroll_of_regeneration"
 {
 	"BaseClass"                     "item_datadriven"
-	"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityTextureName"            "item_scroll_of_regeneration"
 	"AbilityCooldown"               "60"
     "AbilitySharedCooldown"         "scroll_of_regeneration"
 	"AbilityManaCost"               "0"
-		
+	
+    "AbilityCastRange"              "600"
+    	
 	"Model"							"models/props_gameplay/tpscroll01.vmdl"
 	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
 	
@@ -114,7 +116,7 @@
 "item_mechanical_critter"
 {
     "BaseClass"                     "item_datadriven"
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
     "AbilityTextureName"            "item_mechanical_critter"
@@ -171,6 +173,12 @@
                    "ModifierName"    "modifier_mechanical_critter"
                    "Target"          "TARGET"
                    "Duration"        "%duration"
+               }
+
+               "FireSound"
+               {
+                   "EffectName"     "Courier.Spawn"
+                   "Target"         "TARGET"
                }
             }
         }   
@@ -516,6 +524,7 @@
     "ItemAlertable"                 "1" 
 
     "ItemCost"                      "40"
+    "LumberCost"                    "20" //Extra for Shop
     "ItemStockMax"                  "3" 
     "ItemStockTime"                 "30"
     "ItemStockInitial"              "3"
@@ -568,12 +577,13 @@
 {
     "BaseClass"                     "item_datadriven"
     "AbilityTextureName"            "item_staff_of_sanctuary"
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
     "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 
     "AbilityCooldown"               "45"
+    "AbilityCastPoint"              "0.2"
     "AbilityCastRange"              "700"   
     
     "Model"                         "models/props_gameplay/red_box.vmdl"
@@ -611,6 +621,8 @@
     "precache"
     {
         "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+        "particle"  "particles/units/heroes/hero_oracle/oracle_false_promise_bot_steam.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
     }
 
     "OnSpellStart"
@@ -626,6 +638,8 @@
     {
         "modifier_staff_of_sanctuary_heal"
         {
+            "EffectName"        "particles/units/heroes/hero_oracle/oracle_false_promise_bot_steam.vpcf"
+            "EffectAttachType"  "follow_origin"
             "States"
             {
                 "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
@@ -635,10 +649,13 @@
                 "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%heal_per_second"
             }
             "ThinkInterval"  "0.1"
-            "RunScript"
+            "OnIntervalThink"
             {
-                "ScriptFile"    "items/staff_of_sanctuary.lua"
-                "Function"      "HealCheck"
+                "RunScript"
+                {
+                    "ScriptFile"    "items/staff_of_sanctuary.lua"
+                    "Function"      "HealCheck"
+                }
             }
         }
     }
