@@ -78,6 +78,7 @@
 		"override_hero"				"npc_dota_hero_keeper_of_the_light"
 		"InternalName"				"human_archmage"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -173,6 +174,7 @@
 		"override_hero"				"npc_dota_hero_invoker"
 		"InternalName"				"human_blood_mage"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -267,6 +269,7 @@
 		"override_hero"				"npc_dota_hero_zuus"
 		"InternalName"				"human_mountain_king"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -294,6 +297,7 @@
 		"AttackAnimationPoint"		"0.35"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -358,6 +362,7 @@
 		"override_hero"				"npc_dota_hero_omniknight"
 		"InternalName"				"human_paladin"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -385,6 +390,8 @@
 		"AttackAnimationPoint"		"0.433"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -449,6 +456,7 @@
 		"override_hero"				"npc_dota_hero_alchemist"
 		"InternalName"				"neutral_alchemist"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -476,6 +484,7 @@
 		"AttackAnimationPoint"		"0.35"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -539,6 +548,7 @@
 		"override_hero"				"npc_dota_hero_beastmaster"
 		"InternalName"				"neutral_beastmaster"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -567,6 +577,7 @@
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"128"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -630,6 +641,7 @@
 		"override_hero"				"npc_dota_hero_drow_ranger"	
 		"InternalName"				"neutral_dark_ranger"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------	
@@ -723,6 +735,7 @@
 		"InternalName"				"neutral_firelord"
 		//"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -816,6 +829,7 @@
 		"override_hero"				"npc_dota_hero_medusa"
 		"InternalName"				"neutral_naga_sea_witch"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -908,6 +922,7 @@
 		"override_hero"				"npc_dota_hero_brewmaster"
 		"InternalName"				"neutral_pandaren"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------	
@@ -935,6 +950,7 @@
 		"AttackAnimationPoint"		"0.35"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -998,6 +1014,7 @@
 		"InternalName"				"neutral_pit_lord"
 		"model"						"models/heroes/abyssal_underlord/abyssal_underlord.vmdl"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		
 		// Abilities
@@ -1026,6 +1043,7 @@
 		"AttackAnimationPoint"		"0.8"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"128"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -1100,6 +1118,7 @@
 		"override_hero"				"npc_dota_hero_tinker"
 		"InternalName"				"neutral_tinker"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1128,6 +1147,7 @@
 		"AttackAnimationPoint"		"0.35"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"128"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -1189,6 +1209,7 @@
 		"override_hero"				"npc_dota_hero_antimage"
 		"InternalName"				"nightelf_demon_hunter"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1280,6 +1301,7 @@
 		"override_hero"				"npc_dota_hero_leshrac"
 		"InternalName"				"nightelf_keeper"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1372,6 +1394,7 @@
 		"override_hero"				"npc_dota_hero_mirana"
 		"InternalName"				"nightelf_potm"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1465,6 +1488,7 @@
 		"override_hero"				"npc_dota_hero_phantom_assassin"
 		"InternalName"				"nightelf_warden"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1493,6 +1517,7 @@
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"650"
 		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -1556,6 +1581,7 @@
 		"override_hero"				"npc_dota_hero_juggernaut"
 		"InternalName"				"orc_blademaster"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1583,6 +1609,7 @@
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -1646,6 +1673,7 @@
 		"override_hero"				"npc_dota_hero_disruptor"
 		"InternalName"				"orc_far_seer"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1736,6 +1764,7 @@
 		"override_hero"				"npc_dota_hero_shadow_shaman"
 		"InternalName"				"orc_shadow_hunter"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1824,6 +1853,7 @@
 		"override_hero"				"npc_dota_hero_elder_titan"
 		"InternalName"				"orc_chieftain"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1853,6 +1883,7 @@
 		"AttackAnimationPoint"		"0.36"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"128"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -1916,6 +1947,7 @@
 		"override_hero"				"npc_dota_hero_nyx_assassin"
 		"InternalName"				"undead_crypt_lord"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1943,6 +1975,7 @@
 		"AttackAnimationPoint"		"0.46"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"128"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -2006,6 +2039,7 @@
 		"override_hero"				"npc_dota_hero_abaddon"
 		"InternalName"				"undead_death_knight"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------	
@@ -2033,6 +2067,7 @@
 		"AttackAnimationPoint"		"0.56"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -2096,6 +2131,7 @@
 		"override_hero"				"npc_dota_hero_night_stalker"
 		"InternalName"				"undead_dread_lord"
 		"FormationRank"				"0"
+		"AttacksEnabled"			"ground"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2123,6 +2159,7 @@
 		"AttackAnimationPoint"		"0.55"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"100"
+		"ProjectileSpeed"			"900"
 		
 		// Attributes
 		//----------------------------------------------------------------
@@ -2186,6 +2223,7 @@
 		"override_hero"				"npc_dota_hero_lich"
 		"InternalName"				"undead_lich"
 		"FormationRank"				"2"
+		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
 		//----------------------------------------------------------------
