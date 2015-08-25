@@ -44,7 +44,7 @@
 		"03"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"radius"			"900"
+			"radius"			"600"
 		}
         "04"
         {
@@ -574,8 +574,9 @@
     "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 
     "AbilityCooldown"               "45"
+    "AbilityCastRange"              "700"   
     
-    "Model"                         "models/props_gameplay/tpscroll01.vmdl"
+    "Model"                         "models/props_gameplay/red_box.vmdl"
     "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
 
     "UIPickupSound"                 "Item.PickUpRingShop"
@@ -623,7 +624,6 @@
 
     "Modifiers"
     {
-        // Can't be cancelled - Caster is invulnerable
         "modifier_staff_of_sanctuary_heal"
         {
             "States"

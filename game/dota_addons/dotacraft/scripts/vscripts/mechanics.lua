@@ -1149,6 +1149,8 @@ function CreateBlight(location, size)
 	local radius = 960
 	if size == "small" then
 		radius = 704
+	elseif size == "item" then
+		radius = 384
 	end
 	local particle_spread = 256
 	local count = 0

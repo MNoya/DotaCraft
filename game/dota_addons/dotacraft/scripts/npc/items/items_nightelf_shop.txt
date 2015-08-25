@@ -1,0 +1,217 @@
+// Causes an eclipse that blocks out the sun and creates an artificial night. Lasts 30 seconds.
+"item_moonstone"
+{
+	"BaseClass"                     "item_datadriven"
+	"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityTextureName"            "item_moonstone"
+	"AbilityCooldown"               "0"
+    "AbilitySharedCooldown"         "moonstone"
+	"AbilityManaCost"               "0"
+		
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+	
+	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+	"ItemShopTags"					"night"
+	"ItemQuality"                   "common"
+	"ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemInitialCharges"            "1"
+    "ItemAlertable"                 "1" 
+
+    "ItemCost"                      "50"
+	"ItemStockMax"                  "1" 
+	"ItemStockTime"                 "90"
+	"ItemStockInitial"              "1"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"night_duration"	"30"
+		}
+	}
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/moonstone.lua"
+            "Function"      "MoonStone"
+        }
+    }
+}
+
+"item_dust_of_appearance"
+{
+    "BaseClass"                     "item_dust"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityTextureName"            "item_dust_of_appearance"
+    "AbilityCooldown"               "20"
+    "AbilitySharedCooldown"         "dust"
+    "AbilityManaCost"               "0"
+        
+    "Model"                         "models/props_gameplay/dust.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_dust.vpcf"
+    
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "invis"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "2"
+    "ItemAlertable"                 "1" 
+
+    "ItemCost"                      "75"
+    "ItemStockMax"                  "1" 
+    "ItemStockTime"                 "60"
+    "ItemStockInitial"              "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "20"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "1000"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "movespeed"             "0"
+        }
+    }
+}
+
+// Teleports a target friendly unit to its highest level town hall. This item won't affect allied units (due to abuse reasons).
+"item_staff_of_preservation"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_staff_of_sanctuary"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+
+    "AbilityCooldown"               "30"
+    "AbilityCastRange"              "700"
+    
+    "Model"                         "models/props_gameplay/red_box.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+
+    "UIPickupSound"                 "Item.PickUpRingShop"
+    "UIDropSound"                   "Item.DropRingShop"
+    "WorldDropSound"                "Item.DropRingWorld"  
+            
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "teleport"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "1"
+    "ItemAlertable"                 "1" 
+
+    "ItemCost"                      "150"
+    "ItemStockMax"                  "1" 
+    "ItemStockTime"                 "120"
+    "ItemStockInitial"              "1"
+
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/staff_of_preservation.lua"
+            "Function"      "Teleport"
+        }          
+    }
+}
+
+// Gives the Hero immunity to magical spells for 15 seconds.
+"item_anti_magic_potion"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_anti_magic_potion"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+    
+    "Model"                         "models/props_gameplay/smoke.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+
+    "UIPickupSound"                 "Item.PickUpRingShop"
+    "UIDropSound"                   "Item.DropRingShop"
+    "WorldDropSound"                "Item.DropRingWorld"
+    
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+
+    "ItemCost"                      "100"
+    "ItemShopTags"                  "common"
+    "ItemQuality"                   "common"
+    "ItemStackable"                 "1"
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE_STACKING"
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "ItemCost"                      "100"
+    "ItemStockMax"                  "2" 
+    "ItemStockTime"                 "120"
+    "ItemStockInitial"              "2"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "15"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "ApplyModifier"
+        {
+            "Target"        "CASTER"
+            "ModifierName"  "modifier_anti_magic_potion"
+            "Duration"      "%duration"
+        }
+        "SpendCharge"
+        {}  
+    }
+    
+    "Modifiers"
+    {
+        "modifier_anti_magic_potion"
+        {
+            "EffectName"        "particles/items_fx/black_king_bar_avatar.vpcf"
+            "EffectAttachType"  "follow_origin"
+
+            "States"
+            {
+                "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"  
+            }
+        }
+    }
+}

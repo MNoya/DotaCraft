@@ -587,69 +587,6 @@
 	}
 }
 
-"item_anti_magic_potion"
-{
-	"BaseClass"						"item_datadriven"
-	"AbilityTextureName"			"item_potion_of_invulnerability"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-	
-	"Model"							"models/props_gameplay/smoke.vmdl"
-	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
-
-	"UIPickupSound"					"Item.PickUpRingShop"
-	"UIDropSound"					"Item.DropRingShop"
-	"WorldDropSound"				"Item.DropRingWorld"
-	
-	"ItemKillable"                  "1"
-	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
-
-	"ItemCost"						"1200"
-	"ItemShopTags"					"common"
-	"ItemQuality"					"common"
-	"ItemStackable"					"1"
-	"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
-	"ItemPermanent"					"0"
-	"ItemInitialCharges"			"1"
-
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"duration"				"15"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"ApplyModifier"
-		{
-			"Target"		"CASTER"
-			"ModifierName"	"modifier_anti_magic_potion"
-			"Duration"		"%duration"
-		}
-		"SpendCharge"
-		{}	
-	}
-	
-	"Modifiers"
-	{
-		"modifier_anti_magic_potion"
-		{
-			"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
-			"EffectAttachType"	"follow_origin"
-
-			"States"
-			{
-				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
-			}
-		}
-	}
-}
-
 "item_potion_of_invisibility"
 {
 	"BaseClass"						"item_datadriven"
