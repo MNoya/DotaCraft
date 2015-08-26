@@ -464,9 +464,36 @@ function GetCityCenterNameForHeroRace( hero_name )
 	return citycenter_name
 end
 
+-- Goes through the structures of the player, checking for the max level city center
+-- If no city center is found, the player has a 2 minute window in which a city center must be built or all his structures will be revealed
+function CheckCurrentCityCenters( player )
+	local structures = player.structures
+	local city_center_level = 0
+	for k,building in pairs(structures) do
+		if IsCityCenter(building) then
+			local level = building:GetLevel()
+			if level > city_center_level then
+				city_center_level = level
+			end
+		end
+	end
+	player.city_center_level = city_center_level
+
+	print("Current City Center Level for player "..player:GetPlayerID().." is: "..city_center_level)
+
+	if player.city_center_level == 0 then
+		print("Player "..player:GetPlayerID().." has no city centers left standing\Revealed in 2 minutes until a City Center is built.")
+	end
+end
+
 -- Checks the UnitLabel for "city_center"
 function IsCityCenter( unit )
 	return IsCustomBuilding(unit) and string.match(unit:GetUnitLabel(), "city_center")
+end
+
+-- Returns the player.city_center_level
+function GetPlayerCityLevel( player )
+	return player.city_center_level
 end
 
 -- Returns string with the name of the builders associated with the hero_name

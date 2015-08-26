@@ -253,6 +253,11 @@ function Build( event )
 			TeachAbility(unit, "ability_shop")
 		end
 
+		-- If it's a city center, check for city_center_level updates
+		if IsCityCenter(unit) then
+			CheckCurrentCityCenters(unit:GetPlayerOwner())
+		end
+
 		-- Add to the Food Limit if possible
 		local food_produced = GetFoodProduced(unit)
 		if food_produced ~= 0 then

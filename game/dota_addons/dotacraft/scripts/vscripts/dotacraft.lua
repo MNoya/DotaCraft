@@ -966,6 +966,7 @@ function dotacraft:OnPlayerPickHero(keys)
 	player.lumber = 0
 	player.food_limit = 0 -- The amount of food available to build units
 	player.food_used = 0 -- The amount of food used by this player creatures
+	player.city_center_level = 1 -- The maximum level from city centers of the player
 
     -- Create Main Building
     DeepPrintTable(GameRules.StartingPositions)
@@ -1191,6 +1192,36 @@ function dotacraft:OnEntityKilled( event )
 		ModifyFoodUsed(player, - food_cost)
 	end
 
+	-- Table cleanup
+	if player then
+		-- Remake the tables
+		local table_structures = {}
+		for _,building in pairs(player.structures) do
+			if building and IsValidEntity(building) and building:IsAlive() then
+				--print("Valid building: "..building:GetUnitName())
+				table.insert(table_structures, building)
+			end
+		end
+		player.structures = table_structures
+
+		local table_altars = {}
+		for _,altar in pairs(player.altar_structures) do
+			if altar and IsValidEntity(altar) and altar:IsAlive() then
+				--print("Valid altar: "..altar:GetUnitName())
+				table.insert(table_altars, altar)
+			end
+		end
+		player.altar_structures = table_altars
+				
+		local table_units = {}
+		for _,unit in pairs(player.units) do
+			if unit and IsValidEntity(unit) then
+				table.insert(table_units, unit)
+			end
+		end
+		player.units = table_units		
+	end
+
 	-- Building Killed
 	if IsCustomBuilding(killedUnit) then
 
@@ -1225,6 +1256,17 @@ function dotacraft:OnEntityKilled( event )
 			CheckAbilityRequirements( structure, player )
 		end
 
+		-- If the destroyed building was a city center, update the level
+		if IsCityCenter(killedUnit) then
+			CheckCurrentCityCenters(player)
+		end
+
+		--[[ Check for lose condition - All buildings destroyed
+		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
+		if (#player.structures == 0) then
+			GameRules:MakeTeamLose(player:GetTeamNumber())
+		end]]
+
 	-- Unit Killed
 	else
 		-- Give Experience to heroes based on the level of the killed creature
@@ -1252,44 +1294,6 @@ function dotacraft:OnEntityKilled( event )
 		if IsBuilder(killedUnit) then
 			BuildingHelper:ClearQueue(killedUnit)
 		end
-	end
-
-	
-
-	-- Table cleanup
-	if player then
-		-- Remake the tables
-		local table_structures = {}
-		for _,building in pairs(player.structures) do
-			if building and IsValidEntity(building) and building:IsAlive() then
-				--print("Valid building: "..building:GetUnitName())
-				table.insert(table_structures, building)
-			end
-		end
-		player.structures = table_structures
-
-		local table_altars = {}
-		for _,altar in pairs(player.altar_structures) do
-			if altar and IsValidEntity(altar) and altar:IsAlive() then
-				--print("Valid altar: "..altar:GetUnitName())
-				table.insert(table_altars, altar)
-			end
-		end
-		player.altar_structures = table_altars
-		
-		--[[ Check for lose condition - All buildings destroyed
-		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
-		if (#player.structures == 0) then
-			GameRules:MakeTeamLose(player:GetTeamNumber())
-		end]]
-		
-		local table_units = {}
-		for _,unit in pairs(player.units) do
-			if unit and IsValidEntity(unit) then
-				table.insert(table_units, unit)
-			end
-		end
-		player.units = table_units		
 	end
 
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
