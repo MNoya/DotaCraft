@@ -25,10 +25,12 @@
 	"ItemInitialCharges"            "3"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "100"
 	"ItemStockMax"                  "2" 
 	"ItemStockTime"                 "60"
 	"ItemStockInitial"              "2"
+    "ItemRequiresTier"              "1"
 
 	"AbilitySpecial"
 	{
@@ -120,10 +122,12 @@
 	"ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "50"
 	"ItemStockMax"                  "1" 
 	"ItemStockTime"                 "60"
 	"ItemStockInitial"              "1"
+    "ItemRequiresTier"              "1"
 	
 	"AbilitySpecial"
 	{
@@ -218,11 +222,13 @@
     "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "600"
     "LumberCost"					"185"
     "ItemStockMax"                  "1" 
     "ItemStockTime"                 "30"
     "ItemStockInitial"              "3"
+    "ItemRequiresTier"              "3"
 
     // BuildingHelper info
     "Building"                      "1" //bool
@@ -277,6 +283,8 @@
         }
     }
 }
+
+// Swapped if a human hero buys the Tiny Great Hall item
 "item_build_tiny_great_hall_human"
 {
     "BaseClass"                     "item_datadriven"
@@ -296,11 +304,13 @@
     "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "600"
     "LumberCost"					"185"
     "ItemStockMax"                  "1" 
     "ItemStockTime"                 "30"
     "ItemStockInitial"              "3"
+    "ItemRequiresTier"              "3"
 
     // BuildingHelper info
     "Building"                      "1" //bool
@@ -356,6 +366,7 @@
     }
 }
 
+// Swapped if a night elf hero buys the Tiny Great Hall item
 "item_build_tiny_great_hall_nightelf"
 {
     "BaseClass"                     "item_datadriven"
@@ -375,11 +386,13 @@
     "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "600"
     "LumberCost"					"185"
     "ItemStockMax"                  "1" 
     "ItemStockTime"                 "30"
     "ItemStockInitial"              "3"
+    "ItemRequiresTier"              "3"
 
     // BuildingHelper info
     "Building"                      "1" //bool
@@ -435,6 +448,7 @@
     }
 }
 
+// Swapped if an undead hero buys the Tiny Great Hall item
 "item_build_tiny_great_hall_undead"
 {
     "BaseClass"                     "item_datadriven"
@@ -454,11 +468,13 @@
     "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "600"
     "LumberCost"					"185"
     "ItemStockMax"                  "1" 
     "ItemStockTime"                 "30"
     "ItemStockInitial"              "3"
+    "ItemRequiresTier"              "3"
 
     // BuildingHelper info
     "Building"                      "1" //bool

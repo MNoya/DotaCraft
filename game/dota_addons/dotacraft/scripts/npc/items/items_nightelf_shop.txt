@@ -23,10 +23,12 @@
 	"ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "50"
 	"ItemStockMax"                  "1" 
 	"ItemStockTime"                 "90"
 	"ItemStockInitial"              "1"
+    "ItemRequiresTier"              "1"
 	
 	"AbilitySpecial"
 	{
@@ -84,10 +86,12 @@
     "ItemInitialCharges"            "2"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "75"
     "ItemStockMax"                  "1" 
     "ItemStockTime"                 "60"
     "ItemStockInitial"              "1"
+    "ItemRequiresTier"              "1"
 
     "AbilitySpecial"
     {
@@ -145,6 +149,8 @@
     "ItemStockTime"                 "120"
     "ItemStockInitial"              "1"
 
+    "ItemRequiresTier"              "2"
+
     "precache"
     {
         "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
@@ -188,10 +194,12 @@
     "ItemPermanent"                 "0"
     "ItemInitialCharges"            "1"
 
+    // Shops
     "ItemCost"                      "100"
     "ItemStockMax"                  "2" 
     "ItemStockTime"                 "120"
     "ItemStockInitial"              "2"
+    "ItemRequiresTier"              "3"
 
     "AbilitySpecial"
     {

@@ -26,10 +26,12 @@
 	"ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "100"
 	"ItemStockMax"                  "2" 
 	"ItemStockTime"                 "90"
 	"ItemStockInitial"              "2"
+    "ItemRequiresTier"              "1"
 	
 	"AbilitySpecial"
 	{
@@ -138,10 +140,12 @@
     "ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "50"
     "ItemStockMax"                  "2" 
     "ItemStockTime"                 "60"
     "ItemStockInitial"              "2"
+    "ItemRequiresTier"              "1"
     
     "precache"
     {
@@ -231,10 +235,12 @@
     "ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "70"
     "ItemStockMax"                  "2" 
     "ItemStockTime"                 "30"
     "ItemStockInitial"              "2"
+    "ItemRequiresTier"              "2"
 
     "AbilitySpecial"
     {
@@ -327,10 +333,12 @@
     "ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "150"
     "ItemStockMax"                  "3" 
     "ItemStockTime"                 "120"
     "ItemStockInitial"              "3"
+    "ItemRequiresTier"              "2"
 
     "AbilitySpecial"
     {
@@ -393,10 +401,12 @@
     "ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "200"
     "ItemStockMax"                  "2" 
     "ItemStockTime"                 "120"
     "ItemStockInitial"              "2"
+    "ItemRequiresTier"              "2"
 
     "AbilitySpecial"
     {
@@ -459,10 +469,12 @@
     "ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "350"
     "ItemStockMax"                  "2" 
     "ItemStockTime"                 "120"
     "ItemStockInitial"              "2"
+    "ItemRequiresTier"              "2"
 
     "AbilitySpecial"
     {
@@ -523,11 +535,13 @@
     "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "40"
     "LumberCost"                    "20" //Extra for Shop
     "ItemStockMax"                  "3" 
     "ItemStockTime"                 "30"
     "ItemStockInitial"              "3"
+    "ItemRequiresTier"              "2"
 
     // BuildingHelper info
     "Building"                      "1" //bool
@@ -604,10 +618,12 @@
     "ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    // Shops
     "ItemCost"                      "350"
     "ItemStockMax"                  "2" 
     "ItemStockTime"                 "120"
     "ItemStockInitial"              "2"
+    "ItemRequiresTier"              "3"
 
     "AbilitySpecial"
     {
