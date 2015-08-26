@@ -581,6 +581,10 @@ function dotacraft:OnHeroInGame(hero)
 		hero:FindAbilityByName("nightelf_shadow_meld"):SetLevel(1)
 	end
 
+	if hero:HasAbility("blood_mage_orbs") then
+		hero:FindAbilityByName("blood_mage_orbs"):SetLevel(1)
+	end
+
 end
 
 function dotacraft:OnGameInProgress()

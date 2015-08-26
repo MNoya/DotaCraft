@@ -482,7 +482,7 @@ function CheckCurrentCityCenters( player )
 	print("Current City Center Level for player "..player:GetPlayerID().." is: "..city_center_level)
 
 	if player.city_center_level == 0 then
-		print("Player "..player:GetPlayerID().." has no city centers left standing\Revealed in 2 minutes until a City Center is built.")
+		print("Player "..player:GetPlayerID().." has no city centers left standing\nRevealed in 2 minutes until a City Center is built.")
 	end
 end
 

@@ -3364,6 +3364,38 @@
 			}
 		}
 	}
+	// Creates 3 floating orbs just for looks
+	"blood_mage_orbs"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"hero_ability_name"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	
+		"precache"
+		{
+			"particle" 	"particles/custom/human/blood_mage/exort_orb.vpcf"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_blood_mage_orbs"
+			{
+				"IsHidden"			"1"
+				"Passive"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/blood_mage/orbs.lua"
+						"Function"		"AttachOrbs"
+					}
+				}
+			}
+		}
+	}
 	// Blood Mage Phoenix
 	// Author: Noya
 	// Date: 26.01.2015.
