@@ -28,10 +28,12 @@
 		"ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "100"
 		"ItemStockMax"                  "2" 
 		"ItemStockTime"                 "90"
 		"ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "1"
 		
 		"AbilitySpecial"
 		{
@@ -140,10 +142,12 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "50"
 	    "ItemStockMax"                  "2" 
 	    "ItemStockTime"                 "60"
 	    "ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "1"
 	    
 	    "precache"
 	    {
@@ -233,10 +237,12 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "70"
 	    "ItemStockMax"                  "2" 
 	    "ItemStockTime"                 "30"
 	    "ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "2"
 	
 	    "AbilitySpecial"
 	    {
@@ -329,10 +335,12 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "150"
 	    "ItemStockMax"                  "3" 
 	    "ItemStockTime"                 "120"
 	    "ItemStockInitial"              "3"
+	    "ItemRequiresTier"              "2"
 	
 	    "AbilitySpecial"
 	    {
@@ -395,10 +403,12 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "200"
 	    "ItemStockMax"                  "2" 
 	    "ItemStockTime"                 "120"
 	    "ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "2"
 	
 	    "AbilitySpecial"
 	    {
@@ -461,10 +471,12 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "350"
 	    "ItemStockMax"                  "2" 
 	    "ItemStockTime"                 "120"
 	    "ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "2"
 	
 	    "AbilitySpecial"
 	    {
@@ -525,11 +537,13 @@
 	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "40"
 	    "LumberCost"                    "20" //Extra for Shop
 	    "ItemStockMax"                  "3" 
 	    "ItemStockTime"                 "30"
 	    "ItemStockInitial"              "3"
+	    "ItemRequiresTier"              "2"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -606,10 +620,12 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "350"
 	    "ItemStockMax"                  "2" 
 	    "ItemStockTime"                 "120"
 	    "ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "3"
 	
 	    "AbilitySpecial"
 	    {
@@ -687,10 +703,12 @@
 		"ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "50"
 		"ItemStockMax"                  "1" 
 		"ItemStockTime"                 "90"
 		"ItemStockInitial"              "1"
+	    "ItemRequiresTier"              "1"
 		
 		"AbilitySpecial"
 		{
@@ -748,10 +766,12 @@
 	    "ItemInitialCharges"            "2"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "75"
 	    "ItemStockMax"                  "1" 
 	    "ItemStockTime"                 "60"
 	    "ItemStockInitial"              "1"
+	    "ItemRequiresTier"              "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -809,6 +829,8 @@
 	    "ItemStockTime"                 "120"
 	    "ItemStockInitial"              "1"
 	
+	    "ItemRequiresTier"              "2"
+	
 	    "precache"
 	    {
 	        "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
@@ -852,10 +874,12 @@
 	    "ItemPermanent"                 "0"
 	    "ItemInitialCharges"            "1"
 	
+	    // Shops
 	    "ItemCost"                      "100"
 	    "ItemStockMax"                  "2" 
 	    "ItemStockTime"                 "120"
 	    "ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "3"
 	
 	    "AbilitySpecial"
 	    {
@@ -924,10 +948,12 @@
 		"ItemInitialCharges"            "3"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "100"
 		"ItemStockMax"                  "2" 
 		"ItemStockTime"                 "60"
 		"ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "1"
 	
 		"AbilitySpecial"
 		{
@@ -1019,10 +1045,12 @@
 		"ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "50"
 		"ItemStockMax"                  "1" 
 		"ItemStockTime"                 "60"
 		"ItemStockInitial"              "1"
+	    "ItemRequiresTier"              "1"
 		
 		"AbilitySpecial"
 		{
@@ -1117,11 +1145,13 @@
 	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "600"
 	    "LumberCost"					"185"
 	    "ItemStockMax"                  "1" 
 	    "ItemStockTime"                 "30"
 	    "ItemStockInitial"              "3"
+	    "ItemRequiresTier"              "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -1176,6 +1206,8 @@
 	        }
 	    }
 	}
+	
+	// Swapped if a human hero buys the Tiny Great Hall item
 	"item_build_tiny_great_hall_human"
 	{
 	    "BaseClass"                     "item_datadriven"
@@ -1195,11 +1227,13 @@
 	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "600"
 	    "LumberCost"					"185"
 	    "ItemStockMax"                  "1" 
 	    "ItemStockTime"                 "30"
 	    "ItemStockInitial"              "3"
+	    "ItemRequiresTier"              "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -1255,6 +1289,7 @@
 	    }
 	}
 	
+	// Swapped if a night elf hero buys the Tiny Great Hall item
 	"item_build_tiny_great_hall_nightelf"
 	{
 	    "BaseClass"                     "item_datadriven"
@@ -1274,11 +1309,13 @@
 	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "600"
 	    "LumberCost"					"185"
 	    "ItemStockMax"                  "1" 
 	    "ItemStockTime"                 "30"
 	    "ItemStockInitial"              "3"
+	    "ItemRequiresTier"              "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -1334,6 +1371,7 @@
 	    }
 	}
 	
+	// Swapped if an undead hero buys the Tiny Great Hall item
 	"item_build_tiny_great_hall_undead"
 	{
 	    "BaseClass"                     "item_datadriven"
@@ -1353,11 +1391,13 @@
 	    "ItemInitialCharges"            "1" //BuildingHelper has to read this and spend charge
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "600"
 	    "LumberCost"					"185"
 	    "ItemStockMax"                  "1" 
 	    "ItemStockTime"                 "30"
 	    "ItemStockInitial"              "3"
+	    "ItemRequiresTier"              "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -1439,10 +1479,12 @@
 		"ItemInitialCharges"            "4"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "150"
 		"ItemStockMax"                  "1" 
 		"ItemStockTime"                 "60"
 		"ItemStockInitial"              "1"
+	    "ItemRequiresTier"              "1"
 	
 		"AbilitySpecial"
 		{
@@ -1502,10 +1544,12 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "50"
 	    "ItemStockMax"                  "2" 
 	    "ItemStockTime"                 "60"
 	    "ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -1567,10 +1611,12 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    // Shops
 	    "ItemCost"                      "250"
 	    "ItemStockMax"                  "2" 
 	    "ItemStockTime"                 "120"
 	    "ItemStockInitial"              "2"
+	    "ItemRequiresTier"              "3"
 	    
 	    "AbilitySpecial"
 	    {
@@ -8177,10 +8223,12 @@
 		"ItemSellable"                  "1"
 		"ItemDroppable"                 "1" 
 	
+		// Shops
 	    "ItemCost"                      "275"
 		"ItemStockMax"                  "1" 
 		"ItemStockTime"                 "120"
 		"ItemStockInitial"              "1"
+		"ItemRequiresTier"              "3"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf"
@@ -8294,10 +8342,12 @@
 		"ItemSellable"                  "1"
 		"ItemDroppable"                 "1" 
 	
+		// Shops
 	    "ItemCost"                      "325"
 		"ItemStockMax"                  "1" 
 		"ItemStockTime"                 "120"
 		"ItemStockInitial"              "1"
+	    "ItemRequiresTier"              "3"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/items2_fx/orb_of_venom.vpcf"
@@ -8429,10 +8479,12 @@
 		"ItemSellable"                  "1"
 		"ItemDroppable"                 "1" 
 	
+		// Shops
 	    "ItemCost"                      "375"
 		"ItemStockMax"                  "1" 
 		"ItemStockTime"                 "120"
 		"ItemStockInitial"              "1"
+	    "ItemRequiresTier"              "3"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/econ/courier/courier_trail_cursed/courier_cursed_ambient.vpcf"
@@ -8680,10 +8732,12 @@
 		"ItemSellable"                  "1"
 		"ItemDroppable"                 "1" 
 	
+		// Shops
 	    "ItemCost"                      "375"
 		"ItemStockMax"                  "1" 
 		"ItemStockTime"                 "120"
 		"ItemStockInitial"              "1"
+	    "ItemRequiresTier"              "3"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
