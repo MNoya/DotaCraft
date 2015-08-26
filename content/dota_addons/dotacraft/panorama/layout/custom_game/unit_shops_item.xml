@@ -1,0 +1,33 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/unit_shops.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/unit_shops_item.js" />
+	</scripts>
+		<Panel class="ItemContainer" hittest="true">	
+		
+			<Button id="ItemButton"
+					onmouseover="ShowToolTip()"
+					onmouseout="HideToolTip()"
+					onactivate="Buy_Item()"
+					>
+			<Panel id="ItemImage">
+			<Label id="Stock" class="TextBackground" />
+			</Panel>
+			
+			
+			<Panel id="ItemInfo">
+				<Label id="ItemName"/>
+				<Label id="RequiredTier" />
+			</Panel>
+			
+			<Panel id="CostInfo">
+				<Label id="GoldCost" />
+				<Label id="LumberCost"  />
+			</Panel>
+			
+			</Button>
+
+		</Panel>
+</root>

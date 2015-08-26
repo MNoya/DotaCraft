@@ -28050,6 +28050,22 @@
 					}
 				}
 			}
+					
+			"modifier_create_shop"
+			{	
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"buildings/shop.lua"
+						"Function"		"Setup_Shop"			
+					}		
+				}
+			}
+			
 		}		
 	}
 	// Siege units can be repaired

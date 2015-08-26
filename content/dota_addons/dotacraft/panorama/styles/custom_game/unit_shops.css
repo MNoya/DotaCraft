@@ -1,0 +1,148 @@
+.UnitShopPanel
+{
+	width: 100%;
+	height: 100%;
+}
+
+.Container{
+	width: 20%;
+	overflow: clip;
+	margin-bottom: 200px; 
+	
+	vertical-align: middle;   
+	horizontal-align: right;
+	
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
+	border: 2px solid #5e686966;   
+	/*background-image: url('file://{images}/items/item_lesser_clarity_potion.png');    
+	*/
+	padding: 10px;
+	flow-children: down; 
+}
+
+.ItemContainer{
+	height: 50px; 
+	width: 100%;
+	
+	flow-children: down;
+}
+
+#ItemImage{
+	height: 100%;
+	width: 15%;
+	background-size: cover;
+}
+
+#ItemButton{
+	height: 100%;
+	width: 100%;
+	
+	flow-children: right;
+	
+	border: 1px solid #ffffff44;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
+		transition-property: background-color, border;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
+}
+
+#ItemButton:disabled{
+	background-color: black;
+	opacity: 0.3;
+}
+
+#ItemButton:active 
+{
+	background-color: #585e62;
+	border: 1px solid #ffffffff;
+}
+
+#ItemButton:enabled:hover{
+	wash-color: white;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #5F5F5F) ); 
+}
+
+#ItemName{
+	height: 50%;
+	width: 70%;
+}
+
+#ItemInfo{
+	height: 100%;
+	width: 70%;
+	
+	padding: 5px;
+	
+	font-size: 18px;
+	color: white;
+	
+	flow-children: down;
+	
+	vertical-align: middle;
+	horizontal-align: right;
+}
+
+
+#RequiredTier{
+	height: 50%;
+	width: 100%;
+	color: red;
+}
+
+.ToolTip{
+	height: 100px;
+	width: 200px;
+	
+	background-color: red;
+	
+	horizontal-align: middle;
+	vertical-align: middle;
+
+}
+
+#CostInfo{
+	height: 100%;
+	width: 15%;
+	
+	flow-children: right;
+	
+	vertical-align: middle;
+	horizontal-align: middle;
+	padding: 5px;
+}
+
+#GoldCost {
+	color: gold;
+	font-size: 16px;
+	
+	horizontal-align: middle;
+	vertical-align: middle;
+}
+
+#LumberCost{
+	color: green;
+	font-size: 16px;
+	
+	horizontal-align: middle;
+	vertical-align: middle;
+}
+
+#Stock{
+	padding-left: 2px;
+	height: 16px;
+	width: 16px;
+	
+	color: white;
+	font-size: 16px;
+	
+	horizontal-align: right;
+	vertical-align: bottom;
+}
+
+.TextBackground{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
+	border: 1px solid grey;
+	horizontal-align: middle;
+	vertical-align: middle;
+}

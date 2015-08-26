@@ -1,3 +1,199 @@
+if unit_shops == nil then
+	unit_shops = class({})
+	-- create the Units table
+	unit_shops.Units = {}
+	-- register listeners
+	CustomGameEventManager:RegisterListener( "Shops_Buy", Dynamic_Wrap(unit_shops, "Buy"))
+	CustomGameEventManager:RegisterListener( "Shops_Sell", Dynamic_Wrap(unit_shops, "Sell"))	
+end
+
+-- called to create the shop
+function Setup_Shop( keys )
+	local Shop_Name = keys.caster:GetUnitLabel()
+	unit_shops:CreateShop(keys.caster, Shop_Name)
+end
+
+--[[
+	shops[UnitID].CurrentStock is the current stock in store, this holds an array of ints that correlate to the item based on index
+	
+	shops[UnitID].MaxStocks is the max amount of stock the store can have for that item, this also holds an array of int that correlate to the item based on index
+
+	shops[UnitID].RefreshRate is the time at which an item is restocked, this holds an array of int which represent the amount of seconds it takes to add stock++;
+
+	shops[UnitID].CurrentRefreshTime is the time that the item is currently at, this is used as a counter to reference against RefreshRate, once they match we increase stock
+--]]
+
+function unit_shops:CreateShop(unit, shop_name)
+	local UnitID = unit:GetEntityIndex()
+	
+	if unit_shops.Units[UnitID] == nil then
+	-- initialise Shop item table
+		unit_shops.Units[UnitID] = {}
+		unit_shops.Units[UnitID].Items = {}
+	end
+	
+	local UnitShop = unit_shops.Units[UnitID]
+	local player = unit:GetPlayerOwner()
+	local tier = GetPlayerCityLevel(player)
+	
+	-- for each item create an corresponding timer to restock that item
+	--DeepPrintTable(GameRules.Shops["human_shop"])
+	DeepPrintTable(GameRules.Shops)
+	for order,item in pairs(GameRules.Shops[shop_name]) do
+		print("[UNIT SHOP] Creating timer for new unit shop")
+		
+		local key = item
+
+		-- set all variables
+		UnitShop.Items[key] = {}
+		UnitShop.Items[key].CurrentStock = GameRules.ItemKV[key]["ItemStockInitial"]
+		UnitShop.Items[key].MaxStock = GameRules.ItemKV[key]["ItemStockMax"]
+		UnitShop.Items[key].RestockRate = GameRules.ItemKV[key]["ItemStockTime"]
+		UnitShop.Items[key].CurrentRefreshTime = 1
+		UnitShop.Items[key].GoldCost = GameRules.ItemKV[key]["ItemCost"]
+		UnitShop.Items[key].RequiredTier = GameRules.ItemKV[key]["ItemRequiresTier"]
+		UnitShop.Items[key].Order = order
+		DeepPrintTable(UnitShop.Items[key])
+		
+		-- set to 0 if nil, "0" hides the value in panaroma
+		if GameRules.ItemKV[key]["LumberCost"] ~= nil then
+			UnitShop.Items[key].LumberCost = GameRules.ItemKV[key]["LumberCost"]
+		else
+			UnitShop.Items[key].LumberCost = 0
+		end
+		
+		Timers:CreateTimer(1, function()
+			tier = GetPlayerCityLevel(player)
+
+			if not IsValidEntity(unit) or not unit:IsAlive() then
+				-- send command to kill shop panel
+				
+				print("[UNIT SHOP] Shop identified not valid, terminating timer")
+				return
+			end
+			
+			-- if the item is not at max stock start a counter until it's restocked
+			if UnitShop.Items[key].CurrentStock < UnitShop.Items[key].MaxStock then
+			
+				if UnitShop.Items[key].CurrentRefreshTime == UnitShop.Items[key].RestockRate then
+					-- increase stock by 1 when the currentrefreshtime == the refreshrate
+					UnitShop.Items[key].CurrentStock = UnitShop.Items[key].CurrentStock + 1
+					
+					-- reset counter for next stock
+					UnitShop.Items[key].CurrentRefreshTime = 1
+					print("[UNIT SHOP] Increasing stock count by 1")
+				else
+					print("[UNIT SHOP] Incrementing counter to restock")
+					-- increment the time counter
+					UnitShop.Items[key].CurrentRefreshTime = UnitShop.Items[key].CurrentRefreshTime + 1
+				end
+			
+			end
+				-- set nettable update
+				SetNetTableValue("dotacraft_shops_table", tostring(UnitID), { Index = UnitID, Shop = UnitShop, Tier=tier, Race=shop_name })
+			return 1
+		end)
+			
+	end
+
+	local team = unit:GetTeam()
+	CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = UnitShop, Tier=tier, Race=shop_name }) 
+
+end
+
+function unit_shops:Buy(data)
+	local item = data.ItemName
+	local PlayerID = data.PlayerID
+	local Shop = EntIndexToHScript(data.Shop)
+	
+	-- check current tier
+	local player = Shop:GetPlayerOwner()
+	local tier = GetPlayerCityLevel(player)
+				
+	-- Information about the buying unit
+		-- the buying unit
+		local buyer
+		if Shop.current_unit == nil then
+			SendErrorMessage(data.PlayerID, "#shops_no_buyers_found")
+			return
+		else
+			buyer = Shop.current_unit
+		end
+		
+		local buyerPlayerID = buyer:GetPlayerOwnerID()
+		local buyerPlayerOwner = buyer:GetPlayerOwner()
+		-- hero of the buying unit
+		local buyerHero = buyerPlayerOwner:GetAssignedHero()
+		
+		-- cost of the item
+		local Gold_Cost = unit_shops.Units[data.Shop].Items[item].GoldCost
+		local Lumber_Cost = unit_shops.Units[data.Shop].Items[item].LumberCost
+		
+	--DeepPrintTable(GameRules.Shops["human_shop"])
+	if (PlayerResource:GetGold(buyerPlayerID) >= Gold_Cost) and CountInventoryItems(buyer) < 6 and EnoughStock(item, Shop) and PlayerHasEnoughLumber(buyerPlayerOwner, Lumber_Cost ) then
+		-- lower stock count by 1
+		Purchased(item, Shop)
+
+		-- create & add item	
+		local Bought_Item = CreateItem(item, buyerPlayerOwner, buyerPlayerOwner) 
+		buyer:AddItem(Bought_Item)
+
+		-- deduct gold & lumber
+		PlayerResource:SpendGold(buyerPlayerID, Gold_Cost, 0)
+		ModifyLumber(buyerPlayerOwner, Lumber_Cost)
+		
+		local UnitShop =  unit_shops.Units[data.Shop]
+		
+		SetNetTableValue("dotacraft_shops_table", tostring(data.Shop), { Shop = UnitShop, Tier=tier })
+		
+	else -- error messaging
+	
+		-- player error message
+		if not EnoughStock(item, Shop) then -- not enough stock
+			SendErrorMessage(buyerPlayerID, "#shops_not_enough_stock")
+		elseif CountInventoryItems(buyer) >= 6 then -- not enough inventory space
+			SendErrorMessage(buyerPlayerID, "#shops_not_enough_inventory")
+		elseif PlayerResource:GetGold(buyerPlayerID) < Gold_Cost then -- not enough gold
+			SendErrorMessage(buyerPlayerID, "#shops_not_enough_gold")
+		elseif not PlayerHasEnoughLumber(buyerPlayerOwner, Lumber_Cost) then -- not enough lumber
+			SendErrorMessage(buyerPlayerID, "#shops_not_enough_lumber")
+		end
+		
+	end
+	
+end
+
+function Purchased(item, shop)
+	unit_shops.Units[shop:GetEntityIndex()].Items[item].CurrentStock = unit_shops.Units[shop:GetEntityIndex()].Items[item].CurrentStock - 1
+end
+
+function EnoughStock(item, shop)
+	local Stock = unit_shops.Units[shop:GetEntityIndex()].Items[item].CurrentStock
+
+	if Stock > 0 then
+		return true
+	else
+		return false
+	end
+end
+
+function CountInventoryItems(unit)
+local count = 0
+	for i=0, 5, 1 do
+		if unit:GetItemInSlot(i) ~= nil then
+			count = count + 1
+		end
+	end
+	
+	return count
+end
+
+function unit_shops:Sell(data)
+	
+	
+
+end
+
 function CheckHeroInRadius( event )
 	local shop = event.caster
 	local ability = event.ability
