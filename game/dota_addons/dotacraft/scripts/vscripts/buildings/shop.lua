@@ -40,9 +40,9 @@ function unit_shops:CreateShop(unit, shop_name)
 	--DeepPrintTable(GameRules.Shops["human_shop"])
 	DeepPrintTable(GameRules.Shops)
 	for order,item in pairs(GameRules.Shops[shop_name]) do
-		print("[UNIT SHOP] Creating timer for new unit shop")
-		
+		print("[UNIT SHOP] Creating timer for new unit shop: "..shop_name)
 		local key = item
+		print(key)
 
 		-- set all variables
 		UnitShop.Items[key] = {}
@@ -72,6 +72,27 @@ function unit_shops:CreateShop(unit, shop_name)
 				return
 			end
 			
+			-- Set some defaults incase the keys are missing in the item definition
+			if not UnitShop.Items[key].CurrentStock then
+				print("[UNIT SHOP] Error - No ItemStockInitial defined for "..item)
+				UnitShop.Items[key].CurrentStock = 1
+			end
+
+			if not UnitShop.Items[key].MaxStock then
+				print("[UNIT SHOP] Error - No ItemStockMax defined for "..item)
+				UnitShop.Items[key].MaxStock = 1
+			end
+
+			if not UnitShop.Items[key].RestockRate then
+				print("[UNIT SHOP] Error - No ItemStockTime defined for "..item)
+				UnitShop.Items[key].RestockRate = 1
+			end
+
+			if not UnitShop.Items[key].RequiredTier then
+				print("[UNIT SHOP] Error - No ItemRequiresTier defined for "..item)
+				UnitShop.Items[key].RequiredTier = 1
+			end
+
 			-- if the item is not at max stock start a counter until it's restocked
 			if UnitShop.Items[key].CurrentStock < UnitShop.Items[key].MaxStock then
 			

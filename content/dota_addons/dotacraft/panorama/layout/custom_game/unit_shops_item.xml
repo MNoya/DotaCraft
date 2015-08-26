@@ -6,7 +6,7 @@
 		<include src="file://{resources}/scripts/unit_shops_item.js" />
 	</scripts>
 		<Panel class="ItemContainer" hittest="true">	
-		
+			<!--Generate Texture: <Image src="file://{images}/items/item_healing_salve.png" />-->
 			<Button id="ItemButton"
 					onmouseover="ShowToolTip()"
 					onmouseout="HideToolTip()"
