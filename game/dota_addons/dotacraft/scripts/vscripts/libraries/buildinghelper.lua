@@ -388,6 +388,10 @@ function BuildingHelper:StartBuilding( keys )
         -- Remove the model particle and Advance Queue
         BuildingHelper:AdvanceQueue(builder)
         ParticleManager:DestroyParticle(work.particleIndex, true)
+
+        -- Building canceled, refund resources
+        work.refund = true
+        callbacks.onConstructionCancelled(work)
         return
     end
 
