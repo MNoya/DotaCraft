@@ -1,18 +1,23 @@
 function EtherStart( event )
 	local caster = event.caster
 	local ability = event.ability
-	if caster:FindModifierByNameAndCaster('modifier_etheral_form', caster) then
-		caster:RemoveModifierByNameAndCaster('modifier_etheral_form', caster)
-		local cooldown = ability:GetSpecialValueFor('cooldown')
-		ability:StartCooldown(cooldown)
-	else
-		caster:EmitSound('Hero_Pugna.Decrepify')
-		local delay = ability:GetSpecialValueFor('delay')
-		Timers:CreateTimer(delay, function ()
-			ability:ApplyDataDrivenModifier(caster, caster, 'modifier_etheral_form', {})
-		end
-		)
-	end
+	caster:EmitSound('Hero_Pugna.Decrepify')
+	ability:ApplyDataDrivenModifier(caster, caster, 'modifier_ethereal_form', {})
+	local cooldown = ability:GetCooldown(0)
+	ability:StartCooldown(cooldown)
+	local another = caster:FindAbilityByName('orc_corporeal_form')
+	another:StartCooldown(cooldown)
+	ability:SetHidden(true)
+	another:SetHidden(false)
+end
+
+function EtherEnd( event )
+	local caster = event.caster
+	local ability = event.ability
+	caster:RemoveModifierByNameAndCaster('modifier_ethereal_form', caster)
+	local another = caster:FindAbilityByName('orc_ethereal_form')
+	ability:SetHidden(true)
+	another:SetHidden(false)
 end
 
 function Disenchant( event )
@@ -42,4 +47,46 @@ function Disenchant( event )
 	end
 
 	RemoveBlight(point, radius)
+end
+
+function SpiritLinkStart( event )
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+	local radius = ability:GetSpecialValueFor('radius')
+
+	ability:ApplyDataDrivenModifier(caster, target, 'modifier_spirit_link', {})
+	local units = 1
+	local max = ability:GetSpecialValueFor('max_unit')
+	local allies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	caster.linked = {}
+	local anyunit = false
+	while units < max do
+		for k,ally in pairs(allies) do
+			if units < max and ally ~= caster and (not ally:FindModifierByName('modifier_spirit_link') or anyunit) then
+				ability:ApplyDataDrivenModifier(caster, ally, 'modifier_spirit_link', {})
+				units = units + 1
+			end
+		end
+		anyunit = true
+	end
+end
+
+-- IsValidAlive(unit) USE THIS on OnTakeDamge <<<<<<<<<<
+
+function RemoveLinkedUnit( event )
+	local linked_units = event.caster.linked
+	local unit = event.target
+	local i = getIndex(linked_units, unit)
+	if i ~= -1 then
+		table.remove(linked_units, i)
+	else
+		print("Invalid index")
+	end
+end
+
+function AddLinkedUnit( event )
+	local linked_units = event.caster.linked
+	local unit = event.target
+	table.insert(linked_units, unit)
 end
