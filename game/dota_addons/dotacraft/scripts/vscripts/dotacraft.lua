@@ -646,13 +646,19 @@ function dotacraft:InitializePlayer( hero )
 
 	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5, 0) 
 	player.buildings[city_center_name] = 1
-	PlayerResource:SetCameraTarget(playerID, building)
-	Timers:CreateTimer(function() PlayerResource:SetCameraTarget(playerID, nil) end)
+	
+	-- Snap the camera to the created building and add it to selection
+	Timers:CreateTimer(function()
+		PlayerResource:SetCameraTarget(playerID, building)
+
+		Timers:CreateTimer(0.1, function()
+			PlayerResource:SetCameraTarget(playerID, nil)
+			AddUnitToSelection(building)
+		end)
+	end)
+
 	table.insert(player.structures, building)
 	player.main_city_center = building
-
-	-- Add the building to selection
-	Timers:CreateTimer(function() AddUnitToSelection(building) end)
 
 	CheckAbilityRequirements( building, player )
 
@@ -1615,17 +1621,16 @@ function dotacraft:Create_Players(data)
 				race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
 			end
 
-			print(team)
-
 			-- player stuff
 			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
-			PrecacheUnitByNameAsync(race, function()
-				--CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
+			--CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
 				
+			Timers:CreateTimer(0.1,function()
 				local hero_race = PlayerResource:GetPlayer(playerID):GetAssignedHero()
-				PlayerResource:ReplaceHeroWith(playerID, race, hero_race:GetGold(), 0)
-			end, pID)
+				PlayerResource:ReplaceHeroWith(playerID, race, 0, 0)
+				print("[DOTACRAFT] Player Created: ",race,hero_race)
+			end)
 		end
 	end
 end
