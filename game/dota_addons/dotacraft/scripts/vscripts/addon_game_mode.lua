@@ -48,6 +48,8 @@ function Precache( context )
 	-- Entire heroes (sound effects/voice/models/particles) can be precached with PrecacheUnitByNameSync
 	-- Custom units from npc_units_custom.txt can also have all of their abilities and precache{} blocks precached in this way
 
+	PrecacheUnitByNameSync("npc_dota_hero_ancient_apparition", context)
+
 	-- This units are created as soon as the player gets into the game		
 	PrecacheUnitByNameSync("human_town_hall", context)
 	PrecacheUnitByNameSync("nightelf_tree_of_life", context)
