@@ -298,6 +298,9 @@ function Start_Game(){
 	//$.Msg(Root.Game_Started)
 
 	if(DEVELOPER){
+		if(!Root.CountDown){
+	    	GameEvents.SendCustomGameEventToServer("selection_over", {});
+	    }
 		Initiate_Game()
 		return;
 	}
@@ -326,12 +329,17 @@ function Initiate_Game(){
 	$.Msg("Everyone is ready")
 	// this will make the game_setup state go further and tells lua about this and then makes players
 	Game.SetRemainingSetupTime(0);	
-	GameEvents.SendCustomGameEventToServer("selection_over", {});
+	//GameEvents.SendCustomGameEventToServer("selection_over", {});
 }
 
 // simple timer function
 function CountDown(){
 	$.Msg("Countdown Time: "+Root.time_left)
+
+	if(!Root.CountDown){
+    	GameEvents.SendCustomGameEventToServer("selection_over", {});
+    }
+
 	// set countdown true so that this function will start scheduling itself
 	Root.CountDown = true
 	
