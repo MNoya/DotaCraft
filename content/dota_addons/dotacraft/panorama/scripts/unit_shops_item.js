@@ -34,6 +34,7 @@ function Setup_Panel(){
 	
 	if(Root.ItemInfo.RequiredTier != 1){
 		$( "#RequiredTier").text = "Requires: "+$.Localize(Root.Race+"_tier_"+Root.ItemInfo.RequiredTier);
+		Update_Tier_Required_Panels(Root.Tier)
 	}
 }
 
@@ -47,7 +48,13 @@ function Update_Item(TableName, Key, Value){
 	var item = Root.ItemName
 	$( "#Stock").text = Value.Shop.Items[item].CurrentStock
 	
-	if(Value.Tier >= Root.ItemInfo.RequiredTier)
+	Update_Tier_Required_Panels(Value.Tier)
+
+}
+
+function Update_Tier_Required_Panels(tier){
+	
+	if(tier >= Root.ItemInfo.RequiredTier)
 	{
 		$("#RequiredTier").visible = false
 		$("#ItemButton").enabled = true
@@ -55,7 +62,6 @@ function Update_Item(TableName, Key, Value){
 		$("#ItemButton").enabled = false
 		$("#RequiredTier").visible = true
 	}
-
 }
 
 

@@ -18,9 +18,9 @@ function Create_Shop(args){
 		shop_item.ItemInfo = args.Shop.Items[Item]
 		shop_item.Entity = args.Index
 		shop_item.Race = args.Race
+		shop_item.Tier = args.Tier
 	} 
 	
-
 	Shops[args.Index] = args.Shop.Items
 	//$.Msg(Shops[args.Index])
 	//Sort_Shop(Shops[args.Index], args.Index)
@@ -43,7 +43,9 @@ function Current_Selected(){
 function Hide_All_Shops(){
 	for(var key in Shops){
 		var Shop = Root.FindChildTraverse(key)
-		Shop.visible = false
+		if(Shop.visible == true){
+			Shop.visible = false
+		}
 	}
 }
 
