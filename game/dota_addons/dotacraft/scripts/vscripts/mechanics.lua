@@ -482,7 +482,51 @@ function CheckCurrentCityCenters( player )
 	print("Current City Center Level for player "..player:GetPlayerID().." is: "..city_center_level)
 
 	if player.city_center_level == 0 then
-		print("Player "..player:GetPlayerID().." has no city centers left standing\nRevealed in 2 minutes until a City Center is built.")
+		local time_to_reveal = 120
+		print("Player "..player:GetPlayerID().." has no city centers left standing. Revealed in "..time_to_reveal.." seconds until a City Center is built.")
+		player.RevealTimer = Timers:CreateTimer(time_to_reveal, function()
+			RevealPlayerToAllEnemies(player)
+		end)
+	else
+		StopRevealingPlayer(player)
+	end
+end
+
+-- Creates revealer entities on each building of the player
+function RevealPlayerToAllEnemies( player )
+	local playerID = player:GetPlayerID()
+	local units = player.units
+	local structures = player.structures
+
+	print("Revealing Player "..playerID)
+
+	local playerName = PlayerResource:GetPlayerName(playerID)
+	if playerName == "" then playerName = "Player "..playerID end
+	GameRules:SendCustomMessage("Revealing "..playerName, 0, 0)
+
+	for k,building in pairs(structures) do
+		local origin = building:GetAbsOrigin()
+		local vision = buildling:GetDayTimeVisionRange()
+		local ent = SpawnEntityFromTableSynchronous("ent_fow_revealer", {origin = origin, vision = vision, teamnumber = 0})
+		building.revealer = ent
+	end
+end
+
+function StopRevealingPlayer( player )
+	local structures = player.structures
+
+	print("Stop Revealing Player "..player:GetPlayerID())
+
+	if player.RevealTimer then
+		Timers:RemoveTimer(player.RevealTimer)
+		player.RevealTimer = nil
+	end
+
+	for k,building in pairs(structures) do
+		if building.revealer then
+			DoEntFireByInstanceHandle(building.revealer, "Kill", "1", 1, nil, nil)
+			building.revealer = nil
+		end
 	end
 end
 

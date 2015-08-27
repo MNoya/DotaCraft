@@ -375,6 +375,8 @@ function dotacraft:InitGameMode()
 
 	self.bSeenWaitForPlayers = false
 
+	GameRules.DefeatedTeamCount = 0
+
 	-- Full units file to get the custom values
 	GameRules.AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
   	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
@@ -1266,11 +1268,11 @@ function dotacraft:OnEntityKilled( event )
 			CheckCurrentCityCenters(player)
 		end
 
-		--[[ Check for lose condition - All buildings destroyed
+		-- Check for lose condition - All buildings destroyed
 		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
 		if (#player.structures == 0) then
-			GameRules:MakeTeamLose(player:GetTeamNumber())
-		end]]
+			dotacraft:CheckDefeatCondition(player)
+		end
 
 	-- Unit Killed
 	else
@@ -1453,6 +1455,103 @@ function dotacraft:RepositionPlayerCamera( event )
 	end
 end
 
+-- Whenever a building is destroyed and the player structures hit 0, check for defeat & win condition
+-- In team games, teams are defeated as a whole instead of each player (because of resource trading and other shenanigans)
+-- Defeat condition: All players of the same team have 0 buildings
+-- Win condition: All teams have been defeated but one (i.e. there are only structures left standing for players of the same team)
+function dotacraft:CheckDefeatCondition( player )
+	local teamNumber = player:GetTeamNumber()
+
+	--SetNetTableValue("dotacraft_player_table", tostring(player:GetPlayerID()), {Status = "defeated"})
+
+	-- Check the player.structures of all the members of that team to determine defeat
+	local teamMembers = 0
+	local defeatedTeamMembers = 0
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if player:GetTeamNumber() == teamNumber then
+				teamMembers = teamMembers + 1
+				if #player.structures == 0 then
+					defeatedTeamMembers = defeatedTeamMembers + 1
+				end
+			end			
+		end
+	end
+
+	print("CheckDefeatCondition: There are ["..teamMembers.."] players in Team "..teamNumber.." and ["..defeatedTeamMembers.."] without structures left standing")
+	
+	if defeatedTeamMembers == teamMembers then
+		print("All players of team "..teamNumber.." are defeated")
+		GameRules.DefeatedTeamCount = GameRules.DefeatedTeamCount + 1
+		dotacraft:PrintDefeateMessageForTeam( teamNumber )
+	end
+
+	-- Victory: Only 1 team left standing
+	local teamCount = dotacraft:GetTeamCount()
+	print("Team Count: "..teamCount,"Defeated Teams: "..GameRules.DefeatedTeamCount)
+
+	if GameRules.DefeatedTeamCount+1 == teamCount then
+		winningTeam = dotacraft:GetWinningTeam()
+		print("Winning Team: "..winningTeam)
+		dotacraft:PrintWinMessageForTeam(winningTeam)
+		GameRules:SetGameWinner(winningTeam)
+	end
+
+end
+
+-- Returns an Int with the number of teams with valid players in them
+function dotacraft:GetTeamCount()
+	local teamCount = 0
+	for i=DOTA_TEAM_FIRST,DOTA_TEAM_CUSTOM_MAX do
+		local playerCount = PlayerResource:GetPlayerCountForTeam(i)
+		if playerCount > 0 then
+			teamCount = teamCount + 1
+			print("  Team ["..i.."] has "..playerCount.." players")
+		end
+	end
+	return teamCount
+end
+
+-- This should only be called when all teams but one are defeated
+-- Returns the first player with a building left standing
+function dotacraft:GetWinningTeam()
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if #player.structures > 0 then
+				return player:GetTeamNumber()
+			end
+		end
+	end
+end
+
+function dotacraft:PrintDefeateMessageForTeam( teamID )
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if player:GetTeamNumber() == teamID then
+				local playerName = PlayerResource:GetPlayerName(playerID)
+				if playerName == "" then playerName = "Player "..playerID end
+				GameRules:SendCustomMessage(playerName.." was defeated", 0, 0)
+			end
+		end
+	end
+end
+
+function dotacraft:PrintWinMessageForTeam( teamID )
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if player:GetTeamNumber() == teamID then
+				local playerName = PlayerResource:GetPlayerName(playerID)
+				if playerName == "" then playerName = "Player "..playerID end
+				GameRules:SendCustomMessage(playerName.." was victorious", 0, 0)
+			end
+		end
+	end
+end
+
 --[[
 
 Pre_Game_Selection
@@ -1493,6 +1592,8 @@ function dotacraft:Create_Players(data)
 			if race == nil then
 				race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
 			end
+
+			print(team)
 
 			-- player stuff
 			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
