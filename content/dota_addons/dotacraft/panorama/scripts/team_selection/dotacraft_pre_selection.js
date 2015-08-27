@@ -57,10 +57,11 @@ function Update_Team_Lock(args){
 	var LocalPlayerID = Game.GetLocalPlayerID()
 	
 	if(!isHost(LocalPlayerID)){
+		// disable panel for all other players
 		for(var PlayerID in Players){
 			var PlayerPanel = PlayerContainer.FindChildTraverse(PlayerID)
-			var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[2])	
-			Toggle_Enabled_Panel(dropdown, TeamLockState) 		
+			var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[2])
+			Toggle_Enabled_Panel(dropdown, TeamLockState)
 		}
 	}else{
 		var Button_Text = $.FindChildInContext("#LockTeamButtonText", Root)
@@ -68,7 +69,12 @@ function Update_Team_Lock(args){
 			Button_Text.text = "Unlock Teams"
 		}else{
 			Button_Text.text = "Lock Teams"
-		}	
+		}
+		
+		// enable all panels for host
+		for(var PlayerID in Players){
+			Player_Status(PlayerID, TeamLockState, false)						
+		}			
 	}
 }
 
