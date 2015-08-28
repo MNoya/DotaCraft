@@ -122,12 +122,55 @@ function OnRightButtonPressed()
 	return false;
 }
 
+// Handle Left Button events
+function OnLeftButtonPressed() {
+    $.Msg("OnLeftButtonPressed")
+
+    var iPlayerID = Players.GetLocalPlayer();
+    var mainSelected = Players.GetLocalPlayerPortraitUnit(); 
+    var mainSelectedName = Entities.GetUnitName( mainSelected )
+    var cursor = GameUI.GetCursorPosition();
+    var mouseEntities = GameUI.FindScreenEntities( cursor );
+    mouseEntities = mouseEntities.filter( function(e) { return e.entityIndex != mainSelected; } )
+    
+    // Hero or unit with inventory
+    if (UnitCanPurchase(mainSelected))
+    {
+        if (mouseEntities.length > 0)
+        {
+            for ( var e of mouseEntities )
+            {
+                if (IsShop(e.entityIndex) && (IsAlliedUnit(mainSelected,e.entityIndex) || IsNeutralUnit(e.entityIndex)))
+                {
+                    $.Msg("Player "+iPlayerID+" Clicked on a Shop")
+                    //Shop.visible = true - Need a way to Set this from here
+                    return true
+                }
+            }
+        }
+    }
+    
+    return false
+}
+
+function UnitCanPurchase(entIndex) {
+    return (Entities.IsRealHero(entIndex) || Entities.GetAbilityByName( entIndex, "ability_backpack") != -1)
+}
+
 function IsBuilder(entIndex) {
 	return (CustomNetTables.GetTableValue( "builders", entIndex.toString()))
 }
 
 function IsShop(entIndex) {
-	return ( Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
+	return (Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
+}
+
+function IsAlliedUnit(entIndex, targetIndex) {
+    return (Entities.GetTeamNumber(entIndex) == Entities.GetTeamNumber(targetIndex))
+}
+
+function IsNeutralUnit(entIndex) {
+    return (Entities.GetTeamNumber(entIndex) == DOTATeam_t.DOTA_TEAM_NEUTRALS)
 }
 
 // Main mouse event callback
@@ -159,8 +202,8 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
         // Left-click
         if ( arg === 0 )
         {
-            //OnLeftButtonPressed();
-            return CONTINUE_PROCESSING_EVENT;
+            return OnLeftButtonPressed();
+            //return CONTINUE_PROCESSING_EVENT;
         }
 
         // Right-click
