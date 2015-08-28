@@ -297,10 +297,10 @@ function PlayerHasEnoughGold( player, gold_cost )
 	local pID = hero:GetPlayerID()
 	local gold = hero:GetGold()
 
-	if gold < gold_cost then
-		SendErrorMessage(pID, "#error_not_enough_gold")
-		return false
+	if not gold_cost or  gold > gold_cost then 
+		return true
 	else
+		SendErrorMessage(pID, "#error_not_enough_gold")
 		return true
 	end
 end
@@ -310,11 +310,11 @@ end
 function PlayerHasEnoughLumber( player, lumber_cost )
 	local pID = player:GetAssignedHero():GetPlayerID()
 
-	if player.lumber < lumber_cost then
+	if not lumber_cost or player.lumber > lumber_cost then 
+		return true 
+	else
 		SendErrorMessage(pID, "#error_not_enough_lumber")
 		return false
-	else
-		return true
 	end
 end
 
@@ -775,6 +775,10 @@ end
 
 function IsCustomTower( unit )
     return unit:HasAbility("ability_tower")
+end
+
+function IsCustomShop( unit )
+	return unit:HasAbility("ability_shop")
 end
 
 function IsMechanical( unit )
@@ -1516,6 +1520,33 @@ function ReorderItems( caster )
     end
 end
 
+-- Sells an item from any unit, with gold and lumber cost refund
+function SellCustomItem( unit, item )
+	local player = unit:GetPlayerOwner()
+	local pID = player:GetPlayerID()
+	local item_name = item:GetAbilityName()
+    local GoldCost = GameRules.ItemKV[item_name]["ItemCost"]
+    local LumberCost = GameRules.ItemKV[item_name]["LumberCost"]
+
+    -- 10 second sellback
+    local time = item:GetPurchaseTime()
+    local refund_factor = GameRules:GetGameTime() <= time+10 and 1 or 0.5
+
+    if GoldCost then
+        PlayerResource:ModifyGold(pID, GoldCost*refund_factor, false, 0)
+        PopupGoldGain( unit, GoldCost*refund_factor)
+    end
+
+    if LumberCost then
+        ModifyLumber( player, LumberCost*refund_factor )
+        PopupLumber( unit, LumberCost*refund_factor)
+    end
+
+    EmitSoundOnClient("General.Sell", player)
+
+    item:RemoveSelf()
+end
+
 function GetItemSlot( unit, target_item )
 	for itemSlot = 0,5 do
 		local item = unit:GetItemInSlot(itemSlot)
@@ -1524,6 +1555,25 @@ function GetItemSlot( unit, target_item )
 		end
 	end
 	return -1
+end
+
+function CountInventoryItems(unit)
+	local count = 0
+	for i=0, 5 do
+		if unit:GetItemInSlot(i) then
+			count = count + 1
+		end
+	end
+	
+	return count
+end
+
+function IsAlliedUnit( unit, target )
+	return (unit:GetTeamNumber() == target:GetTeamNumber())
+end
+
+function IsNeutralUnit( target )
+	return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS)
 end
 
 function StartItemGhosting(shop, unit)

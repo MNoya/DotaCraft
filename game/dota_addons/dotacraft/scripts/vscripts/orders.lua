@@ -117,15 +117,58 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
     end
 
-    if order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or order_type == DOTA_UNIT_ORDER_SELL_ITEM then
-        local purchaser = EntIndexToHScript(units["0"])
-        print(purchaser:GetUnitName().." order item purchase/sell")
-        if OnEnemyShop(purchaser) then
-            print(" Order denied")
-            return false
+    ------------------------------------------------
+    --              Sell Item Orders              --
+    ------------------------------------------------
+    if order_type == DOTA_UNIT_ORDER_SELL_ITEM then
+        
+        local item = EntIndexToHScript(filterTable.entindex_ability)
+        local item_name = item:GetAbilityName()
+        print(unit:GetUnitName().." "..ORDERS[order_type].." "..item_name)
+
+        local player = unit:GetPlayerOwner()
+        local pID = player:GetPlayerID()
+
+        local bSellCondition = unit:CanSellItems() and item:IsSellable()
+        if bSellCondition then
+            SellCustomItem(unit, item)
         else
-            print(" Order allowed")
+            SendErrorMessage( pID, "#error_cant_sell" )
         end
+
+        return false
+
+    ------------------------------------------------
+    --              Drag Item Orders              --
+    ------------------------------------------------
+    elseif order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
+
+        local item = EntIndexToHScript(filterTable.entindex_ability)
+        local item_name = item:GetAbilityName()
+        local target = EntIndexToHScript(filterTable.entindex_target)
+        print(unit:GetUnitName().." "..units["0"].." "..ORDERS[order_type].." "..item_name.." -> "..target:GetUnitName().." "..filterTable.entindex_target)
+
+        local bDroppable = item:IsDroppable()
+        local bSellable = item:IsSellable()
+        local bFriendly = IsAlliedUnit(unit, target) or IsNeutralUnit(target)
+        local bValidBuilding = not IsCustomBuilding(target) or (IsCustomShop(target) and bSellable) -- Only drag sellable items on shop buildings
+        
+        local bDragCondition = bDroppable and bFriendly and bValidBuilding
+
+        if bDragCondition then
+            unit:MoveToNPCToGiveItem(target, item)
+        else
+            local pID = unit:GetPlayerOwnerID()
+            if not bDroppable then
+                SendErrorMessage( pID, "#error_cant_drop" )
+            elseif not bFriendly then
+                SendErrorMessage( pID, "#error_cant_take_items" )
+            elseif not bValidBuilding then
+                SendErrorMessage( pID, "#error_must_target_shop" )
+            end
+        end
+
+        return false
 
     ------------------------------------------------
     --               Attack Orders                --
@@ -702,7 +745,7 @@ function dotacraft:ShopActiveOrder( event )
     -- Old items are removed. Items are muted
     shop.current_unit = unit
     
-    StartItemGhosting(shop, unit)
+    --StartItemGhosting(shop, unit)
 
     if shop.active_particle then
         ParticleManager:DestroyParticle(shop.active_particle, true)

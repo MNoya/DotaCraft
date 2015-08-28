@@ -28035,18 +28035,19 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-				"States"
-				{
-					"MODIFIER_STATE_MUTED" "MODIFIER_STATE_VALUE_ENABLED"
-				}
 	
-				"ThinkInterval"  "0.5"
+				"ThinkInterval"  "0.1"
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"buildings/shop.lua"
 						"Function"		"CheckHeroInRadius"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"buildings/shop.lua"
+						"Function"		"SellItemsInInventory"
 					}
 				}
 			}

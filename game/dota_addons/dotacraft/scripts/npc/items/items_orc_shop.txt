@@ -27,10 +27,10 @@
 
     // Shops
     "ItemCost"                      "100"
-	"ItemStockMax"                  "2" 
-	"ItemStockTime"                 "60"
-	"ItemStockInitial"              "2"
-    "ItemRequiresTier"              "1"
+	"StockMax"                  "2" 
+	"StockTime"                 "60"
+	"StockInitial"              "2"
+    "RequiresTier"              "1"
 
 	"AbilitySpecial"
 	{
@@ -123,11 +123,11 @@
     "ItemAlertable"                 "1" 
 
     // Shops
-    "ItemCost"                      "50"
-	"ItemStockMax"                  "1" 
-	"ItemStockTime"                 "60"
-	"ItemStockInitial"              "1"
-    "ItemRequiresTier"              "1"
+    "ItemCost"                  "50"
+	"StockMax"                  "1" 
+	"StockTime"                 "60"
+	"StockInitial"              "1"
+    "RequiresTier"              "1"
 	
 	"AbilitySpecial"
 	{
@@ -225,10 +225,10 @@
     // Shops
     "ItemCost"                      "600"
     "LumberCost"					"185"
-    "ItemStockMax"                  "1" 
-    "ItemStockTime"                 "30"
-    "ItemStockInitial"              "3"
-    "ItemRequiresTier"              "3"
+    "StockMax"                  "1" 
+    "StockTime"                 "30"
+    "StockInitial"              "3"
+    "RequiresTier"              "3"
 
     // BuildingHelper info
     "Building"                      "1" //bool
@@ -242,7 +242,7 @@
 
     "UnitName"                      "orc_great_hall"
     "AbilityCooldown"               "0"
-    "AbilityGoldCost"               "0"
+    "AbilityItemCost"               "0"
     // End of BuildingHelper info
 
     "AbilitySpecial"
@@ -307,10 +307,10 @@
     // Shops
     "ItemCost"                      "600"
     "LumberCost"					"185"
-    "ItemStockMax"                  "1" 
-    "ItemStockTime"                 "30"
-    "ItemStockInitial"              "3"
-    "ItemRequiresTier"              "3"
+    "StockMax"                  "1" 
+    "StockTime"                 "30"
+    "StockInitial"              "3"
+    "RequiresTier"              "3"
 
     // BuildingHelper info
     "Building"                      "1" //bool
@@ -324,7 +324,7 @@
 
     "UnitName"                      "human_town_hall"
     "AbilityCooldown"               "0"
-    "AbilityGoldCost"               "0"
+    "AbilityItemCost"               "0"
     // End of BuildingHelper info
 
     "AbilitySpecial"
@@ -389,10 +389,10 @@
     // Shops
     "ItemCost"                      "600"
     "LumberCost"					"185"
-    "ItemStockMax"                  "1" 
-    "ItemStockTime"                 "30"
-    "ItemStockInitial"              "3"
-    "ItemRequiresTier"              "3"
+    "StockMax"                  "1" 
+    "StockTime"                 "30"
+    "StockInitial"              "3"
+    "RequiresTier"              "3"
 
     // BuildingHelper info
     "Building"                      "1" //bool
@@ -406,7 +406,7 @@
 
     "UnitName"                      "nightelf_tree_of_life"
     "AbilityCooldown"               "0"
-    "AbilityGoldCost"               "0"
+    "AbilityItemCost"               "0"
     // End of BuildingHelper info
 
     "AbilitySpecial"
@@ -471,10 +471,10 @@
     // Shops
     "ItemCost"                      "600"
     "LumberCost"					"185"
-    "ItemStockMax"                  "1" 
-    "ItemStockTime"                 "30"
-    "ItemStockInitial"              "3"
-    "ItemRequiresTier"              "3"
+    "StockMax"                  "1" 
+    "StockTime"                 "30"
+    "StockInitial"              "3"
+    "RequiresTier"              "3"
 
     // BuildingHelper info
     "Building"                      "1" //bool
@@ -488,7 +488,7 @@
 
     "UnitName"                      "orc_great_hall"
     "AbilityCooldown"               "0"
-    "AbilityGoldCost"               "0"
+    "AbilityItemCost"               "0"
     // End of BuildingHelper info
 
     "AbilitySpecial"

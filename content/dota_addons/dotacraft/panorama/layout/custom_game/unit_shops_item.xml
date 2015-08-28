@@ -11,6 +11,7 @@
 					onmouseover="ShowToolTip()"
 					onmouseout="HideToolTip()"
 					onactivate="Buy_Item()"
+					oncontextmenu="Buy_Item()"
 					>
 			<Panel id="ItemImage">
 			<Label id="Stock" class="TextBackground" />

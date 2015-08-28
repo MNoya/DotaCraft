@@ -29,11 +29,11 @@
 	    "ItemAlertable"                 "1" 
 	
 	    // Shops
-	    "ItemCost"                      "100"
-		"ItemStockMax"                  "2" 
-		"ItemStockTime"                 "90"
-		"ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "1"
+	    "ItemCost"                  "100"
+		"StockMax"                  "2" 
+		"StockTime"                 "90"
+		"StockInitial"              "2"
+	    "RequiresTier"              "1"
 		
 		"AbilitySpecial"
 		{
@@ -144,10 +144,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "50"
-	    "ItemStockMax"                  "2" 
-	    "ItemStockTime"                 "60"
-	    "ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "1"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "60"
+	    "StockInitial"              "2"
+	    "RequiresTier"              "1"
 	    
 	    "precache"
 	    {
@@ -239,10 +239,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "70"
-	    "ItemStockMax"                  "2" 
-	    "ItemStockTime"                 "30"
-	    "ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "1"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "30"
+	    "StockInitial"              "2"
+	    "RequiresTier"              "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -337,10 +337,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "150"
-	    "ItemStockMax"                  "3" 
-	    "ItemStockTime"                 "120"
-	    "ItemStockInitial"              "3"
-	    "ItemRequiresTier"              "2"
+	    "StockMax"                  "3" 
+	    "StockTime"                 "120"
+	    "StockInitial"              "3"
+	    "RequiresTier"              "2"
 	
 	    "AbilitySpecial"
 	    {
@@ -405,10 +405,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "200"
-	    "ItemStockMax"                  "2" 
-	    "ItemStockTime"                 "120"
-	    "ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "2"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "120"
+	    "StockInitial"              "2"
+	    "RequiresTier"              "2"
 	
 	    "AbilitySpecial"
 	    {
@@ -473,10 +473,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "350"
-	    "ItemStockMax"                  "2" 
-	    "ItemStockTime"                 "120"
-	    "ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "2"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "120"
+	    "StockInitial"              "2"
+	    "RequiresTier"              "2"
 	
 	    "AbilitySpecial"
 	    {
@@ -540,10 +540,10 @@
 	    // Shops
 	    "ItemCost"                      "40"
 	    "LumberCost"                    "20" //Extra for Shop
-	    "ItemStockMax"                  "3" 
-	    "ItemStockTime"                 "30"
-	    "ItemStockInitial"              "3"
-	    "ItemRequiresTier"              "2"
+	    "StockMax"                  "3" 
+	    "StockTime"                 "30"
+	    "StockInitial"              "3"
+	    "RequiresTier"              "2"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -555,7 +555,7 @@
 	
 	    "UnitName"                      "human_scout_tower"
 	    "AbilityCooldown"               "0"
-	    "AbilityGoldCost"               "0"
+	    "AbilityItemCost"               "0"
 	    // End of BuildingHelper info
 	
 	    "AbilitySpecial"
@@ -622,10 +622,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "350"
-	    "ItemStockMax"                  "2" 
-	    "ItemStockTime"                 "120"
-	    "ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "3"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "120"
+	    "StockInitial"              "2"
+	    "RequiresTier"              "3"
 	
 	    "AbilitySpecial"
 	    {
@@ -705,10 +705,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "50"
-		"ItemStockMax"                  "1" 
-		"ItemStockTime"                 "90"
-		"ItemStockInitial"              "1"
-	    "ItemRequiresTier"              "1"
+		"StockMax"                  "1" 
+		"StockTime"                 "90"
+		"StockInitial"              "1"
+	    "RequiresTier"              "1"
 		
 		"AbilitySpecial"
 		{
@@ -768,10 +768,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "75"
-	    "ItemStockMax"                  "1" 
-	    "ItemStockTime"                 "60"
-	    "ItemStockInitial"              "1"
-	    "ItemRequiresTier"              "1"
+	    "StockMax"                  "1" 
+	    "StockTime"                 "60"
+	    "StockInitial"              "1"
+	    "RequiresTier"              "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -825,11 +825,11 @@
 	    "ItemAlertable"                 "1" 
 	
 	    "ItemCost"                      "150"
-	    "ItemStockMax"                  "1" 
-	    "ItemStockTime"                 "120"
-	    "ItemStockInitial"              "1"
+	    "StockMax"                  "1" 
+	    "StockTime"                 "120"
+	    "StockInitial"              "1"
 	
-	    "ItemRequiresTier"              "2"
+	    "RequiresTier"              "2"
 	
 	    "precache"
 	    {
@@ -876,10 +876,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "100"
-	    "ItemStockMax"                  "2" 
-	    "ItemStockTime"                 "120"
-	    "ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "3"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "120"
+	    "StockInitial"              "2"
+	    "RequiresTier"              "3"
 	
 	    "AbilitySpecial"
 	    {
@@ -950,10 +950,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "100"
-		"ItemStockMax"                  "2" 
-		"ItemStockTime"                 "60"
-		"ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "1"
+		"StockMax"                  "2" 
+		"StockTime"                 "60"
+		"StockInitial"              "2"
+	    "RequiresTier"              "1"
 	
 		"AbilitySpecial"
 		{
@@ -1046,11 +1046,11 @@
 	    "ItemAlertable"                 "1" 
 	
 	    // Shops
-	    "ItemCost"                      "50"
-		"ItemStockMax"                  "1" 
-		"ItemStockTime"                 "60"
-		"ItemStockInitial"              "1"
-	    "ItemRequiresTier"              "1"
+	    "ItemCost"                  "50"
+		"StockMax"                  "1" 
+		"StockTime"                 "60"
+		"StockInitial"              "1"
+	    "RequiresTier"              "1"
 		
 		"AbilitySpecial"
 		{
@@ -1148,10 +1148,10 @@
 	    // Shops
 	    "ItemCost"                      "600"
 	    "LumberCost"					"185"
-	    "ItemStockMax"                  "1" 
-	    "ItemStockTime"                 "30"
-	    "ItemStockInitial"              "3"
-	    "ItemRequiresTier"              "3"
+	    "StockMax"                  "1" 
+	    "StockTime"                 "30"
+	    "StockInitial"              "3"
+	    "RequiresTier"              "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -1165,7 +1165,7 @@
 	
 	    "UnitName"                      "orc_great_hall"
 	    "AbilityCooldown"               "0"
-	    "AbilityGoldCost"               "0"
+	    "AbilityItemCost"               "0"
 	    // End of BuildingHelper info
 	
 	    "AbilitySpecial"
@@ -1230,10 +1230,10 @@
 	    // Shops
 	    "ItemCost"                      "600"
 	    "LumberCost"					"185"
-	    "ItemStockMax"                  "1" 
-	    "ItemStockTime"                 "30"
-	    "ItemStockInitial"              "3"
-	    "ItemRequiresTier"              "3"
+	    "StockMax"                  "1" 
+	    "StockTime"                 "30"
+	    "StockInitial"              "3"
+	    "RequiresTier"              "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -1247,7 +1247,7 @@
 	
 	    "UnitName"                      "human_town_hall"
 	    "AbilityCooldown"               "0"
-	    "AbilityGoldCost"               "0"
+	    "AbilityItemCost"               "0"
 	    // End of BuildingHelper info
 	
 	    "AbilitySpecial"
@@ -1312,10 +1312,10 @@
 	    // Shops
 	    "ItemCost"                      "600"
 	    "LumberCost"					"185"
-	    "ItemStockMax"                  "1" 
-	    "ItemStockTime"                 "30"
-	    "ItemStockInitial"              "3"
-	    "ItemRequiresTier"              "3"
+	    "StockMax"                  "1" 
+	    "StockTime"                 "30"
+	    "StockInitial"              "3"
+	    "RequiresTier"              "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -1329,7 +1329,7 @@
 	
 	    "UnitName"                      "nightelf_tree_of_life"
 	    "AbilityCooldown"               "0"
-	    "AbilityGoldCost"               "0"
+	    "AbilityItemCost"               "0"
 	    // End of BuildingHelper info
 	
 	    "AbilitySpecial"
@@ -1394,10 +1394,10 @@
 	    // Shops
 	    "ItemCost"                      "600"
 	    "LumberCost"					"185"
-	    "ItemStockMax"                  "1" 
-	    "ItemStockTime"                 "30"
-	    "ItemStockInitial"              "3"
-	    "ItemRequiresTier"              "3"
+	    "StockMax"                  "1" 
+	    "StockTime"                 "30"
+	    "StockInitial"              "3"
+	    "RequiresTier"              "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
@@ -1411,7 +1411,7 @@
 	
 	    "UnitName"                      "orc_great_hall"
 	    "AbilityCooldown"               "0"
-	    "AbilityGoldCost"               "0"
+	    "AbilityItemCost"               "0"
 	    // End of BuildingHelper info
 	
 	    "AbilitySpecial"
@@ -1481,10 +1481,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "150"
-		"ItemStockMax"                  "1" 
-		"ItemStockTime"                 "60"
-		"ItemStockInitial"              "1"
-	    "ItemRequiresTier"              "1"
+		"StockMax"                  "1" 
+		"StockTime"                 "60"
+		"StockInitial"              "1"
+	    "RequiresTier"              "1"
 	
 		"AbilitySpecial"
 		{
@@ -1546,10 +1546,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "50"
-	    "ItemStockMax"                  "2" 
-	    "ItemStockTime"                 "60"
-	    "ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "1"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "60"
+	    "StockInitial"              "2"
+	    "RequiresTier"              "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -1613,10 +1613,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "250"
-	    "ItemStockMax"                  "2" 
-	    "ItemStockTime"                 "120"
-	    "ItemStockInitial"              "2"
-	    "ItemRequiresTier"              "3"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "120"
+	    "StockInitial"              "2"
+	    "RequiresTier"              "3"
 	    
 	    "AbilitySpecial"
 	    {
@@ -8225,10 +8225,10 @@
 	
 		// Shops
 	    "ItemCost"                      "275"
-		"ItemStockMax"                  "1" 
-		"ItemStockTime"                 "120"
-		"ItemStockInitial"              "1"
-		"ItemRequiresTier"              "3"
+		"StockMax"                  "1" 
+		"StockTime"                 "120"
+		"StockInitial"              "1"
+		"RequiresTier"              "3"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf"
@@ -8344,10 +8344,10 @@
 	
 		// Shops
 	    "ItemCost"                      "325"
-		"ItemStockMax"                  "1" 
-		"ItemStockTime"                 "120"
-		"ItemStockInitial"              "1"
-	    "ItemRequiresTier"              "3"
+		"StockMax"                  "1" 
+		"StockTime"                 "120"
+		"StockInitial"              "1"
+	    "RequiresTier"              "3"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/items2_fx/orb_of_venom.vpcf"
@@ -8481,10 +8481,10 @@
 	
 		// Shops
 	    "ItemCost"                      "375"
-		"ItemStockMax"                  "1" 
-		"ItemStockTime"                 "120"
-		"ItemStockInitial"              "1"
-	    "ItemRequiresTier"              "3"
+		"StockMax"                  "1" 
+		"StockTime"                 "120"
+		"StockInitial"              "1"
+	    "RequiresTier"              "3"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/econ/courier/courier_trail_cursed/courier_cursed_ambient.vpcf"
@@ -8734,10 +8734,10 @@
 	
 		// Shops
 	    "ItemCost"                      "375"
-		"ItemStockMax"                  "1" 
-		"ItemStockTime"                 "120"
-		"ItemStockInitial"              "1"
-	    "ItemRequiresTier"              "3"
+		"StockMax"                  "1" 
+		"StockTime"                 "120"
+		"StockInitial"              "1"
+	    "RequiresTier"              "3"
 		
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"Effect"						"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
@@ -11937,12 +11937,6 @@
 		"ItemKillable"                  "1"
 		"ItemSellable"                  "1"
 		"ItemDroppable"                 "1"
-	
-		"ItemCost"						"200"
-		"ItemStockInitial"				"1"
-		"ItemStockMax"					"1"
-		"ItemStockTime"					"120"
-		"ItemRequiresTier"				"1"
 		
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
