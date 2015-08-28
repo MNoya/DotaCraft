@@ -243,8 +243,8 @@ function CheckHeroInRadius( event )
 		        ParticleManager:DestroyParticle(shop.active_particle, true)
 		    end
 		    shop.current_unit = nil
-		    Timers:RemoveTimer(shop.ghost_items)
-		    ClearItems(shop)
+		    --Timers:RemoveTimer(shop.ghost_items)
+		    --ClearItems(shop)
 		    return
 		end
 

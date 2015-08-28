@@ -131,24 +131,34 @@ function OnLeftButtonPressed() {
     var mainSelectedName = Entities.GetUnitName( mainSelected )
     var cursor = GameUI.GetCursorPosition();
     var mouseEntities = GameUI.FindScreenEntities( cursor );
-    mouseEntities = mouseEntities.filter( function(e) { return e.entityIndex != mainSelected; } )
     
-    // Hero or unit with inventory
-    if (UnitCanPurchase(mainSelected))
+    //Hide_All_Shops()
+
+    if (mouseEntities.length > 0)
     {
-        if (mouseEntities.length > 0)
+        for ( var e of mouseEntities )
         {
-            for ( var e of mouseEntities )
+            if (IsShop(e.entityIndex) && (IsAlliedUnit(mainSelected,e.entityIndex) || IsNeutralUnit(e.entityIndex)))
             {
-                if (IsShop(e.entityIndex) && (IsAlliedUnit(mainSelected,e.entityIndex) || IsNeutralUnit(e.entityIndex)))
+                $.Msg("Player "+iPlayerID+" Clicked on a Shop")
+                ShowShop(e.entityIndex)
+
+                // Hero or unit with inventory
+                if (UnitCanPurchase(mainSelected))
                 {
-                    $.Msg("Player "+iPlayerID+" Clicked on a Shop")
-                    //Shop.visible = true - Need a way to Set this from here
+                    GameEvents.SendCustomGameEventToServer( "shop_active_order", { shop: e.entityIndex, unit: mainSelected, targeted: true})
                     return true
+                }
+                else
+                {
+                    return false //Dont consume the event, let the player select the shop normally
                 }
             }
         }
     }
+    // Rest of the right clicks
+    else
+
     
     return false
 }
@@ -189,6 +199,10 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
         if ( arg === 0 && state == "active")
         {
             return SendBuildCommand();
+        }
+        else
+        {
+            return OnLeftButtonPressed();
         }
 
         // Right-click (Cancel & Repair)
