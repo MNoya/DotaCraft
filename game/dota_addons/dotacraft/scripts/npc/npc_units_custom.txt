@@ -4001,17 +4001,13 @@
 		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
-		"SelectionGroup"            "Human_Peasants"
+		"SelectionGroup"            "Human_Peasants"	
 		"SoundSet"					"Hero_Kunkka"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
 	
 		"UnitLabel"					"builder"
 	
 		"AttacksEnabled"			"ground"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -4221,13 +4217,9 @@
 		"HasInventory"				"1"
 		"SelectionGroup"            "Human_Footmen"
 		"SoundSet"					"Hero_DragonKnight"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
 	
 		"AttacksEnabled"			"ground"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -4337,13 +4329,9 @@
 		"HasInventory"				"1"
 		"SelectionGroup"            "Human_Riflemen"
 		"SoundSet"					"Hero_Sniper"
+		"GameSoundsFile" 			"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -4446,13 +4434,9 @@
 		"HasInventory"				"1"
 		"SelectionGroup"            "Human_Knights"
 		"SoundSet"					"Hero_ChaosKnight"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
 	
 		"AttacksEnabled"			"ground"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -4566,13 +4550,9 @@
 		"HasInventory"				"1"
 		"SelectionGroup"            "Human_Sorceress"
 		"SoundSet"					"Hero_Lina"
+	    "GameSoundsFile"           "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -4683,13 +4663,9 @@
 		"HasInventory"				"1"
 		"SelectionGroup"            "Human_Priests"
 		"SoundSet"					"Hero_Oracle"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -4800,13 +4776,9 @@
 		"HasInventory"				"1"
 		"SelectionGroup"            "Human_Spell_Breakers"
 		"SoundSet"					"Hero_Silencer"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
 	
 		"AttacksEnabled"			"ground"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -4913,13 +4885,9 @@
 		"HealthBarOffset"			"280"
 		"SelectionGroup"            "Human_Flying_Machines"
 		"SoundSet"					"Hero_Gyrocopter"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 	
 		"AttacksEnabled"			"air"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -5018,13 +4986,9 @@
 		"HealthBarOffset"			"280"
 		"SelectionGroup"            "Human_Dragonhawk_Riders"
 		"SoundSet"					"Hero_SkywrathMage"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 	
@@ -5128,6 +5092,7 @@
 		"HealthBarOffset"			"120"
 		"SelectionGroup"            "Human_Mortar_Teams"
 		"SoundSet"					"Hero_Techies"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 	
@@ -5136,11 +5101,6 @@
 		"SplashMediumDamage"		"0.4" //50%
 		"SplashSmallRadius"			"250"
 		"SplashSmallDamage"			"0.1"
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
-		}
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -8471,6 +8431,8 @@
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Wisp"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
 	
 		"UnitLabel"					"builder"
 		
@@ -8793,6 +8755,7 @@
 		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	    "SoundSet"                  "Creep_Good_Engine"
 	
 		"AttacksEnabled"			"ground"
 	
@@ -8893,6 +8856,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+	    "SoundSet"                  "Hero_Enchantress"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_enchantress.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -9001,6 +8966,8 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"FormationRank"				"1"
+	    "SoundSet"                  "Hero_LoneDruid"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -9100,6 +9067,8 @@
 		"ModelScale"				"1.35"
 		"Level"						"6"
 		"HealthBarOffset"			"200"
+	    "SoundSet"                  "Hero_Tiny"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -9200,6 +9169,8 @@
 		"Level"						"6"
 		"HealthBarOffset"			"200"
 		"ConsideredHero"			"1"
+	    "SoundSet"                  "Hero_Tiny"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -9302,6 +9273,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+	    "SoundSet"                  "Hero_Furion"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -9412,6 +9385,8 @@
 		"ModelScale"				"1"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+	    "SoundSet"                  "Hero_Puck"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -9514,6 +9489,8 @@
 		"ModelScale"				"1"
 		"Level"						"5"
 		"HealthBarOffset"			"140"
+	    "SoundSet"                  "Hero_Jakiro"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 	
@@ -9705,6 +9682,8 @@
 		"ModelScale"				"1.2"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
+	    "SoundSet"                  "Hero_Windrunner"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -10896,6 +10875,8 @@
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_TrollWarlord"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
 	
 		"UnitLabel"					"builder"
 	
@@ -10996,6 +10977,8 @@
 		"ModelScale"				"1"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Axe"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -11097,6 +11080,8 @@
 		"ModelScale"				"0.75"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Huskar"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -11197,6 +11182,8 @@
 		"ModelScale"				"0.9"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Huskar"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -11298,6 +11285,7 @@
 		"ModelScale"				"1.5"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"					"Creep_Bad_Engine"
 	
 		"AttacksEnabled"			"ground"
 	
@@ -11397,6 +11385,8 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Bloodseeker"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -11505,6 +11495,8 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_WitchDoctor"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -11611,6 +11603,8 @@
 		"ModelScale"				"1"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_SpiritBreaker"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_spirit_breaker.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -11721,6 +11715,8 @@
 		"ModelScale"				"1"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Chen"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -11818,9 +11814,10 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/courier/smeevil_mammoth/smeevil_mammoth.vmdl"
-		"ModelScale"				"1.7"
+		"ModelScale"				"2"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
+		"SoundSet"					"Creep_Bad_Melee"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -11857,7 +11854,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"70"
+		"RingRadius"				"100"
 		"CollisionSize"				"48"
 		"FormationRank"				"2"
 		
@@ -11914,6 +11911,7 @@
 		"ModelScale"				"0.8"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
+		"SoundSet"					"Creep_Bad_Range"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -12005,6 +12003,8 @@
 		"ModelScale"				"0.8"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Batrider"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -12105,6 +12105,8 @@
 		"ModelScale"				"1"
 		"Level"						"5"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Earthshaker"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -14566,6 +14568,8 @@
 		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Warlock"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
 		
 		"UnitLabel"					"builder"
 	
@@ -14676,6 +14680,8 @@
 		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Nevermore"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14767,6 +14773,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_LifeStealer"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -14867,6 +14875,8 @@
 		"ModelScale"				"0.80"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Weaver"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
 		
 		"AttacksEnabled"			"ground"
 	
@@ -14970,6 +14980,8 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Visage_Familiar"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_visage.vsndevts"
 		
 		"AttacksEnabled"			"ground, air"
 	
@@ -15059,6 +15071,8 @@
 		"ModelScale"				"1"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Pudge"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -15161,6 +15175,7 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"					"Creep_Bad_Engine"
 	
 		"AttacksEnabled"			"ground"
 	
@@ -15265,6 +15280,8 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"180"
 		"FormationRank"				"2"
+		"SoundSet"                  "Hero_ObsidianDestroyer"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
 		
 		"AttacksEnabled"			"ground, air"
 	
@@ -15372,6 +15389,8 @@
 		"ModelScale"				"1"
 		"Level"						"5"
 		"HealthBarOffset"			"350"
+		"SoundSet"                  "Hero_ObsidianDestroyer"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -15476,6 +15495,8 @@
 		"ModelScale"				"0.8"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Necrolyte"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -15583,6 +15604,8 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_DeathProphet"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		
 		"AttacksEnabled"			"ground, air"
 	
@@ -15688,6 +15711,7 @@
 		"ModelScale"				"1"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"SoundSet"					"Creep_Good_Melee"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -15777,6 +15801,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+		"SoundSet"                  "Hero_Pugna"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 		
@@ -15878,6 +15904,8 @@
 		"ModelScale"				"1.2"
 		"Level"						"6"
 		"HealthBarOffset"			"180"
+		"SoundSet"                  "Hero_Winter_Wyvern"
+	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
 	
