@@ -733,24 +733,25 @@ end
 
 ------------------------------------------------
 --            Shop->Unit Right-Click          --
+--            Unit->Shop Left-Click           --
 ------------------------------------------------
 function dotacraft:ShopActiveOrder( event )
+    local pID = event.PlayerID
     local shop = EntIndexToHScript(event.shop)
     local unit = EntIndexToHScript(event.unit)
+    local player = PlayerResource:GetPlayer(pID)
 
     -- Send true in panorama order, false if autoassigned
     shop.targeted = event.targeted or false
 
-    -- Replicate the items of the selected unit in the shop inventory
-    -- Old items are removed. Items are muted
-    shop.current_unit = unit
+    -- Set the current unit of this shop for this player
+    shop.current_unit[pID] = unit
     
-    --StartItemGhosting(shop, unit)
-
     if shop.active_particle then
         ParticleManager:DestroyParticle(shop.active_particle, true)
     end
-    shop.active_particle = ParticleManager:CreateParticle("particles/custom/shop_arrow.vpcf", PATTACH_OVERHEAD_FOLLOW, unit)
+    shop.active_particle = ParticleManager:CreateParticleForPlayer("particles/custom/shop_arrow.vpcf", PATTACH_OVERHEAD_FOLLOW, unit, player)
+
     ParticleManager:SetParticleControl(shop.active_particle, 0, unit:GetAbsOrigin())
 end
 

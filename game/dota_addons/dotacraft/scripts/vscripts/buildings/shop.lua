@@ -11,6 +11,9 @@ end
 function Setup_Shop( keys )
 	local Shop_Name = keys.caster:GetUnitLabel()
 	unit_shops:CreateShop(keys.caster, Shop_Name)
+
+	-- Keeps track of the current unit of this shop for every possible player
+	keys.caster.current_unit = {}
 end
 
 --[[
@@ -132,21 +135,22 @@ end
 
 function unit_shops:Buy(data)
 	local item = data.ItemName
-	local PlayerID = data.PlayerID
+	local PlayerID = data.PlayerID -- The player that clicked on an item to purchase. This can be an allied player
+	local player = PlayerResource:GetPlayer(PlayerID)
 	local Shop = EntIndexToHScript(data.Shop)
 	
 	-- check current tier
-	local player = Shop:GetPlayerOwner()
-	local tier = GetPlayerCityLevel(player)
+	local shopOwner = Shop:GetPlayerOwner()
+	local tier = GetPlayerCityLevel(shopOwner)
 				
 	-- Information about the buying unit
 	-- the buying unit
 	local buyer
-	if Shop.current_unit == nil then
+	if Shop.current_unit[PlayerID] == nil then
 		SendErrorMessage(data.PlayerID, "#shops_no_buyers_found")
 		return
 	else
-		buyer = Shop.current_unit
+		buyer = Shop.current_unit[PlayerID] --A shop can sell to more than 1 player at a time
 	end
 	
 	local buyerPlayerID = buyer:GetPlayerOwnerID()
@@ -262,41 +266,54 @@ function SellItemsInInventory( event )
 	end
 end
 
+-- The shop will try to assign a valid buyer to each valid player unit nearby
 function CheckHeroInRadius( event )
 	local shop = event.caster
 	local ability = event.ability
-	local current_unit = shop.current_unit
+	local teamNumber = shop:GetTeamNumber()
 
-	if IsValidAlive(current_unit) then
-		-- Break out of range
-		if shop:GetRangeToUnit(current_unit) > 900 then
-			if shop.active_particle then
-		        ParticleManager:DestroyParticle(shop.active_particle, true)
-		    end
-		    shop.current_unit = nil
-		    --Timers:RemoveTimer(shop.ghost_items)
-		    --ClearItems(shop)
-		    return
-		end
+	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if teamNumber == DOTA_TEAM_NEUTRALS or player:GetTeamNumber() == teamNumber then
+				
+				local current_unit = shop.current_unit[playerID]
 
-		-- If the current_unit is a creature and was autoassigned (not through rightclick), find heroes
-		if current_unit:IsCreature() and not shop.targeted then
-			local foundHero = FindShopAbleUnit(shop, DOTA_UNIT_TARGET_HERO)
-			if foundHero then
-				event.shop = shop:GetEntityIndex()
-				event.unit = foundHero:GetEntityIndex()
-				dotacraft:ShopActiveOrder(event)
+				-- If the shop already has a unit acquired, check if its still valid
+				if IsValidAlive(current_unit) then
+					-- Break out of range
+					if shop:GetRangeToUnit(current_unit) > 900 then
+						if shop.active_particle then
+					        ParticleManager:DestroyParticle(shop.active_particle, true)
+					    end
+					    shop.current_unit[playerID] = nil
+					    
+					    return
+					end
+
+					-- If the current_unit is a creature and was autoassigned (not through rightclick), find heroes
+					if current_unit:IsCreature() and not shop.targeted then
+						local foundHero = FindShopAbleUnit(shop, DOTA_UNIT_TARGET_HERO)
+						if foundHero then
+							event.shop = shop:GetEntityIndex()
+							event.unit = foundHero:GetEntityIndex()
+							event.PlayerID = playerID
+							dotacraft:ShopActiveOrder(event)
+						end
+					end		
+				else
+					-- Find a nearby units in radius
+					local foundUnit = FindShopAbleUnit(shop, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC)
+
+					-- If a valid shop unit is found, update the current hero and set the replicated items
+					if foundUnit then
+						event.shop = shop:GetEntityIndex()
+						event.unit = foundUnit:GetEntityIndex()
+						event.PlayerID = playerID
+						dotacraft:ShopActiveOrder(event)
+					end
+				end
 			end
-		end		
-	else
-		-- Find a nearby units in radius
-		local foundUnit = FindShopAbleUnit(shop, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC)
-
-		-- If a valid shop unit is found, update the current hero and set the replicated items
-		if foundUnit then
-			event.shop = shop:GetEntityIndex()
-			event.unit = foundUnit:GetEntityIndex()
-			dotacraft:ShopActiveOrder(event)
 		end
 	end
 end
