@@ -129,6 +129,7 @@
 	"ModelScale"				"0.8"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"					"Hero_Windrunner"
 	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 
@@ -143,8 +144,8 @@
 	"Ability4"					"nightelf_improved_bows_disabled"	
 	"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	"Ability6"					"nightelf_elunes_grace"	 //Reference: Aegr
+	"Ability10"					"nightelf_backpack_disabled"
 	"Ability11"					"nightelf_night_regen"
-	 //Reference: Aien Inventory(2 slot unit) Night Elf
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -237,6 +238,7 @@
 	"ModelScale"				"0.7"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"					"Hero_Luna"
 	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 	
@@ -248,8 +250,9 @@
 	"Ability1"					"nightelf_sentinel"	 //Reference: Aesn
 	"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
 	"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl - Gets replaced by "nightelf_upgraded_moon_glaive" after the research
-	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability4"					""
 	"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+	"Ability10"					"nightelf_backpack_disabled"
 	"Ability11"					"nightelf_night_regen"
 	
 	"precache"
@@ -450,6 +453,7 @@
 	"ModelScale"				"0.7"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
     "SoundSet"                  "Hero_Enchantress"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_enchantress.vsndevts"
 
@@ -461,8 +465,9 @@
 	"Ability1"					"nightelf_abolish_magic_disabled"	 //Reference: Aadm
 	"Ability2"					"nightelf_slow_poison"	  	//Reference: Aspo
 	"Ability3"					"generic_spell_immunity"	//Reference: Amim
-	"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability4"					""
 	"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+	"Ability10"					"nightelf_backpack_disabled"
 	"Ability11"					"nightelf_night_regen"
 	
 	// Armor
@@ -559,6 +564,7 @@
 	"Level"						"4"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"FormationRank"				"1"
     "SoundSet"                  "Hero_LoneDruid"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
@@ -572,8 +578,8 @@
 	"Ability2"					"nightelf_rejuvenation"	
 	"Ability3"					"nightelf_bear_form"
 	"Ability4"					"nightelf_bear_form_off"	
-	"Ability5"					""	  //Reference: Aien
-	"Ability6"					"nightelf_ultravision_disabled"
+	"Ability5"					"nightelf_ultravision_disabled"
+	"Ability10"					"nightelf_backpack_disabled"
 	"Ability11"					"nightelf_night_regen"
 	
 	// Armor
@@ -661,6 +667,7 @@
 	"ModelScale"				"1.35"
 	"Level"						"6"
 	"HealthBarOffset"			"200"
+	"HasInventory"				"1"
     "SoundSet"                  "Hero_Tiny"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 
@@ -673,7 +680,7 @@
 	"Ability2"					"nightelf_resistant_skin_disabled"	 //Reference: Arsk
 	"Ability3"					"nightelf_hardened_skin_disabled"	 //Reference: Assk
 	"Ability4"					"nightelf_war_club"	 //Reference: Agra
-	"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability9"					"nightelf_backpack_disabled"
 	"Ability10"					"nightelf_mountain_giant_model"
 	"Ability11"					"nightelf_night_regen"
 	
@@ -763,6 +770,7 @@
 	"Level"						"6"
 	"HealthBarOffset"			"200"
 	"ConsideredHero"			"1"
+	"HasInventory"				"1"
     "SoundSet"                  "Hero_Tiny"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 
@@ -775,7 +783,7 @@
 	"Ability2"					"nightelf_resistant_skin"	 //Reference: Arsk
 	"Ability3"					"nightelf_hardened_skin"	 //Reference: Assk
 	"Ability4"					"nightelf_war_club"	 //Reference: Agra
-	"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+	"Ability9"					"nightelf_backpack_disabled"
 	"Ability10"					"nightelf_mountain_giant_model"
 	"Ability11"					"nightelf_night_regen"
 	
@@ -867,6 +875,7 @@
 	"ModelScale"				"0.7"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
     "SoundSet"                  "Hero_Furion"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
 
@@ -879,6 +888,7 @@
 	"Ability2"					"nightelf_faerie_fire_disabled"	 //Reference: Afa2
 	"Ability3"					"nightelf_cyclone"
 	"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+	"Ability9"					"nightelf_backpack_disabled"
 	"Ability10"					"nightelf_storm_crow_form_off"
 	"Ability11"					"nightelf_night_regen"
 	

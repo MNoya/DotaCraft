@@ -284,32 +284,3 @@
 		}
 	}
 }
-
-"human_backpack_disabled"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_research_backpack"
-	"MaxLevel" 						"1"
-
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-
-
-	"Modifiers"
-	{
-		"modifier_backpack_disabled"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-	
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/human/human_upgrades.lua"
-					"Function"		"Backpack"
-					"Action"		"Disable"
-				}
-			}
-		}
-	}
-}

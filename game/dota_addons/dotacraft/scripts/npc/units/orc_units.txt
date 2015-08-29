@@ -128,6 +128,7 @@
 	"ModelScale"				"1"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"                  "Hero_Axe"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
 
@@ -138,6 +139,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_pillage_disabled"	 //Reference: Asal
 	"Ability2"					"orc_berserker_strength_disabled"
+	"Ability10"					"orc_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -231,6 +233,7 @@
 	"ModelScale"				"0.75"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"                  "Hero_Huskar"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 
@@ -240,8 +243,9 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Sbsk
-	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability2"					""
 	"Ability3"					"orc_troll_regeneration_disabled"
+	"Ability10"					"orc_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -333,6 +337,7 @@
 	"ModelScale"				"0.9"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"                  "Hero_Huskar"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 
@@ -342,8 +347,9 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_berserk"	 //Reference: Absk
-	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability2"					""
 	"Ability3"					"orc_troll_regeneration_disabled"
+	"Ability10"					"orc_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -536,6 +542,7 @@
 	"ModelScale"				"1"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"                  "Hero_Bloodseeker"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
 
@@ -547,7 +554,7 @@
 	"Ability1"					"orc_purge"	 //Reference: Ablo
 	"Ability2"					"orc_lightning_shield"	 //Reference: Alsh
 	"Ability3"					"orc_bloodlust_disabled"	 //Reference: Apg2
-	"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability10"					"orc_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -646,6 +653,7 @@
 	"ModelScale"				"1"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"                  "Hero_WitchDoctor"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
 
@@ -754,6 +762,8 @@
 	"ModelScale"				"1"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
+	"ConsideredHero"			"1"
 	"SoundSet"                  "Hero_SpiritBreaker"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_spirit_breaker.vsndevts"
 
@@ -766,9 +776,10 @@
 	"Ability2"					"orc_disenchant"	 //Reference: Aspl
 	"Ability3"					"orc_ancestral_spirit"	 
 	"Ability4"					"orc_ethereal_form"	 //Reference: Aast
-	"Ability5"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability5"					""
 	"Ability6"					""	 //Reference: ACsk - Resistant Skin(3,1 pos, creep)
 	"Ability7"					"orc_corporeal_form"	 //Reference: Acpf
+	"Ability10"					"orc_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -866,6 +877,7 @@
 	"ModelScale"				"1"
 	"Level"						"3"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"                  "Hero_Chen"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 
@@ -876,7 +888,8 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_ensnare"	 //Reference: Aens
 	"Ability2"					"orc_pillage_disabled"	 //Reference: Asal
-	"Ability3"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability3"					""
+	"Ability10"					"orc_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -977,7 +990,7 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_war_drums"	 //Reference: Aakb
 	"Ability2"					"orc_devour"	 //Reference: Adev
-	"Ability3"					""	 //Reference: Apak - Inventory (Pack Mule)
+	"Ability10"					"orc_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1154,6 +1167,7 @@
 	"ModelScale"				"0.8"
 	"Level"						"2"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"                  "Hero_Batrider"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
 
@@ -1256,6 +1270,7 @@
 	"ModelScale"				"1"
 	"Level"						"5"
 	"HealthBarOffset"			"140"
+	"HasInventory"				"1"
 	"SoundSet"                  "Hero_Earthshaker"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
 
@@ -1265,7 +1280,7 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"orc_pulverize_disabled"	 //Reference: Awar
-	"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+	"Ability10"					"orc_backpack_disabled"
 	
 	// Armor
 	//----------------------------------------------------------------

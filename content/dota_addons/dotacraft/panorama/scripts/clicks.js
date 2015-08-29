@@ -157,7 +157,11 @@ function OnLeftButtonPressed() {
 }
 
 function UnitCanPurchase(entIndex) {
-    return (Entities.IsRealHero(entIndex) || Entities.GetAbilityByName( entIndex, "ability_backpack") != -1)
+    return (Entities.IsRealHero(entIndex) || 
+            Entities.GetAbilityByName(entIndex, "human_backpack") != -1 || 
+            Entities.GetAbilityByName(entIndex, "orc_backpack") != -1 || 
+            Entities.GetAbilityByName(entIndex, "nightelf_backpack") != -1 || 
+            Entities.GetAbilityByName(entIndex, "undead_backpack") != -1)
 }
 
 function IsBuilder(entIndex) {

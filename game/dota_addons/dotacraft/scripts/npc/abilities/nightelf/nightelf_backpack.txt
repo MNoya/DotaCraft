@@ -1,0 +1,155 @@
+// Affects all ground units (except for builders, which have their inventories filled with items)
+"nightelf_backpack"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "research_backpack"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+    "Modifiers"
+    {
+        "modifier_backpack"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+
+            "States"
+            {
+                "MODIFIER_STATE_MUTED"        "MODIFIER_STATE_VALUE_ENABLED"
+            }
+    
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "units/upgrades.lua"
+                    "Function"      "Backpack"
+                    "Action"        "Enable"
+                }
+
+                "RunScript"
+                {
+                    "ScriptFile"    "buildings/upgrades.lua"
+                    "Function"      "HideAbility"
+                }
+            }
+
+            "OnDeath"
+            {
+                // Item drops when unit is killed
+                "RunScript"
+                {
+                    "ScriptFile"    "units/upgrades.lua"
+                    "Function"      "BackpackDrop"
+                }
+            }
+        }
+    }
+}
+
+
+"nightelf_backpack_disabled"
+{
+    "BaseClass"                     "ability_datadriven"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+    "Modifiers"
+    {
+        "modifier_backpack_disabled"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+    
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "units/upgrades.lua"
+                    "Function"      "Backpack"
+                    "Action"        "Disable"
+                }
+            }
+        }
+    }
+}
+
+"nightelf_research_backpack"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "research_backpack"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilityGoldCost"               "50"
+    "AbilityChannelTime"            "%research_time"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "research_time"         "20"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "50"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "25"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/research.lua"
+            "Function"      "DisableResearch"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        // Add Upgrade and Swap the ability for the next upgrade if there is one
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/research.lua"
+            "Function"      "ResearchComplete"
+        }
+    }
+}
+"nightelf_research_backpack_disabled"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "research_backpack"
+    "MaxLevel"                      "0"
+
+    "OnUpgrade"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/upgrades.lua"
+            "Function"      "SetLevel0"
+        }
+    }
+}
