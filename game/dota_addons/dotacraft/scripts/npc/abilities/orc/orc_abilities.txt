@@ -1025,7 +1025,43 @@
 		// Both are percentages.
 	}
 
-	// Done
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/orc/spiritwalker.lua"
+			"Function"		"AncestralSpiritPrecast"
+		}
+	}
+	
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Abaddon.AphoticShield.Cast"
+			"Target"			"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"units/orc/spiritwalker.lua"
+			"Function"		"AncestralSpirit"
+		}		
+	}
 }
 
 //=================================================================================

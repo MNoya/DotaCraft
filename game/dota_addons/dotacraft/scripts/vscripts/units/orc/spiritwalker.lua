@@ -138,3 +138,49 @@ function LinkDamage( event )
 		end
 	end
 end
+
+-- Resurrects units near the caster, using the corpse mechanic.
+function AncestralSpirit( event )
+	local caster = event.caster
+	local ability = event.ability
+	local player = event.caster:GetPlayerOwnerID()
+	local team = event.caster:GetTeamNumber()
+	local radius = ability:GetCastRange()
+	local health_factor = ability:GetSpecialValueFor('life_restored')
+	local mana_factor = ability:GetSpecialValueFor('mana_restored')
+
+	-- Find all corpse entities in the radius and start the counter of units resurrected.
+	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), radius)
+
+	-- Go through the units
+	for _, unit in pairs(targets) do
+		-- The corpse has a unit_name associated.
+		if unit.unit_name == 'orc_tauren' then
+			local resurected = CreateUnitByName(unit.unit_name, unit:GetAbsOrigin(), true, caster, caster, team)
+			resurected:SetControllableByPlayer(player, true)
+			resurected:SetHealth(resurected:GetMaxHealth() * health_factor)
+			resurected:SetMana(resurected:GetMaxMana() * mana_factor)
+			-- Leave no corpses
+			resurected.no_corpse = true
+			unit:RemoveSelf()
+			break
+		end
+	end
+end
+
+-- Denies casting if no tauren corpses near, with a message
+function AncestralSpiritPrecast( event )
+	local ability = event.ability
+	local caster = event.caster
+	local radius = ability:GetCastRange()
+	local corpse = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), radius)
+	for k, v in pairs(corpse) do
+		print(k,v)
+		if v.unit_name == 'orc_tauren' then
+			return
+		end
+	end
+
+	event.caster:Interrupt()
+	SendErrorMessage(pID, "#error_no_usable_corpses")
+end
