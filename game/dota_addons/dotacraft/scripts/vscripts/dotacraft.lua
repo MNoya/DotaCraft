@@ -491,7 +491,7 @@ function dotacraft:PostLoadPrecache()
 	PrecacheUnitByNameAsync("orc_tauren_totem", function(...) end)
 	PrecacheUnitByNameAsync("orc_watch_tower", function(...) end)
 
-	PrecacheUnitByNameAsync("npc_dota_hero_keeper_of_the_light", function(...) end)
+	--PrecacheUnitByNameAsync("npc_dota_hero_keeper_of_the_light", function(...) end)
 	PrecacheUnitByNameAsync("npc_dota_hero_zuus", function(...) end)
 	PrecacheUnitByNameAsync("npc_dota_hero_omniknight", function(...) end)
 	PrecacheUnitByNameAsync("npc_dota_hero_Invoker", function(...) end)

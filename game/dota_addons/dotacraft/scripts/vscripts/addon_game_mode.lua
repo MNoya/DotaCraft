@@ -54,6 +54,8 @@ function Precache( context )
 	PrecacheUnitByNameSync("npc_dota_hero_life_stealer", context)
 	PrecacheUnitByNameSync("npc_dota_hero_huskar", context)
 
+	PrecacheUnitByNameSync("npc_dota_hero_keeper_of_the_light", context)
+
 	-- This units are created as soon as the player gets into the game		
 	PrecacheUnitByNameSync("human_town_hall", context)
 	PrecacheUnitByNameSync("nightelf_tree_of_life", context)
