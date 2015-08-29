@@ -19,12 +19,12 @@ function getIndex(list, element)
 end
 
 function getUnitIndex(list, unitName)
-    --print("Given Table")
+    -- print("Given Table")
     --DeepPrintTable(list)
     if list == nil then return false end
     for k,v in pairs(list) do
         for key,value in pairs(list[k]) do
-            --print(key,value)
+            -- print(key,value)
             if value == unitName then 
                 return key
             end

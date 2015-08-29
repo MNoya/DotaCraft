@@ -55,15 +55,17 @@ function SpiritLinkStart( event )
 	local ability = event.ability
 	local radius = ability:GetSpecialValueFor('radius')
 
-	ability:ApplyDataDrivenModifier(caster, target, 'modifier_spirit_link', {})
 	local units = 1
 	local max = ability:GetSpecialValueFor('max_unit')
 	local allies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-	caster.linked = {}
+	if caster.linked == nil then
+		caster.linked = {}
+	end
+	ability:ApplyDataDrivenModifier(caster, target, 'modifier_spirit_link', {})
 	local anyunit = false
 	while units < max do
 		for k,ally in pairs(allies) do
-			if units < max and ally ~= caster and (not ally:FindModifierByName('modifier_spirit_link') or anyunit) then
+			if units < max and (not ally:FindModifierByName('modifier_spirit_link') or anyunit or ally ~= caster) then
 				ability:ApplyDataDrivenModifier(caster, ally, 'modifier_spirit_link', {})
 				units = units + 1
 			end
@@ -72,21 +74,67 @@ function SpiritLinkStart( event )
 	end
 end
 
--- IsValidAlive(unit) USE THIS on OnTakeDamge <<<<<<<<<<
-
 function RemoveLinkedUnit( event )
-	local linked_units = event.caster.linked
 	local unit = event.target
-	local i = getIndex(linked_units, unit)
-	if i ~= -1 then
-		table.remove(linked_units, i)
-	else
-		print("Invalid index")
+	if IsValidEntity(unit) then
+		-- print('=======================')
+		local i = getIndex(event.caster.linked, unit:GetEntityIndex())
+		if i ~= -1 then
+			table.remove(event.caster.linked, i)
+			-- print('Unit removed from table')
+		else
+			-- print("Invalid index")
+		end
+		-- print('=======================')
 	end
 end
 
 function AddLinkedUnit( event )
-	local linked_units = event.caster.linked
 	local unit = event.target
-	table.insert(linked_units, unit)
+	table.insert(event.caster.linked, unit:GetEntityIndex())
+end
+
+function LinkDamage( event )
+	local attacker = event.attacker
+	local target = event.unit
+	local damage = event.Damage
+	local ability = event.ability
+	local factor = ability:GetSpecialValueFor('distribution_factor') 
+
+	if IsValidAlive(target) then
+		target:Heal(damage * factor, attacker)
+	end
+
+	local j = TableFindKey(event.caster.linked, target:GetEntityIndex())
+	local k = TableCount(event.caster.linked)
+
+	-- DeepPrintTable(event.caster.linked)
+	if not j then j = -1 end
+	-- print('=======================')
+	-- print('Damage on main target: ' .. damage * factor)
+	-- print('Index of main target: ' .. j)
+	-- print('Table general count: ' .. k)
+	-- print('=======================')
+	if k-1 > 0 then
+		local dist_damage = (damage * factor) / (k-1)
+		for i=1,k do
+			if i ~= j then
+				if event.caster.linked[i] then
+					local linked = EntIndexToHScript(event.caster.linked[i])
+					if IsValidAlive(linked) then
+						local new_health = linked:GetHealth() - dist_damage
+						if new_health < 1 then
+							new_health = 1
+							linked:RemoveModifierByName('modifier_spirit_link')
+						end
+						linked:SetHealth(new_health)
+						-- print('=======================')
+						-- print('Damage on linked unit: ' .. dist_damage)
+						-- print('Index of linked unit: ' .. i)
+						-- print('=======================')
+					end
+				end
+			end
+		end
+	end
 end

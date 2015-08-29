@@ -871,38 +871,51 @@
 		}
 	}
 
-	"modifier_spirit_link"
+	"Modifiers"
 	{
-		"IsPurgable"		"1"
-		"IsBuff"			"1"
-		"Duration"			"%duration"
-		"EffectName"		"particle_name"
-		"EffectAttachType"	"follow_origin"
-
-		"OnCreated"
+		"modifier_spirit_link"
 		{
-			"RunScript"
+			"IsPurgable"		"1"
+			"IsBuff"			"1"
+			"Duration"			"%duration"
+			//"EffectName"		"particle_name"
+			//"EffectAttachType"	"follow_origin"
+
+			"OnCreated"
 			{
-				"ScriptFile"	"units/orc/ability_name.lua"
-				"Function"		"AddLinkedUnit"
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/spiritwalker.lua"
+					"Function"		"AddLinkedUnit"
+				}
 			}
-		}
 
-		"OnDeath"
-		{
-			"RunScript"
+			"OnDeath"
 			{
-				"ScriptFile"	"units/orc/ability_name.lua"
-				"Function"		"RemoveLinkedUnit"
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/spiritwalker.lua"
+					"Function"		"RemoveLinkedUnit"
+				}
 			}
-		}
 
-		"OnDestroy"
-		{
-			"RunScript"
+			"OnDestroy"
 			{
-				"ScriptFile"	"units/orc/ability_name.lua"
-				"Function"		"RemoveLinkedUnit"
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/spiritwalker.lua"
+					"Function"		"RemoveLinkedUnit"
+				}
+			}
+
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/spiritwalker.lua"
+					"Function"		"LinkDamage"
+					"Damage"		"%attack_damage"
+				}
 			}
 		}
 	}
