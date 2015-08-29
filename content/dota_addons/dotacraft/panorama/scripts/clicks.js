@@ -149,17 +149,10 @@ function OnLeftButtonPressed() {
                     GameEvents.SendCustomGameEventToServer( "shop_active_order", { shop: e.entityIndex, unit: mainSelected, targeted: true})
                     return true
                 }
-                else
-                {
-                    return false //Dont consume the event, let the player select the shop normally
-                }
             }
         }
     }
-    // Rest of the right clicks
-    else
 
-    
     return false
 }
 
@@ -187,44 +180,31 @@ function IsNeutralUnit(entIndex) {
 GameUI.SetMouseCallback( function( eventName, arg ) {
     var CONSUME_EVENT = true;
     var CONTINUE_PROCESSING_EVENT = false;
+    var LEFT_CLICK = (arg === 0)
+    var RIGHT_CLICK = (arg === 1)
+
+    $.Msg(arg)
 
     if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
         return CONTINUE_PROCESSING_EVENT;
 
     var mainSelected = Players.GetLocalPlayerPortraitUnit()
 
-    if ( eventName === "pressed" && IsBuilder(mainSelected))
+    if ( eventName === "pressed" || eventName === "doublepressed")
     {
-        // Left-click with a builder while BH is active
-        if ( arg === 0 && state == "active")
-        {
-            return SendBuildCommand();
-        }
+        // Builder Clicks
+        if (IsBuilder(mainSelected))
+            if (LEFT_CLICK) 
+                return (state == "active") ? SendBuildCommand() : OnLeftButtonPressed();
+            else if (RIGHT_CLICK) 
+                return OnRightButtonPressed();
+
         else
-        {
-            return OnLeftButtonPressed();
-        }
-
-        // Right-click (Cancel & Repair)
-        if ( arg === 1 )
-        {
-            return OnRightButtonPressed();
-        }
-    }
-    else if ( eventName === "pressed" || eventName === "doublepressed")
-    {
-        // Left-click
-        if ( arg === 0 )
-        {
-            return OnLeftButtonPressed();
-            //return CONTINUE_PROCESSING_EVENT;
-        }
-
-        // Right-click
-        if ( arg === 1 )
-        {
-            return OnRightButtonPressed();
-        }
+            if (LEFT_CLICK) 
+                return OnLeftButtonPressed();
+            else if (RIGHT_CLICK) 
+                return OnRightButtonPressed(); 
+        
     }
     return CONTINUE_PROCESSING_EVENT;
 } );
