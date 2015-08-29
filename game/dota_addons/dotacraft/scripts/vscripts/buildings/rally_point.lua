@@ -53,10 +53,9 @@ end
 function SetRallyPoint( event )
 	local caster = event.caster
 	local origin = caster:GetOrigin()
-	print(origin)
 	
-	-- Need to wait one frame for the building to be properly positioned
-	Timers:CreateTimer(0.03, function()
+	-- Need to wait two frames for the building to be properly positioned
+	Timers:CreateTimer(2/30, function()
 
 		 -- Remove the old flag if there is one
 	    if caster.flag and IsValidEntity(caster.flag) then
@@ -172,12 +171,12 @@ function MoveToRallyPoint( event )
 
 		-- If its a dummy - Move to position
 		elseif rally_type == "position" then
-			print("MOVE TO MINE POSITION")
+			print("MOVE TO POSITION")
 			local position = flag:GetAbsOrigin()
 			Timers:CreateTimer(0.05, function() target:MoveToPosition(position) end)
 			print(target:GetUnitName().." moving to position",position)
 		elseif rally_type == "target" then
-			print("MOVE TO TARGET POSITION")
+			print("MOVE TO FOLLOW TARGET")
 			-- If its a target unit, Move to follow
 			Timers:CreateTimer(0.05, function() target:MoveToNPC(flag) end)
 			print(target:GetUnitName().." moving to follow",flag:GetUnitName())

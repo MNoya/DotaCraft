@@ -122,6 +122,7 @@ if not GameRules.RegisteredCheats then
 	Convars:RegisterCommand( "synergy", Dynamic_Wrap(dotacraft, 'Synergy'), "Disable tech tree requirements", 0 )
 	Convars:RegisterCommand( "riseandshine", Dynamic_Wrap(dotacraft, 'RiseAndShine'), "Set time of day to dawn", 0 )
 	Convars:RegisterCommand( "lightsout", Dynamic_Wrap(dotacraft, 'LightsOut'), "Set time of day to dusk", 0 )
+	Convars:RegisterCommand( "giveitem", Dynamic_Wrap(dotacraft, 'GiveItem'), "Gives an item by name", 0 )
 	GameRules.RegisteredCheats = true
 end
 
@@ -208,6 +209,18 @@ end
 function dotacraft:LightsOut()
 	GameRules:SetTimeOfDay( 0.8 )
 end
+
+function dotacraft:GiveItem(item_name)
+	local cmdPlayer = Convars:GetCommandClient()
+	local pID = cmdPlayer:GetPlayerID()
+	
+	local selected = GetMainSelectedEntity(pID)
+	local new_item = CreateItem(item_name, selected, selected)
+	if new_item then
+		selected:AddItem(new_item)
+	end
+end
+
 
 --[[ 
 StrengthAndHonor - No defeat

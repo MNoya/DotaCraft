@@ -297,10 +297,10 @@ function PlayerHasEnoughGold( player, gold_cost )
 	local pID = hero:GetPlayerID()
 	local gold = hero:GetGold()
 
-	if gold < gold_cost then
-		SendErrorMessage(pID, "#error_not_enough_gold")
-		return false
+	if not gold_cost or  gold > gold_cost then 
+		return true
 	else
+		SendErrorMessage(pID, "#error_not_enough_gold")
 		return true
 	end
 end
@@ -310,11 +310,11 @@ end
 function PlayerHasEnoughLumber( player, lumber_cost )
 	local pID = player:GetAssignedHero():GetPlayerID()
 
-	if player.lumber < lumber_cost then
+	if not lumber_cost or player.lumber > lumber_cost then 
+		return true 
+	else
 		SendErrorMessage(pID, "#error_not_enough_lumber")
 		return false
-	else
-		return true
 	end
 end
 
@@ -464,6 +464,82 @@ function GetCityCenterNameForHeroRace( hero_name )
 	return citycenter_name
 end
 
+-- Goes through the structures of the player, checking for the max level city center
+-- If no city center is found, the player has a 2 minute window in which a city center must be built or all his structures will be revealed
+function CheckCurrentCityCenters( player )
+	local structures = player.structures
+	local city_center_level = 0
+	for k,building in pairs(structures) do
+		if IsCityCenter(building) then
+			local level = building:GetLevel()
+			if level > city_center_level then
+				city_center_level = level
+			end
+		end
+	end
+	player.city_center_level = city_center_level
+
+	print("Current City Center Level for player "..player:GetPlayerID().." is: "..city_center_level)
+
+	if player.city_center_level == 0 then
+		local time_to_reveal = 120
+		print("Player "..player:GetPlayerID().." has no city centers left standing. Revealed in "..time_to_reveal.." seconds until a City Center is built.")
+		player.RevealTimer = Timers:CreateTimer(time_to_reveal, function()
+			RevealPlayerToAllEnemies(player)
+		end)
+	else
+		StopRevealingPlayer(player)
+	end
+end
+
+-- Creates revealer entities on each building of the player
+function RevealPlayerToAllEnemies( player )
+	local playerID = player:GetPlayerID()
+	local units = player.units
+	local structures = player.structures
+
+	print("Revealing Player "..playerID)
+
+	local playerName = PlayerResource:GetPlayerName(playerID)
+	if playerName == "" then playerName = "Player "..playerID end
+	GameRules:SendCustomMessage("Revealing "..playerName, 0, 0)
+
+	for k,building in pairs(structures) do
+		local origin = building:GetAbsOrigin()
+		local vision = buildling:GetDayTimeVisionRange()
+		local ent = SpawnEntityFromTableSynchronous("ent_fow_revealer", {origin = origin, vision = vision, teamnumber = 0})
+		building.revealer = ent
+	end
+end
+
+function StopRevealingPlayer( player )
+	local structures = player.structures
+
+	print("Stop Revealing Player "..player:GetPlayerID())
+
+	if player.RevealTimer then
+		Timers:RemoveTimer(player.RevealTimer)
+		player.RevealTimer = nil
+	end
+
+	for k,building in pairs(structures) do
+		if building.revealer then
+			DoEntFireByInstanceHandle(building.revealer, "Kill", "1", 1, nil, nil)
+			building.revealer = nil
+		end
+	end
+end
+
+-- Checks the UnitLabel for "city_center"
+function IsCityCenter( unit )
+	return IsCustomBuilding(unit) and string.match(unit:GetUnitLabel(), "city_center")
+end
+
+-- Returns the player.city_center_level
+function GetPlayerCityLevel( player )
+	return player.city_center_level
+end
+
 -- Returns string with the name of the builders associated with the hero_name
 function GetBuilderNameForHeroRace( hero_name )
 	local builder_name = ""
@@ -479,12 +555,18 @@ function GetBuilderNameForHeroRace( hero_name )
 	return builder_name
 end
 
--- Builders require the "builder" label in its unit definition
+-- Builders are stored in a nettable in addition to the builder label
 function IsBuilder( unit )
-	if not IsValidEntity(unit) then
-		return
+	local label = unit:GetUnitLabel()
+	if label == "builder" then
+		return true
 	end
-	return (unit:GetUnitLabel() == "builder")
+	local table = CustomNetTables:GetTableValue("builders", tostring(unit:GetEntityIndex()))
+	if table then
+		return tobool(table["IsBuilder"])
+	else
+		return false
+	end
 end
 
 -- A BuildingHelper ability is identified by the "Building" key.
@@ -601,6 +683,17 @@ function PrintAbilities( unit )
 	print("---------------------")
 end
 
+-- Adds an ability to the unit by its name
+function TeachAbility( unit, ability_name )
+	unit:AddAbility(ability_name)
+	local ability = unit:FindAbilityByName(ability_name)
+	if ability then
+		ability:SetLevel(1)
+	else
+		print("ERROR, failed to teach ability "..ability_name)
+	end
+end
+
 function GenerateAbilityString(player, ability_table)
 	local abilities_string = ""
 	local index = 1
@@ -684,6 +777,10 @@ function IsCustomTower( unit )
     return unit:HasAbility("ability_tower")
 end
 
+function IsCustomShop( unit )
+	return unit:HasAbility("ability_shop")
+end
+
 function IsMechanical( unit )
 	return unit:HasAbility("ability_siege")
 end
@@ -725,7 +822,7 @@ function FindAlliesInRadius( unit, radius )
 	local team = unit:GetTeamNumber()
 	local position = unit:GetAbsOrigin()
 	local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, 0, FIND_ANY_ORDER, false)
+	return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, 0, FIND_CLOSEST, false)
 end
 
 function AddUnitToSelection( unit )
@@ -1088,6 +1185,28 @@ function IsValidLumberDepositName( building_name, race )
 	return false
 end
 
+function FindHighestLevelCityCenter( caster )
+	local player = caster:GetPlayerOwner()
+	local position = caster:GetAbsOrigin()
+	if not player then print("ERROR, NO PLAYER") return end
+	local buildings = player.structures
+	local level = 0 --Priority to the highest level city center
+	local distance = 20000
+	local closest_building = nil
+
+	for _,building in pairs(buildings) do
+		if IsValidAlive(building) and IsCityCenter(building) and building.state == "complete" and building:GetLevel() > level then
+			level = building:GetLevel()
+			local this_distance = (position - building:GetAbsOrigin()):Length()
+			if this_distance < distance then
+				distance = this_distance
+				closest_building = building
+			end
+		end
+	end
+	return closest_building
+end
+
 function ApplyConstructionEffect( unit )
 	local item = CreateItem("item_apply_modifiers", nil, nil)
 	item:ApplyDataDrivenModifier(unit, unit, "modifier_construction", {})
@@ -1105,6 +1224,8 @@ function CreateBlight(location, size)
 	local radius = 960
 	if size == "small" then
 		radius = 704
+	elseif size == "item" then
+		radius = 384
 	end
 	local particle_spread = 256
 	local count = 0
@@ -1184,14 +1305,18 @@ end
 
 -- Ground/Air Attack mechanics
 function UnitCanAttackTarget( unit, target )
-  if not unit:HasAttackCapability() 
-    or (target.IsInvulnerable and target:IsInvulnerable()) 
-    or (target.IsAttackImmune and target:IsAttackImmune()) 
-    or not unit:CanEntityBeSeenByMyTeam(target) then
-    return false
-  end
+	local attacks_enabled = GetAttacksEnabled(unit)
+	local target_type = GetMovementCapability(target)
+  
+  	if not unit:HasAttackCapability() 
+    	or (target.IsInvulnerable and target:IsInvulnerable()) 
+    	or (target.IsAttackImmune and target:IsAttackImmune()) 
+    	or not unit:CanEntityBeSeenByMyTeam(target) then
+    	
+    		return false
+  	end
 
-  return true
+  	return string.match(attacks_enabled, target_type)
 end
 
 -- Check the Acquisition Range (stored on spawn) for valid targets that can be attacked by this unit
@@ -1235,6 +1360,16 @@ function GetAttacksEnabled( unit )
 	end
 
 	return attacks_enabled or "ground"
+end
+
+function SetAttacksEnabled( unit, attack_string )
+	local unitName = unit:GetUnitName()
+
+	if unit:IsHero() then
+		GameRules.HeroKV[unitName]["AttacksEnabled"] = attack_string
+	elseif GameRules.UnitKV[unitName] then
+		GameRules.UnitKV[unitName]["AttacksEnabled"] = attack_string
+	end
 end
 
 -- Searches for "AttacksEnabled", false by omission
@@ -1382,5 +1517,94 @@ function ReorderItems( caster )
 
     for k,itemSlot in pairs(slots) do
     	caster:SwapItems(itemSlot,k-1)
+    end
+end
+
+-- Sells an item from any unit, with gold and lumber cost refund
+function SellCustomItem( unit, item )
+	local player = unit:GetPlayerOwner()
+	local pID = player:GetPlayerID()
+	local item_name = item:GetAbilityName()
+    local GoldCost = GameRules.ItemKV[item_name]["ItemCost"]
+    local LumberCost = GameRules.ItemKV[item_name]["LumberCost"]
+
+    -- 10 second sellback
+    local time = item:GetPurchaseTime()
+    local refund_factor = GameRules:GetGameTime() <= time+10 and 1 or 0.5
+
+    if GoldCost then
+        PlayerResource:ModifyGold(pID, GoldCost*refund_factor, false, 0)
+        PopupGoldGain( unit, GoldCost*refund_factor)
+    end
+
+    if LumberCost then
+        ModifyLumber( player, LumberCost*refund_factor )
+        PopupLumber( unit, LumberCost*refund_factor)
+    end
+
+    EmitSoundOnClient("General.Sell", player)
+
+    item:RemoveSelf()
+end
+
+function GetItemSlot( unit, target_item )
+	for itemSlot = 0,5 do
+		local item = unit:GetItemInSlot(itemSlot)
+		if item and item == target_item then
+			return itemSlot
+		end
+	end
+	return -1
+end
+
+function CountInventoryItems(unit)
+	local count = 0
+	for i=0, 5 do
+		if unit:GetItemInSlot(i) then
+			count = count + 1
+		end
+	end
+	
+	return count
+end
+
+function IsAlliedUnit( unit, target )
+	return (unit:GetTeamNumber() == target:GetTeamNumber())
+end
+
+function IsNeutralUnit( target )
+	return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS)
+end
+
+function StartItemGhosting(shop, unit)
+    if shop.ghost_items then
+        Timers:RemoveTimer(shop.ghost_items)
+    end
+
+    shop.ghost_items = Timers:CreateTimer(function()
+        if IsValidAlive(shop) and IsValidAlive(unit) then
+            ClearItems(shop)
+            for j=0,5 do
+                local unit_item = unit:GetItemInSlot(j)
+                if unit_item then
+                    local item_name = unit_item:GetAbilityName()
+                    local new_item = CreateItem(item_name, nil, nil)
+                    shop:AddItem(new_item)
+                    shop:SwapItems(j, GetItemSlot(shop, new_item))
+                end
+            end
+            return 0.1
+        else
+            return nil
+        end
+    end)
+end
+
+function ClearItems(unit)
+     for i=0,5 do
+        local item = unit:GetItemInSlot(i)
+        if item then
+            item:RemoveSelf()
+        end
     end
 end

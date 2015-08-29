@@ -1,11 +1,7 @@
-// List of Scrolls
+// List of Scrolls not sold on Race Shops
 
-// Scroll of Restoration (300 health and 150 mana)
-// Scroll of Healing (150 health)
 // Scroll of Mana (100 mana)
-// Scroll of Regeneration (225 over 45 seconds)
 // Scroll of Protection (2 armor for 30 seconds)
-// Scroll of Speed (10 seconds haste)
 // Scroll of the Beast (25% bonus damage for 45 seconds)
 // Scroll of Resurrection (Paladin)
 // Scroll of Animate Dead (Death Knight)
@@ -97,82 +93,6 @@
 	}
 }
 
-"item_scroll_of_healing"
-{
-	"BaseClass"                     "item_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityTextureName"            "item_scroll_of_healing"
-	"AbilityCooldown"               "60"
-	"AbilityManaCost"               "0"
-		
-	"Model"							"models/props_gameplay/tpscroll01.vmdl"
-	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
-	
-	"ItemCost"                      "1900"
-	"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-	"ItemShopTags"					"rare"
-	"ItemQuality"					"rare"
-	"ItemPermanent"					"0"
-	"ItemKillable"                  "1"
-	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
-	"ItemInitialCharges"            "1"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"health_restored"	"150"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"radius"			"600"
-		}
-	}
-
-	"OnSpellStart"
-	{
-		"FireEffect"
-		{
-			"Target" 			"CASTER"
-			"EffectName"		"particles/items2_fx/mekanism.vpcf"
-			"EffectAttachType" 	"follow_origin"
-		}
-		"ActOnTargets"
-		{
-			"Target"
-			{
-				"Center" 	"CASTER"
-				"Radius" 	"%radius"
-				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-			}
-		
-			"Action"    
-			{
-				"Heal"
-				{
-					"Target"        "TARGET"
-					"HealAmount"	"%health_restored"
-				}
-			}
-		}
-			
-		"FireSound"
-		{
-			"EffectName"	"DOTA_Item.Mekansm.Activate"
-			"Target" 		"CASTER"
-		}
-
-		"SpendCharge"
-		{}
-	}
-}
-
 "item_scroll_of_mana"
 {
 	"BaseClass"                     "item_datadriven"
@@ -248,34 +168,4 @@
 		"SpendCharge"
 		{}
 	}
-}
-
-"item_scroll_of_regeneration"
-{
-
-}
-
-"item_scroll_of_protection"
-{
-
-}
-
-"item_scroll_of_speed"
-{
-
-}
-
-"item_scroll_of_the_beast"
-{
-
-}
-
-"item_scroll_of_resurrection"
-{
-
-}
-
-"item_scroll_of_animate_dead"
-{
-	
 }

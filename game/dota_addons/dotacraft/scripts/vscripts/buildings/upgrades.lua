@@ -32,6 +32,14 @@ function UpgradeBuilding( event )
 		AddUnitToSelection(building)
 	end
 
+	-- If the upgraded building is a city center, update the city_center_level if required
+	if IsCityCenter(building) then
+		local level = building:GetLevel()
+		if level > player.city_center_level then
+			player.city_center_level = level
+		end
+	end
+
 	-- Remove the old building from the structures list
 	if IsValidEntity(caster) then
 		local buildingIndex = getIndex(player.structures, caster)

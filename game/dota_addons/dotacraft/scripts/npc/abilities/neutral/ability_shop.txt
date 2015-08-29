@@ -1,0 +1,52 @@
+"ability_shop"
+{
+	"BaseClass"             		"ability_datadriven"
+	"MaxLevel" 						"1"
+
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+	"precache"
+	{
+		"particle"  "particles/newplayer_fx/npx_moveto_arrow.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_shop"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"ThinkInterval"  "0.1"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"buildings/shop.lua"
+					"Function"		"CheckHeroInRadius"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"buildings/shop.lua"
+					"Function"		"SellItemsInInventory"
+				}
+			}
+		}
+				
+		"modifier_create_shop"
+		{	
+			"Passive" 	"1"
+			"IsHidden"	"1"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile" 	"buildings/shop.lua"
+					"Function"		"Setup_Shop"			
+				}		
+			}
+		}
+		
+	}		
+}

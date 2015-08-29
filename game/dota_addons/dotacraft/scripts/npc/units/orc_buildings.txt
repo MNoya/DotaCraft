@@ -294,6 +294,8 @@
 	"ConsideredHero"			"1"
 
 	"RestrictGoldMineDistance"	"1"
+
+	"UnitLabel"					"city_center"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -372,12 +374,14 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/dire_ancient_base001.vmdl"
 	"ModelScale"				"0.75"
-	"Level"						"1"
+	"Level"						"2"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	"ConsideredHero"			"1"
 
 	"RestrictGoldMineDistance"	"1"
+
+	"UnitLabel"					"city_center"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -456,12 +460,14 @@
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/dire_ancient_base001.vmdl"
 	"ModelScale"				"0.8"
-	"Level"						"1"
+	"Level"						"3"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	"ConsideredHero"			"1"
 
 	"RestrictGoldMineDistance"	"1"
+
+	"UnitLabel"					"city_center"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -551,8 +557,8 @@
 	"Ability1"					"orc_battle_stations"	 //Reference: Abds
 	"Ability2"					"orc_stand_down"	 //Reference: Aspi
 	"Ability3"					"orc_reinforced_defenses"	 //Reference: Abun
-	"Ability4"					""	 //Reference: Abtl
-	"Ability5"					""	 //Reference: Astd
+	"Ability4"					"orc_burrow_peon"	 //Reference: Abtl
+	"Ability5"					"orc_back_to_work"	 //Reference: Astd
 	"Ability6"					""	 //Reference: Arbr
 	"Ability10"					"ability_building"
 	
@@ -571,7 +577,7 @@
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"700"
 	"AttackRange"				"700"
-	"ProjectileModel"			""	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_huskar/huskar_base_attack.vpcf"
 	"ProjectileSpeed"			"1200"
 	
 	// Bounty
@@ -796,11 +802,13 @@
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
 	"ConsideredHero"			"1"
+
+	"UnitLabel"					"orc_shop"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					""	 //Reference: Abds
+	"Ability1"					""
 	"Ability2"					""	 //Reference: Aall
 	"Ability3"					""	 //Reference: Aspi
 	"Ability4"					""	 //Reference: Apit

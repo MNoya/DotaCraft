@@ -1,0 +1,219 @@
+// Creates two Skeleton Warriors from a corpse.
+"item_rod_of_necromancy"
+{
+	"BaseClass"                     "item_datadriven"
+	"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityTextureName"            "item_rod_of_necromancy"
+	
+	"AbilityCooldown"               "22"
+    "AbilitySharedCooldown"         "summon"
+	"AbilityCastRange"				"900"
+		
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+	
+	"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
+	"ItemShopTags"					"summon"
+	"ItemQuality"                   "common"
+	"ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemInitialCharges"            "4"
+    "ItemAlertable"                 "1" 
+
+    // Shops
+    "ItemCost"                      "150"
+	"StockMax"                  "1" 
+	"StockTime"                 "60"
+	"StockInitial"              "1"
+    "RequiresTier"              "1"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"duration"		"60"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"radius"		"900"
+		}
+	}
+	
+	"precache"
+	{
+		"model" "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
+		"particle" "particles/neutral_fx/skeleton_spawn.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile" 	"items/rod_of_necromancy.lua"
+			"Function"		"RaiseDead"
+		}
+	}
+}
+
+// Makes Blight on a small zone
+"item_sacrificial_skull"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityTextureName"            "item_sacrificial_skull"
+    
+    "AbilityCooldown"               "0" //?
+    "AbilitySharedCooldown"         "blight"
+    "AbilityCastRange"              "500" //?
+    "AOERadius"                     "%radius"
+        
+    "Model"                         "models/props_gameplay/red_box.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+    
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "blight"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "1"
+    "ItemAlertable"                 "1" 
+
+    // Shops
+    "ItemCost"                      "50"
+    "StockMax"                  "2" 
+    "StockTime"                 "60"
+    "StockInitial"              "2"
+    "RequiresTier"              "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "radius"        "400"
+        }
+    }
+
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/sacrificial_skull.lua"
+            "Function"      "MakeBlight"
+            "Target"        "POINT"
+        }
+
+        "FireSound"
+        {
+            "EffectName"    "Hero_Nightstalker.Trickling_Fear"
+            "Target"        "CASTER"
+        }
+
+        "SpendCharge" 
+        {}
+    }
+}
+
+"item_scroll_of_healing"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityTextureName"            "item_scroll_of_healing"
+    
+    "AbilityCooldown"               "0" //?
+    "AbilitySharedCooldown"         "scroll"
+    "AbilityCastRange"              "600"
+        
+    "Model"                         "models/props_gameplay/tpscroll01.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+    
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "scroll"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "1"
+    "ItemAlertable"                 "1" 
+
+    // Shops
+    "ItemCost"                      "250"
+    "StockMax"                  "2" 
+    "StockTime"                 "120"
+    "StockInitial"              "2"
+    "RequiresTier"              "3"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "health_restored"   "150"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "radius"            "600"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/items2_fx/mekanism.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"    "CASTER"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+            }
+        
+            "Action"    
+            {
+                "Heal"
+                {
+                    "Target"        "TARGET"
+                    "HealAmount"    "%health_restored"
+                }
+            }
+        }
+            
+        "FireSound"
+        {
+            "EffectName"    "DOTA_Item.Mekansm.Activate"
+            "Target"        "CASTER"
+        }
+
+        "SpendCharge"
+        {}
+    }
+}

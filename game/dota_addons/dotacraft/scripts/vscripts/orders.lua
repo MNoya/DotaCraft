@@ -72,6 +72,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+        if not entityList then return true end
         for _,entityIndex in pairs(entityList) do
             local caster = EntIndexToHScript(entityIndex)
             -- Make sure the original caster unit doesn't cast twice
@@ -95,21 +96,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
         return true
     end
 
-    if order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or order_type == DOTA_UNIT_ORDER_SELL_ITEM then
-        local purchaser = EntIndexToHScript(units["0"])
-        print(purchaser:GetUnitName().." order item purchase/sell")
-        if OnEnemyShop(purchaser) then
-            print(" Order denied")
-            return false
-        else
-            print(" Order allowed")
-        end
-
     ------------------------------------------------
     --              ClearQueue Order              --
     ------------------------------------------------
     -- Cancel queue on Stop and Hold
-    elseif order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+    if order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
             if IsBuilder(unit) then
@@ -124,7 +115,60 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if not IsBuildingAbility(ability) then
             BuildingHelper:ClearQueue(unit)
         end
-        return true   
+    end
+
+    ------------------------------------------------
+    --              Sell Item Orders              --
+    ------------------------------------------------
+    if order_type == DOTA_UNIT_ORDER_SELL_ITEM then
+        
+        local item = EntIndexToHScript(filterTable.entindex_ability)
+        local item_name = item:GetAbilityName()
+        print(unit:GetUnitName().." "..ORDERS[order_type].." "..item_name)
+
+        local player = unit:GetPlayerOwner()
+        local pID = player:GetPlayerID()
+
+        local bSellCondition = unit:CanSellItems() and item:IsSellable()
+        if bSellCondition then
+            SellCustomItem(unit, item)
+        else
+            SendErrorMessage( pID, "#error_cant_sell" )
+        end
+
+        return false
+
+    ------------------------------------------------
+    --              Drag Item Orders              --
+    ------------------------------------------------
+    elseif order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
+
+        local item = EntIndexToHScript(filterTable.entindex_ability)
+        local item_name = item:GetAbilityName()
+        local target = EntIndexToHScript(filterTable.entindex_target)
+        print(unit:GetUnitName().." "..units["0"].." "..ORDERS[order_type].." "..item_name.." -> "..target:GetUnitName().." "..filterTable.entindex_target)
+
+        local bDroppable = item:IsDroppable()
+        local bSellable = item:IsSellable()
+        local bFriendly = IsAlliedUnit(unit, target) or IsNeutralUnit(target)
+        local bValidBuilding = not IsCustomBuilding(target) or (IsCustomShop(target) and bSellable) -- Only drag sellable items on shop buildings
+        
+        local bDragCondition = bDroppable and bFriendly and bValidBuilding
+
+        if bDragCondition then
+            unit:MoveToNPCToGiveItem(target, item)
+        else
+            local pID = unit:GetPlayerOwnerID()
+            if not bDroppable then
+                SendErrorMessage( pID, "#error_cant_drop" )
+            elseif not bFriendly then
+                SendErrorMessage( pID, "#error_cant_take_items" )
+            elseif not bValidBuilding then
+                SendErrorMessage( pID, "#error_must_target_shop" )
+            end
+        end
+
+        return false
 
     ------------------------------------------------
     --               Attack Orders                --
@@ -620,6 +664,45 @@ function dotacraft:MoonWellOrder( event )
 end
 
 ------------------------------------------------
+--                Burrow Right-Click          --
+------------------------------------------------
+function dotacraft:BurrowOrder( event )
+    local pID = event.pID
+    local entityIndex = event.mainSelected
+    local burrowIndex = event.targetIndex
+    local burrow = EntIndexToHScript(burrowIndex)
+    dotacraft:RightClickOrder(event)
+
+    if not burrow.peons_inside then
+        burrow.peons_inside = {}
+    end
+
+    local peons_inside = #burrow.peons_inside
+
+    if peons_inside < 4 then
+        local ability = burrow:FindAbilityByName("orc_burrow_peon")
+        local selectedEntities = GetSelectedEntities(pID)
+
+        -- Send the main unit
+        ExecuteOrderFromTable({ UnitIndex = burrowIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = entityIndex, AbilityIndex = ability:GetEntityIndex(), Queue = false})
+        
+        -- Send the others
+        local maxPeons = 4 - peons_inside
+        for _,entityIndex in pairs(selectedEntities) do
+            local unit = EntIndexToHScript(entityIndex)
+            if unit:GetUnitName() == "orc_peon" then
+                if maxPeons > 0 then
+                    maxPeons = maxPeons - 1
+                    ExecuteOrderFromTable({ UnitIndex = burrowIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = entityIndex, AbilityIndex = ability:GetEntityIndex(), Queue = false})
+                else
+                    break
+                end
+            end
+        end
+    end
+end
+
+------------------------------------------------
 --             Repair Right-Click             --
 ------------------------------------------------
 function dotacraft:RepairOrder( event )
@@ -646,6 +729,30 @@ function dotacraft:RepairOrder( event )
         unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
     end
+end
+
+------------------------------------------------
+--            Shop->Unit Right-Click          --
+--            Unit->Shop Left-Click           --
+------------------------------------------------
+function dotacraft:ShopActiveOrder( event )
+    local pID = event.PlayerID
+    local shop = EntIndexToHScript(event.shop)
+    local unit = EntIndexToHScript(event.unit)
+    local player = PlayerResource:GetPlayer(pID)
+
+    -- Send true in panorama order, false if autoassigned
+    shop.targeted = event.targeted or false
+
+    -- Set the current unit of this shop for this player
+    shop.current_unit[pID] = unit
+    
+    if shop.active_particle[pID] then
+        ParticleManager:DestroyParticle(shop.active_particle[pID], true)
+    end
+    shop.active_particle[pID] = ParticleManager:CreateParticleForPlayer("particles/custom/shop_arrow.vpcf", PATTACH_OVERHEAD_FOLLOW, unit, player)
+
+    ParticleManager:SetParticleControl(shop.active_particle[pID], 0, unit:GetAbsOrigin())
 end
 
 ------------------------------------------------

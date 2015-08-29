@@ -57,11 +57,24 @@ function Update_Team_Lock(args){
 	var LocalPlayerID = Game.GetLocalPlayerID()
 	
 	if(!isHost(LocalPlayerID)){
+		// disable panel for all other players
 		for(var PlayerID in Players){
 			var PlayerPanel = PlayerContainer.FindChildTraverse(PlayerID)
-			var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[2])	
-			Toggle_Enabled_Panel(dropdown, TeamLockState) 		
+			var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[2])
+			Toggle_Enabled_Panel(dropdown, TeamLockState)
 		}
+	}else{
+		var Button_Text = $.FindChildInContext("#LockTeamButtonText", Root)
+		if(TeamLockState){
+			Button_Text.text = "Unlock Teams"
+		}else{
+			Button_Text.text = "Lock Teams"
+		}
+		
+		// enable all panels for host
+		for(var PlayerID in Players){
+			Player_Status(PlayerID, TeamLockState, false)						
+		}			
 	}
 }
 
@@ -167,8 +180,17 @@ function Create_Players(){
 				if(button != null){
 					Toggle_Visibility_Panel(button, false)
 				}
-			}else{
-				PlayerPanel.SetHasClass("Local", true)	
+			}else{ // if local
+				PlayerPanel.SetHasClass("Local", true)
+				// if local and ishost
+				if(isHost(PlayerID)){								
+					// set the start button visible to the host
+					var Force_Start_Button = Root.FindChildTraverse("StartButton")
+					Force_Start_Button.visible = true
+					
+					var Host_Panel = Root.FindChildTraverse("HostPanel")
+					Host_Panel.visible = true					
+				}
 			}
 			
 			// if player is host
@@ -177,13 +199,6 @@ function Create_Players(){
 				var Name = PlayerPanel.FindChildTraverse("PlayerName")
 				var HostIcon = $.CreatePanel("Panel", Name, "Host_Icon");	
 				HostIcon.AddClass("Host") 
-				
-				// set the start button visible to the host
-				var Force_Start_Button = Root.FindChildTraverse("StartButton")
-				Force_Start_Button.visible = true
-				
-				var Host_Panel = Root.FindChildTraverse("HostPanel")
-				Host_Panel.visible = true
 			}
 			// set initial starting variables + PlayerID
 			PlayerPanel.PlayerID = PlayerID

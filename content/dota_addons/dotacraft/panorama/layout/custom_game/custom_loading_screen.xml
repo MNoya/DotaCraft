@@ -6,6 +6,7 @@
     <include src="file://{resources}/scripts/custom_loading_screen.js" /> 
   </scripts>
   <Panel class="AddonLoadingRoot" >
+	<Panel id="Precache"/>
   
 	<Panel id ="LoadingScreenPosition">
 		<Image id="LoadingScreen" src="file://{images}/loading_screen.png" /> 

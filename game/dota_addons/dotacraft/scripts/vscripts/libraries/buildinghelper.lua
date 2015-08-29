@@ -100,6 +100,9 @@ function BuildingHelper:InitializeBuilder(builder)
     if builder.buildingQueue == nil then
         builder.buildingQueue = {}
     end
+
+    -- Store the builder entity indexes on a net table
+    CustomNetTables:SetTableValue("builders", tostring(builder:GetEntityIndex()), { IsBuilder = true })
 end
 
 --[[
@@ -125,7 +128,7 @@ function BuildingHelper:AddBuilding(keys)
     -- Prepare the builder, if it hasn't already been done. Since this would need to be done for every builder in some games, might as well do it here.
     local builder = keys.caster
 
-    if builder.buildingQueue == nil or Timers.timers[builder.workTimer] == nil then    
+    if not builder.buildingQueue then  
         BuildingHelper:InitializeBuilder(builder)
     end
 
@@ -385,6 +388,10 @@ function BuildingHelper:StartBuilding( keys )
         -- Remove the model particle and Advance Queue
         BuildingHelper:AdvanceQueue(builder)
         ParticleManager:DestroyParticle(work.particleIndex, true)
+
+        -- Building canceled, refund resources
+        work.refund = true
+        callbacks.onConstructionCancelled(work)
         return
     end
 

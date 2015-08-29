@@ -50,6 +50,10 @@ function OnRightButtonPressed()
 					GameEvents.SendCustomGameEventToServer( "repair_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex, queue: pressedShift })
 					return true;
 				}
+				else if (IsCustomBuilding(e.entityIndex) && mainSelectedName == "orc_peon" && Entities.GetUnitName( e.entityIndex ) == "orc_burrow"){
+					$.Msg(" Targeted orc burrow")
+					GameEvents.SendCustomGameEventToServer( "burrow_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: e.entityIndex })
+				}
 				return false;
 			}
 		}
@@ -72,8 +76,14 @@ function OnRightButtonPressed()
 					$.Msg(" Targeted gold mine")
 					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "mine", targetIndex: e.entityIndex })
 				}
-				else{
-					$.Msg(" Targeted a building")
+				else if ( IsShop( mainSelected ) && Entities.IsControllableByPlayer( e.entityIndex, iPlayerID )  && ( Entities.IsHero( e.entityIndex ) || Entities.IsInventoryEnabled( e.entityIndex )) && Entities.GetRangeToUnit( mainSelected, e.entityIndex) <= 900)
+				{
+					$.Msg(" Targeted unit to shop")
+					GameEvents.SendCustomGameEventToServer( "shop_active_order", { shop: mainSelected, unit: e.entityIndex, targeted: true})
+				}
+				else
+				{
+					$.Msg(" Targeted some entity to rally point")
 					GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "target", targetIndex: e.entityIndex })
 				}
 				return true;
@@ -112,48 +122,86 @@ function OnRightButtonPressed()
 	return false;
 }
 
+// Handle Left Button events
+function OnLeftButtonPressed() {
+    $.Msg("OnLeftButtonPressed")
+
+    var iPlayerID = Players.GetLocalPlayer();
+    var mainSelected = Players.GetLocalPlayerPortraitUnit(); 
+    var mainSelectedName = Entities.GetUnitName( mainSelected )
+    var cursor = GameUI.GetCursorPosition();
+    var mouseEntities = GameUI.FindScreenEntities( cursor );
+    
+    Hide_All_Shops()
+
+    if (mouseEntities.length > 0)
+    {
+        for ( var e of mouseEntities )
+        {
+            if (IsShop(e.entityIndex) && (IsAlliedUnit(mainSelected,e.entityIndex) || IsNeutralUnit(e.entityIndex)))
+            {
+                $.Msg("Player "+iPlayerID+" Clicked on a Shop")
+                ShowShop(e.entityIndex)
+
+                // Hero or unit with inventory
+                if (UnitCanPurchase(mainSelected))
+                {
+                    GameEvents.SendCustomGameEventToServer( "shop_active_order", { shop: e.entityIndex, unit: mainSelected, targeted: true})
+                    return true
+                }
+            }
+        }
+    }
+
+    return false
+}
+
+function UnitCanPurchase(entIndex) {
+    return (Entities.IsRealHero(entIndex) || Entities.GetAbilityByName( entIndex, "ability_backpack") != -1)
+}
+
 function IsBuilder(entIndex) {
-	return (Entities.GetUnitLabel( entIndex ) == "builder")
+	return (CustomNetTables.GetTableValue( "builders", entIndex.toString()))
+}
+
+function IsShop(entIndex) {
+	return (Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
+}
+
+function IsAlliedUnit(entIndex, targetIndex) {
+    return (Entities.GetTeamNumber(entIndex) == Entities.GetTeamNumber(targetIndex))
+}
+
+function IsNeutralUnit(entIndex) {
+    return (Entities.GetTeamNumber(entIndex) == DOTATeam_t.DOTA_TEAM_NEUTRALS)
 }
 
 // Main mouse event callback
 GameUI.SetMouseCallback( function( eventName, arg ) {
     var CONSUME_EVENT = true;
     var CONTINUE_PROCESSING_EVENT = false;
+    var LEFT_CLICK = (arg === 0)
+    var RIGHT_CLICK = (arg === 1)
 
     if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
         return CONTINUE_PROCESSING_EVENT;
 
     var mainSelected = Players.GetLocalPlayerPortraitUnit()
 
-    if ( eventName === "pressed" && IsBuilder(mainSelected))
+    if ( eventName === "pressed" || eventName === "doublepressed")
     {
-        // Left-click with a builder while BH is active
-        if ( arg === 0 && state == "active")
-        {
-            return SendBuildCommand();
-        }
+        // Builder Clicks
+        if (IsBuilder(mainSelected))
+            if (LEFT_CLICK) 
+                return (state == "active") ? SendBuildCommand() : OnLeftButtonPressed();
+            else if (RIGHT_CLICK) 
+                return OnRightButtonPressed();
 
-        // Right-click (Cancel & Repair)
-        if ( arg === 1 )
-        {
-            return OnRightButtonPressed();
-        }
-    }
-    else if ( eventName === "pressed" || eventName === "doublepressed")
-    {
-        // Left-click
-        if ( arg === 0 )
-        {
-            //OnLeftButtonPressed();
-            return CONTINUE_PROCESSING_EVENT;
-        }
-
-        // Right-click
-        if ( arg === 1 )
-        {
-            return OnRightButtonPressed();
-        }
+        if (LEFT_CLICK) 
+            return OnLeftButtonPressed();
+        else if (RIGHT_CLICK) 
+            return OnRightButtonPressed(); 
+        
     }
     return CONTINUE_PROCESSING_EVENT;
 } );

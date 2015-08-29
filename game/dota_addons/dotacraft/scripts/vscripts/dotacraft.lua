@@ -121,9 +121,8 @@ function dotacraft:InitGameMode()
 	GameMode:SetHUDVisible(6, false)  -- Get Rid of Shop button
 	GameMode:SetHUDVisible(8, false) -- Get Rid of Quick Buy
 
-	-- TEST --
-	-- GameMode:SetCustomGameForceHero("npc_dota_hero_dragon_knight")
-	----------
+	-- Default hero dummy
+	GameMode:SetCustomGameForceHero("npc_dota_hero_ancient_apparition")
 
 	-- DebugPrint
 	Convars:RegisterConvar('debug_spew', tostring(DEBUG_SPEW), 'Set to 1 to start spewing debug info. Set to 0 to disable.', 0)
@@ -202,6 +201,8 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "gold_gather_order", Dynamic_Wrap(dotacraft, "GoldGatherOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "repair_order", Dynamic_Wrap(dotacraft, "RepairOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
+    CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) --Right click through panorama 
+    CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
     CustomGameEventManager:RegisterListener( "right_click_order", Dynamic_Wrap(dotacraft, "RightClickOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
@@ -373,6 +374,8 @@ function dotacraft:InitGameMode()
 
 	self.bSeenWaitForPlayers = false
 
+	GameRules.DefeatedTeamCount = 0
+
 	-- Full units file to get the custom values
 	GameRules.AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
   	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
@@ -384,6 +387,7 @@ function dotacraft:InitGameMode()
   	GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
   	GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
   	GameRules.Buildings = LoadKeyValues("scripts/kv/buildings.kv")
+	GameRules.Shops = LoadKeyValues("scripts/kv/shops.kv")
 
   	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
   	for _,t in pairs(GameRules.ALLTREES) do
@@ -487,7 +491,7 @@ function dotacraft:PostLoadPrecache()
 	PrecacheUnitByNameAsync("orc_tauren_totem", function(...) end)
 	PrecacheUnitByNameAsync("orc_watch_tower", function(...) end)
 
-	PrecacheUnitByNameAsync("npc_dota_hero_keeper_of_the_light", function(...) end)
+	--PrecacheUnitByNameAsync("npc_dota_hero_keeper_of_the_light", function(...) end)
 	PrecacheUnitByNameAsync("npc_dota_hero_zuus", function(...) end)
 	PrecacheUnitByNameAsync("npc_dota_hero_omniknight", function(...) end)
 	PrecacheUnitByNameAsync("npc_dota_hero_Invoker", function(...) end)
@@ -513,6 +517,15 @@ function dotacraft:PostLoadPrecache()
 	PrecacheItemByNameAsync("item_orb_of_corruption", function(...) end)
 	PrecacheItemByNameAsync("item_orb_of_darkness", function(...) end)
 	PrecacheItemByNameAsync("item_orb_of_lightning", function(...) end)
+
+	PrecacheItemByNameAsync("item_scroll_of_regeneration", function(...) end)
+	PrecacheItemByNameAsync("item_mechanical_critter", function(...) end)
+	PrecacheItemByNameAsync("item_lesser_clarity_potion", function(...) end)
+	PrecacheItemByNameAsync("item_potion_of_healing", function(...) end)
+	PrecacheItemByNameAsync("item_potion_of_mana", function(...) end)
+	PrecacheItemByNameAsync("item_scroll_of_town_portal", function(...) end)
+	PrecacheItemByNameAsync("item_build_ivory_tower", function(...) end)
+	PrecacheItemByNameAsync("item_staff_of_sanctuary", function(...) end)
 end
 
 function dotacraft:OnFirstPlayerLoaded()
@@ -554,22 +567,225 @@ function dotacraft:OnAllPlayersLoaded()
 end
 
 function dotacraft:OnHeroInGame(hero)
-	print("[DOTACRAFT] Hero spawned in game for first time -- " .. hero:GetUnitName())
+	local hero_name = hero:GetUnitName()
+	print("[DOTACRAFT] OnHeroInGame "..hero_name)
 
-	if Convars:GetBool("developer") then
-		for i=1,9 do
-			hero:HeroLevelUp(false)
+	-- Ignore the dummy hero to replace with
+	if hero_name == "npc_dota_hero_ancient_apparition" then
+		local aa = hero
+		aa:AddNoDraw() -- Hides the model
+		Timers:CreateTimer(function() 
+			aa:SetAbsOrigin(Vector(11000,11000,0)) -- Hides the minimap icon
+		end)
+		return
+	end
+
+	if hero:HasAbility("hide_hero") then
+		Timers:CreateTimer(0.03, function() 
+			dotacraft:InitializePlayer(hero)
+		end)
+	else
+		print("[DOTACRAFT] Hero spawned in game for first time -- " .. hero:GetUnitName())
+
+		if Convars:GetBool("developer") then
+			for i=1,9 do
+				hero:HeroLevelUp(false)
+			end
+		end
+
+		dotacraft:ModifyStatBonuses(hero)
+
+		if hero:HasAbility("nightelf_shadow_meld") then
+			hero:FindAbilityByName("nightelf_shadow_meld"):SetLevel(1)
+		end
+
+		if hero:HasAbility("blood_mage_orbs") then
+			hero:FindAbilityByName("blood_mage_orbs"):SetLevel(1)
 		end
 	end
 
-	if not hero:HasAbility("hide_hero") then
-		dotacraft:ModifyStatBonuses(hero)
+end
+
+function dotacraft:InitializePlayer( hero )
+	local player = hero:GetPlayerOwner()
+	local playerID = hero:GetPlayerID()
+
+	print("[DOTACRAFT] Initializing main hero entity for player "..playerID)
+
+	-- Initialize Variables for Tracking
+	player.buildings = {} -- This keeps the name and quantity of each building, to access in O(1)
+	player.units = {} -- This keeps the handle of all the units of the player army, to iterate for unlocking upgrades
+	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
+	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
+	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
+	player.altar_structures = {} -- Keeps altars linked
+	player.idle_builders = {} -- Keeps indexes of idle builders to send to the panorama UI
+	player.lumber = 0
+	player.food_limit = 0 -- The amount of food available to build units
+	player.food_used = 0 -- The amount of food used by this player creatures
+	player.city_center_level = 1 -- The maximum level from city centers of the player
+
+    -- Create Main Building
+    DeepPrintTable(GameRules.StartingPositions)
+    local position = GameRules.StartingPositions[playerID].position
+    GameRules.StartingPositions[playerID].playerID = playerID
+
+    print("Position for "..playerID..": ",position)
+    DeepPrintTable(GameRules.StartingPositions)
+    print("Remaining",#GameRules.StartingPositions,"positions")
+
+    -- Stop game logic on the model overview map
+    if GetMapName() == "dotacraft" then
+    	return
+    end
+
+    -- Define the initial unit names to spawn for this hero_race
+    local hero_name = hero:GetUnitName()
+    local city_center_name = GetCityCenterNameForHeroRace(hero_name)
+    local builder_name = GetBuilderNameForHeroRace(hero_name)
+
+	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5, 0) 
+	player.buildings[city_center_name] = 1
+	
+	-- Snap the camera to the created building and add it to selection
+	Timers:CreateTimer(function()
+		PlayerResource:SetCameraTarget(playerID, building)
+
+		Timers:CreateTimer(0.1, function()
+			PlayerResource:SetCameraTarget(playerID, nil)
+			AddUnitToSelection(building)
+		end)
+	end)
+
+	table.insert(player.structures, building)
+	player.main_city_center = building
+
+	CheckAbilityRequirements( building, player )
+
+	-- Give Initial Food
+    ModifyFoodLimit(player, GetFoodProduced(building))
+
+	-- Create Builders in between the gold mine and the city center
+	local num_builders = 5
+	local angle = 360 / num_builders
+	local closest_mine = GetClosestGoldMineToPosition(position)
+	local closest_mine_pos = closest_mine:GetAbsOrigin()
+	local mid_point = closest_mine_pos + (position-closest_mine_pos)/2
+
+	-- Undead special rules
+	if hero_name == "npc_dota_hero_life_stealer" then
+		num_builders = 3
+		local ghoul = CreateUnitByName("undead_ghoul", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
+		ghoul:SetOwner(hero)
+		ghoul:SetControllableByPlayer(playerID, true)
+		ModifyFoodUsed(player, GetFoodCost(ghoul))
+
+		-- Haunt the closest gold mine
+		local haunted_gold_mine = CreateUnitByName("undead_haunted_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
+		haunted_gold_mine:SetOwner(hero)
+		haunted_gold_mine:SetControllableByPlayer(playerID, true)
+		haunted_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
+		ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
+		haunted_gold_mine.builders = {}
+
+		Timers:CreateTimer(function() 
+			CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
+			CreateBlight(building:GetAbsOrigin(), "large")
+		end)
+
+		player.LumberCarried = 20 -- Ghouls carry harder
+
+		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
+		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine
 	end
 
-	if hero:HasAbility("nightelf_shadow_meld") then
-		hero:FindAbilityByName("nightelf_shadow_meld"):SetLevel(1)
+	-- Night Elf special rules
+	if hero_name == "npc_dota_hero_furion" then
+		-- Entangle the closest gold mine
+		local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
+		entangled_gold_mine:SetOwner(hero)
+		entangled_gold_mine:SetControllableByPlayer(playerID, true)
+		entangled_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
+		ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
+		entangled_gold_mine.builders = {}
+
+		entangled_gold_mine.mine = closest_mine -- A reference to the mine that the entangled mine is associated with
+		entangled_gold_mine.city_center = building -- A reference to the city center that entangles this mine
+		building.entangled_gold_mine = entangled_gold_mine -- A reference to the entangled building of the city center
+		closest_mine.building_on_top = entangled_gold_mine -- A reference to the building that entangles this gold mine
+
+		building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
+
+		building:SetAngles(0,-90,0)
 	end
 
+	if hero_name == "npc_dota_hero_dragon_knight" or hero_name == "npc_dota_hero_huskar" then
+		player.LumberCarried = 10
+	end
+
+	for i=1,num_builders do	
+		--DebugDrawCircle(mid_point, Vector(255, 0 , 0), 255, 100, true, 10)
+		local rotate_pos = mid_point + Vector(1,0,0) * 100
+		local builder_pos = RotatePosition(mid_point, QAngle(0, angle*i, 0), rotate_pos)
+
+		local builder = CreateUnitByName(builder_name, builder_pos, true, hero, hero, hero:GetTeamNumber())
+		builder:SetOwner(hero)
+		builder:SetControllableByPlayer(playerID, true)
+		table.insert(player.units, builder)
+		builder.state = "idle"
+
+		-- Increment food used
+		ModifyFoodUsed(player, GetFoodCost(builder))
+
+		-- Go through the abilities and upgrade
+		CheckAbilityRequirements( builder, player )
+	end
+
+	-- Give Initial Resources
+	hero:SetGold(500, false)
+	ModifyLumber(player, 150)
+
+	-- Hide main hero under the main base
+	local ability = hero:FindAbilityByName("hide_hero")
+	ability:UpgradeAbility(true)
+	hero:SetAbilityPoints(0)
+	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
+	Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
+	hero:AddNoDraw()
+
+	-- Find neutrals near the starting zone and remove them
+	local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
+	for k,v in pairs(neutrals) do
+		if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+			v:RemoveSelf()
+		end
+	end
+
+	-- Test options
+	if Convars:GetBool("developer") then
+		dotacraft:DeveloperMode(player)
+	end
+
+	-- Show UI elements for this race
+	local player_race = GetPlayerRace(player)
+	CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", { race = player_race, initial_builders = num_builders })
+
+	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
+	Timers:CreateTimer(1, function() 
+		local idle_builders = {}
+		local player_units = player.units
+		for k,unit in pairs(player_units) do
+			if IsValidAlive(unit) and IsBuilder(unit) and IsIdleBuilder(unit) then
+				table.insert(idle_builders, unit:GetEntityIndex())
+			end
+		end
+		if #idle_builders ~= #player.idle_builders then
+			--print("#Idle Builders changed: "..#idle_builders..", was "..#player.idle_builders)
+			player.idle_builders = idle_builders
+			CustomGameEventManager:Send_ServerToPlayer(player, "player_update_idle_builders", { idle_builder_entities = idle_builders })
+		end
+		return 0.3
+	end)
 end
 
 function dotacraft:OnGameInProgress()
@@ -662,6 +878,10 @@ function dotacraft:OnNPCSpawned(keys)
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
 		dotacraft:OnHeroInGame(npc)
+	end
+
+	if IsBuilder(npc) then
+		BuildingHelper:InitializeBuilder(npc)
 	end
 
 	-- Apply armor and damage modifier (for visuals)
@@ -935,175 +1155,6 @@ end
 function dotacraft:OnPlayerPickHero(keys)
 	print ('[DOTACRAFT] OnPlayerPickHero')
 	--DeepPrintTable(keys)
-
-	local hero = EntIndexToHScript(keys.heroindex)
-	local player = EntIndexToHScript(keys.player)
-	local playerID = hero:GetPlayerID()
-
-	-- Initialize Variables for Tracking
-	player.buildings = {} -- This keeps the name and quantity of each building, to access in O(1)
-	player.units = {} -- This keeps the handle of all the units of the player army, to iterate for unlocking upgrades
-	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
-	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
-	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
-	player.altar_structures = {} -- Keeps altars linked
-	player.idle_builders = {} -- Keeps indexes of idle builders to send to the panorama UI
-	player.lumber = 0
-	player.food_limit = 0 -- The amount of food available to build units
-	player.food_used = 0 -- The amount of food used by this player creatures
-
-    -- Create Main Building
-    DeepPrintTable(GameRules.StartingPositions)
-    local position = GameRules.StartingPositions[playerID].position
-    GameRules.StartingPositions[playerID].playerID = playerID
-
-    print("Position for "..playerID..": ",position)
-    DeepPrintTable(GameRules.StartingPositions)
-    print("Remaining",#GameRules.StartingPositions,"positions")
-
-    -- Stop game logic on the model overview map
-    if GetMapName() == "dotacraft" then
-    	return
-    end
-
-    -- Define the initial unit names to spawn for this hero_race
-    local hero_name = hero:GetUnitName()
-    local city_center_name = GetCityCenterNameForHeroRace(hero_name)
-    local builder_name = GetBuilderNameForHeroRace(hero_name)
-
-	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5, 0) 
-	player.buildings[city_center_name] = 1
-	PlayerResource:SetCameraTarget(playerID, building)
-	Timers:CreateTimer(function() PlayerResource:SetCameraTarget(playerID, nil) end)
-	table.insert(player.structures, building)
-	player.main_city_center = building
-
-	CheckAbilityRequirements( building, player )
-
-	-- Give Initial Food
-    ModifyFoodLimit(player, GetFoodProduced(building))
-
-	-- Create Builders in between the gold mine and the city center
-	local num_builders = 5
-	local angle = 360 / num_builders
-	local closest_mine = GetClosestGoldMineToPosition(position)
-	local closest_mine_pos = closest_mine:GetAbsOrigin()
-	local mid_point = closest_mine_pos + (position-closest_mine_pos)/2
-
-	-- Undead special rules
-	if hero_name == "npc_dota_hero_life_stealer" then
-		num_builders = 3
-		local ghoul = CreateUnitByName("undead_ghoul", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
-		ghoul:SetOwner(hero)
-		ghoul:SetControllableByPlayer(playerID, true)
-		ModifyFoodUsed(player, GetFoodCost(ghoul))
-
-		-- Haunt the closest gold mine
-		local haunted_gold_mine = CreateUnitByName("undead_haunted_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
-		haunted_gold_mine:SetOwner(hero)
-		haunted_gold_mine:SetControllableByPlayer(playerID, true)
-		haunted_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
-		ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
-		haunted_gold_mine.builders = {}
-
-		Timers:CreateTimer(function() 
-			CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
-			CreateBlight(building:GetAbsOrigin(), "large")
-		end)
-
-		player.LumberCarried = 20 -- Ghouls carry harder
-
-		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
-		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine
-	end
-
-	-- Night Elf special rules
-	if hero_name == "npc_dota_hero_furion" then
-		-- Entangle the closest gold mine
-		local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
-		entangled_gold_mine:SetOwner(hero)
-		entangled_gold_mine:SetControllableByPlayer(playerID, true)
-		entangled_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
-		ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
-		entangled_gold_mine.builders = {}
-
-		entangled_gold_mine.mine = closest_mine -- A reference to the mine that the entangled mine is associated with
-		entangled_gold_mine.city_center = building -- A reference to the city center that entangles this mine
-		building.entangled_gold_mine = entangled_gold_mine -- A reference to the entangled building of the city center
-		closest_mine.building_on_top = entangled_gold_mine -- A reference to the building that entangles this gold mine
-
-		building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
-
-		building:SetAngles(0,-90,0)
-	end
-
-	if hero_name == "npc_dota_hero_dragon_knight" or hero_name == "npc_dota_hero_huskar" then
-		player.LumberCarried = 10
-	end
-
-	for i=1,num_builders do	
-		--DebugDrawCircle(mid_point, Vector(255, 0 , 0), 255, 100, true, 10)
-		local rotate_pos = mid_point + Vector(1,0,0) * 100
-		local builder_pos = RotatePosition(mid_point, QAngle(0, angle*i, 0), rotate_pos)
-
-		local builder = CreateUnitByName(builder_name, builder_pos, true, hero, hero, hero:GetTeamNumber())
-		builder:SetOwner(hero)
-		builder:SetControllableByPlayer(playerID, true)
-		table.insert(player.units, builder)
-		builder.state = "idle"
-
-		-- Increment food used
-		ModifyFoodUsed(player, GetFoodCost(builder))
-
-		-- Go through the abilities and upgrade
-		CheckAbilityRequirements( builder, player )
-	end
-
-	-- Give Initial Resources
-	hero:SetGold(500, false)
-	ModifyLumber(player, 150)
-
-	-- Hide main hero under the main base
-	local ability = hero:FindAbilityByName("hide_hero")
-	ability:UpgradeAbility(true)
-	hero:SetAbilityPoints(0)
-	hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
-	Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
-	hero:AddNoDraw()
-
-	-- Find neutrals near the starting zone and remove them
-	local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
-	for k,v in pairs(neutrals) do
-		if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-			v:RemoveSelf()
-		end
-	end
-
-	-- Test options
-	if Convars:GetBool("developer") then
-		dotacraft:DeveloperMode(player)
-	end
-
-	-- Show UI elements for this race
-	local player_race = GetPlayerRace(player)
-	CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", { race = player_race, initial_builders = num_builders })
-
-	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
-	Timers:CreateTimer(1, function() 
-		local idle_builders = {}
-		local player_units = player.units
-		for k,unit in pairs(player_units) do
-			if IsBuilder(unit) and IsIdleBuilder(unit) then
-				table.insert(idle_builders, unit:GetEntityIndex())
-			end
-		end
-		if #idle_builders ~= #player.idle_builders then
-			--print("#Idle Builders changed: "..#idle_builders..", was "..#player.idle_builders)
-			player.idle_builders = idle_builders
-			CustomGameEventManager:Send_ServerToPlayer(player, "player_update_idle_builders", { idle_builder_entities = idle_builders })
-		end
-		return 0.3
-	end)
 end
 
 -- A player killed another player in a multi-team context
@@ -1176,6 +1227,36 @@ function dotacraft:OnEntityKilled( event )
 		ModifyFoodUsed(player, - food_cost)
 	end
 
+	-- Table cleanup
+	if player then
+		-- Remake the tables
+		local table_structures = {}
+		for _,building in pairs(player.structures) do
+			if building and IsValidEntity(building) and building:IsAlive() then
+				--print("Valid building: "..building:GetUnitName())
+				table.insert(table_structures, building)
+			end
+		end
+		player.structures = table_structures
+
+		local table_altars = {}
+		for _,altar in pairs(player.altar_structures) do
+			if altar and IsValidEntity(altar) and altar:IsAlive() then
+				--print("Valid altar: "..altar:GetUnitName())
+				table.insert(table_altars, altar)
+			end
+		end
+		player.altar_structures = table_altars
+				
+		local table_units = {}
+		for _,unit in pairs(player.units) do
+			if unit and IsValidEntity(unit) then
+				table.insert(table_units, unit)
+			end
+		end
+		player.units = table_units		
+	end
+
 	-- Building Killed
 	if IsCustomBuilding(killedUnit) then
 
@@ -1210,6 +1291,17 @@ function dotacraft:OnEntityKilled( event )
 			CheckAbilityRequirements( structure, player )
 		end
 
+		-- If the destroyed building was a city center, update the level
+		if IsCityCenter(killedUnit) then
+			CheckCurrentCityCenters(player)
+		end
+
+		-- Check for lose condition - All buildings destroyed
+		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
+		if (#player.structures == 0) then
+			dotacraft:CheckDefeatCondition(player)
+		end
+
 	-- Unit Killed
 	else
 		-- Give Experience to heroes based on the level of the killed creature
@@ -1237,44 +1329,6 @@ function dotacraft:OnEntityKilled( event )
 		if IsBuilder(killedUnit) then
 			BuildingHelper:ClearQueue(killedUnit)
 		end
-	end
-
-	
-
-	-- Table cleanup
-	if player then
-		-- Remake the tables
-		local table_structures = {}
-		for _,building in pairs(player.structures) do
-			if building and IsValidEntity(building) and building:IsAlive() then
-				--print("Valid building: "..building:GetUnitName())
-				table.insert(table_structures, building)
-			end
-		end
-		player.structures = table_structures
-
-		local table_altars = {}
-		for _,altar in pairs(player.altar_structures) do
-			if altar and IsValidEntity(altar) and altar:IsAlive() then
-				--print("Valid altar: "..altar:GetUnitName())
-				table.insert(table_altars, altar)
-			end
-		end
-		player.altar_structures = table_altars
-		
-		--[[ Check for lose condition - All buildings destroyed
-		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
-		if (#player.structures == 0) then
-			GameRules:MakeTeamLose(player:GetTeamNumber())
-		end]]
-		
-		local table_units = {}
-		for _,unit in pairs(player.units) do
-			if unit and IsValidEntity(unit) then
-				table.insert(table_units, unit)
-			end
-		end
-		player.units = table_units		
 	end
 
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
@@ -1429,6 +1483,103 @@ function dotacraft:RepositionPlayerCamera( event )
 	end
 end
 
+-- Whenever a building is destroyed and the player structures hit 0, check for defeat & win condition
+-- In team games, teams are defeated as a whole instead of each player (because of resource trading and other shenanigans)
+-- Defeat condition: All players of the same team have 0 buildings
+-- Win condition: All teams have been defeated but one (i.e. there are only structures left standing for players of the same team)
+function dotacraft:CheckDefeatCondition( player )
+	local teamNumber = player:GetTeamNumber()
+
+	--SetNetTableValue("dotacraft_player_table", tostring(player:GetPlayerID()), {Status = "defeated"})
+
+	-- Check the player.structures of all the members of that team to determine defeat
+	local teamMembers = 0
+	local defeatedTeamMembers = 0
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if player:GetTeamNumber() == teamNumber then
+				teamMembers = teamMembers + 1
+				if #player.structures == 0 then
+					defeatedTeamMembers = defeatedTeamMembers + 1
+				end
+			end			
+		end
+	end
+
+	print("CheckDefeatCondition: There are ["..teamMembers.."] players in Team "..teamNumber.." and ["..defeatedTeamMembers.."] without structures left standing")
+	
+	if defeatedTeamMembers == teamMembers then
+		print("All players of team "..teamNumber.." are defeated")
+		GameRules.DefeatedTeamCount = GameRules.DefeatedTeamCount + 1
+		dotacraft:PrintDefeateMessageForTeam( teamNumber )
+	end
+
+	-- Victory: Only 1 team left standing
+	local teamCount = dotacraft:GetTeamCount()
+	print("Team Count: "..teamCount,"Defeated Teams: "..GameRules.DefeatedTeamCount)
+
+	if GameRules.DefeatedTeamCount+1 == teamCount then
+		winningTeam = dotacraft:GetWinningTeam()
+		print("Winning Team: "..winningTeam)
+		dotacraft:PrintWinMessageForTeam(winningTeam)
+		GameRules:SetGameWinner(winningTeam)
+	end
+
+end
+
+-- Returns an Int with the number of teams with valid players in them
+function dotacraft:GetTeamCount()
+	local teamCount = 0
+	for i=DOTA_TEAM_FIRST,DOTA_TEAM_CUSTOM_MAX do
+		local playerCount = PlayerResource:GetPlayerCountForTeam(i)
+		if playerCount > 0 then
+			teamCount = teamCount + 1
+			print("  Team ["..i.."] has "..playerCount.." players")
+		end
+	end
+	return teamCount
+end
+
+-- This should only be called when all teams but one are defeated
+-- Returns the first player with a building left standing
+function dotacraft:GetWinningTeam()
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if #player.structures > 0 then
+				return player:GetTeamNumber()
+			end
+		end
+	end
+end
+
+function dotacraft:PrintDefeateMessageForTeam( teamID )
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if player:GetTeamNumber() == teamID then
+				local playerName = PlayerResource:GetPlayerName(playerID)
+				if playerName == "" then playerName = "Player "..playerID end
+				GameRules:SendCustomMessage(playerName.." was defeated", 0, 0)
+			end
+		end
+	end
+end
+
+function dotacraft:PrintWinMessageForTeam( teamID )
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			if player:GetTeamNumber() == teamID then
+				local playerName = PlayerResource:GetPlayerName(playerID)
+				if playerName == "" then playerName = "Player "..playerID end
+				GameRules:SendCustomMessage(playerName.." was victorious", 0, 0)
+			end
+		end
+	end
+end
+
 --[[
 
 Pre_Game_Selection
@@ -1473,9 +1624,13 @@ function dotacraft:Create_Players(data)
 			-- player stuff
 			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
-			PrecacheUnitByNameAsync(race, function()
-				CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
-			end, pID)
+			--CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
+				
+			Timers:CreateTimer(0.1,function()
+				local hero_race = PlayerResource:GetPlayer(playerID):GetAssignedHero()
+				PlayerResource:ReplaceHeroWith(playerID, race, 0, 0)
+				print("[DOTACRAFT] Player Created: ",race,hero_race)
+			end)
 		end
 	end
 end
@@ -1537,4 +1692,12 @@ end
 function GetNetTableValue(NetTableName, key)
     --print("NetTable", key, CustomNetTables:GetTableValue("dotacraft_color_table", key))
     return CustomNetTables:GetTableValue(NetTableName, key)
+end
+
+-- Returns a Vector with the color of the player
+function dotacraft:ColorForPlayer( playerID )
+	local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
+	local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
+	
+	return Vector(color.r, color.g, color.b)
 end

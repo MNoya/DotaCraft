@@ -26,17 +26,13 @@
 	"ModelScale"				"0.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
-	"SelectionGroup"            "Human_Peasants"
+	"SelectionGroup"            "Human_Peasants"	
 	"SoundSet"					"Hero_Kunkka"
+	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
 
 	"UnitLabel"					"builder"
 
 	"AttacksEnabled"			"ground"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -246,13 +242,9 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Footmen"
 	"SoundSet"					"Hero_DragonKnight"
+	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
 
 	"AttacksEnabled"			"ground"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -362,13 +354,9 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Riflemen"
 	"SoundSet"					"Hero_Sniper"
+	"GameSoundsFile" 			"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
 
 	"AttacksEnabled"			"ground, air"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -471,13 +459,9 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Knights"
 	"SoundSet"					"Hero_ChaosKnight"
+    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
 
 	"AttacksEnabled"			"ground"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -591,13 +575,9 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Sorceress"
 	"SoundSet"					"Hero_Lina"
+    "GameSoundsFile"           "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 
 	"AttacksEnabled"			"ground, air"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -708,13 +688,9 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Priests"
 	"SoundSet"					"Hero_Oracle"
+    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 
 	"AttacksEnabled"			"ground, air"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -825,13 +801,9 @@
 	"HasInventory"				"1"
 	"SelectionGroup"            "Human_Spell_Breakers"
 	"SoundSet"					"Hero_Silencer"
+    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
 
 	"AttacksEnabled"			"ground"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -938,13 +910,9 @@
 	"HealthBarOffset"			"280"
 	"SelectionGroup"            "Human_Flying_Machines"
 	"SoundSet"					"Hero_Gyrocopter"
+    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 
 	"AttacksEnabled"			"air"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -1043,13 +1011,9 @@
 	"HealthBarOffset"			"280"
 	"SelectionGroup"            "Human_Dragonhawk_Riders"
 	"SoundSet"					"Hero_SkywrathMage"
+    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
 
 	"AttacksEnabled"			"ground, air"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 
@@ -1153,6 +1117,7 @@
 	"HealthBarOffset"			"120"
 	"SelectionGroup"            "Human_Mortar_Teams"
 	"SoundSet"					"Hero_Techies"
+    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
 
 	"AttacksEnabled"			"ground"
 
@@ -1161,11 +1126,6 @@
 	"SplashMediumDamage"		"0.4" //50%
 	"SplashSmallRadius"			"250"
 	"SplashSmallDamage"			"0.1"
-
-	"precache"
-	{
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
-	}
 	
 	"PathfindingSearchDepthScale" "0.5"
 	
@@ -1429,6 +1389,67 @@
 	"TeamName"					"DOTA_TEAM_NEUTRALS"
 	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_MAGIC"
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_WEAK"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+
+
+
+"human_mechanical_critter"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_base_additive"
+	"Model"						"models/courier/courier_mech/courier_mech.vmdl"
+	"ModelScale"				"0.5"
+	"Level"						"0"
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"0.0"
+	"BountyGoldMax"				"0.0"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"30"
+	"CollisionSize"				"16"
+	"FormationRank"				"4"
+		
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"100"
+	"MovementTurnRate"			"0.4"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"15"
+	"StatusHealthRegen"			"0"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"350"
+	"VisionNighttimeRange"		"350"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	
 	// Creature Data

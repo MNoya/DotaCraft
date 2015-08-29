@@ -41,14 +41,14 @@ See the spreadsheet tracking our progress [here.](https://docs.google.com/spread
 
 - [x] Resources
 - [x] Idle Builders
-- [ ] Team + Race + color picker
+- [x] Team + Race + color picker
 - [x] Controlled Heroes
 - [ ] Gold/Lumber/Food ability values
 - [ ] Shop & Tavern
 
 ### Art
 
-- [  ] Minimap icons for gold mine and Easy/Medium/Hard creep camps
+- [ ] Minimap icons for gold mine and Easy/Medium/Hard creep camps
 - [ ] Possible new models for buildings that require it
 - [ ] Replace the remaining WC3 icons with Dota-style custom icons
   - [ ] Upgrade Research cosmetic icons with custom backgrounds 
