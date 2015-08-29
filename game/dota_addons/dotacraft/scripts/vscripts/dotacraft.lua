@@ -1186,6 +1186,10 @@ function dotacraft:OnEntityKilled( event )
 	-- Hero Killed
 	if killedUnit:IsRealHero() then
 		print("A Hero was killed")
+		for k,v in pairs(unit_shops.Units) do
+			--print(k) (ShopID, HeroName, NewGoldCost, NewLumberCost, RequiredTier)
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(killedUnit:GetPlayerOwnerID()), "Shops_Create_Single_Panel", {Index = k, PlayerID=killedUnit:GetPlayerOwnerID(), HeroInfo={GoldCost=500, LumberCost=0, RequiredTier = 1} , Hero=killedUnit:GetUnitName() }) 
+		end
 		if IsValidEntity(player.altar) then
 			print("Player has "..#player.altar_structures.." valid "..player.altar:GetUnitName())
 			for _,altar in pairs(player.altar_structures) do

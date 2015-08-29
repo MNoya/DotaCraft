@@ -9,21 +9,62 @@ function Create_Shop(args){
 	// create the primary container
 	var Container = $.CreatePanel("Panel", Root, args.Index)
 	Container.AddClass("Container")	
+	//Container.visible = false
 	 
 	// create all the items
-	for(var Item in args.Shop.Items){
-		var shop_item = $.CreatePanel("Panel", Container, Item)
+	for(var orderIndex in args.Shop){
+		var key = args.Shop[orderIndex].ItemName
+
+		var shop_item = $.CreatePanel("Panel", Container, key)
 		shop_item.BLoadLayout("file://{resources}/layout/custom_game/unit_shops_item.xml", false, false);
-		shop_item.ItemName = Item
-		shop_item.ItemInfo = args.Shop.Items[Item]
+		shop_item.ItemName = key
+		shop_item.ItemInfo = args.Shop[orderIndex]
 		shop_item.Entity = args.Index
 		shop_item.Race = args.Race
 		shop_item.Tier = args.Tier
+		shop_item.Order = orderIndex
+		if(args.Tavern != null){
+			shop_item.Tavern = args.Tavern
+		}
 	} 
 	
 	Shops[args.Index] = args.Shop.Items
 	Container.visible = false
+	$.Msg("Set Container Invisible ",Container)
 	//Sort_Shop(Shops[args.Index], args.Index)
+}
+
+function Create_Single_Panel(args){
+	var ShopUnit = args.Index
+	var Shop = Root.FindChildTraverse(ShopUnit)
+	var Hero = args.Hero
+	var PlayerID = args.PlayerID
+	
+	//$.Msg(Shop)
+	//$.Msg(Hero)
+	$.Msg("Creating Hero Panel")
+	if(Shop == null || Hero == null){
+		$.Msg("Retuning, invalid params for individual item creation")
+		return
+	}
+	
+	// yeah I know I should really have a function to create items rather then copy pasta ;P
+	var shop_item = $.CreatePanel("Panel", Shop, PlayerID+"_"+Hero)
+	shop_item.BLoadLayout("file://{resources}/layout/custom_game/unit_shops_item.xml", false, false);
+	shop_item.ItemName = args.Hero
+	shop_item.ItemInfo = args.HeroInfo
+	shop_item.Entity = args.Index
+	shop_item.Hero = true
+}
+
+function Delete_Single_Panel(args){
+	var Shop = args.Index
+	var Hero = args.Hero
+	var PlayerID = Game.GetLocalPlayerID()
+	
+	var Container = Root.FindChildTraverse(Shop)
+	var HeroItemPanel = Container.FindChildTraverse(PlayerID+"_"+Hero)
+	HeroItemPanel.DeleteAsync(0.1)
 }
 
 function Current_Selected(){
@@ -102,4 +143,7 @@ Game.AddCommand( "+ToggleShop", OnShopToggle, "", 0 );
 (function () {
 	GameEvents.Subscribe( "Shops_Create", Create_Shop);
 	GameEvents.Subscribe( "Shops_Open", Open_Shop);
+	GameEvents.Subscribe( "Shops_Create_Single_Panel", Create_Single_Panel);
+	GameEvents.Subscribe( "Shops_Delete_Single_Panel", Delete_Single_Panel);
+	
 })();
