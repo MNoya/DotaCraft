@@ -4226,7 +4226,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"human_defend_disabled"
-		"Ability2"					"human_backpack_disabled"	 //Reference: Aihn
+		"Ability10"					"human_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -4338,7 +4338,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"human_long_rifles_disabled"	 //Reference: Aihn
-		"Ability2"					"human_backpack_disabled"
+		"Ability10"					"human_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -4443,7 +4443,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"human_animal_war_training_disabled"	 //Reference: Aihn
-		"Ability2"					"human_backpack_disabled"
+		"Ability10"					"human_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -4562,7 +4562,7 @@
 		"Ability2"					"human_slow"	 //Reference: Aply
 		"Ability3"					"human_invisibility_disabled"	 //Reference: Aslo
 		"Ability4"					"human_polymorph_disabled"	 //Reference: Aihn
-		"Ability5"					"human_backpack_disabled"
+		"Ability10"					"human_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -4674,7 +4674,7 @@
 		"Ability1"					"human_heal"	 //Reference: Ahea
 		"Ability2"					"human_dispel_magic_disabled"	 //Reference: Ainf
 		"Ability3"					"human_inner_fire_disabled"	 //Reference: Adis
-		"Ability4"					"human_backpack_disabled"
+		"Ability10"					"human_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -4788,7 +4788,7 @@
 		"Ability2"					"human_control_magic_disabled"	 //Reference: Acmg
 		"Ability3"					"generic_spell_immunity"	 //Reference: Amim
 		"Ability4"					"human_feedback"	 //Reference: Afbk
-		"Ability5"					"human_backpack_disabled"
+		"Ability10"					"human_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8535,6 +8535,7 @@
 		"ModelScale"				"0.8"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"					"Hero_Windrunner"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 	
@@ -8549,8 +8550,8 @@
 		"Ability4"					"nightelf_improved_bows_disabled"	
 		"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 		"Ability6"					"nightelf_elunes_grace"	 //Reference: Aegr
+		"Ability10"					"nightelf_backpack_disabled"
 		"Ability11"					"nightelf_night_regen"
-		 //Reference: Aien Inventory(2 slot unit) Night Elf
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8643,6 +8644,7 @@
 		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"					"Hero_Luna"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 		
@@ -8654,8 +8656,9 @@
 		"Ability1"					"nightelf_sentinel"	 //Reference: Aesn
 		"Ability2"					"nightelf_shadow_meld"	 //Reference: Ashm
 		"Ability3"					"nightelf_moon_glaive"	 //Reference: Amgl - Gets replaced by "nightelf_upgraded_moon_glaive" after the research
-		"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+		"Ability4"					""
 		"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability10"					"nightelf_backpack_disabled"
 		"Ability11"					"nightelf_night_regen"
 		
 		"precache"
@@ -8856,6 +8859,7 @@
 		"ModelScale"				"0.7"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 	    "SoundSet"                  "Hero_Enchantress"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_enchantress.vsndevts"
 	
@@ -8867,8 +8871,9 @@
 		"Ability1"					"nightelf_abolish_magic_disabled"	 //Reference: Aadm
 		"Ability2"					"nightelf_slow_poison"	  	//Reference: Aspo
 		"Ability3"					"generic_spell_immunity"	//Reference: Amim
-		"Ability4"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+		"Ability4"					""
 		"Ability5"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability10"					"nightelf_backpack_disabled"
 		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
@@ -8965,6 +8970,7 @@
 		"Level"						"4"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"FormationRank"				"1"
 	    "SoundSet"                  "Hero_LoneDruid"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
@@ -8978,8 +8984,8 @@
 		"Ability2"					"nightelf_rejuvenation"	
 		"Ability3"					"nightelf_bear_form"
 		"Ability4"					"nightelf_bear_form_off"	
-		"Ability5"					""	  //Reference: Aien
-		"Ability6"					"nightelf_ultravision_disabled"
+		"Ability5"					"nightelf_ultravision_disabled"
+		"Ability10"					"nightelf_backpack_disabled"
 		"Ability11"					"nightelf_night_regen"
 		
 		// Armor
@@ -9067,6 +9073,7 @@
 		"ModelScale"				"1.35"
 		"Level"						"6"
 		"HealthBarOffset"			"200"
+		"HasInventory"				"1"
 	    "SoundSet"                  "Hero_Tiny"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 	
@@ -9079,7 +9086,7 @@
 		"Ability2"					"nightelf_resistant_skin_disabled"	 //Reference: Arsk
 		"Ability3"					"nightelf_hardened_skin_disabled"	 //Reference: Assk
 		"Ability4"					"nightelf_war_club"	 //Reference: Agra
-		"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+		"Ability9"					"nightelf_backpack_disabled"
 		"Ability10"					"nightelf_mountain_giant_model"
 		"Ability11"					"nightelf_night_regen"
 		
@@ -9169,6 +9176,7 @@
 		"Level"						"6"
 		"HealthBarOffset"			"200"
 		"ConsideredHero"			"1"
+		"HasInventory"				"1"
 	    "SoundSet"                  "Hero_Tiny"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 	
@@ -9181,7 +9189,7 @@
 		"Ability2"					"nightelf_resistant_skin"	 //Reference: Arsk
 		"Ability3"					"nightelf_hardened_skin"	 //Reference: Assk
 		"Ability4"					"nightelf_war_club"	 //Reference: Agra
-		"Ability5"					""	 //Reference: Aien Inventory(2 slot unit) Night Elf
+		"Ability9"					"nightelf_backpack_disabled"
 		"Ability10"					"nightelf_mountain_giant_model"
 		"Ability11"					"nightelf_night_regen"
 		
@@ -9273,6 +9281,7 @@
 		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 	    "SoundSet"                  "Hero_Furion"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
 	
@@ -9285,6 +9294,7 @@
 		"Ability2"					"nightelf_faerie_fire_disabled"	 //Reference: Afa2
 		"Ability3"					"nightelf_cyclone"
 		"Ability4"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+		"Ability9"					"nightelf_backpack_disabled"
 		"Ability10"					"nightelf_storm_crow_form_off"
 		"Ability11"					"nightelf_night_regen"
 		
@@ -10977,6 +10987,7 @@
 		"ModelScale"				"1"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Axe"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
 	
@@ -10987,6 +10998,7 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_pillage_disabled"	 //Reference: Asal
 		"Ability2"					"orc_berserker_strength_disabled"
+		"Ability10"					"orc_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -11080,6 +11092,7 @@
 		"ModelScale"				"0.75"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Huskar"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 	
@@ -11089,8 +11102,9 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					""	 //Reference: Sbsk
-		"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+		"Ability2"					""
 		"Ability3"					"orc_troll_regeneration_disabled"
+		"Ability10"					"orc_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -11182,6 +11196,7 @@
 		"ModelScale"				"0.9"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Huskar"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 	
@@ -11191,8 +11206,9 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_berserk"	 //Reference: Absk
-		"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+		"Ability2"					""
 		"Ability3"					"orc_troll_regeneration_disabled"
+		"Ability10"					"orc_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -11385,6 +11401,7 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Bloodseeker"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
 	
@@ -11396,7 +11413,7 @@
 		"Ability1"					"orc_purge"	 //Reference: Ablo
 		"Ability2"					"orc_lightning_shield"	 //Reference: Alsh
 		"Ability3"					"orc_bloodlust_disabled"	 //Reference: Apg2
-		"Ability4"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+		"Ability10"					"orc_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -11495,6 +11512,7 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_WitchDoctor"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
 	
@@ -11603,6 +11621,8 @@
 		"ModelScale"				"1"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
+		"ConsideredHero"			"1"
 		"SoundSet"                  "Hero_SpiritBreaker"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_spirit_breaker.vsndevts"
 	
@@ -11615,9 +11635,10 @@
 		"Ability2"					"orc_disenchant"	 //Reference: Aspl
 		"Ability3"					"orc_ancestral_spirit"	 
 		"Ability4"					"orc_ethereal_form"	 //Reference: Aast
-		"Ability5"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+		"Ability5"					""
 		"Ability6"					""	 //Reference: ACsk - Resistant Skin(3,1 pos, creep)
-		//Reference: Acpf - Corporeal Form
+		"Ability7"					"orc_corporeal_form"	 //Reference: Acpf
+		"Ability10"					"orc_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -11715,6 +11736,7 @@
 		"ModelScale"				"1"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Chen"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 	
@@ -11725,7 +11747,8 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_ensnare"	 //Reference: Aens
 		"Ability2"					"orc_pillage_disabled"	 //Reference: Asal
-		"Ability3"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+		"Ability3"					""
+		"Ability10"					"orc_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -11826,7 +11849,7 @@
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_war_drums"	 //Reference: Aakb
 		"Ability2"					"orc_devour"	 //Reference: Adev
-		"Ability3"					""	 //Reference: Apak - Inventory (Pack Mule)
+		"Ability10"					"orc_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -12003,6 +12026,7 @@
 		"ModelScale"				"0.8"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Batrider"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
 	
@@ -12105,6 +12129,7 @@
 		"ModelScale"				"1"
 		"Level"						"5"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Earthshaker"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
 	
@@ -12114,7 +12139,7 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
 		"Ability1"					"orc_pulverize_disabled"	 //Reference: Awar
-		"Ability2"					""	 //Reference: Aion - Inventory(2 slot unit) Orc
+		"Ability10"					"orc_backpack_disabled"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14773,6 +14798,7 @@
 		"ModelScale"				"0.7"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_LifeStealer"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
 	
@@ -14785,6 +14811,7 @@
 		"Ability2"					"undead_return_resources"	
 		"Ability3"					"undead_cannibalize_disabled"	 //Reference: Acan
 		"Ability4"					"undead_ghoul_frenzy_disabled"
+		"Ability10"					"undead_backpack_disabled"
 		"Ability11"					"undead_blight_regen"
 		
 		// Armor
@@ -14875,6 +14902,7 @@
 		"ModelScale"				"0.80"
 		"Level"						"3"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Weaver"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
 		
@@ -14887,6 +14915,7 @@
 		"Ability2"					""	 //Reference: Aspa
 		"Ability3"					"undead_burrow_disabled"	 //Reference: Abur
 		"Ability4"					""	 //Reference: Aiun
+		"Ability10"					"undead_backpack_disabled"
 		"Ability11"					"undead_blight_regen"
 		
 		// Armor
@@ -15071,6 +15100,7 @@
 		"ModelScale"				"1"
 		"Level"						"4"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Pudge"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 	
@@ -15082,6 +15112,7 @@
 		"Ability1"					"undead_cannibalize_disabled"	 //Reference: Aap1
 		"Ability2"					"undead_disease_cloud_disabled"	 //Reference: Aiun
 		"Ability3"					""	 //Reference: Acn2
+		"Ability10"					"undead_backpack_disabled"
 		"Ability11"					"undead_blight_regen"
 	
 		// Armor
@@ -15495,6 +15526,7 @@
 		"ModelScale"				"0.8"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_Necrolyte"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
 	
@@ -15507,6 +15539,7 @@
 		"Ability2"					"undead_raise_dead_disabled"	 //Reference: Arai
 		"Ability3"					"undead_unholy_frenzy_disabled"	 //Reference: Auhf
 		"Ability4"					""	 //Reference: Aiun
+		"Ability10"					"undead_backpack_disabled"
 		"Ability11"					"undead_blight_regen"
 		
 		// Armor
@@ -15604,6 +15637,7 @@
 		"ModelScale"				"1"
 		"Level"						"2"
 		"HealthBarOffset"			"140"
+		"HasInventory"				"1"
 		"SoundSet"                  "Hero_DeathProphet"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		
@@ -15616,6 +15650,7 @@
 		"Ability2"					"undead_curse_disabled"	 //Reference: Acrs
 		"Ability3"					"undead_possession_disabled"	 //Reference: Aps2
 		"Ability4"					""	 //Reference: Aiun
+		"Ability10"					"undead_backpack_disabled"
 		"Ability11"					"undead_blight_regen"
 		
 		// Armor

@@ -15325,46 +15325,6 @@
 			}
 		}
 	}
-	// Ability researched by human_research_backpack
-	"human_backpack"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_research_backpack"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		"Modifiers"
-		{
-			"modifier_backpack"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/human_upgrades.lua"
-						"Function"		"Backpack"
-						"Action"		"Enable"
-					}
-				}
-	
-				"OnDeath"
-				{
-					// Item drops when unit is killed
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/human_upgrades.lua"
-						"Function"		"BackpackDrop"
-					}
-				}
-			}
-		}
-	}
-	
-	
 	"human_defend"
 	//Activate to take 50% less damage from Piercing attacks, but have 30% reduced movement speed. 
 	//Defend does not reflect attacks to buildings, and its chance of reflection against units is 30%.
@@ -17307,35 +17267,6 @@
 			{
 				"ScriptFile"	"buildings/upgrades.lua"
 				"Function"		"SetLevel0"
-			}
-		}
-	}
-	
-	"human_backpack_disabled"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_research_backpack"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-	
-		"Modifiers"
-		{
-			"modifier_backpack_disabled"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/human_upgrades.lua"
-						"Function"		"Backpack"
-						"Action"		"Disable"
-					}
-				}
 			}
 		}
 	}
@@ -21061,6 +20992,161 @@
 		}
 	}
 		
+	// Affects all ground units (except for builders, which have their inventories filled with items)
+	"human_backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_MUTED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Enable"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "buildings/upgrades.lua"
+	                    "Function"      "HideAbility"
+	                }
+	            }
+	
+	            "OnDeath"
+	            {
+	                // Item drops when unit is killed
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "BackpackDrop"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	
+	"human_backpack_disabled"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack_disabled"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Disable"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	"human_research_backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+	    "AbilityGoldCost"               "50"
+	    "AbilityChannelTime"            "%research_time"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "research_time"         "20"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "gold_cost"             "50"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lumber_cost"           "25"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "EnqueueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/research.lua"
+	            "Function"      "DisableResearch"
+	        }
+	    }
+	
+	    "OnChannelSucceeded"
+	    {
+	        // Consume the first item in the queue
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "NextQueue"
+	        }
+	
+	        // Add Upgrade and Swap the ability for the next upgrade if there is one
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/research.lua"
+	            "Function"      "ResearchComplete"
+	        }
+	    }
+	}
+	"human_research_backpack_disabled"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "0"
+	
+	    "OnUpgrade"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/upgrades.lua"
+	            "Function"      "SetLevel0"
+	        }
+	    }
+	}
 	
 	// Town Hall -> Keep Upgrade.
 	"human_train_keep"
@@ -35470,6 +35556,161 @@
 		}
 	}
 		
+	// Affects all ground units (except for builders, which have their inventories filled with items)
+	"nightelf_backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_MUTED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Enable"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "buildings/upgrades.lua"
+	                    "Function"      "HideAbility"
+	                }
+	            }
+	
+	            "OnDeath"
+	            {
+	                // Item drops when unit is killed
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "BackpackDrop"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	
+	"nightelf_backpack_disabled"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack_disabled"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Disable"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	"nightelf_research_backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+	    "AbilityGoldCost"               "50"
+	    "AbilityChannelTime"            "%research_time"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "research_time"         "20"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "gold_cost"             "50"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lumber_cost"           "25"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "EnqueueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/research.lua"
+	            "Function"      "DisableResearch"
+	        }
+	    }
+	
+	    "OnChannelSucceeded"
+	    {
+	        // Consume the first item in the queue
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "NextQueue"
+	        }
+	
+	        // Add Upgrade and Swap the ability for the next upgrade if there is one
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/research.lua"
+	            "Function"      "ResearchComplete"
+	        }
+	    }
+	}
+	"nightelf_research_backpack_disabled"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "0"
+	
+	    "OnUpgrade"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/upgrades.lua"
+	            "Function"      "SetLevel0"
+	        }
+	    }
+	}
 	// Tree of Life -> Tree of Ages
 	"nightelf_train_tree_of_ages"
 	{
@@ -36367,84 +36608,6 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"nightelf_research_natures_blessing"
-		"MaxLevel" 						"0"
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"SetLevel0"
-			}
-		}
-	}
-	
-	"nightelf_research_backpack"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_research_backpack"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"%research_time"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
-		}
-	
-		"OnChannelSucceeded"
-		{
-			// Consume the first item in the queue
-			"RunScript"
-			{
-				"ScriptFile"   	"buildings/queue.lua"
-				"Function"      "NextQueue"
-			}
-	
-			// Add Upgrade and Swap the ability for the next upgrade if there is one
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"ResearchComplete"
-			}
-		}
-	}
-	"nightelf_research_backpack_disabled"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"nightelf_research_backpack"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -41733,8 +41896,6 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		// I do not know what damage type is the damage distributed.
-		// THE DAMAGE LINKED IS CALCULATED BEFORE ANY REDUCTION.
 			
 		"AbilityCastRange"			"750"
 		"AbilityCastPoint"			"0"
@@ -41754,7 +41915,6 @@
 				"var_type"		"FIELD_INTEGER"
 				"radius"		"500"
 			}
-			// Centered around the target unit.
 			"03"
 			{
 				"var_type"		"FIELD_FLOAT"
@@ -41767,7 +41927,50 @@
 			}
 		}
 	
-		// Done
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/spiritwalker.lua"
+				"Function"		"SpiritLinkStart"
+			}
+		}
+	
+		"modifier_spirit_link"
+		{
+			"IsPurgable"		"1"
+			"IsBuff"			"1"
+			"Duration"			"%duration"
+			"EffectName"		"particle_name"
+			"EffectAttachType"	"follow_origin"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/ability_name.lua"
+					"Function"		"AddLinkedUnit"
+				}
+			}
+	
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/ability_name.lua"
+					"Function"		"RemoveLinkedUnit"
+				}
+			}
+	
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/ability_name.lua"
+					"Function"		"RemoveLinkedUnit"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -41888,32 +42091,20 @@
 		"AbilityTextureName"		"orc_ethereal_form"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
-		"AbilityCastPoint"			"0"
-		"AbilityCooldown"			"0"
+		"AbilityCastPoint"			"0.7"
+		"AbilityCooldown"			"30"
 		"AbilityManaCost"			"0"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"delay"		"0.7"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"cooldown"		"30"
-			}
-			"03"
-			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_spell_damage"		"-66"
 			}
-			// Cast time.
-			// The process is uninterruptable.
 		}
 	
 		"precache"
@@ -41933,7 +42124,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_etheral_form"
+			"modifier_ethereal_form"
 			{
 		
 				"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
@@ -41949,11 +42140,59 @@
 					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}	
+			}
 	
+			"modifier_spawning"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"		
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_ethereal_form"
+						"Target" 		"CASTER"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_spawning"
+						"Target" 		"CASTER"
+					}
+				}
 			}
 		}
 	
 		// Done
+	}
+	
+	//=================================================================================
+	// Ability: Corporeal Form
+	// Description: "Removes ethereal form"
+	// Code Reference: Acpf
+	//=================================================================================
+	"orc_corporeal_form"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_ethereal_form"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+			
+		"AbilityCastPoint"			"0.7"
+		"AbilityCooldown"			"30"
+		"AbilityManaCost"			"0"
+				
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/spiritwalker.lua"
+				"Function"		"EtherEnd"
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -46828,6 +47067,161 @@
 		}
 	}
 		
+	// Affects all ground units (except for builders, which have their inventories filled with items)
+	"orc_backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_MUTED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Enable"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "buildings/upgrades.lua"
+	                    "Function"      "HideAbility"
+	                }
+	            }
+	
+	            "OnDeath"
+	            {
+	                // Item drops when unit is killed
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "BackpackDrop"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	
+	"orc_backpack_disabled"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack_disabled"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Disable"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	"orc_research_backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+	    "AbilityGoldCost"               "50"
+	    "AbilityChannelTime"            "%research_time"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "research_time"         "20"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "gold_cost"             "50"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lumber_cost"           "25"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "EnqueueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/research.lua"
+	            "Function"      "DisableResearch"
+	        }
+	    }
+	
+	    "OnChannelSucceeded"
+	    {
+	        // Consume the first item in the queue
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "NextQueue"
+	        }
+	
+	        // Add Upgrade and Swap the ability for the next upgrade if there is one
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/research.lua"
+	            "Function"      "ResearchComplete"
+	        }
+	    }
+	}
+	"orc_research_backpack_disabled"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "0"
+	
+	    "OnUpgrade"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/upgrades.lua"
+	            "Function"      "SetLevel0"
+	        }
+	    }
+	}
 	// Great Hall -> Stronghold
 	"orc_train_stronghold"
 	{
@@ -47622,84 +48016,6 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"orc_research_pillage"
-		"MaxLevel" 						"0"
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"SetLevel0"
-			}
-		}
-	}
-	
-	"orc_research_backpack"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"orc_research_backpack"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"%research_time"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
-		}
-	
-		"OnChannelSucceeded"
-		{
-			// Consume the first item in the queue
-			"RunScript"
-			{
-				"ScriptFile"   	"buildings/queue.lua"
-				"Function"      "NextQueue"
-			}
-	
-			// Add Upgrade and Swap the ability for the next upgrade if there is one
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"ResearchComplete"
-			}
-		}
-	}
-	"orc_research_backpack_disabled"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"orc_research_backpack"
 		"MaxLevel" 						"0"
 	
 		"OnUpgrade"
@@ -59102,6 +59418,161 @@
 			}
 		}
 	}
+	// Affects all ground units (except for builders, which have their inventories filled with items)
+	"undead_backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_MUTED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Enable"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "buildings/upgrades.lua"
+	                    "Function"      "HideAbility"
+	                }
+	            }
+	
+	            "OnDeath"
+	            {
+	                // Item drops when unit is killed
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "BackpackDrop"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	
+	"undead_backpack_disabled"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack_disabled"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Disable"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	"undead_research_backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	
+	    "AbilityGoldCost"               "50"
+	    "AbilityChannelTime"            "%research_time"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "research_time"         "20"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "gold_cost"             "50"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lumber_cost"           "25"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "EnqueueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/research.lua"
+	            "Function"      "DisableResearch"
+	        }
+	    }
+	
+	    "OnChannelSucceeded"
+	    {
+	        // Consume the first item in the queue
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "NextQueue"
+	        }
+	
+	        // Add Upgrade and Swap the ability for the next upgrade if there is one
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/research.lua"
+	            "Function"      "ResearchComplete"
+	        }
+	    }
+	}
+	"undead_research_backpack_disabled"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "0"
+	
+	    "OnUpgrade"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/upgrades.lua"
+	            "Function"      "SetLevel0"
+	        }
+	    }
+	}
 	// All undead buildings generate Blight and require blight to be built except for Necropolis and Haunted Gold Mine
 	// Everything uses undead_blight_growth_small except for the city center and its upgrades
 	
@@ -60110,85 +60581,6 @@
 			}
 		}
 	}
-	// • Necropolis / Halls of the Dead / Black Cidatel
-	"undead_research_backpack"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"undead_research_backpack"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-	
-		"AbilityGoldCost"				"50"
-		"AbilityChannelTime"			"%research_time"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"research_time"			"20"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"gold_cost"				"50"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lumber_cost"			"25"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/queue.lua"
-				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
-		}
-	
-		"OnChannelSucceeded"
-		{
-			// Consume the first item in the queue
-			"RunScript"
-			{
-				"ScriptFile"   	"buildings/queue.lua"
-				"Function"      "NextQueue"
-			}
-	
-			// Add Upgrade and Swap the ability for the next upgrade if there is one
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"ResearchComplete"
-			}
-		}
-	}
-	"undead_research_backpack_disabled"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"undead_research_backpack"
-		"MaxLevel" 						"0"
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"SetLevel0"
-			}
-		}
-	}
-	
 	// • Crypt
 	"undead_research_cannibalize"
 	{

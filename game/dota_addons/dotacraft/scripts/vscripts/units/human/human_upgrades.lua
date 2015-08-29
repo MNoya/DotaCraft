@@ -37,52 +37,6 @@ function ApplyModifierUpgrade( event )
 	end
 end
 
--- Gives an inventory to this unit
-function Backpack( event )
-	local caster = event.caster
-	local action = event.Action
-
-	if action == "Enable" then
-		caster:SetHasInventory(true)
-		-- Remove 2 backpack slot items
-		for itemSlot = 0, 1 do
-			local Item = caster:GetItemInSlot( itemSlot )
-			if Item then 
-				caster:RemoveItem(Item)
-			end
-		end
-	else
-		caster:SetHasInventory(false)
-		-- Make 6 undroppable backpack items
-		for itemSlot = 0, 5 do
-			local newItem = CreateItem("item_backpack", nil, nil)
-			caster:AddItem(newItem)
-		end
-	end
-end
-
--- Drop all the items on the killed unit
-function BackpackDrop( event )
-	local caster = event.caster
-	local position = caster:GetAbsOrigin()
-
-    for itemSlot = 0, 5 do
-        local Item = caster:GetItemInSlot( itemSlot )
-        if Item ~= nil then
-        	local itemName = Item:GetAbilityName()
-        	print(itemName)
-            local newItem = CreateItem(itemName, nil, nil)
-            local drop = CreateItemOnPositionSync( position , newItem)
-    		if drop then
-    			drop:SetContainedItem( newItem )
-            	newItem:LaunchLoot( false, 100, 0.35, position + RandomVector( RandomFloat( 10, 100 ) ) )
-            end
-            caster:RemoveItem(Item)
-        end
-    end
-end
-
-
 -- Add Health through lua because MODIFIER_PROPERTY_HEALTH_BONUS doesn't work on npc_dota_creature zzz
 function ApplyAnimalWarTraining( event )
 	local caster = event.caster
