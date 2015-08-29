@@ -14,6 +14,7 @@ function Setup_Shop( keys )
 
 	-- Keeps track of the current unit of this shop for every possible player
 	keys.caster.current_unit = {}
+	keys.caster.active_particle = {}
 end
 
 --[[
@@ -283,8 +284,8 @@ function CheckHeroInRadius( event )
 				if IsValidAlive(current_unit) then
 					-- Break out of range
 					if shop:GetRangeToUnit(current_unit) > 900 then
-						if shop.active_particle then
-					        ParticleManager:DestroyParticle(shop.active_particle, true)
+						if shop.active_particle[playerID] then
+					        ParticleManager:DestroyParticle(shop.active_particle[playerID], true)
 					    end
 					    shop.current_unit[playerID] = nil
 					    

@@ -747,12 +747,12 @@ function dotacraft:ShopActiveOrder( event )
     -- Set the current unit of this shop for this player
     shop.current_unit[pID] = unit
     
-    if shop.active_particle then
-        ParticleManager:DestroyParticle(shop.active_particle, true)
+    if shop.active_particle[pID] then
+        ParticleManager:DestroyParticle(shop.active_particle[pID], true)
     end
-    shop.active_particle = ParticleManager:CreateParticleForPlayer("particles/custom/shop_arrow.vpcf", PATTACH_OVERHEAD_FOLLOW, unit, player)
+    shop.active_particle[pID] = ParticleManager:CreateParticleForPlayer("particles/custom/shop_arrow.vpcf", PATTACH_OVERHEAD_FOLLOW, unit, player)
 
-    ParticleManager:SetParticleControl(shop.active_particle, 0, unit:GetAbsOrigin())
+    ParticleManager:SetParticleControl(shop.active_particle[pID], 0, unit:GetAbsOrigin())
 end
 
 ------------------------------------------------
