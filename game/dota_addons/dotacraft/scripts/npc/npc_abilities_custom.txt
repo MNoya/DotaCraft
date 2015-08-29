@@ -15325,46 +15325,6 @@
 			}
 		}
 	}
-	// Ability researched by human_research_backpack
-	"human_backpack"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_research_backpack"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		"Modifiers"
-		{
-			"modifier_backpack"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/human_upgrades.lua"
-						"Function"		"Backpack"
-						"Action"		"Enable"
-					}
-				}
-	
-				"OnDeath"
-				{
-					// Item drops when unit is killed
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/human_upgrades.lua"
-						"Function"		"BackpackDrop"
-					}
-				}
-			}
-		}
-	}
-	
-	
 	"human_defend"
 	//Activate to take 50% less damage from Piercing attacks, but have 30% reduced movement speed. 
 	//Defend does not reflect attacks to buildings, and its chance of reflection against units is 30%.
@@ -27879,6 +27839,50 @@
 				}
 			}
 		}		
+	}
+	// Generic inventory ability shared by all races, researched by research_backpack
+	// Affects all ground units (except for builders, which have their inventories filled with items)
+	"backpack"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "research_backpack"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_backpack"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_MUTED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "Backpack"
+	                    "Action"        "Enable"
+	                }
+	            }
+	
+	            "OnDeath"
+	            {
+	                // Item drops when unit is killed
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "BackpackDrop"
+	                }
+	            }
+	        }
+	    }
 	}
 	"ability_building"
 	{
@@ -41733,8 +41737,6 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		// I do not know what damage type is the damage distributed.
-		// THE DAMAGE LINKED IS CALCULATED BEFORE ANY REDUCTION.
 			
 		"AbilityCastRange"			"750"
 		"AbilityCastPoint"			"0"
@@ -41754,7 +41756,6 @@
 				"var_type"		"FIELD_INTEGER"
 				"radius"		"500"
 			}
-			// Centered around the target unit.
 			"03"
 			{
 				"var_type"		"FIELD_FLOAT"
@@ -41767,7 +41768,50 @@
 			}
 		}
 	
-		// Done
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/spiritwalker.lua"
+				"Function"		"SpiritLinkStart"
+			}
+		}
+	
+		"modifier_spirit_link"
+		{
+			"IsPurgable"		"1"
+			"IsBuff"			"1"
+			"Duration"			"%duration"
+			"EffectName"		"particle_name"
+			"EffectAttachType"	"follow_origin"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/ability_name.lua"
+					"Function"		"AddLinkedUnit"
+				}
+			}
+	
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/ability_name.lua"
+					"Function"		"RemoveLinkedUnit"
+				}
+			}
+	
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/orc/ability_name.lua"
+					"Function"		"RemoveLinkedUnit"
+				}
+			}
+		}
 	}
 	
 	//=================================================================================
@@ -41888,32 +41932,20 @@
 		"AbilityTextureName"		"orc_ethereal_form"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
-		"AbilityCastPoint"			"0"
-		"AbilityCooldown"			"0"
+		"AbilityCastPoint"			"0.7"
+		"AbilityCooldown"			"30"
 		"AbilityManaCost"			"0"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"delay"		"0.7"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"cooldown"		"30"
-			}
-			"03"
-			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_spell_damage"		"-66"
 			}
-			// Cast time.
-			// The process is uninterruptable.
 		}
 	
 		"precache"
@@ -41933,7 +41965,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_etheral_form"
+			"modifier_ethereal_form"
 			{
 		
 				"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
@@ -41949,11 +41981,59 @@
 					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}	
+			}
 	
+			"modifier_spawning"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"		
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_ethereal_form"
+						"Target" 		"CASTER"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_spawning"
+						"Target" 		"CASTER"
+					}
+				}
 			}
 		}
 	
 		// Done
+	}
+	
+	//=================================================================================
+	// Ability: Corporeal Form
+	// Description: "Removes ethereal form"
+	// Code Reference: Acpf
+	//=================================================================================
+	"orc_corporeal_form"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"orc_ethereal_form"
+		"MaxLevel"					"1"
+			
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+			
+		"AbilityCastPoint"			"0.7"
+		"AbilityCooldown"			"30"
+		"AbilityManaCost"			"0"
+				
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/spiritwalker.lua"
+				"Function"		"EtherEnd"
+			}
+		}
 	}
 	
 	//=================================================================================
