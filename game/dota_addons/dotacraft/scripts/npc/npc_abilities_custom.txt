@@ -28155,6 +28155,30 @@
 			
 		}		
 	}
+	
+	"ability_tavern"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "Modifiers"
+	    {
+	        "modifier_tavern"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            "Attributes"        "MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE | MODIFIER_ATTRIBUTE_PERMANENT" 
+	            "States"
+	            {
+	                "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_STUNNED"       "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_INVULNERABLE"  "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
 	// Siege units can be repaired
 	"ability_siege"
 	{
@@ -41936,38 +41960,51 @@
 			}
 		}
 	
-		"modifier_spirit_link"
+		"Modifiers"
 		{
-			"IsPurgable"		"1"
-			"IsBuff"			"1"
-			"Duration"			"%duration"
-			"EffectName"		"particle_name"
-			"EffectAttachType"	"follow_origin"
-	
-			"OnCreated"
+			"modifier_spirit_link"
 			{
-				"RunScript"
+				"IsPurgable"		"1"
+				"IsBuff"			"1"
+				"Duration"			"%duration"
+				//"EffectName"		"particle_name"
+				//"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
 				{
-					"ScriptFile"	"units/orc/ability_name.lua"
-					"Function"		"AddLinkedUnit"
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/spiritwalker.lua"
+						"Function"		"AddLinkedUnit"
+					}
 				}
-			}
 	
-			"OnDeath"
-			{
-				"RunScript"
+				"OnDeath"
 				{
-					"ScriptFile"	"units/orc/ability_name.lua"
-					"Function"		"RemoveLinkedUnit"
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/spiritwalker.lua"
+						"Function"		"RemoveLinkedUnit"
+					}
 				}
-			}
 	
-			"OnDestroy"
-			{
-				"RunScript"
+				"OnDestroy"
 				{
-					"ScriptFile"	"units/orc/ability_name.lua"
-					"Function"		"RemoveLinkedUnit"
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/spiritwalker.lua"
+						"Function"		"RemoveLinkedUnit"
+					}
+				}
+	
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/orc/spiritwalker.lua"
+						"Function"		"LinkDamage"
+						"Damage"		"%attack_damage"
+					}
 				}
 			}
 		}

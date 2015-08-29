@@ -1,0 +1,62 @@
+"tavern"
+{
+    // General
+    //----------------------------------------------------------------
+    "BaseClass"                 "npc_dota_building"
+    "Model"                     "models/props_gameplay/treasure_chest001.vmdl"
+    "ModelScale"                "5"
+    "Level"                     "10"
+    "BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"
+    "HealthBarOffset"           "200"
+    "UseNeutralCreepBehavior"   "0"
+
+    "UnitLabel"                 "tavern"
+
+    "Ability1"                  "ability_shop"
+    "Ability2"                  "ability_tavern"
+
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "0"
+    "MagicalResistance"         "0"
+    
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+    
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyGoldMin"             "4.0"
+    "BountyGoldMax"             "6.0"
+    
+    // Gold and Lumber
+    //----------------------------------------------------------------
+    "GoldCost"                  "105"
+    "LumberCost"                "105"
+    
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+    "MovementSpeed"             "100"
+    "MovementTurnRate"          "0.5"
+    
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "240"
+    "StatusHealthRegen"         "0.5"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1400"
+    "VisionNighttimeRange"      "800"
+    
+    // Team
+    //----------------------------------------------------------------
+    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    
+    // Creature Data
+    //----------------------------------------------------------------
+}

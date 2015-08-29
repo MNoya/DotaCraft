@@ -11,12 +11,12 @@ end
 
 -- called to create the shop
 function Setup_Shop( keys )
-	local Shop_Name = keys.caster:GetUnitLabel()
-	unit_shops:CreateShop(keys.caster, Shop_Name)
-
 	-- Keeps track of the current unit of this shop for every possible player
 	keys.caster.current_unit = {}
 	keys.caster.active_particle = {}
+
+	local Shop_Name = keys.caster:GetUnitLabel()
+	unit_shops:CreateShop(keys.caster, Shop_Name)	
 end
 
 --[[
@@ -57,7 +57,7 @@ function unit_shops:CreateShop(unit, shop_name)
 	-- empty sorted table
 	local sorted_table = {}
 	
-	local shopEnt = Entities:FindByName(nil, "custom_shop") -- entity name in hammer
+	local shopEnt = Entities:FindByName(nil, "*custom_shop") -- entity name in hammer
 	if shopEnt then
 		local newshop = SpawnEntityFromTableSynchronous('trigger_shop', {origin = unit:GetAbsOrigin(), shoptype = 1, model="maps/hills_of_glory/entities/custom_shop_0.vmdl"}) -- shoptype is 0 for a "home" shop, 1 for a side shop and 2 for a secret shop
 		print("CreateShop out of "..shopEnt:GetModelName())
