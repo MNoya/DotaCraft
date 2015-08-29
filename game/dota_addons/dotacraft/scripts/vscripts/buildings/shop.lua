@@ -4,7 +4,7 @@ if unit_shops == nil then
 	unit_shops.Units = {}
 	-- register listeners
 	CustomGameEventManager:RegisterListener( "Shops_Buy", Dynamic_Wrap(unit_shops, "Buy"))
-	CustomGameEventManager:RegisterListener( "Shops_Sell", Dynamic_Wrap(unit_shops, "Sell"))
+	CustomGameEventManager:RegisterListener( "open_closest_shop", Dynamic_Wrap(unit_shops, "OpenClosestShop"))
 end
 
 -- called to create the shop
@@ -203,8 +203,39 @@ function unit_shops:Buy(data)
 	end
 end
 
-function unit_shops:Sell(data)
+-- Find a shop to open nearby the currently selected unit
+function unit_shops:OpenClosestShop(data)
+	local PlayerID = data.PlayerID
+	local player = PlayerResource:GetPlayer(PlayerID)
+	local mainSelected = data.UnitIndex
 
+	print("OpenClosestShop near unit "..mainSelected.." of player "..PlayerID)
+
+	local unit = EntIndexToHScript(mainSelected)
+	local shop = FindClosestShop(unit)
+
+	if shop then
+		EmitSoundOnClient("Shop.Available", player)
+		CustomGameEventManager:Send_ServerToPlayer(player, "Shops_Open", {Shop=shop:GetEntityIndex()})
+	else
+		EmitSoundOnClient("Shop.Unavailable", player)
+	end
+end
+
+-- Find one shop in 900 range
+function FindClosestShop( unit )
+	local origin = unit:GetAbsOrigin()
+	local team = unit:GetTeamNumber()
+
+	-- iterate through shops
+	for k,v in pairs(unit_shops.Units) do
+		local shop = EntIndexToHScript(k)
+		if shop and IsValidAlive(shop) and (shop:GetTeamNumber() == team or shop:GetTeamNumber() == DOTA_TEAM_NEUTRALS) then
+			if unit:GetRangeToUnit(shop) < 900 then
+				return shop
+			end
+		end
+	end
 end
 
 function Purchased(item, shop)

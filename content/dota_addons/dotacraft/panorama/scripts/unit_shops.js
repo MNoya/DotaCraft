@@ -1,6 +1,7 @@
 var Root = $.GetContextPanel()
 var Shops = {}
 var LocalPlayerID = Game.GetLocalPlayerID()
+var shop_state = "on"
 
 // create shop
 function Create_Shop(args){	
@@ -41,6 +42,11 @@ function Current_Selected(){
 	$.Schedule(0.1, Current_Selected)*/
 }
 
+function Open_Shop(args) {
+	var index = args.Shop
+	ShowShop(index)
+}
+
 function ShowShop(entIndex){
 	var PlayerID = Players.GetLocalPlayer();
 	var Shop = Root.FindChildTraverse(entIndex)
@@ -50,6 +56,7 @@ function ShowShop(entIndex){
 	if(Shop != null){
 		$.Msg(" Shop ",entIndex," Visible ",Shop)		
 		Shop.visible = true
+		shop_state = "on"
 	}
 }
 
@@ -61,12 +68,29 @@ function HideShop(entIndex){
 	$.Msg(entIndex," ",Shop)
 
 	Shop.visible = false
+	shop_state = "off"
 }
 
+function OnShopToggle() {
+	var PlayerID = Players.GetLocalPlayer();
+	var mainSelected = Players.GetLocalPlayerPortraitUnit();
 
+	// If shop isn't open, try to open the shop closest to the main selected unit
+	// If the shop panel is open, close it
+	if (shop_state == "on")
+	{
+		Hide_All_Shops()
+	}
+	else
+	{
+		GameEvents.SendCustomGameEventToServer( "open_closest_shop", { "PlayerID" : LocalPlayerID, "UnitIndex" : mainSelected } );
+	}
+
+}
 
 function Hide_All_Shops(){
 	$.Msg("Hide_All_Shops")
+	shop_state = "off"
 	for(var key in Shops){
 		var Shop = Root.FindChildTraverse(key)
 		if(Shop.visible == true){
@@ -77,8 +101,9 @@ function Hide_All_Shops(){
 	}
 }
 
+Game.AddCommand( "+ToggleShop", OnShopToggle, "", 0 );
+
 (function () {
 	GameEvents.Subscribe( "Shops_Create", Create_Shop);
-	
-	Current_Selected()
+	GameEvents.Subscribe( "Shops_Open", Open_Shop);
 })();
