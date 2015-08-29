@@ -31,14 +31,14 @@ function Current_Selected(){
 	var PlayerID = Players.GetLocalPlayer();
 	var mainSelected = Players.GetLocalPlayerPortraitUnit();
 	 
-	var Shop = Root.FindChildTraverse(mainSelected)
+	/*var Shop = Root.FindChildTraverse(mainSelected)
 	if(Shop != null){
 		ShowShop(mainSelected)
-	}/*else{
+	}else{
 		Hide_All_Shops()
-	}*/
+	}
 	
-	$.Schedule(0.1, Current_Selected)
+	$.Schedule(0.1, Current_Selected)*/
 }
 
 function ShowShop(entIndex){
@@ -49,14 +49,6 @@ function ShowShop(entIndex){
 
 	if(Shop != null){
 		$.Msg(" Shop ",entIndex," Visible ",Shop)		
-		Shop.visible = true
-	}
-}
-
-function ShowPlease (index) { 
-	var Shop = Root.FindChildTraverse(index)
-	if(Shop != null){
-		$.Msg(" PLEASE SHOW ",index)
 		Shop.visible = true
 	}
 }

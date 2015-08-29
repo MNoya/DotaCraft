@@ -132,7 +132,7 @@ function OnLeftButtonPressed() {
     var cursor = GameUI.GetCursorPosition();
     var mouseEntities = GameUI.FindScreenEntities( cursor );
     
-    //Hide_All_Shops()
+    Hide_All_Shops()
 
     if (mouseEntities.length > 0)
     {
