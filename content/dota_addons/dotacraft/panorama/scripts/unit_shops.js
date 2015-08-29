@@ -9,7 +9,6 @@ function Create_Shop(args){
 	// create the primary container
 	var Container = $.CreatePanel("Panel", Root, args.Index)
 	Container.AddClass("Container")	
-	//Container.visible = false
 	 
 	// create all the items
 	for(var Item in args.Shop.Items){
@@ -24,7 +23,6 @@ function Create_Shop(args){
 	
 	Shops[args.Index] = args.Shop.Items
 	Container.visible = false
-	$.Msg("Set Container Invisible ",Container)
 	//Sort_Shop(Shops[args.Index], args.Index)
 }
 
@@ -51,10 +49,10 @@ function ShowShop(entIndex){
 	var PlayerID = Players.GetLocalPlayer();
 	var Shop = Root.FindChildTraverse(entIndex)
 
-	$.Msg("ShowShop for Player "+PlayerID)
+	$.Msg("ShowShop ",entIndex,"for Player "+PlayerID)
 
 	if(Shop != null){
-		$.Msg(" Shop ",entIndex," Visible ",Shop)		
+		$.Msg(" Shop ",entIndex," is now Visible")		
 		Shop.visible = true
 		shop_state = "on"
 	}
@@ -64,8 +62,7 @@ function HideShop(entIndex){
 	var PlayerID = Players.GetLocalPlayer();
 	var Shop = Root.FindChildTraverse(entIndex)
 
-	$.Msg("HideShop for Player "+PlayerID)
-	$.Msg(entIndex," ",Shop)
+	$.Msg("HideShop ",entIndex," for Player "+PlayerID)
 
 	Shop.visible = false
 	shop_state = "off"
@@ -96,7 +93,6 @@ function Hide_All_Shops(){
 		if(Shop.visible == true){
 			$.Msg("Set Hidden Shop: ",key)
 			Shop.visible = false
-			$.Msg(Shop)
 		}
 	}
 }

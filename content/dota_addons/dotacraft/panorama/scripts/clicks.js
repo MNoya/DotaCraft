@@ -183,8 +183,6 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
     var LEFT_CLICK = (arg === 0)
     var RIGHT_CLICK = (arg === 1)
 
-    $.Msg(arg)
-
     if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
         return CONTINUE_PROCESSING_EVENT;
 
@@ -199,11 +197,10 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
             else if (RIGHT_CLICK) 
                 return OnRightButtonPressed();
 
-        else
-            if (LEFT_CLICK) 
-                return OnLeftButtonPressed();
-            else if (RIGHT_CLICK) 
-                return OnRightButtonPressed(); 
+        if (LEFT_CLICK) 
+            return OnLeftButtonPressed();
+        else if (RIGHT_CLICK) 
+            return OnRightButtonPressed(); 
         
     }
     return CONTINUE_PROCESSING_EVENT;
