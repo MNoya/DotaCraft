@@ -90,7 +90,7 @@ function ShowShop(entIndex){
 	var PlayerID = Players.GetLocalPlayer();
 	var Shop = Root.FindChildTraverse(entIndex)
 
-	$.Msg("ShowShop ",entIndex,"for Player "+PlayerID)
+	$.Msg("ShowShop ",entIndex," for Player "+PlayerID)
 
 	if(Shop != null){
 		$.Msg(" Shop ",entIndex," is now Visible")		

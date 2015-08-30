@@ -387,7 +387,6 @@ function dotacraft:InitGameMode()
   	GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
   	GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
   	GameRules.Buildings = LoadKeyValues("scripts/kv/buildings.kv")
-	GameRules.Shops = LoadKeyValues("scripts/kv/shops.kv")
 
   	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
   	for _,t in pairs(GameRules.ALLTREES) do
@@ -791,6 +790,12 @@ end
 function dotacraft:OnGameInProgress()
 	print("[DOTACRAFT] The game has officially begun")
 
+	-- Setup Tavern
+	local taverns = Entities:FindAllByName("*shop_tavern")
+	for k,v in pairs(taverns) do
+		TeachAbility(v,"ability_shop")
+	end
+
 	GameRules.DayTime = true
 	Timers:CreateTimer(240, function() 
 		if GameRules.DayTime then
@@ -828,10 +833,9 @@ end
 
 -- The overall game state has changed
 function dotacraft:OnGameRulesStateChange(keys)
-	print("[DOTACRAFT] GameRules State Changed")
-	--DeepPrintTable(keys)
-
 	local newState = GameRules:State_Get()
+
+	print("[DOTACRAFT] GameRules State Changed: ",newState)
 		
 	-- send the panaroma developer at each stage to ensure all js are exposed to it
 	dotacraft:Panaroma_Developer_Mode(newState)

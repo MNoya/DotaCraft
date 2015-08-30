@@ -138,7 +138,7 @@ function OnLeftButtonPressed() {
     {
         for ( var e of mouseEntities )
         {
-            if (IsShop(e.entityIndex) && (IsAlliedUnit(mainSelected,e.entityIndex) || IsNeutralUnit(e.entityIndex)))
+            if ((IsShop(e.entityIndex) && IsAlliedUnit(mainSelected,e.entityIndex)) || IsTavern(e.entityIndex))
             {
                 $.Msg("Player "+iPlayerID+" Clicked on a Shop")
                 ShowShop(e.entityIndex)
@@ -170,6 +170,10 @@ function IsBuilder(entIndex) {
 
 function IsShop(entIndex) {
 	return (Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
+}
+
+function IsTavern(entIndex) {
+    return (Entities.GetUnitLabel( entIndex ) == "tavern")
 }
 
 function IsAlliedUnit(entIndex, targetIndex) {

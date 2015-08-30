@@ -1,12 +1,16 @@
 if unit_shops == nil then
 	unit_shops = class({})
+	
 	-- create the Units table
 	unit_shops.Units = {}
 	unit_shops.Players = {}
 	HeroTavernEntityID = nil
+	
 	-- register listeners
 	CustomGameEventManager:RegisterListener( "Shops_Buy", Dynamic_Wrap(unit_shops, "Buy"))
 	CustomGameEventManager:RegisterListener( "open_closest_shop", Dynamic_Wrap(unit_shops, "OpenClosestShop"))
+
+	GameRules.Shops = LoadKeyValues("scripts/kv/shops.kv")
 end
 
 -- called to create the shop
@@ -51,8 +55,8 @@ function unit_shops:CreateShop(unit, shop_name)
 	end
 	
 	local UnitShop = unit_shops.Units[UnitID]
-	local player = unit:GetPlayerOwner()
-	local tier = GetPlayerCityLevel(player)
+	local player = unit:GetPlayerOwner()	
+	local tier = player and GetPlayerCityLevel(player) or 9000
 	
 	-- empty sorted table
 	local sorted_table = {}
@@ -67,9 +71,9 @@ function unit_shops:CreateShop(unit, shop_name)
 	
 	-- for each item create an corresponding timer to restock that item
 	--DeepPrintTable(GameRules.Shops["human_shop"])
-	DeepPrintTable(GameRules.Shops)
+	DeepPrintTable(GameRules.Shops[shop_name])
 	for order,item in pairs(GameRules.Shops[shop_name]) do
-		print("[UNIT SHOP] Creating timer for new unit shop: "..shop_name)
+		print("[UNIT SHOP] Creating timer for "..item.." new unit shop: "..shop_name)
 		local key = item
 
 		-- set all variables
@@ -77,7 +81,7 @@ function unit_shops:CreateShop(unit, shop_name)
 		UnitShop.Items[key].ItemName = key
 		UnitShop.Items[key].CurrentRefreshTime = 1
 		
-		if not shop_name == "tavern" then
+		if shop_name ~= "tavern" then
 			UnitShop.Items[key].CurrentStock = GameRules.ItemKV[key]["StockInitial"]
 			UnitShop.Items[key].MaxStock = GameRules.ItemKV[key]["StockMax"]
 			UnitShop.Items[key].RequiredTier = GameRules.ItemKV[key]["RequiresTier"]
@@ -101,35 +105,35 @@ function unit_shops:CreateShop(unit, shop_name)
 			UnitShop.Items[key].RestockRate = NEUTRAL_HERO_STOCKTIME
 		end
 
+		-- Set some defaults incase the keys are missing in the item definition
+		if not UnitShop.Items[key].CurrentStock then
+			print("[UNIT SHOP] Error - No StockInitial defined for "..item)
+			UnitShop.Items[key].CurrentStock = 1
+		end
+
+		if not UnitShop.Items[key].MaxStock then
+			print("[UNIT SHOP] Error - No StockMax defined for "..item)
+			UnitShop.Items[key].MaxStock = 1
+		end
+
+		if not UnitShop.Items[key].RestockRate then
+			print("[UNIT SHOP] Error - No StockTime defined for "..item)
+			UnitShop.Items[key].RestockRate = 1
+		end
+
+		if not UnitShop.Items[key].RequiredTier then
+			print("[UNIT SHOP] Error - No RequiresTier defined for "..item)
+			UnitShop.Items[key].RequiredTier = 1
+		end
+
 		Timers:CreateTimer(1, function()
-			tier = GetPlayerCityLevel(player)
+			tier = player and GetPlayerCityLevel(player) or 9000
 
 			if not IsValidEntity(unit) or not unit:IsAlive() then
 				-- send command to kill shop panel
 				UnitShop = nil
 				print("[UNIT SHOP] Shop identified not valid, terminating timer")
 				return
-			end
-			
-			-- Set some defaults incase the keys are missing in the item definition
-			if not UnitShop.Items[key].CurrentStock then
-				print("[UNIT SHOP] Error - No StockInitial defined for "..item)
-				UnitShop.Items[key].CurrentStock = 1
-			end
-
-			if not UnitShop.Items[key].MaxStock then
-				print("[UNIT SHOP] Error - No StockMax defined for "..item)
-				UnitShop.Items[key].MaxStock = 1
-			end
-
-			if not UnitShop.Items[key].RestockRate then
-				print("[UNIT SHOP] Error - No StockTime defined for "..item)
-				UnitShop.Items[key].RestockRate = 1
-			end
-
-			if not UnitShop.Items[key].RequiredTier then
-				print("[UNIT SHOP] Error - No RequiresTier defined for "..item)
-				UnitShop.Items[key].RequiredTier = 1
 			end
 
 			-- if the item is not at max stock start a counter until it's restocked
@@ -149,7 +153,7 @@ function unit_shops:CreateShop(unit, shop_name)
 				end
 			
 			end
-				-- set nettable update			
+				-- set nettable update
 				SetNetTableValue("dotacraft_shops_table", tostring(UnitID), { Index = UnitID, Shop = UnitShop, Tier=tier})
 			return 1
 		end)
@@ -159,11 +163,15 @@ function unit_shops:CreateShop(unit, shop_name)
 	end
 
 	local team = unit:GetTeam()
-	if not shop_name == "tavern" then
+	if shop_name ~= "tavern" then
+		print("[UNIT SHOP] Create "..shop_name.." "..UnitID.." Tier "..tier)
+		DeepPrintTable(sorted_table)
 		CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = sorted_table, Tier=tier, Race=shop_name }) 
 	else
 		HeroTavernEntityID = UnitID
 		CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = sorted_table, Tier=tier, Tavern = true}) 
+		print("[UNIT SHOP] Create Tavern "..HeroTavernEntityID)
+		DeepPrintTable(sorted_table)
 	
 		-- make panels available after 135seconds
 		Timers:CreateTimer(NEUTRAL_TAVERN_UNLOCKTIME, function()
@@ -202,7 +210,7 @@ function unit_shops:Buy(data)
 	
 	-- check current tier
 	local shopOwner = Shop:GetPlayerOwner()
-	local tier = GetPlayerCityLevel(shopOwner)
+	local tier = shopOwner and GetPlayerCityLevel(shopOwner) or GetPlayerCityLevel(player) --If there is no owner, use the tier of the player that tries to buy it
 				
 	-- Information about the buying unit
 	-- the buying unit
