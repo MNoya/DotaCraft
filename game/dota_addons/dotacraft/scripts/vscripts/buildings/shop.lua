@@ -284,8 +284,7 @@ function unit_shops:Buy(data)
 			-- Should look for enough food!
 			print("[UNIT SHOPS] Tavern creating hero for "..PlayerID)
 
-
-			-- revive hero here, NOYA DO IT, JUST DO IT
+			TavernReviveHeroForPlayer(PlayerID, shopID, item)
 		end
 
 		-- deduct gold & lumber
@@ -366,6 +365,48 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 	dotacraft:IncreaseAltarTier( playerID )
 	
 	Setup_Hero_Panel(new_hero)
+end
+
+function TavernReviveHeroForPlayer(playerID, shopID, HeroName)
+	local player = PlayerResource:GetPlayer(playerID)
+	local hero = player:GetAssignedHero()
+	local hero_name = HeroName
+	local tavern = EntIndexToHScript(shopID)
+	local health_factor = 0.5
+	local ability_name --Ability on the altars, needs to be removed after the hero is revived
+	local level
+
+	for k,hero in pairs(player.heroes) do
+		if hero:GetUnitName() == HeroName then
+			hero:RespawnUnit()
+			FindClearSpaceForUnit(hero, tavern:GetAbsOrigin(), true)
+			hero:SetMana(0)
+			hero:SetHealth(hero:GetMaxHealth() * health_factor)
+			ability_name = hero.RespawnAbility
+			level = hero:GetLevel()
+			print("Revived "..hero_name.." with 50% Health at Level "..hero:GetLevel())
+		end
+	end
+
+	ability_name =  ability_name.."_revive"..level
+	
+	-- Swap the _revive ability on the altars for a _acquired ability
+	for _,altar in pairs(player.altar_structures) do
+		local new_ability_name = string.gsub(ability_name, "_revive" , "")
+		new_ability_name = GetResearchAbilityName(new_ability_name) --Take away numbers or research
+		new_ability_name = new_ability_name.."_acquired"
+
+		print("new_ability_name is "..new_ability_name..", it will replace: "..ability_name)
+
+		altar:AddAbility(new_ability_name)
+		altar:SwapAbilities(ability_name, new_ability_name, false, true)
+		altar:RemoveAbility(ability_name)
+		
+		local new_ability = altar:FindAbilityByName(new_ability_name)
+		new_ability:SetLevel(new_ability:GetMaxLevel())
+
+		PrintAbilities(altar)
+	end
 end
 
 -- Find a shop to open nearby the currently selected unit
