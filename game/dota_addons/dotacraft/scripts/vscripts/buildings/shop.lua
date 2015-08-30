@@ -361,6 +361,9 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 		TeachAbility(altar, acquired_ability_name)
 		SetAbilityLayout(altar, 5)	
 	end
+
+	-- Increase the altar tier
+	dotacraft:IncreaseAltarTier( playerID )
 	
 	Setup_Hero_Panel(new_hero)
 end

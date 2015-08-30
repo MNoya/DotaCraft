@@ -171,9 +171,15 @@ function Create_Hero_Panel(playerid, heroID, heroname, imagestyle, HeroIndex)
 end
 
 function UpgradeAltarAbilities( event )
-	local caster = event.caster
+	local altar = event.caster
 	local abilityOnProgress = event.ability
-	local player = caster:GetPlayerOwner()
+	local pID = altar:GetPlayerOwnerID()
+
+	dotacraft:IncreaseAltarTier(pID, abilityOnProgress)
+end
+
+function dotacraft:IncreaseAltarTier( pID, abilityOnProgress )
+	local player = PlayerResource:GetPlayer(pID)
 
 	-- Keep simple track of the abilities being queued, these can't be removed/upgraded else the channeling wont go off
 	if not player.altar_queue then
@@ -187,7 +193,10 @@ function UpgradeAltarAbilities( event )
 		player.AltarLevel = player.AltarLevel + 1
 	end
 
-	table.insert(player.altar_queue, abilityOnProgress:GetAbilityName())
+	if abilityOnProgress then
+		table.insert(player.altar_queue, abilityOnProgress:GetAbilityName())
+	end
+
 	print("ALTAR LEVEL "..player.AltarLevel.." QUEUE:")
 	DeepPrintTable(player.altar_queue)
 
@@ -198,16 +207,21 @@ function UpgradeAltarAbilities( event )
 			if ability then
 				local ability_name = ability:GetAbilityName()
 				if string.find(ability_name, "_train") and not string.find(ability_name,"_acquired") then
-					if ability_name ~= abilityOnProgress:GetAbilityName() then	
-						if player.AltarLevel == 4	then -- Disable completely
+					if not abilityOnProgress or ability_name ~= abilityOnProgress:GetAbilityName() then	
+						if player.AltarLevel == 4 or #player.heroes == 3 then -- Disable completely
 							ability:SetHidden(true)
 							--altar:RemoveAbility(ability_name)
 						else	
+							if string.find(ability_name, "_disabled") then
+								ability_name = string.gsub(ability_name, "_disabled" , "")
+							end
 
 							local ability_len = string.len(ability_name)
 							local rank = string.sub(ability_name, ability_len , ability_len)
 							if rank ~= "0" then
+								print(ability_name, rank, player.AltarLevel)
 								local new_ability_name = string.gsub(ability_name, rank , player.AltarLevel)
+								print(new_ability_name)
 
 								-- If the ability has to be channeled (i.e. is queued), it cant be removed!
 								if not tableContains(player.altar_queue, ability_name) then
@@ -242,6 +256,7 @@ function UpgradeAltarAbilities( event )
 		PrintAbilities(altar)
 	end
 end
+
 
 function ReEnableAltarAbilities( event )
 	local caster = event.caster
