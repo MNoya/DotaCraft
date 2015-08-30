@@ -48,11 +48,6 @@ function BuildHero( event )
 	local new_ability_name = train_ability_name.."_acquired"
 	new_hero.RespawnAbility = train_ability_name
 
-	-- Keep the custom name
-	local dotacraft_hero_name = string.gsub(ability_name, "_train" , "")
-	dotacraft_hero_name = string.sub(dotacraft_hero_name, 1 , string.len(dotacraft_hero_name) - 1)
-	new_hero.RealHeroName = dotacraft_hero_name
-
 	-- Swap and Disable on each altars
 	for _,altar in pairs(player.altar_structures) do
 		altar:AddAbility(new_ability_name)
@@ -427,9 +422,8 @@ function ReviveHero( event )
 	local player = caster:GetPlayerOwner()
 	local hero_name = event.Hero
 
-	for _,hero in pairs(player.heroes) do
-		print(_,hero.RealHeroName)
-		if hero.RealHeroName == hero_name then
+	for k,hero in pairs(player.heroes) do
+		if hero:GetUnitName() == hero_name then
 			hero:RespawnUnit()
 			FindClearSpaceForUnit(hero, caster:GetAbsOrigin(), true)
 			Timers:CreateTimer(function() 

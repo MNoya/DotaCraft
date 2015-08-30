@@ -186,27 +186,19 @@ function unit_shops:CreateShop(unit, shop_name)
 	end
 end
 
--- call this function to make the hero tavern put all it's item requirements 1 tier higher
--- make sure to feed it correct player requirement
-function Increment_Hero_Tavern_Tier_Requirement(PlayerID)
-	local UnitShop = unit_shops.Units[HeroTavernEntityID]
-	
-	for HeroName,Kaapa in pairs(UnitShop.Items) do
-		UnitShop.Items[HeroName].RequiredTier = UnitShop.Items[HeroName].RequiredTier + 1
-	end
-	
-	SetNetTableValue("dotacraft_shops_table", tostring(UnitID), { Index = UnitID, Shop = UnitShop, Tier=tier, PlayerID = PlayerID}) 
-end
 
 function unit_shops:Buy(data)
 	local item = data.ItemName
 	local PlayerID = data.PlayerID -- The player that clicked on an item to purchase. This can be an allied player
 	local player = PlayerResource:GetPlayer(PlayerID)
+	local shopID = data.Shop
 	local Shop = EntIndexToHScript(data.Shop)
+
+	print("Player "..PlayerID.." trying to buy "..item.." from "..data.Shop.." "..shopID)
 	
 	-- Check whether hero item or no
-	local isHeroItem = Boolize(data.Hero)
-	local isTavern = Boolize(data.Tavern)
+	local isHeroItem = tobool(data.Hero)
+	local isTavern = tobool(data.Tavern)
 	
 	-- check current tier
 	local shopOwner = Shop:GetPlayerOwner()
@@ -247,6 +239,8 @@ function unit_shops:Buy(data)
 		bEnoughSlots = true
 		bEnoughStock = true
 	end
+
+	local bPlayerCanPurchase = bHasEnoughGold and bHasEnoughLumber and bEnoughSlots and bEnoughStock
 		
 	--DeepPrintTable(GameRules.Shops["human_shop"])
 	if bPlayerCanPurchase then
@@ -254,24 +248,46 @@ function unit_shops:Buy(data)
 		EmitSoundOnClient("General.Buy", player)
 
 		if not isHeroItem or isTavern then
-			-- lower stock count by 1
-			Purchased(item, Shop)
-
+			
 			-- create & add item
 			if not isTavern then
+
+				-- lower stock count by 1
+				Purchased(item, Shop)
+
 				local Bought_Item = CreateItem(item, buyerPlayerOwner, buyerPlayerOwner) 
 				buyer:AddItem(Bought_Item)
-			else -- if it is tavern create hero
-				print("Creating hero")
-				-- increments tavern tier requirement by 1 
-				Increment_Hero_Tavern_Tier_Requirement(PlayerID)
+
+			-- if it is tavern create hero
+			else 
 				
-				-- create neutral hero here
+				if PlayerHasEnoughFood(player, 5) then
+
+					-- lower stock count by 1
+					Purchased(item, Shop)
+
+					print("[UNIT SHOPS] Tavern creating hero for "..PlayerID)
+					-- increments tavern tier requirement by 1 
+					Increment_Hero_Tavern_Tier_Requirement(PlayerID, shopID)
+
+					-- create neutral hero here
+					TavernCreateHeroForPlayer(PlayerID, shopID, item)
+
+				else
+					print("[UNIT SHOPS] Player "..PlayerID.." doesn't have enough food to purchase a hero from Tavern")
+					SendErrorMessage(buyerPlayerID, "#error_not_enough_food_"..(GetPlayerRace(player)))
+					return
+				end			
 			end
-		else -- revive hero here (dead heroes)
-			print("revive a hero")
+		else 
+			-- revive hero here (dead heroes)
+			-- Should look for enough food!
+			print("[UNIT SHOPS] Tavern creating hero for "..PlayerID)
+
+
 			-- revive hero here, NOYA DO IT, JUST DO IT
 		end
+
 		-- deduct gold & lumber
 		PlayerResource:SpendGold(buyerPlayerID, Gold_Cost, 0)
 		ModifyLumber(buyerPlayerOwner, Lumber_Cost)
@@ -298,12 +314,55 @@ function unit_shops:Buy(data)
 	end
 end
 
-function Boolize(value)
-	if (value == 1 or value == true) then
-		return true
-	else
-		return false
+-- call this function to make the hero tavern put all it's item requirements 1 tier higher
+-- make sure to feed it correct player requirement
+function Increment_Hero_Tavern_Tier_Requirement(PlayerID, shopID)
+	local UnitShop = unit_shops.Units[shopID]
+	
+	for HeroName,Kaapa in pairs(UnitShop.Items) do
+		UnitShop.Items[HeroName].RequiredTier = UnitShop.Items[HeroName].RequiredTier + 1
 	end
+	
+	SetNetTableValue("dotacraft_shops_table", tostring(UnitID), { Index = UnitID, Shop = UnitShop, Tier=tier, PlayerID = PlayerID}) 
+end
+
+function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
+	local player = PlayerResource:GetPlayer(playerID)
+	local hero = player:GetAssignedHero()
+	local unit_name = HeroName
+	local tavern = EntIndexToHScript(shopID)
+
+	-- handle_UnitOwner needs to be nil, else it will crash the game.
+	local new_hero = CreateUnitByName(unit_name, tavern:GetAbsOrigin(), true, hero, nil, hero:GetTeamNumber())
+	new_hero:SetPlayerID(playerID)
+	new_hero:SetControllableByPlayer(playerID, true)
+	new_hero:SetOwner(player)
+	FindClearSpaceForUnit(new_hero, tavern:GetAbsOrigin(), true)
+	
+	-- Add a teleport scroll
+	local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
+	new_hero:AddItem(tpScroll)
+	tpScroll:SetPurchaseTime(0) --Dont refund fully
+
+	-- Add the hero to the table of heroes acquired by the player
+	table.insert(player.heroes, new_hero)
+
+	-- Add food cost
+	ModifyFoodUsed(player, 5)
+
+	-- Acquired ability
+	local train_ability_name = "neutral_train_"..HeroName
+	train_ability_name = string.gsub(train_ability_name, "npc_dota_hero_" , "")
+	new_hero.RespawnAbility = train_ability_name --Reference to swap to a revive ability when the hero dies
+
+	-- Add the acquired ability to each altar
+	for _,altar in pairs(player.altar_structures) do
+		local acquired_ability_name = train_ability_name.."_acquired"
+		TeachAbility(altar, acquired_ability_name)
+		SetAbilityLayout(altar, 5)	
+	end
+	
+	Setup_Hero_Panel(new_hero)
 end
 
 -- Find a shop to open nearby the currently selected unit
@@ -418,7 +477,14 @@ function CheckHeroInRadius( event )
 end
 
 function FindShopAbleUnit( shop, unit_types )
-	local units = FindUnitsInRadius(shop:GetTeamNumber(), shop:GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_FRIENDLY, unit_types, 0, FIND_CLOSEST, false)
+	local teamNumber = shop:GetTeamNumber()
+	local units
+	if teamNumber == DOTA_TEAM_NEUTRALS then
+		units = FindUnitsInRadius(teamNumber, shop:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, unit_types, 0, FIND_CLOSEST, false)
+	else
+		units = FindUnitsInRadius(teamNumber, shop:GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_FRIENDLY, unit_types, 0, FIND_CLOSEST, false)
+	end
+
 	if units then
 		-- Check for heroes
 		for k,unit in pairs(units) do		
@@ -430,6 +496,13 @@ function FindShopAbleUnit( shop, unit_types )
 		-- Check for creature units with inventory
 		for k,unit in pairs(units) do
 			if not IsCustomBuilding(unit) and unit:HasInventory() then
+				return unit
+			end
+		end
+
+		-- For tavern, check any unit
+		if shop:GetUnitName() == "tavern" then
+			for k,unit in pairs(units) do
 				return unit
 			end
 		end

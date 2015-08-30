@@ -1608,3 +1608,11 @@ function ClearItems(unit)
         end
     end
 end
+
+function SetAbilityLayout( unit, layout_size )
+	unit:RemoveModifierByName("modifier_layout4")
+	unit:RemoveModifierByName("modifier_layout5")
+	unit:RemoveModifierByName("modifier_layout6")
+		
+	ApplyModifier(unit, "modifier_ability_layout"..layout_size)
+end

@@ -1,0 +1,5602 @@
+//.RespawnAbility
+// Passive version indicates that the hero has already been trained, stopping the next rank of that hero
+"neutral_train_alchemist_acquired"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+"neutral_train_beastmaster_acquired"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+"neutral_train_drow_ranger_acquired"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+"neutral_train_nevermore_acquired"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+"neutral_train_medusa_acquired"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+"neutral_train_brewmaster_acquired"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+"neutral_train_undying_acquired"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+"neutral_train_tinker_acquired"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+}
+
+// Awful copypaste following up next
+//  180 30
+"neutral_train_alchemist_revive1"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "1"
+
+    "AbilityGoldCost"               "180"
+    "AbilityChannelTime"            "30"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "30.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  225 35
+"neutral_train_alchemist_revive2"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "2"
+
+    "AbilityGoldCost"               "225"
+    "AbilityChannelTime"            "35"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "35.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "225"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  270 40
+"neutral_train_alchemist_revive3"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "3"
+
+    "AbilityGoldCost"               "270"
+    "AbilityChannelTime"            "40"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "40.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "270"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  315 45
+"neutral_train_alchemist_revive4"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "4"
+
+    "AbilityGoldCost"               "315"
+    "AbilityChannelTime"            "45"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "45.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "315"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  360 50
+"neutral_train_alchemist_revive5"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "5"
+
+    "AbilityGoldCost"               "360"
+    "AbilityChannelTime"            "50"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "50.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "360"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+
+}
+
+//  405 60
+"neutral_train_alchemist_revive6"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "6"
+
+    "AbilityGoldCost"               "405"
+    "AbilityChannelTime"            "60"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "60.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "405"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  450 70
+"neutral_train_alchemist_revive7"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "7"
+
+    "AbilityGoldCost"               "450"
+    "AbilityChannelTime"            "70"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "70.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "450"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  495 80
+"neutral_train_alchemist_revive8"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "8"
+
+    "AbilityGoldCost"               "495"
+    "AbilityChannelTime"            "80"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "80.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "495"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  540 90
+"neutral_train_alchemist_revive9"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "9"
+
+    "AbilityGoldCost"               "540"
+    "AbilityChannelTime"            "90"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "90.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "540"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  585 100
+"neutral_train_alchemist_revive10"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_alchemist"
+    "MaxLevel"                      "10"
+
+    "AbilityGoldCost"               "585"
+    "AbilityChannelTime"            "100"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "100.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "585"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_alchemist"
+        }
+    }
+}
+
+//  180 30
+"neutral_train_beastmaster_revive1"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "1"
+
+    "AbilityGoldCost"               "180"
+    "AbilityChannelTime"            "30"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "30.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  225 35
+"neutral_train_beastmaster_revive2"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "2"
+
+    "AbilityGoldCost"               "225"
+    "AbilityChannelTime"            "35"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "35.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "225"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  270 40
+"neutral_train_beastmaster_revive3"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "3"
+
+    "AbilityGoldCost"               "270"
+    "AbilityChannelTime"            "40"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "40.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "270"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  315 45
+"neutral_train_beastmaster_revive4"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "4"
+
+    "AbilityGoldCost"               "315"
+    "AbilityChannelTime"            "45"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "45.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "315"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  360 50
+"neutral_train_beastmaster_revive5"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "5"
+
+    "AbilityGoldCost"               "360"
+    "AbilityChannelTime"            "50"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "50.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "360"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+
+}
+
+//  405 60
+"neutral_train_beastmaster_revive6"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "6"
+
+    "AbilityGoldCost"               "405"
+    "AbilityChannelTime"            "60"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "60.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "405"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  450 70
+"neutral_train_beastmaster_revive7"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "7"
+
+    "AbilityGoldCost"               "450"
+    "AbilityChannelTime"            "70"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "70.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "450"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  495 80
+"neutral_train_beastmaster_revive8"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "8"
+
+    "AbilityGoldCost"               "495"
+    "AbilityChannelTime"            "80"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "80.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "495"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  540 90
+"neutral_train_beastmaster_revive9"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "9"
+
+    "AbilityGoldCost"               "540"
+    "AbilityChannelTime"            "90"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "90.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "540"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  585 100
+"neutral_train_beastmaster_revive10"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_beastmaster"
+    "MaxLevel"                      "10"
+
+    "AbilityGoldCost"               "585"
+    "AbilityChannelTime"            "100"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "100.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "585"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_beastmaster"
+        }
+    }
+}
+
+//  180 30
+"neutral_train_drow_ranger_revive1"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "1"
+
+    "AbilityGoldCost"               "180"
+    "AbilityChannelTime"            "30"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "30.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  225 35
+"neutral_train_drow_ranger_revive2"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "2"
+
+    "AbilityGoldCost"               "225"
+    "AbilityChannelTime"            "35"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "35.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "225"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  270 40
+"neutral_train_drow_ranger_revive3"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "3"
+
+    "AbilityGoldCost"               "270"
+    "AbilityChannelTime"            "40"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "40.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "270"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  315 45
+"neutral_train_drow_ranger_revive4"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "4"
+
+    "AbilityGoldCost"               "315"
+    "AbilityChannelTime"            "45"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "45.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "315"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  360 50
+"neutral_train_drow_ranger_revive5"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "5"
+
+    "AbilityGoldCost"               "360"
+    "AbilityChannelTime"            "50"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "50.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "360"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+
+}
+
+//  405 60
+"neutral_train_drow_ranger_revive6"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "6"
+
+    "AbilityGoldCost"               "405"
+    "AbilityChannelTime"            "60"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "60.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "405"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  450 70
+"neutral_train_drow_ranger_revive7"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "7"
+
+    "AbilityGoldCost"               "450"
+    "AbilityChannelTime"            "70"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "70.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "450"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  495 80
+"neutral_train_drow_ranger_revive8"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "8"
+
+    "AbilityGoldCost"               "495"
+    "AbilityChannelTime"            "80"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "80.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "495"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  540 90
+"neutral_train_drow_ranger_revive9"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "9"
+
+    "AbilityGoldCost"               "540"
+    "AbilityChannelTime"            "90"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "90.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "540"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  585 100
+"neutral_train_drow_ranger_revive10"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_drow_ranger"
+    "MaxLevel"                      "10"
+
+    "AbilityGoldCost"               "585"
+    "AbilityChannelTime"            "100"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "100.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "585"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_drow_ranger"
+        }
+    }
+}
+
+//  180 30
+"neutral_train_nevermore_revive1"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "1"
+
+    "AbilityGoldCost"               "180"
+    "AbilityChannelTime"            "30"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "30.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  225 35
+"neutral_train_nevermore_revive2"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "2"
+
+    "AbilityGoldCost"               "225"
+    "AbilityChannelTime"            "35"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "35.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "225"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  270 40
+"neutral_train_nevermore_revive3"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "3"
+
+    "AbilityGoldCost"               "270"
+    "AbilityChannelTime"            "40"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "40.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "270"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  315 45
+"neutral_train_nevermore_revive4"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "4"
+
+    "AbilityGoldCost"               "315"
+    "AbilityChannelTime"            "45"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "45.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "315"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  360 50
+"neutral_train_nevermore_revive5"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "5"
+
+    "AbilityGoldCost"               "360"
+    "AbilityChannelTime"            "50"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "50.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "360"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+
+}
+
+//  405 60
+"neutral_train_nevermore_revive6"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "6"
+
+    "AbilityGoldCost"               "405"
+    "AbilityChannelTime"            "60"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "60.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "405"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  450 70
+"neutral_train_nevermore_revive7"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "7"
+
+    "AbilityGoldCost"               "450"
+    "AbilityChannelTime"            "70"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "70.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "450"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  495 80
+"neutral_train_nevermore_revive8"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "8"
+
+    "AbilityGoldCost"               "495"
+    "AbilityChannelTime"            "80"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "80.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "495"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  540 90
+"neutral_train_nevermore_revive9"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "9"
+
+    "AbilityGoldCost"               "540"
+    "AbilityChannelTime"            "90"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "90.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "540"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  585 100
+"neutral_train_nevermore_revive10"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_nevermore"
+    "MaxLevel"                      "10"
+
+    "AbilityGoldCost"               "585"
+    "AbilityChannelTime"            "100"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "100.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "585"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_nevermore"
+        }
+    }
+}
+
+//  180 30
+"neutral_train_medusa_revive1"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "1"
+
+    "AbilityGoldCost"               "180"
+    "AbilityChannelTime"            "30"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "30.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  225 35
+"neutral_train_medusa_revive2"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "2"
+
+    "AbilityGoldCost"               "225"
+    "AbilityChannelTime"            "35"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "35.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "225"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  270 40
+"neutral_train_medusa_revive3"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "3"
+
+    "AbilityGoldCost"               "270"
+    "AbilityChannelTime"            "40"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "40.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "270"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  315 45
+"neutral_train_medusa_revive4"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "4"
+
+    "AbilityGoldCost"               "315"
+    "AbilityChannelTime"            "45"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "45.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "315"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  360 50
+"neutral_train_medusa_revive5"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "5"
+
+    "AbilityGoldCost"               "360"
+    "AbilityChannelTime"            "50"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "50.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "360"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+
+}
+
+//  405 60
+"neutral_train_medusa_revive6"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "6"
+
+    "AbilityGoldCost"               "405"
+    "AbilityChannelTime"            "60"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "60.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "405"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  450 70
+"neutral_train_medusa_revive7"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "7"
+
+    "AbilityGoldCost"               "450"
+    "AbilityChannelTime"            "70"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "70.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "450"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  495 80
+"neutral_train_medusa_revive8"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "8"
+
+    "AbilityGoldCost"               "495"
+    "AbilityChannelTime"            "80"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "80.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "495"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  540 90
+"neutral_train_medusa_revive9"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "9"
+
+    "AbilityGoldCost"               "540"
+    "AbilityChannelTime"            "90"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "90.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "540"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  585 100
+"neutral_train_medusa_revive10"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_medusa"
+    "MaxLevel"                      "10"
+
+    "AbilityGoldCost"               "585"
+    "AbilityChannelTime"            "100"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "100.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "585"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_medusa"
+        }
+    }
+}
+
+//  180 30
+"neutral_train_brewmaster_revive1"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "1"
+
+    "AbilityGoldCost"               "180"
+    "AbilityChannelTime"            "30"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "30.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  225 35
+"neutral_train_brewmaster_revive2"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "2"
+
+    "AbilityGoldCost"               "225"
+    "AbilityChannelTime"            "35"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "35.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "225"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  270 40
+"neutral_train_brewmaster_revive3"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "3"
+
+    "AbilityGoldCost"               "270"
+    "AbilityChannelTime"            "40"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "40.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "270"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  315 45
+"neutral_train_brewmaster_revive4"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "4"
+
+    "AbilityGoldCost"               "315"
+    "AbilityChannelTime"            "45"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "45.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "315"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  360 50
+"neutral_train_brewmaster_revive5"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "5"
+
+    "AbilityGoldCost"               "360"
+    "AbilityChannelTime"            "50"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "50.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "360"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+
+}
+
+//  405 60
+"neutral_train_brewmaster_revive6"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "6"
+
+    "AbilityGoldCost"               "405"
+    "AbilityChannelTime"            "60"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "60.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "405"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  450 70
+"neutral_train_brewmaster_revive7"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "7"
+
+    "AbilityGoldCost"               "450"
+    "AbilityChannelTime"            "70"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "70.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "450"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  495 80
+"neutral_train_brewmaster_revive8"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "8"
+
+    "AbilityGoldCost"               "495"
+    "AbilityChannelTime"            "80"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "80.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "495"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  540 90
+"neutral_train_brewmaster_revive9"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "9"
+
+    "AbilityGoldCost"               "540"
+    "AbilityChannelTime"            "90"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "90.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "540"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  585 100
+"neutral_train_brewmaster_revive10"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_brewmaster"
+    "MaxLevel"                      "10"
+
+    "AbilityGoldCost"               "585"
+    "AbilityChannelTime"            "100"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "100.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "585"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_brewmaster"
+        }
+    }
+}
+
+//  180 30
+"neutral_train_undying_revive1"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "1"
+
+    "AbilityGoldCost"               "180"
+    "AbilityChannelTime"            "30"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "30.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  225 35
+"neutral_train_undying_revive2"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "2"
+
+    "AbilityGoldCost"               "225"
+    "AbilityChannelTime"            "35"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "35.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "225"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  270 40
+"neutral_train_undying_revive3"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "3"
+
+    "AbilityGoldCost"               "270"
+    "AbilityChannelTime"            "40"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "40.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "270"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  315 45
+"neutral_train_undying_revive4"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "4"
+
+    "AbilityGoldCost"               "315"
+    "AbilityChannelTime"            "45"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "45.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "315"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  360 50
+"neutral_train_undying_revive5"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "5"
+
+    "AbilityGoldCost"               "360"
+    "AbilityChannelTime"            "50"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "50.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "360"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+
+}
+
+//  405 60
+"neutral_train_undying_revive6"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "6"
+
+    "AbilityGoldCost"               "405"
+    "AbilityChannelTime"            "60"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "60.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "405"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  450 70
+"neutral_train_undying_revive7"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "7"
+
+    "AbilityGoldCost"               "450"
+    "AbilityChannelTime"            "70"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "70.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "450"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  495 80
+"neutral_train_undying_revive8"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "8"
+
+    "AbilityGoldCost"               "495"
+    "AbilityChannelTime"            "80"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "80.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "495"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  540 90
+"neutral_train_undying_revive9"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "9"
+
+    "AbilityGoldCost"               "540"
+    "AbilityChannelTime"            "90"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "90.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "540"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  585 100
+"neutral_train_undying_revive10"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_undying"
+    "MaxLevel"                      "10"
+
+    "AbilityGoldCost"               "585"
+    "AbilityChannelTime"            "100"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "100.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "585"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_undying"
+        }
+    }
+}
+
+//  180 30
+"neutral_train_tinker_revive1"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "1"
+
+    "AbilityGoldCost"               "180"
+    "AbilityChannelTime"            "30"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "30.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}
+
+//  225 35
+"neutral_train_tinker_revive2"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "2"
+
+    "AbilityGoldCost"               "225"
+    "AbilityChannelTime"            "35"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "35.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "225"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}
+
+//  270 40
+"neutral_train_tinker_revive3"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "3"
+
+    "AbilityGoldCost"               "270"
+    "AbilityChannelTime"            "40"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "40.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "270"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}
+
+//  315 45
+"neutral_train_tinker_revive4"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "4"
+
+    "AbilityGoldCost"               "315"
+    "AbilityChannelTime"            "45"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "45.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "315"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}
+
+//  360 50
+"neutral_train_tinker_revive5"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "5"
+
+    "AbilityGoldCost"               "360"
+    "AbilityChannelTime"            "50"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "50.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "360"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+
+}
+
+//  405 60
+"neutral_train_tinker_revive6"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "6"
+
+    "AbilityGoldCost"               "405"
+    "AbilityChannelTime"            "60"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "60.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "405"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}
+
+//  450 70
+"neutral_train_tinker_revive7"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "7"
+
+    "AbilityGoldCost"               "450"
+    "AbilityChannelTime"            "70"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "70.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "450"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}
+
+//  495 80
+"neutral_train_tinker_revive8"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "8"
+
+    "AbilityGoldCost"               "495"
+    "AbilityChannelTime"            "80"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "80.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "495"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}
+
+//  540 90
+"neutral_train_tinker_revive9"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "9"
+
+    "AbilityGoldCost"               "540"
+    "AbilityChannelTime"            "90"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "90.0" 
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "540"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}
+
+//  585 100
+"neutral_train_tinker_revive10"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "neutral_train_tinker"
+    "MaxLevel"                      "10"
+
+    "AbilityGoldCost"               "585"
+    "AbilityChannelTime"            "100"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "revive_time"           "100.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "585"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "food_cost"             "5"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "EnqueueUnit"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "HideReviveAbility"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        // Consume the first item in the queue
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/queue.lua"
+            "Function"      "NextQueue"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "buildings/altar.lua"
+            "Function"      "ReviveHero"
+            "Hero"          "npc_dota_hero_tinker"
+        }
+    }
+}

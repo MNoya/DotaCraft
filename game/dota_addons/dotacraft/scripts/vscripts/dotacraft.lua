@@ -1197,11 +1197,12 @@ function dotacraft:OnEntityKilled( event )
 		if IsValidEntity(player.altar) then
 			print("Player has "..#player.altar_structures.." valid "..player.altar:GetUnitName())
 			for _,altar in pairs(player.altar_structures) do
-				print("ALLOW REVIVAL OF THIS THIS HERO AT THIS ALTAR")
-
 				-- Set the strings for the _acquired ability to find and _revival ability to add
 				local level = killedUnit:GetLevel()
 				local name = killedUnit.RespawnAbility
+
+				print("ALLOW REVIVAL OF THIS THIS HERO AT THIS ALTAR - Ability: ",name)
+
 				if name then
 					local acquired_ability_name = name.."_acquired"
 					local revival_ability_name = name.."_revive"..level
@@ -1219,8 +1220,12 @@ function dotacraft:OnEntityKilled( event )
 							new_ability:SetLevel(new_ability:GetMaxLevel())
 							print("ADDED "..revival_ability_name.." at level "..new_ability:GetMaxLevel())
 						else
-							print("ABILITY COULDNT BE CHANGED BECAUSE OF REASONS")
+							print("ABILITY COULDNT BE CHANGED BECAUSE NO "..revival_ability_name.." WAS FOUND ON THIS ALTAR")
 						end
+					else
+						-- The ability couldn't be found (a neutral hero), add it
+						print("ABILITY COULDNT BE CHANGED BECAUSE NO "..acquired_ability_name.." WAS FOUND ON THIS ALTAR")
+
 					end
 				end
 			end

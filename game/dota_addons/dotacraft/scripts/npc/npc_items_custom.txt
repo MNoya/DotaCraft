@@ -1499,6 +1499,2175 @@
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityTextureName"            "npc_dota_hero_tinker"
 	}
+	
+	// Awful copypasta next - 80 items for queue
+	//Revives
+	"item_neutral_train_alchemist_revive1"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive2"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive3"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive4"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive6"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive7"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive8"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive9"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_alchemist_revive10"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_alchemist"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	//Revives
+	"item_neutral_train_beastmaster_revive1"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive2"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive3"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive4"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive6"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive7"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive8"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive9"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_beastmaster_revive10"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_beastmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	//Revives
+	"item_neutral_train_drow_ranger_revive1"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive2"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive3"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive4"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive6"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive7"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive8"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive9"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_drow_ranger_revive10"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_drow_ranger"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	//Revives
+	"item_neutral_train_nevermore_revive1"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive2"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive3"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive4"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive6"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive7"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive8"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive9"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_nevermore_revive10"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_nevermore"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	//Revives
+	"item_neutral_train_medusa_revive1"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive2"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive3"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive4"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive6"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive7"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive8"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive9"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_medusa_revive10"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_medusa"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	//Revives
+	"item_neutral_train_brewmaster_revive1"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive2"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive3"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive4"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive6"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive7"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive8"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive9"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_brewmaster_revive10"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_brewmaster"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	//Revives
+	"item_neutral_train_undying_revive1"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive2"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive3"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive4"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive6"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive7"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive8"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive9"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_undying_revive10"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_undying"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	//Revives
+	"item_neutral_train_tinker_revive1"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive2"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive3"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive4"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive6"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive7"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive8"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive9"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
+	
+	"item_neutral_train_tinker_revive10"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_neutral_train_tinker"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityCastPoint"              "0"
+	
+	    "ItemDroppable"                 "0"
+	    "ItemPurchasable"               "0"
+	    "ItemSellable"                  "0"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/queue.lua"
+	            "Function"      "DequeueUnit"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "buildings/altar.lua"
+	            "Function"      "ShowReviveAbility"
+	        }
+	    }
+	}
 	// Creates two Skeleton Warriors from a corpse.
 	"item_rod_of_necromancy"
 	{
@@ -2031,6 +4200,33 @@
 					}
 				}
 			}
+	
+			"modifier_ability_layout4"
+	        {
+	        	"IsHidden"	"1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ABILITY_LAYOUT" "4"
+	            }
+	        }
+	
+			"modifier_ability_layout5"
+	        {
+	        	"IsHidden"	"1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ABILITY_LAYOUT" "5"
+	            }
+	        }
+	
+	        "modifier_ability_layout6"
+	        {
+	        	"IsHidden"	"1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ABILITY_LAYOUT" "6"
+	            }
+	        }
 		}
 	}
 	"item_backpack"
