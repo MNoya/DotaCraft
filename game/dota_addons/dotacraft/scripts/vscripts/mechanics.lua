@@ -1610,9 +1610,63 @@ function ClearItems(unit)
 end
 
 function SetAbilityLayout( unit, layout_size )
-	unit:RemoveModifierByName("modifier_layout4")
-	unit:RemoveModifierByName("modifier_layout5")
-	unit:RemoveModifierByName("modifier_layout6")
-		
+	unit:RemoveModifierByName("modifier_ability_layout4")
+	unit:RemoveModifierByName("modifier_ability_layout5")
+	unit:RemoveModifierByName("modifier_ability_layout6")
+	
 	ApplyModifier(unit, "modifier_ability_layout"..layout_size)
+end
+
+function AdjustAbilityLayout( unit )
+	local required_layout_size = GetVisibleAbilityCount(unit)
+
+	if required_layout_size > 6 then
+		print("WARNING: Unit has more than 6 visible abilities, defaulting to AbilityLayout 6")
+		required_layout_size = 6
+	elseif required_layout_size < 4 then
+		print("WARNING: Unit has less than 4 visible abilities, defaulting to AbilityLayout 4")
+		required_layout_size = 4
+	end
+
+	SetAbilityLayout(unit, required_layout_size)
+end
+
+function GetVisibleAbilityCount( unit )
+	local count = 0
+	for i=0,15 do
+		local ability = unit:GetAbilityByIndex(i)
+		if ability and not ability:IsHidden() then
+			count = count + 1
+			ability:MarkAbilityButtonDirty()
+		end
+	end
+	return count
+end
+
+function FindAbilityWithName( unit, ability_name_section )
+	for i=0,15 do
+		local ability = unit:GetAbilityByIndex(i)
+		if ability and string.match(ability:GetAbilityName(), ability_name_section) then
+			return ability
+		end
+	end
+end
+
+function GetAbilityOnVisibleSlot( unit, slot )
+	local visible_slot = 0
+	for i=0,15 do
+		local ability = unit:GetAbilityByIndex(i)
+		if ability and not ability:IsHidden() then
+			visible_slot = visible_slot + 1
+			if visible_slot == slot then
+				return ability
+			end
+		end
+	end
+end
+
+-- Hero count is limited to 3
+function CanPlayerTrainMoreHeroes( playerID )
+	local player = PlayerResource:GetPlayer(playerID)
+	return (player.heroes and #player.heroes < 3)
 end

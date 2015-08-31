@@ -206,9 +206,10 @@ function dotacraft:IncreaseAltarTier( pID, abilityOnProgress )
 			local ability = altar:GetAbilityByIndex(i)
 			if ability then
 				local ability_name = ability:GetAbilityName()
+				local level = ability:GetLevel() -- Disabled abilities are level 0
 				if string.find(ability_name, "_train") and not string.find(ability_name,"_acquired") then
 					if not abilityOnProgress or ability_name ~= abilityOnProgress:GetAbilityName() then	
-						if player.AltarLevel == 4 or #player.heroes == 3 then -- Disable completely
+						if player.AltarLevel == 4 or not CanPlayerTrainMoreHeroes( pID ) then -- Disable completely
 							ability:SetHidden(true)
 							--altar:RemoveAbility(ability_name)
 						else	
@@ -219,9 +220,9 @@ function dotacraft:IncreaseAltarTier( pID, abilityOnProgress )
 							local ability_len = string.len(ability_name)
 							local rank = string.sub(ability_name, ability_len , ability_len)
 							if rank ~= "0" then
-								print(ability_name, rank, player.AltarLevel)
 								local new_ability_name = string.gsub(ability_name, rank , player.AltarLevel)
-								print(new_ability_name)
+								if level == 0 then ability_name = ability_name.."_disabled" end
+								print(ability_name, rank, "->", player.AltarLevel, "=",new_ability_name)
 
 								-- If the ability has to be channeled (i.e. is queued), it cant be removed!
 								if not tableContains(player.altar_queue, ability_name) then
@@ -248,6 +249,8 @@ function dotacraft:IncreaseAltarTier( pID, abilityOnProgress )
 
 		-- Look to disable the upgraded abilities if the requirements arent met
 		CheckAbilityRequirements(altar, player)
+
+		AdjustAbilityLayout(altar)
 
 		local hero = altar:GetPlayerOwner():GetAssignedHero()
 		local playerID = hero:GetPlayerID()
@@ -361,9 +364,26 @@ function ReEnableAltarAbilities( event )
 		local player = altar:GetPlayerOwner()
 		CheckAbilityRequirements( structure, player )
 
+		-- Keep order
+		ReorderAbilities(altar)
+
 		PrintAbilities(altar)
 	end
 
+end
+
+-- Check the unit definition and try to keep the predefined index order of abilities
+function ReorderAbilities( unit )
+	local unit_table = GameRules.UnitKV[unit:GetUnitName()]
+	for i=1,4 do
+		local ability_string = unit_table["Ability"..i]
+		local ability_in_slot = GetAbilityOnVisibleSlot(unit, i)
+		local ability_name = GetResearchAbilityName(ability_string)
+		local ability = FindAbilityWithName(unit, ability_name) -- Get an ability with a similar name
+		if ability then
+			unit:SwapAbilities(ability:GetAbilityName(), ability_in_slot:GetAbilityName(), true, true)
+		end
+	end
 end
 
 -- Keep a player.altar after the player builds its first Altar
@@ -389,6 +409,7 @@ function LinkAltar( event )
 		CloneAltarAbilities( altar, player.altar )
 	end
 
+	AdjustAbilityLayout(altar)
 end
 
 -- Copies the abilities on the main altar to the newly built altar
