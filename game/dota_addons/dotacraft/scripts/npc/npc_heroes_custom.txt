@@ -763,7 +763,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_nevermore"
 		"InternalName"				"neutral_nevermore"
-		//"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+		"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
 		"FormationRank"				"2"
 		"AttacksEnabled"			"ground, air"
 		
@@ -776,6 +776,7 @@
 		"Ability4" 					"firelord_volcano"
 		"Ability5"					""
 		"Ability6" 					""
+		"Ability10"					"firelord_arcana_model"
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -794,7 +795,7 @@
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"550"
-		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
 		"ProjectileSpeed"			"1200"
 		
 		// Attributes

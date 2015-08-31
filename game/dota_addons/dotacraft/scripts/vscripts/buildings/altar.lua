@@ -492,6 +492,8 @@ function ReviveHero( event )
 
 		local new_ability = altar:FindAbilityByName(new_ability_name)
 		new_ability:SetLevel(new_ability:GetMaxLevel())
+
+		AdjustAbilityLayout(altar)
 	end
 	
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })

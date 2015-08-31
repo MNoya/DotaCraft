@@ -594,12 +594,17 @@ function dotacraft:OnHeroInGame(hero)
 
 		dotacraft:ModifyStatBonuses(hero)
 
+		-- Innate abilities
 		if hero:HasAbility("nightelf_shadow_meld") then
 			hero:FindAbilityByName("nightelf_shadow_meld"):SetLevel(1)
 		end
 
 		if hero:HasAbility("blood_mage_orbs") then
 			hero:FindAbilityByName("blood_mage_orbs"):SetLevel(1)
+		end
+
+		if hero:HasAbility("firelord_arcana_model") then
+			hero:FindAbilityByName("firelord_arcana_model"):SetLevel(1)
 		end
 	end
 

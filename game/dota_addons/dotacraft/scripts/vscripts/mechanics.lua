@@ -1487,6 +1487,20 @@ function ShowWearable( unit, target_model )
 	end
 end
 
+function PrintWearables( unit )
+	print("---------------------")
+	print("Wearable List of "..unit:GetUnitName())
+	print("Main Model: "..unit:GetModelName())
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			local model_name = wearable:GetModelName()
+			if model_name ~= "" then print(model_name) end
+		end
+		wearable = wearable:NextMovePeer()
+	end
+end
+
 -- Removes the first item by name if found on the unit. Returns true if removed
 function RemoveItemByName( unit, item_name )
 	for i=0,15 do
