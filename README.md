@@ -34,7 +34,7 @@ See the spreadsheet tracking our progress [here.](https://docs.google.com/spread
 
 - [x] Human
 - [x] Night Elf
-- [ ] Orc
+- [x] Orc
 - [x] Undead
 
 ### Interfaces
