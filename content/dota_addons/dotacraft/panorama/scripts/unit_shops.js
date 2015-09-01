@@ -64,6 +64,10 @@ function Delete_Single_Panel(args){
 	
 	var Container = Root.FindChildTraverse(Shop)
 	var HeroItemPanel = Container.FindChildTraverse(PlayerID+"_"+Hero)
+	if(HeroItemPanel == null){
+		HeroItemPanel = Container.FindChildTraverse(Hero)	
+	}
+	$.Msg(HeroItemPanel)
 	HeroItemPanel.DeleteAsync(0.1)
 }
 
@@ -140,10 +144,27 @@ function Hide_All_Shops(){
 
 Game.AddCommand( "+ToggleShop", OnShopToggle, "", 0 );
 
+function Delete_Shop_Content(args){
+	var Shop = $("#"+args.Index)
+	var PlayerID = args.PlayerID
+	
+	var bChildCount = Shop.GetChildCount()
+	$.Msg("killing tavern")
+	// loop and delete all the children
+	for(i = 0; i < bChildCount; i++){
+		var child = Shop.GetChild(i)
+		$.Msg(child)
+		if(child != null && child.id.indexOf(PlayerID.toString())){
+			child.DeleteAsync(0.01)
+		}
+	}
+}
+
 (function () {
 	GameEvents.Subscribe( "Shops_Create", Create_Shop);
 	GameEvents.Subscribe( "Shops_Open", Open_Shop);
 	GameEvents.Subscribe( "Shops_Create_Single_Panel", Create_Single_Panel);
 	GameEvents.Subscribe( "Shops_Delete_Single_Panel", Delete_Single_Panel);
+	GameEvents.Subscribe( "Shops_Remove_Content", Delete_Shop_Content);
 	
 })();

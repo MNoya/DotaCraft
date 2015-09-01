@@ -32,10 +32,18 @@ end
 
 	shops[UnitID].CurrentRefreshTime is the time that the item is currently at, this is used as a counter to reference against RefreshRate, once they match we increase stock
 --]]
+
+-- neutral hero tavern details
 local NEUTRAL_HERO_GOLDCOST = 425
 local NEUTRAL_HERO_LUMBERCOST = 135
 local NEUTRAL_HERO_FOODCOST = 5
 local NEUTRAL_HERO_STOCKTIME = 135
+
+-- player hero revival cost details
+local BASE_HERO_GOLDCOST = 340
+local BASE_HERO_ADDITIONAL_GOLDCOST_PER_LEVEL = 85
+local BASE_HERO_LUMBERCOST = 80
+local BASE_HERO_ADDITIONAL_LUMBERCOST_PER_LEVEL = 30
 
 -- this value should be 135, left at 1 for debugging
 local NEUTRAL_TAVERN_UNLOCKTIME = 1
@@ -60,6 +68,12 @@ function unit_shops:CreateShop(unit, shop_name)
 	
 	-- empty sorted table
 	local sorted_table = {}
+	
+	-- isTavern so we can check whether to setnettable updating
+	local isTavern = false
+	if shop_name == "tavern" then
+		isTavern = true
+	end
 	
 	local shopEnt = Entities:FindByName(nil, "*custom_shop") -- entity name in hammer
 	if shopEnt then
@@ -97,11 +111,11 @@ function unit_shops:CreateShop(unit, shop_name)
 			end
 		
 		else
-			UnitShop.Items[key].CurrentStock = 1
+			UnitShop.Items[key].CurrentStock = 0
 			UnitShop.Items[key].MaxStock = 1
 			UnitShop.Items[key].RequiredTier = 9000
-			UnitShop.Items[key].GoldCost = NEUTRAL_HERO_GOLDCOST
-			UnitShop.Items[key].LumberCost = NEUTRAL_HERO_LUMBERCOST
+			UnitShop.Items[key].GoldCost = 0
+			UnitShop.Items[key].LumberCost = 0
 			UnitShop.Items[key].RestockRate = NEUTRAL_HERO_STOCKTIME
 		end
 
@@ -126,64 +140,72 @@ function unit_shops:CreateShop(unit, shop_name)
 			UnitShop.Items[key].RequiredTier = 1
 		end
 
-		Timers:CreateTimer(1, function()
-			tier = player and GetPlayerCityLevel(player) or 9000
+		if not isTavern then -- if not tavern
+			Timers:CreateTimer(1, function()
+				tier = player and GetPlayerCityLevel(player) or 9000
 
-			if not IsValidEntity(unit) or not unit:IsAlive() then
-				-- send command to kill shop panel
-				UnitShop = nil
-				print("[UNIT SHOP] Shop identified not valid, terminating timer")
-				return
-			end
+				if not IsValidEntity(unit) or not unit:IsAlive() then
+					-- send command to kill shop panel
+					UnitShop = nil
+					print("[UNIT SHOP] Shop identified not valid, terminating timer")
+					return
+				end
 
-			-- if the item is not at max stock start a counter until it's restocked
-			if UnitShop.Items[key].CurrentStock < UnitShop.Items[key].MaxStock then
-			
-				if UnitShop.Items[key].CurrentRefreshTime == UnitShop.Items[key].RestockRate then
-					-- increase stock by 1 when the currentrefreshtime == the refreshrate
-					UnitShop.Items[key].CurrentStock = UnitShop.Items[key].CurrentStock + 1
+				unit_shops:Stock_Management(UnitShop, key)
+				
+				-- set nettable
+				SetNetTableValue("dotacraft_shops_table", tostring(UnitID), { Index = UnitID, Shop = UnitShop, Tier=tier})
+				
+				return 1
+			end)
+		else
+		
+			Timers:CreateTimer(0.1, function()
+				local PlayerCount = PlayerResource:GetPlayerCount() - 1
+				unit_shops:Stock_Management(UnitShop, key)
+				-- check all players hero count
+				for i=0, PlayerCount do
+									
+					if PlayerResource:IsValidPlayer(i) then
+						local player = PlayerResource:GetPlayer(i)
+						
+						-- if player cannot train more heroes and tavern wasn't previously disabled, disable it now			
+						if not CanPlayerTrainMoreHeroes( i ) and not player.hero_tavern_removed then
+							-- delete tavern
+							player.hero_tavern_removed = true
+							CustomGameEventManager:Send_ServerToPlayer(player, "Shops_Remove_Content", {Index = UnitID, Shop = UnitShop, PlayerID = i}) 
+							print("remove neutral heroes panels from player="..tostring(i))
+						end
+						
+						UpdateHeroTavernForPlayer( i )
+						local tier = GetPlayerCityLevel(player)
+						local PlayerHasAltar = HasAltar(i)
+						SetNetTableValue("dotacraft_shops_table", tostring(HeroTavernEntityID), {Shop = UnitShop, PlayerID = PlayerID, Tier=tier, Altar=PlayerHasAltar}) 
 					
-					-- reset counter for next stock
-					UnitShop.Items[key].CurrentRefreshTime = 1
-					print("[UNIT SHOP] Increasing stock count by 1")
-				else
-					--print("[UNIT SHOP] Incrementing counter to restock")
-					-- increment the time counter
-					UnitShop.Items[key].CurrentRefreshTime = UnitShop.Items[key].CurrentRefreshTime + 1
+					end
+					
 				end
 			
-			end
-				-- set nettable update
-				SetNetTableValue("dotacraft_shops_table", tostring(UnitID), { Index = UnitID, Shop = UnitShop, Tier=tier})
-			return 1
-		end)
+				return 0.1
+			end)
+		
+		end
 		
 		-- save item into table using it's sort index, this is send once at the beginning to initialise the shop
 		sorted_table[tonumber(order)] = UnitShop.Items[key]
 	end
 
 	local team = unit:GetTeam()
-	if shop_name ~= "tavern" then
+	if not isTavern then
 		print("[UNIT SHOP] Create "..shop_name.." "..UnitID.." Tier "..tier)
-		DeepPrintTable(sorted_table)
+		--DeepPrintTable(sorted_table)
 		CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = sorted_table, Tier=tier, Race=shop_name }) 
 	else
 		HeroTavernEntityID = UnitID
 		CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = sorted_table, Tier=tier, Tavern = true}) 
-		print("[UNIT SHOP] Create Tavern "..HeroTavernEntityID)
-		DeepPrintTable(sorted_table)
-	
-		-- make panels available after 135seconds
-		Timers:CreateTimer(NEUTRAL_TAVERN_UNLOCKTIME, function()
-			
-			for HeroName,Kaapa in pairs(UnitShop.Items) do
-				UnitShop.Items[HeroName].RequiredTier = 1
-			end
-			print("[UNIT SHOPS] Unlocking neutral hero tavern")
-			SetNetTableValue("dotacraft_shops_table", tostring(UnitID), { Index = UnitID, Shop = UnitShop, Tier=tier}) 
-		end)
-		
+		print("[UNIT SHOP] Create Tavern "..HeroTavernEntityID)		
 	end
+	
 end
 
 
@@ -200,6 +222,10 @@ function unit_shops:Buy(data)
 	local isHeroItem = tobool(data.Hero)
 	local isTavern = tobool(data.Tavern)
 	
+	if isTavern and not CanTrainHeroes(player) then
+		print("PlayerID = "..tostring(PlayerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
+		return
+	end
 	-- check current tier
 	local shopOwner = Shop:GetPlayerOwner()
 	local tier = shopOwner and GetPlayerCityLevel(shopOwner) or GetPlayerCityLevel(player) --If there is no owner, use the tier of the player that tries to buy it
@@ -267,9 +293,7 @@ function unit_shops:Buy(data)
 					Purchased(item, Shop)
 
 					print("[UNIT SHOPS] Tavern creating hero for "..PlayerID)
-					-- increments tavern tier requirement by 1 
-					Increment_Hero_Tavern_Tier_Requirement(PlayerID, shopID)
-
+										
 					-- create neutral hero here
 					TavernCreateHeroForPlayer(PlayerID, shopID, item)
 
@@ -293,10 +317,11 @@ function unit_shops:Buy(data)
 		
 		local UnitShop =  unit_shops.Units[data.Shop]
 		
-		if not isHeroItem or isTavern then -- update shop
-			SetNetTableValue("dotacraft_shops_table", tostring(data.Shop), { Shop = UnitShop, Tier=tier })
-		else -- delete panel of hero
+		-- delete hero / neutral hero panel if IsHero or IsTavern
+		if isHeroItem or isTavern then -- update shop
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(data.PlayerID), "Shops_Delete_Single_Panel", {Index = data.Shop, Hero = data.ItemName }) 
+		else -- update information of stock since it's an item
+			SetNetTableValue("dotacraft_shops_table", tostring(data.Shop), { Shop = UnitShop, Tier=tier })
 		end
 	else -- error messaging
 	
@@ -313,16 +338,67 @@ function unit_shops:Buy(data)
 	end
 end
 
--- call this function to make the hero tavern put all it's item requirements 1 tier higher
--- make sure to feed it correct player requirement
-function Increment_Hero_Tavern_Tier_Requirement(PlayerID, shopID)
-	local UnitShop = unit_shops.Units[shopID]
+function unit_shops:AddHeroToTavern(hero)
+	local HeroLevel = hero:GetLevel()
+
+	local GoldCost = BASE_HERO_GOLDCOST + (BASE_HERO_ADDITIONAL_GOLDCOST_PER_LEVEL * HeroLevel)
+	local LumberCost = BASE_HERO_LUMBERCOST + (BASE_HERO_ADDITIONAL_LUMBERCOST_PER_LEVEL * HeroLevel)
 	
-	for HeroName,Kaapa in pairs(UnitShop.Items) do
-		UnitShop.Items[HeroName].RequiredTier = UnitShop.Items[HeroName].RequiredTier + 1
+	for k,v in pairs(unit_shops.Units) do
+		--print(k) (ShopID, HeroName, NewGoldCost, NewLumberCost, RequiredTier)
+		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), "Shops_Create_Single_Panel", {Index = k, PlayerID=hero:GetPlayerOwnerID(), HeroInfo={GoldCost=GoldCost, LumberCost=LumberCost, RequiredTier = 1} , Hero=hero:GetUnitName() }) 
+	end
+end	
+
+function unit_shops:Stock_Management(UnitShop, key)
+	-- if the item is not at max stock start a counter until it's restocked
+	if UnitShop.Items[key].CurrentStock < UnitShop.Items[key].MaxStock then
+	
+		if UnitShop.Items[key].CurrentRefreshTime == UnitShop.Items[key].RestockRate then
+			-- increase stock by 1 when the currentrefreshtime == the refreshrate
+			UnitShop.Items[key].CurrentStock = UnitShop.Items[key].CurrentStock + 1
+			
+			-- reset counter for next stock
+			UnitShop.Items[key].CurrentRefreshTime = 1
+			print("[UNIT SHOP] Increasing stock count by 1")
+		else
+			--print("[UNIT SHOP] Incrementing counter to restock")
+			-- increment the time counter
+			UnitShop.Items[key].CurrentRefreshTime = UnitShop.Items[key].CurrentRefreshTime + 1
+		end
+	
+	end
+end
+
+function HasAltar(PlayerID)
+    local player = PlayerResource:GetPlayer(PlayerID)
+    return (player.altar_structures and #player.altar_structures > 0)
+end
+
+-- all the player-specific updates for players
+-- make sure to feed it correct player requirement
+function UpdateHeroTavernForPlayer(PlayerID)
+
+	local UnitShop = unit_shops.Units[HeroTavernEntityID]
+	local player = PlayerResource:GetPlayer(PlayerID)
+	local tier = GetPlayerCityLevel(player)
+	
+	local inRequiredTier = #player.heroes + 1
+	
+	if inRequiredTier == 4 then
+		return
 	end
 	
-	SetNetTableValue("dotacraft_shops_table", tostring(UnitID), { Index = UnitID, Shop = UnitShop, Tier=tier, PlayerID = PlayerID}) 
+	if (inRequiredTier - 1) > 0 then
+		for HeroName,Kaapa in pairs(UnitShop.Items) do
+			UnitShop.Items[HeroName].GoldCost = NEUTRAL_HERO_GOLDCOST
+			UnitShop.Items[HeroName].LumberCost = NEUTRAL_HERO_LUMBERCOST
+		end
+	end
+
+	for HeroName,Kaapa in pairs(UnitShop.Items) do
+		UnitShop.Items[HeroName].RequiredTier = inRequiredTier
+	end
 end
 
 function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
