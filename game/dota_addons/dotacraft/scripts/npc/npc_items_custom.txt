@@ -1057,7 +1057,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"speed_bonus_pct"	"20"
+				"movement_speed"	"400"
 			}
 			"02"
 			{
@@ -1119,7 +1119,7 @@
 		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus_pct"
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"  "400"
 				}
 			}
 		}
@@ -16954,10 +16954,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage1"
+	"item_undead_train_crypt_lord1"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -16982,10 +16982,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage2"
+	"item_undead_train_crypt_lord2"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -17010,10 +17010,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage3"
+	"item_undead_train_crypt_lord3"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -17849,10 +17849,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive1"
+	"item_undead_train_crypt_lord_revive1"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -17876,10 +17876,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive2"
+	"item_undead_train_crypt_lord_revive2"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -17903,10 +17903,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive3"
+	"item_undead_train_crypt_lord_revive3"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -17930,10 +17930,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive4"
+	"item_undead_train_crypt_lord_revive4"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -17957,10 +17957,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive5"
+	"item_undead_train_crypt_lord_revive5"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -17984,10 +17984,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive6"
+	"item_undead_train_crypt_lord_revive6"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -18011,10 +18011,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive7"
+	"item_undead_train_crypt_lord_revive7"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -18038,10 +18038,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive8"
+	"item_undead_train_crypt_lord_revive8"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -18065,10 +18065,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive9"
+	"item_undead_train_crypt_lord_revive9"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	
@@ -18092,10 +18092,10 @@
 		}
 	}
 	
-	"item_undead_train_blood_mage_revive10"
+	"item_undead_train_crypt_lord_revive10"
 	{
 		"BaseClass"             		"item_datadriven"
-		"AbilityTextureName"			"item_undead_train_blood_mage"
+		"AbilityTextureName"			"item_undead_train_crypt_lord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityCastPoint"				"0"
 	

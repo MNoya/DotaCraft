@@ -222,7 +222,7 @@ function unit_shops:Buy(data)
 	local isHeroItem = tobool(data.Hero)
 	local isTavern = tobool(data.Tavern)
 	
-	if isTavern and not CanTrainHeroes(player) then
+	if isTavern and not CanPlayerTrainMoreHeroes(PlayerID) then
 		print("PlayerID = "..tostring(PlayerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
 		return
 	end

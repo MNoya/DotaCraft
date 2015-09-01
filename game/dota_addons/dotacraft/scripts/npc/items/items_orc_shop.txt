@@ -134,7 +134,7 @@
 		"01"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"speed_bonus_pct"	"20"
+			"movement_speed"	"400"
 		}
 		"02"
 		{
@@ -196,7 +196,7 @@
 	
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus_pct"
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"  "400"
 			}
 		}
 	}
