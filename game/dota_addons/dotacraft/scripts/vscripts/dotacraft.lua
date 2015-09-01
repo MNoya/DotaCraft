@@ -1120,11 +1120,18 @@ function dotacraft:OnTreeCut(keys)
 	    end
 	end
 	
-	-- Check for Night Elf Sentinels
+	-- Check for Night Elf Sentinels and Wisps
 	local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(treeX,treeY,0), nil, 64, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
 	for _,v in pairs(units) do
-		if v:GetUnitName() == "nightelf_sentinel_owl" then
+		local unit_name = v:GetUnitName()
+		if unit_name == "nightelf_sentinel_owl" then
 			v:ForceKill(false)
+		elseif unit_name == "nightelf_wisp" then
+			local gather_ability = v:FindAbilityByName("nightelf_gather")
+			v:RemoveModifierByName("modifier_gathering_lumber")
+			v.state = "idle"
+			v:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+			ToggleOff(gather_ability)
 		end
 	end
 end
