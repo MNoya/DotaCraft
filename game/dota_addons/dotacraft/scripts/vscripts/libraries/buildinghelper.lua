@@ -1055,7 +1055,9 @@ function BuildingHelper:ClearQueue(builder)
 
      -- Stop panorama ghost
     local player = builder:GetPlayerOwner()
-    CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_end", {})
+    if IsCurrentlySelected(builder) then
+        CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_end", {})
+    end
 
     -- Skip if there's nothing to clear
     if not builder.buildingQueue or (not work and #builder.buildingQueue == 0) then
