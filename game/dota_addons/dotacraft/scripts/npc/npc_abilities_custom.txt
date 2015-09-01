@@ -66069,6 +66069,15 @@
 						"Function"		"CancelGather"
 					}
 				}
+	
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
 				
 				"ThinkInterval"  "%gold_interval"
 				"OnIntervalThink"

@@ -714,6 +714,7 @@ function CancelGather( event )
 	caster:RemoveModifierByName("modifier_on_order_cancel_lumber")
 	caster:RemoveModifierByName("modifier_gathering_lumber")
 	caster:RemoveModifierByName("modifier_on_order_cancel_gold")
+	caster:RemoveModifierByName("modifier_gathering_gold")
 
 	ability.cancelled = true
 	caster.state = "idle"
