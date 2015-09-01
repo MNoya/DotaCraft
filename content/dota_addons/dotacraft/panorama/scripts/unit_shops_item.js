@@ -106,14 +106,18 @@ function Update_Central(TableName, Key, Value){
 		Root.ItemInfo.RequiredTier = ItemValues.RequiredTier
 	}
 	
-	if(!Value.Altar){
-		$("#RequiredTier").text = "You do not have an altar"
-		Update_Tier_Required_Panels(0)
+	if(Value.Tavern){
+		if(!Value.Altar){
+			$("#RequiredTier").text = "Requires: Altar"
+			Update_Tier_Required_Panels(0)
+		}else{
+			$("#RequiredTier").text = "Upgrade your Main Hall"
+		}
+			
+		if(Value.Altar || Value.Altar == null){
+			Update_Tier_Required_Panels(Value.Tier)
+		}
 	}else{
-		$("#RequiredTier").text = "Upgrade your Main Hall"
-	}
-		
-	if(Value.Altar || Value.Altar == null){
 		Update_Tier_Required_Panels(Value.Tier)
 	}
 }

@@ -4,7 +4,7 @@ if unit_shops == nil then
 	-- create the Units table
 	unit_shops.Units = {}
 	unit_shops.Players = {}
-	HeroTavernEntityID = nil
+	GameRules.HeroTavernEntityID = nil
 	
 	-- register listeners
 	CustomGameEventManager:RegisterListener( "Shops_Buy", Dynamic_Wrap(unit_shops, "Buy"))
@@ -12,7 +12,7 @@ if unit_shops == nil then
 
 	GameRules.Shops = LoadKeyValues("scripts/kv/shops.kv")
 end
-
+	
 -- called to create the shop
 function Setup_Shop( keys )
 	-- Keeps track of the current unit of this shop for every possible player
@@ -40,9 +40,9 @@ local NEUTRAL_HERO_FOODCOST = 5
 local NEUTRAL_HERO_STOCKTIME = 135
 
 -- player hero revival cost details
-local BASE_HERO_GOLDCOST = 340
+local BASE_HERO_GOLDCOST = 255
 local BASE_HERO_ADDITIONAL_GOLDCOST_PER_LEVEL = 85
-local BASE_HERO_LUMBERCOST = 80
+local BASE_HERO_LUMBERCOST = 50
 local BASE_HERO_ADDITIONAL_LUMBERCOST_PER_LEVEL = 30
 
 -- this value should be 135, left at 1 for debugging
@@ -180,7 +180,7 @@ function unit_shops:CreateShop(unit, shop_name)
 						UpdateHeroTavernForPlayer( i )
 						local tier = GetPlayerCityLevel(player)
 						local PlayerHasAltar = HasAltar(i)
-						SetNetTableValue("dotacraft_shops_table", tostring(HeroTavernEntityID), {Shop = UnitShop, PlayerID = PlayerID, Tier=tier, Altar=PlayerHasAltar}) 
+						SetNetTableValue("dotacraft_shops_table", tostring(GameRules.HeroTavernEntityID), {Shop = UnitShop, PlayerID = PlayerID, Tier=tier, Altar=PlayerHasAltar, Tavern=true}) 
 					
 					end
 					
@@ -201,13 +201,16 @@ function unit_shops:CreateShop(unit, shop_name)
 		--DeepPrintTable(sorted_table)
 		CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = sorted_table, Tier=tier, Race=shop_name }) 
 	else
-		HeroTavernEntityID = UnitID
+		GameRules.HeroTavernEntityID = UnitID
 		CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = sorted_table, Tier=tier, Tavern = true}) 
-		print("[UNIT SHOP] Create Tavern "..HeroTavernEntityID)		
+		print("[UNIT SHOP] Create Tavern "..GameRules.HeroTavernEntityID)		
 	end
 	
 end
 
+function unit_shops:RemoveHeroPanel(ShopEntityIndex, PlayerID, ItemName)
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(PlayerID), "Shops_Delete_Single_Panel", {Index = ShopEntityIndex, Hero = ItemName}) 
+end
 
 function unit_shops:Buy(data)
 	local item = data.ItemName
@@ -319,7 +322,7 @@ function unit_shops:Buy(data)
 		
 		-- delete hero / neutral hero panel if IsHero or IsTavern
 		if isHeroItem or isTavern then -- update shop
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(data.PlayerID), "Shops_Delete_Single_Panel", {Index = data.Shop, Hero = data.ItemName }) 
+			unit_shops:RemoveHeroPanel(data.Shop, data.PlayerID, data.ItemName)
 		else -- update information of stock since it's an item
 			SetNetTableValue("dotacraft_shops_table", tostring(data.Shop), { Shop = UnitShop, Tier=tier })
 		end
@@ -379,7 +382,7 @@ end
 -- make sure to feed it correct player requirement
 function UpdateHeroTavernForPlayer(PlayerID)
 
-	local UnitShop = unit_shops.Units[HeroTavernEntityID]
+	local UnitShop = unit_shops.Units[GameRules.HeroTavernEntityID]
 	local player = PlayerResource:GetPlayer(PlayerID)
 	local tier = GetPlayerCityLevel(player)
 	

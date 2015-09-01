@@ -62,6 +62,10 @@ function Delete_Single_Panel(args){
 	var Hero = args.Hero
 	var PlayerID = Game.GetLocalPlayerID()
 	
+	$.Msg(PlayerID)
+	$.Msg(Hero)
+	$.Msg(Shop)
+	
 	var Container = Root.FindChildTraverse(Shop)
 	var HeroItemPanel = Container.FindChildTraverse(PlayerID+"_"+Hero)
 	if(HeroItemPanel == null){

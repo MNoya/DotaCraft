@@ -496,6 +496,9 @@ function ReviveHero( event )
 		AdjustAbilityLayout(altar)
 	end
 	
+	-- remove hero panel when revived
+	unit_shops:RemoveHeroPanel(GameRules.HeroTavernEntityID, caster:GetPlayerOwnerID(), hero_name)
+	
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
