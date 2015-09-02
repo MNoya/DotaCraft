@@ -111,83 +111,91 @@ function dotacraft:DebugBlight()
 	end
 end
 
--- Legacy Cheat Codes
-if not GameRules.RegisteredCheats then
-	Convars:RegisterCommand( "warpten", Dynamic_Wrap(dotacraft, 'WarpTen'), "Speeds construction of buildings and units", 0 )
-	Convars:RegisterCommand( "greedisgood", Dynamic_Wrap(dotacraft, 'GreedIsGood'), "Gives you X gold and lumber", 0 )
-	Convars:RegisterCommand( "whosyourdaddy", Dynamic_Wrap(dotacraft, 'WhosYourDaddy'), "God Mode", 0 )
-	Convars:RegisterCommand( "thereisnospoon", Dynamic_Wrap(dotacraft, 'ThereIsNoSpoon'), "Unlimited Mana", 0 )
-	Convars:RegisterCommand( "iseedeadpeople", Dynamic_Wrap(dotacraft, 'ISeeDeadPeople'), "Remove fog of war", 0 )
-	Convars:RegisterCommand( "pointbreak", Dynamic_Wrap(dotacraft, 'PointBreak'), "Sets food limit to 1000", 0 )
-	Convars:RegisterCommand( "synergy", Dynamic_Wrap(dotacraft, 'Synergy'), "Disable tech tree requirements", 0 )
-	Convars:RegisterCommand( "riseandshine", Dynamic_Wrap(dotacraft, 'RiseAndShine'), "Set time of day to dawn", 0 )
-	Convars:RegisterCommand( "lightsout", Dynamic_Wrap(dotacraft, 'LightsOut'), "Set time of day to dusk", 0 )
-	Convars:RegisterCommand( "giveitem", Dynamic_Wrap(dotacraft, 'GiveItem'), "Gives an item by name", 0 )
-	GameRules.RegisteredCheats = true
+CHEAT_CODES = {
+	["warpten"] = function() dotacraft:WarpTen() end,                  -- "Speeds construction of buildings and units"
+	["greedisgood"] = function(args) dotacraft:GreedIsGood(args) end,  -- "Gives you X gold and lumber"	
+	["whosyourdaddy"] = function() dotacraft:WhosYourDaddy() end,      -- "God Mode"	
+	["thereisnospoon"] = function() dotacraft:ThereIsNoSpoon() end,    -- "Unlimited Mana"		
+	["iseedeadpeople"] = function() dotacraft:ISeeDeadPeople() end,    -- "Remove fog of war"		
+	["pointbreak"] = function() dotacraft:PointBreak() end,            -- "Sets food limit to 1000"	
+	["synergy"] = function() dotacraft:Synergy() end,                  -- "Disable tech tree requirements"
+	["riseandshine"] = function() dotacraft:RiseAndShine() end,        -- "Set time of day to dawn"	
+	["lightsout"] = function() dotacraft:LightsOut() end,              -- "Set time of day to dusk"
+	["giveitem"] = function() dotacraft:GiveItem() end                 -- "Gives an item by name"
+}
+
+-- A player has typed something into the chat
+function dotacraft:OnPlayerChat(keys)
+	local text = keys.text
+	local playerID = keys.userid
+	local bTeamOnly = keys.teamonly
+
+	local input = split(text)
+	local command = input[1]
+	local parameter = input[2]
+	if CHEAT_CODES[command] then
+		CHEAT_CODES[command](parameter)
+	end
 end
 
 function dotacraft:WarpTen()
-	if not GameRules.WarpTen then
-		print('Cheat enabled!')
-		GameRules.WarpTen = true
-	else
-		print("Cheat disabled!")
-		GameRules.WarpTen = false
-	end
+	GameRules.WarpTen = not GameRules.WarpTen
+	
+	local message = GameRules.WarpTen and "Cheat enabled!" or "Cheat disabled!"
+	GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:GreedIsGood(value)
 	local cmdPlayer = Convars:GetCommandClient()
 	local pID = cmdPlayer:GetPlayerID()
+	if not value then value = 500 end
 	
 	PlayerResource:ModifyGold(pID, tonumber(value), true, 0)
 	ModifyLumber(cmdPlayer, tonumber(value))
+	
+	GameRules:SendCustomMessage("Cheat enabled!", 0, 0)
 end
 
 function dotacraft:WhosYourDaddy()
-	if not GameRules.WhosYourDaddy then
-		print('Cheat enabled!')
-		GameRules.WhosYourDaddy = true
-	else
-		print("Cheat disabled!")
-		GameRules.WhosYourDaddy = false
-	end
+	GameRules.WhosYourDaddy = not GameRules.WhosYourDaddy
+	
+	local message = GameRules.WhosYourDaddy and "Cheat enabled!" or "Cheat disabled!"
+	GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:ThereIsNoSpoon()
-	if not GameRules.ThereIsNoSpoon then
-		print('Cheat enabled!')
-		GameRules.ThereIsNoSpoon = true
-	else
-		print("Cheat disabled!")
-		GameRules.ThereIsNoSpoon = false
-	end
+	GameRules.ThereIsNoSpoon = not GameRules.ThereIsNoSpoon
+	
+	local message = GameRules.ThereIsNoSpoon and "Cheat enabled!" or "Cheat disabled!"
+	GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:ISeeDeadPeople()	
 	GameRules.ISeeDeadPeople = not GameRules.ISeeDeadPeople
 	GameMode:SetFogOfWarDisabled( GameRules.ISeeDeadPeople )
+
+	local message = GameRules.ISeeDeadPeople and "Cheat enabled!" or "Cheat disabled!"
+	GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:PointBreak()
-	GameRules.PointBreak = true
+	GameRules.PointBreak = not GameRules.PointBreak
+	local foodBonus = GameRules.PointBreak and 1000 or 0
+
 	for i=0,DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(i) then
 			local player = PlayerResource:GetPlayer(i)
-			ModifyFoodLimit(player, 1000-player.food_limit)
+			ModifyFoodLimit(player, foodBonus-player.food_limit)
 		end
 	end
+
+	local message = GameRules.PointBreak and "Cheat enabled!" or "Cheat disabled!"
+	GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:Synergy()
-	if not GameRules.Synergy then
-		print('Cheat enabled!')
-		GameRules.Synergy = true
-	else
-		print("Cheat disabled!")
-		GameRules.Synergy = false
-	end
-
+	GameRules.Sinergy = not ameRules.Sinergy
+	
 	for i=0,DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(i) then
 			local player = PlayerResource:GetPlayer(i)
@@ -200,6 +208,8 @@ function dotacraft:Synergy()
 		end
 	end
 
+	local message = GameRules.Sinergy and "Cheat enabled!" or "Cheat disabled!"
+	GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:RiseAndShine()
