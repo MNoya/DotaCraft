@@ -39,6 +39,11 @@ function dotacraft:OnPlayerChat(keys)
 	local playerID = keys.userid-1
 	local bTeamOnly = keys.teamonly
 
+    -- Handle '-command'
+    if StringStartsWith(text, "-") then
+        text = string.sub(text, 2, string.len(text))
+    end
+
 	local input = split(text)
 	local command = input[1]
 	if CHEAT_CODES[command] then
@@ -184,6 +189,14 @@ function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
     local pos = GetMainSelectedEntity(pID):GetAbsOrigin()
     local player = PlayerResource:GetPlayer(pID)
     local hero = player:GetAssignedHero()
+
+     -- Handle possible unit issues
+    numUnits = numUnits or 1
+    if not GameRules.UnitKV[unitName] then
+        Say(nil,"["..unitName.."] <font color='#ff0000'> is not a valid unit name!</font>", false)
+        return
+    end
+
     local gridPoints = GetGridAroundPoint(numUnits, pos)
 
     PrecacheUnitByNameAsync(unitName, function()
