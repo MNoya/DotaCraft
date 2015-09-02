@@ -49,7 +49,7 @@ function Setup_Panel(){
 function Update_Central(TableName, Key, Value){
 	// this checks that update is the correct entity shop based on EntityIndex
 	if(Key != Root.Entity){ 
-		$.Msg(Key+" is not "+Root.Entity) 
+		//$.Msg(Key+" is not "+Root.Entity) 
 		return
 	}
 
