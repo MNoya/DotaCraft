@@ -249,8 +249,6 @@ function dotacraft:InitGameMode()
 	SendToServerConsole( "dota_combine_models 0" )
 
 	-- Console Commands
-	Convars:RegisterCommand( "debug_trees", Dynamic_Wrap(dotacraft, 'DebugTrees'), "Prints the trees marked as pathable", 0 )
-	Convars:RegisterCommand( "debug_blight", Dynamic_Wrap(dotacraft, 'DebugBlight'), "Prints the positions marked for undead buildings", 0 )
 	Convars:RegisterCommand( "skip_selection", Dynamic_Wrap(dotacraft, 'Skip_Selection'), "Skip Selection", 0 )
 	
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
