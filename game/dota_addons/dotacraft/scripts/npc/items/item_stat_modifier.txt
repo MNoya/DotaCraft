@@ -50,16 +50,6 @@
 			}
 		}
 
-		"modifier_physical_armor_bonus"
-		{
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"0.01"
-			}
-		}
-
 		"modifier_attackspeed_bonus_constant"
 		{
 			"IsHidden"			"1"  
@@ -71,14 +61,13 @@
 			}
 		}
 
-		"modifier_movespeed_minus_constant"
+		"modifier_movespeed_max"
 		{
 			"IsHidden"			"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 			"Properties"
 			{
 				
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"-1"
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"400"
 			}
 		}
 	}

@@ -76,14 +76,9 @@ function dotacraft:ModifyStatBonuses(unit)
 		-- AGI
 		if agility ~= hero.agility then
 			
-			-- Armor Bonus
-			if not hero:HasModifier("modifier_physical_armor_bonus") then
-				applier:ApplyDataDrivenModifier(hero, hero, "modifier_physical_armor_bonus", {})
-			end
-
-			local armor_stacks = agility * armor_adjustment * 100
-			hero:SetModifierStackCount("modifier_physical_armor_bonus", hero, armor_stacks)
-			print("Given "..armor_stacks.." armor stacks of ",armor_adjustment," extra armor is ",armor_stacks*0.01)
+			-- Base Armor Bonus
+			local armor = agility * armor_adjustment
+			hero:SetPhysicalArmorBaseValue(armor)
 
 			-- Attack Speed Bonus
 			if not hero:HasModifier("modifier_attackspeed_bonus_constant") then
@@ -115,14 +110,8 @@ function dotacraft:ModifyStatBonuses(unit)
 		end
 
 		-- MS limit
-		if movespeed ~= hero.movespeed and movespeed > MAX_MOVE_SPEED then
-
-			if not hero:HasModifier("modifier_movespeed_minus_constant") then
-				applier:ApplyDataDrivenModifier(hero, hero, "modifier_movespeed_minus_constant", {})
-			end
-
-			local minus_ms_stacks = movespeed - MAX_MOVE_SPEED
-			hero:SetModifierStackCount("modifier_movespeed_minus_constant", hero, minus_ms_stacks)
+		if movespeed >= MAX_MOVE_SPEED then
+			applier:ApplyDataDrivenModifier(hero, hero, "modifier_movespeed_max", {duration=THINK_INTERVAL-1/30})
 		end
 
 		-- Update the stored values for next timer cycle
@@ -130,6 +119,8 @@ function dotacraft:ModifyStatBonuses(unit)
 		hero.agility = agility
 		hero.intellect = intellect
 		hero.movespeed = movespeed
+
+		hero:CalculateStatBonus()
 
 		return THINK_INTERVAL
 	end)

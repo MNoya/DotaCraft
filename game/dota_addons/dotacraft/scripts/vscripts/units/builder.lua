@@ -140,6 +140,10 @@ function Build( event )
 			end
 		end
 
+		-- Units can't attack while building
+	    unit.original_attack = unit:GetAttackCapability()
+		unit:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
+
 		-- Give item to cancel
 		local item = CreateItem("item_building_cancel", playersHero, playersHero)
 		unit:AddItem(item)
@@ -180,6 +184,9 @@ function Build( event )
 		DebugPrint("[BH] Completed construction of " .. unit:GetUnitName() .. " " .. unit:GetEntityIndex())
 		
 		-- Play construction complete sound
+
+		-- Give the unit their original attack capability
+		unit:SetAttackCapability(unit.original_attack)
 
 		-- Let the building cast abilities
 		unit:RemoveModifierByName("modifier_construction")
