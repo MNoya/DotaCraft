@@ -115,12 +115,6 @@ function dotacraft:InitGameMode()
       SetTeamCustomHealthbarColor(team, color[1], color[2], color[3])
     end
 
-	GameMode:SetHUDVisible(9, false)  -- Get Rid of Courier
-	GameMode:SetHUDVisible(12, false)  -- Get Rid of Recommended items
-	GameMode:SetHUDVisible(1, false) -- Get Rid of Heroes on top
-	GameMode:SetHUDVisible(6, false)  -- Get Rid of Shop button
-	GameMode:SetHUDVisible(8, false) -- Get Rid of Quick Buy
-
 	-- Default hero dummy
 	GameMode:SetCustomGameForceHero("npc_dota_hero_ancient_apparition")
 
