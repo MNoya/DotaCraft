@@ -1,11 +1,11 @@
 <root>
 	<script>
-        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t. DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );
-        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_HUD_VISIBILITY_INVENTORY_COURIER, false );
-        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_HUD_VISIBILITY_SHOP_SUGGESTEDITEMS, false );
-        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_HUD_VISIBILITY_TOP_HEROES, false );
-        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_HUD_VISIBILITY_INVENTORY_SHOP, false );
-        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_HUD_VISIBILITY_INVENTORY_QUICKBUY, false );
+        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );
+        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_COURIER, false );
+        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_SUGGESTEDITEMS, false );
+        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );
+        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, false );
+        GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_QUICKBUY, false );
 	</script>	
 	<Panel>
 		<CustomUIElement type="GameSetup" 			layoutfile="file://{resources}/layout/custom_game/pre_game_selection.xml" />
