@@ -20,6 +20,8 @@ require('developer')
 require('units/neutral_ai')
 require('units/builder')
 require('libraries/buildinghelper')
+require('buildings/shop')
+require('buildings/altar')
 
 ---------------------------------------------------------------------------
 
@@ -54,7 +56,14 @@ function Precache( context )
 	PrecacheUnitByNameSync("npc_dota_hero_life_stealer", context)
 	PrecacheUnitByNameSync("npc_dota_hero_huskar", context)
 
-	PrecacheUnitByNameSync("npc_dota_hero_keeper_of_the_light", context)
+	PrecacheUnitByNameSync("npc_dota_hero_alchemist", context)
+	PrecacheUnitByNameSync("npc_dota_hero_beastmaster", context)
+	PrecacheUnitByNameSync("npc_dota_hero_drow_ranger", context)
+	PrecacheUnitByNameSync("npc_dota_hero_nevermore", context)
+	PrecacheUnitByNameSync("npc_dota_hero_medusa", context)
+	PrecacheUnitByNameSync("npc_dota_hero_brewmaster", context)
+	PrecacheUnitByNameSync("npc_dota_hero_undying", context)
+	PrecacheUnitByNameSync("npc_dota_hero_tinker", context)
 
 	-- This units are created as soon as the player gets into the game		
 	PrecacheUnitByNameSync("human_town_hall", context)
@@ -98,6 +107,7 @@ function Precache( context )
 	PrecacheUnitByNameSync("orc_burrow", context)
 	PrecacheUnitByNameSync("orc_voodoo_lounge", context)
 	PrecacheUnitByNameSync("orc_war_mill", context)	
+	PrecacheUnitByNameSync("npc_dota_hero_keeper_of_the_light", context)
 end
 
 -- Create our game mode and initialize it

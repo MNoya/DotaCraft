@@ -540,7 +540,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"405"
+		"MovementSpeed"				"270"
 		"MovementTurnRate"			"0.6"
 		
 		// Status
@@ -669,7 +669,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_drow_ranger"	
-		"InternalName"				"neutral_dark_ranger"
+		"InternalName"				"neutral_drow_ranger"
 		"FormationRank"				"2"
 		"AttacksEnabled"			"ground, air"
 		
@@ -762,8 +762,8 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_nevermore"
-		"InternalName"				"neutral_firelord"
-		//"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+		"InternalName"				"neutral_nevermore"
+		"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
 		"FormationRank"				"2"
 		"AttacksEnabled"			"ground, air"
 		
@@ -776,6 +776,7 @@
 		"Ability4" 					"firelord_volcano"
 		"Ability5"					""
 		"Ability6" 					""
+		"Ability10"					"firelord_arcana_model"
 		
 		"PathfindingSearchDepthScale" "0.5"
 		
@@ -794,7 +795,7 @@
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"550"
-		//"ProjectileModel"			""	 //Add projectile
+		"ProjectileModel"			"particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
 		"ProjectileSpeed"			"1200"
 		
 		// Attributes
@@ -857,7 +858,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_medusa"
-		"InternalName"				"neutral_naga_sea_witch"
+		"InternalName"				"neutral_medusa"
 		"FormationRank"				"2"
 		"AttacksEnabled"			"ground, air"
 		
@@ -950,7 +951,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_brewmaster"
-		"InternalName"				"neutral_pandaren"
+		"InternalName"				"neutral_brewmaster"
 		"FormationRank"				"0"
 		"AttacksEnabled"			"ground"
 		
@@ -1041,7 +1042,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_undying"	 // Placeholder
-		"InternalName"				"neutral_pit_lord"
+		"InternalName"				"neutral_undying"
 		"model"						"models/heroes/abyssal_underlord/abyssal_underlord.vmdl"
 		"FormationRank"				"0"
 		"AttacksEnabled"			"ground"
@@ -1612,6 +1613,7 @@
 		"InternalName"				"orc_blademaster"
 		"FormationRank"				"0"
 		"AttacksEnabled"			"ground"
+		"ModelScale"				"1.1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1704,6 +1706,7 @@
 		"InternalName"				"orc_far_seer"
 		"FormationRank"				"2"
 		"AttacksEnabled"			"ground, air"
+		"ModelScale"				"1.1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1795,6 +1798,7 @@
 		"InternalName"				"orc_shadow_hunter"
 		"FormationRank"				"2"
 		"AttacksEnabled"			"ground, air"
+		"ModelScale"				"1.1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1884,6 +1888,7 @@
 		"InternalName"				"orc_chieftain"
 		"FormationRank"				"0"
 		"AttacksEnabled"			"ground"
+		"ModelScale"				"1.1"
 		
 		// Abilities
 		//----------------------------------------------------------------

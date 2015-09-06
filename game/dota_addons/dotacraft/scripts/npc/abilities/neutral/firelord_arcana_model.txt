@@ -1,0 +1,82 @@
+"firelord_arcana_model"
+{
+    "BaseClass"                     "ability_datadriven"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+    "precache"
+    {
+        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient.vpcf"
+        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"
+        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient_eyes.vpcf"
+        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_death.vpcf"
+        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_loadout.vpcf"
+        "model"     "models/heroes/shadow_fiend/head_arcana.vmdl"
+        "model"     "models/items/shadow_fiend/arms_deso/arms_deso.vmdl"
+    }
+
+    "OnOwnerDied"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/firelord/arcana.lua"
+            "Function"      "DeathEffect"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_arcana"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_PERMANENT"
+            "OnCreated"
+            {
+                "FireEffect"
+                {
+                    "EffectName"        "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_loadout.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "CASTER"
+                }
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "CASTER"
+                    "ControlPointEntities"
+                    {
+                        "CASTER"    "attach_origin"
+                        "CASTER"    "attach_wing_L0"
+                        "CASTER"    "attach_wing_L1"
+                        "CASTER"    "attach_wing_L2"
+                        "CASTER"    "attach_wing_R0"
+                        "CASTER"    "attach_wing_R1"
+                        "CASTER"    "attach_wing_R2"
+                        "CASTER"    "attach_head" //ambient_head
+                    }
+                }
+                
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient_eyes.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "CASTER"
+                    "ControlPointEntities"
+                    {
+                        "CASTER"    "attach_hitloc"
+                        "CASTER"    "attach_eyeL" //left
+                        "CASTER"    "attach_eyeR" //right
+                        "CASTER"    "attach_head" //mouth
+                    }
+                }
+                "RunScript"
+                {
+                    "ScriptFile"        "heroes/firelord/arcana.lua"
+                    "Function"          "ModelChange"
+                }
+            }
+        }
+    }
+}

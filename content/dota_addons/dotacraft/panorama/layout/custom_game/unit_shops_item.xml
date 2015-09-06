@@ -5,7 +5,9 @@
 	<scripts>
 		<include src="file://{resources}/scripts/unit_shops_item.js" />
 	</scripts>
-		<Panel class="ItemContainer" hittest="true">	
+	<Panel class="ItemContainer" hittest="false">
+
+		<Panel class="ButtonContainer" hittest="true">	
 			<!--Generate Texture: <Image src="file://{images}/items/item_healing_salve.png" />-->
 			<Button id="ItemButton"
 					onmouseover="ShowToolTip()"
@@ -13,8 +15,11 @@
 					onactivate="Buy_Item()"
 					oncontextmenu="Buy_Item()"
 					>
-			<Panel id="ItemImage">
-			<Label id="Stock" class="TextBackground" />
+			<Panel id="ItemImageContainer">
+				<Panel id="ItemMask" hittest="false" />
+				<Panel id="ItemImage">
+					<Label id="Stock" class="TextBackground" />
+				</Panel>
 			</Panel>
 			
 			
@@ -29,6 +34,6 @@
 			</Panel>
 			
 			</Button>
-
 		</Panel>
+	</Panel>
 </root>

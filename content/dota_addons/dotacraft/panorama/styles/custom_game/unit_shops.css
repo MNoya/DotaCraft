@@ -5,7 +5,7 @@
 }
 
 .Container{
-	width: 20%;
+	width: 21%;
 	overflow: clip;
 	margin-bottom: 200px; 
 	
@@ -19,19 +19,39 @@
 	*/
 	padding: 10px;
 	flow-children: down; 
+	z-index: 3;
 }
 
 .ItemContainer{
-	height: 50px; 
+	height: 64px; 
 	width: 100%;
-	
+}
+
+.ButtonContainer{
+	height: 64px; 
+	width: 100%;
 	flow-children: down;
+	z-index: 4;
+}
+
+#ItemMask{
+	height: 100%; 
+	width: 0px;
+	
+	background-color: #444444;
+	opacity: 0.8;
+	z-index: 5;
 }
 
 #ItemImage{
 	height: 100%;
-	width: 15%;
-	background-size: cover;
+	width: 100%;
+	background-size: auto;
+}
+
+#ItemImageContainer{
+	height: 64px;
+	width: 86px;
 }
 
 #ItemButton{
@@ -65,12 +85,12 @@
 
 #ItemName{
 	height: 50%;
-	width: 70%;
+	width: 75%;
 }
 
 #ItemInfo{
 	height: 100%;
-	width: 70%;
+	width: 60%;
 	
 	padding: 5px;
 	
@@ -103,13 +123,13 @@
 
 #CostInfo{
 	height: 100%;
-	width: 15%;
+	width: 100%;
 	
-	flow-children: right;
+	flow-children: down;
 	
 	vertical-align: middle;
 	horizontal-align: middle;
-	padding: 5px;
+	padding: 10px;
 }
 
 #GoldCost {
@@ -117,7 +137,7 @@
 	font-size: 16px;
 	
 	horizontal-align: middle;
-	vertical-align: middle;
+	vertical-align: bottom;
 }
 
 #LumberCost{
@@ -125,7 +145,7 @@
 	font-size: 16px;
 	
 	horizontal-align: middle;
-	vertical-align: middle;
+	vertical-align: bottom;
 }
 
 #Stock{
