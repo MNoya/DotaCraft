@@ -799,19 +799,6 @@
 				}
 			}
 		}
-
-		"modifier_healing_ward_regen"
-		{
-
-			"IsPurgable"		"1"
-			"IsBuff"			"1"
-			"IsHidden"			"1"
-			"Duration"			"0.5"  // Aura linger
-			"Properties"
-			{	
-				"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%regeneration"
-			}		
-		}
 	}
 }
 

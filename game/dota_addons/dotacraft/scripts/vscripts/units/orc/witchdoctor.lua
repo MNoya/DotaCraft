@@ -33,25 +33,26 @@ function HealingStart( event )
 	ability:ApplyDataDrivenModifier(heal, heal, 'modifier_healing_ward', {})
 	heal:EmitSound('Hero_Juggernaut.HealingWard.Cast')
 	heal:EmitSound('Hero_Juggernaut.HealingWard.Loop')
+	heal.radius = ability:GetSpecialValueFor('radius') 
+	heal.ratio = ability:GetSpecialValueFor('regeneration')
 end
 
 function HealingThink( event )
 	local caster = event.caster
-	local ability = event.ability
-	local radius = ability:GetSpecialValueFor('radius') 
-	local ratio = ability:GetSpecialValueFor('regeneration') 
+	local radius = caster.radius
+	local ratio = caster.ratio
 	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
 	for _,ally in pairs(allies) do
 		if not IsMechanical(ally) and not IsCustomBuilding(ally) then
-			ability:ApplyDataDrivenModifier(caster, ally, 'modifier_healing_ward_regen', nil) 
 			local amount = ally:GetMaxHealth() * (ratio/100)
+			ally:Heal(amount, caster)
 			PopupHealing(ally, amount)
 		end
 	end
 end
 
 function HealingEnd( event )
-	local heal = event.caster.heal
+	local heal = event.caster
 	heal:StopSound('Hero_Juggernaut.HealingWard.Loop')
 	heal:EmitSound('Hero_Juggernaut.HealingWard.Stop')
 end
