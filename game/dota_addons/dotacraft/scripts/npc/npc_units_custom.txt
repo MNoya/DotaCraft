@@ -4797,6 +4797,7 @@
 		"AttacksEnabled"			"air"
 		
 		"PathfindingSearchDepthScale" "0.5"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -4896,6 +4897,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 		
 		"PathfindingSearchDepthScale" "0.5"
 	
@@ -5113,6 +5115,7 @@
 		"AttacksEnabled"			"ground"
 		
 		"PathfindingSearchDepthScale" "0.5"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -5207,6 +5210,7 @@
 		"AttacksEnabled"			"ground, air"
 		
 		"PathfindingSearchDepthScale" "0.5"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -5288,6 +5292,8 @@
 		"Model"						"models/courier/courier_mech/courier_mech.vmdl"
 		"ModelScale"				"0.5"
 		"Level"						"0"
+	
+		"LeavesCorpse"				"0"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -6187,6 +6193,7 @@
 		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -6267,6 +6274,7 @@
 		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8408,6 +8416,8 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
 	
 		"UnitLabel"					"builder"
+	
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8734,6 +8744,7 @@
 	    "SoundSet"                  "Creep_Good_Engine"
 	
 		"AttacksEnabled"			"ground"
+		"LeavesCorpse"				"0"
 	
 		"SplashAttack"				"1"
 		"SplashMediumRadius"		"50"
@@ -9051,6 +9062,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 	
 		"AttacksEnabled"			"ground"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9154,6 +9166,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 	
 		"AttacksEnabled"			"ground"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9372,6 +9385,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9476,6 +9490,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 	
 		"AttacksEnabled"			"ground"
+		"LeavesCorpse"				"0"
 	
 		"SplashAttack"				"1"
 		"SplashMediumRadius"		"125"
@@ -9576,6 +9591,7 @@
 		"HealthBarOffset"			"140"
 	
 		"AttacksEnabled"			"air"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9669,6 +9685,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9760,6 +9777,7 @@
 		"ModelScale"				"1.0"
 		"IsSummoned"				"1"
 		"UnitLabel"					"Owl Scout"
+		"LeavesCorpse"				"0"
 	
 		// Bounds
 		//----------------------------------------------------------------
@@ -11277,6 +11295,7 @@
 		"SoundSet"					"Creep_Bad_Engine"
 	
 		"AttacksEnabled"			"ground"
+		"LeavesCorpse"				"0"
 	
 		"SplashAttack"				"1"
 		"SplashMediumRadius"		"50"
@@ -11816,6 +11835,7 @@
 		"SoundSet"					"Creep_Bad_Melee"
 	
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -11910,6 +11930,7 @@
 		"SoundSet"					"Creep_Bad_Range"
 	
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -12004,6 +12025,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14680,11 +14702,13 @@
 		"HealthBarOffset"			"140"
 		"SoundSet"                  "Hero_Nevermore"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	
+	    "LeavesCorpse"				"0"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"undead_true_sight"	 // Only Gold and Repair
+		"Ability1"					"undead_true_sight"
 		"Ability2"					""	 //Reference: Arst
 		"Ability3"					""	 //Reference: Alam
 		"Ability4"					""
@@ -14986,6 +15010,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_visage.vsndevts"
 		
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -15182,6 +15207,7 @@
 		"SoundSet"					"Creep_Bad_Engine"
 	
 		"AttacksEnabled"			"ground"
+		"LeavesCorpse"				"0"
 	
 		"SplashAttack"				"1"
 		"SplashMediumRadius"		"50" 
@@ -15288,6 +15314,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
 		
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -15378,6 +15405,7 @@
 		"VisionNighttimeRange"		"0"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"LeavesCorpse"				"0"
 	}
 	
 	//=================================================================================
@@ -15615,6 +15643,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -15916,6 +15945,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
 	
 		"AttacksEnabled"			"ground, air"
+		"LeavesCorpse"				"0"
 	
 		"SplashAttack"				"1"
 		"SplashMediumRadius"		"50"

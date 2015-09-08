@@ -659,10 +659,15 @@ function LeavesCorpse( unit )
 	elseif unit.no_corpse then
 		return false
 
-	-- Leave corpse
+	-- Read the LeavesCorpse KV
 	else
-		print("Leave corpse")
-		return true
+		local unit_info = GameRules.UnitKV[unit:GetUnitName()]
+		if unit_info["LeavesCorpse"] and unit_info["LeavesCorpse"] == 0 then
+			return false
+		else
+			-- Leave corpse		
+			return true
+		end
 	end
 end
 

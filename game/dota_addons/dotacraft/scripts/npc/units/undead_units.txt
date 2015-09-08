@@ -140,11 +140,13 @@
 	"HealthBarOffset"			"140"
 	"SoundSet"                  "Hero_Nevermore"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+
+    "LeavesCorpse"				"0"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"undead_true_sight"	 // Only Gold and Repair
+	"Ability1"					"undead_true_sight"
 	"Ability2"					""	 //Reference: Arst
 	"Ability3"					""	 //Reference: Alam
 	"Ability4"					""
@@ -446,6 +448,7 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_visage.vsndevts"
 	
 	"AttacksEnabled"			"ground, air"
+	"LeavesCorpse"				"0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -642,6 +645,7 @@
 	"SoundSet"					"Creep_Bad_Engine"
 
 	"AttacksEnabled"			"ground"
+	"LeavesCorpse"				"0"
 
 	"SplashAttack"				"1"
 	"SplashMediumRadius"		"50" 
@@ -748,6 +752,7 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
 	
 	"AttacksEnabled"			"ground, air"
+	"LeavesCorpse"				"0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -838,6 +843,7 @@
 	"VisionNighttimeRange"		"0"
 	"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"LeavesCorpse"				"0"
 }
 
 //=================================================================================
@@ -1075,6 +1081,7 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 	
 	"AttacksEnabled"			"ground, air"
+	"LeavesCorpse"				"0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -1376,6 +1383,7 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
 
 	"AttacksEnabled"			"ground, air"
+	"LeavesCorpse"				"0"
 
 	"SplashAttack"				"1"
 	"SplashMediumRadius"		"50"
