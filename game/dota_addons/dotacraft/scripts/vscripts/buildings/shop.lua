@@ -384,9 +384,10 @@ function UpdateHeroTavernForPlayer(PlayerID)
 
 	local UnitShop = unit_shops.Units[GameRules.HeroTavernEntityID]
 	local player = PlayerResource:GetPlayer(PlayerID)
+	local heroCount = HeroCountForPlayer(PlayerID)
 	local tier = GetPlayerCityLevel(player)
 	
-	local inRequiredTier = #player.heroes + 1
+	local inRequiredTier = heroCount + 1
 	
 	if inRequiredTier == 4 then
 		return

@@ -1689,3 +1689,12 @@ function CanPlayerTrainMoreHeroes( playerID )
 	local player = PlayerResource:GetPlayer(playerID)
 	return (player.heroes and #player.heroes < 3)
 end
+
+function HeroCountForPlayer( playerID )
+	local player = PlayerResource:GetPlayer(playerID)
+	if player and player.heroes then
+		return #player.heroes
+	else
+		return 0
+	end
+end
