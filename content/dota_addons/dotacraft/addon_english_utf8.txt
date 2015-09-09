@@ -1,4 +1,4 @@
-"lang"
+﻿"lang"
 {
 	"Language"		"English"
 	"Tokens"
@@ -40,6 +40,13 @@
 		"npc_dota_hero_tinker"                       "Tinker"
 		"npc_dota_hero_nevermore"                    "Firelord"
 		"npc_dota_hero_alchemist"                    "Alchemist"
+
+		// *************** ERROR MESSAGES ****************
+
+		"error_full_health"							"Already on full health"
+		"error_cant_target_self"					"Unable to target self"
+		"error_cant_target_undead_allies"			"Must target friendly living units or enemy Undead units"
+		"error_must_target_undead_allies"			"Must target enemy living units or friendly Undead units"
 
 		// ******************** UNITS ********************	
 		"firelord_lava_spawn1"                                                            "Lava Spawn"
