@@ -2,7 +2,7 @@
 	Author: Noya
 	Date: 9 September 2015
 	Can only be cast on living allied units (Heal) or enemy Undead units (Damage)
-	Disallows self targeting and casting on allied units with full health (serverside only)
+	Disallows self targeting and casting on allied units with full health
 ]]
 paladin_holy_light = class({})
 
@@ -54,7 +54,7 @@ function paladin_holy_light:CastFilterResultTarget( target )
 	end
 
 	-- Check full health ally
-	if allied and target:GetHealthDeficit() == 0 then
+	if allied and target:GetHealthPercent() == 100 then
 		return UF_FAIL_CUSTOM
 	end
 
@@ -79,7 +79,7 @@ function paladin_holy_light:GetCustomCastErrorTarget( target )
 		return "#error_cant_target_self"
 	end
 
- 	if allied and target:GetHealthDeficit() == 0 then
+ 	if allied and target:GetHealthPercent() == 100 then
 		return "#error_full_health"
 	end
 
