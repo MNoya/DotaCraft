@@ -50,12 +50,6 @@ function Precache( context )
 	-- Entire heroes (sound effects/voice/models/particles) can be precached with PrecacheUnitByNameSync
 	-- Custom units from npc_units_custom.txt can also have all of their abilities and precache{} blocks precached in this way
 
-	PrecacheUnitByNameSync("npc_dota_hero_ancient_apparition", context)
-	PrecacheUnitByNameSync("npc_dota_hero_dragon_knight", context)
-	PrecacheUnitByNameSync("npc_dota_hero_furion", context)
-	PrecacheUnitByNameSync("npc_dota_hero_life_stealer", context)
-	PrecacheUnitByNameSync("npc_dota_hero_huskar", context)
-
 	PrecacheUnitByNameSync("npc_dota_hero_alchemist", context)
 	PrecacheUnitByNameSync("npc_dota_hero_beastmaster", context)
 	PrecacheUnitByNameSync("npc_dota_hero_drow_ranger", context)
@@ -108,6 +102,84 @@ function Precache( context )
 	PrecacheUnitByNameSync("orc_voodoo_lounge", context)
 	PrecacheUnitByNameSync("orc_war_mill", context)	
 	PrecacheUnitByNameSync("npc_dota_hero_keeper_of_the_light", context)
+
+	PrecacheUnitByNameSync("human_arcane_sanctum", context)
+	PrecacheUnitByNameSync("human_guard_tower", context)
+	PrecacheUnitByNameSync("human_cannon_tower", context)
+	PrecacheUnitByNameSync("human_arcane_tower", context)
+	PrecacheUnitByNameSync("human_workshop", context)
+	PrecacheUnitByNameSync("human_gryphon_aviary", context)
+
+	PrecacheUnitByNameSync("nightelf_ancient_of_lore", context)
+	PrecacheUnitByNameSync("nightelf_ancient_of_wind", context)
+	PrecacheUnitByNameSync("nightelf_ancient_protector", context)
+	PrecacheUnitByNameSync("nightelf_tree_of_ages", context)
+	PrecacheUnitByNameSync("nightelf_tree_of_eternity", context)
+	PrecacheUnitByNameSync("nightelf_chimaera_roost", context)
+
+	PrecacheUnitByNameSync("undead_halls_of_the_dead", context)
+	PrecacheUnitByNameSync("undead_black_citadel", context)
+	PrecacheUnitByNameSync("undead_boneyard", context)
+	PrecacheUnitByNameSync("undead_temple_of_the_damned", context)
+	PrecacheUnitByNameSync("undead_slaughterhouse", context)
+	PrecacheUnitByNameSync("undead_nerubian_tower", context)
+	PrecacheUnitByNameSync("undead_spirit_tower", context)
+	PrecacheUnitByNameSync("undead_sacrificial_pit", context)
+
+	PrecacheUnitByNameSync("orc_beastiary", context)
+	PrecacheUnitByNameSync("orc_stronghold", context)
+	PrecacheUnitByNameSync("orc_fortress", context)
+	PrecacheUnitByNameSync("orc_spirit_lodge", context)
+	PrecacheUnitByNameSync("orc_tauren_totem", context)
+	PrecacheUnitByNameSync("orc_watch_tower", context)
+
+	PrecacheUnitByNameSync("npc_dota_hero_keeper_of_the_light", context)
+	PrecacheUnitByNameSync("npc_dota_hero_zuus", context)
+	PrecacheUnitByNameSync("npc_dota_hero_omniknight", context)
+	PrecacheUnitByNameSync("npc_dota_hero_Invoker", context)
+
+	PrecacheUnitByNameSync("npc_dota_hero_antimage", context)
+	PrecacheUnitByNameSync("npc_dota_hero_mirana", context)
+	PrecacheUnitByNameSync("npc_dota_hero_leshrac", context)
+	PrecacheUnitByNameSync("npc_dota_hero_phantom_assassin", context)
+
+	PrecacheUnitByNameSync("npc_dota_hero_abaddon", context)
+	PrecacheUnitByNameSync("npc_dota_hero_night_stalker", context)
+	PrecacheUnitByNameSync("npc_dota_hero_lich", context)
+	PrecacheUnitByNameSync("npc_dota_hero_nyx_assassin", context)
+
+	PrecacheUnitByNameSync("npc_dota_hero_juggernaut", context)
+	PrecacheUnitByNameSync("npc_dota_hero_disruptor", context)
+	PrecacheUnitByNameSync("npc_dota_hero_elder_titan", context)
+	PrecacheUnitByNameSync("npc_dota_hero_shadow_shaman", context)
+
+	PrecacheItemByNameSync("item_orb_of_frost", context)
+	PrecacheItemByNameSync("item_orb_of_fire", context)
+	PrecacheItemByNameSync("item_orb_of_venom_wc3", context)
+	PrecacheItemByNameSync("item_orb_of_corruption", context)
+	PrecacheItemByNameSync("item_orb_of_darkness", context)
+	PrecacheItemByNameSync("item_orb_of_lightning", context)
+
+	PrecacheItemByNameSync("item_scroll_of_regeneration", context)
+	PrecacheItemByNameSync("item_mechanical_critter", context)
+	PrecacheItemByNameSync("item_lesser_clarity_potion", context)
+	PrecacheItemByNameSync("item_potion_of_healing", context)
+	PrecacheItemByNameSync("item_potion_of_mana", context)
+	PrecacheItemByNameSync("item_scroll_of_town_portal", context)
+	PrecacheItemByNameSync("item_build_ivory_tower", context)
+	PrecacheItemByNameSync("item_staff_of_sanctuary", context)
+
+	-- Item wearables
+	local hats = LoadKeyValues("scripts/kv/wearables.kv")
+	for k1,unit_table in pairs(hats) do
+		for k2,sub_table in pairs(unit_table) do
+			for k3,wearables in pairs(sub_table) do
+				for k4,model in pairs (wearables) do
+					PrecacheModel(model, context)
+				end
+			end
+		end
+	end
 end
 
 -- Create our game mode and initialize it

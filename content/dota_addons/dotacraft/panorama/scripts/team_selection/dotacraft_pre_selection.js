@@ -331,7 +331,7 @@ function Initiate_Game(){
 	
 	$.Msg("Everyone is ready")
 	// this will make the game_setup state go further and tells lua about this and then makes players
-	Game.SetRemainingSetupTime(0);	
+	Game.SetRemainingSetupTime(0);
 	GameEvents.SendCustomGameEventToServer("selection_over", {});
 }
 
@@ -447,6 +447,7 @@ function Setup_Minimap(){
 	Setup_Minimap()
 	
 	Game.SetAutoLaunchEnabled(false);
+	Game.SetRemainingSetupTime(999);
     Game.SetTeamSelectionLocked(true);
 	
 	// check for new players, this also sets up the $.Schedule inside the function

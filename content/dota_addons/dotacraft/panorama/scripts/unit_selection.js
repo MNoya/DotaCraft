@@ -120,6 +120,13 @@ function AddToSelection ( args ) {
 	OnUpdateSelectedUnit( args )
 }
 
+function NewSelection ( args ) {
+	$.Msg("New Selection")
+	var entIndex = args.ent_index
+	GameUI.SelectUnit(entIndex, false)
+	OnUpdateSelectedUnit( args )
+}
+
 function RemoveFromSelection ( args ) {
 	$.Msg("Remove From Selection")
 	var entIndex = args.ent_index
@@ -147,6 +154,7 @@ function OnUpdateQueryUnit( event )
 (function () {
 	GameEvents.Subscribe( "add_to_selection", AddToSelection );
 	GameEvents.Subscribe( "remove_from_selection", RemoveFromSelection);
+	GameEvents.Subscribe( "new_selection", NewSelection);
 	GameEvents.Subscribe( "dota_player_update_selected_unit", OnUpdateSelectedUnit );
 	GameEvents.Subscribe( "dota_player_update_query_unit", OnUpdateQueryUnit );
 })();

@@ -79,8 +79,8 @@ function dotacraft:InitGameMode()
 	GameRules:SetHeroRespawnEnabled( false )
 	GameRules:SetUseUniversalShopMode( false )
 	GameRules:SetSameHeroSelectionEnabled( true )
-	GameRules:SetHeroSelectionTime( 30 )
-	GameRules:SetPreGameTime( 0 )
+	GameRules:SetHeroSelectionTime( 0.1 )
+	GameRules:SetPreGameTime( 60 )
 	GameRules:SetPostGameTime( 60 )
 	GameRules:SetTreeRegrowTime( 10000.0 )
 	GameRules:SetUseCustomHeroXPValues ( true )
@@ -91,6 +91,7 @@ function dotacraft:InitGameMode()
 	GameRules:SetRuneMinimapIconScale( 1 )
 	GameRules:SetFirstBloodActive( false )
   	GameRules:SetHideKillMessageHeaders( true )
+  	GameRules:EnableCustomGameSetupAutoLaunch( false )
 
   	-- Set game mode rules
 	GameMode = GameRules:GetGameModeEntity()        
@@ -114,9 +115,6 @@ function dotacraft:InitGameMode()
 	for team,color in pairs(TEAM_COLORS) do
       SetTeamCustomHealthbarColor(team, color[1], color[2], color[3])
     end
-
-	-- Default hero dummy
-	GameMode:SetCustomGameForceHero("npc_dota_hero_ancient_apparition")
 
 	-- DebugPrint
 	Convars:RegisterConvar('debug_spew', tostring(DEBUG_SPEW), 'Set to 1 to start spewing debug info. Set to 0 to disable.', 0)
@@ -365,8 +363,6 @@ function dotacraft:InitGameMode()
 	self.nRadiantKills = 0
 	self.nDireKills = 0
 
-	self.bSeenWaitForPlayers = false
-
 	GameRules.DefeatedTeamCount = 0
 
 	-- Full units file to get the custom values
@@ -401,13 +397,9 @@ function dotacraft:InitGameMode()
 		pos_table.playerID = -1
 		GameRules.StartingPositions[k-1] = pos_table
 	end
-	print("[DOTACRAFT] Starting Positions:")
-	DeepPrintTable(GameRules.StartingPositions)
 
 	print('[DOTACRAFT] Done loading dotacraft gamemode!\n\n')
 end
-
-mode = nil
 
 -- This function is called 1 to 2 times as the player connects initially but before they 
 -- have completely connected
@@ -451,73 +443,7 @@ end
 function dotacraft:PostLoadPrecache()
 	print("[DOTACRAFT] Performing Post-Load precache")
 
-	PrecacheUnitByNameAsync("cosmetic_precache", function(...) end) -- Cosmetic model_folders
-
-	PrecacheUnitByNameAsync("human_arcane_sanctum", function(...) end)
-	PrecacheUnitByNameAsync("human_guard_tower", function(...) end)
-	PrecacheUnitByNameAsync("human_cannon_tower", function(...) end)
-	PrecacheUnitByNameAsync("human_arcane_tower", function(...) end)
-	PrecacheUnitByNameAsync("human_workshop", function(...) end)
-	PrecacheUnitByNameAsync("human_gryphon_aviary", function(...) end)
-
-	PrecacheUnitByNameAsync("nightelf_ancient_of_lore", function(...) end)
-	PrecacheUnitByNameAsync("nightelf_ancient_of_wind", function(...) end)
-	PrecacheUnitByNameAsync("nightelf_ancient_protector", function(...) end)
-	PrecacheUnitByNameAsync("nightelf_tree_of_ages", function(...) end)
-	PrecacheUnitByNameAsync("nightelf_tree_of_eternity", function(...) end)
-	PrecacheUnitByNameAsync("nightelf_chimaera_roost", function(...) end)
-
-	PrecacheUnitByNameAsync("undead_halls_of_the_dead", function(...) end)
-	PrecacheUnitByNameAsync("undead_black_citadel", function(...) end)
-	PrecacheUnitByNameAsync("undead_boneyard", function(...) end)
-	PrecacheUnitByNameAsync("undead_temple_of_the_damned", function(...) end)
-	PrecacheUnitByNameAsync("undead_slaughterhouse", function(...) end)
-	PrecacheUnitByNameAsync("undead_nerubian_tower", function(...) end)
-	PrecacheUnitByNameAsync("undead_spirit_tower", function(...) end)
-	PrecacheUnitByNameAsync("undead_sacrificial_pit", function(...) end)
-
-	PrecacheUnitByNameAsync("orc_beastiary", function(...) end)
-	PrecacheUnitByNameAsync("orc_stronghold", function(...) end)
-	PrecacheUnitByNameAsync("orc_fortress", function(...) end)
-	PrecacheUnitByNameAsync("orc_spirit_lodge", function(...) end)
-	PrecacheUnitByNameAsync("orc_tauren_totem", function(...) end)
-	PrecacheUnitByNameAsync("orc_watch_tower", function(...) end)
-
-	--PrecacheUnitByNameAsync("npc_dota_hero_keeper_of_the_light", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_zuus", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_omniknight", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_Invoker", function(...) end)
-
-	PrecacheUnitByNameAsync("npc_dota_hero_antimage", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_mirana", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_leshrac", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_phantom_assassin", function(...) end)
-
-	PrecacheUnitByNameAsync("npc_dota_hero_abaddon", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_night_stalker", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_lich", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_nyx_assassin", function(...) end)
-
-	PrecacheUnitByNameAsync("npc_dota_hero_juggernaut", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_disruptor", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_elder_titan", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_shadow_shaman", function(...) end)
-
-	PrecacheItemByNameAsync("item_orb_of_frost", function(...) end)
-	PrecacheItemByNameAsync("item_orb_of_fire", function(...) end)
-	PrecacheItemByNameAsync("item_orb_of_venom_wc3", function(...) end)
-	PrecacheItemByNameAsync("item_orb_of_corruption", function(...) end)
-	PrecacheItemByNameAsync("item_orb_of_darkness", function(...) end)
-	PrecacheItemByNameAsync("item_orb_of_lightning", function(...) end)
-
-	PrecacheItemByNameAsync("item_scroll_of_regeneration", function(...) end)
-	PrecacheItemByNameAsync("item_mechanical_critter", function(...) end)
-	PrecacheItemByNameAsync("item_lesser_clarity_potion", function(...) end)
-	PrecacheItemByNameAsync("item_potion_of_healing", function(...) end)
-	PrecacheItemByNameAsync("item_potion_of_mana", function(...) end)
-	PrecacheItemByNameAsync("item_scroll_of_town_portal", function(...) end)
-	PrecacheItemByNameAsync("item_build_ivory_tower", function(...) end)
-	PrecacheItemByNameAsync("item_staff_of_sanctuary", function(...) end)
+	--PrecacheUnitByNameAsync("cosmetic_precache", function(...) end) -- Cosmetic model_folders
 end
 
 function dotacraft:OnFirstPlayerLoaded()
@@ -561,16 +487,6 @@ end
 function dotacraft:OnHeroInGame(hero)
 	local hero_name = hero:GetUnitName()
 	print("[DOTACRAFT] OnHeroInGame "..hero_name)
-
-	-- Ignore the dummy hero to replace with
-	if hero_name == "npc_dota_hero_ancient_apparition" then
-		local aa = hero
-		aa:AddNoDraw() -- Hides the model
-		Timers:CreateTimer(function() 
-			aa:SetAbsOrigin(Vector(11000,11000,0)) -- Hides the minimap icon
-		end)
-		return
-	end
 
 	if hero:HasAbility("hide_hero") then
 		Timers:CreateTimer(0.03, function() 
@@ -623,13 +539,8 @@ function dotacraft:InitializePlayer( hero )
 	player.city_center_level = 1 -- The maximum level from city centers of the player
 
     -- Create Main Building
-    DeepPrintTable(GameRules.StartingPositions)
     local position = GameRules.StartingPositions[playerID].position
     GameRules.StartingPositions[playerID].playerID = playerID
-
-    print("Position for "..playerID..": ",position)
-    DeepPrintTable(GameRules.StartingPositions)
-    print("Remaining",#GameRules.StartingPositions,"positions")
 
     -- Stop game logic on the model overview map
     if GetMapName() == "dotacraft" then
@@ -643,16 +554,6 @@ function dotacraft:InitializePlayer( hero )
 
 	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5, 0) 
 	player.buildings[city_center_name] = 1
-	
-	-- Snap the camera to the created building and add it to selection
-	Timers:CreateTimer(function()
-		PlayerResource:SetCameraTarget(playerID, building)
-
-		Timers:CreateTimer(0.1, function()
-			PlayerResource:SetCameraTarget(playerID, nil)
-			AddUnitToSelection(building)
-		end)
-	end)
 
 	table.insert(player.structures, building)
 	player.main_city_center = building
@@ -750,6 +651,16 @@ function dotacraft:InitializePlayer( hero )
 	Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
 	hero:AddNoDraw()
 
+	-- Snap the camera to the created building and add it to selection
+	Timers:CreateTimer(2/30, function()
+		PlayerResource:SetCameraTarget(playerID, hero)
+	end)
+
+	Timers:CreateTimer(4/30, function()
+		PlayerResource:SetCameraTarget(playerID, nil)
+		NewSelection(building)
+	end)
+
 	-- Find neutrals near the starting zone and remove them
 	local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
 	for k,v in pairs(neutrals) do
@@ -829,39 +740,47 @@ function dotacraft:OnDisconnect(keys)
 
 end
 
+gamestates =
+{
+	[0] = "DOTA_GAMERULES_STATE_INIT",
+	[1] = "DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD",
+	[2] = "DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP",
+	[3] = "DOTA_GAMERULES_STATE_HERO_SELECTION",
+	[4] = "DOTA_GAMERULES_STATE_STRATEGY_TIME",
+	[5] = "DOTA_GAMERULES_STATE_TEAM_SHOWCASE",
+	[6] = "DOTA_GAMERULES_STATE_PRE_GAME",
+	[7] = "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS",
+	[8] = "DOTA_GAMERULES_STATE_POST_GAME",
+	[9] = "DOTA_GAMERULES_STATE_DISCONNECT"
+}
+
 -- The overall game state has changed
 function dotacraft:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
-	print("[DOTACRAFT] GameRules State Changed: ",newState)
+	print("[DOTACRAFT] GameRules State Changed: ",gamestates[newState])
 		
 	-- send the panaroma developer at each stage to ensure all js are exposed to it
 	dotacraft:Panaroma_Developer_Mode(newState)
-	
-	if newState == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
-		self.bSeenWaitForPlayers = true
-	elseif newState == DOTA_GAMERULES_STATE_INIT then
-		Timers:RemoveTimer("alljointimer")
-	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		local et = 6
-		if self.bSeenWaitForPlayers then
-			et = .01
-		end
-		Timers:CreateTimer("alljointimer", {
-			useGameTime = true,
-			endTime = et,
-			callback = function()
-			if PlayerResource:HaveAllPlayersJoined() then
-				dotacraft:PostLoadPrecache()
-				dotacraft:OnAllPlayersLoaded()
-				return 
-			end
+
+	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		local count = 0
+		Timers:CreateTimer(1, function() count = count + 1
+			print(count)
 			return 1
+		end)
+	end
+	
+	if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		if PlayerResource:HaveAllPlayersJoined() then
+			dotacraft:PostLoadPrecache()
+			dotacraft:OnAllPlayersLoaded()
 		end
-		})
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		dotacraft:OnGameInProgress()
-	end
+	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
+    	dotacraft:OnPreGame()
+  	end
 end
 
 -- An NPC has spawned somewhere in game.  This includes heroes
@@ -1591,6 +1510,32 @@ function dotacraft:Lock_Teams(data)
 	end
 
 	CustomGameEventManager:Send_ServerToAllClients("dotacraft_lock_teams", {Locked = GameRules.LockTeams})
+end
+
+function dotacraft:OnPreGame()
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS, 1 do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
+			
+			local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
+			local team = Player_Table.Team
+			local race = GameRules.raceTable[Player_Table.Race]
+
+			-- if race is nil it means that the id supplied is random since that is the only fallout index
+			if race == nil then
+				race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
+			end
+
+			-- player stuff
+			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
+			PlayerResource:SetCustomTeamAssignment(playerID, team)
+			PrecacheUnitByNameAsync(race, function()
+				local player = PlayerResource:GetPlayer(playerID)
+				CreateHeroForPlayer(race, player)
+				print("[DOTACRAFT] Player Created: ",playerID,race,GetPlayerRace(player))
+			end, playerID)
+ 		end
+ 	end
 end
 
 function dotacraft:Create_Players(data)
