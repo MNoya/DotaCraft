@@ -67,7 +67,7 @@ function HideWearables( event )
             end
         end
         model = model:NextMovePeer()
-        if model ~= nil then
+        if model ~= nil and model:GetClassname() == "dota_item_wearable" then
         	print("Next Peer:" .. model:GetModelName())
         end
     end
