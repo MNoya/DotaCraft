@@ -7178,6 +7178,660 @@
 			}
 		}
 	}
+	
+	// Turtle Rock
+	
+	//=================================================================================
+	// Creature: Forest Troll
+	// Description: "Axe-throwing Troll. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_forest_troll"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_berserker.vmdl"
+		"ModelScale"				"1"
+		"Level"						"2"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"17.0"
+		"AttackDamageMax"			"20.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.6"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"500"
+		"ProjectileModel"			""	 //Add projectile
+		"ProjectileSpeed"			"1200"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"6.0"
+		"BountyGoldMax"				"8.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"150"
+		"LumberCost"				"150"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"300"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Sea Turtle Hatchling
+	// Description: "Light ranged amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_sea_turtle_hatchling"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/items/courier/nexon_turtle_01_grey/nexon_turtle_01_grey.vmdl" //No Attack animation
+	    "ModelScale"                "1.2"
+	    "Level"                     "1"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    "UseNeutralCreepBehavior" 	"0"
+	
+	    "AttacksEnabled"			"ground,air"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  ""   //Reference: ANth
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "0"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+	    "AttackDamageMin"           "13.0"
+	    "AttackDamageMax"           "15.0"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "1.6"
+	    "AttackAnimationPoint"      "0.5"
+	    "AttackAcquisitionRange"    "600"
+	    "AttackRange"               "500"
+	    "ProjectileModel"           "particles/units/heroes/hero_morphling/morphling_base_attack.vpcf"
+	    "ProjectileSpeed"           "1300"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "4.0"
+	    "BountyGoldMax"             "6.0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "105"
+	    "LumberCost"                "105"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "270"
+	    "MovementTurnRate"          "0.6"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "220"
+	    "StatusHealthRegen"         "0.5"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Sea Turtle
+	// Description: "Light melee amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_sea_turtle"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/items/courier/nexon_turtle_09_blue/nexon_turtle_09_blue.vmdl"
+	    "ModelScale"                "1.5"
+	    "Level"                     "2"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    "UseNeutralCreepBehavior" 	"0"
+	    
+	    "AttacksEnabled"			"ground"
+	
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  ""   //Reference: ANth
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "4"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageMin"           "6.0"
+	    "AttackDamageMax"           "10.0"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "1.35"
+	    "AttackAnimationPoint"      "0.66"
+	    "AttackAcquisitionRange"    "500"
+	    "AttackRange"               "100"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "6.0"
+	    "BountyGoldMax"             "8.0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "255"
+	    "LumberCost"                "255"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "270"
+	    "MovementTurnRate"          "0.6"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "250"
+	    "StatusHealthRegen"         "0.5"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Giant Sea Turtle
+	// Description: "Medium ranged amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_giant_sea_turtle"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/items/courier/raidcall_ems_one_turtle/raidcall_ems_one_turtle.vmdl" //No Attack animation
+	    "ModelScale"                "2"
+	    "Level"                     "4"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    "UseNeutralCreepBehavior" 	"0"
+	
+	    "AttacksEnabled"			"ground,air"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  ""   //Reference: ANth
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "4"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+	    "AttackDamageMin"           "28.0"
+	    "AttackDamageMax"           "37.0"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "1.6"
+	    "AttackAnimationPoint"      "0.5"
+	    "AttackAcquisitionRange"    "500"
+	    "AttackRange"               "500"
+	    "ProjectileModel"           "particles/units/heroes/hero_morphling/morphling_base_attack.vpcf"
+	    "ProjectileSpeed"           "1300"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "11.0"
+	    "BountyGoldMax"             "15.0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "295"
+	    "LumberCost"                "295"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "270"
+	    "MovementTurnRate"          "0.6"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "375"
+	    "StatusHealthRegen"         "0.5"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Forest Troll Warlord
+	// Description: "Heavy ranged unit with Trueshot Aura. |n|n|cffffcc00Attacks land and air units.|r"
+	//=================================================================================
+	"neutral_forest_troll_warlord"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/heroes/troll_warlord/troll_warlord.vmdl"
+	    "ModelScale"                "1.2"
+	    "Level"                     "6"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    "UseNeutralCreepBehavior" 	"0"
+	
+	    "AttacksEnabled"			"ground, air"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  ""   //Reference: ACat
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "2"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+	    "AttackDamageMin"           "36.0"
+	    "AttackDamageMax"           "43.0"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "1.6"
+	    "AttackAnimationPoint"      "0.3"
+	    "AttackAcquisitionRange"    "500"
+	    "AttackRange"               "500"
+	    "ProjectileModel"           "particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
+	    "ProjectileSpeed"           "1200"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "44.0"
+	    "BountyGoldMax"             "52.0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "365"
+	    "LumberCost"                "365"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "320"
+	    "MovementTurnRate"          "0.5"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "750"
+	    "StatusHealthRegen"         "0.5"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	    "Creature"
+	    {
+	    	"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"373"		}
+				"Wearable2"		{	"ItemDef"		"374" 		} 
+			}
+	    }
+	}
+	
+	//=================================================================================
+	// Creature: Ogre Lord
+	// Description: "Lord of the Ogre Legion. Has a defensive aura, and can cast Shockwave. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_ogre_lord"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/heroes/ogre_magi/ogre_magi.vmdl"
+	    "ModelScale"                "1.6"
+	    "Level"                     "7"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    "UseNeutralCreepBehavior" 	"0"
+	
+	    "AttacksEnabled"			"ground"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  ""   //Reference: ACav
+	    "Ability2"                  ""   //Reference: ACsh
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "3"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageMin"           "39.0"
+	    "AttackDamageMax"           "44.0"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "1.35"
+	    "AttackAnimationPoint"      "0.3"
+	    "AttackAcquisitionRange"    "500"
+	    "AttackRange"               "100"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "55.0"
+	    "BountyGoldMax"             "65.0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "425"
+	    "LumberCost"                "425"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "320"
+	    "MovementTurnRate"          "0.5"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "950"
+	    "StatusHealthRegen"         "0.5"
+	    "StatusMana"                "500"
+	    "StatusManaRegen"           "1.25"
+	    "StatusStartingMana"        "500"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	    "Creature"
+	    {
+	    	"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"4359"		} //Champion's Belly Belt
+				"Wearable2"		{	"ItemDef"		"7847" 		} //Helmet and hood of the Antipodeans
+				"Wearable3"		{	"ItemDef"		"7839" 		} //Shield and Bracelet of the Antipodeans
+				"Wearable4"		{	"ItemDef"		"7848" 		} //Burning scepter of the Antipodeans
+				"Wearable5"		{	"ItemDef"		"7845" 		} //Pauldron and Cloak of the Antipodeans
+			}
+	    }
+	}
+	
+	//=================================================================================
+	// Creature: Murloc Nightcrawler
+	// Description: "Light melee unit that poisons opponents. Can also Shadowmeld. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_murloc_nightcrawler"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/heroes/slark/slark.vmdl"
+	    "ModelScale"                "0.9"
+	    "Level"                     "3"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    "UseNeutralCreepBehavior" 	"0"
+	
+	    "AttacksEnabled"			"ground"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  ""   //Reference: ACvs
+	    "Ability2"                  ""   //Reference: Ashm
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "1"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageMin"           "10.0"
+	    "AttackDamageMax"           "11.0"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "1.35"
+	    "AttackAnimationPoint"      "0.66"
+	    "AttackAcquisitionRange"    "500"
+	    "AttackRange"               "100"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "8.0"
+	    "BountyGoldMax"             "10.0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "215"
+	    "LumberCost"                "215"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "270"
+	    "MovementTurnRate"          "0.5"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "400"
+	    "StatusHealthRegen"         "0.5"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	    "Creature"
+	    {     
+	        "AttachWearables"
+	        {
+	            "Wearable1"     {   "ItemDef"       "6871"      }   //Skadi
+	            "Wearable2"     {   "ItemDef"       "6406"      }
+	            "Wearable3"     {   "ItemDef"       "4882"      } //naked head  
+	            "Wearable4"     {   "ItemDef"       "6392"      }
+	            "Wearable5"     {   "ItemDef"       "5101"      } //wavecutter back
+	        }
+	    }
+	}
+	
+	//=================================================================================
+	// Creature: Murloc Huntsman
+	// Description: "Light melee unit that can Ensnare opponents. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_murloc_huntsman"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/heroes/slark/slark.vmdl"
+	    "ModelScale"                "1.1"
+	    "Level"                     "2"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    "UseNeutralCreepBehavior" 	"0"
+	
+	    "AttacksEnabled"			"ground"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  ""   //Reference: ACen
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "0"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageMin"           "6.0"
+	    "AttackDamageMax"           "10.0"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "1.35"
+	    "AttackAnimationPoint"      "0.66"
+	    "AttackAcquisitionRange"    "500"
+	    "AttackRange"               "100"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "6.0"
+	    "BountyGoldMax"             "8.0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "150"
+	    "LumberCost"                "150"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "270"
+	    "MovementTurnRate"          "0.5"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "300"
+	    "StatusHealthRegen"         "0.5"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	    "Creature"
+	    {
+	        "AttachWearables" //deep scoundrel
+	        {
+	            "Wearable1"     {   "ItemDef"       "6419"      } //weapon scoundrel 
+	            "Wearable2"     {   "ItemDef"       "6417"      } 
+	            "Wearable3"     {   "ItemDef"       "4882"      } //naked head  
+	            "Wearable4"     {   "ItemDef"       "6418"      }
+	            "Wearable5"     {   "ItemDef"       "6420"      } // back
+	        }
+	    }
+	}
 	// Night Elf Buildings
 	// Ancients (Creatures, can move if unrooted)
 	// nightelf_ancient_of_lore
