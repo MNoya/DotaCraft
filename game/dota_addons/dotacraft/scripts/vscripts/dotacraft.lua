@@ -240,6 +240,9 @@ function dotacraft:InitGameMode()
 	-- Allow cosmetic swapping
 	SendToServerConsole( "dota_combine_models 0" )
 
+	-- Don't end the game if everyone is unassigned
+    SendToServerConsole("dota_surrender_on_disconnect 0")
+
 	-- Console Commands
 	Convars:RegisterCommand( "skip_selection", Dynamic_Wrap(dotacraft, 'Skip_Selection'), "Skip Selection", 0 )
 	
@@ -665,7 +668,8 @@ function dotacraft:InitializePlayer( hero )
 	local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
 	for k,v in pairs(neutrals) do
 		if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-			v:RemoveSelf()
+			v:ForceKill(true)
+			v:AddNoDraw()
 		end
 	end
 
@@ -762,14 +766,6 @@ function dotacraft:OnGameRulesStateChange(keys)
 		
 	-- send the panaroma developer at each stage to ensure all js are exposed to it
 	dotacraft:Panaroma_Developer_Mode(newState)
-
-	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		local count = 0
-		Timers:CreateTimer(1, function() count = count + 1
-			print(count)
-			return 1
-		end)
-	end
 	
 	if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		if PlayerResource:HaveAllPlayersJoined() then
