@@ -36,7 +36,7 @@ end
 function NeutralAI:GlobalThink()
 	local unit = self.unit
 
-	if not unit:IsAlive() then
+	if not IsValidAlive(unit) then
 		return nil
 	end
 
