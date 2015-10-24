@@ -7332,81 +7332,6 @@
 	}
 	
 	//=================================================================================
-	// Creature: Sea Turtle
-	// Description: "Light melee amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land units.|r"
-	//=================================================================================
-	"neutral_sea_turtle"
-	{
-	    // General
-	    //----------------------------------------------------------------
-	    "BaseClass"                 "npc_dota_creature"
-	    "Model"                     "models/items/courier/nexon_turtle_09_blue/nexon_turtle_09_blue.vmdl"
-	    "ModelScale"                "1.5"
-	    "Level"                     "2"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
-	    "HealthBarOffset"           "140"
-	    "UseNeutralCreepBehavior" 	"0"
-	    
-	    "AttacksEnabled"			"ground"
-	
-	    // Abilities
-	    //----------------------------------------------------------------
-	    "Ability1"                  ""   //Reference: ANth
-	    
-	    // Armor
-	    //----------------------------------------------------------------
-	    "ArmorPhysical"             "4"
-	    "MagicalResistance"         "0"
-	    
-	    // Attack
-	    //----------------------------------------------------------------
-	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-	    "AttackDamageMin"           "6.0"
-	    "AttackDamageMax"           "10.0"
-	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-	    "AttackRate"                "1.35"
-	    "AttackAnimationPoint"      "0.66"
-	    "AttackAcquisitionRange"    "500"
-	    "AttackRange"               "100"
-	    
-	    // Bounty
-	    //----------------------------------------------------------------
-	    "BountyGoldMin"             "6.0"
-	    "BountyGoldMax"             "8.0"
-	    
-	    // Gold and Lumber
-	    //----------------------------------------------------------------
-	    "GoldCost"                  "255"
-	    "LumberCost"                "255"
-	    
-	    // Movement
-	    //----------------------------------------------------------------
-	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-	    "MovementSpeed"             "270"
-	    "MovementTurnRate"          "0.6"
-	    
-	    // Status
-	    //----------------------------------------------------------------
-	    "StatusHealth"              "250"
-	    "StatusHealthRegen"         "0.5"
-	    
-	    // Vision
-	    //----------------------------------------------------------------
-	    "VisionDaytimeRange"        "1400"
-	    "VisionNighttimeRange"      "800"
-	    
-	    // Team
-	    //----------------------------------------------------------------
-	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
-	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
-	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRONG"
-	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	    
-	    // Creature Data
-	    //----------------------------------------------------------------
-	}
-	
-	//=================================================================================
 	// Creature: Giant Sea Turtle
 	// Description: "Medium ranged amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land and air units.|r"
 	//=================================================================================
@@ -7481,6 +7406,81 @@
 	    
 	    // Creature Data
 	    //----------------------------------------------------------------
+	}
+	
+	//=================================================================================
+	// Creature: Gargantuan Sea Turtle
+	// Description: "Heavy melee amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"gargantuan_sea_turtle"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/courier/nexon_turtle_13_red/nexon_turtle_13_red.vmdl"
+		"ModelScale"				"2.5"
+		"Level"						"7"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
+	
+	    "AttacksEnabled"			"ground"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 //Reference: ANth
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"39.0"
+		"AttackDamageMax"			"46.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.35"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"55.0"
+		"BountyGoldMax"				"65.0"
+		
+		// Gold and Lumber
+		//----------------------------------------------------------------
+		"GoldCost"					"255"
+		"LumberCost"				"255"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1250"
+		"StatusHealthRegen"			"0.5"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
 	}
 	
 	//=================================================================================
