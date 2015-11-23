@@ -79,9 +79,9 @@ function dotacraft:InitGameMode()
 	GameRules:SetHeroRespawnEnabled( false )
 	GameRules:SetUseUniversalShopMode( false )
 	GameRules:SetSameHeroSelectionEnabled( true )
-	GameRules:SetHeroSelectionTime( 0.1 )
-	GameRules:SetPreGameTime( 60 )
-	GameRules:SetPostGameTime( 60 )
+	GameRules:SetHeroSelectionTime( 0 )
+	GameRules:SetPreGameTime( 1 )
+	GameRules:SetPostGameTime( 0 )
 	GameRules:SetTreeRegrowTime( 10000.0 )
 	GameRules:SetUseCustomHeroXPValues ( true )
 	GameRules:SetGoldPerTick(0)
@@ -117,7 +117,7 @@ function dotacraft:InitGameMode()
     end
 
 	-- DebugPrint
-	Convars:RegisterConvar('debug_spew', tostring(DEBUG_SPEW), 'Set to 1 to start spewing debug info. Set to 0 to disable.', 0)
+	--Convars:RegisterConvar('debug_spew', tostring(DEBUG_SPEW), 'Set to 1 to start spewing debug info. Set to 0 to disable.', 0)
 
 	print('[DOTACRAFT] Game Rules set')
 
@@ -152,7 +152,6 @@ function dotacraft:InitGameMode()
 	GameRules.PLAYER_DAMAGE_WARNING = {}
 	
 	dotacraft:DeterminePathableTrees()
-	print('[DOTACRAFT] Pathable Trees set')
 
 	-- Event Hooks
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
@@ -203,7 +202,7 @@ function dotacraft:InitGameMode()
 
 	-- Listeners for Pre_Game_Selection
 	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
-	CustomGameEventManager:RegisterListener( "selection_over", Dynamic_Wrap(dotacraft, "Create_Players"))	
+	--CustomGameEventManager:RegisterListener( "selection_over", Dynamic_Wrap(dotacraft, "Create_Players"))	
 	CustomGameEventManager:RegisterListener( "update_team_lock", Dynamic_Wrap(dotacraft, "Lock_Teams"))	
 	
 	-- register panaroma tables
@@ -317,38 +316,6 @@ function dotacraft:InitGameMode()
 	  	end
 	end, "Change AbilityValues", 0 )
 
-
-	-- Fill server with fake clients
-	-- Fake clients don't use the default bot AI for buying items or moving down lanes and are sometimes necessary for debugging
-	Convars:RegisterCommand('fake', function()
-		-- Check if the server ran it
-		if not Convars:GetCommandClient() then
-		  -- Create fake Players
-			SendToServerConsole('dota_create_fake_clients')
-
-			Timers:CreateTimer('assign_fakes', {
-			  	useGameTime = false,
-			  	endTime = Time(),
-			  	callback = function(dotacraft, args)
-			  	local userID = 20
-			  	for i=0, 9 do
-			  		userID = userID + 1
-			        -- Check if this player is a fake one
-			        if PlayerResource:IsFakeClient(i) then
-			          	-- Grab player instance
-			          	local ply = PlayerResource:GetPlayer(i)
-			          	-- Make sure we actually found a player instance
-			        	if ply then
-				          	CreateHeroForPlayer('npc_dota_hero_axe', ply)
-			          		self:OnConnectFull({ userid = userID, index = ply:entindex()-1 })
-				          	ply:GetAssignedHero():SetControllableByPlayer(0, true)
-			    		end
-			      	end
-			  	end
-			end})
-		end
-	end, 'Connects and assigns fake Players.', 0)
-
 	-- Change random seed
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
 	math.randomseed(tonumber(timeTxt))
@@ -401,7 +368,7 @@ function dotacraft:InitGameMode()
 		GameRules.StartingPositions[k-1] = pos_table
 	end
 
-	print('[DOTACRAFT] Done loading dotacraft gamemode!\n\n')
+	print('[DOTACRAFT] Done loading dotacraft gamemode!')
 end
 
 -- This function is called 1 to 2 times as the player connects initially but before they 
@@ -428,8 +395,6 @@ function dotacraft:OnConnectFull(keys)
 	-- The Player ID of the joining player
 	local playerID = ply:GetPlayerID()
 
-	--CreateHeroForPlayer("npc_dota_hero_dragon_knight", ply)
-
 	-- Update the user ID table with this user
 	self.vUserIds[keys.userid] = ply
 
@@ -447,6 +412,17 @@ function dotacraft:PostLoadPrecache()
 	print("[DOTACRAFT] Performing Post-Load precache")
 
 	--PrecacheUnitByNameAsync("cosmetic_precache", function(...) end) -- Cosmetic model_folders
+	for k,_ in pairs(PRECACHE_TABLE.UnitAsync) do
+		PrecacheUnitByNameAsync(k, function(...)
+			--print("Done loading unit ",k) 
+		end)
+	end
+
+	for k,_ in pairs(PRECACHE_TABLE.ItemAsync) do
+		PrecacheItemByNameAsync(k, function(...) 
+			--print("Done loading item ",k) 
+		end)
+	end
 end
 
 function dotacraft:OnFirstPlayerLoaded()
@@ -655,9 +631,7 @@ function dotacraft:InitializePlayer( hero )
 	hero:AddNoDraw()
 
 	-- Snap the camera to the created building and add it to selection
-	Timers:CreateTimer(2/30, function()
-		PlayerResource:SetCameraTarget(playerID, hero)
-	end)
+	PlayerResource:SetCameraTarget(playerID, hero)
 
 	Timers:CreateTimer(4/30, function()
 		PlayerResource:SetCameraTarget(playerID, nil)
@@ -767,9 +741,13 @@ function dotacraft:OnGameRulesStateChange(keys)
 	dotacraft:Panaroma_Developer_Mode(newState)
 	
 	if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		
+	elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		if PlayerResource:HaveAllPlayersJoined() then
 			dotacraft:PostLoadPrecache()
 			dotacraft:OnAllPlayersLoaded()
+		else
+			print("ERROR: Not all players have joined at GAME_SETUP!")
 		end
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		dotacraft:OnGameInProgress()
@@ -816,10 +794,10 @@ function dotacraft:OnNPCSpawned(keys)
     end
 
     -- Attack system
-    npc:SetIdleAcquire(false)
+    --[[npc:SetIdleAcquire(false)
     npc.AcquisitionRange = npc:GetAcquisitionRange()
     npc:SetAcquisitionRange(0)
-    ApplyModifier(npc, "modifier_attack_system")
+    ApplyModifier(npc, "modifier_attack_system")]]
 
 end
 
@@ -1305,7 +1283,7 @@ function dotacraft:DeterminePathableTrees()
 	--      Flood Fill      --
 	--------------------------
 
-	print("DeterminePathableTrees")
+	print("[DOTACRAFT] Determining pathable trees...")
 
 	local world_positions = {}
 	local valid_trees = {}
@@ -1370,6 +1348,8 @@ function dotacraft:DeterminePathableTrees()
 	--for k,tree in pairs(valid_trees) do
 		--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 0, 32, true, 60)
 	--end
+
+	print('[DOTACRAFT] Pathable Trees set')
 end
 
 function dotacraft:RepositionPlayerCamera( event )
@@ -1508,6 +1488,7 @@ function dotacraft:Lock_Teams(data)
 end
 
 function dotacraft:OnPreGame()
+	print("[DOTACRAFT] OnPreGame")
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS, 1 do
 		if PlayerResource:IsValidPlayerID(playerID) then
 			local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
@@ -1524,11 +1505,11 @@ function dotacraft:OnPreGame()
 			-- player stuff
 			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
-			PrecacheUnitByNameAsync(race, function()
+			--PrecacheUnitByNameAsync(race, function() --Race Heroes are already precached
 				local player = PlayerResource:GetPlayer(playerID)
-				CreateHeroForPlayer(race, player)
-				print("[DOTACRAFT] Player Created: ",playerID,race,GetPlayerRace(player))
-			end, playerID)
+				local hero = CreateHeroForPlayer(race, player)
+				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,GetUnitRace(hero),team)
+			--end, playerID)
  		end
  	end
 end
@@ -1551,7 +1532,21 @@ function dotacraft:Create_Players(data)
 			-- player stuff
 			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
-			--CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
+
+			PrecacheUnitByNameAsync(hero_name, function()
+		        local hero = CreateHeroForPlayer(hero_name, player)
+		        print("[ITT] CreateHeroForPlayer: ",playerID,hero_name,team)
+
+		        -- Move to the first unassigned starting position for the assigned team-isle
+		        ITT:SetHeroIslandPosition(hero, team)
+
+		        -- Health Label
+		        local color = ITT:ColorForTeam( team )
+		        hero:SetCustomHealthLabel( hero.Tribe.." Tribe", color[1], color[2], color[3] )
+
+		    end, playerID)
+
+			CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
 				
 			Timers:CreateTimer(0.1,function()
 				local hero_race = PlayerResource:GetPlayer(playerID):GetAssignedHero()
@@ -1563,7 +1558,7 @@ function dotacraft:Create_Players(data)
 end
 
 function dotacraft:Selection_Update_Player(args)
-	print("updating player")
+	--print("updating player")
 	local PlayerID = args.ID
 		
 	SetNetTableValue("dotacraft_player_table", tostring(PlayerID), {Team = args.Team, Color = args.Color, Race = args.Race, Ready = args.Ready})
@@ -1585,7 +1580,7 @@ function dotacraft:Setup_Tables()
 end
 
 function dotacraft:Setup_Color_Table()
-	print("creating color table")
+	--print("creating color table")
 		
 	SetNetTableValue("dotacraft_color_table", "0", 	{r=255, g=0,   b=0	})	-- red
 	SetNetTableValue("dotacraft_color_table", "1", 	{r=0, 	g=0,   b=255})	-- blue

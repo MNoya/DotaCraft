@@ -113,7 +113,7 @@ function StringStartsWith( fullstring, substring )
 end
 
 function DebugPrint(...)
-    local spew = Convars:GetInt('debug_spew') or -1
+    local spew = 1--Convars:GetInt('debug_spew') or -1
     if spew == -1 and DEBUG_SPEW then
         spew = 1
     end
