@@ -44,7 +44,7 @@ function Precache( context )
         end
     end
 
-    --PrecacheWearables( context )
+    PrecacheWearables( context )
     
     print("[DOTACRAFT] Pre-Load precache done!")
 end

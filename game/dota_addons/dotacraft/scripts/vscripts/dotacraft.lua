@@ -408,23 +408,6 @@ function dotacraft:OnConnectFull(keys)
 	end
 end
 
-function dotacraft:PostLoadPrecache()
-	print("[DOTACRAFT] Performing Post-Load precache")
-
-	--PrecacheUnitByNameAsync("cosmetic_precache", function(...) end) -- Cosmetic model_folders
-	for k,_ in pairs(PRECACHE_TABLE.UnitAsync) do
-		PrecacheUnitByNameAsync(k, function(...)
-			--print("Done loading unit ",k) 
-		end)
-	end
-
-	for k,_ in pairs(PRECACHE_TABLE.ItemAsync) do
-		PrecacheItemByNameAsync(k, function(...) 
-			--print("Done loading item ",k) 
-		end)
-	end
-end
-
 function dotacraft:OnFirstPlayerLoaded()
 	print("[DOTACRAFT] First Player has loaded")
 end
@@ -631,9 +614,13 @@ function dotacraft:InitializePlayer( hero )
 	hero:AddNoDraw()
 
 	-- Snap the camera to the created building and add it to selection
-	PlayerResource:SetCameraTarget(playerID, hero)
+	for i=1,15 do
+		Timers:CreateTimer(i*0.03, function()
+			PlayerResource:SetCameraTarget(playerID, hero)
+		end)
+	end
 
-	Timers:CreateTimer(4/30, function()
+	Timers:CreateTimer(0.5, function()
 		PlayerResource:SetCameraTarget(playerID, nil)
 		NewSelection(building)
 	end)
@@ -741,14 +728,11 @@ function dotacraft:OnGameRulesStateChange(keys)
 	dotacraft:Panaroma_Developer_Mode(newState)
 	
 	if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		
-	elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		if PlayerResource:HaveAllPlayersJoined() then
-			dotacraft:PostLoadPrecache()
 			dotacraft:OnAllPlayersLoaded()
-		else
-			print("ERROR: Not all players have joined at GAME_SETUP!")
 		end
+	elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		dotacraft:OnGameInProgress()
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
@@ -796,8 +780,8 @@ function dotacraft:OnNPCSpawned(keys)
     -- Attack system
     --[[npc:SetIdleAcquire(false)
     npc.AcquisitionRange = npc:GetAcquisitionRange()
-    npc:SetAcquisitionRange(0)
-    ApplyModifier(npc, "modifier_attack_system")]]
+    npc:SetAcquisitionRange(0)]]
+    ApplyModifier(npc, "modifier_attack_system")
 
 end
 

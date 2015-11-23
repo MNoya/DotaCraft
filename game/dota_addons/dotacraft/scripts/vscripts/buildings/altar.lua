@@ -17,49 +17,53 @@ function BuildHero( event )
 	local origin = caster:GetAbsOrigin() + RandomVector(150)
 
 	-- handle_UnitOwner needs to be nil, else it will crash the game.
-	local new_hero = CreateUnitByName(unit_name, origin, true, hero, nil, hero:GetTeamNumber())
-	new_hero:SetPlayerID(playerID)
-	new_hero:SetControllableByPlayer(playerID, true)
-	new_hero:SetOwner(player)
-	
-	if caster.flag then
-		local position = caster.flag:GetAbsOrigin()
-		Timers:CreateTimer(0.05, function() 
-			FindClearSpaceForUnit(new_hero, new_hero:GetAbsOrigin(), true)
-			new_hero:MoveToPosition(position) 
-		end)
-		print(new_hero:GetUnitName().." moving to position",position)
-	end
+	PrecacheUnitByNameAsync(unit_name, function()
+		local new_hero = CreateUnitByName(unit_name, origin, true, hero, nil, hero:GetTeamNumber())
+		new_hero:SetPlayerID(playerID)
+		new_hero:SetControllableByPlayer(playerID, true)
+		new_hero:SetOwner(player)
 
-	-- Add a teleport scroll
-	local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
-	new_hero:AddItem(tpScroll)
-	tpScroll:SetPurchaseTime(0) --Dont refund fully
+		new_hero:RespawnUnit()
+		
+		if caster.flag then
+			local position = caster.flag:GetAbsOrigin()
+			Timers:CreateTimer(0.05, function() 
+				FindClearSpaceForUnit(new_hero, new_hero:GetAbsOrigin(), true)
+				new_hero:MoveToPosition(position) 
+			end)
+			print(new_hero:GetUnitName().." moving to position",position)
+		end
 
-	-- Add the hero to the table of heroes acquired by the player
-	table.insert(player.heroes, new_hero)
+		-- Add a teleport scroll
+		local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
+		new_hero:AddItem(tpScroll)
+		tpScroll:SetPurchaseTime(0) --Dont refund fully
 
-	-- Swap the (hidden) finished hero ability for a passive version, to indicate it has been trained
-	local ability = event.ability
-	local ability_name = ability:GetAbilityName()
-	
-	-- Cut the rank, add the _acquired suffix
-	local train_ability_name = string.sub(ability_name, 1 , string.len(ability_name) - 1)
-	local new_ability_name = train_ability_name.."_acquired"
-	new_hero.RespawnAbility = train_ability_name
+		-- Add the hero to the table of heroes acquired by the player
+		table.insert(player.heroes, new_hero)
 
-	-- Swap and Disable on each altars
-	for _,altar in pairs(player.altar_structures) do
-		altar:AddAbility(new_ability_name)
-		altar:SwapAbilities(ability_name, new_ability_name, false, true)
-		altar:RemoveAbility(ability_name)
-		local new_ability = altar:FindAbilityByName(new_ability_name)
-		new_ability:SetLevel(new_ability:GetMaxLevel())
-	end
+		-- Swap the (hidden) finished hero ability for a passive version, to indicate it has been trained
+		local ability = event.ability
+		local ability_name = ability:GetAbilityName()
+		
+		-- Cut the rank, add the _acquired suffix
+		local train_ability_name = string.sub(ability_name, 1 , string.len(ability_name) - 1)
+		local new_ability_name = train_ability_name.."_acquired"
+		new_hero.RespawnAbility = train_ability_name
 
-	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
-	
-	Setup_Hero_Panel(new_hero)
+		-- Swap and Disable on each altars
+		for _,altar in pairs(player.altar_structures) do
+			altar:AddAbility(new_ability_name)
+			altar:SwapAbilities(ability_name, new_ability_name, false, true)
+			altar:RemoveAbility(ability_name)
+			local new_ability = altar:FindAbilityByName(new_ability_name)
+			new_ability:SetLevel(new_ability:GetMaxLevel())
+		end
+
+		FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
+		
+		Setup_Hero_Panel(new_hero)
+	end, playerID)
 	
 	-- register panaroma listener
 	CustomGameEventManager:RegisterListener( "center_hero_camera", CenterCamera)

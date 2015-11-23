@@ -412,39 +412,43 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 	local tavern = EntIndexToHScript(shopID)
 
 	-- handle_UnitOwner needs to be nil, else it will crash the game.
-	local new_hero = CreateUnitByName(unit_name, tavern:GetAbsOrigin(), true, hero, nil, hero:GetTeamNumber())
-	new_hero:SetPlayerID(playerID)
-	new_hero:SetControllableByPlayer(playerID, true)
-	new_hero:SetOwner(player)
-	FindClearSpaceForUnit(new_hero, tavern:GetAbsOrigin(), true)
+	PrecacheUnitByNameAsync(unit_name, function()
+		local new_hero = CreateUnitByName(unit_name, tavern:GetAbsOrigin(), true, hero, nil, hero:GetTeamNumber())
+		new_hero:SetPlayerID(playerID)
+		new_hero:SetControllableByPlayer(playerID, true)
+		new_hero:SetOwner(player)
+		FindClearSpaceForUnit(new_hero, tavern:GetAbsOrigin(), true)
+
+		new_hero:RespawnUnit()
+		
+		-- Add a teleport scroll
+		local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
+		new_hero:AddItem(tpScroll)
+		tpScroll:SetPurchaseTime(0) --Dont refund fully
+
+		-- Add the hero to the table of heroes acquired by the player
+		table.insert(player.heroes, new_hero)
+
+		-- Add food cost
+		ModifyFoodUsed(player, 5)
+
+		-- Acquired ability
+		local train_ability_name = "neutral_train_"..HeroName
+		train_ability_name = string.gsub(train_ability_name, "npc_dota_hero_" , "")
+		new_hero.RespawnAbility = train_ability_name --Reference to swap to a revive ability when the hero dies
+
+		-- Add the acquired ability to each altar
+		for _,altar in pairs(player.altar_structures) do
+			local acquired_ability_name = train_ability_name.."_acquired"
+			TeachAbility(altar, acquired_ability_name)
+			SetAbilityLayout(altar, 5)	
+		end
+
+		-- Increase the altar tier
+		dotacraft:IncreaseAltarTier( playerID )
 	
-	-- Add a teleport scroll
-	local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
-	new_hero:AddItem(tpScroll)
-	tpScroll:SetPurchaseTime(0) --Dont refund fully
-
-	-- Add the hero to the table of heroes acquired by the player
-	table.insert(player.heroes, new_hero)
-
-	-- Add food cost
-	ModifyFoodUsed(player, 5)
-
-	-- Acquired ability
-	local train_ability_name = "neutral_train_"..HeroName
-	train_ability_name = string.gsub(train_ability_name, "npc_dota_hero_" , "")
-	new_hero.RespawnAbility = train_ability_name --Reference to swap to a revive ability when the hero dies
-
-	-- Add the acquired ability to each altar
-	for _,altar in pairs(player.altar_structures) do
-		local acquired_ability_name = train_ability_name.."_acquired"
-		TeachAbility(altar, acquired_ability_name)
-		SetAbilityLayout(altar, 5)	
-	end
-
-	-- Increase the altar tier
-	dotacraft:IncreaseAltarTier( playerID )
-	
-	Setup_Hero_Panel(new_hero)
+		Setup_Hero_Panel(new_hero)
+	end, playerID)
 end
 
 function TavernReviveHeroForPlayer(playerID, shopID, HeroName)
