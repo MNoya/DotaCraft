@@ -22,7 +22,6 @@ function BuildHero( event )
 		new_hero:SetPlayerID(playerID)
 		new_hero:SetControllableByPlayer(playerID, true)
 		new_hero:SetOwner(player)
-
 		new_hero:RespawnUnit()
 		
 		if caster.flag then
@@ -40,7 +39,7 @@ function BuildHero( event )
 		tpScroll:SetPurchaseTime(0) --Dont refund fully
 
 		-- Add the hero to the table of heroes acquired by the player
-		table.insert(player.heroes, new_hero)
+		Players:AddHero(playerID, new_hero)
 
 		-- Swap the (hidden) finished hero ability for a passive version, to indicate it has been trained
 		local ability = event.ability
@@ -52,7 +51,8 @@ function BuildHero( event )
 		new_hero.RespawnAbility = train_ability_name
 
 		-- Swap and Disable on each altars
-		for _,altar in pairs(player.altar_structures) do
+		local playerAltars = Players:GetAltars(playerID)
+		for _,altar in pairs(playerAltars) do
 			altar:AddAbility(new_ability_name)
 			altar:SwapAbilities(ability_name, new_ability_name, false, true)
 			altar:RemoveAbility(ability_name)
@@ -73,15 +73,16 @@ end
 -- Panorama action: Click on the Revive button
 function Revive_Hero(eventSourceIndex, args)
 	local heroname = args.heroname
-	local playerid = args.playerid
+	local playerID = args.playerid
 	local hero_internal_name = GetInternalHeroName(heroname)
-	local player = PlayerResource:GetPlayer(playerid)
+	local player = PlayerResource:GetPlayer(playerID)
 
 	-- Find a valid ability to revive this hero on the altar
 	local revive_ability
-	if IsValidEntity(player.altar) then
+	local altar = Players:HasAltar(playerID)
+	if altar then
 		for i=0,15 do
-			local ability = player.altar:GetAbilityByIndex(i)
+			local ability = altar:GetAbilityByIndex(i)
 			if ability then
 				local ability_name = ability:GetAbilityName()
 				ability_name = string.gsub(ability_name, "_revive" , "")
@@ -94,7 +95,7 @@ function Revive_Hero(eventSourceIndex, args)
 			end
 		end
 		if revive_ability then
-			player.altar:CastAbilityImmediately(revive_ability, player:GetPlayerID())
+			altar:CastAbilityImmediately(revive_ability, player:GetPlayerID())
 		else
 			print("No valid ability to revive")
 		end
@@ -177,35 +178,33 @@ end
 function UpgradeAltarAbilities( event )
 	local altar = event.caster
 	local abilityOnProgress = event.ability
-	local pID = altar:GetPlayerOwnerID()
+	local playerID = altar:GetPlayerOwnerID()
 
-	dotacraft:IncreaseAltarTier(pID, abilityOnProgress)
+	dotacraft:IncreaseAltarTier(playerID, abilityOnProgress)
 end
 
-function dotacraft:IncreaseAltarTier( pID, abilityOnProgress )
-	local player = PlayerResource:GetPlayer(pID)
+function dotacraft:IncreaseAltarTier( playerID, abilityOnProgress )
+	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
 	-- Keep simple track of the abilities being queued, these can't be removed/upgraded else the channeling wont go off
-	if not player.altar_queue then
-		player.altar_queue = {}
+	if not hero.altar_queue then
+		hero.altar_queue = {}
 	end
 
 	-- Simple track of the current global rank
-	if not player.AltarLevel then
-		player.AltarLevel = 2
-	else
-		player.AltarLevel = player.AltarLevel + 1
-	end
+	local altar_level = hero.altar_level + 1
+	hero.altar_level = altar_level
 
 	if abilityOnProgress then
-		table.insert(player.altar_queue, abilityOnProgress:GetAbilityName())
+		table.insert(hero.altar_queue, abilityOnProgress:GetAbilityName())
 	end
 
-	print("ALTAR LEVEL "..player.AltarLevel.." QUEUE:")
-	DeepPrintTable(player.altar_queue)
+	print("ALTAR LEVEL "..altar_level.." QUEUE:")
+	DeepPrintTable(hero.altar_queue)
 
 	-- On Each altar
-	for _,altar in pairs(player.altar_structures) do
+	local playerAltars = Players:GetAltars(playerID)
+	for _,altar in pairs(playerAltars) do
 		for i=0,15 do
 			local ability = altar:GetAbilityByIndex(i)
 			if ability then
@@ -213,7 +212,7 @@ function dotacraft:IncreaseAltarTier( pID, abilityOnProgress )
 				local level = ability:GetLevel() -- Disabled abilities are level 0
 				if string.find(ability_name, "_train") and not string.find(ability_name,"_acquired") then
 					if not abilityOnProgress or ability_name ~= abilityOnProgress:GetAbilityName() then	
-						if player.AltarLevel == 4 or not CanPlayerTrainMoreHeroes( pID ) then -- Disable completely
+						if altar_level == 4 or not CanPlayerTrainMoreHeroes( pID ) then -- Disable completely
 							ability:SetHidden(true)
 							--altar:RemoveAbility(ability_name)
 						else	
@@ -224,12 +223,12 @@ function dotacraft:IncreaseAltarTier( pID, abilityOnProgress )
 							local ability_len = string.len(ability_name)
 							local rank = string.sub(ability_name, ability_len , ability_len)
 							if rank ~= "0" then
-								local new_ability_name = string.gsub(ability_name, rank , player.AltarLevel)
+								local new_ability_name = string.gsub(ability_name, rank , altar_level)
 								if level == 0 then ability_name = ability_name.."_disabled" end
-								print(ability_name, rank, "->", player.AltarLevel, "=",new_ability_name)
+								print(ability_name, rank, "->", altar_level, "=",new_ability_name)
 
 								-- If the ability has to be channeled (i.e. is queued), it cant be removed!
-								if not tableContains(player.altar_queue, ability_name) then
+								if not tableContains(hero.altar_queue, ability_name) then
 									altar:AddAbility(new_ability_name)
 									altar:SwapAbilities(ability_name, new_ability_name, false, true)
 									altar:RemoveAbility(ability_name)
@@ -268,7 +267,8 @@ end
 function ReEnableAltarAbilities( event )
 	local caster = event.caster
 	local ability = event.ability
-	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
 	 -- Remove the "item_" to compare
 	local item_name = ability:GetAbilityName()
@@ -276,18 +276,21 @@ function ReEnableAltarAbilities( event )
 	print("ABILITY NAME : "..train_ability_name)
 
 	-- Remove it from the altar queue
-	local queue_element = getIndex(player.altar_queue, train_ability_name)
-    table.remove(player.altar_queue, queue_element)
+	local queue_element = getIndex(hero.altar_queue, train_ability_name)
+    table.remove(hero.altar_queue, queue_element)
 
 	-- This is the level at which all train abilities should end up
-	player.AltarLevel = player.AltarLevel - 1
+	local altar_level = hero.altar_level - 1
+	hero.altar_level = altar_level
 
-	print("ALTAR LEVEL "..player.AltarLevel.." QUEUE:")
-	DeepPrintTable(player.altar_queue)
+	print("ALTAR LEVEL "..altar_level.." QUEUE:")
+	DeepPrintTable(hero.altar_queue)
 
 	print("--")
+
 	-- On Each altar
-	for _,altar in pairs(player.altar_structures) do
+	local playerAltars = Players:GetAltars(playerID)
+	for _,altar in pairs(playerAltars) do
 		for i=0,15 do
 			local ability = altar:GetAbilityByIndex(i)
 			if ability then
@@ -301,16 +304,16 @@ function ReEnableAltarAbilities( event )
 				elseif string.find(ability_name, "_train") then
 				 	if ability:IsHidden() then
 
-				 		-- The level which abilities have to be downgraded and set visible depends on the current AltarLevel
+				 		-- The level which abilities have to be downgraded and set visible depends on the current altar_level
 				 		-- There's some critical issues with different cancelling of the queue that have to be considered
 
-						if not tableContains(player.altar_queue, ability_name) then
+						if not tableContains(hero.altar_queue, ability_name) then
 
 							-- Adjust the correct rank of this ability
 							local ability_len = string.len(ability_name)
-							local rank = tonumber(string.sub(ability_name, ability_len , ability_len))
-							local adjusted_ability_name = string.gsub(ability_name, rank , tostring( player.AltarLevel))
-							print(rank,ability_name,player.AltarLevel,adjusted_ability_name)
+							local rank = tonumber(string.sub(ability_name, ability_len, ability_len))
+							local adjusted_ability_name = string.gsub(ability_name, rank , tostring(altar_level))
+							print(rank,ability_name,altar_level,adjusted_ability_name)
 
 							local correct_ability = altar:FindAbilityByName(adjusted_ability_name)
 							if correct_ability then
@@ -365,8 +368,7 @@ function ReEnableAltarAbilities( event )
 		end
 
 		-- Look to disable the downgraded abilities if the requirements arent met
-		local player = altar:GetPlayerOwner()
-		CheckAbilityRequirements( structure, player )
+		CheckAbilityRequirements( structure, playerID )
 
 		-- Keep order
 		ReorderAbilities(altar)
@@ -390,27 +392,28 @@ function ReorderAbilities( unit )
 	end
 end
 
--- Keep a player.altar after the player builds its first Altar
+-- Keep a direct reference after the player builds its first Altar
 -- Clone the abilities of this building if possible, if its killed try to find another in the structures list
--- If no altar can be found, check the player.heroes table and decide which rank to apply
+-- If no altar can be found, check the player heroes table and decide which rank to apply
 -- This can also include setting re-train abilities (because the heroes are dead) or passive version if the hero is still alive
 function LinkAltar( event )
 	local altar = event.caster
-	local player = altar:GetPlayerOwner()
+	local playerID = altar:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
 	-- If no altar is active, this will be the reference
-	if not player.altar then
-		player.altar = altar
-		player.altar_structures = {}
-		print("Initialized player.altar")
+	local hasAltar = Players:HasAltar(playerID)
+	if not hasAltar then
+		hero.altar = altar
+		print("Initialized altar for player "..playerID)
 	end
 
 	-- Keep all altars in a separate structure list
-	table.insert(player.altar_structures, altar)
+	table.insert(hero.altar_structures, altar)
 
-	if altar ~= player.altar and IsValidEntity(player.altar) then
-		print("Linking this Altar to "..player.altar:GetEntityIndex())
-		CloneAltarAbilities( altar, player.altar )
+	if altar ~= hero.altar and IsValidAlive(hero.altar) then
+		print("Linking this Altar to "..hero.altar:GetEntityIndex())
+		CloneAltarAbilities( altar, hero.altar )
 	end
 
 	AdjustAbilityLayout(altar)
@@ -459,10 +462,11 @@ end
 -- Hero revive time is capped at 100 seconds.
 function ReviveHero( event )
 	local caster = event.caster -- An Altar
-	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
 	local hero_name = event.Hero
+	local playerHeroes = Players:GetHeroes(playerID)
 
-	for k,hero in pairs(player.heroes) do
+	for k,hero in pairs(playerHeroes) do
 		if hero:GetUnitName() == hero_name then
 			hero:RespawnUnit()
 			FindClearSpaceForUnit(hero, caster:GetAbsOrigin(), true)
@@ -481,7 +485,8 @@ function ReviveHero( event )
 
 	print("SWAPPING "..ability_name.." with the ACQUIRED version on EVERY ALTAR")
 
-	for _,altar in pairs(player.altar_structures) do
+	local playerAltars = Players:GetAltars(playerID)
+	for _,altar in pairs(playerAltars) do
 		local new_ability_name = string.gsub(ability_name, "_revive" , "")
 		new_ability_name = GetResearchAbilityName(new_ability_name) --Take away numbers or research
 		new_ability_name = new_ability_name.."_acquired"
@@ -516,7 +521,8 @@ function HideReviveAbility( event )
 
 	print("HIDING "..ability_name.." on EVERY ALTAR")
 
-	for _,altar in pairs(player.altar_structures) do
+	local playerAltars = Players:GetAltars(playerID)
+	for _,altar in pairs(playerAltars) do
 		local revive_ability = altar:FindAbilityByName(ability_name)
 		if revive_ability then
 			print("Hiding "..revive_ability:GetAbilityName())
@@ -539,7 +545,8 @@ function ShowReviveAbility( event )
 
 	print("SHOWING "..ability_name.." on EVERY ALTAR")
 
-	for _,altar in pairs(player.altar_structures) do
+	local playerAltars = Players:GetAltars(playerID)
+	for _,altar in pairs(playerAltars) do
 		local acquired_ability = altar:FindAbilityByName(ability_name)
 		if acquired_ability then
 			print("Showing "..acquired_ability:GetAbilityName())

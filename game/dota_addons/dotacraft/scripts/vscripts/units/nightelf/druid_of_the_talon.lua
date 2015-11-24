@@ -25,7 +25,7 @@ end
 
 function CrowFormOn( event )
     local caster = event.caster
-    local player = caster:GetPlayerOwner()
+    local playerID = caster:GetPlayerOwner()
     caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
     --caster:EmitSound("Hero_LoneDruid.TrueForm.Cast")
 
@@ -36,7 +36,7 @@ function CrowFormOn( event )
     end
 
     -- Disable faerie fire unless the player has mark of the talon researched
-    if not PlayerHasResearch(player, "nightelf_research_mark_of_the_talon") then
+    if not Players:HasResearch(playerID, "nightelf_research_mark_of_the_talon") then
         local ff_ability = caster:FindAbilityByName("nightelf_faerie_fire")
         ff_ability:SetLevel(0)
     end
@@ -44,12 +44,12 @@ end
 
 function CrowFormOff( event )
     local caster = event.caster
-    local player = caster:GetPlayerOwner()
+    local playerID = caster:GetPlayerOwnerID()
     caster:StartGesture(ACT_DOTA_IDLE_RARE)
     --caster:EmitSound("Hero_LoneDruid.TrueForm.Recast")
     
     -- Enable cyclone if the research is valid
-    if PlayerHasResearch(player, "nightelf_research_druid_of_the_talon_training1") then
+    if Players:HasResearch(playerID, "nightelf_research_druid_of_the_talon_training1") then
         local cyclone = caster:FindAbilityByName("nightelf_cyclone")
         cyclone:SetHidden(false)
     else

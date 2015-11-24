@@ -6,7 +6,7 @@ function Teleport( event )
 	-- If no target handle, it was ground targeted
 	-- If self-targeted, find the greatest town hall level of the player
 	if target == nil or target==caster then
-		target = FindHighestLevelCityCenter(caster)
+		target = Players:FindHighestLevelCityCenter(caster)
 	end
 
 	if not IsCityCenter(target) then

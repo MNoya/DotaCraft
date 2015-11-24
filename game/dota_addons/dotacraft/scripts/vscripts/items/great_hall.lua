@@ -3,7 +3,8 @@ function ChangeGreatHall( event )
 	local item_name = ability:GetAbilityName()
 	local unit = event.caster
 	if unit:IsHero() then
-		local race = GetPlayerRace(unit:GetPlayerOwner())
+		local playerID = unit:GetPlayerID()
+		local race = Players:GetRace(playerID)
 		local new_name = "item_build_tiny_great_hall_"..race
 		if new_name ~= item_name then
 			print("Changing Item "..item_name.." to "..new_name)

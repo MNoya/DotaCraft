@@ -13,7 +13,7 @@ end
 
 function BearFormOn( event )
     local caster = event.caster
-    local player = caster:GetPlayerOwner()
+    local playerID = caster:GetPlayerOwnerID()
     caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_3)
     caster:EmitSound("Hero_LoneDruid.TrueForm.Cast")
 
@@ -24,7 +24,7 @@ function BearFormOn( event )
     end
 
     -- Disable roar unless the player has mark of the claw researched
-    if not PlayerHasResearch(player, "nightelf_research_mark_of_the_claw") then
+    if not Players:HasResearch(playerID, "nightelf_research_mark_of_the_claw") then
         local roar_ability = caster:FindAbilityByName("nightelf_roar")
         roar_ability:SetLevel(0)
     end
@@ -32,19 +32,20 @@ end
 
 function BearFormOff( event )
     local caster = event.caster
-    local player = caster:GetPlayerOwner()
+    local playerID = caster:GetPlayerOwnerID()
     caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
     caster:EmitSound("Hero_LoneDruid.TrueForm.Recast")
+    
     local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lone_druid/true_form_lone_druid.vpcf", PATTACH_CUSTOMORIGIN, caster)
     ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
     ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
 
     -- Enable rejuvenation if the research is valid
-    if PlayerHasResearch(player, "nightelf_research_druid_of_the_claw_training1") then
+    if not Players:HasResearch(playerID, "nightelf_research_druid_of_the_claw_training1") then
         local rejuvenation = caster:FindAbilityByName("nightelf_rejuvenation")
         rejuvenation:SetHidden(false)
     else
-        CheckAbilityRequirements( caster, player )
+        CheckAbilityRequirements( caster, playerID )
     end
 
     -- Enable roar

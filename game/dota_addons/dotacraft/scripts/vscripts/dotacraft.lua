@@ -322,6 +322,7 @@ function dotacraft:InitGameMode()
 
 	-- Initialized tables for tracking state
 	self.vUserIds = {}
+	self.vPlayerUserIds = {}
 	self.vSteamIds = {}
 	self.vBots = {}
 	self.vBroadcasters = {}
@@ -386,20 +387,17 @@ end
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function dotacraft:OnConnectFull(keys)
 	print ('[DOTACRAFT] OnConnectFull')
-	--DeepPrintTable(keys)
-
+	
 	local entIndex = keys.index+1
-	-- The Player entity of the joining user
-	local ply = EntIndexToHScript(entIndex)
+    -- The Player entity of the joining user
+    local ply = EntIndexToHScript(entIndex)
 
-	-- The Player ID of the joining player
-	local playerID = ply:GetPlayerID()
+    -- The Player ID of the joining player
+    local playerID = ply:GetPlayerID()
 
-	-- Update the user ID table with this user
-	self.vUserIds[keys.userid] = ply
-
-	-- Update the Steam ID table
-	self.vSteamIds[PlayerResource:GetSteamAccountID(playerID)] = ply
+    -- Update the user ID table with this user
+    self.vUserIds[keys.userid] = ply
+    self.vPlayerUserIds[playerID] = keys.userid
 
 	-- If the player is a broadcaster flag it in the Broadcasters table
 	if PlayerResource:IsBroadcaster(playerID) then
@@ -478,7 +476,6 @@ function dotacraft:OnHeroInGame(hero)
 			hero:FindAbilityByName("firelord_arcana_model"):SetLevel(1)
 		end
 	end
-
 end
 
 function dotacraft:InitializePlayer( hero )
@@ -487,18 +484,7 @@ function dotacraft:InitializePlayer( hero )
 
 	print("[DOTACRAFT] Initializing main hero entity for player "..playerID)
 
-	-- Initialize Variables for Tracking
-	player.buildings = {} -- This keeps the name and quantity of each building, to access in O(1)
-	player.units = {} -- This keeps the handle of all the units of the player army, to iterate for unlocking upgrades
-	player.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
-	player.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
-	player.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
-	player.altar_structures = {} -- Keeps altars linked
-	player.idle_builders = {} -- Keeps indexes of idle builders to send to the panorama UI
-	player.lumber = 0
-	player.food_limit = 0 -- The amount of food available to build units
-	player.food_used = 0 -- The amount of food used by this player creatures
-	player.city_center_level = 1 -- The maximum level from city centers of the player
+	Players:Init(playerID, hero)
 
     -- Create Main Building
     local position = GameRules.StartingPositions[playerID].position
@@ -514,16 +500,15 @@ function dotacraft:InitializePlayer( hero )
     local city_center_name = GetCityCenterNameForHeroRace(hero_name)
     local builder_name = GetBuilderNameForHeroRace(hero_name)
 
-	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5, 0) 
-	player.buildings[city_center_name] = 1
+	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5, 0)
+	Players:AddStructure(playerID, building)
+	
+	Players:SetMainCityCenter(playerID, building)
 
-	table.insert(player.structures, building)
-	player.main_city_center = building
-
-	CheckAbilityRequirements( building, player )
+	CheckAbilityRequirements( building, playerID )
 
 	-- Give Initial Food
-    ModifyFoodLimit(player, GetFoodProduced(building))
+    Players:ModifyFoodLimit(playerID, GetFoodProduced(building))
 
 	-- Create Builders in between the gold mine and the city center
 	local num_builders = 5
@@ -538,7 +523,7 @@ function dotacraft:InitializePlayer( hero )
 		local ghoul = CreateUnitByName("undead_ghoul", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
 		ghoul:SetOwner(hero)
 		ghoul:SetControllableByPlayer(playerID, true)
-		ModifyFoodUsed(player, GetFoodCost(ghoul))
+		Players:ModifyFoodUsed(playerID, GetFoodCost(ghoul))
 
 		-- Haunt the closest gold mine
 		local haunted_gold_mine = CreateUnitByName("undead_haunted_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
@@ -553,7 +538,7 @@ function dotacraft:InitializePlayer( hero )
 			CreateBlight(building:GetAbsOrigin(), "large")
 		end)
 
-		player.LumberCarried = 20 -- Ghouls carry harder
+		hero.lumber_carried = 20 -- Ghouls carry harder
 
 		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
 		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine
@@ -580,9 +565,10 @@ function dotacraft:InitializePlayer( hero )
 	end
 
 	if hero_name == "npc_dota_hero_dragon_knight" or hero_name == "npc_dota_hero_huskar" then
-		player.LumberCarried = 10
+		hero.lumber_carried = 10
 	end
 
+	local units = Players:GetUnits(playerID)
 	for i=1,num_builders do	
 		--DebugDrawCircle(mid_point, Vector(255, 0 , 0), 255, 100, true, 10)
 		local rotate_pos = mid_point + Vector(1,0,0) * 100
@@ -591,19 +577,19 @@ function dotacraft:InitializePlayer( hero )
 		local builder = CreateUnitByName(builder_name, builder_pos, true, hero, hero, hero:GetTeamNumber())
 		builder:SetOwner(hero)
 		builder:SetControllableByPlayer(playerID, true)
-		table.insert(player.units, builder)
+		Players:AddUnit(playerID, builder)
 		builder.state = "idle"
 
 		-- Increment food used
-		ModifyFoodUsed(player, GetFoodCost(builder))
+		Players:ModifyFoodUsed(playerID, GetFoodCost(builder))
 
 		-- Go through the abilities and upgrade
-		CheckAbilityRequirements( builder, player )
+		CheckAbilityRequirements( builder, playerID )
 	end
 
 	-- Give Initial Resources
-	hero:SetGold(500, false)
-	ModifyLumber(player, 150)
+	Players:SetGold(playerID, 500)
+	Players:ModifyLumber(playerID, 150)
 
 	-- Hide main hero under the main base
 	local ability = hero:FindAbilityByName("hide_hero")
@@ -639,21 +625,21 @@ function dotacraft:InitializePlayer( hero )
 	end
 
 	-- Show UI elements for this race
-	local player_race = GetPlayerRace(player)
+	local player_race = Players:GetRace(playerID)
 	CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", { race = player_race, initial_builders = num_builders })
 
 	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
 	Timers:CreateTimer(1, function() 
 		local idle_builders = {}
-		local player_units = player.units
+		local player_units = Players:GetUnits(playerID)
 		for k,unit in pairs(player_units) do
 			if IsValidAlive(unit) and IsBuilder(unit) and IsIdleBuilder(unit) then
 				table.insert(idle_builders, unit:GetEntityIndex())
 			end
 		end
-		if #idle_builders ~= #player.idle_builders then
-			--print("#Idle Builders changed: "..#idle_builders..", was "..#player.idle_builders)
-			player.idle_builders = idle_builders
+		if #idle_builders ~= #hero.idle_builders then
+			--print("#Idle Builders changed: "..#idle_builders..", was "..#hero.idle_builders)
+			hero.idle_builders = idle_builders
 			CustomGameEventManager:Send_ServerToPlayer(player, "player_update_idle_builders", { idle_builder_entities = idle_builders })
 		end
 		return 0.3
@@ -1026,30 +1012,42 @@ function dotacraft:OnTeamKillCredit(keys)
 function dotacraft:OnEntityKilled( event )
 	--print( '[DOTACRAFT] OnEntityKilled Called' )
 
-	-- The Unit that was Killed
-	local killedUnit = EntIndexToHScript(event.entindex_killed)
-	-- The Killing entity
-	local killerEntity
+	local killed = EntIndexToHScript(event.entindex_killed)
+	local attacker
 	if event.entindex_attacker then
-		killerEntity = EntIndexToHScript(event.entindex_attacker)
+		attacker = EntIndexToHScript(event.entindex_attacker)
 	end
 
-	-- Player owner of the unit
-	local player = killedUnit:GetPlayerOwner()
+	-- Safeguard
+    if killed.reincarnating then return end
+
+	-- Killed credentials
+    local killed_player = killed:GetPlayerOwner()
+    local killed_playerID = killed:GetPlayerOwnerID()
+    local killed_teamNumber = killed:GetTeamNumber()
+    local killed_hero = PlayerResource:GetSelectedHeroEntity(killed_playerID)
+
+    -- Attacker credentials
+    local attacker_player = attacker and attacker:GetPlayerOwner()
+    local attacker_playerID = attacker and attacker:GetPlayerOwnerID()
+    local attacker_teamNumber = attacker and attacker:GetTeamNumber()
+    local attacker_hero = attacker_playerID and PlayerResource:GetSelectedHeroEntity(attacker_playerID)
 
 	-- Hero Killed
-	if killedUnit:IsRealHero() then
+	if killed:IsRealHero() then
 		print("A Hero was killed")
 		
 		-- add hero to tavern, this function also works out cost etc
-		unit_shops:AddHeroToTavern(killedUnit)
+		unit_shops:AddHeroToTavern(killed)
 		
-		if IsValidEntity(player.altar) then
-			print("Player has "..#player.altar_structures.." valid "..player.altar:GetUnitName())
-			for _,altar in pairs(player.altar_structures) do
+		if Players:HasAltar(playerID) then
+
+			local playerAltars = Players:GetAltars(playerID)
+			print("Player has "..#playerAltars.." valid altars")
+			for _,altar in pairs(playerAltars) do
 				-- Set the strings for the _acquired ability to find and _revival ability to add
-				local level = killedUnit:GetLevel()
-				local name = killedUnit.RespawnAbility
+				local level = killed:GetLevel()
+				local name = killed.RespawnAbility
 
 				print("ALLOW REVIVAL OF THIS THIS HERO AT THIS ALTAR - Ability: ",name)
 
@@ -1079,126 +1077,99 @@ function dotacraft:OnEntityKilled( event )
 					end
 				end
 			end
+		
 		else
 			print("Hero Killed but player doesn't have an altar to revive it")
 		end
 	end
 
-	-- Substract the Food Used
-	local food_cost = GetFoodCost(killedUnit)
-	if food_cost > 0 and player and tableContains(player.units, killedUnit) then
-		ModifyFoodUsed(player, - food_cost)
-	end
-
-	-- Table cleanup
-	if player then
-		-- Remake the tables
-		local table_structures = {}
-		for _,building in pairs(player.structures) do
-			if building and IsValidEntity(building) and building:IsAlive() then
-				--print("Valid building: "..building:GetUnitName())
-				table.insert(table_structures, building)
-			end
-		end
-		player.structures = table_structures
-
-		local table_altars = {}
-		for _,altar in pairs(player.altar_structures) do
-			if altar and IsValidEntity(altar) and altar:IsAlive() then
-				--print("Valid altar: "..altar:GetUnitName())
-				table.insert(table_altars, altar)
-			end
-		end
-		player.altar_structures = table_altars
-				
-		local table_units = {}
-		for _,unit in pairs(player.units) do
-			if unit and IsValidEntity(unit) then
-				table.insert(table_units, unit)
-			end
-		end
-		player.units = table_units		
-	end
-
+	
 	-- Building Killed
-	if IsCustomBuilding(killedUnit) then
+	if IsCustomBuilding(killed) then
 
-		 -- Building Helper grid cleanup
-		BuildingHelper:RemoveBuilding(killedUnit, true)
+		-- Building Helper grid cleanup
+		BuildingHelper:RemoveBuilding(killed, true)
 
 		local particle = ParticleManager:CreateParticle("particles/world_destruction_fx/base_statue_destruction_generic_c.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(particle,0 , killedUnit:GetAbsOrigin())
-		killedUnit:AddNoDraw()
+		ParticleManager:SetParticleControl(particle,0 , killed:GetAbsOrigin())
+		killed:AddNoDraw()
 
 		-- Substract the Food Produced
-		local food_produced = GetFoodProduced(killedUnit)
-		if food_produced > 0 and player and not killedUnit.state == "canceled" then
-			ModifyFoodLimit(player, - food_produced)
+		local food_produced = GetFoodProduced(killed)
+		if food_produced > 0 and player and not killed.state == "canceled" then
+			Players:ModifyFoodLimit(killed_playerID, - food_produced)
 		end
 
 		-- Check units for downgrades
-		local building_name = killedUnit:GetUnitName()
+		local building_name = killed:GetUnitName()
 				
 		-- Substract 1 to the player building tracking table for that name
-		if player.buildings[building_name] then
-			player.buildings[building_name] = player.buildings[building_name] - 1
+		local playerBuildingTable = Players:GetBuildingTable( killed_playerID )
+		if playerBuildingTable[building_name] then
+			playerBuildingTable[building_name] = playerBuildingTable[building_name] - 1
 		end
 
-		-- possible builder downgrades
-		for k,units in pairs(player.units) do
-		    CheckAbilityRequirements( units, player )
+		-- possible unit downgrades
+		local playerUnits = Players:GetUnits( killed_playerID )
+		for k,units in pairs(playerUnits) do
+		    CheckAbilityRequirements( units, killed_playerID )
 		end
 
 		-- possible structure downgrades
-		for k,structure in pairs(player.structures) do
-			CheckAbilityRequirements( structure, player )
+		local playerStructures = Players:GetStructures( killed_playerID )
+		for k,structure in pairs(playerStructures) do
+			CheckAbilityRequirements( structure, killed_playerID )
 		end
 
 		-- If the destroyed building was a city center, update the level
-		if IsCityCenter(killedUnit) then
-			CheckCurrentCityCenters(player)
+		if IsCityCenter(killed) then
+			Players:CheckCurrentCityCenters(killed_playerID)
 		end
 
 		-- Check for lose condition - All buildings destroyed
-		print("Player "..player:GetPlayerID().." has "..#player.structures.." buildings left")
-		if (#player.structures == 0) then
+		print("Player "..killed_playerID.." has "..#playerStructures.." buildings left")
+		if (#playerStructures == 0) then
 			dotacraft:CheckDefeatCondition(player)
 		end
-
-	-- Unit Killed
+	
+	-- Unit Killed (Hero or Creature)
 	else
 		-- Give Experience to heroes based on the level of the killed creature
-		if not IsCustomBuilding(killedUnit) then
-			local XPGain = XP_BOUNTY_TABLE[killedUnit:GetLevel()]
+		local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
 
-			-- Grant XP in AoE
-			local heroesNearby = FindUnitsInRadius( killerEntity:GetTeamNumber(), killedUnit:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			--print("There are ",#heroesNearby," nearby the dead unit, base value for this unit is: "..XPGain)
-			for _,hero in pairs(heroesNearby) do
-				if hero:IsRealHero() and hero:GetTeam() ~= killedUnit:GetTeam() then
+		-- Grant XP in AoE
+		local heroesNearby = FindUnitsInRadius( killerEntity:GetTeamNumber(), killed:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		--print("There are ",#heroesNearby," nearby the dead unit, base value for this unit is: "..XPGain)
+		for _,hero in pairs(heroesNearby) do
+			if hero:IsRealHero() and hero:GetTeam() ~= killed:GetTeam() then
 
-					-- Scale XP if neutral
-					local xp = XPGain
-					if killedUnit:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-						xp = ( XPGain * XP_NEUTRAL_SCALING[hero:GetLevel()] ) / #heroesNearby
-					end
-
-					hero:AddExperience(math.floor(xp), false, false)
-					--print("granted "..xp.." to "..hero:GetUnitName())
+				-- Scale XP if neutral
+				local xp = XPGain
+				if killed:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+					xp = ( XPGain * XP_NEUTRAL_SCALING[hero:GetLevel()] ) / #heroesNearby
 				end
-			end		
+
+				hero:AddExperience(math.floor(xp), false, false)
+				--print("granted "..xp.." to "..hero:GetUnitName())
+			end	
 		end
 
-		if IsBuilder(killedUnit) then
-			BuildingHelper:ClearQueue(killedUnit)
+		-- Substract the Food Used
+		local food_cost = GetFoodCost(killed)
+		if food_cost > 0 then
+			Players:ModifyFoodUsed(killed_playerID, - food_cost)
+		end
+
+		if IsBuilder(killed) then
+			BuildingHelper:ClearQueue(killed)
 		end
 	end
 
 	-- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
 	Timers:CreateTimer(1, function() 
-	if LeavesCorpse( killedUnit ) then
+	if LeavesCorpse( killed ) then
 			-- Create and set model
-			local corpse = CreateUnitByName("dummy_unit", killedUnit:GetAbsOrigin(), true, nil, nil, killedUnit:GetTeamNumber())
+			local corpse = CreateUnitByName("dummy_unit", killed:GetAbsOrigin(), true, nil, nil, killed:GetTeamNumber())
 			corpse:SetModel(CORPSE_MODEL)
 
 			-- Set the corpse invisible until the dota corpse disappears
@@ -1206,7 +1177,7 @@ function dotacraft:OnEntityKilled( event )
 			
 			-- Keep a reference to its name and expire time
 			corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
-			corpse.unit_name = killedUnit:GetUnitName()
+			corpse.unit_name = killed:GetUnitName()
 
 			-- Set custom corpse visible
 			Timers:CreateTimer(3, function() if IsValidEntity(corpse) then corpse:RemoveNoDraw() end end)
@@ -1357,7 +1328,7 @@ function dotacraft:CheckDefeatCondition( player )
 
 	--SetNetTableValue("dotacraft_player_table", tostring(player:GetPlayerID()), {Status = "defeated"})
 
-	-- Check the player.structures of all the members of that team to determine defeat
+	-- Check the player structures of all the members of that team to determine defeat
 	local teamMembers = 0
 	local defeatedTeamMembers = 0
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
@@ -1365,7 +1336,8 @@ function dotacraft:CheckDefeatCondition( player )
 			local player = PlayerResource:GetPlayer(playerID)
 			if player:GetTeamNumber() == teamNumber then
 				teamMembers = teamMembers + 1
-				if #player.structures == 0 then
+				local playerStructures = Players:GetStructures(playerID)
+				if #playerStructures == 0 then
 					defeatedTeamMembers = defeatedTeamMembers + 1
 				end
 			end			
@@ -1412,7 +1384,8 @@ function dotacraft:GetWinningTeam()
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(playerID) then
 			local player = PlayerResource:GetPlayer(playerID)
-			if #player.structures > 0 then
+			local playerStructures = Players:GetStructures( playerID )
+			if #playerStructures > 0 then
 				return player:GetTeamNumber()
 			end
 		end
@@ -1424,8 +1397,7 @@ function dotacraft:PrintDefeateMessageForTeam( teamID )
 		if PlayerResource:IsValidPlayerID(playerID) then
 			local player = PlayerResource:GetPlayer(playerID)
 			if player:GetTeamNumber() == teamID then
-				local playerName = PlayerResource:GetPlayerName(playerID)
-				if playerName == "" then playerName = "Player "..playerID end
+				local playerName = Players:GetPlayerName(playerID)
 				GameRules:SendCustomMessage(playerName.." was defeated", 0, 0)
 			end
 		end

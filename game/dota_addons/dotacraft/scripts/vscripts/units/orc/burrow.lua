@@ -124,6 +124,8 @@ function SetBurrowCounter( burrow, count )
 		return
 	end
 
+	if not burrow.counter_particle then return end
+
 	for i=1,count do
 		--print("Set ",i," turned on")
 		ParticleManager:SetParticleControl(burrow.counter_particle, i, Vector(1,0,0))
@@ -192,6 +194,7 @@ end
 function Eject( event )
 	local caster = event.caster
 	SetBurrowCounter(caster, 0)
+	if not caster.peons_inside then return end
 	for k,peon in pairs(caster.peons_inside) do
 		FindClearSpaceForUnit(peon, caster:GetAbsOrigin(), true)
 		peon:RemoveNoDraw()

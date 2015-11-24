@@ -63,8 +63,8 @@ function unit_shops:CreateShop(unit, shop_name)
 	end
 	
 	local UnitShop = unit_shops.Units[UnitID]
-	local player = unit:GetPlayerOwner()	
-	local tier = player and GetPlayerCityLevel(player) or 9000
+	local playerID = unit:GetPlayerOwnerID()	
+	local tier = playerID and Players:GetCityLevel(playerID) or 9000
 	
 	-- empty sorted table
 	local sorted_table = {}
@@ -142,7 +142,8 @@ function unit_shops:CreateShop(unit, shop_name)
 
 		if not isTavern then -- if not tavern
 			Timers:CreateTimer(1, function()
-				tier = player and GetPlayerCityLevel(player) or 9000
+				local playerID = unit:GetPlayerOwnerID()	
+				local tier = playerID and Players:GetCityLevel(playerID) or 9000
 
 				if not IsValidEntity(unit) or not unit:IsAlive() then
 					-- send command to kill shop panel
@@ -163,6 +164,7 @@ function unit_shops:CreateShop(unit, shop_name)
 			Timers:CreateTimer(0.1, function()
 				local PlayerCount = PlayerResource:GetPlayerCount() - 1
 				unit_shops:Stock_Management(UnitShop, key)
+				
 				-- check all players hero count
 				for i=0, PlayerCount do
 									
@@ -170,17 +172,17 @@ function unit_shops:CreateShop(unit, shop_name)
 						local player = PlayerResource:GetPlayer(i)
 						
 						-- if player cannot train more heroes and tavern wasn't previously disabled, disable it now			
-						if not CanPlayerTrainMoreHeroes( i ) and not player.hero_tavern_removed then
+						if not Players:CanTrainMoreHeroes( i ) and not player.hero_tavern_removed then
 							-- delete tavern
 							player.hero_tavern_removed = true
-							CustomGameEventManager:Send_ServerToPlayer(player, "Shops_Remove_Content", {Index = UnitID, Shop = UnitShop, PlayerID = i}) 
+							CustomGameEventManager:Send_ServerToPlayer(player, "Shops_Remove_Content", {Index = UnitID, Shop = UnitShop, playerID = i}) 
 							print("remove neutral heroes panels from player="..tostring(i))
 						end
 						
 						UpdateHeroTavernForPlayer( i )
-						local tier = GetPlayerCityLevel(player)
+						local tier = Players:GetCityLevel(i) or 9000
 						local PlayerHasAltar = HasAltar(i)
-						SetNetTableValue("dotacraft_shops_table", tostring(GameRules.HeroTavernEntityID), {Shop = UnitShop, PlayerID = PlayerID, Tier=tier, Altar=PlayerHasAltar, Tavern=true}) 
+						SetNetTableValue("dotacraft_shops_table", tostring(GameRules.HeroTavernEntityID), {Shop = UnitShop, playerID = playerID, Tier=tier, Altar=PlayerHasAltar, Tavern=true}) 
 					
 					end
 					
@@ -208,39 +210,39 @@ function unit_shops:CreateShop(unit, shop_name)
 	
 end
 
-function unit_shops:RemoveHeroPanel(ShopEntityIndex, PlayerID, ItemName)
-	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(PlayerID), "Shops_Delete_Single_Panel", {Index = ShopEntityIndex, Hero = ItemName}) 
+function unit_shops:RemoveHeroPanel(ShopEntityIndex, playerID, ItemName)
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "Shops_Delete_Single_Panel", {Index = ShopEntityIndex, Hero = ItemName}) 
 end
 
 function unit_shops:Buy(data)
 	local item = data.ItemName
-	local PlayerID = data.PlayerID -- The player that clicked on an item to purchase. This can be an allied player
-	local player = PlayerResource:GetPlayer(PlayerID)
+	local playerID = data.playerID -- The player that clicked on an item to purchase. This can be an allied player
+	local player = PlayerResource:GetPlayer(playerID)
 	local shopID = data.Shop
 	local Shop = EntIndexToHScript(data.Shop)
 
-	print("Player "..PlayerID.." trying to buy "..item.." from "..data.Shop.." "..shopID)
+	print("Player "..playerID.." trying to buy "..item.." from "..data.Shop.." "..shopID)
 	
 	-- Check whether hero item or no
 	local isHeroItem = tobool(data.Hero)
 	local isTavern = tobool(data.Tavern)
 	
-	if isTavern and not CanPlayerTrainMoreHeroes(PlayerID) then
-		print("PlayerID = "..tostring(PlayerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
+	if isTavern and not CanPlayerTrainMoreHeroes(playerID) then
+		print("playerID = "..tostring(playerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
 		return
 	end
 	-- check current tier
 	local shopOwner = Shop:GetPlayerOwner()
-	local tier = shopOwner and GetPlayerCityLevel(shopOwner) or GetPlayerCityLevel(player) --If there is no owner, use the tier of the player that tries to buy it
+	local tier = shopOwner and Players:GetCityLevel(shopOwner) or Players:GetCityLevel(player) --If there is no owner, use the tier of the player that tries to buy it
 				
 	-- Information about the buying unit
 	-- the buying unit
 	local buyer
-	if Shop.current_unit[PlayerID] == nil then
-		SendErrorMessage(data.PlayerID, "#shops_no_buyers_found")
+	if Shop.current_unit[playerID] == nil then
+		SendErrorMessage(data.playerID, "#shops_no_buyers_found")
 		return
 	else
-		buyer = Shop.current_unit[PlayerID] --A shop can sell to more than 1 player at a time
+		buyer = Shop.current_unit[playerID] --A shop can sell to more than 1 player at a time
 	end
 	
 	local buyerPlayerID = buyer:GetPlayerOwnerID()
@@ -256,8 +258,8 @@ function unit_shops:Buy(data)
 	local Lumber_Cost = data.LumberCost
 
 	-- Conditions
-	local bHasEnoughGold = PlayerHasEnoughGold(buyerPlayerOwner, GoldCost)
-	local bHasEnoughLumber = PlayerHasEnoughLumber(buyerPlayerOwner, Lumber_Cost )
+	local bHasEnoughGold = Players:HasEnoughGold(buyerPlayerID, GoldCost)
+	local bHasEnoughLumber = Players:HasEnoughLumber(buyerPlayerID, Lumber_Cost )
 	
 	local bEnoughSlots
 	local bEnoughStock
@@ -290,28 +292,29 @@ function unit_shops:Buy(data)
 			-- if it is tavern create hero
 			else 
 				
-				if PlayerHasEnoughFood(player, 5) then
+				if Players:HasEnoughFood(playerID, 5) then
 
 					-- lower stock count by 1
 					Purchased(item, Shop)
 
-					print("[UNIT SHOPS] Tavern creating hero for "..PlayerID)
+					print("[UNIT SHOPS] Tavern creating hero for "..playerID)
 										
 					-- create neutral hero here
-					TavernCreateHeroForPlayer(PlayerID, shopID, item)
+					TavernCreateHeroForPlayer(playerID, shopID, item)
 
 				else
-					print("[UNIT SHOPS] Player "..PlayerID.." doesn't have enough food to purchase a hero from Tavern")
-					SendErrorMessage(buyerPlayerID, "#error_not_enough_food_"..(GetPlayerRace(player)))
+					local race = Players:GetRace(playerID)
+					print("[UNIT SHOPS] Player "..playerID.." doesn't have enough food to purchase a hero from Tavern")
+					SendErrorMessage(buyerPlayerID, "#error_not_enough_food_"..race)
 					return
 				end			
 			end
 		else 
 			-- revive hero here (dead heroes)
 			-- Should look for enough food!
-			print("[UNIT SHOPS] Tavern creating hero for "..PlayerID)
+			print("[UNIT SHOPS] Tavern creating hero for "..playerID)
 
-			TavernReviveHeroForPlayer(PlayerID, shopID, item)
+			TavernReviveHeroForPlayer(playerID, shopID, item)
 		end
 
 		-- deduct gold & lumber
@@ -322,7 +325,7 @@ function unit_shops:Buy(data)
 		
 		-- delete hero / neutral hero panel if IsHero or IsTavern
 		if isHeroItem or isTavern then -- update shop
-			unit_shops:RemoveHeroPanel(data.Shop, data.PlayerID, data.ItemName)
+			unit_shops:RemoveHeroPanel(data.Shop, data.playerID, data.ItemName)
 		else -- update information of stock since it's an item
 			SetNetTableValue("dotacraft_shops_table", tostring(data.Shop), { Shop = UnitShop, Tier=tier })
 		end
@@ -349,7 +352,7 @@ function unit_shops:AddHeroToTavern(hero)
 	
 	for k,v in pairs(unit_shops.Units) do
 		--print(k) (ShopID, HeroName, NewGoldCost, NewLumberCost, RequiredTier)
-		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), "Shops_Create_Single_Panel", {Index = k, PlayerID=hero:GetPlayerOwnerID(), HeroInfo={GoldCost=GoldCost, LumberCost=LumberCost, RequiredTier = 1} , Hero=hero:GetUnitName() }) 
+		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), "Shops_Create_Single_Panel", {Index = k, playerID=hero:GetPlayerOwnerID(), HeroInfo={GoldCost=GoldCost, LumberCost=LumberCost, RequiredTier = 1} , Hero=hero:GetUnitName() }) 
 	end
 end	
 
@@ -373,19 +376,19 @@ function unit_shops:Stock_Management(UnitShop, key)
 	end
 end
 
-function HasAltar(PlayerID)
-    local player = PlayerResource:GetPlayer(PlayerID)
+function HasAltar(playerID)
+    local player = PlayerResource:GetPlayer(playerID)
     return (player.altar_structures and #player.altar_structures > 0)
 end
 
 -- all the player-specific updates for players
 -- make sure to feed it correct player requirement
-function UpdateHeroTavernForPlayer(PlayerID)
+function UpdateHeroTavernForPlayer(playerID)
 
 	local UnitShop = unit_shops.Units[GameRules.HeroTavernEntityID]
-	local player = PlayerResource:GetPlayer(PlayerID)
-	local heroCount = HeroCountForPlayer(PlayerID)
-	local tier = GetPlayerCityLevel(player)
+	local player = PlayerResource:GetPlayer(playerID)
+	local heroCount = Players:HeroCount(playerID)
+	local tier = Players:GetCityLevel(playerID)
 	
 	local inRequiredTier = heroCount + 1
 	
@@ -414,7 +417,7 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 	-- handle_UnitOwner needs to be nil, else it will crash the game.
 	PrecacheUnitByNameAsync(unit_name, function()
 		local new_hero = CreateUnitByName(unit_name, tavern:GetAbsOrigin(), true, hero, nil, hero:GetTeamNumber())
-		new_hero:SetPlayerID(playerID)
+		new_hero:SetplayerID(playerID)
 		new_hero:SetControllableByPlayer(playerID, true)
 		new_hero:SetOwner(player)
 		FindClearSpaceForUnit(new_hero, tavern:GetAbsOrigin(), true)
@@ -495,11 +498,11 @@ end
 
 -- Find a shop to open nearby the currently selected unit
 function unit_shops:OpenClosestShop(data)
-	local PlayerID = data.PlayerID
-	local player = PlayerResource:GetPlayer(PlayerID)
+	local playerID = data.playerID
+	local player = PlayerResource:GetPlayer(playerID)
 	local mainSelected = data.UnitIndex
 
-	print("OpenClosestShop near unit "..mainSelected.." of player "..PlayerID)
+	print("OpenClosestShop near unit "..mainSelected.." of player "..playerID)
 
 	local unit = EntIndexToHScript(mainSelected)
 	local shop = FindClosestShop(unit)

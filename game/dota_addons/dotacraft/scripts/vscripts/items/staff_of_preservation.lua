@@ -9,7 +9,7 @@ function Teleport( event )
 		SendErrorMessage(caster:GetPlayerID(), "error_cant_target_friendly")
 		ability:EndCooldown()
 	else
-		local city_center = FindHighestLevelCityCenter(target)
+		local city_center = Players:FindHighestLevelCityCenter(target)
 		caster:EmitSound("Hero_Chen.TeleportOut")
 		ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_test_of_faith.vpcf", PATTACH_ABSORIGIN, target)
 		FindClearSpaceForUnit(target, city_center:GetAbsOrigin(), true)

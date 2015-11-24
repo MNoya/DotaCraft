@@ -32,10 +32,10 @@ end
 function ApplyMoonGlaiveUpgrade( event )
 	local caster = event.caster
 	local target = event.target
-	local player = caster:GetPlayerOwner()
-	local upgrades = player.upgrades
+	local playerID = caster:GetPlayerOwnerID()
+	local upgrades = Players:GetUpgradeTable( playerID )
 	
-	if player.upgrades["nightelf_research_upgraded_moon_glaive"] then
+	if upgrades["nightelf_research_upgraded_moon_glaive"] then
 		target:RemoveModifierByName("modifier_luna_moon_glaive")
 		target:AddAbility("nightelf_upgraded_moon_glaive")
 		target:SwapAbilities("nightelf_upgraded_moon_glaive", "nightelf_moon_glaive", true, false)
@@ -48,7 +48,7 @@ end
 function UpgradeMoonGlaives( event )
 	local caster = event.caster
 	local player = caster:GetPlayerOwner()
-	local units = player.units
+	local units = Players:GetUnits( playerID )
 
 	for _,unit in pairs(units) do
 		if IsValidEntity(unit) and unit:HasAbility("nightelf_moon_glaive") then
@@ -64,8 +64,8 @@ end
 -- Upgrade all transformed Druids of the Claw
 function UpgradeMarkOfTheClaw( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwner()
-	local units = player.units
+	local player = caster:GetPlayerOwnerID()
+	local units = Players:GetUnits( playerID )
 
 	for _,unit in pairs(units) do
 		if IsValidEntity(unit) and unit:HasModifier("modifier_bear_form") then
@@ -79,8 +79,8 @@ end
 -- Upgrade all transformed Druids of the Talon
 function UpgradeMarkOfTheTalon( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwner()
-	local units = player.units
+	local player = caster:GetPlayerOwnerID()
+	local units = Players:GetUnits( playerID )
 
 	for _,unit in pairs(units) do
 		if IsValidEntity(unit) and unit:HasModifier("modifier_crow_form") then
@@ -94,8 +94,8 @@ end
 -- Upgrade all Mountain Giants with Resistant Skin by replacing them
 function UpgradeResistantSkin( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwner()
-	local units = player.units
+	local player = caster:GetPlayerOwnerID()
+	local units = Players:GetUnits( playerID )
 
 	for _,unit in pairs(units) do
 		if IsValidEntity(unit) and unit:GetUnitName() == "nightelf_mountain_giant" then

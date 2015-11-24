@@ -4,21 +4,21 @@
 	-- On every unit & building after ResearchComplete or after a building is destroyed
 	-- On single unit after spawning in MoveToRallyPoint
 	-- On single building after spawning in OnConstructionStarted
-function CheckAbilityRequirements( unit, player )
+function CheckAbilityRequirements( unit, playerID )
 
 	local requirements = GameRules.Requirements
-	local buildings = player.buildings
-	local upgrades = player.upgrades
+	local buildings = Players:GetBuildingTable(playerID)
+	local upgrades = Players:GetUpgradeTable(playerID)
+	local units = Players:GetUnits(playerID)
+	local structures = Players:GetStructures(playerID)
 
 	-- Check the Researches for this player, adjusting the abilities that have been already upgraded
-   CheckResearchRequirements( unit, player )
+   CheckResearchRequirements( unit, playerID )
 
 	-- The disabled abilities end with this affix
 	local len = string.len("_disabled")
 
 	if IsValidEntity(unit) then
-		local hero = unit:GetOwner()
-		local pID = hero:GetPlayerID()
 
 		--print("--- Checking Requirements on "..unit:GetUnitName().." ---")
 		for abilitySlot=0,15 do
@@ -44,7 +44,7 @@ function CheckAbilityRequirements( unit, player )
 					end
 
 					-- Check if it has requirements on the KV table
-					local player_has_requirements = PlayerHasRequirementForAbility( player, ability_name)
+					local player_has_requirements = Players:HasRequirementForAbility( playerID, ability_name )
 
 					--[[Act accordingly to the disabled/enabled state of the ability
 						If the ability is _disabled
@@ -101,18 +101,19 @@ function CheckAbilityRequirements( unit, player )
 			end
 		end
 	else
-		print("! Not a Valid Entity !, there's currently ",#player.units,"units and",#player.structures,"structures in the table")
+		print("FIX THIS ALREADY YOU IDIOT")
+		print("! Not a Valid Entity !, there's currently ",#units,"units and",#structures,"structures in the table")
 	end
 
 	-- Fire update lumber costs UI
 	--print("###Firing ability_values_force_check for "..unit:GetUnitName())
-	FireGameEvent( 'ability_values_force_check', { player_ID = pID })
+	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 	
 end
 
 -- In addition and run just before CheckAbilityRequirements, when a building starts construction
 -- this will swap to the correct rank of each research_ or remove it if the max rank has been detected
-function CheckResearchRequirements( unit, player )
+function CheckResearchRequirements( unit, playerID )
 	if IsValidEntity(unit) then
 		for abilitySlot=0,15 do
 			local ability = unit:GetAbilityByIndex(abilitySlot)
@@ -121,10 +122,10 @@ function CheckResearchRequirements( unit, player )
 				local ability_name = ability:GetAbilityName()
 
 				if string.find(ability_name, "research_") then
-					if PlayerHasResearch(player, ability_name) then -- Player has the initial research
+					if Players:HasResearch(playerID, ability_name) then -- Player has the initial research
 
 						local max_research_rank = MaxResearchRank(ability_name)
-						local current_research_rank = GetCurrentResearchRank( player, ability_name )
+						local current_research_rank = Players:GetCurrentResearchRank( playerID, ability_name )
 
 						if max_research_rank > 1 and current_research_rank < max_research_rank then
 						
@@ -151,12 +152,12 @@ function CheckResearchRequirements( unit, player )
 end
 
 -- This function is called on every unit after ResearchComplete
-function UpdateUnitUpgrades( unit, player, research_name )
+function UpdateUnitUpgrades( unit, playerID, research_name )
 	if not IsValidEntity(unit) then
 		return
 	end
 	local unit_name = unit:GetUnitName()
-	local upgrades = player.upgrades
+	local upgrades = Players:GetUpgradeTable(playerID)
 
 	-- Research name is "(race)_research_(name)(rank)"
 	-- The ability name is "(race)_(name)", so we need to  cut it accordingly
@@ -293,16 +294,16 @@ end
 
 -- This directly applies the current lvl 1/2/3, from the player upgrades table
 function ApplyMultiRankUpgrade( unit, research_name, cosmetic_type )
-	local player = unit:GetPlayerOwner()
-	local upgrades = player.upgrades
+	local playerID = unit:GetPlayerOwnerID()
+	local upgrades = Players:GetUpgradeTable( playerID )
 	local ability_name = string.gsub(research_name, "research_" , "")
 	local level = 0
 
-	if player.upgrades[research_name.."3"] then
+	if upgrades[research_name.."3"] then
 		level = 3		
-	elseif player.upgrades[research_name.."2"] then
+	elseif upgrades[research_name.."2"] then
 		level = 2		
-	elseif player.upgrades[research_name.."1"] then
+	elseif upgrades[research_name.."1"] then
 		level = 1
 	end
 

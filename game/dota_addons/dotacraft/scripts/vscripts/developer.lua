@@ -1,22 +1,22 @@
 CHEAT_CODES = {
-    ["warpten"] = function() dotacraft:WarpTen() end,                  -- "Speeds construction of buildings and units"
-    ["greedisgood"] = function(arg) dotacraft:GreedIsGood(arg) end,    -- "Gives you X gold and lumber" 
-    ["whosyourdaddy"] = function() dotacraft:WhosYourDaddy() end,      -- "God Mode"    
-    ["thereisnospoon"] = function() dotacraft:ThereIsNoSpoon() end,    -- "Unlimited Mana"      
-    ["iseedeadpeople"] = function() dotacraft:ISeeDeadPeople() end,    -- "Remove fog of war"       
-    ["pointbreak"] = function() dotacraft:PointBreak() end,            -- "Sets food limit to 1000" 
-    ["synergy"] = function() dotacraft:Synergy() end,                  -- "Disable tech tree requirements"
-    ["riseandshine"] = function() dotacraft:RiseAndShine() end,        -- "Set time of day to dawn" 
-    ["lightsout"] = function() dotacraft:LightsOut() end,              -- "Set time of day to dusk"                
+    ["warpten"] = function(...) dotacraft:WarpTen(...) end,                  -- "Speeds construction of buildings and units"
+    ["greedisgood"] = function(...) dotacraft:GreedIsGood(...) end,    -- "Gives you X gold and lumber" 
+    ["whosyourdaddy"] = function(...) dotacraft:WhosYourDaddy(...) end,      -- "God Mode"    
+    ["thereisnospoon"] = function(...) dotacraft:ThereIsNoSpoon(...) end,    -- "Unlimited Mana"      
+    ["iseedeadpeople"] = function(...) dotacraft:ISeeDeadPeople(...) end,    -- "Remove fog of war"       
+    ["pointbreak"] = function(...) dotacraft:PointBreak(...) end,            -- "Sets food limit to 1000" 
+    ["synergy"] = function(...) dotacraft:Synergy(...) end,                  -- "Disable tech tree requirements"
+    ["riseandshine"] = function(...) dotacraft:RiseAndShine(...) end,        -- "Set time of day to dawn" 
+    ["lightsout"] = function(...) dotacraft:LightsOut(...) end,              -- "Set time of day to dusk"                
 }
 
 DEBUG_CODES = {
-    ["debug_trees"] = function() dotacraft:DebugTrees() end,           -- "Prints the trees marked as pathable"
-    ["debug_blight"] = function() dotacraft:DebugBlight() end          -- "Prints the positions marked for undead buildings"
+    ["debug_trees"] = function(...) dotacraft:DebugTrees(...) end,           -- "Prints the trees marked as pathable"
+    ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end          -- "Prints the positions marked for undead buildings"
 }
 
 TEST_CODES = {
-    ["giveitem"] = function(arg) dotacraft:GiveItem(arg) end,          -- Gives an item by name to the currently selected unit
+    ["giveitem"] = function(...) dotacraft:GiveItem(...) end,          -- Gives an item by name to the currently selected unit
     ["createunits"] = function(...) dotacraft:CreateUnits(...) end     -- Creates 'name' units around the currently selected unit, with optional num and neutral team
 }
 
@@ -24,9 +24,9 @@ function dotacraft:DeveloperMode(player)
 	local pID = player:GetPlayerID()
 	local hero = player:GetAssignedHero()
 
-	hero:SetGold(50000, false)
-	ModifyLumber(player, 50000)
-	ModifyFoodLimit(player, 100)
+	--hero:SetGold(50000, false)
+	--ModifyLumber(player, 50000)
+	--ModifyFoodLimit(player, 100)
 	--[[local position = GameRules.StartingPositions[pID].position
 	dotacraft:SpawnTestUnits("orc_spirit_walker", 8, player, position + Vector(0,-600,0), false)
 	dotacraft:SpawnTestUnits("nightelf_mountain_giant", 10, player, position + Vector(0,-1000,0), true)]]
@@ -35,8 +35,9 @@ end
 -- A player has typed something into the chat
 function dotacraft:OnPlayerChat(keys)
 	local text = keys.text
-	local playerID = keys.userid-1
-	local bTeamOnly = keys.teamonly
+	local userID = keys.userid
+    local playerID = self.vUserIds[userID] and self.vUserIds[userID]:GetPlayerID()
+    if not playerID then return end
 
     -- Handle '-command'
     if StringStartsWith(text, "-") then
@@ -46,7 +47,7 @@ function dotacraft:OnPlayerChat(keys)
 	local input = split(text)
 	local command = input[1]
 	if CHEAT_CODES[command] then
-		CHEAT_CODES[command](input[2])
+		CHEAT_CODES[command](playerID, input[2])
 	elseif DEBUG_CODES[command] then
         DEBUG_CODES[command]()
     elseif TEST_CODES[command] then
@@ -61,13 +62,11 @@ function dotacraft:WarpTen()
 	GameRules:SendCustomMessage(message, 0, 0)
 end
 
-function dotacraft:GreedIsGood(value)
-	local cmdPlayer = Convars:GetCommandClient()
-	local pID = cmdPlayer:GetPlayerID()
+function dotacraft:GreedIsGood(playerID, value)
 	if not value then value = 500 end
 	
-	PlayerResource:ModifyGold(pID, tonumber(value), true, 0)
-	ModifyLumber(cmdPlayer, tonumber(value))
+	Players:ModifyGold(playerID, tonumber(value))
+	Players:ModifyLumber(playerID, tonumber(value))
 	
 	GameRules:SendCustomMessage("Cheat enabled!", 0, 0)
 end

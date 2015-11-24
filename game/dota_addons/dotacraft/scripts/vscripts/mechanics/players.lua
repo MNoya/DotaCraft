@@ -1,72 +1,300 @@
+if not Players then
+    Players = class({})
+end
+
+function Players:Init( playerID, hero )
+
+    -- Tables
+    hero.units = {} -- This keeps the handle of all the units of the player army, to iterate for unlocking upgrades
+    hero.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
+    hero.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
+    hero.altar_structures = {} -- Keeps altars linked
+
+    hero.buildings = {} -- This keeps the name and quantity of each building
+    hero.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
+
+    hero.idle_builders = {} -- Keeps indexes of idle builders to send to the panorama UI
+    
+    -- Resource tracking
+    hero.gold = 0
+    hero.lumber = 0
+    hero.food_limit = 0 -- The amount of food available to build units
+    hero.food_used = 0 -- The amount of food used by this player creatures
+
+    -- Other variables
+    hero.city_center_level = 1
+    hero.lumber_carried = 0
+    hero.altar_level = 1
+end
+
+---------------------------------------------------------------
+
+function Players:GetUnits( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.units
+end
+
+function Players:GetStructures( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.structures
+end
+
+function Players:GetHeroes( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.heroes
+end
+
+function Players:GetAltars( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.altar_structures
+end
+
+function Players:GetUpgradeTable( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.upgrades
+end
+
+function Players:GetBuildingTable( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.buildings
+end
+
+function Players:GetIdleBuilders( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.idle_builders
+end
+
+-- Returns the city_center_level
+function Players:GetCityLevel( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero and hero.city_center_level or 1
+end
+
+function Players:SetCityCenterLevel( playerID, level )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    hero.city_center_level = level
+end
+
 -- Returns float with the percentage to reduce income
-function GetUpkeep( player )
-    if player.food_used > 80 then
+function Players:GetUpkeep( playerID )
+    local food_used = Players:GetFoodUsed(playerID)
+    if food_used > 80 then
         return 0.4 -- High Upkeep
-    elseif player.food_used > 50 then
+    elseif food_used > 50 then
         return 0.7 -- Low Upkeep
     else
         return 1 -- No Upkeep
     end
 end
 
--- Returns bool
-function PlayerHasEnoughGold( player, gold_cost )
-    local hero = player:GetAssignedHero()
-    local pID = hero:GetPlayerID()
-    local gold = hero:GetGold()
+-- Adjusts name inside tools
+function Players:GetPlayerName( playerID )
+    local playerName = PlayerResource:GetPlayerName(playerID)
+    if playerName == "" then playerName = "Player "..playerID end
+    return playerName
+end
 
-    if not gold_cost or  gold > gold_cost then 
+---------------------------------------------------------------
+
+function Players:GetGold( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.gold
+end
+
+function Players:GetLumber( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.lumber
+end
+
+function Players:GetFoodUsed( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    
+    return hero.food_used
+end
+
+function Players:GetFoodLimit( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    
+    return hero.food_limit
+end
+
+---------------------------------------------------------------
+
+function Players:SetGold( playerID, value )
+    local player = PlayerResource:GetPlayer(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    
+    hero:SetGold(value, false)
+    hero.gold = value
+    --CustomGameEventManager:Send_ServerToPlayer(player, "player_gold_changed", { gold = math.floor(hero.gold) })
+end
+
+function Players:SetLumber( playerID, value )
+    local player = PlayerResource:GetPlayer(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    
+    hero.lumber = value
+    CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = math.floor(hero.lumber) })
+end
+
+function Players:SetFoodLimit( playerID, value )
+    local player = PlayerResource:GetPlayer(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    
+    hero.food_limit = value
+    CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = hero.food_used, food_limit = hero.food_limit }) 
+end
+
+function Players:SetFoodUsed( playerID, value )
+    local player = PlayerResource:GetPlayer(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    hero.food_used = value
+    CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = hero.food_used, food_limit = hero.food_limit }) 
+end
+
+---------------------------------------------------------------
+
+-- Modifies the gold of this player, accepts negative values
+function Players:ModifyGold( playerID, gold_value )
+    PlayerResource:ModifyGold(playerID, gold_value, false, 0)
+end
+
+-- Modifies the lumber of this player, accepts negative values
+function Players:ModifyLumber( playerID, lumber_value )
+    if lumber_value == 0 then return end
+
+    local current_lumber = Players:GetLumber( playerID )
+    local new_lumber = current_lumber + lumber_value
+
+    if lumber_value > 0 then
+        Players:SetLumber( playerID, new_lumber )
+    else
+        if Players:HasEnoughLumber( playerID, math.abs(lumber_value) ) then
+            Players:SetLumber( playerID, new_lumber )
+        end
+    end
+end
+
+-- Modifies the food limit of this player, accepts negative values
+-- Can't go over the limit unless pointbreak cheat is enabled
+function Players:ModifyFoodLimit( playerID, food_limit_value )
+    local food_limit = Players:GetFoodLimit(playerID) + food_limit_value
+
+    if food_limit > 100 and not GameRules.PointBreak then
+        food_limit = 100
+    end
+
+    Players:SetFoodLimit(playerID, food_limit)
+end
+
+-- Modifies the food used of this player, accepts negative values
+-- Can go over the limit if a build is destroyed while the unit is already spawned/training
+function Players:ModifyFoodUsed( playerID, food_used_value )
+    local food_used = Players:GetFoodUsed(playerID) + food_used_value
+
+    Players:SetFoodUsed(playerID, food_used)
+end
+
+---------------------------------------------------------------
+
+-- Returns bool
+function Players:HasEnoughGold( playerID, gold_cost )
+    local gold = Players:GetGold( playerID )
+
+    if not gold_cost or gold > gold_cost then 
         return true
     else
-        SendErrorMessage(pID, "#error_not_enough_gold")
-        return true
+        SendErrorMessage(playerID, "#error_not_enough_gold")
+        return false
     end
 end
 
 
 -- Returns bool
-function PlayerHasEnoughLumber( player, lumber_cost )
-    local pID = player:GetAssignedHero():GetPlayerID()
+function Players:HasEnoughLumber( playerID, lumber_cost )
+    local lumber = Players:GetLumber(playerID)
 
-    if not lumber_cost or player.lumber > lumber_cost then 
+    if not lumber_cost or lumber > lumber_cost then 
         return true 
     else
-        SendErrorMessage(pID, "#error_not_enough_lumber")
+        SendErrorMessage(playerID, "#error_not_enough_lumber")
         return false
     end
 end
 
 -- Return bool
-function PlayerHasEnoughFood( player, food_cost )
-    local pID = player:GetAssignedHero():GetPlayerID()
+function Players:HasEnoughFood( playerID, food_cost )
+    local food_used = Players:GetFoodUsed(playerID)
+    local food_limit = Players:GetFoodLimit(playerID)
 
-    if player.food_used + food_cost > player.food_limit then
+    if food_used + food_cost > food_limit then
         -- send the warning only once every time
-        if not player.need_more_farms then
-            local race = GetPlayerRace(player)
-            SendErrorMessage(pID, "#error_not_enough_food_"..race)
-            player.need_more_farms = true
-        end
+        --if not player.need_more_farms then
+            local race = Players:GetRace(playerID)
+            SendErrorMessage(playerID, "#error_not_enough_food_"..race)
+        --    player.need_more_farms = true
+        --end
         return false
     else
         return true
     end
 end
 
+function Players:HasAltar( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return IsValidAlive(hero.altar) and hero.altar or false
+end
+
+---------------------------------------------------------------
+
+function Players:AddUnit( playerID, unit )
+    local playerUnits = Players:GetUnits(playerID)
+
+    table.insert(playerUnits, unit)
+end
+
+function Players:AddHero( playerID, hero )
+    local playerHeroes = Players:GetHeroes(playerID)
+
+    table.insert(playerHeroes, hero)
+end
+
+function Players:AddStructure( playerID, building )
+    local playerStructures = Players:GetStructures(playerID)
+    local buildingTable = Players:GetBuildingTable(playerID)
+
+    local name = building:GetUnitName()
+    buildingTable[name] = buildingTable[name] and (buildingTable[name] + 1) or 1
+
+    table.insert(playerStructures, building)
+end
+
+---------------------------------------------------------------
+
 -- Returns bool
-function PlayerHasResearch( player, research_name )
-    if player.upgrades[research_name] then
-        return true
-    else
-        return false
-    end
+function Players:HasResearch( playerID, research_name )
+    local upgrades = Players:GetUpgradeTable(playerID)
+    return upgrades[research_name]
 end
 
 -- Returns bool
-function PlayerHasRequirementForAbility( player, ability_name )
+function Players:HasRequirementForAbility( playerID, ability_name )
     local requirements = GameRules.Requirements
-    local buildings = player.buildings
-    local upgrades = player.upgrades
+    local buildings = Players:GetBuildingTable(playerID)
+    local upgrades = Players:GetUpgradeTable(playerID)
     local requirement_failed = false
 
     if requirements[ability_name] then
@@ -96,10 +324,11 @@ function PlayerHasRequirementForAbility( player, ability_name )
     return true
 end
 
+---------------------------------------------------------------
 
 -- Return ability handle or nil
-function FindAbilityOnStructures( player, ability_name )
-    local structures = player.structures
+function Players:FindAbilityOnStructures( playerID, ability_name )
+    local structures = Players:GetStructures(playerID)
 
     for _,building in pairs(structures) do
         local ability_found = building:FindAbilityByName(ability_name)
@@ -111,8 +340,8 @@ function FindAbilityOnStructures( player, ability_name )
 end
 
 -- Return ability handle or nil
-function FindAbilityOnUnits( player, ability_name )
-    local units = player.units
+function Players:FindAbilityOnUnits( playerID, ability_name )
+    local units = Players:GetUnits(playerID)
 
     for _,unit in pairs(units) do
         local ability_found = unit:FindAbilityByName(ability_name)
@@ -124,17 +353,17 @@ function FindAbilityOnUnits( player, ability_name )
 end
 
 
--- Returns int, 0 if not PlayerHasResearch()
-function GetCurrentResearchRank( player, research_name )
-    local upgrades = player.upgrades
-    local max_rank = MaxResearchRank( research_name )
+-- Returns int, 0 if the player doesnt have the research
+function Players:GetCurrentResearchRank( playerID, research_name )
+    local upgrades = Players:GetUpgradeTable(playerID)
+    local max_rank = MaxResearchRank(research_name)
 
     local current_rank = 0
     if max_rank > 0 then
         for i=1,max_rank do
             local ability_len = string.len(research_name)
             local this_research = string.sub(research_name, 1 , ability_len - 1)..i
-            if PlayerHasResearch(player, this_research) then
+            if Players:HasResearch(playerID, this_research) then
                 current_rank = i
             end
         end
@@ -145,9 +374,10 @@ end
 
 -- Goes through the structures of the player, checking for the max level city center
 -- If no city center is found, the player has a 2 minute window in which a city center must be built or all his structures will be revealed
-function CheckCurrentCityCenters( player )
-    local structures = player.structures
+function Players:CheckCurrentCityCenters( playerID )
+    local structures = Players:GetStructures( playerID )
     local city_center_level = 0
+
     for k,building in pairs(structures) do
         if IsCityCenter(building) then
             local level = building:GetLevel()
@@ -156,31 +386,29 @@ function CheckCurrentCityCenters( player )
             end
         end
     end
-    player.city_center_level = city_center_level
+    Players:SetCityCenterLevel(playerID, city_center_level)
 
     print("Current City Center Level for player "..player:GetPlayerID().." is: "..city_center_level)
 
-    if player.city_center_level == 0 then
+    if city_center_level == 0 then
         local time_to_reveal = 120
         print("Player "..player:GetPlayerID().." has no city centers left standing. Revealed in "..time_to_reveal.." seconds until a City Center is built.")
-        player.RevealTimer = Timers:CreateTimer(time_to_reveal, function()
-            RevealPlayerToAllEnemies(player)
+        structures.RevealTimer = Timers:CreateTimer(time_to_reveal, function()
+            Players:RevealToAllEnemies( playerID )
         end)
     else
-        StopRevealingPlayer(player)
+        Players:StopRevealing(playerID)
     end
 end
 
 -- Creates revealer entities on each building of the player
-function RevealPlayerToAllEnemies( player )
-    local playerID = player:GetPlayerID()
-    local units = player.units
-    local structures = player.structures
+function Players:RevealToAllEnemies( playerID )
+    local units = Players:GetUnits(playerID)
+    local structures = Players:GetStructures(playerID)
 
     print("Revealing Player "..playerID)
 
-    local playerName = PlayerResource:GetPlayerName(playerID)
-    if playerName == "" then playerName = "Player "..playerID end
+    local playerName = Players:GetPlayerName(playerID)
     GameRules:SendCustomMessage("Revealing "..playerName, 0, 0)
 
     for k,building in pairs(structures) do
@@ -191,14 +419,14 @@ function RevealPlayerToAllEnemies( player )
     end
 end
 
-function StopRevealingPlayer( player )
-    local structures = player.structures
+function Players:StopRevealing( playerID )
+    local structures = Players:GetStructures(playerID)
 
-    print("Stop Revealing Player "..player:GetPlayerID())
+    print("Stop Revealing Player "..playerID)
 
-    if player.RevealTimer then
-        Timers:RemoveTimer(player.RevealTimer)
-        player.RevealTimer = nil
+    if structures.RevealTimer then
+        Timers:RemoveTimer(structures.RevealTimer)
+        structures.RevealTimer = nil
     end
 
     for k,building in pairs(structures) do
@@ -209,14 +437,9 @@ function StopRevealingPlayer( player )
     end
 end
 
--- Returns the player.city_center_level
-function GetPlayerCityLevel( player )
-    return player.city_center_level
-end
-
 -- Returns a string with the race of the player
-function GetPlayerRace( player )
-    local hero = player:GetAssignedHero()
+function Players:GetRace( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     local hero_name = hero:GetUnitName()
     local race
     if hero_name == "npc_dota_hero_dragon_knight" then
@@ -231,11 +454,10 @@ function GetPlayerRace( player )
     return race
 end
 
-function FindHighestLevelCityCenter( caster )
-    local player = caster:GetPlayerOwner()
-    local position = caster:GetAbsOrigin()
-    if not player then print("ERROR, NO PLAYER") return end
-    local buildings = player.structures
+function Players:FindHighestLevelCityCenter( unit )
+    local playerID = unit:GetPlayerOwnerID()
+    local position = unit:GetAbsOrigin()
+    local buildings = Players:GetStructures( playerID )
     local level = 0 --Priority to the highest level city center
     local distance = 20000
     local closest_building = nil
@@ -253,17 +475,17 @@ function FindHighestLevelCityCenter( caster )
     return closest_building
 end
 
--- Hero count is limited to 3
-function CanPlayerTrainMoreHeroes( playerID )
-    local player = PlayerResource:GetPlayer(playerID)
-    return (player.heroes and #player.heroes < 3)
+function Players:SetMainCityCenter( playerID, building )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    hero.main_city_center = building
 end
 
-function HeroCountForPlayer( playerID )
-    local player = PlayerResource:GetPlayer(playerID)
-    if player and player.heroes then
-        return #player.heroes
-    else
-        return 0
-    end
+-- Hero count is limited to 3
+function Players:CanTrainMoreHeroes( playerID )
+    return Players:HeroCount( playerID ) < 3
+end
+
+function Players:HeroCount( playerID )
+    return #Players:GetHeroes(playerID)
 end

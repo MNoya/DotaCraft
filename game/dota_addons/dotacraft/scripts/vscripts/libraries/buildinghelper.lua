@@ -483,7 +483,7 @@ function BuildingHelper:StartBuilding( keys )
     local fserverFrameRate = 1/30
 
     -- Max and Initial Health factor
-    local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
+    local masonry_rank = Players:GetCurrentResearchRank(player:GetPlayerID(), "human_research_masonry1")
     local fMaxHealth = building:GetMaxHealth() * (1 + 0.2 * masonry_rank) 
     local nInitialHealth = 0.10 * ( fMaxHealth )
     local fUpdateHealthInterval = buildTime / math.floor(fMaxHealth-nInitialHealth) -- health to add every tick until build time is completed.
@@ -777,6 +777,7 @@ end
 function BuildingHelper:CancelBuilding(keys)
     local building = keys.unit
     local hero = building:GetOwner()
+    local playerID = hero:GetPlayerID()
 
     DebugPrint("[BH] CancelBuilding "..building:GetUnitName().." "..building:GetEntityIndex())
 
@@ -785,8 +786,8 @@ function BuildingHelper:CancelBuilding(keys)
     local gold_cost = math.floor(GetGoldCost(building) * refund_factor)
     local lumber_cost = math.floor(GetLumberCost(building) * refund_factor)
 
-    hero:ModifyGold(gold_cost, true, 0)
-    ModifyLumber( hero:GetPlayerOwner(), lumber_cost)
+    Players:ModifyGold(playerID, gold_cost)
+    Players:ModifyLumber(playerID, lumber_cost)
     PopupGoldGain(building, gold_cost)
     PopupLumber(building, lumber_cost)
 

@@ -35,9 +35,9 @@ function Build( event )
 
 	-- If the ability has an AbilityGoldCost, it's impossible to not have enough gold the first time it's cast
 	-- Always refund the gold here, as the building hasn't been placed yet
-	hero:ModifyGold(gold_cost, false, 0)
+	Players:ModifyGold(playerID, gold_cost)
 
-	if not PlayerHasEnoughLumber( player, lumber_cost ) then
+	if not Players:HasEnoughLumber( playerID, lumber_cost ) then
 		return
 	end
 
@@ -67,13 +67,11 @@ function Build( event )
        	end
 
        	-- If not enough resources to queue, stop
-       	if not PlayerHasEnoughGold( player, gold_cost ) then
-       		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_not_enough_gold")
+       	if not Players:HasEnoughGold( playerID, gold_cost ) then
 			return false
 		end
 
-       	if not PlayerHasEnoughLumber( player, lumber_cost ) then
-       		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_not_enough_lumber")
+       	if not Players:HasEnoughLumber( playerID, lumber_cost ) then
 			return false
 		end
 
@@ -84,8 +82,8 @@ function Build( event )
     event:OnBuildingPosChosen(function(vPos)
 		
     	-- Spend resources
-    	hero:ModifyGold(-gold_cost, false, 0)
-    	ModifyLumber( player, -lumber_cost)
+    	Players:ModifyGold(playerID, -gold_cost)
+    	Players:ModifyLumber(playerID, -lumber_cost)
 
     	-- Play a sound
     	EmitSoundOnClient("DOTA_Item.ObserverWard.Activate", player)
@@ -119,8 +117,8 @@ function Build( event )
 
 		-- Refund resources for this cancelled work
 		if work.refund then
-			hero:ModifyGold(gold_cost, false, 0)
-    		ModifyLumber( player, lumber_cost)
+			Players:ModifyGold(playerID, gold_cost)
+    		Players:ModifyLumber(playerID, lumber_cost)
     	end
 	end)
 
@@ -159,10 +157,10 @@ function Build( event )
     	ApplyModifier(unit, "modifier_construction")
 
     	-- Check the abilities of this building, disabling those that don't meet the requirements
-    	CheckAbilityRequirements( unit, player )
+    	CheckAbilityRequirements( unit, playerID )
 
     	-- Apply the current level of Masonry to the newly upgraded building
-		local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
+		local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
 		if masonry_rank and masonry_rank > 0 then
 			DebugPrint("[BH] Applying masonry rank "..masonry_rank.." to this building construction")
 			UpdateUnitUpgrades( unit, player, "human_research_masonry"..masonry_rank )
@@ -176,7 +174,7 @@ function Build( event )
 		end
 
 		-- Add the building handle to the list of structures
-		table.insert(player.structures, unit)
+		Players:AddStructure(playerID, unit)
 	end)
 
 	-- A building finished construction
@@ -240,10 +238,11 @@ function Build( event )
 		end)
 
 		-- Add 1 to the player building tracking table for that name
-		if not player.buildings[building_name] then
-			player.buildings[building_name] = 1
+		local buildingTable = Players:GetBuildingTable(playerID)
+		if not buildingTable[building_name] then
+			buildingTable[building_name] = 1
 		else
-			player.buildings[building_name] = player.buildings[building_name] + 1
+			buildingTable[building_name] = buildingTable[building_name] + 1
 		end
 
 		-- Add blight if its an undead building
@@ -268,16 +267,18 @@ function Build( event )
 		-- Add to the Food Limit if possible
 		local food_produced = GetFoodProduced(unit)
 		if food_produced ~= 0 then
-			ModifyFoodLimit(player, food_produced)
+			Players:ModifyFoodLimit(playerID, food_produced)
 		end
 
 		-- Update the abilities of the builders and buildings
-    	for k,units in pairs(player.units) do
-    		CheckAbilityRequirements( units, player )
+		local playerUnits = Players:GetUnits(playerID)
+    	for k,units in pairs(playerUnits) do
+    		CheckAbilityRequirements( units, playerID )
     	end
 
-    	for k,structure in pairs(player.structures) do
-    		CheckAbilityRequirements( structure, player )
+    	local playerStructures = Players:GetStructures(playerID)
+    	for k,structure in pairs(playerStructures) do
+    		CheckAbilityRequirements( structure, playerID )
     	end
 
 	end)
@@ -1013,7 +1014,7 @@ function ReturnResources( event )
 	local ability = event.ability
 	local hero = caster:GetOwner()
 	local player = caster:GetPlayerOwner()
-	local pID = hero:GetPlayerID()
+	local playerID = hero:GetPlayerID()
 	
 	caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
 	
@@ -1074,7 +1075,7 @@ function ReturnResources( event )
 							caster:RemoveModifierByName("modifier_carrying_gold")
 							local gold_building = FindClosestResourceDeposit( caster, "gold" )
 							if gold_building == caster.target_building then 
-								local upkeep = GetUpkeep( player )
+								local upkeep = Players:GetUpkeep( playerID )
 								local gold_gain = caster.gold_gathered * upkeep
 								hero:ModifyGold(gold_gain, false, 0)
 								PopupGoldGain(caster, gold_gain)
@@ -1125,7 +1126,7 @@ function ReturnResources( event )
 						return THINK_INTERVAL
 					elseif caster.gold_gathered and caster.gold_gathered > 0 then
 						--print("Building Reached at ",distance)
-						local upkeep = GetUpkeep( player )
+						local upkeep = Players:GetUpkeep( playerID )
 						local gold_gain = caster.gold_gathered * upkeep
 
 						hero:ModifyGold(gold_gain, false, 0)
@@ -1167,12 +1168,12 @@ end
 
 function SendBackToGather( unit, ability, resource_type )
 	local race = GetUnitRace(unit)
-	local pID = unit:GetPlayerOwnerID()
+	local playerID = unit:GetPlayerOwnerID()
 
 	if resource_type == "lumber" then
 		--print("Back to the trees")
 		if unit.target_tree and unit.target_tree:IsStanding() then
-			unit:CastAbilityOnTarget(unit.target_tree, ability, pID)
+			unit:CastAbilityOnTarget(unit.target_tree, ability, playerID)
 		else
 			-- Find closest near the city center in a huge radius
 			if unit.target_building then
@@ -1186,7 +1187,7 @@ function SendBackToGather( unit, ability, resource_type )
 			if unit.target_tree then
 				if DEBUG_TREES then DebugDrawCircle(unit.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
 				if unit.target_tree then
-					unit:CastAbilityOnTarget(unit.target_tree, ability, pID)
+					unit:CastAbilityOnTarget(unit.target_tree, ability, playerID)
 				end
 			else
 				-- Cancel ability, couldn't find moar trees...
@@ -1203,7 +1204,7 @@ function SendBackToGather( unit, ability, resource_type )
 
 			unit:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
 
-			unit:CastAbilityOnTarget(unit.target_mine, ability, pID)
+			unit:CastAbilityOnTarget(unit.target_mine, ability, playerID)
 		else
 			print("Mine Collapsed")
 			ToggleOff(ability)
@@ -1236,7 +1237,7 @@ function Repair( event )
 
 	local hero = caster:GetOwner()
 	local player = caster:GetPlayerOwner()
-	local pID = hero:GetPlayerID()
+	local playerID = hero:GetPlayerID()
 
 	local building_name = building:GetUnitName()
 	local building_info = GameRules.UnitKV[building_name]
@@ -1294,7 +1295,7 @@ function Repair( event )
 		end]]
 			
 		local healthGain = 0
-		if PlayerHasEnoughGold( player, math.ceil(gold_per_second+gold_float) ) and PlayerHasEnoughLumber( player, lumber_per_second ) then
+		if Players:HasEnoughGold( playerID, math.ceil(gold_per_second+gold_float) ) and Players:HasEnoughLumber( playerID, lumber_per_second ) then
 			-- Health
 			building.HPAdjustment = building.HPAdjustment + health_float
 			if building.HPAdjustment > 1 then
@@ -1317,7 +1318,7 @@ function Repair( event )
 				building.gold_used = building.gold_used + gold_per_second
 			end
 			
-			ModifyLumber( player, -lumber_per_second )
+			Players:ModifyLumber( playerID, -lumber_per_second )
 			building.lumber_used = building.lumber_used + lumber_per_second
 		else
 			-- Remove the modifiers on the building and the builders

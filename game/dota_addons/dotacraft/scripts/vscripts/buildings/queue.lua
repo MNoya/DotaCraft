@@ -6,7 +6,7 @@
 function EnqueueUnit( event )
 	local caster = event.caster
 	local ability = event.ability
-	local pID = caster:GetPlayerOwner():GetPlayerID()
+	local playerID = caster:GetPlayerOwner():GetPlayerID()
 	local gold_cost = ability:GetGoldCost( ability:GetLevel() - 1 )
 	local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel() - 1)
 	if not food_cost then
@@ -35,7 +35,7 @@ function EnqueueUnit( event )
 		end
 	else
 		-- Refund with message
- 		PlayerResource:ModifyGold(pID, gold_cost, false, 0)
+ 		Players:ModifyGold(playerID, gold_cost)
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_queue_full")
 	end
 end
@@ -47,7 +47,7 @@ function DequeueUnit( event )
 	local caster = event.caster
 	local item = event.ability
 	local player = caster:GetPlayerOwner()
-	local pID = player:GetPlayerID()
+	local playerID = player:GetPlayerID()
 
 	local item_ability = EntIndexToHScript(item:GetEntityIndex())
 	local item_ability_name = item_ability:GetAbilityName()
@@ -74,7 +74,7 @@ function DequeueUnit( event )
 	            caster:RemoveItem(item)
 	            
 	            -- Refund ability cost
-	            PlayerResource:ModifyGold(pID, gold_cost, false, 0)
+	            Players:ModifyGold(playerID, gold_cost)
 				print("Refund ",gold_cost)
 
 				-- Set not channeling if the cancelled item was the first slot
@@ -83,7 +83,7 @@ function DequeueUnit( event )
 					local ability = caster:FindAbilityByName(train_ability_name)
 					local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel())
 					if food_cost and not caster:HasModifier("modifier_construction") and ability:IsChanneling() then
-						ModifyFoodUsed(player, -food_cost)
+						Players:ModifyFoodUsed(playerID, -food_cost)
 					end
 
 					train_ability:SetChanneling(false)
@@ -147,6 +147,7 @@ function AdvanceQueue( event )
 	local caster = event.caster
 	local ability = event.ability
 	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
 
 	if not IsChanneling( caster ) then
 		caster:SetMana(0)
@@ -182,10 +183,10 @@ function AdvanceQueue( event )
 							food_cost = 0
 						end
 
-						if PlayerHasEnoughFood(player, food_cost) then
+						if Players:HasEnoughFood(playerID, food_cost) then
 
 							-- Add to the value of food used as soon as the unit training starts
-							ModifyFoodUsed(player, food_cost)
+							Players:ModifyFoodUsed(playerID, food_cost)
 
 							-- Reset the need more farms warning
 							player.need_more_farms = false

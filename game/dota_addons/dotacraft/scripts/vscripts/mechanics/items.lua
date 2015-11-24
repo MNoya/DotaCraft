@@ -34,7 +34,7 @@ end
 -- Sells an item from any unit, with gold and lumber cost refund
 function SellCustomItem( unit, item )
     local player = unit:GetPlayerOwner()
-    local pID = player:GetPlayerID()
+    local playerID = player:GetPlayerID()
     local item_name = item:GetAbilityName()
     local GoldCost = GameRules.ItemKV[item_name]["ItemCost"]
     local LumberCost = GameRules.ItemKV[item_name]["LumberCost"]
@@ -44,12 +44,12 @@ function SellCustomItem( unit, item )
     local refund_factor = GameRules:GetGameTime() <= time+10 and 1 or 0.5
 
     if GoldCost then
-        PlayerResource:ModifyGold(pID, GoldCost*refund_factor, false, 0)
+        Players:ModifyGold(playerID, GoldCost*refund_factor)
         PopupGoldGain( unit, GoldCost*refund_factor)
     end
 
     if LumberCost then
-        ModifyLumber( player, LumberCost*refund_factor )
+        Players:ModifyLumber(playerID, LumberCost*refund_factor)
         PopupLumber( unit, LumberCost*refund_factor)
     end
 

@@ -1,33 +1,3 @@
--- Modifies the lumber of this player. Accepts negative values
-function ModifyLumber( player, lumber_value )
-    if lumber_value == 0 then return end
-    if lumber_value > 0 then
-        player.lumber = player.lumber + lumber_value
-        CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = math.floor(player.lumber) })
-    else
-        if PlayerHasEnoughLumber( player, math.abs(lumber_value) ) then
-            player.lumber = player.lumber + lumber_value
-            CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = math.floor(player.lumber) })
-        end
-    end
-end
-
--- Modifies the food limit of this player. Accepts negative values
-function ModifyFoodLimit( player, food_limit_value )
-    player.food_limit = player.food_limit + food_limit_value
-    if player.food_limit > 100 and not GameRules.PointBreak then
-        player.food_limit = 100
-    end
-    CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = player.food_used, food_limit = player.food_limit }) 
-end
-
--- Modifies the food used of this player. Accepts negative values
--- Can go over the limit if a build is destroyed while the unit is already spawned/training
-function ModifyFoodUsed( player, food_used_value )
-    player.food_used = player.food_used + food_used_value
-    CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = player.food_used, food_limit = player.food_limit })
-end
-
 function GetClosestEntityToPosition(list, position)
     local distance = 20000
     local closest = nil
@@ -68,9 +38,10 @@ function FindClosestResourceDeposit( caster, resource_type )
     
     -- Find a building to deliver
     local player = caster:GetPlayerOwner()
-    local race = GetPlayerRace(player)
-    if not player then print("ERROR, NO PLAYER") return end
-    local buildings = player.structures
+    local playerID = caster:GetPlayerOwnerID()
+    local race = Players:GetRace(playerID)
+
+    local buildings = Players:GetStructures(playerID)
     local distance = 20000
     local closest_building = nil
 
