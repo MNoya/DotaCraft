@@ -1,12 +1,13 @@
-if unit_shops == nil then
+if not unit_shops then
 	unit_shops = class({})
-	
+end
+
+function unit_shops:start()
 	-- create the Units table
 	unit_shops.Units = {}
 	unit_shops.Players = {}
 	GameRules.HeroTavernEntityID = nil
-	
-	-- register listeners
+
 	CustomGameEventManager:RegisterListener( "Shops_Buy", Dynamic_Wrap(unit_shops, "Buy"))
 	CustomGameEventManager:RegisterListener( "open_closest_shop", Dynamic_Wrap(unit_shops, "OpenClosestShop"))
 
@@ -77,7 +78,7 @@ function unit_shops:CreateShop(unit, shop_name)
 	
 	local shopEnt = Entities:FindByName(nil, "*custom_shop") -- entity name in hammer
 	if shopEnt then
-		local newshop = SpawnEntityFromTableSynchronous('trigger_shop', {origin = unit:GetAbsOrigin(), shoptype = 1, model="maps/hills_of_glory/entities/custom_shop_0.vmdl"}) -- shoptype is 0 for a "home" shop, 1 for a side shop and 2 for a secret shop
+		local newshop = SpawnEntityFromTableSynchronous('trigger_shop', {origin = unit:GetAbsOrigin(), shoptype = 1}) -- shoptype is 0 for a "home" shop, 1 for a side shop and 2 for a secret shop
 		print("CreateShop out of "..shopEnt:GetModelName())
 	else
 		print("ERROR: CreateShop was unable to find a custom_shop trigger area. Add a custom_shop trigger to this map")
@@ -166,23 +167,24 @@ function unit_shops:CreateShop(unit, shop_name)
 				unit_shops:Stock_Management(UnitShop, key)
 				
 				-- check all players hero count
-				for i=0, PlayerCount do
-									
-					if PlayerResource:IsValidPlayer(i) then
-						local player = PlayerResource:GetPlayer(i)
+				for playerID=0, PlayerCount do
+					
+					local hero = PlayerResource:GetSelectedHeroEntity(playerID)			
+					if PlayerResource:IsValidPlayer(playerID) and hero then
+						local player = PlayerResource:GetPlayer(playerID)						
 						
 						-- if player cannot train more heroes and tavern wasn't previously disabled, disable it now			
-						if not Players:CanTrainMoreHeroes( i ) and not player.hero_tavern_removed then
+						if not Players:CanTrainMoreHeroes( playerID ) and not hero.hero_tavern_removed then
 							-- delete tavern
-							player.hero_tavern_removed = true
+							hero.hero_tavern_removed = true
 							CustomGameEventManager:Send_ServerToPlayer(player, "Shops_Remove_Content", {Index = UnitID, Shop = UnitShop, playerID = i}) 
-							print("remove neutral heroes panels from player="..tostring(i))
+							print("remove neutral heroes panels from player="..tostring(playerID))
 						end
 						
-						UpdateHeroTavernForPlayer( i )
-						local tier = Players:GetCityLevel(i) or 9000
-						local PlayerHasAltar = HasAltar(i)
-						SetNetTableValue("dotacraft_shops_table", tostring(GameRules.HeroTavernEntityID), {Shop = UnitShop, playerID = playerID, Tier=tier, Altar=PlayerHasAltar, Tavern=true}) 
+						UpdateHeroTavernForPlayer( playerID )
+						local tier = Players:GetCityLevel(playerID) or 9000
+						local hasAltar = Players:HasAltar(playerID)
+						SetNetTableValue("dotacraft_shops_table", tostring(GameRules.HeroTavernEntityID), {Shop = UnitShop, playerID = playerID, Tier=tier, Altar=hasAltar, Tavern=true}) 
 					
 					end
 					
@@ -216,7 +218,7 @@ end
 
 function unit_shops:Buy(data)
 	local item = data.ItemName
-	local playerID = data.playerID -- The player that clicked on an item to purchase. This can be an allied player
+	local playerID = data.PlayerID -- The player that clicked on an item to purchase. This can be an allied player
 	local player = PlayerResource:GetPlayer(playerID)
 	local shopID = data.Shop
 	local Shop = EntIndexToHScript(data.Shop)
@@ -227,19 +229,19 @@ function unit_shops:Buy(data)
 	local isHeroItem = tobool(data.Hero)
 	local isTavern = tobool(data.Tavern)
 	
-	if isTavern and not CanPlayerTrainMoreHeroes(playerID) then
+	if isTavern and not Players:CanTrainMoreHeroes( playerID ) then
 		print("playerID = "..tostring(playerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
 		return
 	end
 	-- check current tier
-	local shopOwner = Shop:GetPlayerOwner()
-	local tier = shopOwner and Players:GetCityLevel(shopOwner) or Players:GetCityLevel(player) --If there is no owner, use the tier of the player that tries to buy it
+	local shopOwnerID = Shop:GetPlayerOwnerID()
+	local tier = shopOwner and Players:GetCityLevel(shopOwnerID) or Players:GetCityLevel(playerID) --If there is no owner, use the tier of the player that tries to buy it
 				
 	-- Information about the buying unit
 	-- the buying unit
 	local buyer
 	if Shop.current_unit[playerID] == nil then
-		SendErrorMessage(data.playerID, "#shops_no_buyers_found")
+		SendErrorMessage(data.PlayerID, "#shops_no_buyers_found")
 		return
 	else
 		buyer = Shop.current_unit[playerID] --A shop can sell to more than 1 player at a time
@@ -261,21 +263,16 @@ function unit_shops:Buy(data)
 	local bHasEnoughGold = Players:HasEnoughGold(buyerPlayerID, GoldCost)
 	local bHasEnoughLumber = Players:HasEnoughLumber(buyerPlayerID, Lumber_Cost )
 	
-	local bEnoughSlots
-	local bEnoughStock
+	local bEnoughSlots = true
+	local bEnoughStock = true
 	if not isHeroItem and not isTavern then
-		bEnoughSlots = EnoughStock(item, Shop)
-		bEnoughStock = CountInventoryItems(buyer) < 6
-	else -- reviving a hero doesn't need slots or stock
-		bEnoughSlots = true
-		bEnoughStock = true
+		bEnoughSlots = CountInventoryItems(buyer) < 6
+		bEnoughStock = EnoughStock(item, Shop)
 	end
 
 	local bPlayerCanPurchase = bHasEnoughGold and bHasEnoughLumber and bEnoughSlots and bEnoughStock
 		
-	--DeepPrintTable(GameRules.Shops["human_shop"])
 	if bPlayerCanPurchase then
-
 		EmitSoundOnClient("General.Buy", player)
 
 		if not isHeroItem or isTavern then
@@ -318,14 +315,14 @@ function unit_shops:Buy(data)
 		end
 
 		-- deduct gold & lumber
-		PlayerResource:SpendGold(buyerPlayerID, Gold_Cost, 0)
-		ModifyLumber(buyerPlayerOwner, Lumber_Cost)
+		Players:ModifyGold(buyerPlayerID, -Gold_Cost)
+		Players:ModifyLumber(buyerPlayerID, -Lumber_Cost)
 		
 		local UnitShop =  unit_shops.Units[data.Shop]
 		
 		-- delete hero / neutral hero panel if IsHero or IsTavern
 		if isHeroItem or isTavern then -- update shop
-			unit_shops:RemoveHeroPanel(data.Shop, data.playerID, data.ItemName)
+			unit_shops:RemoveHeroPanel(data.Shop, data.PlayerID, data.ItemName)
 		else -- update information of stock since it's an item
 			SetNetTableValue("dotacraft_shops_table", tostring(data.Shop), { Shop = UnitShop, Tier=tier })
 		end
@@ -376,11 +373,6 @@ function unit_shops:Stock_Management(UnitShop, key)
 	end
 end
 
-function HasAltar(playerID)
-    local player = PlayerResource:GetPlayer(playerID)
-    return (player.altar_structures and #player.altar_structures > 0)
-end
-
 -- all the player-specific updates for players
 -- make sure to feed it correct player requirement
 function UpdateHeroTavernForPlayer(playerID)
@@ -397,13 +389,13 @@ function UpdateHeroTavernForPlayer(playerID)
 	end
 	
 	if (inRequiredTier - 1) > 0 then
-		for HeroName,Kaapa in pairs(UnitShop.Items) do
+		for HeroName,_ in pairs(UnitShop.Items) do
 			UnitShop.Items[HeroName].GoldCost = NEUTRAL_HERO_GOLDCOST
 			UnitShop.Items[HeroName].LumberCost = NEUTRAL_HERO_LUMBERCOST
 		end
 	end
 
-	for HeroName,Kaapa in pairs(UnitShop.Items) do
+	for HeroName,_ in pairs(UnitShop.Items) do
 		UnitShop.Items[HeroName].RequiredTier = inRequiredTier
 	end
 end
@@ -417,7 +409,7 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 	-- handle_UnitOwner needs to be nil, else it will crash the game.
 	PrecacheUnitByNameAsync(unit_name, function()
 		local new_hero = CreateUnitByName(unit_name, tavern:GetAbsOrigin(), true, hero, nil, hero:GetTeamNumber())
-		new_hero:SetplayerID(playerID)
+		new_hero:SetPlayerID(playerID)
 		new_hero:SetControllableByPlayer(playerID, true)
 		new_hero:SetOwner(player)
 		FindClearSpaceForUnit(new_hero, tavern:GetAbsOrigin(), true)
@@ -430,10 +422,10 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 		tpScroll:SetPurchaseTime(0) --Dont refund fully
 
 		-- Add the hero to the table of heroes acquired by the player
-		table.insert(player.heroes, new_hero)
+		Players:AddHero( playerID, new_hero )
 
 		-- Add food cost
-		ModifyFoodUsed(player, 5)
+		Players:ModifyFoodUsed(playerID, 5)
 
 		-- Acquired ability
 		local train_ability_name = "neutral_train_"..HeroName
@@ -441,7 +433,8 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 		new_hero.RespawnAbility = train_ability_name --Reference to swap to a revive ability when the hero dies
 
 		-- Add the acquired ability to each altar
-		for _,altar in pairs(player.altar_structures) do
+		local altarStructures = Players:GetAltars(playerID)
+		for _,altar in pairs(altarStructures) do
 			local acquired_ability_name = train_ability_name.."_acquired"
 			TeachAbility(altar, acquired_ability_name)
 			SetAbilityLayout(altar, 5)	
@@ -463,7 +456,8 @@ function TavernReviveHeroForPlayer(playerID, shopID, HeroName)
 	local ability_name --Ability on the altars, needs to be removed after the hero is revived
 	local level
 
-	for k,hero in pairs(player.heroes) do
+	local playerHeroes = Players:GetHeroes(playerID)
+	for k,hero in pairs(playerHeroes) do
 		if hero:GetUnitName() == HeroName then
 			hero:RespawnUnit()
 			FindClearSpaceForUnit(hero, tavern:GetAbsOrigin(), true)
@@ -478,7 +472,8 @@ function TavernReviveHeroForPlayer(playerID, shopID, HeroName)
 	ability_name =  ability_name.."_revive"..level
 	
 	-- Swap the _revive ability on the altars for a _acquired ability
-	for _,altar in pairs(player.altar_structures) do
+	local altarStructures = Players:GetAltars(playerID)
+	for _,altar in pairs(altarStructures) do
 		local new_ability_name = string.gsub(ability_name, "_revive" , "")
 		new_ability_name = GetResearchAbilityName(new_ability_name) --Take away numbers or research
 		new_ability_name = new_ability_name.."_acquired"
@@ -498,7 +493,7 @@ end
 
 -- Find a shop to open nearby the currently selected unit
 function unit_shops:OpenClosestShop(data)
-	local playerID = data.playerID
+	local playerID = data.PlayerID
 	local player = PlayerResource:GetPlayer(playerID)
 	local mainSelected = data.UnitIndex
 
@@ -640,3 +635,5 @@ function FindShopAbleUnit( shop, unit_types )
 	end
 	return nil
 end
+
+if not unit_shops.Units then unit_shops:start() end
