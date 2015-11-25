@@ -200,6 +200,10 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
 	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
 
+	-- Lua Modifiers
+	LinkLuaModifier("modifier_movespeed_cap", "libraries/modifiers/modifier_movespeed_cap", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_hex", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
+
 	-- Listeners for Pre_Game_Selection
 	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
 	--CustomGameEventManager:RegisterListener( "selection_over", Dynamic_Wrap(dotacraft, "Create_Players"))	
@@ -631,8 +635,8 @@ function dotacraft:InitializePlayer( hero )
 	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
 	Timers:CreateTimer(1, function() 
 		local idle_builders = {}
-		local player_units = Players:GetUnits(playerID)
-		for k,unit in pairs(player_units) do
+		local playerUnits = Players:GetUnits(playerID)
+		for k,unit in pairs(playerUnits) do
 			if IsValidAlive(unit) and IsBuilder(unit) and IsIdleBuilder(unit) then
 				table.insert(idle_builders, unit:GetEntityIndex())
 			end
@@ -1138,7 +1142,7 @@ function dotacraft:OnEntityKilled( event )
 		local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
 
 		-- Grant XP in AoE
-		local heroesNearby = FindUnitsInRadius( killerEntity:GetTeamNumber(), killed:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local heroesNearby = FindUnitsInRadius( attacker:GetTeamNumber(), killed:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		--print("There are ",#heroesNearby," nearby the dead unit, base value for this unit is: "..XPGain)
 		for _,hero in pairs(heroesNearby) do
 			if hero:IsRealHero() and hero:GetTeam() ~= killed:GetTeam() then
@@ -1463,8 +1467,8 @@ function dotacraft:OnPreGame()
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
 			--PrecacheUnitByNameAsync(race, function() --Race Heroes are already precached
 				local player = PlayerResource:GetPlayer(playerID)
-				local hero = CreateHeroForPlayer(race, player)
-				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,GetUnitRace(hero),team)
+				CreateHeroForPlayer(race, player)
+				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
 			--end, playerID)
  		end
  	end

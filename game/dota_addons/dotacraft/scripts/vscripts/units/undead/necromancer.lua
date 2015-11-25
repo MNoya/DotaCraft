@@ -94,7 +94,7 @@ function CreateUnit(caster, spawnlocation, duration)
 		Timers:CreateTimer(0.5, function() CreatedUnit:SetIdleAcquire(true) end)
 
 		CreatedUnit.no_corpse = true
-		table.insert(player.units, CreatedUnit)
+		Players:AddUnit(playerID, CreatedUnit)
 
 		-- Apply upgrades
 		CheckAbilityRequirements(CreatedUnit, player)

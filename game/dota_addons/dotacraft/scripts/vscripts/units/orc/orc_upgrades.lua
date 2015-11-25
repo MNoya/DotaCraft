@@ -34,10 +34,10 @@ end
 function ApplyWarDrumsUpgrade( event )
 	local caster = event.caster
 	local target = event.target
-	local player = caster:GetPlayerOwner()
-	local upgrades = player.upgrades
+	local playerID = caster:GetPlayerOwnerID()
+	local upgrades = Players:GetUpgradeTable(playerID)
 	
-	if player.upgrades["orc_research_improved_war_drums"] then
+	if upgrades["orc_research_improved_war_drums"] then
 		caster:RemoveModifierByName("modifier_war_drums_aura")
 		
 		-- Find all units nearby and remove the buff to re-apply
@@ -56,10 +56,10 @@ end
 -- Upgrade all Kodo Beasts
 function UpgradeWarDrums( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwner()
-	local units = player.units
+	local playerID = caster:GetPlayerOwnerID()
+	local playerUnits = Players:GetUnits(playerID)
 
-	for _,unit in pairs(units) do
+	for _,unit in pairs(playerUnits) do
 		if IsValidEntity(unit) and unit:HasAbility("orc_war_drums") then
 			unit:RemoveModifierByName("modifier_war_drums_aura")
 

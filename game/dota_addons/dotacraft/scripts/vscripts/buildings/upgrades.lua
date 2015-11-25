@@ -35,15 +35,17 @@ function UpgradeBuilding( event )
 	-- If the upgraded building is a city center, update the city_center_level if required
 	if IsCityCenter(building) then
 		local level = building:GetLevel()
-		if level > player.city_center_level then
-			player.city_center_level = level
+		local city_center_level = Players:GetCityLevel(playerID)
+		if level > city_center_level then
+			Players:SetCityCenterLevel( playerID, level )
 		end
 	end
 
 	-- Remove the old building from the structures list
+	local playerStructures = Players:GetStructures(playerID)
 	if IsValidEntity(caster) then
-		local buildingIndex = getIndex(player.structures, caster)
-        table.remove(player.structures, buildingIndex)
+		local buildingIndex = getIndex(playerStructures, caster)
+        table.remove(playerStructures, buildingIndex)
 		
 		-- Remove old building entity
 		caster:RemoveSelf()
@@ -60,29 +62,31 @@ function UpgradeBuilding( event )
     end
 
 	-- Add 1 to the buildings list for that name. The old name still remains
-	if not player.buildings[new_unit] then
-		player.buildings[new_unit] = 1
+	local buildingTable = Players:GetBuildingTable(playerID)
+	if not buildingTable[new_unit] then
+		buildingTable[new_unit] = 1
 	else
-		player.buildings[new_unit] = player.buildings[new_unit] + 1
+		buildingTable[new_unit] = buildingTable[new_unit] + 1
 	end
 
 	-- Add the new building to the structures list
-	table.insert(player.structures, building)
+	Players:AddStructure(playerID, building)
 
 	-- Update the abilities of the units and structures
-	for k,unit in pairs(player.units) do
-		CheckAbilityRequirements( unit, player )
+	local playerUnits = Players:GetUnits(playerID)
+	for k,unit in pairs(playerUnits) do
+		CheckAbilityRequirements( unit, playerID )
 	end
 
-	for k,structure in pairs(player.structures) do
-		CheckAbilityRequirements( structure, player )
+	for k,structure in pairs(playerStructures) do
+		CheckAbilityRequirements( structure, playerID )
 	end
 
 	-- Apply the current level of Masonry to the newly upgraded building
-	local masonry_rank = GetCurrentResearchRank(player, "human_research_masonry1")
+	local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
 	if masonry_rank and masonry_rank > 0 then
 		print("Applying masonry rank "..masonry_rank.." to this building upgrade")
-		UpdateUnitUpgrades( building, player, "human_research_masonry"..masonry_rank )
+		UpdateUnitUpgrades( building, playerID, "human_research_masonry"..masonry_rank )
 	end
 end
 

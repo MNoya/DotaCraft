@@ -212,7 +212,7 @@ function dotacraft:IncreaseAltarTier( playerID, abilityOnProgress )
 				local level = ability:GetLevel() -- Disabled abilities are level 0
 				if string.find(ability_name, "_train") and not string.find(ability_name,"_acquired") then
 					if not abilityOnProgress or ability_name ~= abilityOnProgress:GetAbilityName() then	
-						if altar_level == 4 or not CanPlayerTrainMoreHeroes( pID ) then -- Disable completely
+						if altar_level == 4 or not Players:CanTrainMoreHeroes( playerID ) then -- Disable completely
 							ability:SetHidden(true)
 							--altar:RemoveAbility(ability_name)
 						else	
@@ -251,7 +251,7 @@ function dotacraft:IncreaseAltarTier( playerID, abilityOnProgress )
 		end
 
 		-- Look to disable the upgraded abilities if the requirements arent met
-		CheckAbilityRequirements(altar, player)
+		CheckAbilityRequirements(altar, playerID)
 
 		AdjustAbilityLayout(altar)
 

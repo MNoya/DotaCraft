@@ -1,9 +1,9 @@
 function unsummon (keys)
-local caster = keys.caster
-local target = keys.target
-local playerID = caster:GetPlayerOwnerID()
-local player = PlayerResource:GetPlayer(playerID)
-local hero = player:GetAssignedHero()
+	local caster = keys.caster
+	local target = keys.target
+	local playerID = caster:GetPlayerOwnerID()
+	local player = PlayerResource:GetPlayer(playerID)
+	local hero = player:GetAssignedHero()
 
 	-- target is already unsummoning
 	if target.unsummoning or not IsCustomBuilding(target) or caster:GetPlayerOwnerID() ~= target:GetPlayerOwnerID() or not target.constructionCompleted then
@@ -34,10 +34,10 @@ local hero = player:GetAssignedHero()
 		ParticleManager:CreateParticle("particles/base_destruction_fx/gbm_lvl3_glow.vpcf", 0, target)
 		
 		if target:GetHealth() <= 50 then -- refund resource + kill unit
-			GiveResources(GoldGain, LumberGain, hero)
+			GiveResources(GoldGain, LumberGain, playerID)
 			RemoveTarget(target)
 		else -- refund resource + apply damage
-			GiveResources(GoldGain, LumberGain, hero)
+			GiveResources(GoldGain, LumberGain, playerID)
 			target:SetHealth(target:GetHealth() - UNSUMMON_DAMAGE_PER_SECOND)
 		end
 
@@ -52,9 +52,9 @@ function RemoveTarget(target)
 	target:SetAbsOrigin(Vector(0,0,-9000))
 end
 
-function GiveResources(gold, lumber, hero)
-	hero:ModifyGold(gold, true, 0)
-	ModifyLumber(hero:GetPlayerOwner(), lumber)
+function GiveResources(gold, lumber, playerID)
+	Players:ModifyGold(playerID, gold)
+	Players:ModifyLumber(playerID, lumber)
 end
 
 function sacrifice ( keys )

@@ -75,7 +75,7 @@ function CreateUnit(caster, spawnlocation, duration)
 		Timers:CreateTimer(0.5, function() CreatedUnit:SetIdleAcquire(true) end)
 
 		CreatedUnit.no_corpse = true
-		table.insert(player.units, CreatedUnit)
+		Players:AddUnit(playerID, CreatedUnit)
 
 		-- Summoned skeleton warriors don't benefit from the skeletal longevity upgrade, remove it
 		CreatedUnit:RemoveAbility("undead_skeletal_longevity_disabled")

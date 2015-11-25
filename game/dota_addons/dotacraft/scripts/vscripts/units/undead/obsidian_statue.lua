@@ -185,7 +185,7 @@ function morph_into_destroyer(keys)
 		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_creature_carapace", "armor")
 
 		caster.no_corpse = true
-		table.insert(player.units, CreatedUnit)
+		Players:AddUnit(playerID, CreatedUnit)
 		
 		ParticleManager:CreateParticle("particles/siege_fx/siege_bad_death_01.vpcf", 0, CreatedUnit)
 		AddUnitToSelection(CreatedUnit)

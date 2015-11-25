@@ -937,7 +937,8 @@ function LumberGain( event )
 	local ability = event.ability
 	local caster = event.caster
 	local lumber_gain = ability:GetSpecialValueFor("lumber_per_interval")
-	ModifyLumber( caster:GetPlayerOwner(), lumber_gain )
+	local playerID = caster:GetPlayerOwnerID()
+	Players:ModifyLumber( playerID, lumber_gain )
 	PopupLumber( caster, lumber_gain)
 end
 
@@ -945,10 +946,11 @@ end
 function GoldGain( event )
 	local ability = event.ability
 	local caster = event.caster
+	local playerID = caster:GetPlayerOwnerID()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local race = GetUnitRace(caster)
 	local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
-	hero:ModifyGold(gold_gain, false, 0)
+	Players:ModifyGold(playerID, gold_gain)
 	PopupGoldGain( caster, gold_gain)
 
 	-- Reduce the health of the main and mana on the entangled/haunted mine to show the remaining gold
@@ -1068,7 +1070,7 @@ function ReturnResources( event )
 						--print("Building Reached at ",distance)
 						caster:RemoveModifierByName("modifier_carrying_lumber")
 						PopupLumber(caster, caster.lumber_gathered)
-						ModifyLumber(player, caster.lumber_gathered)
+						Players:ModifyLumber(playerID, caster.lumber_gathered)
 
 						-- Also handle possible gold leftovers if its being deposited in a city center
 						if caster:HasModifier("modifier_carrying_gold") then
@@ -1077,7 +1079,7 @@ function ReturnResources( event )
 							if gold_building == caster.target_building then 
 								local upkeep = Players:GetUpkeep( playerID )
 								local gold_gain = caster.gold_gathered * upkeep
-								hero:ModifyGold(gold_gain, false, 0)
+								Players:ModifyGold(playerID, gold_gain)
 								PopupGoldGain(caster, gold_gain)
 							end
 							caster.gold_gathered = 0
@@ -1129,7 +1131,7 @@ function ReturnResources( event )
 						local upkeep = Players:GetUpkeep( playerID )
 						local gold_gain = caster.gold_gathered * upkeep
 
-						hero:ModifyGold(gold_gain, false, 0)
+						Players:ModifyGold(playerID, gold_gain)
 						PopupGoldGain(caster, gold_gain)
 
 						caster:RemoveModifierByName("modifier_carrying_gold")
@@ -1138,7 +1140,7 @@ function ReturnResources( event )
 						if caster:HasModifier("modifier_carrying_lumber") then
 							caster:RemoveModifierByName("modifier_carrying_lumber")
 							PopupLumber(caster, caster.lumber_gathered)
-							ModifyLumber(player, caster.lumber_gathered)
+							Players:ModifyLumber(playerID, caster.lumber_gathered)
 							caster.lumber_gathered = 0
 						end
 
@@ -1310,11 +1312,11 @@ function Repair( event )
 			-- Consume Resources
 			building.GoldAdjustment = building.GoldAdjustment + gold_float
 			if building.GoldAdjustment > 1 then
-				hero:ModifyGold( -gold_per_second - 1, false, 0)
+				Players:ModifyGold(playerID, -gold_per_second - 1)
 				building.GoldAdjustment = building.GoldAdjustment - 1
 				building.gold_used = building.gold_used + gold_per_second + 1
 			else
-				hero:ModifyGold( -gold_per_second, false, 0)
+				Players:ModifyGold(playerID, -gold_per_second)
 				building.gold_used = building.gold_used + gold_per_second
 			end
 			

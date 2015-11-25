@@ -97,10 +97,10 @@ function dotacraft:PointBreak()
 	GameRules.PointBreak = not GameRules.PointBreak
 	local foodBonus = GameRules.PointBreak and 1000 or 0
 
-	for i=0,DOTA_MAX_TEAM_PLAYERS do
-		if PlayerResource:IsValidPlayerID(i) then
-			local player = PlayerResource:GetPlayer(i)
-			ModifyFoodLimit(player, foodBonus-player.food_limit)
+	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			Players:ModifyFoodLimit(playerID, foodBonus-Players:GetFoodLimit(playeID))
 		end
 	end
 
@@ -111,14 +111,15 @@ end
 function dotacraft:Synergy()
 	GameRules.Sinergy = not GameRules.Sinergy
 	
-	for i=0,DOTA_MAX_TEAM_PLAYERS do
-		if PlayerResource:IsValidPlayerID(i) then
-			local player = PlayerResource:GetPlayer(i)
-			for _,v in pairs(player.units) do
-				CheckAbilityRequirements(v, player)
+	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local playerUnits = Players:GetUnits(playerID)
+            local playerStructures = Players:GetUnits(playerID)
+			for _,v in pairs(playerUnits) do
+				CheckAbilityRequirements(v, playerID)
 			end
-			for _,v in pairs(player.structures) do
-				CheckAbilityRequirements(v, player)
+			for _,v in pairs(playerStructures) do
+				CheckAbilityRequirements(v, playerID)
 			end
 		end
 	end
@@ -135,11 +136,10 @@ function dotacraft:LightsOut()
 	GameRules:SetTimeOfDay( 0.8 )
 end
 
-function dotacraft:GiveItem(item_name)
+function dotacraft:GiveItem(playerID, item_name)
 	local cmdPlayer = Convars:GetCommandClient()
-	local pID = cmdPlayer:GetPlayerID()
 	
-	local selected = GetMainSelectedEntity(pID)
+	local selected = GetMainSelectedEntity(playerID)
 	local new_item = CreateItem(item_name, selected, selected)
 	if new_item then
 		selected:AddItem(new_item)
@@ -207,7 +207,7 @@ function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
             if bEnemy then 
                 unit:SetTeam(DOTA_TEAM_NEUTRALS)
             else
-                table.insert(player.units, unit)
+                Players:AddUnit(playerID, unit)
             end
 
             FindClearSpaceForUnit(unit, gridPoints[i], true)

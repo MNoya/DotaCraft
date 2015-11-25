@@ -5,35 +5,38 @@
 ]]
 function ResearchComplete( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
 	local ability = event.ability
 	local research_name = ability:GetAbilityName()
 
 	-- It shouldn't be possible to research the same upgrade more than once.
-	player.upgrades[research_name] = 1
+	local upgrades = Players:GetUpgradeTable(playerID)
+	upgrades[research_name] = 1
 
 	print("Player current upgrades list:")
-	DeepPrintTable(player.upgrades)
+	DeepPrintTable(upgrades)
 	print("==========================")
 	
 	-- Go through all the upgradeable units and upgrade with the research
 	-- These are just abilities set as lvl 0 _disabled until the tech is researched
 	-- Some show as passives, while wc3 showed them as 0-1-2-3 ranks on the damage/armor indicator	
-	for _,unit in pairs(player.units) do
-		CheckAbilityRequirements( unit, player )
+	local playerUnits = Players:GetUnits(playerID)
+	for _,unit in pairs(playerUnits) do
+		CheckAbilityRequirements( unit, playerID )
 	end
 
 	-- Also, on the buildings that have the upgrade, disable the upgrade and/or apply the next rank.
-	for _,structure in pairs(player.structures) do
-		CheckAbilityRequirements( structure, player )
+	local playerStructures = Players:GetUnits(playerID)
+	for _,structure in pairs(playerStructures) do
+		CheckAbilityRequirements( structure, playerID )
 	end
 		
-	for _,unit in pairs(player.units) do
-		UpdateUnitUpgrades( unit, player, research_name)
+	for _,unit in pairs(playerUnits) do
+		UpdateUnitUpgrades( unit, playerID, research_name)
 	end
 
-	for _,structure in pairs(player.structures) do
-		UpdateUnitUpgrades( structure, player, research_name)
+	for _,structure in pairs(playerStructures) do
+		UpdateUnitUpgrades( structure, playerID, research_name)
 	end
 
 end
