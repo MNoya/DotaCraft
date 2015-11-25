@@ -261,7 +261,7 @@ function SetRaceBackgroundImage(race){
 	var Left_Bar = Root.FindChildTraverse("Left_Bar")
 	if(race != 0){
 		// save image path and then assign it in the style
-		var team_path = "url('s2r://panorama/images/selection/background_"+race+".vtex')"
+		var team_path = "url('s2r://panorama/images/selection/background_"+race+".png')"
 		Left_Bar.style["background-image"] = team_path
 	}else{ // if random
 		Left_Bar.style["background-image"] = "url('s2r://panorama/images/backgrounds/gallery_background.png')"
@@ -409,14 +409,14 @@ function Setup_Panaroma_Color_Table(){
 
 function Setup_Minimap(){
 	var Map_Info = Game.GetMapInfo()
-	var Map_Name = Map_Info.map_display_name
+	var Map_Name = Map_Info.map_display_name.substring(2)
 	
 	var Minimap_Panel = Root.FindChildTraverse("Minimap")
 	var Minimap_Name = Root.FindChildTraverse("Minimap_Name")
 	var Suggested_Players = Root.FindChildTraverse("Suggested_Players_Text")
 	var Map_Description = Root.FindChildTraverse("Map_Description_Text")
 	
-	var Minimap_Image_Path = "url('file://{images}/selection/"+Map_Name+".vtex');"
+	var Minimap_Image_Path = "url('file://{images}/selection/maps/"+Map_Name+".png');"
 	//$.Msg(Minimap_Image_Path)
 	 
 	// set minimap image path

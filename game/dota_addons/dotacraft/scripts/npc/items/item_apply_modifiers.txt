@@ -217,40 +217,40 @@
 		{
 			"IsHidden"	"1"
 
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"
-			}
+			//"Properties"
+			//{
+			//	"MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"
+			//}
 			"States"
 			{
 				"MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 
-			"OnAttacked"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/attacks.lua"
-					"Function"		"AttackAggro"
-				}
-			}
+			//"OnAttacked"
+			//{
+			//	"RunScript"
+			//	{
+			//		"ScriptFile"	"units/attacks.lua"
+			//		"Function"		"AttackAggro"
+			//	}
+			//}
+			//
+			//"OnAbilityExecuted"
+			//{
+			//	"RunScript"
+			//	{
+			//		"ScriptFile"	"units/attacks.lua"
+			//		"Function"		"CheatCheck"
+			//	}
+			//}
 
-			"OnAbilityExecuted"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/attacks.lua"
-					"Function"		"CheatCheck"
-				}
-			}
-
-			"ThinkInterval"  "0.1"
+			"ThinkInterval"  "0.03"
 			"OnIntervalThink"
 			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/attacks.lua"
-					"Function"		"AutoAcquire"
+					"Function"		"CheckAcquire"
 				}
 			}
 		}

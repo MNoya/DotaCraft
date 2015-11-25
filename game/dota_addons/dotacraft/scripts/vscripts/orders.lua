@@ -46,14 +46,14 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     --print( unit:GetUnitName(),ORDERS[order_type])
 
                     -- Set movement aggresive
-                    unit.bAttackMove = (order_type == DOTA_UNIT_ORDER_ATTACK_MOVE)
+                    --[[unit.bAttackMove = (order_type == DOTA_UNIT_ORDER_ATTACK_MOVE)
 
                     -- Set hold position
                     if order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
                         HoldPosition(unit)
                     elseif order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
                         unit:RemoveModifierByName("modifier_hold_position")
-                    end
+                    end]]
 
                     numUnits = numUnits + 1
                 elseif unit:IsBuilding() or IsCustomBuilding(unit) then

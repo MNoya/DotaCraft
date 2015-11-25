@@ -206,7 +206,6 @@ function dotacraft:InitGameMode()
 
 	-- Listeners for Pre_Game_Selection
 	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
-	--CustomGameEventManager:RegisterListener( "selection_over", Dynamic_Wrap(dotacraft, "Create_Players"))	
 	CustomGameEventManager:RegisterListener( "update_team_lock", Dynamic_Wrap(dotacraft, "Lock_Teams"))	
 	
 	-- register panaroma tables
@@ -1264,6 +1263,7 @@ function dotacraft:DeterminePathableTrees()
     	Vector(-64,0,0), -- W
     	Vector(-64,64,0) -- NW
   	}
+  	local cont = 0
 
  	while #Q > 0 do
  		--Set n equal to the first element of Q and Remove first element from Q.
@@ -1459,7 +1459,7 @@ function dotacraft:OnPreGame()
 
 			-- if race is nil it means that the id supplied is random since that is the only fallout index
 			if race == nil then
-				race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
+				race = GameRules.raceTable[RandomInt(1, 4)]
 			end
 
 			-- player stuff
@@ -1472,49 +1472,6 @@ function dotacraft:OnPreGame()
 			--end, playerID)
  		end
  	end
-end
-
-function dotacraft:Create_Players(data)
-	print("[DOTACRAFT] Create Players")
-	for playerID = 0, DOTA_MAX_TEAM_PLAYERS, 1 do
-		if PlayerResource:IsValidPlayerID(playerID) then
-			local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
-			
-			local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
-			local team = Player_Table.Team
-			local race = GameRules.raceTable[Player_Table.Race]
-
-			-- if race is nil it means that the id supplied is random since that is the only fallout index
-			if race == nil then
-				race = GameRules.raceTable[RandomInt(1, #GameRules.raceTable)]
-			end
-
-			-- player stuff
-			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
-			PlayerResource:SetCustomTeamAssignment(playerID, team)
-
-			PrecacheUnitByNameAsync(hero_name, function()
-		        local hero = CreateHeroForPlayer(hero_name, player)
-		        print("[ITT] CreateHeroForPlayer: ",playerID,hero_name,team)
-
-		        -- Move to the first unassigned starting position for the assigned team-isle
-		        ITT:SetHeroIslandPosition(hero, team)
-
-		        -- Health Label
-		        local color = ITT:ColorForTeam( team )
-		        hero:SetCustomHealthLabel( hero.Tribe.." Tribe", color[1], color[2], color[3] )
-
-		    end, playerID)
-
-			CreateHeroForPlayer(race, PlayerResource:GetPlayer(playerID))
-				
-			Timers:CreateTimer(0.1,function()
-				local hero_race = PlayerResource:GetPlayer(playerID):GetAssignedHero()
-				PlayerResource:ReplaceHeroWith(playerID, race, 0, 0)
-				print("[DOTACRAFT] Player Created: ",race,hero_race)
-			end)
-		end
-	end
 end
 
 function dotacraft:Selection_Update_Player(args)

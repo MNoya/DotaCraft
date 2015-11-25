@@ -1,0 +1,1 @@
+dir /B | grep ".png" | sed "s/^\(.*\)$/<Image style=\"opacity:0;\" src=\"file:\/\/{images}\/items\/\1\" \/>/g" > images.xml

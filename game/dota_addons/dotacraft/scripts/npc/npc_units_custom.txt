@@ -1122,69 +1122,6 @@
 		// Creature Data
 		//----------------------------------------------------------------
 	}
-	"cosmetic_precache"
-	{	
-		"BaseClass"					"npc_dota_base_additive"
-		"Model"						"models/development/invisiblebox.vmdl"
-		"precache"
-		{
-			"model_folder" "models/heroes/dragon_knight"
-			"model_folder" "models/items/dragon_knight"
-			"model_folder" "models/heroes/sniper"
-			"model_folder" "models/items/sniper"
-			"model_folder" "models/heroes/chaos_knight"
-			"model_folder" "models/items/chaos_knight"
-			"model_folder" "models/heroes/silencer"
-			"model_folder" "models/items/silencer"
-			"model_folder" "models/heroes/gyrocopter"
-			"model_folder" "models/items/gyrocopter"
-			"model_folder" "models/heroes/skywrath_mage"
-			"model_folder" "models/items/skywrath_mage"
-	
-			"model_folder" "models/heroes/axe"
-			"model_folder" "models/items/axe"
-			"model_folder" "models/heroes/huskar"
-			"model_folder" "models/items/huskar"
-			"model_folder" "models/heroes/blood_seeker"
-			"model_folder" "models/items/blood_seeker"
-			"model_folder" "models/heroes/witchdoctor"
-			"model_folder" "models/items/witchdoctor"
-			"model_folder" "models/heroes/spirit_breaker"
-			"model_folder" "models/items/spirit_breaker"
-			"model_folder" "models/heroes/chen"
-			"model_folder" "models/items/chen"
-			"model_folder" "models/heroes/batrider"
-			"model_folder" "models/items/batrider"
-			"model_folder" "models/heroes/earthshaker"
-			"model_folder" "models/items/earthshaker"
-	
-			"model_folder" "models/heroes/windrunner"
-			"model_folder" "models/items/windrunner"
-			"model_folder" "models/heroes/luna"
-			"model_folder" "models/items/luna"
-			"model_folder" "models/heroes/enchantress"
-			"model_folder" "models/items/enchantress"
-			"model_folder" "models/heroes/lone_druid"
-			"model_folder" "models/items/lone_druid"
-			"model_folder" "models/heroes/furion"
-			"model_folder" "models/items/furion"
-			"model_folder" "models/heroes/puck"
-			"model_folder" "models/items/puck"
-	
-			"model_folder" "models/heroes/life_stealer"
-			"model_folder" "models/items/lifestealer"
-			"model_folder" "models/heroes/weaver"
-			"model_folder" "models/items/weaver"
-			"model_folder" "models/heroes/pudge"
-			"model_folder" "models/items/pudge"
-			"model_folder" "models/heroes/obsidian_destroyer"
-			"model_folder" "models/items/obsidian_destroyer"
-			"model_folder" "models/heroes/necrolyte"
-			"model_folder" "models/items/necrolyte"
-			"model_folder" "models/heroes/death_prophet"
-			"model_folder" "models/items/death_prophet"
-		}
-	}
 	//------------------------------------------------------------------------------------
 	//- Units for crypt_lord_carrion_beetles ability 								 	-
 	//------------------------------------------------------------------------------------
@@ -8721,8 +8658,8 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/good_statue001.vmdl"
-		"ModelScale"				"0.5"
+		"Model"						"models/items/wards/jakiro_pyrexae_ward/jakiro_pyrexae_ward.vmdl"
+		"ModelScale"				"2.2"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"

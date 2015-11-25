@@ -10,6 +10,20 @@ function Choose_Hint(){
 	Hint_Text.text = "Hint: "+Localized_String
 }
 
+function Choose_Background() {
+	var Map_Info = Game.GetMapInfo()
+	var Map_Name = Map_Info.map_display_name.substring(2)
+	if (Map_Name == "")
+	{
+		$.Schedule(0.1, Choose_Background)
+		return
+	}
+
+	var path = "url('file://{images}/loading/"+Map_Name+".png');"
+	$("#LoadingScreen").style["background-image"] = path
+	$.Msg("Set Loading Screen Background ",path)
+}
+
 // an infinite loop that stops once an u nlocalised string is found
 // function assume that atleast a hint index _0 EXIST
 function Count_Localized_Strings(){
@@ -48,5 +62,6 @@ var Root = $.GetContextPanel();
 
 (function () {
 	Choose_Hint()
+	Choose_Background()
 	Check_Loading()
 })();

@@ -28,7 +28,7 @@ function BuildingHelper:Init()
     ItemKVs = LoadKeyValues("scripts/npc/npc_items_custom.txt")
     UnitKVs = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
-    DebugPrint("[BH] BuildingHelper Init")
+    BuildingHelper:print("BuildingHelper Init")
 
     -- Merge Building abilities coming from both the Ability and Unit KVs
     for i=1,2 do
@@ -61,7 +61,7 @@ function BuildingHelper:BuildCommand( args )
     local queue = tobool(args['Queue'])
     local builder = player.activeBuilder
 
-    DebugPrint("[BH] Build Command - Queued: ",queue)
+    BuildingHelper:print("Build Command - Queued: ",queue)
 
     -- Cancel current repair
     if builder:HasModifier("modifier_builder_repairing") and not queue then
@@ -95,7 +95,7 @@ end
       * Manages each workers build queue. Will run once per builder
 ]]--
 function BuildingHelper:InitializeBuilder(builder)
-    DebugPrint("[BH] InitializeBuilder "..builder:GetUnitName().." "..builder:GetEntityIndex())
+    BuildingHelper:print("InitializeBuilder "..builder:GetUnitName().." "..builder:GetEntityIndex())
 
     if builder.buildingQueue == nil then
         builder.buildingQueue = {}
@@ -123,7 +123,7 @@ function BuildingHelper:AddBuilding(keys)
     local size = buildingTable:GetVal("BuildingSize", "number")
     local unitName = buildingTable:GetVal("UnitName", "string")
 
-    DebugPrint("[BH] AddBuilding "..unitName)
+    BuildingHelper:print("AddBuilding "..unitName)
 
     -- Prepare the builder, if it hasn't already been done. Since this would need to be done for every builder in some games, might as well do it here.
     local builder = keys.caster
@@ -269,18 +269,18 @@ function BuildingHelper:SetupBuildingTable( abilityName )
     -- Extract data from the KV files, set is called to guarantee these have values later on in execution
     local size = buildingTable:GetVal("BuildingSize", "number")
     if size == nil then
-        DebugPrint('[BH] Error: ' .. abilName .. ' does not have a BuildingSize KeyValue')
+        BuildingHelper:print('Error: ' .. abilName .. ' does not have a BuildingSize KeyValue')
         return
     end
     if size == 1 then
-        DebugPrint('[BH] Warning: ' .. abilName .. ' has a size of 1. Using a gridnav size of 1 is currently not supported, it was increased to 2')
+        BuildingHelper:print('Warning: ' .. abilName .. ' has a size of 1. Using a gridnav size of 1 is currently not supported, it was increased to 2')
         buildingTable:SetVal("size", 2)
         return
     end
 
     local unitName = buildingTable:GetVal("UnitName", "string")
     if unitName == nil then
-        DebugPrint('[BH] Error: ' .. abilName .. ' does not have a UnitName KeyValue')
+        BuildingHelper:print('Error: ' .. abilName .. ' does not have a UnitName KeyValue')
         return
     end
 
@@ -322,7 +322,7 @@ function BuildingHelper:PlaceBuilding(player, name, location, blockGridNav, size
   
     local pID = player:GetPlayerID()
     local playersHero = player:GetAssignedHero()
-    DebugPrint("[BH] PlaceBuilding for playerID ".. pID)
+    BuildingHelper:print("PlaceBuilding for playerID ".. pID)
   
     local gridNavBlockers
     if blockGridNav then
@@ -395,7 +395,7 @@ function BuildingHelper:StartBuilding( keys )
         return
     end
 
-    DebugPrint("[BH] Initializing Building Entity: "..unitName.." at "..VectorString(location))
+    BuildingHelper:print("Initializing Building Entity: "..unitName.." at "..VectorString(location))
 
     -- Mark this work in progress, skip refund if cancelled as the building is already placed
     work.inProgress = true
@@ -527,9 +527,9 @@ function BuildingHelper:StartBuilding( keys )
     -- Otherwise just add 1 health each frame.
     if fUpdateHealthInterval <= fserverFrameRate then
 
-        DebugPrint("[BH] Building needs float adjust")
+        BuildingHelper:print("Building needs float adjust")
         if bRequiresRepair then
-            DebugPrint("[BH] Error: Don't use Repair with fast-ticking buildings!")
+            BuildingHelper:print("Error: Don't use Repair with fast-ticking buildings!")
         end
 
         if not bBuilderInside then
@@ -569,7 +569,7 @@ function BuildingHelper:StartBuilding( keys )
                         callbacks.onConstructionCompleted(building)
                     end
                     
-                    DebugPrint("[BH] HP was off by:", fMaxHealth - fAddedHealth)
+                    BuildingHelper:print("HP was off by:", fMaxHealth - fAddedHealth)
 
                     -- Eject Builder
                     if bBuilderInside then
@@ -679,7 +679,7 @@ function BuildingHelper:StartBuilding( keys )
         local repair_ability_name = race.."_gather"
         local repair_ability = builder:FindAbilityByName(repair_ability_name)
         if not repair_ability then
-            DebugPrint("[BH] Error, can't find "..repair_ability_name.." on the builder ", builder:GetUnitName(), builder:GetEntityIndex())
+            BuildingHelper:print("Error, can't find "..repair_ability_name.." on the builder ", builder:GetUnitName(), builder:GetEntityIndex())
             return
         end
 
@@ -723,7 +723,7 @@ function BuildingHelper:StartBuilding( keys )
                     end
                 else
                     
-                    DebugPrint("[BH] Scale was off by:", fMaxScale - fCurrentScale)
+                    BuildingHelper:print("Scale was off by:", fMaxScale - fCurrentScale)
                     building:SetModelScale(fMaxScale)
                     return
                 end
@@ -779,7 +779,7 @@ function BuildingHelper:CancelBuilding(keys)
     local hero = building:GetOwner()
     local playerID = hero:GetPlayerID()
 
-    DebugPrint("[BH] CancelBuilding "..building:GetUnitName().." "..building:GetEntityIndex())
+    BuildingHelper:print("CancelBuilding "..building:GetUnitName().." "..building:GetEntityIndex())
 
     -- Refund
     local refund_factor = 0.75
@@ -942,7 +942,7 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
         end
     end
 
-    DebugPrint("[BH] AddToQueue "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> location "..VectorString(location))
+    BuildingHelper:print("AddToQueue "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> location "..VectorString(location))
 
     -- Position chosen is initially valid, send callback to spend gold
     callbacks.onBuildingPosChosen(location)
@@ -979,9 +979,9 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     if builder.work == nil and not builder:HasModifier("modifier_builder_hidden") and not (builder.state == "repairing" or builder.state == "moving_to_repair") then
         builder.work = builder.buildingQueue[1]
         BuildingHelper:AdvanceQueue(builder)
-        DebugPrint("[BH] Builder doesn't have work to do, start right away")
+        BuildingHelper:print("Builder doesn't have work to do, start right away")
     else
-        DebugPrint("[BH] Work was queued, builder already has work to do")
+        BuildingHelper:print("Work was queued, builder already has work to do")
         BuildingHelper:PrintQueue(builder)
     end
 end
@@ -1006,7 +1006,7 @@ function BuildingHelper:AdvanceQueue(builder)
         -- Make the caster move towards the point
         local abilName = "move_to_point_" .. tostring(castRange)
         if AbilityKVs[abilName] == nil then
-            DebugPrint('[BH] Error: ' .. abilName .. ' was not found in npc_abilities_custom.txt. Using the ability move_to_point_100')
+            BuildingHelper:print('Error: ' .. abilName .. ' was not found in npc_abilities_custom.txt. Using the ability move_to_point_100')
             abilName = "move_to_point_100"
         end
 
@@ -1033,12 +1033,12 @@ function BuildingHelper:AdvanceQueue(builder)
             -- Change builder state
             builder.state = "moving_to_build"
 
-            DebugPrint("[BH] AdvanceQueue - "..builder:GetUnitName().." "..builder:GetEntityIndex().." moving to build "..work.name.." at "..VectorString(location))
+            BuildingHelper:print("AdvanceQueue - "..builder:GetUnitName().." "..builder:GetEntityIndex().." moving to build "..work.name.." at "..VectorString(location))
         end)
     
     else
         -- Set the builder work to nil to accept next work directly
-        DebugPrint("[BH] Builder "..builder:GetUnitName().." "..builder:GetEntityIndex().." finished its building Queue")
+        BuildingHelper:print("Builder "..builder:GetUnitName().." "..builder:GetEntityIndex().." finished its building Queue")
         builder.state = "idle"
         builder.work = nil
     end
@@ -1065,7 +1065,7 @@ function BuildingHelper:ClearQueue(builder)
         return
     end
 
-    DebugPrint("[BH] ClearQueue "..builder:GetUnitName().." "..builder:GetEntityIndex())
+    BuildingHelper:print("ClearQueue "..builder:GetUnitName().." "..builder:GetEntityIndex())
 
     -- Main work  
     if work then
@@ -1099,12 +1099,12 @@ end
     * Shows the current queued work for this builder
 ]]--
 function BuildingHelper:PrintQueue(builder)
-    DebugPrint("[BH] Builder Queue of "..builder:GetUnitName().. " "..builder:GetEntityIndex())
+    BuildingHelper:print("Builder Queue of "..builder:GetUnitName().. " "..builder:GetEntityIndex())
     local buildingQueue = builder.buildingQueue
     for k,v in pairs(buildingQueue) do
-        DebugPrint(" #"..k..": "..buildingQueue[k]["name"].." at "..VectorString(buildingQueue[k]["location"]))
+        BuildingHelper:print(" #"..k..": "..buildingQueue[k]["name"].." at "..VectorString(buildingQueue[k]["location"]))
     end
-    print("------------------------------------")
+    BuildingHelper:print("------------------------------------")
 end
 
 function SnapToGrid( size, location )
@@ -1123,6 +1123,13 @@ end
 
 function SnapToGrid32(coord)
     return 32+64*math.floor(coord/64)
+end
+
+BH_PRINT = true --Turn this off on production
+function BuildingHelper:print( ... )
+    if BH_PRINT then
+        print('[BH]'.. ...)
+    end
 end
 
 BuildingHelper:Init()

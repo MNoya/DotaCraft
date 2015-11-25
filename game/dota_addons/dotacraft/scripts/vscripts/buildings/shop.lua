@@ -78,8 +78,9 @@ function unit_shops:CreateShop(unit, shop_name)
 	
 	local shopEnt = Entities:FindByName(nil, "*custom_shop") -- entity name in hammer
 	if shopEnt then
-		local newshop = SpawnEntityFromTableSynchronous('trigger_shop', {origin = unit:GetAbsOrigin(), shoptype = 1}) -- shoptype is 0 for a "home" shop, 1 for a side shop and 2 for a secret shop
-		print("CreateShop out of "..shopEnt:GetModelName())
+		local modelName = shopEnt:GetModelName()
+		local newshop = SpawnEntityFromTableSynchronous('trigger_shop', {origin = unit:GetAbsOrigin(), shoptype = 1, model = modelName}) -- shoptype is 0 for a "home" shop, 1 for a side shop and 2 for a secret shop
+		print("CreateShop out of "..modelName)
 	else
 		print("ERROR: CreateShop was unable to find a custom_shop trigger area. Add a custom_shop trigger to this map")
 	end
@@ -558,8 +559,8 @@ function CheckHeroInRadius( event )
 
 	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(playerID) then
-			local player = PlayerResource:GetPlayer(playerID)
-			if teamNumber == DOTA_TEAM_NEUTRALS or player:GetTeamNumber() == teamNumber then
+			local playerTeam = PlayerResource:GetTeam(playerID)
+			if teamNumber == DOTA_TEAM_NEUTRALS or playerTeam == teamNumber then
 				
 				local current_unit = shop.current_unit[playerID]
 

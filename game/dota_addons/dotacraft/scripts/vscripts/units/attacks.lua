@@ -1,3 +1,17 @@
+function CheckAcquire( event )
+    local unit = event.caster
+    local target = unit:GetAttackTarget()
+
+    if target then
+        if UnitCanAttackTarget(unit, target) then
+            --print(unit:GetUnitName().." attacking "..target:GetUnitName())
+        else
+            unit:Stop()
+        end
+    end
+
+end
+
 -- Acquire valid attackable targets if the target is idle or in Attack-Move state
 function AutoAcquire( event )
     local unit = event.target
