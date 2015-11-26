@@ -39,20 +39,19 @@ end
 -- Denies casting if no friendly corpses near, with a message
 function ResurrectionPrecast( event )
 	local caster = event.caster
+	local playerID = caster:GetPlayerID()
 	local team = caster:GetTeamNumber()
 	local ability = event.ability
 	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), ability:GetCastRange()) 
 	
-	-- Remove units that aren't corpses or corpses of enemy units
+	-- Continue if a valid friendly corpse is found
 	for k,unit in pairs(targets) do
-		if unit.corpse_expiration == nil or unit:GetTeamNumber() ~= team then
-			table.remove(targets,k)
+		if unit.corpse_expiration and unit:GetTeamNumber() == team then
+			return
 		end
 	end
 
 	-- End the spell if no targets found
-	if #targets == 0 then
-		event.caster:Interrupt()
-		SendErrorMessage(pID, "#error_no_usable_friendly_corpses")
-	end
+	caster:Interrupt()
+	SendErrorMessage(playerID, "#error_no_usable_friendly_corpses")
 end

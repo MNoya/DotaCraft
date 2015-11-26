@@ -1129,7 +1129,7 @@ function dotacraft:OnEntityKilled( event )
 	else
 
 		-- CLeanup unit table
-		Players:RemoveUnit( killed_playerID, unit )
+		Players:RemoveUnit( killed_playerID, killed )
 
 		-- Give Experience to heroes based on the level of the killed creature
 		local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
