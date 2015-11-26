@@ -212,7 +212,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
     elseif order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
         
         local abilityIndex = filterTable["entindex_ability"]
-        local ability = EntIndexToHScript(abilityIndex) 
+        local ability = EntIndexToHScript(abilityIndex)
+        if not ability then
+            print("Error: CAST_NO_TARGET without an incorrect index")
+            return true
+        end
         local abilityName = ability:GetAbilityName()
 
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())

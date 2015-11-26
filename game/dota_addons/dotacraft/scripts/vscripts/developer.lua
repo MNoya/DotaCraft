@@ -100,7 +100,7 @@ function dotacraft:PointBreak()
 	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(playerID) then
 			local player = PlayerResource:GetPlayer(playerID)
-			Players:ModifyFoodLimit(playerID, foodBonus-Players:GetFoodLimit(playeID))
+			Players:ModifyFoodLimit(playerID, foodBonus-Players:GetFoodLimit(playerID))
 		end
 	end
 

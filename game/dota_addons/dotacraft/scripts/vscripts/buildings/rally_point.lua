@@ -9,12 +9,12 @@ function SpawnUnit( event )
 	local teamID = caster:GetTeam()
 
 	-- Adjust Mountain Giant secondary unit
-	if PlayerHasResearch(player, "nightelf_research_resistant_skin") then
+	if Players:HasResearch( playerID, "nightelf_research_resistant_skin") then
 		unit_name = unit_name.."_resistant_skin"
 	end
 
 	-- Adjust Troll Berkserker upgraded unit
-	if PlayerHasResearch(player, "orc_research_berserker_upgrade") then
+	if Players:HasResearch( playerID, "orc_research_berserker_upgrade") then
 		unit_name = "orc_troll_berserker"
 	end
 		

@@ -36,8 +36,8 @@ end
 
 -- Blight can be dispelled once the building that generated it has been destroyed or unsummoned.
 function RemoveBlight( location, radius )
-    location.x = SnapToGrid64(location.x)
-    location.y = SnapToGrid64(location.y)
+    location.x = BuildingHelper:SnapToGrid64(location.x)
+    location.y = BuildingHelper:SnapToGrid64(location.y)
     radius = radius - (radius%64) + 256
 
     local count = 0

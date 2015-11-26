@@ -1099,7 +1099,7 @@ function dotacraft:OnEntityKilled( event )
 
 		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killed)
-		if food_produced > 0 and player and not killed.state == "canceled" then
+		if food_produced > 0 and killed_playerID and not killed.state == "canceled" then
 			Players:ModifyFoodLimit(killed_playerID, - food_produced)
 		end
 
@@ -1122,11 +1122,13 @@ function dotacraft:OnEntityKilled( event )
 		-- Check for lose condition - All buildings destroyed
 		print("Player "..killed_playerID.." has "..#playerStructures.." buildings left")
 		if (#playerStructures == 0) then
-			dotacraft:CheckDefeatCondition(player)
+			dotacraft:CheckDefeatCondition(killed_teamNumber)
 		end
 	
 	-- Unit Killed (Hero or Creature)
 	else
+		-- Skip corpses
+		if unit.corpse_expiration then return end
 
 		-- CLeanup unit table
 		Players:RemoveUnit( killed_playerID, killed )
@@ -1321,8 +1323,7 @@ end
 -- In team games, teams are defeated as a whole instead of each player (because of resource trading and other shenanigans)
 -- Defeat condition: All players of the same team have 0 buildings
 -- Win condition: All teams have been defeated but one (i.e. there are only structures left standing for players of the same team)
-function dotacraft:CheckDefeatCondition( player )
-	local teamNumber = player:GetTeamNumber()
+function dotacraft:CheckDefeatCondition( teamNumber )
 
 	--SetNetTableValue("dotacraft_player_table", tostring(player:GetPlayerID()), {Status = "defeated"})
 

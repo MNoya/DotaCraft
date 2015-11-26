@@ -105,7 +105,8 @@ function Build( event )
 
     -- The construction failed and was never confirmed due to the gridnav being blocked in the attempted area
 	event:OnConstructionFailed(function()
-		local name = player.activeBuilding
+		local playerTable = BuildingHelper:GetPlayerTable(playerID)
+		local name = playerTable.activeBuilding
 		BuildingHelper:print("Failed placement of " .. name)
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
 	end)

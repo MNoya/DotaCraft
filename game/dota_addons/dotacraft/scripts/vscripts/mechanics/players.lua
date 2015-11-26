@@ -443,7 +443,7 @@ function Players:CheckCurrentCityCenters( playerID )
     end
     Players:SetCityCenterLevel(playerID, city_center_level)
 
-    print("Current City Center Level for player "..player:GetPlayerID().." is: "..city_center_level)
+    print("Current City Center Level for player "..playerID.." is: "..city_center_level)
 
     if city_center_level == 0 then
         local time_to_reveal = 120
