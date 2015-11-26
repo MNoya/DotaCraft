@@ -206,12 +206,13 @@ function EndBuildingHelper()
 function SendBuildCommand( params )
 {
     pressedShift = GameUI.IsShiftDown();
+    var mainSelected = Players.GetLocalPlayerPortraitUnit(); 
 
     $.Msg("Send Build command. Queue: "+pressedShift)
     var mPos = GameUI.GetCursorPosition();
     var GamePos = Game.ScreenXYToWorld(mPos[0], mPos[1]);
 
-    GameEvents.SendCustomGameEventToServer( "building_helper_build_command", { "X" : GamePos[0], "Y" : GamePos[1], "Z" : GamePos[2] , "Queue" : pressedShift } );
+    GameEvents.SendCustomGameEventToServer( "building_helper_build_command", { "builder": mainSelected, "X" : GamePos[0], "Y" : GamePos[1], "Z" : GamePos[2] , "Queue" : pressedShift } );
 
     // Cancel unless the player is holding shift
     if (!GameUI.IsShiftDown())
