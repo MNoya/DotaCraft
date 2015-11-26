@@ -44,10 +44,9 @@ function ApplyAnimalWarTraining( event )
 	-- Wait 1 frame because the ownership hasn't been set yet
 	Timers:CreateTimer(function() 
 		local hero = caster:GetOwner()
-		local player = hero:GetPlayerOwner()
-		local upgrades = player.upgrades
-		DeepPrintTable(player.upgrades)
-		if player.upgrades["human_research_animal_war_training"] then
+		local playerID = hero:GetPlayerOwnerID()
+		local upgrades = Players:GetUpgradeTable(playerID)
+		if upgrades["human_research_animal_war_training"] then
 			local bonus_health = event.ability:GetLevelSpecialValueFor("bonus_health", (event.ability:GetLevel() - 1))
 
 			local newHP = caster:GetMaxHealth() + bonus_health
@@ -60,16 +59,16 @@ end
 function TrainPriest( event )
 	local caster = event.caster
 	local hero = caster:GetOwner()
-	local player = hero:GetPlayerOwner()
-	local upgrades = player.upgrades
+	local playerID = hero:GetPlayerOwnerID()
+	local upgrades = Players:GetUpgradeTable(playerID)
 
 	local target = event.target
-	if player.upgrades["human_research_priest_training2"] then
+	if upgrades["human_research_priest_training2"] then
 		target:AddAbility("human_priest_training2")
 		local ability = target:FindAbilityByName("human_priest_training2")
 		ability:SetLevel(2)
 		target:CreatureLevelUp(1)
-	elseif player.upgrades["human_research_priest_training1"] then
+	elseif upgrades["human_research_priest_training1"] then
 		target:AddAbility("human_priest_training1")
 		local ability = target:FindAbilityByName("human_priest_training1")
 		ability:SetLevel(1)
@@ -79,16 +78,16 @@ end
 function TrainSorceress( event )
 	local caster = event.caster
 	local hero = caster:GetOwner()
-	local player = hero:GetPlayerOwner()
-	local upgrades = player.upgrades
+	local playerID = hero:GetPlayerOwnerID()
+	local upgrades = Players:GetUpgradeTable(playerID)
 
 	local target = event.target
-	if player.upgrades["human_research_sorceress_training2"] then
+	if upgrades["human_research_sorceress_training2"] then
 		target:AddAbility("human_sorceress_training2")
 		local ability = target:FindAbilityByName("human_sorceress_training2")
 		ability:SetLevel(2)
 		target:CreatureLevelUp(1)
-	elseif player.upgrades["human_research_sorceress_training1"] then
+	elseif upgrades["human_research_sorceress_training1"] then
 		target:AddAbility("human_sorceress_training1")
 		local ability = target:FindAbilityByName("human_sorceress_training1")
 		ability:SetLevel(1)

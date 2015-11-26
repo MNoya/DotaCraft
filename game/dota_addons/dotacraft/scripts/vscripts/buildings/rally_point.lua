@@ -112,7 +112,7 @@ function MoveToRallyPoint( event )
 	local caster = event.caster
 	local target = event.target
 	local entityIndex = target:GetEntityIndex() -- The spawned unit
-	local playerID = caster:GetPlayerID()
+	local playerID = caster:GetPlayerOwnerID()
 
 	-- Set the builders idle when they spawn
 	if IsBuilder(target) then 
@@ -188,7 +188,7 @@ function MoveToRallyPoint( event )
 	local hero = player:GetAssignedHero()
 	target:SetOwner(hero)
 	Players:AddUnit(playerID, target)
-	CheckAbilityRequirements(target, player)
+	CheckAbilityRequirements(target, playerID)
 end
 
 function GetInitialRallyPoint( event )

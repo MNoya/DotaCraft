@@ -284,6 +284,45 @@ end
 
 ---------------------------------------------------------------
 
+function Players:RemoveUnit( playerID, unit )
+    -- Attempt to remove from player units
+    local playerUnits = Players:GetUnits(playerID)
+    local unit_index = getIndexTable(playerUnits, unit)
+    if unit_index then
+        table.remove(playerUnits, unit_index)
+    end
+end
+
+function Players:RemoveStructure( playerID, unit )
+    local playerStructures = Players:GetStructures(playerID)
+    local buildingTable = Players:GetBuildingTable(playerID)
+
+    -- Substract 1 to the player building tracking table for that name
+    local buildingTable = Players:GetBuildingTable( playerID )
+    local unitName = unit:GetUnitName()
+    if buildingTable[unitName] then
+        buildingTable[unitName] = buildingTable[unitName] - 1
+    end
+
+    -- Remove the handle from the player structures
+    local playerStructures = Players:GetStructures( playerID )
+    local structure_index = getIndexTable(playerStructures, unit)
+    if structure_index then 
+        table.remove(playerStructures, structure_index)
+    end
+
+    if IsAltar(unit) then
+        -- Remove from altar structures
+        local playerAltars = Players:GetAltars( playerID )
+        local altar_index = getIndexTable(playerStructures, unit)
+        if altar_index then 
+            table.remove(playerAltars, altar_index)
+        end
+    end
+end
+
+---------------------------------------------------------------
+
 -- Returns bool
 function Players:HasResearch( playerID, research_name )
     local upgrades = Players:GetUpgradeTable(playerID)
@@ -489,3 +528,4 @@ end
 function Players:HeroCount( playerID )
     return #Players:GetHeroes(playerID)
 end
+

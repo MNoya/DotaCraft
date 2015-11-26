@@ -40,7 +40,7 @@ function getIndexTable(list, element)
             return k
         end
     end
-    return -1
+    return nil
 end
 
 function shallowcopy(orig)

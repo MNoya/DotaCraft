@@ -2,18 +2,18 @@
 function ApplyMultiRankUpgrade( event )
 	local caster = event.caster
 	local target = event.target
-	local player = caster:GetPlayerOwner()
-	local upgrades = player.upgrades
+	local playerID = caster:GetPlayerOwnerID()
+	local upgrades = Players:GetUpgradeTable(playerID)
 	local research_name = event.ResearchName
 	local ability_name = string.gsub(research_name, "research_" , "")
 	local cosmetic_type = event.WearableType
 	local level = 0
 
-	if player.upgrades[research_name.."3"] then
+	if upgrades[research_name.."3"] then
 		level = 3		
-	elseif player.upgrades[research_name.."2"] then
+	elseif upgrades[research_name.."2"] then
 		level = 2		
-	elseif player.upgrades[research_name.."1"] then
+	elseif upgrades[research_name.."1"] then
 		level = 1
 	end
 

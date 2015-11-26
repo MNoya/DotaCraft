@@ -6,6 +6,7 @@ function CallToArms( event )
 	local hero = caster:GetOwner()
 	local ability = event.ability
 	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
 
 	local units = FindAlliesInRadius(caster, 3000) --Radius of the bell ring
 	for _,unit in pairs(units) do
@@ -41,12 +42,10 @@ function CallToArms( event )
 						ability:ApplyDataDrivenModifier(militia, militia, "modifier_militia", {})
 
 						-- Add the units to a table so they are easier to find later
-						if not player.militia then
-							player.militia = {}
+						if not hero.militia then
+							hero.militia = {}
 						end
-						table.insert(player.militia, militia)
-
-						table.insert(player.units, militia)
+						table.insert(hero.militia, militia)
 					end
 				end
 			end)
@@ -67,7 +66,7 @@ end
 function BackToWork( event )
 	local unit = event.caster -- The militia unit
 	local ability = event.ability
-	local player = unit:GetPlayerOwner()
+	local playerID = unit:GetPlayerOwnerID()
 
 	local building = FindClosestResourceDeposit( unit, "gold" )
 	local building_pos = building :GetAbsOrigin()
@@ -97,8 +96,8 @@ function BackToWork( event )
 				return CALL_THINK_INTERVAL
 			else
 				local peasant = ReplaceUnit(unit, "human_peasant")
-				CheckAbilityRequirements(peasant, player)
-				table.insert(player.units, peasant)
+				
+				CheckAbilityRequirements(peasant, playerID)
 			end
 		end
 	end)
@@ -106,10 +105,10 @@ end
 
 function CallToArmsEnd( event )
 	local target = event.target
-	local player = target:GetPlayerOwner()
+	local playerID = target:GetPlayerOwnerID()
 	local peasant = ReplaceUnit( event.target, "human_peasant" )
-	CheckAbilityRequirements(peasant, player)
-	table.insert(player.units, peasant)
+
+	CheckAbilityRequirements(peasant, playerID)
 end
 
 function HideBackpack( event )

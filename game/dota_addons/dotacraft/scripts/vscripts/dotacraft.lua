@@ -197,8 +197,6 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
     CustomGameEventManager:RegisterListener( "right_click_order", Dynamic_Wrap(dotacraft, "RightClickOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
-    CustomGameEventManager:RegisterListener( "building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
-	CustomGameEventManager:RegisterListener( "building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
 
 	-- Lua Modifiers
 	LinkLuaModifier("modifier_movespeed_cap", "libraries/modifiers/modifier_movespeed_cap", LUA_MODIFIER_MOTION_NONE)
@@ -224,8 +222,8 @@ function dotacraft:InitGameMode()
 	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
 	for k,gold_mine in pairs (GameRules.GoldMines) do
 		local location = gold_mine:GetAbsOrigin()
-		location.x = SnapToGrid32(location.x)
-    	location.y = SnapToGrid32(location.y)
+		location.x = BuildingHelper:SnapToGrid32(location.x)
+    	location.y = BuildingHelper:SnapToGrid32(location.y)
 		local gridNavBlockers = BuildingHelper:BlockGridNavSquare(5, location)
 		--gold_mine:SetAbsOrigin(location)
 	    gold_mine.blockers = gridNavBlockers
@@ -1043,9 +1041,9 @@ function dotacraft:OnEntityKilled( event )
 		-- add hero to tavern, this function also works out cost etc
 		unit_shops:AddHeroToTavern(killed)
 		
-		if Players:HasAltar(playerID) then
+		if Players:HasAltar(killed_playerID) then
 
-			local playerAltars = Players:GetAltars(playerID)
+			local playerAltars = Players:GetAltars(killed_playerID)
 			print("Player has "..#playerAltars.." valid altars")
 			for _,altar in pairs(playerAltars) do
 				-- Set the strings for the _acquired ability to find and _revival ability to add
@@ -1085,10 +1083,12 @@ function dotacraft:OnEntityKilled( event )
 			print("Hero Killed but player doesn't have an altar to revive it")
 		end
 	end
-
 	
 	-- Building Killed
 	if IsCustomBuilding(killed) then
+
+		-- Cleanup building tables
+		Players:RemoveStructure( killed_playerID, killed )
 
 		-- Building Helper grid cleanup
 		BuildingHelper:RemoveBuilding(killed, true)
@@ -1103,22 +1103,12 @@ function dotacraft:OnEntityKilled( event )
 			Players:ModifyFoodLimit(killed_playerID, - food_produced)
 		end
 
-		-- Check units for downgrades
-		local building_name = killed:GetUnitName()
-				
-		-- Substract 1 to the player building tracking table for that name
-		local playerBuildingTable = Players:GetBuildingTable( killed_playerID )
-		if playerBuildingTable[building_name] then
-			playerBuildingTable[building_name] = playerBuildingTable[building_name] - 1
-		end
-
-		-- possible unit downgrades
+		-- Check units and structures for downgrades
 		local playerUnits = Players:GetUnits( killed_playerID )
 		for k,units in pairs(playerUnits) do
 		    CheckAbilityRequirements( units, killed_playerID )
 		end
 
-		-- possible structure downgrades
 		local playerStructures = Players:GetStructures( killed_playerID )
 		for k,structure in pairs(playerStructures) do
 			CheckAbilityRequirements( structure, killed_playerID )
@@ -1137,6 +1127,10 @@ function dotacraft:OnEntityKilled( event )
 	
 	-- Unit Killed (Hero or Creature)
 	else
+
+		-- CLeanup unit table
+		Players:RemoveUnit( killed_playerID, unit )
+
 		-- Give Experience to heroes based on the level of the killed creature
 		local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
 
@@ -1205,7 +1199,7 @@ function dotacraft:OnPlayerSelectedEntities( event )
 	-- This is for Building Helper to know which is the currently active builder
 	local mainSelected = GetMainSelectedEntity(pID)
 	if IsValidEntity(mainSelected) and IsBuilder(mainSelected) then
-		local player = PlayerResource:GetPlayer(pID)
+		local player = BuildingHelper:GetPlayerTable(pID)
 		player.activeBuilder = mainSelected
 	end
 end

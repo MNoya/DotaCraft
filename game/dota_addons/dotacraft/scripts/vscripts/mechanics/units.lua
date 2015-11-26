@@ -156,6 +156,10 @@ function IsCustomBuilding( unit )
     end
 end
 
+function IsAltar( unit )
+    return string.match(unit:GetUnitName(), "_altar_")
+end
+
 function IsCustomTower( unit )
     return unit:HasAbility("ability_tower")
 end
@@ -211,7 +215,7 @@ function ReplaceUnit( unit, new_unit_name )
     --print("Replacing "..unit:GetUnitName().." with "..new_unit_name)
 
     local hero = unit:GetOwner()
-    local pID = hero:GetPlayerOwnerID()
+    local playerID = hero:GetPlayerOwnerID()
 
     local position = unit:GetAbsOrigin()
     local relative_health = unit:GetHealthPercent()
@@ -219,7 +223,7 @@ function ReplaceUnit( unit, new_unit_name )
 
     local new_unit = CreateUnitByName(new_unit_name, position, true, hero, hero, hero:GetTeamNumber())
     new_unit:SetOwner(hero)
-    new_unit:SetControllableByPlayer(pID, true)
+    new_unit:SetControllableByPlayer(playerID, true)
     new_unit:SetHealth(new_unit:GetMaxHealth() * relative_health)
     FindClearSpaceForUnit(new_unit, position, true)
 
@@ -227,6 +231,11 @@ function ReplaceUnit( unit, new_unit_name )
         AddUnitToSelection(new_unit)
     end
 
+    -- Add the new unit to the player units
+    Players:AddUnit(playerID, new_unit)
+
+    -- Remove replaced unit from the game
+    Players:RemoveUnit(playerID, unit)
     unit:RemoveSelf()
 
     return new_unit
