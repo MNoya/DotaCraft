@@ -50,7 +50,7 @@ function Build( event )
        	-- Blight check
        	if string.match(building_name, "undead") and building_name ~= "undead_necropolis" then
        		local bHasBlight = HasBlight(vPos)
-       		DebugPrint("[BH] Blight check for "..building_name..":", bHasBlight)
+       		BuildingHelper:print("Blight check for "..building_name..":", bHasBlight)
        		if not bHasBlight then
        			SendErrorMessage(caster:GetPlayerOwnerID(), "#error_must_build_on_blight")
        			return false
@@ -94,7 +94,7 @@ function Build( event )
 		
 		for _,unit in pairs(units) do
 			if unit ~= caster and not IsCustomBuilding(unit) then
-				DebugPrint("[BH] Moving unit "..unit:GetUnitName().." outside of the building area")
+				BuildingHelper:print("Moving unit "..unit:GetUnitName().." outside of the building area")
 				local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * hull
 				ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
 				unit:AddNewModifier(caster, nil, "modifier_phased", {duration=1})
@@ -106,14 +106,14 @@ function Build( event )
     -- The construction failed and was never confirmed due to the gridnav being blocked in the attempted area
 	event:OnConstructionFailed(function()
 		local name = player.activeBuilding
-		DebugPrint("[BH] Failed placement of " .. name)
+		BuildingHelper:print("Failed placement of " .. name)
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
 	end)
 
 	-- Cancelled due to ClearQueue
 	event:OnConstructionCancelled(function(work)
 		local name = work.name
-		DebugPrint("[BH] Cancelled construction of " .. name)
+		BuildingHelper:print("Cancelled construction of " .. name)
 
 		-- Refund resources for this cancelled work
 		if work.refund then
@@ -124,7 +124,7 @@ function Build( event )
 
 	-- A building unit was created
 	event:OnConstructionStarted(function(unit)
-		DebugPrint("[BH] Started construction of " .. unit:GetUnitName() .. " " .. unit:GetEntityIndex())
+		BuildingHelper:print("Started construction of " .. unit:GetUnitName() .. " " .. unit:GetEntityIndex())
 		-- Play construction sound
 
 		-- If it's an item-ability and has charges, remove a charge or remove the item if no charges left
@@ -162,7 +162,7 @@ function Build( event )
     	-- Apply the current level of Masonry to the newly upgraded building
 		local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
 		if masonry_rank and masonry_rank > 0 then
-			DebugPrint("[BH] Applying masonry rank "..masonry_rank.." to this building construction")
+			BuildingHelper:print("Applying masonry rank "..masonry_rank.." to this building construction")
 			UpdateUnitUpgrades( unit, player, "human_research_masonry"..masonry_rank )
 		end
 
@@ -179,7 +179,7 @@ function Build( event )
 
 	-- A building finished construction
 	event:OnConstructionCompleted(function(unit)
-		DebugPrint("[BH] Completed construction of " .. unit:GetUnitName() .. " " .. unit:GetEntityIndex())
+		BuildingHelper:print("Completed construction of " .. unit:GetUnitName() .. " " .. unit:GetEntityIndex())
 		
 		-- Play construction complete sound
 
@@ -204,7 +204,7 @@ function Build( event )
 		-- When building one of the lumber-only buildings, send the builder(s) to auto-gather lumber after the building is done
 		Timers:CreateTimer(0.5, function() 
 		if builders and building_name == "human_lumber_mill" or building_name == "orc_war_mill" then
-			DebugPrint("[BH] Sending "..#builders.." builders to gather lumber after finishing "..building_name)
+			BuildingHelper:print("Sending "..#builders.." builders to gather lumber after finishing "..building_name)
 			
 			for k,builder in pairs(builders) do
 				local race = GetUnitRace(builder)
@@ -286,7 +286,7 @@ function Build( event )
 	-- These callbacks will only fire when the state between below half health/above half health changes.
 	-- i.e. it won't fire multiple times unnecessarily.
 	event:OnBelowHalfHealth(function(unit)
-		DebugPrint("[BH] " .. unit:GetUnitName() .. " is below half health.")
+		BuildingHelper:print("" .. unit:GetUnitName() .. " is below half health.")
 				
 		local item = CreateItem("item_apply_modifiers", nil, nil)
     	item:ApplyDataDrivenModifier(unit, unit, "modifier_onfire", {})
@@ -295,7 +295,7 @@ function Build( event )
 	end)
 
 	event:OnAboveHalfHealth(function(unit)
-		DebugPrint("[BH] " ..unit:GetUnitName().. " is above half health.")
+		BuildingHelper:print("" ..unit:GetUnitName().. " is above half health.")
 
 		unit:RemoveModifierByName("modifier_onfire")
 		
@@ -1298,6 +1298,7 @@ function Repair( event )
 			
 		local healthGain = 0
 		if Players:HasEnoughGold( playerID, math.ceil(gold_per_second+gold_float) ) and Players:HasEnoughLumber( playerID, lumber_per_second ) then
+
 			-- Health
 			building.HPAdjustment = building.HPAdjustment + health_float
 			if building.HPAdjustment > 1 then
@@ -1325,6 +1326,7 @@ function Repair( event )
 		else
 			-- Remove the modifiers on the building and the builders
 			building:RemoveModifierByName("modifier_repairing_building")
+			print("Remove the modifiers on the building and the builders")
 			for _,builder in pairs(building.units_repairing) do
 				if builder and IsValidEntity(builder) then
 					builder:RemoveModifierByName("modifier_builder_repairing")
@@ -1347,6 +1349,7 @@ function Repair( event )
 	else
 		-- Remove the modifiers on the building and the builders
 		building:RemoveModifierByName("modifier_repairing_building")
+		print("Building Fully Healed")
 		for _,builder in pairs(building.units_repairing) do
 			if builder and IsValidEntity(builder) then
 				builder:RemoveModifierByName("modifier_builder_repairing")
@@ -1381,7 +1384,7 @@ function BuilderRepairing( event )
 	local ability = event.ability
 	local target = caster.repair_target
 
-    print("Builder Repairing ",target:GetUnitName())
+    print("Builder Repairing ",target:GetUnitName(), caster, ability, target)
 	
 	caster.state = "repairing"
 
@@ -1390,17 +1393,16 @@ function BuilderRepairing( event )
 	if target:HasModifier(modifierName) then
 		target:SetModifierStackCount( modifierName, ability, target:GetModifierStackCount( modifierName, ability ) + 1 )
 	else
-		ability:ApplyDataDrivenModifier( caster, target, modifierName, { Duration = duration } )
+		ability:ApplyDataDrivenModifier( caster, target, modifierName, { duration = duration } )
 		target:SetModifierStackCount( modifierName, ability, 1 )
 	end
 
 	-- Keep a list of the units repairing this building
 	if not target.units_repairing then
 		target.units_repairing = {}
-		table.insert(target.units_repairing, caster)
-	else
-		table.insert(target.units_repairing, caster)
 	end
+
+	table.insert(target.units_repairing, caster:GetEntityIndex())
 end
 
 function BuilderStopRepairing( event )
@@ -1434,7 +1436,7 @@ function BuilderStopRepairing( event )
 	end
 
 	-- Remove the builder from the list of units repairing the building
-	local builder = getIndex(building.units_repairing, caster)
+	local builder = getIndexTable(building.units_repairing, caster:GetEntityIndex())
 	if builder and builder ~= -1 then
 		table.remove(building.units_repairing, builder)
 	end
