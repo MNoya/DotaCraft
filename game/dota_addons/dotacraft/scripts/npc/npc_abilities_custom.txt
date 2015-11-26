@@ -15277,7 +15277,9 @@
 		"AbilityTextureName"			"human_research_defend"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+	
+		"AbilityMultiOrder"				"1"
 	
 		"AbilitySpecial"
 		{
@@ -15296,6 +15298,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"reflect_chance"			"30"
 			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_medusa/medusa_mana_shield_snakeskin.vpcf"
 		}
 	
 		"OnToggleOn"
@@ -15323,6 +15330,9 @@
 				"Passive"			"0"
 				"IsHidden"			"0"
 				"IsDebuff"			"0"
+	
+				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield_snakeskin.vpcf"
+				"EffectAttachType"	"follow_origin"
 	
 				"Properties"
 				{

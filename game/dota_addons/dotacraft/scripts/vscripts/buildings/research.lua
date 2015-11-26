@@ -1,8 +1,4 @@
---[[
-	Author: Noya
-	Date: 20.02.2015.
-	Adds the search to the player research list
-]]
+-- Adds the search to the player research list
 function ResearchComplete( event )
 	local caster = event.caster
 	local playerID = caster:GetPlayerOwnerID()
@@ -23,22 +19,15 @@ function ResearchComplete( event )
 	local playerUnits = Players:GetUnits(playerID)
 	for _,unit in pairs(playerUnits) do
 		CheckAbilityRequirements( unit, playerID )
-	end
-
-	-- Also, on the buildings that have the upgrade, disable the upgrade and/or apply the next rank.
-	local playerStructures = Players:GetUnits(playerID)
-	for _,structure in pairs(playerStructures) do
-		CheckAbilityRequirements( structure, playerID )
-	end
-		
-	for _,unit in pairs(playerUnits) do
 		UpdateUnitUpgrades( unit, playerID, research_name)
 	end
 
+	-- Also, on the buildings that have the upgrade, disable the upgrade and/or apply the next rank.
+	local playerStructures = Players:GetStructures(playerID)
 	for _,structure in pairs(playerStructures) do
+		CheckAbilityRequirements( structure, playerID )
 		UpdateUnitUpgrades( structure, playerID, research_name)
 	end
-
 end
 
 function LumberResearchComplete( event )

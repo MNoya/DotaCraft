@@ -67,7 +67,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     --           Ability Multi Order              --
     ------------------------------------------------
     if abilityIndex and abilityIndex ~= 0 and IsMultiOrderAbility(EntIndexToHScript(abilityIndex)) then
-        print("Multi Order Ability")
+        --print("Multi Order Ability")
 
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
