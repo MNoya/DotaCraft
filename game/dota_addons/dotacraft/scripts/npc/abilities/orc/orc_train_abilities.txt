@@ -87,26 +87,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "orc_train_grunt"
@@ -214,26 +194,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "orc_train_troll_headhunter" //berserker takes 2 more seconds
@@ -294,26 +254,6 @@
 			"ScriptFile"	"buildings/rally_point.lua"
 			"Function"		"SpawnUnit"
 			"UnitName"		"orc_troll_headhunter"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
 		}
 	}
 }
@@ -437,26 +377,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "orc_train_demolisher_disabled"
@@ -572,26 +492,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "orc_train_troll_witch_doctor"
@@ -691,26 +591,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "orc_train_spirit_walker"
@@ -806,26 +686,6 @@
 					"Function"		"ApplyMultiRankUpgrade"
 					"ResearchName"	"orc_research_spirit_walker_training"
 					"wearable_type"	"training"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}
@@ -937,26 +797,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "orc_train_kodo_beast"
@@ -1050,26 +890,6 @@
 				{
 					"ScriptFile"	"units/orc/orc_upgrades.lua"
 					"Function"		"ApplyWarDrumsUpgrade"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}
@@ -1191,26 +1011,6 @@
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
 					"ResearchName"	"orc_research_unit_armor"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}
@@ -1338,26 +1138,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "orc_train_troll_batrider_disabled"
@@ -1477,26 +1257,6 @@
 					"Function"      "ApplyMultiRankUpgrade"
 					"ResearchName"	"orc_research_unit_armor"
 					"WearableType"	"armor"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}

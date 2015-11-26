@@ -47,7 +47,7 @@ function DequeueUnit( event )
 	local caster = event.caster
 	local item = event.ability
 	local player = caster:GetPlayerOwner()
-	local playerID = player:GetPlayerID()
+	local playerID = caster:GetPlayerOwnerID()
 
 	local item_ability = EntIndexToHScript(item:GetEntityIndex())
 	local item_ability_name = item_ability:GetAbilityName()
@@ -158,6 +158,19 @@ function AdvanceQueue( event )
 		
 		-- RemakeQueue
 		caster.queue = {}
+
+		-- Autocast, only if the queue is empty and there's enough food and resources for any of the training
+		local nQueued = GetNumItemsInInventory(caster)
+		if nQueued == 0 then
+			for i=0,15 do
+				local thisAbility = caster:GetAbilityByIndex(i)
+				if thisAbility and thisAbility:GetAutoCastState() and Players:EnoughToDoMyPower(playerID, thisAbility) then
+					caster:CastAbilityNoTarget(thisAbility, playerID)
+					print("Autocasting ",thisAbility:GetAbilityName())
+				end
+			end
+		end
+
 
 		-- Check the first item that contains "train" on the queue
 		for itemSlot=0,5 do

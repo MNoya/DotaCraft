@@ -87,26 +87,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "undead_train_ghoul"
@@ -214,26 +194,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "undead_train_crypt_fiend"
@@ -337,26 +297,6 @@
 					"Function"      "ApplyMultiRankUpgrade"
 					"ResearchName"	"undead_research_creature_carapace"
 					"WearableType"	"armor"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}
@@ -484,26 +424,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "undead_train_gargoyle_disabled"
@@ -627,26 +547,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "undead_train_abomination_disabled"
@@ -761,26 +661,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "undead_train_obsidian_statue"
@@ -868,26 +748,6 @@
 				{
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}
@@ -1007,26 +867,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "undead_train_banshee"
@@ -1122,26 +962,6 @@
 					"Function"		"ApplyMultiRankUpgrade"
 					"ResearchName"	"undead_research_banshee_training"
 					"WearableType"	"training"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}
@@ -1249,26 +1069,6 @@
 					"Function"      "ApplyMultiRankUpgrade"
 					"ResearchName"	"undead_research_creature_carapace"
 					"WearableType"	"armor"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}

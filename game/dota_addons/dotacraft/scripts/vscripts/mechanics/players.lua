@@ -23,7 +23,7 @@ function Players:Init( playerID, hero )
 
     -- Other variables
     hero.city_center_level = 1
-    hero.lumber_carried = 0
+    hero.lumber_carried = 0 --Should be a unitvalue
     hero.altar_level = 1
 end
 
@@ -108,7 +108,7 @@ end
 function Players:GetGold( playerID )
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
-    return hero.gold
+    return hero:GetGold()
 end
 
 function Players:GetLumber( playerID )
@@ -252,10 +252,20 @@ function Players:HasEnoughFood( playerID, food_cost )
     end
 end
 
-function Players:HasAltar( playerID )
-    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+function Players:EnoughToDoMyPower( playerID, ability )
+    local gold_cost = ability:GetGoldCost(ability:GetLevel()) or 0
+    local lumber_cost = ability:GetSpecialValueFor("lumber_cost") or 0
+    local food_cost = ability:GetSpecialValueFor("food_cost") or 0
 
-    return IsValidAlive(hero.altar) and hero.altar or false
+    local current_gold = Players:GetGold(playerID)
+    local current_lumber = Players:GetLumber(playerID)
+    local current_food = Players:GetFoodLimit(playerID) - Players:GetFoodUsed(playerID)
+
+    local bCanAffordGoldCost = current_gold >= gold_cost
+    local bCanAffordLumberCost = current_lumber >= lumber_cost
+    local bCanAffordFoodCost = current_food >= food_cost
+
+    return bCanAffordGoldCost and bCanAffordLumberCost and bCanAffordFoodCost
 end
 
 ---------------------------------------------------------------
@@ -361,6 +371,12 @@ function Players:HasRequirementForAbility( playerID, ability_name )
     end
 
     return true
+end
+
+function Players:HasAltar( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return IsValidAlive(hero.altar) and hero.altar or false
 end
 
 ---------------------------------------------------------------

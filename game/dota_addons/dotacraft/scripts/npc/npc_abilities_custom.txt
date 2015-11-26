@@ -25118,26 +25118,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	
@@ -25246,26 +25226,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"human_train_rifleman"
@@ -25369,26 +25329,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"human_research_leather_armor"
 						"WearableType"	"armor"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -25501,26 +25441,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"human_train_sorceress"
@@ -25615,26 +25535,6 @@
 					{
 						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"TrainSorceress"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -25734,26 +25634,6 @@
 					{
 						"ScriptFile"	"units/human/human_upgrades.lua"
 						"Function"		"TrainPriest"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -25866,26 +25746,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	
@@ -25990,26 +25850,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"human_research_ranged_weapons"
 						"WearableType"	"weapon"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -26122,26 +25962,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	"human_train_siege_engine"
 	{
@@ -26244,26 +26064,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"human_research_ranged_weapons"
 						"WearableType"	"weapon"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -26378,26 +26178,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	"human_train_dragonhawk_rider"
 	{
@@ -26500,26 +26280,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"human_research_leather_armor"
 						"WearableType"	"armor"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -44601,26 +44361,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"nightelf_train_archer"
@@ -44724,26 +44464,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"nightelf_research_moon_armor"
 						"WearableType"	"armor"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -44861,26 +44581,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"nightelf_train_huntress_disabled"
@@ -44991,26 +44691,6 @@
 						"ScriptFile"    "units/upgrades.lua"
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"nightelf_research_strength_of_the_moon"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -45138,26 +44818,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"nightelf_train_druid_of_the_claw"
@@ -45257,26 +44917,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"nightelf_train_druid_of_the_claw_disabled"
@@ -45353,26 +44993,6 @@
 				"ScriptFile"	"buildings/rally_point.lua"
 				"Function"		"SpawnUnit"
 				"UnitName"		"nightelf_mountain_giant"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
 			}
 		}
 	}
@@ -45498,26 +45118,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"nightelf_train_faerie_dragon_disabled"
@@ -45633,26 +45233,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"nightelf_train_hippogryph"
@@ -45760,26 +45340,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"nightelf_train_chimaera"
@@ -45883,26 +45443,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"nightelf_research_reinforced_hides"
 						"WearableType"	"armor"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -56007,26 +55547,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"orc_train_grunt"
@@ -56134,26 +55654,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"orc_train_troll_headhunter" //berserker takes 2 more seconds
@@ -56214,26 +55714,6 @@
 				"ScriptFile"	"buildings/rally_point.lua"
 				"Function"		"SpawnUnit"
 				"UnitName"		"orc_troll_headhunter"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
 			}
 		}
 	}
@@ -56357,26 +55837,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"orc_train_demolisher_disabled"
@@ -56492,26 +55952,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"orc_train_troll_witch_doctor"
@@ -56611,26 +56051,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"orc_train_spirit_walker"
@@ -56726,26 +56146,6 @@
 						"Function"		"ApplyMultiRankUpgrade"
 						"ResearchName"	"orc_research_spirit_walker_training"
 						"wearable_type"	"training"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -56857,26 +56257,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"orc_train_kodo_beast"
@@ -56970,26 +56350,6 @@
 					{
 						"ScriptFile"	"units/orc/orc_upgrades.lua"
 						"Function"		"ApplyWarDrumsUpgrade"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -57111,26 +56471,6 @@
 						"ScriptFile"    "units/upgrades.lua"
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"orc_research_unit_armor"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -57258,26 +56598,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"orc_train_troll_batrider_disabled"
@@ -57397,26 +56717,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"orc_research_unit_armor"
 						"WearableType"	"armor"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -68490,26 +67790,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"undead_train_ghoul"
@@ -68617,26 +67897,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"undead_train_crypt_fiend"
@@ -68740,26 +68000,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"undead_research_creature_carapace"
 						"WearableType"	"armor"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -68887,26 +68127,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"undead_train_gargoyle_disabled"
@@ -69030,26 +68250,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"undead_train_abomination_disabled"
@@ -69164,26 +68364,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"undead_train_obsidian_statue"
@@ -69271,26 +68451,6 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -69410,26 +68570,6 @@
 				}
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
-					}
-				}
-			}
-		}
 	}
 	
 	"undead_train_banshee"
@@ -69525,26 +68665,6 @@
 						"Function"		"ApplyMultiRankUpgrade"
 						"ResearchName"	"undead_research_banshee_training"
 						"WearableType"	"training"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}
@@ -69652,26 +68772,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"undead_research_creature_carapace"
 						"WearableType"	"armor"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "buildings/autocast.lua"
-						"Function"      "BuildingAutocast"
 					}
 				}
 			}

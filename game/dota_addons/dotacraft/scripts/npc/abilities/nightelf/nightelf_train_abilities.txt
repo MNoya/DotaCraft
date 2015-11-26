@@ -87,26 +87,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "nightelf_train_archer"
@@ -210,26 +190,6 @@
 					"Function"      "ApplyMultiRankUpgrade"
 					"ResearchName"	"nightelf_research_moon_armor"
 					"WearableType"	"armor"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}
@@ -347,26 +307,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "nightelf_train_huntress_disabled"
@@ -477,26 +417,6 @@
 					"ScriptFile"    "units/upgrades.lua"
 					"Function"      "ApplyMultiRankUpgrade"
 					"ResearchName"	"nightelf_research_strength_of_the_moon"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}
@@ -624,26 +544,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "nightelf_train_druid_of_the_claw"
@@ -743,26 +643,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "nightelf_train_druid_of_the_claw_disabled"
@@ -839,26 +719,6 @@
 			"ScriptFile"	"buildings/rally_point.lua"
 			"Function"		"SpawnUnit"
 			"UnitName"		"nightelf_mountain_giant"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
 		}
 	}
 }
@@ -984,26 +844,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "nightelf_train_faerie_dragon_disabled"
@@ -1119,26 +959,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "nightelf_train_hippogryph"
@@ -1246,26 +1066,6 @@
 			}
 		}
 	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
-				}
-			}
-		}
-	}
 }
 
 "nightelf_train_chimaera"
@@ -1369,26 +1169,6 @@
 					"Function"      "ApplyMultiRankUpgrade"
 					"ResearchName"	"nightelf_research_reinforced_hides"
 					"WearableType"	"armor"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_building_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "buildings/autocast.lua"
-					"Function"      "BuildingAutocast"
 				}
 			}
 		}

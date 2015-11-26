@@ -31,6 +31,15 @@ function ReorderItems( caster )
     end
 end
 
+function GetNumItemsInInventory( unit )
+    local count = 0
+    for i=0,5 do
+        local item = unit:GetItemInSlot(i)
+        if item then count = count + 1 end
+    end
+    return count
+end
+
 -- Sells an item from any unit, with gold and lumber cost refund
 function SellCustomItem( unit, item )
     local player = unit:GetPlayerOwner()

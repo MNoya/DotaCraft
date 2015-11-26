@@ -1350,7 +1350,8 @@ function Repair( event )
 		-- Remove the modifiers on the building and the builders
 		building:RemoveModifierByName("modifier_repairing_building")
 		print("Building Fully Healed")
-		for _,builder in pairs(building.units_repairing) do
+		for _,v in pairs(building.units_repairing) do
+			local builder = EntIndexToHScript(v)
 			if builder and IsValidEntity(builder) then
 				builder:RemoveModifierByName("modifier_builder_repairing")
 				builder.state = "idle"
