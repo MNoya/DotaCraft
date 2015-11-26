@@ -252,7 +252,7 @@ function Players:HasEnoughFood( playerID, food_cost )
     end
 end
 
-function Players:EnoughToDoMyPower( playerID, ability )
+function Players:EnoughForDoMyPower( playerID, ability )
     local gold_cost = ability:GetGoldCost(ability:GetLevel()) or 0
     local lumber_cost = ability:GetSpecialValueFor("lumber_cost") or 0
     local food_cost = ability:GetSpecialValueFor("food_cost") or 0

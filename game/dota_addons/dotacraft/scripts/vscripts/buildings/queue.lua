@@ -164,9 +164,8 @@ function AdvanceQueue( event )
 		if nQueued == 0 then
 			for i=0,15 do
 				local thisAbility = caster:GetAbilityByIndex(i)
-				if thisAbility and thisAbility:GetAutoCastState() and Players:EnoughToDoMyPower(playerID, thisAbility) then
+				if thisAbility and thisAbility:GetAutoCastState() and Players:EnoughForDoMyPower(playerID, thisAbility) then
 					caster:CastAbilityNoTarget(thisAbility, playerID)
-					print("Autocasting ",thisAbility:GetAbilityName())
 				end
 			end
 		end
