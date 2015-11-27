@@ -16,9 +16,11 @@ function BattleStations( event )
 	local maxPeons = 4 - #caster.peons_inside
 	local peons = {}
 	for _,unit in pairs(units) do
-		if IsValidEntity(unit) and unit:GetUnitName() == "orc_peon" and #peons < maxPeons then
-			if unit.state == "idle" then
-				table.insert(peons, unit)
+		if #peons < maxPeons then
+			if IsValidEntity(unit) and unit:GetUnitName() == "orc_peon" and not unit:HasModifier("modifier_builder_burrowed") then
+				if unit.state == "idle" then
+					table.insert(peons, unit)
+				end
 			end
 		end
 	end
@@ -26,7 +28,7 @@ function BattleStations( event )
 	-- If we couldn't find 4 idle peons in radius, get any
 	if #peons < maxPeons then
 		for _,unit in pairs(units) do
-			if IsValidEntity(unit) and unit:GetUnitName() == "orc_peon" and not unit.state == "burrowed" and #peons < maxPeons and not tablecontains(peons, unit) then
+			if IsValidEntity(unit) and unit:GetUnitName() == "orc_peon" and not unit:HasModifier("modifier_builder_burrowed") and not tableContains(peons, unit) then
 				table.insert(peons, unit)
 			end
 		end
@@ -42,7 +44,8 @@ end
 function BurrowPeon( event )
 	local caster = event.caster
 	local unit = event.target
-	
+	caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+
 	if unit:GetUnitName() ~= "orc_peon" then
 		print("Not an Orc Peon")
 		return
@@ -61,6 +64,8 @@ function BurrowPeon( event )
 		Timers:RemoveTimer(unit.moving_timer)
 	end
 
+	ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
+	unit:Interrupt()
 	ability:ApplyDataDrivenModifier(unit, unit, "modifier_on_order_cancel_battle_stations", {})
 
 	-- Start moving towards the building
@@ -101,7 +106,9 @@ function BurrowPeon( event )
 				counter=counter+1
 
 				-- Apply modifier on building for faster attack
-				caster:RemoveModifierByName("modifier_battle_stations"..counter-1)
+				for i=1,4 do
+					caster:RemoveModifierByName("modifier_battle_stations"..i)
+				end
 				ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_stations"..counter, {})
 				ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_stations", {})
 				caster:SetModifierStackCount("modifier_battle_stations", caster, counter)
@@ -148,7 +155,10 @@ function CancelBattleStations( event )
 end
 
 function StandDown( event )
-	for i=1,5 do
+	local caster = event.caster
+	caster:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
+	for i=1,4 do
+		caster:RemoveModifierByName("modifier_battle_stations"..i)
 		Timers:CreateTimer(0.5*i, function() 
 			BackToWork(event)
 		end)
@@ -178,8 +188,11 @@ function BackToWork( event )
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_stations", {})
 			caster:SetModifierStackCount("modifier_battle_stations", caster, counter)
 		else
-			caster:RemoveModifierByName("modifier_battle_stations"..counter-1)
+			for i=1,4 do
+				caster:RemoveModifierByName("modifier_battle_stations"..i)
+			end
 			caster:RemoveModifierByName("modifier_battle_stations")
+			caster:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
 		end
 
 		FindClearSpaceForUnit(first_peon, caster:GetAbsOrigin(), true)

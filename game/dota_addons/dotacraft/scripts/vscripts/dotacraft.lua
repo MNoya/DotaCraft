@@ -525,6 +525,7 @@ function dotacraft:InitializePlayer( hero )
 		ghoul:SetOwner(hero)
 		ghoul:SetControllableByPlayer(playerID, true)
 		Players:ModifyFoodUsed(playerID, GetFoodCost(ghoul))
+		Players:AddUnit(playerID, ghoul)
 
 		-- Haunt the closest gold mine
 		local haunted_gold_mine = CreateUnitByName("undead_haunted_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
@@ -1131,7 +1132,9 @@ function dotacraft:OnEntityKilled( event )
 		if killed.corpse_expiration then return end
 
 		-- CLeanup unit table
-		Players:RemoveUnit( killed_playerID, killed )
+		if killed_hero then
+			Players:RemoveUnit( killed_playerID, killed )
+		end
 
 		-- Give Experience to heroes based on the level of the killed creature
 		local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
@@ -1155,7 +1158,7 @@ function dotacraft:OnEntityKilled( event )
 
 		-- Substract the Food Used
 		local food_cost = GetFoodCost(killed)
-		if food_cost > 0 then
+		if killed_hero and food_cost > 0 then
 			Players:ModifyFoodUsed(killed_playerID, - food_cost)
 		end
 
