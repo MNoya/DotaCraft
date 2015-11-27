@@ -230,6 +230,8 @@ function SendCancelCommand( params )
 }
 
 (function () {
+    GameUI.SetRenderBottomInsetOverride( 0 );
+    
     GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
     GameEvents.Subscribe( "building_helper_end", EndBuildingHelper);
 })();

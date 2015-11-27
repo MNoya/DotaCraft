@@ -20,7 +20,7 @@ function UpgradeBuilding( event )
 	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, false, 0) 
 	building.blockers = blockers
 	building:SetHullRadius(hull_radius)
-	building:SetAngles(0, -angle.y, 0)
+	building:SetAngles(0, angle.y, 0)
 
 	-- Keep the rally flag reference if there is one
     if IsValidEntity(flag) then

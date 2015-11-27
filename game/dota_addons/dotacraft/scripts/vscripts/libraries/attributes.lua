@@ -26,93 +26,93 @@ end
 
 function Attributes:ModifyBonuses(hero)
 
-	print("Modifying Stats Bonus of hero "..hero:GetUnitName())
+    print("Modifying Stats Bonus of hero "..hero:GetUnitName())
 
     hero:AddNewModifier(hero, nil, "modifier_movespeed_cap", {})
-	Timers:CreateTimer(function()
+    Timers:CreateTimer(function()
 
-		if not IsValidEntity(hero) then
-			return
-		end
+        if not IsValidEntity(hero) then
+            return
+        end
 
-		-- Initialize value tracking
-		if not hero.custom_stats then
-			hero.custom_stats = true
-			hero.strength = 0
-			hero.agility = 0
-			hero.intellect = 0
-		end
+        -- Initialize value tracking
+        if not hero.custom_stats then
+            hero.custom_stats = true
+            hero.strength = 0
+            hero.agility = 0
+            hero.intellect = 0
+        end
 
-		-- Get player attribute values
-		local strength = hero:GetStrength()
-		local agility = hero:GetAgility()
-		local intellect = hero:GetIntellect()
-		
+        -- Get player attribute values
+        local strength = hero:GetStrength()
+        local agility = hero:GetAgility()
+        local intellect = hero:GetIntellect()
+        
         -- Base Armor Bonus
         local armor = agility * Attributes.armor_adjustment
         hero:SetPhysicalArmorBaseValue(armor)
 
-		-- STR
-		if strength ~= hero.strength then
-			
-			-- HP Bonus
-			if not hero:HasModifier("modifier_health_bonus") then
-				Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_bonus", {})
-			end
+        -- STR
+        if strength ~= hero.strength then
+            
+            -- HP Bonus
+            if not hero:HasModifier("modifier_health_bonus") then
+                Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_bonus", {})
+            end
 
-			local health_stacks = math.abs(strength * Attributes.hp_adjustment)
-			hero:SetModifierStackCount("modifier_health_bonus", Attributes.applier, health_stacks)
+            local health_stacks = math.abs(strength * Attributes.hp_adjustment)
+            hero:SetModifierStackCount("modifier_health_bonus", Attributes.applier, health_stacks)
 
-			-- HP Regen Bonus
-			if not hero:HasModifier("modifier_health_regen_constant") then
-				Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_regen_constant", {})
-			end
+            -- HP Regen Bonus
+            if not hero:HasModifier("modifier_health_regen_constant") then
+                Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_regen_constant", {})
+            end
 
-			local health_regen_stacks = math.abs(strength * Attributes.hp_regen_adjustment * 100)
-			hero:SetModifierStackCount("modifier_health_regen_constant", Attributes.applier, health_regen_stacks)
-		end
+            local health_regen_stacks = math.abs(strength * Attributes.hp_regen_adjustment * 100)
+            hero:SetModifierStackCount("modifier_health_regen_constant", Attributes.applier, health_regen_stacks)
+        end
 
-		-- AGI
-		if agility ~= hero.agility then		
+        -- AGI
+        if agility ~= hero.agility then        
 
-			-- Attack Speed Bonus
-			if not hero:HasModifier("modifier_attackspeed_bonus_constant") then
-				Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_attackspeed_bonus_constant", {})
-			end
+            -- Attack Speed Bonus
+            if not hero:HasModifier("modifier_attackspeed_bonus_constant") then
+                Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_attackspeed_bonus_constant", {})
+            end
 
-			local attackspeed_stacks = math.abs(agility * Attributes.attackspeed_adjustment)
-			hero:SetModifierStackCount("modifier_attackspeed_bonus_constant", Attributes.applier, attackspeed_stacks)
-		end
+            local attackspeed_stacks = math.abs(agility * Attributes.attackspeed_adjustment)
+            hero:SetModifierStackCount("modifier_attackspeed_bonus_constant", Attributes.applier, attackspeed_stacks)
+        end
 
-		-- INT
-		if intellect ~= hero.intellect then
-			
-			-- Mana Bonus
-			if not hero:HasModifier("modifier_mana_bonus") then
-				Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_mana_bonus", {})
-			end
+        -- INT
+        if intellect ~= hero.intellect then
+            
+            -- Mana Bonus
+            if not hero:HasModifier("modifier_mana_bonus") then
+                Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_mana_bonus", {})
+            end
 
-			local mana_stacks = math.abs(intellect * Attributes.mana_adjustment)
-			hero:SetModifierStackCount("modifier_mana_bonus", Attributes.applier, mana_stacks)
+            local mana_stacks = math.abs(intellect * Attributes.mana_adjustment)
+            hero:SetModifierStackCount("modifier_mana_bonus", Attributes.applier, mana_stacks)
 
-			-- Mana Regen Bonus
-			if not hero:HasModifier("modifier_base_mana_regen") then
-				Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_base_mana_regen", {})
-			end
+            -- Mana Regen Bonus
+            if not hero:HasModifier("modifier_base_mana_regen") then
+                Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_base_mana_regen", {})
+            end
 
-			local mana_regen_stacks = math.abs(intellect * Attributes.mana_regen_adjustment * 100)
-			hero:SetModifierStackCount("modifier_base_mana_regen", Attributes.applier, mana_regen_stacks)
-		end
+            local mana_regen_stacks = math.abs(intellect * Attributes.mana_regen_adjustment * 100)
+            hero:SetModifierStackCount("modifier_base_mana_regen", Attributes.applier, mana_regen_stacks)
+        end
 
-		-- Update the stored values for next timer cycle
-		hero.strength = strength
-		hero.agility = agility
-		hero.intellect = intellect
+        -- Update the stored values for next timer cycle
+        hero.strength = strength
+        hero.agility = agility
+        hero.intellect = intellect
 
-		hero:CalculateStatBonus()
+        hero:CalculateStatBonus()
 
-		return 0.25
-	end)
+        return 0.25
+    end)
 end
 
 if not Attributes.applier then Attributes:Init() end
