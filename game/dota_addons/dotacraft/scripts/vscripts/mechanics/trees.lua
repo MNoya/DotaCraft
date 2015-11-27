@@ -53,4 +53,7 @@ end
 function IsTreePathable( tree )
     return tree.pathable
 end
-    
+
+function GetTreeIndexFromHandle(tree)
+    return GetTreeIdForEntityIndex(empty_tree:GetEntityIndex())
+end

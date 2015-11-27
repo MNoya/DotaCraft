@@ -1128,7 +1128,7 @@ function dotacraft:OnEntityKilled( event )
 	-- Unit Killed (Hero or Creature)
 	else
 		-- Skip corpses
-		if unit.corpse_expiration then return end
+		if killed.corpse_expiration then return end
 
 		-- CLeanup unit table
 		Players:RemoveUnit( killed_playerID, killed )

@@ -322,7 +322,7 @@ end
 ------------------------------------------
 
 MIN_DISTANCE_TO_TREE = 200
-MIN_DISTANCE_TO_MINE = 250
+MIN_DISTANCE_TO_MINE = 300
 TREE_FIND_RADIUS_FROM_TREE = 200
 TREE_FIND_RADIUS_FROM_TOWN = 2000
 DURATION_INSIDE_MINE = 0.5
@@ -513,7 +513,7 @@ function Gather( event )
 		-- Recieving another order will cancel this
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_gold", {})
 
-		local mine_entrance_pos = mine.entrance+RandomVector(75)
+		local mine_entrance_pos = mine.entrance+RandomVector(50)
 		caster.moving_timer = Timers:CreateTimer(function() 
 
 			-- End if killed
@@ -541,6 +541,7 @@ function Gather( event )
 							return THINK_INTERVAL
 						elseif mine and IsValidEntity(mine) then
 							mine.builder = caster
+							caster:AddNoDraw()
 							ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {duration = DURATION_INSIDE_MINE})
 							caster:SetAbsOrigin(mine:GetAbsOrigin()) -- Send builder inside
 							return
@@ -899,6 +900,7 @@ function GatherGold( event )
 	mine:SetHealth( mine:GetHealth() - DAMAGE_TO_MINE )
 	caster.gold_gathered = DAMAGE_TO_MINE
 	mine.builder = nil --Set the mine free for other builders to enter
+	caster:RemoveNoDraw()
 	caster.state = "gathering_gold"
 
 	-- If the gold mine has no health left for another harvest
