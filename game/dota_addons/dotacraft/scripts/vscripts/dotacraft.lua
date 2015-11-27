@@ -208,6 +208,9 @@ function dotacraft:InitGameMode()
 	
 	-- register panaroma tables
 	dotacraft:Setup_Tables()
+
+	-- Custom Stats for STR/AGI/INT
+    Stats:Init()
 	
 	-- Remove building invulnerability
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
@@ -462,7 +465,7 @@ function dotacraft:OnHeroInGame(hero)
 			end
 		end
 
-		dotacraft:ModifyStatBonuses(hero)
+		Stats:ModifyBonuses(hero)
 
 		-- Innate abilities
 		if hero:HasAbility("nightelf_shadow_meld") then
