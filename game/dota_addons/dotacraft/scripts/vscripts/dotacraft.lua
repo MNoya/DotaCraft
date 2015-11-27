@@ -199,7 +199,6 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
 
 	-- Lua Modifiers
-	LinkLuaModifier("modifier_movespeed_cap", "libraries/modifiers/modifier_movespeed_cap", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
 
 	-- Listeners for Pre_Game_Selection
@@ -208,9 +207,7 @@ function dotacraft:InitGameMode()
 	
 	-- register panaroma tables
 	dotacraft:Setup_Tables()
-
-	-- Custom Stats for STR/AGI/INT
-    Stats:Init()
+    
 	
 	-- Remove building invulnerability
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
@@ -465,7 +462,7 @@ function dotacraft:OnHeroInGame(hero)
 			end
 		end
 
-		Stats:ModifyBonuses(hero)
+		Attributes:ModifyBonuses(hero)
 
 		-- Innate abilities
 		if hero:HasAbility("nightelf_shadow_meld") then
