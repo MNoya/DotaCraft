@@ -2332,16 +2332,16 @@
 		"DOTA_Tooltip_ability_human_long_rifles_bonus_attack_range"                       "BONUS ATTACK RANGE:"
 
 		"DOTA_Tooltip_ability_human_research_animal_war_training_disabled"                "Research Animal War Training"
-		"DOTA_Tooltip_ability_human_research_animal_war_training_disabled_Description"    "<b><font color='#eedd44'>Requires:\n - Blacksmith\n - Lumber Mill\n - Castle</font></b>\nIncreases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by <Rhan,base1>."
+		"DOTA_Tooltip_ability_human_research_animal_war_training_disabled_Description"    "<b><font color='#eedd44'>Requires:\n - Blacksmith\n - Lumber Mill\n - Castle</font></b>\nIncreases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by 150."
 
 		"DOTA_Tooltip_ability_human_research_animal_war_training"                         "Research Animal War Training"
-		"DOTA_Tooltip_ability_human_research_animal_war_training_Description"             "Increases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by <Rhan,base1>."
+		"DOTA_Tooltip_ability_human_research_animal_war_training_Description"             "Increases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by 150."
 		"DOTA_Tooltip_ability_human_research_animal_war_training_research_time"           "RESEARCH TIME:" 
 		"DOTA_Tooltip_ability_human_research_animal_war_training_gold_cost"               "GOLD COST:" 
 		"DOTA_Tooltip_ability_human_research_animal_war_training_lumber_cost"             "LUMBER COST:" 
 
 		"DOTA_Tooltip_ability_human_animal_war_training_disabled"                         "Animal War Training"
-		"DOTA_Tooltip_ability_human_animal_war_training_disabled_Description"             "<b><font color='#eedd44'>Requires:\n - Animal War Training</b>\nIncreases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by <Rhan,base1>."
+		"DOTA_Tooltip_ability_human_animal_war_training_disabled_Description"             "<b><font color='#eedd44'>Requires:\n - Animal War Training</b>\nIncreases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by %bonus_health%."
         "DOTA_Tooltip_ability_human_animal_war_training_disabled_bonus_health"            "BONUS HEALTH:"
 
 		"DOTA_Tooltip_ability_human_animal_war_training"                                  "Animal War Training"
@@ -3297,7 +3297,7 @@
         "DOTA_Tooltip_ability_orc_sentry_ward_radius"                                     "RADIUS:"
 
         "DOTA_Tooltip_ability_orc_stasis_trap"                                            "Stasis Trap"
-        "DOTA_Tooltip_ability_orc_stasis_trap_Description"                                "Summons an invisible and immovable ward that stuns enemy land units around it. The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect.\nThe trap lasts <Asta,Dur1> seconds.\nThe stun lasts <Asta,DataD1> seconds."
+        "DOTA_Tooltip_ability_orc_stasis_trap_Description"                                "Summons an invisible and immovable ward that stuns enemy land units around it. The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect.\nThe trap lasts %duration% seconds.\nThe stun lasts %stun_duration% seconds."
         "DOTA_Tooltip_ability_orc_stasis_trap_duration"                                   "DURATION:"
         "DOTA_Tooltip_ability_orc_stasis_trap_detonation_radius"                          "DETONATION RADIUS:"
         "DOTA_Tooltip_ability_orc_stasis_trap_stun_duration"                              "STUN DURATION:"
@@ -3306,13 +3306,13 @@
         "DOTA_Tooltip_ability_orc_stasis_trap_stun_duration_hero"                         "STUN DURATION HERO:"
 
         "DOTA_Tooltip_ability_orc_stasis_trap_disabled"                                   "Stasis Trap"
-        "DOTA_Tooltip_ability_orc_stasis_trap_disabled_Description"                       "<b><font color='#eedd44'>Requires:\n - Witch Doctor Adept Training</font></b>\nSummons an invisible and immovable ward that stuns enemy land units around it. The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect.\nThe trap lasts <Asta,Dur1> seconds.\nThe stun lasts <Asta,DataD1> seconds."
+        "DOTA_Tooltip_ability_orc_stasis_trap_disabled_Description"                       "<b><font color='#eedd44'>Requires:\n - Witch Doctor Adept Training</font></b>\nSummons an invisible and immovable ward that stuns enemy land units around it. The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect.\nThe trap lasts %duration% seconds.\nThe stun lasts %stun_duration% seconds."
 
         "DOTA_Tooltip_ability_orc_sentry_ward_disabled"                                   "Sentry Ward"
         "DOTA_Tooltip_ability_orc_sentry_ward_disabled_Description"                       "Summons an invisible and immovable ward that provides vision in an area.\nCan see invisible units.\nLasts %duration% seconds."
 
         "DOTA_Tooltip_ability_orc_healing_ward"                                           "Healing Ward"
-        "DOTA_Tooltip_ability_orc_healing_ward_Description"                               "Summons an immovable ward that heals <Aoar,DataA1,%>% of a nearby friendly non-mechanical unit's hit points per second.\nLasts <Ahwd,Dur1> seconds."
+        "DOTA_Tooltip_ability_orc_healing_ward_Description"                               "Summons an immovable ward that heals %ward_regeneration%%% of a nearby friendly non-mechanical unit's hit points per second.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_orc_healing_ward_duration"                                  "DURATION:"
         "DOTA_Tooltip_ability_orc_healing_ward_radius"                                    "RADIUS:"
         "DOTA_Tooltip_ability_orc_healing_ward_regeneration"                              "REGENERATION:"
@@ -3323,30 +3323,30 @@
         "DOTA_Tooltip_ability_orc_healing_ward_aura_regeneration"                         "REGENERATION:"
 
         "DOTA_Tooltip_ability_orc_healing_ward_disabled"                                  "Healing Ward"
-        "DOTA_Tooltip_ability_orc_healing_ward_disabled_Description"                      "<b><font color='#eedd44'>Requires:\n - Witch Doctor Master Training</font></b>\nSummons an immovable ward that heals <Aoar,DataA1,%>% of a nearby friendly non-mechanical unit's hit points per second.\nLasts <Ahwd,Dur1> seconds."
+        "DOTA_Tooltip_ability_orc_healing_ward_disabled_Description"                      "<b><font color='#eedd44'>Requires:\n - Witch Doctor Master Training</font></b>\nSummons an immovable ward that heals %ward_regeneration%%% of a nearby friendly non-mechanical unit's hit points per second.\nLasts %duration% seconds."
 
         "DOTA_Tooltip_ability_orc_spirit_link"                                            "Spirit Link"
-        "DOTA_Tooltip_ability_orc_spirit_link_Description"                                "Links <Aspl,DataB1> units together in a chain. All units with Spirit Link on them will live longer, by distributing <Aspl,DataA1,%>% of the damage they take across other Spirit Linked units.\nLasts <Aspl,Dur1> seconds."
+        "DOTA_Tooltip_ability_orc_spirit_link_Description"                                "Links %max_unit% units together in a chain. All units with Spirit Link on them will live longer, by distributing %distribution_factor%% of the damage they take across other Spirit Linked units.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_orc_spirit_link_duration"                                   "DURATION:"
         "DOTA_Tooltip_ability_orc_spirit_link_radius"                                     "RADIUS:"
         "DOTA_Tooltip_ability_orc_spirit_link_distribution_factor"                        "DISTRIBUTION FACTOR:"
         "DOTA_Tooltip_ability_orc_spirit_link_max_unit"                                   "MAX UNIT:"
 
         "DOTA_Tooltip_ability_orc_disenchant"                                             "Disenchant"
-        "DOTA_Tooltip_ability_orc_disenchant_Description"                                 "Removes all buffs from units in a target area.\n<font color='#ffcc00'>Deals <Adcn,DataB1> damage to hostile summoned units</font>."
+        "DOTA_Tooltip_ability_orc_disenchant_Description"                                 "Removes all buffs from units in a target area.\n<font color='#ffcc00'>Deals %damage_to_summons% damage to hostile summoned units</font>."
         "DOTA_Tooltip_ability_orc_disenchant_radius"                                      "RADIUS:"
         "DOTA_Tooltip_ability_orc_disenchant_damage_to_summons"                           "DAMAGE TO SUMMONS:"
 
         "DOTA_Tooltip_ability_orc_disenchant_disabled"                                    "Disenchant"
-        "DOTA_Tooltip_ability_orc_disenchant_disabled_Description"                        "<b><font color='#eedd44'>Requires:\n - Research Disenchant</font></b>\nRemoves all buffs from units in a target area.\n<font color='#ffcc00'>Deals <Adcn,DataB1> damage to hostile summoned units</font>."
+        "DOTA_Tooltip_ability_orc_disenchant_disabled_Description"                        "<b><font color='#eedd44'>Requires:\n - Research Disenchant</font></b>\nRemoves all buffs from units in a target area."
 
         "DOTA_Tooltip_ability_orc_ancestral_spirit"                                       "Ancestral Spirit"
-        "DOTA_Tooltip_ability_orc_ancestral_spirit_Description"                           "Raises a fallen non-Hero Tauren from the dead. The Tauren is revived with <Aast,DataA1,%>% of its hit points restored."
+        "DOTA_Tooltip_ability_orc_ancestral_spirit_Description"                           "Raises a fallen non-Hero Tauren from the dead. The Tauren is revived with %life_restored%%% of its hit points restored."
         "DOTA_Tooltip_ability_orc_ancestral_spirit_life_restored"                         "LIFE RESTORED:"
         "DOTA_Tooltip_ability_orc_ancestral_spirit_mana_restored"                         "MANA RESTORED:"
 
         "DOTA_Tooltip_ability_orc_ancestral_spirit_disabled"                              "Ancestral Spirit"
-        "DOTA_Tooltip_ability_orc_ancestral_spirit_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Research Ancestral Spirit</font></b>\nRaises a fallen non-Hero Tauren from the dead. The Tauren is revived with <Aast,DataA1,%>% of its hit points restored."
+        "DOTA_Tooltip_ability_orc_ancestral_spirit_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Research Ancestral Spirit</font></b>\nRaises a fallen non-Hero Tauren from the dead. The Tauren is revived with %life_restored%%% of its hit points restored."
 
         "DOTA_Tooltip_ability_orc_ethereal_form"                                          "Ethereal Form"
         "DOTA_Tooltip_ability_orc_ethereal_form_Description"                              "Turns the Spirit Walker ethereal, making him immune to physical damage but unable to attack. He can cast spells and will take extra damage from Magic attacks and spells."
@@ -3357,16 +3357,16 @@
         "DOTA_Tooltip_ability_orc_corporeal_form_Description"                             "Turns the Spirit Walker corporeal, allowing him to attack and take physical damage."
 
         "DOTA_Tooltip_ability_orc_ensnare"                                                "Ensnare"
-        "DOTA_Tooltip_ability_orc_ensnare_Description"                                    "Causes a target enemy unit to be bound to the ground so that it cannot move for <Aens,Dur1> seconds. Air units that are ensnared can be attacked as though they were land units."
+        "DOTA_Tooltip_ability_orc_ensnare_Description"                                    "Causes a target enemy unit to be bound to the ground so that it cannot move for %duration% seconds. Air units that are ensnared can be attacked as though they were land units."
         "DOTA_Tooltip_ability_orc_ensnare_duration"                                       "DURATION:"
         "DOTA_Tooltip_ability_orc_ensnare_lower_duration"                                 "LOWER DURATION:"
         "DOTA_Tooltip_ability_orc_ensnare_lower_height"                                   "LOWER HEIGHT:"
 
         "DOTA_Tooltip_ability_orc_ensnare_disabled"                                       "Ensnare"
-        "DOTA_Tooltip_ability_orc_ensnare_disabled_Description"                           "<b><font color='#eedd44'>Requires:\n - Research Ensnare</font></b>\nCauses a target enemy unit to be bound to the ground so that it cannot move for <Aens,Dur1> seconds. Air units that are ensnared can be attacked as though they were land units."
+        "DOTA_Tooltip_ability_orc_ensnare_disabled_Description"                           "<b><font color='#eedd44'>Requires:\n - Research Ensnare</font></b>\nCauses a target enemy unit to be bound to the ground so that it cannot move for %duration% seconds. Air units that are ensnared can be attacked as though they were land units."
 
         "DOTA_Tooltip_ability_orc_devour"                                                 "Devour"
-        "DOTA_Tooltip_ability_orc_devour_Description"                                     "Consumes an enemy land unit, slowly digesting it and dealing <Advc,DataC1> damage per second to it. If the Kodo Beast is killed while the consumed unit is still digesting, the unit that was devoured will be released."
+        "DOTA_Tooltip_ability_orc_devour_Description"                                     "Consumes an enemy land unit, slowly digesting it and dealing %damage_per_second% damage per second to it. If the Kodo Beast is killed while the consumed unit is still digesting, the unit that was devoured will be released."
         "DOTA_Tooltip_ability_orc_devour_max_creep_level"                                 "MAX CREEP LEVEL:"
         "DOTA_Tooltip_ability_orc_devour_delay"                                           "DELAY:"
         "DOTA_Tooltip_ability_orc_devour_radius"                                          "RADIUS:"
@@ -3384,39 +3384,39 @@
         "DOTA_Tooltip_ability_orc_war_drums_damage_increase"                              "DAMAGE INCREASE:"
 
         "DOTA_Tooltip_ability_orc_envenomed_spears"                                       "Envenomed Spears"
-        "DOTA_Tooltip_ability_orc_envenomed_spears_Description"                           "Deals <Aven,DataA1> poison damage per second.\nLasts <Aven,Dur1> seconds."
+        "DOTA_Tooltip_ability_orc_envenomed_spears_Description"                           "Deals %damage_per_second% poison damage per second.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_orc_envenomed_spears_duration"                              "DURATION:"
         "DOTA_Tooltip_ability_orc_envenomed_spears_duration_hero"                         "DURATION HERO:"
         "DOTA_Tooltip_ability_orc_envenomed_spears_damage_per_second"                     "DAMAGE PER SECOND:"
 
         "DOTA_Tooltip_ability_orc_envenomed_spears_disabled"                              "Envenomed Spears"
-        "DOTA_Tooltip_ability_orc_envenomed_spears_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Research Envenomed Spears</font></b>\nDeals <Aven,DataA1> poison damage per second.\nLasts <Aven,Dur1> seconds."
+        "DOTA_Tooltip_ability_orc_envenomed_spears_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Research Envenomed Spears</font></b>\nDeals damage per second.\nLasts %duration% seconds."
 
         "DOTA_Tooltip_ability_orc_unstable_concoction"                                    "Unstable Concoction"
-        "DOTA_Tooltip_ability_orc_unstable_concoction_Description"                        "Causes a powerful explosion that deals <Auco,DataB1> damage to a target air unit, and <Auco,DataD1> damage to nearby enemy air units."
+        "DOTA_Tooltip_ability_orc_unstable_concoction_Description"                        "Causes a powerful explosion that deals %full_damage_amount% damage to a target air unit, and %partial_damage_amount% damage to nearby enemy air units."
         "DOTA_Tooltip_ability_orc_unstable_concoction_partial_damage_amount"              "PARTIAL DAMAGE AMOUNT:"
         "DOTA_Tooltip_ability_orc_unstable_concoction_partial_damage_radius"              "PARTIAL DAMAGE RADIUS:"
         "DOTA_Tooltip_ability_orc_unstable_concoction_full_damage_amount"                 "FULL DAMAGE AMOUNT:"
         "DOTA_Tooltip_ability_orc_unstable_concoction_speed_bonus"                        "SPEED BONUS:"
 
         "DOTA_Tooltip_ability_orc_liquid_fire"                                            "Liquid Fire"
-        "DOTA_Tooltip_ability_orc_liquid_fire_Description"                                "Flings a volatile liquid that causes buildings to take damage over time. Buildings that are currently taking damage from Liquid Fire cannot be repaired, and have their attack rate reduced by <Aliq,DataC1,%>%."
+        "DOTA_Tooltip_ability_orc_liquid_fire_Description"                                "Flings a volatile liquid that causes buildings to take damage over time. Buildings that are currently taking damage from Liquid Fire cannot be repaired, and have their attack rate reduced by %attack_speed_reduction%%%."
         "DOTA_Tooltip_ability_orc_liquid_fire_duration"                                   "DURATION:"
         "DOTA_Tooltip_ability_orc_liquid_fire_attack_speed_reduction"                     "ATTACK SPEED REDUCTION:"
         "DOTA_Tooltip_ability_orc_liquid_fire_damage_per_second"                          "DAMAGE PER SECOND:"
 
         "DOTA_Tooltip_ability_orc_liquid_fire_disabled"                                   "Liquid Fire"
-        "DOTA_Tooltip_ability_orc_liquid_fire_disabled_Description"                       "<b><font color='#eedd44'>Requires:\n - Research Liquid Fire</font></b>\nFlings a volatile liquid that causes buildings to take damage over time. Buildings that are currently taking damage from Liquid Fire cannot be repaired, and have their attack rate reduced by <Aliq,DataC1,%>%."
+        "DOTA_Tooltip_ability_orc_liquid_fire_disabled_Description"                       "<b><font color='#eedd44'>Requires:\n - Research Liquid Fire</font></b>\nFlings a volatile liquid that causes buildings to take damage over time. Buildings that are currently taking damage from Liquid Fire cannot be repaired, and have their attack rate reduced."
 
         "DOTA_Tooltip_ability_orc_pulverize"                                              "Pulverize"
-        "DOTA_Tooltip_ability_orc_pulverize_Description"                                  "Gives a <Awar,DataA1>% chance that an attack will deal <Awar,DataB1> damage to nearby units."
+        "DOTA_Tooltip_ability_orc_pulverize_Description"                                  "Gives a %chance%%% chance that an attack will deal %extra_damage% damage to nearby units."
         "DOTA_Tooltip_ability_orc_pulverize_full_damage_radius"                           "FULL DAMAGE RADIUS:"
         "DOTA_Tooltip_ability_orc_pulverize_half_damage_radius"                           "HALF DAMAGE RADIUS:"
         "DOTA_Tooltip_ability_orc_pulverize_chance"                                       "CHANCE:"
         "DOTA_Tooltip_ability_orc_pulverize_extra_damage"                                 "EXTRA DAMAGE:"
 
         "DOTA_Tooltip_ability_orc_pulverize_disabled"                                     "Pulverize"
-        "DOTA_Tooltip_ability_orc_pulverize_disabled_Description"                         "<b><font color='#eedd44'>Requires:\n - Research Pulverize</font></b>\nGives a <Awar,DataA1>% chance that an attack will deal <Awar,DataB1> damage to nearby units."
+        "DOTA_Tooltip_ability_orc_pulverize_disabled_Description"                         "<b><font color='#eedd44'>Requires:\n - Research Pulverize</font></b>\nGives a chance that an attack will deal damage to nearby units."
 
         "DOTA_Tooltip_ability_orc_battle_stations"                                        "Battle Stations"
         "DOTA_Tooltip_ability_orc_battle_stations_Description"                            "Causes nearby Peons to run into the Burrow so that they can defend their base."
@@ -3459,13 +3459,13 @@
         "DOTA_Tooltip_ability_orc_research_backpack_disabled_Description"                 "<b><font color='#eedd44'>Requires:\n - Voodoo Lounge</font></b>\nGives specific Orc ground units the ability to carry items."
 
         "DOTA_Tooltip_ability_orc_research_berserker_strength"                            "Research Berserker Strength"
-        "DOTA_Tooltip_ability_orc_research_berserker_strength_Description"                "Improves the fighting capabilities of Grunts with a <Robs,base1> hit point increase, and <Robs,base2> bonus attack damage."
+        "DOTA_Tooltip_ability_orc_research_berserker_strength_Description"                "Improves the fighting capabilities of Grunts with a 100 hit point increase, and 3 bonus attack damage."
         "DOTA_Tooltip_ability_orc_research_berserker_strength_research_time"              "RESEARCH TIME:"
         "DOTA_Tooltip_ability_orc_research_berserker_strength_gold_cost"                  "GOLD COST:"
         "DOTA_Tooltip_ability_orc_research_berserker_strength_lumber_cost"                "LUMBER COST:"
 
         "DOTA_Tooltip_ability_orc_research_berserker_strength_disabled"                   "Research Berserker Strength"
-        "DOTA_Tooltip_ability_orc_research_berserker_strength_disabled_Description"       "<b><font color='#eedd44'>Requires:\n - Stronghold</font></b>\nImproves the fighting capabilities of Grunts with a <Robs,base1> hit point increase, and <Robs,base2> bonus attack damage."
+        "DOTA_Tooltip_ability_orc_research_berserker_strength_disabled_Description"       "<b><font color='#eedd44'>Requires:\n - Stronghold</font></b>\nImproves the fighting capabilities of Grunts with a 100 hit point increase, and 3 bonus attack damage."
 
         "DOTA_Tooltip_ability_orc_research_berserker_upgrade"                             "Research Berserker Upgrade"
         "DOTA_Tooltip_ability_orc_research_berserker_upgrade_Description"                 "Transforms Headhunters into Troll Berserkers, giving them increased hit points and the Berserk ability."
@@ -3675,40 +3675,40 @@
         "DOTA_Tooltip_ability_orc_research_ranged_weapons3_disabled_Description"          "<b><font color='#eedd44'>Requires:\n - Fortress</font></b>\nFurther increases the ranged attack damage of Headhunters, Wind Riders, Troll Batriders and Demolishers."
 
         "DOTA_Tooltip_ability_orc_research_spiked_barricades1"                            "Research Spiked Barricades"
-        "DOTA_Tooltip_ability_orc_research_spiked_barricades1_Description"                "Further increases the ranged attack damage of Headhunters, Wind Riders, Troll Batriders and Demolishers."
+        "DOTA_Tooltip_ability_orc_research_spiked_barricades1_Description"                "Surrounds Orc buildings with spikes that damage enemy melee attackers. Deals 4 damage per attack."
         "DOTA_Tooltip_ability_orc_research_spiked_barricades1_research_time"              "RESEARCH TIME:"
         "DOTA_Tooltip_ability_orc_research_spiked_barricades1_gold_cost"                  "GOLD COST:"
         "DOTA_Tooltip_ability_orc_research_spiked_barricades1_lumber_cost"                "LUMBER COST:"
 
         "DOTA_Tooltip_ability_orc_research_spiked_barricades1_disabled"                   "Research Spiked Barricades"
-        "DOTA_Tooltip_ability_orc_research_spiked_barricades1_disabled_Description"       "Surrounds Orc buildings with spikes that damage enemy melee attackers. Deals <Rosp,base1> damage per attack."
+        "DOTA_Tooltip_ability_orc_research_spiked_barricades1_disabled_Description"       "Surrounds Orc buildings with spikes that damage enemy melee attackers. Deals 4 damage per attack."
 
         "DOTA_Tooltip_ability_orc_research_spiked_barricades2"                            "Research Improved Spiked Barricades"
-        "DOTA_Tooltip_ability_orc_research_spiked_barricades2_Description"                "Surrounds Orc buildings with spikes that damage enemy melee attackers. Deals <Rosp,base1> damage per attack."
+        "DOTA_Tooltip_ability_orc_research_spiked_barricades2_Description"                "Surrounds Orc buildings with spikes that damage enemy melee attackers. Deals 10 damage per attack."
         "DOTA_Tooltip_ability_orc_research_spiked_barricades2_research_time"              "RESEARCH TIME:"
         "DOTA_Tooltip_ability_orc_research_spiked_barricades2_gold_cost"                  "GOLD COST:"
         "DOTA_Tooltip_ability_orc_research_spiked_barricades2_lumber_cost"                "LUMBER COST:"
 
         "DOTA_Tooltip_ability_orc_research_spiked_barricades2_disabled"                   "Research Improved Spiked Barricades"
-        "DOTA_Tooltip_ability_orc_research_spiked_barricades2_disabled_Description"       "<b><font color='#eedd44'>Requires:\n - Stronghold</font></b>\nIncreases the amount of damage inflicted on melee attackers by <Rosp,mod1>."
+        "DOTA_Tooltip_ability_orc_research_spiked_barricades2_disabled_Description"       "<b><font color='#eedd44'>Requires:\n - Stronghold</font></b>\nIncreases the amount of damage inflicted on melee attackers by 10."
 
         "DOTA_Tooltip_ability_orc_research_spiked_barricades3"                            "Research Advanced Spiked Barricades"
-        "DOTA_Tooltip_ability_orc_research_spiked_barricades3_Description"                "Further increases the amount of damage inflicted on melee attackers by <Rosp,mod1>."
+        "DOTA_Tooltip_ability_orc_research_spiked_barricades3_Description"                "Further increases the amount of damage inflicted on melee attackers by 16."
         "DOTA_Tooltip_ability_orc_research_spiked_barricades3_research_time"              "RESEARCH TIME:"
         "DOTA_Tooltip_ability_orc_research_spiked_barricades3_gold_cost"                  "GOLD COST:"
         "DOTA_Tooltip_ability_orc_research_spiked_barricades3_lumber_cost"                "LUMBER COST:"
 
         "DOTA_Tooltip_ability_orc_research_spiked_barricades3_disabled"                   "Research Advanced Spiked Barricades"
-        "DOTA_Tooltip_ability_orc_research_spiked_barricades3_disabled_Description"       "<b><font color='#eedd44'>Requires:\n - Fortress</font></b>\nFurther increases the amount of damage inflicted on melee attackers by <Rosp,mod1>."
+        "DOTA_Tooltip_ability_orc_research_spiked_barricades3_disabled_Description"       "<b><font color='#eedd44'>Requires:\n - Fortress</font></b>\nFurther increases the amount of damage inflicted on melee attackers by 16."
 
         "DOTA_Tooltip_ability_orc_research_reinforced_defenses"                           "Research Reinforced Defenses"
-        "DOTA_Tooltip_ability_orc_research_reinforced_defenses_Description"               "Further increases the amount of damage inflicted on melee attackers by <Rosp,mod1>."
+        "DOTA_Tooltip_ability_orc_research_reinforced_defenses_Description"               "Upgrades Burrows and Watch Towers so that they have Fortified armor."
         "DOTA_Tooltip_ability_orc_research_reinforced_defenses_research_time"             "RESEARCH TIME:"
         "DOTA_Tooltip_ability_orc_research_reinforced_defenses_gold_cost"                 "GOLD COST:"
         "DOTA_Tooltip_ability_orc_research_reinforced_defenses_lumber_cost"               "LUMBER COST:"
 
         "DOTA_Tooltip_ability_orc_research_reinforced_defenses_disabled"                  "Research Reinforced Defenses"
-        "DOTA_Tooltip_ability_orc_research_reinforced_defenses_disabled_Description"      "<b><font color='#eedd44'>Requires:\n - Fortress</font></b>\nFurther increases the amount of damage inflicted on melee attackers by <Rosp,mod1>."
+        "DOTA_Tooltip_ability_orc_research_reinforced_defenses_disabled_Description"      "<b><font color='#eedd44'>Requires:\n - Fortress</font></b>\nUpgrades Burrows and Watch Towers so that they have Fortified armor."
 
         "DOTA_Tooltip_ability_orc_train_peon"                                             "Train Peon"
         "DOTA_Tooltip_ability_orc_train_peon_Description"                                 "Basic worker unit. Can harvest gold and lumber, build structures, and Repair. Can also go inside Orc Burrows to give it an attack.\n\n<font color='#ffcc00>Attacks land and air units</font>."
@@ -6204,24 +6204,24 @@
         "DOTA_Tooltip_ability_undead_ghoul_frenzy_disabled_Description"                   "<b><font color='#eedd44'>Requires:\n - Research Ghoul Frenzy</font></b>\nIncreases the attack rate and movement speed of Ghouls."
 
         "DOTA_Tooltip_ability_undead_web"                                                 "Web"
-        "DOTA_Tooltip_ability_undead_web_Description"                                     "Binds a target enemy air unit in webbing, forcing it to the ground. Webbed units can be hit as though they were land units.\nLasts <Aweb,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_web_Description"                                     "Binds a target enemy air unit in webbing, forcing it to the ground. Webbed units can be hit as though they were land units.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_undead_web_duration"                                        "DURATION:"
         "DOTA_Tooltip_ability_undead_web_lower_duration"                                  "LOWER DURATION:"
         "DOTA_Tooltip_ability_undead_web_lower_height"                                    "LOWER HEIGHT:"
 
         "DOTA_Tooltip_ability_undead_web_disabled"                                        "Web"
-        "DOTA_Tooltip_ability_undead_web_disabled_Description"                            "<b><font color='#eedd44'>Requires:\n - Research Web</font></b>\nBinds a target enemy air unit in webbing, forcing it to the ground. Webbed units can be hit as though they were land units.\nLasts <Aweb,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_web_disabled_Description"                            "<b><font color='#eedd44'>Requires:\n - Research Web</font></b>\nBinds a target enemy air unit in webbing, forcing it to the ground. Webbed units can be hit as though they were land units.\nLasts %duration% seconds."
 
         "DOTA_Tooltip_ability_undead_burrow"                                              "Burrow"
-        "DOTA_Tooltip_ability_undead_burrow_Description"                                  "The Crypt Fiend digs into the ground, becomes invisible, and gains a regeneration rate of <ucrm,regenHP> hit points per second.\nThe Crypt Fiend cannot attack while burrowed."
+        "DOTA_Tooltip_ability_undead_burrow_Description"                                  "The Crypt Fiend digs into the ground, becomes invisible, and gains a regeneration rate of %burrow_regeneration% hit points per second.\nThe Crypt Fiend cannot attack while burrowed."
         "DOTA_Tooltip_ability_undead_burrow_duration"                                     "DURATION:"
         "DOTA_Tooltip_ability_undead_burrow_regeneration"                                 "REGENERATION:"
 
         "DOTA_Tooltip_ability_undead_burrow_disabled"                                     "Burrow"
-        "DOTA_Tooltip_ability_undead_burrow_disabled_Description"                         "<b><font color='#eedd44'>Requires:\n - Research Burrow</font></b>\nThe Crypt Fiend digs into the ground, becomes invisible, and gains a regeneration rate of <ucrm,regenHP> hit points per second.\nThe Crypt Fiend cannot attack while burrowed."
+        "DOTA_Tooltip_ability_undead_burrow_disabled_Description"                         "<b><font color='#eedd44'>Requires:\n - Research Burrow</font></b>\nThe Crypt Fiend digs into the ground, becomes invisible, and gains a regeneration rate of 5 hit points per second.\nThe Crypt Fiend cannot attack while burrowed."
 
         "DOTA_Tooltip_ability_undead_stone_form"                                          "Stone Form"
-        "DOTA_Tooltip_ability_undead_stone_form_Description"                              "Transforms the Gargoyle into a statue that is immune to spells, gains additional armor and has a regeneration rate of <Astn,DataE1> hit points per second.\nThe Gargoyle cannot attack in this form."
+        "DOTA_Tooltip_ability_undead_stone_form_Description"                              "Transforms the Gargoyle into a statue that is immune to spells, gains additional armor and has a regeneration rate of 5 hit points per second.\nThe Gargoyle cannot attack in this form."
         "DOTA_Tooltip_ability_undead_stone_form_duration"                                 "DURATION:"
         "DOTA_Tooltip_ability_undead_stone_form_regeneration"                             "REGENERATION:"
         "DOTA_Tooltip_ability_undead_stone_form_transition_start"                         "TRANSITION START:"
@@ -6229,19 +6229,19 @@
         "DOTA_Tooltip_ability_undead_stone_form_bonus_armor"                              "BONUS ARMOR:"
 
         "DOTA_Tooltip_ability_undead_stone_form_disabled"                                 "Stone Form"
-        "DOTA_Tooltip_ability_undead_stone_form_disabled_Description"                     "<b><font color='#eedd44'>Requires:\n - Research Stone Form</font></b>\nTransforms the Gargoyle into a statue that is immune to spells, gains additional armor and has a regeneration rate of <Astn,DataE1> hit points per second.\nThe Gargoyle cannot attack in this form."
+        "DOTA_Tooltip_ability_undead_stone_form_disabled_Description"                     "<b><font color='#eedd44'>Requires:\n - Research Stone Form</font></b>\nTransforms the Gargoyle into a statue that is immune to spells, gains additional armor and has a regeneration rate of 8 hit points per second.\nThe Gargoyle cannot attack in this form."
 
         "DOTA_Tooltip_ability_undead_disease_cloud"                                       "Disease Cloud"
-        "DOTA_Tooltip_ability_undead_disease_cloud_Description"                           "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second.\nLasts <Aap1,DataA1> seconds."
+        "DOTA_Tooltip_ability_undead_disease_cloud_Description"                           "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals %damage_per_second% damage per second.\nLasts %debuff_duration% seconds."
         "DOTA_Tooltip_ability_undead_disease_cloud_radius"                                "RADIUS:"
         "DOTA_Tooltip_ability_undead_disease_cloud_damage_per_second"                     "DAMAGE PER SECOND:"
-        "DOTA_Tooltip_ability_undead_disease_cloud_think_interval"                        "THINK INTERVAL:"
+        "DOTA_Tooltip_ability_undead_disease_cloud_debuff_duration"                       "DEBUFF DURATION:"
 
         "DOTA_Tooltip_ability_undead_disease_cloud_disabled"                              "Disease Cloud"
-        "DOTA_Tooltip_ability_undead_disease_cloud_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Research Disease Cloud</font></b>\nInfects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second.\nLasts <Aap1,DataA1> seconds."
+        "DOTA_Tooltip_ability_undead_disease_cloud_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Research Disease Cloud</font></b>\nInfects nearby enemy living units with Disease Cloud. Disease Cloud deals 1 damage per second.\nLasts 120 seconds."
 
         "DOTA_Tooltip_ability_undead_meat_wagon_disease_cloud"                            "Disease Cloud (Meat Wagon)"
-        "DOTA_Tooltip_ability_undead_meat_wagon_disease_cloud_Description"                "Drops a Disease Cloud with each attack. Disease Cloud deals <Aap1,DataB1> damage per second.\nLasts <Aap1,DataA1> seconds."
+        "DOTA_Tooltip_ability_undead_meat_wagon_disease_cloud_Description"                "Drops a Disease Cloud with each attack. Disease Cloud deals 1 damage per second.\nLasts 120 seconds."
         "DOTA_Tooltip_ability_undead_meat_wagon_disease_cloud_maximum_clouds"             "MAXIMUM CLOUDS:"
 
         "DOTA_Tooltip_ability_undead_get_corpse"                                          "Get Corpse"
@@ -6257,7 +6257,7 @@
         "DOTA_Tooltip_ability_undead_exhume_corpses_interval"                             "INTERVAL:"
 
         "DOTA_Tooltip_ability_undead_exhume_corpses_disabled"                             "Exhume Corpses"
-        "DOTA_Tooltip_ability_undead_exhume_corpses_disabled_Description"                 "<b><font color='#eedd44'>Requires:\n - Research Exhume Corpses</font></b>\nGenerates a corpse within the Meat Wagon every <Aexh,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_exhume_corpses_disabled_Description"                 "<b><font color='#eedd44'>Requires:\n - Research Exhume Corpses</font></b>\nGenerates a corpse within the Meat Wagon every %duration% seconds."
 
         "DOTA_Tooltip_ability_undead_raise_dead"                                          "Raise Dead"
         "DOTA_Tooltip_ability_undead_raise_dead_Description"                              "Raises 2 skeletons from a corpse."
@@ -6265,16 +6265,16 @@
         "DOTA_Tooltip_ability_undead_raise_dead_radius"                                   "RADIUS:"
 
         "DOTA_Tooltip_ability_undead_unholy_frenzy"                                       "Unholy Frenzy"
-        "DOTA_Tooltip_ability_undead_unholy_frenzy_Description"                           "Increases the attack rate of a target unit by <Auhf,DataA1,%>%, but drains <Auhf,DataB1> hit points per second.\nLasts <Auhf,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_unholy_frenzy_Description"                           "Increases the attack rate of a target unit by %attack_speed_increase%%%, but drains %damage_per_second%%% hit points per second.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_undead_unholy_frenzy_duration"                              "DURATION:"
         "DOTA_Tooltip_ability_undead_unholy_frenzy_attack_speed_increase"                 "ATTACK SPEED INCREASE:"
         "DOTA_Tooltip_ability_undead_unholy_frenzy_damage_per_second"                     "DAMAGE PER SECOND:"
 
         "DOTA_Tooltip_ability_undead_unholy_frenzy_disabled"                              "Unholy Frenzy"
-        "DOTA_Tooltip_ability_undead_unholy_frenzy_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Necromancer Adept Training</font></b>\nIncreases the attack rate of a target unit by <Auhf,DataA1,%>%, but drains <Auhf,DataB1> hit points per second.\nLasts <Auhf,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_unholy_frenzy_disabled_Description"                  "<b><font color='#eedd44'>Requires:\n - Necromancer Adept Training</font></b>\nIncreases the attack rate of a target unit by %attack_speed_increase%%%, but drains %damage_per_second%%% hit points per second.\nLasts %duration% seconds."
 
         "DOTA_Tooltip_ability_undead_cripple"                                             "Cripple"
-        "DOTA_Tooltip_ability_undead_cripple_Description"                                 "Reduces movement speed by <Acri,DataA1,%>%, attack rate by <Acri,DataB1,%>%, and damage by <Acri,DataC1,%>% of a target enemy unit.\nLasts <Acri,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_cripple_Description"                                 "Reduces movement speed by %movement_speed_reduction%%%, attack rate by %attack_speed_reduction%%%, and damage by %damage_reduction%%% of a target enemy unit.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_undead_cripple_creep_duration"                              "CREEP DURATION:"
         "DOTA_Tooltip_ability_undead_cripple_hero_duration"                               "HERO DURATION:"
         "DOTA_Tooltip_ability_undead_cripple_attack_speed_reduction"                      "ATTACK SPEED REDUCTION:"
@@ -6282,7 +6282,7 @@
         "DOTA_Tooltip_ability_undead_cripple_damage_reduction"                            "DAMAGE REDUCTION:"
 
         "DOTA_Tooltip_ability_undead_cripple_disabled"                                    "Cripple"
-        "DOTA_Tooltip_ability_undead_cripple_disabled_Description"                        "<b><font color='#eedd44'>Requires:\n - Necromancer Master Training</font></b>\nReduces movement speed by <Acri,DataA1,%>%, attack rate by <Acri,DataB1,%>%, and damage by <Acri,DataC1,%>% of a target enemy unit.\nLasts <Acri,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_cripple_disabled_Description"                        "<b><font color='#eedd44'>Requires:\n - Necromancer Master Training</font></b>\nReduces movement speed by %movement_speed_reduction%%%, attack rate by %attack_speed_reduction%%%, and damage by %damage_reduction%%% of a target enemy unit.\nLasts %duration% seconds."
 
         "DOTA_Tooltip_ability_undead_skeletal_longevity"                                  "Skeletal Longevity"
         "DOTA_Tooltip_ability_undead_skeletal_longevity_Description"                      "Increases the duration of raised Skeleton Warriors and Skeletal Mages by %bonus_duration% seconds."
@@ -6298,38 +6298,38 @@
         "DOTA_Tooltip_ability_undead_skeletal_mastery_disabled_Description"               "<b><font color='#eedd44'>Requires:\n - Research Skeletal Mastery</font></b>\nCauses one of the two skeletons created by Raise Dead to be a Skeletal Mage."
 
         "DOTA_Tooltip_ability_undead_curse"                                               "Curse"
-        "DOTA_Tooltip_ability_undead_curse_Description"                                   "Curses a target enemy unit, causing it to have a <Acrs,DataA1,%>% chance to miss on an attack.\nLasts <Acrs,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_curse_Description"                                   "Curses a target enemy unit, causing it to have a %miss_chance%%% chance to miss on an attack.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_undead_curse_unit_duration"                                 "UNIT DURATION:"
         "DOTA_Tooltip_ability_undead_curse_hero_duration"                                 "HERO DURATION:"
         "DOTA_Tooltip_ability_undead_curse_miss_chance"                                   "MISS CHANCE:"
         "DOTA_Tooltip_ability_undead_curse_cast_range"                                    "CAST RANGE:"
 
         "DOTA_Tooltip_ability_undead_anti_magic_shell"                                    "Anti Magic Shell"
-        "DOTA_Tooltip_ability_undead_anti_magic_shell_Description"                        "Creates a barrier that stops spells from affecting a target unit.\nLasts <Aams,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_anti_magic_shell_Description"                        "Creates a barrier that stops spells from affecting a target unit.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_undead_anti_magic_shell_duration"                           "DURATION:"
         "DOTA_Tooltip_ability_undead_anti_magic_shell_spell_absorption"                   "SPELL ABSORPTION:"
 
         "DOTA_Tooltip_ability_undead_anti_magic_shell_disabled"                           "Anti Magic Shell"
-        "DOTA_Tooltip_ability_undead_anti_magic_shell_disabled_Description"               "<b><font color='#eedd44'>Requires:\n - Banshee Adept Training</font></b>\nCreates a barrier that stops spells from affecting a target unit.\nLasts <Aams,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_anti_magic_shell_disabled_Description"               "<b><font color='#eedd44'>Requires:\n - Banshee Adept Training</font></b>\nCreates a barrier that stops spells from affecting a target unit.\nLasts %duration% seconds."
 
         "DOTA_Tooltip_ability_undead_possession"                                          "Possession"
-        "DOTA_Tooltip_ability_undead_possession_Description"                              "Displaces the soul of an enemy, giving you permanent control of it, but destroying the caster's body.\nPossession cannot be used on flying units, Heroes, or creeps above level <Apos,DataA1>."
+        "DOTA_Tooltip_ability_undead_possession_Description"                              "Displaces the soul of an enemy, giving you permanent control of it, but destroying the caster's body.\nPossession cannot be used on flying units, Heroes, or creeps above level %max_level%."
         "DOTA_Tooltip_ability_undead_possession_damage_increase_while_channeling"         "DAMAGE INCREASE WHILE CHANNELING:"
         "DOTA_Tooltip_ability_undead_possession_channel_range"                            "CHANNEL RANGE:"
         "DOTA_Tooltip_ability_undead_possession_duration"                                 "DURATION:"
         "DOTA_Tooltip_ability_undead_possession_max_level"                                "MAX LEVEL:"
 
         "DOTA_Tooltip_ability_undead_possession_disabled"                                 "Possession"
-        "DOTA_Tooltip_ability_undead_possession_disabled_Description"                     "<b><font color='#eedd44'>Requires:\n - Banshee Master Training</font></b>\nDisplaces the soul of an enemy, giving you permanent control of it, but destroying the caster's body.\nPossession cannot be used on flying units, Heroes, or creeps above level <Apos,DataA1>."
+        "DOTA_Tooltip_ability_undead_possession_disabled_Description"                     "<b><font color='#eedd44'>Requires:\n - Banshee Master Training</font></b>\nDisplaces the soul of an enemy, giving you permanent control of it, but destroying the caster's body.\nPossession cannot be used on flying units, Heroes, or creeps above level %max_level%."
 
         "DOTA_Tooltip_ability_undead_freezing_breath"                                     "Freezing Breath"
-        "DOTA_Tooltip_ability_undead_freezing_breath_Description"                         "When used on a building, temporarily stops all building activities.\nLasts <Afrz,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_freezing_breath_Description"                         "When used on a building, temporarily stops all building activities.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_undead_freezing_breath_duration"                            "DURATION:"
         "DOTA_Tooltip_ability_undead_freezing_breath_radius"                              "RADIUS:"
         "DOTA_Tooltip_ability_undead_freezing_breath_movement_speed_reduction"            "MOVEMENT SPEED REDUCTION:"
 
         "DOTA_Tooltip_ability_undead_freezing_breath_disabled"                            "Freezing Breath"
-        "DOTA_Tooltip_ability_undead_freezing_breath_disabled_Description"                "<b><font color='#eedd44'>Requires:\n - Research Freezing Breath</font></b>\nWhen used on a building, temporarily stops all building activities.\nLasts <Afrz,Dur1> seconds."
+        "DOTA_Tooltip_ability_undead_freezing_breath_disabled_Description"                "<b><font color='#eedd44'>Requires:\n - Research Freezing Breath</font></b>\nWhen used on a building, temporarily stops all building activities.\nLasts %duration% seconds."
 
         "DOTA_Tooltip_ability_undead_freezing_splash"                                     "Freezing Splash"
         "DOTA_Tooltip_ability_undead_freezing_splash_Description"                         ""
@@ -6346,7 +6346,7 @@
         "DOTA_Tooltip_ability_undead_frost_attack_movement_speed_reduction"               "MOVEMENT SPEED REDUCTION:"
 
         "DOTA_Tooltip_ability_undead_essence_of_blight"                                   "Essence of Blight"
-        "DOTA_Tooltip_ability_undead_essence_of_blight_Description"                       "Restores <Arpl,DataA1> hit points to nearby friendly units."
+        "DOTA_Tooltip_ability_undead_essence_of_blight_Description"                       "Restores %health_restore% hit points to nearby friendly units."
         "DOTA_Tooltip_ability_undead_essence_of_blight_duration"                          "DURATION:"
         "DOTA_Tooltip_ability_undead_essence_of_blight_radius"                            "RADIUS:"
         "DOTA_Tooltip_ability_undead_essence_of_blight_health_restore"                    "HEALTH RESTORE:"
@@ -6354,7 +6354,7 @@
         "DOTA_Tooltip_ability_undead_essence_of_blight_mana_per_unit_healed"              "MANA PER UNIT HEALED:"
 
         "DOTA_Tooltip_ability_undead_spirit_touch"                                        "Spirit Touch"
-        "DOTA_Tooltip_ability_undead_spirit_touch_Description"                            "Restores <Arpm,DataB1> mana to nearby friendly units."
+        "DOTA_Tooltip_ability_undead_spirit_touch_Description"                            "Restores %mana_restore% mana to nearby friendly units."
         "DOTA_Tooltip_ability_undead_spirit_touch_duration"                               "DURATION:"
         "DOTA_Tooltip_ability_undead_spirit_touch_radius"                                 "RADIUS:"
         "DOTA_Tooltip_ability_undead_spirit_touch_mana_restore"                           "MANA RESTORE:"
@@ -6374,14 +6374,14 @@
         "DOTA_Tooltip_ability_undead_absorb_mana_duration"                                "DURATION:"
 
         "DOTA_Tooltip_ability_undead_devour_magic"                                        "Devour Magic"
-        "DOTA_Tooltip_ability_undead_devour_magic_Description"                            "Consumes all magical buffs from units in an area. Each unit that is devoured of magic gives the Destroyer <Advm,DataA1> hit points and <Advm,DataB1> mana.\n<font>Deals <Advm,DataE1> damage to summoned units</font>."
+        "DOTA_Tooltip_ability_undead_devour_magic_Description"                            "Consumes all magical buffs from units in an area. Each unit that is devoured of magic gives the Destroyer %health_restore% hit points and %mana_restore% mana.\n<font>Deals %summoned_unit_damage% damage to summoned units</font>."
         "DOTA_Tooltip_ability_undead_devour_magic_radius"                                 "RADIUS:"
         "DOTA_Tooltip_ability_undead_devour_magic_health_restore"                         "HEALTH RESTORE:"
         "DOTA_Tooltip_ability_undead_devour_magic_mana_restore"                           "MANA RESTORE:"
         "DOTA_Tooltip_ability_undead_devour_magic_summoned_unit_damage"                   "SUMMONED UNIT DAMAGE:"
 
         "DOTA_Tooltip_ability_undead_orb_of_annihilation"                                 "Orb of Annihilation"
-        "DOTA_Tooltip_ability_undead_orb_of_annihilation_Description"                     "Adds <Afak,DataA1> bonus damage to the Destroyer's attack and causes his attacks to do area of effect damage."
+        "DOTA_Tooltip_ability_undead_orb_of_annihilation_Description"                     "Adds %damage_bones% bonus damage to the Destroyer's attack and causes his attacks to do area of effect damage."
         "DOTA_Tooltip_ability_undead_orb_of_annihilation_radius"                          "RADIUS:"
         "DOTA_Tooltip_ability_undead_orb_of_annihilation_damage_bonus"                    "DAMAGE BONUS:"
         "DOTA_Tooltip_ability_undead_orb_of_annihilation_small_damage_factor"             "SMALL DAMAGE FACTOR:"
@@ -6389,7 +6389,7 @@
         "DOTA_Tooltip_ability_undead_orb_of_annihilation_half_damage_radius"              "HALF DAMAGE RADIUS:"
 
         "DOTA_Tooltip_ability_undead_unsummon_building"                                   "Unsummon Building"
-        "DOTA_Tooltip_ability_undead_unsummon_building_Description"                       "Unsummons your building to regain <Auns,DataA1,%>% of the spent resources."
+        "DOTA_Tooltip_ability_undead_unsummon_building_Description"                       "Unsummons your building to regain 50%%% of the spent resources."
         "DOTA_Tooltip_ability_undead_unsummon_building_accumulation_step"                 "ACCUMULATION STEP:"
         "DOTA_Tooltip_ability_undead_unsummon_building_salvage_cost_ratio"                "SALVAGE COST RATIO:"
 
@@ -6568,13 +6568,13 @@
 
 
         "DOTA_Tooltip_ability_undead_research_ghoul_frenzy"                               "Research Ghoul Frenzy"
-        "DOTA_Tooltip_ability_undead_research_ghoul_frenzy_Description"                   "Increases the attack rate of Ghouls by <Rugf,base1,%>%, and increases their movement speed."
+        "DOTA_Tooltip_ability_undead_research_ghoul_frenzy_Description"                   "Increases the attack rate of Ghouls by 25%%, and increases their movement speed."
         "DOTA_Tooltip_ability_undead_research_ghoul_frenzy_research_time"                 "RESEARCH TIME:"
         "DOTA_Tooltip_ability_undead_research_ghoul_frenzy_gold_cost"                     "GOLD COST:"
         "DOTA_Tooltip_ability_undead_research_ghoul_frenzy_lumber_cost"                   "LUMBER COST:"
 
         "DOTA_Tooltip_ability_undead_research_ghoul_frenzy_disabled"                      "Research Ghoul Frenzy"
-        "DOTA_Tooltip_ability_undead_research_ghoul_frenzy_disabled_Description"          "<b><font color='#eedd44'>Requires:\n - Graveyard\n - Black Citadel</font></b>\nIncreases the attack rate of Ghouls by <Rugf,base1,%>%, and increases their movement speed."
+        "DOTA_Tooltip_ability_undead_research_ghoul_frenzy_disabled_Description"          "<b><font color='#eedd44'>Requires:\n - Graveyard\n - Black Citadel</font></b>\nIncreases the attack rate of Ghouls by 25%%, and increases their movement speed."
 
         "DOTA_Tooltip_ability_undead_research_stone_form"                                 "Research Stone Form"
         "DOTA_Tooltip_ability_undead_research_stone_form_Description"                     "Enables the ability for Gargoyles to assume Stone Form. Stone Form transforms the Gargoyle into a statue with high armor, spell immunity, and regeneration. The Gargoyle cannot attack in this form."
@@ -6631,13 +6631,13 @@
         "DOTA_Tooltip_ability_undead_research_banshee_training2_disabled_Description"     "<b><font color='#eedd44'>Requires:\n - Black Citadel</font></b>\nFurther increases Banshees' mana capacity, mana regeneration rate, hit points, and gives them the ability to cast Possession."
 
         "DOTA_Tooltip_ability_undead_research_skeletal_longevity"                         "Research Skeletal Longevity"
-        "DOTA_Tooltip_ability_undead_research_skeletal_longevity_Description"             "Increases the duration of raised Skeleton Warriors and Skeletal Mages by <Rusl,base1> seconds."
+        "DOTA_Tooltip_ability_undead_research_skeletal_longevity_Description"             "Increases the duration of raised Skeleton Warriors and Skeletal Mages by 15 seconds."
         "DOTA_Tooltip_ability_undead_research_skeletal_longevity_research_time"           "RESEARCH TIME:"
         "DOTA_Tooltip_ability_undead_research_skeletal_longevity_gold_cost"               "GOLD COST:"
         "DOTA_Tooltip_ability_undead_research_skeletal_longevity_lumber_cost"             "LUMBER COST:"
 
         "DOTA_Tooltip_ability_undead_research_skeletal_longevity_disabled"                "Research Skeletal Longevity"
-        "DOTA_Tooltip_ability_undead_research_skeletal_longevity_disabled_Description"    "Increases the duration of raised Skeleton Warriors and Skeletal Mages by <Rusl,base1> seconds."
+        "DOTA_Tooltip_ability_undead_research_skeletal_longevity_disabled_Description"    "Increases the duration of raised Skeleton Warriors and Skeletal Mages by 15 seconds."
 
         "DOTA_Tooltip_ability_undead_research_skeletal_mastery"                           "Research Skeletal Mastery"
         "DOTA_Tooltip_ability_undead_research_skeletal_mastery_Description"               "Causes one of the two skeletons created by Raise Dead to be a Skeletal Mage."
@@ -6649,13 +6649,13 @@
         "DOTA_Tooltip_ability_undead_research_skeletal_mastery_disabled_Description"      "<b><font color='#eedd44'>Requires:\n - Black Citadel</font></b>\nCauses one of the two skeletons created by Raise Dead to be a Skeletal Mage."
 
         "DOTA_Tooltip_ability_undead_research_disease_cloud"                              "Research Disease Cloud"
-        "DOTA_Tooltip_ability_undead_research_disease_cloud_Description"                  "Gives Abominations a Disease Cloud aura that deals <Aap1,DataB1> damage per second for <Aap1,DataA1> seconds to nearby enemy units. Meat Wagons will cause Disease Clouds wherever they attack that deal <Aap2,DataB1> damage per second for <Aap2,DataA1> seconds to nearby enemy units.\nUndead are immune to Disease Cloud."
+        "DOTA_Tooltip_ability_undead_research_disease_cloud_Description"                  "Gives Abominations a Disease Cloud aura that deals 1 damage per second for 120 seconds to nearby enemy units. Meat Wagons will cause Disease Clouds wherever they attack that deal 1 damage per second for 120 seconds to nearby enemy units.\nUndead are immune to Disease Cloud."
         "DOTA_Tooltip_ability_undead_research_disease_cloud_research_time"                "RESEARCH TIME:"
         "DOTA_Tooltip_ability_undead_research_disease_cloud_gold_cost"                    "GOLD COST:"
         "DOTA_Tooltip_ability_undead_research_disease_cloud_lumber_cost"                  "LUMBER COST:"
 
         "DOTA_Tooltip_ability_undead_research_disease_cloud_disabled"                     "Research Disease Cloud"
-        "DOTA_Tooltip_ability_undead_research_disease_cloud_disabled_Description"         "<b><font color='#eedd44'>Requires:\n - Black Citadel</font></b>\nGives Abominations a Disease Cloud aura that deals <Aap1,DataB1> damage per second for <Aap1,DataA1> seconds to nearby enemy units. Meat Wagons will cause Disease Clouds wherever they attack that deal <Aap2,DataB1> damage per second for <Aap2,DataA1> seconds to nearby enemy units.\nUndead are immune to Disease Cloud."
+        "DOTA_Tooltip_ability_undead_research_disease_cloud_disabled_Description"         "<b><font color='#eedd44'>Requires:\n - Black Citadel</font></b>\nGives Abominations a Disease Cloud aura that deals 1 damage per second for 120 seconds to nearby enemy units. Meat Wagons will cause Disease Clouds wherever they attack that deal 1 damage per second for 120 seconds to nearby enemy units.\nUndead are immune to Disease Cloud."
 
         "DOTA_Tooltip_ability_undead_research_destroyer_form"                             "Research Destroyer Form"
         "DOTA_Tooltip_ability_undead_research_destroyer_form_Description"                 "Allows the Obsidian Statue to transform into a Destroyer, a large flying unit that must devour magic to sustain its mana. The Destroyer has Spell Immunity, Devour Magic, Absorb Mana, and Orb of Annihilation.\n\n<font color='#ffcc00'>Attacks land and air units</font>."
@@ -7745,7 +7745,7 @@
         "DOTA_Tooltip_ability_item_moonstone_night_duration"                              "NIGHT DURATION:"
 
         "DOTA_Tooltip_ability_item_dust_of_appearance"                                    "Dust of Appearance"
-        "DOTA_Tooltip_ability_item_dust_of_appearance_Description"                        "Reveals enemy invisible units in an area around the Hero.\nContains <dust,uses> charges.\nLasts %duration% seconds."
+        "DOTA_Tooltip_ability_item_dust_of_appearance_Description"                        "Reveals enemy invisible units in an area around the Hero.\nContains 2 charges.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_item_dust_of_appearance_duration"                           "DURATION:"
         "DOTA_Tooltip_ability_item_dust_of_appearance_radius"                             "RADIUS:"
         "DOTA_Tooltip_ability_item_dust_of_appearance_movespeed"                          "MOVESPEED:"
@@ -7754,7 +7754,7 @@
         "DOTA_Tooltip_ability_item_staff_of_preservation_Description"                     "Teleports a target friendly unit to its highest level town hall."
 
         "DOTA_Tooltip_ability_item_anti_magic_potion"                                     "Anti Magic Potion"
-        "DOTA_Tooltip_ability_item_anti_magic_potion_Description"                         "Gives the Hero immunity to magical spells for <AIxs,Dur1> seconds."
+        "DOTA_Tooltip_ability_item_anti_magic_potion_Description"                         "Gives the Hero immunity to magical spells for %duration% seconds."
         "DOTA_Tooltip_ability_item_anti_magic_potion_duration"                            "DURATION:"
 
         "DOTA_Tooltip_ability_item_healing_salve"                                         "Healing Salve"

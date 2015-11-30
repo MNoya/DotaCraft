@@ -508,7 +508,7 @@
 		"03"
 		{
 			"var_type"			"FIELD_FLOAT"
-			"think_interval"	"1"
+			"debuff_duration"	"1"
 		}
 	}
 
@@ -548,8 +548,9 @@
 
 		"modifier_disease_cloud_debuff"
 		{
+			"Duration"			"%debuff_duration"
 			"IsDebuff"			"1"
-			"ThinkInterval"  	"%think_interval"
+			"ThinkInterval"  	"1"
 			"OnIntervalThink"
 			{
 				"Damage"
