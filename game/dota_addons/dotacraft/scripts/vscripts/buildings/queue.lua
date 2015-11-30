@@ -18,6 +18,12 @@ function EnqueueUnit( event )
 		caster.queue = {}
 	end
 
+	-- Send 'need more farms' warning
+    if not Players:HasEnoughFood(playerID, food_cost) then
+        local race = Players:GetRace(playerID)
+        SendErrorMessage(playerID, "#error_not_enough_food_"..race)
+    end
+
 	-- Queue up to 6 units max
 	if #caster.queue < 6 then
 		local ability_name = ability:GetAbilityName()
@@ -199,9 +205,6 @@ function AdvanceQueue( event )
 
 							-- Add to the value of food used as soon as the unit training starts
 							Players:ModifyFoodUsed(playerID, food_cost)
-
-							-- Reset the need more farms warning
-							player.need_more_farms = false
 
 							ability_to_channel:SetChanneling(true)
 							print("->"..ability_to_channel:GetAbilityName()," started channel")

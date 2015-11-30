@@ -239,17 +239,7 @@ function Players:HasEnoughFood( playerID, food_cost )
     local food_used = Players:GetFoodUsed(playerID)
     local food_limit = Players:GetFoodLimit(playerID)
 
-    if food_used + food_cost > food_limit then
-        -- send the warning only once every time
-        --if not player.need_more_farms then
-            local race = Players:GetRace(playerID)
-            SendErrorMessage(playerID, "#error_not_enough_food_"..race)
-        --    player.need_more_farms = true
-        --end
-        return false
-    else
-        return true
-    end
+    return (food_used + food_cost <= food_limit)
 end
 
 function Players:EnoughForDoMyPower( playerID, ability )
