@@ -30,15 +30,6 @@ function ResearchComplete( event )
 	end
 end
 
-function LumberResearchComplete( event )
-	local player = event.caster:GetPlayerOwner()
-	local level = event.Level
-	local extra_lumber_carried = event.ability:GetLevelSpecialValueFor("extra_lumber_carried", level - 1)
-
-	player.LumberCarried = 10 + extra_lumber_carried
-end
-
-
 -- When queing a research, disable it to prevent from being queued again
 function DisableResearch( event )
 	local ability = event.ability

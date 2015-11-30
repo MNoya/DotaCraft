@@ -23,7 +23,6 @@ function Players:Init( playerID, hero )
 
     -- Other variables
     hero.city_center_level = 1
-    hero.lumber_carried = 0 --Should be a unitvalue
     hero.altar_level = 1
 end
 
@@ -534,4 +533,3 @@ end
 function Players:HeroCount( playerID )
     return #Players:GetHeroes(playerID)
 end
-

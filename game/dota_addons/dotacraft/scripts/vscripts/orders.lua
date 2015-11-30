@@ -372,7 +372,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 end
             elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
                 -- Can the unit still gather more resources?
-                if (unit.lumber_gathered and unit.lumber_carried and unit.lumber_gathered < unit.lumber_carried) and not unit:HasModifier("modifier_returning_gold") then
+                if (unit.lumber_gathered and unit.lumber_gathered < Units:GetLumberCapacity(unit)) and not unit:HasModifier("modifier_returning_gold") then
                     --print("Keep gathering")
 
                     -- Swap to a gather ability and keep extracting
@@ -557,7 +557,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
                 elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
                     -- Can the unit still gather more resources?
-                    if (unit.lumber_gathered and unit.lumber_carried and unit.lumber_gathered < unit.lumber_carried) and not unit:HasModifier("modifier_returning_gold") then
+                    if (unit.lumber_gathered and unit.lumber_gathered < Units:GetLumberCapacity(unit)) and not unit:HasModifier("modifier_returning_gold") then
                         --print("Keep gathering")
 
                         -- Swap to a gather ability and keep extracting
@@ -634,7 +634,7 @@ function dotacraft:GoldGatherOrder( event )
         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
     elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
         -- Can the unit still gather more resources?
-        if (unit.lumber_gathered and unit.lumber_carried and unit.lumber_gathered < unit.lumber_carried) and not unit:HasModifier("modifier_returning_gold") then
+        if (unit.lumber_gathered and unit.lumber_gathered < Units:GetLumberCapacity(unit)) and not unit:HasModifier("modifier_returning_gold") then
             --print("Keep gathering")
 
             -- Swap to a gather ability and keep extracting

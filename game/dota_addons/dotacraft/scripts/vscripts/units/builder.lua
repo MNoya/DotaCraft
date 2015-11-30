@@ -326,7 +326,6 @@ MIN_DISTANCE_TO_MINE = 300
 TREE_FIND_RADIUS_FROM_TREE = 200
 TREE_FIND_RADIUS_FROM_TOWN = 2000
 DURATION_INSIDE_MINE = 0.5
-BASE_LUMBER_CARGO = 10
 DAMAGE_TO_TREE = 1
 DAMAGE_TO_MINE = 10
 THINK_INTERVAL = 0.5
@@ -810,8 +809,7 @@ function GatherLumber( event )
 	
 	local caster = event.caster
 	local ability = event.ability
-	local player = caster:GetPlayerOwner()
-	local max_lumber_carried = BASE_LUMBER_CARGO
+	local max_lumber_carried = Units:GetLumberCapacity(caster)
 	local tree = caster.target_tree
 
 	-- Builder race
@@ -820,16 +818,6 @@ function GatherLumber( event )
 	caster.state = "gathering_lumber"
 
 	--print("Tree Health: ", tree.health)
-
-	-- Upgraded on LumberResearchComplete
-	if player.LumberCarried then 
-		max_lumber_carried = player.LumberCarried
-	end
-
-	-- Undead Ghouls can carry up to 20
-	if IsUndead(caster) then
-		max_lumber_carried = 20
-	end
 
 	local return_ability = caster:FindAbilityByName(race.."_return_resources")
 
