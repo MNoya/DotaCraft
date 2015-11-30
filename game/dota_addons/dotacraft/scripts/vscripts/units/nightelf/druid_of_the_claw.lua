@@ -64,8 +64,7 @@ function TrueFormStart( event )
     end
 
     -- Sets the new model
-    caster:SetModel(model)
-    caster:SetOriginalModel(model)
+    caster:AddNewModifier(caster, nil, "modifier_druid_bear_model", {})
 
     -- Bonus Health
     local bear_hp = ability:GetSpecialValueFor("bear_hp")
@@ -94,8 +93,8 @@ function TrueFormEnd( event )
     local ability = event.ability
     local modifier = event.remove_modifier_name
 
-    caster:SetModel(caster.caster_model)
-    caster:SetOriginalModel(caster.caster_model)
+    -- Revert model change
+    caster:RemoveModifierByName("modifier_druid_bear_model")
 
     -- Minus Health
     local bonus_hp = caster.bonus_hp
@@ -127,41 +126,5 @@ function TrueFormEnd( event )
     print("Swapped "..sub_ability_name.." with " ..main_ability_name)
 
     -- Remove modifier
-    caster:RemoveModifierByName(modifier)
-end
-
-function HideWearables( event )
-    local hero = event.caster
-    local ability = event.ability
-
-    hero.wearableNames = {} -- In here we'll store the wearable names to revert the change
-    hero.hiddenWearables = {} -- Keep every wearable handle in a table, as its way better to iterate than in the MovePeer system
-    local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() ~= "" and model:GetClassname() == "dota_item_wearable" then
-            local modelName = model:GetModelName()
-            if string.find(modelName, "invisiblebox") == nil then
-                -- Add the original model name to revert later
-                table.insert(hero.wearableNames,modelName)
-
-                -- Set model invisible
-                model:SetModel("models/development/invisiblebox.vmdl")
-                table.insert(hero.hiddenWearables,model)
-            end
-        end
-        model = model:NextMovePeer()
-    end
-end
-
-function ShowWearables( event )
-    local hero = event.caster
-
-    -- Iterate on both tables to set each item back to their original modelName
-    for i,v in ipairs(hero.hiddenWearables) do
-        for index,modelName in ipairs(hero.wearableNames) do
-            if i==index then
-                v:SetModel(modelName)
-            end
-        end
-    end
+    caster:RemoveModifierByName("modifier_bear_form")
 end

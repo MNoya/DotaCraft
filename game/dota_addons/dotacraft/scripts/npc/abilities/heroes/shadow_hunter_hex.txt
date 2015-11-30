@@ -72,7 +72,7 @@
 
 		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_hex"
+			"ModifierName"	"modifier_hex_frog" //Lua modifier
 			"Target"
 			{
 				"Center"	"TARGET"
@@ -84,7 +84,7 @@
 		
 		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_hex"
+			"ModifierName"	"modifier_hex_frog" //Lua modifier
 			"Target"
 			{
 				"Center"	"TARGET"
@@ -92,61 +92,6 @@
 				"Types"		"DOTA_UNIT_TARGET_BASIC"
 			}
 			"Duration"		"%creep_duration"
-		}
-		
-	}
-
-	"Modifiers"
-	{
-		"modifier_hex"
-		{
-			"IsDebuff"	"1"
-			"Duration"	"%duration"
-
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
-					"Function"		"voodoo_start"
-					"model"			"models/props_gameplay/frog.vmdl"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"		"heroes/shadow_hunter/hex.lua"
-					"Function"			"HideWearables"
-				}
-			}
-
-			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
-					"Function"		"voodoo_end"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/shadow_hunter/hex.lua"
-					"Function"		"ShowWearables"
-				}
-			}
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"%movespeed"
-			}
-
-			"States"
-			{
-				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_MUTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_HEXED"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_EVADE_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_BLOCK_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
+		}	
 	}
 }

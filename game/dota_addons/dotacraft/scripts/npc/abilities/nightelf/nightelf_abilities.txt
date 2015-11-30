@@ -1228,19 +1228,11 @@
                 {
                     "ScriptFile"            "units/nightelf/druid_of_the_claw.lua"
                     "Function"              "TrueFormStart"
-                    "model"                 "models/heroes/lone_druid/true_form.vmdl"
                     "sub_ability_name"      "nightelf_bear_form_off"
-                }
-
-                "RunScript"
-                {
-                    "ScriptFile"            "units/nightelf/druid_of_the_claw.lua"
-                    "Function"              "HideWearables"
                 }
             }
         }
     }
-	
 }
 
 "nightelf_bear_form_off"
@@ -1957,19 +1949,11 @@
                 {
                     "ScriptFile"            "units/nightelf/druid_of_the_talon.lua"
                     "Function"              "CrowFormStart"
-                    "model"                 "models/items/courier/shagbark/shagbark_flying.vmdl"
                     "sub_ability_name"      "nightelf_storm_crow_form_off"
-                }
-
-                "RunScript"
-                {
-                    "ScriptFile"            "units/nightelf/druid_of_the_talon.lua"
-                    "Function"              "HideWearables"
                 }
             }
         }
     }
-	
 }
 
 "nightelf_storm_crow_form_off"

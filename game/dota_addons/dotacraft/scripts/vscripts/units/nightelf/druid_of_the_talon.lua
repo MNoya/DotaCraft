@@ -25,7 +25,7 @@ end
 
 function CrowFormOn( event )
     local caster = event.caster
-    local playerID = caster:GetPlayerOwner()
+    local playerID = caster:GetPlayerOwnerID()
     caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
     --caster:EmitSound("Hero_LoneDruid.TrueForm.Cast")
 
@@ -68,14 +68,8 @@ function CrowFormStart( event )
     caster:Stop()
     caster:SetModelScale(0.8)
 
-    -- Saves the original model
-    if caster.caster_model == nil then 
-        caster.caster_model = caster:GetModelName()
-    end
-
     -- Sets the new model
-    caster:SetModel(model)
-    caster:SetOriginalModel(model)
+    caster:AddNewModifier(caster, nil, "modifier_druid_crow_model", {})
 
     -- Add weapon/armor upgrade benefits
     local player = caster:GetPlayerOwner()
@@ -101,8 +95,8 @@ function CrowFormEnd( event )
     caster:Stop()
     caster:SetModelScale(0.7)
 
-    caster:SetModel(caster.caster_model)
-    caster:SetOriginalModel(caster.caster_model)
+    -- Reverts model
+    caster:RemoveModifierByName("modifier_druid_crow_model")
 
     -- Remove abilities and modifiers from weapon/armor upgrades
     for i=0,15 do
@@ -127,41 +121,5 @@ function CrowFormEnd( event )
     print("Swapped "..sub_ability_name.." with " ..main_ability_name)
 
     -- Remove modifier
-    caster:RemoveModifierByName(modifier)
-end
-
-function HideWearables( event )
-	local hero = event.caster
-	local ability = event.ability
-
-	hero.wearableNames = {} -- In here we'll store the wearable names to revert the change
-	hero.hiddenWearables = {} -- Keep every wearable handle in a table, as its way better to iterate than in the MovePeer system
-    local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() ~= "" and model:GetClassname() == "dota_item_wearable" then
-            local modelName = model:GetModelName()
-            if string.find(modelName, "invisiblebox") == nil then
-            	-- Add the original model name to revert later
-            	table.insert(hero.wearableNames,modelName)
-
-            	-- Set model invisible
-            	model:SetModel("models/development/invisiblebox.vmdl")
-            	table.insert(hero.hiddenWearables,model)
-            end
-        end
-        model = model:NextMovePeer()
-    end
-end
-
-function ShowWearables( event )
-	local hero = event.caster
-
-	-- Iterate on both tables to set each item back to their original modelName
-	for i,v in ipairs(hero.hiddenWearables) do
-		for index,modelName in ipairs(hero.wearableNames) do
-			if i==index then
-				v:SetModel(modelName)
-			end
-		end
-	end
+    caster:RemoveModifierByName("modifier_crow_form")
 end
