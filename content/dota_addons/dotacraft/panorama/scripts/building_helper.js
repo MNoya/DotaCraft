@@ -8,6 +8,7 @@ var overlay_alpha = 90;
 var model_alpha = 100;
 var recolor_ghost = false;
 var pressedShift = false;
+var altDown = false;
 var modelParticle;
 var gridParticles;
 var overlayParticles;
@@ -64,13 +65,6 @@ function StartBuildingHelper( params )
         }
 
         overlayParticles = [];
-        for (var y=0; y < overlay_size*overlay_size; y++)
-        {
-            var particle = Particles.CreateParticle("particles/buildinghelper/square_overlay.vpcf", ParticleAttachment_t.PATTACH_CUSTOMORIGIN, 0)
-            Particles.SetParticleControl(particle, 1, [32,0,0])
-            Particles.SetParticleControl(particle, 3, [0,0,0])
-            overlayParticles.push(particle)
-        }
     } 
     
     if (state == 'active')
@@ -115,58 +109,99 @@ function StartBuildingHelper( params )
                     var screenY = Game.WorldToScreenY( pos[0], pos[1], pos[2] );
                     var mouseEntities = GameUI.FindScreenEntities( [screenX,screenY] );
      
+                    // Check entities
+                    color = [0,255,0]
                     if (mouseEntities.length > 0)
                     {
-                        color = [255,0,0]
-                        invalid = true //Mark invalid for the ghost recolor
-                    }
-                    else
-                    {
-                        color = [0,255,0]
+                        for (var i = 0; i < mouseEntities.length; i++)
+                        {
+                            var entIndex = mouseEntities[i].entityIndex
+                            if (IsCustomBuilding(entIndex) || Entities.GetTeamNumber(entIndex) != Entities.GetTeamNumber(builderIndex) )
+                            {
+                                color = [255,0,0]
+                                invalid = true //Mark invalid for the ghost recolor
+                                break;
+                            }
+                        }
+                        
                     }
 
-                    Particles.SetParticleControl(gridParticle, 2, color)            
+                    Particles.SetParticleControl(gridParticle, 2, color)   
                 }
             }
 
             // Overlay Grid, visible with Alt pressed
-            // Keep in mind that a particle with 0 alpha does still eat frame rate.
-            overlay_alpha = GameUI.IsAltDown() ? 90 : 0;
-
-            color = [255,255,255]
-            var part2 = 0
-            var halfSide2 = (overlay_size/2)*64
-            var boundingRect2 = {}
-            boundingRect2["leftBorderX"] = GamePos[0]-halfSide2
-            boundingRect2["rightBorderX"] = GamePos[0]+halfSide2
-            boundingRect2["topBorderY"] = GamePos[1]+halfSide2
-            boundingRect2["bottomBorderY"] = GamePos[1]-halfSide2
-
-            for (var x2=boundingRect2["leftBorderX"]+32; x2 <= boundingRect2["rightBorderX"]-32; x2+=64)
+            altDown = GameUI.IsAltDown();
+            if (altDown)
             {
-                for (var y2=boundingRect2["topBorderY"]-32; y2 >= boundingRect2["bottomBorderY"]+32; y2-=64)
+                // Create the particles
+                if (overlayParticles && overlayParticles.length == 0)
                 {
-                    var pos2 = [x2,y2,GamePos[2]]
-                    if (part2>=overlay_size*overlay_size)
-                        return
+                    for (var y=0; y < overlay_size*overlay_size; y++)
+                    {
+                        var particle = Particles.CreateParticle("particles/buildinghelper/square_overlay.vpcf", ParticleAttachment_t.PATTACH_CUSTOMORIGIN, 0)
+                        Particles.SetParticleControl(particle, 1, [32,0,0])
+                        Particles.SetParticleControl(particle, 3, [0,0,0])
+                        overlayParticles.push(particle)
+                    }
+                }
 
-                    var overlayParticle = overlayParticles[part2]
-                    Particles.SetParticleControl(overlayParticle, 0, pos2)     
-                    part2++;
+                color = [255,255,255]
+                var part2 = 0
+                var halfSide2 = (overlay_size/2)*64
+                var boundingRect2 = {}
+                boundingRect2["leftBorderX"] = GamePos[0]-halfSide2
+                boundingRect2["rightBorderX"] = GamePos[0]+halfSide2
+                boundingRect2["topBorderY"] = GamePos[1]+halfSide2
+                boundingRect2["bottomBorderY"] = GamePos[1]-halfSide2
 
-                    // Grid color turns red when over invalid positions
-                    // Until we get a good way perform clientside FindUnitsInRadius & Gridnav Check, the prevention will stay serverside
-                    var screenX2 = Game.WorldToScreenX( pos2[0], pos2[1], pos2[2] );
-                    var screenY2 = Game.WorldToScreenY( pos2[0], pos2[1], pos2[2] );
-                    var mouseEntities2 = GameUI.FindScreenEntities( [screenX2,screenY2] );
-     
-                    if (mouseEntities2.length > 0)
-                        color = [255,0,0]
-                    else
+                for (var x2=boundingRect2["leftBorderX"]+32; x2 <= boundingRect2["rightBorderX"]-32; x2+=64)
+                {
+                    for (var y2=boundingRect2["topBorderY"]-32; y2 >= boundingRect2["bottomBorderY"]+32; y2-=64)
+                    {
+                        var pos2 = [x2,y2,GamePos[2]]
+                        if (part2>=overlay_size*overlay_size)
+                            return
+
+                        var overlayParticle = overlayParticles[part2]
+                        Particles.SetParticleControl(overlayParticle, 0, pos2)     
+                        part2++;
+
+                        // Grid color turns red when over invalid positions
+                        // Until we get a good way perform clientside FindUnitsInRadius & Gridnav Check, the prevention will stay serverside
+                        var screenX2 = Game.WorldToScreenX( pos2[0], pos2[1], pos2[2] );
+                        var screenY2 = Game.WorldToScreenY( pos2[0], pos2[1], pos2[2] );
+                        var mouseEntities2 = GameUI.FindScreenEntities( [screenX2,screenY2] );
+         
+                        // Check entities
                         color = [255,255,255] //White on empty positions
+                        if (mouseEntities2.length > 0)
+                        {
+                            for (var i = 0; i < mouseEntities2.length; i++)
+                            {
+                                var entIndex2 = mouseEntities2[i].entityIndex
+                                if (IsCustomBuilding(entIndex2) || Entities.GetTeamNumber(entIndex2) != Entities.GetTeamNumber(builderIndex) )
+                                {
+                                    color = [255,0,0]
+                                    break;
+                                }
+                            }  
+                        }
 
-                    Particles.SetParticleControl(overlayParticle, 2, color)        
-                    Particles.SetParticleControl(overlayParticle, 3, [overlay_alpha,0,0])
+                        Particles.SetParticleControl(overlayParticle, 2, color)        
+                        Particles.SetParticleControl(overlayParticle, 3, [overlay_alpha,0,0])
+                    }
+                }
+            }
+            else
+            {
+                // Destroy the particles, only once
+                if (overlayParticles && overlayParticles.length != 0)
+                {
+                    for (var i in overlayParticles) {
+                        Particles.DestroyParticleEffect(overlayParticles[i], true)
+                    }
+                    overlayParticles = [];
                 }
             }
 
