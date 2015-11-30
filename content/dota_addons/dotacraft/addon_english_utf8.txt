@@ -57,7 +57,8 @@
 		"firelord_lava_spawn2"                                                            "Lava Spawn"
 		"firelord_lava_spawn3"                                                            "Lava Spawn"
 		"firelord_volcano"                                                                "Volcano"
-		"gold_mine"                                                                       "Gold Mine"
+		"gold_mine"                                                                       "Gold Mine"		
+		"tavern"                                                                          "Tavern"
 
 		"human_town_hall"                                                                 "Town Hall"
 		"human_keep"                                                                      "Keep"
@@ -88,6 +89,7 @@
 		"human_mortar_team"                                                               "Mortar Team"
 		"human_siege_engine"                                                              "Siege Engine"
 		"human_gryphon_rider"                                                             "Gryphon Rider"
+		"human_mechanical_critter"                                                        "Human Mechanical Critter"
 
 		"nightelf_tree_of_life"                                                           "Tree of Life"
 		"nightelf_wisp"                                                                   "Wisp"
@@ -123,7 +125,7 @@
 		"orc_great_hall"                                                                  "Great Hall"
 		"orc_stronghold"                                                                  "Stronghold"
 		"orc_fortress"                                                                    "Fortress"
-		"orc_orc_burrow"                                                                  "Orc Burrow"
+		"orc_burrow"                                                                      "Orc Burrow"
 		"orc_spirit_lodge"                                                                "Spirit Lodge"
 		"orc_tauren_totem"                                                                "Tauren Totem"
 		"orc_voodoo_lounge"                                                               "Voodoo Lounge"
@@ -142,6 +144,9 @@
 		"orc_wind_rider"                                                                  "Wind Rider"
 		"orc_troll_batrider"                                                              "Troll Batrider"
 		"orc_tauren"                                                                      "Tauren"
+		"orc_sentry_ward_unit"                                                            "Sentry Ward"
+		"orc_stasis_ward_unit"                                                            "Stasis Ward"
+		"orc_healing_ward_unit"                                                           "Healing Ward"
 		
 		"undead_necropolis"                                                               "Necropolis"
 		"undead_halls_of_the_dead"                                                        "Halls of the Dead"
@@ -169,6 +174,10 @@
 		"undead_skeleton_warrior"                                                         "Skeleton Warrior"
 		"undead_skeletal_mage"                                                            "Skeletal Mage"
 		"undead_frost_wyrm"                                                               "Frost Wyrm"
+		"undead_sacrificial_pit"                                                          "Sacrificial Pit"
+		"undead_shade"                                                                    "Shade"
+		"undead_obsidian_statue"                                                          "Obsidian Statue"
+		"undead_obsidian_statue_dummy"                                                    "Obsidian Statue"
 
 		"npc_avatar_of_vengeance"                                                         "Avatar of Vengeance"
 		"npc_beastmaster_bear"                                                            "Bear"
@@ -214,6 +223,33 @@
 		"tinker_pocket_factory_building2"                                                 "Pocket Factory"
 		"tinker_pocket_factory_building3"                                                 "Pocket Factory"
 
+		"neutral_gnoll"                                                                   "Gnoll"
+		"neutral_gnoll_assassin"                                                          "Gnoll Assassin"
+		"neutral_gnoll_poacher"                                                           "Gnoll Poacher"
+		"neutral_gnoll_overseer"                                                          "Gnoll Overseer"
+		"neutral_forest_troll_trapper"                                                    "Forest Troll Trapper"
+		"neutral_forest_troll_berserker"                                                  "Forest Troll Berserker"
+		"neutral_forest_troll_high_priest"                                                "Forest Troll High Priest"
+		"neutral_red_dragon"                                                              "Red Dragon"
+		"neutral_rock_golem"                                                              "Rock Golem"
+		"neutral_ogre_magi"                                                               "Ogre Magi"
+		"neutral_ogre_warrior"                                                            "Ogre Warrior"
+		"neutral_centaur_drudge"                                                          "Centaur Drudge"
+		"neutral_centaur_archer"                                                          "Centaur Archer"
+		"neutral_centaur_impaler"                                                         "Centaur Impaler"
+		"neutral_centaur_sorcerer"                                                        "Centaur Sorcerer"
+		"neutral_razormane_scout"                                                         "Razormane Scout"
+		"neutral_quillboar_hunter"                                                        "Quillboar Hunter"
+		"neutral_razormane_medicine_man"                                                  "Razormane Medicine Man"
+		"neutral_razormane_chieftain"                                                     "Razormane Chieftain"
+		"neutral_forest_troll"                                                            "Forest Troll"
+		"neutral_sea_turtle_hatchling"                                                    "Sea Turtle Hatchling"
+		"neutral_giant_sea_turtle"                                                        "Giant Sea Turtle"
+		"neutral_gargantuan_sea_turtle"                                                   "Gargantuan Sea Turtle"
+		"neutral_forest_troll_warlord"                                                    "Neutral Forest Troll Warlord"
+		"neutral_ogre_lord"                                                               "Neutral Ogre Lord"
+		"neutral_murloc_nightcrawler"                                                     "Neutral Murloc Nightcrawler"
+		"neutral_murloc_huntsman"                                                         "Neutral Murloc Huntsman"
 
 		//Overriden alchemist_chemical_rage modifier
 		"DOTA_Tooltip_modifier_alchemist_chemical_rage"             "Legacy Chemical Rage"
@@ -484,8 +520,8 @@
 		"DOTA_Tooltip_ability_demon_hunter_demon_form_duration"                           "DURATION:"
 		"DOTA_Tooltip_ability_demon_hunter_demon_form_bonus_health"                       "BONUS HEALTH:"
 		"DOTA_Tooltip_ability_demon_hunter_demon_form_bonus_health_regen"                 "BONUS HEALTH REGEN:"
-		"DOTA_Tooltip_ability_demon_hunter_demon_form_bonus_range"                        "BONUS RANGE:"
-		"DOTA_Tooltip_ability_demon_hunter_demon_form_range_tooltip"                      "RANGE TOOLTIP:"
+		"DOTA_Tooltip_ability_demon_hunter_demon_form_range_tooltip"                      "BONUS RANGE:"
+		"DOTA_Tooltip_ability_demon_hunter_demon_form_transformation_time"                "TRANSFORMATION TIME:"
 		
 		"DOTA_Tooltip_ability_demon_hunter_evasion"                                       "Evasion"
 		"DOTA_Tooltip_ability_demon_hunter_evasion_Description"                           "Gives the Demon Hunter a chance to avoid attacks."
@@ -865,6 +901,7 @@
 		"DOTA_Tooltip_ability_potm_searing_arrows"                                        "Searing Arrows"
 		"DOTA_Tooltip_ability_potm_searing_arrows_Description"                            "Increases the damage of the Priestess' attack by adding fire. Searing Arrows will fire until the Priestess is out of mana. Manually casting Searing Arrows will allow the Priestess of the Moon to fire beyond her normal 60 range at level 2."
 		"DOTA_Tooltip_ability_potm_searing_arrows_bonus_range"                            "BONUS RANGE:"
+		"DOTA_Tooltip_ability_potm_searing_arrows_damage_bonus"                           "DAMAGE BONUS:"
 		
 		"DOTA_Tooltip_ability_potm_starfall"                                              "Starfall"
 		"DOTA_Tooltip_ability_potm_starfall_Description"                                  "Calls down waves of falling stars that damage nearby enemy units. Each wave deals 50 damage. the time between waves is 1.5 seconds."
@@ -980,6 +1017,7 @@
 		"DOTA_Tooltip_ability_avatar_of_vengeance_spirit_spawn_Description"               "Raises an invulnerable feral spirit from the corpses of fallen units. Lasts 50 seconds or until the avatar dies."
 		"DOTA_Tooltip_ability_avatar_of_vengeance_spirit_spawn_spirit_limit"              "SPIRIT LIMIT:"
 		"DOTA_Tooltip_ability_avatar_of_vengeance_spirit_spawn_radius"                    "RADIUS:"
+        "DOTA_Tooltip_ability_avatar_of_vengeance_spirit_spawn_duration"                  "DURATION:"
 				
 		"DOTA_Tooltip_ability_warden_blink"                                               "Blink"
 		"DOTA_Tooltip_ability_warden_blink_Description"                                   "Short distance teleportation that allows the Warden to move in and out of combat."
@@ -995,6 +1033,563 @@
 		"DOTA_Tooltip_ability_warden_shadow_strike_initial_damage"                        "INITIAL DAMAGE:"
 		"DOTA_Tooltip_ability_warden_shadow_strike_damage_every_3sec"                     "DAMAGE EVERY 3SEC:"
 		"DOTA_Tooltip_ability_warden_shadow_strike_move_speed_slow"                       "MOVE SPEED SLOW:"
+
+		// ******************** ABILITY MODIFIERS ********************
+		"DOTA_Tooltip_modifier_acid_bomb"                                                 "Acid Bomb"
+		"DOTA_Tooltip_modifier_acid_bomb_Description"                                     ""
+
+		"DOTA_Tooltip_modifier_healing_spray_channelling"                                 "Healing Spray Channelling"
+		"DOTA_Tooltip_modifier_healing_spray_channelling_Description"                     ""
+
+		"DOTA_Tooltip_modifier_healing_spray_thinker"                                     "Healing Spray Thinker"
+		"DOTA_Tooltip_modifier_healing_spray_thinker_Description"                         ""
+
+		"DOTA_Tooltip_modifier_blizzard_wave"                                             "Blizzard Wave"
+		"DOTA_Tooltip_modifier_blizzard_wave_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_blizzard_thinker"                                          "Blizzard Thinker"
+		"DOTA_Tooltip_modifier_blizzard_thinker_Description"                              ""
+
+		"DOTA_Tooltip_modifier_brilliance_aura_mana_regen"                                "Brilliance Aura Mana Regen"
+		"DOTA_Tooltip_modifier_brilliance_aura_mana_regen_Description"                    ""
+
+		"DOTA_Tooltip_modifier_channeling_animation"                                      "Channeling Animation"
+		"DOTA_Tooltip_modifier_channeling_animation_Description"                          ""
+
+		"DOTA_Tooltip_modifier_stampede"                                                  "Stampede"
+		"DOTA_Tooltip_modifier_stampede_Description"                                      ""
+
+		"DOTA_Tooltip_modifier_stampede_dummy"                                            "Stampede Dummy"
+		"DOTA_Tooltip_modifier_stampede_dummy_Description"                                ""
+
+		"DOTA_Tooltip_modifier_bash_stun"                                                 "Bash Stun"
+		"DOTA_Tooltip_modifier_bash_stun_Description"                                     ""
+
+		"DOTA_Tooltip_modifier_hawk_invis"                                                "Hawk Invis"
+		"DOTA_Tooltip_modifier_hawk_invis_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_frenzy"                                                    "Frenzy"
+		"DOTA_Tooltip_modifier_frenzy_Description"                                        ""
+
+		"DOTA_Tooltip_modifier_bladestorm"                                                "Bladestorm"
+		"DOTA_Tooltip_modifier_bladestorm_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_windwalk"                                                  "Windwalk"
+		"DOTA_Tooltip_modifier_windwalk_Description"                                      ""
+
+		"DOTA_Tooltip_modifier_banish"                                                    "Banish"
+		"DOTA_Tooltip_modifier_banish_Description"                                        ""
+
+		"DOTA_Tooltip_modifier_flame_strike_first_burn"                                   "Flame Strike First Burn"
+		"DOTA_Tooltip_modifier_flame_strike_first_burn_Description"                       ""
+
+		"DOTA_Tooltip_modifier_flame_strike_second_burn"                                  "Flame Strike Second Burn"
+		"DOTA_Tooltip_modifier_flame_strike_second_burn_Description"                      ""
+
+		"DOTA_Tooltip_modifier_phoenix_reborn"                                            "Phoenix Reborn"
+		"DOTA_Tooltip_modifier_phoenix_reborn_Description"                                ""
+
+		"DOTA_Tooltip_modifier_egg"                                                       "Egg"
+		"DOTA_Tooltip_modifier_egg_Description"                                           ""
+
+		"DOTA_Tooltip_modifier_siphon_mana"                                               "Siphon Mana"
+		"DOTA_Tooltip_modifier_siphon_mana_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_carrion_beetle"                                            "Carrion Beetle"
+		"DOTA_Tooltip_modifier_carrion_beetle_Description"                                ""
+
+		"DOTA_Tooltip_modifier_burrow"                                                    "Burrow"
+		"DOTA_Tooltip_modifier_burrow_Description"                                        ""
+
+		"DOTA_Tooltip_modifier_impale"                                                    "Impale"
+		"DOTA_Tooltip_modifier_impale_Description"                                        ""
+
+		"DOTA_Tooltip_modifier_locust_swarm"                                              "Locust Swarm"
+		"DOTA_Tooltip_modifier_locust_swarm_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_locust"                                                    "Locust"
+		"DOTA_Tooltip_modifier_locust_Description"                                        ""
+
+		"DOTA_Tooltip_modifier_spiked_carapace"                                           "Spiked Carapace"
+		"DOTA_Tooltip_modifier_spiked_carapace_Description"                               ""
+
+		"DOTA_Tooltip_modifier_life_drain"                                                "Life Drain"
+		"DOTA_Tooltip_modifier_life_drain_Description"                                    ""
+
+		"DOTA_Tooltip_channelling_animation"                                              "Channelling Animation"
+		"DOTA_Tooltip_channelling_animation_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_silenced"                                                  "Silenced"
+		"DOTA_Tooltip_modifier_silenced_Description"                                      ""
+
+		"DOTA_Tooltip_modifier_animate_dead"                                              "Animate Dead"
+		"DOTA_Tooltip_modifier_animate_dead_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_unholy_aura_buff"                                          "Unholy Aura Buff"
+		"DOTA_Tooltip_modifier_unholy_aura_buff_Description"                              ""
+
+		"DOTA_Tooltip_modifier_demon_form"                                                "Demon Form"
+		"DOTA_Tooltip_modifier_demon_form_Description"                                    ""
+
+		"DOTA_Tooltip_evasion"                                                            "Evasion"
+		"DOTA_Tooltip_evasion_Description"                                                ""
+
+		"DOTA_Tooltip_modifier_immolation"                                                "Immolation"
+		"DOTA_Tooltip_modifier_immolation_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_inferno_stun"                                              "Inferno Stun"
+		"DOTA_Tooltip_modifier_inferno_stun_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_inferno_immolation_burn"                                   "Inferno Immolation Burn"
+		"DOTA_Tooltip_modifier_inferno_immolation_burn_Description"                       ""
+
+		"DOTA_Tooltip_modifier_sleep"                                                     "Sleep"
+		"DOTA_Tooltip_modifier_sleep_Description"                                         ""
+
+		"DOTA_Tooltip_modifier_vampiric_aura_buff"                                        "Vampiric Aura Buff"
+		"DOTA_Tooltip_modifier_vampiric_aura_buff_Description"                            ""
+
+		"DOTA_Tooltip_modifier_earthquake_thinker"                                        "Earthquake Thinker"
+		"DOTA_Tooltip_modifier_earthquake_thinker_Description"                            ""
+
+		"DOTA_Tooltip_modifier_eartquake_slow"                                            "Eartquake Slow"
+		"DOTA_Tooltip_modifier_eartquake_slow_Description"                                ""
+
+		"DOTA_Tooltip_modifier_far_sight_vision"                                          "Far Sight Vision"
+		"DOTA_Tooltip_modifier_far_sight_vision_Description"                              ""
+
+		"DOTA_Tooltip_modifier_incinerate_stack"                                          "Incinerate Stack"
+		"DOTA_Tooltip_modifier_incinerate_stack_Description"                              ""
+
+		"DOTA_Tooltip_modifier_soul_burn"                                                 "Soul Burn"
+		"DOTA_Tooltip_modifier_soul_burn_Description"                                     ""
+
+		"DOTA_Tooltip_modifier_volcano_channelling"                                       "Volcano Channelling"
+		"DOTA_Tooltip_modifier_volcano_channelling_Description"                           ""
+
+		"DOTA_Tooltip_modifier_channeling"                                                "Channeling"
+		"DOTA_Tooltip_modifier_channeling_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_volcano_channeling_idle"                                   "Volcano Channeling Idle"
+		"DOTA_Tooltip_modifier_volcano_channeling_idle_Description"                       ""
+
+		"DOTA_Tooltip_modifier_channeling_idle"                                           "Channeling Idle"
+		"DOTA_Tooltip_modifier_channeling_idle_Description"                               ""
+
+		"DOTA_Tooltip_modifier_volcano_thinker"                                           "Volcano Thinker"
+		"DOTA_Tooltip_modifier_volcano_thinker_Description"                               ""
+
+		"DOTA_Tooltip_modifier_volcano_stun"                                              "Volcano Stun"
+		"DOTA_Tooltip_modifier_volcano_stun_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_entangling_roots"                                          "Entangling Roots"
+		"DOTA_Tooltip_modifier_entangling_roots_Description"                              ""
+
+		"DOTA_Tooltip_modifiers_thorns_aura_buff"                                         "Modifiers Thorns Aura Buff"
+		"DOTA_Tooltip_modifiers_thorns_aura_buff_Description"                             ""
+
+		"DOTA_Tooltip_modifier_tranquility_aura_effect"                                   "Tranquility Aura Effect"
+		"DOTA_Tooltip_modifier_tranquility_aura_effect_Description"                       ""
+
+		"DOTA_Tooltip_modifier_death_and_decay_thinker"                                   "Death And Decay Thinker"
+		"DOTA_Tooltip_modifier_death_and_decay_thinker_Description"                       ""
+
+		"DOTA_Tooltip_modifier_frost_armor"                                               "Frost Armor"
+		"DOTA_Tooltip_modifier_frost_armor_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_frost_armor_slow"                                          "Frost Armor Slow"
+		"DOTA_Tooltip_modifier_frost_armor_slow_Description"                              ""
+
+		"DOTA_Tooltip_modifier_frost_nova_slow"                                           "Frost Nova Slow"
+		"DOTA_Tooltip_modifier_frost_nova_slow_Description"                               ""
+
+		"DOTA_Tooltip_modifier_avatar"                                                    "Avatar"
+		"DOTA_Tooltip_modifier_avatar_Description"                                        ""
+
+		"DOTA_Tooltip_modifier_storm_bolt"                                                "Storm Bolt"
+		"DOTA_Tooltip_modifier_storm_bolt_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_thunder_clap"                                              "Thunder Clap"
+		"DOTA_Tooltip_modifier_thunder_clap_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_frost_arrows_slow"                                         "Frost Arrows Slow"
+		"DOTA_Tooltip_modifier_frost_arrows_slow_Description"                             ""
+
+		"DOTA_Tooltip_modifier_mana_shield"                                               "Mana Shield"
+		"DOTA_Tooltip_modifier_mana_shield_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_tornado_debuff"                                            "Tornado Debuff"
+		"DOTA_Tooltip_modifier_tornado_debuff_Description"                                ""
+
+		"DOTA_Tooltip_modifier_tornado_flying_debuff"                                     "Tornado Flying Debuff"
+		"DOTA_Tooltip_modifier_tornado_flying_debuff_Description"                         ""
+
+		"DOTA_Tooltip_modifier_devotion_aura_buff"                                        "Devotion Aura Buff"
+		"DOTA_Tooltip_modifier_devotion_aura_buff_Description"                            ""
+
+		"DOTA_Tooltip_modifier_paladin_divine_shield"                                     "Paladin Divine Shield"
+		"DOTA_Tooltip_modifier_paladin_divine_shield_Description"                         ""
+
+		"DOTA_Tooltip_modifier_resurrection"                                              "Resurrection"
+		"DOTA_Tooltip_modifier_resurrection_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_breath_fire_burn"                                          "Breath Fire Burn"
+		"DOTA_Tooltip_modifier_breath_fire_burn_Description"                              ""
+
+		"DOTA_Tooltip_modifier_drunken_haze"                                              "Drunken Haze"
+		"DOTA_Tooltip_modifier_drunken_haze_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_primal_split_delay"                                        "Primal Split Delay"
+		"DOTA_Tooltip_modifier_primal_split_delay_Description"                            ""
+
+		"DOTA_Tooltip_modifier_primal_split_duration"                                     "Primal Split Duration"
+		"DOTA_Tooltip_modifier_primal_split_duration_Description"                         ""
+
+		"DOTA_Tooltip_modifier_split_unit"                                                "Split Unit"
+		"DOTA_Tooltip_modifier_split_unit_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_storm_cyclone"                                             "Storm Cyclone"
+		"DOTA_Tooltip_modifier_storm_cyclone_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_permanent_immolation_burn"                                 "Permanent Immolation Burn"
+		"DOTA_Tooltip_modifier_permanent_immolation_burn_Description"                     ""
+
+		"DOTA_Tooltip_modifier_doom"                                                      "Doom"
+		"DOTA_Tooltip_modifier_doom_Description"                                          ""
+
+		"DOTA_Tooltip_modifier_hoof_stomp"                                                "Hoof Stomp"
+		"DOTA_Tooltip_modifier_hoof_stomp_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_cripple"                                                   "Cripple"
+		"DOTA_Tooltip_modifier_cripple_Description"                                       ""
+
+		"DOTA_Tooltip_modifier_rain_of_fire_thinker"                                      "Rain Of Fire Thinker"
+		"DOTA_Tooltip_modifier_rain_of_fire_thinker_Description"                          ""
+
+		"DOTA_Tooltip_modifier_rain_of_fire_burn"                                         "Rain Of Fire Burn"
+		"DOTA_Tooltip_modifier_rain_of_fire_burn_Description"                             ""
+
+		"DOTA_Tooltip_modifier_howl_of_terror"                                            "Howl Of Terror"
+		"DOTA_Tooltip_modifier_howl_of_terror_Description"                                ""
+
+		"DOTA_Tooltip_modifier_starfall"                                                  "Starfall"
+		"DOTA_Tooltip_modifier_starfall_Description"                                      ""
+
+		"DOTA_Tooltip_modifier_trueshot_aura_buff"                                        "Trueshot Aura Buff"
+		"DOTA_Tooltip_modifier_trueshot_aura_buff_Description"                            ""
+
+		"DOTA_Tooltip_modifier_big_bad_voodoo"                                            "Big Bad Voodoo"
+		"DOTA_Tooltip_modifier_big_bad_voodoo_Description"                                ""
+
+		"DOTA_Tooltip_modifier_big_bad_voodoo_invulnerability"                            "Big Bad Voodoo Invulnerability"
+		"DOTA_Tooltip_modifier_big_bad_voodoo_invulnerability_Description"                ""
+
+		"DOTA_Tooltip_modifier_endurance_aura_effect"                                     "Endurance Aura Effect"
+		"DOTA_Tooltip_modifier_endurance_aura_effect_Description"                         ""
+
+		"DOTA_Tooltip_modifier_war_stomp"                                                 "War Stomp"
+		"DOTA_Tooltip_modifier_war_stomp_Description"                                     ""
+
+		"DOTA_Tooltip_modifier_robot_transform"                                           "Robot Transform"
+		"DOTA_Tooltip_modifier_robot_transform_Description"                               ""
+
+		"DOTA_Tooltip_modifier_tinker_transform"                                          "Tinker Transform"
+		"DOTA_Tooltip_modifier_tinker_transform_Description"                              ""
+
+		"DOTA_Tooltip_modifier_shadow_strike"                                             "Shadow Strike"
+		"DOTA_Tooltip_modifier_shadow_strike_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_defend"                                                    "Defend"
+		"DOTA_Tooltip_modifier_defend_Description"                                        ""
+
+		"DOTA_Tooltip_modifier_human_slow"                                                "Human Slow"
+		"DOTA_Tooltip_modifier_human_slow_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_inner_fire"                                                "Inner Fire"
+		"DOTA_Tooltip_modifier_inner_fire_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_flare_vision"                                              "Flare Vision"
+		"DOTA_Tooltip_modifier_flare_vision_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_barrage"                                                   "Barrage"
+		"DOTA_Tooltip_modifier_barrage_Description"                                       ""
+
+		"DOTA_Tooltip_modifier_cloud"                                                     "Cloud"
+		"DOTA_Tooltip_modifier_cloud_Description"                                         ""
+
+		"DOTA_Tooltip_modifier_cloud_channelling"                                         "Cloud Channelling"
+		"DOTA_Tooltip_modifier_cloud_channelling_Description"                             ""
+
+		"DOTA_Tooltip_modifier_aerial_shackles"                                           "Aerial Shackles"
+		"DOTA_Tooltip_modifier_aerial_shackles_Description"                               ""
+
+		"DOTA_Tooltip_modifier_aerial_shackles_channeling"                                "Aerial Shackles Channeling"
+		"DOTA_Tooltip_modifier_aerial_shackles_channeling_Description"                    ""
+
+		"DOTA_Tooltip_modifier_reveal_vision"                                             "Reveal Vision"
+		"DOTA_Tooltip_modifier_reveal_vision_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_militia"                                                   "Militia"
+		"DOTA_Tooltip_modifier_militia_Description"                                       ""
+
+		"DOTA_Tooltip_modifier_gathering_gold"                                            "Gathering Gold"
+		"DOTA_Tooltip_modifier_gathering_gold_Description"                                ""
+
+		"DOTA_Tooltip_modifier_builder_repairing"                                         "Builder Repairing"
+		"DOTA_Tooltip_modifier_builder_repairing_Description"                             ""
+
+		"DOTA_Tooltip_modifier_repairing_building"                                        "Repairing Building"
+		"DOTA_Tooltip_modifier_repairing_building_Description"                            ""
+
+		"DOTA_Tooltip_modifier_carrying_lumber"                                           "Carrying Lumber"
+		"DOTA_Tooltip_modifier_carrying_lumber_Description"                               ""
+
+		"DOTA_Tooltip_modifier_carrying_gold"                                             "Carrying Gold"
+		"DOTA_Tooltip_modifier_carrying_gold_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_human_masonry"                                             "Human Masonry"
+		"DOTA_Tooltip_modifier_human_masonry_Description"                                 ""
+
+		"DOTA_Tooltip_dummy_modifier"                                                     "Dummy Modifier"
+		"DOTA_Tooltip_dummy_modifier_Description"                                         ""
+
+		"DOTA_Tooltip_modifier_gold_mine_passive"                                         "Gold Mine Passive"
+		"DOTA_Tooltip_modifier_gold_mine_passive_Description"                             ""
+
+		"DOTA_Tooltip_modifier_vorpal_blades"                                             "Vorpal Blades"
+		"DOTA_Tooltip_modifier_vorpal_blades_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_slow_poison"                                               "Slow Poison"
+		"DOTA_Tooltip_modifier_slow_poison_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_roar"                                                      "Roar"
+		"DOTA_Tooltip_modifier_roar_Description"                                          ""
+
+		"DOTA_Tooltip_modifier_rejuvenation"                                              "Rejuvenation"
+		"DOTA_Tooltip_modifier_rejuvenation_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_bear_form"                                                 "Bear Form"
+		"DOTA_Tooltip_modifier_bear_form_Description"                                     ""
+
+		"DOTA_Tooltip_modifier_druid_transform"                                           "Druid Transform"
+		"DOTA_Tooltip_modifier_druid_transform_Description"                               ""
+
+		"DOTA_Tooltip_modifier_war_club_strikes"                                          "War Club Strikes"
+		"DOTA_Tooltip_modifier_war_club_strikes_Description"                              ""
+
+		"DOTA_Tooltip_modifier_on_order_cancel"                                           "On Order Cancel"
+		"DOTA_Tooltip_modifier_on_order_cancel_Description"                               ""
+
+		"DOTA_Tooltip_modifier_faerie_fire"                                               "Faerie Fire"
+		"DOTA_Tooltip_modifier_faerie_fire_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_crow_form"                                                 "Crow Form"
+		"DOTA_Tooltip_modifier_crow_form_Description"                                     ""
+
+		"DOTA_Tooltip_modifier_phase_shift"                                               "Phase Shift"
+		"DOTA_Tooltip_modifier_phase_shift_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_mana_flare_caster"                                         "Mana Flare Caster"
+		"DOTA_Tooltip_modifier_mana_flare_caster_Description"                             ""
+
+		"DOTA_Tooltip_modifier_mana_flare_debuff"                                         "Mana Flare Debuff"
+		"DOTA_Tooltip_modifier_mana_flare_debuff_Description"                             ""
+
+		"DOTA_Tooltip_modifier_corrosive_breath"                                          "Corrosive Breath"
+		"DOTA_Tooltip_modifier_corrosive_breath_Description"                              ""
+
+		"DOTA_Tooltip_modifier_ultravision"                                               "Ultravision"
+		"DOTA_Tooltip_modifier_ultravision_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_rooted_ancient"                                            "Rooted Ancient"
+		"DOTA_Tooltip_modifier_rooted_ancient_Description"                                ""
+
+		"DOTA_Tooltip_modifier_uprooted"                                                  "Uprooted"
+		"DOTA_Tooltip_modifier_uprooted_Description"                                      ""
+
+		"DOTA_Tooltip_modifier_uprooted_ancient_protector"                                "Uprooted Ancient Protector"
+		"DOTA_Tooltip_modifier_uprooted_ancient_protector_Description"                    ""
+
+		"DOTA_Tooltip_modifier_natures_blessing_tree"                                     "Natures Blessing Tree"
+		"DOTA_Tooltip_modifier_natures_blessing_tree_Description"                         ""
+
+		"DOTA_Tooltip_modifier_natures_blessing_tower"                                    "Natures Blessing Tower"
+		"DOTA_Tooltip_modifier_natures_blessing_tower_Description"                        ""
+
+		"DOTA_Tooltip_modifier_eat_tree"                                                  "Eat Tree"
+		"DOTA_Tooltip_modifier_eat_tree_Description"                                      ""
+
+		"DOTA_Tooltip_modifier_gathering_lumber"                                          "Gathering Lumber"
+		"DOTA_Tooltip_modifier_gathering_lumber_Description"                              ""
+
+		"DOTA_Tooltip_modifier_pillage"                                                   "Pillage"
+		"DOTA_Tooltip_modifier_pillage_Description"                                       ""
+
+		"DOTA_Tooltip_modifier_orc_berserk"                                               "Orc Berserk"
+		"DOTA_Tooltip_modifier_orc_berserk_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_burning_oil"                                               "Burning Oil"
+		"DOTA_Tooltip_modifier_burning_oil_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_burning_oil_damage"                                        "Burning Oil Damage"
+		"DOTA_Tooltip_modifier_burning_oil_damage_Description"                            ""
+
+		"DOTA_Tooltip_modifier_purge"                                                     "Purge"
+		"DOTA_Tooltip_modifier_purge_Description"                                         ""
+
+		"DOTA_Tooltip_modifier_orc_lightning_shield"                                      "Orc Lightning Shield"
+		"DOTA_Tooltip_modifier_orc_lightning_shield_Description"                          ""
+
+		"DOTA_Tooltip_modifier_orc_bloodlust"                                             "Orc Bloodlust"
+		"DOTA_Tooltip_modifier_orc_bloodlust_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_sentry_ward"                                               "Sentry Ward"
+		"DOTA_Tooltip_modifier_sentry_ward_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_healing_ward"                                              "Healing Ward"
+		"DOTA_Tooltip_modifier_healing_ward_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_spirit_link"                                               "Spirit Link"
+		"DOTA_Tooltip_modifier_spirit_link_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_ethereal_form"                                             "Ethereal Form"
+		"DOTA_Tooltip_modifier_ethereal_form_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_ensnare"                                                   "Ensnare"
+		"DOTA_Tooltip_modifier_ensnare_Description"                                       ""
+
+		"DOTA_Tooltip_modifier_devour_devouring"                                          "Devour Devouring"
+		"DOTA_Tooltip_modifier_devour_devouring_Description"                              ""
+
+		"DOTA_Tooltip_modifier_devour_debuff"                                             "Devour Debuff"
+		"DOTA_Tooltip_modifier_devour_debuff_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_war_drums"                                                 "War Drums"
+		"DOTA_Tooltip_modifier_war_drums_Description"                                     ""
+
+		"DOTA_Tooltip_modifier_envenomed_spears_slow"                                     "Envenomed Spears Slow"
+		"DOTA_Tooltip_modifier_envenomed_spears_slow_Description"                         ""
+
+		"DOTA_Tooltip_modifier_unstable_concoction"                                       "Unstable Concoction"
+		"DOTA_Tooltip_modifier_unstable_concoction_Description"                           ""
+
+		"DOTA_Tooltip_modifier_liquid_fire_debuff"                                        "Liquid Fire Debuff"
+		"DOTA_Tooltip_modifier_liquid_fire_debuff_Description"                            ""
+
+		"DOTA_Tooltip_modifier_battle_stations"                                           "Battle Stations"
+		"DOTA_Tooltip_modifier_battle_stations_Description"                               ""
+
+		"DOTA_Tooltip_modifier_spiked_barricades"                                         "Spiked Barricades"
+		"DOTA_Tooltip_modifier_spiked_barricades_Description"                             ""
+
+		"DOTA_Tooltip_modifier_cannibalize"                                               "Cannibalize"
+		"DOTA_Tooltip_modifier_cannibalize_Description"                                   ""
+
+		"DOTA_Tooltip_modifier_spell_immunity"                                            "Spell Immunity"
+		"DOTA_Tooltip_modifier_spell_immunity_Description"                                ""
+
+		"DOTA_Tooltip_modifier_web"                                                       "Web"
+		"DOTA_Tooltip_modifier_web_Description"                                           ""
+
+		"DOTA_Tooltip_modifier_crypt_fiend_burrow"                                        "Crypt Fiend Burrow"
+		"DOTA_Tooltip_modifier_crypt_fiend_burrow_Description"                            ""
+
+		"DOTA_Tooltip_modifier_stone_form"                                                "Stone Form"
+		"DOTA_Tooltip_modifier_stone_form_Description"                                    ""
+
+		"DOTA_Tooltip_modifier_disease_cloud_debuff"                                      "Disease Cloud Debuff"
+		"DOTA_Tooltip_modifier_disease_cloud_debuff_Description"                          ""
+
+		"DOTA_Tooltip_modifier_corpses"                                                   "Corpses"
+		"DOTA_Tooltip_modifier_corpses_Description"                                       ""
+
+		"DOTA_Tooltip_modifier_unholy_frenzy"                                             "Unholy Frenzy"
+		"DOTA_Tooltip_modifier_unholy_frenzy_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_undead_curse"                                              "Undead Curse"
+		"DOTA_Tooltip_modifier_undead_curse_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_anti_magic_shell"                                          "Anti Magic Shell"
+		"DOTA_Tooltip_modifier_anti_magic_shell_Description"                              ""
+
+		"DOTA_Tooltip_modifier_possession_target"                                         "Possession Target"
+		"DOTA_Tooltip_modifier_possession_target_Description"                             ""
+
+		"DOTA_Tooltip_modifier_possession_caster"                                         "Possession Caster"
+		"DOTA_Tooltip_modifier_possession_caster_Description"                             ""
+
+		"DOTA_Tooltip_modifier_frozen"                                                    "Frozen"
+		"DOTA_Tooltip_modifier_frozen_Description"                                        ""
+
+		"DOTA_Tooltip_modifier_freezing_attack"                                           "Freezing Attack"
+		"DOTA_Tooltip_modifier_freezing_attack_Description"                               ""
+
+		"DOTA_Tooltip_modifier_frost_attack"                                              "Frost Attack"
+		"DOTA_Tooltip_modifier_frost_attack_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_blight_regen"                                              "Blight Regen"
+		"DOTA_Tooltip_modifier_blight_regen_Description"                                  ""
+
+		"DOTA_Tooltip_modifier_unselectable_mine"                                         "Unselectable Mine"
+		"DOTA_Tooltip_modifier_unselectable_mine_Description"                             ""
+
+		// ******************** ITEM MODIFIERS ********************
+		"DOTA_Tooltip_modifier_scroll_of_regeneration"                                    "Scroll Of Regeneration"
+		"DOTA_Tooltip_modifier_scroll_of_regeneration_Description"                        ""
+
+		"DOTA_Tooltip_modifier_mechanical_critter"                                        "Mechanical Critter"
+		"DOTA_Tooltip_modifier_mechanical_critter_Description"                            ""
+
+		"DOTA_Tooltip_modifier_lesser_clarity"                                            "Lesser Clarity"
+		"DOTA_Tooltip_modifier_lesser_clarity_Description"                                ""
+
+		"DOTA_Tooltip_modifier_scroll_of_town_portal_caster"                              "Scroll Of Town Portal Caster"
+		"DOTA_Tooltip_modifier_scroll_of_town_portal_caster_Description"                  ""
+
+		"DOTA_Tooltip_modifier_staff_of_sanctuary_heal"                                   "Staff Of Sanctuary Heal"
+		"DOTA_Tooltip_modifier_staff_of_sanctuary_heal_Description"                       ""
+
+		"DOTA_Tooltip_modifier_anti_magic_potion"                                         "Anti Magic Potion"
+		"DOTA_Tooltip_modifier_anti_magic_potion_Description"                             ""
+
+		"DOTA_Tooltip_modifier_healing_salve"                                             "Healing Salve"
+		"DOTA_Tooltip_modifier_healing_salve_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_scroll_of_speed"                                           "Scroll Of Speed"
+		"DOTA_Tooltip_modifier_scroll_of_speed_Description"                               ""
+
+		"DOTA_Tooltip_modifier_neutral_sleep"                                             "Neutral Sleep"
+		"DOTA_Tooltip_modifier_neutral_sleep_Description"                                 ""
+
+		"DOTA_Tooltip_modifier_orb_of_frost_slow"                                         "Orb Of Frost Slow"
+		"DOTA_Tooltip_modifier_orb_of_frost_slow_Description"                             ""
+
+		"DOTA_Tooltip_modifier_orb_of_venom_wc3_debuff"                                   "Orb Of Venom Wc3 Debuff"
+		"DOTA_Tooltip_modifier_orb_of_venom_wc3_debuff_Description"                       ""
+
+		"DOTA_Tooltip_modifier_orb_of_corruption_debuff"                                  "Orb Of Corruption Debuff"
+		"DOTA_Tooltip_modifier_orb_of_corruption_debuff_Description"                      ""
+
+		"DOTA_Tooltip_modifier_orb_of_lightning_purge"                                    "Orb Of Lightning Purge"
+		"DOTA_Tooltip_modifier_orb_of_lightning_purge_Description"                        ""
+
+		"DOTA_Tooltip_modifier_clarity_potion"                                            "Clarity Potion"
+		"DOTA_Tooltip_modifier_clarity_potion_Description"                                ""
+
+		"DOTA_Tooltip_modifier_replenishment_potion"                                      "Replenishment Potion"
+		"DOTA_Tooltip_modifier_replenishment_potion_Description"                          ""
+
+		"DOTA_Tooltip_modifier_lesser_potion_of_invulnerability"                          "Lesser Potion Of Invulnerability"
+		"DOTA_Tooltip_modifier_lesser_potion_of_invulnerability_Description"              ""
+
+		"DOTA_Tooltip_modifier_potion_of_invulnerability"                                 "Potion Of Invulnerability"
+		"DOTA_Tooltip_modifier_potion_of_invulnerability_Description"                     ""
+
+		"DOTA_Tooltip_modifier_potion_of_divinity"                                        "Potion Of Divinity"
+		"DOTA_Tooltip_modifier_potion_of_divinity_Description"                            ""
+
+		"DOTA_Tooltip_modifier_vampiric_potion"                                           "Vampiric Potion"
+		"DOTA_Tooltip_modifier_vampiric_potion_Description"                               ""
 		
 
 
@@ -1002,7 +1597,7 @@
 		// ===================================  -HUMANS-  ==================================
 		// **************************************************************************************
 
-				// Builder Peasant Abilities
+		// Builder Peasant Abilities
 		// REQUIRES Format for disabled abilities: <b><font color='#eedd44'>Requires:\n - BuildingName</font></b>\n
 		"DOTA_Tooltip_ability_human_build_barracks"                                             "Build Barracks"
 		"DOTA_Tooltip_ability_human_build_barracks_Description"                                 "Primary troop production building.\nTrains Footmen, Riflemen and Knights.\nAlso contains the Defend, Long Rifles, and Animal War Training upgrades."
@@ -1605,6 +2200,90 @@
 		"DOTA_Tooltip_ability_human_train_dragonhawk_rider_lumber_cost"                   "LUMBER COST:"
 		"DOTA_Tooltip_ability_human_train_dragonhawk_rider_food_cost"                     "FOOD COST:"
 
+        "DOTA_Tooltip_ability_human_train_guard_tower"                                    "Train Guard Tower"
+        "DOTA_Tooltip_ability_human_train_guard_tower_Description"                        ""
+        "DOTA_Tooltip_ability_human_train_guard_tower_build_time"                         "BUILD TIME:"
+        "DOTA_Tooltip_ability_human_train_guard_tower_gold_cost"                          "GOLD COST:"
+        "DOTA_Tooltip_ability_human_train_guard_tower_lumber_cost"                        "LUMBER COST:"
+
+        "DOTA_Tooltip_ability_human_train_guard_tower_disabled"                           "Train Guard Tower"
+        "DOTA_Tooltip_ability_human_train_guard_tower_disabled_Description"               "<b><font color='#eedd44'>Requires:\n - Workshop</b>\n"
+
+        "DOTA_Tooltip_ability_human_train_cannon_tower"                                   "Train Cannon Tower"
+        "DOTA_Tooltip_ability_human_train_cannon_tower_Description"                       ""
+        "DOTA_Tooltip_ability_human_train_cannon_tower_build_time"                        "BUILD TIME:"
+        "DOTA_Tooltip_ability_human_train_cannon_tower_gold_cost"                         "GOLD COST:"
+        "DOTA_Tooltip_ability_human_train_cannon_tower_lumber_cost"                       "LUMBER COST:"
+
+        "DOTA_Tooltip_ability_human_train_cannon_tower_disabled"                          "Train Cannon Tower"
+        "DOTA_Tooltip_ability_human_train_cannon_tower_disabled_Description"              "<b><font color='#eedd44'>Requires:\n - Lumber Mill</b>\n"
+
+        "DOTA_Tooltip_ability_human_train_arcane_tower"                                   "Train Arcane Tower"
+        "DOTA_Tooltip_ability_human_train_arcane_tower_Description"                       ""
+        "DOTA_Tooltip_ability_human_train_arcane_tower_build_time"                        "BUILD TIME:"
+        "DOTA_Tooltip_ability_human_train_arcane_tower_gold_cost"                         "GOLD COST:"
+        "DOTA_Tooltip_ability_human_train_arcane_tower_lumber_cost"                       "LUMBER COST:"
+
+        "DOTA_Tooltip_ability_human_call_to_arms"                                         "Call To Arms"
+        "DOTA_Tooltip_ability_human_call_to_arms_Description"                             "Call all nearby Peasants to the Town Hall to be converted to Militia.\nLasts %duration% seconds."
+        "DOTA_Tooltip_ability_human_call_to_arms_duration"                                "DURATION:"
+
+        "DOTA_Tooltip_ability_human_back_to_work"                                         "Back To Work"
+        "DOTA_Tooltip_ability_human_back_to_work_Description"                             ""
+        "DOTA_Tooltip_ability_human_back_to_work_duration"                                "DURATION:"
+
+        "DOTA_Tooltip_ability_human_gather_gold_capacity"                                 "GOLD CAPACITY:"
+        "DOTA_Tooltip_ability_human_gather_lumber_capacity"                               "LUMBER CAPACITY:"
+
+        "DOTA_Tooltip_ability_human_masonry1"                                             "Improved Masonry"
+        "DOTA_Tooltip_ability_human_masonry1_Description"                                 "Increases the armor and hit points of Human buildings."
+        "DOTA_Tooltip_ability_human_masonry1_bonus_health_pct"                            "%BONUS HEALTH:"
+        "DOTA_Tooltip_ability_human_masonry1_bonus_armor"                                 "BONUS ARMOR:"
+
+        "DOTA_Tooltip_ability_human_masonry2"                                             "Advanced Masonry"
+        "DOTA_Tooltip_ability_human_masonry2_Description"                                 "Further increases the armor and hit points of Human buildings."
+        "DOTA_Tooltip_ability_human_masonry2_bonus_health_pct"                            "%BONUS HEALTH:"
+        "DOTA_Tooltip_ability_human_masonry2_bonus_armor"                                 "BONUS ARMOR:"
+
+        "DOTA_Tooltip_ability_human_masonry3"                                             "Imbued Masonry"
+        "DOTA_Tooltip_ability_human_masonry3_Description"                                 "Further increases the armor and hit points of Human buildings."
+        "DOTA_Tooltip_ability_human_masonry3_bonus_health_pct"                            "%BONUS HEALTH:"
+        "DOTA_Tooltip_ability_human_masonry3_bonus_armor"                                 "BONUS ARMOR:"
+
+        "DOTA_Tooltip_ability_human_lumber_harvesting1"                                   "Improved Lumber Harvesting"
+        "DOTA_Tooltip_ability_human_lumber_harvesting1_Description"                       "Increases the amount of lumber that Peasants can carry by %extra_lumber_carried%."
+        "DOTA_Tooltip_ability_human_lumber_harvesting1_extra_lumber_carried"              "EXTRA LUMBER CARRIED:"
+
+        "DOTA_Tooltip_ability_human_lumber_harvesting2"                                   "Advanced Lumber Harvesting"
+        "DOTA_Tooltip_ability_human_lumber_harvesting2_Description"                       "Further increases the amount of lumber that Peasants can carry by %extra_lumber_carried%."
+        "DOTA_Tooltip_ability_human_lumber_harvesting2_extra_lumber_carried"              "EXTRA LUMBER CARRIED:"
+
+        "DOTA_Tooltip_ability_human_priest_training1"                                     "Priest Adept Training"
+        "DOTA_Tooltip_ability_human_priest_training1_Description"                         "Increases Priests' mana capacity, mana regeneration rate, hit points, and gives them the ability to cast Dispel Magic."
+        "DOTA_Tooltip_ability_human_priest_training1_bonus_mana"                          "BONUS MANA:"
+        "DOTA_Tooltip_ability_human_priest_training1_bonus_mana_regen_pct"                "BONUS MANA REGEN PCT:"
+        "DOTA_Tooltip_ability_human_priest_training1_bonus_health"                        "BONUS HEALTH:"
+
+        "DOTA_Tooltip_ability_human_priest_training2"                                     "Priest Master Training"
+        "DOTA_Tooltip_ability_human_priest_training2_Description"                         "Increases Priests' mana capacity, mana regeneration rate, hit points, and gives them the ability to cast Inner Fire."
+        "DOTA_Tooltip_ability_human_priest_training2_bonus_mana"                          "BONUS MANA:"
+        "DOTA_Tooltip_ability_human_priest_training2_bonus_mana_regen_pct"                "BONUS MANA REGEN PCT:"
+        "DOTA_Tooltip_ability_human_priest_training2_bonus_health"                        "BONUS HEALTH:"
+
+        "DOTA_Tooltip_ability_human_sorceress_training1"                                  "Sorceress Adept Training"
+        "DOTA_Tooltip_ability_human_sorceress_training1_Description"                      "Increases Sorceresses' mana capacity, mana regeneration rate, hit points, and gives them the ability to cast Invisibility."
+        "DOTA_Tooltip_ability_human_sorceress_training1_bonus_mana"                       "BONUS MANA:"
+        "DOTA_Tooltip_ability_human_sorceress_training1_bonus_mana_regen_pct"             "BONUS MANA REGEN PCT:"
+        "DOTA_Tooltip_ability_human_sorceress_training1_bonus_health"                     "BONUS HEALTH:"
+
+        "DOTA_Tooltip_ability_human_sorceress_training2"                                  "Sorceress Master Training"
+        "DOTA_Tooltip_ability_human_sorceress_training2_Description"                      "Increases Sorceresses' mana capacity, mana regeneration rate, hit points, and gives them the ability to cast Polymorph."
+        "DOTA_Tooltip_ability_human_sorceress_training2_bonus_mana"                       "BONUS MANA:"
+        "DOTA_Tooltip_ability_human_sorceress_training2_bonus_mana_regen_pct"             "BONUS MANA REGEN PCT:"
+        "DOTA_Tooltip_ability_human_sorceress_training2_bonus_health"                     "BONUS HEALTH:"
+
+
+
 
 		// Peasant Gather
 		"DOTA_Tooltip_ability_human_gather"                                               "Gather"
@@ -1617,31 +2296,40 @@
 		// <b><font color='#eedd44'>Requires:\n - BuildingName</font></b>\n
 		"DOTA_Tooltip_ability_human_research_defend"                                      "Research Defend"
 		"DOTA_Tooltip_ability_human_research_defend_Description"                          "Allows Footmen to use the Defend ability, which increases their defensive capabilities against Piercing attacks."
-		"DOTA_Tooltip_ability_human_research_defend_research_time"                      "RESEARCH TIME:" 
-		"DOTA_Tooltip_ability_human_research_defend_gold_cost"                          "GOLD COST:" 
-		"DOTA_Tooltip_ability_human_research_defend_lumber_cost"                        "LUMBER COST:"
+		"DOTA_Tooltip_ability_human_research_defend_research_time"                        "RESEARCH TIME:" 
+		"DOTA_Tooltip_ability_human_research_defend_gold_cost"                            "GOLD COST:" 
+		"DOTA_Tooltip_ability_human_research_defend_lumber_cost"                          "LUMBER COST:"
 		"DOTA_Tooltip_ability_human_research_defend_disabled"                             "Research Defend"
 		"DOTA_Tooltip_ability_human_research_defend_disabled_Description"                 "Allows Footmen to use the Defend ability, which increases their defensive capabilities against Piercing attacks."
 
 		"DOTA_Tooltip_ability_human_defend_disabled"                                      "Defend"
-		"DOTA_Tooltip_ability_human_defend_disabled_Description"                          "<b><font color='#eedd44'>Requires:\n - Defend</font></b>"
+		"DOTA_Tooltip_ability_human_defend_disabled_Description"                          "<b><font color='#eedd44'>Requires:\n - Defend</font></b>\nActivate to take %piercing_damage_reduction%%% less damage from Piercing attacks, but have %movement_speed_reduction%%% reduced movement speed. Defend does not reflect attacks to buildings, and its chance of reflection against units is %reflect_chance%%%."
+		"DOTA_Tooltip_ability_human_defend_disabled_piercing_damage_reduction"            "PIERCING DAMAGE REDUCTION:"
+		"DOTA_Tooltip_ability_human_defend_disabled_movement_speed_reduction"             "MOVEMENT SPEED REDUCTION:"
+		"DOTA_Tooltip_ability_human_defend_disabled_reflect_chance"                       "REFLECT CHANCE:"
 
 		"DOTA_Tooltip_ability_human_defend"                                               "Defend"
-		"DOTA_Tooltip_ability_human_defend_Description"                                   ""
+		"DOTA_Tooltip_ability_human_defend_Description"                                   "Activate to take %piercing_damage_reduction%%% less damage from Piercing attacks, but have %movement_speed_reduction%%% reduced movement speed. Defend does not reflect attacks to buildings, and its chance of reflection against units is %reflect_chance%%%."
+		"DOTA_Tooltip_ability_human_defend_piercing_damage_reduction"                     "PIERCING DAMAGE REDUCTION:"
+		"DOTA_Tooltip_ability_human_defend_movement_speed_reduction"                      "MOVEMENT SPEED REDUCTION:"
+		"DOTA_Tooltip_ability_human_defend_reflect_chance"                                "REFLECT CHANCE:"
 
 		"DOTA_Tooltip_ability_human_research_long_rifles_disabled"                        "Research Long Rifles"
 		"DOTA_Tooltip_ability_human_research_long_rifles_disabled_Description"            "<b><font color='#eedd44'>Requires:\n - Keep</font></b>\nIncreases the range of Riflemen attacks."
 
 		"DOTA_Tooltip_ability_human_research_long_rifles"                                 "Research Long Rifles"
 		"DOTA_Tooltip_ability_human_research_long_rifles_Description"                     "Increases the range of Riflemen attacks."
-		"DOTA_Tooltip_ability_human_research_long_rifles_research_time"                      "RESEARCH TIME:" 
-		"DOTA_Tooltip_ability_human_research_long_rifles_gold_cost"                          "GOLD COST:" 
-		"DOTA_Tooltip_ability_human_research_long_rifles_lumber_cost"                        "LUMBER COST:" 
+		"DOTA_Tooltip_ability_human_research_long_rifles_research_time"                   "RESEARCH TIME:" 
+		"DOTA_Tooltip_ability_human_research_long_rifles_gold_cost"                       "GOLD COST:" 
+		"DOTA_Tooltip_ability_human_research_long_rifles_lumber_cost"                     "LUMBER COST:" 
 
 		"DOTA_Tooltip_ability_human_long_rifles_disabled"                        		  "Long Rifles"
 		"DOTA_Tooltip_ability_human_long_rifles_disabled_Description"                     "<b><font color='#eedd44'>Requires:\n - Long Rifles</font></b>\nIncreases the range of Riflemen attacks."
+        "DOTA_Tooltip_ability_human_long_rifles_disabled_bonus_attack_range"              "BONUS ATTACK RANGE:"
+
 		"DOTA_Tooltip_ability_human_long_rifles"                                  		  "Long Rifles"
 		"DOTA_Tooltip_ability_human_long_rifles_Description"                              "Increases the range of Riflemen attacks."
+		"DOTA_Tooltip_ability_human_long_rifles_bonus_attack_range"                       "BONUS ATTACK RANGE:"
 
 		"DOTA_Tooltip_ability_human_research_animal_war_training_disabled"                "Research Animal War Training"
 		"DOTA_Tooltip_ability_human_research_animal_war_training_disabled_Description"    "<b><font color='#eedd44'>Requires:\n - Blacksmith\n - Lumber Mill\n - Castle</font></b>\nIncreases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by <Rhan,base1>."
@@ -1654,15 +2342,18 @@
 
 		"DOTA_Tooltip_ability_human_animal_war_training_disabled"                         "Animal War Training"
 		"DOTA_Tooltip_ability_human_animal_war_training_disabled_Description"             "<b><font color='#eedd44'>Requires:\n - Animal War Training</b>\nIncreases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by <Rhan,base1>."
+        "DOTA_Tooltip_ability_human_animal_war_training_disabled_bonus_health"            "BONUS HEALTH:"
 
 		"DOTA_Tooltip_ability_human_animal_war_training"                                  "Animal War Training"
-		"DOTA_Tooltip_ability_human_animal_war_training_Description"                      "Increases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by <Rhan,base1>."
+		"DOTA_Tooltip_ability_human_animal_war_training_Description"                      "Increases the maximum hit points of Knights, Dragonhawk Riders, and Gryphon Riders by %bonus_health%."
+		"DOTA_Tooltip_ability_human_animal_war_training_bonus_health"                     "BONUS HEALTH:"
 
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting1"                          "Research Improved Lumber Harvesting"
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting1_Description"              "Increases the amount of lumber that Peasants can carry by 10."
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting1_research_time"            "RESEARCH TIME:" 
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting1_gold_cost"                "GOLD COST:" 
-		"DOTA_Tooltip_ability_human_research_lumber_harvesting1_lumber_cost"              "LUMBER COST:" 
+		"DOTA_Tooltip_ability_human_research_lumber_harvesting1_lumber_cost"              "LUMBER COST:"
+        "DOTA_Tooltip_ability_human_research_lumber_harvesting1_extra_lumber_carried"     "EXTRA LUMBER CARRIED:"
 
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting1_disabled"                 "Research Improved Lumber Harvesting"
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting1_disabled_Description"     "<b><font color='#eedd44'>Requires:\n - Keep</font></b>\nIncreases the amount of lumber that Peasants can carry by 10."
@@ -1671,7 +2362,8 @@
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting2_Description"              "Further increases the amount of lumber that Peasants can carry by 10."
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting2_research_time"            "RESEARCH TIME:" 
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting2_gold_cost"                "GOLD COST:" 
-		"DOTA_Tooltip_ability_human_research_lumber_harvesting2_lumber_cost"              "LUMBER COST:" 
+		"DOTA_Tooltip_ability_human_research_lumber_harvesting2_lumber_cost"              "LUMBER COST:"
+        "DOTA_Tooltip_ability_human_research_lumber_harvesting2_extra_lumber_carried"     "EXTRA LUMBER CARRIED:"
 
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting2_disabled"                 "Research Advanced Lumber Harvesting"
 		"DOTA_Tooltip_ability_human_research_lumber_harvesting2_disabled_Description"     "<b><font color='#eedd44'>Requires:\n - Castle</font></b>\nFurther increases the amount of lumber that Peasants can carry by 10."
@@ -1742,7 +2434,7 @@
 		"DOTA_Tooltip_ability_human_forged_swords3_Description"                           "Further increases the attack damage of Militia, Footmen, Spell Breakers, Dragonhawk Riders, Gryphon Riders, and Knights."
 		"DOTA_Tooltip_ability_human_forged_swords3_bonus_damage"                          "BONUS DAMAGE:"
 		"DOTA_Tooltip_ability_human_forged_swords3_knight_damage"                         "KNIGHT DAMAGE:"
-		"DOTA_Tooltip_ability_human_forged_swords3_modifier_gryphon_rider_damage"         "GRYPHON RIDER DAMAGE:"
+		"DOTA_Tooltip_ability_human_forged_swords3_gryphon_rider_damage"         "GRYPHON RIDER DAMAGE:"
 
 		"DOTA_Tooltip_ability_human_research_forged_swords3_disabled"                     "Research Mithril Forged Swords"
 		"DOTA_Tooltip_ability_human_research_forged_swords3_disabled_Description"         "<b><font color='#eedd44'>Requires:\n - Castle</font></b>\nFurther increases the attack damage of Militia, Footmen, Spell Breakers, Dragonhawk Riders, Gryphon Riders, and Knights."
@@ -1913,6 +2605,77 @@
 		"DOTA_Tooltip_ability_human_backpack"                                             "Backpack"
 		"DOTA_Tooltip_ability_human_backpack_Description"                                 "Gives specific Human ground units the ability to carry items."
 
+        "DOTA_Tooltip_ability_human_backpack_disabled"                                    "Backpack"
+        "DOTA_Tooltip_ability_human_backpack_disabled_Description"                        "<b><font color='#eedd44'>Requires:\n - Research Backpack</font></b>\nGives specific Human ground units the ability to carry items."
+
+        "DOTA_Tooltip_ability_human_true_sight"                                           "True Sight"
+        "DOTA_Tooltip_ability_human_true_sight_Description"                               "Reveals nearby invisible units."
+
+        "DOTA_Tooltip_ability_human_flying_machine_bombs"                                 "Flying Machine Bombs"
+        "DOTA_Tooltip_ability_human_flying_machine_bombs_Description"                     "Allows Flying Machines to attack land units."
+
+        "DOTA_Tooltip_ability_human_flying_machine_bombs_disabled"                        "Flying Machine Bombs"
+        "DOTA_Tooltip_ability_human_flying_machine_bombs_disabled_Description"            "<b><font color='#eedd44'>Requires:\n - Research Flying Machine Bombs</font></b>\nAllows Flying Machines to attack land units."
+
+        "DOTA_Tooltip_ability_human_flak_cannons"                                         "Flak Cannons"
+        "DOTA_Tooltip_ability_human_flak_cannons_Description"                             "Upgrades the weapons on Flying Machines to give them an area effect damage attack against air units."
+        "DOTA_Tooltip_ability_human_flak_cannons_medium_damage_radius"                    "MEDIUM DAMAGE RADIUS:"
+        "DOTA_Tooltip_ability_human_flak_cannons_small_damage_radius"                     "SMALL DAMAGE RADIUS:"
+
+        "DOTA_Tooltip_ability_human_flak_cannons_disabled"                                "Flak Cannons"
+        "DOTA_Tooltip_ability_human_flak_cannons_disabled_Description"                    "<b><font color='#eedd44'>Requires:\n - Research Flak Cannons</font></b>\nUpgrades the weapons on Flying Machines to give them an area effect damage attack against air units."
+
+        "DOTA_Tooltip_ability_human_flare"                                                "Flare"
+        "DOTA_Tooltip_ability_human_flare_Description"                                    "Launches a Dwarven flare above a target point, which reveals that area for 15 seconds. Reveals invisible units."
+        "DOTA_Tooltip_ability_human_flare_reveal_radius"                                  "REVEAL RADIUS:"
+        "DOTA_Tooltip_ability_human_flare_duration"                                       "DURATION:"
+
+        "DOTA_Tooltip_ability_human_flare_disabled"                                       "Flare"
+        "DOTA_Tooltip_ability_human_flare_disabled_Description"                           "<b><font color='#eedd44'>Requires:\n - Research Flare</font></b>\nLaunches a Dwarven flare above a target point, which reveals that area for 15 seconds. Reveals invisible units."
+
+        "DOTA_Tooltip_ability_human_fragmentation_shards"                                 "Fragmentation Shards"
+        "DOTA_Tooltip_ability_human_fragmentation_shards_Description"                     "Uses fragmentation mortars to increase damage dealt to Unarmored and Medium armor units."
+        "DOTA_Tooltip_ability_human_fragmentation_shards_radius"                          "RADIUS:"
+
+        "DOTA_Tooltip_ability_human_fragmentation_shards_disabled"                        "Fragmentation Shards"
+        "DOTA_Tooltip_ability_human_fragmentation_shards_disabled_Description"            "<b><font color='#eedd44'>Requires:\n - Research Fragmentation Shards</font></b>\nUses fragmentation mortars to increase damage dealt to Unarmored and Medium armor units."
+
+        "DOTA_Tooltip_ability_human_barrage"                                              "Barrage"
+        "DOTA_Tooltip_ability_human_barrage_Description"                                  "Fires powerful Dwarven rockets at nearby enemy air units, dealing 25 damage per hit for a range of 50. 9 rockets can be fired at once. 2 second cooldown."
+        "DOTA_Tooltip_ability_human_barrage_radius"                                       "RADIUS:"
+
+        "DOTA_Tooltip_ability_human_barrage_disabled"                                     "Barrage"
+        "DOTA_Tooltip_ability_human_barrage_disabled_Description"                         "<b><font color='#eedd44'>Requires:\n - Research Barrage</font></b>\nFires powerful Dwarven rockets at nearby enemy air units, dealing 25 damage per hit for a range of 50. 9 rockets can be fired at once. 2 second cooldown."
+
+        "DOTA_Tooltip_ability_human_storm_hammers"                                        "Storm Hammers"
+        "DOTA_Tooltip_ability_human_storm_hammers_Description"                            "Causes Gryphon Riders' hammers to strike through their target at the next opponent, dealing damage to both. Storm Hammers do not work on air units."
+
+        "DOTA_Tooltip_ability_human_storm_hammers_disabled"                               "Storm Hammers"
+        "DOTA_Tooltip_ability_human_storm_hammers_disabled_Description"                   "<b><font color='#eedd44'>Requires:\n - Research Storm Hammers</font></b>\nCauses Gryphon Riders' hammers to strike through their target at the next opponent, dealing damage to both. Storm Hammers do not work on air units."
+
+        "DOTA_Tooltip_ability_human_cloud"                                                "Cloud"
+        "DOTA_Tooltip_ability_human_cloud_Description"                                    "Creates a small cloud that stops buildings with ranged attacks that are within it from attacking."
+        "DOTA_Tooltip_ability_human_cloud_cloud_duration"                                 "CLOUD DURATION:"
+        "DOTA_Tooltip_ability_human_cloud_radius"                                         "RADIUS:"
+
+        "DOTA_Tooltip_ability_human_cloud_disabled"                                       "Cloud"
+        "DOTA_Tooltip_ability_human_cloud_disabled_Description"                           "<b><font color='#eedd44'>Requires:\n - Research Cloud</font></b>\nCreates a small cloud that stops buildings with ranged attacks that are within it from attacking."
+
+        "DOTA_Tooltip_ability_human_aerial_shackles"                                      "Aerial Shackles"
+        "DOTA_Tooltip_ability_human_aerial_shackles_Description"                          "Magically binds a target enemy air unit, so that it cannot move or attack and takes %damage_per_second% damage per second."
+        "DOTA_Tooltip_ability_human_aerial_shackles_duration"                             "DURATION:"
+        "DOTA_Tooltip_ability_human_aerial_shackles_damage_per_second"                    "DAMAGE PER SECOND:"
+        "DOTA_Tooltip_ability_human_aerial_shackles_tick_rate"                            "TICK RATE:"
+
+        "DOTA_Tooltip_ability_human_magic_sentry"                                         "Magic Sentry"
+        "DOTA_Tooltip_ability_human_magic_sentry_Description"                             "Reveals nearby invisible units"
+        "DOTA_Tooltip_ability_human_magic_sentry_radius"                                  "RADIUS:"
+
+        "DOTA_Tooltip_ability_human_reveal"                                               "Reveal"
+        "DOTA_Tooltip_ability_human_reveal_Description"                                   "Reveals an area of the map. Detects invisible units. Lasts %duration% seconds."
+        "DOTA_Tooltip_ability_human_reveal_reveal_radius"                                 "REVEAL RADIUS:"
+        "DOTA_Tooltip_ability_human_reveal_duration"                                      "DURATION:"
+
 		// Upgradeable Building Abilities
 		"DOTA_Tooltip_ability_human_train_keep"                                           "Upgrade to Keep"
 		"DOTA_Tooltip_ability_human_train_keep_Description"                               "Upgrade to Keep to enable the production of additional types of structures and units."
@@ -1929,8 +2692,11 @@
 		"DOTA_Tooltip_ability_human_train_castle_gold_cost"                               "GOLD COST:"
 		"DOTA_Tooltip_ability_human_train_castle_lumber_cost"                             "LUMBER COST:"
 
+        // BuildingHelper cancel
+        "DOTA_Tooltip_ability_item_building_cancel"                                       "Building Cancel"
+        "DOTA_Tooltip_ability_item_building_cancel_Description"                           ""
 
-		// Train Queue Cancel Items
+		// Human Cancel Items
 		"DOTA_Tooltip_ability_item_human_train_keep"                                      "Cancel Keep"
 		"DOTA_Tooltip_ability_item_human_train_keep_Description"                          "Remove this unit from the queue"
 
@@ -2237,6 +3003,15 @@
 		"DOTA_Tooltip_ability_item_human_research_cloud"                                  "Cancel Research Cloud"
 		"DOTA_Tooltip_ability_item_human_research_cloud_Description"                      ""
 
+        "DOTA_Tooltip_ability_item_human_train_guard_tower"                               "Cancel Guard Tower"
+        "DOTA_Tooltip_ability_item_human_train_guard_tower_Description"                   ""
+
+        "DOTA_Tooltip_ability_item_human_train_cannon_tower"                              "Cancel Cannon Tower"
+        "DOTA_Tooltip_ability_item_human_train_cannon_tower_Description"                  ""
+
+        "DOTA_Tooltip_ability_item_human_train_arcane_tower"                              "Cancel Arcane Tower"
+        "DOTA_Tooltip_ability_item_human_train_arcane_tower_Description"                  ""
+
 		// Sorceress
 		"DOTA_Tooltip_ability_human_slow"                                                 "Slow"
 		"DOTA_Tooltip_ability_human_slow_Description"                                     "Slows a target enemy unit's attack rate by 25% and movement speed by 60%."
@@ -2246,12 +3021,15 @@
 		
 		"DOTA_Tooltip_ability_human_invisibility"                                         "Invisibility"
 		"DOTA_Tooltip_ability_human_invisibility_Description"                             "Makes a target unit invisible. If the unit attacks, uses an ability or casts a spell, it will become visible."
+        "DOTA_Tooltip_ability_human_invisibility_duration"                                "DURATION:"
 
 		"DOTA_Tooltip_ability_human_invisibility_disabled"                                "Invisibility"
 		"DOTA_Tooltip_ability_human_invisibility_disabled_Description"                    "<b><font color='#eedd44'>Requires:\n - Sorceress Adept Training</font></b>\nMakes a target unit invisible. If the unit attacks, uses an ability or casts a spell, it will become visible."
 		
 		"DOTA_Tooltip_ability_human_polymorph"                                            "Polymorph"
 		"DOTA_Tooltip_ability_human_polymorph_Description"                                "Turns a target enemy unit into a sheep or flying sheep.\nThe targeted unit retains its hit points, but cannot attack.\nCannot be cast on Heroes or Summoned units."
+        "DOTA_Tooltip_ability_human_polymorph_duration"                                   "DURATION:"
+        "DOTA_Tooltip_ability_human_polymorph_movespeed"                                  "MOVESPEED:"
 
 		"DOTA_Tooltip_ability_human_polymorph_disabled"                                   "Polymorph"
 		"DOTA_Tooltip_ability_human_polymorph_disabled_Description"                       "<b><font color='#eedd44'>Requires:\n - Sorceress Master Training</font></b>\nTurns a target enemy unit into a sheep or flying sheep. the targeted unit retains its hit points, but cannot attack.\nCannot be cast on Heroes or Summoned units."
@@ -2265,6 +3043,7 @@
 		"DOTA_Tooltip_ability_human_dispel_magic_Description"                             "Removes all buffs from units in a target area. Deals 200 damage to summoned units."
 		"DOTA_Tooltip_ability_human_dispel_magic_damage"                                  "DAMAGE:"
 		"DOTA_Tooltip_ability_human_dispel_magic_radius"                                  "RADIUS:"
+        "DOTA_Tooltip_ability_human_dispel_magic_damage_to_summons"                       "DAMAGE TO SUMMONS:"
 
 		"DOTA_Tooltip_ability_human_dispel_magic_disabled"                                "Dispel Magic"
 		"DOTA_Tooltip_ability_human_dispel_magic_disabled_Description"                    "<b><font color='#eedd44'>Requires:\n - Priest Adept Training</font></b>\nRemoves all buffs from units in a target area. Deals 200 damage to summoned units."
@@ -2287,6 +3066,7 @@
 		"DOTA_Tooltip_ability_human_research_control_magic_research_time"                 "RESEARCH TIME:"
 		"DOTA_Tooltip_ability_human_research_control_magic_gold_cost"                     "GOLD COST:"
 		"DOTA_Tooltip_ability_human_research_control_magic_lumber_cost"                   "LUMBER COST:"
+        "DOTA_Tooltip_ability_human_control_magic_mana_control_rate"                      "MANA CONTROL RATE:"
 
 		"DOTA_Tooltip_ability_human_control_magic_disabled"                               "Control Magic"
 		"DOTA_Tooltip_ability_human_control_magic_disabled_Description"                   "<b><font color='#eedd44'>Requires:\n - Arcane Vault\n - Castle</font></b>\nGive Spell Breakers the ability to take control of enemy summoned units. the spell's cost is relative to the current hit points of the target."
@@ -3167,6 +3947,7 @@
         "DOTA_Tooltip_ability_orc_spiked_barricades3_damage_to_attackers"                 "DAMAGE TO ATTACKERS:"
 
 
+        // Orc Cancel Items
         "DOTA_Tooltip_ability_item_orc_train_stronghold"                                  "Cancel Upgrade to Stronghold"
         "DOTA_Tooltip_ability_item_orc_train_stronghold_Description"                      ""
 
@@ -3879,6 +4660,7 @@
 		"DOTA_Tooltip_ability_nightelf_shadow_meld_inaction_duration"                     "INACTION DURATION:"
 		"DOTA_Tooltip_ability_nightelf_shadow_meld_fade_duration"                         "FADE DURATION:"
 		"DOTA_Tooltip_ability_nightelf_shadow_meld_transition_duration"                   "TRANSITION DURATION:"
+        "DOTA_Tooltip_ability_nightelf_shadow_meld_fade_time"                             "FADE TIME:"
 		"DOTA_Tooltip_ability_nightelf_shadow_meld_Note0"                                 "The units are only invisible when they are not moving/attacking"
 
 		"DOTA_Tooltip_ability_nightelf_improved_bows"                                     "Improved Bows"
@@ -4047,12 +4829,14 @@
 
 		"DOTA_Tooltip_ability_nightelf_ultravision"                                       "Ultravision"
 		"DOTA_Tooltip_ability_nightelf_ultravision_Description"                           "Gives Night Elves the ability to see as far as night as they do during the day"
-
+    
 		"DOTA_Tooltip_ability_nightelf_root"                                              "Root"
-		"DOTA_Tooltip_ability_nightelf_root_Description"                                  "Burrows the Ancient's roots into the ground, rendering it immobile, but allowing it to build units. For the Ancient Protector, this allows it to hurl enormous rocks through the air to damage enemy units.\nAlso gives the Ancient Fortified armor."
+	   	"DOTA_Tooltip_ability_nightelf_root_Description"                                  "Burrows the Ancient's roots into the ground, rendering it immobile, but allowing it to build units. For the Ancient Protector, this allows it to hurl enormous rocks through the air to damage enemy units.\nAlso gives the Ancient Fortified armor."
+        "DOTA_Tooltip_ability_nightelf_root_duration"                                     "DURATION:"
 
 		"DOTA_Tooltip_ability_nightelf_uproot"                                            "Uproot"
 		"DOTA_Tooltip_ability_nightelf_uproot_Description"                                "Allows the Ancient to pull itself up out of the ground so that it can move and engage units in melee combat.\nAlso gives the Ancient Heavy armor."
+        "DOTA_Tooltip_ability_nightelf_uproot_duration"                                   "DURATION:"
 
 		"DOTA_Tooltip_ability_nightelf_natures_blessing"                                  "Natures Blessing"
 		"DOTA_Tooltip_ability_nightelf_natures_blessing_Description"                      "Upgrades all Ancients' and Treants' movement speed and armor."
@@ -5092,8 +5876,14 @@
 		"DOTA_Tooltip_ability_nightelf_reinforced_hides3_Description"                     "Further increases the armor of Druids of the Claw in Bear Form, Druids of the Talon in Storm Crow Form, Dryads, Mountain Giants, Faerie Dragons, Hippogryphs, and Chimaeras."
 		"DOTA_Tooltip_ability_nightelf_reinforced_hides3_bonus_armor"                     "BONUS ARMOR:"
 
+        "DOTA_Tooltip_ability_nightelf_backpack"                                          "Backpack"
+        "DOTA_Tooltip_ability_nightelf_backpack_Description"                              ""
 
-		// Item queue night elf
+        "DOTA_Tooltip_ability_nightelf_backpack_disabled"                                 "Backpack"
+        "DOTA_Tooltip_ability_nightelf_backpack_disabled_Description"                     "<b><font color='#eedd44'>Requires:\n - Research Backpack</font></b>\n"
+
+
+		// Night Elf item cancel
 		"DOTA_Tooltip_ability_item_nightelf_train_tree_of_ages"                           "Cancel Tree of Ages"
 		"DOTA_Tooltip_ability_item_nightelf_train_tree_of_ages_Description"               ""
 
@@ -6903,8 +7693,8 @@
 		"DOTA_Tooltip_modifier_splash_attack"                                             "Splash Attack"
 		"DOTA_Tooltip_modifier_splash_attack_Description"                                 "This unit spreads a portion of its attack damage in the area of impact\nAttack vs Armor types still apply."
 	
-		"DOTA_Tooltip_modifier_item_dustofappearance"		                               "Dust of Appearance"
-		"DOTA_Tooltip_modifier_item_dustofappearance_Description"		                      "Can be seen by enemies when invisible."
+		"DOTA_Tooltip_modifier_item_dustofappearance"		                              "Dust of Appearance"
+		"DOTA_Tooltip_modifier_item_dustofappearance_Description"		                  "Can be seen by enemies when invisible."
 
 
 		// **************************************************************************************
@@ -6958,6 +7748,7 @@
         "DOTA_Tooltip_ability_item_dust_of_appearance_Description"                        "Reveals enemy invisible units in an area around the Hero.\nContains <dust,uses> charges.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_item_dust_of_appearance_duration"                           "DURATION:"
         "DOTA_Tooltip_ability_item_dust_of_appearance_radius"                             "RADIUS:"
+        "DOTA_Tooltip_ability_item_dust_of_appearance_movespeed"                          "MOVESPEED:"
 
         "DOTA_Tooltip_ability_item_staff_of_preservation"                                 "Staff of Preservation"
         "DOTA_Tooltip_ability_item_staff_of_preservation_Description"                     "Teleports a target friendly unit to its highest level town hall."
@@ -7722,8 +8513,7 @@
         "DOTA_Tooltip_ability_neutral_train_tinker_revive10_lumber_cost"                  "LUMBER COST:"
         "DOTA_Tooltip_ability_neutral_train_tinker_revive10_food_cost"                    "FOOD COST:"
 
-        // Altar Items
-        
+        // Altar Items        
         "DOTA_Tooltip_ability_item_neutral_train_alchemist_revive1"                       "Cancel Revive Alchemist (1)"
         "DOTA_Tooltip_ability_item_neutral_train_alchemist_revive1_Description"           ""
 
