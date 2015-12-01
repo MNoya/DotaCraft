@@ -18,12 +18,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     local z = tonumber(filterTable["position_z"])
     local point = Vector(x,y,z)
 
-    local queue = filterTable["queue"]
-    if queue == 1 then 
-        queue = true
-    else
-        Queue = queue
-    end
+    local queue = tobool(filterTable["queue"])
 
     -- Skip Prevents order loops
     local unit = EntIndexToHScript(units["0"])
@@ -110,7 +105,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         return true
 
     -- Cancel builder queue when casting non building abilities
-    elseif (abilityIndex and abilityIndex ~= 0) and IsBuilder(unit) then
+    elseif (abilityIndex and abilityIndex ~= 0) and unit and IsBuilder(unit) then
         local ability = EntIndexToHScript(abilityIndex)
         if not IsBuildingAbility(ability) then
             BuildingHelper:ClearQueue(unit)
@@ -178,9 +173,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local errorMsg = nil
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
+            if not unit or not target then print("ERROR ON ATTACK ORDER FILTER") return true end
             if UnitCanAttackTarget(unit, target) then
-                unit.skip = true
-                ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = targetIndex, Queue = queue})
+                return true
             else
                 print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetAttacksEnabled(unit),"-",GetMovementCapability(target))
                 
@@ -408,7 +403,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local _units = {}
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
-            if not unit:IsBuilding() and not IsCustomBuilding(unit) then
+            if unit and not unit:IsBuilding() and not IsCustomBuilding(unit) then
                 _units[#_units+1] = unit_index
             end
         end
