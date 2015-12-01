@@ -195,7 +195,7 @@ function Build( event )
         ReorderItems(unit)
 
 		local building_name = unit:GetUnitName()
-		local builders = {}
+		--[[local builders = {}
 		if unit.builder then
 			table.insert(builders, unit.builder)
 		elseif unit.units_repairing then
@@ -236,7 +236,7 @@ function Build( event )
 	        end
             return false
 		end
-		end)
+		end)]]
 
 		-- Add 1 to the player building tracking table for that name
 		local buildingTable = Players:GetBuildingTable(playerID)

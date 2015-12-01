@@ -55,5 +55,5 @@ function IsTreePathable( tree )
 end
 
 function GetTreeIndexFromHandle(tree)
-    return GetTreeIdForEntityIndex(empty_tree:GetEntityIndex())
+    return GetTreeIdForEntityIndex(tree:GetEntityIndex())
 end
