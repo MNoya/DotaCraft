@@ -15,7 +15,7 @@ If you are interested in helping with this project don't hesitate contacting me,
 
 ### Credits
 
-* [Myll](https://github.com/Myll), for his incredible hard work and dedication on [ModKit](https://github.com/Myll/Dota-2-ModKit) and [Building Helper](https://github.com/Myll/Dota-2-Building-Helper)
+* [Myll](https://github.com/Myll), for his incredible hard work and dedication on [ModKit](https://github.com/stephenfournier/Dota-2-ModKit) and [Building Helper](https://github.com/stephenfournier/Dota-2-Building-Helper)
 * [BMD](https://github.com/bmddota), for his invaluable help to the modding community in general.
 * [zed](https://github.com/zedor), made very needed scaleform UI modules to use in variety of projects.
 * [kritth](https://github.com/kritth), helped a ton with particles and mechanic ideas.
