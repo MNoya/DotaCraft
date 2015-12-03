@@ -46,6 +46,11 @@ function StartBuildingHelper( params )
                 Particles.DestroyParticleEffect(gridParticles[i], true)
             }
         }
+        if (overlayParticles !== undefined) {
+            for (var i in overlayParticles) {
+                Particles.DestroyParticleEffect(overlayParticles[i], true)
+            }
+        }
 
         // Building Ghost
         modelParticle = Particles.CreateParticle("particles/buildinghelper/ghost_model.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN, localHeroIndex);
