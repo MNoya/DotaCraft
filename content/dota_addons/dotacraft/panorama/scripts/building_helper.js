@@ -13,9 +13,16 @@ var modelParticle;
 var gridParticles;
 var overlayParticles;
 var builderIndex;
-var GridNav = [];
-var squareX;
-var squareY;
+var Root = $.GetContextPanel()
+
+if (! Root.loaded)
+{
+    Root.GridNav = [];
+    Root.squareX = 0;
+    Root.squareY = 0;
+    Root.loaded = true;
+}
+
 
 function StartBuildingHelper( params )
 {
@@ -111,28 +118,35 @@ function StartBuildingHelper( params )
                     Particles.SetParticleControl(gridParticle, 0, pos)     
                     part++; 
 
-                    // Grid color turns red when over invalid positions
-                    // Until we get a good way perform clientside FindUnitsInRadius & Gridnav Check, the prevention will stay serverside
-                    var screenX = Game.WorldToScreenX( pos[0], pos[1], pos[2] );
-                    var screenY = Game.WorldToScreenY( pos[0], pos[1], pos[2] );
-                    var mouseEntities = GameUI.FindScreenEntities( [screenX,screenY] );
-     
-                    // Check entities
+                    // Grid color turns red when over invalid position
                     color = [0,255,0]
-                    if (mouseEntities.length > 0)
+                    if (IsBlocked(pos))
                     {
-                        for (var i = 0; i < mouseEntities.length; i++)
+                        color = [255,0,0]
+                        invalid = true
+                    }
+
+                    // Check entities
+                    /*if (!invalid)
+                    {
+                        var screenX = Game.WorldToScreenX( pos[0], pos[1], pos[2] );
+                        var screenY = Game.WorldToScreenY( pos[0], pos[1], pos[2] );
+                        var mouseEntities = GameUI.FindScreenEntities( [screenX,screenY] );
+
+                        if (mouseEntities.length > 0)
                         {
-                            var entIndex = mouseEntities[i].entityIndex
-                            if (IsCustomBuilding(entIndex) || Entities.GetTeamNumber(entIndex) != Entities.GetTeamNumber(builderIndex) )
+                            for (var i = 0; i < mouseEntities.length; i++)
                             {
-                                color = [255,0,0]
-                                invalid = true //Mark invalid for the ghost recolor
-                                break;
+                                var entIndex = mouseEntities[i].entityIndex
+                                if (IsCustomBuilding(entIndex) || Entities.GetTeamNumber(entIndex) != Entities.GetTeamNumber(builderIndex) )
+                                {
+                                    color = [255,0,0]
+                                    invalid = true //Mark invalid for the ghost recolor
+                                    break;
+                                }
                             }
                         }
-                        
-                    }
+                    }*/
 
                     Particles.SetParticleControl(gridParticle, 2, color)   
                 }
@@ -171,18 +185,23 @@ function StartBuildingHelper( params )
                         if (part2>=overlay_size*overlay_size)
                             return
 
+                        color = [255,255,255] //White on empty positions
                         var overlayParticle = overlayParticles[part2]
                         Particles.SetParticleControl(overlayParticle, 0, pos2)     
                         part2++;
 
+                        if (IsBlocked(pos2))
+                        {
+                            color = [255,0,0]
+                        }
+
                         // Grid color turns red when over invalid positions
-                        // Until we get a good way perform clientside FindUnitsInRadius & Gridnav Check, the prevention will stay serverside
-                        var screenX2 = Game.WorldToScreenX( pos2[0], pos2[1], pos2[2] );
+                        /*var screenX2 = Game.WorldToScreenX( pos2[0], pos2[1], pos2[2] );
                         var screenY2 = Game.WorldToScreenY( pos2[0], pos2[1], pos2[2] );
                         var mouseEntities2 = GameUI.FindScreenEntities( [screenX2,screenY2] );
          
                         // Check entities
-                        color = [255,255,255] //White on empty positions
+                        
                         if (mouseEntities2.length > 0)
                         {
                             for (var i = 0; i < mouseEntities2.length; i++)
@@ -194,7 +213,7 @@ function StartBuildingHelper( params )
                                     break;
                                 }
                             }  
-                        }
+                        }*/
 
                         Particles.SetParticleControl(overlayParticle, 2, color)        
                         Particles.SetParticleControl(overlayParticle, 3, [overlay_alpha,0,0])
@@ -305,8 +324,10 @@ function SnapToGrid32(coord) {
 }
 
 function GNV(msg){
-    squareX = msg.squareX
-    squareY = msg.squareY
+    var GridNav = [];
+    var squareX = msg.squareX
+    var squareY = msg.squareY
+    $.Msg("Registering GNV ["+squareX+","+squareY+"]")
 
     var arr = [];
     // Thanks to BMD for this method
@@ -331,6 +352,9 @@ function GNV(msg){
         // ASCII Art
         //$.Msg(GridNav[i].join(''))
     }
+    Root.GridNav = GridNav
+    Root.squareX = squareX
+    Root.squareY = squareY
 
     // Debug Prints
     var tab = {"0":0, "1":0, "2":0, "3":0};
@@ -342,10 +366,9 @@ function GNV(msg){
 }
 
 function IsBlocked(position) {
-    var x = WorldToGridPosX(position.x) + squareX/2
-    var y = WorldToGridPosY(position.y) + squareY/2
-
-    return GridNav[x][y] == 2
+    var x = WorldToGridPosX(position[0]) + Root.squareX/2
+    var y = WorldToGridPosY(position[1]) + Root.squareY/2
+    return Root.GridNav[x][y] == 2
 }
 
 function WorldToGridPosX(x){

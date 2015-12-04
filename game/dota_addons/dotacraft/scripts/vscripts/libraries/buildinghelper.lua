@@ -36,6 +36,16 @@ function BuildingHelper:Init()
     CustomGameEventManager:RegisterListener("building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
     CustomGameEventManager:RegisterListener("building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
 
+    ListenToGameEvent('game_rules_state_change', function()
+        local newState = GameRules:State_Get()
+        BuildingHelper:print(newState)
+        if newState == DOTA_GAMERULES_STATE_PRE_GAME then
+            Timers:CreateTimer(1, function()
+                BuildingHelper:SendGNV()
+            end)
+        end
+    end, nil)
+
     -- Merge Building abilities coming from both the Ability and Item KVs
     for i=1,2 do
         local t = AbilityKVs
@@ -51,8 +61,6 @@ function BuildingHelper:Init()
             end
         end
     end
-
-    BuildingHelper:SendGNV()
 end
 
 --[[
@@ -895,6 +903,7 @@ function BuildingHelper:BlockGridNavSquare(size, location)
             end
         end
     end
+
     return gridNavBlockers
 end
 
