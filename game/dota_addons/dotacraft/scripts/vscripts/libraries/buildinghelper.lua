@@ -1,7 +1,10 @@
+BH_VERSION = "1.0"
+
 --[[
-    A library to help make RTS-style and Tower Defense custom games in Dota 2
-    Developers: Myll, Noya, snipplets
-    Version: 1.0.0
+    TODO: Explain stuff
+    * Grid
+    * Terrain
+    * Entities
 ]]--
 
 -- Building Particle Settings
@@ -25,42 +28,135 @@ end
     * Loads Key Values into the BuildingAbilities
 ]]--
 function BuildingHelper:Init()
-    AbilityKVs = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
-    ItemKVs = LoadKeyValues("scripts/npc/npc_items_custom.txt")
-    UnitKVs = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+    BuildingHelper.AbilityKVs = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
+    BuildingHelper.ItemKVs = LoadKeyValues("scripts/npc/npc_items_custom.txt")
+    BuildingHelper.UnitKVs = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
     BuildingHelper:print("BuildingHelper Init")
-    BuildingHelper.Abilities = {}
-    BuildingHelper.Players = {}
+    BuildingHelper.Players = {} -- Holds a table for each player ID
+
+    BuildingHelper.Grid = {}    -- Construction grid
+    BuildingHelper.Terrain = {} -- Terrain grid, this only changes when a tree is cut
+    BuildingHelper.Encoded = "" -- String containing the base terrain, networked to clients
+    BuildingHelper.squareX = 0  -- Number of X grid points
+    BuildingHelper.squareY = 0  -- Number of Y grid points
+
+    -- Grid States
+    GRID_BLOCKED = 1
+    GRID_FREE = 2
 
     CustomGameEventManager:RegisterListener("building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
     CustomGameEventManager:RegisterListener("building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
 
     ListenToGameEvent('game_rules_state_change', function()
         local newState = GameRules:State_Get()
-        BuildingHelper:print(newState)
-        if newState == DOTA_GAMERULES_STATE_PRE_GAME then
+        if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+            -- The base terrain GridNav is obtained directly from the vmap
+            BuildingHelper:InitGNV()
+        elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
             Timers:CreateTimer(1, function()
                 BuildingHelper:SendGNV()
             end)
         end
     end, nil)
 
-    -- Merge Building abilities coming from both the Ability and Item KVs
-    for i=1,2 do
-        local t = AbilityKVs
-        if i == 2 then
-            t = ItemKVs
-        end
-        for abil_name,abil_info in pairs(t) do
-            if type(abil_info) == "table" then
-                local isBuilding = abil_info["Building"]
-                if isBuilding and tostring(isBuilding) == "1" then
-                    BuildingHelper.Abilities[tostring(abil_name)] = abil_info
+    BuildingHelper.KV = {} -- Merge KVs into a single table
+    BuildingHelper:ParseKV(BuildingHelper.AbilityKVs, BuildingHelper.KV)
+    BuildingHelper:ParseKV(BuildingHelper.ItemKVs, BuildingHelper.KV)
+    BuildingHelper:ParseKV(BuildingHelper.UnitKVs, BuildingHelper.KV)
+end    
+
+function BuildingHelper:ParseKV( t, result )
+    for name,info in pairs(t) do
+        if type(info) == "table" then
+            local isBuilding = info["Building"] or info["ConstructionSize"]
+            if isBuilding then
+                if result[name] then
+                    BuildingHelper:print("Error: There's more than 2 entries for "..name)
+                else
+                    result[name] = info
                 end
             end
         end
     end
+end
+
+function BuildingHelper:InitGNV()
+    local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
+    local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
+
+    local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
+    local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
+    local boundY1 = GridNav:WorldToGridPosY(worldMin.y)
+    local boundY2 = GridNav:WorldToGridPosY(worldMax.y)
+   
+    BuildingHelper:print("Max World Bounds: ")
+    BuildingHelper:print(GetWorldMaxX()..' '..GetWorldMaxY()..' '..GetWorldMaxX()..' '..GetWorldMaxY())
+
+    local blockedCount = 0
+    local unblockedCount = 0
+
+    --[[
+    for i=boundY1,boundY2 do
+        local shift = 6
+        local byte = 0
+        for j=boundX1,boundX2 do
+            local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
+            local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)]]
+
+    local gnv = {}
+    for x=boundX1,boundX2 do
+        local shift = 6
+        local byte = 0
+        BuildingHelper.Terrain[x] = {}
+        for y=boundY1,boundY2 do
+            local gridX = GridNav:GridPosToWorldCenterX(x)
+            local gridY = GridNav:GridPosToWorldCenterY(y)
+            local position = Vector(gridX, gridY, 0)
+            local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
+
+            if blocked then
+                BuildingHelper.Terrain[x][y] = GRID_BLOCKED
+                byte = byte + bit.lshift(2,shift)
+                blockedCount = blockedCount+1
+            else
+                BuildingHelper.Terrain[x][y] = GRID_FREE
+                byte = byte + bit.lshift(1,shift)
+                unblockedCount = unblockedCount+1
+            end
+            shift = shift - 2
+
+            if shift == -2 then
+                gnv[#gnv+1] = string.char(byte-53)
+                shift = 6
+                byte = 0
+            end
+        end
+
+        if shift ~= 6 then
+            gnv[#gnv+1] = string.char(byte-53)
+        end
+    end
+
+    local gnv_string = table.concat(gnv,'')
+
+    BuildingHelper:print(boundX1..' '..boundX2..' '..boundY1..' '..boundY2)
+    local squareX = math.abs(boundX1) + math.abs(boundX2)+1
+    local squareY = math.abs(boundY1) + math.abs(boundY2)+1
+    print("Free: "..unblockedCount.." Blocked: "..blockedCount)
+
+    -- Initially, the construction grid equals the terrain grid
+    -- Clients will have full knowledge of the terrain grid
+    -- The construction grid is only known by the server
+    BuildingHelper.Grid = BuildingHelper.Terrain
+
+    BuildingHelper.Encoded = gnv_string
+    BuildingHelper.squareX = squareX
+    BuildingHelper.squareY = squareY
+end
+
+function BuildingHelper:SendGNV()
+    CustomGameEventManager:Send_ServerToAllClients("gnv", {gnv=BuildingHelper.Encoded, squareX = BuildingHelper.squareX, squareY = BuildingHelper.squareY})
 end
 
 --[[
@@ -136,7 +232,7 @@ function BuildingHelper:AddBuilding(keys)
 
     buildingTable:SetVal("AbilityHandle", ability)
 
-    local size = buildingTable:GetVal("BuildingSize", "number")
+    local size = buildingTable:GetVal("ConstructionSize", "number")
     local unitName = buildingTable:GetVal("UnitName", "string")
 
     BuildingHelper:print("AddBuilding "..unitName)
@@ -151,7 +247,7 @@ function BuildingHelper:AddBuilding(keys)
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
     if not fMaxScale then
         -- If no MaxScale is defined, check the "ModelScale" KeyValue. Otherwise just default to 1
-        local fModelScale = GameMode.UnitKVs[unitName].ModelScale
+        local fModelScale = BuildingHelper.UnitKVs[unitName].ModelScale
         if fModelScale then
           fMaxScale = fModelScale
         else
@@ -250,7 +346,7 @@ end
 ]]--
 function BuildingHelper:SetupBuildingTable( abilityName )
 
-    local buildingTable = BuildingHelper.Abilities[abilityName]
+    local buildingTable = BuildingHelper.KV[abilityName]
 
     function buildingTable:GetVal( key, expectedType )
         local val = buildingTable[key]
@@ -283,33 +379,44 @@ function BuildingHelper:SetupBuildingTable( abilityName )
     end
 
     -- Extract data from the KV files, set is called to guarantee these have values later on in execution
-    local size = buildingTable:GetVal("BuildingSize", "number")
-    if size == nil then
-        BuildingHelper:print('Error: ' .. abilName .. ' does not have a BuildingSize KeyValue')
-        return
-    end
-    if size == 1 then
-        BuildingHelper:print('Warning: ' .. abilName .. ' has a size of 1. Using a gridnav size of 1 is currently not supported, it was increased to 2')
-        buildingTable:SetVal("size", 2)
-        return
-    end
-
     local unitName = buildingTable:GetVal("UnitName", "string")
-    if unitName == nil then
+    if not unitName then
         BuildingHelper:print('Error: ' .. abilName .. ' does not have a UnitName KeyValue')
         return
     end
+    buildingTable:SetVal("UnitName", unitName)
+
+    -- Ensure that the unit actually exists
+    local unitTable = BuildingHelper.UnitKVs[unitName]
+    if not unitTable then
+        BuildingHelper:print('Error: Definition for Unit ' .. unitName .. ' could not be found in the KeyValue files.')
+        return
+    end
+
+    local construction_size = unitTable["ConstructionSize"]
+    if not construction_size then
+        BuildingHelper:print('Error: Unit ' .. unitName .. ' does not have a ConstructionSize KeyValue.')
+        return
+    end
+    buildingTable:SetVal("ConstructionSize", construction_size)
+
+    local pathing_size = unitTable["BlockPathingSize"]
+    if not pathing_size then
+        BuildingHelper:print('Warning: Unit ' .. unitName .. ' does not have a BlockPathingSize KeyValue. Defaulting to 0')
+        pathing_size = 0
+    end
+    buildingTable:SetVal("BlockPathingSize", pathing_size)
 
     local castRange = buildingTable:GetVal("AbilityCastRange", "number")
-    if castRange == nil then
+    if not castRange then
         castRange = 200
     end
     buildingTable:SetVal("AbilityCastRange", castRange)
 
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
-    if fMaxScale == nil then
-        -- If no MaxScale is defined, check the "ModelScale" KeyValue. Otherwise just default to 1
-        local fModelScale = UnitKVs[unitName].ModelScale
+    if not fMaxScale then
+        -- If no MaxScale is defined, check the Units "ModelScale" KeyValue. Otherwise just default to 1
+        local fModelScale = BuildingHelper.UnitKVs[unitName].ModelScale
         if fModelScale then
             fMaxScale = fModelScale
         else
@@ -319,7 +426,7 @@ function BuildingHelper:SetupBuildingTable( abilityName )
     buildingTable:SetVal("MaxScale", fMaxScale)
 
     local fModelRotation = buildingTable:GetVal("ModelRotation", "float")
-    if fModelRotation == nil then
+    if not fModelRotation then
         fModelRotation = 0
     end
     buildingTable:SetVal("ModelRotation", fModelRotation)
@@ -334,16 +441,13 @@ end
     * Skips the construction phase and doesn't require a builder, this is most important to place the "base" buildings for the players when the game starts.
     * Make sure the position is valid before calling this in code.
 ]]--
-function BuildingHelper:PlaceBuilding(player, name, location, blockGridNav, size, angle)
+function BuildingHelper:PlaceBuilding(player, name, location, construction_size, pathing_size, angle)
     
     local playerID = player:GetPlayerID()
     local playersHero = PlayerResource:GetSelectedHeroEntity(playerID)
     BuildingHelper:print("PlaceBuilding for playerID ".. playerID)
   
-    local gridNavBlockers
-    if blockGridNav then
-        gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)
-    end
+    local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
 
     -- Spawn the building
     local building = CreateUnitByName(name, location, false, playersHero, player, playersHero:GetTeamNumber())
@@ -365,9 +469,15 @@ end
 
 --[[
     RemoveBuilding
-    * Removes a building, removing its gridnav blockers, with an optional parameter to kill it
+    * Removes a building, removing it from the gridnav, with an optional parameter to kill it
 ]]--
 function BuildingHelper:RemoveBuilding( building, bForcedKill )
+     if bForcedKill then
+        building:ForceKill(bForcedKill)
+    end
+
+    BuildingHelper:FreeGridSquares(building.construction_size, building:GetAbsOrigin())
+
     if not building.blockers then 
         return 
     end
@@ -375,10 +485,6 @@ function BuildingHelper:RemoveBuilding( building, bForcedKill )
     for k, v in pairs(building.blockers) do
         DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
         DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
-    end
-
-    if bForcedKill then
-        building:ForceKill(bForcedKill)
     end
 end
 
@@ -396,10 +502,11 @@ function BuildingHelper:StartBuilding( keys )
     local player = PlayerResource:GetPlayer(playerID)
     local playersHero = PlayerResource:GetSelectedHeroEntity(playerID)
     local buildingTable = work.buildingTable
-    local size = buildingTable:GetVal("BuildingSize", "number")
+    local construction_size = buildingTable:GetVal("ConstructionSize", "number")
+    local pathing_size = buildingTable:GetVal("BlockPathingSize", "number")
 
     -- Check gridnav and cancel if invalid
-    if not BuildingHelper:ValidPosition(size, location, callbacks) then
+    if not BuildingHelper:ValidPosition(construction_size, location, callbacks) then
         
         -- Remove the model particle and Advance Queue
         BuildingHelper:AdvanceQueue(builder)
@@ -425,7 +532,7 @@ function BuildingHelper:StartBuilding( keys )
     end
 
     -- Spawn point obstructions before placing the building
-    local gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)
+    local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
 
     -- Stuck the buildings back in place
     for k,v in pairs(buildings) do
@@ -438,6 +545,7 @@ function BuildingHelper:StartBuilding( keys )
     local building = CreateUnitByName(unitName, OutOfWorldVector, false, playersHero, player, builder:GetTeam())
     building:SetControllableByPlayer(playerID, true)
     building.blockers = gridNavBlockers
+    building.construction_size = construction_size
     building.buildingTable = buildingTable
     building.state = "building"
 
@@ -870,12 +978,47 @@ function BuildingHelper:CancelBuilding(keys)
 end
 
 --[[
-      BlockGridNavSquare
-      * Blocks GridNav square of certain size at a location
+      BlockGridSquares
+      * Blocks a square of certain construction and pathing size at a location on the server grid
+      * construction_size: square of grid points to block from construction
+      * pathing_size: square of pathing obstructions that will be spawned 
 ]]--
-function BuildingHelper:BlockGridNavSquare(size, location)
+function BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
+    local originX = GridNav:WorldToGridPosX(location.x)
+    local originY = GridNav:WorldToGridPosY(location.y)
 
-    BuildingHelper:SnapToGrid(size, location)
+    local boundX1 = originX + math.floor(construction_size/2)
+    local boundX2 = originX - math.floor(construction_size/2)
+    local boundY1 = originY + math.floor(construction_size/2)
+    local boundY2 = originY - math.floor(construction_size/2)
+
+    local lowerBoundX = math.min(boundX1, boundX2)
+    local upperBoundX = math.max(boundX1, boundX2)
+    local lowerBoundY = math.min(boundY1, boundY2)
+    local upperBoundY = math.max(boundY1, boundY2)
+
+    -- Adjust even size
+    if (construction_size % 2) == 0 then
+        upperBoundX = upperBoundX-1
+        upperBoundY = upperBoundY-1
+    end
+
+    for x = lowerBoundX, upperBoundX do
+        for y = lowerBoundY, upperBoundY do
+            BuildingHelper.Grid[x][y] = GRID_BLOCKED
+        end
+    end
+
+    return BuildingHelper:BlockPSO(pathing_size, location)
+end
+
+--[[
+      BlockPSO
+      * Spawns a square of point_simple_obstruction entities at a location
+]]--
+function BuildingHelper:BlockPSO(size, location)
+    local pos = Vector(location.x, location.y, 0)
+    BuildingHelper:SnapToGrid(size, pos)
 
     local gridNavBlockers = {}
     if size == 5 then
@@ -905,6 +1048,37 @@ function BuildingHelper:BlockGridNavSquare(size, location)
     end
 
     return gridNavBlockers
+end
+
+--[[
+      FreeGridSquares
+      * Clears out an area for construction
+]]--
+function BuildingHelper:FreeGridSquares(construction_size, location)
+    local originX = GridNav:WorldToGridPosX(location.x)
+    local originY = GridNav:WorldToGridPosY(location.y)
+
+    local boundX1 = originX + math.floor(construction_size/2)
+    local boundX2 = originX - math.floor(construction_size/2)
+    local boundY1 = originY + math.floor(construction_size/2)
+    local boundY2 = originY - math.floor(construction_size/2)
+
+    local lowerBoundX = math.min(boundX1, boundX2)
+    local upperBoundX = math.max(boundX1, boundX2)
+    local lowerBoundY = math.min(boundY1, boundY2)
+    local upperBoundY = math.max(boundY1, boundY2)
+
+    -- Adjust even size
+    if (construction_size % 2) == 0 then
+        upperBoundX = upperBoundX-1
+        upperBoundY = upperBoundY-1
+    end
+
+    for x = lowerBoundX, upperBoundX do
+        for y = lowerBoundY, upperBoundY do
+            BuildingHelper.Grid[x][y] = GRID_FREE
+        end
+    end
 end
 
 --[[
@@ -947,7 +1121,8 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     local building = playerTable.activeBuilding
     local buildingTable = playerTable.activeBuildingTable
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
-    local size = buildingTable:GetVal("BuildingSize", "number")
+    local size = buildingTable:GetVal("ConstructionSize", "number")
+    local pathing_size = buildingTable:GetVal("BlockGridNavSize", "number")
     local callbacks = playerTable.activeCallbacks
 
     BuildingHelper:SnapToGrid(size, location)
@@ -1028,7 +1203,7 @@ function BuildingHelper:AdvanceQueue(builder)
 
         -- Make the caster move towards the point
         local abilName = "move_to_point_" .. tostring(castRange)
-        if AbilityKVs[abilName] == nil then
+        if BuildingHelper.AbilityKVs[abilName] == nil then
             BuildingHelper:print('Error: ' .. abilName .. ' was not found in npc_abilities_custom.txt. Using the ability move_to_point_100')
             abilName = "move_to_point_100"
         end
@@ -1162,62 +1337,23 @@ function BuildingHelper:GetPlayerTable( playerID )
     return BuildingHelper.Players[playerID]
 end
 
-function BuildingHelper:SendGNV()  
-    local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
-    local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
-
-    local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
-    local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
-    local boundY1 = GridNav:WorldToGridPosY(worldMin.y)
-    local boundY2 = GridNav:WorldToGridPosY(worldMax.y)
-   
-    BuildingHelper:print("Max World Bounds: ")
-    BuildingHelper:print(GetWorldMaxX()..' '..GetWorldMaxY()..' '..GetWorldMaxX()..' '..GetWorldMaxY())
-
-    local blockedCount = 0
-    local unblockedCount = 0
-
-    local gnv = {}
-    local codes = {}
-    for i=boundY1,boundY2 do
-        local shift = 6
-        local byte = 0
-        for j=boundX1,boundX2 do
-            local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
-            local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
-
-            if blocked then
-                byte = byte + bit.lshift(2,shift)
-                blockedCount = blockedCount+1
-            else
-                byte = byte + bit.lshift(1,shift)
-                unblockedCount = unblockedCount+1
-            end
-            shift = shift - 2
-
-            if shift == -2 then
-                gnv[#gnv+1] = string.char(byte-53)
-                shift = 6
-                byte = 0
-            end
-        end
-
-        if shift ~= 6 then
-            gnv[#gnv+1] = string.char(byte-53)
-        end
-    end
-
-    BuildingHelper:print(boundX1..' '..boundX2..' '..boundY1..' '..boundY2)
-    local squareX = math.abs(boundX1) + math.abs(boundX2)+1
-    local squareY = math.abs(boundY1) + math.abs(boundY2)+1
-    print("Free: "..unblockedCount.." Blocked: "..blockedCount)
-    
-    local gnv_string = table.concat(gnv,'')
-    CustomGameEventManager:Send_ServerToAllClients("gnv", {gnv=gnv_string, squareX = squareX, squareY = squareY})
-end
-
 function PrintGridCoords( pos )
     print('('..string.format("%.1f", pos.x)..','..string.format("%.1f", pos.y)..') = ['.. GridNav:WorldToGridPosX(pos.x)..','..GridNav:WorldToGridPosY(pos.y)..']')
 end
 
-if not BuildingHelper.Abilities then BuildingHelper:Init() end
+function DrawGridSquare( x, y, color )
+    local pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 500)
+    BuildingHelper:SnapToGrid(1, pos)
+        
+    local particle = ParticleManager:CreateParticle("particles/buildinghelper/square_overlay.vpcf", PATTACH_CUSTOMORIGIN, nil)
+    ParticleManager:SetParticleControl(particle, 0, pos)
+    ParticleManager:SetParticleControl(particle, 1, Vector(32,0,0))
+    ParticleManager:SetParticleControl(particle, 2, color)
+    ParticleManager:SetParticleControl(particle, 3, Vector(90,0,0))
+
+    Timers:CreateTimer(10, function() 
+        ParticleManager:DestroyParticle(particle, true)
+    end)
+end
+
+if not BuildingHelper.KV then BuildingHelper:Init() end
