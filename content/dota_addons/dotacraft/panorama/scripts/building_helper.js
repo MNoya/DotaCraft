@@ -13,6 +13,9 @@ var modelParticle;
 var gridParticles;
 var overlayParticles;
 var builderIndex;
+var GridNav = [];
+var squareX;
+var squareY;
 
 function StartBuildingHelper( params )
 {
@@ -274,6 +277,7 @@ function SendCancelCommand( params )
     
     GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
     GameEvents.Subscribe( "building_helper_end", EndBuildingHelper);
+    GameEvents.Subscribe( "gnv", GNV);
 })();
 
 //-----------------------------------
@@ -298,4 +302,60 @@ function SnapToGrid64(coord) {
 
 function SnapToGrid32(coord) {
     return 32+64*Math.floor(coord/64);
+}
+
+function GNV(msg){
+    squareX = msg.squareX
+    squareY = msg.squareY
+
+    var arr = [];
+    // Thanks to BMD for this method
+    for (var i=0; i<msg.gnv.length; i++){
+        var code = msg.gnv.charCodeAt(i)+53;
+        for (var j=6; j>=0; j-=2){
+            var g = (code & (3 << j)) >> j;
+
+            arr.push(g);
+        }
+    }
+
+    // Load the GridNav
+    var x = 0;
+    for (var i = 0; i < squareX; i++) {
+        GridNav[i] = []
+        for (var j = 0; j < squareY; j++) {
+            GridNav[i][j] = arr[x]
+            x++
+        }
+
+        // ASCII Art
+        //$.Msg(GridNav[i].join(''))
+    }
+
+    // Debug Prints
+    var tab = {"0":0, "1":0, "2":0, "3":0};
+    for (i=0; i<arr.length; i++)
+    {
+        tab[arr[i].toString()]++;
+    }
+    $.Msg("Free: ",tab["1"]," Blocked: ",tab["2"])
+}
+
+function IsBlocked(position) {
+    var x = WorldToGridPosX(position.x) + squareX/2
+    var y = WorldToGridPosY(position.y) + squareY/2
+
+    return GridNav[x][y] == 2
+}
+
+function WorldToGridPosX(x){
+    return Math.floor(x/64)
+}
+
+function WorldToGridPosY(y){
+    return Math.floor(y/64)
+}
+
+function PrintGridCoords(x,y) {
+    $.Msg('(',x,',',y,') = [',WorldToGridPosX(x),',',WorldToGridPosY(y),']')
 }

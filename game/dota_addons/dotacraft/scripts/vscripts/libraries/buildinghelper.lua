@@ -51,6 +51,8 @@ function BuildingHelper:Init()
             end
         end
     end
+
+    BuildingHelper:SendGNV()
 end
 
 --[[
@@ -1149,6 +1151,64 @@ function BuildingHelper:GetPlayerTable( playerID )
     end
 
     return BuildingHelper.Players[playerID]
+end
+
+function BuildingHelper:SendGNV()  
+    local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
+    local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
+
+    local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
+    local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
+    local boundY1 = GridNav:WorldToGridPosY(worldMin.y)
+    local boundY2 = GridNav:WorldToGridPosY(worldMax.y)
+   
+    BuildingHelper:print("Max World Bounds: ")
+    BuildingHelper:print(GetWorldMaxX()..' '..GetWorldMaxY()..' '..GetWorldMaxX()..' '..GetWorldMaxY())
+
+    local blockedCount = 0
+    local unblockedCount = 0
+
+    local gnv = {}
+    local codes = {}
+    for i=boundY1,boundY2 do
+        local shift = 6
+        local byte = 0
+        for j=boundX1,boundX2 do
+            local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
+            local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
+
+            if blocked then
+                byte = byte + bit.lshift(2,shift)
+                blockedCount = blockedCount+1
+            else
+                byte = byte + bit.lshift(1,shift)
+                unblockedCount = unblockedCount+1
+            end
+            shift = shift - 2
+
+            if shift == -2 then
+                gnv[#gnv+1] = string.char(byte-53)
+                shift = 6
+                byte = 0
+            end
+        end
+
+        if shift ~= 6 then
+            gnv[#gnv+1] = string.char(byte-53)
+        end
+    end
+
+    BuildingHelper:print(boundX1..' '..boundX2..' '..boundY1..' '..boundY2)
+    local squareX = math.abs(boundX1) + math.abs(boundX2)+1
+    local squareY = math.abs(boundY1) + math.abs(boundY2)+1
+    print("Free: "..unblockedCount.." Blocked: "..blockedCount)
+    
+    local gnv_string = table.concat(gnv,'')
+    CustomGameEventManager:Send_ServerToAllClients("gnv", {gnv=gnv_string, squareX = squareX, squareY = squareY})
+end
+
+function PrintGridCoords( pos )
+    print('('..string.format("%.1f", pos.x)..','..string.format("%.1f", pos.y)..') = ['.. GridNav:WorldToGridPosX(pos.x)..','..GridNav:WorldToGridPosY(pos.y)..']')
 end
 
 if not BuildingHelper.Abilities then BuildingHelper:Init() end

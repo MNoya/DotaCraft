@@ -134,3 +134,10 @@ function tobool(s)
         return false
     end
 end
+
+-- v should be a Normalized vector. theta is in radians.
+function RotateVector2D(v, theta)
+    local xPrime = v.x*math.cos(theta)-v.y*math.sin(theta)
+    local yPrime = v.x*math.sin(theta)+v.y*math.cos(theta)
+    return Vector(xPrime, yPrime, v.z)
+end
