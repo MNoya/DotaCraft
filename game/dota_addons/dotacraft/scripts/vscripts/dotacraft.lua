@@ -933,6 +933,10 @@ function dotacraft:OnTreeCut(keys)
 
 	local treeX = keys.tree_x
 	local treeY = keys.tree_y
+	local treePos = Vector(treeX,treeY,0)
+
+	-- Create a dummy for clients to be able to detect trees standing and block their grid
+	CreateUnitByName("tree_chopped", treePos, false, nil, nil, 0)
 
 	-- Update the pathable trees nearby
 	local vecs = {
@@ -963,7 +967,7 @@ function dotacraft:OnTreeCut(keys)
 	end
 	
 	-- Check for Night Elf Sentinels and Wisps
-	local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(treeX,treeY,0), nil, 64, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
+	local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, treePos, nil, 64, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
 	for _,v in pairs(units) do
 		local unit_name = v:GetUnitName()
 		if unit_name == "nightelf_sentinel_owl" then

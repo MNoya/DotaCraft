@@ -101,14 +101,6 @@ function BuildingHelper:InitGNV()
     local blockedCount = 0
     local unblockedCount = 0
 
-    --[[
-    for i=boundY1,boundY2 do
-        local shift = 6
-        local byte = 0
-        for j=boundX1,boundX2 do
-            local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
-            local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)]]
-
     local gnv = {}
     for x=boundX1,boundX2 do
         local shift = 6
@@ -118,7 +110,7 @@ function BuildingHelper:InitGNV()
             local gridX = GridNav:GridPosToWorldCenterX(x)
             local gridY = GridNav:GridPosToWorldCenterY(y)
             local position = Vector(gridX, gridY, 0)
-            local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
+            local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) and not GridNav:IsNearbyTree(position, 30, true)
 
             if blocked then
                 BuildingHelper.Terrain[x][y] = GRID_BLOCKED

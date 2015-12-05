@@ -14,6 +14,7 @@ var gridParticles;
 var overlayParticles;
 var builderIndex;
 var entityGrid;
+var cutTrees = [];
 var BLOCKED = 2;
 var Root = $.GetContextPanel()
 var constructionSize = CustomNetTables.GetAllTableValues( "construction_size" )
@@ -92,7 +93,7 @@ function StartBuildingHelper( params )
         // Get all the creature entities on the screen
         var entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
         var hero_entities = Entities.GetAllEntitiesByClassname('npc_dota_hero')
-        var tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree') //TODO
+        var tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
         entities.concat(hero_entities)
 
         /*
@@ -107,6 +108,7 @@ function StartBuildingHelper( params )
         {
             if (!Entities.IsAlive(entities[i])) continue
             var entPos = Entities.GetAbsOrigin( entities[i] )
+
             if (IsCustomBuilding(entities[i]))
             {
                  // Block squares centered on the origin
@@ -116,13 +118,26 @@ function StartBuildingHelper( params )
             }
             else
             {
+                // Put visible chopped tree dummies on a separate table to skip trees
+                if (Entities.GetUnitName(entities[i]) == 'tree_chopped')
+                {
+                    cutTrees[entPos] = entities[i]
+                }
                 // Block 2x2 squares if its an enemy unit
-                if (Entities.GetTeamNumber(entities[i]) != Entities.GetTeamNumber(builderIndex))
+                else if (Entities.GetTeamNumber(entities[i]) != Entities.GetTeamNumber(builderIndex))
                 {
                     BlockGridSquares(entPos, 2)
                 }
-
             }        
+        }
+
+        // Handle trees
+        for (var i = 0; i < tree_entities.length; i++) 
+        {
+            var treePos = Entities.GetAbsOrigin(tree_entities[i])
+            // Block the grid if the tree isn't chopped
+            if (cutTrees[treePos] === undefined)
+                BlockGridSquares(treePos, 2)
         }
 
         var mPos = GameUI.GetCursorPosition();
@@ -169,7 +184,7 @@ function StartBuildingHelper( params )
             }
 
             // Overlay Grid, visible with Alt pressed
-            altDown = true;//GameUI.IsAltDown();
+            altDown = GameUI.IsAltDown();
             if (altDown)
             {
                 // Create the particles
@@ -363,7 +378,7 @@ function IsBlocked(position) {
     var x = WorldToGridPosX(position[0]) + Root.squareX/2
     var y = WorldToGridPosY(position[1]) + Root.squareY/2
     
-    return (Root.GridNav[x][y] == BLOCKED) || IsEntityGridBlocked(x,y)
+    return /*(Root.GridNav[x][y] == BLOCKED) || */IsEntityGridBlocked(x,y)
 }
 
 function IsEntityGridBlocked(x,y) {
