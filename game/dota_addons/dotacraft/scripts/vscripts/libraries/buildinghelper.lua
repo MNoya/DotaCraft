@@ -511,7 +511,7 @@ function BuildingHelper:StartBuilding( keys )
     local pathing_size = buildingTable:GetVal("BlockPathingSize", "number")
 
     -- Check gridnav and cancel if invalid
-    if not BuildingHelper:ValidPosition(construction_size, location, callbacks) then
+    if not BuildingHelper:ValidPosition(construction_size, location, builder, callbacks) then
         
         -- Remove the model particle and Advance Queue
         BuildingHelper:AdvanceQueue(builder)
@@ -1097,7 +1097,7 @@ end
       * Checks GridNav square of certain size at a location
       * Sends onConstructionFailed if invalid
 ]]--
-function BuildingHelper:ValidPosition(size, location, callbacks)
+function BuildingHelper:ValidPosition(size, location, unit, callbacks)
 
     --[[ Deprecated point_simple_obstruction validation
     local halfSide = (size/2)*64
@@ -1148,6 +1148,16 @@ function BuildingHelper:ValidPosition(size, location, callbacks)
         end
     end
 
+    -- Check enemy units blocking the area
+    local construction_radius = size * 64 - 32
+    local enemies = FindEnemiesInRadiusAtPoint(unit, construction_radius, location)
+    if #enemies > 0 then
+        if callbacks.onConstructionFailed then
+            callbacks.onConstructionFailed()
+            return false
+        end
+    end
+
     return true
 end
 
@@ -1171,7 +1181,7 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     BuildingHelper:SnapToGrid(size, location)
 
     -- Check gridnav
-    if not BuildingHelper:ValidPosition(size, location, callbacks) then
+    if not BuildingHelper:ValidPosition(size, location, builder, callbacks) then
         return
     end
 

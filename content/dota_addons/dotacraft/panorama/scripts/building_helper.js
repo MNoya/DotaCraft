@@ -109,36 +109,21 @@ function StartBuildingHelper( params )
             var entPos = Entities.GetAbsOrigin( entities[i] )
             if (IsCustomBuilding(entities[i]))
             {
+                 // Block squares centered on the origin
                 var squares = GetConstructionSize(entities[i])
+                BlockGridSquares(entPos, squares)
                 
-                // Block squares centered on the origin
-                var halfSide = (squares/2)*64
-                var boundingRect = {}
-                boundingRect["leftBorderX"] = entPos[0]-halfSide
-                boundingRect["rightBorderX"] = entPos[0]+halfSide
-                boundingRect["topBorderY"] = entPos[1]+halfSide
-                boundingRect["bottomBorderY"] = entPos[1]-halfSide
-
-                for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
-                {
-                    for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
-                    {
-                        var pos = [x,y,0]
-                        //SnapToGrid(pos, squares)
-                        BlockEntityGrid(pos)
-                    }
-                }
             }
             else
             {
-                // Block 1 square if its an enemy unit
+                // Block 2x2 squares if its an enemy unit
                 if (Entities.GetTeamNumber(entities[i]) != Entities.GetTeamNumber(builderIndex))
                 {
-                    BlockEntityGrid(entPos)
+                    BlockGridSquares(entPos, 2)
                 }
 
             }        
-        }        
+        }
 
         var mPos = GameUI.GetCursorPosition();
         var GamePos = Game.ScreenXYToWorld(mPos[0], mPos[1]);
@@ -184,7 +169,7 @@ function StartBuildingHelper( params )
             }
 
             // Overlay Grid, visible with Alt pressed
-            altDown = GameUI.IsAltDown();
+            altDown = true;//GameUI.IsAltDown();
             if (altDown)
             {
                 // Create the particles
@@ -392,6 +377,24 @@ function BlockEntityGrid(position) {
     if (entityGrid[x] === undefined) entityGrid[x] = []
 
     entityGrid[x][y] = BLOCKED
+}
+
+function BlockGridSquares (position, squares) {
+    var halfSide = (squares/2)*64
+    var boundingRect = {}
+    boundingRect["leftBorderX"] = position[0]-halfSide
+    boundingRect["rightBorderX"] = position[0]+halfSide
+    boundingRect["topBorderY"] = position[1]+halfSide
+    boundingRect["bottomBorderY"] = position[1]-halfSide
+
+    for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
+    {
+        for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
+        {
+            var pos = [x,y,0]
+            BlockEntityGrid(pos)
+        }
+    }
 }
 
 function WorldToGridPosX(x){

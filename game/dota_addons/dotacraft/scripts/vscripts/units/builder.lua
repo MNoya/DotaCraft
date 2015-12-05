@@ -10,9 +10,7 @@ function Build( event )
 	local AbilityKV = GameRules.AbilityKV
 	local UnitKV = GameRules.UnitKV
 
-    -- Hold needs an Interrupt
-	if caster.bHold then
-		caster.bHold = false
+	if caster:IsIdle() then
 		caster:Interrupt()
 	end
 
@@ -24,6 +22,9 @@ function Build( event )
 		building_name = AbilityKV[ability_name].UnitName --Building Helper value
 	end
 
+	local construction_size = Units:GetConstructionSize(building_name)
+	local construction_radius = construction_size * 64 - 32
+
 	-- Checks if there is enough custom resources to start the building, else stop.
 	local unit_table = UnitKV[building_name]
 	local gold_cost = ability:GetSpecialValueFor("gold_cost")
@@ -32,6 +33,7 @@ function Build( event )
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local playerID = hero:GetPlayerID()
 	local player = PlayerResource:GetPlayer(playerID)	
+	local teamNumber = hero:GetTeamNumber()
 
 	-- If the ability has an AbilityGoldCost, it's impossible to not have enough gold the first time it's cast
 	-- Always refund the gold here, as the building hasn't been placed yet
@@ -46,6 +48,16 @@ function Build( event )
 
 	-- Additional checks to confirm a valid building position can be performed here
 	event:OnPreConstruction(function(vPos)
+
+		-- Enemy unit check
+    	local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    	local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
+    	local enemies = FindUnitsInRadius(teamNumber, vPos, nil, construction_size, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_CLOSEST, false)
+
+		if #enemies > 0 then
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
+			return false
+		end
 
        	-- Blight check
        	if string.match(building_name, "undead") and building_name ~= "undead_necropolis" then
@@ -88,12 +100,11 @@ function Build( event )
     	-- Play a sound
     	EmitSoundOnClient("DOTA_Item.ObserverWard.Activate", player)
 
-    	-- Move the units away from the building place
-		local hull = unit_table.CollisionSize*2
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), vPos, nil, hull, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
+    	-- Move allied units away from the building place
+		local units = FindUnitsInRadius(teamNumber, vPos, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
 		
 		for _,unit in pairs(units) do
-			if unit ~= caster and not IsCustomBuilding(unit) then
+			if unit ~= caster and unit:GetTeamNumber() == teamNumber and not IsCustomBuilding(unit) then
 				BuildingHelper:print("Moving unit "..unit:GetUnitName().." outside of the building area")
 				local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * hull
 				ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
