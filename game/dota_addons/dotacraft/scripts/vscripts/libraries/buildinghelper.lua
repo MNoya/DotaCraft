@@ -76,6 +76,11 @@ function BuildingHelper:ParseKV( t, result )
                 else
                     result[name] = info
                 end
+
+                -- Build NetTable with the grid sizes
+                if info['ConstructionSize'] then
+                    CustomNetTables:SetTableValue("construction_size", name, {size = info['ConstructionSize']})
+                end
             end
         end
     end
@@ -1017,32 +1022,38 @@ end
       * Spawns a square of point_simple_obstruction entities at a location
 ]]--
 function BuildingHelper:BlockPSO(size, location)
-    local pos = Vector(location.x, location.y, 0)
+    local pos = Vector(location.x, location.y, location.z)
     BuildingHelper:SnapToGrid(size, pos)
 
     local gridNavBlockers = {}
     if size == 5 then
-        for x = location.x - (size-2) * 32, location.x + (size-2) * 32, 64 do
-            for y = location.y - (size-2) * 32, location.y + (size-2) * 32, 64 do
-                local blockerLocation = Vector(x, y, location.z)
+        for x = pos.x - (size-2) * 32, pos.x + (size-2) * 32, 64 do
+            for y = pos.y - (size-2) * 32, pos.y + (size-2) * 32, 64 do
+                local blockerLocation = Vector(x, y, pos.z)
                 local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
                 table.insert(gridNavBlockers, ent)
             end
         end
     elseif size == 3 then
-        for x = location.x - (size / 2) * 32 , location.x + (size / 2) * 32 , 64 do
-            for y = location.y - (size / 2) * 32 , location.y + (size / 2) * 32 , 64 do
-                local blockerLocation = Vector(x, y, location.z)
+        for x = pos.x - (size / 2) * 32 , pos.x + (size / 2) * 32 , 64 do
+            for y = pos.y - (size / 2) * 32 , pos.y + (size / 2) * 32 , 64 do
+                local blockerLocation = Vector(x, y, pos.z)
                 local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
                 table.insert(gridNavBlockers, ent)
             end
         end
     else
-        for x = location.x - (size / 2) * 32 + 16, location.x + (size / 2) * 32 - 16, 96 do
-            for y = location.y - (size / 2) * 32 + 16, location.y + (size / 2) * 32 - 16, 96 do
-                local blockerLocation = Vector(x, y, location.z)
-                local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
-                table.insert(gridNavBlockers, ent)
+        local len = size * 32 - 64
+        if len == 0 then
+            local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = pos})
+            table.insert(gridNavBlockers, ent)
+        else
+            for x = pos.x - len, pos.x + len, len do
+                for y = pos.y - len, pos.y + len, len do
+                    local blockerLocation = Vector(x, y, pos.z)
+                    local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
+                    table.insert(gridNavBlockers, ent)
+                end
             end
         end
     end
@@ -1088,6 +1099,7 @@ end
 ]]--
 function BuildingHelper:ValidPosition(size, location, callbacks)
 
+    --[[ Deprecated point_simple_obstruction validation
     local halfSide = (size/2)*64
     local boundingRect = {  leftBorderX = location.x-halfSide, 
                             rightBorderX = location.x+halfSide, 
@@ -1104,7 +1116,38 @@ function BuildingHelper:ValidPosition(size, location, callbacks)
                 end
             end
         end
+    end]]
+
+    local originX = GridNav:WorldToGridPosX(location.x)
+    local originY = GridNav:WorldToGridPosY(location.y)
+
+    local boundX1 = originX + math.floor(size/2)
+    local boundX2 = originX - math.floor(size/2)
+    local boundY1 = originY + math.floor(size/2)
+    local boundY2 = originY - math.floor(size/2)
+
+    local lowerBoundX = math.min(boundX1, boundX2)
+    local upperBoundX = math.max(boundX1, boundX2)
+    local lowerBoundY = math.min(boundY1, boundY2)
+    local upperBoundY = math.max(boundY1, boundY2)
+
+    -- Adjust even size
+    if (size % 2) == 0 then
+        upperBoundX = upperBoundX-1
+        upperBoundY = upperBoundY-1
     end
+
+    for x = lowerBoundX, upperBoundX do
+        for y = lowerBoundY, upperBoundY do
+            if BuildingHelper.Grid[x][y] == GRID_BLOCKED then
+                if callbacks.onConstructionFailed then
+                    callbacks.onConstructionFailed()
+                    return false
+                end
+            end
+        end
+    end
+
     return true
 end
 

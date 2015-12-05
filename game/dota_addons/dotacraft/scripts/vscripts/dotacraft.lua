@@ -222,25 +222,6 @@ function dotacraft:InitGameMode()
 		end
 	end
 
-	-- Add gridnav blockers to the gold mines
-	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
-	for k,gold_mine in pairs (GameRules.GoldMines) do
-		local location = gold_mine:GetAbsOrigin()
-		location.x = BuildingHelper:SnapToGrid32(location.x)
-    	location.y = BuildingHelper:SnapToGrid32(location.y)
-		local gridNavBlockers = BuildingHelper:BlockGridNavSquare(5, location)
-		--gold_mine:SetAbsOrigin(location)
-	    gold_mine.blockers = gridNavBlockers
-
-	    -- Find and store the mine entrance
-		local mine_entrance = Entities:FindAllByNameWithin("*mine_entrance", location, 300)
-		for k,v in pairs(mine_entrance) do
-			gold_mine.entrance = v:GetAbsOrigin()
-		end
-
-		-- Find and store the mine light
-	end
-
 	-- Allow cosmetic swapping
 	SendToServerConsole( "dota_combine_models 0" )
 
@@ -505,7 +486,7 @@ function dotacraft:InitializePlayer( hero )
     local city_center_name = GetCityCenterNameForHeroRace(hero_name)
     local builder_name = GetBuilderNameForHeroRace(hero_name)
 
-	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, true, 5, 0)
+	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, Units:GetConstructionSize(city_center_name), Units:GetBlockPathingSize(city_center_name), 0)
 	Players:AddStructure(playerID, building)
 	
 	Players:SetMainCityCenter(playerID, building)
@@ -1474,6 +1455,25 @@ function dotacraft:OnPreGame()
 			--end, playerID)
  		end
  	end
+
+ 	-- Add gridnav blockers to the gold mines
+	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
+	for k,gold_mine in pairs (GameRules.GoldMines) do
+		local location = gold_mine:GetAbsOrigin()
+		location.x = BuildingHelper:SnapToGrid32(location.x)
+    	location.y = BuildingHelper:SnapToGrid32(location.y)
+		local gridNavBlockers = BuildingHelper:BlockGridSquares(5, 5, location)
+		gold_mine:SetAbsOrigin(location)
+	    gold_mine.blockers = gridNavBlockers
+
+	    -- Find and store the mine entrance
+		local mine_entrance = Entities:FindAllByNameWithin("*mine_entrance", location, 300)
+		for k,v in pairs(mine_entrance) do
+			gold_mine.entrance = v:GetAbsOrigin()
+		end
+
+		-- Find and store the mine light
+	end
 end
 
 function dotacraft:Selection_Update_Player(args)

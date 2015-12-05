@@ -13,7 +13,10 @@ var modelParticle;
 var gridParticles;
 var overlayParticles;
 var builderIndex;
+var entityGrid;
+var BLOCKED = 2;
 var Root = $.GetContextPanel()
+var constructionSize = CustomNetTables.GetAllTableValues( "construction_size" )
 
 if (! Root.loaded)
 {
@@ -80,20 +83,70 @@ function StartBuildingHelper( params )
         }
 
         overlayParticles = [];
-    } 
-    
+    }
+
     if (state == 'active')
     {   
         $.Schedule(1/60, StartBuildingHelper);
 
+        // Get all the creature entities on the screen
+        var entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
+        var hero_entities = Entities.GetAllEntitiesByClassname('npc_dota_hero')
+        var tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree') //TODO
+        entities.concat(hero_entities)
+
+        /*
+        $.Msg('Entities: ',entities)
+        $.Msg('Trees: ',tree_entities.length)
+        $.Msg("There are ",entities.length," entities on the screen")
+        */
+
+        // Build the entity grid with the construction sizes and entity origins
+        entityGrid = []
+        for (var i = 0; i < entities.length; i++)
+        {
+            if (!Entities.IsAlive(entities[i])) continue
+            var entPos = Entities.GetAbsOrigin( entities[i] )
+            if (IsCustomBuilding(entities[i]))
+            {
+                var squares = GetConstructionSize(entities[i])
+                
+                // Block squares centered on the origin
+                var halfSide = (squares/2)*64
+                var boundingRect = {}
+                boundingRect["leftBorderX"] = entPos[0]-halfSide
+                boundingRect["rightBorderX"] = entPos[0]+halfSide
+                boundingRect["topBorderY"] = entPos[1]+halfSide
+                boundingRect["bottomBorderY"] = entPos[1]-halfSide
+
+                for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
+                {
+                    for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
+                    {
+                        var pos = [x,y,0]
+                        //SnapToGrid(pos, squares)
+                        BlockEntityGrid(pos)
+                    }
+                }
+            }
+            else
+            {
+                // Block 1 square if its an enemy unit
+                if (Entities.GetTeamNumber(entities[i]) != Entities.GetTeamNumber(builderIndex))
+                {
+                    BlockEntityGrid(entPos)
+                }
+
+            }        
+        }        
+
         var mPos = GameUI.GetCursorPosition();
         var GamePos = Game.ScreenXYToWorld(mPos[0], mPos[1]);
-
         if ( GamePos !== null ) 
         {
             SnapToGrid(GamePos, size)
 
-            var invalid
+            var invalid;
             var color = [0,255,0]
             var part = 0
             var halfSide = (size/2)*64
@@ -125,28 +178,6 @@ function StartBuildingHelper( params )
                         color = [255,0,0]
                         invalid = true
                     }
-
-                    // Check entities
-                    /*if (!invalid)
-                    {
-                        var screenX = Game.WorldToScreenX( pos[0], pos[1], pos[2] );
-                        var screenY = Game.WorldToScreenY( pos[0], pos[1], pos[2] );
-                        var mouseEntities = GameUI.FindScreenEntities( [screenX,screenY] );
-
-                        if (mouseEntities.length > 0)
-                        {
-                            for (var i = 0; i < mouseEntities.length; i++)
-                            {
-                                var entIndex = mouseEntities[i].entityIndex
-                                if (IsCustomBuilding(entIndex) || Entities.GetTeamNumber(entIndex) != Entities.GetTeamNumber(builderIndex) )
-                                {
-                                    color = [255,0,0]
-                                    invalid = true //Mark invalid for the ghost recolor
-                                    break;
-                                }
-                            }
-                        }
-                    }*/
 
                     Particles.SetParticleControl(gridParticle, 2, color)   
                 }
@@ -191,29 +222,7 @@ function StartBuildingHelper( params )
                         part2++;
 
                         if (IsBlocked(pos2))
-                        {
-                            color = [255,0,0]
-                        }
-
-                        // Grid color turns red when over invalid positions
-                        /*var screenX2 = Game.WorldToScreenX( pos2[0], pos2[1], pos2[2] );
-                        var screenY2 = Game.WorldToScreenY( pos2[0], pos2[1], pos2[2] );
-                        var mouseEntities2 = GameUI.FindScreenEntities( [screenX2,screenY2] );
-         
-                        // Check entities
-                        
-                        if (mouseEntities2.length > 0)
-                        {
-                            for (var i = 0; i < mouseEntities2.length; i++)
-                            {
-                                var entIndex2 = mouseEntities2[i].entityIndex
-                                if (IsCustomBuilding(entIndex2) || Entities.GetTeamNumber(entIndex2) != Entities.GetTeamNumber(builderIndex) )
-                                {
-                                    color = [255,0,0]
-                                    break;
-                                }
-                            }  
-                        }*/
+                            color = [255,0,0]                        
 
                         Particles.SetParticleControl(overlayParticle, 2, color)        
                         Particles.SetParticleControl(overlayParticle, 3, [overlay_alpha,0,0])
@@ -291,38 +300,6 @@ function SendCancelCommand( params )
     GameEvents.SendCustomGameEventToServer( "building_helper_cancel_command", {} );
 }
 
-(function () {
-    GameUI.SetRenderBottomInsetOverride( 0 );
-    
-    GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
-    GameEvents.Subscribe( "building_helper_end", EndBuildingHelper);
-    GameEvents.Subscribe( "gnv", GNV);
-})();
-
-//-----------------------------------
-
-function SnapToGrid(vec, size) {
-    // Buildings are centered differently when the size is odd.
-    if (size % 2 != 0) 
-    {
-        vec[0] = SnapToGrid32(vec[0])
-        vec[1] = SnapToGrid32(vec[1])
-    } 
-    else 
-    {
-        vec[0] = SnapToGrid64(vec[0])
-        vec[1] = SnapToGrid64(vec[1])
-    }
-}
-
-function SnapToGrid64(coord) {
-    return 64*Math.floor(0.5+coord/64);
-}
-
-function SnapToGrid32(coord) {
-    return 32+64*Math.floor(coord/64);
-}
-
 function GNV(msg){
     var GridNav = [];
     var squareX = msg.squareX
@@ -365,10 +342,56 @@ function GNV(msg){
     $.Msg("Free: ",tab["1"]," Blocked: ",tab["2"])
 }
 
+(function () {
+    GameUI.SetRenderBottomInsetOverride( 0 );
+    
+    GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
+    GameEvents.Subscribe( "building_helper_end", EndBuildingHelper);
+    GameEvents.Subscribe( "gnv", GNV);
+})();
+
+//-----------------------------------
+
+function SnapToGrid(vec, size) {
+    // Buildings are centered differently when the size is odd.
+    if (size % 2 != 0) 
+    {
+        vec[0] = SnapToGrid32(vec[0])
+        vec[1] = SnapToGrid32(vec[1])
+    } 
+    else 
+    {
+        vec[0] = SnapToGrid64(vec[0])
+        vec[1] = SnapToGrid64(vec[1])
+    }
+}
+
+function SnapToGrid64(coord) {
+    return 64*Math.floor(0.5+coord/64);
+}
+
+function SnapToGrid32(coord) {
+    return 32+64*Math.floor(coord/64);
+}
+
 function IsBlocked(position) {
     var x = WorldToGridPosX(position[0]) + Root.squareX/2
     var y = WorldToGridPosY(position[1]) + Root.squareY/2
-    return Root.GridNav[x][y] == 2
+    
+    return (Root.GridNav[x][y] == BLOCKED) || IsEntityGridBlocked(x,y)
+}
+
+function IsEntityGridBlocked(x,y) {
+    return (entityGrid[x] && entityGrid[x][y] == BLOCKED)
+}
+
+function BlockEntityGrid(position) {
+    var x = WorldToGridPosX(position[0]) + Root.squareX/2
+    var y = WorldToGridPosY(position[1]) + Root.squareY/2
+
+    if (entityGrid[x] === undefined) entityGrid[x] = []
+
+    entityGrid[x][y] = BLOCKED
 }
 
 function WorldToGridPosX(x){
@@ -377,6 +400,12 @@ function WorldToGridPosX(x){
 
 function WorldToGridPosY(y){
     return Math.floor(y/64)
+}
+
+function GetConstructionSize(entIndex) {
+    var entName = Entities.GetUnitName(entIndex)
+    var table = CustomNetTables.GetTableValue( "construction_size", entName)
+    return table ? table.size : 0
 }
 
 function PrintGridCoords(x,y) {
