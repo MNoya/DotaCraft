@@ -262,7 +262,7 @@ function Build( event )
 
 		-- If it's a city center, check for city_center_level updates
 		if IsCityCenter(unit) then
-			CheckCurrentCityCenters(unit:GetPlayerOwner())
+			Players:CheckCurrentCityCenters(playerID)
 		end
 
 		-- Add to the Food Limit if possible

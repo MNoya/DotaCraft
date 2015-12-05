@@ -212,7 +212,7 @@ end
 function Players:HasEnoughGold( playerID, gold_cost )
     local gold = Players:GetGold( playerID )
 
-    if not gold_cost or gold > gold_cost then 
+    if not gold_cost or gold >= gold_cost then 
         return true
     else
         SendErrorMessage(playerID, "#error_not_enough_gold")
@@ -225,7 +225,7 @@ end
 function Players:HasEnoughLumber( playerID, lumber_cost )
     local lumber = Players:GetLumber(playerID)
 
-    if not lumber_cost or lumber > lumber_cost then 
+    if not lumber_cost or lumber >= lumber_cost then 
         return true 
     else
         SendErrorMessage(playerID, "#error_not_enough_lumber")
