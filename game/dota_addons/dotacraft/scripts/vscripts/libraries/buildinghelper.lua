@@ -1142,7 +1142,9 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
 
     -- Check enemy units blocking the area
     local construction_radius = size * 64 - 32
-    local enemies = FindEnemiesInRadiusAtPoint(unit, construction_radius, location)
+    local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
+    local enemies = FindUnitsInRadius(unit:GetTeamNumber(), location, nil, size, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
     if #enemies > 0 then
         if callbacks.onConstructionFailed then
             callbacks.onConstructionFailed()

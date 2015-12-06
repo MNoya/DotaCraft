@@ -1464,9 +1464,11 @@ function dotacraft:OnPreGame()
 	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
 	for k,gold_mine in pairs (GameRules.GoldMines) do
 		local location = gold_mine:GetAbsOrigin()
-		location.x = BuildingHelper:SnapToGrid32(location.x)
-    	location.y = BuildingHelper:SnapToGrid32(location.y)
-		local gridNavBlockers = BuildingHelper:BlockGridSquares(5, 5, location)
+		local construction_size = Units:GetConstructionSize(gold_mine)
+		local pathing_size = Units:GetBlockPathingSize(gold_mine)
+		BuildingHelper:SnapToGrid(construction_size, location)
+
+		local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
 		gold_mine:SetAbsOrigin(location)
 	    gold_mine.blockers = gridNavBlockers
 

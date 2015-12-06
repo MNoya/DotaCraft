@@ -93,14 +93,10 @@ function StartBuildingHelper( params )
         // Get all the creature entities on the screen
         var entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
         var hero_entities = Entities.GetAllEntitiesByClassname('npc_dota_hero')
+        var build_entities = Entities.GetAllEntitiesByClassname('npc_dota_building')
         var tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
-        entities.concat(hero_entities)
-
-        /*
-        $.Msg('Entities: ',entities)
-        $.Msg('Trees: ',tree_entities.length)
-        $.Msg("There are ",entities.length," entities on the screen")
-        */
+        entities = entities.concat(hero_entities)
+        entities = entities.concat(build_entities)
 
         // Build the entity grid with the construction sizes and entity origins
         entityGrid = []
@@ -108,13 +104,12 @@ function StartBuildingHelper( params )
         {
             if (!Entities.IsAlive(entities[i])) continue
             var entPos = Entities.GetAbsOrigin( entities[i] )
+            var squares = GetConstructionSize(entities[i])
 
-            if (IsCustomBuilding(entities[i]))
+            if (squares > 0)
             {
-                 // Block squares centered on the origin
-                var squares = GetConstructionSize(entities[i])
+                // Block squares centered on the origin 
                 BlockGridSquares(entPos, squares)
-                
             }
             else
             {
@@ -128,7 +123,7 @@ function StartBuildingHelper( params )
                 {
                     BlockGridSquares(entPos, 2)
                 }
-            }        
+            }      
         }
 
         // Handle trees
@@ -142,6 +137,7 @@ function StartBuildingHelper( params )
 
         var mPos = GameUI.GetCursorPosition();
         var GamePos = Game.ScreenXYToWorld(mPos[0], mPos[1]);
+        GamePos[2]+=5 //Modify offset on ground based on the origin
         if ( GamePos !== null ) 
         {
             SnapToGrid(GamePos, size)
@@ -342,9 +338,7 @@ function GNV(msg){
     $.Msg("Free: ",tab["1"]," Blocked: ",tab["2"])
 }
 
-(function () {
-    GameUI.SetRenderBottomInsetOverride( 0 );
-    
+(function () {    
     GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
     GameEvents.Subscribe( "building_helper_end", EndBuildingHelper);
     GameEvents.Subscribe( "gnv", GNV);
@@ -378,7 +372,7 @@ function IsBlocked(position) {
     var x = WorldToGridPosX(position[0]) + Root.squareX/2
     var y = WorldToGridPosY(position[1]) + Root.squareY/2
     
-    return /*(Root.GridNav[x][y] == BLOCKED) || */IsEntityGridBlocked(x,y)
+    return (Root.GridNav[x][y] == BLOCKED) || IsEntityGridBlocked(x,y)
 }
 
 function IsEntityGridBlocked(x,y) {

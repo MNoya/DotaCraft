@@ -52,7 +52,7 @@ function Build( event )
 		-- Enemy unit check
     	local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     	local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
-    	local enemies = FindUnitsInRadius(teamNumber, vPos, nil, construction_size, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_CLOSEST, false)
+    	local enemies = FindUnitsInRadius(teamNumber, vPos, nil, construction_size, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
 
 		if #enemies > 0 then
 			SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
@@ -651,8 +651,6 @@ function Gather( event )
 			end
 
 			caster.repair_target = target
-
-			local target_pos = target:GetAbsOrigin()
 			
 			ability.cancelled = false
 			caster.state = "moving_to_repair"
@@ -682,10 +680,10 @@ function Gather( event )
 				-- Move towards the target until close range
 				if not ability.cancelled and caster.state == "moving_to_repair" then
 					if caster.repair_target and IsValidEntity(caster.repair_target) then
-						local distance = (target_pos - caster:GetAbsOrigin()):Length()
+						local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
 						
 						if distance > collision_size then
-							caster:MoveToNPC(target)
+							caster:MoveToPosition(target:GetAbsOrigin())
 							return THINK_INTERVAL
 						else
                             --print("Reached target, starting the Repair process")
@@ -1025,8 +1023,6 @@ function ReturnResources( event )
 	-- Builder race
 	local race = GetUnitRace(caster)
 
-	print("Return Resources of type ",caster.last_resource_gathered)
-
 	-- Return Ability On
 	ability.cancelled = false
 	if ability:GetToggleState() == false then
@@ -1050,7 +1046,6 @@ function ReturnResources( event )
 		caster.target_building = building
 		caster.state = "returning_lumber"
 
-		local collision_size = building:GetHullRadius()*2 + 100
 
 		-- Move towards it
 		caster.moving_timer = Timers:CreateTimer(function() 
@@ -1063,10 +1058,11 @@ function ReturnResources( event )
 			if not ability.cancelled then
 				if caster.target_building and IsValidEntity(caster.target_building) and caster.state == "returning_lumber" then
 					local building_pos = caster.target_building:GetAbsOrigin()
+					local collision_size = GetCollisionSize(building)*2
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						caster:MoveToNPC(caster.target_building)				
+						caster:MoveToPosition(GetReturnPosition( caster, building ))		
 						return THINK_INTERVAL
 					elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
 						--print("Building Reached at ",distance)
@@ -1110,7 +1106,7 @@ function ReturnResources( event )
 		local building = FindClosestResourceDeposit( caster, "gold" )
 		caster.target_building = building
 		caster.state = "returning_gold"
-		local collision_size = building:GetHullRadius()*2 + 64
+		local collision_size = GetCollisionSize(building)*2
 
 		-- Move towards it
 		caster.moving_timer = Timers:CreateTimer(function() 
@@ -1126,7 +1122,7 @@ function ReturnResources( event )
 					local distance = (building_pos - caster:GetAbsOrigin()):Length()
 				
 					if distance > collision_size then
-						caster:MoveToNPC(building)
+						caster:MoveToPosition(GetReturnPosition( caster, building ))
 						return THINK_INTERVAL
 					elseif caster.gold_gathered and caster.gold_gathered > 0 then
 						--print("Building Reached at ",distance)
@@ -1204,7 +1200,6 @@ function SendBackToGather( unit, ability, resource_type )
 	elseif resource_type == "gold" then
 
 		if unit.target_mine and IsValidEntity(unit.target_mine) then
-			print("Back to the Mine", unit.target_mine:GetClassname())
 
 			unit:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
 
@@ -1216,6 +1211,13 @@ function SendBackToGather( unit, ability, resource_type )
 			unit:RemoveModifierByName("modifier_on_order_cancel_gold")
 		end
 	end
+end
+
+function GetReturnPosition( unit, target )
+	local origin = unit:GetAbsOrigin()
+	local building_pos = target:GetAbsOrigin()
+	local distance = target:GetHullRadius()
+	return building_pos + (origin - building_pos):Normalized() * distance
 end
 
 --------------------------------
