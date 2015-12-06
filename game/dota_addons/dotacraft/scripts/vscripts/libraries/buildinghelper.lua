@@ -450,9 +450,8 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     local building = CreateUnitByName(name, location, false, playersHero, player, playersHero:GetTeamNumber())
     building:SetControllableByPlayer(playerID, true)
     building:SetOwner(playersHero)
-    if blockGridNav then
-        building.blockers = gridNavBlockers
-    end
+    building.construction_size = construction_size
+    building.blockers = gridNavBlockers
 
     if angle then
         building:SetAngles(0,-angle,0)

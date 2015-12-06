@@ -17,7 +17,7 @@ function UpgradeBuilding( event )
 	local angle = caster:GetAngles()
 
     -- New building
-	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, false, 0) 
+	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, caster.construction_size, 0, 0)
 	building.blockers = blockers
 	building:SetHullRadius(hull_radius)
 	building:SetAngles(0, angle.y, 0)
