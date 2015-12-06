@@ -98,7 +98,8 @@ function Build( event )
     	Players:ModifyLumber(playerID, -lumber_cost)
 
     	-- Play a sound
-    	EmitSoundOnClient("DOTA_Item.ObserverWard.Activate", player)
+    	Sounds:EmitSoundOnClient(playerID, "Building.Placement")
+    	EmitGlobalSound("Building.Placement")
 
     	-- Move allied units away from the building place
 		local units = FindUnitsInRadius(teamNumber, vPos, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
