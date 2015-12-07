@@ -47,16 +47,13 @@ function BuildingHelper:Init()
 
     CustomGameEventManager:RegisterListener("building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
     CustomGameEventManager:RegisterListener("building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
+    CustomGameEventManager:RegisterListener("gnv_request", Dynamic_Wrap(BuildingHelper, "SendGNV"))
 
     ListenToGameEvent('game_rules_state_change', function()
         local newState = GameRules:State_Get()
         if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
             -- The base terrain GridNav is obtained directly from the vmap
             BuildingHelper:InitGNV()
-        elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
-            Timers:CreateTimer(1, function()
-                BuildingHelper:SendGNV()
-            end)
         end
     end, nil)
 
@@ -152,8 +149,11 @@ function BuildingHelper:InitGNV()
     BuildingHelper.squareY = squareY
 end
 
-function BuildingHelper:SendGNV()
-    CustomGameEventManager:Send_ServerToAllClients("gnv", {gnv=BuildingHelper.Encoded, squareX = BuildingHelper.squareX, squareY = BuildingHelper.squareY})
+function BuildingHelper:SendGNV( args )
+    local playerID = args.PlayerID
+    local player = PlayerResource:GetPlayer(playerID)
+    BuildingHelper:print("Sending GNV to player "..playerID)
+    CustomGameEventManager:Send_ServerToPlayer(player, "gnv_register", {gnv=BuildingHelper.Encoded, squareX = BuildingHelper.squareX, squareY = BuildingHelper.squareY})
 end
 
 --[[
