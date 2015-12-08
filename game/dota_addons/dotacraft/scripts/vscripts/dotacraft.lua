@@ -201,6 +201,7 @@ function dotacraft:InitGameMode()
 	-- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_client_convars", "libraries/modifiers/modifier_client_convars", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
@@ -471,6 +472,9 @@ function dotacraft:InitializePlayer( hero )
 	print("[DOTACRAFT] Initializing main hero entity for player "..playerID)
 
 	Players:Init(playerID, hero)
+
+	-- Client Settings
+	hero:AddNewModifier(hero, nil, "modifier_client_convars", {})
 
     -- Create Main Building
     local position = GameRules.StartingPositions[playerID].position
@@ -1351,6 +1355,15 @@ function dotacraft:CheckDefeatCondition( teamNumber )
 		winningTeam = dotacraft:GetWinningTeam()
 		print("Winning Team: "..winningTeam)
 		dotacraft:PrintWinMessageForTeam(winningTeam)
+
+		-- Revert client convars
+		for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+			if PlayerResource:IsValidPlayerID(playerID) then
+				local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+				hero:RemoveModifierByName("modifier_client_convars")
+			end
+		end
+
 		GameRules:SetGameWinner(winningTeam)
 	end
 
