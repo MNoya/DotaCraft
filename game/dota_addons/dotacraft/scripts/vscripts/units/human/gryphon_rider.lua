@@ -38,3 +38,27 @@ function StormHammerDamage( event )
 	ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType })
 	print("Storm Hammer dealt "..damage.." to "..target:GetUnitName().." number ".. target:GetEntityIndex())
 end
+
+function Mount( event )
+	local caster = event.caster
+	local ability = event.ability
+
+	local attach = caster:ScriptLookupAttachment("attach_hitloc")
+	local origin = caster:GetAttachmentOrigin(attach)
+	local fv = caster:GetForwardVector()
+
+	local rider = CreateUnitByName("human_gryphon_mounted_dummy", caster:GetAbsOrigin(), false, nil, nil, caster:GetTeamNumber()) 
+	ability:ApplyDataDrivenModifier(caster, rider, "modifier_disable_rider", {})
+
+	rider:SetAbsOrigin(Vector(origin.x, origin.y, origin.z-30))
+	rider:SetAngles(0,90,0)
+	rider:SetParent(caster, "attach_hitloc")
+
+	caster.rider = rider
+end
+
+function FakeAttack( event )
+	local caster = event.caster
+
+	caster.rider:StartGesture(ACT_DOTA_ATTACK)
+end

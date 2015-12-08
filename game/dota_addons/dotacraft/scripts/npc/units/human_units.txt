@@ -1318,8 +1318,8 @@
 	// General
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/items/courier/royal_griffin_cub/royal_griffin_cub.vmdl"
-	"ModelScale"				"1.2"
+	"Model"						"models/items/courier/royal_griffin_cub/royal_griffin_cub_flying.vmdl"
+	"ModelScale"				"1.5"
 	"Level"						"5"
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"ShouldDoFlyHeightVisual" 	"1"
@@ -1335,6 +1335,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"human_storm_hammers_disabled"	 //Reference: Asth
+	"Ability10"					"human_gryphon_mounted_rider"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1401,6 +1402,31 @@
 	//----------------------------------------------------------------
 }
 
+"human_gryphon_mounted_dummy"
+{
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/tuskarr/tuskarr.vmdl"
+	"ModelScale"				"0.4"
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"VisionDaytimeRange"		"0"	
+	"VisionNighttimeRange"		"0"
+	"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+	"LeavesCorpse"				"0"
+
+	"Creature"
+	{
+		"AttachWearables"
+		{
+			"1" { "ItemDef" "413" } //Glove
+			"2" { "ItemDef" "414" } //Cowl
+			"3" { "ItemDef" "415" } //Hat
+			"4" { "ItemDef" "416" } //Tusks
+			"5" { "ItemDef" "417" } //Weapon
+			"6" { "ItemDef" "418" } //Back
+		}
+	}
+}
 
 
 
