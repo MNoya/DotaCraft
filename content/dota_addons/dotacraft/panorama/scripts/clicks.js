@@ -18,7 +18,7 @@ function OnRightButtonPressed()
 	if ( IsBuilder( mainSelected ) )
 	{
 		// Cancel BH
-		SendCancelCommand();
+        if (!pressedShift) SendCancelCommand();
 
 		// If it's mousing over entities
 		if (mouseEntities.length > 0)

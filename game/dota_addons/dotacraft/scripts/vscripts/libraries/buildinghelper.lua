@@ -19,10 +19,6 @@ if not BuildingHelper then
     BuildingHelper = class({})
 end
 
-if not OutOfWorldVector then
-    OutOfWorldVector = Vector(11000,11000,0)
-end
-
 --[[
     BuildingHelper Init
     * Loads Key Values into the BuildingAbilities
@@ -48,6 +44,8 @@ function BuildingHelper:Init()
     CustomGameEventManager:RegisterListener("building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
     CustomGameEventManager:RegisterListener("building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
     CustomGameEventManager:RegisterListener("gnv_request", Dynamic_Wrap(BuildingHelper, "SendGNV"))
+
+    LinkLuaModifier("modifier_out_of_world", "libraries/modifiers/modifier_out_of_world", LUA_MODIFIER_MOTION_NONE)
 
     ListenToGameEvent('game_rules_state_change', function()
         local newState = GameRules:State_Get()
@@ -266,27 +264,23 @@ function BuildingHelper:AddBuilding(keys)
     UTIL_Remove(playerTable.activeBuildingTable.mgd)
 
     -- Make a model dummy to pass it to panorama
-    playerTable.activeBuildingTable.mgd = CreateUnitByName(unitName, OutOfWorldVector, false, nil, nil, builder:GetTeam())
+    local mgd = CreateUnitByName(unitName, builder:GetAbsOrigin(), false, nil, nil, builder:GetTeam())
+    mgd:AddNoDraw()
+    mgd:AddNewModifier(mgd, nil, "modifier_out_of_world", {})
+    playerTable.activeBuildingTable.mgd = mgd
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
-    playerTable.activeBuildingTable.mgd:SetAngles(0, -yaw, 0)
-
-    -- Position is CP0, model attach is CP1, color is CP2, alpha is CP3.x, scale is CP4.x
-    playerTable.activeBuildingTable.modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, playerTable.activeBuildingTable.mgd, player)
-    ParticleManager:SetParticleControlEnt(playerTable.activeBuildingTable.modelParticle, 1, playerTable.activeBuildingTable.mgd, 1, "follow_origin", playerTable.activeBuildingTable.mgd:GetAbsOrigin(), true)            
-    ParticleManager:SetParticleControl(playerTable.activeBuildingTable.modelParticle, 3, Vector(MODEL_ALPHA,0,0))
-    ParticleManager:SetParticleControl(playerTable.activeBuildingTable.modelParticle, 4, Vector(fMaxScale,0,0))
+    mgd:SetAngles(0, -yaw, 0)
 
     local color = Vector(255,255,255)
     if RECOLOR_GHOST_MODEL then
         color = Vector(0,255,0)
     end
-    ParticleManager:SetParticleControl(playerTable.activeBuildingTable.modelParticle, 2, color)
 
     local paramsTable = { state = "active", size = size, scale = fMaxScale, 
                           grid_alpha = GRID_ALPHA, model_alpha = MODEL_ALPHA, recolor_ghost = RECOLOR_GHOST_MODEL,
-                          entindex = playerTable.activeBuildingTable.mgd:GetEntityIndex(), builderIndex = builder:GetEntityIndex()
+                          entindex = mgd:GetEntityIndex(), builderIndex = builder:GetEntityIndex()
                         }
     CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", paramsTable)
 end
@@ -538,19 +532,12 @@ function BuildingHelper:StartBuilding( keys )
     end
 
     -- Spawn the building
-    local building = CreateUnitByName(unitName, OutOfWorldVector, false, playersHero, player, builder:GetTeam())
+    local building = CreateUnitByName(unitName, location, false, playersHero, player, builder:GetTeam())
     building:SetControllableByPlayer(playerID, true)
     building.blockers = gridNavBlockers
     building.construction_size = construction_size
     building.buildingTable = buildingTable
     building.state = "building"
-
-    Timers:CreateTimer(function() 
-        building:SetAbsOrigin(location)
-
-        -- Remove ghost model
-        UTIL_Remove(buildingTable.mgd)
-    end)
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
@@ -1143,7 +1130,7 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     local construction_radius = size * 64 - 32
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
-    local enemies = FindUnitsInRadius(unit:GetTeamNumber(), location, nil, size, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
+    local enemies = FindUnitsInRadius(unit:GetTeamNumber(), location, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
     if #enemies > 0 then
         if callbacks.onConstructionFailed then
             callbacks.onConstructionFailed()
@@ -1192,7 +1179,9 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     callbacks.onBuildingPosChosen(location)
 
     -- Create model ghost dummy out of the map, then make pretty particles
-    local mgd = CreateUnitByName(building, OutOfWorldVector, false, nil, nil, builder:GetTeam())
+    local mgd = CreateUnitByName(building, location, false, nil, nil, builder:GetTeam())
+    mgd:AddNoDraw()
+    mgd:AddNewModifier(mgd, nil, "modifier_out_of_world", {})
 
     local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
     ParticleManager:SetParticleControl(modelParticle, 0, location)
@@ -1216,7 +1205,7 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     end
 
     -- Add this to the builder queue
-    table.insert(builder.buildingQueue, {["location"] = location, ["name"] = building, ["buildingTable"] = buildingTable, ["particleIndex"] = modelParticle, ["callbacks"] = callbacks})
+    table.insert(builder.buildingQueue, {["location"] = location, ["name"] = building, ["buildingTable"] = buildingTable, ["particleIndex"] = modelParticle, ["entity"] = mgd, ["callbacks"] = callbacks})
 
     -- If the builder doesn't have a current work, start the queue
     -- Extra check for builder-inside behaviour, those abilities are always queued
@@ -1298,6 +1287,11 @@ function BuildingHelper:ClearQueue(builder)
     builder.work = nil
     builder.state = "idle"
 
+    local playerTable = BuildingHelper:GetPlayerTable(builder:GetPlayerOwnerID())
+    if playerTable.activeBuildingTable and IsValidEntity(playerTable.activeBuildingTable.mgd) then
+        UTIL_Remove(playerTable.activeBuildingTable.mgd)
+    end
+
      -- Stop panorama ghost
     local player = builder:GetPlayerOwner()
     if IsCurrentlySelected(builder) then
@@ -1314,6 +1308,7 @@ function BuildingHelper:ClearQueue(builder)
     -- Main work  
     if work then
         ParticleManager:DestroyParticle(work.particleIndex, true)
+        UTIL_Remove(work.entity)
 
         -- Only refund work that hasn't been placed yet
         if not work.inProgress then
@@ -1330,6 +1325,7 @@ function BuildingHelper:ClearQueue(builder)
         work = builder.buildingQueue[1]
         work.refund = true --Refund this
         ParticleManager:DestroyParticle(work.particleIndex, true)
+        UTIL_Remove(work.entity)
         table.remove(builder.buildingQueue, 1)
 
         if work.callbacks.onConstructionCancelled ~= nil then
