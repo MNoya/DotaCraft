@@ -70,6 +70,17 @@ function GetUnitRace( unit )
     return name_split[1]
 end
 
+function GetOriginalModelScale( unit )
+    local unit_name = unit:GetUnitName()
+    local unit_table = unit:IsHero() and GameRules.HeroKV[unit_name] or GameRules.UnitKV[unit_name]
+    return unit_table and unit_table["ModelScale"] or unit:GetModelScale()
+end
+
+function GetRangedProjectileName( unit )
+    local unit_name = unit:GetUnitName()
+    local unit_table = unit:IsHero() and GameRules.HeroKV[unit_name] or GameRules.UnitKV[unit_name]
+    return unit_table and unit_table["ProjectileModel"] or ""
+end
 
 
 -- Checks the UnitLabel for "city_center"
