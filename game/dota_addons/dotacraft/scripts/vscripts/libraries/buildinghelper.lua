@@ -1287,16 +1287,7 @@ function BuildingHelper:ClearQueue(builder)
     builder.work = nil
     builder.state = "idle"
 
-    local playerTable = BuildingHelper:GetPlayerTable(builder:GetPlayerOwnerID())
-    if playerTable.activeBuildingTable and IsValidEntity(playerTable.activeBuildingTable.mgd) then
-        UTIL_Remove(playerTable.activeBuildingTable.mgd)
-    end
-
-     -- Stop panorama ghost
-    local player = builder:GetPlayerOwner()
-    if IsCurrentlySelected(builder) then
-        CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_end", {})
-    end
+    BuildingHelper:StopGhost(builder)
 
     -- Skip if there's nothing to clear
     if not builder.buildingQueue or (not work and #builder.buildingQueue == 0) then
@@ -1333,6 +1324,24 @@ function BuildingHelper:ClearQueue(builder)
         end
     end
 end
+
+--[[
+    StopGhost
+    * Stop panorama ghost
+]]--
+function BuildingHelper:StopGhost( builder )
+    local player = builder:GetPlayerOwner()
+
+    local playerTable = BuildingHelper:GetPlayerTable(builder:GetPlayerOwnerID())
+    if playerTable.activeBuildingTable and IsValidEntity(playerTable.activeBuildingTable.mgd) then
+        UTIL_Remove(playerTable.activeBuildingTable.mgd)
+    end
+
+    if IsCurrentlySelected(builder) then
+        CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_end", {})
+    end
+end
+
 
 --[[
     PrintQueue
