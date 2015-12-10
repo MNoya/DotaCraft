@@ -17,7 +17,8 @@ DEBUG_CODES = {
 
 TEST_CODES = {
     ["giveitem"] = function(...) dotacraft:GiveItem(...) end,          -- Gives an item by name to the currently selected unit
-    ["createunits"] = function(...) dotacraft:CreateUnits(...) end     -- Creates 'name' units around the currently selected unit, with optional num and neutral team
+    ["createunits"] = function(...) dotacraft:CreateUnits(...) end,    -- Creates 'name' units around the currently selected unit, with optional num and neutral team
+    ["testhero"] = function(...) dotacraft:TestHero(...) end           -- Creates 'name' max level hero at the currently selected unit, optional team num
 }
 
 function dotacraft:DeveloperMode(player)
@@ -214,6 +215,22 @@ function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
             unit:Hold()         
         end
     end, pID)
+end
+
+function dotacraft:TestHero( heroName, bEnemy )
+    local pos = GetMainSelectedEntity(0):GetAbsOrigin()
+    local unitName = GetRealHeroName(heroName)
+    local team = bEnemy and DOTA_TEAM_NEUTRALS or PlayerResource:GetTeam(0)
+
+    PrecacheUnitByNameAsync(unitName, function()
+        local hero = CreateUnitByName(unitName, pos, true, nil, nil, team)
+        hero:SetControllableByPlayer(0, true)
+
+        for i=1,8 do
+            hero:HeroLevelUp(false)
+        end
+
+    end, 0)
 end
 
 function GetGridAroundPoint( numUnits, point )

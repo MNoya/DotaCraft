@@ -1200,8 +1200,10 @@ function dotacraft:OnPlayerSelectedEntities( event )
 	if IsValidEntity(mainSelected) and IsBuilder(mainSelected) then
 		player.activeBuilder = mainSelected
 	else
-		-- Clear queue when swapping to a non-builder
-		BuildingHelper:ClearQueue(player.activeBuilder)
+		if IsValidEntity(player.activeBuilder) then
+			-- Clear queue when swapping to a non-builder
+			BuildingHelper:ClearQueue(player.activeBuilder)
+		end
 	end
 end
 

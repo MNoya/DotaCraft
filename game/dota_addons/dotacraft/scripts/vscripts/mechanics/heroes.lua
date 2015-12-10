@@ -37,6 +37,17 @@ function GetInternalHeroName( hero_name )
     end
 end
 
+function GetRealHeroName( internal_hero_name )
+    local heroes = GameRules.HeroKV
+    for hero_name,v in pairs(heroes) do
+        for key,value in pairs(v) do
+            if value == internal_hero_name then
+                return hero_name
+            end
+        end
+    end
+end
+
 -- Auxiliar function that goes through every ability and item, checking for any ability being channelled
 function IsChanneling ( hero )
     

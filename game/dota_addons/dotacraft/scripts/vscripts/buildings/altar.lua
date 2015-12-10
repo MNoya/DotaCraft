@@ -23,6 +23,8 @@ function BuildHero( event )
 		new_hero:SetControllableByPlayer(playerID, true)
 		new_hero:SetOwner(player)
 		new_hero:RespawnUnit()
+
+		CreateAttachmentsForPlayerHero(playerID, new_hero)
 		
 		if caster.flag then
 			local position = caster.flag:GetAbsOrigin()
@@ -68,6 +70,20 @@ function BuildHero( event )
 	-- register panaroma listener
 	CustomGameEventManager:RegisterListener( "center_hero_camera", CenterCamera)
 	CustomGameEventManager:RegisterListener( "revive_hero", Revive_Hero)
+end
+
+function CreateAttachmentsForPlayerHero(playerID, hero)
+	local heroName = GetInternalHeroName(hero:GetUnitName())
+	local sets = LoadKeyValues("scripts/kv/cosmetic_sets.kv")
+	local steamID = tostring(PlayerResource:GetSteamAccountID(playerID))
+
+	local hasSetForHero = sets[steamID] and sets[steamID][heroName]
+	if hasSetForHero then
+		local attachments = hasSetForHero.Attachments
+		for attach_point,model_name in pairs(attachments) do
+			Attachments:AttachProp(hero, attach_point, model_name)
+		end
+	end
 end
 
 -- Panorama action: Click on the Revive button
