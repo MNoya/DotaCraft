@@ -101,7 +101,7 @@ function StartUpgrade( event )
 	local abilities = {}
 
 	-- Check to not disable when the queue was full
-	if #caster.queue < 5 then
+	if #caster.queue <= 6 then
 
 		-- Iterate through abilities marking those to disable
 		for i=0,15 do

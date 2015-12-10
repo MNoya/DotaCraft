@@ -235,47 +235,11 @@ function AdvanceQueue( event )
 									--print("This unit was interrupted")
 								end
 							end)
-						end
+						end				
+					
 
-					-- Items that contain "research_" will start a channel of an ability with the same name  without the item_ affix
-					elseif string.find(item_name, "research_") then
-						-- Find the name of the tied ability-item: 
-						--	ability = human_research_defend
-						-- 	item = item_human_research_defend
-						local research_ability_name = string.gsub(item_name, "item_", "")
 
-						local ability_to_channel = caster:FindAbilityByName(research_ability_name)
-						if ability_to_channel then
-							ability_to_channel:SetChanneling(true)
-							print("->"..ability_to_channel:GetAbilityName()," started channel")
-
-							-- Fake mana channel bar
-							local channel_time = ability_to_channel:GetChannelTime()
-							caster:SetMana(0)
-							caster:SetBaseManaRegen(caster:GetMaxMana()/channel_time)
-
-							-- Cheats
-							if GameRules.WarpTen then
-								ability_to_channel:EndChannel(false)
-								ReorderItems(caster)
-								return
-							end
-
-							-- After the channeling time, check if it was cancelled or spawn it
-							-- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
-							Timers:CreateTimer(ability_to_channel:GetChannelTime(), 
-							function()
-								--print("===Queue Table====")
-								--DeepPrintTable(caster.queue)
-								if IsValidEntity(item) then
-									ability_to_channel:EndChannel(false)
-									ReorderItems(caster)
-									print("Research complete!")
-								else
-									--print("This Research was interrupted")
-								end
-							end)
-						end
+					return -- Don't continue, queue should strictly only take the first in line
 					end
 				end
 			end
