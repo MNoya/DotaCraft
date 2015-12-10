@@ -16007,6 +16007,66 @@
 		}
 	}
 	
+	// Stronger version
+	"human_arcane_tower_feedback"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"human_feedback"
+		"MaxLevel"					"1"
+	
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"		
+	
+		"precache"
+		{
+			"particle"	"particles/generic_gameplay/generic_manaburn.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_burn"		"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_hit"			"24"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_hit_heroes"	"12"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_human_feedback"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"Orb"
+				{
+					"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+				}
+	
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/spell_breaker.lua"
+						"Function"		"ManaBreak"
+						"Target"		"TARGET"
+					}
+				}
+			}
+		}
+	}
+	
 	"human_true_sight"
 	{
 		"BaseClass"             		"ability_datadriven"
