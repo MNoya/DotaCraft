@@ -1,105 +1,94 @@
 --[[
-	Author: Noya
-	Date: 17.01.2015.
-	Bounces a chain lightning
+    Author: Noya
+    Date: 12 December 2015
+    Bounces a chain lightning
 ]]
 function ChainLightning( event )
+    local caster = event.caster
+    local target = event.target
+    local ability = event.ability
+    local teamNumber = caster:GetTeamNumber()
+    local targetTeam = ability:GetAbilityTargetTeam()
+    local targetTypes = ability:GetAbilityTargetType()
+    local flags = DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE
+    local findType = FIND_CLOSEST
 
-	local hero = event.caster
-	local target = event.target
-	local ability = event.ability
+    local damage = ability:GetLevelSpecialValueFor( "lightning_damage", ability:GetLevel() - 1 )
+    local bounces = ability:GetLevelSpecialValueFor( "lightning_bounces", ability:GetLevel() - 1 )
+    local bounce_range = ability:GetLevelSpecialValueFor( "bounce_range", ability:GetLevel() - 1 )
+    local decay = ability:GetLevelSpecialValueFor( "lightning_decay", ability:GetLevel() - 1 ) * 0.01
+    local time_between_bounces = ability:GetLevelSpecialValueFor( "time_between_bounces", ability:GetLevel() - 1 )
 
-	local damage = ability:GetLevelSpecialValueFor( "lightning_damage", ability:GetLevel() - 1 )
-	local bounces = ability:GetLevelSpecialValueFor( "lightning_bounces", ability:GetLevel() - 1 )
-	local bounce_range = ability:GetLevelSpecialValueFor( "bounce_range", ability:GetLevel() - 1 )
-	local decay = ability:GetLevelSpecialValueFor( "lightning_decay", ability:GetLevel() - 1 ) * 0.01
-	local time_between_bounces = ability:GetLevelSpecialValueFor( "time_between_bounces", ability:GetLevel() - 1 )
+    local start_position = caster:GetAbsOrigin()
+    local attach_eye_r = caster:ScriptLookupAttachment("attach_eye_r") --Disruptor
+    local attach_attack1 = caster:ScriptLookupAttachment("attach_attack1") --Most units have this
+    if attach_eye_r ~= 0 then
+        local first_eye = caster:GetAttachmentOrigin(attach_eye_r)
+        local second_eye = caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_eye_l"))
+        start_position = first_eye + (second_eye-first_eye)/2 --Between the eyes
+        start_position.z = start_position.z + 50
+    
+    elseif attach_attack1 ~= 0 then
+        start_position = caster:GetAttachmentOrigin(attach_attack1)
+    else
+        start_position.z = start_position.z + target:GetBoundingMaxs().z
+    end
 
-	local lightningBolt = ParticleManager:CreateParticle("particles/items_fx/chain_lightning.vpcf", PATTACH_WORLDORIGIN, hero)
-	ParticleManager:SetParticleControl(lightningBolt,0,Vector(hero:GetAbsOrigin().x,hero:GetAbsOrigin().y,hero:GetAbsOrigin().z + hero:GetBoundingMaxs().z ))	
-	ParticleManager:SetParticleControl(lightningBolt,1,Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z + target:GetBoundingMaxs().z ))	
-	--ParticleManager:SetParticleControlEnt(lightningBolt, 1, target, 1, "attach_hitloc", target:GetAbsOrigin(), true)
+    local current_position = CreateChainLightning(caster, start_position, target, damage)
 
-	EmitSoundOn("Hero_Zuus.ArcLightning.Target", target)	
-	ApplyDamage({ victim = target, attacker = hero, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
-	PopupDamage(target,math.floor(damage))
+    -- Every target struck by the chain is added to an entity index list
+    local targetsStruck = {}
+    targetsStruck[target:GetEntityIndex()] = true
 
-	-- Every target struck by the chain is added to a list of targets struck, And set a boolean inside its index to be sure we don't hit it twice.
-	local targetsStruck = {}
-	target.struckByChain = true
-	table.insert(targetsStruck,target)
+    Timers:CreateTimer(time_between_bounces, function()  
+        local units = FindUnitsInRadius(teamNumber, current_position, target, bounce_range, targetTeam, targetTypes, flags, findType, true)
 
-	local dummy = nil
-	local units = nil
+        if #units > 0 then
 
-	Timers:CreateTimer(DoUniqueString("ChainLightning"), {
-		endTime = time_between_bounces,
-		callback = function()
-	
-			-- unit selection and counting
-			units = FindUnitsInRadius(hero:GetTeamNumber(), target:GetOrigin(), target, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, 
-						DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, true)
+            -- Hit the first unit that hasn't been struck yet
+            local bounce_target
+            for _,unit in pairs(units) do
+                local entIndex = unit:GetEntityIndex()
+                if not targetsStruck[entIndex] then
+                    bounce_target = unit
+                    targetsStruck[entIndex] = true
+                    break
+                end
+            end
 
-			-- particle and dummy to start the chain
-			targetVec = target:GetAbsOrigin()
-			targetVec.z = target:GetAbsOrigin().z + target:GetBoundingMaxs().z
-			if dummy ~= nil then
-				dummy:RemoveSelf()
-			end
-			dummy = CreateUnitByName("dummy_unit", targetVec, false, hero, hero, hero:GetTeam())
+            if bounce_target then
+                damage = damage - (damage*decay)
+                current_position = CreateChainLightning(caster, current_position, bounce_target, damage)
 
-			-- Track the possible targets to bounce from the units in radius
-			local possibleTargetsBounce = {}
-			for _,v in pairs(units) do
-				if not v.struckByChain then
-					table.insert(possibleTargetsBounce,v)
-				end
-			end
+                -- decrement remaining spell bounces
+                bounces = bounces - 1
 
-			-- Select one of those targets at random
-			target = possibleTargetsBounce[math.random(1,#possibleTargetsBounce)]
-			if target then
-				target.struckByChain = true
-				table.insert(targetsStruck,target)		
-			else
-				-- There's no more targets left to bounce, clear the struck table and end
-				for _,v in pairs(targetsStruck) do
-				    v.struckByChain = false
-				    v = nil
-				end
-			    print("End Chain, no more targets")
-				return	
-			end
+                -- fire the timer again if spell bounces remain
+                if bounces > 0 then
+                    return time_between_bounces
+                end
+            end
+        end
+    end)
+end
 
+-- Creates a chain lightning on a start position towards a target. Also does sound, damage and popup
+function CreateChainLightning( caster, start_position, target, damage )
+    local target_position = target:GetAbsOrigin()
+    local attach_hitloc = target:ScriptLookupAttachment("attach_hitloc")
+    if attach_hitloc ~= 0 then
+        target_position = target:GetAttachmentOrigin(attach_hitloc)
+    else
+        target_position.z = target_position.z + target:GetBoundingMaxs().z
+    end
 
-			local lightningChain = ParticleManager:CreateParticle("particles/items_fx/chain_lightning.vpcf", PATTACH_WORLDORIGIN, dummy)
-			ParticleManager:SetParticleControl(lightningChain,0,Vector(dummy:GetAbsOrigin().x,dummy:GetAbsOrigin().y,dummy:GetAbsOrigin().z + dummy:GetBoundingMaxs().z ))	
-			
-			-- damage and decay
-			damage = damage - (damage*decay)
-			ApplyDamage({ victim = target, attacker = hero, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
-			PopupDamage(target,math.floor(damage))
-			print("Bounce "..bounces.." Hit Unit "..target:GetEntityIndex().. " for "..damage.." damage")
+    local particle = ParticleManager:CreateParticle("particles/items_fx/chain_lightning.vpcf", PATTACH_CUSTOMORIGIN, caster)
+    ParticleManager:SetParticleControl(particle,0, start_position)
+    ParticleManager:SetParticleControl(particle,1, target_position)
 
-			-- play the sound
-			EmitSoundOn("Hero_Zuus.ArcLightning.Target",target)
+    EmitSoundOn("Hero_Zuus.ArcLightning.Target", target)    
+    ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
+    PopupDamage(target, math.floor(damage))
 
-			-- make the particle shoot to the target
-			ParticleManager:SetParticleControl(lightningChain,1,Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z + target:GetBoundingMaxs().z ))
-	
-			-- decrement remaining spell bounces
-			bounces = bounces - 1
-
-			-- fire the timer again if spell bounces remain
-			if bounces > 0 then
-				return time_between_bounces
-			else
-				for _,v in pairs(targetsStruck) do
-				   	v.struckByChain = false
-				   	v = nil
-				end
-				print("End Chain, no more bounces")
-			end
-		end
-	})
+    return target_position
 end
