@@ -1,0 +1,37 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/trading_alliances.css" />
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/trading_alliances/trading_alliances.js" />
+		<include src="file://{resources}/scripts/Player.js" />
+		<include src="file://{resources}/scripts/trading_alliances/ResourceTradingAndAlliances.js" />
+	</scripts>
+	<Panel class="TradingAlliancesRoot" hittest="false">
+		<Button id="ToggleButton" onactivate="ToggleRootPanel()">
+			<Label id="ToggleButtonText" text=""/>
+		</Button>
+		<Panel id="TradingAlliancesContainer">
+			<Panel class="Headers">
+				<Panel class="HeaderContainerContent">
+					<Label class="PanelTitle" text="Trading Resources" />
+				</Panel>
+				<!--<Panel class="HeaderContainer">
+					<Label class="PlayerHeader" text="Players"/>
+					<Label class="GoldHeader" text="Gold"/>
+					<Label class="LumberHeader" text="Lumber"/>		
+				</Panel>-->
+			</Panel>
+			<Panel id="PlayerContainer" />
+			<Panel class="Footer">
+				<Button id="ConfirmButton" onactivate="ConfirmTrade()">
+					<Label id="ConfirmButtonText" text="Confirm"/>
+				</Button>
+				<Button id="CancelButton" onactivate="CancelTrade()">
+					<Label id="CancelButtonText" text="Cancel"/>
+				</Button>
+			</Panel>
+		</Panel>
+	</Panel>
+</root> 

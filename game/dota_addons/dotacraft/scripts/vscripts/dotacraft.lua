@@ -210,6 +210,9 @@ function dotacraft:InitGameMode()
 	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
 	CustomGameEventManager:RegisterListener( "update_team_lock", Dynamic_Wrap(dotacraft, "Lock_Teams"))	
 	
+	-- Listeners for Trading Alliances
+	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
+	
 	-- register panaroma tables
 	dotacraft:Setup_Tables()
     
@@ -1498,6 +1501,25 @@ function dotacraft:OnPreGame()
 
 		-- Find and store the mine light
 	end
+end
+
+function dotacraft:Trade_Offers(args)
+	--DeepPrintTable(args.Trade);
+	-- not much error handling going on yet, will attempt do most of it at the javascript side
+	
+	local SendingPlayerID = args.Trade.SendID;
+	local RecievingPlayerID = args.Trade.RecieveID;
+	
+	local GoldAmount = args.Trade.Gold;
+	local LumberAmount = args.Trade.Lumber;
+
+	-- deduct gold & lumber from sending player
+	Players:ModifyLumber(SendingPlayerID, -LumberAmount);
+	Players:ModifyGold(SendingPlayerID, -GoldAmount);
+	
+	-- add gold & lumber to recieving player
+	Players:ModifyLumber(RecievingPlayerID, LumberAmount);
+	Players:ModifyGold(RecievingPlayerID, GoldAmount);
 end
 
 function dotacraft:Selection_Update_Player(args)

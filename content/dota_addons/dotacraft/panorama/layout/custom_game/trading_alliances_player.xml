@@ -1,0 +1,25 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/trading_alliances.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/trading_alliances/trading_alliances_player.js" />
+		<include src="file://{resources}/scripts/Player.js" />
+	</scripts>
+	<Panel class="Player">	
+		<Panel class="PlayerInfo">
+			<DOTAAvatarImage id="PlayerAvatar" />
+			<DOTAUserName id="PlayerName" />
+		</Panel>
+		<Panel class="ResourceTrading">
+			<Button id="GoldBox" onactivate="Increment(1, false)" oncontextmenu="Increment(1, true)"> 
+				<Panel id="GoldBoxIcon" />
+				<Label id="GoldBoxText" text="0"/>
+			</Button> 
+			<Button id="LumberBox" onactivate="Increment(2, false)" oncontextmenu="Increment(2, true)"> 
+				<Panel id="LumberBoxIcon" />
+				<Label id="LumberBoxText" text="0"/>			
+			</Button>  
+		</Panel> 
+	</Panel>
+</root>

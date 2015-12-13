@@ -144,7 +144,9 @@ function Players:SetLumber( playerID, value )
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     
     hero.lumber = value
+
     CustomGameEventManager:Send_ServerToPlayer(player, "player_lumber_changed", { lumber = math.floor(hero.lumber) })
+	Players:UpdateJavaScriptPlayer(playerID);
 end
 
 function Players:SetFoodLimit( playerID, value )
@@ -153,6 +155,7 @@ function Players:SetFoodLimit( playerID, value )
     
     hero.food_limit = value
     CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = hero.food_used, food_limit = hero.food_limit }) 
+	Players:UpdateJavaScriptPlayer(playerID);
 end
 
 function Players:SetFoodUsed( playerID, value )
@@ -161,8 +164,22 @@ function Players:SetFoodUsed( playerID, value )
 
     hero.food_used = value
     CustomGameEventManager:Send_ServerToPlayer(player, 'player_food_changed', { food_used = hero.food_used, food_limit = hero.food_limit }) 
+	Players:UpdateJavaScriptPlayer(playerID)
 end
 
+function Players:UpdateJavaScriptPlayer(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)	
+	
+	local Gold = math.floor(hero.gold)
+	local Lumber = math.floor(hero.lumber)
+	local FoodUsed = hero.food_used
+	local FoodLimit = hero.food_limit
+	
+	local PlayerTable = GetNetTableValue("dotacraft_player_table", tostring(playerID))
+	local ColorID = PlayerTable.Color;
+
+	SetNetTableValue("dotacraft_player_table", tostring(playerID), {Color = ColorID, food_used = FoodUsed, food_limit = FoodLimit, lumber = Lumber, gold = Gold})
+end
 ---------------------------------------------------------------
 
 -- Modifies the gold of this player, accepts negative values
