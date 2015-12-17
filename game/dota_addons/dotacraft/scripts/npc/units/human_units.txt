@@ -776,13 +776,13 @@
 		"ManaGain"					"100"
 		"HPGain"					"40"
 
-		"AttachWearables"
+		"AttachWearables" // Default npc_dota_hero_oracle
 		{
-			"Wearable1"		{	"ItemDef"		"546"		}
-			"Wearable2"		{	"ItemDef"		"547"		}
-			"Wearable3" 	{	"ItemDef"		"548"		}
-			"Wearable3" 	{	"ItemDef"		"549"		}
-			"Wearable3" 	{	"ItemDef"		"550"		}
+			"1" { "ItemDef" "546" } // Oracle's Armor
+			"2" { "ItemDef" "547" } // Oracle's Back Item
+			"3" { "ItemDef" "549" } // Oracle's Weapon
+			"4" { "ItemDef" "548" } // Oracle's Head Item
+			"5" { "ItemDef" "550" } // Oracle's Ambient Effects
 		}
 	}
 }

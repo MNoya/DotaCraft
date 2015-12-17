@@ -2062,7 +2062,7 @@
     //----------------------------------------------------------------
     "BaseClass"                 "npc_dota_creature"
     "Model"                     "models/heroes/slark/slark.vmdl"
-    "ModelScale"                "0.9"
+    "ModelScale"                "1.2"
     "Level"                     "3"
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
@@ -2149,7 +2149,7 @@
     //----------------------------------------------------------------
     "BaseClass"                 "npc_dota_creature"
     "Model"                     "models/heroes/slark/slark.vmdl"
-    "ModelScale"                "1.1"
+    "ModelScale"                "1.0"
     "Level"                     "2"
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
@@ -2224,3 +2224,895 @@
         }
     }
 }
+
+// Melting Valley
+	//	Gnoll Warden, Gnoll Overseer, Gnoll Poacher, Gnoll Assassin, Gnoll Brute
+	//	Ogre Lord, Ogre Mauler, Ogre Magi
+	//	Ice Troll Trapper, Ice Troll High Priest, Ice Troll Berserker, Ice Troll Warlord, Ice Troll
+	//	Murloc Nightcrawler, Murloc Huntsman, Murloc Tiderunner
+	//	Rock Golem, Granite Golem
+
+//=================================================================================
+// Creature: Gnoll Warden
+// Description: "Light ranged unit that hurls bolts of lightning. Can cast Purge. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_gnoll_warden"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/arc_warden/arc_warden.vmdl"
+	"ModelScale"				"1"
+	"Level"						"3"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACpu
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"21.0"
+	"AttackDamageMax"			"29.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"500"
+	"ProjectileModel"			"particles/units/heroes/arc_warden/arc_warden_base_attack.vpcf"
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"8.0"
+	"BountyGoldMax"				"10.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"215"
+	"LumberCost"				"215"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"330"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"300"
+	"StatusManaRegen"			"0.75"
+	"StatusStartingMana"		"300"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+    {
+        "AttachWearables" // Default npc_dota_hero_arc_warden
+        {
+            "1" { "ItemDef" "598" } // Arc Warden's Back
+            "2" { "ItemDef" "601" } // Arc Warden's Ambient Effects
+            "3" { "ItemDef" "556" } // Arc Warden's Bracers
+            "4" { "ItemDef" "557" } // Arc Warden's Shoulders
+        }
+    }
+}
+
+//=================================================================================
+// Creature: Gnoll Brute
+// Description: "Light melee unit to bolster your forces. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_gnoll_brute"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/bristleback/bristleback.vmdl"
+	"ModelScale"				"1.2"
+	"Level"						"3"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"14.0"
+	"AttackDamageMax"			"15.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"8.0"
+	"BountyGoldMax"				"10.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"215"
+	"LumberCost"				"215"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"400"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+    {
+        "AttachWearables" // Default npc_dota_hero_bristleback
+        {
+            "1" { "ItemDef" "520" } // Bristleback's Ambient Effects
+            "2" { "ItemDef" "8366" } // All Heroes' Default Pet
+            "3" { "ItemDef" "439" } // Bristleback's Bracers
+            "4" { "ItemDef" "436" } // Bristleback's Back
+            "5" { "ItemDef" "438" } // Bristleback's Weapon
+            "6" { "ItemDef" "437" } // Bristleback's Head
+            "7" { "ItemDef" "440" } // Bristleback's Necklace
+        }
+    }
+}
+
+//=================================================================================
+// Creature: Ogre Mauler
+// Description: "Large brutal warrior of the Ogre Legion. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_ogre_mauler"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_ogre_med/n_creep_ogre_med.vmdl"
+	"ModelScale"				"1.3"
+	"Level"						"5"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"3"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"24.0"
+	"AttackDamageMax"			"27.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"20.0"
+	"BountyGoldMax"				"26.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"300"
+	"LumberCost"				"300"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"850"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Murloc Tiderunner
+// Description: "Light melee unit. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_murloc_tiderunner"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/slark/slark.vmdl"
+	"ModelScale"				"0.8"
+	"Level"						"1"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"9.0"
+	"AttackDamageMax"			"10.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.66"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"4.0"
+	"BountyGoldMax"				"6.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"105"
+	"LumberCost"				"105"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"240"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"AttachWearables"
+		{
+			"1" { "ItemDef"			"5795" }
+			"2" { "ItemDef"			"353" }
+			"3" { "ItemDef"			"354" }
+			"4" { "ItemDef"			"355" }
+			"5" { "ItemDef"			"356" }
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Granite Golem
+// Description: "Heavy melee unit that can Slam opponents and hurl boulders. Immune to spells. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_granite_golem"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_golem_a/neutral_creep_golem_a.vmdl"
+	"ModelScale"				"1.2"
+	"Level"						"9"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACmi
+	"Ability2"					""	 //Reference: ACtb
+	"Ability3"					""	 //Reference: ACtc
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"61.0"
+	"AttackDamageMax"			"68.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"128"
+	"ProjectileModel"			"particles/units/heroes/hero_disruptor/disruptor_base_attack.vpcf"
+	"ProjectileSpeed"			"1000"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"107.0"
+	"BountyGoldMax"				"121.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"545"
+	"LumberCost"				"545"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1500"
+	"StatusHealthRegen"			"1.5"
+	"StatusMana"				"600"
+	"StatusManaRegen"			"1.5"
+	"StatusStartingMana"		"600"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Ice Troll
+// Description: "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_ice_troll"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_berserker.vmdl"
+	"ModelScale"				"1"
+	"Level"						"2"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"17.0"
+	"AttackDamageMax"			"20.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"500"
+	"ProjectileModel"			"particles/base_attacks/ranged_badguy.vpcf"
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"6.0"
+	"BountyGoldMax"				"8.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"150"
+	"LumberCost"				"150"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"300"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Ice Troll Priest
+// Description: "Priest of healing magic. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_ice_troll_priest"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_high_priest.vmdl"
+	"ModelScale"				"0.9"
+	"Level"						"2"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: Anh1
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"17.0"
+	"AttackDamageMax"			"24.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.8"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			"particles/base_attacks/ranged_badguy.vpcf"
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"6.0"
+	"BountyGoldMax"				"8.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"195"
+	"LumberCost"				"195"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"240"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"200"
+	"StatusManaRegen"			"0.5"
+	"StatusStartingMana"		"200"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Ice Troll Berserker
+// Description: "Medium ranged unit. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_ice_troll_berserker"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_troll_dark_a/n_creep_troll_dark_a.vmdl"
+	"ModelScale"				"1"
+	"Level"						"4"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"28.0"
+	"AttackDamageMax"			"37.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"500"
+	"ProjectileModel"			"particles/base_attacks/ranged_badguy.vpcf"
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"11.0"
+	"BountyGoldMax"				"15.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"245"
+	"LumberCost"				"245"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"300"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"450"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Ice Troll High Priest
+// Description: "High Priest of healing magic. Can cast Abolish Magic and Frost Armor. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_ice_troll_high_priest"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_high_priest.vmdl"
+	"ModelScale"				"1.1"
+	"Level"						"4"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: Anh2
+	"Ability2"					""	 //Reference: ACf2
+	"Ability3"					""	 //Reference: ACd2
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"25.0"
+	"AttackDamageMax"			"32.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.8"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			"particles/base_attacks/ranged_badguy.vpcf"
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"11.0"
+	"BountyGoldMax"				"15.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"255"
+	"LumberCost"				"255"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"300"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"450"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"300"
+	"StatusManaRegen"			"0.75"
+	"StatusStartingMana"		"300"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Ice Troll Warlord
+// Description: "Heavy ranged unit with Trueshot Aura. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_ice_troll_warlord"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"                     "models/heroes/troll_warlord/troll_warlord.vmdl"
+    "ModelScale"                "1.2"
+	"Level"						"6"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACat
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"2"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"36.0"
+	"AttackDamageMax"			"43.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"500"
+	"ProjectileModel"			"particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"44.0"
+	"BountyGoldMax"				"52.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"365"
+	"LumberCost"				"365"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"320"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"750"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+    {
+    	"DisableClumpingBehavior"	"1"
+		"AttachWearables"
+		{
+			"Wearable1"		{	"ItemDef"		"373"		}
+			"Wearable2"		{	"ItemDef"		"374" 		} 
+		}
+    }
+}
+
+//=================================================================================
+// Creature: Ice Troll Trapper
+// Description: "Medium ranged unit that can Ensnare opponents. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_ice_troll_trapper"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_troll_dark_b/n_creep_troll_dark_b.vmdl"
+	"ModelScale"				"0.75"
+	"Level"						"3"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACen
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"21.0"
+	"AttackDamageMax"			"25.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.6"
+	"AttackAnimationPoint"		"0.3"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"500"
+	"ProjectileModel"			"particles/base_attacks/ranged_badguy.vpcf"
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"8.0"
+	"BountyGoldMax"				"10.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"200"
+	"LumberCost"				"200"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"400"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
