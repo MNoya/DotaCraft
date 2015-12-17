@@ -2,18 +2,24 @@ var ResourceTradingAndAlliances = (function() {
 	function ResourceTradingAndAlliances(pRoot){
 		this.mPlayerPanels = new Array();
 		this.mRoot = pRoot;
-
-		// setup players
-		this.SetupPlayers(); 
+		this.mCurrentTransaction = new Array();
 		
-		// check gold & lumber
-		this.CheckGold();
+		for(var PlayerID of Game.GetAllPlayerIDs()){
+			if( Players.IsValidPlayerID(PlayerID) )
+				this.mCurrentTransaction[PlayerID] = new Array();
+		};
+		// setup players 
+		this.SetupPlayers(); 
 	};
 
 	ResourceTradingAndAlliances.prototype.getPlayerPanel = function(pPlayerID){
 		return this.mPlayerPanels[pPlayerID];
 	};
-		
+ 
+	ResourceTradingAndAlliances.prototype.getAllPlayerPanels = function(){
+		return this.mPlayerPanels;
+	};
+	
 	ResourceTradingAndAlliances.prototype.addPlayerPanel = function(pPlayerID, pPlayerPanel){
 		this.mPlayerPanels[pPlayerID] = pPlayerPanel; 
 	}; 
@@ -25,20 +31,24 @@ var ResourceTradingAndAlliances = (function() {
 
 		var PlayerIDList = Game.GetPlayerIDsOnTeam(LocalPlayerTeam);
 		
-		for(var PlayerID of Game.GetAllPlayerIDs()){
-			//if(	Players.IsValidPlayerID(PlayerID) && Game.GetLocalPlayerID() != PlayerID )
+		// loop through all id's found on this team
+		for(var PlayerID of PlayerIDList){
+			// if valid ID & not local player
+			if(	Players.IsValidPlayerID(PlayerID) && Game.GetLocalPlayerID() != PlayerID )
 				this.CreatePlayer(PlayerID);
-			//else
-			//	$.Msg("[Resource Trading and Alliances] PlayerID= "+PlayerID+" is not valid, Function=setupPlayers");
+			else if( !Players.IsValidPlayerID(PlayerID) )
+				$.Msg("[Resource Trading and Alliances] PlayerID= "+PlayerID+" is not valid, Function=setupPlayers");
 		};
 	};
-		
+	
 	// create player panel
 	ResourceTradingAndAlliances.prototype.CreatePlayer = function(pPlayerID){ 
 		var PlayerPanel = $.CreatePanel("Panel", this.mRoot, pPlayerID);
 		PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/trading_alliances_player.xml", false, false);
 		
 		PlayerPanel.PlayerID = pPlayerID;
+		PlayerPanel.CurrentGold = 0;
+		PlayerPanel.CurrentLumber = 0;
 		
 		this.addPlayerPanel(pPlayerID, PlayerPanel);
 	};
@@ -53,59 +63,42 @@ var ResourceTradingAndAlliances = (function() {
 		// for each existing panel reset their input to 0.
 		for(var Panel of this.mPlayerPanels)
 		{
-			var GoldBox = Panel.FindChildTraverse("GoldBoxText");
-			var LumberBox = Panel.FindChildTraverse("LumberBoxText");
-			GoldBox.text = 0;
-			LumberBox.text = 0;
+			if(Panel != null){
+				var GoldBox = Panel.FindChildTraverse("GoldBoxText");
+				var LumberBox = Panel.FindChildTraverse("LumberBoxText");
+				GoldBox.text = 0;
+				LumberBox.text = 0;
+			};
 		};
 	};
 	
-	ResourceTradingAndAlliances.prototype.SendPlayersInput = function(){
+	ResourceTradingAndAlliances.prototype.CompleteTrade = function(){
 		// for each existing panel reset their input to 0.
 		for(var Panel of this.mPlayerPanels)
 		{
-			var GoldBox = Panel.FindChildTraverse("GoldBoxText");
-			var LumberBox = Panel.FindChildTraverse("LumberBoxText");
-			
-			// if both text boxes are 0 then there was no intended trade.
-			if( GoldBox.text == "0" && LumberBox.text == "0" ){
-				//$.Msg("SKIPPING");
-				continue;
-			}; 
-			
-			// player trade details
-			var TradeDetails = {
-				"SendID" : Game.GetLocalPlayerID(),
-				"RecieveID" : parseInt(Panel.PlayerID),
-				"Gold" : parseInt(GoldBox.text),
-				"Lumber" : parseInt(LumberBox.text),
+			if( Panel != null){
+				var GoldBox = Panel.FindChildTraverse("GoldBoxText");
+				var LumberBox = Panel.FindChildTraverse("LumberBoxText");
+				
+				// if both text boxes are 0 then there was no intended trade.
+				if( GoldBox.text == "0" && LumberBox.text == "0" ){
+					//$.Msg("SKIPPING");
+					continue;
+				}; 
+				
+				// player trade details
+				var TradeDetails = {
+					"SendID" : Game.GetLocalPlayerID(),
+					"RecieveID" : parseInt(Panel.PlayerID),
+					"Gold" : parseInt(GoldBox.text),
+					"Lumber" : parseInt(LumberBox.text),
+				};
+				
+				// send trade details to server
+				GameEvents.SendCustomGameEventToServer("trading_alliances_trade_confirm", {"Trade" : TradeDetails} );
 			};
-			
-			// send trade details to server
-			GameEvents.SendCustomGameEventToServer("trading_alliances_trade_confirm", {"Trade" : TradeDetails} );
 		};
 	};  
-	
-	ResourceTradingAndAlliances.prototype.CheckLumber = function(pNewLumber){
-		// for each existing panel check their current value
-		for(var Panel of this.mPlayerPanels)
-		{
-			var LumberBox = Panel.FindChildTraverse("LumberBoxText");
-			if(LumberBox.text > pNewLumber)
-				LumberBox.text = pNewLumber;
-		};
-	};
-	
-	ResourceTradingAndAlliances.prototype.CheckGold = function(){
-		var NewGold = Players.GetGold(Game.GetLocalPlayerID()); 
-		// for each existing panel check their current value
-		for(var Panel of this.mPlayerPanels)
-		{
-			var GoldBox = Panel.FindChildTraverse("GoldBoxText");
-			if(GoldBox.text > NewGold)
-				GoldBox.text = NewGold;
-		};
-	};
 	
     return ResourceTradingAndAlliances;
 })();

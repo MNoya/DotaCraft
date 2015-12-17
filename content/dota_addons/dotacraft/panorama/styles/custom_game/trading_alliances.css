@@ -7,13 +7,13 @@
 #PlayerContainer
 {
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 25px;
 	flow-children: down; 
-} 
+}
 
 #TradingAlliancesContainer
 {
-	width: 40%;
+	width: 30%;
 	
 	margin-left: 50px;
 	margin-top: 100px;
@@ -24,6 +24,10 @@
 	flow-children: down;
 	color: #EEEEEE;
 	visibility: collapse;
+	
+	animation-name: Slide_In_Animation;
+	animation-duration: 1.5s;
+	animation-timing-function: ease-out;
 }
 
 .Player
@@ -38,6 +42,19 @@
 	
 	margin-top: 5px;
 }
+
+@keyframes 'Slide_In_Animation'
+{
+	0%
+	{
+		transform: translateX(100%);
+	} 
+				
+	100%
+	{
+		transform: translateX(0%);
+	}
+}
 /* ==========================
 		Resource Trade - Player Info
    ========================== */
@@ -51,7 +68,7 @@
 #PlayerAvatar
 {
 	height: 100%;
-	width: 10%;
+	width: 20%;
 
 	margin: 2px;
 	border: 2px solid red;
@@ -77,12 +94,12 @@
 	height: 80px;
 	width: 100%;
 	
-	flow-children: down;
+	flow-children: right;
 }
 
 .HeaderContainerContent
 {
-	height: 73%;
+	height: 50%;
 	width: 100%;
 }
 .HeaderContainer
@@ -113,32 +130,38 @@
 {
 	width: 25%;
 }
+
 /* ==========================
 		Resource Trade - Gold & Lumber Box
    ========================== */
 .ResourceTrading
 {
 	height: 70%;
-	width: 60%;
+	width: 40%; 
 
 	flow-children: right;
 
 	margin-top: 5px;	
 	margin-left: 10px;
+	
+	horizontal-align: right;
 }
 
 #GoldBox, #LumberBox
 {
 	margin-right: 5px;
 	height: 100%;
-	width: 35%;
+	width: 50%;
 	border: 1px solid #ffffffff;
 	flow-children: right;
 }
 #GoldBox:hover, #LumberBox:hover
 {
 	border: 1px solid yellow;
+	
+	background-color: rgba(255, 255, 255, 2);
 }
+
 #GoldBox:active, #LumberBox:active
 {
 	border: 1px solid green;
@@ -187,17 +210,12 @@
 	width: 100%;
 	height: 80px;
 	flow-children: right;
-	
-	margin-left: 160px;
-	
-	padding: 15px;
+	horizontal-align: right;
 }
 
 #ConfirmButton, #CancelButton{
-	height: 75px;
-	width: 100px;
-
-	margin-left: 50px;
+	height: 50px;
+	width: 90px;
 	
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #5A615Ecc ), to( #879695cc ));
 	box-shadow: fill #002a6644 -4px -4px 8px 9px;
@@ -210,6 +228,8 @@
 	transition-duration: .2s;
 
     wash-color: #99999922;
+	vertical-align: middle;
+	margin-right: 15px;
 }
 
 #ConfirmButton:enabled:hover, #CancelButton:enabled:hover
@@ -218,7 +238,7 @@
 }
 
 #ConfirmButton Label, #CancelButton Label{
-    font-size: 14px;
+    font-size: 18px;
     font-weight: normal;
     letter-spacing: 1px;
     text-transform: uppercase;

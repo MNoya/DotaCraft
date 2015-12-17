@@ -1,34 +1,25 @@
 var Root = $.GetContextPanel();
-var System;  
+var System;
 var ContainerPanel;
-var PlayerObjectList = new Array();
 (function () {
 //	GameEvents.Subscribe( "panaroma_developer", Developer_Mode );
 	$.Schedule(1, SetupTradingAndAlliances);
 })();
- 
+
 function CancelTrade(){
 	HideTradePanel();
-}; 
- 
+	System.ResetPlayersInput();
+};
+
 function ConfirmTrade(){
-	System.SendPlayersInput();
 	HideTradePanel();
-};
-
-function LocalPlayerLumberChanged(pNewLumber){
-	System.CheckLumber(LocalPlayerLumberChanged);
-};
-
-function LocalPlayerGoldChanged(){
-	System.CheckGold();
-	$.Schedule(1, LocalPlayerGoldChanged);
+	System.CompleteTrade();
+	System.ResetPlayersInput();
 };
 
 function HideTradePanel()
 {
 	ContainerPanel.style["visibility"] = "collapse";
-	System.ResetPlayersInput();
 };
 
 function ToggleRootPanel(){
@@ -36,18 +27,16 @@ function ToggleRootPanel(){
 		ContainerPanel.style["visibility"] = "visible";
 	else
 		ContainerPanel.style["visibility"] = "collapse";
-	
-	System.ResetPlayersInput();
-};
- 
+	 
+	System.ResetPlayersInput(); 
+}; 
+
 function SetupTradingAndAlliances(){
 	ContainerPanel = Root.FindChildTraverse("TradingAlliancesContainer");
 	var PlayerContainer = ContainerPanel.FindChildTraverse("PlayerContainer");
-
-	System = new ResourceTradingAndAlliances(PlayerContainer); 
+	var LocalID = Game.GetLocalPlayerID();
+	Root.LocalPlayerID = LocalID;
+	
+	System = new ResourceTradingAndAlliances(PlayerContainer);
 	$.Msg("setting up trading_alliances");
-
-	// can't put this into my object cause it breaks it somehow, cba figuring out why ;P
-	GameEvents.Subscribe( "player_lumber_changed",	LocalPlayerLumberChanged);	
-	$.Schedule(1, LocalPlayerGoldChanged);
-}; 
+};

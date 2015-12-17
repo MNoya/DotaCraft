@@ -6,7 +6,7 @@ var Player = (function() {
 
 		this.setPlayerID(pPlayerID);
 		this.setLumber(PlayerDetails.lumber);
-		this.setGold(PlayerDetails.gold);
+		this.setGold(Players.GetGold(pPlayerID));
 		this.setFoodUsed(PlayerDetails.food_used);
 		this.setFoodLimit(PlayerDetails.food_limit);
 		this.setColorID(PlayerDetails.Color);
