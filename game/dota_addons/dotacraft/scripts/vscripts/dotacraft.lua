@@ -215,8 +215,7 @@ function dotacraft:InitGameMode()
 	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
 	
 	-- register panaroma tables
-	dotacraft:Setup_Tables()
-    
+	dotacraft:Setup_Tables()   
 	
 	-- Remove building invulnerability
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
@@ -349,6 +348,9 @@ function dotacraft:InitGameMode()
 
 	-- Keeps the blighted gridnav positions
 	GameRules.Blight = {}
+
+	-- Attack net table
+	Attacks:Init()
   	
   	-- Starting positions
   	GameRules.StartingPositions = {}

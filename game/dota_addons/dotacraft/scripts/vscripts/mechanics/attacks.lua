@@ -1,3 +1,23 @@
+if not Attacks then
+    Attacks = class({})
+end
+
+function Attacks:Init()
+    for name,values in pairs(GameRules.UnitKV) do
+        -- Build NetTable with the attacks enabled
+        if values['AttacksEnabled'] then
+            CustomNetTables:SetTableValue("attacks_enabled", name, {enabled = values['AttacksEnabled']})
+        end
+    end
+
+    for name,values in pairs(GameRules.HeroKV) do
+        -- Build NetTable with the attacks enabled
+        if values['AttacksEnabled'] then
+            CustomNetTables:SetTableValue("attacks_enabled", name, {enabled = values['AttacksEnabled']})
+        end
+    end
+end
+
 ATTACK_TYPES = {
     ["DOTA_COMBAT_CLASS_ATTACK_BASIC"] = "normal",
     ["DOTA_COMBAT_CLASS_ATTACK_PIERCE"] = "pierce",
@@ -242,12 +262,10 @@ end
 
 function SetAttacksEnabled( unit, attack_string )
     local unitName = unit:GetUnitName()
-
-    if unit:IsHero() then
-        GameRules.HeroKV[unitName]["AttacksEnabled"] = attack_string
-    elseif GameRules.UnitKV[unitName] then
-        GameRules.UnitKV[unitName]["AttacksEnabled"] = attack_string
-    end
+    local unitTable = GameRules.UnitKV[unitName] or GameRules.HeroKV[unitName]
+    
+    unitTable["AttacksEnabled"] = attack_string
+    CustomNetTables:SetTableValue("attacks_enabled", unitName, {enabled = attack_string})
 end
 
 -- Searches for "AttacksEnabled", false by omission

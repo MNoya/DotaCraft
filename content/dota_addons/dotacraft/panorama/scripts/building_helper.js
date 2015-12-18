@@ -17,7 +17,6 @@ var entityGrid;
 var cutTrees = [];
 var BLOCKED = 2;
 var Root = $.GetContextPanel()
-var constructionSize = CustomNetTables.GetAllTableValues( "construction_size" )
 
 if (! Root.loaded)
 {
