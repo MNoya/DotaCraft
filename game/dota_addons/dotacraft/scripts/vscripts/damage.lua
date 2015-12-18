@@ -111,6 +111,8 @@ function dotacraft:FilterDamage( filterTable )
   		end
   	end
 
+    filterTable["damage"] = 0
+
 	return true
 end
 

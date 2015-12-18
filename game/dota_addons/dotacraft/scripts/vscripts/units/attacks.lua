@@ -1,16 +1,66 @@
+function OnCreated( event )
+    local unit = event.caster
+    unit.attack_target = nil
+    unit.disable_autoattack = 0 -- True when there are no valid units to attack
+    unit:AddNewModifier(unit, nil, "modifier_autoattack", {})
+end
+
 function CheckAcquire( event )
     local unit = event.caster
-    local target = unit:GetAttackTarget()
+    local target = unit:GetAttackTarget() or unit:GetAggroTarget()
 
     if target then
-        if UnitCanAttackTarget(unit, target) then
-            --print(unit:GetUnitName().." attacking "..target:GetUnitName())
-        else
-            unit:Stop()
+        local bCanAttackTarget = UnitCanAttackTarget(unit, target)
+
+        -- Autoattack acquire enabled
+        if unit.disable_autoattack == 0 then
+            -- The unit acquired a new attack target
+            if target ~= unit.attack_target then
+                print(unit:GetUnitName()..' is changed its aggro to '..target:GetUnitName())
+                if bCanAttackTarget then
+                    Attack(unit, target)
+                    return
+                else
+                    -- Is there any enemy unit nearby the invalid one that this unit can attack?
+                    local enemies = FindEnemiesInRadius(unit, unit:GetAcquisitionRange())
+                    if #enemies > 0 then
+                        for _,enemy in pairs(enemies) do
+                            if UnitCanAttackTarget(unit, enemy) then
+                                Attack(unit, enemy)
+                                return
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        if not bCanAttackTarget then
+            -- No valid enemies, disable autoattack. Start disabled autoattack state
+            DisableAutoAttack(unit)
+            unit:Stop() --Unit will still turn for a frame towards its invalid target
         end
     end
-
 end
+
+function Attack( unit, target )
+    unit:MoveToTargetToAttack(target)
+    unit.attack_target = target
+    print(unit:GetUnitName().." is now attacking "..target:GetUnitName())
+    EnableAutoAttack(unit)
+end
+
+function EnableAutoAttack( unit )
+    print(unit:GetUnitName().." autoattack is now enabled")
+    unit.disable_autoattack = 0
+end
+
+function DisableAutoAttack( unit )
+    print(unit:GetUnitName().." autoattack has been disabled!")
+    unit.disable_autoattack = 1
+end
+
+-------------------------------------------------------------------------------------------
 
 -- Acquire valid attackable targets if the target is idle or in Attack-Move state
 function AutoAcquire( event )
@@ -55,7 +105,7 @@ function AttackAggro( event )
         return
     end
 
-    if unit:IsIdle() then
+    if unit:IsIdle() and not unit:GetAttackTarget() then
         --print(unit:GetUnitName(), " was attacked by ", target:GetUnitName()," while idling")
         if UnitCanAttackTarget(unit, target) then
             --print(unit:GetUnitName()," now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())

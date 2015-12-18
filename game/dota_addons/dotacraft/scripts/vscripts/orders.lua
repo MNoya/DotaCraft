@@ -180,7 +180,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetAttacksEnabled(unit),"-",GetMovementCapability(target))
                 
                 -- Move to position
-                ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, TargetIndex = targetIndex, Position = target:GetAbsOrigin(), Queue = queue})
+                ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, TargetIndex = targetIndex, Position = target:GetAbsOrigin(), Queue = queue})
 
                 -- Stop idle acquire
                 unit:SetIdleAcquire(false)
@@ -1000,4 +1000,5 @@ ORDERS = {
     [26] = "DOTA_UNIT_ORDER_CAST_RUNE",
     [27] = "DOTA_UNIT_ORDER_PING_ABILITY",
     [28] = "DOTA_UNIT_ORDER_MOVE_TO_DIRECTION",
+    [29] = "DOTA_UNIT_ORDER_PATROL",
 }
