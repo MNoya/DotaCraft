@@ -758,12 +758,8 @@ function dotacraft:OnNPCSpawned(keys)
     	ApplyModifier(npc, "modifier_splash_attack")
     end
 
-    -- Attack system
-    --[[npc:SetIdleAcquire(false)
-    npc.AcquisitionRange = npc:GetAcquisitionRange()
-    npc:SetAcquisitionRange(0)]]
+    -- Attack system    
     ApplyModifier(npc, "modifier_attack_system")
-
 end
 
 -- An entity somewhere has been hurt.

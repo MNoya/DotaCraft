@@ -222,6 +222,16 @@
 				"MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 
+			"OnCreated"
+			{
+				// Lua Modifier
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_autoattack"
+					"Target" 		"TARGET"
+				}
+			}
+
 			"OnAttacked"
 			{
 				"RunScript"
@@ -237,25 +247,6 @@
 				{
 					"ScriptFile"	"units/attacks.lua"
 					"Function"		"CheatCheck"
-				}
-			}
-
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/attacks.lua"
-					"Function"		"OnCreated"
-				}
-			}
-
-			"ThinkInterval"  "0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/attacks.lua"
-					"Function"		"CheckAcquire"
 				}
 			}
 		}
