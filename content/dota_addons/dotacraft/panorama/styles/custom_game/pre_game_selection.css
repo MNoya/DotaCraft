@@ -5,7 +5,7 @@
 {
 	width: 100%;
 	height: 100%;
-	
+	z-index: -900;
 }
 
 #PlayerListContainer
@@ -31,6 +31,19 @@
 	
 }
 
+.hidden
+{
+	visibility: collapse;
+}
+.PanelOptions
+{
+	width: 200px;
+	height: 100%;
+
+	padding: 2px;
+	height: 100%;
+
+}
 @keyframes 'Slide_In_Animation'
 {
 	0%
@@ -82,7 +95,6 @@
 
 	horizontal-align: middle;
 }
-
 
 #HostPanel{
 	width: 200px;
@@ -219,6 +231,7 @@
 	margin-top: 10px;
 	flow-children: right;
 	height: 60px;
+	width: 750px;
 	
 	padding: 10px;
 	
@@ -368,7 +381,7 @@
 	margin-left: 5px;
 	margin-right: 5px;
 	
-	width: 200px;
+	width: 100%;
 	height: 100%;
 
 	padding: 5px;
@@ -481,7 +494,41 @@
 	transition-timing-function: linear;
 }
 
-#RaceDropDown:enabled:hover, #TeamDropDown:enabled:hover, #ColorDropDown:enabled:hover
+#OptionsDropDown{
+	background-color: #292e2e;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+
+	background-image: url("s2r://panorama/images/control_icons/arrow_dropdown_png.vtex");
+	
+	background-repeat: no-repeat;
+	background-position: right 38px 35%;
+	background-size: 32px 32px;
+	box-shadow: #00000055 -2px -2px 1px 4px;
+	
+	border: 2px solid #5e686966;
+	
+	font-size: 24px;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	vertical-align: center;
+	
+	transition-property: background-color, border;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
+}
+
+#OptionsDropDown:disabled{
+	background-image: none;
+	background-color: none;
+	border: 0px solid black;
+}
+
+.transparent{
+opacity: 0.8;
+
+}
+#RaceDropDown:enabled:hover, #TeamDropDown:enabled:hover, #ColorDropDown:enabled:hover, #OptionsDropDown:enabled:hover
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #393e3e ), to( #292e2e ) );
 }
@@ -499,7 +546,7 @@
 	color: #AAAAAA;
 }
 
-#RaceDropDown Label, #TeamDropDown Label, #ColorDropDown Label
+#RaceDropDown Label, #TeamDropDown Label, #ColorDropDown Label, #OptionsDropDown Label
 {
 	width: 100%;
 	margin: 3px 29px 0px 6px;
@@ -510,12 +557,12 @@
 	transition-timing-function: linear;
 }
 
-#RaceDropDown:focus Label, #TeamDropDown:focus Label, #ColorDropDown:focus Label
+#RaceDropDown:focus Label, #TeamDropDown:focus Label, #ColorDropDown:focus Label, #OptionsDropDown:focus Label
 {
 	color: white;
 }
 
-#RaceDropDown.DropDownMenuVisible:focus Label, #TeamDropDown.DropDownMenuVisible:focus Label, #ColorDropDown.DropDownMenuVisible:focus Label
+#RaceDropDown.DropDownMenuVisible:focus Label, #TeamDropDown.DropDownMenuVisible:focus Label, #ColorDropDown.DropDownMenuVisible:focus Label, #OptionsDropDown.DropDownMenuVisible:focus Label
 {
 	color: white;
 }

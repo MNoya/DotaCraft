@@ -4,11 +4,12 @@
 	<include src="s2r://panorama/styles/dotastyles.vcss_c" />
   </styles>
   <scripts>
+    <include src="file://{resources}/scripts/team_selection/TeamSelection.js" /> 
     <include src="file://{resources}/scripts/team_selection/dotacraft_pre_selection.js" /> 
   </scripts>
-	<Panel class="PreGameSelectionRoot">
+	<Panel class="PreGameSelectionRoot" hittest="false">
 
-	<Panel id="Left_Bar">
+	<Panel id="Left_Bar" hittest="false">
 		<Panel id="PlayerListContainer"/> 
 	</Panel>
 	

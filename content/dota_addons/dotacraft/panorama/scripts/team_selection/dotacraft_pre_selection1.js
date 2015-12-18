@@ -1,6 +1,6 @@
 var PlayerContainer = $("#PlayerListContainer")
 var Root = $.GetContextPanel()
-var System;
+
 ///////////////////////////////////////////////
 // 			Local Variables & Tables		 //
 ///////////////////////////////////////////////
@@ -101,6 +101,16 @@ function Player_Status(PlayerID, enabled, ready){
 	if(button != null){
 		button.SetHasClass("Ready", ready);
 	};
+	
+	// we only want the host panel when he is not ready
+	if(Game.GetLocalPlayerID() == PlayerID)
+	{
+		PlayerPanel.SetHasClass("Local", !ready);
+	};
+};
+
+function Player_Spectator_Status(PlayerPanel){
+	
 };
 
 // main logic behind when everybody is ready
@@ -118,13 +128,13 @@ function Ready_Status(){
 				AmountOfPlayersReady++;
 			};
 		};
-	}; 
+	};
 
 	// if all players are ready and game hasn't already started, then start the game
 	if(AmountOfPlayersReady == PlayerIDList+1 && !Root.Game_Started && !Root.CountDown){
-		Start_Game(); 
-	};   
-};   
+		Start_Game();
+	};
+};
 
 ///////////////////////////////////////////////
 // 		Create & Update Player Logic	 	 //
@@ -134,72 +144,70 @@ function Ready_Status(){
 // this function also checks the ready status
 function CheckForNewPlayers(){
 	//$.Msg("checking new players")
-	//Create_Players() ;
-	
-	// assign players
-	AssignNewPlayers();   
-	
-	// check if localplayerID == host
-	CheckForHostprivileges()
+	Create_Players() ;
 	
 	// loop this same function every minute
-	if(!Root.Game_Started){  
-		//$.Schedule(1, CheckForNewPlayers);
+	if(!Root.Game_Started){
+		$.Schedule(1, CheckForNewPlayers);
 		//$.Schedule(0.5, Ready_Status)
-	};  
-}; 
- 
-function AssignNewPlayers(){
+	};
+};
+
+// main logic for creating players when connected
+function Create_Players(){
+	var ContainerRoot = $('#PlayerListContainer') ;
 	var PlayerIDList = Game.GetAllPlayerIDs();
-	var LocalPlayerID = Game.GetLocalPlayerID(); 
+	var LocalPlayerID = Game.GetLocalPlayerID();
 	
 	for(var PlayerID of PlayerIDList){
-		if( !System.isPlayerAssigned(PlayerID) ){  
-			var PlayerPanel = System.assignPlayer(PlayerID);
-			   
-			// host panel 
-			if(isHost(PlayerID)){ 
-				// add Host panel class to differentiate between host and normal players
-		  		var Name = PlayerPanel.FindChildTraverse("PlayerName");
-				var HostIcon = $.CreatePanel("Panel", Name, "Host_Icon");	
-				HostIcon.AddClass("Host");
-			}; 
+		if(Players.IsValidPlayerID(PlayerID)){
+			// check if player panel was already made or not
+			if(!IsPlayerPanelCreated(PlayerID)){
+				//$.Msg("Creating Player: #" +PlayerID)
+				//$.Msg(Game.GetPlayerInfo(PlayerID))
 
-			var OptionsDropDown = PlayerPanel.GetChild(1).GetChild(0);
-			if( isHost(LocalPlayerID) || LocalPlayerID == PlayerID )
-				System.setPanelStatus(PlayerPanel.PanelID, true, false);
-			
-			// set options invisible
-			OptionsDropDown.visible = false		 
-			  
-			// Assign panel teamIndex and Color
-			PlayerPanel.PlayerID = PlayerID;
-			PlayerPanel.AI = false; 
-			PlayerPanel.PlayerTeam = dotacraft_Teams[current_TeamIndex];
-			PlayerPanel.PlayerColor = current_ColorIndex;
-				 
-			// increment current team index
-			Increment_Variables();         
+				var PlayerPanel = $.CreatePanel("Panel", ContainerRoot, PlayerID);	
+				PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
+				
+				// if not local player disable everything and set local panel class to differentiate from others
+				if(LocalPlayerID != PlayerID){
+					//disable player panel completely
+					Player_Status(PlayerID, false, false);
+					
+					// hide ready button
+					var button = PlayerPanel.FindChildTraverse("HudButton");
+					if(button != null){
+						Toggle_Visibility_Panel(button, false);
+					};
+				}else{ // if local
+					PlayerPanel.SetHasClass("Local", true);
+					// if local and ishost
+					if(isHost(PlayerID)){								
+						// set the start button visible to the host
+						var Force_Start_Button = Root.FindChildTraverse("StartButton");
+						Force_Start_Button.visible = true;
+						
+						var Host_Panel = Root.FindChildTraverse("HostPanel");
+						Host_Panel.visible = true;
+					};
+				};
+				
+				// if player is host
+				if(isHost(PlayerID)){
+					// add Host panel class to differentiate between host and normal players
+					var Name = PlayerPanel.FindChildTraverse("PlayerName");
+					var HostIcon = $.CreatePanel("Panel", Name, "Host_Icon");	
+					HostIcon.AddClass("Host");
+				};
+				// set initial starting variables + PlayerID
+				PlayerPanel.PlayerID = PlayerID;
+				PlayerPanel.PlayerTeam = dotacraft_Teams[current_TeamIndex];
+				PlayerPanel.PlayerColor = current_ColorIndex;
+				
+				Increment_Variables();
+			};
 		};
 	};
-};
-
-function CheckForHostprivileges(){
-	if( isHost(Game.GetLocalPlayerID()) ){								
-		// set the start button visible to the host
-		var Force_Start_Button = Root.FindChildTraverse("StartButton");
-		Force_Start_Button.visible = true;
-
-		// enable host panel 
-		var Host_Panel = Root.FindChildTraverse("HostPanel");
-		Host_Panel.visible = true;
-		
-		EnableFullControl();
-	};
-};
-
-function EnableFullControl(){
-	System.setFullControl(Game.GetLocalPlayerID());
 };
 
 // main logic behind updating players, this is called when net_table changed
@@ -432,28 +440,19 @@ function Setup_Minimap(){
 	CustomNetTables.SubscribeNetTableListener("dotacraft_player_table", Update_Player);
 	CustomNetTables.SubscribeNetTableListener("dotacraft_color_table", Update_Available_Colors);
 	
-	Root.CountDown = false; 
+	Root.CountDown = false;
 	Root.Game_Started = false;
 
 	// setup function calls
-	Setup_Panaroma_Color_Table(); 
-	Setup_Minimap(); 
+	Setup_Panaroma_Color_Table();
+	Setup_Minimap();
 	
 	Game.SetAutoLaunchEnabled(false);
 	Game.SetRemainingSetupTime(999);
-    Game.SetTeamSelectionLocked(true); 
- 
-	var MapPlayerLimit = parseInt(Game.GetMapInfo().map_display_name.substring(0,1));
-	if( MapPlayerLimit == null ){
-		$.Msg("[Pre-Game] Map Name is invalid, unable to determine Player Limit, defaulting to 8");
-		MaxPlayerLimit = 8;
-	};
-	
-	var ContainerRoot = $('#PlayerListContainer'); 
-	System = new TeamSelection(ContainerRoot, MapPlayerLimit, dotacraft_DropDowns);
+    Game.SetTeamSelectionLocked(true);
 	
 	// check for new players, this also sets up the $.Schedule inside the function
-	CheckForNewPlayers(); 
+	CheckForNewPlayers();
 })();
 
 ///////////////////////////////////////////////

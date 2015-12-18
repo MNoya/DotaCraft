@@ -7,13 +7,11 @@ var dotacraft_PlayerColor
 var dotacraft_Player_Info
 var dotacraft_PlayerRace = 0
 var dotacraft_PlayerReady = false
-var dotacraft_PanelID = 0;
 
 // panaroma color table, will most likely make a nettable for this
 var CURRENT_COLOUR = 0
 var COLOUR_TABLE = {}
 
-var Root = $.GetContextPanel();
 //////////////////////////////////////////////
 // 					BUTTONS					//
 //////////////////////////////////////////////
@@ -83,38 +81,6 @@ function PlayerColorChanged(){
 	Update_Player();
 };
 
-function OptionsInput(){
-	var OptionsDropDown = $("#OptionsDropDown");
-	var SelectedIndex = parseInt(OptionsDropDown.GetSelected().id);
-
-	if( SelectedIndex != null ){
-
-		switch ( SelectedIndex ){
-			case 0:
-				Root.AI = false;	
-				break;
-			case 1:
-				Root.AI = false;
-				break;				
-			case 2:
-				Root.PlayerID = 9001;
-				Root.AI = true;
-				Setup_Player();
-				break;
-			case 3:
-				Root.PlayerID = 9002;
-				Root.AI = true;
-				Setup_Player();
-				break;
-			case 4:
-				Root.PlayerID = 9003;
-				Root.AI = true;
-				Setup_Player();
-				break;
-		};
-	};
-};
-
 //////////////////////////////////////////////
 // 					Player Update			//
 //////////////////////////////////////////////
@@ -123,7 +89,8 @@ function Update_Player(){
 	// save this info in the playerpanel and send it to lua net_tables
 	$.Msg("Player: #"+dotacraft_PlayerID+" set to Team: #"+dotacraft_PlayerTeam+" with color: "+dotacraft_PlayerColor+" and race: #"+dotacraft_PlayerRace+", ReadyStatus="+dotacraft_PlayerReady);
 	
-	GameEvents.SendCustomGameEventToServer("update_player", { "ID": dotacraft_PanelID, "Team": dotacraft_PlayerTeam, "Color": dotacraft_PlayerColor, "Race": dotacraft_PlayerRace, "Ready": dotacraft_PlayerReady});
+	$.Msg(dotacraft_PlayerReady);
+	GameEvents.SendCustomGameEventToServer("update_player", { "ID": dotacraft_PlayerID, "Team": dotacraft_PlayerTeam, "Color": dotacraft_PlayerColor, "Race": dotacraft_PlayerRace, "Ready": dotacraft_PlayerReady});
 };
 
 // Globally available panel to this context
@@ -135,76 +102,37 @@ var PlayerPanel
 	Setup_Panaroma_Color_Table();
 	Setup_Colours(PlayerPanel);
 	
-	$.Schedule(0.1, Update);
+	$.Schedule(0.1, Setup_Player);
 })();
-
-function Update(){
-	Setup_Player()
-	CurrentStateOfPanel();
-	$.Schedule(0.01, Update);	
-};
-
-function CurrentStateOfPanel(){
-	var OptionsDropDown = $("#OptionsDropDown");
-	var SelectedIndex = OptionsDropDown.GetSelected().id;
-
-	if( SelectedIndex != null ){
-		if( Players.IsValidPlayerID(PlayerPanel.PlayerID) || Root.AI ){
-			$("#ColorDropDown").visible = true;
-			$("#RaceDropDown").visible = true;
-			$("#TeamDropDown").visible = true;
-		}else{
-			$("#ColorDropDown").visible = false;
-			$("#RaceDropDown").visible = false;
-			$("#TeamDropDown").visible = false;	
-		};
-	};
-};
 
 ///////////////////////////////////////////////
 // 			One-Time INITIALISATION			 //
 ///////////////////////////////////////////////
 
-var AI_Names = {
-	8999: "Closed",
-	9000: "Open",
-	9001: "COMPUTER (EASY)",
-	9002: "COMPUTER (NORMAL)",
-	9003: "COMPUTER (HARD)"
-}; 
-
 // this function sets up all the components for the player once
 function Setup_Player(){
 	// assign default variables
 	dotacraft_PlayerID = PlayerPanel.PlayerID;
-	
-	if( Players.IsValidPlayerID(PlayerPanel.PlayerID) ){
-		dotacraft_Player_Info = Game.GetPlayerInfo(dotacraft_PlayerID); 
-		
-		// assign steamid to avatar and playername panels
-		$("#PlayerAvatar").steamid = dotacraft_Player_Info.player_steamid;
-		$("#PlayerName").steamid = dotacraft_Player_Info.player_steamid;
-	}else{
-	//	$("#PlayerAvatar").steamid = dotacraft_Player_Info.player_steamid;
-		$("#PlayerName").GetChild(0).text = AI_Names[PlayerPanel.PlayerID];  
-	};
-
+	dotacraft_Player_Info = Game.GetPlayerInfo(dotacraft_PlayerID);
 	dotacraft_PlayerTeam = PlayerPanel.PlayerTeam;
 	dotacraft_PlayerColor = PlayerPanel.PlayerColor;
 	PlayerPanel.Race = dotacraft_PlayerRace;
 	PlayerPanel.Ready = dotacraft_PlayerReady;
-	dotacraft_PanelID = PlayerPanel.PanelID;
 	
-		// set initial dropdown color
+	// set initial dropdown color
 	var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
 	dropdown.SetSelected(dotacraft_PlayerColor);
 	var key = dotacraft_PlayerColor;
 	
 	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[key].r+","+COLOUR_TABLE[key].g+","+COLOUR_TABLE[key].b+")";
 	
+	// assign steamid to avatar and playername panels
+	$("#PlayerAvatar").steamid = dotacraft_Player_Info.player_steamid;
+	$("#PlayerName").steamid = dotacraft_Player_Info.player_steamid	;
+	
 	// initial update player call
 	Update_Player();
-};
+}
 
 function Setup_Panaroma_Color_Table(){
 	// store color table inside this var

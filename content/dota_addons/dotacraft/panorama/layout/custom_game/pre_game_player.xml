@@ -7,40 +7,50 @@
 	</scripts>
 	<Panel class="Player">
 		<DOTAAvatarImage id="PlayerAvatar" />
-		<DOTAUserName id="PlayerName" />
-	<DropDown id="TeamDropDown" oninputsubmit="PlayerTeamChanged()">
-		<Label text="Team 1" id="2" />
-		<Label text="Team 2" id="3" />
-		<Label text="Team 3" id="6" /> 
-		<Label text="Team 4" id="7" />
-		<Label text="Team 5" id="8" />
-		<Label text="Team 6" id="9" />
-	</DropDown>
+		<Panel class="PanelOptions">
+			<DropDown id="OptionsDropDown" oninputsubmit="OptionsInput()">
+				<Label text="Open" 				id="0" />
+				<Label text="Close"				id="1" />
+				<Label text="Computer (Easy)" 	id="2" /> 
+				<Label text="Computer (Normal)" id="3" />
+				<Label text="Computer (Hard)" 	id="4" />
+			</DropDown>	
+			
+			<DOTAUserName id="PlayerName" />
+		</Panel>
+		<DropDown id="TeamDropDown" oninputsubmit="PlayerTeamChanged()" class="hidden">
+			<Label text="Team 1" id="2" />
+			<Label text="Team 2" id="3" />
+			<Label text="Team 3" id="6" /> 
+			<Label text="Team 4" id="7" />
+			<Label text="Team 5" id="8" />
+			<Label text="Team 6" id="9" />
+		</DropDown>
 
-	<DropDown id="RaceDropDown" oninputsubmit="PlayerRaceChanged()">
-		<Label text="Random" 	id="0" />
-		<Label text="Human" 	id="1" />
-		<Label text="Orc" 		id="2" />
-		<Label text="Night Elf" id="3" />
-		<Label text="Undead" 	id="4" />
-	</DropDown>		
-		
-	<DropDown id="ColorDropDown" oninputsubmit="PlayerColorChanged()">
-		<Label text="" id="0" />
-		<Label text="" id="1" />
-		<Label text="" id="2" />
-		<Label text="" id="3" />
-		<Label text="" id="4" />
-		<Label text="" id="5" />
-		<Label text="" id="6" />
-		<Label text="" id="7" />
-		<Label text="" id="8" />
-	</DropDown>
+		<DropDown id="RaceDropDown" oninputsubmit="PlayerRaceChanged()" class="hidden">
+			<Label text="Random" 	id="0" />
+			<Label text="Human" 	id="1" />
+			<Label text="Orc" 		id="2" />
+			<Label text="Night Elf" id="3" />
+			<Label text="Undead" 	id="4" />
+		</DropDown>		
+			
+		<DropDown id="ColorDropDown" oninputsubmit="PlayerColorChanged()" class="hidden">
+			<Label text="" id="0" />
+			<Label text="" id="1" />
+			<Label text="" id="2" />
+			<Label text="" id="3" />
+			<Label text="" id="4" />
+			<Label text="" id="5" />
+			<Label text="" id="6" />
+			<Label text="" id="7" />
+			<Label text="" id="8" />
+		</DropDown>
 	
-	<!--
-	<Button id="HudButton" onactivate="ReadyUp()">
-		<Label id="PlayerScoreButtonLabel" text="Ready" />
-	</Button>
-	-->
+		<!--
+		<Button id="HudButton" onactivate="ReadyUp()">
+			<Label id="PlayerScoreButtonLabel" text="Ready" />
+		</Button>
+		-->
 	</Panel>
 </root>
