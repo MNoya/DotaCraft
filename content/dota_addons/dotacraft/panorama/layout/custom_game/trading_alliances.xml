@@ -26,7 +26,7 @@
 			<Panel id="PlayerContainer" />
 			<Panel class="Footer">
 				<Button id="ConfirmButton" onactivate="ConfirmTrade()">
-					<Label id="ConfirmButtonText" text="Confirm"/>
+					<Label id="ConfirmButtonText" text="Accept"/>
 				</Button>
 				<Button id="CancelButton" onactivate="CancelTrade()">
 					<Label id="CancelButtonText" text="Cancel"/>
