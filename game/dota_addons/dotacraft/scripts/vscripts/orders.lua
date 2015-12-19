@@ -37,19 +37,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
             local unit = EntIndexToHScript(unit_index)
             if unit and IsValidEntity(unit) then
                 if not unit:IsBuilding() and not IsCustomBuilding(unit) then
-
-                    --print( unit:GetUnitName(),ORDERS[order_type])
-
-                    -- Set movement aggresive
-                    --[[unit.bAttackMove = (order_type == DOTA_UNIT_ORDER_ATTACK_MOVE)
-
-                    -- Set hold position
-                    if order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
-                        HoldPosition(unit)
-                    elseif order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
-                        unit:RemoveModifierByName("modifier_hold_position")
-                    end]]
-
                     numUnits = numUnits + 1
                 elseif unit:IsBuilding() or IsCustomBuilding(unit) then
                     numBuildings = numBuildings + 1
@@ -175,6 +162,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             local unit = EntIndexToHScript(unit_index)
             if not unit or not target then print("ERROR ON ATTACK ORDER FILTER") return true end
             if UnitCanAttackTarget(unit, target) then
+                unit.attack_target_order = target
                 return true
             else
                 print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetAttacksEnabled(unit),"-",GetMovementCapability(target))

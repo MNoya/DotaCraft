@@ -134,7 +134,7 @@ function ControlMagicCheck( event )
 	local caster = event.caster
 	local target = event.target
 	local ability = event.ability
-	local pID = caster:GetPlayerID()
+	local pID = caster:GetPlayerOwnerID()
 	
 	if not target:IsSummoned() and not target:IsDominated() then
 		caster:Interrupt()
@@ -143,11 +143,11 @@ function ControlMagicCheck( event )
 		local targetHP = target:GetHealth()
 		local casterMana = caster:GetMana()
 		local mana_control_rate = ability:GetLevelSpecialValueFor("mana_control_rate", ability:GetLevel() - 1 )
-		local mana_cost = targetHP*mana_control_rate + ability:GetManaCost(ability:GetLevel() - 1)
+		local mana_cost = math.floor(targetHP*mana_control_rate + ability:GetManaCost(ability:GetLevel() - 1))
 		print("Need "..mana_cost.." Have "..casterMana)
 		if mana_cost > casterMana then
 			caster:Interrupt()
-			SendErrorMessage(pID, "#not_enough_mana")
+			SendErrorMessage(pID, "Need at least "..mana_cost.." Mana")
 		end
 	end
 end

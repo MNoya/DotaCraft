@@ -1,3 +1,10 @@
+GameUI.CustomUIConfig().ErrorMessage = function( msg ) {
+    BottomRemoveNotification( {count:50}, msg )
+    BottomNotification( msg )
+    Game.EmitSound("General.Cancel")
+    $.Msg("ERROR!")
+}
+
 function TopNotification( msg ) {
   AddNotification(msg, $('#TopNotifications'));
 }
@@ -13,7 +20,6 @@ function TopRemoveNotification(msg){
 function BottomRemoveNotification(msg){
   RemoveNotification(msg, $('#BottomNotifications'));
 }
-
 
 function RemoveNotification(msg, panel){
   var count = msg.count;

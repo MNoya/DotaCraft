@@ -202,7 +202,8 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_client_convars", "libraries/modifiers/modifier_client_convars", LUA_MODIFIER_MOTION_NONE)
-    LinkLuaModifier("modifier_autoattack", "libraries/modifiers/modifier_autoattack", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_specially_deniable", "libraries/modifiers/modifier_specially_deniable", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_autoattack", "units/attacks", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
@@ -216,8 +217,7 @@ function dotacraft:InitGameMode()
 	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
 	
 	-- register panaroma tables
-	dotacraft:Setup_Tables()
-    
+	dotacraft:Setup_Tables()   
 	
 	-- Remove building invulnerability
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
@@ -350,6 +350,9 @@ function dotacraft:InitGameMode()
 
 	-- Keeps the blighted gridnav positions
 	GameRules.Blight = {}
+
+	-- Attack net table
+	Attacks:Init()
   	
   	-- Starting positions
   	GameRules.StartingPositions = {}
@@ -759,12 +762,13 @@ function dotacraft:OnNPCSpawned(keys)
     	ApplyModifier(npc, "modifier_splash_attack")
     end
 
-    -- Attack system
-    --[[npc:SetIdleAcquire(false)
-    npc.AcquisitionRange = npc:GetAcquisitionRange()
-    npc:SetAcquisitionRange(0)]]
-    ApplyModifier(npc, "modifier_attack_system")
+    -- Attack system, only applied to units and buildings without an attack or without both ground and air attacks enabled
+    local attacks_enabled = GetAttacksEnabled(npc)
+    if attacks_enabled ~= "none" and attacks_enabled ~= "ground,air" then
+    	ApplyModifier(npc, "modifier_attack_system")
+    end
 
+    npc:AddNewModifier(npc, nil, "modifier_specially_deniable", {})
 end
 
 -- An entity somewhere has been hurt.
