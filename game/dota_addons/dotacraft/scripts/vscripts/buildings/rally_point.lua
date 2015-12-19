@@ -45,11 +45,7 @@ function SpawnUnit( event )
 
 end
 
---[[
-	Author: Noya
-	Date: 11.02.2015.
-	Creates a rally point flag for this unit, removing the old one if there was one
-]]
+-- Creates a rally point flag for this unit, removing the old one if there was one
 function SetRallyPoint( event )
 	local caster = event.caster
 	local origin = caster:GetOrigin()
@@ -69,9 +65,6 @@ function SetRallyPoint( event )
 	            caster.flag:RemoveSelf()
 	        end
 	    end
-
-		-- Make a new one
-		caster.flag = Entities:CreateByClassname("prop_dynamic")
 
 		-- Find vector towards 0,0,0 for the initial rally point
 		if not IsValidEntity(caster) then
