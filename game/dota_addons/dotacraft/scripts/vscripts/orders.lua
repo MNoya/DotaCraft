@@ -162,6 +162,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             local unit = EntIndexToHScript(unit_index)
             if not unit or not target then print("ERROR ON ATTACK ORDER FILTER") return true end
             if UnitCanAttackTarget(unit, target) then
+                unit.attack_target_order = target
                 return true
             else
                 print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetAttacksEnabled(unit),"-",GetMovementCapability(target))
