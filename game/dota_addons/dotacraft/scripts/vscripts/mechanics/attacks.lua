@@ -246,7 +246,7 @@ function GetMovementCapability( unit )
 end
 
 -- Searches for "AttacksEnabled" in the KV files
--- Default by omission is "ground", other possible returns should be "ground,air" or "air"
+-- Default by omission is "none", other possible returns should be "ground,air" or "air"
 function GetAttacksEnabled( unit )
     local unitName = unit:GetUnitName()
     local attacks_enabled
@@ -257,7 +257,7 @@ function GetAttacksEnabled( unit )
         attacks_enabled = GameRules.UnitKV[unitName]["AttacksEnabled"]
     end
 
-    return attacks_enabled or "ground"
+    return attacks_enabled or "none"
 end
 
 function SetAttacksEnabled( unit, attack_string )
