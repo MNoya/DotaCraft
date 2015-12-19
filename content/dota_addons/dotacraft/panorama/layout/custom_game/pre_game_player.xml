@@ -6,16 +6,17 @@
 		<include src="file://{resources}/scripts/team_selection/dotacraft_player.js" />
 	</scripts>
 	<Panel class="Player">
-		<DOTAAvatarImage id="PlayerAvatar" />
+		<Panel class="PanelOptions2" >
+			<DOTAAvatarImage id="PlayerAvatar" />
+		</Panel>
 		<Panel class="PanelOptions">
-			<DropDown id="OptionsDropDown" oninputsubmit="OptionsInput()">
+			<DropDown id="OptionsDropDown" text="lol" oninputsubmit="OptionsInput()">
 				<Label text="Open" 				id="0" />
-				<Label text="Close"				id="1" />
+				<Label text="Close"				id="1" /> 
 				<Label text="Computer (Easy)" 	id="2" /> 
-				<Label text="Computer (Normal)" id="3" />
-				<Label text="Computer (Hard)" 	id="4" />
-			</DropDown>	
-			
+				<Label text="Computer (Normal)" id="3" /> 
+				<Label text="Computer (Hard)" 	id="4" /> 
+			</DropDown>
 			<DOTAUserName id="PlayerName" />
 		</Panel>
 		<DropDown id="TeamDropDown" oninputsubmit="PlayerTeamChanged()" class="hidden">
@@ -26,7 +27,6 @@
 			<Label text="Team 5" id="8" />
 			<Label text="Team 6" id="9" />
 		</DropDown>
-
 		<DropDown id="RaceDropDown" oninputsubmit="PlayerRaceChanged()" class="hidden">
 			<Label text="Random" 	id="0" />
 			<Label text="Human" 	id="1" />
@@ -34,7 +34,6 @@
 			<Label text="Night Elf" id="3" />
 			<Label text="Undead" 	id="4" />
 		</DropDown>		
-			
 		<DropDown id="ColorDropDown" oninputsubmit="PlayerColorChanged()" class="hidden">
 			<Label text="" id="0" />
 			<Label text="" id="1" />

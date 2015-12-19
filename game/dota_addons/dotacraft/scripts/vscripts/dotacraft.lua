@@ -210,6 +210,7 @@ function dotacraft:InitGameMode()
 	-- Listeners for Pre_Game_Selection
 	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
 	CustomGameEventManager:RegisterListener( "update_team_lock", Dynamic_Wrap(dotacraft, "Lock_Teams"))	
+	CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGame_Update"))	
 	
 	-- Listeners for Trading Alliances
 	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
@@ -1523,11 +1524,17 @@ function dotacraft:Trade_Offers(args)
 	Players:ModifyGold(RecievingPlayerID, GoldAmount);
 end
 
+-- unused for now will be refractored soon
 function dotacraft:Selection_Update_Player(args)
 	--print("updating player")
 	local PlayerID = args.ID
 		
 	SetNetTableValue("dotacraft_player_table", tostring(PlayerID), {Team = args.Team, Color = args.Color, Race = args.Race, Ready = args.Ready})
+end
+
+function dotacraft:PreGame_Update(data)
+	DeepPrintTable(data);
+	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerID = data.PlayerID})
 end
 
 function dotacraft:Setup_Tables()

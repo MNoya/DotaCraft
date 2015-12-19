@@ -1,16 +1,7 @@
 //////////////////////////////////////////////
 // 				Local Variables				//
 //////////////////////////////////////////////
-var dotacraft_PlayerID
-var dotacraft_PlayerTeam
-var dotacraft_PlayerColor
-var dotacraft_Player_Info
-var dotacraft_PlayerRace = 0
-var dotacraft_PlayerReady = false
-var dotacraft_PanelID = 0;
-
 // panaroma color table, will most likely make a nettable for this
-var CURRENT_COLOUR = 0
 var COLOUR_TABLE = {}
 
 var Root = $.GetContextPanel();
@@ -22,12 +13,10 @@ var Root = $.GetContextPanel();
 function ReadyUp(){
 	// TOGGLE
 	// if not ready, he's now ready
-	if (!dotacraft_PlayerReady){
-		dotacraft_PlayerReady = true;
-		PlayerPanel.Ready = true;
+	if (!Root.PlayerReady){
+		Root.PlayerReady = true;
 	}else{ // if ready, he's now not ready 
-		dotacraft_PlayerReady = false;
-		PlayerPanel.Ready = false;
+		Root.PlayerReady = false;
 	};
 
 	// update ready status
@@ -36,12 +25,12 @@ function ReadyUp(){
 
 // button click function for the team dropdown
 function PlayerTeamChanged(){
-	var dropdown = PlayerPanel.FindChildTraverse("TeamDropDown");
+	var dropdown = Root.FindChildTraverse("TeamDropDown");
 	var team_index = dropdown.GetSelected().id;
 	
 	// set selected dropdown child and assign the index of the GetSelected as the new value
 	dropdown.SetSelected(team_index);
-	dotacraft_PlayerTeam = parseInt(team_index, 10);
+	SetPanelInformation(parseInt(team_index), 1);
 	
 	// update player
 	Update_Player();
@@ -49,12 +38,12 @@ function PlayerTeamChanged(){
 
 // button click function for the race dropdown
 function PlayerRaceChanged(){
-	var dropdown = PlayerPanel.FindChildTraverse("RaceDropDown");
+	var dropdown = Root.FindChildTraverse("RaceDropDown");
 	var race_index = dropdown.GetSelected().id;
 	
 	// set selected dropdown child and assign the index of the GetSelected as the new value
 	dropdown.SetSelected(race_index);
-	dotacraft_PlayerRace = parseInt(race_index, 10);
+	SetPanelInformation(parseInt(race_index), 2);	
 	
 	// update player
 	Update_Player();
@@ -62,19 +51,19 @@ function PlayerRaceChanged(){
 
 // button click function for the color dropdown
 function PlayerColorChanged(){
-	var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
+	var dropdown = Root.FindChildTraverse("ColorDropDown");
 	var color_index = dropdown.GetSelected().id;
 	
 	// set selected dropdown child and assign the index of the GetSelected as the new value
 	dropdown.SetSelected(color_index);
 	
 	// reset last color
-	var previous_dropdown_child = dropdown.FindDropDownMenuChild (dotacraft_PlayerColor);
+	var previous_dropdown_child = dropdown.FindDropDownMenuChild (Root.PlayerColor);
 	previous_dropdown_child.enabled = true;
 	previous_dropdown_child.style["border"] = "0px solid black";
 	
 	// save the new color index in the local variable
-	dotacraft_PlayerColor = parseInt(color_index, 10);
+	SetPanelInformation(parseInt(color_index), 2);	 
 
 	// change background color to match the setselected
 	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[color_index].r+","+COLOUR_TABLE[color_index].g+","+COLOUR_TABLE[color_index].b+")";
@@ -88,7 +77,6 @@ function OptionsInput(){
 	var SelectedIndex = parseInt(OptionsDropDown.GetSelected().id);
 
 	if( SelectedIndex != null ){
-
 		switch ( SelectedIndex ){
 			case 0:
 				Root.AI = false;	
@@ -97,17 +85,17 @@ function OptionsInput(){
 				Root.AI = false;
 				break;				
 			case 2:
-				Root.PlayerID = 9001;
+				SetPanelInformation(9001, 0)
 				Root.AI = true;
 				Setup_Player();
 				break;
 			case 3:
-				Root.PlayerID = 9002;
+				SetPanelInformation(9002, 0)
 				Root.AI = true;
 				Setup_Player();
 				break;
 			case 4:
-				Root.PlayerID = 9003;
+				SetPanelInformation(9003, 0)
 				Root.AI = true;
 				Setup_Player();
 				break;
@@ -115,33 +103,47 @@ function OptionsInput(){
 	};
 };
 
+function SetPanelInformation(Value, State){
+	// set panel && local variable values
+	switch ( State ){
+		case 0: // PlayerID
+			Root.PlayerID = Value
+			break;
+		case 1: // TeamID
+			Root.PlayerTeam = Value	
+			break;
+		case 2: // RaceID
+			Root.PlayerRace = Value	
+			break;
+		case 3: // ColorID
+			Root.PlayerColor = Value
+			break;
+	};		
+};
 //////////////////////////////////////////////
-// 					Player Update			//
+// 					Player Update			//  
 //////////////////////////////////////////////
 // update player logic
 function Update_Player(){
 	// save this info in the playerpanel and send it to lua net_tables
-	$.Msg("Player: #"+dotacraft_PlayerID+" set to Team: #"+dotacraft_PlayerTeam+" with color: "+dotacraft_PlayerColor+" and race: #"+dotacraft_PlayerRace+", ReadyStatus="+dotacraft_PlayerReady);
+	//$.Msg("Player: #"+Root.PlayerID+" set to Team: #"+Root.PlayerTeam+" with color: "+Root.PlayerColor+" and race: #"+Root.PlayerRace+", ReadyStatus="+Root.PlayerReady);
 	
-	GameEvents.SendCustomGameEventToServer("update_player", { "ID": dotacraft_PanelID, "Team": dotacraft_PlayerTeam, "Color": dotacraft_PlayerColor, "Race": dotacraft_PlayerRace, "Ready": dotacraft_PlayerReady});
-};
+	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerID": Root.PlayerID, "Race": Root.PlayerRace, "Team": Root.PlayerTeam, "Color": Root.PlayerColor});
+};  
 
 // Globally available panel to this context
-var PlayerPanel
 (function () {
-	// save the context panel
-	PlayerPanel = $.GetContextPanel();
-	
+	// save the context panel	
 	Setup_Panaroma_Color_Table();
-	Setup_Colours(PlayerPanel);
+	Setup_Colours(Root);
 	
 	$.Schedule(0.1, Update);
 })();
 
 function Update(){
-	Setup_Player()
+	Setup_Player();
 	CurrentStateOfPanel();
-	$.Schedule(0.01, Update);	
+	$.Schedule(0.01, Update);
 };
 
 function CurrentStateOfPanel(){
@@ -149,7 +151,7 @@ function CurrentStateOfPanel(){
 	var SelectedIndex = OptionsDropDown.GetSelected().id;
 
 	if( SelectedIndex != null ){
-		if( Players.IsValidPlayerID(PlayerPanel.PlayerID) || Root.AI ){
+		if( Players.IsValidPlayerID(Root.PlayerID) || Root.AI ){
 			$("#ColorDropDown").visible = true;
 			$("#RaceDropDown").visible = true;
 			$("#TeamDropDown").visible = true;
@@ -175,30 +177,27 @@ var AI_Names = {
 
 // this function sets up all the components for the player once
 function Setup_Player(){
-	// assign default variables
-	dotacraft_PlayerID = PlayerPanel.PlayerID;
-	
-	if( Players.IsValidPlayerID(PlayerPanel.PlayerID) ){
-		dotacraft_Player_Info = Game.GetPlayerInfo(dotacraft_PlayerID); 
+	var PlayerInfo;
+	if( Players.IsValidPlayerID(Root.PlayerID) ){
+		PlayerInfo = Game.GetPlayerInfo(Root.PlayerID); 
 		
 		// assign steamid to avatar and playername panels
-		$("#PlayerAvatar").steamid = dotacraft_Player_Info.player_steamid;
-		$("#PlayerName").steamid = dotacraft_Player_Info.player_steamid;
+		$("#PlayerAvatar").steamid = PlayerInfo.player_steamid;
+		$("#PlayerName").steamid = PlayerInfo.player_steamid;
 	}else{
-	//	$("#PlayerAvatar").steamid = dotacraft_Player_Info.player_steamid;
-		$("#PlayerName").GetChild(0).text = AI_Names[PlayerPanel.PlayerID];  
+	//	$("#PlayerAvatar").steamid = PlayerInfo.player_steamid;
+		$("#PlayerName").GetChild(0).text = AI_Names[Root.PlayerID];  
 	};
 
-	dotacraft_PlayerTeam = PlayerPanel.PlayerTeam;
-	dotacraft_PlayerColor = PlayerPanel.PlayerColor;
-	PlayerPanel.Race = dotacraft_PlayerRace;
-	PlayerPanel.Ready = dotacraft_PlayerReady;
-	dotacraft_PanelID = PlayerPanel.PanelID;
+	// default values
+	Root.PlayerRace = 1;
+	Root.PlayerReady = false;
+	Root.PlayerTeam = 3;
 	
-		// set initial dropdown color
-	var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
-	dropdown.SetSelected(dotacraft_PlayerColor);
-	var key = dotacraft_PlayerColor;
+	// set initial dropdown color
+	var dropdown = Root.FindChildTraverse("ColorDropDown");
+	dropdown.SetSelected(Root.PlayerColor);
+	var key = Root.PlayerColor;
 	
 	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[key].r+","+COLOUR_TABLE[key].g+","+COLOUR_TABLE[key].b+")";
 	
@@ -264,11 +263,11 @@ function Count_Dropdown_Children(dropdown, name){
 
 // check if player is host
 function isHost(){
-    var Player_Info = dotacraft_Player_Info;
+    var Player_Info = Game.GetPlayerInfo(Root.PlayerID);
     
     if(!Player_Info)
     {
-		$.Msg("Player does not exist = #"+dotacraft_PlayerID);
+		$.Msg("Player does not exist = #"+Root.PlayerID);
         return false;
     };
 
@@ -281,7 +280,7 @@ var ChangeColour= (
 	{
 		return function()
 		{
-			dotacraft_PlayerColor = color_index;
+			Root.PlayerColor = color_index;
 			dropdown.SetSelected(color_index.toString());
 			dropdown.style["background-color"] = COLOUR_TABLE[color_index];
 

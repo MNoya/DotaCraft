@@ -1,17 +1,18 @@
 var TeamSelection = (function() {
-	function TeamSelection(pRoot, pPlayerLimit, pDropDowns){
+	function TeamSelection(pRoot, pPlayerLimit, pDropDowns, pTeams){
 		this.mPanels = new Array();
 		this.mEmptyPanelIDs = new Array();
 		this.mRoot = pRoot;
 		this.mPlayerLimit = pPlayerLimit;
 		this.mDropDowns = pDropDowns;
+		this.mTeams = pTeams;
 		
 		// setup players 
 		this.SetupPanels(); 
 	};
 
-	TeamSelection.prototype.getPanel = function(pPlayerID){
-		return this.mPanels[pPlayerID];
+	TeamSelection.prototype.getPanel = function(pPanelID){
+		return this.mPanels[pPanelID];
 	};
  
 	TeamSelection.prototype.getAllPanels = function(){
@@ -31,8 +32,13 @@ var TeamSelection = (function() {
 		return PlayerAlreadyAssigned;
 	};
 
-	TeamSelection.prototype.assignPlayer = function(pPlayerID){	
-		var PlayerPanel = this.FindEmptySlot();
+	TeamSelection.prototype.assignPlayer = function(pPlayerID, pPanelID){	
+		var PlayerPanel;
+		if( pPanelID == null)
+			PlayerPanel = this.FindEmptySlot();
+		else
+			PlayerPanel = this.getPanel(pPanelID);
+		
 		if( PlayerPanel != false )
 		{			
 			// if local player
@@ -58,24 +64,23 @@ var TeamSelection = (function() {
 	
 	TeamSelection.prototype.SetupPanels = function(){
 		// create panels equal to player limit
-		var currentColorIndex = 0;
 		for(var i = 0; i < this.mPlayerLimit; i+=1){
-			this.CreateTemplate(i, currentColorIndex);
-			currentColorIndex++;
+			this.CreateTemplate(i);
 		};
 	};
 	
-	TeamSelection.prototype.CreateTemplate = function(pID, pColor){
+	TeamSelection.prototype.CreateTemplate = function(pID){
 		var TemplatePanel = $.CreatePanel("Panel", this.mRoot, pID);
 		TemplatePanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
 		
 		// assign panel values
 		TemplatePanel.PanelID = pID;
 		TemplatePanel.PlayerID = 9000;
-		TemplatePanel.PlayerColor = pColor;
+		TemplatePanel.PlayerColor = pID;
+		TemplatePanel.PlayerReady = false;
 		
 		this.addPanel(pID, TemplatePanel);
-		this.setPanelStatus(pID, false, false);
+		this.setPanelStatus(pID, false, false); 
 	};
 	
 	TeamSelection.prototype.setFullControl = function(pPlayerID){	
@@ -87,10 +92,9 @@ var TeamSelection = (function() {
 	TeamSelection.prototype.setPanelStatus = function(pPanelID, pEnabled, pReady){
 		var Panel = this.getPanel(pPanelID);
 		Panel.SetHasClass("Ready", pReady);
-		
+		 
 		// find all drop-downs and pEnabled
 		for(var Index in this.mDropDowns){
-			$.Msg(this.mDropDowns[Index]);
 			var DropDown = Panel.FindChildInLayoutFile(this.mDropDowns[Index]);
 			DropDown.enabled = pEnabled;
 		};
