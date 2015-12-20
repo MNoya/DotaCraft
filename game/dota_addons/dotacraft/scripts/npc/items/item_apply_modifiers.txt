@@ -232,7 +232,7 @@
 				"RunScript"
 				{
 					"ScriptFile"	"units/attacks.lua"
-					"Function"		"AttackAggro"
+					"Function"		"OnAttacked"
 				}
 			}
 
@@ -242,6 +242,31 @@
 				{
 					"ScriptFile"	"units/attacks.lua"
 					"Function"		"CheatCheck"
+				}
+			}
+		}
+
+		// For Builders aggro
+		"modifier_attack_system_passive"
+		{
+			"IsHidden"	"1"
+
+			"OnCreated"
+			{
+				// Lua Modifier
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_disable_autoattack"
+					"Target" 		"TARGET"
+				}
+			}
+
+			"OnAttacked"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/attacks.lua"
+					"Function"		"OnBuilderAttacked"
 				}
 			}
 		}

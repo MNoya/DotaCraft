@@ -204,6 +204,7 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_client_convars", "libraries/modifiers/modifier_client_convars", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_specially_deniable", "libraries/modifiers/modifier_specially_deniable", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_autoattack", "units/attacks", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_disable_autoattack", "units/attacks", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
@@ -764,7 +765,11 @@ function dotacraft:OnNPCSpawned(keys)
     -- Attack system, only applied to units and buildings without an attack or without both ground and air attacks enabled
     local attacks_enabled = GetAttacksEnabled(npc)
     if attacks_enabled ~= "none" and attacks_enabled ~= "ground,air" then
-    	ApplyModifier(npc, "modifier_attack_system")
+        if IsBuilder(npc) then
+            ApplyModifier(npc, "modifier_attack_system_passive")
+        else
+            ApplyModifier(npc, "modifier_attack_system")
+        end
     end
 
     npc:AddNewModifier(npc, nil, "modifier_specially_deniable", {})

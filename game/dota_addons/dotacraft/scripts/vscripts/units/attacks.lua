@@ -86,11 +86,72 @@ function modifier_autoattack:IsHidden()
     return true
 end
 
+------------------------------------------------------------------------------------
+
+modifier_disable_autoattack = class({})
+
+function modifier_disable_autoattack:DeclareFunctions()
+    return { MODIFIER_PROPERTY_DISABLE_AUTOATTACK }
+end
+
+function modifier_disable_autoattack:GetDisableAutoAttack( params )
+    return 1
+end
+
+function modifier_disable_autoattack:IsHidden()
+    return false
+end
+
+------------------------------------------------------------------------------------
+
+-- Aggro a target
 function Attack( unit, target )
     unit:MoveToTargetToAttack(target)
     unit.attack_target = target
     unit.disable_autoattack = 0
-    --print(unit:GetUnitName().." is now attacking "..target:GetUnitName())
+end
+
+-- Run away from the attacker
+function Flee( unit, attacker )
+    local unit_origin = unit:GetAbsOrigin()
+    local target_origin = attacker:GetAbsOrigin() 
+    local flee_position = unit_origin + (unit_origin - target_origin):Normalized() * 200
+
+    unit:MoveToPosition(flee_position)
+end
+
+------------------------------------------------------------------------------------
+
+
+-- If attacked and not currently attacking a unit
+function OnAttacked( event )
+    local unit = event.target
+    local attacker = event.attacker
+
+    if unit:HasModifier("modifier_shadow_meld_active") then
+        return
+    end
+
+    local enemyAttack = unit:GetTeamNumber() ~= attacker:GetTeamNumber()
+
+    if enemyAttack and unit:IsIdle() and not unit:GetAttackTarget() then
+        if UnitCanAttackTarget(unit, attacker) then
+            Attack(unit, attacker)
+        else
+            Flee(unit, attacker)
+        end
+    end
+end
+
+-- Builders use more passive attack rules: flee from attacks, even if they can fight back
+function OnBuilderAttacked( event )
+    local unit = event.target
+    local attacker = event.attacker
+    local enemyAttack = unit:GetTeamNumber() ~= attacker:GetTeamNumber()
+
+    if enemyAttack and unit:IsIdle() and not unit:GetAttackTarget() then
+        Flee(unit, attacker)
+    end
 end
 
 ------------------------------------------------------------------------------------
@@ -107,31 +168,6 @@ function HoldAcquire( event )
             HoldPosition(unit)
         else
             unit:SetAttacking(nil)
-        end
-    end
-end
-
--- If attacked and not currently attacking a unit
-function AttackAggro( event )
-    local unit = event.target
-    local target = event.attacker
-
-    if unit:HasModifier("modifier_shadow_meld_active") then
-        return
-    end
-
-    if unit:IsIdle() and not unit:GetAttackTarget() then
-        --print(unit:GetUnitName(), " was attacked by ", target:GetUnitName()," while idling")
-        if UnitCanAttackTarget(unit, target) then
-            --print(unit:GetUnitName()," now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
-            unit:MoveToTargetToAttack(target)
-        else
-            -- Run away from the unit that attacked this
-            local unit_origin = unit:GetAbsOrigin()
-            local target_origin = target:GetAbsOrigin() 
-            local flee_position = unit_origin + (unit_origin - target_origin):Normalized() * 200
-
-            unit:MoveToPosition(flee_position) 
         end
     end
 end
