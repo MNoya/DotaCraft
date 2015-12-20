@@ -17,18 +17,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     local y = tonumber(filterTable["position_y"])
     local z = tonumber(filterTable["position_z"])
     local point = Vector(x,y,z)
-
     local queue = tobool(filterTable["queue"])
-
-    -- Skip Prevents order loops
-    local unit = EntIndexToHScript(units["0"])
-    if unit and unit.skip then
-        if DEBUG then print("Skip") end
-            unit.skip = false
-        return true
-    else
-        if DEBUG then print("Execute this order") end
-    end
 
     local numUnits = 0
     local numBuildings = 0
@@ -36,12 +25,23 @@ function dotacraft:FilterExecuteOrder( filterTable )
         for n,unit_index in pairs(units) do
             local unit = EntIndexToHScript(unit_index)
             if unit and IsValidEntity(unit) then
+                unit.current_order = order_type -- Track the last executed order
+                
                 if not unit:IsBuilding() and not IsCustomBuilding(unit) then
                     numUnits = numUnits + 1
                 elseif unit:IsBuilding() or IsCustomBuilding(unit) then
                     numBuildings = numBuildings + 1
                 end
             end
+        end
+    end
+
+    -- Skip Prevents order loops
+    local unit = EntIndexToHScript(units["0"])
+    if unit then
+        if unit.skip then
+            unit.skip = false
+            return true
         end
     end
 
