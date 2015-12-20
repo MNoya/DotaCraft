@@ -437,8 +437,24 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     local playerID = player:GetPlayerID()
     local playersHero = PlayerResource:GetSelectedHeroEntity(playerID)
     BuildingHelper:print("PlaceBuilding for playerID ".. playerID)
-  
+
+    -- Keep the origin of the buildings to put them back in position after spawning point_simple_obstruction entities
+    local buildings = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, construction_size*128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+    for k,v in pairs(buildings) do
+        if IsCustomBuilding(v) then
+            v.Origin = v:GetAbsOrigin()
+        end
+    end
+
+    -- Spawn point obstructions before placing the building
     local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
+
+    -- Stuck the buildings back in place
+    for k,v in pairs(buildings) do
+        if IsCustomBuilding(v) then
+            v:SetAbsOrigin(v.Origin)
+        end
+    end
 
     -- Spawn the building
     local building = CreateUnitByName(name, location, false, playersHero, player, playersHero:GetTeamNumber())
@@ -514,7 +530,7 @@ function BuildingHelper:StartBuilding( keys )
     work.inProgress = true
 
     -- Keep the origin of the buildings to put them back in position after spawning point_simple_obstruction entities
-    local buildings = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, 1000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+    local buildings = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, construction_size*128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
     for k,v in pairs(buildings) do
         if IsCustomBuilding(v) then
             v.Origin = v:GetAbsOrigin()
