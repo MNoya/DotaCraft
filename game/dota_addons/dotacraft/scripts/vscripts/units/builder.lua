@@ -175,6 +175,12 @@ function Build( event )
         -- Check the abilities of this building, disabling those that don't meet the requirements
         CheckAbilityRequirements( unit, playerID )
 
+        -- Add roots to ancient
+        local ancient_roots = unit:FindAbilityByName("nightelf_uproot")
+        if ancient_roots then
+            ancient_roots:ApplyDataDrivenModifier(unit, unit, "modifier_rooted_ancient", {})
+        end
+
         -- Apply the current level of Masonry to the newly upgraded building
         local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
         if masonry_rank and masonry_rank > 0 then

@@ -213,7 +213,6 @@ function GetMovementCapability (entIndex) {
 function GetAttacksEnabled (unit) {
     var unitName = Entities.GetUnitName(unit)
     var attackTypes = CustomNetTables.GetTableValue( "attacks_enabled", unitName)
-    $.Msg(attackTypes.enabled)
     return attackTypes ? attackTypes.enabled : "ground"
 }
 
