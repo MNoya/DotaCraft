@@ -744,6 +744,11 @@ function CancelGather( event )
     -- Builder race
     local race = GetUnitRace(caster)
 
+    -- If it's carrying resources, leave the return resources ability enabled
+    if caster:HasModifier("modifier_carrying_lumber") or caster:HasModifier("modifier_carrying_gold") then
+        caster:SwapAbilities(race.."_gather", race.."_return_resources", false, true)
+    end
+
     local tree = caster.target_tree
     if tree then
         caster.target_tree = nil
