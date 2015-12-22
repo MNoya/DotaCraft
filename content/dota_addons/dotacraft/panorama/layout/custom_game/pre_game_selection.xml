@@ -4,48 +4,48 @@
 	<include src="s2r://panorama/styles/dotastyles.vcss_c" />
   </styles>
   <scripts>
+    <include src="file://{resources}/scripts/team_selection/TeamSelection.js" /> 
     <include src="file://{resources}/scripts/team_selection/dotacraft_pre_selection.js" /> 
   </scripts>
-	<Panel class="PreGameSelectionRoot">
-
-	<Panel id="Left_Bar">
-		<Panel id="PlayerListContainer"/> 
-	</Panel>
-	
-	<Panel id="Right_Bar">
-		<Label id="Addon_Name" text="Dotacraft"/>
-		<Panel id="Minimap" />
-		<Label id="Minimap_Name" />
-		<Panel id="Suggested_Players" >
-			<Label id="Description_Header" text="Suggested Players:"/> 
-			<Label id="Suggested_Players_Text" /> 
-		</Panel>
+	<Panel class="PreGameSelectionRoot" hittest="false">	
+		<Panel id="Left_Bar" hittest="false">
+			<Panel id="SpectatorListContainer">
+				<Label id="SpectatorTitle" text="Spectators"/>
+				<Panel id="SpectatorContainer" />
+			</Panel>
+			<Panel id="PlayerListContainer"/> 
+		</Panel>	
 		
-		<Panel id="Map_Description">
-			<Label id="Description_Header" text="Map Description:"/> 
-			<Label id="Map_Description_Text" /> 
-		</Panel>
-		
-	<Button id="StartButton" onactivate="Start_Game()">
-		<Label text="Start Game"/>
-	</Button>
-	</Panel>	
-
-	<Panel id="HostPanel">		
-		<Panel id="HostContainer" class="HostContainer">
-			<Label id="Host_Header" text="Host Control Panel" />
+		<Panel id="Right_Bar">
+			<Label id="Addon_Name" text="Dotacraft"/>
+			<Panel id="Minimap" /> 
+			<Label id="Minimap_Name" />
+			<Panel id="Suggested_Players" >
+				<Label id="Description_Header" text="Suggested Players:"/> 
+				<Label id="Suggested_Players_Text" /> 
+			</Panel>
+			
+			<Panel id="Map_Description">
+				<Label id="Description_Header" text="Map Description:"/> 
+				<Label id="Map_Description_Text" /> 
+			</Panel>
 				
-			<Button id="LockTeamButton" onactivate="Lock_Teams()">
-				<Label id="LockTeamButtonText" text="Lock Teams"/>
+			<Button id="StartButton" onactivate="Start_Game()">
+				<Label text="Start Game"/>
 			</Button>
 		</Panel>
 		
-		<Button id="ToggleHostButton" onactivate="Toggle_Host_Container()" />
+		<Panel id="HostPanel">		
+			<Panel id="HostContainer" class="HostContainer">
+				<Label id="Host_Header" text="Host Control Panel" />
+					
+				<Button id="LockTeamButton" onactivate="LockTeams()">
+					<Label id="LockTeamButtonText" text="Lock Teams"/>
+				</Button>
+			</Panel>
+			
+			<Button id="ToggleHostButton" onactivate="Toggle_Host_Container()" />		
+		</Panel>
 		
-	</Panel>
-	
-	
- 
-	
 	</Panel>
 </root>

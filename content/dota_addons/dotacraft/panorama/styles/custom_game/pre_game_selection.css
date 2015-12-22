@@ -5,7 +5,7 @@
 {
 	width: 100%;
 	height: 100%;
-	
+	z-index: -900;
 }
 
 #PlayerListContainer
@@ -28,8 +28,101 @@
 	margin-top: 200px;
 
 	opacity: 1;
-	
 }
+
+#SpectatorListContainer
+{
+	flow-children: down;
+	horizontal-align: middle;
+	height: 50px;
+	width: 700px;
+	margin-left: 50px;
+	
+	visibility: visible;
+	
+	background-color: #444444; 
+		
+	border: 2px solid grey;
+
+	opacity: 1;
+	
+	padding: 2px;
+}
+
+#Spectator
+{
+	padding-left: 5px;
+	color: white;
+	font-family: bold;
+}
+#SpectatorTitle
+{
+	height: 40%;
+	font-size: 15px;
+	width: 100%;
+	border-bottom: 1px solid grey;
+	font-family: bold;
+}
+
+#SpectatorContainer{
+	margin-left: 25px;
+	width: 100%;
+	height: 60%;
+}
+
+.hidden
+{
+	visibility: collapse;
+}
+.PanelOptions
+{
+	width: 200px;
+	height: 100%;
+
+	padding: 2px;
+	height: 100%;
+}
+
+.PanelOptions2
+{
+	height: 100%;
+	width: 65px;
+	vertical-align: middle; 
+}
+
+#SitButton
+{
+	height: 100%;
+	width: 100%;
+
+	vertical-align: middle;
+	
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #5A615Ecc ), to( #879695cc ));
+	border: 1px solid #ffffff44;
+	border-left: 0px solid red;
+	
+	transition-property: background-color;
+	transition-duration: .2s;
+	
+	margin-right: 10px;
+}
+
+#SitButton:hover{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #5f6663 ), to( #b4c2c1 ));
+}
+
+#SitButtonText
+{
+    font-size: 36px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #d5d7d7;
+	
+    vertical-align: middle;
+	horizontal-align: middle;	
+}
+
 
 @keyframes 'Slide_In_Animation'
 {
@@ -82,7 +175,6 @@
 
 	horizontal-align: middle;
 }
-
 
 #HostPanel{
 	width: 200px;
@@ -219,6 +311,7 @@
 	margin-top: 10px;
 	flow-children: right;
 	height: 60px;
+	width: 750px;
 	
 	padding: 10px;
 	
@@ -368,7 +461,7 @@
 	margin-left: 5px;
 	margin-right: 5px;
 	
-	width: 200px;
+	width: 100%;
 	height: 100%;
 
 	padding: 5px;
@@ -481,7 +574,41 @@
 	transition-timing-function: linear;
 }
 
-#RaceDropDown:enabled:hover, #TeamDropDown:enabled:hover, #ColorDropDown:enabled:hover
+#OptionsDropDown{
+	background-color: #292e2e;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+
+	background-image: url("s2r://panorama/images/control_icons/arrow_dropdown_png.vtex");
+	
+	background-repeat: no-repeat;
+	background-position: right 38px 35%;
+	background-size: 32px 32px;
+	box-shadow: #00000055 -2px -2px 1px 4px;
+	
+	border: 2px solid #5e686966;
+	
+	font-size: 24px;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	vertical-align: center;
+	
+	transition-property: background-color, border;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
+}
+
+#OptionsDropDown:disabled{
+	background-image: none;
+	background-color: none;
+	border: 0px solid black;
+}
+
+.transparent{
+opacity: 0.8;
+
+}
+#RaceDropDown:enabled:hover, #TeamDropDown:enabled:hover, #ColorDropDown:enabled:hover, #OptionsDropDown:enabled:hover
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #393e3e ), to( #292e2e ) );
 }
@@ -499,7 +626,7 @@
 	color: #AAAAAA;
 }
 
-#RaceDropDown Label, #TeamDropDown Label, #ColorDropDown Label
+#RaceDropDown Label, #TeamDropDown Label, #ColorDropDown Label, #OptionsDropDown Label
 {
 	width: 100%;
 	margin: 3px 29px 0px 6px;
@@ -510,12 +637,12 @@
 	transition-timing-function: linear;
 }
 
-#RaceDropDown:focus Label, #TeamDropDown:focus Label, #ColorDropDown:focus Label
+#RaceDropDown:focus Label, #TeamDropDown:focus Label, #ColorDropDown:focus Label, #OptionsDropDown:focus Label
 {
 	color: white;
 }
 
-#RaceDropDown.DropDownMenuVisible:focus Label, #TeamDropDown.DropDownMenuVisible:focus Label, #ColorDropDown.DropDownMenuVisible:focus Label
+#RaceDropDown.DropDownMenuVisible:focus Label, #TeamDropDown.DropDownMenuVisible:focus Label, #ColorDropDown.DropDownMenuVisible:focus Label, #OptionsDropDown.DropDownMenuVisible:focus Label
 {
 	color: white;
 }

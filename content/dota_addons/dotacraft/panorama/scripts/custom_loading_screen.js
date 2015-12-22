@@ -61,7 +61,7 @@ function Check_Loading(){
 var Root = $.GetContextPanel();
 
 (function () {
-	Choose_Hint()
-	Choose_Background()
-	Check_Loading()
+	Choose_Hint();
+	Choose_Background();
+	Check_Loading();
 })();
