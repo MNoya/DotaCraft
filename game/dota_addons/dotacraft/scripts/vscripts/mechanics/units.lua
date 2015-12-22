@@ -2,6 +2,45 @@ if not Units then
     Units = class({})
 end
 
+-- Initializes one unit with all its required modifiers and functions
+function Units:Init( unit )
+
+    -- Apply armor and damage modifier (for visuals)
+    local attack_type = GetAttackType(unit)
+    if attack_type ~= 0 and unit:GetAttackDamage() > 0 then
+        ApplyModifier(unit, "modifier_attack_"..attack_type)
+    end
+
+    local armor_type = GetArmorType(unit)
+    if armor_type ~= 0 then
+        ApplyModifier(unit, "modifier_armor_"..armor_type)
+    end
+
+    if HasSplashAttack(unit) then
+        ApplyModifier(unit, "modifier_splash_attack")
+    end
+
+    -- Attack system, only applied to units and buildings without an attack or without both ground and air attacks enabled
+    local attacks_enabled = GetAttacksEnabled(unit)
+    if attacks_enabled ~= "none" and attacks_enabled ~= "ground,air" then
+        if IsBuilder(unit) then
+            ApplyModifier(unit, "modifier_attack_system_passive")
+        else
+            ApplyModifier(unit, "modifier_attack_system")
+        end
+    end
+
+    unit:AddNewModifier(unit, nil, "modifier_specially_deniable", {})
+
+    -- Adjust Hull
+    local collision_size = GetCollisionSize(unit)
+    local hull_radius = unit:GetHullRadius()
+    if collision_size and collision_size > hull_radius then
+        print("[Units] Adjusting hull of "..unit:GetUnitName().." to "..collision_size)
+        unit:SetHullRadius(GetCollisionSize(unit))
+    end
+end
+
 -- Returns Int
 function GetFoodProduced( unit )
     if unit and IsValidEntity(unit) then

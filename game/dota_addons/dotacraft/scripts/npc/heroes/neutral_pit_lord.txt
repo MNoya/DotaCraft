@@ -8,7 +8,6 @@
 	"override_hero"				"npc_dota_hero_undying"	 // Placeholder
 	"InternalName"				"neutral_undying"
 	"model"						"models/heroes/abyssal_underlord/abyssal_underlord.vmdl"
-	"FormationRank"				"0"
 	"AttacksEnabled"			"ground"
 	
 	
@@ -52,6 +51,11 @@
 	//----------------------------------------------------------------
 	//"BountyGoldMin"				"38.0"
 	//"BountyGoldMax"				"54.0"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

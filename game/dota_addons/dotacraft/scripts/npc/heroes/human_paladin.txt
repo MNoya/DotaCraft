@@ -8,7 +8,6 @@
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_omniknight"
 	"InternalName"				"human_paladin"
-	"FormationRank"				"0"
 	"AttacksEnabled"			"ground"
 	
 	// Abilities
@@ -52,6 +51,11 @@
 	//----------------------------------------------------------------
 	//"BountyGoldMin"				"38.0"
 	//"BountyGoldMax"				"54.0"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------

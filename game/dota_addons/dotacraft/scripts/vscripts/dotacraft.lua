@@ -727,32 +727,7 @@ function dotacraft:OnNPCSpawned(keys)
 		BuildingHelper:InitializeBuilder(npc)
 	end
 
-	-- Apply armor and damage modifier (for visuals)
-	local attack_type = GetAttackType(npc)
-	if attack_type ~= 0 and npc:GetAttackDamage() > 0 then
-		ApplyModifier(npc, "modifier_attack_"..attack_type)
-    end
-
-    local armor_type = GetArmorType(npc)
-	if armor_type ~= 0 then
-		ApplyModifier(npc, "modifier_armor_"..armor_type)
-    end
-
-    if HasSplashAttack(npc) then
-    	ApplyModifier(npc, "modifier_splash_attack")
-    end
-
-    -- Attack system, only applied to units and buildings without an attack or without both ground and air attacks enabled
-    local attacks_enabled = GetAttacksEnabled(npc)
-    if attacks_enabled ~= "none" and attacks_enabled ~= "ground,air" then
-        if IsBuilder(npc) then
-            ApplyModifier(npc, "modifier_attack_system_passive")
-        else
-            ApplyModifier(npc, "modifier_attack_system")
-        end
-    end
-
-    npc:AddNewModifier(npc, nil, "modifier_specially_deniable", {})
+    Units:Init(npc)
 end
 
 -- An entity somewhere has been hurt.
