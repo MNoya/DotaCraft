@@ -216,10 +216,19 @@ function SetupPreGame(){
 	Update()
 };
 
-
 ///////////////////////////////////////////////
 // 				Game Start Logic			 //
 ///////////////////////////////////////////////
+
+function LoadUpNetTableForPreGame(){
+	for(var Panel of System.getAllPanels()){
+		GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Panel.PanelID, "PlayerIndex": Panel.PlayerID, "Race": Panel.PlayerRace, "Team": Panel.PlayerTeam, "Color": Panel.PlayerColor});
+	};
+};
+
+function InitStartGame(){
+	GameEvents.SendCustomGameEventToServer("pregame_countdown", {});	
+};
 
 // if everyone is ready this will be called
 // essentially tells lua that the selection is over and sets the setup time to 0
@@ -227,7 +236,9 @@ function Start_Game(){
 	$.Msg("Game Starting");
 	//$.Msg(Root.CountDown)
 	//$.Msg(Root.Game_Started)
-
+	if( Game.GetLocalPlayerID() == 0 )
+		LoadUpNetTableForPreGame();
+	
 	if(DEVELOPER){ 
 		Initiate_Game();
 		return;
@@ -371,6 +382,7 @@ function Setup_Minimap(){
 	GameEvents.Subscribe( "panaroma_developer", Developer_Mode );
 	//GameEvents subscribes
 	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
+	GameEvents.Subscribe( "pregame_countdown", Start_Game );
 	
 	Root.CountDown = false; 
 	Root.Game_Started = false;
@@ -380,7 +392,7 @@ function Setup_Minimap(){
 	Setup_Minimap(); 
 	
 	Game.SetAutoLaunchEnabled(false);
-	Game.SetRemainingSetupTime(999);
+	Game.SetRemainingSetupTime(99999);
     Game.SetTeamSelectionLocked(true); 
  
 	var MapPlayerLimit = parseInt(Game.GetMapInfo().map_display_name.substring(0,1));

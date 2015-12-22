@@ -14,7 +14,7 @@ function RootStart( event )
 	-- Block the area
 	local location = caster:GetAbsOrigin()
 	local size = 5
-	local gridNavBlockers = BuildingHelper:BlockGridNavSquare(size, location)
+	local gridNavBlockers = BuildingHelper:BlockGridSquares(size, size, location)
     
     caster.blockers = gridNavBlockers
     caster:SetAbsOrigin(location)

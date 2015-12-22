@@ -76,11 +76,12 @@
 }
 .PanelOptions
 {
-	width: 200px;
+	width: 300px;
 	height: 100%;
 
 	padding: 2px;
 	height: 100%;
+	flow-children: right;
 }
 
 .PanelOptions2
@@ -311,7 +312,7 @@
 	margin-top: 10px;
 	flow-children: right;
 	height: 60px;
-	width: 750px;
+	width: 850px;
 	
 	padding: 10px;
 	
@@ -588,7 +589,7 @@
 	border: 2px solid #5e686966;
 	
 	font-size: 24px;
-	width: 100%;
+	width: 45px;
 	height: 100%;
 	z-index: 1;
 	vertical-align: center;
@@ -596,6 +597,7 @@
 	transition-property: background-color, border;
 	transition-duration: 0.15s;
 	transition-timing-function: linear;
+	padding: 50px;
 }
 
 #OptionsDropDown:disabled{

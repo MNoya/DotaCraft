@@ -191,7 +191,8 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
 
 	-- Listeners for Pre_Game_Selection
-	CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGame_Update"))	
+	CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGame_Update"))
+	CustomGameEventManager:RegisterListener( "pregame_countdown", Dynamic_Wrap(dotacraft, "PreGame_StartCountDown"))	
 	
 	-- Listeners for Trading Alliances
 	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
@@ -1489,6 +1490,10 @@ end
 
 function dotacraft:PreGame_Update(data)
 	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex})
+end
+
+function PreGame_StartCountDown(data)
+	CustomGameEventManager:Send_ServerToAllClients("pregame_countdown", {})
 end
 
 function dotacraft:Setup_Tables()
