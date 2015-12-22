@@ -1436,7 +1436,7 @@ function dotacraft:OnPreGame()
 			--end, playerID)
 			
 			-- got to give it colorID for the javascript player object call in players.lua
-			SetNetTableValue("dotacraft_player_table", tostring(playerID), {Color = ColorID})
+			SetNetTableValue("dotacraft_player_table", tostring(playerID), {Color = color})
  		elseif playerID > 9000 then
 			-- Create ai player here
 		else

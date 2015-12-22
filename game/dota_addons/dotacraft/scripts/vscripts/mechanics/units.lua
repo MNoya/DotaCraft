@@ -95,9 +95,9 @@ end
 
 function GetCollisionSize( unit )
     if unit and IsValidEntity(unit) then
-        if GameRules.UnitKV[unit:GetUnitName()]["CollisionSize"] and GameRules.UnitKV[unit:GetUnitName()]["CollisionSize"] then
-            return GameRules.UnitKV[unit:GetUnitName()]["CollisionSize"]
-        end
+        local unitName = unit:GetUnitName()
+        local unitTable = unit:IsHero() and GameRules.HeroKV or GameRules.UnitKV
+        return unitTable[unitName] and unitTable[unitName]["CollisionSize"] or 0
     end
     return 0
 end
