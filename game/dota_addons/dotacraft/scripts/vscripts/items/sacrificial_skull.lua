@@ -2,8 +2,8 @@ function MakeBlight( event )
 	local ability = event.ability
 	local point = event.target_points[1]
 
-	SnapToGrid64(point.x)
-	SnapToGrid64(point.y)
+	BuildingHelper:SnapToGrid64(point.x)
+	BuildingHelper:SnapToGrid64(point.y)
 
 	print("MakeBlight at "..VectorString(point))
 
