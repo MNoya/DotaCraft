@@ -461,7 +461,7 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
     if model.GetName and IsValidEntity(model) then
       prop = model
     else
-      prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propModel, DefaultAnim = animation})
+      prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propModel, DefaultAnim = animation, targetname = DoUniqueString("prop_dynamic")})
       prop:SetModelScale(scale * unit:GetModelScale())
     end
 
