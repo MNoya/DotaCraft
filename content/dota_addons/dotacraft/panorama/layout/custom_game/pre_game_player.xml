@@ -8,6 +8,9 @@
 	<Panel class="Player">
 		<Panel class="PanelOptions2" >
 			<DOTAAvatarImage id="PlayerAvatar" />
+			<Button id="SitButton" onactivate="Sit()" >
+				<Label id="SitButtonText" text=">"/> 
+			</Button>
 		</Panel>
 		<Panel class="PanelOptions">
 			<DropDown id="OptionsDropDown" text="lol" oninputsubmit="OptionsInput()">
@@ -33,7 +36,7 @@
 			<Label text="Orc" 		id="2" />
 			<Label text="Night Elf" id="3" />
 			<Label text="Undead" 	id="4" />
-		</DropDown>		
+		</DropDown>
 		<DropDown id="ColorDropDown" oninputsubmit="PlayerColorChanged()" class="hidden">
 			<Label text="" id="0" />
 			<Label text="" id="1" />

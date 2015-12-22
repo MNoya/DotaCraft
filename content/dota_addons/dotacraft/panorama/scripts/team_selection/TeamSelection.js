@@ -6,6 +6,7 @@ var TeamSelection = (function() {
 		this.mPlayerLimit = pPlayerLimit;
 		this.mDropDowns = pDropDowns;
 		this.mTeams = pTeams;
+		this.mCount = 0;
 		
 		// setup players 
 		this.SetupPanels(); 
@@ -17,6 +18,10 @@ var TeamSelection = (function() {
  
 	TeamSelection.prototype.getAllPanels = function(){
 		return this.mPanels;
+	};
+	
+	TeamSelection.prototype.panelCount = function(){
+		return this.mCount;
 	};
 	
 	TeamSelection.prototype.addPanel = function(pID, pPanel){
@@ -54,11 +59,11 @@ var TeamSelection = (function() {
 		// loop through all panels checking their AI flag
 		for(var Panel of this.mPanels.reverse()){
 			if ( Panel != null ){
-				if( parseInt(Panel.PlayerID) >= 9000 ) {
+				if( parseInt(Panel.PlayerID) == 9000 ) {
 					SelectedPanel = Panel;
 				};
 			};
-		};		
+		};
 		return SelectedPanel;
 	};
 	
@@ -79,36 +84,19 @@ var TeamSelection = (function() {
 		TemplatePanel.PlayerColor = pID;
 		TemplatePanel.PlayerReady = false;
 		
+		this.mCount+=1;
+					
 		this.addPanel(pID, TemplatePanel);
-		this.setPanelStatus(pID, false, false); 
 	};
 	
-	TeamSelection.prototype.setFullControl = function(pPlayerID){	
+	TeamSelection.prototype.setFullControl = function(pEnabled){	
 		for(var Panel of this.mPanels){
-			Panel.enabled = true;
+			Panel.enabled = pEnabled;
 		};
-	};
-	
-	TeamSelection.prototype.setPanelStatus = function(pPanelID, pEnabled, pReady){
-		var Panel = this.getPanel(pPanelID);
-		Panel.SetHasClass("Ready", pReady);
-		 
-		// find all drop-downs and pEnabled
-		for(var Index in this.mDropDowns){
-			var DropDown = Panel.FindChildInLayoutFile(this.mDropDowns[Index]);
-			DropDown.enabled = pEnabled;
-		};
-
-		/*
-		// find button and sethasclass
-		var Button = Panel.FindChildTraverse("HudButton")
-		if(Button != null){
-			button.SetHasClass("Ready", pReady);
-		};	*/
 	};
 				
 	TeamSelection.prototype.isHost = function(pPlayerID){
-		   var Player_Info = Game.GetPlayerInfo(pPlayerID)  
+		var Player_Info = Game.GetPlayerInfo(pPlayerID)  
 		if(!Player_Info)
 		{
 			$.Msg("Player does not exist = #"+pPlayerID);

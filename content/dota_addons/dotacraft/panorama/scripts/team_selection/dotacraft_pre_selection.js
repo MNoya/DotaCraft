@@ -13,10 +13,10 @@ var dotacraft_DropDowns = {
 };
 
 // table of all the buttons
-var dotacraft_Buttons = {
+var dotacraft_Buttons = { 
 	1: "HudButton"
 };
-
+ 
 //table for all team id's
 var dotacraft_Teams = {
 	0: 2,
@@ -31,8 +31,8 @@ var dotacraft_Teams = {
 var dotacraft_Colors = {};
 
 var current_TeamIndex = 0;
-var current_ColorIndex = 0;
-var DEVELOPER = false;
+var current_ColorIndex = 0; 
+var DEVELOPER = false; 
 
 ///////////////////////////////////////////////
 // 					Buttons			 		 //
@@ -47,36 +47,11 @@ function Toggle_Host_Container(){
 	};
 };
 
-function Lock_Teams(){
-	GameEvents.SendCustomGameEventToServer("update_team_lock", {});
-}
-
-function Update_Team_Lock(args){
-	var TeamLockState = args.Locked;
-	var Players = Game.GetAllPlayerIDs();
-	var LocalPlayerID = Game.GetLocalPlayerID();
-	
-	if(!isHost(LocalPlayerID)){
-		// disable panel for all other players
-		for(var PlayerID in Players){
-			var PlayerPanel = PlayerContainer.FindChildTraverse(PlayerID);
-			var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[2]);
-			Toggle_Enabled_Panel(dropdown, TeamLockState);
-		};
-	}else{
-		var Button_Text = $.FindChildInContext("#LockTeamButtonText", Root);
-		if(TeamLockState){
-			Button_Text.text = "Unlock Teams";
-		}else{
-			Button_Text.text = "Lock Teams";
-		};
-		
-		// enable all panels for host
-		for(var PlayerID in Players){
-			Player_Status(PlayerID, TeamLockState, false);				
-		};
-	};
-};
+function LockTeams()
+{
+	// set lockstate == true/false for all panels
+ 
+}; 
 
 ///////////////////////////////////////////////
 // 		Player Panel State Management		 //
@@ -93,7 +68,7 @@ function Player_Status(PlayerID, enabled, ready){
 	// find all drop-downs and toggle them
 	for(var index in dotacraft_DropDowns){
 		var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[index]);	
-		Toggle_Enabled_Panel(dropdown, enabled);
+		dropdown.enabled = enabled
 	};
 	
 	// find button and sethasclass
@@ -129,67 +104,29 @@ function Ready_Status(){
 ///////////////////////////////////////////////
 // 		Create & Update Player Logic	 	 //
 ///////////////////////////////////////////////
-
-// this function is called every seconds and creates any new players
-// this function also checks the ready status
-function CheckForNewPlayers(){ 
-	//$.Msg("checking new players")
-	//Create_Players() ;
-	
-	CheckAndCreateCurrentPlayers()
-	// assign players
-	//AssignNewPlayers();   
-	
-	// check if localplayerID == host
-	CheckForHostprivileges()
-	
-	// loop this same function every minute
-	if(!Root.Game_Started){  
-		//$.Schedule(1, CheckForNewPlayers);
-		//$.Schedule(0.5, Ready_Status)
-	};  
-}; 
-
 // dotacraft pregame table =
 // key = PanelID
 // playerID = current assigned player ID
 // color = current color Index
 // team = current team Index
 // race = current race index
-// optionstate = current state of the optiondropdown
- 
+
 function CheckAndCreateCurrentPlayers(){
 	var NetTable = CustomNetTables.GetAllTableValues( "dotacraft_pregame_table" );
-	var LocalPlayerID = Game.GetLocalPlayerID(); 
-	
-	//$.Msg("new table:");
-	//$.Msg(NetTable);
-	if( NetTable != null ){
+	var LocalPlayerID = Game.GetLocalPlayerID();  
+
+	if( NetTable != null ){ 
 		for(var table of NetTable){
-			var PlayerID = parseInt(table.value.PlayerID);
+			var PlayerID = parseInt(table.value.PlayerIndex);
+			
 			var PanelID = parseInt(table.key);
 			var PlayerPanel = System.assignPlayer(PlayerID, PanelID);
 
-			// host panel 
-			if(isHost(PlayerID)){ 
-				// add Host panel class to differentiate between host and normal players
-				var Name = PlayerPanel.FindChildTraverse("PlayerName");
-				var HostIcon = $.CreatePanel("Panel", Name, "Host_Icon");	
-				HostIcon.AddClass("Host"); 
-			};    
-
-			var OptionsDropDown = PlayerPanel.GetChild(1).GetChild(0);
-			if( isHost(LocalPlayerID) || LocalPlayerID == PlayerID )
-				System.setPanelStatus(PlayerPanel.PanelID, true, false);
-
-			//if ( !isHost(LocalPlayerID) )
-				OptionsDropDown.visible = false;
-			
 			// Assign panel teamIndex and Color
 			PlayerPanel.PlayerID = PlayerID;
-			PlayerPanel.AI = false;
 			PlayerPanel.PlayerTeam = parseInt(table.value.Team);
 			PlayerPanel.PlayerColor = parseInt(table.value.Color);
+			PlayerPanel.Race = parseInt(table.value.Race);
 		};
 	};
 };
@@ -199,35 +136,23 @@ function AssignYourself(){
 	
 	if( !System.isPlayerAssigned(LocalPlayerID) ){
 		var PlayerPanel = System.assignPlayer(LocalPlayerID);
-		
-		// host panel
-		if(isHost(LocalPlayerID)){
-			// add Host panel class to differentiate between host and normal players
-			var Name = PlayerPanel.FindChildTraverse("PlayerName");
-			var HostIcon = $.CreatePanel("Panel", Name, "Host_Icon");
-			HostIcon.AddClass("Host");
-		};
-		
-		System.setPanelStatus(PlayerPanel.PanelID, true, false);
-		
-		var OptionsDropDown = PlayerPanel.GetChild(1).GetChild(0);
-		OptionsDropDown.visible = false;
-		
+		$.Msg("PlayerPanel ="+PlayerPanel);
+
 		// Assign panel teamIndex and Color
 		PlayerPanel.PlayerID = LocalPlayerID;
-		PlayerPanel.AI = false;
-		PlayerPanel.PlayerTeam = dotacraft_Teams[current_TeamIndex];
+		PlayerPanel.PlayerTeam = current_TeamIndex;
 		PlayerPanel.PlayerColor = current_ColorIndex;
 		
 		// increment current team index
 		Increment_Variables();
 		 
+		// send new player Information
 		GameEvents.SendCustomGameEventToServer("update_pregame", {"PlayerID" : LocalPlayerID, "PanelID" : PlayerPanel.PanelID, "Team" : PlayerPanel.PlayerTeam, "Color" : PlayerPanel.PlayerColor, "Race" : 0});
 	};
 }; 
 
 function CheckForHostprivileges(){
-	if( isHost(Game.GetLocalPlayerID()) ){								
+	if( isHost() ){
 		// set the start button visible to the host
 		var Force_Start_Button = Root.FindChildTraverse("StartButton");
 		Force_Start_Button.visible = true;
@@ -236,7 +161,46 @@ function CheckForHostprivileges(){
 		var Host_Panel = Root.FindChildTraverse("HostPanel");
 		Host_Panel.visible = true;
 		
-		System.setFullControl(Game.GetLocalPlayerID());
+		System.setFullControl(true);
+	};
+};
+
+function Update(){ 
+	CheckCurrentSpectators(); 
+	UpdateCurrentSpectators();
+	$.Schedule(0.1, Update); 
+};
+
+var SpectatorRoot = $("#SpectatorListContainer");
+var Spectators = new Array();
+function CheckCurrentSpectators(){
+	Spectators = Game.GetAllPlayerIDs();
+
+	for(var Panel of System.getAllPanels()){
+		if( Players.IsValidPlayerID(Panel.PlayerID) ){
+			var Index = Spectators.indexOf(Panel.PlayerID)
+			Spectators.splice(Index, 1);
+		};
+	};
+};
+
+function UpdateCurrentSpectators(){
+	var PlayerIDList = Game.GetAllPlayerIDs();
+	var SpectatorContainer = SpectatorRoot.FindChildTraverse("SpectatorContainer");
+
+	for(var PlayerID of PlayerIDList){
+		if( SpectatorContainer.FindChildTraverse(PlayerID) == null ){
+			var PlayerLabel = $.CreatePanel("Label", SpectatorContainer, PlayerID);
+			var PlayerName = Game.GetPlayerInfo(PlayerID).player_name;
+			PlayerLabel.text = PlayerName;
+			PlayerLabel.SetHasClass("Spectator", true);
+		};
+		
+		var PlayerPanel = SpectatorContainer.FindChildTraverse(PlayerID);
+		if( !Spectators.indexOf(PlayerID) )
+			PlayerPanel.visible = true;
+		else
+			PlayerPanel.visible = false;
 	};
 };
 
@@ -247,95 +211,11 @@ function SetupPreGame(){
 	// assign local playerid to a panel
 	AssignYourself(); 
 	
-	//$.Msg("NetTable"); 
-	//$.Msg(CustomNetTables.GetAllTableValues("dotacraft_pregame_table")); 
+	// check if host, if true enable buttons
+	CheckForHostprivileges(); 
+	Update()
 };
 
-// main logic behind updating players, this is called when net_table changed
-function Update_Player(TableName, Key, Value){
-	$.Msg(TableName);
-	$.Msg(Key);
-	$.Msg(Value);  
-	
-	// variables  
-	var PlayerID = Value.PlayerID;
-	var PanelID = Key;
-	//var ready = Boolise(Value.Ready);
-
-	// PlayerID & Player Panel 
-	var LocalPlayerID = Game.GetLocalPlayerID();
-	var PlayerPanel = PlayerContainer.FindChildTraverse(PanelID);
-	//PlayerPanel.Ready = ready; 
-	 
-	$.Msg("[Panel]: "+PanelID+" - [Player]: "+PlayerID+" is updating"); 
-	 
-	// find all drop-downs and update their selection
-	for(var index in dotacraft_DropDowns){ 	
-		var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[index]);
-		
-		// determine which dropdown the current index is, and update accordingly
-		if(dotacraft_DropDowns[index] == "ColorDropDown"){
-			dropdown.SetSelected(Value.Color);
-		} 
-		else if (dotacraft_DropDowns[index] == "TeamDropDown"){ 
-			dropdown.SetSelected(Value.Team);
-		}
-		else if (dotacraft_DropDowns[index] == "RaceDropDown"){
-			dropdown.SetSelected(Value.Race);
-			
-			// if local player change the race background to match the select race
-			if(LocalPlayerID == PlayerID){
-				SetRaceBackgroundImage(Value.Race);
-			};
-		};
-	}; 
-	
-	// disable colors that are already taken
-	Update_Available_Colors();
-	
-	// ready status for local player
-	// currently doesn't do anything since the ready state will also be false and !false
-	// if(PlayerID == LocalPlayerID){
-		// toggle the player panel
-	//	Player_Status(PlayerID, !ready, ready);
-	// };
-}; 
-
-// function which sets the local background image to that of the race
-function SetRaceBackgroundImage(race){
-	// if race is not 0, which is the random race
-	var Left_Bar = Root.FindChildTraverse("Left_Bar");
-	if(race != 0){
-		// save image path and then assign it in the style
-		var team_path = "url('s2r://panorama/images/selection/background_"+race+".png')";
-		Left_Bar.style["background-image"] = team_path;
-	}else{ // if random
-		Left_Bar.style["background-image"] = "url('s2r://panorama/images/backgrounds/gallery_background.png')";
-	};
-};
- 
-function Update_Available_Colors(){
-	var PlayerIDList = Game.GetAllPlayerIDs();
-	var PlayerColors = CustomNetTables.GetAllTableValues("dotacraft_pregame_table");
-	var LocalPlayerID = Game.GetLocalPlayerID();  
-	
-	// for all players
-	for(var PlayerID of PlayerIDList){
-		var PlayerPanel = PlayerContainer.FindChildTraverse(PlayerID);
-		var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
-		
-		// for all players in table
-		for(var PlayerIDForColor of PlayerIDList){
-			// color index to disable
-			var color_index = PlayerColors[PlayerIDForColor].value.Color;
-			
-			// find dropdown child
-			var dropdown_child = dropdown.FindDropDownMenuChild(color_index);
-			dropdown_child.enabled = false; 
-			dropdown_child.style["border"] = "3px solid black";
-		}; 
-	};  
-};
 
 ///////////////////////////////////////////////
 // 				Game Start Logic			 //
@@ -374,10 +254,19 @@ function Initiate_Game(){
 	
 	Root.DeleteAsync(0.1);
 	
-	$.Msg("Everyone is ready");
+	$.Msg("Everyone is ready");	
 	// this will make the game_setup state go further and tells lua about this and then makes players
 	Game.SetRemainingSetupTime(0);
 	GameEvents.SendCustomGameEventToServer("selection_over", {});
+};
+
+function FindLocalPlayerTeamID(){
+	var TeamID = 3;
+	for(var Panel of System.getAllPanels()){
+		if( Panel.PlayerID == Game.GetLocalPlayerID() )
+			TeamID = Panel.PlayerTeam;
+	};
+	return TeamID;
 };
 
 // simple timer function
@@ -438,7 +327,8 @@ function Developer_Mode(args){
 // PURELY DEBUG
 function Skip_Selection(data){
 	$.Msg("Everyone is ready");
-	Game.SetRemainingSetupTime(0);	
+	
+	Game.SetRemainingSetupTime(0);
 	GameEvents.SendCustomGameEventToServer("selection_over", {});
 };
 
@@ -473,16 +363,14 @@ function Setup_Minimap(){
 	Suggested_Players.text = $.Localize("#"+Map_Name+"_suggested_players");
 	Map_Description.text = $.Localize("#"+Map_Name+"_map_description");
 };
-
+ 
 (function () {
+	// default to spectator
+	Game.PlayerJoinTeam(3)
+	
 	GameEvents.Subscribe( "panaroma_developer", Developer_Mode );
 	//GameEvents subscribes
-	GameEvents.Subscribe( "dotacraft_update_player", Update_Player );
 	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
-	GameEvents.Subscribe( "dotacraft_lock_teams", Update_Team_Lock );
-	
-	CustomNetTables.SubscribeNetTableListener("dotacraft_pregame_table", Update_Player);
-	CustomNetTables.SubscribeNetTableListener("dotacraft_color_table", Update_Available_Colors);
 	
 	Root.CountDown = false; 
 	Root.Game_Started = false;
@@ -505,7 +393,7 @@ function Setup_Minimap(){
 	System = new TeamSelection(ContainerRoot, MapPlayerLimit, dotacraft_DropDowns, dotacraft_Teams);
 	
 	SetupPreGame(); 
-})();
+})(); 
 
 ///////////////////////////////////////////////
 // 				Useful Functions			 //
@@ -530,7 +418,7 @@ function Increment_Variables(){
 	if(current_TeamIndex >= Length(dotacraft_Teams)){ 
 		current_TeamIndex = 0;
 	}
-	else{
+	else{ 
 		current_TeamIndex++;
 	};
 	
@@ -540,40 +428,19 @@ function Increment_Variables(){
 	else{
 		current_ColorIndex++;
 	};
-} 
-
-// this it to check whether a player panel was already created
-function IsPlayerPanelCreated(PlayerID){
-	// check the player panel of the container for playerID's
-	if(PlayerContainer.FindChildTraverse(PlayerID) == null){
-		return false;
-	} 
-	else{
-		return true;
-	};
-};
+}
 
 // check if player is host
-function isHost(PlayerID){
-    var Player_Info = Game.GetPlayerInfo(PlayerID)
-    
+function isHost(){
+    var Player_Info = Game.GetPlayerInfo(Game.GetLocalPlayerID())
+
     if(!Player_Info)
     {
-		$.Msg("Player does not exist = #"+PlayerID);
+		//$.Msg("Player does not exist = #"+PlayerID);
         return false;
     }; 
 
-    return Player_Info.player_has_host_privileges;
-}
-
-// panel enabled
-function Toggle_Enabled_Panel(panel, enabled){
-	panel.enabled = enabled;
-}
-
-// panel visibility
-function Toggle_Visibility_Panel(panel, visible){
-	panel.visible = visible;
+    return Player_Info.player_has_host_privileges; 
 }
 
 function Boolise(index){

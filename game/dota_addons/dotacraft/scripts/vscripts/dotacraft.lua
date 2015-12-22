@@ -209,8 +209,6 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
 
 	-- Listeners for Pre_Game_Selection
-	CustomGameEventManager:RegisterListener( "update_player", Dynamic_Wrap(dotacraft, "Selection_Update_Player"))
-	CustomGameEventManager:RegisterListener( "update_team_lock", Dynamic_Wrap(dotacraft, "Lock_Teams"))	
 	CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGame_Update"))	
 	
 	-- Listeners for Trading Alliances
@@ -1444,38 +1442,29 @@ function dotacraft:Skip_Selection()
 	CustomGameEventManager:Send_ServerToAllClients("dotacraft_skip_selection", {}) 
 end
 
-function dotacraft:Lock_Teams(data)
-
-	if GameRules.LockTeams == nil then
-		print("Creating lockteams")
-		GameRules.LockTeams = false
-	end
-	
-	-- toggle
-	if GameRules.LockTeams then
-		GameRules.LockTeams = false
-	else
-		GameRules.LockTeams = true
-	end
-
-	CustomGameEventManager:Send_ServerToAllClients("dotacraft_lock_teams", {Locked = GameRules.LockTeams})
-end
-
 function dotacraft:OnPreGame()
 	print("[DOTACRAFT] OnPreGame")
-	for playerID = 0, DOTA_MAX_TEAM_PLAYERS, 1 do
+	local Finished = false
+	local currentIndex = 0
+	while not Finished do
+		
+		local Player_Table = GetNetTableValue("dotacraft_pregame_table", tostring(currentIndex))
+		local NextTable = GetNetTableValue("dotacraft_pregame_table", tostring(currentIndex+1))
+		if not NextTable then
+			Finished = true
+		end
+		
+		local playerID = Player_Table.PlayerIndex
+		local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
+		local team = Player_Table.Team
+		local race = GameRules.raceTable[Player_Table.Race]
+		
+		-- if race is nil it means that the id supplied is random since that is the only fallout index
+		if race == nil then
+			race = GameRules.raceTable[RandomInt(1, 4)]
+		end
+		
 		if PlayerResource:IsValidPlayerID(playerID) then
-			local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
-			
-			local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
-			local team = Player_Table.Team
-			local race = GameRules.raceTable[Player_Table.Race]
-
-			-- if race is nil it means that the id supplied is random since that is the only fallout index
-			if race == nil then
-				race = GameRules.raceTable[RandomInt(1, 4)]
-			end
-
 			-- player stuff
 			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
@@ -1484,7 +1473,16 @@ function dotacraft:OnPreGame()
 				CreateHeroForPlayer(race, player)
 				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
 			--end, playerID)
- 		end
+			
+			-- got to give it colorID for the javascript player object call in players.lua
+			SetNetTableValue("dotacraft_player_table", tostring(playerID), {Color = ColorID})
+ 		elseif playerID > 9000 then
+			-- Create ai player here
+		else
+			-- do nothing
+		end
+		
+		currentIndex = currentIndex + 1
  	end
 
  	-- Add gridnav blockers to the gold mines
@@ -1528,17 +1526,8 @@ function dotacraft:Trade_Offers(args)
 	Players:ModifyGold(RecievingPlayerID, GoldAmount);
 end
 
--- unused for now will be refractored soon
-function dotacraft:Selection_Update_Player(args)
-	--print("updating player")
-	local PlayerID = args.ID
-		
-	SetNetTableValue("dotacraft_player_table", tostring(PlayerID), {Team = args.Team, Color = args.Color, Race = args.Race, Ready = args.Ready})
-end
-
 function dotacraft:PreGame_Update(data)
-	DeepPrintTable(data);
-	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerID = data.PlayerID})
+	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex})
 end
 
 function dotacraft:Setup_Tables()

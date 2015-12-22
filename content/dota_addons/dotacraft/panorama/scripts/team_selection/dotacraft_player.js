@@ -3,8 +3,8 @@
 //////////////////////////////////////////////
 // panaroma color table, will most likely make a nettable for this
 var COLOUR_TABLE = {}
-
 var Root = $.GetContextPanel();
+
 //////////////////////////////////////////////
 // 					BUTTONS					//
 //////////////////////////////////////////////
@@ -20,7 +20,42 @@ function ReadyUp(){
 	};
 
 	// update ready status
-	Update_Player();
+	UpdatePlayer();
+};
+
+function Sit(){
+	var Continue = true;
+	if(Root.PlayerID == Game.GetLocalPlayerID()){
+		Root.PlayerID = 9000;
+		Continue = false;
+	}else
+		Root.PlayerID = Game.GetLocalPlayerID();
+	
+	if(Continue){
+		$.Msg("Changing slots");
+		var Parent = Root.GetParent();
+		var SavedInformation = {PlayerTeam : Root.PlayerTeam, PlayerColor : Root.PlayerColor, PlayerRace : Root.PlayerRace};
+		for(var i=0; i < i +1;i+=1){
+			var PlayerPanel = Parent.GetChild(i);
+			if(PlayerPanel == null)
+				break;
+			
+			if( PlayerPanel.PlayerID == Game.GetLocalPlayerID() && Root.PanelID != PlayerPanel.PanelID){
+				Root.PlayerTeam = PlayerPanel.PlayerTeam;
+				Root.PlayerRace = PlayerPanel.PlayerRace;
+				Root.PlayerColor = PlayerPanel.PlayerColor;
+				
+				PlayerPanel.PlayerID = 9000;
+				PlayerPanel.PlayerTeam = SavedInformation.PlayerTeam; 
+				PlayerPanel.PlayerRace = SavedInformation.PlayerRace;
+				PlayerPanel.PlayerColor = SavedInformation.PlayerColor;
+			};
+			
+			// this should never be met but just in case lal
+			if(i > 100)
+				break;
+		};
+	};
 };
 
 // button click function for the team dropdown
@@ -30,10 +65,10 @@ function PlayerTeamChanged(){
 	
 	// set selected dropdown child and assign the index of the GetSelected as the new value
 	dropdown.SetSelected(team_index);
-	SetPanelInformation(parseInt(team_index), 1);
+	Root.PlayerTeam = parseInt(team_index);
 	
 	// update player
-	Update_Player();
+	UpdatePlayer();
 };
 
 // button click function for the race dropdown
@@ -43,10 +78,10 @@ function PlayerRaceChanged(){
 	
 	// set selected dropdown child and assign the index of the GetSelected as the new value
 	dropdown.SetSelected(race_index);
-	SetPanelInformation(parseInt(race_index), 2);	
+	Root.PlayerRace = parseInt(race_index);	
 	
 	// update player
-	Update_Player();
+	UpdatePlayer();
 };
 
 // button click function for the color dropdown
@@ -63,14 +98,14 @@ function PlayerColorChanged(){
 	previous_dropdown_child.style["border"] = "0px solid black";
 	
 	// save the new color index in the local variable
-	SetPanelInformation(parseInt(color_index), 2);	 
+	Root.PlayerColor = parseInt(color_index);
 
 	// change background color to match the setselected
 	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[color_index].r+","+COLOUR_TABLE[color_index].g+","+COLOUR_TABLE[color_index].b+")";
 	
 	// update player
-	Update_Player();
-};
+	UpdatePlayer();
+};  
 
 function OptionsInput(){
 	var OptionsDropDown = $("#OptionsDropDown");
@@ -79,79 +114,187 @@ function OptionsInput(){
 	if( SelectedIndex != null ){
 		switch ( SelectedIndex ){
 			case 0:
-				Root.AI = false;	
+				Root.PlayerID = 9000;
 				break;
 			case 1:
-				Root.AI = false;
+				Root.PlayerID = 8999;
 				break;				
 			case 2:
-				SetPanelInformation(9001, 0)
-				Root.AI = true;
-				Setup_Player();
+				Root.PlayerID = 9001;
 				break;
 			case 3:
-				SetPanelInformation(9002, 0)
-				Root.AI = true;
-				Setup_Player();
+				Root.PlayerID = 9002;
 				break;
 			case 4:
-				SetPanelInformation(9003, 0)
-				Root.AI = true;
-				Setup_Player();
+				Root.PlayerID = 9003;
 				break;
 		};
 	};
 };
 
-function SetPanelInformation(Value, State){
-	// set panel && local variable values
-	switch ( State ){
-		case 0: // PlayerID
-			Root.PlayerID = Value
-			break;
-		case 1: // TeamID
-			Root.PlayerTeam = Value	
-			break;
-		case 2: // RaceID
-			Root.PlayerRace = Value	
-			break;
-		case 3: // ColorID
-			Root.PlayerColor = Value
-			break;
-	};		
-};
 //////////////////////////////////////////////
 // 					Player Update			//  
 //////////////////////////////////////////////
 // update player logic
-function Update_Player(){
+function UpdatePlayer(){
 	// save this info in the playerpanel and send it to lua net_tables
-	//$.Msg("Player: #"+Root.PlayerID+" set to Team: #"+Root.PlayerTeam+" with color: "+Root.PlayerColor+" and race: #"+Root.PlayerRace+", ReadyStatus="+Root.PlayerReady);
-	
-	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerID": Root.PlayerID, "Race": Root.PlayerRace, "Team": Root.PlayerTeam, "Color": Root.PlayerColor});
+	//$.Msg("Player: #"+Root.PlayerID+" set to Team: #"+Root.PlayerTeam+" with color: "+Root.PlayerColor+" and race: #"+Root.PlayerRace+", ReadyStatus="+Root.PlayerReady+", LockState="+Root.Locked);
+
+	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Race": Root.PlayerRace, "Team": Root.PlayerTeam, "Color": Root.PlayerColor, "LockState": Root.Locked});
 };  
 
 // Globally available panel to this context
 (function () {
-	// save the context panel	
+	// default values
+	Root.PlayerRace = 0;
+	Root.PlayerTeam = 2;
+	Root.PlayerReady = false;
+	Root.Locked = false;
+	
+	// setup functions
 	Setup_Panaroma_Color_Table();
 	Setup_Colours(Root);
+	
+	CustomNetTables.SubscribeNetTableListener("dotacraft_pregame_table", NetTableUpdatePlayer);
+	CustomNetTables.SubscribeNetTableListener("dotacraft_color_table", Update_Available_Colors);
 	
 	$.Schedule(0.1, Update);
 })();
 
+// main logic behind updating players, this is called when net_table changed
+function NetTableUpdatePlayer(TableName, Key, Value){
+	if( Key == Root.PanelID ){
+		// variables  
+		var PlayerID = Value.PlayerIndex;
+		var PanelID = Key; 
+		//var ready = Boolise(Value.Ready);
+
+		// PlayerID & Player Panel 
+		var LocalPlayerID = Game.GetLocalPlayerID();
+		var PlayerPanel = Root;
+		PlayerPanel.Locked = Value.LockState;
+		//PlayerPanel.Ready = ready; 
+		PlayerPanel.PlayerID = PlayerID;
+		PlayerPanel.PlayerTeam = Value.Team
+		PlayerPanel.PlayerRace = Value.Race
+		PlayerPanel.PlayerColor = Value.Color
+		
+		if (PlayerID > 9000 ){
+			var OptionsDropDown = PlayerPanel.GetChild(1).GetChild(0);
+			if ( !isHost() )
+			OptionsDropDown.visible = false;
+		};
+
+		$.Msg("[Panel]: "+PanelID+" - [Player]: "+PlayerID+" is updating"); 
+		 
+		// find all drop-downs and update their selection
+		for(var index in dotacraft_DropDowns){ 	 
+			var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[index]);
+			
+			// determine which dropdown the current index is, and update accordingly
+			if(dotacraft_DropDowns[index] == "ColorDropDown"){
+				dropdown.SetSelected(Value.Color);
+			} 
+			else if (dotacraft_DropDowns[index] == "TeamDropDown"){ 
+				dropdown.SetSelected(Value.Team);
+			}
+			else if (dotacraft_DropDowns[index] == "RaceDropDown"){
+				dropdown.SetSelected(Value.Race);
+				
+				// if local player change the race background to match the select race
+				if(LocalPlayerID == PlayerID){
+					SetRaceBackgroundImage(Value.Race);
+				};
+			};
+		}; 
+		
+		// disable colors that are already taken
+		Update_Available_Colors();
+	};
+}; 
+
+// function which sets the local background image to that of the race
+function SetRaceBackgroundImage(race){
+	// if race is not 0, which is the random race
+	var Left_Bar = Root.GetParent();
+	if(race != 0){
+		// save image path and then assign it in the style
+		var team_path = "url('s2r://panorama/images/selection/background_"+race+".png')";
+		Left_Bar.style["background-image"] = team_path;
+	}else{ // if random
+		Left_Bar.style["background-image"] = "url('s2r://panorama/images/backgrounds/gallery_background.png')";
+	};
+};
+ 
+function Update_Available_Colors(){
+	var PlayerIDList = Game.GetAllPlayerIDs();
+	var PlayerColors = CustomNetTables.GetAllTableValues("dotacraft_pregame_table");
+	var LocalPlayerID = Game.GetLocalPlayerID();  
+	var PlayerContainer = Root.GetParent();
+	
+	$.Msg("Updating colors");
+	ResetColorDropDownState();
+	
+	// for all panels
+	var PlayerPanel = Root;
+
+	var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
+	
+	// for all panels in table
+	for(var ID=0; ID <= ID+1;ID+=1){  
+		//color index to disable
+		if (PlayerColors[ID] != undefined){
+			var color_index = PlayerColors[ID].value.Color; 
+			var PanelToCheck = PlayerContainer.FindChildTraverse(PlayerColors[ID].key)
+			var PanelIDToCheck = PanelToCheck.PlayerID;
+			
+			if(PanelIDToCheck > 9000){
+				// find dropdown child
+				var dropdown_child = dropdown.FindDropDownMenuChild(color_index);
+				dropdown_child.enabled = false; 
+				dropdown_child.style["border"] = "3px solid black";
+			};
+		}else
+			break;
+	};
+};
+
+function ResetColorDropDownState(){
+	var Parent = Root.GetParent();
+	// for all panels
+	for(var ID=0; ID < ID+1; ID+=1){
+		var PlayerPanel = Parent.FindChildTraverse(ID);		
+		if(PlayerPanel == null)
+			break;
+		
+		var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
+
+		// for all ColorID's in dropdown
+		var ID2 = 1;
+		for(var ID=0; ID <= ID2;ID+=1){
+			//color index to disable
+			var color_index = ID;
+
+			var dropdown_child = dropdown.FindDropDownMenuChild(color_index);
+			if( dropdown_child != null ){
+				dropdown_child.enabled = true; 
+				dropdown_child.style["border"] = "0px solid black";
+				ID2++;
+			};
+		}; 
+	};		
+};
 function Update(){
-	Setup_Player();
-	CurrentStateOfPanel();
+	PlayerPanelUpdate();
 	$.Schedule(0.01, Update);
 };
 
-function CurrentStateOfPanel(){
+function UpdateDropDownVisibility(){
 	var OptionsDropDown = $("#OptionsDropDown");
 	var SelectedIndex = OptionsDropDown.GetSelected().id;
 
 	if( SelectedIndex != null ){
-		if( Players.IsValidPlayerID(Root.PlayerID) || Root.AI ){
+		if( Players.IsValidPlayerID(Root.PlayerID) || Root.PlayerID > 9000 ){
 			$("#ColorDropDown").visible = true;
 			$("#RaceDropDown").visible = true;
 			$("#TeamDropDown").visible = true;
@@ -160,6 +303,12 @@ function CurrentStateOfPanel(){
 			$("#RaceDropDown").visible = false;
 			$("#TeamDropDown").visible = false;	
 		};
+	};
+
+	if( isHost() ){
+		OptionsDropDown.visible = true;
+		
+		
 	};
 };
 
@@ -175,34 +324,82 @@ var AI_Names = {
 	9003: "COMPUTER (HARD)"
 }; 
 
+var dotacraft_DropDowns = {
+	1: "ColorDropDown",
+	2: "TeamDropDown",
+	3: "RaceDropDown"
+};
+
 // this function sets up all the components for the player once
-function Setup_Player(){
+function PlayerPanelUpdate(){
 	var PlayerInfo;
+	
+	// manage name & image
 	if( Players.IsValidPlayerID(Root.PlayerID) ){
-		PlayerInfo = Game.GetPlayerInfo(Root.PlayerID); 
+		PlayerInfo = Game.GetPlayerInfo(Root.PlayerID);
 		
+		$("#PlayerAvatar").visible = true;
 		// assign steamid to avatar and playername panels
 		$("#PlayerAvatar").steamid = PlayerInfo.player_steamid;
-		$("#PlayerName").steamid = PlayerInfo.player_steamid;
+		$("#PlayerName").GetChild(0).text = PlayerInfo.player_name;
 	}else{
-	//	$("#PlayerAvatar").steamid = PlayerInfo.player_steamid;
+		$("#PlayerAvatar").visible = false;
 		$("#PlayerName").GetChild(0).text = AI_Names[Root.PlayerID];  
 	};
-
-	// default values
-	Root.PlayerRace = 1;
-	Root.PlayerReady = false;
-	Root.PlayerTeam = 3;
 	
+	// manage hosticon display
+	if( isHost() ){
+		// add Host panel class to differentiate between host and normal players
+		var Name = $("#PlayerName");
+		var HostIcon = $("#Host_Icon");
+		if( HostIcon == null ){
+			HostIcon = $.CreatePanel("Panel", Name, "Host_Icon");
+			HostIcon.SetHasClass("Host", true);	
+		}else
+			HostIcon.visible = true;
+	}else{
+		var HostIcon = $("#Host_Icon");
+		if(HostIcon != null){
+			HostIcon.visible = false;
+		};
+	};
+		
 	// set initial dropdown color
 	var dropdown = Root.FindChildTraverse("ColorDropDown");
 	dropdown.SetSelected(Root.PlayerColor);
 	var key = Root.PlayerColor;
-	
+	// set dropdown color
 	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[key].r+","+COLOUR_TABLE[key].g+","+COLOUR_TABLE[key].b+")";
 	
+	// set dropdown enabled states
+	if( Root.Locked )
+		if( isHost() )
+			SetDropDownStates(true);	
+		else
+			SetDropDownStates(false);
+	else if( Root.PlayerID == Game.GetLocalPlayerID() || (Root.PlayerID > 9000 && isHost()) )
+		SetDropDownStates(true);
+	else  // if Root.Locked && !isHost()
+		SetDropDownStates(false);
+	
+	// check slot is open (playerid 9000)
+	if( Root.PlayerID == 9000 )
+		$("#SitButton").visible = true;
+	else
+		$("#SitButton").visible = false
+	
+	// update dropdown visibilities accordingly
+	UpdateDropDownVisibility();
+	
 	// initial update player call
-	Update_Player();
+	UpdatePlayer();
+};
+
+function SetDropDownStates(Enabled){
+	for(var index in dotacraft_DropDowns){
+		var dropdown = Root.FindChildTraverse(dotacraft_DropDowns[index]);	
+		dropdown.enabled = Enabled;
+	};	
 };
 
 function Setup_Panaroma_Color_Table(){
@@ -212,8 +409,8 @@ function Setup_Panaroma_Color_Table(){
 	// loop and add the Colors table to the local color table
 	for (var key in Colors) {   
 		COLOUR_TABLE[key] = { r: Colors[key].value.r, g: Colors[key].value.g, b: Colors[key].value.b };	
-	} 
-}
+	};
+};
 
 // setup the colors for the color dropdown
 function Setup_Colours(panel){
@@ -263,15 +460,15 @@ function Count_Dropdown_Children(dropdown, name){
 
 // check if player is host
 function isHost(){
-    var Player_Info = Game.GetPlayerInfo(Root.PlayerID);
+    var Player_Info = Game.GetPlayerInfo(Game.GetLocalPlayerID());
     
     if(!Player_Info)
     {
-		$.Msg("Player does not exist = #"+Root.PlayerID);
+		//$.Msg("Player does not exist = #"+Root.PlayerID);
         return false;
     };
 
-    return player.player_has_host_privileges;
+    return Player_Info.player_has_host_privileges;
 };
 
 // unused old example button click
