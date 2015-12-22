@@ -12,13 +12,15 @@ CHEAT_CODES = {
 
 DEBUG_CODES = {
     ["debug_trees"] = function(...) dotacraft:DebugTrees(...) end,           -- "Prints the trees marked as pathable"
-    ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end          -- "Prints the positions marked for undead buildings"
+    ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end,         -- "Prints the positions marked for undead buildings"
+    ["debug_c"] = function(...) dotacraft:DebugCalls(...) end,               -- Spams the console with every lua call
+    ["debug_l"] = function(...) dotacraft:DebugLines(...) end,               -- Spams the console with every lua line 
 }
 
 TEST_CODES = {
     ["giveitem"] = function(...) dotacraft:GiveItem(...) end,          -- Gives an item by name to the currently selected unit
     ["createunits"] = function(...) dotacraft:CreateUnits(...) end,    -- Creates 'name' units around the currently selected unit, with optional num and neutral team
-    ["testhero"] = function(...) dotacraft:TestHero(...) end           -- Creates 'name' max level hero at the currently selected unit, optional team num
+    ["testhero"] = function(...) dotacraft:TestHero(...) end,          -- Creates 'name' max level hero at the currently selected unit, optional team num
 }
 
 function dotacraft:DeveloperMode(player)
@@ -50,7 +52,7 @@ function dotacraft:OnPlayerChat(keys)
 	if CHEAT_CODES[command] then
 		CHEAT_CODES[command](playerID, input[2])
 	elseif DEBUG_CODES[command] then
-        DEBUG_CODES[command]()
+        DEBUG_CODES[command](input[2])
     elseif TEST_CODES[command] then
         TEST_CODES[command](input[2], input[3], input[4], playerID)
     end        
@@ -231,6 +233,47 @@ function dotacraft:TestHero( heroName, bEnemy )
         end
 
     end, 0)
+end
+
+function dotacraft:DebugCalls()
+    if not GameRules.DebugCalls then
+        print("Starting DebugCalls")
+        GameRules.DebugCalls = true
+
+        debug.sethook(function(...)
+            local info = debug.getinfo(2)
+            local src = tostring(info.short_src)
+            local name = tostring(info.name)
+            if name ~= "__index" then
+                print("Call: ".. src .. " -- " .. name)
+            end
+        end, "c")
+    else
+        print("Stopped DebugCalls")
+        GameRules.DebugCalls = false
+        debug.sethook(nil, "c")
+    end
+end
+
+function dotacraft:DebugLines(funcName)
+    if not GameRules.DebugLines then
+        print("Starting DebugLines "..funcName)
+        GameRules.DebugLines = true
+
+        -- Line Hook
+        debug.sethook(function(event, line)
+            local info = debug.getinfo(2)
+            local src = tostring(info.short_src)
+            local name = tostring(info.name)
+            if name == funcName then
+                print("Line ".. line .. " -- " .. src .. " -- " .. name)
+            end
+        end, "l")
+    else
+        print("Stopped DebugLines")
+        GameRules.DebugLines = false
+        debug.sethook(nil, "l")
+    end
 end
 
 function GetGridAroundPoint( numUnits, point )
