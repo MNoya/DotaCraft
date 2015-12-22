@@ -140,7 +140,7 @@ function AssignYourself(){
 
 		// Assign panel teamIndex and Color
 		PlayerPanel.PlayerID = LocalPlayerID;
-		PlayerPanel.PlayerTeam = current_TeamIndex;
+		PlayerPanel.PlayerTeam = dotacraft_Teams[current_TeamIndex];
 		PlayerPanel.PlayerColor = current_ColorIndex;
 		
 		// increment current team index

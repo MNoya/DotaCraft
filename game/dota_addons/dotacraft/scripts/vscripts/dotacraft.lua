@@ -76,40 +76,43 @@ function dotacraft:InitGameMode()
 	print('[DOTACRAFT] Starting to load dotacraft gamemode...')
 
 	-- Setup rules
-	GameRules:SetHeroRespawnEnabled( false )
-	GameRules:SetUseUniversalShopMode( false )
-	GameRules:SetSameHeroSelectionEnabled( true )
-	GameRules:SetHeroSelectionTime( 0 )
-	GameRules:SetPreGameTime( 1 )
-	GameRules:SetPostGameTime( 0 )
-	GameRules:SetTreeRegrowTime( 10000.0 )
-	GameRules:SetUseCustomHeroXPValues ( true )
-	GameRules:SetGoldPerTick(0)
-	GameRules:SetUseBaseGoldBountyOnHeroes( false ) -- Need to check legacy values
-	GameRules:SetHeroMinimapIconScale( 1 )
-	GameRules:SetCreepMinimapIconScale( 1 )
-	GameRules:SetRuneMinimapIconScale( 1 )
-	GameRules:SetFirstBloodActive( false )
-  	GameRules:SetHideKillMessageHeaders( true )
-  	GameRules:EnableCustomGameSetupAutoLaunch( false )
+    LimitPathingSearchDepth(0.5)
+    GameRules:SetHeroRespawnEnabled( false )
+    GameRules:SetUseUniversalShopMode( false )
+    GameRules:SetSameHeroSelectionEnabled( true )
+    GameRules:SetHeroSelectionTime( 0 )
+    GameRules:SetPreGameTime( 1 )
+    GameRules:SetPostGameTime( 0 )
+    GameRules:SetTreeRegrowTime( 10000.0 )
+    GameRules:SetUseCustomHeroXPValues ( true )
+    GameRules:SetGoldPerTick(0)
+    GameRules:SetUseBaseGoldBountyOnHeroes( false ) -- Need to check legacy values
+    GameRules:SetHeroMinimapIconScale( 1 )
+    GameRules:SetCreepMinimapIconScale( 1 )
+    GameRules:SetRuneMinimapIconScale( 1 )
+    GameRules:SetFirstBloodActive( false )
+    GameRules:SetHideKillMessageHeaders( true )
+    GameRules:EnableCustomGameSetupAutoLaunch( false )
 
-  	-- Set game mode rules
-	GameMode = GameRules:GetGameModeEntity()        
-	GameMode:SetRecommendedItemsDisabled( true )
-	GameMode:SetBuybackEnabled( false )
-	GameMode:SetTopBarTeamValuesOverride ( true )
-	GameMode:SetTopBarTeamValuesVisible( true )
-	GameMode:SetUseCustomHeroLevels ( true )
-	GameMode:SetUnseenFogOfWarEnabled( UNSEEN_FOG_ENABLED )	
-	GameMode:SetTowerBackdoorProtectionEnabled( false )
-	GameMode:SetGoldSoundDisabled( false )
-	GameMode:SetRemoveIllusionsOnDeath( true )
-	GameMode:SetAnnouncerDisabled( true )
-	GameMode:SetLoseGoldOnDeath( false )
-	GameMode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
-	GameMode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
-	GameMode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
-	GameMode:SetCustomHeroMaxLevel ( 10 )
+    -- Set game mode rules
+    GameMode = GameRules:GetGameModeEntity()        
+    GameMode:SetRecommendedItemsDisabled( true )
+    GameMode:SetBuybackEnabled( false )
+    GameMode:SetTopBarTeamValuesOverride ( true )
+    GameMode:SetTopBarTeamValuesVisible( true )
+    GameMode:SetUseCustomHeroLevels ( true )
+    GameMode:SetUnseenFogOfWarEnabled( UNSEEN_FOG_ENABLED ) 
+    GameMode:SetTowerBackdoorProtectionEnabled( false )
+    GameMode:SetGoldSoundDisabled( false )
+    GameMode:SetRemoveIllusionsOnDeath( true )
+    GameMode:SetAnnouncerDisabled( true )
+    GameMode:SetLoseGoldOnDeath( false )
+    GameMode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
+    GameMode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+    GameMode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
+    GameMode:SetCustomHeroMaxLevel ( 10 )
+    GameMode:SetStashPurchasingDisabled( true )
+    GameMode:SetMaximumAttackSpeed( 500 )
 
 	-- Team Colors
 	for team,color in pairs(TEAM_COLORS) do
@@ -121,31 +124,9 @@ function dotacraft:InitGameMode()
 
 	print('[DOTACRAFT] Game Rules set')
 
-	-- Multi Team Configuration - Should be acquired from the UI, to allow 1v1v1v1 or 2v2 on the same map for example.
-	if GetMapName() == "hills_of_glory" then
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1,	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 	10 )
-	
-		-- Spectator
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_NOTEAM, 10 )
-	elseif GetMapName() == "copper_canyon" then
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1,	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 	10 )
-	
-		-- Spectator
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_NOTEAM, 10 )
-	else
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 2 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 2 )
-	end
+	for teamID=DOTA_TEAM_FIRST,DOTA_TEAM_CUSTOM_MAX do
+        GameRules:SetCustomGameTeamMaxPlayers( teamID, 10 )
+    end
 
 	-- Keep track of the last time each player was damaged (to play warnings/"we are under attack")
 	GameRules.PLAYER_BUILDINGS_DAMAGED = {}	
