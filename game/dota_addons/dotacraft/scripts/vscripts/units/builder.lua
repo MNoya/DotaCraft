@@ -175,6 +175,12 @@ function Build( event )
         -- Check the abilities of this building, disabling those that don't meet the requirements
         CheckAbilityRequirements( unit, playerID )
 
+        -- Add roots to ancient
+        local ancient_roots = unit:FindAbilityByName("nightelf_uproot")
+        if ancient_roots then
+            ancient_roots:ApplyDataDrivenModifier(unit, unit, "modifier_rooted_ancient", {})
+        end
+
         -- Apply the current level of Masonry to the newly upgraded building
         local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
         if masonry_rank and masonry_rank > 0 then
@@ -743,6 +749,11 @@ function CancelGather( event )
 
     -- Builder race
     local race = GetUnitRace(caster)
+
+    -- If it's carrying resources, leave the return resources ability enabled
+    if caster:HasModifier("modifier_carrying_lumber") or caster:HasModifier("modifier_carrying_gold") then
+        caster:SwapAbilities(race.."_gather", race.."_return_resources", false, true)
+    end
 
     local tree = caster.target_tree
     if tree then

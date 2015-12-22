@@ -1,0 +1,22 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "global_lit_simple.vfx"
+
+	//---- Translucent ----
+	F_ADDITIVE_BLEND 1
+	F_ALPHA_ANGLE_POWER 1
+	F_TRANSLUCENT 1
+
+	//---- Color ----
+	g_vColorTint "[1.000000 1.000000 1.000000 1.000000]"
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[0.000 1.000]"
+	TextureColor "materials/default/default_color.tga"
+
+	//---- Translucent ----
+	g_flAlphaAnglePower "8.000"
+	g_flOpacityScale "0.000"
+	TextureTranslucency "materials/default/default_trans.tga"
+}

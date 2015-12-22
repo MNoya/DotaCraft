@@ -9,7 +9,6 @@
 	"override_hero"				"npc_dota_hero_nevermore"
 	"InternalName"				"neutral_nevermore"
 	"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
-	"FormationRank"				"2"
 	"AttacksEnabled"			"ground, air"
 	
 	// Abilities
@@ -21,9 +20,7 @@
 	"Ability4" 					"firelord_volcano"
 	"Ability5"					""
 	"Ability6" 					""
-	"Ability10"					"firelord_arcana_model"
-	
-	"PathfindingSearchDepthScale" "0.5"
+	"Ability10"					"firelord_arcana_model"	    
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -57,6 +54,11 @@
 	//----------------------------------------------------------------
 	//"BountyGoldMin"				"38.0"
 	//"BountyGoldMax"				"54.0"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

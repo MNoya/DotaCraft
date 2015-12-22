@@ -36,7 +36,6 @@
 
 	"LumberCapacity"			"10"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -144,7 +143,6 @@
 
 	"AttacksEnabled"			"ground"
 
-	"PathfindingSearchDepthScale" "0.5"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -248,7 +246,6 @@
 
 	"AttacksEnabled"			"ground"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -360,7 +357,6 @@
 
 	"AttacksEnabled"			"ground,air"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -465,12 +461,12 @@
 
 	"AttacksEnabled"			"ground"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"human_animal_war_training_disabled"	 //Reference: Aihn
 	"Ability10"					"human_backpack_disabled"
+	//"Ability11"				"human_knight_mounted_rider"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -545,15 +541,15 @@
 		//	"Wearable4"		{	"ItemDef"		"5885"		} //"Stonehall Royal Guard Arms"
 		//	"Wearable5"		{	"ItemDef"		"6192"		} //"Pauldrons of the Equine Emissary"
 		//}
-		"AttachWearables"	
-		{
-			"Wearable1"		{	"ItemDef"	"181"	}
-			"Wearable2"		{	"ItemDef"	"183"	}
-			"Wearable3"		{	"ItemDef"	"184"	}
-			"Wearable4"		{	"ItemDef"	"185"	}
-			"Wearable5"		{	"ItemDef"	"186"	}
-		}
-	}
+        "AttachWearables" // Default npc_dota_hero_chaos_knight
+        {
+            "1" { "ItemDef" "181" } // Chaos Knight's Horse
+            "2" { "ItemDef" "183" } // Chaos Knight's Shoulder Guards
+            "3" { "ItemDef" "184" } // Chaos Knight's Helmet
+            "4" { "ItemDef" "185" } // Chaos Knight's Weapon
+            "5" { "ItemDef" "186" } // Chaos Knight's Shield
+        }
+    }
 
 	"precache"
 	{
@@ -581,7 +577,6 @@
 
 	"AttacksEnabled"			"ground,air"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -694,7 +689,6 @@
 
 	"AttacksEnabled"			"ground,air"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -807,7 +801,6 @@
 
 	"AttacksEnabled"			"ground"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -916,7 +909,6 @@
 
 	"AttacksEnabled"			"air"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	"LeavesCorpse"				"0"
 	
 	// Abilities
@@ -1019,7 +1011,6 @@
 	"AttacksEnabled"			"ground,air"
 	"LeavesCorpse"				"0"
 	
-	"PathfindingSearchDepthScale" "0.5"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -1131,7 +1122,6 @@
 	"SplashSmallRadius"			"250"
 	"SplashSmallDamage"			"0.1"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1165,7 +1155,7 @@
 	//----------------------------------------------------------------
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"RingRadius"				"40"
-	"CollisionSize"				"8"
+	"CollisionSize"				"32"
 	"FormationRank"				"4"
 	
 	// Gold and Lumber
@@ -1234,7 +1224,6 @@
 
 	"AttacksEnabled"			"ground"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	"LeavesCorpse"				"0"
 	
 	// Abilities
@@ -1270,7 +1259,7 @@
 	//----------------------------------------------------------------
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"RingRadius"				"40"
-	"CollisionSize"				"8"
+	"CollisionSize"				"48"
 	"FormationRank"				"0"
 	
 	// Gold and Lumber
@@ -1329,7 +1318,6 @@
 
 	"AttacksEnabled"			"ground,air"
 	
-	"PathfindingSearchDepthScale" "0.5"
 	"LeavesCorpse"				"0"
 	
 	// Abilities

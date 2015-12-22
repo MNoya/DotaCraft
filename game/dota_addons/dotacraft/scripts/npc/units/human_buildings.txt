@@ -388,7 +388,7 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/good_statue008.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.8"
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 	
@@ -641,9 +641,9 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/wooden_sentry_tower001.vmdl"
-	"ModelScale"				"0.7"
+	"ModelScale"				"0.5"
 	"Level"						"1"
-	"HealthBarOffset"			"140"
+	"HealthBarOffset"			"180"
 	"HasInventory"				"1"
 	
 	// Abilities
@@ -725,9 +725,9 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/tower_good.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.8"
 	"Level"						"1"
-	"HealthBarOffset"			"140"
+	"HealthBarOffset"			"180"
 
 	"AttacksEnabled"			"ground,air"
 	
@@ -815,9 +815,9 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/tower001.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.8"
 	"Level"						"1"
-	"HealthBarOffset"			"140"
+	"HealthBarOffset"			"180"
 
 	"AttacksEnabled"			"ground"
 	
@@ -904,9 +904,9 @@
 	//----------------------------------------------------------------
 	"BaseClass"					"npc_dota_creature"
 	"Model"						"models/props_structures/tower_dragon_white.vmdl"
-	"ModelScale"				"1"
+	"ModelScale"				"0.8"
 	"Level"						"1"
-	"HealthBarOffset"			"140"
+	"HealthBarOffset"			"180"
 
 	"AttacksEnabled"			"ground,air"
 	
@@ -933,7 +933,7 @@
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"800"
 	"AttackRange"				"800"
-	"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"
+	"ProjectileModel"			"particles/neutral_fx/black_dragon_attack.vpcf"
 	"ProjectileSpeed"			"1500"
 	
 	// Bounty

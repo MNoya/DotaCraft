@@ -182,11 +182,11 @@ function unit_shops:CreateShop(unit, shop_name)
 							print("remove neutral heroes panels from player="..tostring(playerID))
 						end
 						
-						UpdateHeroTavernForPlayer( playerID )
+						--[[UpdateHeroTavernForPlayer( playerID )
 						local tier = Players:GetCityLevel(playerID) or 9000
 						local hasAltar = Players:HasAltar(playerID)
 						SetNetTableValue("dotacraft_shops_table", tostring(GameRules.HeroTavernEntityID), {Shop = UnitShop, playerID = playerID, Tier=tier, Altar=hasAltar, Tavern=true}) 
-					
+						]]
 					end
 					
 				end

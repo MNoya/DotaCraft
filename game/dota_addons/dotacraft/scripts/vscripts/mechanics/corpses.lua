@@ -21,7 +21,7 @@ function LeavesCorpse( unit )
         return false
 
     -- Ignore custom buildings
-    elseif unit:FindAbilityByName("ability_building") then
+    elseif IsCustomBuilding(unit) then
         return false
 
     -- Ignore units that start with dummy keyword   

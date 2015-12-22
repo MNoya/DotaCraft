@@ -48,6 +48,8 @@ end
 -- Creates a rally point flag for this unit, removing the old one if there was one
 function SetRallyPoint( event )
 	local caster = event.caster
+	if not HasTrainAbility( caster ) then return end
+
 	local origin = caster:GetOrigin()
 	
 	-- Need to wait two frames for the building to be properly positioned
@@ -78,8 +80,6 @@ function SetRallyPoint( event )
 		if not event.target_points then
 			-- For the initial rally point, get point away from the building looking towards (0,0,0)
 			point = origin + forwardVec * 220
-			DebugDrawCircle(point, Vector(255,255,255), 255, 10, false, 10)
-			DebugDrawCircle(point, Vector(255,255,255), 255, 20, false, 10)
 
 			-- Keep track of this position so that every unit is autospawned there (avoids going around the)
 			caster.initial_spawn_position = point
@@ -115,7 +115,7 @@ function MoveToRallyPoint( event )
 	if caster.flag and IsValidEntity(caster.flag) then
 		local flag = caster.flag
 		local rally_type = flag.type
-		print("Move to Rally Point", flag.type)
+
 		-- If its a tree and this is a builder, cast gather
 		if rally_type == "tree" then
 			Timers:CreateTimer(0.05, function() 
@@ -129,13 +129,11 @@ function MoveToRallyPoint( event )
 				        local gather_ability = target:FindAbilityByName(race.."_gather")
 				        if gather_ability then
 				        	local tree_index = GetTreeIndexFromHandle(empty_tree)
-				            print("Order: Cast on Tree ",tree_index)
 				            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
 				        end
 				    end
 				else
 					-- Move
-					print("MOVE TO TREE POSITION")
 					local position = caster.flag:GetAbsOrigin()
 					target:MoveToPosition(position)
 				end
@@ -151,13 +149,11 @@ function MoveToRallyPoint( event )
 			    		if ab then print(ab:GetAbilityName()) end
 			    	end
 			        if gather_ability then
-			            print("Order: Cast on Mine ",flag)
 			            target.skip = true
 			            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = flag:GetEntityIndex(), AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
 			        end
 			    else
 			    	-- Move
-			    	print("MOVE TO MINE POSITION")
 			    	local position = flag:GetAbsOrigin()
 					target:MoveToPosition(position)
 				end
@@ -165,12 +161,10 @@ function MoveToRallyPoint( event )
 
 		-- If its a dummy - Move to position
 		elseif rally_type == "position" then
-			print("MOVE TO POSITION")
 			local position = flag:GetAbsOrigin()
 			Timers:CreateTimer(0.05, function() target:MoveToPosition(position) end)
 			print(target:GetUnitName().." moving to position",position)
 		elseif rally_type == "target" then
-			print("MOVE TO FOLLOW TARGET")
 			-- If its a target unit, Move to follow
 			Timers:CreateTimer(0.05, function() target:MoveToNPC(flag) end)
 			print(target:GetUnitName().." moving to follow",flag:GetUnitName())

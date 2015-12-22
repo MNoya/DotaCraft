@@ -76,40 +76,43 @@ function dotacraft:InitGameMode()
 	print('[DOTACRAFT] Starting to load dotacraft gamemode...')
 
 	-- Setup rules
-	GameRules:SetHeroRespawnEnabled( false )
-	GameRules:SetUseUniversalShopMode( false )
-	GameRules:SetSameHeroSelectionEnabled( true )
-	GameRules:SetHeroSelectionTime( 0 )
-	GameRules:SetPreGameTime( 1 )
-	GameRules:SetPostGameTime( 0 )
-	GameRules:SetTreeRegrowTime( 10000.0 )
-	GameRules:SetUseCustomHeroXPValues ( true )
-	GameRules:SetGoldPerTick(0)
-	GameRules:SetUseBaseGoldBountyOnHeroes( false ) -- Need to check legacy values
-	GameRules:SetHeroMinimapIconScale( 1 )
-	GameRules:SetCreepMinimapIconScale( 1 )
-	GameRules:SetRuneMinimapIconScale( 1 )
-	GameRules:SetFirstBloodActive( false )
-  	GameRules:SetHideKillMessageHeaders( true )
-  	GameRules:EnableCustomGameSetupAutoLaunch( false )
+    LimitPathingSearchDepth(0.5)
+    GameRules:SetHeroRespawnEnabled( false )
+    GameRules:SetUseUniversalShopMode( false )
+    GameRules:SetSameHeroSelectionEnabled( true )
+    GameRules:SetHeroSelectionTime( 0 )
+    GameRules:SetPreGameTime( 1 )
+    GameRules:SetPostGameTime( 0 )
+    GameRules:SetTreeRegrowTime( 10000.0 )
+    GameRules:SetUseCustomHeroXPValues ( true )
+    GameRules:SetGoldPerTick(0)
+    GameRules:SetUseBaseGoldBountyOnHeroes( false ) -- Need to check legacy values
+    GameRules:SetHeroMinimapIconScale( 1 )
+    GameRules:SetCreepMinimapIconScale( 1 )
+    GameRules:SetRuneMinimapIconScale( 1 )
+    GameRules:SetFirstBloodActive( false )
+    GameRules:SetHideKillMessageHeaders( true )
+    GameRules:EnableCustomGameSetupAutoLaunch( false )
 
-  	-- Set game mode rules
-	GameMode = GameRules:GetGameModeEntity()        
-	GameMode:SetRecommendedItemsDisabled( true )
-	GameMode:SetBuybackEnabled( false )
-	GameMode:SetTopBarTeamValuesOverride ( true )
-	GameMode:SetTopBarTeamValuesVisible( true )
-	GameMode:SetUseCustomHeroLevels ( true )
-	GameMode:SetUnseenFogOfWarEnabled( UNSEEN_FOG_ENABLED )	
-	GameMode:SetTowerBackdoorProtectionEnabled( false )
-	GameMode:SetGoldSoundDisabled( false )
-	GameMode:SetRemoveIllusionsOnDeath( true )
-	GameMode:SetAnnouncerDisabled( true )
-	GameMode:SetLoseGoldOnDeath( false )
-	GameMode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
-	GameMode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
-	GameMode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
-	GameMode:SetCustomHeroMaxLevel ( 10 )
+    -- Set game mode rules
+    GameMode = GameRules:GetGameModeEntity()        
+    GameMode:SetRecommendedItemsDisabled( true )
+    GameMode:SetBuybackEnabled( false )
+    GameMode:SetTopBarTeamValuesOverride ( true )
+    GameMode:SetTopBarTeamValuesVisible( true )
+    GameMode:SetUseCustomHeroLevels ( true )
+    GameMode:SetUnseenFogOfWarEnabled( UNSEEN_FOG_ENABLED ) 
+    GameMode:SetTowerBackdoorProtectionEnabled( false )
+    GameMode:SetGoldSoundDisabled( false )
+    GameMode:SetRemoveIllusionsOnDeath( true )
+    GameMode:SetAnnouncerDisabled( true )
+    GameMode:SetLoseGoldOnDeath( false )
+    GameMode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
+    GameMode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+    GameMode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
+    GameMode:SetCustomHeroMaxLevel ( 10 )
+    GameMode:SetStashPurchasingDisabled( true )
+    GameMode:SetMaximumAttackSpeed( 500 )
 
 	-- Team Colors
 	for team,color in pairs(TEAM_COLORS) do
@@ -121,31 +124,9 @@ function dotacraft:InitGameMode()
 
 	print('[DOTACRAFT] Game Rules set')
 
-	-- Multi Team Configuration - Should be acquired from the UI, to allow 1v1v1v1 or 2v2 on the same map for example.
-	if GetMapName() == "hills_of_glory" then
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1,	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 	10 )
-	
-		-- Spectator
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_NOTEAM, 10 )
-	elseif GetMapName() == "copper_canyon" then
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1,	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 	10 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 	10 )
-	
-		-- Spectator
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_NOTEAM, 10 )
-	else
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 2 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 2 )
-	end
+	for teamID=DOTA_TEAM_FIRST,DOTA_TEAM_CUSTOM_MAX do
+        GameRules:SetCustomGameTeamMaxPlayers( teamID, 10 )
+    end
 
 	-- Keep track of the last time each player was damaged (to play warnings/"we are under attack")
 	GameRules.PLAYER_BUILDINGS_DAMAGED = {}	
@@ -204,6 +185,7 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_client_convars", "libraries/modifiers/modifier_client_convars", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_specially_deniable", "libraries/modifiers/modifier_specially_deniable", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_autoattack", "units/attacks", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_autoattack_passive", "units/attacks", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
@@ -745,28 +727,7 @@ function dotacraft:OnNPCSpawned(keys)
 		BuildingHelper:InitializeBuilder(npc)
 	end
 
-	-- Apply armor and damage modifier (for visuals)
-	local attack_type = GetAttackType(npc)
-	if attack_type ~= 0 and npc:GetAttackDamage() > 0 then
-		ApplyModifier(npc, "modifier_attack_"..attack_type)
-    end
-
-    local armor_type = GetArmorType(npc)
-	if armor_type ~= 0 then
-		ApplyModifier(npc, "modifier_armor_"..armor_type)
-    end
-
-    if HasSplashAttack(npc) then
-    	ApplyModifier(npc, "modifier_splash_attack")
-    end
-
-    -- Attack system, only applied to units and buildings without an attack or without both ground and air attacks enabled
-    local attacks_enabled = GetAttacksEnabled(npc)
-    if attacks_enabled ~= "none" and attacks_enabled ~= "ground,air" then
-    	ApplyModifier(npc, "modifier_attack_system")
-    end
-
-    npc:AddNewModifier(npc, nil, "modifier_specially_deniable", {})
+    Units:Init(npc)
 end
 
 -- An entity somewhere has been hurt.
@@ -1475,7 +1436,7 @@ function dotacraft:OnPreGame()
 			--end, playerID)
 			
 			-- got to give it colorID for the javascript player object call in players.lua
-			SetNetTableValue("dotacraft_player_table", tostring(playerID), {Color = ColorID})
+			SetNetTableValue("dotacraft_player_table", tostring(playerID), {Color = color})
  		elseif playerID > 9000 then
 			-- Create ai player here
 		else

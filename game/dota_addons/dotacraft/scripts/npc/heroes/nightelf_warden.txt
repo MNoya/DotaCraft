@@ -8,7 +8,6 @@
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_phantom_assassin"
 	"InternalName"				"nightelf_warden"
-	"FormationRank"				"0"
 	"AttacksEnabled"			"ground"
 	
 	// Abilities
@@ -19,9 +18,7 @@
 	"Ability3" 					"warden_shadow_strike"
 	"Ability4" 					"nightelf_shadow_meld"
 	"Ability5"					""
-	"Ability6"					"warden_avatar_of_vengeance"
-	
-	"PathfindingSearchDepthScale" "0.5"
+	"Ability6"					"warden_avatar_of_vengeance"	    
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -54,6 +51,11 @@
 	//----------------------------------------------------------------
 	//"BountyGoldMin"				"38.0"
 	//"BountyGoldMax"				"54.0"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

@@ -8,7 +8,6 @@
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_keeper_of_the_light"
 	"InternalName"				"human_archmage"
-	"FormationRank"				"2"
 	"AttacksEnabled"			"ground, air"
 	
 	// Abilities
@@ -20,9 +19,7 @@
 	"Ability4" 					"archmage_mass_teleport"
 	"Ability5"					""
 	"Ability6" 					""
-	"Ability10"					""
-	
-	"PathfindingSearchDepthScale" "0.5"
+	"Ability10"					""	    
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -56,6 +53,11 @@
 	//----------------------------------------------------------------
 	//"BountyGoldMin"				"38.0"
 	//"BountyGoldMax"				"54.0"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------

@@ -7,7 +7,6 @@
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_zuus"
 	"InternalName"				"human_mountain_king"
-	"FormationRank"				"0"
 	"AttacksEnabled"			"ground"
 	
 	// Abilities
@@ -17,9 +16,7 @@
 	"Ability3" 					"mountain_king_bash"
 	"Ability4" 					"mountain_king_avatar"
 	"Ability5"					""
-	"Ability6"					""
-	
-	"PathfindingSearchDepthScale" "0.5"
+	"Ability6"					""	    
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -52,6 +49,11 @@
 	//----------------------------------------------------------------
 	//"BountyGoldMin"				"38.0"
 	//"BountyGoldMax"				"54.0"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"CollisionSize"				"32"
+	"FormationRank"				"0"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
