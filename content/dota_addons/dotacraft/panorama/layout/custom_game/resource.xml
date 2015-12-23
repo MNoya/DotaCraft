@@ -9,13 +9,19 @@
 		$.Msg( "Compiled Panorama Resource!" );
 	</script>
 	<Panel hittest="false" class='ResourcePanel'>
-		<Panel class="LumberPanel">
-			<Label id="LumberText" text="" html="true" class="TitleFont" />
-			<Image hittest="false" id="LumberIcon" src="file://{images}/custom_game/lumber_icon.png" />
-		</Panel>
-		<Panel class='FoodPanel Green'>
-			<Label id="FoodText" text= "" html="true" class="TitleFont" />
-			<Image hittest="false" id="FoodIcon" src="file://{images}/custom_game/food_icon.png" />
+		<Panel id="ResourceContainer" >
+			<Panel class="GoldPanel">
+				<Image hittest="false" id="GoldIcon" src="file://{images}/custom_game/gold_icon.png" />
+				<Label id="GoldText" text="" html="true" class="TitleFont" />
+			</Panel>
+			<Panel class="LumberPanel"> 
+				<Image hittest="false" id="LumberIcon" src="file://{images}/custom_game/lumber_icon.png" />
+				<Label id="LumberText" text="" html="true" class="TitleFont" />
+			</Panel>
+			<Panel class='FoodPanel Green'>
+				<Image hittest="false" id="FoodIcon" src="file://{images}/custom_game/food_icon.png" />
+				<Label id="FoodText" text= "" html="true" class="TitleFont" />
+			</Panel>
 		</Panel>
 		<Panel hittest="false" class='UpkeepPanel'>
 			<Label hittest="false" id="UpkeepText" text="" html="true" class="TitleFont"/>
