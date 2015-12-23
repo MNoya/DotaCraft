@@ -907,9 +907,6 @@ function dotacraft:OnTreeCut(keys)
 	local treeY = keys.tree_y
 	local treePos = Vector(treeX,treeY,0)
 
-	-- Create a dummy for clients to be able to detect trees standing and block their grid
-	CreateUnitByName("tree_chopped", treePos, false, nil, nil, 0)
-
 	-- Update the pathable trees nearby
 	local vecs = {
     	Vector(0,64,0),-- N

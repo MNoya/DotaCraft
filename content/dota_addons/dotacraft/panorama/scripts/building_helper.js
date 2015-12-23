@@ -115,6 +115,7 @@ function StartBuildingHelper( params )
                 // Put visible chopped tree dummies on a separate table to skip trees
                 if (Entities.GetUnitName(entities[i]) == 'tree_chopped')
                 {
+                    $.Msg("Got a cut tree!")
                     cutTrees[entPos] = entities[i]
                 }
                 // Block 2x2 squares if its an enemy unit
@@ -132,6 +133,8 @@ function StartBuildingHelper( params )
             // Block the grid if the tree isn't chopped
             if (cutTrees[treePos] === undefined)
                 BlockGridSquares(treePos, 2)
+            else
+                $.Msg("This tree was cut")
         }
 
         var mPos = GameUI.GetCursorPosition();
