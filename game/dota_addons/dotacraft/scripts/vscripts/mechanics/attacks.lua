@@ -282,6 +282,15 @@ function HasSplashAttack( unit )
     return false
 end
 
+function GetFullSplashRadius( unit )
+    local unitName = unit:GetUnitName()
+    local unit_table = GameRules.UnitKV[unitName]
+    if unit_table["SplashFullRadius"] then
+        return unit_table["SplashFullRadius"]
+    end
+    return 0
+end
+
 function GetMediumSplashRadius( unit )
     local unitName = unit:GetUnitName()
     local unit_table = GameRules.UnitKV[unitName]

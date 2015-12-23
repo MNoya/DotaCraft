@@ -1116,7 +1116,9 @@
 
 	"AttacksEnabled"			"ground"
 
+	"Artillery"					"1"
 	"SplashAttack"				"1"
+	"SplashFullRadius"			"25"
 	"SplashMediumRadius"		"150"
 	"SplashMediumDamage"		"0.4" //50%
 	"SplashSmallRadius"			"250"
@@ -1125,8 +1127,9 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"Ability1"					"human_flare_disabled"	 //Reference: Afla
-	"Ability2"					"human_fragmentation_shards_disabled"	 //Reference: Afsh
+	"Ability1"					"attack_ground"
+	"Ability2"					"human_flare_disabled"	 //Reference: Afla
+	"Ability3"					"human_fragmentation_shards_disabled"	 //Reference: Afsh
 	
 	// Armor
 	//----------------------------------------------------------------

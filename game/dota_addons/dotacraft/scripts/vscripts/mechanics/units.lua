@@ -268,6 +268,14 @@ function FindAllUnitsInRadius( unit, radius )
     return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
 end
 
+-- Returns all units in radius of a point
+function FindAllUnitsAroundPoint( unit, point, radius )
+    local team = unit:GetTeamNumber()
+    local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+    return FindUnitsInRadius(team, point, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
+end
+
 function FindAlliesInRadius( unit, radius )
     local team = unit:GetTeamNumber()
     local position = unit:GetAbsOrigin()
@@ -354,6 +362,11 @@ end
 
 function IsNeutralUnit( target )
     return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS)
+end
+
+function HasArtilleryAttack( unit )
+    local unitTable = GameRules.UnitKV[unit:GetUnitName()]
+    return unitTable["Artillery"]
 end
 
 -- Handles each specific lumber capacity for player units

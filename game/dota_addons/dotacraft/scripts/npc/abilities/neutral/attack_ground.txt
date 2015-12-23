@@ -1,0 +1,79 @@
+"attack_ground"
+{
+    "BaseClass"             "ability_datadriven"
+    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityUnitDamageType" "DAMAGE_TYPE_PHYSICAL"
+    "AbilityTextureName"    "attack_ground"
+    "MaxLevel"              "1"
+
+    "AbilityCastRange"      "1150"
+    "AOERadius"             "150"
+
+    "AbilityMultiOrder"     "1" //Extend this ability cast to other units with the ability in the current selection group
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "minimum_range"     "250"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "splash_radius"     "150"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/nightelf/glaive_thrower.lua"
+            "Function"      "AttackGround"
+            "Target"        "POINT"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_attacking_ground"
+        {
+            "IsHidden"          "1"
+    
+            "OnOrder"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_attacking_ground"
+                    "Target"        "CASTER"
+                }
+                "RunScript"
+                {
+                    "ScriptFile"    "units/nightelf/glaive_thrower.lua"
+                    "Function"      "StopAttackGround"
+                }
+            }
+
+            // Attacking ground is a fake attack
+            "OnAttack"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_attacking_ground"
+                    "Target"        "CASTER"
+                }
+                "RunScript"
+                {
+                    "ScriptFile"    "units/nightelf/glaive_thrower.lua"
+                    "Function"      "StopAttackGround"
+                }
+            }
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_DISABLE_AUTOATTACK"  "1"
+            }
+        }
+    }
+}

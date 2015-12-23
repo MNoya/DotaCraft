@@ -649,7 +649,9 @@
 	"AttacksEnabled"			"ground"
 	"LeavesCorpse"				"0"
 
+	"Artillery"					"1"
 	"SplashAttack"				"1"
+	"SplashFullRadius"			"25"
 	"SplashMediumRadius"		"50" 
 	"SplashMediumDamage"		"0.4" //65%
 	"SplashSmallRadius"			"150"
@@ -658,9 +660,9 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"6"
-	"Ability1"					"undead_get_corpse"	 //Reference: Sch2
-	"Ability2"					"undead_drop_corpse"	 //Reference: Amel
-	"Ability3"					"undead_attack_ground"	 //Reference: Amed
+	"Ability1"					"attack_ground"
+	"Ability2"					"undead_get_corpse"	 //Reference: Sch2
+	"Ability3"					"undead_drop_corpse"	 //Reference: Amel
 	"Ability4"					"undead_exhume_corpses_disabled" //Reference: Apts
 	"Ability5"					"undead_meat_wagon_disease_cloud_disabled"
 	"Ability11"					"ability_siege"
@@ -1388,6 +1390,7 @@
 	"LeavesCorpse"				"0"
 
 	"SplashAttack"				"1"
+	"SplashFullRadius"			"25"
 	"SplashMediumRadius"		"50"
 	"SplashMediumDamage"		"0.2" //30%
 	"SplashSmallRadius"			"200"
