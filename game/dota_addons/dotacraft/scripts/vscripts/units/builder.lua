@@ -113,10 +113,11 @@ function Build( event )
         
         for _,unit in pairs(units) do
             if unit ~= caster and unit:GetTeamNumber() == teamNumber and not IsCustomBuilding(unit) then
-                -- This is still sketchy but works
-                if (unit.state and unit.state ~= "repairing") then
+                -- This is still sketchy but works.
+                if (unit:IsIdle() and unit.state ~= "repairing") then
                     BuildingHelper:print("Moving unit "..unit:GetUnitName().." outside of the building area")
-                    local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * construction_radius
+                    local origin = unit:GetAbsOrigin()
+                    local front_position = origin + (origin - vPos):Normalized() * (construction_radius - (vPos-origin):Length2D())
                     ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
                     unit:AddNewModifier(caster, nil, "modifier_phased", {duration=1})
                 end
