@@ -43,6 +43,11 @@ function PrimalSplit( event )
 	caster.Storm = CreateUnitByName(unit_name_storm, storm_position, true, caster, caster, caster:GetTeamNumber())
 	caster.Fire = CreateUnitByName(unit_name_fire, fire_position, true, caster, caster, caster:GetTeamNumber())
 
+	AddUnitToSelection(caster.Earth)
+	AddUnitToSelection(caster.Storm)
+	AddUnitToSelection(caster.Fire)
+	RemoveUnitFromSelection(caster)
+
 	-- Make them controllable
 	caster.Earth:SetControllableByPlayer(player, true)
 	caster.Storm:SetControllableByPlayer(player, true)

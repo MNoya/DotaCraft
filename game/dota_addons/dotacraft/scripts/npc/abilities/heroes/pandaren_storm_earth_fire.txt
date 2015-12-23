@@ -661,7 +661,7 @@
 				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 			
-			"OnAttackLanded"
+			"OnAttack"
 			{
 				"RemoveModifier"
 				{
@@ -675,6 +675,41 @@
 					"Target"		"CASTER"
 				}
 
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_windwalk_damage"
+					"Target" 		"CASTER"
+					"Duration"		"%duration"
+				}
+			}
+
+			"OnAbilityExecuted"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName" 	"modifier_invisible"
+					"Target"		"CASTER"
+				}
+
+				"RemoveModifier"
+				{
+					"ModifierName" 	"modifier_windwalk"
+					"Target"		"CASTER"
+				}
+			}
+		}
+
+		"modifier_windwalk_damage"
+		{
+			"IsHidden"	"1"
+			"OnAttackLanded"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_windwalk_damage"
+					"Target" 		"CASTER"
+				}
+				
 				"Damage"
 				{
 					"Target"	"TARGET"
@@ -693,21 +728,6 @@
 						"02"		"1 4 0"					//lifetime digits
 						"03"		"255 0 0"				//color
 					}
-				}
-			}
-
-			"OnAbilityExecuted"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName" 	"modifier_invisible"
-					"Target"		"CASTER"
-				}
-
-				"RemoveModifier"
-				{
-					"ModifierName" 	"modifier_windwalk"
-					"Target"		"CASTER"
 				}
 			}
 		}
