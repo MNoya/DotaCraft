@@ -1417,7 +1417,7 @@ function dotacraft:OnPreGame()
 		end
 		
 		local playerID = Player_Table.PlayerIndex
-		local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
+		local color = Player_Table.Color
 		local team = Player_Table.Team
 		local race = GameRules.raceTable[Player_Table.Race]
 		
@@ -1428,7 +1428,8 @@ function dotacraft:OnPreGame()
 		
 		if PlayerResource:IsValidPlayerID(playerID) then
 			-- player stuff
-			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
+			local PlayerColor = GetNetTableValue("dotacraft_color_table", tostring(color))
+			PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
 			--PrecacheUnitByNameAsync(race, function() --Race Heroes are already precached
 				local player = PlayerResource:GetPlayer(playerID)
