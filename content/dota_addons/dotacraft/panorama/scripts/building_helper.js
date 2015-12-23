@@ -115,7 +115,6 @@ function StartBuildingHelper( params )
                 // Put visible chopped tree dummies on a separate table to skip trees
                 if (Entities.GetUnitName(entities[i]) == 'tree_chopped')
                 {
-                    $.Msg("Got a cut tree!")
                     cutTrees[entPos] = entities[i]
                 }
                 // Block 2x2 squares if its an enemy unit

@@ -101,6 +101,13 @@ function Build( event )
         Sounds:EmitSoundOnClient(playerID, "Building.Placement")
         EmitGlobalSound("Building.Placement")
 
+        -- Cancel gather
+        local race = GetUnitRace(caster)
+        local gather_ability = caster:FindAbilityByName(race.."_gather")
+        if gather_ability then
+            CancelGather({caster = caster, ability = gather_ability})
+        end
+
         -- Move allied units away from the building place
         local units = FindUnitsInRadius(teamNumber, vPos, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
         
