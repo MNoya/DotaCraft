@@ -30,7 +30,7 @@ var ResourceTradingAndAlliances = (function() {
 		var LocalPlayerTeam = LocalPlayerInfo.player_team_id;
 
 		var PlayerIDList = Game.GetPlayerIDsOnTeam(LocalPlayerTeam);
-		
+		//var PlayerIDList = Game.GetAllPlayerIDs();
 		// loop through all id's found on this team
 		for(var PlayerID of PlayerIDList){
 			// if valid ID & not local player

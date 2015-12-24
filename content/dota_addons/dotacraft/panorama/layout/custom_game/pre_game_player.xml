@@ -13,7 +13,7 @@
 			</Button>
 		</Panel>
 		<Panel class="PanelOptions">
-			<DropDown id="OptionsDropDown" text="lol" oninputsubmit="OptionsInput()">
+			<DropDown id="OptionsDropDown" oninputsubmit="OptionsInput()">
 				<Label text="Open" 				id="0" />
 				<Label text="Close"				id="1" /> 
 				<Label text="Computer (Easy)" 	id="2" /> 

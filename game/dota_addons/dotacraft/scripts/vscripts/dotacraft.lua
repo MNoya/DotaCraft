@@ -192,7 +192,8 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
 
 	-- Listeners for Pre_Game_Selection
-	CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGame_Update"))	
+	CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGame_Update"))
+	CustomGameEventManager:RegisterListener( "pregame_countdown", Dynamic_Wrap(dotacraft, "PreGame_StartCountDown"))	
 	
 	-- Listeners for Trading Alliances
 	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
@@ -1411,9 +1412,8 @@ function dotacraft:OnPreGame()
 		if not NextTable then
 			Finished = true
 		end
-		
 		local playerID = Player_Table.PlayerIndex
-		local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
+		local color = Player_Table.Color
 		local team = Player_Table.Team
 		local race = GameRules.raceTable[Player_Table.Race]
 		
@@ -1424,7 +1424,8 @@ function dotacraft:OnPreGame()
 		
 		if PlayerResource:IsValidPlayerID(playerID) then
 			-- player stuff
-			PlayerResource:SetCustomPlayerColor(playerID, color.r, color.g, color.b)
+			local PlayerColor = GetNetTableValue("dotacraft_color_table", tostring(color))
+			PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
 			--PrecacheUnitByNameAsync(race, function() --Race Heroes are already precached
 				local player = PlayerResource:GetPlayer(playerID)
@@ -1442,7 +1443,15 @@ function dotacraft:OnPreGame()
 		
 		currentIndex = currentIndex + 1
  	end
-
+	
+	--[[
+	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) && PlayerResource:GetTeam(playerID) == 1 then
+			-- spectator
+		end
+	end
+	--]]
+	
  	-- Add gridnav blockers to the gold mines
 	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
 	for k,gold_mine in pairs (GameRules.GoldMines) do
@@ -1486,6 +1495,10 @@ end
 
 function dotacraft:PreGame_Update(data)
 	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex})
+end
+
+function PreGame_StartCountDown(data)
+	CustomGameEventManager:Send_ServerToAllClients("pregame_countdown_start", {})
 end
 
 function dotacraft:Setup_Tables()

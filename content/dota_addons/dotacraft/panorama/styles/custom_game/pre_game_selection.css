@@ -76,11 +76,12 @@
 }
 .PanelOptions
 {
-	width: 200px;
+	width: 300px;
 	height: 100%;
 
 	padding: 2px;
 	height: 100%;
+	flow-children: right;
 }
 
 .PanelOptions2
@@ -311,7 +312,7 @@
 	margin-top: 10px;
 	flow-children: right;
 	height: 60px;
-	width: 750px;
+	width: 850px;
 	
 	padding: 10px;
 	
@@ -558,7 +559,7 @@
 	background-repeat: no-repeat;
 	background-position: right 38px 35%;
 	background-size: 32px 32px;
-	box-shadow: #00000055 -2px -2px 1px 4px;
+	box-shadow: #000000 -2px -2px 1px 4px;
 	
 	border: 2px solid #5e686966;
 	
@@ -588,7 +589,7 @@
 	border: 2px solid #5e686966;
 	
 	font-size: 24px;
-	width: 100%;
+	width: 45px;
 	height: 100%;
 	z-index: 1;
 	vertical-align: center;
@@ -596,6 +597,7 @@
 	transition-property: background-color, border;
 	transition-duration: 0.15s;
 	transition-timing-function: linear;
+	padding: 50px;
 }
 
 #OptionsDropDown:disabled{
