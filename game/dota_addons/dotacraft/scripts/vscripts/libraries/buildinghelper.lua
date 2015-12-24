@@ -238,24 +238,27 @@ end
 function BuildingHelper:AddBuilding(keys)
     -- Callbacks
     callbacks = BuildingHelper:SetCallbacks(keys)
-
+    local builder = keys.caster
     local ability = keys.ability
     local abilName = ability:GetAbilityName()
-    local buildingTable = BuildingHelper:SetupBuildingTable(abilName) 
+    local buildingTable = BuildingHelper:SetupBuildingTable(abilName, builder)
 
     buildingTable:SetVal("AbilityHandle", ability)
+
+    -- Prepare the builder, if it hasn't already been done. Since this would need to be done for every builder in some games, might as well do it here.
+    if not builder.buildingQueue then  
+        BuildingHelper:InitializeBuilder(builder)
+    end
 
     local size = buildingTable:GetVal("ConstructionSize", "number")
     local unitName = buildingTable:GetVal("UnitName", "string")
 
-    BuildingHelper:print("AddBuilding "..unitName)
-
-    -- Prepare the builder, if it hasn't already been done. Since this would need to be done for every builder in some games, might as well do it here.
-    local builder = keys.caster
-
-    if not builder.buildingQueue then  
-        BuildingHelper:InitializeBuilder(builder)
+    -- Handle self-ghosting
+    if unitName == "self" then
+        unitName = builder:GetUnitName()
     end
+
+    BuildingHelper:print("AddBuilding "..unitName)
 
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
     if not fMaxScale then
@@ -278,12 +281,20 @@ function BuildingHelper:AddBuilding(keys)
     playerTable.activeBuildingTable = buildingTable
     playerTable.activeCallbacks = callbacks
 
+    -- npc_dota_creature doesn't render cosmetics on the particle ghost, use hero names instead
+    local overrideGhost = buildingTable:GetVal("OverrideBuildingGhost", "string")
+    if overrideGhost then
+        unitName = overrideGhost
+    end
+
     -- Remove old ghost model dummy
-    UTIL_Remove(playerTable.activeBuildingTable.mgd)
+    if playerTable.activeBuildingTable.mgd then
+        UTIL_Remove(playerTable.activeBuildingTable.mgd)
+    end
 
     -- Make a model dummy to pass it to panorama
     local mgd = CreateUnitByName(unitName, builder:GetAbsOrigin(), false, nil, nil, builder:GetTeam())
-    mgd:AddNoDraw()
+    mgd:AddEffects(EF_NODRAW)
     mgd:AddNewModifier(mgd, nil, "modifier_out_of_world", {})
     playerTable.activeBuildingTable.mgd = mgd
 
@@ -353,7 +364,7 @@ end
     SetupBuildingTable
     * Setup building table, returns a constructed table.
 ]]--
-function BuildingHelper:SetupBuildingTable( abilityName )
+function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
 
     local buildingTable = BuildingHelper.KV[abilityName]
 
@@ -394,6 +405,17 @@ function BuildingHelper:SetupBuildingTable( abilityName )
         return
     end
     buildingTable:SetVal("UnitName", unitName)
+
+    -- Self ghosting
+    if unitName == "self" then
+        unitName = builderHandle:GetUnitName()
+    end
+
+    -- OverrideBuildingGhost
+    local override_ghost = BuildingHelper.UnitKVs[unitName]["OverrideBuildingGhost"]
+    if override_ghost then
+        buildingTable:SetVal("OverrideBuildingGhost", override_ghost)
+    end
 
     -- Ensure that the unit actually exists
     local unitTable = BuildingHelper.UnitKVs[unitName]
@@ -516,8 +538,7 @@ end
       StartBuilding
       * Creates the building and starts the construction process
 ]]--
-function BuildingHelper:StartBuilding( keys )
-    local builder = keys.caster
+function BuildingHelper:StartBuilding( builder )
     local playerID = builder:GetMainControllingPlayer()
     local work = builder.work
     local callbacks = work.callbacks
@@ -1173,7 +1194,7 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     local playerID = builder:GetMainControllingPlayer()
     local player = PlayerResource:GetPlayer(playerID)
     local playerTable = BuildingHelper:GetPlayerTable(playerID)
-    local building = playerTable.activeBuilding
+    local buildingName = playerTable.activeBuilding
     local buildingTable = playerTable.activeBuildingTable
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
     local size = buildingTable:GetVal("ConstructionSize", "number")
@@ -1200,25 +1221,29 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     -- Position chosen is initially valid, send callback to spend gold
     callbacks.onBuildingPosChosen(location)
 
-    -- Create model ghost dummy out of the map, then make pretty particles
-    local mgd = CreateUnitByName(building, location, false, nil, nil, builder:GetTeam())
-    mgd:AddNoDraw()
-    mgd:AddNewModifier(mgd, nil, "modifier_out_of_world", {})
+    -- npc_dota_creature doesn't render cosmetics on the particle ghost, use hero names instead
+    local overrideGhost = buildingTable:GetVal("OverrideBuildingGhost", "string")
+    local unitName = buildingName
+    if overrideGhost then
+        unitName = overrideGhost
+    end
 
-    local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, mgd, player)
+    -- Create the building entity that will be used to start construction and project the queue particles
+    local entity = CreateUnitByName(unitName, location, false, nil, nil, builder:GetTeam())
+    entity:AddEffects(EF_NODRAW)
+    entity:AddNewModifier(entity, nil, "modifier_out_of_world", {})
+
+    local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, entity, player)
     ParticleManager:SetParticleControl(modelParticle, 0, location)
-    ParticleManager:SetParticleControlEnt(modelParticle, 1, mgd, 1, "follow_origin", mgd:GetAbsOrigin(), true) -- Model attach          
+    ParticleManager:SetParticleControlEnt(modelParticle, 1, entity, 1, "attach_hitloc", entity:GetAbsOrigin(), true) -- Model attach          
     ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0)) -- Alpha
     ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0)) -- Scale
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
-    mgd:SetAngles(0, -yaw, 0)
+    entity:SetAngles(0, -yaw, 0)
     
-    local color = Vector(255,255,255)
-    if RECOLOR_BUILDING_PLACED then
-        color = Vector(0,255,0)
-    end
+    local color = RECOLOR_BUILDING_PLACED and Vector(0,255,0) or Vector(255,255,255)
     ParticleManager:SetParticleControl(modelParticle, 2, color) -- Color
 
     -- If the ability wasn't queued, override the building queue
@@ -1226,8 +1251,8 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
         BuildingHelper:ClearQueue(builder)
     end
 
-    -- Add this to the builder queue
-    table.insert(builder.buildingQueue, {["location"] = location, ["name"] = building, ["buildingTable"] = buildingTable, ["particleIndex"] = modelParticle, ["entity"] = mgd, ["callbacks"] = callbacks})
+     -- Add this to the builder queue
+    table.insert(builder.buildingQueue, {["location"] = location, ["name"] = buildingName, ["buildingTable"] = buildingTable, ["particleIndex"] = modelParticle, ["entity"] = entity, ["callbacks"] = callbacks})
 
     -- If the builder doesn't have a current work, start the queue
     -- Extra check for builder-inside behaviour, those abilities are always queued
@@ -1246,6 +1271,8 @@ end
       * Processes an item of the builders work queue
 ]]--
 function BuildingHelper:AdvanceQueue(builder)
+    if (builder.move_to_build_timer) then Timers:RemoveTimer(builder.move_to_build_timer) end
+
     if builder.buildingQueue and #builder.buildingQueue > 0 then
         BuildingHelper:PrintQueue(builder)
 
@@ -1258,39 +1285,21 @@ function BuildingHelper:AdvanceQueue(builder)
         local location = work.location
         builder.work = work
 
-        -- Make the caster move towards the point
-        local abilName = "move_to_point_" .. tostring(castRange)
-        if BuildingHelper.AbilityKVs[abilName] == nil then
-            BuildingHelper:print('Error: ' .. abilName .. ' was not found in npc_abilities_custom.txt. Using the ability move_to_point_100')
-            abilName = "move_to_point_100"
-        end
-
-        -- If unit has other move_to_point abils, we should clean them up here
-        for i=0,15 do
-            local abil = builder:GetAbilityByIndex(i)
-            if abil then
-                local name = abil:GetAbilityName()
-                if name ~= abilName and StringStartsWith(name, "move_to_point_") then
-                    builder:RemoveAbility(name)
-                end
-            end
-        end
-
-        if not builder:HasAbility(abilName) then
-            builder:AddAbility(abilName)
-        end
-        local abil = builder:FindAbilityByName(abilName)
-        abil:SetLevel(1)
-
-        Timers:CreateTimer(function()
-            builder:CastAbilityOnPosition(location, abil, 0)
-
-            -- Change builder state
+        -- Move towards the point at cast range
+        builder.move_to_build_timer = Timers:CreateTimer(function()
+            if not IsValidEntity(builder) or not builder:IsAlive() then return end
             builder.state = "moving_to_build"
 
-            BuildingHelper:print("AdvanceQueue - "..builder:GetUnitName().." "..builder:GetEntityIndex().." moving to build "..work.name.." at "..VectorString(location))
-        end)
-    
+            local distance = (location - builder:GetAbsOrigin()):Length2D()
+            if distance > castRange then
+                builder:MoveToPosition(location)
+                return 0.03
+            else
+                builder:Stop()
+                BuildingHelper:StartBuilding(builder)
+                return
+            end
+        end)    
     else
         -- Set the builder work to nil to accept next work directly
         BuildingHelper:print("Builder "..builder:GetUnitName().." "..builder:GetEntityIndex().." finished its building Queue")
@@ -1310,6 +1319,11 @@ function BuildingHelper:ClearQueue(builder)
     builder.state = "idle"
 
     BuildingHelper:StopGhost(builder)
+
+    -- Clear movement
+    if builder.move_to_build_timer then
+        Timers:RemoveTimer(builder.move_to_build_timer)
+    end
 
     -- Skip if there's nothing to clear
     if not builder.buildingQueue or (not work and #builder.buildingQueue == 0) then

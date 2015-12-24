@@ -210,9 +210,6 @@ function dotacraft:InitGameMode()
 		end
 	end
 
-	-- Allow cosmetic swapping
-	SendToServerConsole( "dota_combine_models 0" )
-
 	-- Don't end the game if everyone is unassigned
     SendToServerConsole("dota_surrender_on_disconnect 0")
 
@@ -712,6 +709,9 @@ function dotacraft:OnNPCSpawned(keys)
 	--print("[DOTACRAFT] NPC Spawned")
 	--DeepPrintTable(keys)
 	local npc = EntIndexToHScript(keys.entindex)
+
+    -- Hardcoded fuckery to ignore tree of life overriden ghost
+    if npc:GetUnitName() == "npc_dota_hero_treant" then return end
 
 	if npc:IsHero() then
 		npc.strBonus = 0
