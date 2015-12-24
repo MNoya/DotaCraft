@@ -167,6 +167,7 @@ function dotacraft:InitGameMode()
 	-- Filters
     GameMode:SetExecuteOrderFilter( Dynamic_Wrap( dotacraft, "FilterExecuteOrder" ), self )
     GameMode:SetDamageFilter( Dynamic_Wrap( dotacraft, "FilterDamage" ), self )
+    GameMode:SetTrackingProjectileFilter( Dynamic_Wrap( dotacraft, "FilterProjectile" ), self )
 
     -- Register Listener
     CustomGameEventManager:RegisterListener( "reposition_player_camera", Dynamic_Wrap(dotacraft, "RepositionPlayerCamera"))
@@ -902,14 +903,10 @@ end
 -- A tree was cut down
 function dotacraft:OnTreeCut(keys)
 	print ('[DOTACRAFT] OnTreeCut')
-	DeepPrintTable(keys)
 
 	local treeX = keys.tree_x
 	local treeY = keys.tree_y
 	local treePos = Vector(treeX,treeY,0)
-
-	-- Create a dummy for clients to be able to detect trees standing and block their grid
-	CreateUnitByName("tree_chopped", treePos, false, nil, nil, 0)
 
 	-- Update the pathable trees nearby
 	local vecs = {
@@ -1562,4 +1559,25 @@ function dotacraft:ColorForPlayer( playerID )
 	local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
 	
 	return Vector(color.r, color.g, color.b)
+end
+
+function dotacraft:FilterProjectile( filterTable )
+    local attacker_index = filterTable["entindex_source_const"]
+    local victim_index = filterTable["entindex_target_const"]
+
+    if not victim_index or not attacker_index then
+        return true
+    end
+
+    local victim = EntIndexToHScript( victim_index )
+    local attacker = EntIndexToHScript( attacker_index )
+    local is_attack = tobool(filterTable["is_attack"])
+    local move_speed = filterTable["move_speed"]
+
+    if is_attack and HasArtilleryAttack(attacker) then
+        AttackGroundPos(attacker, victim:GetAbsOrigin(), move_speed)
+        return false
+    end
+
+    return true
 end

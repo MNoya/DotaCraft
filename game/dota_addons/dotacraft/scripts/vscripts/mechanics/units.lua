@@ -230,6 +230,26 @@ function IsValidAlive( unit )
     return (IsValidEntity(unit) and unit:IsAlive())
 end
 
+-- Auxiliar function that goes through every ability and item, checking for any ability being channelled
+function IsChanneling ( unit )
+    
+    for abilitySlot=0,15 do
+        local ability = unit:GetAbilityByIndex(abilitySlot)
+        if ability and ability:IsChanneling() then 
+            return true
+        end
+    end
+
+    for itemSlot=0,5 do
+        local item = unit:GetItemInSlot(itemSlot)
+        if item and item:IsChanneling() then
+            return true
+        end
+    end
+
+    return false
+end
+
 -- Returns all visible enemies in radius of the unit
 function FindEnemiesInRadius( unit, radius )
     local team = unit:GetTeamNumber()
@@ -246,6 +266,14 @@ function FindAllUnitsInRadius( unit, radius )
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
     return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
+end
+
+-- Returns all units in radius of a point
+function FindAllUnitsAroundPoint( unit, point, radius )
+    local team = unit:GetTeamNumber()
+    local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+    return FindUnitsInRadius(team, point, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
 end
 
 function FindAlliesInRadius( unit, radius )
@@ -334,6 +362,11 @@ end
 
 function IsNeutralUnit( target )
     return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS)
+end
+
+function HasArtilleryAttack( unit )
+    local unitTable = GameRules.UnitKV[unit:GetUnitName()]
+    return unitTable["Artillery"]
 end
 
 -- Handles each specific lumber capacity for player units

@@ -360,6 +360,7 @@
 	"LeavesCorpse"				"0"
 
 	"SplashAttack"				"1"
+	"SplashFullRadius"			"25"
 	"SplashMediumRadius"		"50"
 	"SplashMediumDamage"		"0.4" //65%
 	"SplashSmallRadius"			"150"
@@ -368,7 +369,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"nightelf_attack_ground"
+	"Ability1"					"attack_ground"
 	"Ability2"					"nightelf_vorpal_blades_disabled"	 //Reference: Aimp - Vorpal Blades
 	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
 	"Ability11"					"ability_siege"
@@ -1106,6 +1107,7 @@
 	"LeavesCorpse"				"0"
 
 	"SplashAttack"				"1"
+	"SplashFullRadius"			"25"
 	"SplashMediumRadius"		"125"
 	"SplashMediumDamage"		"0.4" //50%
 	"SplashSmallRadius"			"200"

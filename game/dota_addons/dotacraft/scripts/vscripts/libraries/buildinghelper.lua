@@ -55,6 +55,17 @@ function BuildingHelper:Init()
         end
     end, nil)
 
+    ListenToGameEvent('tree_cut', function(keys)
+        local treePos = Vector(keys.tree_x,keys.tree_y,0)
+
+        -- Create a dummy for clients to be able to detect trees standing and block their grid
+        CreateUnitByName("tree_chopped", treePos, false, nil, nil, 0)
+
+        if not BuildingHelper:IsAreaBlocked(2, treePos) then
+            BuildingHelper:FreeGridSquares(2, treePos)
+        end
+    end, nil)
+
     BuildingHelper.KV = {} -- Merge KVs into a single table
     BuildingHelper:ParseKV(BuildingHelper.AbilityKVs, BuildingHelper.KV)
     BuildingHelper:ParseKV(BuildingHelper.ItemKVs, BuildingHelper.KV)
@@ -105,9 +116,10 @@ function BuildingHelper:InitGNV()
             local gridX = GridNav:GridPosToWorldCenterX(x)
             local gridY = GridNav:GridPosToWorldCenterY(y)
             local position = Vector(gridX, gridY, 0)
-            local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) and not GridNav:IsNearbyTree(position, 30, true)
+            local treeBlocked = GridNav:IsNearbyTree(position, 30, true)
+            local terrainBlocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) and not treeBlocked
 
-            if blocked then
+            if terrainBlocked then
                 BuildingHelper.Terrain[x][y] = GRID_BLOCKED
                 byte = byte + bit.lshift(2,shift)
                 blockedCount = blockedCount+1
@@ -116,6 +128,12 @@ function BuildingHelper:InitGNV()
                 byte = byte + bit.lshift(1,shift)
                 unblockedCount = unblockedCount+1
             end
+
+            --Trees aren't networked but detected as ent_dota_tree entities on clients
+            if treeBlocked then
+                BuildingHelper.Terrain[x][y] = GRID_BLOCKED
+            end
+
             shift = shift - 2
 
             if shift == -2 then
@@ -1092,26 +1110,30 @@ end
       * Sends onConstructionFailed if invalid
 ]]--
 function BuildingHelper:ValidPosition(size, location, unit, callbacks)
-
-    --[[ Deprecated point_simple_obstruction validation
-    local halfSide = (size/2)*64
-    local boundingRect = {  leftBorderX = location.x-halfSide, 
-                            rightBorderX = location.x+halfSide, 
-                            topBorderY = location.y+halfSide,
-                            bottomBorderY = location.y-halfSide }
-
-    for x=boundingRect.leftBorderX+32,boundingRect.rightBorderX-32,64 do
-        for y=boundingRect.topBorderY-32,boundingRect.bottomBorderY+32,-64 do
-            local testLocation = Vector(x, y, location.z)
-            if GridNav:IsBlocked(testLocation) or GridNav:IsTraversable(testLocation) == false then
-                if callbacks.onConstructionFailed then
-                    callbacks.onConstructionFailed()
-                    return false
-                end
-            end
+    local bBlocked = BuildingHelper:IsAreaBlocked(size, location)
+    if bBlocked then
+        if callbacks.onConstructionFailed then
+            callbacks.onConstructionFailed()
+            return false
         end
-    end]]
+    end
 
+    -- Check enemy units blocking the area
+    local construction_radius = size * 64 - 32
+    local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
+    local enemies = FindUnitsInRadius(unit:GetTeamNumber(), location, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
+    if #enemies > 0 then
+        if callbacks.onConstructionFailed then
+            callbacks.onConstructionFailed()
+            return false
+        end
+    end
+
+    return true
+end
+
+function BuildingHelper:IsAreaBlocked( size, location )
     local originX = GridNav:WorldToGridPosX(location.x)
     local originY = GridNav:WorldToGridPosY(location.y)
 
@@ -1134,27 +1156,11 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     for x = lowerBoundX, upperBoundX do
         for y = lowerBoundY, upperBoundY do
             if BuildingHelper.Grid[x][y] == GRID_BLOCKED then
-                if callbacks.onConstructionFailed then
-                    callbacks.onConstructionFailed()
-                    return false
-                end
+                return true
             end
         end
     end
-
-    -- Check enemy units blocking the area
-    local construction_radius = size * 64 - 32
-    local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-    local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
-    local enemies = FindUnitsInRadius(unit:GetTeamNumber(), location, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
-    if #enemies > 0 then
-        if callbacks.onConstructionFailed then
-            callbacks.onConstructionFailed()
-            return false
-        end
-    end
-
-    return true
+    return false
 end
 
 --[[

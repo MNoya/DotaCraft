@@ -449,7 +449,9 @@
 	"AttacksEnabled"			"ground"
 	"LeavesCorpse"				"0"
 
+	"Artillery"					"1"
 	"SplashAttack"				"1"
+	"SplashFullRadius"			"25"
 	"SplashMediumRadius"		"50"
 	"SplashMediumDamage"		"0.4" //65%
 	"SplashSmallRadius"			"150"
@@ -458,7 +460,8 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"orc_burning_oil_disabled"	 //Reference: Abof
+	"Ability1"					"attack_ground"
+	"Ability2"					"orc_burning_oil_disabled"	 //Reference: Abof
 	"Ability11"					"ability_siege"
 	
 	// Armor

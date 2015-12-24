@@ -29,14 +29,6 @@ function dotacraft:FilterDamage( filterTable )
 		else
 			attack_damage = attacker:GetAttackDamage()
 		end
-	
-		-- Adjust if the damage comes from splash
-		if victim.damage_from_splash then
-			attack_damage = victim.damage_from_splash
-			victim.damage_from_splash = nil
-		elseif HasSplashAttack(attacker) then
-			SplashAttack(attack_damage, attacker, victim)
-		end
 
 		local attack_type  = GetAttackType( attacker )
 		local armor_type = GetArmorType( victim )
@@ -113,36 +105,6 @@ function dotacraft:FilterDamage( filterTable )
 
 	return true
 end
-
-function SplashAttack( attack_damage, attacker, victim )
-	local target = victim
-	local medium_radius = GetMediumSplashRadius(attacker)
-    local medium_damage = attack_damage * GetMediumSplashDamage(attacker)
-
-    local small_radius = GetSmallSplashRadius(attacker)
-    local small_damage = attack_damage * GetSmallSplashDamage(attacker)
-
-    --print("Attacked for "..attack_damage.." - Splashing "..medium_damage.." damage in "..medium_radius.." (medium radius) and "..small_damage.." in "..small_radius.." (small radius)")
-
-    local targets_medium_radius = FindAllUnitsInRadius(target, medium_radius)
-    --DebugDrawCircle(target:GetAbsOrigin(), Vector(255,0,0), 100, medium_radius, true, 3)
-    for _,v in pairs(targets_medium_radius) do
-        if v ~= attacker and v ~= target then
-        	v.damage_from_splash = medium_damage
-            ApplyDamage({ victim = v, attacker = attacker, damage = medium_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-        end
-    end
-
-    local targets_small_radius = FindAllUnitsInRadius(target, small_radius)
-    --DebugDrawCircle(target:GetAbsOrigin(), Vector(255,0,0), 100, small_radius, true, 3)
-    for _,v in pairs(targets_small_radius) do
-        if v ~= attacker and v ~= target then
-        	v.damage_from_splash = medium_damage
-            ApplyDamage({ victim = v, attacker = attacker, damage = small_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-        end
-    end
-end
-
 
 DAMAGE_TYPES = {
     [0] = "DAMAGE_TYPE_NONE",

@@ -101,15 +101,23 @@ function Build( event )
         Sounds:EmitSoundOnClient(playerID, "Building.Placement")
         EmitGlobalSound("Building.Placement")
 
+        -- Cancel gather
+        local race = GetUnitRace(caster)
+        local gather_ability = caster:FindAbilityByName(race.."_gather")
+        if gather_ability then
+            CancelGather({caster = caster, ability = gather_ability})
+        end
+
         -- Move allied units away from the building place
         local units = FindUnitsInRadius(teamNumber, vPos, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
         
         for _,unit in pairs(units) do
             if unit ~= caster and unit:GetTeamNumber() == teamNumber and not IsCustomBuilding(unit) then
-                -- This is still sketchy but works
-                if (unit.state and unit.state ~= "repairing") then
+                -- This is still sketchy but works.
+                if (unit:IsIdle() and unit.state ~= "repairing") then
                     BuildingHelper:print("Moving unit "..unit:GetUnitName().." outside of the building area")
-                    local front_position = unit:GetAbsOrigin() + unit:GetForwardVector() * construction_radius
+                    local origin = unit:GetAbsOrigin()
+                    local front_position = origin + (origin - vPos):Normalized() * (construction_radius - (vPos-origin):Length2D())
                     ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
                     unit:AddNewModifier(caster, nil, "modifier_phased", {duration=1})
                 end
