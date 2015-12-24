@@ -105,9 +105,9 @@ function StartBuildingHelper( params )
             var entPos = Entities.GetAbsOrigin( entities[i] )
             var squares = GetConstructionSize(entities[i])
 
-            if (squares > 0)
+            if (squares > 0 && IsCustomBuilding(entities[i]))
             {
-                // Block squares centered on the origin 
+                // Block squares centered on the origin
                 BlockGridSquares(entPos, squares)
             }
             else

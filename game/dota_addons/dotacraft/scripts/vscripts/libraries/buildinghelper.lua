@@ -185,8 +185,6 @@ function BuildingHelper:BuildCommand( args )
     local queue = tobool(args['Queue'])
     local builder = EntIndexToHScript(args['builder']) --activeBuilder
 
-    BuildingHelper:print("Build Command - Queued: ",queue)
-
     -- Cancel current repair
     if builder:HasModifier("modifier_builder_repairing") and not queue then
         local race = GetUnitRace(builder)
@@ -478,23 +476,8 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     local playersHero = PlayerResource:GetSelectedHeroEntity(playerID)
     BuildingHelper:print("PlaceBuilding for playerID ".. playerID)
 
-    -- Keep the origin of the buildings to put them back in position after spawning point_simple_obstruction entities
-    local buildings = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, construction_size*128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-    for k,v in pairs(buildings) do
-        if IsCustomBuilding(v) then
-            v.Origin = v:GetAbsOrigin()
-        end
-    end
-
     -- Spawn point obstructions before placing the building
     local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
-
-    -- Stuck the buildings back in place
-    for k,v in pairs(buildings) do
-        if IsCustomBuilding(v) then
-            v:SetAbsOrigin(v.Origin)
-        end
-    end
 
     -- Spawn the building
     local building = CreateUnitByName(name, location, false, playersHero, player, playersHero:GetTeamNumber())
@@ -568,23 +551,8 @@ function BuildingHelper:StartBuilding( builder )
     -- Mark this work in progress, skip refund if cancelled as the building is already placed
     work.inProgress = true
 
-    -- Keep the origin of the buildings to put them back in position after spawning point_simple_obstruction entities
-    local buildings = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, construction_size*128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-    for k,v in pairs(buildings) do
-        if IsCustomBuilding(v) then
-            v.Origin = v:GetAbsOrigin()
-        end
-    end
-
     -- Spawn point obstructions before placing the building
     local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
-
-    -- Stuck the buildings back in place
-    for k,v in pairs(buildings) do
-        if IsCustomBuilding(v) then
-            v:SetAbsOrigin(v.Origin)
-        end
-    end
 
     -- Spawn the building
     local building = CreateUnitByName(unitName, location, false, playersHero, player, builder:GetTeam())
@@ -1055,6 +1023,14 @@ end
       * Spawns a square of point_simple_obstruction entities at a location
 ]]--
 function BuildingHelper:BlockPSO(size, location)
+    -- Keep the origin of the buildings to put them back in position after spawning point_simple_obstruction entities
+    local buildings = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, size*128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+    for k,v in pairs(buildings) do
+        if IsCustomBuilding(v) then
+            v.Origin = v:GetAbsOrigin()
+        end
+    end
+
     local pos = Vector(location.x, location.y, location.z)
     BuildingHelper:SnapToGrid(size, pos)
 
@@ -1088,6 +1064,13 @@ function BuildingHelper:BlockPSO(size, location)
                     table.insert(gridNavBlockers, ent)
                 end
             end
+        end
+    end
+
+    -- Stuck the stuff back in place
+    for k,v in pairs(buildings) do
+        if IsCustomBuilding(v) then
+            v:SetAbsOrigin(v.Origin)
         end
     end
 
@@ -1221,48 +1204,53 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
     -- Position chosen is initially valid, send callback to spend gold
     callbacks.onBuildingPosChosen(location)
 
-    -- npc_dota_creature doesn't render cosmetics on the particle ghost, use hero names instead
-    local overrideGhost = buildingTable:GetVal("OverrideBuildingGhost", "string")
-    local unitName = buildingName
-    if overrideGhost then
-        unitName = overrideGhost
-    end
-
-    -- Create the building entity that will be used to start construction and project the queue particles
-    local entity = CreateUnitByName(unitName, location, false, nil, nil, builder:GetTeam())
-    entity:AddEffects(EF_NODRAW)
-    entity:AddNewModifier(entity, nil, "modifier_out_of_world", {})
-
-    local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, entity, player)
-    ParticleManager:SetParticleControl(modelParticle, 0, location)
-    ParticleManager:SetParticleControlEnt(modelParticle, 1, entity, 1, "attach_hitloc", entity:GetAbsOrigin(), true) -- Model attach          
-    ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0)) -- Alpha
-    ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0)) -- Scale
-
-    -- Adjust the Model Orientation
-    local yaw = buildingTable:GetVal("ModelRotation", "float")
-    entity:SetAngles(0, -yaw, 0)
-    
-    local color = RECOLOR_BUILDING_PLACED and Vector(0,255,0) or Vector(255,255,255)
-    ParticleManager:SetParticleControl(modelParticle, 2, color) -- Color
-
-    -- If the ability wasn't queued, override the building queue
-    if not bQueued then
+    -- Self placement doesn't make ghost particles on the placement area
+    if builder:GetUnitName() == buildingName then
+        -- Never queued
         BuildingHelper:ClearQueue(builder)
-    end
+        table.insert(builder.buildingQueue, {["location"] = location, ["name"] = buildingName, ["buildingTable"] = buildingTable, ["callbacks"] = callbacks})
 
-     -- Add this to the builder queue
-    table.insert(builder.buildingQueue, {["location"] = location, ["name"] = buildingName, ["buildingTable"] = buildingTable, ["particleIndex"] = modelParticle, ["entity"] = entity, ["callbacks"] = callbacks})
-
-    -- If the builder doesn't have a current work, start the queue
-    -- Extra check for builder-inside behaviour, those abilities are always queued
-    if builder.work == nil and not builder:HasModifier("modifier_builder_hidden") and not (builder.state == "repairing" or builder.state == "moving_to_repair") then
-        builder.work = builder.buildingQueue[1]
         BuildingHelper:AdvanceQueue(builder)
-        BuildingHelper:print("Builder doesn't have work to do, start right away")
+        BuildingHelper:print("Starting self placement of "..buildingName)
+
     else
-        BuildingHelper:print("Work was queued, builder already has work to do")
-        BuildingHelper:PrintQueue(builder)
+
+        -- Create the building entity that will be used to start construction and project the queue particles
+        local entity = CreateUnitByName(buildingName, location, false, nil, nil, builder:GetTeam())
+        entity:AddEffects(EF_NODRAW)
+        entity:AddNewModifier(entity, nil, "modifier_out_of_world", {})
+
+        local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, entity, player)
+        ParticleManager:SetParticleControl(modelParticle, 0, location)
+        ParticleManager:SetParticleControlEnt(modelParticle, 1, entity, 1, "attach_hitloc", entity:GetAbsOrigin(), true) -- Model attach          
+        ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0)) -- Alpha
+        ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0)) -- Scale
+
+        -- Adjust the Model Orientation
+        local yaw = buildingTable:GetVal("ModelRotation", "float")
+        entity:SetAngles(0, -yaw, 0)
+        
+        local color = RECOLOR_BUILDING_PLACED and Vector(0,255,0) or Vector(255,255,255)
+        ParticleManager:SetParticleControl(modelParticle, 2, color) -- Color
+
+        -- If the ability wasn't queued, override the building queue
+        if not bQueued then
+            BuildingHelper:ClearQueue(builder)
+        end
+
+         -- Add this to the builder queue
+        table.insert(builder.buildingQueue, {["location"] = location, ["name"] = buildingName, ["buildingTable"] = buildingTable, ["particleIndex"] = modelParticle, ["entity"] = entity, ["callbacks"] = callbacks})
+
+        -- If the builder doesn't have a current work, start the queue
+        -- Extra check for builder-inside behaviour, those abilities are always queued
+        if builder.work == nil and not builder:HasModifier("modifier_builder_hidden") and not (builder.state == "repairing" or builder.state == "moving_to_repair") then
+            builder.work = builder.buildingQueue[1]
+            BuildingHelper:AdvanceQueue(builder)
+            BuildingHelper:print("Builder doesn't have work to do, start right away")
+        else
+            BuildingHelper:print("Work was queued, builder already has work to do")
+            BuildingHelper:PrintQueue(builder)
+        end
     end
 end
 
@@ -1296,7 +1284,17 @@ function BuildingHelper:AdvanceQueue(builder)
                 return 0.03
             else
                 builder:Stop()
-                BuildingHelper:StartBuilding(builder)
+                
+                -- Self placement goes directly to the OnConstructionStarted callback
+                if work.name == builder:GetUnitName() then
+                    local callbacks = work.callbacks
+                    if callbacks.onConstructionStarted then
+                        callbacks.onConstructionStarted(builder)
+                    end
+
+                else
+                    BuildingHelper:StartBuilding(builder)
+                end
                 return
             end
         end)    
@@ -1334,7 +1332,9 @@ function BuildingHelper:ClearQueue(builder)
 
     -- Main work  
     if work then
-        ParticleManager:DestroyParticle(work.particleIndex, true)
+        if work.particleIndex then
+            ParticleManager:DestroyParticle(work.particleIndex, true)
+        end
         UTIL_Remove(work.entity)
 
         -- Only refund work that hasn't been placed yet
