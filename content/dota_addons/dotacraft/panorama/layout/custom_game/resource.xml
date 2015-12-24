@@ -22,9 +22,12 @@
 				<Image hittest="false" id="FoodIcon" src="file://{images}/custom_game/food_icon.png" />
 				<Label id="FoodText" text= "" html="true" class="TitleFont" />
 			</Panel>
+			<Panel class='UpkeepPanel'>
+				<Label id="UpkeepText" text="" html="true" class="TitleFont"/>
+			</Panel>
 		</Panel>
-		<Panel hittest="false" class='UpkeepPanel'>
-			<Label hittest="false" id="UpkeepText" text="" html="true" class="TitleFont"/>
+		<Panel hittest="false" class='UpkeepPanelAnnounce'>
+			<Label hittest="false" id="UpkeepTextAnnounce" text="" html="true" class="TitleFont"/>
 		</Panel>
 	</Panel>
 </root>

@@ -21,18 +21,6 @@
     opacity: 0;
 }
 
-.LumberPanel
-{
-    width: 100px;
-    height: 40px;
-	
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
-	border: 1px solid grey;
-	margin-right: 5px;
-	padding: 5px;
-	flow-children: right;
-}
-
 #LumberText
 {
 	color: green;
@@ -43,6 +31,7 @@
     text-shadow: 0px 0px 3px 3.0 #000000;
 	
 	padding-left: 5px;
+	horizontal-align: right;
 }
 
 #GoldIcon{
@@ -63,19 +52,43 @@
     text-shadow: 0px 0px 3px 3.0 #000000;
 	
 	padding-left: 5px;
+	horizontal-align: right;
 }
 
-.GoldPanel
+.GoldPanel, .FoodPanel, .LumberPanel, .UpkeepPanel
 {
     width: 100px;
     height: 40px;
+
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
 	
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
-	border: 1px solid grey;
+	background-color: black );
+	box-shadow: inset 0 0 5px #333333; 
 	margin-right: 5px;
 	padding: 5px;
 	flow-children: right;
+	border-radius: 8px;
 } 
+
+.GoldPanel:hover, .LumberPanel:hover, .FoodPanel:hover, .UpkeepPanel:hover
+{
+	box-shadow: inset 0 0 5px #777777; 
+	transition-property: box-shadow;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+}
+
+#UpkeepText 
+{
+    font-size: 16px;
+  	font-family: Radiance;
+  	font-weight: bold;
+    text-shadow: 4px 4px 4px #000000;
+
+	vertical-align: middle;
+	horizontal-align: middle;
+}
 
 #LumberIcon 
 {	
@@ -83,19 +96,6 @@
 	height: 30px;  
 	background-image: url("s2r://panorama/images/custom_game/lumber_icon.png"); 
 	background-size: 100% 100%;
-}
-
-
-.FoodPanel
-{
-    width: 100px;
-    height: 40px;
-	
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
-	border: 1px solid grey;
-	padding: 5px;
-	margin-right: 5px;
-	flow-children: right;
 }
 
 #FoodText
@@ -107,6 +107,7 @@
     text-shadow: 0px 0px 3px 2.0 #000000;
 	
 	padding-left: 5px;
+	horizontal-align: right;
 }
 
 #FoodIcon 
@@ -117,7 +118,7 @@
 	background-size: 100% 100%;
 }
 
-.UpkeepPanel
+.UpkeepPanelAnnounce
 {
 	width: 500px;
     height: 200px;
@@ -126,7 +127,7 @@
     vertical-align: top;
 }
 
-#UpkeepText
+#UpkeepTextAnnounce
 {
     font-size: 50px;
   	font-family: Radiance;

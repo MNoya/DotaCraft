@@ -1415,7 +1415,6 @@ function dotacraft:OnPreGame()
 		if not NextTable then
 			Finished = true
 		end
-		
 		local playerID = Player_Table.PlayerIndex
 		local color = Player_Table.Color
 		local team = Player_Table.Team
@@ -1447,7 +1446,15 @@ function dotacraft:OnPreGame()
 		
 		currentIndex = currentIndex + 1
  	end
-
+	
+	--[[
+	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) && PlayerResource:GetTeam(playerID) == 1 then
+			-- spectator
+		end
+	end
+	--]]
+	
  	-- Add gridnav blockers to the gold mines
 	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
 	for k,gold_mine in pairs (GameRules.GoldMines) do
@@ -1494,7 +1501,7 @@ function dotacraft:PreGame_Update(data)
 end
 
 function PreGame_StartCountDown(data)
-	CustomGameEventManager:Send_ServerToAllClients("pregame_countdown", {})
+	CustomGameEventManager:Send_ServerToAllClients("pregame_countdown_start", {})
 end
 
 function dotacraft:Setup_Tables()

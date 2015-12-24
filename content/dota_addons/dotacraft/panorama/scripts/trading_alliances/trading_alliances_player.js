@@ -53,12 +53,16 @@ function SetupPanels(){
 };
 
 function CalculateCurrentPendingResources(){
-	var PlayerIDList = Game.GetAllPlayerIDs();
 	var GoldAndLumber = {
 				Gold : 0,
 				Lumber : 0		
 			};
-	
+			
+	var LocalPlayerInfo	= Game.GetLocalPlayerInfo(); 
+	var LocalPlayerTeam = LocalPlayerInfo.player_team_id;
+
+	var PlayerIDList = Game.GetPlayerIDsOnTeam(LocalPlayerTeam);
+	// loop through all id's found on this team
 	for(var PlayerID of PlayerIDList){
 		if( PlayerID != Game.GetLocalPlayerID() ){
 			var PlayerPanel = Parent.FindChildTraverse(PlayerID);

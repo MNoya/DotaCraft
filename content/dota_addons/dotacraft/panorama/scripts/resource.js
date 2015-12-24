@@ -30,8 +30,8 @@ function OnPlayerFoodChanged ( args ) {
 	if (food_used > HIGH_UPKEEP && currentUpkeep != 3){
 		currentUpkeep = 3
 		$.Msg(" HIGH_UPKEEP")
-		$('#UpkeepText').text = $.Localize( "#high_upkeep" );
-		$('#UpkeepText').RemoveClass('Hidden');
+		$('#UpkeepTextAnnounce').text = $.Localize( "#high_upkeep" );
+		$('#UpkeepTextAnnounce').RemoveClass('Hidden');
 
 		$('#FoodText').AddClass('Red');
 		$('#FoodText').RemoveClass('Yellow');
@@ -40,37 +40,52 @@ function OnPlayerFoodChanged ( args ) {
 		$('#UpkeepText').AddClass('Red');
 		$('#UpkeepText').RemoveClass('Yellow');
 		$('#UpkeepText').RemoveClass('Green');
-		$.Schedule(3, function(){ $('#UpkeepText').AddClass('Hidden') })
+		$('#UpkeepText').text = "High Upkeep";
+		
+		$('#UpkeepTextAnnounce').AddClass('Red');
+		$('#UpkeepTextAnnounce').RemoveClass('Yellow');
+		$('#UpkeepTextAnnounce').RemoveClass('Green');
+		$.Schedule(3, function(){ $('#UpkeepTextAnnounce').AddClass('Hidden') })
 	}
 	else if (food_used > LOW_UPKEEP && food_used <= HIGH_UPKEEP && currentUpkeep !=2) {
 		currentUpkeep = 2
 		$.Msg(" LOW UPKEEP")
-		$('#UpkeepText').text = $.Localize( "#low_upkeep" );
-		$('#UpkeepText').RemoveClass('Hidden');
+		$('#UpkeepTextAnnounce').text = $.Localize( "#low_upkeep" );
+		$('#UpkeepTextAnnounce').RemoveClass('Hidden');
 
 		$('#FoodText').AddClass('Yellow');	
 		$('#FoodText').RemoveClass('Red');
 		$('#FoodText').RemoveClass('Green');
-
-		$('#UpkeepText').AddClass('Yellow');
+			
+		$('#UpkeepText').AddClass('Yellow');	
 		$('#UpkeepText').RemoveClass('Red');
 		$('#UpkeepText').RemoveClass('Green');
-		$.Schedule(3, function(){ $('#UpkeepText').AddClass('Hidden') })
+		$('#UpkeepText').text = "Low Upkeep";
+		
+		$('#UpkeepTextAnnounce').AddClass('Yellow');
+		$('#UpkeepTextAnnounce').RemoveClass('Red');
+		$('#UpkeepTextAnnounce').RemoveClass('Green');
+		$.Schedule(3, function(){ $('#UpkeepTextAnnounce').AddClass('Hidden') })
 	}
 	else if (food_used < LOW_UPKEEP && currentUpkeep !=1){
 		currentUpkeep = 1
 		$.Msg(" NO UPKEEP")
-		$('#UpkeepText').text = $.Localize( "#no_upkeep" );
-		$('#UpkeepText').RemoveClass('Hidden');
+		$('#UpkeepTextAnnounce').text = $.Localize( "#no_upkeep" );
+		$('#UpkeepTextAnnounce').RemoveClass('Hidden');
 
 		$('#FoodText').AddClass('Green');
 		$('#FoodText').RemoveClass('Yellow');
 		$('#FoodText').RemoveClass('Red');
-		
+
 		$('#UpkeepText').AddClass('Green');
 		$('#UpkeepText').RemoveClass('Yellow');
 		$('#UpkeepText').RemoveClass('Red');
-		$.Schedule(3, function(){ $('#UpkeepText').AddClass('Hidden') })
+		$('#UpkeepText').text = "No Upkeep";
+		
+		$('#UpkeepTextAnnounce').AddClass('Green');
+		$('#UpkeepTextAnnounce').RemoveClass('Yellow');
+		$('#UpkeepTextAnnounce').RemoveClass('Red');
+		$.Schedule(3, function(){ $('#UpkeepTextAnnounce').AddClass('Hidden') })
 	}
 }
 

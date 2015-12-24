@@ -38,19 +38,12 @@ var TeamSelection = (function() {
 	};
 
 	TeamSelection.prototype.assignPlayer = function(pPlayerID, pPanelID){	
-		var PlayerPanel;
+		var PlayerPanel = false;
 		if( pPanelID == null)
 			PlayerPanel = this.FindEmptySlot();
 		else
 			PlayerPanel = this.getPanel(pPanelID);
-		
-		if( PlayerPanel != false )
-		{			
-			// if local player
-			if( PlayerPanel.PlayerID == Game.GetLocalPlayerID()){
-				PlayerPanel.SetHasClass("Local", true);
-			};	
-		}; 
+
 		return PlayerPanel;
 	};
 	

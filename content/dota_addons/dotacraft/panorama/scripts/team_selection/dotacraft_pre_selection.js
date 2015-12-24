@@ -137,17 +137,19 @@ function AssignYourself(){
 	if( !System.isPlayerAssigned(LocalPlayerID) ){
 		var PlayerPanel = System.assignPlayer(LocalPlayerID);
 		$.Msg("PlayerPanel ="+PlayerPanel);
-
-		// Assign panel teamIndex and Color
-		PlayerPanel.PlayerID = LocalPlayerID;
-		PlayerPanel.PlayerTeam = dotacraft_Teams[current_TeamIndex];
-		PlayerPanel.PlayerColor = current_ColorIndex;
-		
-		// increment current team index
-		Increment_Variables();
-		 
-		// send new player Information
-		GameEvents.SendCustomGameEventToServer("update_pregame", {"PlayerID" : LocalPlayerID, "PanelID" : PlayerPanel.PanelID, "Team" : PlayerPanel.PlayerTeam, "Color" : PlayerPanel.PlayerColor, "Race" : 0});
+		if( PlayerPanel != false ){
+			// Assign panel teamIndex and Color
+			PlayerPanel.PlayerID = LocalPlayerID;
+			PlayerPanel.PlayerTeam = dotacraft_Teams[current_TeamIndex];
+			PlayerPanel.PlayerColor = current_ColorIndex;
+			
+			// increment current team index
+			Increment_Variables();
+			 
+			// send new player Information
+			GameEvents.SendCustomGameEventToServer("update_pregame", {"PlayerID" : LocalPlayerID, "PanelID" : PlayerPanel.PanelID, "Team" : PlayerPanel.PlayerTeam, "Color" : PlayerPanel.PlayerColor, "Race" : 0});
+		}else
+			$.Msg("Unable to assign local player")
 	};
 }; 
 
@@ -179,7 +181,7 @@ function CheckCurrentSpectators(){
 	for(var Panel of System.getAllPanels()){
 		if( Players.IsValidPlayerID(Panel.PlayerID) ){
 			var Index = Spectators.indexOf(Panel.PlayerID)
-			Spectators.splice(Index, 1);
+			Spectators.splice(Index, 1); 
 		};
 	};
 };
@@ -209,24 +211,18 @@ function SetupPreGame(){
 	CheckAndCreateCurrentPlayers(); 
 	
 	// assign local playerid to a panel
-	AssignYourself(); 
+	AssignYourself();
 	
 	// check if host, if true enable buttons
-	CheckForHostprivileges(); 
-	Update()
+	CheckForHostprivileges();
+	Update();
 };
 
 ///////////////////////////////////////////////
 // 				Game Start Logic			 //
 ///////////////////////////////////////////////
 
-function LoadUpNetTableForPreGame(){
-	for(var Panel of System.getAllPanels()){
-		GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Panel.PanelID, "PlayerIndex": Panel.PlayerID, "Race": Panel.PlayerRace, "Team": Panel.PlayerTeam, "Color": Panel.PlayerColor});
-	};
-};
-
-function InitStartGame(){
+function InitStartGame(){ 
 	GameEvents.SendCustomGameEventToServer("pregame_countdown", {});	
 };
 
@@ -236,8 +232,6 @@ function Start_Game(){
 	$.Msg("Game Starting");
 	//$.Msg(Root.CountDown)
 	//$.Msg(Root.Game_Started)
-	if( Game.GetLocalPlayerID() == 0 )
-		LoadUpNetTableForPreGame();
 	
 	if(DEVELOPER){ 
 		Initiate_Game();
@@ -271,11 +265,11 @@ function Initiate_Game(){
 	GameEvents.SendCustomGameEventToServer("selection_over", {});
 };
 
-function FindLocalPlayerTeamID(){
-	var TeamID = 3;
+function FindLocalPlayerTeamID(){ 
+	var TeamID = 3;  
 	for(var Panel of System.getAllPanels()){
 		if( Panel.PlayerID == Game.GetLocalPlayerID() )
-			TeamID = Panel.PlayerTeam;
+			TeamID = Panel.PlayerTeam;  
 	};
 	return TeamID;
 };
@@ -377,12 +371,12 @@ function Setup_Minimap(){
  
 (function () {
 	// default to spectator
-	Game.PlayerJoinTeam(3)
+	Game.PlayerJoinTeam(1)
 	
 	GameEvents.Subscribe( "panaroma_developer", Developer_Mode );
 	//GameEvents subscribes
 	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
-	GameEvents.Subscribe( "pregame_countdown", Start_Game );
+	GameEvents.Subscribe( "pregame_countdown_start", Start_Game );
 	
 	Root.CountDown = false; 
 	Root.Game_Started = false;
