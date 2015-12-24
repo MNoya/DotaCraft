@@ -34,7 +34,7 @@
 {
 	flow-children: down;
 	horizontal-align: middle;
-	height: 50px;
+	height: 80px;
 	width: 700px;
 	margin-left: 50px;
 	
@@ -57,7 +57,7 @@
 }
 #SpectatorTitle
 {
-	height: 40%;
+	height: 30%;
 	font-size: 15px;
 	width: 100%;
 	border-bottom: 1px solid grey;
@@ -67,7 +67,39 @@
 #SpectatorContainer{
 	margin-left: 25px;
 	width: 100%;
-	height: 60%;
+	height: 40%;
+}
+
+#SpectateButton{
+	height: 30%;
+	width: 10%; 
+	
+	vertical-align: middle;
+	horizontal-align: middle; 
+	
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #5A615Ecc ), to( #879695cc ));
+	box-shadow: fill #002a6644 -4px -4px 8px 9px;
+	border-top: 1px solid #ffffff44;
+	border-right: 1px solid #00000088;
+	border-left: 1px solid #ffffff44;
+	border-bottom: 1px solid #00000088;
+	
+	transition-property: background-color;
+	transition-duration: .2s;
+
+    wash-color: #99999922;
+}
+
+#SpectateButtonText{
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #d5d7d7;
+	
+    vertical-align: middle;
+	horizontal-align: middle;
+
 }
 
 .hidden
@@ -252,7 +284,7 @@
 }
 
 #LockTeamButtonText{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: normal;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -284,7 +316,7 @@
     visibility: collapse;
 }
 
-#StartButton:enabled:hover, #LockTeamButton:hover{
+#StartButton:enabled:hover, #LockTeamButton:hover, #SpectateButton:hover{
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #5f6663 ), to( #b4c2c1 ));
 }
 
@@ -303,7 +335,7 @@
     color: white;
 }
 
-#StartButton:active, #LockTeamButton:active
+#StartButton:active, #LockTeamButton:active, #SpectateButton:active
 {
     wash-color: #ffffff;
 }

@@ -47,10 +47,36 @@ function Toggle_Host_Container(){
 	};
 };
 
-function LockTeams()
-{
+function Spectate(){
+	var Parent = Root.GetParent();
+	for( var Panel of System.getAllPanels() ){
+		if(Panel != null){
+			if( Panel.PlayerID == Game.GetLocalPlayerID() ){
+				Panel.PlayerID = 9000;
+				
+				GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Panel.PanelID, "PlayerIndex": Panel.PlayerID});
+				break;
+			};		
+		};
+	};
+};	
+
+function LockTeams(){
+	var Locked;
 	// set lockstate == true/false for all panels
- 
+	for( var Panel of System.getAllPanels() ){
+		var PlayerID = Panel.PlayerID
+		if( Panel.Locked )
+			Locked = false
+		else
+			Locked = true
+		GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Panel.PanelID, "PlayerIndex": Panel.PlayerID, "LockState": Locked});
+	};
+	
+	if( Locked )
+		$("#LockTeamButtonText").text = "Unlock Players"
+	else
+		$("#LockTeamButtonText").text = "Lock Players"		
 }; 
 
 ///////////////////////////////////////////////

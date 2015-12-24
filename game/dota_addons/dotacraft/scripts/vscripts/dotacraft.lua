@@ -1494,7 +1494,7 @@ function dotacraft:Trade_Offers(args)
 end
 
 function dotacraft:PreGame_Update(data)
-	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex})
+	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex, LockState = data.LockState})
 end
 
 function PreGame_StartCountDown(data)
