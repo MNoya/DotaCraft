@@ -171,12 +171,15 @@ function NetTableUpdatePlayer(TableName, Key, Value){
 		var PlayerPanel = Root;
 		
 		PlayerPanel.PlayerID = PlayerID;
-		$.Msg("Panel ="+Key)
 
-		PlayerPanel.PlayerTeam = Value.Team;
-		PlayerPanel.PlayerRace = Value.Race;
-		PlayerPanel.PlayerColor = Value.Color;
-		PlayerPanel.Locked = Value.LockState;
+		if( Value.Team )
+			PlayerPanel.PlayerTeam = Value.Team;
+		if( Value.Race )
+			PlayerPanel.PlayerRace = Value.Race;
+		if( Value.Color )
+			PlayerPanel.PlayerColor = Value.Color;
+		if( Value.LockState || !Value.LockState )
+			PlayerPanel.Locked = Value.LockState
 		
 		if ( PlayerID > 9000 ){
 			var OptionsDropDown = PlayerPanel.GetChild(1).GetChild(0);
@@ -186,23 +189,25 @@ function NetTableUpdatePlayer(TableName, Key, Value){
 
 		$.Msg("[Panel]: "+PanelID+" - [Player]: "+PlayerID+" is updating"); 
 		
-		// find all drop-downs and update their selection
-		for(var index in dotacraft_DropDowns){ 	 
-			var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[index]);
-			
-			// determine which dropdown the current index is, and update accordingly
-			if(dotacraft_DropDowns[index] == "ColorDropDown"){
-				dropdown.SetSelected(Value.Color);
-			} 
-			else if (dotacraft_DropDowns[index] == "TeamDropDown"){ 
-				dropdown.SetSelected(Value.Team);
-			}
-			else if (dotacraft_DropDowns[index] == "RaceDropDown"){
-				dropdown.SetSelected(Value.Race);
+		if( Value.Team || Value.Color || Value.Race ){
+			// find all drop-downs and update their selection
+			for(var index in dotacraft_DropDowns){ 	 
+				var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[index]);
 				
-				// if local player change the race background to match the select race
-				if(LocalPlayerID == PlayerID){
-					SetRaceBackgroundImage(Value.Race);
+				// determine which dropdown the current index is, and update accordingly
+				if(dotacraft_DropDowns[index] == "ColorDropDown" && Value.Color){
+					dropdown.SetSelected(Value.Color);
+				} 
+				else if (dotacraft_DropDowns[index] == "TeamDropDown" && Value.Team){ 
+					dropdown.SetSelected(Value.Team);
+				}
+				else if (dotacraft_DropDowns[index] == "RaceDropDown" && Value.Race){
+					dropdown.SetSelected(Value.Race);
+					
+					// if local player change the race background to match the select race
+					if(LocalPlayerID == PlayerID){
+						SetRaceBackgroundImage(Value.Race);
+					};
 				};
 			};
 		};

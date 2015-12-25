@@ -12,8 +12,11 @@
 			<Panel id="SpectatorListContainer">
 				<Label id="SpectatorTitle" text="Spectators"/>
 				<Panel id="SpectatorContainer" />
+				<Button id="SpectateButton" onactivate="Spectate()">
+					<Label id="SpectateButtonText" text="Join"/>
+				</Button> 
 			</Panel>
-			<Panel id="PlayerListContainer"/> 
+			<Panel id="PlayerListContainer"/>
 		</Panel>	
 		
 		<Panel id="Right_Bar">
@@ -30,7 +33,7 @@
 				<Label id="Map_Description_Text" /> 
 			</Panel>
 				
-			<Button id="StartButton" onactivate="Start_Game()">
+			<Button id="StartButton" onactivate="InitStartGame()">
 				<Label text="Start Game"/>
 			</Button>
 		</Panel>
@@ -40,7 +43,7 @@
 				<Label id="Host_Header" text="Host Control Panel" />
 					
 				<Button id="LockTeamButton" onactivate="LockTeams()">
-					<Label id="LockTeamButtonText" text="Lock Teams"/>
+					<Label id="LockTeamButtonText" text="Lock Players"/>
 				</Button>
 			</Panel>
 			
