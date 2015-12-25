@@ -164,7 +164,6 @@ end
 
 -- Aggro a target
 function Attack( unit, target )
-    print("attackerino")
     unit:MoveToTargetToAttack(target)
     unit.attack_target = target
     unit.disable_autoattack = 0

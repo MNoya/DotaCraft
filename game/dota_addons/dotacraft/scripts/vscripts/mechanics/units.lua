@@ -28,13 +28,13 @@ function Units:Init( unit )
         else
             ApplyModifier(unit, "modifier_attack_system")
         end
-    end
 
-    -- Neutral AI aggro and leashing
-    if unit:GetTeamNumber() == DOTA_TEAM_NEUTRALS and not IsDummyUnit(unit) then
-        ApplyModifier(unit,"modifier_neutral_idle_aggro")
+        -- Neutral AI aggro and leashing
+        if unit:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+            ApplyModifier(unit,"modifier_neutral_idle_aggro")
 
-        NeutralAI:Start( unit )
+            NeutralAI:Start( unit )
+        end
     end
 
     unit:AddNewModifier(unit, nil, "modifier_specially_deniable", {})
@@ -370,10 +370,6 @@ end
 
 function IsNeutralUnit( target )
     return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS)
-end
-
-function IsDummyUnit( unit )
-    return string.match(unit:GetUnitName(), "dummy")
 end
 
 function HasArtilleryAttack( unit )
