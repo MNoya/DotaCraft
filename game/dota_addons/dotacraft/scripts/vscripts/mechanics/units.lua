@@ -374,7 +374,7 @@ end
 
 function HasArtilleryAttack( unit )
     local unitTable = GameRules.UnitKV[unit:GetUnitName()]
-    return unitTable["Artillery"]
+    return unitTable and unitTable["Artillery"]
 end
 
 -- Handles each specific lumber capacity for player units

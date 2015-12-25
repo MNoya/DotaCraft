@@ -531,7 +531,7 @@ end
 function HideReviveAbility( event )
 	local caster = event.caster
 	local ability = event.ability
-	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
 
 	local ability_name = ability:GetAbilityName()
 
@@ -553,7 +553,7 @@ end
 function ShowReviveAbility( event )
 	local caster = event.caster
 	local ability = event.ability
-	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
 	local item_name = ability:GetAbilityName()
 
 	local ability_name = string.gsub(item_name, "item_", "")
