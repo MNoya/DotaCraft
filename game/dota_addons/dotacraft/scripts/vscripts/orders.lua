@@ -158,32 +158,37 @@ function dotacraft:FilterExecuteOrder( filterTable )
     elseif order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
         local target = EntIndexToHScript(targetIndex)
         local errorMsg = nil
+
+        if not target then print("ERROR, ATTACK WITHOUT TARGET") return true end
+
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
-            if not unit or not target then print("ERROR ON ATTACK ORDER FILTER") return true end
-            if UnitCanAttackTarget(unit, target) then
-                unit.attack_target_order = target
-                return true
-            else
-                print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetAttacksEnabled(unit),"-",GetMovementCapability(target))
-                
-                -- Move to position
-                ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, TargetIndex = targetIndex, Position = target:GetAbsOrigin(), Queue = queue})
+            if unit then
+                if UnitCanAttackTarget(unit, target) then
+                    unit.attack_target_order = target
+                    unit.skip = true
 
-                -- Stop idle acquire
-                unit:SetIdleAcquire(false)
-                
-                if not errorMsg then
-                    local error_type = GetMovementCapability(target)
-                    if error_type == "air" then
-                        errorMsg = "#error_cant_target_air"
-                    elseif error_type == "ground" then
-                        errorMsg = "#error_must_target_air"
+                    -- Send the attack
+                    ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = targetIndex, Queue = queue})
+
+                else
+                    unit.skip = true
+                    print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetAttacksEnabled(unit),"-",GetMovementCapability(target))
+                    
+                    -- Move to position
+                    ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, TargetIndex = targetIndex, Position = target:GetAbsOrigin(), Queue = queue})
+                    
+                    if not errorMsg then
+                        local error_type = GetMovementCapability(target)
+                        if error_type == "air" then
+                            errorMsg = "#error_cant_target_air"
+                        elseif error_type == "ground" then
+                            errorMsg = "#error_must_target_air"
+                        end
+
+                        SendErrorMessage( unit:GetPlayerOwnerID(), errorMsg )
                     end
-
-                    SendErrorMessage( unit:GetPlayerOwnerID(), errorMsg )
                 end
-
             end
         end
         errorMsg = nil
