@@ -20,14 +20,21 @@ function Units:Init( unit )
         ApplyModifier(unit, "modifier_splash_attack")
     end
 
-    -- Attack system, only applied to units and buildings without an attack or without both ground and air attacks enabled
+    -- Attack system, only applied to units and buildings with an attack
     local attacks_enabled = GetAttacksEnabled(unit)
-    if attacks_enabled ~= "none" and attacks_enabled ~= "ground,air" then
+    if attacks_enabled ~= "none" then
         if IsBuilder(unit) then
             ApplyModifier(unit, "modifier_attack_system_passive")
         else
             ApplyModifier(unit, "modifier_attack_system")
         end
+    end
+
+    -- Neutral AI aggro and leashing
+    if unit:GetTeamNumber() == DOTA_TEAM_NEUTRALS and not IsDummyUnit(unit) then
+        ApplyModifier(unit,"modifier_neutral_idle_aggro")
+
+        NeutralAI:Start( unit )
     end
 
     unit:AddNewModifier(unit, nil, "modifier_specially_deniable", {})
@@ -273,14 +280,15 @@ function FindAllUnitsAroundPoint( unit, point, radius )
     local team = unit:GetTeamNumber()
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
-    return FindUnitsInRadius(team, point, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
+    return FindUnitsInRadius(team, point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
 end
 
 function FindAlliesInRadius( unit, radius )
     local team = unit:GetTeamNumber()
     local position = unit:GetAbsOrigin()
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-    return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, 0, FIND_CLOSEST, false)
+    local flags = DOTA_UNIT_TARGET_FLAG_INVULNERABLE
+    return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, flags, FIND_CLOSEST, false)
 end
 
 function HasGoldMineDistanceRestriction( unit_name )
@@ -362,6 +370,10 @@ end
 
 function IsNeutralUnit( target )
     return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS)
+end
+
+function IsDummyUnit( unit )
+    return string.match(unit:GetUnitName(), "dummy")
 end
 
 function HasArtilleryAttack( unit )

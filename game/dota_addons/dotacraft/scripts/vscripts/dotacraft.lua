@@ -387,35 +387,13 @@ end
 function dotacraft:OnAllPlayersLoaded()
 	print("[DOTACRAFT] All Players have loaded into the game")
 
-	print("[DOTACRAFT] Initializing Neutrals")
-	GameRules.ALLNEUTRALS = Entities:FindAllByClassname("npc_dota_creature")
-	for k,npc in pairs(GameRules.ALLNEUTRALS) do
-		if npc:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-
-			-- Apply armor and damage modifier (for visuals)
-			local attack_type = GetAttackType(npc)
-			if attack_type ~= 0 and npc:GetAttackDamage() > 0 then
-				ApplyModifier(npc, "modifier_attack_"..attack_type)
-		    end
-
-		    local armor_type = GetArmorType(npc)
-			if armor_type ~= 0 then
-				ApplyModifier(npc, "modifier_armor_"..armor_type)
-		    end
-
-		    if HasSplashAttack(npc) then
-		    	ApplyModifier(npc, "modifier_splash_attack")
-		    end
-
-		    -- Attack system
-		    npc:SetIdleAcquire(false)
-		    npc.AcquisitionRange = npc:GetAcquisitionRange()
-		    npc:SetAcquisitionRange(0)
-		    ApplyModifier(npc,"modifier_neutral_idle_aggro")
-		    
-		    NeutralAI:Start( npc )
-		end
-	end
+    print("[DOTACRAFT] Initializing Neutrals")
+    GameRules.ALLNEUTRALS = Entities:FindAllByClassname("npc_dota_creature")
+    for k,npc in pairs(GameRules.ALLNEUTRALS) do
+        if npc:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+            Units:Init(npc)
+        end
+    end
 end
 
 function dotacraft:OnHeroInGame(hero)
