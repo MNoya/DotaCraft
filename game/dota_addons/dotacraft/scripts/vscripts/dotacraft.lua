@@ -194,6 +194,7 @@ function dotacraft:InitGameMode()
 	-- Listeners for Pre_Game_Selection
 	CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGame_Update"))
 	CustomGameEventManager:RegisterListener( "pregame_countdown", Dynamic_Wrap(dotacraft, "PreGame_StartCountDown"))	
+	CustomGameEventManager:RegisterListener( "pregame_lock", Dynamic_Wrap(dotacraft, "PreGame_ToggleLock"))	
 	
 	-- Listeners for Trading Alliances
 	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
@@ -1472,10 +1473,14 @@ function dotacraft:Trade_Offers(args)
 end
 
 function dotacraft:PreGame_Update(data)
-	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex, LockState = data.LockState})
+	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex})
 end
 
-function PreGame_StartCountDown(data)
+function dotacraft:PreGame_ToggleLock(data)
+	CustomGameEventManager:Send_ServerToAllClients("pregame_toggle_lock", {})
+end
+
+function dotacraft:PreGame_StartCountDown(data)
 	CustomGameEventManager:Send_ServerToAllClients("pregame_countdown_start", {})
 end
 

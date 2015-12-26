@@ -68,6 +68,7 @@
 	margin-left: 25px;
 	width: 100%;
 	height: 40%;
+	flow-children: right;
 }
 
 #SpectateButton{
@@ -132,12 +133,15 @@
 	
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #5A615Ecc ), to( #879695cc ));
 	border: 1px solid #ffffff44;
-	border-left: 0px solid red;
 	
 	transition-property: background-color;
 	transition-duration: .2s;
 	
 	margin-right: 10px;
+}
+
+#SitButton:disabled{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #28403A99 ), to( #656473aa ));
 }
 
 #SitButton:hover{
@@ -378,8 +382,7 @@
 
 	background-repeat: no-repeat;
 	background-position: right 38px 35%;
-	background-size: 32px 32px;
-	
+	background-size: 32px 100%; 
 }
 #Left_Bar{
 	width: 80%;

@@ -60,6 +60,15 @@ var TeamSelection = (function() {
 		return SelectedPanel;
 	};
 	
+	TeamSelection.prototype.EmptyPanelsLeft = function(){
+		var EmptyPanelsLeft = false;
+		
+		if( FindEmptySlot() )
+			EmptyPanelsLeft = true;
+		
+		return EmptyPanelsLeft;
+	};
+	
 	TeamSelection.prototype.SetupPanels = function(){
 		// create panels equal to player limit
 		for(var i = 0; i < this.mPlayerLimit; i+=1){
