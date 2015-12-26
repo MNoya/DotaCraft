@@ -22,7 +22,7 @@
 	margin-left: 50px;
 	margin-top: 50px;
 	
-	border: 2px solid black;
+	border: 2px solid #ffffff44;
 	
 	horizontal-align: middle;
 	margin-top: 200px;
@@ -43,15 +43,18 @@
 	background-color: #444444; 
 		
 	border: 2px solid grey;
+	border-top: 0px solid grey;
 
 	opacity: 1;
 	
 	padding: 2px;
+	background-image: url("file://{images}/selection/pattern.png");
+	background-size: 100px;
 }
 
 #Spectator
 {
-	padding-left: 5px;
+	margin-left: 5px;
 	color: white;
 	font-family: bold;
 }
@@ -65,10 +68,11 @@
 }
 
 #SpectatorContainer{
-	margin-left: 25px;
+	margin-left: 15px;
 	width: 100%;
 	height: 40%;
 	flow-children: right;
+	padding: 5px;
 }
 
 #SpectateButton{
@@ -140,7 +144,7 @@
 	margin-right: 10px;
 }
 
-#SitButton:disabled{
+#SitButton:disabled, #SpectateButton:disabled{
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #28403A99 ), to( #656473aa ));
 }
 
@@ -215,22 +219,24 @@
 
 #HostPanel{
 	width: 200px;
-	height: 100%;
+	height: 150px;
 	
-	flow-children: right;
-	
-	horizontal-align: left;
-	vertical-align: middle;
+	horizontal-align: middle;
+	margin-left: 825px; 
 	
 	visibility: collapse;
 }
 
 .HostContainer{
 	height: 100%;
-	width: 90%;
+	width: 100%;
 	
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
-	border-right: 2px solid #ffffff44;	
+	border: 2px solid #ffffff44;
+	border-top: 0px solid grey;	
+	flow-children: down;
+	
+	padding: 10px;
 }
 
 .Closed{
@@ -238,7 +244,6 @@
 }
 
 #Host_Header{
-	margin-top: 20px;
     font-size: 18px;
     font-weight: normal;
     letter-spacing: 1px;
@@ -247,26 +252,8 @@
 	horizontal-align: middle;
 }
 
-#ToggleHostButton{
-	height: 10%;
-	width: 10%;
-	
-	vertical-align: middle;
-	
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #5A615Ecc ), to( #879695cc ));
-	border: 1px solid #ffffff44;
-	border-left: 0px solid red;
-	
-	transition-property: background-color;
-	transition-duration: .2s;
-}
-
-#ToggleHostButton:hover{
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #5f6663 ), to( #b4c2c1 ));
-}
-
 #LockTeamButton{
-	height: 5%;
+	height: 40%;
 	width: 80%; 
 	margin-top: 25px;
 	margin-bottom: 25px;
@@ -387,13 +374,13 @@
 #Left_Bar{
 	width: 80%;
 	height: 100%;
-	
+	/*	
     background-image: url("s2r://panorama/images/backgrounds/gallery_background.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	
 	border-left: 3px solid #444444; 
-	/*
+
 		This border is used to give the impression it's for the loading_screens panel
 	*/
 }

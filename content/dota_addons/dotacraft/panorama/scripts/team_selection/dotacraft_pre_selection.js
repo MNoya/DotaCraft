@@ -77,10 +77,13 @@ function NetTableUpdatePlayerLockState(){
 		Panel.Locked = LockState;		
 	};
 	
-	if( LockState )
-		$("#LockTeamButtonText").text = "Unlock Players"
-	else
-		$("#LockTeamButtonText").text = "Lock Players"		
+	if( LockState ){
+		$("#LockTeamButtonText").text = "Unlock Players";
+		$("#SpectateButton").enabled = false;
+	}else{
+		$("#LockTeamButtonText").text = "Lock Players";
+		$("#SpectateButton").enabled = true;
+	}
 }; 
 
 ///////////////////////////////////////////////
@@ -197,13 +200,13 @@ function CheckCurrentSpectators(){
 			var Index = Spectators.indexOf(Panel.PlayerID)
 			Spectators.splice(Index, 1); 
 		};
-	};
+	}; 
 
 	if( Spectators.indexOf(Game.GetLocalPlayerID()) == -1 )
 		$("#SpectateButton").visible = true;
 	else
 		$("#SpectateButton").visible = false; 
-};
+}; 
 
 function UpdateCurrentSpectators(){
 	var PlayerIDList = Game.GetAllPlayerIDs();
@@ -215,7 +218,7 @@ function UpdateCurrentSpectators(){
 			var PlayerName = Game.GetPlayerInfo(PlayerID).player_name;
 			PlayerLabel.text = PlayerName;
 			PlayerLabel.SetHasClass("Spectator", true);
-			if( !isHost() )
+			if( isHost() )
 				PlayerLabel.style["color"] = "yellow";
 		};
 		
@@ -225,7 +228,7 @@ function UpdateCurrentSpectators(){
 		else
 			PlayerPanel.visible = false;
 	};
-};
+};  
 
 function Update_Available_Colors(){
 	for( var PlayerPanel of System.getAllPanels() ){
