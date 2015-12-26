@@ -130,7 +130,7 @@ function AggroFilter( unit )
             -- The unit acquired a new attack target
             if target ~= unit.attack_target then
                 if bCanAttackTarget then
-                    Attack(unit, target)
+                    unit.attack_target = target --Update the target, keep the aggro
                     return
                 else
                     -- Is there any enemy unit nearby the invalid one that this unit can attack?
@@ -159,6 +159,17 @@ function DisableAggro( unit )
     unit.disable_autoattack = 1
     if unit:GetAggroTarget() then
         unit:Stop() --Unit will still turn for a frame towards its invalid target
+    end
+
+    -- Resume attack move order
+    if unit.current_order == DOTA_UNIT_ORDER_ATTACK_MOVE then
+        unit.skip = true
+        local orderTable = unit.orderTable
+        local x = tonumber(orderTable["position_x"])
+        local y = tonumber(orderTable["position_y"])
+        local z = tonumber(orderTable["position_z"])
+        local point = Vector(x,y,z) 
+        ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = point, Queue = false})
     end
 end
 
