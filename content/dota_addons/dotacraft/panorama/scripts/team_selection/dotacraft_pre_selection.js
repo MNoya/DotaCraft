@@ -13,7 +13,7 @@ var dotacraft_DropDowns = {
 };
 
 // table of all the buttons
-var dotacraft_Buttons = { 
+var dotacraft_Buttons = {
 	1: "HudButton"
 };
  
@@ -61,19 +61,23 @@ function Spectate(){
 	};
 };	
 
-function LockTeams(){
-	var Locked;
+var LockState = false;
+function LockPlayers(){
+	GameEvents.SendCustomGameEventToServer("pregame_lock", {});
+};
+
+function NetTableUpdatePlayerLockState(){
+	if ( LockState )
+		LockState = false
+	else
+		LockState = true
+	
 	// set lockstate == true/false for all panels
 	for( var Panel of System.getAllPanels() ){
-		var PlayerID = Panel.PlayerID
-		if( Panel.Locked )
-			Locked = false
-		else
-			Locked = true
-		GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Panel.PanelID, "PlayerIndex": Panel.PlayerID, "LockState": Locked});
+		Panel.Locked = LockState;		
 	};
 	
-	if( Locked )
+	if( LockState )
 		$("#LockTeamButtonText").text = "Unlock Players"
 	else
 		$("#LockTeamButtonText").text = "Lock Players"		
@@ -82,27 +86,6 @@ function LockTeams(){
 ///////////////////////////////////////////////
 // 		Player Panel State Management		 //
 ///////////////////////////////////////////////
-
-// function which handles the player panel status
-function Player_Status(PlayerID, enabled, ready){
-	// find panel and sethasclass
-	var PlayerPanel = PlayerContainer.FindChildTraverse(PlayerID);
-	PlayerPanel.SetHasClass("Ready", ready);
-	
-	//$.Msg("Player "+PlayerID+" is ready") 
-	
-	// find all drop-downs and toggle them
-	for(var index in dotacraft_DropDowns){
-		var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[index]);	
-		dropdown.enabled = enabled
-	};
-	
-	// find button and sethasclass
-	var button = PlayerPanel.FindChildTraverse("HudButton")
-	if(button != null){
-		button.SetHasClass("Ready", ready);
-	};
-};
 
 // main logic behind when everybody is ready
 // currently NOT IN USE, this only works when it's based on a "all ready" system
@@ -160,20 +143,21 @@ function CheckAndCreateCurrentPlayers(){
 function AssignYourself(){
 	var LocalPlayerID = Game.GetLocalPlayerID();
 	
-	if( !System.isPlayerAssigned(LocalPlayerID) ){
-		var PlayerPanel = System.assignPlayer(LocalPlayerID);
+	if( !System.isPlayerAssigned(LocalPlayerID) && System.EmptyPanelsLeft){
+		var PlayerPanel = System.assignPlayer(LocalPlayerID, LocalPlayerID);
 		$.Msg("PlayerPanel ="+PlayerPanel);
 		if( PlayerPanel != false ){
 			// Assign panel teamIndex and Color
 			PlayerPanel.PlayerID = LocalPlayerID;
 			PlayerPanel.PlayerTeam = dotacraft_Teams[current_TeamIndex];
 			PlayerPanel.PlayerColor = current_ColorIndex;
+			PlayerPanel.PlayerRace = 0;
 			
 			// increment current team index
 			Increment_Variables();
 			 
 			// send new player Information
-			GameEvents.SendCustomGameEventToServer("update_pregame", {"PlayerID" : LocalPlayerID, "PanelID" : PlayerPanel.PanelID, "Team" : PlayerPanel.PlayerTeam, "Color" : PlayerPanel.PlayerColor, "Race" : 0});
+			GameEvents.SendCustomGameEventToServer("update_pregame", {"PlayerID" : LocalPlayerID, "PanelID" : LocalPlayerID, "Team" : PlayerPanel.PlayerTeam, "Color" : PlayerPanel.PlayerColor, "Race" : PlayerPanel.PlayerRace});
 		}else
 			$.Msg("Unable to assign local player")
 	};
@@ -196,6 +180,10 @@ function CheckForHostprivileges(){
 function Update(){ 
 	CheckCurrentSpectators(); 
 	UpdateCurrentSpectators();
+	
+	ResetColorDropDownState();
+	Update_Available_Colors();
+	
 	$.Schedule(0.1, Update); 
 };
 
@@ -210,6 +198,11 @@ function CheckCurrentSpectators(){
 			Spectators.splice(Index, 1); 
 		};
 	};
+
+	if( Spectators.indexOf(Game.GetLocalPlayerID()) == -1 )
+		$("#SpectateButton").visible = true;
+	else
+		$("#SpectateButton").visible = false; 
 };
 
 function UpdateCurrentSpectators(){
@@ -222,14 +215,53 @@ function UpdateCurrentSpectators(){
 			var PlayerName = Game.GetPlayerInfo(PlayerID).player_name;
 			PlayerLabel.text = PlayerName;
 			PlayerLabel.SetHasClass("Spectator", true);
+			if( !isHost() )
+				PlayerLabel.style["color"] = "yellow";
 		};
 		
 		var PlayerPanel = SpectatorContainer.FindChildTraverse(PlayerID);
-		if( !Spectators.indexOf(PlayerID) )
+		if( Spectators.indexOf(PlayerID) > -1 )
 			PlayerPanel.visible = true;
 		else
 			PlayerPanel.visible = false;
 	};
+};
+
+function Update_Available_Colors(){
+	for( var PlayerPanel of System.getAllPanels() ){
+		var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
+		
+		for( var Panel of System.getAllPanels() ){
+			var color_index = Panel.PlayerColor;
+			var PanelIDToCheck = Panel.PlayerID;
+			//$.Msg("Disabling ColorID: "+color_index+", used by playerID: "+PanelIDToCheck+" in panel: "+Root.PanelID);
+			
+			if( PanelIDToCheck != 9000 && PanelIDToCheck != 8999 ){
+				// find dropdown child
+				var dropdown_child = dropdown.FindDropDownMenuChild(color_index);
+				if( dropdown_child != null){
+					dropdown_child.visible = false
+				};
+			};
+		};
+	};
+};
+
+function ResetColorDropDownState(){
+	for( var PlayerPanel of System.getAllPanels() ){
+		var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
+		
+		if( dropdown != null){
+			var ID3 = 0;
+			for(var ID2=0; ID2 < ID3+1; ID2++){ 
+				var dropdown_child = dropdown.FindDropDownMenuChild(ID2);
+				if( dropdown_child != null ){
+					dropdown_child.visible = true
+					ID3++;
+				};
+			}; 
+		};  
+	};		
 };
 
 function SetupPreGame(){
@@ -267,10 +299,6 @@ function Start_Game(){
 	// disable start button
 	var Button = Root.FindChildTraverse("StartButton");
 	Button.enabled = false;
-	
-	// disable player panel
-	var PlayerID = Game.GetLocalPlayerID();
-	Player_Status(PlayerID, false, false);
 	
 	// set time left incase the button is pressed again
 	Root.time_left = 3;
@@ -363,7 +391,7 @@ function Skip_Selection(data){
 	GameEvents.SendCustomGameEventToServer("selection_over", {});
 };
 
-function Setup_Panaroma_Color_Table(){
+function Setup_Panaroma_Color_Table(){    
 	// store color table inside this var
 	var Colors = CustomNetTables.GetAllTableValues("dotacraft_color_table");
 
@@ -371,9 +399,9 @@ function Setup_Panaroma_Color_Table(){
 	for (var key in Colors) {   
 		dotacraft_Colors[key] = { r: Colors[key].value.r, g: Colors[key].value.g, b: Colors[key].value.b, "taken": false };
 	};
-};
-
-function Setup_Minimap(){
+};    
+ 
+function Setup_Minimap(){ 
 	var Map_Info = Game.GetMapInfo()
 	var Map_Name = Map_Info.map_display_name.substring(2);
 	
@@ -394,7 +422,7 @@ function Setup_Minimap(){
 	Suggested_Players.text = $.Localize("#"+Map_Name+"_suggested_players");
 	Map_Description.text = $.Localize("#"+Map_Name+"_map_description");
 };
- 
+
 (function () {
 	// default to spectator
 	Game.PlayerJoinTeam(1)
@@ -403,6 +431,7 @@ function Setup_Minimap(){
 	//GameEvents subscribes
 	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
 	GameEvents.Subscribe( "pregame_countdown_start", Start_Game );
+	GameEvents.Subscribe( "pregame_toggle_lock", NetTableUpdatePlayerLockState );
 	
 	Root.CountDown = false; 
 	Root.Game_Started = false;
@@ -445,6 +474,7 @@ function Length(Panel){
 		No_End++;
 	};
 };
+
 // increment team and color index variables
 function Increment_Variables(){
 	if(current_TeamIndex >= Length(dotacraft_Teams)){ 

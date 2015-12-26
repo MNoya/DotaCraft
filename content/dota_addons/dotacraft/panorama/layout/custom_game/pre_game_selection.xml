@@ -42,7 +42,7 @@
 			<Panel id="HostContainer" class="HostContainer">
 				<Label id="Host_Header" text="Host Control Panel" />
 					
-				<Button id="LockTeamButton" onactivate="LockTeams()">
+				<Button id="LockTeamButton" onactivate="LockPlayers()">
 					<Label id="LockTeamButtonText" text="Lock Players"/>
 				</Button>
 			</Panel>
