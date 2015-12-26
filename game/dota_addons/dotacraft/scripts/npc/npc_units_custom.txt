@@ -3319,12 +3319,20 @@
 		"HealthBarOffset"			"180"
 	
 		"AttacksEnabled"			"ground"
+	
+		"Artillery"					"1"
+		"SplashAttack"				"1"
+		"SplashFullRadius"			"50"
+		"SplashMediumRadius"		"100"
+		"SplashMediumDamage"		"0.5"
+		"SplashSmallRadius"			"125"
+		"SplashSmallDamage"			"0.1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"human_magic_sentry"
-		"Ability2"					""//aoe attack
+		"Ability1"					"attack_ground"
+		"Ability2"					"human_magic_sentry"
 		"Ability6"					"ability_tower"
 		
 		// Armor
