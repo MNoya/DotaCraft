@@ -14,6 +14,10 @@ function OnIdleButtonPressed( data ) {
 	currentBuilder++
 
 	var nextBuilder = builderList[String(currentBuilder)]
+	if (nextBuilder === undefined)
+		currentBuilder = 1
+
+	nextBuilder = builderList[String(currentBuilder)]
 	GameUI.SelectUnit(nextBuilder, false)
 	GameEvents.SendCustomGameEventToServer( "reposition_player_camera", { pID: iPlayerID, entIndex: nextBuilder })
 }
