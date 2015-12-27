@@ -37,7 +37,7 @@ function Units:Init( unit )
         end
     end
 
-    unit:AddNewModifier(unit, nil, "modifier_specially_deniable", {})
+    ApplyModifier(unit, "modifier_specially_deniable")
 
     -- Adjust Hull
     local collision_size = GetCollisionSize(unit)

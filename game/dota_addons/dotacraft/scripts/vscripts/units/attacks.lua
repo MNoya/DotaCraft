@@ -175,6 +175,7 @@ end
 
 -- Aggro a target
 function Attack( unit, target )
+    unit:AlertNearbyUnits(target, nil)
     unit:MoveToTargetToAttack(target)
     unit.attack_target = target
     unit.disable_autoattack = 0
@@ -204,6 +205,7 @@ function OnAttacked( event )
     local enemyAttack = unit:GetTeamNumber() ~= attacker:GetTeamNumber()
 
     if enemyAttack and unit:IsIdle() and not unit:GetAggroTarget() then
+        unit:AlertNearbyUnits(attacker, nil)
         if UnitCanAttackTarget(unit, attacker) then
             Attack(unit, attacker)
         else

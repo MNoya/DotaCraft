@@ -174,7 +174,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
                 else
                     unit.skip = true
-                    print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetAttacksEnabled(unit),"-",GetMovementCapability(target))
                     
                     -- Move to position
                     ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = target:GetAbsOrigin(), Queue = queue})
