@@ -26,6 +26,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             local unit = EntIndexToHScript(unit_index)
             if unit and IsValidEntity(unit) then
                 unit.current_order = order_type -- Track the last executed order
+                unit.orderTable = filterTable -- Keep the whole order table, to resume it later if needed
                 
                 if not unit:IsBuilding() and not IsCustomBuilding(unit) then
                     numUnits = numUnits + 1
@@ -158,32 +159,36 @@ function dotacraft:FilterExecuteOrder( filterTable )
     elseif order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
         local target = EntIndexToHScript(targetIndex)
         local errorMsg = nil
+
+        if not target then print("ERROR, ATTACK WITHOUT TARGET") return true end
+
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
-            if not unit or not target then print("ERROR ON ATTACK ORDER FILTER") return true end
-            if UnitCanAttackTarget(unit, target) then
-                unit.attack_target_order = target
-                return true
-            else
-                print(unit:GetUnitName().." can't attack "..target:GetUnitName(), GetAttacksEnabled(unit),"-",GetMovementCapability(target))
-                
-                -- Move to position
-                ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, TargetIndex = targetIndex, Position = target:GetAbsOrigin(), Queue = queue})
+            if unit then
+                if UnitCanAttackTarget(unit, target) then
+                    unit.attack_target_order = target
+                    unit.skip = true
 
-                -- Stop idle acquire
-                unit:SetIdleAcquire(false)
-                
-                if not errorMsg then
-                    local error_type = GetMovementCapability(target)
-                    if error_type == "air" then
-                        errorMsg = "#error_cant_target_air"
-                    elseif error_type == "ground" then
-                        errorMsg = "#error_must_target_air"
+                    -- Send the attack
+                    ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = targetIndex, Queue = queue})
+
+                else
+                    unit.skip = true
+                    
+                    -- Move to position
+                    ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = target:GetAbsOrigin(), Queue = queue})
+                    
+                    if not errorMsg then
+                        local error_type = GetMovementCapability(target)
+                        if error_type == "air" then
+                            errorMsg = "#error_cant_target_air"
+                        elseif error_type == "ground" then
+                            errorMsg = "#error_must_target_air"
+                        end
+
+                        SendErrorMessage( unit:GetPlayerOwnerID(), errorMsg )
                     end
-
-                    SendErrorMessage( unit:GetPlayerOwnerID(), errorMsg )
                 end
-
             end
         end
         errorMsg = nil
@@ -409,7 +414,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         local point = Vector(x,y,z) -- initial goal
 
-		if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 100, 18, true, 3) end
+        if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 100, 18, true, 3) end
 
         local unitsPerRow = math.floor(math.sqrt(numUnits/SQUARE_FACTOR))
         local unitsPerColumn = math.floor((numUnits / unitsPerRow))
@@ -430,7 +435,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
           for j=1,unitsPerColumn do
             --print ('grid point (' .. curX .. ', ' .. curY .. ')')
             local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
-			if DEBUG then 
+            if DEBUG then 
                 DebugDrawCircle(newPoint, Vector(0,0,0), 255, 25, true, 5)
                 DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
             end
@@ -444,14 +449,14 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local curX = ((remainder-1) * -.5)
 
         for i=1,remainder do 
-			--print ('grid point (' .. curX .. ', ' .. curY .. ')')
-			local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
-			if DEBUG then 
+            --print ('grid point (' .. curX .. ', ' .. curY .. ')')
+            local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
+            if DEBUG then 
                 DebugDrawCircle(newPoint, Vector(0,0,255), 255, 25, true, 5)
                 DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
             end
-			navPoints[#navPoints+1] = newPoint
-			curX = curX + 1
+            navPoints[#navPoints+1] = newPoint
+            curX = curX + 1
         end
 
         for i=1,#navPoints do 

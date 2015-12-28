@@ -2365,32 +2365,25 @@
 	"AbilityTextureName"		"nightelf_root"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		
-	"AbilityCastPoint"			"2.5"
+	//"AbilityCastPoint"			"2.5"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
-	"AbilityCastRange"			"1" //On Place
-	"AOERadius"					"200"
-		
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"duration"		"2.5"
-		}
-		// Cast time and animation stuff basically.
-		// When uprooted, the defense type is changed to Large.
-	}
+	"AbilityGoldCost"			"0"
+	"AbilityCastRange"			"1"
 
-	// This should use the same rules as Building Helper, but the building ghosts are not posible yet so there's no point
-	"OnAbilityPhaseStart"
+	// BuildingHelper info
+	"Building"					"1"
+	"ModelRotation"				"90.0"
+	"UnitName"					"self" //Replicates the unit that has this ability on runtime
+
+	"OnSpellStart"
 	{
 		"RunScript"
 		{
 			"ScriptFile"	"units/nightelf/ancients.lua"
-			"Function"		"RootStart"
+			"Function"		"Root"
 		}
 	}
 }

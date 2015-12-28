@@ -40,7 +40,7 @@ function modifier_autoattack:OnIntervalThink()
         if #enemies > 0 then
             -- If an enemy is valid, attack it and stop the thinker
             for _,enemy in pairs(enemies) do
-                if UnitCanAttackTarget(unit, enemy) and not enemy:HasModifier("modifier_neutral_sleep") then
+                if UnitCanAttackTarget(unit, enemy) and ShouldAggroNeutral(unit, enemy) then
                     Attack(unit, enemy)
                     return
                 end
@@ -91,7 +91,7 @@ function modifier_autoattack_passive:GetDisableAutoAttack( params )
         local enemies = FindEnemiesInRadius(unit, unit:GetAcquisitionRange())
         if #enemies > 0 then
             for _,enemy in pairs(enemies) do
-                if UnitCanAttackTarget(unit, enemy) then
+                if UnitCanAttackTarget(unit, enemy) and ShouldAggroNeutral(unit, enemy) then
                     unit.disable_autoattack = 0
                     break
                 end
@@ -124,20 +124,20 @@ function AggroFilter( unit )
     local target = unit:GetAttackTarget() or unit:GetAggroTarget()
 
     if target then
-        local bCanAttackTarget = UnitCanAttackTarget(unit, target) and (not target:HasModifier("modifier_neutral_sleep") or unit.attack_target_order == target)
+        local bCanAttackTarget = UnitCanAttackTarget(unit, target) and ShouldAggroNeutral(unit, target)
 
         if unit.disable_autoattack == 0 then
             -- The unit acquired a new attack target
             if target ~= unit.attack_target then
                 if bCanAttackTarget then
-                    Attack(unit, target)
+                    unit.attack_target = target --Update the target, keep the aggro
                     return
                 else
                     -- Is there any enemy unit nearby the invalid one that this unit can attack?
                     local enemies = FindEnemiesInRadius(unit, unit:GetAcquisitionRange())
                     if #enemies > 0 then
                         for _,enemy in pairs(enemies) do
-                            if UnitCanAttackTarget(unit, enemy) then
+                            if UnitCanAttackTarget(unit, enemy) and ShouldAggroNeutral(unit, enemy) then
                                 Attack(unit, enemy)
                                 return
                             end
@@ -160,10 +160,22 @@ function DisableAggro( unit )
     if unit:GetAggroTarget() then
         unit:Stop() --Unit will still turn for a frame towards its invalid target
     end
+
+    -- Resume attack move order
+    if unit.current_order == DOTA_UNIT_ORDER_ATTACK_MOVE then
+        unit.skip = true
+        local orderTable = unit.orderTable
+        local x = tonumber(orderTable["position_x"])
+        local y = tonumber(orderTable["position_y"])
+        local z = tonumber(orderTable["position_z"])
+        local point = Vector(x,y,z) 
+        ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = point, Queue = false})
+    end
 end
 
 -- Aggro a target
 function Attack( unit, target )
+    unit:AlertNearbyUnits(target, nil)
     unit:MoveToTargetToAttack(target)
     unit.attack_target = target
     unit.disable_autoattack = 0
@@ -193,6 +205,7 @@ function OnAttacked( event )
     local enemyAttack = unit:GetTeamNumber() ~= attacker:GetTeamNumber()
 
     if enemyAttack and unit:IsIdle() and not unit:GetAggroTarget() then
+        unit:AlertNearbyUnits(attacker, nil)
         if UnitCanAttackTarget(unit, attacker) then
             Attack(unit, attacker)
         else
@@ -387,13 +400,14 @@ function WakeUp( event )
     local unit = event.unit
     local attacker = event.attacker
 
-    local allies = FindAlliesInRadius( unit, unit.AcquisitionRange)
-    for _,v in pairs(allies) do
-        v:RemoveModifierByName("modifier_neutral_sleep")
-        v.state = AI_STATE_AGGRESSIVE
-        if not IsValidAlive(v.aggroTarget) then
-            v:MoveToTargetToAttack(attacker)
-            v.aggroTarget = attacker
+    for _,v in pairs(unit.allies) do
+        if IsValidAlive(v) then
+            v:RemoveModifierByName("modifier_neutral_sleep")
+            v.state = AI_STATE_AGGRESSIVE
+            if not IsValidAlive(v.aggroTarget) then
+                v:MoveToTargetToAttack(attacker)
+                v.aggroTarget = attacker
+            end
         end
     end
 end
@@ -402,9 +416,8 @@ function NeutralAggro( event )
     local unit = event.unit
     local attacker = event.attacker
 
-    local allies = FindAlliesInRadius( unit, unit.AcquisitionRange)
-    for _,v in pairs(allies) do
-        if v.state == AI_STATE_IDLE then
+    for _,v in pairs(unit.allies) do
+        if IsValidAlive(v) and v.state == AI_STATE_IDLE then
             v:RemoveModifierByName("modifier_neutral_idle_aggro")
             v.state = AI_STATE_AGGRESSIVE
             if not IsValidAlive(v.aggroTarget) then

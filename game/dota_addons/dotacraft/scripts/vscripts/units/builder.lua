@@ -332,11 +332,6 @@ function Build( event )
     end)
 end
 
--- Called when the move_to_point ability starts
-function StartBuilding( keys )
-    BuildingHelper:StartBuilding(keys)
-end
-
 -- Called when the Cancel ability-item is used
 function CancelBuilding( keys )
     BuildingHelper:CancelBuilding(keys)
