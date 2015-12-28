@@ -1128,7 +1128,6 @@ function dotacraft:OnEntityKilled( event )
 			-- Remove itself after the corpse duration
 			Timers:CreateTimer(CORPSE_DURATION, function()
 				if corpse and IsValidEntity(corpse) then
-					print("removing corpse")
 					corpse:RemoveSelf()
 				end
 			end)
@@ -1165,7 +1164,7 @@ function dotacraft:UpdateRallyFlagDisplays( playerID )
 
     for k,v in pairs(units) do
         local building = EntIndexToHScript(v)
-        if IsValidAlive(building) and IsCustomBuilding(building) then
+        if IsValidAlive(building) and IsCustomBuilding(building) and not IsCustomTower(building) then
             CreateRallyFlagForBuilding( building )
         end
     end
