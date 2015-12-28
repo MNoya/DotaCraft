@@ -104,6 +104,10 @@ function IsCustomBuilding( entityIndex ){
 		return false
 }
 
+function IsGoldMine( entityIndex ) {
+	return (Entities.GetUnitName(entityIndex) == "gold_mine")
+}
+
 function IsMechanical( entityIndex ) {
 	var ability_siege = Entities.GetAbilityByName( entityIndex, "ability_siege")
 	return (ability_siege != -1)
