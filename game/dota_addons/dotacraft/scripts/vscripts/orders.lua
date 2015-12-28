@@ -847,6 +847,7 @@ function CreateRallyFlagForBuilding( building )
     local teamNumber = building:GetTeamNumber()
     local color = TEAM_COLORS[teamNumber]
     local particleName = "particles/custom/rally_flag.vpcf"
+    local origin = building:GetAbsOrigin()
     local particle
     local position
     local orientation
@@ -860,7 +861,7 @@ function CreateRallyFlagForBuilding( building )
     elseif flag_type == "position" then
         particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_CUSTOMORIGIN, building, teamNumber)
         position = building.flag
-        orientation = building:GetAbsOrigin()
+        orientation = origin
 
     elseif flag_type == "target" or flag_type == "mine" then
         local target = building.flag
@@ -869,13 +870,15 @@ function CreateRallyFlagForBuilding( building )
                         
             if flag_type == "mine" then
                 particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_CUSTOMORIGIN, target, teamNumber)
-                position = Vector(origin.x, origin.y, origin.z+350)
+                position.z = position.z + 350
             else
                 particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_OVERHEAD_FOLLOW, target, teamNumber)
             end
 
-            local orientation = target:GetAbsOrigin() * target:GetForwardVector()
+            orientation = target:GetAbsOrigin() * target:GetForwardVector()
         end
+    else
+        return
     end
 
     ParticleManager:SetParticleControl(particle, 0, position) -- Position
@@ -883,8 +886,8 @@ function CreateRallyFlagForBuilding( building )
     ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
 
     local line = ParticleManager:CreateParticleForTeam("particles/ui_mouseactions/range_finder_line.vpcf", PATTACH_CUSTOMORIGIN, building, teamNumber)
-    ParticleManager:SetParticleControl(line, 0, building:GetAbsOrigin())
-    ParticleManager:SetParticleControl(line, 1, building:GetAbsOrigin())
+    ParticleManager:SetParticleControl(line, 0, origin)
+    ParticleManager:SetParticleControl(line, 1, origin)
     ParticleManager:SetParticleControl(line, 2, position)
 
     -- Stores the particle to remove it when the selection changes

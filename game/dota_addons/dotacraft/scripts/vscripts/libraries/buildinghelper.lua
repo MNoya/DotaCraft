@@ -228,6 +228,11 @@ function BuildingHelper:InitializeBuilder(builder)
     CustomNetTables:SetTableValue("builders", tostring(builder:GetEntityIndex()), { IsBuilder = true })
 end
 
+function BuildingHelper:RemoveBuilder( builder )
+    -- Store the builder entity indexes on a net table
+    CustomNetTables:SetTableValue("builders", tostring(builder:GetEntityIndex()), { IsBuilder = false })
+end
+
 --[[
     AddBuilding
     * Makes a building dummy and starts panorama ghosting

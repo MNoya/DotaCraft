@@ -182,11 +182,11 @@ function unit_shops:CreateShop(unit, shop_name)
 							print("remove neutral heroes panels from player="..tostring(playerID))
 						end
 						
-						UpdateHeroTavernForPlayer( playerID )
+						--[[UpdateHeroTavernForPlayer( playerID )
 						local tier = Players:GetCityLevel(playerID) or 9000
 						local hasAltar = Players:HasAltar(playerID)
 						SetNetTableValue("dotacraft_shops_table", tostring(GameRules.HeroTavernEntityID), {Shop = UnitShop, playerID = playerID, Tier=tier, Altar=hasAltar, Tavern=true}) 
-						
+						]]
 					end
 					
 				end
@@ -635,6 +635,19 @@ function FindShopAbleUnit( shop, unit_types )
 		end
 	end
 	return nil
+end
+
+function RemoveShop( event )
+	local shop = event.caster
+	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			if shop.active_particle[playerID] then
+				ParticleManager:DestroyParticle(shop.active_particle[playerID], true)
+			end
+		end
+	
+		shop.current_unit[playerID] = nil
+	end
 end
 
 if not unit_shops.Units then unit_shops:start() end

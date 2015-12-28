@@ -7,12 +7,9 @@ function Root( event )
     local teamNumber = caster:GetTeamNumber()
     local ancient_name = caster:GetUnitName()
     local construction_size = Units:GetConstructionSize(ancient_name)
-    local pathing_size = Units:GetBlockPathingSize(ancient_name)
     
     -- Callbacks
-    event:OnPreConstruction(function(vPos)
-
-    end)
+    event:OnPreConstruction(function(vPos) end)
 
     -- Position for a building was confirmed and valid
     event:OnBuildingPosChosen(function(vPos)
@@ -33,112 +30,143 @@ function Root( event )
         SendErrorMessage(playerID, "#error_invalid_build_position")
     end)
 
-    event:OnConstructionCancelled(function(work)
-
-    end)
+    event:OnConstructionCancelled(function(work) end)
 
     event:OnConstructionStarted(function(unit)
-        local position = unit:GetAbsOrigin()
-        unit:MoveToPosition(Vector(position.x, position.y-1, position.z)) --Look forward
-
-        local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, position)
-        unit.blockers = gridNavBlockers
-
-        caster:SetAbsOrigin(position)
-        caster:SetAngles(0,-90,0)
-        caster:StartGesture(ACT_DOTA_CAST_ABILITY_5) --Treant protector overgrowth
-        caster:RemoveModifierByName("modifier_uprooted")
-        caster:SwapAbilities("nightelf_uproot", "nightelf_root", true, false)
-        caster:FindAbilityByName("nightelf_root"):SetLevel(1)
-
-        -- Apply rooted particles
-        local uproot_ability = caster:FindAbilityByName("nightelf_uproot")
-        uproot_ability:ApplyDataDrivenModifier(caster, caster, "modifier_rooted_ancient", {})
-
-        caster:AddAbility("ability_building")
-        caster:AddAbility("ability_building_queue")
-        caster:FindAbilityByName("ability_building"):SetLevel(1)
-        caster:FindAbilityByName("ability_building_queue"):SetLevel(1)
-
-        local cast_time = 2--ability:GetCastPoint()
-        Timers:CreateTimer(cast_time, function()
-            print("Root End")
-
-            SetArmorType(caster, "fortified")
-
-            -- Show all train and research abilities
-            for i=0,15 do
-                local ability = caster:GetAbilityByIndex(i)
-                if ability then
-                    if ability:IsHidden() and ( string.match(ability:GetAbilityName(), "train_") or string.match(ability:GetAbilityName(), "research_")) then
-                        ability:SetHidden(false)
-                    elseif ability:GetAbilityName() == "nightelf_eat_tree" then
-                        ability:SetHidden(true)
-                    end
-                end
-            end
-
-            -- Look for a gold mine to entangle if its a tree of Life/Ages/Eternity
-            local unitName = caster:GetUnitName()
-            if (unitName == "nightelf_tree_of_life" or unitName == "nightelf_tree_of_ages" or unitName == "nightelf_tree_of_eternity") then
-                local closest_mine = GetClosestGoldMineToPosition(caster:GetAbsOrigin())
-                if caster:GetRangeToUnit(closest_mine) <= 900 and not closest_mine.building_on_top then
-                    event.target = closest_mine
-                    EntangleGoldMine(event)
-                end
-            end
-        end)
+        RootStart(unit)
     end)
 
     event:OnConstructionCompleted(function(unit) end)
-
 end
 
+function RootStart( unit )
+    local ancient_name = unit:GetUnitName()
+    local construction_size = Units:GetConstructionSize(ancient_name)
+    local pathing_size = Units:GetBlockPathingSize(ancient_name)
+
+    BuildingHelper:RemoveBuilder(unit)
+
+    local position = unit:GetAbsOrigin()
+    BuildingHelper:SnapToGrid(construction_size, position)
+    unit:MoveToPosition(Vector(position.x, position.y-1, position.z)) --Look forward
+
+    local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, position)
+    unit.blockers = gridNavBlockers
+
+    unit:SetAbsOrigin(position)
+    unit:SetAngles(0,-90,0)
+    unit:StartGesture(ACT_DOTA_CAST_ABILITY_5) --Treant protector overgrowth
+    unit:RemoveModifierByName("modifier_uprooted")
+    unit:SwapAbilities("nightelf_uproot", "nightelf_root", true, false)
+    unit:FindAbilityByName("nightelf_root"):SetLevel(1)
+
+    -- Apply rooted particles
+    local uproot_ability = unit:FindAbilityByName("nightelf_uproot")
+    uproot_ability:ApplyDataDrivenModifier(unit, unit, "modifier_rooted_ancient", {})
+
+    unit:AddAbility("ability_building")
+    unit:AddAbility("ability_building_queue")
+    unit:FindAbilityByName("ability_building"):SetLevel(1)
+    unit:FindAbilityByName("ability_building_queue"):SetLevel(1)
+
+    local cast_time = 2--ability:GetCastPoint()
+    Timers:CreateTimer(cast_time, function()
+        if IsValidAlive(unit) then
+            RootEnd(unit)
+        end
+    end)
+end
+
+function RootEnd( unit )
+    SetArmorType(unit, "fortified")
+
+    -- Show all train and research abilities
+    for i=0,15 do
+        local ability = unit:GetAbilityByIndex(i)
+        if ability then
+            if ability:IsHidden() and ( string.match(ability:GetAbilityName(), "train_") or string.match(ability:GetAbilityName(), "research_")) then
+                ability:SetHidden(false)
+            elseif ability:GetAbilityName() == "nightelf_eat_tree" then
+                ability:SetHidden(true)
+            end
+        end
+    end
+
+    -- Look for a gold mine to entangle if its a tree of Life/Ages/Eternity
+    local unitName = unit:GetUnitName()
+    if (unitName == "nightelf_tree_of_life" or unitName == "nightelf_tree_of_ages" or unitName == "nightelf_tree_of_eternity") then
+        local closest_mine = GetClosestGoldMineToPosition(unit:GetAbsOrigin())
+        if unit:GetRangeToUnit(closest_mine) <= 900 and not closest_mine.building_on_top then
+            EntangleGoldMine({caster = unit, target = closest_mine})
+        end
+
+    -- Tower
+    elseif unitName == "nightelf_ancient_protector" then
+
+        TeachAbility(unit, "ability_tower")
+        unit:RemoveModifierByName("modifier_uprooted_ancient_protector")
+        caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+    
+    -- Shop
+    elseif unitName == "nightelf_ancient_of_wonders" then
+        TeachAbility(unit, "ability_shop")        
+    end
+end
+
+-- Initial cast of the root ability
 function UpRootStart( event )
-    print("UpRoot Start")
     local caster = event.caster
+
+    -- Don't allow uprooting until the ancient has finished construction
     if caster:HasModifier("modifier_construction") then
-        print("Stop, this ancient is in construction")
         caster:Stop()
         return
     end
 
+    -- Remove building properties
     BuildingHelper:RemoveBuilding( caster, false )
     caster:RemoveAbility("ability_building")
     caster:RemoveAbility("ability_building_queue")
     caster:RemoveModifierByName("modifier_building_queue")
 
+    -- If the ancient had an entangled mine, remove the effect, which will trigger ShowGoldMine
     if IsValidEntity(caster.entangled_gold_mine) then
         caster.entangled_gold_mine:RemoveModifierByName("modifier_entangled_mine")
     end
 end
 
+-- Finished uprooting, the ancient is now a mobile unit
 function UpRoot( event )
-    print("Finish UpRooting")
     local caster = event.caster
 
     -- Specific to the night elf tower unit: Reduce its damage by 20, (1.5 BAT) and make it melee (128 range)
-    if caster:GetUnitName() == "nightelf_ancient_protector" then
+    local unitName = caster:GetUnitName()
+    if unitName == "nightelf_ancient_protector" then
         caster:RemoveAbility("ability_tower")
         caster:RemoveModifierByName("modifier_tower")
 
         event.ability:ApplyDataDrivenModifier(caster, caster, "modifier_uprooted_ancient_protector", {})
         caster:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+    
+    -- Shop: Disable shopping while uprooted
+    elseif unitName == "nightelf_ancient_of_wonders" then
+        caster:RemoveAbility("ability_shop")
+        caster:RemoveModifierByName("modifier_shop")
     end
 
     caster:RemoveModifierByName("modifier_building")
 
     SetArmorType(caster, "heavy")
-    
+
+    -- Set the builder abilities
+    BuildingHelper:InitializeBuilder(caster)
     if not caster:HasAbility("nightelf_root") then
         caster:AddAbility("nightelf_root")
     end
     caster:FindAbilityByName("nightelf_root"):SetLevel(1)
     caster:SwapAbilities("nightelf_uproot", "nightelf_root", false, true)
 
-    if caster.flag and IsValidEntity(caster.flag) then
-        caster.flag:RemoveSelf()
-    end
+    Players:ClearPlayerFlags( caster:GetPlayerOwnerID() )
 
     -- Hide all train and research abilities, show eat tree
     for i=0,15 do
@@ -174,14 +202,15 @@ end
 function EntangleGoldMine( event )
     local caster = event.caster
     local target = event.target
-    local ability = event.ability
 
     if target:GetUnitName() ~= "gold_mine" then
         print("Must target a gold mine")
         return
     else
         if caster:HasModifier("modifier_uprooted") then
-            RootStart(event)
+            -- Cast root close to the gold mine
+            RootStart(caster)
+
         else
             print("Begining construction of a Entangled Gold Mine")
 
@@ -213,7 +242,7 @@ function EntangleGoldMine( event )
             ApplyConstructionEffect(building)
 
             building.updateHealthTimer = Timers:CreateTimer(function()
-                if IsValidEntity(building) and building:IsAlive() then
+                if IsValidAlive(building) then
                       local timesUp = GameRules:GetGameTime() >= time_completed
                       if not timesUp then
                         if building.bUpdatingHealth then
@@ -231,14 +260,14 @@ function EntangleGoldMine( event )
                         RemoveConstructionEffect(building)
 
                         building.constructionCompleted = true
-                           building.state = "complete"
+                        building.state = "complete"
 
-                           return
+                        return
                     end
                 
                 else
-                      -- Building destroyed
-                      print("Entangled gold mine was destroyed during the construction process!")
+                    -- Building destroyed
+                    print("Entangled gold mine was destroyed during the construction process!")
 
                     return
                 end
@@ -306,6 +335,8 @@ function ShowGoldMine( event )
     if building.counter_particle then
         ParticleManager:DestroyParticle(building.counter_particle, true)
     end
+    
+    RemoveConstructionEffect(building)
 
     building:RemoveSelf()
 
@@ -315,8 +346,6 @@ function ShowGoldMine( event )
     city_center:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", true, false)
 
     mine.building_on_top = nil
-
-    print("Removed Entangled Gold Mine successfully")
 end
 
 -- Orders a wisp to use its gather ability on this entangled gold mine

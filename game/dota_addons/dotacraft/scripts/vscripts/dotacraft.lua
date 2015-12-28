@@ -502,6 +502,10 @@ function dotacraft:InitializePlayer( hero )
 
 	-- Night Elf special rules
 	if hero_name == "npc_dota_hero_furion" then
+        -- Apply rooted particles
+        local uproot_ability = building:FindAbilityByName("nightelf_uproot")
+        uproot_ability:ApplyDataDrivenModifier(building, building, "modifier_rooted_ancient", {})
+        
 		-- Entangle the closest gold mine
 		local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
 		entangled_gold_mine:SetOwner(hero)

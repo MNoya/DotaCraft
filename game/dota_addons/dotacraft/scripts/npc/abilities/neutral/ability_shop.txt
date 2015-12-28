@@ -31,6 +31,15 @@
 					"Function"		"SellItemsInInventory"
 				}
 			}
+
+            "OnDestroy"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "buildings/shop.lua"
+                    "Function"      "RemoveShop"
+                }
+            }
 		}
 				
 		"modifier_create_shop"
