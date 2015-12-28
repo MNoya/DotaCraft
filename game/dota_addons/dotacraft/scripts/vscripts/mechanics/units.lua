@@ -30,7 +30,7 @@ function Units:Init( unit )
         end
 
         -- Neutral AI aggro and leashing
-        if unit:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+        if unit:GetTeamNumber() == DOTA_TEAM_NEUTRALS and string.match(unit:GetUnitName(), "neutral_") then
             ApplyModifier(unit,"modifier_neutral_idle_aggro")
 
             NeutralAI:Start( unit )

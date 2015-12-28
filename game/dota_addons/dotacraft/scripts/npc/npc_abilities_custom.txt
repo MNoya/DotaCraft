@@ -15982,7 +15982,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit"			"20"
 			}
-			"02"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit_heroes"	"4"
@@ -16055,10 +16055,15 @@
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit"			"24"
 			}
-			"02"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit_heroes"	"12"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_to_summons"		"20"
 			}
 		}
 	
@@ -16081,6 +16086,12 @@
 						"ScriptFile"	"units/human/spell_breaker.lua"
 						"Function"		"ManaBreak"
 						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/arcane_tower.lua"
+						"Function"		"DamageToSummons"
 					}
 				}
 			}
