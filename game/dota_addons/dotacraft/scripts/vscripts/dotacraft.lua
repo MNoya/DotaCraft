@@ -1151,26 +1151,18 @@ function dotacraft:OnPlayerSelectedEntities( event )
 	end
 end
 
+
 -- Hides or shows the rally flag particles for the player (avoids visual clutter)
 function dotacraft:UpdateRallyFlagDisplays( playerID )
-    
-    local mainSelected = GetMainSelectedEntity(playerID)
-    if not mainSelected then
-        return
-    end
     local player = PlayerResource:GetPlayer(playerID)
+    local units = GetSelectedEntities(playerID)
 
-    -- Destroy the old flag
-    if player.flagParticle then
-        ParticleManager:DestroyParticle(player.flagParticle, true)
-        player.flagParticle = nil
-    else
-        --print("NO PLAYER FLAG PARTICLE TO DESTROY")
-    end
+    Players:ClearPlayerFlags(playerID)
 
-    if mainSelected.flag and IsValidEntity(mainSelected.flag) then
-        if HasTrainAbility(mainSelected) and not IsCustomTower(mainSelected) then
-            CreateRallyFlagForBuilding(mainSelected)
+    for k,v in pairs(units) do
+        local building = EntIndexToHScript(v)
+        if IsValidAlive(building) and IsCustomBuilding(building) then
+            CreateRallyFlagForBuilding( building )
         end
     end
 end

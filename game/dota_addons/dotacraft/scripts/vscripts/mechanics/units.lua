@@ -43,7 +43,6 @@ function Units:Init( unit )
     local collision_size = GetCollisionSize(unit)
     local hull_radius = unit:GetHullRadius()
     if collision_size and collision_size > hull_radius then
-        print("[Units] Adjusting hull of "..unit:GetUnitName().." to "..collision_size)
         unit:SetHullRadius(GetCollisionSize(unit))
     end
 end
