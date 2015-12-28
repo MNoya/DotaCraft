@@ -1,4 +1,4 @@
--- The first Hero is free, only costs 5 supply and comes with a free Town Portal Scroll and a free skill point.
+	-- The first Hero is free, only costs 5 supply and comes with a free Town Portal Scroll and a free skill point.
 -- Additional Heroes require resources, and come with one skill point but do not have additional Town Portal Scrolls. 
 -- To build a second Hero, you must upgrade your Town Hall to a Keep instead of a Town Hall. 
 -- To build a third Hero you must have a third level Town Hall building such as a Castle.
@@ -23,16 +23,21 @@ function BuildHero( event )
 		new_hero:SetControllableByPlayer(playerID, true)
 		new_hero:SetOwner(player)
 		new_hero:RespawnUnit()
+		FindClearSpaceForUnit(new_hero, origin, true)
 
 		CreateAttachmentsForPlayerHero(playerID, new_hero)
 		
-		if caster.flag then
-			local position = caster.flag:GetAbsOrigin()
+		if caster.flag_type == "position" then
+			local position = caster.flag
 			Timers:CreateTimer(0.05, function() 
 				FindClearSpaceForUnit(new_hero, new_hero:GetAbsOrigin(), true)
 				new_hero:MoveToPosition(position) 
 			end)
-			print(new_hero:GetUnitName().." moving to position",position)
+		elseif caster.flag_type == "target" and IsValidAlive(caster.flag) then
+			Timers:CreateTimer(0.05, function() 
+				FindClearSpaceForUnit(new_hero, new_hero:GetAbsOrigin(), true)
+				new_hero:MoveToNPC(caster.flag) 
+			end)
 		end
 
 		-- Add a teleport scroll

@@ -14,6 +14,7 @@ function UpgradeBuilding( event )
 	local blockers = caster.blockers
 	local hull_radius = caster:GetHullRadius()
 	local flag = caster.flag
+	local flag_type = caster.flag_type
 	local angle = caster:GetAngles()
 
     -- New building
@@ -23,9 +24,7 @@ function UpgradeBuilding( event )
 	building:SetAngles(0, angle.y, 0)
 
 	-- Keep the rally flag reference if there is one
-    if IsValidEntity(flag) then
-		building.flag = flag
-	end
+    building.flag = flag
 
 	-- If the building to ugprade is selected, change the selection to the new one
 	if IsCurrentlySelected(caster) then

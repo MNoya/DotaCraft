@@ -14,6 +14,7 @@ function Players:Init( playerID, hero )
     hero.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
 
     hero.idle_builders = {} -- Keeps indexes of idle builders to send to the panorama UI
+    hero.flags = {} -- Particle flags for each building currently selected
     
     -- Resource tracking
     hero.gold = 0
@@ -101,6 +102,35 @@ function Players:GetPlayerName( playerID )
     if playerName == "" then playerName = "Player "..playerID end
     return playerName
 end
+
+-- For particles
+function Players:GetPlayerFlags( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.flags
+end
+
+function Players:ClearPlayerFlags( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local flags = Players:GetPlayerFlags( playerID )
+    local selected = GetSelectedEntities(playerID)
+
+    for entIndex,particleTable in pairs(flags) do
+        local flagParticle = particleTable.flagParticle
+        local lineParticle = particleTable.lineParticle
+
+        if flagParticle then
+            ParticleManager:DestroyParticle(flagParticle, true)
+            flags[entIndex].flagParticle = nil
+        end
+
+        if lineParticle then
+            ParticleManager:DestroyParticle(lineParticle, true)
+            flags[entIndex].lineParticle = nil
+        end
+    end
+end
+
 
 ---------------------------------------------------------------
 
