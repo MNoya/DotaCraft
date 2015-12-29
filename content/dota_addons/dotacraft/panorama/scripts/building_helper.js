@@ -104,8 +104,8 @@ function StartBuildingHelper( params )
             if (!Entities.IsAlive(entities[i]) || Entities.IsOutOfGame(entities[i])) continue
             var entPos = Entities.GetAbsOrigin( entities[i] )
             var squares = GetConstructionSize(entities[i])
-
-            if (squares > 0 && IsCustomBuilding(entities[i]))
+            
+            if (squares > 0 && ( IsCustomBuilding(entities[i]) || IsGoldMine(entities[i])))
             {
                 // Block squares centered on the origin
                 BlockGridSquares(entPos, squares)

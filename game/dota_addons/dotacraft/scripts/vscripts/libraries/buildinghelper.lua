@@ -1219,9 +1219,15 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
         BuildingHelper:print("Starting self placement of "..buildingName)
 
     else
+        -- npc_dota_creature doesn't render cosmetics on the particle ghost, use hero names instead
+        local overrideGhost = buildingTable:GetVal("OverrideBuildingGhost", "string")
+        local unitName = buildingName
+        if overrideGhost then
+            unitName = overrideGhost
+        end
 
         -- Create the building entity that will be used to start construction and project the queue particles
-        local entity = CreateUnitByName(buildingName, location, false, nil, nil, builder:GetTeam())
+        local entity = CreateUnitByName(unitName, location, false, nil, nil, builder:GetTeam())
         entity:AddEffects(EF_NODRAW)
         entity:AddNewModifier(entity, nil, "modifier_out_of_world", {})
 

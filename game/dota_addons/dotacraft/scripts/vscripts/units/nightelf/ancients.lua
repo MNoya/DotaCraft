@@ -95,10 +95,7 @@ function RootEnd( unit )
     -- Look for a gold mine to entangle if its a tree of Life/Ages/Eternity
     local unitName = unit:GetUnitName()
     if (unitName == "nightelf_tree_of_life" or unitName == "nightelf_tree_of_ages" or unitName == "nightelf_tree_of_eternity") then
-        local closest_mine = GetClosestGoldMineToPosition(unit:GetAbsOrigin())
-        if unit:GetRangeToUnit(closest_mine) <= 900 and not closest_mine.building_on_top then
-            EntangleGoldMine({caster = unit, target = closest_mine})
-        end
+        AutoEntangle({caster = unit})
 
     -- Tower
     elseif unitName == "nightelf_ancient_protector" then
@@ -110,6 +107,29 @@ function RootEnd( unit )
     -- Shop
     elseif unitName == "nightelf_ancient_of_wonders" then
         TeachAbility(unit, "ability_shop")        
+    end
+end
+
+function AutoEntangle( event )
+    local caster = event.caster
+    -- If it's uprooted or already has an entangled mine, skip
+    if not caster:HasModifier("modifier_rooted_ancient") or IsValidAlive(caster.entangled_gold_mine) then
+        return
+    end
+
+    local free_mine_in_range = FindGoldMineForEntangling(caster)
+    if free_mine_in_range then
+        EntangleGoldMine({caster = caster, target = free_mine_in_range})
+    end
+end
+
+function FindGoldMineForEntangling( unit )
+    local radius = 900
+    local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
+    for k,gold_mine in pairs(units) do
+        if not gold_mine.building_on_top then
+            return gold_mine
+        end
     end
 end
 
@@ -138,9 +158,9 @@ end
 -- Finished uprooting, the ancient is now a mobile unit
 function UpRoot( event )
     local caster = event.caster
-
-    -- Specific to the night elf tower unit: Reduce its damage by 20, (1.5 BAT) and make it melee (128 range)
     local unitName = caster:GetUnitName()
+
+    -- Tower: Reduce its damage by 20, (1.5 BAT) and make it melee (128 range)
     if unitName == "nightelf_ancient_protector" then
         caster:RemoveAbility("ability_tower")
         caster:RemoveModifierByName("modifier_tower")
@@ -196,6 +216,7 @@ function UpRoot( event )
         caster:CastAbilityImmediately(item, caster:GetPlayerOwner():GetEntityIndex())
     end
 
+    FireGameEvent( 'ability_values_force_check', { player_ID = caster:GetPlayerOwnerID() })
 end
 
 -- Roots the tree next to a gold mine and starts the construction of a entangled mine
@@ -203,8 +224,8 @@ function EntangleGoldMine( event )
     local caster = event.caster
     local target = event.target
 
-    if target:GetUnitName() ~= "gold_mine" then
-        print("Must target a gold mine")
+    if target:GetUnitName() ~= "gold_mine" or IsValidAlive(target.building_on_top) then
+        print("Must target a valid free gold mine")
         return
     else
         if caster:HasModifier("modifier_uprooted") then
@@ -222,10 +243,17 @@ function EntangleGoldMine( event )
             local playerID = player:GetPlayerID()
             local mine_pos = target:GetAbsOrigin()
 
+            -- Create and entangled gold mine building on top of the gold mine
             local building = CreateUnitByName("nightelf_entangled_gold_mine", mine_pos, false, hero, hero, hero:GetTeamNumber())
             building:SetOwner(hero)
             building:SetControllableByPlayer(playerID, true)
             building.state = "building"
+            building:SetForwardVector(target:GetForwardVector()) -- Keep orientation
+            building.construction_size = Units:GetConstructionSize("gold_mine")
+
+            -- Hide the gold mine
+            target:AddNoDraw()
+            ApplyModifier(target, "modifier_unselectable")
 
             local entangle_ability = caster:FindAbilityByName("nightelf_entangle_gold_mine")
             local build_time = entangle_ability:GetSpecialValueFor("build_time")
@@ -283,20 +311,6 @@ function EntangleGoldMine( event )
     end
 end
 
--- Makes the mine pseudo invisible
-function HideGoldMine( event )
-    Timers:CreateTimer(function() 
-        local building = event.caster
-        local ability = event.ability
-        local mine = building.mine -- This is set when the building is built on top of the mine
-
-        mine:AddNoDraw()
-        building:SetForwardVector(mine:GetForwardVector())
-        ability:ApplyDataDrivenModifier(building, mine, "modifier_unselectable_mine", {})
-
-    end)
-end
-
 -- Show the mine (when killed either through uprooting or attackers)
 function ShowGoldMine( event )
     local building = event.caster
@@ -307,7 +321,7 @@ function ShowGoldMine( event )
     print("Removing Entangled Gold Mine")
 
     mine:RemoveNoDraw()
-    mine:RemoveModifierByName("modifier_unselectable_mine")
+    mine:RemoveModifierByName("modifier_unselectable")
 
     -- Eject all wisps 
     local builders = mine.builders
@@ -338,13 +352,13 @@ function ShowGoldMine( event )
     
     RemoveConstructionEffect(building)
 
-    building:RemoveSelf()
-
-    city_center.entangled_gold_mine = nil
+    building:RemoveSelf()    
 
     -- Show an ability to re-entangle a gold mine on the city center if it is still rooted
     city_center:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", true, false)
 
+    -- Remove the references
+    city_center.entangled_gold_mine = nil
     mine.building_on_top = nil
 end
 

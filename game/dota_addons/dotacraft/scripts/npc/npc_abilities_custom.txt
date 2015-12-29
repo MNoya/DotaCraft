@@ -15982,7 +15982,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit"			"20"
 			}
-			"02"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit_heroes"	"4"
@@ -16055,10 +16055,15 @@
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit"			"24"
 			}
-			"02"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit_heroes"	"12"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_to_summons"		"20"
 			}
 		}
 	
@@ -16081,6 +16086,12 @@
 						"ScriptFile"	"units/human/spell_breaker.lua"
 						"Function"		"ManaBreak"
 						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"units/human/arcane_tower.lua"
+						"Function"		"DamageToSummons"
 					}
 				}
 			}
@@ -36374,8 +36385,6 @@
 				"var_type"		"FIELD_FLOAT"
 				"duration"		"2.5"
 			}
-			// Cast time and animation stuff basically.
-			// When uprooted, the defense type is changed to Large.
 		}
 	
 		"OnAbilityPhaseStart"
@@ -41379,7 +41388,7 @@
 		"AbilityTextureName"			"nightelf_entangle_gold_mine"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
@@ -41414,6 +41423,24 @@
 				"Function"		"EntangleGoldMine"
 			}
 		}
+	
+		"Modifiers"
+		{
+			"modifier_auto_entangle"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"ThinkInterval"  "5.0" //Slow thinker
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/nightelf/ancients.lua"
+						"Function"		"AutoEntangle"
+					}
+				}
+			}
+		}
 	}
 	
 	// Passive ability to indicate that this ancient has an entangled gold mine active
@@ -41422,7 +41449,7 @@
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"nightelf_entangle_gold_mine"
 		"MaxLevel" 						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	}
 	
 	// Effects on the nightelf_entangled_gold_mine
@@ -41449,14 +41476,6 @@
 				"EffectName"		"particles/custom/nightelf/root_vines.vpcf"
 				"EffectAttachType"	"follow_origin"
 	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/nightelf/ancients.lua"
-						"Function"		"HideGoldMine"
-					}
-				}
 				"OnDestroy"
 				{
 					"RunScript"
@@ -41464,16 +41483,6 @@
 						"ScriptFile"	"units/nightelf/ancients.lua"
 						"Function"		"ShowGoldMine"
 					}
-				}
-			}
-	
-			// Mine "behind" the entangled is unselectable
-			"modifier_unselectable_mine"
-			{
-				"IsHidden"			"1"
-				"States"
-				{
-					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}

@@ -885,10 +885,13 @@ function CreateRallyFlagForBuilding( building )
     ParticleManager:SetParticleControl(particle, 1, orientation) --Orientation
     ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
 
-    local line = ParticleManager:CreateParticleForTeam("particles/ui_mouseactions/range_finder_line.vpcf", PATTACH_CUSTOMORIGIN, building, teamNumber)
-    ParticleManager:SetParticleControl(line, 0, origin)
-    ParticleManager:SetParticleControl(line, 1, origin)
+    local line = ParticleManager:CreateParticleForTeam("particles/custom/range_finder_line.vpcf", PATTACH_CUSTOMORIGIN, building, teamNumber)
+    local spawn_pos = building.initial_spawn_position
+    spawn_pos = (spawn_pos + (origin-spawn_pos)/10)
+    ParticleManager:SetParticleControl(line, 0, spawn_pos)
+    ParticleManager:SetParticleControl(line, 1, spawn_pos)
     ParticleManager:SetParticleControl(line, 2, position)
+    ParticleManager:SetParticleControl(line, 15, Vector(color[1], color[2], color[3])) --Color
 
     -- Stores the particle to remove it when the selection changes
     local flags = Players:GetPlayerFlags(building:GetPlayerOwnerID())
