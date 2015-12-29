@@ -21,7 +21,7 @@ function Sit(){
 	if(Continue){
 		$.Msg("Changing slots");
 		var Parent = Root.GetParent();
-		var SavedInformation = {PlayerTeam : Root.PlayerTeam, PlayerColor : Root.PlayerColor, PlayerRace : Root.PlayerRace};
+		var SavedInformation = {PlayerTeam : Root.PlayerTeam, PlayerRace : Root.PlayerRace, PlayerColor : Root.PlayerColor};
 		for(var i=0; i < i +1;i+=1){
 			var PlayerPanel = Parent.GetChild(i);
 			if(PlayerPanel == null)
@@ -38,6 +38,8 @@ function Sit(){
 				PlayerPanel.PlayerColor = SavedInformation.PlayerColor;
 				
 				GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": PlayerPanel.PanelID, "PlayerIndex": PlayerPanel.PlayerID, "Race": PlayerPanel.PlayerRace, "Team": PlayerPanel.PlayerTeam, "Color": PlayerPanel.PlayerColor});
+			}else{
+				Root.PlayerColor = SelectNewColor();
 			};
 			
 			// this should never be met but just in case lal
@@ -187,6 +189,12 @@ function UpdatePlayer(){
 	
 	CustomNetTables.SubscribeNetTableListener("dotacraft_pregame_table", NetTableUpdatePlayer);
 	
+	var OptionsDropDown = $("#OptionsDropDown");
+	if ( isLocalPlayerHost() )
+		OptionsDropDown.visible = true;
+	else
+		OptionsDropDown.visible = false;
+	
 	$.Schedule(0.1, UpdatePlayer);
 	$.Schedule(0.1, Update);
 })();
@@ -208,12 +216,6 @@ function NetTableUpdatePlayer(TableName, Key, Value){
 		if( Value.Color )
 			PlayerPanel.PlayerColor = Value.Color;
 		
-		if ( PlayerID > 9000 ){
-			var OptionsDropDown = PlayerPanel.GetChild(1).GetChild(0);
-			if ( !isLocalPlayerHost() )
-				OptionsDropDown.visible = false;
-		};
-
 		$.Msg("[Panel]: "+PanelID+" - [Player]: "+PlayerID+" is updating"); 
 		
 		if( Value.Team || Value.Color || Value.Race ){
@@ -233,7 +235,7 @@ function NetTableUpdatePlayer(TableName, Key, Value){
 					
 					// if local player change the race background to match the select race
 					if(LocalPlayerID == PlayerID){
-						SetRaceBackgroundImage(Value.Race);
+						//SetRaceBackgroundImage(Value.Race);
 					};
 				};
 			};
@@ -275,10 +277,10 @@ function UpdateDropDownVisibility(){
 		};
 	};
 
-	if( isLocalPlayerHost() ){
+	if( isLocalPlayerHost() )
 		OptionsDropDown.visible = true;
-			
-	};
+	else
+		OptionsDropDown.visible = false;
 };
 
 ///////////////////////////////////////////////

@@ -150,7 +150,7 @@ Game.AddCommand( "+ToggleShop", OnShopToggle, "", 0 );
 
 function Delete_Shop_Content(args){
 	var Shop = $("#"+args.Index)
-	var PlayerID = args.PlayerID
+	var PlayerID = args.playerID
 	
 	var bChildCount = Shop.GetChildCount()
 	$.Msg("killing tavern")

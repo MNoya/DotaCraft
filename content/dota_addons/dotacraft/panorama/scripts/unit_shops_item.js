@@ -16,8 +16,8 @@ function HideToolTip(){
 	$.DispatchEvent( "DOTAHideAbilityTooltip", abilityButton );
 }
 
-function Setup_Panel(){
-	CustomNetTables.SubscribeNetTableListener("dotacraft_shops_table", Update_Central);
+function Setup_Panel(){	
+	GameEvents.Subscribe( "unitshop_updateStock", Update_Central);
 	
 	var image_path = "url('file://{images}/items/"+Root.ItemName+".png');"
 	$("#ItemImage").style["background-image"] = image_path 
@@ -46,29 +46,23 @@ function Setup_Panel(){
 	}
 }
 
-function Update_Central(TableName, Key, Value){
+function Update_Central(data){
 	// this checks that update is the correct entity shop based on EntityIndex
-	if(Key != Root.Entity){ 
+	if(data.Index != Root.Entity || data.Item.ItemName != Root.ItemName){ 
 		//$.Msg(Key+" is not "+Root.Entity) 
 		return
 	}
 
-	if(Value.PlayerID != null){
-		if(Value.PlayerID != LocalPlayerID){
+	if(data.PlayerID != null){
+		if(data.PlayerID != LocalPlayerID){
 			$.Msg("Incorrect local PlayerID, returning")
 			return
 		}
 	}
 	
 	var item = Root.ItemName
-	var ItemValues
-	if(Value.Hero){
-		ItemValues = Value.Shop[item]
-	}else{ 
-		//$.Msg("Updating a Item")
-		ItemValues = Value.Shop.Items[item]
-	}
-	
+	var ItemValues = data.Item
+
 	if(ItemValues.CurrentStock != null){
 		$( "#Stock").text = ItemValues.CurrentStock
 	}
@@ -106,19 +100,19 @@ function Update_Central(TableName, Key, Value){
 		Root.ItemInfo.RequiredTier = ItemValues.RequiredTier
 	}
 	
-	if(Value.Tavern){
-		if(!Value.Altar){
+	if(data.Tavern){
+		if(!data.Altar){
 			$("#RequiredTier").text = "Requires: Altar"
 			Update_Tier_Required_Panels(0)
 		}else{
 			$("#RequiredTier").text = "Upgrade your Main Hall"
 		}
 			
-		if(Value.Altar || Value.Altar == null){
-			Update_Tier_Required_Panels(Value.Tier)
+		if(data.Altar || data.Altar == null){
+			Update_Tier_Required_Panels(data.Tier)
 		}
 	}else{
-		Update_Tier_Required_Panels(Value.Tier)
+		Update_Tier_Required_Panels(data.Tier)
 	}
 }
 
