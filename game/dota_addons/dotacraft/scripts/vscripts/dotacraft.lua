@@ -184,7 +184,6 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_client_convars", "libraries/modifiers/modifier_client_convars", LUA_MODIFIER_MOTION_NONE)
-    LinkLuaModifier("modifier_specially_deniable", "libraries/modifiers/modifier_specially_deniable", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_autoattack", "units/attacks", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_autoattack_passive", "units/attacks", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
@@ -210,9 +209,6 @@ function dotacraft:InitGameMode()
 			building:RemoveModifierByName('modifier_invulnerable')
 		end
 	end
-
-	-- Allow cosmetic swapping
-	SendToServerConsole( "dota_combine_models 0" )
 
 	-- Don't end the game if everyone is unassigned
     SendToServerConsole("dota_surrender_on_disconnect 0")
@@ -391,35 +387,13 @@ end
 function dotacraft:OnAllPlayersLoaded()
 	print("[DOTACRAFT] All Players have loaded into the game")
 
-	print("[DOTACRAFT] Initializing Neutrals")
-	GameRules.ALLNEUTRALS = Entities:FindAllByClassname("npc_dota_creature")
-	for k,npc in pairs(GameRules.ALLNEUTRALS) do
-		if npc:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-
-			-- Apply armor and damage modifier (for visuals)
-			local attack_type = GetAttackType(npc)
-			if attack_type ~= 0 and npc:GetAttackDamage() > 0 then
-				ApplyModifier(npc, "modifier_attack_"..attack_type)
-		    end
-
-		    local armor_type = GetArmorType(npc)
-			if armor_type ~= 0 then
-				ApplyModifier(npc, "modifier_armor_"..armor_type)
-		    end
-
-		    if HasSplashAttack(npc) then
-		    	ApplyModifier(npc, "modifier_splash_attack")
-		    end
-
-		    -- Attack system
-		    npc:SetIdleAcquire(false)
-		    npc.AcquisitionRange = npc:GetAcquisitionRange()
-		    npc:SetAcquisitionRange(0)
-		    ApplyModifier(npc,"modifier_neutral_idle_aggro")
-		    
-		    NeutralAI:Start( npc )
-		end
-	end
+    print("[DOTACRAFT] Initializing Neutrals")
+    GameRules.ALLNEUTRALS = Entities:FindAllByClassname("npc_dota_creature")
+    for k,npc in pairs(GameRules.ALLNEUTRALS) do
+        if npc:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+            Units:Init(npc)
+        end
+    end
 end
 
 function dotacraft:OnHeroInGame(hero)
@@ -528,6 +502,10 @@ function dotacraft:InitializePlayer( hero )
 
 	-- Night Elf special rules
 	if hero_name == "npc_dota_hero_furion" then
+        -- Apply rooted particles
+        local uproot_ability = building:FindAbilityByName("nightelf_uproot")
+        uproot_ability:ApplyDataDrivenModifier(building, building, "modifier_rooted_ancient", {})
+        
 		-- Entangle the closest gold mine
 		local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
 		entangled_gold_mine:SetOwner(hero)
@@ -713,6 +691,9 @@ function dotacraft:OnNPCSpawned(keys)
 	--print("[DOTACRAFT] NPC Spawned")
 	--DeepPrintTable(keys)
 	local npc = EntIndexToHScript(keys.entindex)
+
+    -- Hardcoded fuckery to ignore tree of life overriden ghost
+    if npc:GetUnitName() == "npc_dota_hero_treant" then return end
 
 	if npc:IsHero() then
 		npc.strBonus = 0
@@ -1174,26 +1155,18 @@ function dotacraft:OnPlayerSelectedEntities( event )
 	end
 end
 
+
 -- Hides or shows the rally flag particles for the player (avoids visual clutter)
 function dotacraft:UpdateRallyFlagDisplays( playerID )
-    
-    local mainSelected = GetMainSelectedEntity(playerID)
-    if not mainSelected then
-        return
-    end
     local player = PlayerResource:GetPlayer(playerID)
+    local units = GetSelectedEntities(playerID)
 
-    -- Destroy the old flag
-    if player.flagParticle then
-        ParticleManager:DestroyParticle(player.flagParticle, true)
-        player.flagParticle = nil
-    else
-        --print("NO PLAYER FLAG PARTICLE TO DESTROY")
-    end
+    Players:ClearPlayerFlags(playerID)
 
-    if mainSelected.flag and IsValidEntity(mainSelected.flag) then
-        if HasTrainAbility(mainSelected) and not IsCustomTower(mainSelected) then
-            CreateRallyFlagForBuilding(mainSelected)
+    for k,v in pairs(units) do
+        local building = EntIndexToHScript(v)
+        if IsValidAlive(building) and IsCustomBuilding(building) then
+            CreateRallyFlagForBuilding( building )
         end
     end
 end
@@ -1281,7 +1254,7 @@ function dotacraft:RepositionPlayerCamera( event )
 	local entity = EntIndexToHScript(entIndex)
 	if entity and IsValidEntity(entity) then
 		PlayerResource:SetCameraTarget(pID, entity)
-		Timers:CreateTimer(function()
+		Timers:CreateTimer(0.1, function()
 			PlayerResource:SetCameraTarget(pID, nil)
 		end)
 	end

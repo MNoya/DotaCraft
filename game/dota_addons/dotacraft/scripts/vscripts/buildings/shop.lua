@@ -657,4 +657,17 @@ function FindShopAbleUnit( shop, unit_types )
 	return nil
 end
 
+function RemoveShop( event )
+	local shop = event.caster
+	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			if shop.active_particle[playerID] then
+				ParticleManager:DestroyParticle(shop.active_particle[playerID], true)
+			end
+		end
+	
+		shop.current_unit[playerID] = nil
+	end
+end
+
 if not unit_shops.Units then unit_shops:start() end

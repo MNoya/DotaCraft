@@ -3319,12 +3319,20 @@
 		"HealthBarOffset"			"180"
 	
 		"AttacksEnabled"			"ground"
+	
+		"Artillery"					"1"
+		"SplashAttack"				"1"
+		"SplashFullRadius"			"50"
+		"SplashMediumRadius"		"100"
+		"SplashMediumDamage"		"0.5"
+		"SplashSmallRadius"			"125"
+		"SplashSmallDamage"			"0.1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"human_magic_sentry"
-		"Ability2"					""//aoe attack
+		"Ability1"					"attack_ground"
+		"Ability2"					"human_magic_sentry"
 		"Ability6"					"ability_tower"
 		
 		// Armor
@@ -7254,7 +7262,10 @@
 		"Level"						"2"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
-		
+		"UseNeutralCreepBehavior" 	"0"
+	
+		"AttacksEnabled"			"ground,air"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		
@@ -7913,6 +7924,7 @@
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground,air"
 		
@@ -8002,6 +8014,7 @@
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -8088,6 +8101,7 @@
 		"Level"						"5"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -8161,6 +8175,7 @@
 		"Level"						"1"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground"
 		
@@ -8245,6 +8260,7 @@
 		"Level"						"9"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground,air"
 		
@@ -8326,6 +8342,7 @@
 		"Level"						"2"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground,air"
 		
@@ -8401,6 +8418,7 @@
 		"Level"						"2"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground,air"
 		
@@ -8480,6 +8498,7 @@
 		"Level"						"4"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground,air"
 		
@@ -8555,6 +8574,7 @@
 		"Level"						"4"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground,air"
 		
@@ -8636,6 +8656,7 @@
 		"Level"						"6"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground,air"
 		
@@ -8721,6 +8742,7 @@
 		"Level"						"3"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
+		"UseNeutralCreepBehavior" 	"0"
 	
 		"AttacksEnabled"			"ground,air"
 		
@@ -9319,6 +9341,7 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+		"OverrideBuildingGhost"		"npc_dota_hero_treant"
 	
 		"UnitLabel"					"city_center"
 	

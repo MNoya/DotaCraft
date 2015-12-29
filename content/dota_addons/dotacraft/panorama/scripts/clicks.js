@@ -66,7 +66,7 @@ function OnRightButtonPressed()
             return true
         }
     }
-    
+
     // Builder Right Click
     if ( IsBuilder( mainSelected ) )
     {
@@ -106,7 +106,7 @@ function OnRightButtonPressed()
                 GameEvents.SendCustomGameEventToServer( "burrow_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex })
             }
             return false
-        }            
+        }
     }
 
     // Building Right Click
@@ -225,11 +225,12 @@ function UnitCanPurchase(entIndex) {
 }
 
 function IsBuilder(entIndex) {
-    return (CustomNetTables.GetTableValue( "builders", entIndex.toString()))
+    var tableValue = CustomNetTables.GetTableValue( "builders", entIndex.toString())
+    return (tableValue !== undefined) && (tableValue.IsBuilder == 1)
 }
 
 function IsShop(entIndex) {
-    return (Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
+    return (IsCustomBuilding(entIndex) && Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
 }
 
 function IsTavern(entIndex) {

@@ -171,4 +171,5 @@ function Delete_Shop_Content(args){
 	GameEvents.Subscribe( "Shops_Delete_Single_Panel", Delete_Single_Panel);
 	GameEvents.Subscribe( "Shops_Remove_Content", Delete_Shop_Content);
 	
+	GameEvents.Subscribe( "shop_force_hide", Hide_All_Shops );
 })();

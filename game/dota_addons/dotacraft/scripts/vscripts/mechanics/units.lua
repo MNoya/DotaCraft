@@ -20,23 +20,29 @@ function Units:Init( unit )
         ApplyModifier(unit, "modifier_splash_attack")
     end
 
-    -- Attack system, only applied to units and buildings without an attack or without both ground and air attacks enabled
+    -- Attack system, only applied to units and buildings with an attack
     local attacks_enabled = GetAttacksEnabled(unit)
-    if attacks_enabled ~= "none" and attacks_enabled ~= "ground,air" then
+    if attacks_enabled ~= "none" then
         if IsBuilder(unit) then
             ApplyModifier(unit, "modifier_attack_system_passive")
         else
             ApplyModifier(unit, "modifier_attack_system")
         end
+
+        -- Neutral AI aggro and leashing
+        if unit:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+            ApplyModifier(unit,"modifier_neutral_idle_aggro")
+
+            NeutralAI:Start( unit )
+        end
     end
 
-    unit:AddNewModifier(unit, nil, "modifier_specially_deniable", {})
+    ApplyModifier(unit, "modifier_specially_deniable")
 
     -- Adjust Hull
     local collision_size = GetCollisionSize(unit)
     local hull_radius = unit:GetHullRadius()
     if collision_size and collision_size > hull_radius then
-        print("[Units] Adjusting hull of "..unit:GetUnitName().." to "..collision_size)
         unit:SetHullRadius(GetCollisionSize(unit))
     end
 end
@@ -273,14 +279,15 @@ function FindAllUnitsAroundPoint( unit, point, radius )
     local team = unit:GetTeamNumber()
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
-    return FindUnitsInRadius(team, point, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
+    return FindUnitsInRadius(team, point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
 end
 
 function FindAlliesInRadius( unit, radius )
     local team = unit:GetTeamNumber()
     local position = unit:GetAbsOrigin()
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-    return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, 0, FIND_CLOSEST, false)
+    local flags = DOTA_UNIT_TARGET_FLAG_INVULNERABLE
+    return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, flags, FIND_CLOSEST, false)
 end
 
 function HasGoldMineDistanceRestriction( unit_name )
@@ -366,7 +373,7 @@ end
 
 function HasArtilleryAttack( unit )
     local unitTable = GameRules.UnitKV[unit:GetUnitName()]
-    return unitTable["Artillery"]
+    return unitTable and unitTable["Artillery"]
 end
 
 -- Handles each specific lumber capacity for player units

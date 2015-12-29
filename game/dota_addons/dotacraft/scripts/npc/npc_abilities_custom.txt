@@ -25005,6 +25005,8 @@
 	
 		"AbilityGoldCost"				"75" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25097,6 +25099,8 @@
 	
 		"AbilityGoldCost"				"135" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25204,6 +25208,8 @@
 	
 		"AbilityGoldCost"				"205" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25312,6 +25318,8 @@
 	
 		"AbilityGoldCost"				"245" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25419,6 +25427,8 @@
 	
 		"AbilityGoldCost"				"155" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25518,6 +25528,8 @@
 	
 		"AbilityGoldCost"				"135" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25617,6 +25629,8 @@
 		"AbilityGoldCost"				"215" // From "GoldCost"
 		"AbilityUpgradeGoldCost"		"0"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25725,6 +25739,8 @@
 	
 		"AbilityGoldCost"				"90" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25832,6 +25848,8 @@
 	
 		"AbilityGoldCost"				"180" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -25939,6 +25957,8 @@
 	
 		"AbilityGoldCost"				"195" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -26049,6 +26069,8 @@
 	
 		"AbilityGoldCost"				"280" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -26155,6 +26177,8 @@
 	
 		"AbilityGoldCost"				"200" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -27806,6 +27830,15 @@
 						"Function"		"SellItemsInInventory"
 					}
 				}
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "buildings/shop.lua"
+	                    "Function"      "RemoveShop"
+	                }
+	            }
 			}
 					
 			"modifier_create_shop"
@@ -27948,116 +27981,6 @@
 	            }
 	        }
 	    }
-	}
-	// move_to_point abilities are for BuildingHelper.
-	"move_to_point_100"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"BaseClass"						"ability_datadriven"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"0"
-		"AbilityCastRange"				"100"
-		"MaxLevel"						"1"
-	
-		"AbilityManaCost"				"0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"Target"		"POINT"
-				"ScriptFile"	"units/builder.lua"
-				"Function"		"StartBuilding"
-			}
-		}
-	}
-	
-	"move_to_point_150"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"BaseClass"						"ability_datadriven"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"0"
-		"AbilityCastRange"				"150"
-		"MaxLevel"						"1"
-	
-		"AbilityManaCost"				"0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"Target"		"POINT"
-				"ScriptFile"	"units/builder.lua"
-				"Function"		"StartBuilding"
-			}
-		}
-	}
-	
-	"move_to_point_200"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"BaseClass"						"ability_datadriven"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"0"
-		"AbilityCastRange"				"200"
-		"MaxLevel"						"1"
-	
-		"AbilityManaCost"				"0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"Target"		"POINT"
-				"ScriptFile"	"units/builder.lua"
-				"Function"		"StartBuilding"
-			}
-		}
-	}
-	
-	"move_to_point_250"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"BaseClass"						"ability_datadriven"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"0"
-		"AbilityCastRange"				"250"
-		"MaxLevel"						"1"
-	
-		"AbilityManaCost"				"0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"Target"		"POINT"
-				"ScriptFile"	"units/builder.lua"
-				"Function"		"StartBuilding"
-			}
-		}
-	}
-	
-	"move_to_point_300"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"BaseClass"						"ability_datadriven"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"0"
-		"AbilityCastRange"				"300"
-		"MaxLevel"						"1"
-	
-		"AbilityManaCost"				"0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"Target"		"POINT"
-				"ScriptFile"	"units/builder.lua"
-				"Function"		"StartBuildingEntity"
-			}
-		}
 	}
 	"dummy_passive"
 	{
@@ -36403,32 +36326,25 @@
 		"AbilityTextureName"		"nightelf_root"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 			
-		"AbilityCastPoint"			"2.5"
+		//"AbilityCastPoint"			"2.5"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
-		"AbilityCastRange"			"1" //On Place
-		"AOERadius"					"200"
-			
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"2.5"
-			}
-			// Cast time and animation stuff basically.
-			// When uprooted, the defense type is changed to Large.
-		}
+		"AbilityGoldCost"			"0"
+		"AbilityCastRange"			"1"
 	
-		// This should use the same rules as Building Helper, but the building ghosts are not posible yet so there's no point
-		"OnAbilityPhaseStart"
+		// BuildingHelper info
+		"Building"					"1"
+		"ModelRotation"				"90.0"
+		"UnitName"					"self" //Replicates the unit that has this ability on runtime
+	
+		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"	"units/nightelf/ancients.lua"
-				"Function"		"RootStart"
+				"Function"		"Root"
 			}
 		}
 	}
@@ -44181,6 +44097,8 @@
 	
 		"AbilityGoldCost"				"60" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -44272,6 +44190,8 @@
 	
 		"AbilityGoldCost"				"130" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -44379,6 +44299,8 @@
 	
 		"AbilityGoldCost"				"195" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -44508,6 +44430,8 @@
 	
 		"AbilityGoldCost"				"210" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -44622,6 +44546,8 @@
 	
 		"AbilityGoldCost"				"145" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -44729,6 +44655,8 @@
 	
 		"AbilityGoldCost"				"255" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -44844,6 +44772,8 @@
 	
 		"AbilityGoldCost"				"425" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -44922,6 +44852,8 @@
 	
 		"AbilityGoldCost"				"155" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -45045,6 +44977,8 @@
 	
 		"AbilityGoldCost"				"135" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -45144,6 +45078,8 @@
 	
 		"AbilityGoldCost"				"160" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -45251,6 +45187,8 @@
 	
 		"AbilityGoldCost"				"330" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -55398,6 +55336,8 @@
 	
 		"AbilityGoldCost"				"75" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -55489,6 +55429,8 @@
 	
 		"AbilityGoldCost"				"200" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -55596,6 +55538,8 @@
 	
 		"AbilityGoldCost"				"135" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -55674,6 +55618,8 @@
 	
 		"AbilityGoldCost"				"220" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -55795,6 +55741,8 @@
 	
 		"AbilityGoldCost"				"135" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -55894,6 +55842,8 @@
 	
 		"AbilityGoldCost"				"145" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -55993,6 +55943,8 @@
 	
 		"AbilityGoldCost"				"195" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -56092,6 +56044,8 @@
 	
 		"AbilityGoldCost"				"180" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -56199,6 +56153,8 @@
 	
 		"AbilityGoldCost"				"255" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -56312,6 +56268,8 @@
 	
 		"AbilityGoldCost"				"265" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -56433,6 +56391,8 @@
 	
 		"AbilityGoldCost"				"160" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -56556,6 +56516,8 @@
 	
 		"AbilityGoldCost"				"280" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -67546,6 +67508,8 @@
 	
 		"AbilityGoldCost"				"75" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -67637,6 +67601,8 @@
 	
 		"AbilityGoldCost"				"120" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -67744,6 +67710,8 @@
 	
 		"AbilityGoldCost"				"215" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -67867,6 +67835,8 @@
 	
 		"AbilityGoldCost"				"185" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -67990,6 +67960,8 @@
 	
 		"AbilityGoldCost"				"240" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -68113,6 +68085,8 @@
 	
 		"AbilityGoldCost"				"230" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -68211,6 +68185,8 @@
 	
 		"AbilityGoldCost"				"200" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -68318,6 +68294,8 @@
 	
 		"AbilityGoldCost"				"145" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -68417,6 +68395,8 @@
 	
 		"AbilityGoldCost"				"155" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
@@ -68516,6 +68496,8 @@
 	
 		"AbilityGoldCost"				"385" // From "GoldCost"
 		"AbilityChannelTime"			"%train_time" // From "BuildTime"
+	
+		"AbilityMultiOrder"				"1"
 		
 		"AbilitySpecial"
 		{
