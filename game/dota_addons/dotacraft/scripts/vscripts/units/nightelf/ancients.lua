@@ -249,7 +249,6 @@ function EntangleGoldMine( event )
             building:SetControllableByPlayer(playerID, true)
             building.state = "building"
             building:SetForwardVector(target:GetForwardVector()) -- Keep orientation
-            building.construction_size = Units:GetConstructionSize("gold_mine")
 
             -- Hide the gold mine
             target:AddNoDraw()
@@ -311,6 +310,14 @@ function EntangleGoldMine( event )
     end
 end
 
+-- Triggers ShowGoldMine on the entangled mine
+function RemoveEntangledMine( event )
+    local caster = event.caster
+    if IsValidEntity(caster.entangled_gold_mine) then
+        caster.entangled_gold_mine:RemoveModifierByName("modifier_entangled_mine")
+    end
+end
+
 -- Show the mine (when killed either through uprooting or attackers)
 function ShowGoldMine( event )
     local building = event.caster
@@ -355,10 +362,13 @@ function ShowGoldMine( event )
     building:RemoveSelf()    
 
     -- Show an ability to re-entangle a gold mine on the city center if it is still rooted
-    city_center:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", true, false)
+    if IsValidAlive(city_center) then
+        city_center:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", true, false)
 
-    -- Remove the references
-    city_center.entangled_gold_mine = nil
+        -- Remove the references
+        city_center.entangled_gold_mine = nil
+    end
+
     mine.building_on_top = nil
 end
 

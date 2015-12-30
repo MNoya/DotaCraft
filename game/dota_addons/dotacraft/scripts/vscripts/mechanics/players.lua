@@ -483,7 +483,7 @@ function Players:CheckCurrentCityCenters( playerID )
 
     if city_center_level == 0 then
         local time_to_reveal = 120
-        print("Player "..player:GetPlayerID().." has no city centers left standing. Revealed in "..time_to_reveal.." seconds until a City Center is built.")
+        print("Player "..playerID.." has no city centers left standing. Revealed in "..time_to_reveal.." seconds until a City Center is built.")
         structures.RevealTimer = Timers:CreateTimer(time_to_reveal, function()
             Players:RevealToAllEnemies( playerID )
         end)

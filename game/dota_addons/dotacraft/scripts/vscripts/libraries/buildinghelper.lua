@@ -1087,6 +1087,7 @@ end
       * Clears out an area for construction
 ]]--
 function BuildingHelper:FreeGridSquares(construction_size, location)
+    if not construction_size or construction_size == 0 then return end
     local originX = GridNav:WorldToGridPosX(location.x)
     local originY = GridNav:WorldToGridPosY(location.y)
 

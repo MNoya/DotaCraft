@@ -41450,6 +41450,15 @@
 		"AbilityTextureName"			"nightelf_entangle_gold_mine"
 		"MaxLevel" 						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/nightelf/ancients.lua"
+				"Function"		"RemoveEntangledMine"
+			}
+		}
 	}
 	
 	// Effects on the nightelf_entangled_gold_mine
