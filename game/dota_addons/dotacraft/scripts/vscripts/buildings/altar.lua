@@ -11,10 +11,7 @@ function BuildHero( event )
 	local hero = player:GetAssignedHero()
 	local playerID = player:GetPlayerID()
 	local unit_name = event.Hero
-	local origin = event.caster:GetAbsOrigin() + RandomVector(250)
-
-	-- Get a random position to create the new_hero in
-	local origin = caster:GetAbsOrigin() + RandomVector(150)
+	local origin = caster.initial_spawn_position
 
 	-- handle_UnitOwner needs to be nil, else it will crash the game.
 	PrecacheUnitByNameAsync(unit_name, function()

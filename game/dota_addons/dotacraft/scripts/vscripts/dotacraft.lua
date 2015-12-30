@@ -318,6 +318,8 @@ function dotacraft:InitGameMode()
   	GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
   	GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
   	GameRules.Buildings = LoadKeyValues("scripts/kv/buildings.kv")
+    GameRules.Drops = LoadKeyValues("scripts/kv/map_drops.kv")
+    GameRules.Items = LoadKeyValues("scripts/kv/items.kv")
 
   	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
   	for _,t in pairs(GameRules.ALLTREES) do
@@ -975,6 +977,11 @@ function dotacraft:OnEntityKilled( event )
     local attacker_playerID = attacker and attacker:GetPlayerOwnerID()
     local attacker_teamNumber = attacker and attacker:GetTeamNumber()
     local attacker_hero = attacker_playerID and PlayerResource:GetSelectedHeroEntity(attacker_playerID)
+
+    -- Check for neutral item drops
+    if killed_teamNumber == DOTA_TEAM_NEUTRALS and killed:IsCreature() then
+        DropItems( killed )
+    end
 
 	-- Hero Killed
 	if killed:IsRealHero() then
