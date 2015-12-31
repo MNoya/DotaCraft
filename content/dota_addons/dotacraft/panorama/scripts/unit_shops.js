@@ -5,7 +5,6 @@ var shop_state = "on"
 
 // create shop
 function Create_Shop(args){	
-	
 	// create the primary container
 	var Container = $.CreatePanel("Panel", Root, args.Index)
 	Container.AddClass("Container")	
@@ -25,7 +24,7 @@ function Create_Shop(args){
 		shop_item.Order = orderIndex
 		if(args.Tavern != null){
 			shop_item.Tavern = args.Tavern
-		}
+		} 
 	} 
 	
 	Shops[args.Index] = args.Shop.Items

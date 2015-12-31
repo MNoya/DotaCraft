@@ -178,7 +178,7 @@ function OnLeftButtonPressed() {
 
     if (targetIndex)
     {
-        if ((IsShop(targetIndex) && IsAlliedUnit(mainSelected,targetIndex)) || IsTavern(targetIndex))
+        if ((IsShop(targetIndex) && IsAlliedUnit(mainSelected,targetIndex)) || IsTavern(targetIndex) || IsGlobalShop(targetIndex))
         {
             $.Msg("Player "+iPlayerID+" Clicked on a Shop")
             ShowShop(targetIndex)
@@ -235,6 +235,11 @@ function IsShop(entIndex) {
 
 function IsTavern(entIndex) {
     return (Entities.GetUnitLabel( entIndex ) == "tavern")
+}
+
+function IsGlobalShop(entIndex) {
+	var entityName = Entities.GetUnitLabel( entIndex );
+    return ( entityName == "goblin_merchant" || entityName == "goblin_lab" || entityName == "mercenary" )
 }
 
 function IsAlliedUnit(entIndex, targetIndex) {

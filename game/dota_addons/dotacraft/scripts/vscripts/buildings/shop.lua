@@ -12,6 +12,7 @@ function unit_shops:start()
 	CustomGameEventManager:RegisterListener( "open_closest_shop", Dynamic_Wrap(unit_shops, "OpenClosestShop"))
 
 	GameRules.Shops = LoadKeyValues("scripts/kv/shops.kv")
+	GameRules.GoblinMerchant = LoadKeyValues("scripts/kv/goblin_merchant.kv")
 end
 	
 -- called to create the shop
@@ -21,7 +22,7 @@ function Setup_Shop( keys )
 	keys.caster.active_particle = {}
 
 	local Shop_Name = keys.caster:GetUnitLabel()
-	unit_shops:CreateShop(keys.caster, Shop_Name)	
+	unit_shops:CreateShop(keys.caster, Shop_Name)
 end
 
 --[[
@@ -70,11 +71,9 @@ function unit_shops:CreateShop(unit, shop_name)
 	-- empty sorted table
 	local sorted_table = {}
 	
-	local isTavern = false
-	if shop_name == "tavern" then
-		isTavern = true
-	end
-	
+	local isTavern = shop_name == "tavern"
+	local isGlobal = (shop_name == "goblin_merchant" or shop_name == "mercenary" or shop_name == "goblin_lab")
+
 	local shopEnt = Entities:FindByName(nil, "*custom_shop") -- entity name in hammer
 	if shopEnt then
 		local modelName = shopEnt:GetModelName()
@@ -96,7 +95,8 @@ function unit_shops:CreateShop(unit, shop_name)
 		UnitShop.Items[key].ItemName = key
 		UnitShop.Items[key].CurrentRefreshTime = 1
 		
-		if shop_name ~= "tavern" then
+		--if not isTavern and not isGlobal then
+		if not isTavern and not isGlobal then
 			UnitShop.Items[key].CurrentStock = GameRules.ItemKV[key]["StockInitial"]
 			UnitShop.Items[key].MaxStock = GameRules.ItemKV[key]["StockMax"]
 			UnitShop.Items[key].RequiredTier = GameRules.ItemKV[key]["RequiresTier"]
@@ -111,13 +111,26 @@ function unit_shops:CreateShop(unit, shop_name)
 				UnitShop.Items[key].LumberCost = 0
 			end
 		
-		else
+		elseif isTavern then
 			UnitShop.Items[key].CurrentStock = 0
 			UnitShop.Items[key].MaxStock = 1
 			UnitShop.Items[key].RequiredTier = 9000
 			UnitShop.Items[key].GoldCost = 0
 			UnitShop.Items[key].LumberCost = 0
 			UnitShop.Items[key].RestockRate = NEUTRAL_HERO_STOCKTIME
+		elseif shop_name == "goblin_merchant" then
+			UnitShop.Items[key].CurrentStock = GameRules.GoblinMerchant[key]["StockInitial"]
+			UnitShop.Items[key].MaxStock = GameRules.GoblinMerchant[key]["StockMax"]
+			UnitShop.Items[key].RequiredTier = 0;
+			UnitShop.Items[key].GoldCost = GameRules.GoblinMerchant[key]["ItemCost"]
+			UnitShop.Items[key].RestockRate = GameRules.GoblinMerchant[key]["StockTime"]
+			UnitShop.Items[key].FirstStock = GameRules.GoblinMerchant[key]["FirstStock"]
+			
+			if GameRules.GoblinMerchant[key]["LumberCost"] ~= nil then
+				UnitShop.Items[key].LumberCost = GameRules.GoblinMerchant[key]["LumberCost"]
+			else
+				UnitShop.Items[key].LumberCost = 0
+			end
 		end
 
 		-- Set some defaults incase the keys are missing in the item definition
@@ -142,7 +155,7 @@ function unit_shops:CreateShop(unit, shop_name)
 		end
 
 		if not isTavern then -- if not tavern
-			unit_shops:StockUpdater(UnitShop.Items[key], unit)
+			unit_shops:StockUpdater(UnitShop.Items[key], unit, isGlobal)
 		else
 			unit_shops:SetupTavernStock(UnitShop.Items[key], unit)
 		end
@@ -152,17 +165,20 @@ function unit_shops:CreateShop(unit, shop_name)
 	end
 
 	-- Create shop panels
-	unit_shops:SetupShopPanels(unit, sorted_table, isTavern, tier, shop_name)
+	unit_shops:SetupShopPanels(unit, sorted_table, isTavern, isGlobal, tier, shop_name)
 end
 
-function unit_shops:SetupShopPanels(unit, ShopItemTable, isTavern, RequiredTier, ShopName)
+function unit_shops:SetupShopPanels(unit, ShopItemTable, isTavern, isGlobal, RequiredTier, ShopName)
 	local UnitID = unit:GetEntityIndex()
 	local team = unit:GetTeam()
-	
 	if not isTavern then
 		--print("[UNIT SHOP] Create "..shop_name.." "..UnitID.." Tier "..tier)
 		--DeepPrintTable(ShopItemTable)
-		CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, Race=ShopName }) 
+		if isGlobal then
+			CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=0, Race=ShopName }) 
+		else
+			CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, Race=ShopName }) 
+		end
 	else
 		GameRules.HeroTavernEntityID = UnitID
 		CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, Tavern = true}) 
@@ -211,7 +227,7 @@ function unit_shops:SetupTavernStock(UnitShopItem, unit)
 	end)
 end
 
-function unit_shops:StockUpdater(UnitShopItem, unit)
+function unit_shops:StockUpdater(UnitShopItem, unit, isGlobal)
 	local UnitID = unit:GetEntityIndex()
 	local team = unit:GetTeam()
 	Timers:CreateTimer(1, function()
@@ -227,16 +243,27 @@ function unit_shops:StockUpdater(UnitShopItem, unit)
 
 		unit_shops:Stock_Management(UnitShopItem)
 		
-		CustomGameEventManager:Send_ServerToTeam(team, "unitshop_updateStock", { Index = UnitID, Item = UnitShopItem, Tier=tier })
+		CustomGameEventManager:Send_ServerToAllClients("unitshop_updateStock", { Index = UnitID, Item = UnitShopItem, Tier=tier })		
 		return 1
 	end)
 end
 
 function unit_shops:Stock_Management(UnitShopItem)
 	-- if the item is not at max stock start a counter until it's restocked
+	
 	if UnitShopItem.CurrentStock < UnitShopItem.MaxStock then
 	
-		if UnitShopItem.CurrentRefreshTime == UnitShopItem.RestockRate then
+		if UnitShopItem.FirstStock ~= 0 and UnitShopItem.CurrentRefreshTime == UnitShopItem.FirstStock then
+			-- this is might need altering, currently its abit hardcoded
+			UnitShopItem.CurrentStock = UnitShopItem.MaxStock
+			
+			-- set to 0 to stop condition from being met so that it resumes normal restocking rates
+			UnitShopItem.FirstStock = 0
+			
+			-- reset counter for next stock
+			UnitShopItem.CurrentRefreshTime = 1
+			print("[UNIT SHOP] Increasing stock count by 1 for global shop")
+		elseif UnitShopItem.CurrentRefreshTime == UnitShopItem.RestockRate then
 			-- increase stock by 1 when the currentrefreshtime == the refreshrate
 			UnitShopItem.CurrentStock = UnitShopItem.CurrentStock + 1
 			
