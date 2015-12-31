@@ -169,3 +169,84 @@
 		{}
 	}
 }
+
+"item_scroll_of_protection"
+{
+	"BaseClass"                     "item_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityTextureName"            "item_scroll_of_protection"
+	"AbilityCooldown"               "60"
+	"AbilityManaCost"               "0"
+	"AbilityCastRange"				"600"
+		
+	"Model"							"models/props_gameplay/tpscroll01.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+	
+	"ItemCost"                      "150"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
+	"ItemShopTags"					"rare"
+	"ItemQuality"					"rare"
+	"ItemPermanent"					"0"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemInitialCharges"            "1"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_armor"		"2"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"600"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"30"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		//TODO: Add cast fx
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_scroll_of_protection"
+			"Target"
+			{
+				"Center" 	"CASTER"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+			}
+			"Duration"		"%duration"
+		}
+
+		"SpendCharge"
+		{}
+	}
+
+	"Modifiers"
+	{
+		"modifier_scroll_of_protection"
+		{
+			// TODO: Add fx	
+			//"EffectName"		"particle_name"
+			//"EffectAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor" 
+			}
+		}
+	}
+}

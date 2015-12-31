@@ -1,0 +1,18 @@
+"tome_of_retraining"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityTextureName"            "tome_of_retraining"
+    
+    "ItemCost"                      "300"
+    "ItemQuality"                   "common"
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/tome_of_retraining.lua"
+            "Function"      "Retrain"
+        }
+    }
+}

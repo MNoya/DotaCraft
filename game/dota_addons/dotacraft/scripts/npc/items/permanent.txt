@@ -1,0 +1,124 @@
+"item_circlet_of_nobility"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_circlet_of_nobility"
+    
+    "ItemCost"                      "175"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_all_stats"       "2"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_circlet_of_nobility"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_all_stats"
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_all_stats"
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_all_stats"
+            }
+        }
+    }
+}
+
+"item_periapt_of_vitality"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_periapt_of_vitality"
+    
+    "ItemCost"                      "175"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_health"          "150"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_periapt_of_vitality"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+            }
+        }
+    }
+}
+
+"item_boots_of_speed"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_boots_of_speed"
+    
+    "ItemCost"                      "175"
+    "ItemQuality"                   "common"
+    "ItemAliases"                   "circlet"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_movement_speed"  "50"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_boots_of_speed"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE" "%bonus_movement_speed"
+            }
+        }
+    }
+}
+
+"item_staff_of_teleportation"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityTextureName"            "item_staff_of_teleportation"
+    
+    "ItemCost"                      "150"
+    "ItemQuality"                   "common"
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/staff_of_teleportation.lua"
+            "Function"      "SelfTeleport"
+        }
+    }
+}
