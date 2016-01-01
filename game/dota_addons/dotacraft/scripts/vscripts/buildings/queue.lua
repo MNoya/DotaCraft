@@ -4,20 +4,34 @@ function EnqueueUnit( event )
     local ability = event.ability
     local playerID = caster:GetPlayerOwner():GetPlayerID()
     local gold_cost = ability:GetGoldCost( ability:GetLevel() - 1 )
-    local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel() - 1)
-    if not food_cost then
-        food_cost = 0
-    end
+    local lumber_cost = ability:GetLevelSpecialValueFor("lumber_cost", ability:GetLevel() - 1) or 0
 
     -- Initialize queue
     if not caster.queue then
         caster.queue = {}
     end
 
+    -- Check food
+    local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel() - 1)
+    if not food_cost then
+        food_cost = 0
+    end
+
     -- Send 'need more farms' warning
     if not Players:HasEnoughFood(playerID, food_cost) then
         local race = Players:GetRace(playerID)
         SendErrorMessage(playerID, "#error_not_enough_food_"..race)
+    end
+
+    -- Check lumber
+    if not Players:HasEnoughLumber( playerID, lumber_cost ) then
+        -- Refund gold, show message
+        Players:ModifyGold(playerID, gold_cost)
+        SendErrorMessage(playerID, "#error_not_enough_lumber")
+        return
+    else
+        -- Use lumber
+        Players:ModifyLumber(playerID, -lumber_cost)
     end
 
     -- Queue up to 6 units max
@@ -37,8 +51,9 @@ function EnqueueUnit( event )
         end
     else
         -- Refund with message
-         Players:ModifyGold(playerID, gold_cost)
-        SendErrorMessage(caster:GetPlayerOwnerID(), "#error_queue_full")
+        Players:ModifyLumber(playerID, lumber_cost)
+        Players:ModifyGold(playerID, gold_cost)
+        SendErrorMessage(playerID, "#error_queue_full")
     end
 end
 
@@ -58,6 +73,7 @@ function DequeueUnit( event )
     local train_ability_name = string.gsub(item_ability_name, "item_", "")
     local train_ability = caster:FindAbilityByName(train_ability_name)
     local gold_cost = train_ability:GetGoldCost( train_ability:GetLevel() )
+    local lumber_cost = train_ability:GetLevelSpecialValueFor("lumber_cost", train_ability:GetLevel() - 1) or 0
 
     for itemSlot = 0, 5, 1 do
            local item = caster:GetItemInSlot( itemSlot )
@@ -75,6 +91,7 @@ function DequeueUnit( event )
                 
                 -- Refund ability cost
                 Players:ModifyGold(playerID, gold_cost)
+                Players:ModifyLumber(playerID, lumber_cost)
 
                 -- Set not channeling if the cancelled item was the first slot
                 if itemSlot == 0 then
