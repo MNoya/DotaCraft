@@ -21129,12 +21129,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 				"ModifierName"	"modifier_building_particle"
 			}
 		}
@@ -21241,15 +21236,8 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
+				"Action"		"StartUpgrade"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
-				"ModifierName"	"modifier_building_particle"
-			}
-	
 		}
 	
 		"OnChannelSucceeded"
@@ -21409,12 +21397,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 			}
 		}
 	
@@ -21496,12 +21479,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 			}
 		}
 	
@@ -21583,12 +21561,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 			}
 		}
 	
@@ -22525,12 +22498,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -40990,12 +40957,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 			}
 		}
 	
@@ -41073,14 +41035,8 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
+				"Action"		"StartUpgrade"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
-			}
-	
 		}
 	
 		"OnChannelSucceeded"
@@ -41826,12 +41782,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -41905,12 +41855,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -41982,12 +41926,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -42061,12 +41999,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -42138,12 +42070,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -42224,12 +42150,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -42303,12 +42223,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -42366,12 +42280,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -42428,12 +42336,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -42506,12 +42408,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -42593,12 +42489,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -42678,12 +42568,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -42757,12 +42641,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -42834,12 +42712,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -42913,12 +42785,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -42975,12 +42841,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -43062,12 +42922,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -43126,12 +42980,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -43188,12 +43036,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -43267,12 +43109,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -43345,12 +43181,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -43407,12 +43237,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -43486,12 +43310,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -43564,12 +43382,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -43626,12 +43438,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -43705,12 +43511,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -43783,12 +43583,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -43845,12 +43639,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -43924,12 +43712,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -44002,12 +43784,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -44064,12 +43840,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -52382,12 +52152,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 			}
 		}
 	
@@ -52465,14 +52230,8 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
+				"Action"		"StartUpgrade"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
-			}
-	
 		}
 	
 		"OnChannelSucceeded"
@@ -53109,12 +52868,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -53188,12 +52941,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -53265,12 +53012,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -53344,12 +53085,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -53421,12 +53156,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -53501,12 +53230,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -53578,12 +53301,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -53657,12 +53374,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -53733,12 +53444,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -53812,12 +53517,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -53889,12 +53588,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -53969,12 +53662,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -54046,12 +53733,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -54132,12 +53813,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -54209,12 +53884,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -54289,12 +53958,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -54368,12 +54031,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -54445,12 +54102,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -54524,12 +54175,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -54601,12 +54246,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -54680,12 +54319,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -54757,12 +54390,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -54836,12 +54463,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -54913,12 +54534,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -54992,12 +54607,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -55069,12 +54678,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -55148,12 +54751,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -55226,12 +54823,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -55303,12 +54894,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -64464,12 +64049,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 			}
 		}
 	
@@ -64547,14 +64127,8 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
+				"Action"		"StartUpgrade"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
-			}
-	
 		}
 	
 		"OnChannelSucceeded"
@@ -64614,12 +64188,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 			}
 		}
 	
@@ -64697,12 +64266,7 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/upgrades.lua"
-				"Function"		"StartUpgrade"
+				"Action"		"StartUpgrade"
 			}
 		}
 	
@@ -65441,12 +65005,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -65518,12 +65076,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -65597,12 +65149,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -65675,12 +65221,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -65752,12 +65292,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -65833,12 +65367,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -65910,12 +65438,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -65989,12 +65511,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -66066,12 +65582,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -66145,12 +65655,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -66222,12 +65726,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -66303,12 +65801,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -66381,12 +65873,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -66458,12 +65944,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -66538,12 +66018,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -66617,12 +66091,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -66694,12 +66162,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -66773,12 +66235,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -66850,12 +66306,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -66929,12 +66379,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -67006,12 +66450,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -67086,12 +66524,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -67163,12 +66595,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -67242,12 +66668,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -67319,12 +66739,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	
@@ -67398,12 +66812,6 @@
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
 			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
-			}
 		}
 	
 		"OnChannelSucceeded"
@@ -67475,12 +66883,6 @@
 			{
 				"ScriptFile"	"buildings/queue.lua"
 				"Function"		"EnqueueUnit"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/research.lua"
-				"Function"		"DisableResearch"
 			}
 		}
 	

@@ -99,35 +99,30 @@ function StartUpgrade( event )
 	local modifier_name = event.ModifierName
 	local abilities = {}
 
-	-- Check to not disable when the queue was full
-	if #caster.queue <= 6 then
+	-- Iterate through abilities marking those to disable
+	for i=0,15 do
+		local abil = caster:GetAbilityByIndex(i)
+		if abil then
+			local ability_name = abil:GetName()
 
-		-- Iterate through abilities marking those to disable
-		for i=0,15 do
-			local abil = caster:GetAbilityByIndex(i)
-			if abil then
-				local ability_name = abil:GetName()
-
-				-- Abilities to hide include the strings train_ and research_, the rest remain available
-				if string.match(ability_name, "train_") or string.match(ability_name, "research_") then
-					table.insert(abilities, abil)
-				end
+			-- Abilities to hide include the strings train_ and research_, the rest remain available
+			if string.match(ability_name, "train_") or string.match(ability_name, "research_") then
+				table.insert(abilities, abil)
 			end
 		end
+	end
 
-		-- Keep the references to enable if the upgrade gets canceled
-		caster.disabled_abilities = abilities
+	-- Keep the references to enable if the upgrade gets canceled
+	caster.disabled_abilities = abilities
 
-		for k,disable_ability in pairs(abilities) do
-			disable_ability:SetHidden(true)		
-		end
+	for k,disable_ability in pairs(abilities) do
+		disable_ability:SetHidden(true)		
+	end
 
-		-- Pass a modifier with particle(s) of choice to show that the building is upgrading. Remove it on CancelUpgrade
-		if modifier_name then
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_name, {})
-			caster.upgrade_modifier = modifier_name
-		end
-
+	-- Pass a modifier with particle(s) of choice to show that the building is upgrading. Remove it on CancelUpgrade
+	if modifier_name then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_name, {})
+		caster.upgrade_modifier = modifier_name
 	end
 
 	local hero = caster:GetPlayerOwner():GetAssignedHero()

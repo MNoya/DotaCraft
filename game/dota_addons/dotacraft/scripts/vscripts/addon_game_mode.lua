@@ -24,6 +24,8 @@ require('units/attacks')
 require('libraries/buildinghelper')
 require('buildings/shop')
 require('buildings/altar')
+require('buildings/research')
+require('buildings/upgrades')
 
 ---------------------------------------------------------------------------
 

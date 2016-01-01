@@ -49,6 +49,16 @@ function EnqueueUnit( event )
                 table.insert(caster.queue, item:GetEntityIndex())
             end
         end
+
+        -- Disable research
+        if string.match(ability_name, "research_") then
+            DisableResearch(event) -- upgrades.lua
+        end
+
+        -- Start building upgrade actions
+        if event.Action == "StartUpgrade" then
+            StartUpgrade(event)
+        end
     else
         -- Refund with message
         Players:ModifyLumber(playerID, lumber_cost)
