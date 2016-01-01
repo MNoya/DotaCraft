@@ -1028,6 +1028,8 @@ end
       * Spawns a square of point_simple_obstruction entities at a location
 ]]--
 function BuildingHelper:BlockPSO(size, location)
+    if size == 0 then return end
+
     -- Keep the origin of the buildings to put them back in position after spawning point_simple_obstruction entities
     local buildings = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, size*128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
     for k,v in pairs(buildings) do
