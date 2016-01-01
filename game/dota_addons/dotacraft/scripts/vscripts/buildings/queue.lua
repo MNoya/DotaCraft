@@ -72,11 +72,9 @@ end
 -- If its the first slot, the channeling ability is also set to not channel, refunding the full price.
 function DequeueUnit( event )
     local caster = event.caster
-    local item = event.ability
+    local item_ability = event.ability
     local player = caster:GetPlayerOwner()
     local playerID = caster:GetPlayerOwnerID()
-
-    local item_ability = EntIndexToHScript(item:GetEntityIndex())
     local item_ability_name = item_ability:GetAbilityName()
 
     -- Get tied ability
@@ -85,43 +83,40 @@ function DequeueUnit( event )
     local gold_cost = train_ability:GetGoldCost( train_ability:GetLevel() )
     local lumber_cost = train_ability:GetLevelSpecialValueFor("lumber_cost", train_ability:GetLevel() - 1) or 0
 
+    print("DequeueUnit")
+
     for itemSlot = 0, 5, 1 do
-           local item = caster:GetItemInSlot( itemSlot )
-        if item ~= nil then
-            local current_item = EntIndexToHScript(item:GetEntityIndex())
+        local item = caster:GetItemInSlot( itemSlot )
+        print(item:GetAbilityName(), item_ability_name)
+        if item and item == item_ability then
+            print("OK")
+            local queue_element = getIndex(caster.queue, item:GetEntityIndex())
+            table.remove(caster.queue, queue_element)
 
-            if current_item == item_ability then
-                --print("Q")
-                --DeepPrintTable(caster.queue)
-                local queue_element = getIndex(caster.queue, item:GetEntityIndex())
-                --print(item:GetEntityIndex().." in queue at "..queue_element)
-                table.remove(caster.queue, queue_element)
+            item:RemoveSelf()
+            
+            -- Refund ability cost
+            Players:ModifyGold(playerID, gold_cost)
+            Players:ModifyLumber(playerID, lumber_cost)
 
-                caster:RemoveItem(item)
-                
-                -- Refund ability cost
-                Players:ModifyGold(playerID, gold_cost)
-                Players:ModifyLumber(playerID, lumber_cost)
-
-                -- Set not channeling if the cancelled item was the first slot
-                if itemSlot == 0 then
-                    -- Refund food used
-                    local ability = caster:FindAbilityByName(train_ability_name)
-                    local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel())
-                    if food_cost and not caster:HasModifier("modifier_construction") and ability:IsChanneling() then
-                        Players:ModifyFoodUsed(playerID, -food_cost)
-                    end
-
-                    train_ability:SetChanneling(false)
-                    train_ability:EndChannel(true)
-
-                    -- Fake mana channel bar
-                    caster:SetMana(0)
-                    caster:SetBaseManaRegen(0)            
+            -- Set not channeling if the cancelled item was the first slot
+            if itemSlot == 0 then
+                -- Refund food used
+                local ability = caster:FindAbilityByName(train_ability_name)
+                local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel())
+                if food_cost and not caster:HasModifier("modifier_construction") and ability:IsChanneling() then
+                    Players:ModifyFoodUsed(playerID, -food_cost)
                 end
-                ReorderItems(caster)
-                break
+
+                train_ability:SetChanneling(false)
+                train_ability:EndChannel(true)
+
+                -- Fake mana channel bar
+                caster:SetMana(0)
+                caster:SetBaseManaRegen(0)            
             end
+            ReorderItems(caster)
+            break
         end
     end
 end

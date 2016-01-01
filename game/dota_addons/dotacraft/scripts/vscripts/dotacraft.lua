@@ -985,6 +985,9 @@ function dotacraft:OnEntityKilled( event )
         DropItems( killed )
     end
 
+    -- Remove dead units from selection group
+    RemoveUnitFromSelection(killed)
+
 	-- Hero Killed
 	if killed:IsRealHero() then
 		print("A Hero was killed")
