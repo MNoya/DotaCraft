@@ -613,10 +613,12 @@ end
 function dotacraft:OnGameInProgress()
 	print("[DOTACRAFT] The game has officially begun")
 
-	-- Setup Tavern
-	local taverns = Entities:FindAllByName("*shop_tavern")
-	for k,v in pairs(taverns) do
-		TeachAbility(v,"ability_shop")
+	-- Setup shops (Tavern, Mercenary, Goblin Merchant and Lab)
+	local shops = Entities:FindAllByName("*shop*")
+	for k,v in pairs(shops) do
+        if v.AddAbility then
+		  TeachAbility(v,"ability_shop")
+        end
 	end
 
 	GameRules.DayTime = true

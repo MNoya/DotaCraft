@@ -14396,7 +14396,7 @@
 		"ItemSellable"                  "1"
 		"ItemDroppable"                 "1"
 	
-		"ItemCost"						"1200"
+		"ItemCost"						"100"
 		"ItemShopTags"					"common"
 		"ItemQuality"					"common"
 		"ItemStackable"					"1"
@@ -14486,10 +14486,10 @@
 		}
 	}
 	
-	"item_lesser_potion_of_invulnerability"
+	"item_potion_of_lesser_invulnerability"
 	{
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_potion_of_invulnerability"
+		"AbilityTextureName"			"item_potion_of_lesser_invulnerability"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -14505,7 +14505,7 @@
 		"ItemSellable"                  "1"
 		"ItemDroppable"                 "1"
 	
-		"ItemCost"						"1200"
+		"ItemCost"						"150"
 		"ItemShopTags"					"common"
 		"ItemQuality"					"common"
 		"ItemStackable"					"1"
@@ -15193,6 +15193,87 @@
 	
 			"SpendCharge"
 			{}
+		}
+	}
+	
+	"item_scroll_of_protection"
+	{
+		"BaseClass"                     "item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"            "item_scroll_of_protection"
+		"AbilityCooldown"               "60"
+		"AbilityManaCost"               "0"
+		"AbilityCastRange"				"600"
+			
+		"Model"							"models/props_gameplay/tpscroll01.vmdl"
+		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+		
+		"ItemCost"                      "150"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
+		"ItemShopTags"					"rare"
+		"ItemQuality"					"rare"
+		"ItemPermanent"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemInitialCharges"            "1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_armor"		"2"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"600"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			//TODO: Add cast fx
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_scroll_of_protection"
+				"Target"
+				{
+					"Center" 	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+				}
+				"Duration"		"%duration"
+			}
+	
+			"SpendCharge"
+			{}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_scroll_of_protection"
+			{
+				// TODO: Add fx	
+				//"EffectName"		"particle_name"
+				//"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor" 
+				}
+			}
 		}
 	}
 	"item_stat_modifier"
@@ -18098,4 +18179,146 @@
 		}
 	}
 	
+	"item_circlet_of_nobility"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "item_circlet_of_nobility"
+	    
+	    "ItemCost"                      "175"
+	    "ItemQuality"                   "common"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_all_stats"       "2"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_circlet_of_nobility"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_all_stats"
+	                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_all_stats"
+	                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_all_stats"
+	            }
+	        }
+	    }
+	}
+	
+	"item_periapt_of_vitality"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "item_periapt_of_vitality"
+	    
+	    "ItemCost"                      "175"
+	    "ItemQuality"                   "common"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_health"          "150"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_periapt_of_vitality"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+	            }
+	        }
+	    }
+	}
+	
+	"item_boots_of_speed"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "item_boots_of_speed"
+	    
+	    "ItemCost"                      "175"
+	    "ItemQuality"                   "common"
+	    "ItemAliases"                   "circlet"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_movement_speed"  "50"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_boots_of_speed"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE" "%bonus_movement_speed"
+	            }
+	        }
+	    }
+	}
+	
+	"item_staff_of_teleportation"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "item_staff_of_teleportation"
+	    
+	    "ItemCost"                      "150"
+	    "ItemQuality"                   "common"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/staff_of_teleportation.lua"
+	            "Function"      "SelfTeleport"
+	        }
+	    }
+	}
+	"tome_of_retraining"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityTextureName"            "tome_of_retraining"
+	    
+	    "ItemCost"                      "300"
+	    "ItemQuality"                   "common"
+	    
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/tome_of_retraining.lua"
+	            "Function"      "Retrain"
+	        }
+	    }
+	}
 }
