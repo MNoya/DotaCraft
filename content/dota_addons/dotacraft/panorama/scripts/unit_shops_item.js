@@ -19,6 +19,10 @@ function HideToolTip(){
 function Setup_Panel(){	
 	GameEvents.Subscribe( "unitshop_updateStock", Update_Central);
 	
+	var itemName = Root.ItemName
+	if (itemName.substring(0,6) == "item_")
+		itemName = itemName.substring(6)
+	
 	var image_path = "url('file://{images}/items/"+Root.ItemName+".png');"
 	$("#ItemImage").style["background-image"] = image_path 
 	
