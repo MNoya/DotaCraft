@@ -456,8 +456,10 @@ function dotacraft:InitializePlayer( hero )
     local hero_name = hero:GetUnitName()
     local city_center_name = GetCityCenterNameForHeroRace(hero_name)
     local builder_name = GetBuilderNameForHeroRace(hero_name)
+    local construction_size = Units:GetConstructionSize(city_center_name) 
+    local pathing_size = Units:GetBlockPathingSize(city_center_name)
 
-	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, Units:GetConstructionSize(city_center_name), Units:GetBlockPathingSize(city_center_name), 0)
+	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, construction_size, pathing_size, 0)
 	Players:AddStructure(playerID, building)
 	
 	Players:SetMainCityCenter(playerID, building)

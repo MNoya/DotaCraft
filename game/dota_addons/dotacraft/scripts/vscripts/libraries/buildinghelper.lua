@@ -476,7 +476,7 @@ end
     * Make sure the position is valid before calling this in code.
 ]]--
 function BuildingHelper:PlaceBuilding(player, name, location, construction_size, pathing_size, angle)
-    
+    BuildingHelper:SnapToGrid(construction_size, location)
     local playerID = player:GetPlayerID()
     local playersHero = PlayerResource:GetSelectedHeroEntity(playerID)
     BuildingHelper:print("PlaceBuilding for playerID ".. playerID)
