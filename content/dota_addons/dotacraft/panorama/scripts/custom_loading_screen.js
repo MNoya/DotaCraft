@@ -12,7 +12,8 @@ function Choose_Hint(){
 
 function Choose_Background() {
 	var Map_Info = Game.GetMapInfo();
-	var Map_Name = Map_Info.map_display_name.substring(2);
+	var Map_Name = Map_Info.map_display_name.substring(Map_Info.map_display_name.indexOf('_')+1);
+
 	if (Map_Name == "")
 	{
 		$.Schedule(0.1, Choose_Background);
