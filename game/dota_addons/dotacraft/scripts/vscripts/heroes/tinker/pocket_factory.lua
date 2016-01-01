@@ -1,6 +1,6 @@
 --[[
 	Author: Noya
-	Date: 03.02.2015.
+	Date: January 2016
 	Creates a building, adds ability to spawn units every at an interval which decreases with engineering_upgrade levels
 ]]
 function BuildPocketFactory( event )
@@ -11,19 +11,18 @@ function BuildPocketFactory( event )
 	local factory_duration =  ability:GetLevelSpecialValueFor( "factory_duration" , ability:GetLevel() - 1  )
 	local ability_level = ability:GetLevel()
 	local building_name = "tinker_pocket_factory_building"..ability_level
+	local construction_size = Units:GetConstructionSize(building_name)
+	local pathing_size = Units:GetBlockPathingSize(building_name)
 
 	-- Create the building, set to time out after a duration
-	caster.pocket_factory = CreateUnitByName(building_name, point, true, caster, caster, caster:GetTeam())
+	caster.pocket_factory = BuildingHelper:PlaceBuilding(caster:GetPlayerOwner(), building_name, point, construction_size, pathing_size, 0)
 	caster.pocket_factory:AddNewModifier(caster, nil, "modifier_kill", {duration = factory_duration})
-	caster.pocket_factory:RemoveModifierByName("modifier_invulnerable")
 	caster.pocket_factory.no_corpse = true
-	Timers:CreateTimer(0.03, function() caster.pocket_factory:SetAbsOrigin(point) end)
 
 	-- Add the ability and set its level
-	caster.pocket_factory:AddAbility("tinker_pocket_factory_spawn_goblin")
-	local spawn_ability = caster.pocket_factory:FindAbilityByName("tinker_pocket_factory_spawn_goblin")
+	caster.pocket_factory:AddAbility("tinker_pocket_factory_train_goblin")
+	local spawn_ability = caster.pocket_factory:FindAbilityByName("tinker_pocket_factory_train_goblin")
 	spawn_ability:SetLevel(ability_level)
-
 end
 
 -- When the building is created, check level of engineering and start spawning every interval
@@ -63,6 +62,9 @@ function StartGoblinSpawn( event )
 			goblin:SetControllableByPlayer(player, true)
 			goblin:AddNewModifier(caster, nil, "modifier_kill", {duration = goblin_duration})
 			goblin.no_corpse = true
+
+			-- Move to rally point
+			MoveToRallyPoint({caster=caster, target=goblin})
 
 			-- Add the ability and set its level to the main ability level
 			goblin:AddAbility(goblin_ability_name)

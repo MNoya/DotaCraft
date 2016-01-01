@@ -26,6 +26,7 @@ require('buildings/shop')
 require('buildings/altar')
 require('buildings/research')
 require('buildings/upgrades')
+require('buildings/rally_point')
 
 ---------------------------------------------------------------------------
 

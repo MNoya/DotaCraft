@@ -15067,9 +15067,9 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"			"npc_dota_building"
+		"BaseClass"			"npc_dota_creature"
 		"Model"				"models/buildings/building_plain_reference.vmdl"
-		"ModelScale"		"1"
+		"ModelScale"		"0.9"
 		"Level"				"4"
 		"SoundSet"			"Creep_Good_Melee"
 		"MinimapIcon"		"minimap_racks90"
@@ -15078,6 +15078,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"			"" //"tinker_pocket_factory_spawn_goblin" learn in lua	 //Reference: ARal
+		"Ability10"			"ability_building"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -15127,7 +15128,13 @@
 		"UnitRelationShipClass"	"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_BARRACKS"
-		"RingRadius"			"220"
+		"RingRadius"			"110"
+		"CollisionSize"			"48"
+	
+		// Building Size
+		//----------------------------------------------------------------
+		"ConstructionSize"			"2"
+		"BlockPathingSize"			"2"
 		
 		// Creature Data
 		//----------------------------------------------------------------
@@ -15137,9 +15144,9 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"			"npc_dota_building"
+		"BaseClass"			"npc_dota_creature"
 		"Model"				"models/buildings/building_plain_reference.vmdl"
-		"ModelScale"		"1.1"
+		"ModelScale"		"1.0"
 		"Level"				"5"
 		"SoundSet"			"Creep_Good_Melee"
 		"MinimapIcon"		"minimap_racks90"
@@ -15148,6 +15155,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"			"" //"tinker_pocket_factory_spawn_goblin" learn in lua	 //Reference: ARal
+		"Ability10"			"ability_building"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -15197,7 +15205,13 @@
 		"UnitRelationShipClass"	"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_BARRACKS"
-		"RingRadius"			"220"
+		"RingRadius"			"110"
+		"CollisionSize"			"48"
+	
+		// Building Size
+		//----------------------------------------------------------------
+		"ConstructionSize"			"2"
+		"BlockPathingSize"			"2"
 		
 		// Creature Data
 		//----------------------------------------------------------------
@@ -15207,9 +15221,9 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"			"npc_dota_building"
+		"BaseClass"			"npc_dota_creature"
 		"Model"				"models/buildings/building_plain_reference.vmdl"
-		"ModelScale"		"1.2"
+		"ModelScale"		"1.1"
 		"Level"				"6"
 		"SoundSet"			"Creep_Good_Melee"
 		"MinimapIcon"		"minimap_racks90"
@@ -15218,6 +15232,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"			"" //"tinker_pocket_factory_spawn_goblin" learn in lua	 //Reference: ARal
+		"Ability10"			"ability_building"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -15267,7 +15282,13 @@
 		"UnitRelationShipClass"	"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		"BoundsHullName"		"DOTA_HULL_SIZE_BARRACKS"
-		"RingRadius"			"220"
+		"RingRadius"			"110"
+		"CollisionSize"			"48"
+	
+		// Building Size
+		//----------------------------------------------------------------
+		"ConstructionSize"			"2"
+		"BlockPathingSize"			"2"
 		
 		// Creature Data
 		//----------------------------------------------------------------
