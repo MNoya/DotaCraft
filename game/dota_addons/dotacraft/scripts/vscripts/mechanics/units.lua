@@ -42,7 +42,7 @@ function Units:Init( unit )
     -- Adjust Hull
     local collision_size = GetCollisionSize(unit)
     local hull_radius = unit:GetHullRadius()
-    if collision_size and collision_size > hull_radius then
+    if collision_size and collision_size > hull_radius+10 then
         unit:SetHullRadius(GetCollisionSize(unit))
     end
 end

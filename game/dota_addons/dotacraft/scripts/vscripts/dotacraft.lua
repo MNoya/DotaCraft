@@ -486,7 +486,7 @@ function dotacraft:InitializePlayer( hero )
 		Players:AddUnit(playerID, ghoul)
 
 		-- Haunt the closest gold mine
-        --[[local construction_size = Units:GetConstructionSize("undead_haunted_gold_mine")
+        local construction_size = Units:GetConstructionSize("undead_haunted_gold_mine")
 		local haunted_gold_mine = BuildingHelper:PlaceBuilding(player, "undead_haunted_gold_mine", closest_mine_pos, construction_size, 0)
         Players:AddStructure(playerID, haunted_gold_mine)
 
@@ -494,6 +494,16 @@ function dotacraft:InitializePlayer( hero )
 		ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
 		haunted_gold_mine.builders = {}
 
+         -- Hide the targeted gold mine    
+        ApplyModifier(closest_mine, "modifier_unselectable")
+
+        -- Create sigil prop
+        local modelName = "models/props_magic/bad_sigil_ancient001.vmdl"
+        haunted_gold_mine.sigil = SpawnEntityFromTableSynchronous("prop_dynamic", {model = modelName, DefaultAnim = 'bad_sigil_ancient001_rotate'})
+        haunted_gold_mine.sigil:SetAbsOrigin(Vector(closest_mine_pos.x, closest_mine_pos.y, closest_mine_pos.z-60))
+        haunted_gold_mine.sigil:SetModelScale(haunted_gold_mine:GetModelScale())
+
+        -- Create blight
 		Timers:CreateTimer(function() 
 			CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
 			CreateBlight(building:GetAbsOrigin(), "large")
