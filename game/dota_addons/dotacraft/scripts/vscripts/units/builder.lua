@@ -9,6 +9,7 @@ function Build( event )
     local ability_name = ability:GetAbilityName()
     local AbilityKV = GameRules.AbilityKV
     local UnitKV = GameRules.UnitKV
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
 
     if caster:IsIdle() then
         caster:Interrupt()
@@ -103,7 +104,7 @@ function Build( event )
 
         -- Cancel gather
         local race = GetUnitRace(caster)
-        local gather_ability = caster:FindAbilityByName(race.."_gather")
+        local gather_ability = caster:FindAbilityByName(casterKV.GatherAbility)
         if gather_ability then
             CancelGather({caster = caster, ability = gather_ability})
         end
@@ -362,6 +363,7 @@ function Gather( event )
     local target = event.target
     local ability = event.ability
     local target_class = target:GetClassname()
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
 
     caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
 
@@ -472,7 +474,7 @@ function Gather( event )
 
         -- Hide Return
         if IsHuman(caster) or IsOrc(caster) then
-            local return_ability = caster:FindAbilityByName(race.."_return_resources")
+            local return_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
             return_ability:SetHidden(true)
             ability:SetHidden(false)
             --print("Gathering Lumber ON, Return OFF")
@@ -642,7 +644,7 @@ function Gather( event )
         end)
             
         -- Hide Return
-        local return_ability = caster:FindAbilityByName(race.."_return_resources")
+        local return_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
         if return_ability then
             return_ability:SetHidden(true)
         end
@@ -731,6 +733,7 @@ end
 function CancelGather( event )
     local caster = event.caster
     local ability = event.ability
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
 
     local ability_order = event.event_ability
     if ability_order then
@@ -755,7 +758,7 @@ function CancelGather( event )
 
     -- If it's carrying resources, leave the return resources ability enabled
     if caster:HasModifier("modifier_carrying_lumber") or caster:HasModifier("modifier_carrying_gold") then
-        caster:SwapAbilities(race.."_gather", race.."_return_resources", false, true)
+        caster:SwapAbilities(casterKV.GatherAbility, casterKV.ReturnAbility, false, true)
     end
 
     local tree = caster.target_tree
@@ -802,6 +805,7 @@ end
 function CancelReturn( event )
     local caster = event.caster
     local ability = event.ability
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
 
     local ability_order = event.event_ability
     if ability_order then
@@ -814,7 +818,7 @@ function CancelReturn( event )
     -- Builder race
     local race = GetUnitRace(caster)
 
-    local gather_ability = caster:FindAbilityByName(race.."_gather")
+    local gather_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
     gather_ability.cancelled = true
     caster.state = "idle"
 
@@ -833,22 +837,25 @@ end
 -- Gets called every second, increases the carried lumber of the builder by 1 until it can't carry more
 -- Also does tree cutting and reacquiring of new trees when necessary.
 function GatherLumber( event )
-    
     local caster = event.caster
     local ability = event.ability
-    local max_lumber_carried = Units:GetLumberCapacity(caster)
+    local abilityLevel = ability:GetLevel() - 1
+    --local max_lumber_carried = Units:GetLumberCapacity(caster)
+    local max_lumber_carried = ability:GetLevelSpecialValueFor("lumber_capacity", abilityLevel)
     local tree = caster.target_tree
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()] --
+    local UnitKV = GameRules.UnitKV
+    local lumber_per_hit = ability:GetLevelSpecialValueFor("lumber_per_hit", abilityLevel)
+    local damage_to_tree = ability:GetLevelSpecialValueFor("damage_to_tree", abilityLevel)
 
     -- Builder race
     local race = GetUnitRace(caster)
 
     caster.state = "gathering_lumber"
 
-    --print("Tree Health: ", tree.health)
+    local return_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
 
-    local return_ability = caster:FindAbilityByName(race.."_return_resources")
-
-    caster.lumber_gathered = caster.lumber_gathered + 1
+    caster.lumber_gathered = caster.lumber_gathered + lumber_per_hit
     if tree and tree.health then
 
         -- Hit particle
@@ -856,7 +863,7 @@ function GatherLumber( event )
         local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
         ParticleManager:SetParticleControl(particle, 0, tree:GetAbsOrigin())
 
-        tree.health = tree.health - DAMAGE_TO_TREE
+        tree.health = tree.health - damage_to_tree
         if tree.health <= 0 then
             tree:CutDown(caster:GetTeamNumber())
 
@@ -889,7 +896,7 @@ function GatherLumber( event )
 
         -- Show the return ability
         if return_ability:IsHidden() then
-            caster:SwapAbilities(race.."_gather", race.."_return_resources", false, true)
+            caster:SwapAbilities(casterKV.GatherAbility, casterKV.ReturnAbility, false, true)
         end
     else
         -- RETURN
@@ -908,6 +915,7 @@ function GatherGold( event )
     local caster = event.caster
     local ability = event.ability
     local mine = caster.target_mine
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
 
     -- Builder race
     local race = GetUnitRace(caster)
@@ -932,7 +940,7 @@ function GatherGold( event )
         caster.target_mine = nil
     end
 
-    local return_ability = caster:FindAbilityByName(race.."_return_resources")
+    local return_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
     return_ability:SetHidden(false)
     return_ability:ApplyDataDrivenModifier( caster, caster, "modifier_carrying_gold", nil)
     
@@ -968,6 +976,7 @@ function GoldGain( event )
     local hero = caster:GetPlayerOwner():GetAssignedHero()
     local race = GetUnitRace(caster)
     local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
     Players:ModifyGold(playerID, gold_gain)
     PopupGoldGain( caster, gold_gain)
 
@@ -995,7 +1004,7 @@ function GoldGain( event )
             builder:RemoveModifierByName("modifier_gathering_gold")
             builder.state = "idle"
 
-            local ability = builder:FindAbilityByName(race.."_gather")
+            local ability = builder:FindAbilityByName(casterKV.GatherAbility)
             ability.cancelled = true
             ToggleOff(ability)
 
@@ -1035,6 +1044,7 @@ function ReturnResources( event )
     local hero = caster:GetOwner()
     local player = caster:GetPlayerOwner()
     local playerID = hero:GetPlayerID()
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
     
     caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
     
@@ -1047,7 +1057,7 @@ function ReturnResources( event )
         ability:ToggleAbility()
     end
 
-    local gather_ability = caster:FindAbilityByName(race.."_gather")
+    local gather_ability = caster:FindAbilityByName(casterKV.GatherAbility)
 
     -- Destroy any old move timer
     if caster.moving_timer then
@@ -1179,7 +1189,7 @@ function ReturnResources( event )
     else
         --print("TRIED TO RETURN NO RESOURCES")
         ToggleOff(gather_ability)
-        caster:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
+        caster:SwapAbilities(casterKV.GatherAbility,casterKV.ReturnAbility, true, false)
         caster:RemoveModifierByName("modifier_on_order_cancel_gold")
     end
 end
@@ -1187,6 +1197,7 @@ end
 function SendBackToGather( unit, ability, resource_type )
     local race = GetUnitRace(unit)
     local playerID = unit:GetPlayerOwnerID()
+    local casterKV = GameRules.UnitKV[unit:GetUnitName()]
 
     if resource_type == "lumber" then
         --print("Back to the trees")
@@ -1211,7 +1222,7 @@ function SendBackToGather( unit, ability, resource_type )
                 -- Cancel ability, couldn't find moar trees...
                 ToggleOff(ability)
 
-                unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
+                unit:SwapAbilities(casterKV.GatherAbility, casterKV.ReturnAbility, true, false)
             end
         end
 
@@ -1219,13 +1230,13 @@ function SendBackToGather( unit, ability, resource_type )
 
         if unit.target_mine and IsValidEntity(unit.target_mine) then
 
-            unit:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
+            unit:SwapAbilities(casterKV.GatherAbility,casterKV.ReturnAbility, true, false)
 
             unit:CastAbilityOnTarget(unit.target_mine, ability, playerID)
         else
             print("Mine Collapsed")
             ToggleOff(ability)
-            unit:SwapAbilities(race.."_gather",race.."_return_resources", true, false)
+            unit:SwapAbilities(casterKV.GatherAbility,casterKV.ReturnAbility, true, false)
             unit:RemoveModifierByName("modifier_on_order_cancel_gold")
         end
     end
