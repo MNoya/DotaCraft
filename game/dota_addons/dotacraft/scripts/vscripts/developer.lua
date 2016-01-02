@@ -1,6 +1,6 @@
 CHEAT_CODES = {
     ["warpten"] = function(...) dotacraft:WarpTen(...) end,                  -- "Speeds construction of buildings and units"
-    ["greedisgood"] = function(...) dotacraft:GreedIsGood(...) end,    -- "Gives you X gold and lumber" 
+    ["greedisgood"] = function(...) dotacraft:GreedIsGood(...) end,          -- "Gives you X gold and lumber" 
     ["whosyourdaddy"] = function(...) dotacraft:WhosYourDaddy(...) end,      -- "God Mode"    
     ["thereisnospoon"] = function(...) dotacraft:ThereIsNoSpoon(...) end,    -- "Unlimited Mana"      
     ["iseedeadpeople"] = function(...) dotacraft:ISeeDeadPeople(...) end,    -- "Remove fog of war"       
@@ -11,8 +11,9 @@ CHEAT_CODES = {
 }
 
 DEBUG_CODES = {
-    ["debug_trees"] = function(...) dotacraft:DebugTrees(...) end,           -- "Prints the trees marked as pathable"
-    ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end,         -- "Prints the positions marked for undead buildings"
+    ["debug_trees"] = function(...) dotacraft:DebugTrees(...) end,           -- Prints the trees marked as pathable
+    ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end,         -- Prints the positions marked for undead buildings
+    ["debug_food"] = function(...) dotacraft:DebugFood(...) end,           -- Prints the food count for all players, checking for inconsistencies
     ["debug_c"] = function(...) dotacraft:DebugCalls(...) end,               -- Spams the console with every lua call
     ["debug_l"] = function(...) dotacraft:DebugLines(...) end,               -- Spams the console with every lua line 
 }
@@ -182,6 +183,71 @@ function dotacraft:DebugBlight()
                     DebugDrawCircle(position, Vector(128,0,128), 50, 32, true, 60)
                 end
             end
+        end
+    end
+end
+
+function dotacraft:DebugFood()
+    for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            local food_limit = Players:GetFoodLimit(playerID)
+            local food_used = Players:GetFoodUsed(playerID)
+            local food_produced_counter = 0
+            local food_used_counter = 0
+            print("== PLAYER "..playerID.." ==")
+            print("== UNITS ==")
+
+            local units = {}
+            local playerUnits = Players:GetUnits(playerID)
+            for _,v in pairs(playerUnits) do
+                if not IsValidAlive(v) then
+                    print(" Invalid Unit!")
+                else
+                    local food_cost = GetFoodCost(v)
+                    food_used_counter = food_used_counter + food_cost
+                    local unitName = v:GetUnitName()
+                    units[unitName] = units[unitName] and units[unitName]+1 or 1
+                end
+            end
+
+            print('-> '..food_used_counter.." food used on units: ")
+            for k,v in pairs(units) do
+                print(k,GameRules.UnitKV[k].FoodCost * v, "("..v..")")
+            end
+
+            print("== HEROES ==")
+            local playerHeroes = Players:GetHeroes(playerID)
+            local hero_food_counter = 0
+            for _,v in pairs(playerHeroes) do
+                if not IsValidAlive(v) then
+                    print(" Invalid Hero!")
+                else
+                    local food_cost = GetFoodCost(v)
+                    food_used_counter = food_used_counter + food_cost
+                    hero_food_counter = hero_food_counter + food_cost
+                end
+            end
+            print("-> "..hero_food_counter.." food used on heroes")
+
+            print("== STRUCTURES ==")
+            local playerStructures = Players:GetStructures(playerID)
+            for _,v in pairs(playerStructures) do
+                if not IsValidAlive(v) then
+                    print(" Invalid Structure!")
+                else
+                    local food_produced = GetFoodProduced(v) or 0
+                    food_produced_counter = food_produced_counter + food_produced
+                    if food_produced_counter > 100 then food_produced_counter = 100 end
+                end
+            end
+            print("-> "..food_produced_counter.." food produced from structures")
+
+            print("================")
+            print("Stored:  ",food_used.." / "..food_limit)
+            print("Recount: ",food_used_counter.." / "..food_produced_counter)
+            if (food_used ~= food_used_counter) then print("ERROR IN FOOD USED!") end
+            if (food_limit ~= food_produced_counter) then print("ERROR IN FOOD PRODUCED!") end
+            print("================")
         end
     end
 end
