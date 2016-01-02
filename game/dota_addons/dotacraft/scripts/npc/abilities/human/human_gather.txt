@@ -25,6 +25,16 @@
 			"var_type"				"FIELD_INTEGER"
 			"lumber_capacity"		"10" //Can be upgraded
 		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"lumber_per_hit"		"1" //also deals this much damage to tree
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_to_tree"		"1" //mainly here for nightelf wisp to deal 0 damage to trees without having to do a race check
+		}
 	}
 
 	"OnAbilityPhaseStart"

@@ -48,7 +48,11 @@
 	"Ability8"					"build_orc_items" // Provides additional building abilities
 	"Ability9"					""
 	"Ability10"					"orc_pillage_disabled"	 //Reference: Asal
-	
+
+	// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
+	"GatherAbility"				"orc_gather"
+	"ReturnAbility"				"orc_return_resources"
+
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"0"

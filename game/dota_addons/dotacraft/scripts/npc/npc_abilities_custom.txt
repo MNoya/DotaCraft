@@ -22092,6 +22092,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"lumber_capacity"		"10" //Can be upgraded
 			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_per_hit"		"1" //also deals this much damage to tree
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_to_tree"		"1" //mainly here for nightelf wisp to deal 0 damage to trees without having to do a race check
+			}
 		}
 	
 		"OnAbilityPhaseStart"
@@ -41551,6 +41561,7 @@
 				"var_type"			"FIELD_INTEGER"
 				"gold_per_interval"	"10"
 			}	
+			
 		}
 	
 		"precache"
@@ -52597,7 +52608,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_capacity"		"10"
+				"lumber_capacity"		"10" //Can be upgraded
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_per_hit"		"1" //also deals this much damage to tree
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_to_tree"		"1" //mainly here for nightelf wisp to deal 0 damage to trees without having to do a race check
 			}
 		}
 	
@@ -64627,6 +64648,23 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ghoul_lumber_capacity"	"20" //Can be upgraded
+			}
+	
+			// regular gather stuff
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_capacity"		"20" //Can be upgraded
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lumber_per_hit"		"2" //also deals this much damage to tree
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_to_tree"		"2" //mainly here for nightelf wisp to deal 0 damage to trees without having to do a race check
 			}
 		}
 	
