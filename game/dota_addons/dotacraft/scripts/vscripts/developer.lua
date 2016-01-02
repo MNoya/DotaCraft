@@ -276,7 +276,7 @@ function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
             if bEnemy then 
                 unit:SetTeam(DOTA_TEAM_NEUTRALS)
             else
-                Players:AddUnit(playerID, unit)
+                Players:AddUnit(pID, unit)
             end
 
             FindClearSpaceForUnit(unit, gridPoints[i], true)

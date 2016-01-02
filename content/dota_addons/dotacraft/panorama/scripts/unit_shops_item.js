@@ -75,9 +75,9 @@ function Update_Central(data){
 		if(ItemValues.CurrentRefreshTime > 1){
 				$("#ItemMask").visible = true
 				//$.Msg(((100 / ItemValues.RestockRate) * ItemValues.CurrentRefreshTime)+"%")
-				if( ItemValues.FirstStock != null){
-					if( ItemValues.FirstStock != 0 ){
-						$("#ItemMask").style["width"] = 100 - ((100 / ItemValues.FirstStock) * ItemValues.CurrentRefreshTime)+"%";
+				if( ItemValues.StockStartDelay != null){
+					if( ItemValues.StockStartDelay != 0 ){
+						$("#ItemMask").style["width"] = 100 - ((100 / ItemValues.StockStartDelay) * ItemValues.CurrentRefreshTime)+"%";
 					}else{
 						$("#ItemMask").style["width"] = 100 - ((100 / ItemValues.RestockRate) * ItemValues.CurrentRefreshTime)+"%";
 					};

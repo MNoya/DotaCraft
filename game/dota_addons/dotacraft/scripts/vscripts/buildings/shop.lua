@@ -74,6 +74,11 @@ function unit_shops:CreateShop(unit, shop_name)
 	local isTavern = shop_name == "tavern"
 	local isGlobal = (shop_name == "goblin_merchant" or shop_name == "mercenary" or shop_name == "goblin_lab")
 
+	-- Shops that sell npc units can sell to units without inventory
+	if shop_name == "mercenary" or shop_name == "goblin_lab" or shop_name == "tavern" then
+		unit.SellsNPCs = true
+	end
+
 	local shopEnt = Entities:FindByName(nil, "*custom_shop") -- entity name in hammer
 	if shopEnt then
 		local modelName = shopEnt:GetModelName()
@@ -95,8 +100,32 @@ function unit_shops:CreateShop(unit, shop_name)
 		UnitShop.Items[key].ItemName = key
 		UnitShop.Items[key].CurrentRefreshTime = 1
 		
-		--if not isTavern and not isGlobal then
-		if not isTavern and not isGlobal then
+		-- Tavern heroes initially cost only food
+		if isTavern then
+			UnitShop.Items[key].CurrentStock = 0
+			UnitShop.Items[key].MaxStock = 1
+			UnitShop.Items[key].RequiredTier = 9000
+			UnitShop.Items[key].GoldCost = 0
+			UnitShop.Items[key].LumberCost = 0
+			UnitShop.Items[key].RestockRate = NEUTRAL_HERO_STOCKTIME
+
+		-- Merchant uses a different stock system and tiers for items
+		elseif shop_name == "goblin_merchant" then
+			UnitShop.Items[key].CurrentStock = GameRules.GoblinMerchant[key]["StockInitial"]
+			UnitShop.Items[key].MaxStock = GameRules.GoblinMerchant[key]["StockMax"]
+			UnitShop.Items[key].RequiredTier = 0;
+			UnitShop.Items[key].GoldCost = GameRules.GoblinMerchant[key]["ItemCost"]
+			UnitShop.Items[key].RestockRate = GameRules.GoblinMerchant[key]["StockTime"]
+			UnitShop.Items[key].StockStartDelay = GameRules.GoblinMerchant[key]["StockStartDelay"]
+			
+			if GameRules.GoblinMerchant[key]["LumberCost"] ~= nil then
+				UnitShop.Items[key].LumberCost = GameRules.GoblinMerchant[key]["LumberCost"]
+			else
+				UnitShop.Items[key].LumberCost = 0
+			end
+
+		-- Other shops take the values directly from the item kv
+		else
 			UnitShop.Items[key].CurrentStock = GameRules.ItemKV[key]["StockInitial"]
 			UnitShop.Items[key].MaxStock = GameRules.ItemKV[key]["StockMax"]
 			UnitShop.Items[key].RequiredTier = GameRules.ItemKV[key]["RequiresTier"]
@@ -107,27 +136,6 @@ function unit_shops:CreateShop(unit, shop_name)
 			-- set to 0 if nil, "0" hides the value in panaroma
 			if GameRules.ItemKV[key]["LumberCost"] ~= nil then
 				UnitShop.Items[key].LumberCost = GameRules.ItemKV[key]["LumberCost"]
-			else
-				UnitShop.Items[key].LumberCost = 0
-			end
-		
-		elseif isTavern then
-			UnitShop.Items[key].CurrentStock = 0
-			UnitShop.Items[key].MaxStock = 1
-			UnitShop.Items[key].RequiredTier = 9000
-			UnitShop.Items[key].GoldCost = 0
-			UnitShop.Items[key].LumberCost = 0
-			UnitShop.Items[key].RestockRate = NEUTRAL_HERO_STOCKTIME
-		elseif shop_name == "goblin_merchant" then
-			UnitShop.Items[key].CurrentStock = GameRules.GoblinMerchant[key]["StockInitial"]
-			UnitShop.Items[key].MaxStock = GameRules.GoblinMerchant[key]["StockMax"]
-			UnitShop.Items[key].RequiredTier = 0;
-			UnitShop.Items[key].GoldCost = GameRules.GoblinMerchant[key]["ItemCost"]
-			UnitShop.Items[key].RestockRate = GameRules.GoblinMerchant[key]["StockTime"]
-			UnitShop.Items[key].FirstStock = GameRules.GoblinMerchant[key]["FirstStock"]
-			
-			if GameRules.GoblinMerchant[key]["LumberCost"] ~= nil then
-				UnitShop.Items[key].LumberCost = GameRules.GoblinMerchant[key]["LumberCost"]
 			else
 				UnitShop.Items[key].LumberCost = 0
 			end
@@ -253,12 +261,12 @@ function unit_shops:Stock_Management(UnitShopItem)
 	
 	if UnitShopItem.CurrentStock < UnitShopItem.MaxStock then
 	
-		if UnitShopItem.FirstStock ~= 0 and UnitShopItem.CurrentRefreshTime == UnitShopItem.FirstStock then
+		if UnitShopItem.StockStartDelay ~= 0 and UnitShopItem.CurrentRefreshTime == UnitShopItem.StockStartDelay then
 			-- this is might need altering, currently its abit hardcoded
 			UnitShopItem.CurrentStock = UnitShopItem.MaxStock
 			
 			-- set to 0 to stop condition from being met so that it resumes normal restocking rates
-			UnitShopItem.FirstStock = 0
+			UnitShopItem.StockStartDelay = 0
 			
 			-- reset counter for next stock
 			UnitShopItem.CurrentRefreshTime = 1
@@ -295,6 +303,7 @@ function unit_shops:Buy(data)
 	-- Check whether hero item or no
 	local isHeroItem = tobool(data.Hero)
 	local isTavern = tobool(data.Tavern)
+	local isUnitItem = string.match(item, "npc_") -- Start an item with npc_ to indicate a unit purchase
 	
 	if isTavern and not Players:CanTrainMoreHeroes( playerID ) then
 		print("playerID = "..tostring(playerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
@@ -332,7 +341,7 @@ function unit_shops:Buy(data)
 	
 	local bEnoughSlots = true
 	local bEnoughStock = true
-	if not isHeroItem and not isTavern then
+	if not isUnitItem then
 		bEnoughSlots = CountInventoryItems(buyer) < 6
 		bEnoughStock = EnoughStock(item, Shop)
 	end
@@ -342,46 +351,62 @@ function unit_shops:Buy(data)
 	if bPlayerCanPurchase then
 		EmitSoundOnClient("General.Buy", player)
 
-		if not isHeroItem or isTavern then
-			
-			-- create & add item
-			if not isTavern then
-
-				-- lower stock count by 1
-				Purchased(item, Shop)
-
-				local Bought_Item = CreateItem(item, buyerPlayerOwner, buyerPlayerOwner) 
-				buyer:AddItem(Bought_Item)
-
+		if isUnitItem then
 			-- if it is tavern create hero
-			else 
-				
+			if isHeroItem and isTavern then
+
 				-- NOYA
 				-- add a bool check for player heroes < 3
-				if Players:HasEnoughFood(playerID, 5) then				
-					-- lower stock count by 1
-					Purchased(item, Shop)
+				if Players:HasEnoughFood(playerID, 5) then
 
-					print("[UNIT SHOPS] Tavern creating hero for "..playerID)
-										
-					-- create neutral hero here
-					TavernCreateHeroForPlayer(playerID, shopID, item)
-					
-					-- NOYA
-					-- increment hero count here
+					-- Is a revive?
+					local isRevive = false
+					local playerHeroes = Players:GetHeroes(playerID)
+					for k,v in pairs(table_name) do
+						if v:GetUnitName() == item then
+							isRevive = true
+							break
+						end
+					end
+
+					if isRevive then
+						print("[UNIT SHOPS] Tavern creating hero for "..playerID)
+						TavernReviveHeroForPlayer(playerID, shopID, item)
+					else
+						-- lower stock count by 1
+						Purchased(item, Shop)
+
+						print("[UNIT SHOPS] Tavern creating hero for "..playerID)
+											
+						-- create neutral hero here
+						TavernCreateHeroForPlayer(playerID, shopID, item)
+
+						-- NOYA
+						-- increment hero count here
+					end
 				else
 					local race = Players:GetRace(playerID)
 					print("[UNIT SHOPS] Player "..playerID.." doesn't have enough food to purchase a hero from Tavern")
 					SendErrorMessage(buyerPlayerID, "#error_not_enough_food_"..race)
 					return
-				end			
-			end
-		else 
-			-- revive hero here (dead heroes)
-			-- Should look for enough food!
-			print("[UNIT SHOPS] Tavern creating hero for "..playerID)
+				end
 
-			TavernReviveHeroForPlayer(playerID, shopID, item)
+			-- create mercenary unit
+			else
+				-- lower stock count by 1
+				Purchased(item, Shop)
+				
+				CreateMercenaryForPlayer(playerID, shopID, item)
+			end
+
+		-- create & add item
+		else
+
+			-- lower stock count by 1
+			Purchased(item, Shop)
+
+			local Bought_Item = CreateItem(item, buyerPlayerOwner, buyerPlayerOwner) 
+			buyer:AddItem(Bought_Item)
 		end
 
 		-- deduct gold & lumber
@@ -539,6 +564,21 @@ function TavernReviveHeroForPlayer(playerID, shopID, HeroName)
 	end
 end
 
+function CreateMercenaryForPlayer(playerID, shopID, unitName)
+	local player = PlayerResource:GetPlayer(playerID)
+	local hero = player:GetAssignedHero()
+	local shop = EntIndexToHScript(shopID)
+	local mercenary = CreateUnitByName(unitName, shop:GetAbsOrigin(), true, hero, player, hero:GetTeamNumber())
+	mercenary:SetControllableByPlayer(playerID, true)
+	mercenary:SetOwner(hero)
+
+	-- Add food cost
+	Players:ModifyFoodUsed(playerID, 5)
+
+	-- Add to player table
+	Players:AddUnit(playerID, mercenary)
+end
+
 -- Find a shop to open nearby the currently selected unit
 function unit_shops:OpenClosestShop(data)
 	local playerID = data.PlayerID
@@ -674,8 +714,8 @@ function FindShopAbleUnit( shop, unit_types )
 			end
 		end
 
-		-- For tavern, check any unit
-		if shop:GetUnitName() == "tavern" then
+		-- For npc-selling buildings, check any unit
+		if shop.SellsNPCs then
 			for k,unit in pairs(units) do
 				return unit
 			end
