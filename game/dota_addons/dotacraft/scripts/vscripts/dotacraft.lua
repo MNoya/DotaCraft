@@ -486,9 +486,10 @@ function dotacraft:InitializePlayer( hero )
 		Players:AddUnit(playerID, ghoul)
 
 		-- Haunt the closest gold mine
-		local haunted_gold_mine = CreateUnitByName("undead_haunted_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
-		haunted_gold_mine:SetOwner(hero)
-		haunted_gold_mine:SetControllableByPlayer(playerID, true)
+        --[[local construction_size = Units:GetConstructionSize("undead_haunted_gold_mine")
+		local haunted_gold_mine = BuildingHelper:PlaceBuilding(player, "undead_haunted_gold_mine", closest_mine_pos, construction_size, 0)
+        Players:AddStructure(playerID, haunted_gold_mine)
+
 		haunted_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
 		ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
 		haunted_gold_mine.builders = {}
@@ -501,7 +502,7 @@ function dotacraft:InitializePlayer( hero )
 		hero.lumber_carried = 20 -- Ghouls carry harder
 
 		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
-		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine
+		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine]]
 	end
 
 	-- Night Elf special rules
@@ -1447,7 +1448,7 @@ function dotacraft:OnPreGame()
 		local pathing_size = Units:GetBlockPathingSize(gold_mine)
 		BuildingHelper:SnapToGrid(construction_size, location)
 
-		local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
+		local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location, "GoldMine")
 		gold_mine:SetAbsOrigin(location)
 	    gold_mine.blockers = gridNavBlockers
 

@@ -288,15 +288,22 @@
 	"AbilityTextureName"			"item_build_haunted_gold_mine"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
-	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 	"ItemDroppable" 				"0"
 	"ItemPurchasable" 				"0"
-	
+
+	// BuildingHelper info
+	"Building"						"1" //bool
+	"BuildTime"						"100.0"
+	"AbilityCastRange"				"500"
+	"Scale"							"0" //bool
+	"PlayerCanControl"				"1" //bool
+
+	"UnitName"						"undead_haunted_gold_mine"
+	"AbilityCooldown"				"0"
 	"AbilityGoldCost"				"255"
+	// End of BuildingHelper info
 
 	"AbilitySpecial"
 	{

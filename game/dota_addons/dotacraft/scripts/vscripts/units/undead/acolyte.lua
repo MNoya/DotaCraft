@@ -108,95 +108,95 @@ function stop_sacrifice ( keys )
 end
 
 function HauntGoldMine( event )
+    BuildingHelper:AddBuilding(event)
 
-	local caster = event.caster
-	local target = event.target
-	local ability = event.ability
+    local ability = event.ability
+    local caster = event.caster
+    local playerID = caster:GetPlayerOwnerID()
+    local teamNumber = caster:GetTeamNumber()
+    local building_name = "undead_haunted_gold_mine"
+    local construction_size = Units:GetConstructionSize(building_name)
+    
+    -- Callbacks
+    event:OnPreConstruction(function(vPos) end)
 
-	if target:GetUnitName() ~= "gold_mine" then
-		print("Must target a gold mine")
-		--refund gold_cost lumber_cost
-		return
-	else
-		print("Begining construction of a Haunted Gold Mine")
+    -- Position for a building was confirmed and valid
+    event:OnBuildingPosChosen(function(vPos)
+        -- Enemy unit check
+        local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+        local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
+        local enemies = FindUnitsInRadius(teamNumber, vPos, nil, construction_size, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
 
-		local player = caster:GetPlayerOwner()
-		local hero = player:GetAssignedHero()
-		local playerID = player:GetPlayerID()
-		local mine_pos = target:GetAbsOrigin()
+        if #enemies > 0 then
+            SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
+            return false
+        end
 
-		local building = CreateUnitByName("undead_haunted_gold_mine", mine_pos, false, hero, hero, hero:GetTeamNumber())
-		building:SetOwner(hero)
-		building:SetControllableByPlayer(playerID, true)
-		building.state = "building"
+        return true
+    end)
 
-		local ability = event.ability
-		local build_time = ability:GetSpecialValueFor("build_time")
-		local hit_points = building:GetMaxHealth()
+    event:OnConstructionFailed(function()
+        SendErrorMessage(playerID, "#error_invalid_build_position")
+    end)
 
-		-- Start building construction ---
-		local initial_health = 0.10 * hit_points
-		local time_completed = GameRules:GetGameTime()+build_time
-		local update_health_interval = build_time / math.floor(hit_points-initial_health) -- health to add every tick
-		building:SetHealth(initial_health)
-		building.bUpdatingHealth = true
+    event:OnConstructionCancelled(function(work) end)
 
-		-- Particle effect
-    	ApplyConstructionEffect(building)
+    event:OnConstructionStarted(function(unit)
 
-		building.updateHealthTimer = Timers:CreateTimer(function()
-    		if IsValidEntity(building) and building:IsAlive() then
-      			local timesUp = GameRules:GetGameTime() >= time_completed
-      			if not timesUp then
-        			if building.bUpdatingHealth then
-          				if building:GetHealth() < hit_points then
-            				building:SetHealth(building:GetHealth() + 1)
-          				else
-            				building.bUpdatingHealth = false
-         				end
-        			end
-      			else
-        			-- Show the gold counter and initialize the mine builders list
-					building.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, building)
-					ParticleManager:SetParticleControl(building.counter_particle, 0, Vector(mine_pos.x,mine_pos.y,mine_pos.z+200))
-					building.builders = {} -- The builders list on the haunted gold mine
-					RemoveConstructionEffect(building)
+        caster:StartGesture(ACT_DOTA_ATTACK)
 
-        			building.constructionCompleted = true
-       				building.state = "complete"
+        -- Give item to cancel
+        local item = CreateItem("item_building_cancel", playersHero, playersHero)
+        unit:AddItem(item)
 
-       				return
-        		end
-    		
-    		else
-      			-- Building destroyed
-      			print("Haunted gold mine was destroyed during the construction process!")
+        -- Hide the targeted gold mine
+        local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, 100, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
+        local mine = units[1]
+        unit.mine = mine -- A reference to the mine that the haunted mine is associated with
+        mine.building_on_top = unit -- A reference to the building that haunts this gold mine
+        HideGoldMine({caster = unit})
 
-                return
-    		end
-    		return update_health_interval
- 		end)
- 		---------------------------------
+        -- Particle effect
+        ApplyModifier(unit, "modifier_construction")
 
-		building.mine = target -- A reference to the mine that the haunted mine is associated with
-		target.building_on_top = building -- A reference to the building that haunts this gold mine
-	end
+        -- Add the building handle to the list of structures
+        Players:AddStructure(playerID, unit)
+    end)
+
+    event:OnConstructionCompleted(function(unit)
+
+    	-- Show the gold counter and initialize the mine builders list
+        local mine_pos = unit.mine:GetAbsOrigin()
+		unit.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, unit)
+		ParticleManager:SetParticleControl(unit.counter_particle, 0, Vector(mine_pos.x,mine_pos.y,mine_pos.z+200))
+		unit.builders = {} -- The builders list on the haunted gold mine
+
+		-- Let the building cast abilities
+        unit:RemoveModifierByName("modifier_construction")
+
+        -- Remove item_building_cancel and reorder
+        RemoveItemByName(unit, "item_building_cancel")
+
+        -- Add blight if its an undead building
+        CreateBlight(unit:GetAbsOrigin(), "small")
+    end)
 end
 
--- Makes the mine pseudo invisible
+-- Makes the mine unselectable and adds props
 function HideGoldMine( event )
+	if not event.caster.state then return end --Exit out on building dummy
+
 	Timers:CreateTimer(0.05, function() 
 		local building = event.caster
-		local ability = event.ability
 		local mine = building.mine -- This is set when the building is built on top of the mine
 
 		--building:SetForwardVector(mine:GetForwardVector())
-		ability:ApplyDataDrivenModifier(mine, mine, "modifier_unselectable_mine", {})
+		ApplyModifier(mine, "modifier_unselectable")
 
 		local pos = mine:GetAbsOrigin()
-		building.sigil = Entities:CreateByClassname("prop_dynamic")
+        local modelName = "models/props_magic/bad_sigil_ancient001.vmdl"
+		building.sigil = SpawnEntityFromTableSynchronous("prop_dynamic", {model = modelName, DefaultAnim = 'bad_sigil_ancient001_rotate'})
 		building.sigil:SetAbsOrigin(Vector(pos.x, pos.y, pos.z-60))
-		building.sigil:SetModel("models/props_magic/bad_sigil_ancient001.vmdl")
 		building.sigil:SetModelScale(building:GetModelScale())
 
 		print("Hide Gold Mine")
@@ -238,6 +238,9 @@ function ShowGoldMine( event )
 	if building.counter_particle then
 		ParticleManager:DestroyParticle(building.counter_particle, true)
 	end
+
+     -- Set the area back to GoldMine squares
+    BuildingHelper:BlockGridSquares(8, 0, building:GetAbsOrigin(), "GoldMine")
 
 	building.sigil:RemoveSelf()
 	building:RemoveSelf()

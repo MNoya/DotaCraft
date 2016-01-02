@@ -310,9 +310,12 @@ function BuildingHelper:AddBuilding(keys)
         color = Vector(0,255,0)
     end
 
+    -- Require a certain type of grid string
+    local requires = buildingTable:GetVal("Requires", "string")
+
     local paramsTable = { state = "active", size = size, scale = fMaxScale, 
                           grid_alpha = GRID_ALPHA, model_alpha = MODEL_ALPHA, recolor_ghost = RECOLOR_GHOST_MODEL,
-                          entindex = mgd:GetEntityIndex(), builderIndex = builder:GetEntityIndex()
+                          entindex = mgd:GetEntityIndex(), builderIndex = builder:GetEntityIndex(), requires = requires,
                         }
     CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", paramsTable)
 end
@@ -440,6 +443,10 @@ function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
         pathing_size = 0
     end
     buildingTable:SetVal("BlockPathingSize", pathing_size)
+
+    -- If the construction requires certain grid type, store it
+    local requires = unitTable["Requires"]
+    buildingTable:SetVal("Requires", requires)
 
     local castRange = buildingTable:GetVal("AbilityCastRange", "number")
     if not castRange then
@@ -993,8 +1000,9 @@ end
       * Blocks a square of certain construction and pathing size at a location on the server grid
       * construction_size: square of grid points to block from construction
       * pathing_size: square of pathing obstructions that will be spawned 
+      * grid_type: optional, sets a grid point with an specific name
 ]]--
-function BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
+function BuildingHelper:BlockGridSquares(construction_size, pathing_size, location, grid_type)
     local originX = GridNav:WorldToGridPosX(location.x)
     local originY = GridNav:WorldToGridPosY(location.y)
 
@@ -1014,9 +1022,11 @@ function BuildingHelper:BlockGridSquares(construction_size, pathing_size, locati
         upperBoundY = upperBoundY-1
     end
 
+    grid_type = grid_type or GRID_BLOCKED
+
     for x = lowerBoundX, upperBoundX do
         for y = lowerBoundY, upperBoundY do
-            BuildingHelper.Grid[x][y] = GRID_BLOCKED
+            BuildingHelper.Grid[x][y] = grid_type
         end
     end
 
@@ -1122,7 +1132,19 @@ end
       * Sends onConstructionFailed if invalid
 ]]--
 function BuildingHelper:ValidPosition(size, location, unit, callbacks)
-    local bBlocked = BuildingHelper:IsAreaBlocked(size, location)
+    local bBlocked
+
+    -- Check for special requirement
+    local playerTable = BuildingHelper:GetPlayerTable(unit:GetPlayerOwnerID())
+    local buildingName = playerTable.activeBuilding
+    local requires = BuildingHelper.UnitKVs[buildingName]["Requires"]
+
+    if requires then
+        bBlocked = not BuildingHelper:AreaMeetsCriteria(size, location, requires)
+    else
+        bBlocked = BuildingHelper:IsAreaBlocked(size, location)
+    end
+
     if bBlocked then
         if callbacks.onConstructionFailed then
             callbacks.onConstructionFailed()
@@ -1167,13 +1189,44 @@ function BuildingHelper:IsAreaBlocked( size, location )
 
     for x = lowerBoundX, upperBoundX do
         for y = lowerBoundY, upperBoundY do
-            if BuildingHelper.Grid[x][y] == GRID_BLOCKED then
+            if BuildingHelper.Grid[x][y] ~= GRID_FREE and not string.match(BuildingHelper.Grid[x][y],"Buildable") then
                 return true
             end
         end
     end
     return false
 end
+
+function BuildingHelper:AreaMeetsCriteria( size, location, grid_type )
+    local originX = GridNav:WorldToGridPosX(location.x)
+    local originY = GridNav:WorldToGridPosY(location.y)
+
+    local boundX1 = originX + math.floor(size/2)
+    local boundX2 = originX - math.floor(size/2)
+    local boundY1 = originY + math.floor(size/2)
+    local boundY2 = originY - math.floor(size/2)
+
+    local lowerBoundX = math.min(boundX1, boundX2)
+    local upperBoundX = math.max(boundX1, boundX2)
+    local lowerBoundY = math.min(boundY1, boundY2)
+    local upperBoundY = math.max(boundY1, boundY2)
+
+    -- Adjust even size
+    if (size % 2) == 0 then
+        upperBoundX = upperBoundX-1
+        upperBoundY = upperBoundY-1
+    end
+
+    for x = lowerBoundX, upperBoundX do
+        for y = lowerBoundY, upperBoundY do
+            if BuildingHelper.Grid[x][y] ~= grid_type then
+                return false
+            end
+        end
+    end
+    return true
+end
+
 
 --[[
     AddToQueue

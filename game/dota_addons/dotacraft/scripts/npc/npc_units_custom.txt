@@ -2464,7 +2464,7 @@
 		// Building Size
 		//----------------------------------------------------------------
 		"ConstructionSize"			"8"
-		"BlockPathingSize"			"5"
+		"BlockPathingSize"			"6"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -15088,7 +15088,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"			"" //"tinker_pocket_factory_spawn_goblin" learn in lua	 //Reference: ARal
+		"Ability1"			"" //"tinker_pocket_factory_train_goblin" learn in lua	 //Reference: ARal
 		"Ability10"			"ability_building"
 		
 		// Armor
@@ -15165,7 +15165,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"			"" //"tinker_pocket_factory_spawn_goblin" learn in lua	 //Reference: ARal
+		"Ability1"			"" //"tinker_pocket_factory_train_goblin" learn in lua	 //Reference: ARal
 		"Ability10"			"ability_building"
 		
 		// Armor
@@ -15242,7 +15242,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"			"" //"tinker_pocket_factory_spawn_goblin" learn in lua	 //Reference: ARal
+		"Ability1"			"" //"tinker_pocket_factory_train_goblin" learn in lua	 //Reference: ARal
 		"Ability10"			"ability_building"
 		
 		// Armor
@@ -16113,14 +16113,14 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"70"
-		"CollisionSize"				"50"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"220"
+		"CollisionSize"				"150"
 		
 		// Building Size
 		//----------------------------------------------------------------
 		"ConstructionSize"			"8"
-		"BlockPathingSize"			"6"
+		"BlockPathingSize"			"0"
 		"Requires"					"GoldMine"
 		
 		// Building Cost Stats

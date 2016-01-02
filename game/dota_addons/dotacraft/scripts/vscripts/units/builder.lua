@@ -194,7 +194,7 @@ function Build( event )
         local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
         if masonry_rank and masonry_rank > 0 then
             BuildingHelper:print("Applying masonry rank "..masonry_rank.." to this building construction")
-            UpdateUnitUpgrades( unit, player, "human_research_masonry"..masonry_rank )
+            UpdateUnitUpgrades( unit, playerID, "human_research_masonry"..masonry_rank )
         end
 
         -- Apply altar linking

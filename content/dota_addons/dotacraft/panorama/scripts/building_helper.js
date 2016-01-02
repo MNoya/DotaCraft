@@ -9,6 +9,7 @@ var model_alpha = 100;
 var recolor_ghost = false;
 var pressedShift = false;
 var altDown = false;
+var requires;
 var modelParticle;
 var gridParticles;
 var overlayParticles;
@@ -16,6 +17,7 @@ var builderIndex;
 var entityGrid;
 var cutTrees = [];
 var BLOCKED = 2;
+var GRID_TYPES = [];
 var Root = $.GetContextPanel()
 
 if (! Root.loaded)
@@ -39,8 +41,15 @@ function StartBuildingHelper( params )
         model_alpha = Number(params.model_alpha);
         recolor_ghost = Number(params.recolor_ghost);
         builderIndex = params.builderIndex;
+        requires = params.requires;
         var scale = params.scale;
         var entindex = params.entindex;
+
+        if (requires !== undefined)
+        {
+            if (GRID_TYPES[requires] === undefined)
+                GRID_TYPES[requires] = GRID_TYPES.length + BLOCKED + 1
+        }
         
         // If we chose to not recolor the ghost model, set it white
         var ghost_color = [0, 255, 0]
@@ -90,12 +99,12 @@ function StartBuildingHelper( params )
         $.Schedule(1/60, StartBuildingHelper);
 
         // Get all the creature entities on the screen
-        var entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
+        var entities = Entities.GetAllEntitiesByClassname('npc_dota_building')
         var hero_entities = Entities.GetAllEntitiesByClassname('npc_dota_hero')
-        var build_entities = Entities.GetAllEntitiesByClassname('npc_dota_building')
+        var creature_entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
         var tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
         entities = entities.concat(hero_entities)
-        entities = entities.concat(build_entities)
+        entities = entities.concat(creature_entities)
 
         // Build the entity grid with the construction sizes and entity origins
         entityGrid = []
@@ -107,8 +116,11 @@ function StartBuildingHelper( params )
             
             if (squares > 0 && ( IsCustomBuilding(entities[i]) || IsGoldMine(entities[i])))
             {
-                // Block squares centered on the origin
-                BlockGridSquares(entPos, squares)
+                if (IsGoldMine(entities[i]))
+                    BlockGridSquares(entPos, squares, requires)
+                else
+                    // Block squares centered on the origin
+                    BlockGridSquares(entPos, squares)
             }
             else
             {
@@ -378,24 +390,36 @@ function SnapToGrid32(coord) {
 function IsBlocked(position) {
     var x = WorldToGridPosX(position[0]) + Root.squareX/2
     var y = WorldToGridPosY(position[1]) + Root.squareY/2
+
+    if (requires !== undefined)
+        return !IsSpecialGrid(x,y, requires)
     
-    return (Root.GridNav[x][y] == BLOCKED) || IsEntityGridBlocked(x,y)
+    return (Root.GridNav[x][y] >= BLOCKED) || IsEntityGridBlocked(x,y)
 }
 
 function IsEntityGridBlocked(x,y) {
     return (entityGrid[x] && entityGrid[x][y] == BLOCKED)
 }
 
-function BlockEntityGrid(position) {
+function IsSpecialGrid (x,y, gridType) {
+    return (entityGrid[x] && entityGrid[x][y] == GRID_TYPES[gridType])
+}
+
+function BlockEntityGrid(position, gridType) {
     var x = WorldToGridPosX(position[0]) + Root.squareX/2
     var y = WorldToGridPosY(position[1]) + Root.squareY/2
 
     if (entityGrid[x] === undefined) entityGrid[x] = []
 
-    entityGrid[x][y] = BLOCKED
+    if (gridType !== undefined)
+    {
+        entityGrid[x][y] = GRID_TYPES[gridType]
+    }
+    else
+        entityGrid[x][y] = BLOCKED
 }
 
-function BlockGridSquares (position, squares) {
+function BlockGridSquares (position, squares, gridType) {
     var halfSide = (squares/2)*64
     var boundingRect = {}
     boundingRect["leftBorderX"] = position[0]-halfSide
@@ -408,7 +432,7 @@ function BlockGridSquares (position, squares) {
         for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
         {
             var pos = [x,y,0]
-            BlockEntityGrid(pos)
+            BlockEntityGrid(pos, gridType)
         }
     }
 }
