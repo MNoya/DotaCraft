@@ -47,6 +47,10 @@
 	"Ability9"					"build_undead_items"
 	"Ability11"					"undead_blight_regen"
 		
+	// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
+	"GatherAbility"				"undead_gather"
+	"ReturnAbility"				"undead_return_resources"
+
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"0"
@@ -240,6 +244,10 @@
 	"AttacksEnabled"			"ground"
 
 	"LumberCapacity"			"20"
+
+	// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
+	"GatherAbility"				"undead_gather"
+	"ReturnAbility"				"undead_return_resources"
 	
 	// Abilities
 	//----------------------------------------------------------------

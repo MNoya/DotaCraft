@@ -406,7 +406,7 @@ function Setup_Panaroma_Color_Table(){
  
 function Setup_Minimap(){ 
 	var Map_Info = Game.GetMapInfo()
-	var Map_Name = Map_Info.map_display_name.substring(2);
+	var Map_Name = Map_Info.map_display_name.substring(Map_Info.map_display_name.indexOf('_')+1);
 	
 	var Minimap_Panel = Root.FindChildTraverse("Minimap");
 	var Minimap_Name = Root.FindChildTraverse("Minimap_Name");
@@ -447,7 +447,7 @@ function Setup_Minimap(){
 	Game.SetRemainingSetupTime(99999);
     Game.SetTeamSelectionLocked(true); 
  
-	var MapPlayerLimit = parseInt(Game.GetMapInfo().map_display_name.substring(0,1));
+	var MapPlayerLimit = parseInt(Game.GetMapInfo().map_display_name.split("_",1));
 	if( MapPlayerLimit == null ){
 		$.Msg("[Pre-Game] Map Name is invalid, unable to determine Player Limit, defaulting to 8");
 		MaxPlayerLimit = 8;
