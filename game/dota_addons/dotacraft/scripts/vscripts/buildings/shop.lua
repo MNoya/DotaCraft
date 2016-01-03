@@ -304,8 +304,8 @@ function unit_shops:Buy(data)
 	-- Check whether hero item or no
 	local isHeroItem = string.match(item, "npc_dota_hero")
 
-	local isTavern = data.Tavern ~= nil
-	
+	local isTavern = tobool(data.Tavern)
+
 	local isUnitItem = string.match(item, "npc_") -- Start an item with npc_ to indicate a unit purchase
 	
 	if isTavern and not Players:CanTrainMoreHeroes( playerID ) then
