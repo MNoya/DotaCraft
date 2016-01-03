@@ -36,7 +36,7 @@ function SetupTradingAndAlliances(){
 	var LocalPlayerTeamID = LocalPlayerInfo.player_team_id;
 
 	var PlayersOnTeam = Game.GetPlayerIDsOnTeam( LocalPlayerTeamID );
-	if(PlayersOnTeam.length == 1){
+	if(PlayersOnTeam.length > 1){
 		ContainerPanel = Root.FindChildTraverse("TradingAlliancesContainer");
 		var PlayerContainer = ContainerPanel.FindChildTraverse("PlayerContainer");
 		var LocalID = Game.GetLocalPlayerID();
