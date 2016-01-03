@@ -113,7 +113,7 @@ end
 function AutoEntangle( event )
     local caster = event.caster
     -- If it's uprooted or already has an entangled mine, skip
-    if not caster:HasModifier("modifier_rooted_ancient") or IsValidAlive(caster.entangled_gold_mine) then
+    if not caster:HasAbility("ability_building") or IsValidAlive(caster.entangled_gold_mine) then
         return
     end
 
