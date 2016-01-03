@@ -112,7 +112,7 @@ function Update_Central(data){
 		Root.ItemInfo.RequiredTier = ItemValues.RequiredTier
 	}
 	
-	if(data.Tavern){
+	if(Root.Tavern){
 		if(!data.Altar){
 			$("#RequiredTier").text = "Requires: Altar"
 			Update_Tier_Required_Panels(0)

@@ -22,9 +22,12 @@ function Create_Shop(args){
 		shop_item.Race = args.Race
 		shop_item.Tier = args.Tier
 		shop_item.Order = orderIndex
+		
 		if(args.Tavern != null){
-			shop_item.Tavern = args.Tavern
-		} 
+			shop_item.Tavern = true
+		}else{
+			shop_item.Tavern = false
+		};
 	} 
 	
 	Shops[args.Index] = args.Shop.Items
@@ -37,7 +40,7 @@ function Create_Single_Panel(args){
 	var ShopUnit = args.Index
 	var Shop = Root.FindChildTraverse(ShopUnit)
 	var Hero = args.Hero
-	var PlayerID = args.PlayerID
+	var PlayerID = args.playerID
 	
 	//$.Msg(Shop)
 	//$.Msg(Hero)
