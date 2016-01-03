@@ -32,11 +32,20 @@ function ToggleRootPanel(){
 }; 
 
 function SetupTradingAndAlliances(){
-	ContainerPanel = Root.FindChildTraverse("TradingAlliancesContainer");
-	var PlayerContainer = ContainerPanel.FindChildTraverse("PlayerContainer");
-	var LocalID = Game.GetLocalPlayerID();
-	Root.LocalPlayerID = LocalID;
+	var LocalPlayerInfo	= Game.GetLocalPlayerInfo(); 
+	var LocalPlayerTeamID = LocalPlayerInfo.player_team_id;
+
+	var PlayersOnTeam = Game.GetPlayerIDsOnTeam( LocalPlayerTeamID );
+	if(PlayersOnTeam.length == 1){
+		ContainerPanel = Root.FindChildTraverse("TradingAlliancesContainer");
+		var PlayerContainer = ContainerPanel.FindChildTraverse("PlayerContainer");
+		var LocalID = Game.GetLocalPlayerID();
+		Root.LocalPlayerID = LocalID;
 	
-	System = new ResourceTradingAndAlliances(PlayerContainer);
-	$.Msg("setting up trading_alliances");
+		System = new ResourceTradingAndAlliances(PlayerContainer);
+		$.Msg("setting up trading_alliances");
+	}else{
+		$.Msg("[TRADING ALLIANCES] only 1 player detected on team, disabling trading alliance button visibility");
+		$("#ToggleButton").visible = false;
+	};
 };
