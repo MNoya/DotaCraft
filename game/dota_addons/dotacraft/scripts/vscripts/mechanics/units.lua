@@ -174,7 +174,7 @@ end
 function CanGatherLumber( unit )
     local unitName = unit:GetUnitName()
     local unitTable = GameRules.UnitKV[unitName]
-    local gatherResources = unitTable["GatherResources"]
+    local gatherResources = unitTable and unitTable["GatherResources"]
     return gatherResources and string.match(gatherResources,"lumber")
 end
 
@@ -182,21 +182,21 @@ end
 function CanGatherGold( unit )
     local unitName = unit:GetUnitName()
     local unitTable = GameRules.UnitKV[unitName]
-    local gatherResources = unitTable["GatherResources"]
+    local gatherResources = unitTable and unitTable["GatherResources"]
     return gatherResources and string.match(gatherResources,"gold")
 end
 
 function FindGatherAbility( unit )
     local unitName = unit:GetUnitName()
     local unitTable = GameRules.UnitKV[unitName]
-    local abilityName = unitTable["GatherAbility"]
+    local abilityName = unitTable and unitTable["GatherAbility"]
     return unit:FindAbilityByName(abilityName)
 end
 
 function FindReturnAbility( unit )
     local unitName = unit:GetUnitName()
     local unitTable = GameRules.UnitKV[unitName]
-    local abilityName = unitTable["ReturnAbility"]
+    local abilityName = unitTable and unitTable["ReturnAbility"]
     return unit:FindAbilityByName(abilityName)
 end
 
