@@ -22070,7 +22070,7 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_gather"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -22090,7 +22090,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_capacity"		"10" //Can be upgraded
+				"lumber_capacity"		"10 20 30"
 			}
 			"03"
 			{
@@ -22768,6 +22768,14 @@
 				"ScriptFile"	"buildings/research.lua"
 				"Function"		"ResearchComplete"
 			}
+	
+			// Upgrade peasants
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/lumber_mill.lua"
+				"Function"		"HarvestResearchFinished"
+				"Level"			"1"
+			}
 		}
 	}
 	"human_research_lumber_harvesting1_disabled"
@@ -22845,6 +22853,14 @@
 			{
 				"ScriptFile"	"buildings/research.lua"
 				"Function"		"ResearchComplete"
+			}
+	
+			// Upgrade peasants
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/lumber_mill.lua"
+				"Function"		"HarvestResearchFinished"
+				"Level"			"2"
 			}
 		}
 	}
@@ -25070,6 +25086,12 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/human/human_upgrades.lua"
+						"Function"      "HarvestUpgrade"
 					}
 				}
 			}

@@ -86,6 +86,12 @@
 					"ScriptFile"    "buildings/rally_point.lua"
 					"Function"      "MoveToRallyPoint"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/human/human_upgrades.lua"
+					"Function"      "HarvestUpgrade"
+				}
 			}
 		}
 	}

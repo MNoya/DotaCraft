@@ -93,3 +93,14 @@ function TrainSorceress( event )
 		ability:SetLevel(1)
 	end
 end
+
+-- When peasants spawn, adjust their gather ability level
+function HarvestUpgrade( event )
+	local peasant = event.target
+	local playerID = peasant:GetPlayerOwnerID()
+	local upgrades = Players:GetUpgradeTable(playerID)
+
+	local level = Players:GetCurrentResearchRank(playerID, "human_research_lumber_harvesting1")
+	local ability = FindGatherAbility(peasant)
+	ability:SetLevel(1+level)
+end

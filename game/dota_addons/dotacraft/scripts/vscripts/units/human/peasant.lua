@@ -109,6 +109,11 @@ function CallToArmsEnd( event )
 	local peasant = ReplaceUnit( event.target, "human_peasant" )
 
 	CheckAbilityRequirements(peasant, playerID)
+
+	-- Gather ability level adjust
+	local level = Players:GetCurrentResearchRank(playerID, "human_research_lumber_harvesting1")
+	local ability = FindGatherAbility(peasant)
+	ability:SetLevel(1+level)
 end
 
 function HideBackpack( event )

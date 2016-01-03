@@ -386,23 +386,6 @@ function HasArtilleryAttack( unit )
     return unitTable and unitTable["Artillery"]
 end
 
--- Handles each specific lumber capacity for player units
-function Units:GetLumberCapacity(unit)
-    local unitName = unit:GetUnitName()
-    local lumber_capacity = GameRules.UnitKV[unitName]['LumberCapacity'] or 0
-
-    -- Handle peasant lumber upgrades
-    if unitName == "human_peasant" then
-        local playerID = unit:GetPlayerOwnerID()
-        local bLumberUpgrade = Players:GetCurrentResearchRank(playerID, "human_research_lumber_harvesting1")
-        if bLumberUpgrade then
-            lumber_capacity  = lumber_capacity + 10 * bLumberUpgrade
-        end
-    end
-
-    return lumber_capacity
-end
-
 function Units:GetConstructionSize(unit)
     local unitTable = (type(unit) == "table") and GameRules.UnitKV[unit:GetUnitName()] or GameRules.UnitKV[unit]
     return unitTable["ConstructionSize"]

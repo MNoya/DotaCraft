@@ -838,7 +838,6 @@ function GatherLumber( event )
     local caster = event.caster
     local ability = event.ability
     local abilityLevel = ability:GetLevel() - 1
-    --local max_lumber_carried = Units:GetLumberCapacity(caster)
     local max_lumber_carried = ability:GetLevelSpecialValueFor("lumber_capacity", abilityLevel)
     local tree = caster.target_tree
     local casterKV = GameRules.UnitKV[caster:GetUnitName()] --
