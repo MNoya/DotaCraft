@@ -919,6 +919,11 @@ function dotacraft:OnTreeCut(keys)
     	Vector(-64,64,0) -- NW
   	}
 
+    -- Allow construction
+    if not GridNav:IsBlocked(treePos) then
+        BuildingHelper:FreeGridSquares(2, treePos)
+    end
+
   	for k=1,#vecs do
   		local vec = vecs[k]
  		local xoff = vec.x
