@@ -3963,9 +3963,6 @@
 		"UnitLabel"					"builder"
 	
 		"AttacksEnabled"			"ground"
-	
-		"LumberCapacity"			"10"
-		
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3982,6 +3979,8 @@
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"human_gather"
 		"ReturnAbility"				"human_return_resources"
+		"GatherResources"			"lumber,gold"
+	
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"0"
@@ -5634,6 +5633,7 @@
 	
 	    "GatherAbility"             "shredder_gather"
 	    "ReturnAbility"             "shredder_return_resources"
+	    "GatherResources"           "lumber"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -10446,7 +10446,7 @@
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"nightelf_gather"
 		"ReturnAbility"				"nightelf_return_resources"
-	
+		"GatherResources"			"lumber,gold"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -12984,6 +12984,7 @@
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"orc_gather"
 		"ReturnAbility"				"orc_return_resources"
+		"GatherResources"			"lumber,gold"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -16824,6 +16825,7 @@
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"undead_gather"
 		"ReturnAbility"				"undead_return_resources"
+		"GatherResources"			"gold"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -17022,6 +17024,7 @@
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"undead_gather"
 		"ReturnAbility"				"undead_return_resources"
+		"GatherResources"			"lumber"
 		
 		// Abilities
 		//----------------------------------------------------------------

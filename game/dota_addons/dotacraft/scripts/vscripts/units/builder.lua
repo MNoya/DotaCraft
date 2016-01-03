@@ -103,8 +103,7 @@ function Build( event )
         EmitGlobalSound("Building.Placement")
 
         -- Cancel gather
-        local race = GetUnitRace(caster)
-        local gather_ability = caster:FindAbilityByName(casterKV.GatherAbility)
+        local gather_ability = FindGatherAbility(caster)
         if gather_ability then
             CancelGather({caster = caster, ability = gather_ability})
         end
@@ -473,7 +472,7 @@ function Gather( event )
 
         -- Hide Return
         if IsHuman(caster) or IsOrc(caster) then
-            local return_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
+            local return_ability = FindReturnAbility(caster)
             return_ability:SetHidden(true)
             ability:SetHidden(false)
             --print("Gathering Lumber ON, Return OFF")
@@ -643,7 +642,7 @@ function Gather( event )
         end)
             
         -- Hide Return
-        local return_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
+        local return_ability = FindReturnAbility(caster)
         if return_ability then
             return_ability:SetHidden(true)
         end
@@ -817,7 +816,7 @@ function CancelReturn( event )
     -- Builder race
     local race = GetUnitRace(caster)
 
-    local gather_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
+    local gather_ability = FindGatherAbility(caster)
     gather_ability.cancelled = true
     caster.state = "idle"
 
@@ -852,7 +851,7 @@ function GatherLumber( event )
 
     caster.state = "gathering_lumber"
 
-    local return_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
+    local return_ability = FindReturnAbility(caster)
 
     caster.lumber_gathered = caster.lumber_gathered + lumber_per_hit
     if tree and tree.health then
@@ -939,7 +938,7 @@ function GatherGold( event )
         caster.target_mine = nil
     end
 
-    local return_ability = caster:FindAbilityByName(casterKV.ReturnAbility)
+    local return_ability = FindReturnAbility(caster)
     return_ability:SetHidden(false)
     return_ability:ApplyDataDrivenModifier( caster, caster, "modifier_carrying_gold", nil)
     
@@ -1003,7 +1002,7 @@ function GoldGain( event )
             builder:RemoveModifierByName("modifier_gathering_gold")
             builder.state = "idle"
 
-            local ability = builder:FindAbilityByName(casterKV.GatherAbility)
+            local ability = FindGatherAbility(builder)
             ability.cancelled = true
             ToggleOff(ability)
 
@@ -1056,7 +1055,7 @@ function ReturnResources( event )
         ability:ToggleAbility()
     end
 
-    local gather_ability = caster:FindAbilityByName(casterKV.GatherAbility)
+    local gather_ability = FindGatherAbility(caster)
 
     -- Destroy any old move timer
     if caster.moving_timer then

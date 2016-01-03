@@ -173,21 +173,31 @@ end
 -- Returns true if the unit is a valid lumberjack
 function CanGatherLumber( unit )
     local unitName = unit:GetUnitName()
-    if unitName == "human_peasant" or unitName == "nightelf_wisp" or unitName == "undead_ghoul" or unitName == "orc_peon" then
-        return true
-    else
-        return false
-    end
+    local unitTable = GameRules.UnitKV[unitName]
+    local gatherResources = unitTable["GatherResources"]
+    return gatherResources and string.match(gatherResources,"lumber")
 end
 
 -- Returns true if the unit is a gold miner
 function CanGatherGold( unit )
     local unitName = unit:GetUnitName()
-    if unitName == "human_peasant" or unitName == "nightelf_wisp" or unitName == "undead_acolyte" or unitName == "orc_peon" then
-        return true
-    else
-        return false
-    end
+    local unitTable = GameRules.UnitKV[unitName]
+    local gatherResources = unitTable["GatherResources"]
+    return gatherResources and string.match(gatherResources,"gold")
+end
+
+function FindGatherAbility( unit )
+    local unitName = unit:GetUnitName()
+    local unitTable = GameRules.UnitKV[unitName]
+    local abilityName = unitTable["GatherAbility"]
+    return unit:FindAbilityByName(abilityName)
+end
+
+function FindReturnAbility( unit )
+    local unitName = unit:GetUnitName()
+    local unitTable = GameRules.UnitKV[unitName]
+    local abilityName = unitTable["ReturnAbility"]
+    return unit:FindAbilityByName(abilityName)
 end
 
 function IsHuman( unit )
