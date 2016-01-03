@@ -1072,8 +1072,8 @@ function dotacraft:OnEntityKilled( event )
 
 		-- Check units and structures for downgrades
 		local playerUnits = Players:GetUnits( killed_playerID )
-		for k,units in pairs(playerUnits) do
-		    CheckAbilityRequirements( units, killed_playerID )
+		for k,unit in pairs(playerUnits) do
+		    CheckAbilityRequirements( unit, killed_playerID )
 		end
 
 		local playerStructures = Players:GetStructures( killed_playerID )

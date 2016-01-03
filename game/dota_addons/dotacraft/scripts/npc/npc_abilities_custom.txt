@@ -47343,7 +47343,6 @@
 	// Ability: Devour
 	// Description: "Consumes an enemy land unit, slowly digesting it and dealing <Advc,DataC1> damage per second to it. If the Kodo Beast is killed while the consumed unit is still digesting, the unit that was devoured will be released."
 	// Code Reference: Adev and Advc
-	// NOTE: IMPORTANT!!! Devour and Devour Cargo work in tandem, Devour appears to be a dummy spell that lets Devour Cargo handle targeting and doing actual work.
 	//=================================================================================
 	"orc_devour"
 	{
@@ -47404,6 +47403,15 @@
 			}
 		}
 	
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/kodobeast.lua"
+				"Function"		"DevourDeath"
+			}
+		}
+	
 		"Modifiers"
 		{
 	
@@ -47460,6 +47468,9 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_WORLD"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	
 				"Properties"

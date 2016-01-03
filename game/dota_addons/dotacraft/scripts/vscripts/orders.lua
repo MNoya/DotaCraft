@@ -6,7 +6,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     end
     ]]
 
-    local DEBUG = true
+    local DEBUG = false
 
     local units = filterTable["units"]
     local order_type = filterTable["order_type"]
