@@ -31,7 +31,7 @@ function Build( event )
     local gold_cost = ability:GetSpecialValueFor("gold_cost")
     local lumber_cost = ability:GetSpecialValueFor("lumber_cost")
 
-    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    local hero = caster:GetOwner()
     local playerID = hero:GetPlayerID()
     local player = PlayerResource:GetPlayer(playerID)    
     local teamNumber = hero:GetTeamNumber()
@@ -971,7 +971,7 @@ function GoldGain( event )
     local ability = event.ability
     local caster = event.caster
     local playerID = caster:GetPlayerOwnerID()
-    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    local hero = caster:GetOwner()
     local race = GetUnitRace(caster)
     local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
     local casterKV = GameRules.UnitKV[caster:GetUnitName()]

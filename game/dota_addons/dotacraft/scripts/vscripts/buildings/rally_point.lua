@@ -50,7 +50,7 @@ function SetRallyPoint( event )
 	local caster = event.caster
 	if not HasTrainAbility( caster ) then return end
 
-	Timers:CreateTimer(1/30, function()
+	Timers:CreateTimer(2/30, function()
 		local origin = caster:GetAbsOrigin()
 		
 		-- Find vector towards 0,0,0 for the initial rally point
