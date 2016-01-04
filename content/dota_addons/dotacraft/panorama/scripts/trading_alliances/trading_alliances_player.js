@@ -52,6 +52,10 @@ function SetupPanels(){
 	};
 };
 
+function OnToggleShare(){
+	GameEvents.SendCustomGameEventToServer("trading_alliances_shareMask", { "targetPlayerID" : Root.PlayerID, "invokingPlayerID" : Game.GetLocalPlayerID()} );
+};
+
 function CalculateCurrentPendingResources(){
 	var GoldAndLumber = {
 				Gold : 0,

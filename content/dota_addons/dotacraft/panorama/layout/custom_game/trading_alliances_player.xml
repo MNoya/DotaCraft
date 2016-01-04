@@ -11,6 +11,11 @@
 			<DOTAAvatarImage id="PlayerAvatar" />
 			<DOTAUserName id="PlayerName" />
 		</Panel>
+		<Panel class="PlayerToggles">
+			<ToggleButton id="ToggleShare" checked="false" onactivate="OnToggleShare()" >
+				<Label text="Share Units" class="ShareText"/>
+			</ToggleButton>
+		</Panel>
 		<Panel class="ResourceTrading">
 			<Button id="GoldBox" onactivate="Increment(1, false)" oncontextmenu="Increment(1, true)"> 
 				<Panel id="GoldBoxIcon" />
