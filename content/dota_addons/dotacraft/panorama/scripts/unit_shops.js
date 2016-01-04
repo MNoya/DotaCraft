@@ -51,12 +51,22 @@ function Create_Single_Panel(args){
 	}
 	
 	// yeah I know I should really have a function to create items rather then copy pasta ;P
+	if($("#"+PlayerID+"_"+Hero) != null)
+		$("#"+PlayerID+"_"+Hero).RemoveAndDeleteChildren();
+		
 	var shop_item = $.CreatePanel("Panel", Shop, PlayerID+"_"+Hero)
 	shop_item.BLoadLayout("file://{resources}/layout/custom_game/unit_shops_item.xml", false, false);
 	shop_item.ItemName = args.Hero
 	shop_item.ItemInfo = args.HeroInfo
+
 	shop_item.Entity = args.Index
 	shop_item.Hero = true
+	
+	if(args.Revive != null){
+		shop_item.Revive = true
+	}else{
+		shop_item.Revive = false
+	};
 }
 
 function Delete_Single_Panel(args){
@@ -64,17 +74,18 @@ function Delete_Single_Panel(args){
 	var Hero = args.Hero
 	var PlayerID = Game.GetLocalPlayerID()
 	
-	$.Msg(PlayerID)
-	$.Msg(Hero)
-	$.Msg(Shop)
+	//$.Msg(PlayerID)
+	//$.Msg(Hero)
+	//$.Msg(Shop)
 	
 	var Container = Root.FindChildTraverse(Shop)
 	var HeroItemPanel = Container.FindChildTraverse(PlayerID+"_"+Hero)
 	if(HeroItemPanel == null){
 		HeroItemPanel = Container.FindChildTraverse(Hero)	
 	}
-	$.Msg(HeroItemPanel)
-	HeroItemPanel.DeleteAsync(0.1)
+	//$.Msg(HeroItemPanel)
+	HeroItemPanel.RemoveAndDeleteChildren();
+	HeroItemPanel.DeleteAsync(0.01);
 }
 
 function Current_Selected(){
@@ -160,9 +171,12 @@ function Delete_Shop_Content(args){
 	for(i = 0; i < bChildCount; i++){
 		var child = Shop.GetChild(i)
 		$.Msg(child)
-		if(child != null && child.id.indexOf(PlayerID.toString())){
-			child.DeleteAsync(0.01)
-		}
+		if(!child.Revive){
+			if(child != null && child.id.indexOf(PlayerID.toString())){
+				child.RemoveAndDeleteChildren();
+				child.DeleteAsync(0.01);
+			}
+		};
 	}
 }
 

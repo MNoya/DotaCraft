@@ -2,8 +2,9 @@ var Root = $.GetContextPanel()
 var LocalPlayerID = Game.GetLocalPlayerID()
 
 function Buy_Item(){	
-
-	GameEvents.SendCustomGameEventToServer( "Shops_Buy", { "PlayerID" : LocalPlayerID, "Shop" : Root.Entity, "ItemName" : Root.ItemName, "Hero" : Root.Hero, "GoldCost" : Root.ItemInfo.GoldCost, "LumberCost" : Root.ItemInfo.LumberCost, "Tavern" : Root.Tavern } );
+	if (Root.Revive == null)
+		Root.Revive = false
+	GameEvents.SendCustomGameEventToServer( "Shops_Buy", { "PlayerID" : LocalPlayerID, "Shop" : Root.Entity, "ItemName" : Root.ItemName, "Hero" : Root.Hero, "GoldCost" : Root.ItemInfo.GoldCost, "LumberCost" : Root.ItemInfo.LumberCost, "Tavern" : Root.Tavern, "Revive": Root.Revive} );
 }
 
 function ShowToolTip(){ 
@@ -28,7 +29,7 @@ function Setup_Panel(){
 	
 	$( "#GoldCost" ).text = Root.ItemInfo.GoldCost;  
 	
-	if(Root.ItemInfo.LumberCost != "0"){
+	if(Root.ItemInfo.LumberCost != 0){
 		$( "#LumberCost" ).text = Root.ItemInfo.LumberCost;
 	}else{
 		$( "#LumberCost" ).visible = false;
@@ -68,7 +69,7 @@ function Update_Central(data){
 	var ItemValues = data.Item
 
 	if(ItemValues.CurrentStock != null){
-		$( "#Stock").text = ItemValues.CurrentStock
+		$("#Stock").text = ItemValues.CurrentStock
 	}
 	
 	if(ItemValues.RestockRate != null){

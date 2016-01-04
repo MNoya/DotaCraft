@@ -197,24 +197,27 @@ end
 
 function Players:UpdateJavaScriptPlayer( playerID )
 	Timers:CreateTimer("Player_".. playerID .."_Updater", {	useGameTime = true, endTime = 1, callback = function()
-		local hero = PlayerResource:GetSelectedHeroEntity(playerID)	
+		if PlayerResource:IsValidPlayer(playerID) then
+			local hero = PlayerResource:GetSelectedHeroEntity(playerID)	
 	
-		local Gold = PlayerResource:GetGold(playerID)
-		local Lumber = math.floor(hero.lumber)
-		local FoodUsed = hero.food_used
-		local FoodLimit = hero.food_limit
+			local Gold = PlayerResource:GetGold(playerID)
+			local Lumber = math.floor(hero.lumber)
+			local FoodUsed = hero.food_used
+			local FoodLimit = hero.food_limit
 	
-		local PlayerTable = GetNetTableValue("dotacraft_player_table", tostring(playerID))
-		local ColorID = PlayerTable.Color;
+			local PlayerTable = GetNetTableValue("dotacraft_player_table", tostring(playerID))
+			local ColorID = PlayerTable.Color;
 	
-		local HasAltar = Player:HasAltar(playerID)
-		if HasAltar then HasAltar = true else HasAltar = false end
+			local HasAltar = Player:HasAltar(playerID)
+			if HasAltar then HasAltar = true else HasAltar = false end
 	
-		local TechTier = Players:GetCityLevel(playerID)
-		local HeroCount = 0
-		-- WIP Noya herocounter
+			local TechTier = Players:GetCityLevel(playerID)
+			local HeroCount = 0
+			-- WIP Noya herocounter
 	
-		SetNetTableValue("dotacraft_player_table", tostring(playerID), {color_id = ColorID, food_used = FoodUsed, food_limit = FoodLimit, lumber = Lumber, gold = Gold, tech_tier = TechTier, has_altar = HasAltar, hero_count = HeroCount})
+			SetNetTableValue("dotacraft_player_table", tostring(playerID), {color_id = ColorID, food_used = FoodUsed, food_limit = FoodLimit, lumber = Lumber, gold = Gold, tech_tier = TechTier, has_altar = HasAltar, hero_count = HeroCount})
+		end
+		
 		return 1
 	end})
 	

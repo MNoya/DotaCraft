@@ -165,7 +165,7 @@ function unit_shops:CreateShop(unit, shop_name)
 		if not isTavern then -- if not tavern
 			unit_shops:StockUpdater(UnitShop.Items[key], unit, isGlobal)
 		else
-			unit_shops:SetupTavernStock(UnitShop.Items[key], unit)
+			unit_shops:TavernStockUpdater(UnitShop.Items[key], unit)
 		end
 		
 		-- save item into table using it's sort index, this is send once at the beginning to initialise the shop
@@ -195,7 +195,7 @@ function unit_shops:SetupShopPanels(unit, ShopItemTable, isTavern, isGlobal, Req
 
 end
 
-function unit_shops:SetupTavernStock(UnitShopItem, unit)
+function unit_shops:TavernStockUpdater(UnitShopItem, unit)
 	Timers:CreateTimer(0.1, function()
 		local PlayerCount = PlayerResource:GetPlayerCount() - 1
 		unit_shops:Stock_Management(UnitShopItem)
@@ -207,12 +207,11 @@ function unit_shops:SetupTavernStock(UnitShopItem, unit)
 			if PlayerResource:IsValidPlayer(playerID) and hero then
 				local player = PlayerResource:GetPlayer(playerID)						
 				
-				-- if player cannot train more heroes and tavern wasn't previously disabled, disable it now			
-				if not Players:CanTrainMoreHeroes( playerID ) and not hero.hero_tavern_removed then
-					-- delete tavern
-					hero.hero_tavern_removed = true
+				-- if player cannot train more heroes and tavern wasn't previously disabled, disable it now		
+				if not Players:CanTrainMoreHeroes( playerID ) then
 					CustomGameEventManager:Send_ServerToPlayer(player, "Shops_Remove_Content", {Index = GameRules.HeroTavernEntityID, Shop = UnitShopItem, playerID = i}) 
 					print("remove neutral heroes panels from player="..tostring(playerID))
+					return
 				end
 				
 				UpdateHeroTavernForPlayer( playerID )
@@ -226,7 +225,9 @@ function unit_shops:SetupTavernStock(UnitShopItem, unit)
 					hasAltar = false
 				end
 				
-				CustomGameEventManager:Send_ServerToPlayer(player, "unitshop_updateStock", { Index = GameRules.HeroTavernEntityID, Item = UnitShopItem, playerID = playerID, Tier=tier, Altar=hasAltar})
+				if PlayerResource:IsValidPlayer(playerID) then
+					CustomGameEventManager:Send_ServerToPlayer(player, "unitshop_updateStock", { Index = GameRules.HeroTavernEntityID, Item = UnitShopItem, playerID = playerID, Tier=tier, Altar=hasAltar})
+				end
 			end
 			
 		end
@@ -244,14 +245,15 @@ function unit_shops:StockUpdater(UnitShopItem, unit, isGlobal)
 
 		if not IsValidEntity(unit) or not unit:IsAlive() then
 			-- send command to kill shop panel
-			UnitShop = nil
 			print("[UNIT SHOP] Shop identified not valid, terminating timer")
 			return
 		end
 
 		unit_shops:Stock_Management(UnitShopItem)
+		if PlayerResource:IsValidPlayer(playerID) then
+			CustomGameEventManager:Send_ServerToAllClients("unitshop_updateStock", { Index = UnitID, Item = UnitShopItem, Tier=tier })		
+		end
 		
-		CustomGameEventManager:Send_ServerToAllClients("unitshop_updateStock", { Index = UnitID, Item = UnitShopItem, Tier=tier })		
 		return 1
 	end)
 end
@@ -305,7 +307,8 @@ function unit_shops:Buy(data)
 	local isHeroItem = string.match(item, "npc_dota_hero")
 
 	local isTavern = tobool(data.Tavern)
-
+	local isRevive = tobool(data.Revive)
+	
 	local isUnitItem = string.match(item, "npc_") -- Start an item with npc_ to indicate a unit purchase
 	
 	if isTavern and not Players:CanTrainMoreHeroes( playerID ) then
@@ -358,21 +361,11 @@ function unit_shops:Buy(data)
 
 		if isHeroItem then
 			-- if it is tavern create hero
-			if isHeroItem and isTavern then
+			if (isHeroItem and isTavern) or isRevive then
 
 				-- NOYA
 				-- add a bool check for player heroes < 3
 				if Players:HasEnoughFood(playerID, 5) then
-
-					-- Is a revive?
-					local isRevive = false
-					local playerHeroes = Players:GetHeroes(playerID)
-					for k,v in pairs(playerHeroes) do
-						if v:GetUnitName() == item then
-							isRevive = true
-							break
-						end
-					end
 
 					if isRevive then
 						print("[UNIT SHOPS] Tavern creating hero for "..playerID)
@@ -441,7 +434,7 @@ function unit_shops:AddHeroToTavern(hero)
 	local GoldCost = BASE_HERO_GOLDCOST + (BASE_HERO_ADDITIONAL_GOLDCOST_PER_LEVEL * HeroLevel)
 	local LumberCost = BASE_HERO_LUMBERCOST + (BASE_HERO_ADDITIONAL_LUMBERCOST_PER_LEVEL * HeroLevel)
 
-	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(heroPlayerID), "Shops_Create_Single_Panel", {Index = GameRules.HeroTavernEntityID, playerID=heroPlayerID, HeroInfo={GoldCost=GoldCost, LumberCost=LumberCost, RequiredTier = 1} , Hero=hero:GetUnitName() }) 
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(heroPlayerID), "Shops_Create_Single_Panel", {Index = GameRules.HeroTavernEntityID, playerID=heroPlayerID, HeroInfo={GoldCost=GoldCost, LumberCost=LumberCost, RequiredTier = 1} , Hero=hero:GetUnitName(), Revive = true}) 
 end	
 
 -- all the player-specific updates for players
