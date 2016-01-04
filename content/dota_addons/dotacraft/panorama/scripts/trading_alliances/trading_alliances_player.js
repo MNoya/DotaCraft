@@ -14,32 +14,10 @@ function SetupPlayer(){
 	$("#PlayerAvatar").steamid = PlayerSteamID;
 	$("#PlayerName").steamid = PlayerSteamID;
 	
-	LocalPlayerObject = new Player(Game.GetLocalPlayerID());
-	CustomNetTables.SubscribeNetTableListener("dotacraft_player_table", UpdatePlayer);
+	LocalPlayerObject = GameUI.CustomUIConfig.Player[Game.GetLocalPlayerID()];
 	
 	// setup panels
 	SetupPanels();
-	
-	// initialise updater
-	Update();	
-};
-
-function Update(){
-	// update player object gold.
-	UpdatePlayerGold();
-
-	$.Schedule(0.01, Update);
-};
-
-function UpdatePlayerGold(){
-	var PlayerGold = Players.GetGold(Game.GetLocalPlayerID());
-	LocalPlayerObject.setGold(PlayerGold);
-};
-
-// function which updates the local player object
-function UpdatePlayer(TableName, Key, Value){
-	if(Key == Game.GetLocalPlayerID())
-		LocalPlayerObject.Update(Value);
 };
 
 function SetupPanels(){

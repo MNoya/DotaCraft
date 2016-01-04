@@ -19,7 +19,7 @@ Entry Point object and nettable declaration
 	};
 
 */
-
+//GameUI.CustomUIConfig()
 var Player = (function() {
 	
 	function Player(pPlayerID)
@@ -27,21 +27,8 @@ var Player = (function() {
 		var PlayerDetails = CustomNetTables.GetTableValue( "dotacraft_player_table", pPlayerID);
 		
 		this.setPlayerID(pPlayerID);
-		this.setLumber(PlayerDetails.lumber);
-		this.setGold(Players.GetGold(pPlayerID));
-		this.setFoodUsed(PlayerDetails.food_used);
-		this.setFoodLimit(PlayerDetails.food_limit);
-		this.setColorID(PlayerDetails.color_id);
-		this.setHeroCount(PlayerDetails.hero_count);
-		this.setHasAltar(PlayerDetails.has_altar);
-		this.setTechTier(PlayerDetails.tech_tier);
-		
-		//$.Msg("Player      :"+this.mPlayerID);
-		//$.Msg("Food Limit  :"+this.getFoodLimit());
-		//$.Msg("Food Used   :"+this.getFoodUsed());
-		//$.Msg("Gold        :"+this.getGold());
-		//$.Msg("Lumber      :"+this.getLumber());
-		//$.Msg("Color       :"+this.getColorID());
+		$.Msg(PlayerDetails)
+		this.Update(PlayerDetails);
 	}; 
 
 	Player.prototype.setPlayerID = function(pPlayerID)
@@ -109,8 +96,23 @@ var Player = (function() {
 		return this.mTechTier;
 	};
 	
+	Player.prototype.HasEnoughFood = function(pFoodAmount, pLocalisedErrorString){
+		
+		return ( (this.getFoodLimit() - this.getFoodUsed()) >= pFoodAmount )		
+	};
+	
+	Player.prototype.HasEnoughGold = function(pGoldAmount, pLocalisedErrorString){
+		
+		return ( pGoldAmount <= this.getGold() )
+	};
+	
+	Player.prototype.HasEnoughLumber = function(pLumberAmount, pLocalisedErrorString){
+		
+		return ( pLumberAmount <= this.getLumber() )
+	};
+	
 	Player.prototype.Update = function(pValue){		
-		$.Msg("[PLAYER OBJECT] Updating Player: "+this.getPlayerID());
+		$.Msg("[PLAYER OBJECT] Updating Player: "+ this.getPlayerID());
 		
 		if(pValue.lumber){
 			this.setLumber(pValue.lumber);
@@ -122,7 +124,7 @@ var Player = (function() {
 		};
 		if(pValue.food_used){
 			this.setFoodUsed(pValue.food_used);
-			$.Msg("Updating Food Used ="+this.getFoodUsed());
+			$.Msg("Updating Food Used = "+this.getFoodUsed());
 		};
 		if(pValue.food_limit){
 			this.setFoodLimit(pValue.food_limit)

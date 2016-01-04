@@ -8,7 +8,10 @@ function unit_shops:start()
 	unit_shops.Players = {}
 	GameRules.HeroTavernEntityID = nil
 
-	CustomGameEventManager:RegisterListener( "Shops_Buy", Dynamic_Wrap(unit_shops, "Buy"))
+	CustomGameEventManager:RegisterListener( "Shops_Buy_Item", Dynamic_Wrap(unit_shops, "BuyItem"))
+	CustomGameEventManager:RegisterListener( "Shops_Buy_Tavern_Revive_Hero", Dynamic_Wrap(unit_shops, "BuyHeroRevive"))
+	CustomGameEventManager:RegisterListener( "Shops_Buy_Tavern_Buy_Hero", Dynamic_Wrap(unit_shops, "BuyHero"))
+	
 	CustomGameEventManager:RegisterListener( "open_closest_shop", Dynamic_Wrap(unit_shops, "OpenClosestShop"))
 
 	GameRules.Shops = LoadKeyValues("scripts/kv/shops.kv")
@@ -225,14 +228,12 @@ function unit_shops:TavernStockUpdater(UnitShopItem, unit)
 					hasAltar = false
 				end
 				
-				if PlayerResource:IsValidPlayer(playerID) then
-					CustomGameEventManager:Send_ServerToPlayer(player, "unitshop_updateStock", { Index = GameRules.HeroTavernEntityID, Item = UnitShopItem, playerID = playerID, Tier=tier, Altar=hasAltar})
-				end
+				CustomGameEventManager:Send_ServerToPlayer(player, "unitshop_updateStock", { Index = GameRules.HeroTavernEntityID, Item = UnitShopItem, playerID = playerID, Tier=tier, Altar=hasAltar})
 			end
 			
 		end
 	
-		return 0.1
+		return 0.01
 	end)
 end
 
@@ -250,7 +251,7 @@ function unit_shops:StockUpdater(UnitShopItem, unit, isGlobal)
 		end
 
 		unit_shops:Stock_Management(UnitShopItem)
-		if PlayerResource:IsValidPlayer(playerID) then
+		if PlayerResource:IsValidPlayer(playerID) or isGlobal then
 			CustomGameEventManager:Send_ServerToAllClients("unitshop_updateStock", { Index = UnitID, Item = UnitShopItem, Tier=tier })		
 		end
 		
@@ -294,7 +295,75 @@ function unit_shops:RemoveHeroPanel(ShopEntityIndex, playerID, ItemName)
 	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "Shops_Delete_Single_Panel", {Index = ShopEntityIndex, Hero = ItemName}) 
 end
 
-function unit_shops:Buy(data)
+function unit_shops:BuyHero(data)
+	local item = data.ItemName
+	local playerID = data.PlayerID -- The player that clicked on an item to purchase. This can be an allied player
+	local player = PlayerResource:GetPlayer(playerID)
+	local shopID = data.Shop
+	local Shop = EntIndexToHScript(data.Shop)
+	-- cost of the item
+	local Gold_Cost = data.GoldCost
+	local Lumber_Cost = data.LumberCost
+	
+	local buyer = unit_shops:ValidateNearbyBuyer(playerID, Shop)
+	if not Players:CanTrainMoreHeroes( playerID ) or not unit_shops or not buyer then
+		if buyer or unit_shops then
+			print("playerID = "..tostring(playerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
+		end
+		return
+	end
+	local buyerPlayerID = buyer:GetPlayerOwnerID()
+	
+	EmitSoundOnClient("General.Buy", player)
+	
+	print("[UNIT SHOPS] Tavern creating hero for "..playerID)						
+	TavernCreateHeroForPlayer(playerID, shopID, item)
+	
+	unit_shops:RemoveHeroPanel(shopID, playerID, item)
+	-- deduct gold & lumber
+	Players:ModifyGold(buyerPlayerID, -Gold_Cost)
+	Players:ModifyLumber(buyerPlayerID, -Lumber_Cost)
+end
+
+function unit_shops:BuyHeroRevive(data)
+	local item = data.ItemName
+	local playerID = data.PlayerID -- The player that clicked on an item to purchase. This can be an allied player
+	local player = PlayerResource:GetPlayer(playerID)
+	local shopID = data.Shop
+	local Shop = EntIndexToHScript(data.Shop)
+	-- cost of the item
+	local Gold_Cost = data.GoldCost
+	local Lumber_Cost = data.LumberCost
+
+	local buyer = unit_shops:ValidateNearbyBuyer(playerID, Shop)
+	if not buyer then return end
+	local buyerPlayerID = buyer:GetPlayerOwnerID()	
+	
+	EmitSoundOnClient("General.Buy", player)
+	
+	print("[UNIT SHOPS] Tavern reviving hero for "..playerID)
+	TavernReviveHeroForPlayer(playerID, shopID, item)
+	
+	unit_shops:RemoveHeroPanel(shopID, playerID, item)
+	-- deduct gold & lumber
+	Players:ModifyGold(buyerPlayerID, -Gold_Cost)
+	Players:ModifyLumber(buyerPlayerID, -Lumber_Cost)
+end
+
+function unit_shops:ValidateNearbyBuyer( playerID, Shop )
+	-- Information about the buying unit
+	local buyer
+	if Shop.current_unit[playerID] == nil then
+		SendErrorMessage(playerID, "#shops_no_buyers_found")
+		return
+	else
+		buyer = Shop.current_unit[playerID] --A shop can sell to more than 1 player at a time
+	end
+	
+	return buyer;
+end
+
+function unit_shops:BuyItem(data)
 	local item = data.ItemName
 	local playerID = data.PlayerID -- The player that clicked on an item to purchase. This can be an allied player
 	local player = PlayerResource:GetPlayer(playerID)
@@ -302,34 +371,9 @@ function unit_shops:Buy(data)
 	local Shop = EntIndexToHScript(data.Shop)
 	
 	print("Player "..playerID.." trying to buy "..item.." from "..data.Shop.." "..shopID)
-	
-	-- Check whether hero item or no
-	local isHeroItem = string.match(item, "npc_dota_hero")
 
-	local isTavern = tobool(data.Tavern)
-	local isRevive = tobool(data.Revive)
-	
-	local isUnitItem = string.match(item, "npc_") -- Start an item with npc_ to indicate a unit purchase
-	
-	if isTavern and not Players:CanTrainMoreHeroes( playerID ) then
-		print("playerID = "..tostring(playerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
-		return
-	end
-	
-	-- check current tier
-	local shopOwnerID = Shop:GetPlayerOwnerID()
-	local tier = shopOwner and Players:GetCityLevel(shopOwnerID) or Players:GetCityLevel(playerID) --If there is no owner, use the tier of the player that tries to buy it
-				
-	-- Information about the buying unit
-	-- the buying unit
-	local buyer
-	if Shop.current_unit[playerID] == nil then
-		SendErrorMessage(data.PlayerID, "#shops_no_buyers_found")
-		return
-	else
-		buyer = Shop.current_unit[playerID] --A shop can sell to more than 1 player at a time
-	end
-	
+	local buyer = unit_shops:ValidateNearbyBuyer(playerID, Shop)
+	if not buyer then return end
 	local buyerPlayerID = buyer:GetPlayerOwnerID()
 	local buyerPlayerOwner = buyer:GetPlayerOwner()
 	-- hero of the buying unit
@@ -342,88 +386,35 @@ function unit_shops:Buy(data)
 	local Gold_Cost = data.GoldCost
 	local Lumber_Cost = data.LumberCost
 
-	-- Conditions
-	local bHasEnoughGold = Players:HasEnoughGold(buyerPlayerID, GoldCost)
-	local bHasEnoughLumber = Players:HasEnoughLumber(buyerPlayerID, Lumber_Cost )
+	local bEnoughSlots = CountInventoryItems(buyer) < 6
+	local isUnitItem = string.match(item, "npc_") -- Start an item with npc_ to indicate a unit purchase
 	
-	local bEnoughSlots = true
-	local bEnoughStock = true
-			
-	if not isHeroItem then
-		bEnoughSlots = CountInventoryItems(buyer) < 6
-		bEnoughStock = EnoughStock(item, Shop)
-	end
-
-	local bPlayerCanPurchase = bHasEnoughGold and bHasEnoughLumber and bEnoughSlots and bEnoughStock
-
-	if bPlayerCanPurchase then
+	if bEnoughSlots then
 		EmitSoundOnClient("General.Buy", player)
-
-		if isHeroItem then
-			-- if it is tavern create hero
-			if (isHeroItem and isTavern) or isRevive then
-
-				-- NOYA
-				-- add a bool check for player heroes < 3
-				if Players:HasEnoughFood(playerID, 5) then
-
-					if isRevive then
-						print("[UNIT SHOPS] Tavern creating hero for "..playerID)
-						TavernReviveHeroForPlayer(playerID, shopID, item)
-
-					else
-						-- lower stock count by 1
-						Purchased(item, Shop)
-
-						print("[UNIT SHOPS] Tavern creating hero for "..playerID)
-											
-						-- create neutral hero here
-						TavernCreateHeroForPlayer(playerID, shopID, item)
-
-						-- NOYA
-						-- increment hero count here
-					end
-				else
-					local race = Players:GetRace(playerID)
-					print("[UNIT SHOPS] Player "..playerID.." doesn't have enough food to purchase a hero from Tavern")
-					SendErrorMessage(buyerPlayerID, "#error_not_enough_food_"..race)
-					return
-				end
-
-				unit_shops:RemoveHeroPanel(shopID, playerID, item)
-			-- create mercenary unit
-			else
-				-- lower stock count by 1
-				Purchased(item, Shop)
-				
-				CreateMercenaryForPlayer(playerID, shopID, item)
-			end
-
-		-- create & add item
+		
+		if isUnitItem then
+			CreateMercenaryForPlayer(playerID, shopID, item)
 		else
-
-			-- lower stock count by 1
-			Purchased(item, Shop)
-
-			local Bought_Item = CreateItem(item, buyerPlayerOwner, buyerPlayerOwner) 
+			local Bought_Item = CreateItem(item, buyerPlayerOwner, buyerPlayerOwner)
 			buyer:AddItem(Bought_Item)
-		end
-
+		end	
+		-- lower stock count by 1
+		Purchased(item, Shop)
+		
 		-- deduct gold & lumber
 		Players:ModifyGold(buyerPlayerID, -Gold_Cost)
 		Players:ModifyLumber(buyerPlayerID, -Lumber_Cost)
-	else -- error messaging
-	
+	else
 		-- player error message
-		if not bEnoughStock then -- not enough stock
-			SendErrorMessage(buyerPlayerID, "#shops_not_enough_stock")
-		elseif not bEnoughSlots then -- not enough inventory space
+		--if not bEnoughStock then -- not enough stock
+		--	SendErrorMessage(buyerPlayerID, "#shops_not_enough_stock")
+		--elseif not bEnoughSlots then -- not enough inventory space
 			SendErrorMessage(buyerPlayerID, "#shops_not_enough_inventory")
-		elseif not bHasEnoughGold then -- not enough gold
-			SendErrorMessage(buyerPlayerID, "#shops_not_enough_gold")
-		elseif not bHasEnoughLumber then -- not enough lumber
-			SendErrorMessage(buyerPlayerID, "#shops_not_enough_lumber")
-		end	
+		--elseif not bHasEnoughGold then -- not enough gold
+		--	SendErrorMessage(buyerPlayerID, "#shops_not_enough_gold")
+		--elseif not bHasEnoughLumber then -- not enough lumber
+		--	SendErrorMessage(buyerPlayerID, "#shops_not_enough_lumber")
+		--end	
 	end
 end
 

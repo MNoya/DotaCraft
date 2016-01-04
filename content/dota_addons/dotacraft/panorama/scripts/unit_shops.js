@@ -20,8 +20,8 @@ function Create_Shop(args){
 		shop_item.ItemInfo = args.Shop[orderIndex]
 		shop_item.Entity = args.Index
 		shop_item.Race = args.Race
-		shop_item.Tier = args.Tier
-		shop_item.Order = orderIndex
+		shop_item.Tier = args.Tier  
+		shop_item.Order = orderIndex   
 		
 		if(args.Tavern != null){
 			shop_item.Tavern = true

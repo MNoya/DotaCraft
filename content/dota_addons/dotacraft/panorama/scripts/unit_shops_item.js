@@ -1,10 +1,42 @@
 var Root = $.GetContextPanel()
 var LocalPlayerID = Game.GetLocalPlayerID()
-
+var LocalPlayerObject;
 function Buy_Item(){	
-	if (Root.Revive == null)
+	if(Root.Revive == null)
 		Root.Revive = false
-	GameEvents.SendCustomGameEventToServer( "Shops_Buy", { "PlayerID" : LocalPlayerID, "Shop" : Root.Entity, "ItemName" : Root.ItemName, "Hero" : Root.Hero, "GoldCost" : Root.ItemInfo.GoldCost, "LumberCost" : Root.ItemInfo.LumberCost, "Tavern" : Root.Tavern, "Revive": Root.Revive} );
+	
+	var Player = GameUI.CustomUIConfig.Player[Game.GetLocalPlayerID()];
+	
+	var event, food_cost, bAllowedToPurchase;
+	if(Root.Revive){
+		event = "Shops_Buy_Tavern_Revive_Hero"
+		food_cost = 5;
+		bAllowedToPurchase = Player.HasEnoughFood(5) && Player.HasEnoughLumber(Root.ItemInfo.LumberCost) && Player.HasEnoughGold(Root.ItemInfo.GoldCost) && Root.ItemInfo.CurrentStock > 0;
+	}else if(Root.Tavern){
+		event = "Shops_Buy_Tavern_Buy_Hero"
+		food_cost = 5;
+		bAllowedToPurchase = Player.HasEnoughFood(5) && Player.HasEnoughLumber(Root.ItemInfo.LumberCost) && Player.HasEnoughGold(Root.ItemInfo.GoldCost);
+	}else{
+		event = "Shops_Buy_Item";
+		food_cost = 0;
+		bAllowedToPurchase = Player.HasEnoughLumber(Root.ItemInfo.LumberCost) && Player.HasEnoughGold(Root.ItemInfo.GoldCost) && Root.ItemInfo.CurrentStock > 0;
+	};
+
+	if(bAllowedToPurchase) {
+		Root.ItemInfo.CurrentStock -= 1;
+		GameEvents.SendCustomGameEventToServer( event, { "PlayerID" : LocalPlayerID, "Shop" : Root.Entity, "ItemName" : Root.ItemName, "GoldCost" : Root.ItemInfo.GoldCost, "LumberCost" : Root.ItemInfo.LumberCost  } );
+	}else{
+		$.Msg("Not allowed to purchase");
+		$.Msg("Food = "+Player.HasEnoughFood(5));
+		$.Msg("Lumber = "+Player.HasEnoughLumber(Root.ItemInfo.LumberCost));
+		$.Msg("Gold  = "+Player.HasEnoughGold(Root.ItemInfo.GoldCost));
+		//if( !LocalPlayerObject.HasEnoughFood(food_cost) )
+			
+		//else if( !LocalPlayerObject.HasEnoughLumber(Root.ItemInfo.LumberCost) )
+			
+		//else if( !LocalPlayerObject.HasEnoughGold(Root.ItemInfo.GoldCost) )
+		
+	};
 }
 
 function ShowToolTip(){ 
@@ -49,6 +81,8 @@ function Setup_Panel(){
 	}else if(Root.Hero){
 		$( "#RequiredTier").text = "Revive this Hero instantly"
 	}
+	
+	LocalPlayerObject = new Player(Game.GetLocalPlayerID());
 }
 
 function Update_Central(data){
@@ -69,6 +103,7 @@ function Update_Central(data){
 	var ItemValues = data.Item
 
 	if(ItemValues.CurrentStock != null){
+		Root.ItemInfo.CurrentStock = ItemValues.CurrentStock;
 		$("#Stock").text = ItemValues.CurrentStock
 	}
 	
@@ -141,8 +176,6 @@ function Update_Tier_Required_Panels(tier){
 	}
 }
 
-
 (function () { 
-	$.Schedule( 0.1, Setup_Panel)
-	
+	$.Schedule( 0.1, Setup_Panel)	
 })();

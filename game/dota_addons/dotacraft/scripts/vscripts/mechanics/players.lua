@@ -208,7 +208,7 @@ function Players:UpdateJavaScriptPlayer( playerID )
 			local PlayerTable = GetNetTableValue("dotacraft_player_table", tostring(playerID))
 			local ColorID = PlayerTable.Color;
 	
-			local HasAltar = Player:HasAltar(playerID)
+			local HasAltar = Players:HasAltar(playerID)
 			if HasAltar then HasAltar = true else HasAltar = false end
 	
 			local TechTier = Players:GetCityLevel(playerID)
