@@ -28234,6 +28234,115 @@
 	        }
 	    }
 	}
+	"fountain_of_health_aura"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "fountain_of_health_aura"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+	    "AbilityCastRange"              "500"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "regen_per_sec" "1"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "500"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_fountain_of_health"
+	        {
+	            "Passive"            "1"
+	            "IsHidden"           "1"
+	    
+	            "Aura"              "modifier_fountain_of_health_regen"
+	            "Aura_Radius"       "%radius"
+	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_BOTH"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            "Aura_ApplyToCaster" "0"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	
+	        "modifier_fountain_of_health_regen"
+	        {
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%regen_per_sec"
+	            }
+	        }
+	    }
+	}
+	
+	"fountain_of_mana_aura"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "fountain_of_mana_aura"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+	    "AbilityCastRange"              "500"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "regen_per_sec" "1"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "500"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_fountain_of_mana"
+	        {
+	            "Passive"            "1"
+	            "IsHidden"           "1"
+	    
+	            "Aura"              "modifier_fountain_of_mana_regen"
+	            "Aura_Radius"       "%radius"
+	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_BOTH"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            "Aura_ApplyToCaster" "0"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	
+	        "modifier_fountain_of_mana_regen"
+	        {
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE" "%regen_per_sec"
+	            }
+	        }
+	    }
+	}
 	"generic_spell_immunity"
 	{
 		"BaseClass"				"ability_datadriven"

@@ -2414,6 +2414,143 @@
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER" 
 	}
+	"fountain_of_health"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/props_structures/structure_fountain_radiant_basic.vmdl"
+	    "ModelScale"                "1"
+	    "Level"                     "10"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  "fountain_of_health_aura"
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "0"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "0"
+	    "AttackAcquisitionRange"    "500"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "0.0"
+	    "BountyGoldMax"             "0.0"
+	    
+	    // Bounds
+	    //----------------------------------------------------------------
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "RingRadius"                "50"
+	    "CollisionSize"             "50"
+	    "FormationRank"             "0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "50"
+	    "LumberCost"                "0"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "150000"
+	    "StatusHealthRegen"         "0"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "500"
+	    "VisionNighttimeRange"      "500"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	}
+	
+	"fountain_of_mana"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/props_structures/structure_fountain_radiant_basic.vmdl"
+	    "ModelScale"                "1"
+	    "Level"                     "10"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "HealthBarOffset"           "140"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"                  "fountain_of_mana_aura"
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "0"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "0"
+	    "AttackAcquisitionRange"    "500"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "0.0"
+	    "BountyGoldMax"             "0.0"
+	    
+	    // Bounds
+	    //----------------------------------------------------------------
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "RingRadius"                "50"
+	    "CollisionSize"             "50"
+	    "FormationRank"             "0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "50"
+	    "LumberCost"                "0"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "150000"
+	    "StatusHealthRegen"         "0"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "0"
+	    "VisionNighttimeRange"      "0"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	}
 	//=================================================================================
 	// Building: Gold Mine
 	//=================================================================================
