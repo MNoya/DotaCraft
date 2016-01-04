@@ -197,16 +197,14 @@ function dotacraft:FilterExecuteOrder( filterTable )
     ------------------------------------------------
     --             No Target Orders               --
     ------------------------------------------------
-    elseif order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+    elseif order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET and abilityIndex and abilityIndex ~= 0 then
         
-        local abilityIndex = filterTable["entindex_ability"]
         local ability = EntIndexToHScript(abilityIndex)
         if not ability then
-            print("Error: CAST_NO_TARGET without an incorrect index")
+            print("Error: CAST_NO_TARGET with an incorrect index")
             return true
         end
         local abilityName = ability:GetAbilityName()
-
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
 
         local race = GetUnitRace(unit)

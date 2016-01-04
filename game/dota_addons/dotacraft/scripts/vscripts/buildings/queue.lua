@@ -87,9 +87,7 @@ function DequeueUnit( event )
 
     for itemSlot = 0, 5, 1 do
         local item = caster:GetItemInSlot( itemSlot )
-        print(item:GetAbilityName(), item_ability_name)
         if item and item == item_ability then
-            print("OK")
             local queue_element = getIndex(caster.queue, item:GetEntityIndex())
             table.remove(caster.queue, queue_element)
 
