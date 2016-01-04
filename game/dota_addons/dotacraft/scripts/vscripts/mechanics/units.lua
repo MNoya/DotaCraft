@@ -174,7 +174,7 @@ end
 function CanGatherLumber( unit )
     local unitName = unit:GetUnitName()
     local unitTable = GameRules.UnitKV[unitName]
-    local gatherResources = unitTable["GatherResources"]
+    local gatherResources = unitTable and unitTable["GatherResources"]
     return gatherResources and string.match(gatherResources,"lumber")
 end
 
@@ -182,21 +182,21 @@ end
 function CanGatherGold( unit )
     local unitName = unit:GetUnitName()
     local unitTable = GameRules.UnitKV[unitName]
-    local gatherResources = unitTable["GatherResources"]
+    local gatherResources = unitTable and unitTable["GatherResources"]
     return gatherResources and string.match(gatherResources,"gold")
 end
 
 function FindGatherAbility( unit )
     local unitName = unit:GetUnitName()
     local unitTable = GameRules.UnitKV[unitName]
-    local abilityName = unitTable["GatherAbility"]
+    local abilityName = unitTable and unitTable["GatherAbility"]
     return unit:FindAbilityByName(abilityName)
 end
 
 function FindReturnAbility( unit )
     local unitName = unit:GetUnitName()
     local unitTable = GameRules.UnitKV[unitName]
-    local abilityName = unitTable["ReturnAbility"]
+    local abilityName = unitTable and unitTable["ReturnAbility"]
     return unit:FindAbilityByName(abilityName)
 end
 
@@ -384,23 +384,6 @@ end
 function HasArtilleryAttack( unit )
     local unitTable = GameRules.UnitKV[unit:GetUnitName()]
     return unitTable and unitTable["Artillery"]
-end
-
--- Handles each specific lumber capacity for player units
-function Units:GetLumberCapacity(unit)
-    local unitName = unit:GetUnitName()
-    local lumber_capacity = GameRules.UnitKV[unitName]['LumberCapacity'] or 0
-
-    -- Handle peasant lumber upgrades
-    if unitName == "human_peasant" then
-        local playerID = unit:GetPlayerOwnerID()
-        local bLumberUpgrade = Players:GetCurrentResearchRank(playerID, "human_research_lumber_harvesting1")
-        if bLumberUpgrade then
-            lumber_capacity  = lumber_capacity + 10 * bLumberUpgrade
-        end
-    end
-
-    return lumber_capacity
 end
 
 function Units:GetConstructionSize(unit)

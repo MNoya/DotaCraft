@@ -919,6 +919,11 @@ function dotacraft:OnTreeCut(keys)
     	Vector(-64,64,0) -- NW
   	}
 
+    -- Allow construction
+    if not GridNav:IsBlocked(treePos) then
+        BuildingHelper:FreeGridSquares(2, treePos)
+    end
+
   	for k=1,#vecs do
   		local vec = vecs[k]
  		local xoff = vec.x
@@ -1072,8 +1077,8 @@ function dotacraft:OnEntityKilled( event )
 
 		-- Check units and structures for downgrades
 		local playerUnits = Players:GetUnits( killed_playerID )
-		for k,units in pairs(playerUnits) do
-		    CheckAbilityRequirements( units, killed_playerID )
+		for k,unit in pairs(playerUnits) do
+		    CheckAbilityRequirements( unit, killed_playerID )
 		end
 
 		local playerStructures = Players:GetStructures( killed_playerID )

@@ -31,3 +31,18 @@ function Masonry( event )
 	-- Set ability hidden
 	ability:SetHidden(true)
 end
+
+-- Update all current peasants
+function HarvestResearchFinished( event )
+	local level = event.Level
+	local caster = event.caster
+	local playerID = caster:GetPlayerOwnerID()
+	local playerUnits = Players:GetUnits(playerID)
+
+	for k,v in pairs(playerUnits) do
+		if IsValidAlive(v) and v:GetUnitName() == "human_peasant" then
+			local ability = FindGatherAbility(v)
+			ability:SetLevel(1+level)
+		end
+	end
+end

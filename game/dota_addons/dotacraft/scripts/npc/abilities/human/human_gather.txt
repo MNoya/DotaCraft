@@ -3,7 +3,7 @@
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_gather"
-	"MaxLevel" 						"1"
+	"MaxLevel" 						"3"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -23,7 +23,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_capacity"		"10" //Can be upgraded
+			"lumber_capacity"		"10 20 30"
 		}
 		"03"
 		{

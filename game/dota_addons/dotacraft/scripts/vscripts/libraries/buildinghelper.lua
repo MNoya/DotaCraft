@@ -207,7 +207,7 @@ function BuildingHelper:CancelCommand( args )
     local playerTable = BuildingHelper:GetPlayerTable(playerID)
     playerTable.activeBuilding = nil
 
-    if not playerTable.activeBuilder then
+    if not playerTable.activeBuilder or not IsValidEntity(playerTable.activeBuilder) then
         return
     end
     BuildingHelper:ClearQueue(playerTable.activeBuilder)
@@ -1137,7 +1137,8 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     -- Check for special requirement
     local playerTable = BuildingHelper:GetPlayerTable(unit:GetPlayerOwnerID())
     local buildingName = playerTable.activeBuilding
-    local requires = BuildingHelper.UnitKVs[buildingName]["Requires"]
+    local buildingTable = buildingName and BuildingHelper.UnitKVs[buildingName]
+    local requires = buildingTable and buildingTable["Requires"]
 
     if requires then
         bBlocked = not BuildingHelper:AreaMeetsCriteria(size, location, requires)

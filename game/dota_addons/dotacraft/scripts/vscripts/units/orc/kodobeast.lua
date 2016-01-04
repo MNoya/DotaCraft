@@ -9,8 +9,9 @@ end
 function DevourStart( event )
 	local caster = event.caster
 	local target = event.target
-	caster.target = target
 	local ability = event.ability
+
+	ability.target = target -- The devoured unit
 	local duration = math.ceil(target:GetHealth() / ability:GetSpecialValueFor('damage_per_second'))
 
 	ability:ApplyDataDrivenModifier(caster, target, 'modifier_devour_debuff', {})
@@ -29,24 +30,28 @@ function DevourThink( event )
 		attacker = caster,
 		damage = ability:GetSpecialValueFor('damage_per_second'),
 		damage_type = ability:GetAbilityDamageType(),
-		ability = ability
-	})	
+		ability = ability,
+		damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY,
+	})
 end
 
 function DevourDeath( event )
 	local caster = event.caster
-	local target = event.caster.target
 	local ability = event.ability
+	local target = ability.target
 
-	target:SetAbsOrigin(caster:GetAbsOrigin())
-	target:RemoveModifierByName('modifier_devour_debuff')
-	target:RemoveNoDraw()
+	if IsValidEntity(target) then
+		target:SetAbsOrigin(caster:GetAbsOrigin())
+		target:RemoveModifierByName('modifier_devour_debuff')
+		target:RemoveNoDraw()
+		ability.target = nil
+	end
 end
 
 function NotificationFix( event )
 	local caster = event.caster
-	local target = event.caster.target
 	local ability = event.ability
+	local target = ability.target
 
 	target:SetAbsOrigin(caster:GetAbsOrigin())
 end

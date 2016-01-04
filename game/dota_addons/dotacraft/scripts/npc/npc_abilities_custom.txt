@@ -22070,7 +22070,7 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_gather"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -22090,7 +22090,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lumber_capacity"		"10" //Can be upgraded
+				"lumber_capacity"		"10 20 30"
 			}
 			"03"
 			{
@@ -22768,6 +22768,14 @@
 				"ScriptFile"	"buildings/research.lua"
 				"Function"		"ResearchComplete"
 			}
+	
+			// Upgrade peasants
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/lumber_mill.lua"
+				"Function"		"HarvestResearchFinished"
+				"Level"			"1"
+			}
 		}
 	}
 	"human_research_lumber_harvesting1_disabled"
@@ -22845,6 +22853,14 @@
 			{
 				"ScriptFile"	"buildings/research.lua"
 				"Function"		"ResearchComplete"
+			}
+	
+			// Upgrade peasants
+			"RunScript"
+			{
+				"ScriptFile"	"units/human/lumber_mill.lua"
+				"Function"		"HarvestResearchFinished"
+				"Level"			"2"
 			}
 		}
 	}
@@ -25070,6 +25086,12 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/human/human_upgrades.lua"
+						"Function"      "HarvestUpgrade"
 					}
 				}
 			}
@@ -47343,7 +47365,6 @@
 	// Ability: Devour
 	// Description: "Consumes an enemy land unit, slowly digesting it and dealing <Advc,DataC1> damage per second to it. If the Kodo Beast is killed while the consumed unit is still digesting, the unit that was devoured will be released."
 	// Code Reference: Adev and Advc
-	// NOTE: IMPORTANT!!! Devour and Devour Cargo work in tandem, Devour appears to be a dummy spell that lets Devour Cargo handle targeting and doing actual work.
 	//=================================================================================
 	"orc_devour"
 	{
@@ -47404,6 +47425,15 @@
 			}
 		}
 	
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/orc/kodobeast.lua"
+				"Function"		"DevourDeath"
+			}
+		}
+	
 		"Modifiers"
 		{
 	
@@ -47460,6 +47490,9 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_WORLD"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	
 				"Properties"

@@ -31,7 +31,7 @@ function Build( event )
     local gold_cost = ability:GetSpecialValueFor("gold_cost")
     local lumber_cost = ability:GetSpecialValueFor("lumber_cost")
 
-    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    local hero = caster:GetOwner()
     local playerID = hero:GetPlayerID()
     local player = PlayerResource:GetPlayer(playerID)    
     local teamNumber = hero:GetTeamNumber()
@@ -838,7 +838,6 @@ function GatherLumber( event )
     local caster = event.caster
     local ability = event.ability
     local abilityLevel = ability:GetLevel() - 1
-    --local max_lumber_carried = Units:GetLumberCapacity(caster)
     local max_lumber_carried = ability:GetLevelSpecialValueFor("lumber_capacity", abilityLevel)
     local tree = caster.target_tree
     local casterKV = GameRules.UnitKV[caster:GetUnitName()] --
@@ -971,7 +970,7 @@ function GoldGain( event )
     local ability = event.ability
     local caster = event.caster
     local playerID = caster:GetPlayerOwnerID()
-    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    local hero = caster:GetOwner()
     local race = GetUnitRace(caster)
     local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
     local casterKV = GameRules.UnitKV[caster:GetUnitName()]
