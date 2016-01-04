@@ -78,11 +78,14 @@ function CreateUnit(caster, spawnlocation, duration)
 		Players:AddUnit(playerID, CreatedUnit)
 
 		-- Summoned skeleton warriors don't benefit from the skeletal longevity upgrade, remove it
-		CreatedUnit:RemoveAbility("undead_skeletal_longevity_disabled")
-		CreatedUnit:RemoveAbility("undead_skeletal_longevity")
+		if CreatedUnit:HasAbility("undead_skeletal_longevity") then
+			CreatedUnit:RemoveAbility("undead_skeletal_longevity")
+		else
+			CreatedUnit:RemoveAbility("undead_skeletal_longevity_disabled")
+		end
 
 		-- Apply upgrades
-		CheckAbilityRequirements(CreatedUnit, player)
+		CheckAbilityRequirements(CreatedUnit, playerID)
 		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_unholy_strength", "weapon")
 		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_unholy_armor", "armor")
 	end

@@ -988,8 +988,8 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"undead_cripple"	 //Reference: Acri
-	"Ability2"					"undead_raise_dead_disabled"	 //Reference: Arai
+	"Ability1"					"undead_raise_dead"	 //Reference: Acri
+	"Ability2"					"undead_cripple_disabled"	 //Reference: Arai
 	"Ability3"					"undead_unholy_frenzy_disabled"	 //Reference: Auhf
 	"Ability4"					""	 //Reference: Aiun
 	"Ability10"					"undead_backpack_disabled"
@@ -1234,7 +1234,7 @@
 	// Bounds
 	//----------------------------------------------------------------
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-	"RingRadius"				"70"
+	"RingRadius"				"40"
 	"CollisionSize"				"31"
 	"FormationRank"				"0"
 	

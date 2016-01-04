@@ -2,7 +2,7 @@ function undead_raise_dead ( keys )
 	local target = keys.target
 	local caster = keys.caster
 	local ability = keys.ability
-	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
 
 	-- durations have be inverted due to some weird parsing bug
 	local RADIUS = keys.ability:GetSpecialValueFor("radius")
@@ -16,7 +16,7 @@ function undead_raise_dead ( keys )
 		local spawnlocation = corpse:GetAbsOrigin()
 		
 		if corpse.corpse_expiration ~= nil and not corpse.being_eaten then					
-			if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
+			if Players:HasResearch( playerID, "undead_research_skeletal_longevity" ) then
 				duration = SKELETON_DURATION + 15
 			else
 				duration = SKELETON_DURATION
@@ -35,13 +35,13 @@ function undead_raise_dead ( keys )
 			return
 		end
 		
-		if corpse:GetUnitName() == "undead_meat_wagon" and corpse:GetModifierStackCount("modifier_corpses", corpse) > 0 and caster:GetPlayerOwnerID() == corpse:GetPlayerOwnerID() then	
+		if corpse:GetUnitName() == "undead_meat_wagon" and corpse:GetModifierStackCount("modifier_corpses", corpse) > 0 and playerID == corpse:GetPlayerOwnerID() then	
 			local StackCount = corpse:GetModifierStackCount("modifier_corpses", corpse)
-			if  StackCount > 0 then
+			if StackCount > 0 then
 				corpse:SetModifierStackCount("modifier_corpses",corpse, StackCount - 1)
 					print("stackcount is greatert then 0")
 					
-				if PlayerHasResearch( player, "undead_research_skeletal_longevity" ) then
+				if Players:HasResearch( playerID, "undead_research_skeletal_longevity" ) then
 					duration = SKELETON_DURATION + 15
 				else
 					duration = SKELETON_DURATION
@@ -81,7 +81,7 @@ function CreateUnit(caster, spawnlocation, duration)
 
 	for i=0, 1, 1 do
 		local unitname = warrior
-		if i == 1 and PlayerHasResearch( player, "undead_research_skeletal_mastery" ) then
+		if i == 1 and Players:HasResearch( playerID, "undead_research_skeletal_mastery" ) then
 			unitname = mage
 		end
 	
@@ -97,7 +97,7 @@ function CreateUnit(caster, spawnlocation, duration)
 		Players:AddUnit(playerID, CreatedUnit)
 
 		-- Apply upgrades
-		CheckAbilityRequirements(CreatedUnit, player)
+		CheckAbilityRequirements(CreatedUnit, playerID)
 		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_unholy_strength", "weapon")
 		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_unholy_armor", "armor")
 	end
