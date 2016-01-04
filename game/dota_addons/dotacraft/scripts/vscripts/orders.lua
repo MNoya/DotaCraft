@@ -207,7 +207,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local abilityName = ability:GetAbilityName()
         local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
 
-        local race = GetUnitRace(unit)
         if string.match(abilityName, "_return_resources") then
             for k,entityIndex in pairs(entityList) do
                 local unit = EntIndexToHScript(entityIndex)

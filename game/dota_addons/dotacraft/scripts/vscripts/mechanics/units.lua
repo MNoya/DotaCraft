@@ -20,10 +20,18 @@ function Units:Init( unit )
         ApplyModifier(unit, "modifier_splash_attack")
     end
 
+    local bBuilder = IsBuilder(unit)
+    if bBuilder then
+        unit.oldIdle = unit.IsIdle
+        function unit:IsIdle()
+            return unit:oldIdle() and unit.state == "idle"
+        end
+    end
+
     -- Attack system, only applied to units and buildings with an attack
     local attacks_enabled = GetAttacksEnabled(unit)
     if attacks_enabled ~= "none" then
-        if IsBuilder(unit) then
+        if bBuilder then
             ApplyModifier(unit, "modifier_attack_system_passive")
         else
             ApplyModifier(unit, "modifier_attack_system")
