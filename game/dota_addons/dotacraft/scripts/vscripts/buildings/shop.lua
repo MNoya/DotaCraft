@@ -426,7 +426,7 @@ function unit_shops:BuyItem(data)
 	local bEnoughSlots
 
 	local isUnitItem = tobool(data.Neutral);
-	if isUnitItem then bEnoughSlots = true else bEnoghSlots = CountInventoryItems(buyer) < 6 end
+	if isUnitItem then bEnoughSlots = true else bEnoughSlots = CountInventoryItems(buyer) < 6 end
 	
 	if bEnoughSlots then
 		EmitSoundOnClient("General.Buy", player)
