@@ -1,11 +1,9 @@
 function DropItems( creep )
     if creep:GetName() == "npc_dota_creature" then return end -- If the creep doesnt have a hammer name, it won't drop items
-    local targetName = string.sub(creep:GetName(), 5) -- Name of the entity in hammer, skip first 4 characters to match towards the item_drops.kv
-    local mapName = string.sub(GetMapName(), 3) -- This will have issues for maps starting with 10_ or more
+    local targetName = string.sub(creep:GetName(), string.find(creep:GetName(), '_', 1, true)) -- Name of the entity in hammer, starting after first entityIndex_
+    local mapName = string.sub(GetMapName(), string.find(GetMapName(), '_', 1, true)) -- Map name starting after first X_
     local dropTable = GameRules.Drops
     local itemTable = GameRules.Items
-
-    print(creep:GetClassname(), creep:GetDebugName())
 
     local mapDrops = dropTable[mapName]
     if not mapDrops then

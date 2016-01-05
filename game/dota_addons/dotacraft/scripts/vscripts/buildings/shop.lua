@@ -16,6 +16,7 @@ function unit_shops:start()
 
 	GameRules.Shops = LoadKeyValues("scripts/kv/shops.kv")
 	GameRules.GoblinMerchant = LoadKeyValues("scripts/kv/goblin_merchant.kv")
+	GameRules.Mercenaries = LoadKeyValues("scripts/kv/mercenaries.kv")
 end
 	
 -- called to create the shop
@@ -93,8 +94,19 @@ function unit_shops:CreateShop(unit, shop_name)
 	
 	-- for each item create an corresponding timer to restock that item
 	--DeepPrintTable(GameRules.Shops["human_shop"])
-	DeepPrintTable(GameRules.Shops[shop_name])
-	for order,item in pairs(GameRules.Shops[shop_name]) do
+	local shopList = GameRules.Shops[shop_name]
+
+	-- Mercenaries take their list based on the tileset
+	if shop_name == "mercenary" then
+		local mapName = string.sub(GetMapName(), string.find(GetMapName(), '_', 1, true)+1)
+		local tileset = GameRules.Mercenaries["Maps"][mapName]
+		print("[UNIT SHOP] Mercenary shop for "..mapName,tileset)
+		shopList = GameRules.Mercenaries[tileset]
+	end
+
+	DeepPrintTable(shopList)
+
+	for order,item in pairs(shopList) do
 		print("[UNIT SHOP] Creating timer for "..item.." new unit shop: "..shop_name)
 		local key = item
 
@@ -125,22 +137,26 @@ function unit_shops:CreateShop(unit, shop_name)
 				UnitShop.Items[key].LumberCost = GameRules.GoblinMerchant[key]["LumberCost"]
 			else
 				UnitShop.Items[key].LumberCost = 0
-			end
+			end			
 
 		-- Other shops take the values directly from the item kv
 		else
-			UnitShop.Items[key].CurrentStock = GameRules.ItemKV[key]["StockInitial"]
-			UnitShop.Items[key].MaxStock = GameRules.ItemKV[key]["StockMax"]
-			UnitShop.Items[key].RequiredTier = GameRules.ItemKV[key]["RequiresTier"]
-			UnitShop.Items[key].GoldCost = GameRules.ItemKV[key]["ItemCost"]
-			UnitShop.Items[key].RestockRate = GameRules.ItemKV[key]["StockTime"]
-						
-			--DeepPrintTable(UnitShop.Items[key])
-			-- set to 0 if nil, "0" hides the value in panaroma
-			if GameRules.ItemKV[key]["LumberCost"] ~= nil then
-				UnitShop.Items[key].LumberCost = GameRules.ItemKV[key]["LumberCost"]
+			if not GameRules.ItemKV[key] then
+				print("[UNIT SHOP] Error: no Item KeyValues for "..key)
 			else
-				UnitShop.Items[key].LumberCost = 0
+				UnitShop.Items[key].CurrentStock = GameRules.ItemKV[key]["StockInitial"]
+				UnitShop.Items[key].MaxStock = GameRules.ItemKV[key]["StockMax"]
+				UnitShop.Items[key].RequiredTier = GameRules.ItemKV[key]["RequiresTier"]
+				UnitShop.Items[key].GoldCost = GameRules.ItemKV[key]["ItemCost"]
+				UnitShop.Items[key].RestockRate = GameRules.ItemKV[key]["StockTime"]
+							
+				--DeepPrintTable(UnitShop.Items[key])
+				-- set to 0 if nil, "0" hides the value in panaroma
+				if GameRules.ItemKV[key]["LumberCost"] ~= nil then
+					UnitShop.Items[key].LumberCost = GameRules.ItemKV[key]["LumberCost"]
+				else
+					UnitShop.Items[key].LumberCost = 0
+				end
 			end
 		end
 
