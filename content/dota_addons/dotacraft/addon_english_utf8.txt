@@ -59,6 +59,11 @@
 		"firelord_volcano"                                                                "Volcano"
 		"gold_mine"                                                                       "Gold Mine"		
 		"tavern"                                                                          "Tavern"
+		"goblin_merchant"                                                                 "Goblin Merchant"
+		"goblin_lab"                                                                      "Goblin Laboratory"
+		"mercenary"                                                                       "Mercenary"
+		"fountain_of_health"                                                              "Fountain of Health"
+		"fountain_of_mana"                                                                "Fountain of Mana"
 
 		"human_town_hall"                                                                 "Town Hall"
 		"human_keep"                                                                      "Keep"
@@ -115,7 +120,7 @@
 		"nightelf_hippogryph"                                                             "Hippogryph"
 		"nightelf_hippogryph_rider"                                                       "Hippogryph Rider"
 		"nightelf_entangled_gold_mine"                                                    "Entangled Gold Mine"
-		"nightelf_ancient_of_wonders"                                                     "Ancient Of Wonders"
+		"nightelf_ancient_of_wonders"                                                     "Ancient of Wonders"
 		"nightelf_mountain_giant_resistant_skin"                                          "Mountain Giant"
 		"nightelf_sentinel_owl"                                                           "Sentinel Owl"
 
@@ -246,10 +251,57 @@
 		"neutral_sea_turtle_hatchling"                                                    "Sea Turtle Hatchling"
 		"neutral_giant_sea_turtle"                                                        "Giant Sea Turtle"
 		"neutral_gargantuan_sea_turtle"                                                   "Gargantuan Sea Turtle"
-		"neutral_forest_troll_warlord"                                                    "Neutral Forest Troll Warlord"
-		"neutral_ogre_lord"                                                               "Neutral Ogre Lord"
-		"neutral_murloc_nightcrawler"                                                     "Neutral Murloc Nightcrawler"
-		"neutral_murloc_huntsman"                                                         "Neutral Murloc Huntsman"
+		"neutral_forest_troll_warlord"                                                    "Forest Troll Warlord"
+		"neutral_ogre_lord"                                                               "Ogre Lord"
+		"neutral_murloc_nightcrawler"                                                     "Murloc Nightcrawler"
+		"neutral_murloc_huntsman"                                                         "Murloc Huntsman"
+		"neutral_gnoll_warden"                                                            "Gnoll Warden"
+		"neutral_gnoll_brute"                                                             "Gnoll Brute"
+		"neutral_ogre_mauler"                                                             "Ogre Mauler"
+		"neutral_murloc_tiderunner"                                                       "Murloc Tiderunner"
+		"neutral_granite_golem"                                                           "Granite Golem"
+		"neutral_ice_troll"                                                               "Ice Troll"
+		"neutral_ice_troll_priest"                                                        "Ice Troll Priest"
+		"neutral_ice_troll_berserker"                                                     "Ice Troll Berserker"
+		"neutral_ice_troll_high_priest"                                                   "Ice Troll High Priest"
+		"neutral_ice_troll_warlord"                                                       "Ice Troll Warlord"
+		"neutral_ice_troll_trapper"                                                       "Ice Troll Trapper"
+		"neutral_goblin_sapper"                                                           "Goblin Sapper"
+		"neutral_goblin_zeppelin"                                                         "Goblin Zeppelin"
+		"neutral_goblin_shredder"                                                         "Goblin Shredder"
+		"neutral_forest_troll_shadow_priest"                                              "Forest Troll Shadow Priest"
+		"neutral_mud_golem"                                                               "Mud Golem"
+		"neutral_rogue"                                                                   "Rogue"
+		"neutral_assassin"                                                                "Assassin"
+		"neutral_kobold_geomancer"                                                        "Kobold Geomancer"
+		"neutral_centaur_outrunner"                                                       "Centaur Outrunner"
+		"neutral_harpy_rogue"                                                             "Harpy Rogue"
+		"neutral_harpy_windwitch"                                                         "Harpy Windwitch"
+		"neutral_burning_archer"                                                          "Burning Archer"
+		"neutral_wildkin"                                                                 "Wildkin"
+		"neutral_murgul_snarecaster"                                                      "Murgul Snarecaster"
+		"neutral_makrura_snapper"                                                         "Makrura Snapper"
+		"neutral_makrura_deepseer"                                                        "Makrura Deepseer"
+		"neutral_fel_beast"                                                               "Fel Beast"
+		"neutral_draenei_disciple"                                                        "Draenei Disciple"
+		"neutral_voidwalker"                                                              "Voidwalker"
+		"neutral_draenei_darkslayer"                                                      "Draenei Darkslayer"
+		"neutral_satyr_shadowdancer"                                                      "Satyr Shadowdancer"
+		"neutral_furbolg_shaman"                                                          "Furbolg Shaman"
+		"neutral_thunder_lizard"                                                          "Thunder Lizard"
+		"neutral_murloc_flesheater"                                                       "Murloc Flesheater"
+		"neutral_sludge_flinger"                                                          "Sludge Flinger"
+		"neutral_satyr_soulstealer"                                                       "Satyr Soulstealer"
+		"neutral_barbed_arachnathid"                                                      "Barbed Arachnathid"
+		"neutral_blue_dragonspawn_meddler"                                                "Blue Dragonspawn Meddler"
+		"neutral_magnataur_warrior"                                                       "Magnataur Warrior"
+		"neutral_polar_furbolg_shaman"                                                    "Polar Furbolg Shaman"
+		"neutral_nerubian_warrior"                                                        "Nerubian Warrior"
+		"neutral_ice_troll_berserker"                                                     "Ice Troll Berserker"
+		"neutral_frost_revenant"                                                          "Frost Revenant"
+		"neutral_nerubian_webspinner"                                                     "Nerubian Webspinner"
+		"neutral_kobold"                                                                  "Kobold"
+
 
 		//Overriden alchemist_chemical_rage modifier
 		"DOTA_Tooltip_modifier_alchemist_chemical_rage"             "Legacy Chemical Rage"
@@ -1263,13 +1315,13 @@
 		"DOTA_Tooltip_modifier_cripple"                                                   "Cripple"
 		"DOTA_Tooltip_modifier_cripple_Description"                                       ""
 
-		"DOTA_Tooltip_modifier_rain_of_fire_thinker"                                      "Rain Of Fire Thinker"
+		"DOTA_Tooltip_modifier_rain_of_fire_thinker"                                      "Rain of Fire Thinker"
 		"DOTA_Tooltip_modifier_rain_of_fire_thinker_Description"                          ""
 
-		"DOTA_Tooltip_modifier_rain_of_fire_burn"                                         "Rain Of Fire Burn"
+		"DOTA_Tooltip_modifier_rain_of_fire_burn"                                         "Rain of Fire Burn"
 		"DOTA_Tooltip_modifier_rain_of_fire_burn_Description"                             ""
 
-		"DOTA_Tooltip_modifier_howl_of_terror"                                            "Howl Of Terror"
+		"DOTA_Tooltip_modifier_howl_of_terror"                                            "Howl of Terror"
 		"DOTA_Tooltip_modifier_howl_of_terror_Description"                                ""
 
 		"DOTA_Tooltip_modifier_starfall"                                                  "Starfall"
@@ -1534,7 +1586,7 @@
 		"DOTA_Tooltip_modifier_unselectable_mine_Description"                             ""
 
 		// ******************** ITEM MODIFIERS ********************
-		"DOTA_Tooltip_modifier_scroll_of_regeneration"                                    "Scroll Of Regeneration"
+		"DOTA_Tooltip_modifier_scroll_of_regeneration"                                    "Scroll of Regeneration"
 		"DOTA_Tooltip_modifier_scroll_of_regeneration_Description"                        ""
 
 		"DOTA_Tooltip_modifier_mechanical_critter"                                        "Mechanical Critter"
@@ -1543,10 +1595,10 @@
 		"DOTA_Tooltip_modifier_lesser_clarity"                                            "Lesser Clarity"
 		"DOTA_Tooltip_modifier_lesser_clarity_Description"                                ""
 
-		"DOTA_Tooltip_modifier_scroll_of_town_portal_caster"                              "Scroll Of Town Portal Caster"
+		"DOTA_Tooltip_modifier_scroll_of_town_portal_caster"                              "Scroll of Town Portal Caster"
 		"DOTA_Tooltip_modifier_scroll_of_town_portal_caster_Description"                  ""
 
-		"DOTA_Tooltip_modifier_staff_of_sanctuary_heal"                                   "Staff Of Sanctuary Heal"
+		"DOTA_Tooltip_modifier_staff_of_sanctuary_heal"                                   "Staff of Sanctuary Heal"
 		"DOTA_Tooltip_modifier_staff_of_sanctuary_heal_Description"                       ""
 
 		"DOTA_Tooltip_modifier_anti_magic_potion"                                         "Anti Magic Potion"
@@ -1555,22 +1607,22 @@
 		"DOTA_Tooltip_modifier_healing_salve"                                             "Healing Salve"
 		"DOTA_Tooltip_modifier_healing_salve_Description"                                 ""
 
-		"DOTA_Tooltip_modifier_scroll_of_speed"                                           "Scroll Of Speed"
+		"DOTA_Tooltip_modifier_scroll_of_speed"                                           "Scroll of Speed"
 		"DOTA_Tooltip_modifier_scroll_of_speed_Description"                               ""
 
 		"DOTA_Tooltip_modifier_neutral_sleep"                                             "Neutral Sleep"
 		"DOTA_Tooltip_modifier_neutral_sleep_Description"                                 ""
 
-		"DOTA_Tooltip_modifier_orb_of_frost_slow"                                         "Orb Of Frost Slow"
+		"DOTA_Tooltip_modifier_orb_of_frost_slow"                                         "Orb of Frost Slow"
 		"DOTA_Tooltip_modifier_orb_of_frost_slow_Description"                             ""
 
-		"DOTA_Tooltip_modifier_orb_of_venom_wc3_debuff"                                   "Orb Of Venom Wc3 Debuff"
+		"DOTA_Tooltip_modifier_orb_of_venom_wc3_debuff"                                   "Orb of Venom Wc3 Debuff"
 		"DOTA_Tooltip_modifier_orb_of_venom_wc3_debuff_Description"                       ""
 
-		"DOTA_Tooltip_modifier_orb_of_corruption_debuff"                                  "Orb Of Corruption Debuff"
+		"DOTA_Tooltip_modifier_orb_of_corruption_debuff"                                  "Orb of Corruption Debuff"
 		"DOTA_Tooltip_modifier_orb_of_corruption_debuff_Description"                      ""
 
-		"DOTA_Tooltip_modifier_orb_of_lightning_purge"                                    "Orb Of Lightning Purge"
+		"DOTA_Tooltip_modifier_orb_of_lightning_purge"                                    "Orb of Lightning Purge"
 		"DOTA_Tooltip_modifier_orb_of_lightning_purge_Description"                        ""
 
 		"DOTA_Tooltip_modifier_clarity_potion"                                            "Clarity Potion"
@@ -1579,13 +1631,13 @@
 		"DOTA_Tooltip_modifier_replenishment_potion"                                      "Replenishment Potion"
 		"DOTA_Tooltip_modifier_replenishment_potion_Description"                          ""
 
-		"DOTA_Tooltip_modifier_lesser_potion_of_invulnerability"                          "Lesser Potion Of Invulnerability"
+		"DOTA_Tooltip_modifier_lesser_potion_of_invulnerability"                          "Lesser Potion of Invulnerability"
 		"DOTA_Tooltip_modifier_lesser_potion_of_invulnerability_Description"              ""
 
-		"DOTA_Tooltip_modifier_potion_of_invulnerability"                                 "Potion Of Invulnerability"
+		"DOTA_Tooltip_modifier_potion_of_invulnerability"                                 "Potion of Invulnerability"
 		"DOTA_Tooltip_modifier_potion_of_invulnerability_Description"                     ""
 
-		"DOTA_Tooltip_modifier_potion_of_divinity"                                        "Potion Of Divinity"
+		"DOTA_Tooltip_modifier_potion_of_divinity"                                        "Potion of Divinity"
 		"DOTA_Tooltip_modifier_potion_of_divinity_Description"                            ""
 
 		"DOTA_Tooltip_modifier_vampiric_potion"                                           "Vampiric Potion"
@@ -7925,6 +7977,31 @@
         "DOTA_Tooltip_ability_item_orb_of_lightning_duration"                             "DURATION:"
         "DOTA_Tooltip_ability_item_orb_of_lightning_damage_to_summons"                    "DAMAGE TO SUMMONS:"
 
+        "DOTA_Tooltip_ability_item_potion_of_lesser_invulnerability"                      "Potion of Lesser Invulnerability"
+		"DOTA_Tooltip_ability_item_potion_of_lesser_invulnerability_Description"          "Makes the Hero invulnerable to damage for %duration% seconds when used. An invulnerable Hero may not be the target of spells or effects."
+		"DOTA_Tooltip_ability_item_potion_of_lesser_invulnerability_duration"             "DURATION:"
+
+		"DOTA_Tooltip_ability_item_scroll_of_protection"                                  "Scroll of Protection"
+		"DOTA_Tooltip_ability_item_scroll_of_protection_Description"                      "Increases the armor of all friendly units in an area around your Hero by %bonus_armor% for %duration% seconds."
+		"DOTA_Tooltip_ability_item_scroll_of_protection_bonus_armor"                      "BONUS ARMOR:"
+		"DOTA_Tooltip_ability_item_scroll_of_protection_radius"                           "RADIUS:"
+		"DOTA_Tooltip_ability_item_scroll_of_protection_duration"                         "DURATION:"
+
+		"DOTA_Tooltip_ability_item_circlet_of_nobility"                                   "Circlet of Nobility"
+		"DOTA_Tooltip_ability_item_circlet_of_nobility_Description"                       "Provides a +%bonus_all_stats% bonus to Strength, Agility and Intelligence."
+		"DOTA_Tooltip_ability_item_circlet_of_nobility_bonus_all_stats"                   "BONUS ALL STATS:"
+
+		"DOTA_Tooltip_ability_item_periapt_of_vitality"                                   "Periapt of Vitality"
+		"DOTA_Tooltip_ability_item_periapt_of_vitality_Description"                       "Increases the hit points of the Hero by %bonus_health% when worn."
+		"DOTA_Tooltip_ability_item_periapt_of_vitality_bonus_health"                      "BONUS HEALTH:"
+
+		"DOTA_Tooltip_ability_item_boots_of_speed"                                        "Boots of Speed"
+		"DOTA_Tooltip_ability_item_boots_of_speed_Description"                            "Increases the movement speed of the Hero when worn."
+		"DOTA_Tooltip_ability_item_boots_of_speed_bonus_movement_speed"                   "BONUS MOVEMENT SPEED:"
+
+		"DOTA_Tooltip_ability_item_staff_of_teleportation"                                "Staff of Teleportation"
+		"DOTA_Tooltip_ability_item_staff_of_teleportation_Description"                    "Teleports the Hero to the targeted allied land unit or structure.."
+
 
         // **************************************************************************************
         // ======================================  -TAVERN- =====================================
@@ -8759,28 +8836,166 @@
 
 
         "DOTA_Tooltip_ability_npc_dota_hero_alchemist"                                    "Alchemist"
-        "DOTA_Tooltip_ability_npc_dota_hero_alchemist_Description"                        ""
+        "DOTA_Tooltip_ability_npc_dota_hero_alchemist_Description"                        "Warrior Hero, known for offensive and defensive versatility. Can learn Healing Spray, Chemical Rage, Acid Bomb and Transmute.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
 
         "DOTA_Tooltip_ability_npc_dota_hero_beastmaster"                                  "Beastmaster"
-        "DOTA_Tooltip_ability_npc_dota_hero_beastmaster_Description"                      ""
+        "DOTA_Tooltip_ability_npc_dota_hero_beastmaster_Description"                      "Warrior Hero, adept at summoning beasts into battle. Can learn Summon Bear, Summon Quilbeast, Summon Hawk, and Stampede.\n\n<font color='#ffffcc'>Attacks land units</font>."
 
         "DOTA_Tooltip_ability_npc_dota_hero_drow_ranger"                                  "Drow Ranger"
-        "DOTA_Tooltip_ability_npc_dota_hero_drow_ranger_Description"                      ""
+        "DOTA_Tooltip_ability_npc_dota_hero_drow_ranger_Description"                      "Cunning Hero, adept at manipulating opponents. Can learn Silence, Black Arrow, Life Drain, and Charm.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
 
         "DOTA_Tooltip_ability_npc_dota_hero_nevermore"                                    "Nevermore"
-        "DOTA_Tooltip_ability_npc_dota_hero_nevermore_Description"                        ""
+        "DOTA_Tooltip_ability_npc_dota_hero_nevermore_Description"                        "Mystical Hero, adept at disrupting spells and dealing large amounts of fire damage.  Can learn Soul Burn, Summon Lava Spawn, Incinerate and Volcano.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
 
         "DOTA_Tooltip_ability_npc_dota_hero_medusa"                                       "Medusa"
-        "DOTA_Tooltip_ability_npc_dota_hero_medusa_Description"                           ""
+        "DOTA_Tooltip_ability_npc_dota_hero_medusa_Description"                           "Mystical Hero, adept at ranged combat. Can learn Forked Lightning, Frost Arrows, Mana Shield, and Tornado.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
 
         "DOTA_Tooltip_ability_npc_dota_hero_brewmaster"                                   "Brewmaster"
-        "DOTA_Tooltip_ability_npc_dota_hero_brewmaster_Description"                       ""
+        "DOTA_Tooltip_ability_npc_dota_hero_brewmaster_Description"                       "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Breath of Fire, Drunken Haze, Drunken Brawler and Storm, Earth, And Fire.\n\n<font color='#ffffcc'>Attacks land units</font>."
 
-        "DOTA_Tooltip_ability_npc_dota_hero_undying"                                      "Undying"
-        "DOTA_Tooltip_ability_npc_dota_hero_undying_Description"                          ""
+        "DOTA_Tooltip_ability_npc_dota_hero_undying"                                      "Pit Lord"
+        "DOTA_Tooltip_ability_npc_dota_hero_undying_Description"                          "Warrior Hero, adept at terrorizing enemies. Can learn Rain of Fire, Howl of Terror, Cleaving Attack, and Doom.\n\n<font color='#ffffcc'>Attacks land units</font>."
 
         "DOTA_Tooltip_ability_npc_dota_hero_tinker"                                       "Tinker"
-        "DOTA_Tooltip_ability_npc_dota_hero_tinker_Description"                           ""
+        "DOTA_Tooltip_ability_npc_dota_hero_tinker_Description"                           "Cunning Hero, exceptional at disrupting battles and enduring damage. Can learn Pocket Factory, Cluster Rockets, Engineering Upgrade and Robo-Goblin.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+        "DOTA_Tooltip_ability_neutral_goblin_sapper"                                      "Goblin Sapper"
+		"DOTA_Tooltip_ability_neutral_goblin_sapper_Description"                          "Explosive team of goblin sappers. Particularly effective against buildings. \n<font color='#ffffcc'>Can Kaboom land units and trees</font>."
+
+		"DOTA_Tooltip_ability_neutral_goblin_zeppelin"                                    "Goblin Zeppelin"
+		"DOTA_Tooltip_ability_neutral_goblin_zeppelin_Description"                        "Flying air-transport</font>."
+
+		"DOTA_Tooltip_ability_neutral_goblin_shredder"                                    "Goblin Shredder"
+		"DOTA_Tooltip_ability_neutral_goblin_shredder_Description"                        "Medium melee unit made of iron. Excellent at harvesting large amounts of lumber.\n\n<font color='#ffffcc'>Attacks land units and trees</font>."
+
+		"DOTA_Tooltip_ability_neutral_forest_troll_berserker"                             "Forest Troll Berserker"
+		"DOTA_Tooltip_ability_neutral_forest_troll_berserker_Description"                 "Rabid axe-thrower.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_forest_troll_shadow_priest"                         "Forest Troll Shadow Priest"
+		"DOTA_Tooltip_ability_neutral_forest_troll_shadow_priest_Description"             "Shadow Priest of healing magic. Hurls fiery missiles. Can cast Abolish Magic.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_ogre_mauler"                                        "Ogre Mauler"
+		"DOTA_Tooltip_ability_neutral_ogre_mauler_Description"                            "Large brutal warrior of the Ogre Legion.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_mud_golem"                                          "Mud Golem"
+		"DOTA_Tooltip_ability_neutral_mud_golem_Description"                              "Light melee unit that can Slow opponents. Immune to spells.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_gnoll_overseer"                                     "Gnoll Overseer"
+		"DOTA_Tooltip_ability_neutral_gnoll_overseer_Description"                         "Heavy melee unit with Command Aura.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_ice_troll_trapper"                                  "Ice Troll Trapper"
+		"DOTA_Tooltip_ability_neutral_ice_troll_trapper_Description"                      "Medium ranged unit that can Ensnare opponents.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_rogue"                                              "Rogue"
+		"DOTA_Tooltip_ability_neutral_rogue_Description"                                  "Light melee unit with Shadowmeld.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_assassin"                                           "Assassin"
+		"DOTA_Tooltip_ability_neutral_assassin_Description"                               "Medium ranged unit that fires envenomed bolts and can Shadowmeld.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_forest_troll_high_priest"                           "Forest Troll High Priest"
+		"DOTA_Tooltip_ability_neutral_forest_troll_high_priest_Description"               "High Priest of healing magic. Hurls fiery missiles. Can cast Abolish Magic and Inner Fire.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_gnoll_brute"                                        "Gnoll Brute"
+		"DOTA_Tooltip_ability_neutral_gnoll_brute_Description"                            "Light melee unit to bolster your forces.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_gnoll_warden"                                       "Gnoll Warden"
+		"DOTA_Tooltip_ability_neutral_gnoll_warden_Description"                           "Light ranged unit that hurls bolts of lightning. Can cast Purge.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_ogre_magi"                                          "Ogre Magi"
+		"DOTA_Tooltip_ability_neutral_ogre_magi_Description"                              "Spellcasting warrior of the Ogre Legion. Can cast Bloodlust.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_centaur_outrunner"                                  "Centaur Outrunner"
+		"DOTA_Tooltip_ability_neutral_centaur_outrunner_Description"                      "Medium melee attacker wielding a large axe.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_harpy_rogue"                                        "Harpy Rogue"
+		"DOTA_Tooltip_ability_neutral_harpy_rogue_Description"                            "Light flying ranged unit that hurls pin-feathers.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_razormane_medicine_man"                             "Razormane Medicine Man"
+		"DOTA_Tooltip_ability_neutral_razormane_medicine_man_Description"                 "Medium melee unit that can cast Healing Ward and Feral Spirit.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_harpy_windwitch"                                    "Harpy Windwitch"
+		"DOTA_Tooltip_ability_neutral_harpy_windwitch_Description"                        "Light flying ranged unit that hurls bolts of lightning. Casts Faerie Fire.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_burning_archer"                                     "Burning Archer"
+		"DOTA_Tooltip_ability_neutral_burning_archer_Description"                         "Light ranged unit that shoots Searing Arrows.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_kobold_geomancer"                                   "Kobold Geomancer"
+		"DOTA_Tooltip_ability_neutral_kobold_geomancer_Description"                       "Light ranged unit that casts Slow and Abolish Magic.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_wildkin"                                            "Wildkin"
+		"DOTA_Tooltip_ability_neutral_wildkin_Description"                                "Medium melee unit.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_murgul_snarecaster"                                 "Murgul Snarecaster"
+		"DOTA_Tooltip_ability_neutral_murgul_snarecaster_Description"                     "Medium ranged amphibious unit with Abolish Magic and Slow.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_makrura_snapper"                                    "Makrura Snapper"
+		"DOTA_Tooltip_ability_neutral_makrura_snapper_Description"                        "Heavy melee unit.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_makrura_deepseer"                                   "Makrura Deepseer"
+		"DOTA_Tooltip_ability_neutral_makrura_deepseer_Description"                       "Medium ranged unit that can cast Entangling Roots and summon Prawns.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_giant_sea_turtle"                                   "Giant Sea Turtle"
+		"DOTA_Tooltip_ability_neutral_giant_sea_turtle_Description"                       "Medium ranged amphibious unit whose spiked shell harms enemy melee attackers.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_fel_beast"                                          "Fel Beast"
+		"DOTA_Tooltip_ability_neutral_fel_beast_Description"                              "Light melee unit.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_draenei_disciple"                                   "Draenei Disciple"
+		"DOTA_Tooltip_ability_neutral_draenei_disciple_Description"                       "Light ranged unit that casts Heal.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_voidwalker"                                         "Voidwalker"
+		"DOTA_Tooltip_ability_neutral_voidwalker_Description"                             "Light ranged unit with Cold Arrows.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_draenei_darkslayer"                                 "Draenei Darkslayer"
+		"DOTA_Tooltip_ability_neutral_draenei_darkslayer_Description"                     "Light ranged unit with Cold Arrows.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_satyr_shadowdancer"                                 "Satyr Shadowdancer"
+		"DOTA_Tooltip_ability_neutral_satyr_shadowdancer_Description"                     "Medium melee unit with Immolation.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_furbolg_shaman"                                     "Furbolg Shaman"
+		"DOTA_Tooltip_ability_neutral_furbolg_shaman_Description"                         "Light ranged unit with Shadowmeld. Can cast Curse.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_thunder_lizard"                                     "Thunder Lizard"
+		"DOTA_Tooltip_ability_neutral_thunder_lizard_Description"                         "Medium ranged unit that hurls bolts of lightning. Can cast Rejuvenation.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_murloc_flesheater"                                  "Murloc Flesheater"
+		"DOTA_Tooltip_ability_neutral_murloc_flesheater_Description"                      "Heavy ranged unit that hurls bolts of lightning. Can Slam opponents.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_sludge_flinger"                                     "Sludge Flinger"
+		"DOTA_Tooltip_ability_neutral_sludge_flinger_Description"                         "Light melee unit that can Cannibalize corpses.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_satyr_soulstealer"                                  "Satyr Soulstealer"
+		"DOTA_Tooltip_ability_neutral_satyr_soulstealer_Description"                      "Light ranged unit that can Slow opponents.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_barbed_arachnathid"                                 "Barbed Arachnathid"
+		"DOTA_Tooltip_ability_neutral_barbed_arachnathid_Description"                     "Medium melee unit that can cast Mana Burn and Raise Dead.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_blue_dragonspawn_meddler"                           "Blue Dragonspawn Meddler"
+		"DOTA_Tooltip_ability_neutral_blue_dragonspawn_meddler_Description"               "Light ranged unit that has the Burrow ability.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_magnataur_warrior"                                  "Magnataur Warrior"
+		"DOTA_Tooltip_ability_neutral_magnataur_warrior_Description"                      "Light melee unit with Evasion.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_polar_furbolg_shaman"                               "Polar Furbolg Shaman"
+		"DOTA_Tooltip_ability_neutral_polar_furbolg_shaman_Description"                   "Heavy melee unit. Immune to spells.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_nerubian_warrior"                                   "Nerubian Warrior"
+		"DOTA_Tooltip_ability_neutral_nerubian_warrior_Description"                       "Medium ranged unit with Abolish Magic and Frost Armor.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_ice_troll_berserker"                                "Ice Troll Berserker"
+		"DOTA_Tooltip_ability_neutral_ice_troll_berserker_Description"                    "Light melee unit that carries its young into battle.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_frost_revenant"                                     "Frost Revenant"
+		"DOTA_Tooltip_ability_neutral_frost_revenant_Description"                         "Medium ranged unit.\n\n<font color='#ffffcc'>Attacks land and air units</font>."
+
+		"DOTA_Tooltip_ability_neutral_nerubian_webspinner"                                "Nerubian Webspinner"
+		"DOTA_Tooltip_ability_neutral_nerubian_webspinner_Description"                    "Medium melee unit that can cast Blizzard.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_kobold"                                             "Kobold"
+		"DOTA_Tooltip_ability_neutral_kobold_Description"                                 "Light ranged unit that can cast Web and Raise Dead.\n\n<font color='#ffffcc'>Attacks land units</font>."
+
+		"DOTA_Tooltip_ability_neutral_murloc_huntsman"                                    "Murloc Huntsman"
+		"DOTA_Tooltip_ability_neutral_murloc_huntsman_Description"                        "Light melee unit.\n\n<font color='#ffffcc'>Attacks land units</font>."
 
         "DOTA_Tooltip_ability_item_backpack"                                              ""
         "DOTA_Tooltip_ability_item_backpack_Description"                                  ""

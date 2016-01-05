@@ -1,8 +1,170 @@
 //=================================================================================
+// Creature: Goblin Sapper
+// Description: "Explosive team of goblin sappers. Particularly effective against buildings. |n|cffffcc00Can Kaboom land units and trees.|r"
+//=================================================================================
+"neutral_goblin_sapper"
+{
+    // General
+    //----------------------------------------------------------------
+    "BaseClass"                 "npc_dota_creature"
+    "Model"                     ""   //Add model
+    "ModelScale"                "1"
+    "Level"                     "4"
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "HealthBarOffset"           "140"
+    
+    // Abilities
+    //----------------------------------------------------------------
+    "Ability1"                  ""   //Reference: Asds
+    
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "0"
+    "MagicalResistance"         "0"
+    
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+    "AttackRate"                "0"
+    "AttackAcquisitionRange"    "500"
+    
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyGoldMin"             "32.0"
+    "BountyGoldMax"             "36.0"
+    
+    // Bounds
+    //----------------------------------------------------------------
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "RingRadius"                "32"
+    "CollisionSize"             "32"
+    "FormationRank"             "0"
+    
+    // Unit Costs
+    //----------------------------------------------------------------
+    "GoldCost"                  "215"
+    "LumberCost"                "100"
+    "FoodCost"                  "2"
+    "StockMax"                  "3"
+    "StockTime"                 "210"
+    "StockInitial"              "0"
+    "StockStartDelay"           "440"
+    
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+    "MovementSpeed"             "270"
+    "MovementTurnRate"          "0.5"
+    
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "100"
+    "StatusHealthRegen"         "0.5"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1400"
+    "VisionNighttimeRange"      "800"
+    
+    // Team
+    //----------------------------------------------------------------
+    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    
+    // Creature Data
+    //----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Goblin Zeppelin
+// Description: "Flying air-transport."
+//=================================================================================
+"neutral_goblin_zeppelin"
+{
+    // General
+    //----------------------------------------------------------------
+    "BaseClass"                 "npc_dota_creature"
+    "Model"                     ""   //Add model
+    "ModelScale"                "1"
+    "Level"                     "1"
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "HealthBarOffset"           "140"
+    
+    // Abilities
+    //----------------------------------------------------------------
+    "Ability1"                  ""   //Reference: Sch3
+    "Ability2"                  ""   //Reference: Achd
+    "Ability3"                  ""   //Reference: Aloa
+    "Ability4"                  ""   //Reference: Adro
+    
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "0"
+    "MagicalResistance"         "0"
+    
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+    "AttackRate"                "0"
+    "AttackAcquisitionRange"    "500"
+    
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyGoldMin"             "26.0"
+    "BountyGoldMax"             "28.0"
+    
+    // Bounds
+    //----------------------------------------------------------------
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "RingRadius"                "48"
+    "CollisionSize"             "48"
+    "FormationRank"             "2"
+    
+    // Unit Costs
+    //----------------------------------------------------------------
+    "GoldCost"                  "240"
+    "LumberCost"                "60"
+    "StockMax"                  "1"
+    "StockTime"                 "30"
+    "StockInitial"              "0"
+    "StockStartDelay"           "440"
+    
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+    "MovementSpeed"             "270"
+    "MovementTurnRate"          "0.5"
+    
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "575"
+    "StatusHealthRegen"         "0"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1400"
+    "VisionNighttimeRange"      "800"
+    
+    // Team
+    //----------------------------------------------------------------
+    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+    "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+    "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_WEAK"
+    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    
+    // Creature Data
+    //----------------------------------------------------------------
+}
+
+//=================================================================================
 // Creature: Goblin Shredder
 // Description: "Medium melee unit made of iron. Excellent at harvesting large amounts of lumber. |n|n|cffffcc00Attacks land units and trees.|r"
 //=================================================================================
-"npc_goblin_shredder"
+"neutral_goblin_shredder"
 {
     // General
     //----------------------------------------------------------------
@@ -52,11 +214,15 @@
     "CollisionSize"             "48"
     "FormationRank"             "0"
 
-    // Gold and Lumber
+    // Unit Costs
     //----------------------------------------------------------------
     "GoldCost"                  "375"
     "LumberCost"                "100"
     "FoodCost"                  "4"
+    "StockMax"                  "1"
+    "StockTime"                 "210"
+    "StockInitial"              "0"
+    "StockStartDelay"           "300"
 
     // Movement
     //----------------------------------------------------------------
