@@ -27,7 +27,16 @@ var Player = (function() {
 		var PlayerDetails = CustomNetTables.GetTableValue( "dotacraft_player_table", pPlayerID);
 		
 		this.setPlayerID(pPlayerID);
-		$.Msg(PlayerDetails)
+		this.setLumber(0);
+		this.setGold(0);
+		this.setFoodLimit(0);
+		this.setFoodUsed(0);
+		this.setColorID(0);
+		this.setHasAltar(0);
+		this.setHeroCount(0);
+		this.setTechTier(0);
+		
+		//$.Msg(PlayerDetails)
 		this.Update(PlayerDetails);
 	}; 
 
@@ -96,22 +105,19 @@ var Player = (function() {
 		return this.mTechTier;
 	};
 	
-	Player.prototype.HasEnoughFood = function(pFoodAmount, pLocalisedErrorString){
-		
+	Player.prototype.HasEnoughFood = function(pFoodAmount){	
 		return ( (this.getFoodLimit() - this.getFoodUsed()) >= pFoodAmount )		
 	};
 	
-	Player.prototype.HasEnoughGold = function(pGoldAmount, pLocalisedErrorString){
-		
-		return ( pGoldAmount <= this.getGold() )
+	Player.prototype.HasEnoughGold = function(pGoldAmount){	
+		return ( this.getGold() >= pGoldAmount )
 	};
 	
-	Player.prototype.HasEnoughLumber = function(pLumberAmount, pLocalisedErrorString){
-		
-		return ( pLumberAmount <= this.getLumber() )
+	Player.prototype.HasEnoughLumber = function(pLumberAmount){		
+		return ( this.getLumber() >= pLumberAmount )
 	};
 	
-	Player.prototype.Update = function(pValue){		
+	Player.prototype.Update = function(pValue){
 		$.Msg("[PLAYER OBJECT] Updating Player: "+ this.getPlayerID());
 		
 		if(pValue.lumber){

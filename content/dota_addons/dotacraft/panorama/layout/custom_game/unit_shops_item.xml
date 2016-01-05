@@ -19,6 +19,10 @@
 			<Panel id="ItemImageContainer">
 				<Panel id="ItemMask" hittest="false" />
 				<Panel id="ItemImage">
+					<Panel id="FoodPanel">
+						<Panel id="FoodImg" />
+						<Label id="Food" />
+					</Panel>
 					<Label id="Stock" class="TextBackground" />
 				</Panel>
 			</Panel>

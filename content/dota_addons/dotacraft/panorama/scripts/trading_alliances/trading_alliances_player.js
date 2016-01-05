@@ -14,7 +14,7 @@ function SetupPlayer(){
 	$("#PlayerAvatar").steamid = PlayerSteamID;
 	$("#PlayerName").steamid = PlayerSteamID;
 	
-	LocalPlayerObject = GameUI.CustomUIConfig.Player[Game.GetLocalPlayerID()];
+	LocalPlayerObject = GameUI.CustomUIConfig.GetPlayer(Game.GetLocalPlayerID());
 	
 	// setup panels
 	SetupPanels();

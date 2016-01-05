@@ -160,6 +160,39 @@
 	vertical-align: bottom;
 }
 
+#FoodPanel{	
+	height: 18px;
+	width: 26px;
+	
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
+	border: 1px solid grey;
+	horizontal-align: left;
+	vertical-align: bottom;
+}
+
+#Food{
+	width: 50%;
+	height: 50%;
+	
+	color: white;
+	font-size: 12px;
+	horizontal-align: right;
+	vertical-align: middle;
+	padding-left: 1px;
+}
+
+#FoodImg{
+	width: 50%;
+	height: 50%;
+	
+	background-image: url("s2r://panorama/images/custom_game/food_icon.png"); 
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	
+	horizontal-align: left;
+	vertical-align: middle;
+}
+
 .TextBackground{
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
 	border: 1px solid grey;

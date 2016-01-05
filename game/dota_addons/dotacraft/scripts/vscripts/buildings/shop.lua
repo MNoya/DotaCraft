@@ -77,7 +77,8 @@ function unit_shops:CreateShop(unit, shop_name)
 	
 	local isTavern = shop_name == "tavern"
 	local isGlobal = (shop_name == "goblin_merchant" or shop_name == "mercenary" or shop_name == "goblin_lab")
-
+	local isUnitShop = (shop_name == "mercenary" or shop_name == "goblin_lab") -- does not include tavern
+	
 	-- Shops that sell npc units can sell to units without inventory
 	if shop_name == "mercenary" or shop_name == "goblin_lab" or shop_name == "tavern" then
 		unit.SellsNPCs = true
@@ -192,17 +193,17 @@ function unit_shops:CreateShop(unit, shop_name)
 	end
 
 	-- Create shop panels
-	unit_shops:SetupShopPanels(unit, sorted_table, isTavern, isGlobal, tier, shop_name)
+	unit_shops:SetupShopPanels(unit, sorted_table, isTavern, isGlobal, isUnitShop, tier, shop_name)
 end
 
-function unit_shops:SetupShopPanels(unit, ShopItemTable, isTavern, isGlobal, RequiredTier, ShopName)
+function unit_shops:SetupShopPanels(unit, ShopItemTable, isTavern, isGlobal, isUnitShop, RequiredTier, ShopName)
 	local UnitID = unit:GetEntityIndex()
 	local team = unit:GetTeam()
 	if not isTavern then
 		--print("[UNIT SHOP] Create "..shop_name.." "..UnitID.." Tier "..tier)
 		--DeepPrintTable(ShopItemTable)
 		if isGlobal then
-			CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=0, Race=ShopName }) 
+			CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=0, Race=ShopName, Neutral = isUnitShop}) 		
 		else
 			CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, Race=ShopName }) 
 		end
@@ -329,9 +330,8 @@ function unit_shops:BuyHero(data)
 		return
 	end
 	local buyerPlayerID = buyer:GetPlayerOwnerID()
-	
+
 	EmitSoundOnClient("General.Buy", player)
-	
 	print("[UNIT SHOPS] Tavern creating hero for "..playerID)						
 	TavernCreateHeroForPlayer(playerID, shopID, item)
 	
@@ -356,7 +356,6 @@ function unit_shops:BuyHeroRevive(data)
 	local buyerPlayerID = buyer:GetPlayerOwnerID()	
 	
 	EmitSoundOnClient("General.Buy", player)
-	
 	print("[UNIT SHOPS] Tavern reviving hero for "..playerID)
 	TavernReviveHeroForPlayer(playerID, shopID, item)
 	
@@ -403,11 +402,10 @@ function unit_shops:BuyItem(data)
 	local Lumber_Cost = data.LumberCost
 
 	local bEnoughSlots = CountInventoryItems(buyer) < 6
-	local isUnitItem = string.match(item, "npc_") -- Start an item with npc_ to indicate a unit purchase
+	local isUnitItem = tobool(data.Neutral);
 	
 	if bEnoughSlots then
 		EmitSoundOnClient("General.Buy", player)
-		
 		if isUnitItem then
 			CreateMercenaryForPlayer(playerID, shopID, item)
 		else

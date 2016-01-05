@@ -5,37 +5,63 @@ function Buy_Item(){
 	if(Root.Revive == null)
 		Root.Revive = false
 	
-	var Player = GameUI.CustomUIConfig.Player[Game.GetLocalPlayerID()];
-	
-	var event, food_cost, bAllowedToPurchase;
-	if(Root.Revive){
+	var Player = GameUI.CustomUIConfig.GetPlayer(Game.GetLocalPlayerID());
+	$.Msg(Player)
+	var event, food_cost;
+	if(Root.Revive){ // Tavern purchase - Revive hero
+		food_cost = 5;
 		event = "Shops_Buy_Tavern_Revive_Hero"
-		food_cost = 5;
-		bAllowedToPurchase = Player.HasEnoughFood(5) && Player.HasEnoughLumber(Root.ItemInfo.LumberCost) && Player.HasEnoughGold(Root.ItemInfo.GoldCost) && Root.ItemInfo.CurrentStock > 0;
-	}else if(Root.Tavern){
-		event = "Shops_Buy_Tavern_Buy_Hero"
-		food_cost = 5;
-		bAllowedToPurchase = Player.HasEnoughFood(5) && Player.HasEnoughLumber(Root.ItemInfo.LumberCost) && Player.HasEnoughGold(Root.ItemInfo.GoldCost);
-	}else{
-		event = "Shops_Buy_Item";
-		food_cost = 0;
-		bAllowedToPurchase = Player.HasEnoughLumber(Root.ItemInfo.LumberCost) && Player.HasEnoughGold(Root.ItemInfo.GoldCost) && Root.ItemInfo.CurrentStock > 0;
-	};
-
-	if(bAllowedToPurchase) {
-		Root.ItemInfo.CurrentStock -= 1;
-		GameEvents.SendCustomGameEventToServer( event, { "PlayerID" : LocalPlayerID, "Shop" : Root.Entity, "ItemName" : Root.ItemName, "GoldCost" : Root.ItemInfo.GoldCost, "LumberCost" : Root.ItemInfo.LumberCost  } );
-	}else{
-		$.Msg("Not allowed to purchase");
-		$.Msg("Food = "+Player.HasEnoughFood(5));
-		$.Msg("Lumber = "+Player.HasEnoughLumber(Root.ItemInfo.LumberCost));
-		$.Msg("Gold  = "+Player.HasEnoughGold(Root.ItemInfo.GoldCost));
-		//if( !LocalPlayerObject.HasEnoughFood(food_cost) )
-			
-		//else if( !LocalPlayerObject.HasEnoughLumber(Root.ItemInfo.LumberCost) )
-			
-		//else if( !LocalPlayerObject.HasEnoughGold(Root.ItemInfo.GoldCost) )
 		
+		EnoughFood = Player.HasEnoughFood(food_cost);
+		EnoughStock = true;
+	}else if(Root.Tavern){ // Tavern purchase - buying a hero
+		food_cost = 5;
+		event = "Shops_Buy_Tavern_Buy_Hero"
+		
+		EnoughFood = Player.HasEnoughFood(food_cost);
+		EnoughStock = true;
+	}else{ // Item
+		food_cost = 0;
+		event = "Shops_Buy_Item";
+		
+		if(!Root.Neutral)
+			EnoughFood = true;
+		else
+			EnoughFood = Player.HasEnoughFood(food_cost);
+			
+		EnoughStock = Root.ItemInfo.CurrentStock > 0;
+	};
+	
+		var EnoughLumber = Player.HasEnoughLumber(Root.ItemInfo.LumberCost);
+		var EnoughGold = Player.HasEnoughGold(Root.ItemInfo.GoldCost);
+		
+		var bAllowedToPurchase =  EnoughLumber && EnoughGold && EnoughStock && EnoughFood;
+		
+	if(bAllowedToPurchase) {
+		if( Root.ItemInfo != 0 )
+			Root.ItemInfo.CurrentStock -= 1;
+		
+		GameEvents.SendCustomGameEventToServer( event, { "PlayerID" : LocalPlayerID, "Shop" : Root.Entity, "ItemName" : Root.ItemName, "GoldCost" : Root.ItemInfo.GoldCost, "LumberCost" : Root.ItemInfo.LumberCost, "Neutral" : Root.Neutral} );
+	}else{
+		$.Msg("[UNIT SHOPS] Declined Player: "+Game.GetLocalPlayerID()+" from buying: "+Root.ItemInfo.ItemName);
+		//$.Msg("Enough Food = "+EnoughFood);
+		//$.Msg("Enough Lumber = "+EnoughLumber);
+		//$.Msg("Enough Gold  = "+EnoughGold);
+		//$.Msg("Enough Stock = "+EnoughStock);
+		
+		var errorString = "";
+		if( !EnoughFood )
+			errorString = "#shops_not_enough_food";
+		else if( !EnoughStock )
+			errorString = "#shops_not_enough_stock";
+		else if( !EnoughLumber )
+			errorString = "#shops_not_enough_lumber";	
+		else if( !EnoughGold )
+			errorString = "#shops_not_enough_gold";
+		else
+			errorString = "dafuq how did I get here?";
+		
+		GameUI.CustomUIConfig().ErrorMessage({text : errorString, style : {color:'#E62020'}, duration : 2})
 	};
 }
 
@@ -68,6 +94,11 @@ function Setup_Panel(){
 	}
 	
 	$( "#Stock").text = Root.ItemInfo.CurrentStock;
+	
+	if(Root.ItemInfo.FoodCost != null)
+		$("#Food").text = Root.ItemInfo.FoodCost; 	
+	else
+		$("#Food").visible = false;
 	
 	$( "#ItemName").text = $.Localize(Root.ItemName);
 	

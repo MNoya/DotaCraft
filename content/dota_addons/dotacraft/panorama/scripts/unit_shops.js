@@ -23,11 +23,15 @@ function Create_Shop(args){
 		shop_item.Tier = args.Tier  
 		shop_item.Order = orderIndex   
 		
-		if(args.Tavern != null){
-			shop_item.Tavern = true
-		}else{
-			shop_item.Tavern = false
-		};
+		if(args.Tavern != null)
+			shop_item.Tavern = true;
+		else
+			shop_item.Tavern = false;
+		
+		if(args.Neutral != null)
+			shop_item.Neutral = true;
+		else
+			shop_item.Neutral = false;
 	} 
 	
 	Shops[args.Index] = args.Shop.Items
