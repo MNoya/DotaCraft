@@ -14741,6 +14741,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -14821,6 +14823,8 @@
 	    "Level"                     "1"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "none"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -14836,7 +14840,7 @@
 	    
 	    // Attack
 	    //----------------------------------------------------------------
-	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
 	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
 	    "AttackRate"                "0"
 	    "AttackAcquisitionRange"    "500"
@@ -14903,6 +14907,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	
 	    // Mechanical, 50 sec build time
 	    
@@ -15007,6 +15013,8 @@
 	    "Level"                     "2"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15028,7 +15036,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
 	    "ProjectileSpeed"           "900"
 	    
 	    // Bounty
@@ -15097,6 +15105,8 @@
 	    "Level"                     "2"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15185,6 +15195,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15264,11 +15276,13 @@
 	    // General
 	    //----------------------------------------------------------------
 	    "BaseClass"                 "npc_dota_creature"
-	    "Model"                     "models/heroes/rikimaru/rikimaru.vmdl"
+	    "Model"                     "models/heroes/lanaya/lanaya.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15290,7 +15304,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "500"
 	    "AttackRange"               "500"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
 	    "ProjectileSpeed"           "900"
 	    
 	    // Bounty
@@ -15356,6 +15370,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15377,7 +15393,7 @@
 	    "AttackAnimationPoint"      "0.38"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/base_attacks/ranged_badguy.vpcf"
 	    "ProjectileSpeed"           "900"
 	    
 	    // Bounty
@@ -15446,6 +15462,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15529,6 +15547,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15548,7 +15568,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "500"
 	    "AttackRange"               "500"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/base_attacks/ranged_badguy.vpcf"
 	    "ProjectileSpeed"           "1500"
 	    
 	    // Bounty
@@ -15614,6 +15634,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15634,7 +15656,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_disruptor/disruptor_base_attack.vpcf"
 	    "ProjectileSpeed"           "1200"
 	    
 	    // Bounty
@@ -15703,6 +15725,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15723,7 +15747,7 @@
 	    "AttackAnimationPoint"      "0.7"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "500"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
 	    "ProjectileSpeed"           "900"
 	    
 	    // Bounty
@@ -15792,6 +15816,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15875,6 +15901,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -15896,7 +15924,7 @@
 	    "AttackAnimationPoint"      "0.6"
 	    "AttackAcquisitionRange"    "500"
 	    "AttackRange"               "500"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/base_attacks/ranged_badguy.vpcf"
 	    "ProjectileSpeed"           "900"
 	    
 	    // Bounty
@@ -15965,6 +15993,8 @@
 	    "Level"                     "5"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16048,6 +16078,8 @@
 	    "Level"                     "5"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16069,7 +16101,7 @@
 	    "AttackAnimationPoint"      "0.53"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/base_attacks/ranged_badguy.vpcf"
 	    "ProjectileSpeed"           "900"
 	    
 	    // Bounty
@@ -16138,6 +16170,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16221,6 +16255,8 @@
 	    "Level"                     "2"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16241,7 +16277,7 @@
 	    "AttackAnimationPoint"      "0.59"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_oracle/oracle_base_attack.vpcf"
 	    "ProjectileSpeed"           "1200"
 	    
 	    // Bounty
@@ -16310,6 +16346,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16330,7 +16368,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "500"
 	    "AttackRange"               "450"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	    "ProjectileSpeed"           "900"
 	    
 	    // Bounty
@@ -16399,6 +16437,8 @@
 	    "Level"                     "5"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16486,6 +16526,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16507,7 +16549,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/neutral_fx/satyr_trickster_projectile.vpcf"
 	    "ProjectileSpeed"           "1500"
 	    
 	    // Bounty
@@ -16577,6 +16619,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16597,7 +16641,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_lone_druid/lone_druid_base_attack.vpcf"
 	    "ProjectileSpeed"           "1200"
 	    
 	    // Bounty
@@ -16666,6 +16710,8 @@
 	    "Level"                     "6"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16687,7 +16733,7 @@
 	    "AttackAnimationPoint"      "0.5"
 	    "AttackAcquisitionRange"    "500"
 	    "AttackRange"               "500"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/neutral_fx/thunderlizard_base_attack.vpcf"
 	    "ProjectileSpeed"           "1500"
 	    
 	    // Bounty
@@ -16756,6 +16802,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16841,6 +16889,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -16861,7 +16911,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
 	    "ProjectileSpeed"           "900"
 	    
 	    // Bounty
@@ -16931,6 +16981,8 @@
 	    "Level"                     "5"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17019,6 +17071,8 @@
 	    "Level"                     "1"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17039,7 +17093,7 @@
 	    "AttackAnimationPoint"      "0.53"
 	    "AttackAcquisitionRange"    "650"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"
 	    "ProjectileSpeed"           "1500"
 	    
 	    // Bounty
@@ -17105,6 +17159,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17189,6 +17245,8 @@
 	    "Level"                     "5"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17273,6 +17331,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17294,7 +17354,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "600"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_lone_druid/lone_druid_base_attack.vpcf"
 	    "ProjectileSpeed"           "1200"
 	    
 	    // Bounty
@@ -17363,6 +17423,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17447,6 +17509,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground,air"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17466,7 +17530,7 @@
 	    "AttackAnimationPoint"      "0.3"
 	    "AttackAcquisitionRange"    "500"
 	    "AttackRange"               "500"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
 	    "ProjectileSpeed"           "1200"
 	    
 	    // Bounty
@@ -17532,6 +17596,8 @@
 	    "Level"                     "4"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17619,6 +17685,8 @@
 	    "Level"                     "3"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
@@ -17641,7 +17709,7 @@
 	    "AttackAnimationPoint"      "0.64"
 	    "AttackAcquisitionRange"    "700"
 	    "AttackRange"               "600"
-	    "ProjectileModel"           ""   //Add projectile
+	    "ProjectileModel"           "particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"
 	    "ProjectileSpeed"           "500"
 	    
 	    // Bounty
@@ -17710,6 +17778,8 @@
 	    "Level"                     "1"
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
+	
+	    "AttacksEnabled"            "ground"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
