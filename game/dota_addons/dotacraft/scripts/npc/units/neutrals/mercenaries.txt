@@ -13,6 +13,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -78,6 +79,18 @@
     
     // Creature Data
     //----------------------------------------------------------------
+    "Creature"
+    {
+        "AttachWearables" // Default npc_dota_hero_techies
+        {
+            "1" { "ItemDef" "491" } // Techies Squee Costume
+            "2" { "ItemDef" "490" } // Techies Cart
+            "3" { "ItemDef" "492" } // Techies Spleen Costume
+            "4" { "ItemDef" "394" } // Techies Bomb Arsenal
+            "5" { "ItemDef" "487" } // Techies Spoon Costume
+            "6" { "ItemDef" "489" } // Techies Slingshot
+        }
+    }
 }
 
 //=================================================================================
@@ -179,6 +192,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
 
     // Mechanical, 50 sec build time
@@ -285,6 +299,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -360,6 +375,17 @@
     
     // Creature Data
     //----------------------------------------------------------------
+    "Creature"
+    {
+        "AttachWearables" // Default npc_dota_hero_dazzle
+        {
+            "1" { "ItemDef" "264" } // Dazzle's Staff
+            "2" { "ItemDef" "265" } // Dazzle's Skirt
+            "3" { "ItemDef" "263" } // Dazzle's Mohawk
+            "4" { "ItemDef" "266" } // Dazzle's Sleeve
+            "5" { "ItemDef" "468" } // Dazzle's Shoulders
+        }
+    }
 }
 
 //=================================================================================
@@ -377,6 +403,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -467,6 +494,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -553,6 +581,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -642,6 +671,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -734,6 +764,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -819,6 +850,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -906,6 +938,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -997,6 +1030,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -1088,6 +1122,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -1173,6 +1208,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -1265,6 +1301,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -1350,6 +1387,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -1442,6 +1480,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -1527,6 +1566,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -1618,6 +1658,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -1709,6 +1750,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -1798,6 +1840,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -1891,6 +1934,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -1982,6 +2026,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -2074,6 +2119,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -2161,6 +2207,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -2253,6 +2300,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -2343,6 +2391,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -2431,6 +2480,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -2517,6 +2567,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -2603,6 +2654,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -2695,6 +2747,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -2781,6 +2834,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground,air"
     
     // Abilities
@@ -2868,6 +2922,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -2957,6 +3012,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "2"
     "AttacksEnabled"            "ground"
     
     // Abilities
@@ -3050,6 +3106,7 @@
     "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "HealthBarOffset"           "140"
 
+    "FormationRank"             "0"
     "AttacksEnabled"            "ground"
     
     // Abilities
