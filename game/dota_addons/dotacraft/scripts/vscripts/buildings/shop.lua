@@ -93,7 +93,6 @@ function unit_shops:CreateShop(unit, shop_name)
 		print("ERROR: CreateShop was unable to find a custom_shop trigger area. Add a custom_shop trigger to this map")
 	end
 	
-	-- for each item create an corresponding timer to restock that item
 	--DeepPrintTable(GameRules.Shops["human_shop"])
 	local shopList = GameRules.Shops[shop_name]
 
@@ -106,86 +105,109 @@ function unit_shops:CreateShop(unit, shop_name)
 	end
 
 	DeepPrintTable(shopList)
-
-	for order,item in pairs(shopList) do
-		print("[UNIT SHOP] Creating timer for "..item.." new unit shop: "..shop_name)
-		local key = item
+	for order,itemname in pairs(shopList) do
+		print("[UNIT SHOP] Creating timer for "..itemname.." new unit shop: "..shop_name)
+		local key = itemname
 
 		-- set all variables
 		UnitShop.Items[key] = {}
 		UnitShop.Items[key].ItemName = key
 		UnitShop.Items[key].CurrentRefreshTime = 1
+		local Item = UnitShop.Items[key]
 		
-		-- Tavern heroes initially cost only food
+		local grTable
+		if shop_name == "mercenary" then
+			grTable = GameRules.UnitKV
+		elseif shop_name == "goblin_merchant" then
+			grTable = GameRules.GoblinMerchant
+		else
+			grTable = GameRules.ItemKV
+		end
+		
+		-- Tavern heroes initially cost only food			
 		if isTavern then
-			UnitShop.Items[key].CurrentStock = 0
-			UnitShop.Items[key].MaxStock = 1
-			UnitShop.Items[key].RequiredTier = 9000
-			UnitShop.Items[key].GoldCost = 0
-			UnitShop.Items[key].LumberCost = 0
-			UnitShop.Items[key].RestockRate = NEUTRAL_HERO_STOCKTIME
+			Item.CurrentStock = 0
+			Item.MaxStock = 1
+			Item.RequiredTier = 9000
+			Item.GoldCost = 0
+			Item.LumberCost = 0
+			Item.RestockRate = NEUTRAL_HERO_STOCKTIME
 
 		-- Merchant uses a different stock system and tiers for items
 		elseif shop_name == "goblin_merchant" then
-			UnitShop.Items[key].CurrentStock = GameRules.GoblinMerchant[key]["StockInitial"]
-			UnitShop.Items[key].MaxStock = GameRules.GoblinMerchant[key]["StockMax"]
-			UnitShop.Items[key].RequiredTier = 0;
-			UnitShop.Items[key].GoldCost = GameRules.GoblinMerchant[key]["ItemCost"]
-			UnitShop.Items[key].RestockRate = GameRules.GoblinMerchant[key]["StockTime"]
-			UnitShop.Items[key].StockStartDelay = GameRules.GoblinMerchant[key]["StockStartDelay"]
+			Item.CurrentStock = grTable[key]["StockInitial"]
+			Item.MaxStock = grTable[key]["StockMax"]
+			Item.RequiredTier = 0;
+			Item.GoldCost = grTable[key]["ItemCost"]
+			Item.RestockRate = grTable[key]["StockTime"]
+			Item.StockStartDelay = grTable[key]["StockStartDelay"]
 			
-			if GameRules.GoblinMerchant[key]["LumberCost"] ~= nil then
-				UnitShop.Items[key].LumberCost = GameRules.GoblinMerchant[key]["LumberCost"]
+			if grTable[key]["LumberCost"] ~= nil then
+				Item.LumberCost = grTable[key]["LumberCost"]
 			else
-				UnitShop.Items[key].LumberCost = 0
+				Item.LumberCost = 0
 			end			
-
+		elseif shop_name == "mercenary" then
+			Item.CurrentStock = grTable[key]["StockInitial"]
+			Item.MaxStock = grTable[key]["StockMax"]
+			Item.RequiredTier = 0;
+			Item.GoldCost = grTable[key]["GoldCost"]
+			Item.RestockRate = grTable[key]["StockTime"]
+			Item.StockStartDelay = grTable[key]["StockStartDelay"]
+			Item.FoodCost = grTable[key]["FoodCost"]
+			
+			if grTable[key]["LumberCost"] ~= nil then
+				Item.LumberCost = grTable[key]["LumberCost"]
+			else
+				Item.LumberCost = 0
+			end
+			
 		-- Other shops take the values directly from the item kv
 		else
-			if not GameRules.ItemKV[key] then
+			if not grTable[key] then
 				print("[UNIT SHOP] Error: no Item KeyValues for "..key)
 			else
-				UnitShop.Items[key].CurrentStock = GameRules.ItemKV[key]["StockInitial"]
-				UnitShop.Items[key].MaxStock = GameRules.ItemKV[key]["StockMax"]
-				UnitShop.Items[key].RequiredTier = GameRules.ItemKV[key]["RequiresTier"]
-				UnitShop.Items[key].GoldCost = GameRules.ItemKV[key]["ItemCost"]
-				UnitShop.Items[key].RestockRate = GameRules.ItemKV[key]["StockTime"]
+				Item.CurrentStock = grTable[key]["StockInitial"]
+				Item.MaxStock = grTable[key]["StockMax"]
+				Item.RequiredTier = grTable[key]["RequiresTier"]
+				Item.GoldCost = grTable[key]["ItemCost"]
+				Item.RestockRate = grTable[key]["StockTime"]
 							
 				--DeepPrintTable(UnitShop.Items[key])
 				-- set to 0 if nil, "0" hides the value in panaroma
-				if GameRules.ItemKV[key]["LumberCost"] ~= nil then
-					UnitShop.Items[key].LumberCost = GameRules.ItemKV[key]["LumberCost"]
+				if grTable[key]["LumberCost"] ~= nil then
+					Item.LumberCost = grTable[key]["LumberCost"]
 				else
-					UnitShop.Items[key].LumberCost = 0
+					Item.LumberCost = 0
 				end
 			end
 		end
 
 		-- Set some defaults incase the keys are missing in the item definition
-		if not UnitShop.Items[key].CurrentStock then
-			print("[UNIT SHOP] Error - No StockInitial defined for "..item)
-			UnitShop.Items[key].CurrentStock = 1
+		if not Item.CurrentStock then
+			print("[UNIT SHOP] Error - No StockInitial defined for "..itemname)
+			Item.CurrentStock = 1
 		end
 
-		if not UnitShop.Items[key].MaxStock then
-			print("[UNIT SHOP] Error - No StockMax defined for "..item)
-			UnitShop.Items[key].MaxStock = 1
+		if not Item.MaxStock then
+			print("[UNIT SHOP] Error - No StockMax defined for "..itemname)
+			Item.MaxStock = 1
 		end
 
-		if not UnitShop.Items[key].RestockRate then
-			print("[UNIT SHOP] Error - No StockTime defined for "..item)
-			UnitShop.Items[key].RestockRate = 1
+		if not Item.RestockRate then
+			print("[UNIT SHOP] Error - No StockTime defined for "..itemname)
+			Item.RestockRate = 1
 		end
 
-		if not UnitShop.Items[key].RequiredTier then
-			print("[UNIT SHOP] Error - No RequiresTier defined for "..item)
-			UnitShop.Items[key].RequiredTier = 1
+		if not Item.RequiredTier then
+			print("[UNIT SHOP] Error - No RequiresTier defined for "..itemname)
+			Item.RequiredTier = 1
 		end
 
 		if not isTavern then -- if not tavern
-			unit_shops:StockUpdater(UnitShop.Items[key], unit, isGlobal)
+			unit_shops:StockUpdater(Item, unit, isGlobal)
 		else
-			unit_shops:TavernStockUpdater(UnitShop.Items[key], unit)
+			unit_shops:TavernStockUpdater(Item, unit)
 		end
 		
 		-- save item into table using it's sort index, this is send once at the beginning to initialise the shop
@@ -401,8 +423,10 @@ function unit_shops:BuyItem(data)
 	local Gold_Cost = data.GoldCost
 	local Lumber_Cost = data.LumberCost
 
-	local bEnoughSlots = CountInventoryItems(buyer) < 6
+	local bEnoughSlots
+
 	local isUnitItem = tobool(data.Neutral);
+	if isUnitItem then bEnoughSlots = true else bEnoghSlots = CountInventoryItems(buyer) < 6 end
 	
 	if bEnoughSlots then
 		EmitSoundOnClient("General.Buy", player)

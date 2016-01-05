@@ -3,33 +3,26 @@ function NetTableListenerUpdater(tableName, key, value){
 		GameUI.CustomUIConfig.Player[key].Update(value);
 };
 
-function InitGoldUpdater(playerID){
-	var playerGold = Players.GetGold(playerID)
-	
-	GameUI.CustomUIConfig.GetPlayer(playerID).Update( {gold : playerGold} );	
-	
-	$.Schedule(0.01, InitGoldUpdater);
-};
-
 (function () {
 	$.Msg("[CUSTOM PLAYER OBJECT] Setup Started");
 	CustomNetTables.SubscribeNetTableListener( "dotacraft_player_table", NetTableListenerUpdater );
+	
 	// create player table
 	GameUI.CustomUIConfig.Player = {};
 	
 	var PlayerIDList = Game.GetAllPlayerIDs();
 		
 	// create player objects
-	for( playerID of PlayerIDList ){
+	for( playerID of PlayerIDList ){ 
 		var playerInfo = Game.GetLocalPlayerInfo(); 
 		var playerTeam = playerInfo.player_team_id;
 		if( playerTeam != 1 ){
 			GameUI.CustomUIConfig.Player[playerID] = new Player(playerID);
-			InitGoldUpdater(playerID);
 		}else{
 			$.Msg("Player is Spectator, skipping object creation");
 		};
 	}; 
+	
 	//
 	// Defined Non-Player Object Functions
 	//
@@ -47,8 +40,6 @@ function InitGoldUpdater(playerID){
 			$.Msg("Player is Spectator, skipping object print");
 		};
 	};
-	
-
 	
 	$.Msg("[CUSTOM PLAYER OBJECT] Setup Complete");
 })();

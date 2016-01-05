@@ -21,13 +21,12 @@ function Buy_Item(){
 		EnoughFood = Player.HasEnoughFood(food_cost);
 		EnoughStock = true;
 	}else{ // Item
-		food_cost = 0;
 		event = "Shops_Buy_Item";
-		
+		$.Msg(Root.ItemInfo.FoodCost)
 		if(!Root.Neutral)
 			EnoughFood = true;
 		else
-			EnoughFood = Player.HasEnoughFood(food_cost);
+			EnoughFood = Player.HasEnoughFood(Root.ItemInfo.FoodCost);
 			
 		EnoughStock = Root.ItemInfo.CurrentStock > 0;
 	};
