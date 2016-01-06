@@ -6,18 +6,13 @@ function Masonry( event )
 	local healthBonusPercentage = event.ability:GetLevelSpecialValueFor("bonus_health_pct", level - 1) * 0.01
 	local healthPercent = caster:GetHealth()/caster:GetMaxHealth()
 	
-	-- Store the original starting HP
-	if not caster.BaseMaxHealth then
-		caster.BaseMaxHealth = caster:GetMaxHealth()
-	end	
-	
-	-- Max Health
-	local maxHP = caster.BaseMaxHealth
-	local newMaxHP = maxHP * (1+healthBonusPercentage)
-	caster:SetMaxHealth(newMaxHP)
-
 	-- Adjust the relative HP for buildings that were already constructed
-	if not caster:HasModifier("modifier_construction") then
+	if not caster:HasModifier("modifier_construction") then	
+		-- Max Health
+		local maxHP = GameRules.UnitKV[caster:GetUnitName()]['StatusHealth']
+		local newMaxHP = maxHP * (1+healthBonusPercentage)
+		caster:SetMaxHealth(newMaxHP)
+	
 		local newHP = math.ceil(newMaxHP * healthPercent)
 		caster:SetHealth(newHP)
 		print("Masonry HP of "..caster:GetUnitName()..": "..newHP.."/"..newMaxHP)	

@@ -1,5 +1,7 @@
 'use strict';
 
+GameUI.SetRenderBottomInsetOverride( 0 );
+
 var state = 'disabled';
 var size = 0;
 var overlay_size = 0;
