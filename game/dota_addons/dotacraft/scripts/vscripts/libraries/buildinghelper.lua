@@ -12,22 +12,25 @@ if not BuildingHelper then
     BuildingHelper = class({})
 end
 
--- Initializes the order filter
-function BuildingHelper:Activate()
-    local mode = GameRules:GetGameModeEntity()
-    mode:SetExecuteOrderFilter(Dynamic_Wrap(BuildingHelper, 'OrderFilter'), BuildingHelper)
-    self.oldFilter = mode.SetExecuteOrderFilter
-    mode.SetExecuteOrderFilter = function(mode, fun, context)
-        BuildingHelper.nextFilter = fun
-        BuildingHelper.nextContext = context
-    end
-end
-
 --[[
     BuildingHelper Init
     * Loads Key Values into the BuildingAbilities
 ]]--
 function BuildingHelper:Init()
+    debug.sethook(function(...)
+        local info = debug.getinfo(2)
+        local src = tostring(info.short_src)
+        local name = tostring(info.name)
+        if name ~= "__index" then
+            if string.find(src, "addon_game_mode") then
+                if GameRules:GetGameModeEntity() then
+                    BuildingHelper:Activate()
+                    debug.sethook(nil, "c")
+                end
+            end
+        end
+    end, "c")
+
     BuildingHelper.AbilityKVs = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
     BuildingHelper.ItemKVs = LoadKeyValues("scripts/npc/npc_items_custom.txt")
     BuildingHelper.UnitKVs = LoadKeyValues("scripts/npc/npc_units_custom.txt")
@@ -64,7 +67,7 @@ function BuildingHelper:Init()
     BuildingHelper:ParseKV(BuildingHelper.AbilityKVs, BuildingHelper.KV)
     BuildingHelper:ParseKV(BuildingHelper.ItemKVs, BuildingHelper.KV)
     BuildingHelper:ParseKV(BuildingHelper.UnitKVs, BuildingHelper.KV)
-end    
+end
 
 function BuildingHelper:ParseKV( t, result )
     for name,info in pairs(t) do
@@ -83,6 +86,17 @@ function BuildingHelper:ParseKV( t, result )
                 end
             end
         end
+    end
+end
+
+-- Initializes the order filter
+function BuildingHelper:Activate()
+    local mode = GameRules:GetGameModeEntity()
+    mode:SetExecuteOrderFilter(Dynamic_Wrap(BuildingHelper, 'OrderFilter'), BuildingHelper)
+    self.oldFilter = mode.SetExecuteOrderFilter
+    mode.SetExecuteOrderFilter = function(mode, fun, context)
+        BuildingHelper.nextFilter = fun
+        BuildingHelper.nextContext = context
     end
 end
 

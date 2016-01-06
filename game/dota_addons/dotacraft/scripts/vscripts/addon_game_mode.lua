@@ -11,6 +11,7 @@ require('libraries/popups')
 require('libraries/attributes')
 require('libraries/notifications')
 require('libraries/attachments')
+require('libraries/buildinghelper')
 require('dotacraft')
 require('utilities')
 require('upgrades')
@@ -21,7 +22,6 @@ require('developer')
 require('units/neutral_ai')
 require('units/builder')
 require('units/attacks')
-require('libraries/buildinghelper')
 require('buildings/shop')
 require('buildings/altar')
 require('buildings/research')
@@ -57,7 +57,6 @@ end
 -- Create our game mode and initialize it
 function Activate()
     print ( '[DOTACRAFT] creating dotacraft game mode' )
-    BuildingHelper:Activate()
     dotacraft:InitGameMode()
 end
 
