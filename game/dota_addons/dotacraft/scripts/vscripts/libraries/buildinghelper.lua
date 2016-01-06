@@ -296,6 +296,7 @@ function BuildingHelper:OrderFilter(order)
     local order_type = order.order_type
     local units = order.units
     local abilityIndex = order.entindex_ability
+    local unit = EntIndexToHScript(units["0"])
 
     -- Cancel queue on Stop and Hold
     if order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
