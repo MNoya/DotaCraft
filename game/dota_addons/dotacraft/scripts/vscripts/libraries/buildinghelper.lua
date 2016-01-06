@@ -23,7 +23,7 @@ function BuildingHelper:Init()
 
     BuildingHelper:print("BuildingHelper Init")
     BuildingHelper.Players = {} -- Holds a table for each player ID
-
+    BuildingHelper.Dummies = {} -- Holds up to one entity for each building name
     BuildingHelper.Grid = {}    -- Construction grid
     BuildingHelper.Terrain = {} -- Terrain grid, this only changes when a tree is cut
     BuildingHelper.Encoded = "" -- String containing the base terrain, networked to clients
@@ -364,8 +364,6 @@ function BuildingHelper:AddBuilding(keys)
         unitName = builder:GetUnitName()
     end
 
-    BuildingHelper:print("AddBuilding "..unitName)
-
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
     if not fMaxScale then
         -- If no MaxScale is defined, check the "ModelScale" KeyValue. Otherwise just default to 1
@@ -393,16 +391,8 @@ function BuildingHelper:AddBuilding(keys)
         unitName = overrideGhost
     end
 
-    -- Remove old ghost model dummy
-    if playerTable.activeBuildingTable.mgd then
-        UTIL_Remove(playerTable.activeBuildingTable.mgd)
-    end
-
-    -- Make a model dummy to pass it to panorama
-    local mgd = CreateUnitByName(unitName, builder:GetAbsOrigin(), false, nil, nil, builder:GetTeam())
-    mgd:AddEffects(EF_NODRAW)
-    mgd:AddNewModifier(mgd, nil, "modifier_out_of_world", {})
-    playerTable.activeBuildingTable.mgd = mgd
+    -- Get a model dummy to pass it to panorama
+    local mgd = BuildingHelper:GetOrCreateDummy(unitName)
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
@@ -1418,11 +1408,6 @@ end
 function BuildingHelper:StopGhost( builder )
     local player = builder:GetPlayerOwner()
 
-    local playerTable = BuildingHelper:GetPlayerTable(builder:GetPlayerOwnerID())
-    if playerTable.activeBuildingTable and IsValidEntity(playerTable.activeBuildingTable.mgd) then
-        UTIL_Remove(playerTable.activeBuildingTable.mgd)
-    end
-
     if IsCurrentlySelected(builder) then
         CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_end", {})
     end
@@ -1472,6 +1457,20 @@ function BuildingHelper:GetPlayerTable( playerID )
     end
 
     return BuildingHelper.Players[playerID]
+end
+
+-- Creates an out of world dummy at map origin and stores it, reducing load from creating units
+function BuildingHelper:GetOrCreateDummy( unitName )
+    if BuildingHelper.Dummies[unitName] then
+        return BuildingHelper.Dummies[unitName]
+    else
+        BuildingHelper:print("AddBuilding "..unitName)
+        local mgd = CreateUnitByName(unitName, Vector(0,0,0), false, nil, nil, 0)
+        mgd:AddEffects(EF_NODRAW)
+        mgd:AddNewModifier(mgd, nil, "modifier_out_of_world", {})
+        BuildingHelper.Dummies[unitName] = mgd
+        return mgd
+    end
 end
 
 function BuildingHelper:GetConstructionSize(unit)

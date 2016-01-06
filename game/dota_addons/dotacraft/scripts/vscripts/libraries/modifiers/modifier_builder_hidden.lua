@@ -7,7 +7,7 @@ if IsServer() then
         local state = {
             [MODIFIER_STATE_NO_UNIT_COLLISION] = true,
             [MODIFIER_STATE_INVULNERABLE] = true,
-            [MODIFIER_STATE_ROOTED] = false,
+            [MODIFIER_STATE_ROOTED] = true,
             [MODIFIER_STATE_DISARMED] = true,
             [MODIFIER_STATE_NOT_ON_MINIMAP] = true,
             [MODIFIER_STATE_NO_HEALTH_BAR] = true,
@@ -16,8 +16,7 @@ if IsServer() then
         return state
     end
 
-    function modifier_builder_hidden:OnCreated( params )
-        
+    function modifier_builder_hidden:OnCreated( params )    
         local unit = self:GetParent()
         unit.originalDayVision = unit:GetDayTimeVisionRange()
         unit.originalNightVision = unit:GetDayTimeVisionRange()
@@ -30,4 +29,8 @@ if IsServer() then
         unit:SetDayTimeVisionRange(unit.originalDayVision)
         unit:SetNightTimeVisionRange(unit.originalNightVision)
     end
+end
+
+function modifier_builder_hidden:IsHidden()
+    return true
 end
