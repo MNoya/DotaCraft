@@ -90,7 +90,12 @@ function BuildingHelper:ParseKV( t, result )
 
                 -- Build NetTable with the grid sizes
                 if info['ConstructionSize'] then
-                    CustomNetTables:SetTableValue("construction_size", name, {size = info['ConstructionSize']})
+                    -- Add proximity restriction
+                    if info['RestrictGoldMineDistance'] then
+                        CustomNetTables:SetTableValue("construction_size", name, {size = info['ConstructionSize'], distance_to_gold_mine = info['RestrictGoldMineDistance']})
+                    else
+                        CustomNetTables:SetTableValue("construction_size", name, {size = info['ConstructionSize']})
+                    end                    
                 end
             end
         end

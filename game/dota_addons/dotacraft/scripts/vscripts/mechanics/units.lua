@@ -310,9 +310,9 @@ end
 
 function HasGoldMineDistanceRestriction( unit_name )
     if GameRules.UnitKV[unit_name] then
-        local bRestrictGoldMineDistance = GameRules.UnitKV[unit_name]["RestrictGoldMineDistance"]
-        if bRestrictGoldMineDistance and bRestrictGoldMineDistance == 1 then
-            return true
+        local restrict_distance = GameRules.UnitKV[unit_name]["RestrictGoldMineDistance"]
+        if restrict_distance then
+            return restrict_distance
         end
     end
     return false

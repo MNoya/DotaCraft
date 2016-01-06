@@ -17,6 +17,7 @@ var gridParticles;
 var overlayParticles;
 var builderIndex;
 var entityGrid;
+var distance_to_gold_mine;
 var cutTrees = [];
 var BLOCKED = 2;
 var GRID_TYPES = [];
@@ -52,6 +53,8 @@ function StartBuildingHelper( params )
             if (GRID_TYPES[requires] === undefined)
                 GRID_TYPES[requires] = GRID_TYPES.length + BLOCKED + 1
         }
+
+        distance_to_gold_mine = HasGoldMineDistanceRestriction(entindex)
         
         // If we chose to not recolor the ghost model, set it white
         var ghost_color = [0, 255, 0]
@@ -167,6 +170,8 @@ function StartBuildingHelper( params )
 
             if (GamePos[0] > 10000000) return
 
+            var closeToGoldMine = TooCloseToGoldmine(GamePos)
+
             // Building Base Grid
             for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
             {
@@ -182,7 +187,7 @@ function StartBuildingHelper( params )
 
                     // Grid color turns red when over invalid position
                     color = [0,255,0]
-                    if (IsBlocked(pos))
+                    if (IsBlocked(pos) || closeToGoldMine)
                     {
                         color = [255,0,0]
                         invalid = true
@@ -230,7 +235,7 @@ function StartBuildingHelper( params )
                         Particles.SetParticleControl(overlayParticle, 0, pos2)     
                         part2++;
 
-                        if (IsBlocked(pos2))
+                        if (IsBlocked(pos2) || TooCloseToGoldmine(pos2))
                             color = [255,0,0]                        
 
                         Particles.SetParticleControl(overlayParticle, 2, color)        
@@ -451,6 +456,36 @@ function GetConstructionSize(entIndex) {
     var entName = Entities.GetUnitName(entIndex)
     var table = CustomNetTables.GetTableValue( "construction_size", entName)
     return table ? table.size : 0
+}
+
+function HasGoldMineDistanceRestriction(entIndex) {
+    var entName = Entities.GetUnitName(entIndex)
+    var table = CustomNetTables.GetTableValue( "construction_size", entName)
+    return table ? table.distance_to_gold_mine : 0
+}
+
+function GetClosestDistanceToGoldMine(position) {
+    var building_entities = Entities.GetAllEntitiesByClassname('npc_dota_building')
+
+    var minDistance = 99999
+    for (var i = 0; i < building_entities.length; i++)
+    {
+        if (Entities.GetUnitName(building_entities[i]) == "gold_mine")
+        {
+            var distance_to_this_mine = Length2D(position, Entities.GetAbsOrigin(building_entities[i]))
+            if (distance_to_this_mine < minDistance)
+                minDistance = distance_to_this_mine
+        }
+    }
+    return minDistance
+}
+
+function TooCloseToGoldmine(position) {
+    return (distance_to_gold_mine > 0 && GetClosestDistanceToGoldMine(position) < distance_to_gold_mine)
+}
+
+function Length2D(v1, v2) {
+    return Math.sqrt( (v2[0]-v1[0])*(v2[0]-v1[0]) + (v2[1]-v1[1])*(v2[1]-v1[1]) + (v2[2]-v1[2])*(v2[2]-v1[2]) )
 }
 
 function PrintGridCoords(x,y) {
