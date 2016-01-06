@@ -393,13 +393,3 @@ function HasArtilleryAttack( unit )
     local unitTable = GameRules.UnitKV[unit:GetUnitName()]
     return unitTable and unitTable["Artillery"]
 end
-
-function Units:GetConstructionSize(unit)
-    local unitTable = (type(unit) == "table") and GameRules.UnitKV[unit:GetUnitName()] or GameRules.UnitKV[unit]
-    return unitTable["ConstructionSize"]
-end
-
-function Units:GetBlockPathingSize(unit)
-    local unitTable = (type(unit) == "table") and GameRules.UnitKV[unit:GetUnitName()] or GameRules.UnitKV[unit]
-    return unitTable["BlockPathingSize"]
-end

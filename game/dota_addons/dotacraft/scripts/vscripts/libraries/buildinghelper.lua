@@ -1,12 +1,5 @@
 BH_VERSION = "1.0"
 
---[[
-    TODO: Explain stuff
-    * Grid
-    * Terrain
-    * Entities
-]]--
-
 -- Building Particle Settings
 GRID_ALPHA = 30 -- Defines the transparency of the ghost squares (Panorama)
 MODEL_ALPHA = 100 -- Defines the transparency of both the ghost model (Panorama) and Building Placed (Lua)
@@ -17,6 +10,17 @@ BH_PRINT = true --Turn this off on production
 
 if not BuildingHelper then
     BuildingHelper = class({})
+end
+
+-- Initializes the order filter
+function BuildingHelper:Activate()
+    local mode = GameRules:GetGameModeEntity()
+    mode:SetExecuteOrderFilter(Dynamic_Wrap(BuildingHelper, 'OrderFilter'), BuildingHelper)
+    self.oldFilter = mode.SetExecuteOrderFilter
+    mode.SetExecuteOrderFilter = function(mode, fun, context)
+        BuildingHelper.nextFilter = fun
+        BuildingHelper.nextContext = context
+    end
 end
 
 --[[
@@ -41,31 +45,21 @@ function BuildingHelper:Init()
     GRID_BLOCKED = 1
     GRID_FREE = 2
 
+    -- Panorama Event Listeners
     CustomGameEventManager:RegisterListener("building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
     CustomGameEventManager:RegisterListener("building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
+    CustomGameEventManager:RegisterListener("update_selected_entities", Dynamic_Wrap(BuildingHelper, 'OnPlayerSelectedEntities'))
     CustomGameEventManager:RegisterListener("gnv_request", Dynamic_Wrap(BuildingHelper, "SendGNV"))
 
+     -- Game Event Listeners
+    ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(BuildingHelper, 'OnGameRulesStateChange'), self)
+    ListenToGameEvent('npc_spawned', Dynamic_Wrap(BuildingHelper, 'OnNPCSpawned'), self)
+    ListenToGameEvent('entity_killed', Dynamic_Wrap(BuildingHelper, 'OnEntityKilled'), self)
+    ListenToGameEvent('tree_cut', Dynamic_Wrap(BuildingHelper, 'OnTreeCut'), self)
+
+    -- Lua modifiers
     LinkLuaModifier("modifier_out_of_world", "libraries/modifiers/modifier_out_of_world", LUA_MODIFIER_MOTION_NONE)
-
-    ListenToGameEvent('game_rules_state_change', function()
-        local newState = GameRules:State_Get()
-        if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-            -- The base terrain GridNav is obtained directly from the vmap
-            BuildingHelper:InitGNV()
-        end
-    end, nil)
-
-    ListenToGameEvent('tree_cut', function(keys)
-        local treePos = Vector(keys.tree_x,keys.tree_y,0)
-
-        -- Create a dummy for clients to be able to detect trees standing and block their grid
-        CreateUnitByName("tree_chopped", treePos, false, nil, nil, 0)
-
-        if not BuildingHelper:IsAreaBlocked(2, treePos) then
-            BuildingHelper:FreeGridSquares(2, treePos)
-        end
-    end, nil)
-
+    
     BuildingHelper.KV = {} -- Merge KVs into a single table
     BuildingHelper:ParseKV(BuildingHelper.AbilityKVs, BuildingHelper.KV)
     BuildingHelper:ParseKV(BuildingHelper.ItemKVs, BuildingHelper.KV)
@@ -165,6 +159,44 @@ function BuildingHelper:InitGNV()
     BuildingHelper.squareY = squareY
 end
 
+function BuildingHelper:OnGameRulesStateChange(keys)
+    local newState = GameRules:State_Get()
+    if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+        -- The base terrain GridNav is obtained directly from the vmap
+        BuildingHelper:InitGNV()
+    end
+end
+
+function BuildingHelper:OnNPCSpawned(keys)
+    local npc = EntIndexToHScript(keys.entindex)
+    if IsBuilder(npc) then
+        BuildingHelper:InitializeBuilder(npc)
+    end
+end
+
+function BuildingHelper:OnEntityKilled(keys)
+    local killed = EntIndexToHScript(keys.entindex_killed)
+
+    if IsBuilder(killed) then
+        BuildingHelper:ClearQueue(killed)
+    elseif IsCustomBuilding(killed) then
+        -- Building Helper grid cleanup
+        BuildingHelper:RemoveBuilding(killed, true)
+    end
+end
+
+function BuildingHelper:OnTreeCut(keys)
+    local treePos = Vector(keys.tree_x,keys.tree_y,0)
+
+    -- Create a dummy for clients to be able to detect trees standing and block their grid
+    CreateUnitByName("tree_chopped", treePos, false, nil, nil, 0)
+
+    -- Allow construction
+    if not GridNav:IsBlocked(treePos) then
+        BuildingHelper:FreeGridSquares(2, treePos)
+    end
+end
+
 function BuildingHelper:SendGNV( args )
     local playerID = args.PlayerID
     local player = PlayerResource:GetPlayer(playerID)
@@ -212,6 +244,65 @@ function BuildingHelper:CancelCommand( args )
     end
     BuildingHelper:ClearQueue(playerTable.activeBuilder)
 end
+
+function BuildingHelper:OnPlayerSelectedEntities(event)
+    local pID = event.pID
+
+    GameRules.SELECTED_UNITS[pID] = event.selected_entities
+
+    -- This is for Building Helper to know which is the currently active builder
+    local mainSelected = GetMainSelectedEntity(pID)
+    local player = BuildingHelper:GetPlayerTable(pID)
+    if IsValidEntity(mainSelected) and IsBuilder(mainSelected) then
+        player.activeBuilder = mainSelected
+    else
+        if IsValidEntity(player.activeBuilder) then
+            -- Clear ghost particles when swapping to a non-builder
+            BuildingHelper:StopGhost(player.activeBuilder)
+        end
+    end
+end
+
+function BuildingHelper:OrderFilter(order)
+    local ret = true    
+
+    if BuildingHelper.nextFilter then
+        ret = BuildingHelper.nextFilter(BuildingHelper.nextContext, order)
+    end
+
+    if not ret then
+        return false
+    end
+
+    local issuerID = order.issuer_player_id_const
+
+    if issuerID == -1 then return true end
+
+    local queue = order.queue == 1
+    local order_type = order.order_type
+    local units = order.units
+    local abilityIndex = order.entindex_ability
+
+    -- Cancel queue on Stop and Hold
+    if order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+        for n, unit_index in pairs(units) do 
+            local unit = EntIndexToHScript(unit_index)
+            if IsBuilder(unit) then
+                BuildingHelper:ClearQueue(unit)
+            end
+        end
+        return true
+
+    -- Cancel builder queue when casting non building abilities
+    elseif (abilityIndex and abilityIndex ~= 0) and unit and IsBuilder(unit) then
+        local ability = EntIndexToHScript(abilityIndex)
+        if not IsBuildingAbility(ability) then
+            BuildingHelper:ClearQueue(unit)
+        end
+    end
+
+    return ret
+end    
 
 --[[
       InitializeBuilder
@@ -1490,6 +1581,101 @@ function BuildingHelper:GetPlayerTable( playerID )
     end
 
     return BuildingHelper.Players[playerID]
+end
+
+function BuildingHelper:GetConstructionSize(unit)
+    local unitTable = (type(unit) == "table") and BuildingHelper.UnitKVs[unit:GetUnitName()] or BuildingHelper.UnitKVs[unit]
+    return unitTable["ConstructionSize"]
+end
+
+function BuildingHelper:GetBlockPathingSize(unit)
+    local unitTable = (type(unit) == "table") and BuildingHelper.UnitKVs[unit:GetUnitName()] or BuildingHelper.UnitKVs[unit]
+    return unitTable["BlockPathingSize"]
+end
+
+-- Find the closest position of construction_size, within maxDistance
+function BuildingHelper:FindClosestEmptyPositionNearby( location, construction_size, maxDistance )
+    local originX = GridNav:WorldToGridPosX(location.x)
+    local originY = GridNav:WorldToGridPosY(location.y)
+
+    local boundX1 = originX + math.floor(maxDistance/64)
+    local boundX2 = originX - math.floor(maxDistance/64)
+    local boundY1 = originY + math.floor(maxDistance/64)
+    local boundY2 = originY - math.floor(maxDistance/64)
+
+    local lowerBoundX = math.min(boundX1, boundX2)
+    local upperBoundX = math.max(boundX1, boundX2)
+    local lowerBoundY = math.min(boundY1, boundY2)
+    local upperBoundY = math.max(boundY1, boundY2)
+
+    -- Restrict to the map edges
+    lowerBoundX = math.max(lowerBoundX, -BuildingHelper.squareX/2+1)
+    upperBoundX = math.min(upperBoundX, BuildingHelper.squareX/2-1)
+    lowerBoundY = math.max(lowerBoundY, -BuildingHelper.squareY/2+1)
+    upperBoundY = math.min(upperBoundY, BuildingHelper.squareY/2-1)
+
+    -- Adjust even size
+    if (construction_size % 2) == 0 then
+        upperBoundX = upperBoundX-1
+        upperBoundY = upperBoundY-1
+    end
+
+    local towerPos = nil
+    local closestDistance = maxDistance
+
+    for x = lowerBoundX, upperBoundX do
+        for y = lowerBoundY, upperBoundY do
+            if BuildingHelper.Grid[x][y] == GRID_FREE then
+                local pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
+                BuildingHelper:SnapToGrid(construction_size, pos)
+                if not BuildingHelper:IsAreaBlocked(construction_size, pos) then
+                    local distance = (pos - location):Length2D()
+                    if distance < closestDistance then
+                        towerPos = pos
+                        closestDistance = distance
+                    end
+                end
+            end
+        end
+    end
+    BuildingHelper:SnapToGrid(construction_size, towerPos)
+    return towerPos
+end
+
+-- A BuildingHelper ability is identified by the "Building" key.
+function IsBuildingAbility( ability )
+    if not IsValidEntity(ability) then
+        return
+    end
+
+    local ability_name = ability:GetAbilityName()
+    local ability_table = BuildingHelper.AbilityKVs[ability_name]
+    if ability_table and ability_table["Building"] then
+        return true
+    else
+        ability_table = BuildingHelper.ItemKVs[ability_name]
+        if ability_table and ability_table["Building"] then
+            return true
+        end
+    end
+
+    return false
+end
+
+-- Builders are stored in a nettable in addition to the builder label
+function IsBuilder( unit )
+    local table = CustomNetTables:GetTableValue("builders", tostring(unit:GetEntityIndex()))
+    return table and tobool(table["IsBuilder"]) or false
+end
+
+function IsCustomBuilding( unit )
+    local ability_building = unit:FindAbilityByName("ability_building")
+    local ability_tower = unit:FindAbilityByName("ability_tower")
+    if ability_building or ability_tower then
+        return true
+    else
+        return false
+    end
 end
 
 function PrintGridCoords( pos )

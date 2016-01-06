@@ -456,8 +456,8 @@ function dotacraft:InitializePlayer( hero )
     local hero_name = hero:GetUnitName()
     local city_center_name = GetCityCenterNameForHeroRace(hero_name)
     local builder_name = GetBuilderNameForHeroRace(hero_name)
-    local construction_size = Units:GetConstructionSize(city_center_name) 
-    local pathing_size = Units:GetBlockPathingSize(city_center_name)
+    local construction_size = BuildingHelper:GetConstructionSize(city_center_name) 
+    local pathing_size = BuildingHelper:GetBlockPathingSize(city_center_name)
 
 	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, construction_size, pathing_size, 0)
 	Players:AddStructure(playerID, building)
@@ -486,7 +486,7 @@ function dotacraft:InitializePlayer( hero )
 		Players:AddUnit(playerID, ghoul)
 
 		-- Haunt the closest gold mine
-        local construction_size = Units:GetConstructionSize("undead_haunted_gold_mine")
+        local construction_size = BuildingHelper:GetConstructionSize("undead_haunted_gold_mine")
 		local haunted_gold_mine = BuildingHelper:PlaceBuilding(player, "undead_haunted_gold_mine", closest_mine_pos, construction_size, 0)
         Players:AddStructure(playerID, haunted_gold_mine)
 
@@ -724,10 +724,6 @@ function dotacraft:OnNPCSpawned(keys)
 		dotacraft:OnHeroInGame(npc)
 	end
 
-	if IsBuilder(npc) then
-		BuildingHelper:InitializeBuilder(npc)
-	end
-
     Units:Init(npc)
 end
 
@@ -919,11 +915,6 @@ function dotacraft:OnTreeCut(keys)
     	Vector(-64,64,0) -- NW
   	}
 
-    -- Allow construction
-    if not GridNav:IsBlocked(treePos) then
-        BuildingHelper:FreeGridSquares(2, treePos)
-    end
-
   	for k=1,#vecs do
   		local vec = vecs[k]
  		local xoff = vec.x
@@ -1062,9 +1053,6 @@ function dotacraft:OnEntityKilled( event )
 		-- Cleanup building tables
 		Players:RemoveStructure( killed_playerID, killed )
 
-		-- Building Helper grid cleanup
-		BuildingHelper:RemoveBuilding(killed, true)
-
 		local particle = ParticleManager:CreateParticle("particles/world_destruction_fx/base_statue_destruction_generic_c.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(particle,0 , killed:GetAbsOrigin())
 		killed:AddNoDraw()
@@ -1131,10 +1119,6 @@ function dotacraft:OnEntityKilled( event )
 		local food_cost = GetFoodCost(killed)
 		if killed_hero and food_cost > 0 then
 			Players:ModifyFoodUsed(killed_playerID, - food_cost)
-		end
-
-		if IsBuilder(killed) then
-			BuildingHelper:ClearQueue(killed)
 		end
 	end
 
@@ -1459,8 +1443,8 @@ function dotacraft:OnPreGame()
 	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
 	for k,gold_mine in pairs (GameRules.GoldMines) do
 		local location = gold_mine:GetAbsOrigin()
-		local construction_size = Units:GetConstructionSize(gold_mine)
-		local pathing_size = Units:GetBlockPathingSize(gold_mine)
+		local construction_size = BuildingHelper:GetConstructionSize(gold_mine)
+		local pathing_size = BuildingHelper:GetBlockPathingSize(gold_mine)
 		BuildingHelper:SnapToGrid(construction_size, location)
 
 		local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location, "GoldMine")

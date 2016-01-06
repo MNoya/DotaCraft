@@ -57,6 +57,7 @@ end
 -- Create our game mode and initialize it
 function Activate()
     print ( '[DOTACRAFT] creating dotacraft game mode' )
+    BuildingHelper:Activate()
     dotacraft:InitGameMode()
 end
 

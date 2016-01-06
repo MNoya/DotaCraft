@@ -6,7 +6,7 @@ function Root( event )
     local playerID = caster:GetPlayerOwnerID()
     local teamNumber = caster:GetTeamNumber()
     local ancient_name = caster:GetUnitName()
-    local construction_size = Units:GetConstructionSize(ancient_name)
+    local construction_size = BuildingHelper:GetConstructionSize(ancient_name)
     
     -- Callbacks
     event:OnPreConstruction(function(vPos) end)
@@ -41,8 +41,8 @@ end
 
 function RootStart( unit )
     local ancient_name = unit:GetUnitName()
-    local construction_size = Units:GetConstructionSize(ancient_name)
-    local pathing_size = Units:GetBlockPathingSize(ancient_name)
+    local construction_size = BuildingHelper:GetConstructionSize(ancient_name)
+    local pathing_size = BuildingHelper:GetBlockPathingSize(ancient_name)
 
     BuildingHelper:RemoveBuilder(unit)
 

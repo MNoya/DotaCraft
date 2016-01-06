@@ -23,7 +23,7 @@ function Build( event )
         building_name = AbilityKV[ability_name].UnitName --Building Helper value
     end
 
-    local construction_size = Units:GetConstructionSize(building_name)
+    local construction_size = BuildingHelper:GetConstructionSize(building_name)
     local construction_radius = construction_size * 64 - 32
 
     -- Checks if there is enough custom resources to start the building, else stop.

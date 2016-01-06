@@ -11,8 +11,8 @@ function BuildPocketFactory( event )
 	local factory_duration =  ability:GetLevelSpecialValueFor( "factory_duration" , ability:GetLevel() - 1  )
 	local ability_level = ability:GetLevel()
 	local building_name = "tinker_pocket_factory_building"..ability_level
-	local construction_size = Units:GetConstructionSize(building_name)
-	local pathing_size = Units:GetBlockPathingSize(building_name)
+	local construction_size = BuildingHelper:GetConstructionSize(building_name)
+	local pathing_size = BuildingHelper:GetBlockPathingSize(building_name)
 
 	-- Create the building, set to time out after a duration
 	caster.pocket_factory = BuildingHelper:PlaceBuilding(caster:GetPlayerOwner(), building_name, point, construction_size, pathing_size, 0)
