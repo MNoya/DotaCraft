@@ -5,7 +5,7 @@ GRID_ALPHA = 30 -- Defines the transparency of the ghost squares (Panorama)
 MODEL_ALPHA = 100 -- Defines the transparency of both the ghost model (Panorama) and Building Placed (Lua)
 RECOLOR_GHOST_MODEL = true -- Whether to recolor the ghost model green/red or not
 RECOLOR_BUILDING_PLACED = true -- Whether to recolor the queue of buildings placed (Lua)
-INITIAL_HEALTH_FACTOR = 0.10 -- percentage health that buildings should start at, can be overriden by InitialHealth KV
+INITIAL_HEALTH_FACTOR = 0.10 -- percentage health that buildings should start at
 BH_PRINT = true --Turn this off on production
 
 if not BuildingHelper then
@@ -17,9 +17,9 @@ end
     * Loads Key Values into the BuildingAbilities
 ]]--
 function BuildingHelper:Init()
-    BuildingHelper.AbilityKVs = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
-    BuildingHelper.ItemKVs = LoadKeyValues("scripts/npc/npc_items_custom.txt")
-    BuildingHelper.UnitKVs = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+    BuildingHelper.AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
+    BuildingHelper.ItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
+    BuildingHelper.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
     BuildingHelper:print("BuildingHelper Init")
     BuildingHelper.Players = {} -- Holds a table for each player ID
@@ -51,9 +51,9 @@ function BuildingHelper:Init()
     LinkLuaModifier("modifier_builder_hidden", "libraries/modifiers/modifier_builder_hidden", LUA_MODIFIER_MOTION_NONE)
     
     BuildingHelper.KV = {} -- Merge KVs into a single table
-    BuildingHelper:ParseKV(BuildingHelper.AbilityKVs, BuildingHelper.KV)
-    BuildingHelper:ParseKV(BuildingHelper.ItemKVs, BuildingHelper.KV)
-    BuildingHelper:ParseKV(BuildingHelper.UnitKVs, BuildingHelper.KV)
+    BuildingHelper:ParseKV(BuildingHelper.AbilityKV, BuildingHelper.KV)
+    BuildingHelper:ParseKV(BuildingHelper.ItemKV, BuildingHelper.KV)
+    BuildingHelper:ParseKV(BuildingHelper.UnitKV, BuildingHelper.KV)
 
     -- Hook to override the order filter
     debug.sethook(function(...)
@@ -369,7 +369,7 @@ function BuildingHelper:AddBuilding(keys)
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
     if not fMaxScale then
         -- If no MaxScale is defined, check the "ModelScale" KeyValue. Otherwise just default to 1
-        local fModelScale = BuildingHelper.UnitKVs[unitName].ModelScale
+        local fModelScale = BuildingHelper.UnitKV[unitName].ModelScale
         if fModelScale then
           fMaxScale = fModelScale
         else
@@ -521,13 +521,13 @@ function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
     end
 
     -- OverrideBuildingGhost
-    local override_ghost = BuildingHelper.UnitKVs[unitName]["OverrideBuildingGhost"]
+    local override_ghost = BuildingHelper.UnitKV[unitName]["OverrideBuildingGhost"]
     if override_ghost then
         buildingTable:SetVal("OverrideBuildingGhost", override_ghost)
     end
 
     -- Ensure that the unit actually exists
-    local unitTable = BuildingHelper.UnitKVs[unitName]
+    local unitTable = BuildingHelper.UnitKV[unitName]
     if not unitTable then
         BuildingHelper:print('Error: Definition for Unit ' .. unitName .. ' could not be found in the KeyValue files.')
         return
@@ -560,7 +560,7 @@ function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
     if not fMaxScale then
         -- If no MaxScale is defined, check the Units "ModelScale" KeyValue. Otherwise just default to 1
-        local fModelScale = BuildingHelper.UnitKVs[unitName].ModelScale
+        local fModelScale = BuildingHelper.UnitKV[unitName].ModelScale
         if fModelScale then
             fMaxScale = fModelScale
         else
@@ -717,7 +717,7 @@ function BuildingHelper:StartBuilding( builder )
     -- Max and Initial Health factor
     local fMaxHealth = building:GetMaxHealth()
     local fInitialHealthFactor = INITIAL_HEALTH_FACTOR
-    local nInitialHealth = buildingTable:GetVal("InitialHealth", "number") or fInitialHealthFactor * ( fMaxHealth )
+    local nInitialHealth = math.floor(fInitialHealthFactor * ( fMaxHealth ))
     local fUpdateHealthInterval = buildTime / math.floor(fMaxHealth-nInitialHealth) -- health to add every tick until build time is completed.
     building:SetHealth(nInitialHealth)
     building.bUpdatingHealth = true
@@ -1119,7 +1119,7 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     -- Check for special requirement
     local playerTable = BuildingHelper:GetPlayerTable(unit:GetPlayerOwnerID())
     local buildingName = playerTable.activeBuilding
-    local buildingTable = buildingName and BuildingHelper.UnitKVs[buildingName]
+    local buildingTable = buildingName and BuildingHelper.UnitKV[buildingName]
     local requires = buildingTable and buildingTable["Requires"]
 
     if requires then
@@ -1475,12 +1475,12 @@ function BuildingHelper:GetPlayerTable( playerID )
 end
 
 function BuildingHelper:GetConstructionSize(unit)
-    local unitTable = (type(unit) == "table") and BuildingHelper.UnitKVs[unit:GetUnitName()] or BuildingHelper.UnitKVs[unit]
+    local unitTable = (type(unit) == "table") and BuildingHelper.UnitKV[unit:GetUnitName()] or BuildingHelper.UnitKV[unit]
     return unitTable["ConstructionSize"]
 end
 
 function BuildingHelper:GetBlockPathingSize(unit)
-    local unitTable = (type(unit) == "table") and BuildingHelper.UnitKVs[unit:GetUnitName()] or BuildingHelper.UnitKVs[unit]
+    local unitTable = (type(unit) == "table") and BuildingHelper.UnitKV[unit:GetUnitName()] or BuildingHelper.UnitKV[unit]
     return unitTable["BlockPathingSize"]
 end
 
