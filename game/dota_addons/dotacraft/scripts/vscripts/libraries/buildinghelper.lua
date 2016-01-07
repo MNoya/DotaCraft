@@ -381,6 +381,15 @@ function BuildingHelper:AddBuilding(keys)
     end
     buildingTable:SetVal("MaxScale", fMaxScale)
 
+    local color = Vector(255,255,255)
+    if RECOLOR_GHOST_MODEL then
+        color = Vector(0,255,0)
+    end
+
+    -- Basic event table to send
+    local event = { state = "active", size = size, scale = fMaxScale, builderIndex = builder:GetEntityIndex(),
+                    grid_alpha = GRID_ALPHA, model_alpha = MODEL_ALPHA, recolor_ghost = RECOLOR_GHOST_MODEL, }
+
     -- Set the active variables and callbacks
     local playerID = builder:GetMainControllingPlayer()
     local player = PlayerResource:GetPlayer(playerID)
@@ -398,24 +407,34 @@ function BuildingHelper:AddBuilding(keys)
 
     -- Get a model dummy to pass it to panorama
     local mgd = BuildingHelper:GetOrCreateDummy(unitName)
+    event.entindex = mgd:GetEntityIndex()
+
+    -- Range overlay
+    if mgd:HasAttackCapability() then
+        event.range = buildingTable:GetVal("AttackRange", "number") + mgd:GetHullRadius()
+    end
+
+    -- Make a pedestal dummy if required
+    local pedestal = buildingTable:GetVal("PedestalModel")
+    if pedestal then
+        local prop = BuildingHelper:GetOrCreateProp(pedestal)
+        mgd.prop = prop
+
+        -- Add values to the event table
+        event.propIndex = prop:GetEntityIndex()
+        event.propScale = buildingTable:GetVal("PedestalModelScale", "float") or mgd:GetModelScale()
+        event.offsetZ = buildingTable:GetVal("PedestalOffset", "float") or 0
+    end
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
     mgd:SetAngles(0, -yaw, 0)
 
-    local color = Vector(255,255,255)
-    if RECOLOR_GHOST_MODEL then
-        color = Vector(0,255,0)
-    end
-
     -- Require a certain type of grid string
     local requires = buildingTable:GetVal("Requires", "string")
-
-    local paramsTable = { state = "active", size = size, scale = fMaxScale, 
-                          grid_alpha = GRID_ALPHA, model_alpha = MODEL_ALPHA, recolor_ghost = RECOLOR_GHOST_MODEL,
-                          entindex = mgd:GetEntityIndex(), builderIndex = builder:GetEntityIndex(), requires = requires,
-                        }
-    CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", paramsTable)
+    event.requires = requires
+                        
+    CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_enable", event)
 end
 
 --[[
@@ -515,12 +534,6 @@ function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
         unitName = builderHandle:GetUnitName()
     end
 
-    -- OverrideBuildingGhost
-    local override_ghost = BuildingHelper.UnitKV[unitName]["OverrideBuildingGhost"]
-    if override_ghost then
-        buildingTable:SetVal("OverrideBuildingGhost", override_ghost)
-    end
-
     -- Ensure that the unit actually exists
     local unitTable = BuildingHelper.UnitKV[unitName]
     if not unitTable then
@@ -535,12 +548,39 @@ function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
     end
     buildingTable:SetVal("ConstructionSize", construction_size)
 
+    -- OverrideBuildingGhost
+    local override_ghost = BuildingHelper.UnitKV[unitName]["OverrideBuildingGhost"]
+    if override_ghost then
+        buildingTable:SetVal("OverrideBuildingGhost", override_ghost)
+    end
+
+    local attack_range = unitTable["AttackRange"] or 0
+    buildingTable:SetVal("AttackRange", attack_range)
+
     local pathing_size = unitTable["BlockPathingSize"]
     if not pathing_size then
         BuildingHelper:print('Warning: Unit ' .. unitName .. ' does not have a BlockPathingSize KeyValue. Defaulting to 0')
         pathing_size = 0
     end
     buildingTable:SetVal("BlockPathingSize", pathing_size)
+
+    -- Pedestal Model
+    local pedestal_model = BuildingHelper.UnitKV[unitName]["PedestalModel"]
+    if pedestal_model then
+        buildingTable:SetVal("PedestalModel", pedestal_model)
+    end
+
+    -- Pedestal Scale
+    local pedestal_scale = BuildingHelper.UnitKV[unitName]["PedestalModelScale"]
+    if pedestal_scale then
+        buildingTable:SetVal("PedestalModelScale", pedestal_scale)
+    end
+
+    -- Pedestal Offset
+    local pedestal_offset = BuildingHelper.UnitKV[unitName]["PedestalOffset"]
+    if pedestal_offset then
+        buildingTable:SetVal("PedestalOffset", pedestal_offset)
+    end
 
     -- If the construction requires certain grid type, store it
     local requires = unitTable["Requires"]
@@ -615,6 +655,16 @@ function BuildingHelper:RemoveBuilding( building, bForcedKill )
         building:ForceKill(bForcedKill)
     end
 
+    local particleName = BuildingHelper.UnitKV[building:GetUnitName()]["DestructionEffect"]
+    if particleName then
+        local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, building)
+        ParticleManager:SetParticleControl(particle, 0, building:GetAbsOrigin())
+    end
+
+    if building.prop then
+        UTIL_Remove(building.prop)
+    end
+
     BuildingHelper:FreeGridSquares(building.construction_size, building:GetAbsOrigin())
 
     if not building.blockers then 
@@ -635,6 +685,7 @@ function BuildingHelper:StartBuilding( builder )
     local playerID = builder:GetMainControllingPlayer()
     local work = builder.work
     local callbacks = work.callbacks
+    local building = work.entity -- The building entity
     local unitName = work.name
     local location = work.location
     local player = PlayerResource:GetPlayer(playerID)
@@ -664,13 +715,30 @@ function BuildingHelper:StartBuilding( builder )
     -- Spawn point obstructions before placing the building
     local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
 
-    -- Spawn the building
-    local building = CreateUnitByName(unitName, location, false, playersHero, player, builder:GetTeam())
+    -- For overriden ghosts we need to create another unit and remove the fake hero ghost
+    if building:GetUnitName() ~= unitName then
+        building = CreateUnitByName(unitName, location, false, playersHero, player, builder:GetTeam())
+    else
+        building:RemoveModifierByName("modifier_out_of_world")
+        building:RemoveEffects(EF_NODRAW)
+    end
+
+    -- Initialize the building
+    building:SetAbsOrigin(location)
     building:SetControllableByPlayer(playerID, true)
     building.blockers = gridNavBlockers
     building.construction_size = construction_size
     building.buildingTable = buildingTable
     building.state = "building"
+
+    -- Remove the attached prop particle and reveal the entity
+    if work.entity and work.entity.prop and work.entity.prop.pedestalParticle then
+        work.entity.prop:RemoveEffects(EF_NODRAW)
+        ParticleManager:DestroyParticle(work.entity.prop.pedestalParticle, true)
+
+        -- Store the prop on the building itself
+        building.prop = work.entity.prop
+    end
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
@@ -1271,6 +1339,28 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
         ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0)) -- Alpha
         ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0)) -- Scale
 
+        -- Create pedestal
+        local pedestal = buildingTable:GetVal("PedestalModel")
+        local offset = buildingTable:GetVal("PedestalOffset", "float") or 0
+        if pedestal then
+            local prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = pedestal})
+            local scale = buildingTable:GetVal("PedestalModelScale", "float") or entity:GetModelScale()
+            local offset_location = Vector(location.x, location.y, location.z + offset)
+            prop:SetModelScale(scale)
+            prop:SetAbsOrigin(offset_location)
+            entity.prop = prop -- Store the pedestal prop
+
+            prop:AddEffects(EF_NODRAW)
+            prop.pedestalParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, prop, player)
+            ParticleManager:SetParticleControl(prop.pedestalParticle, 0, offset_location)
+            ParticleManager:SetParticleControlEnt(prop.pedestalParticle, 1, prop, 1, "attach_hitloc", prop:GetAbsOrigin(), true) -- Model attach          
+            ParticleManager:SetParticleControl(prop.pedestalParticle, 3, Vector(MODEL_ALPHA,0,0)) -- Alpha
+            ParticleManager:SetParticleControl(prop.pedestalParticle, 4, Vector(scale,0,0)) -- Scale
+
+            local color = RECOLOR_BUILDING_PLACED and Vector(0,255,0) or Vector(255,255,255)
+            ParticleManager:SetParticleControl(prop.pedestalParticle, 2, color) -- Color
+        end
+
         -- Adjust the Model Orientation
         local yaw = buildingTable:GetVal("ModelRotation", "float")
         entity:SetAngles(0, -yaw, 0)
@@ -1283,7 +1373,7 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
             BuildingHelper:ClearQueue(builder)
         end
 
-         -- Add this to the builder queue
+        -- Add this to the builder queue
         table.insert(builder.buildingQueue, {["location"] = location, ["name"] = buildingName, ["buildingTable"] = buildingTable, ["particleIndex"] = modelParticle, ["entity"] = entity, ["callbacks"] = callbacks})
 
         -- If the builder doesn't have a current work, start the queue
@@ -1377,9 +1467,8 @@ function BuildingHelper:ClearQueue(builder)
 
     -- Main work  
     if work then
-        if work.particleIndex then
-            ParticleManager:DestroyParticle(work.particleIndex, true)
-        end
+        ParticleManager:DestroyParticle(work.particleIndex, true)
+        if work.entity.prop then UTIL_Remove(work.entity.prop) end
         UTIL_Remove(work.entity)
 
         -- Only refund work that hasn't been placed yet
@@ -1397,6 +1486,7 @@ function BuildingHelper:ClearQueue(builder)
         work = builder.buildingQueue[1]
         work.refund = true --Refund this
         ParticleManager:DestroyParticle(work.particleIndex, true)
+        if work.entity.prop then UTIL_Remove(work.entity.prop) end
         UTIL_Remove(work.entity)
         table.remove(builder.buildingQueue, 1)
 
@@ -1475,6 +1565,17 @@ function BuildingHelper:GetOrCreateDummy( unitName )
         mgd:AddNewModifier(mgd, nil, "modifier_out_of_world", {})
         BuildingHelper.Dummies[unitName] = mgd
         return mgd
+    end
+end
+
+function BuildingHelper:GetOrCreateProp( propName )
+    if BuildingHelper.Dummies[propName] then
+        return BuildingHelper.Dummies[propName]
+    else
+        local prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propName})
+        prop:AddEffects(EF_NODRAW)
+        BuildingHelper.Dummies[propName] = prop
+        return prop
     end
 end
 
