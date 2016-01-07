@@ -17,7 +17,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     local y = tonumber(filterTable["position_y"])
     local z = tonumber(filterTable["position_z"])
     local point = Vector(x,y,z)
-    local queue = tobool(filterTable["queue"])
+    local queue = filterTable["queue"] == 1
 
     local numUnits = 0
     local numBuildings = 0

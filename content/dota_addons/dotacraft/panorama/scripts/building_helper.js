@@ -6,11 +6,7 @@ var state = 'disabled';
 var frame_rate = 1/30;
 var size = 0;
 var overlay_size = 0;
-var grid_alpha = 30;
-var overlay_alpha = 90;
-var range_overlay_alpha = 30;
-var model_alpha = 100;
-var recolor_ghost = false;
+var range = 0;
 var pressedShift = false;
 var altDown = false;
 var requires;
@@ -22,13 +18,25 @@ var gridParticles;
 var overlayParticles;
 var rangeOverlay;
 var rangeOverlayActive;
-var range = 0;
 var builderIndex;
 var entityGrid;
 var distance_to_gold_mine;
 var cutTrees = [];
 var BLOCKED = 2;
 var GRID_TYPES = [];
+
+// building_settings.kv options
+var grid_alpha = CustomNetTables.GetTableValue( "building_settings", "grid_alpha").value
+var alt_grid_alpha = CustomNetTables.GetTableValue( "building_settings", "alt_grid_alpha").value
+var range_overlay_alpha = CustomNetTables.GetTableValue( "building_settings", "range_overlay_alpha").value
+var model_alpha = CustomNetTables.GetTableValue( "building_settings", "model_alpha").value
+var recolor_ghost = CustomNetTables.GetTableValue( "building_settings", "recolor_ghost").value;
+var turn_red = CustomNetTables.GetTableValue( "building_settings", "turn_red").value;
+
+var HEIGHT_RESTRICTION
+if (CustomNetTables.GetTableValue( "building_settings", "height_restriction") !== undefined)
+    HEIGHT_RESTRICTION = CustomNetTables.GetTableValue( "building_settings", "height_restriction").value;
+
 var Root = $.GetContextPanel()
 var localHeroIndex = Players.GetPlayerHeroEntityIndex( Players.GetLocalPlayer() );
 
@@ -50,9 +58,6 @@ function StartBuildingHelper( params )
         size = params.size;
         range = params.range;
         overlay_size = size*3;
-        grid_alpha = Number(params.grid_alpha);
-        model_alpha = Number(params.model_alpha);
-        recolor_ghost = Number(params.recolor_ghost);
         builderIndex = params.builderIndex;
         requires = params.requires;
         var scale = params.scale;
@@ -77,6 +82,9 @@ function StartBuildingHelper( params )
 
         if (modelParticle !== undefined) {
             Particles.DestroyParticleEffect(modelParticle, true)
+        }
+        if (propParticle !== undefined) {
+            Particles.DestroyParticleEffect(propParticle, true)
         }
         if (gridParticles !== undefined) {
             for (var i in gridParticles) {
@@ -231,7 +239,7 @@ function StartBuildingHelper( params )
                     {
                         var particle = Particles.CreateParticle("particles/buildinghelper/square_overlay.vpcf", ParticleAttachment_t.PATTACH_CUSTOMORIGIN, 0)
                         Particles.SetParticleControl(particle, 1, [32,0,0])
-                        Particles.SetParticleControl(particle, 3, [0,0,0])
+                        Particles.SetParticleControl(particle, 3, [alt_grid_alpha,0,0])
                         overlayParticles.push(particle)
                     }
                 }
@@ -261,8 +269,7 @@ function StartBuildingHelper( params )
                         if (IsBlocked(pos2) || TooCloseToGoldmine(pos2))
                             color = [255,0,0]                        
 
-                        Particles.SetParticleControl(overlayParticle, 2, color)        
-                        Particles.SetParticleControl(overlayParticle, 3, [overlay_alpha,0,0])
+                        Particles.SetParticleControl(overlayParticle, 2, color)
                     }
                 }
             }
@@ -307,7 +314,7 @@ function StartBuildingHelper( params )
                 Particles.SetParticleControl(rangeOverlay, 0, GamePos)
 
             // Turn the model red if we can't build there
-            if (recolor_ghost){
+            if (turn_red){
                 invalid ? Particles.SetParticleControl(modelParticle, 2, [255,0,0]) : Particles.SetParticleControl(modelParticle, 2, [255,255,255])
                 if (propParticle !== undefined)
                     invalid ? Particles.SetParticleControl(propParticle, 2, [255,0,0]) : Particles.SetParticleControl(propParticle, 2, [255,255,255])
@@ -453,8 +460,10 @@ function IsBlocked(position) {
 
     if (requires !== undefined)
         return !IsSpecialGrid(x,y, requires)
-    
-    return (Root.GridNav[x][y] >= BLOCKED) || IsEntityGridBlocked(x,y)
+
+    var restrictHeight = (HEIGHT_RESTRICTION !== undefined) ? position[2] < HEIGHT_RESTRICTION : false
+
+    return restrictHeight || Root.GridNav[x][y] == BLOCKED || IsEntityGridBlocked(x,y)
 }
 
 function IsEntityGridBlocked(x,y) {

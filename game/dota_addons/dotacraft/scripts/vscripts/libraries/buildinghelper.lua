@@ -1,13 +1,5 @@
 BH_VERSION = "1.0"
 
--- Building Particle Settings
-GRID_ALPHA = 30 -- Defines the transparency of the ghost squares (Panorama)
-MODEL_ALPHA = 100 -- Defines the transparency of both the ghost model (Panorama) and Building Placed (Lua)
-RECOLOR_GHOST_MODEL = true -- Whether to recolor the ghost model green/red or not
-RECOLOR_BUILDING_PLACED = true -- Whether to recolor the queue of buildings placed (Lua)
-INITIAL_HEALTH_FACTOR = 0.10 -- percentage health that buildings should start at
-BH_PRINT = true --Turn this off on production
-
 if not BuildingHelper then
     BuildingHelper = class({})
 end
@@ -75,6 +67,24 @@ function BuildingHelper:Init()
             end
         end
     end, "c")
+end
+
+function BuildingHelper:LoadSettings()
+    BuildingHelper.Settings = LoadKeyValues("scripts/kv/building_settings.kv")
+    
+    BuildingHelper.Settings["TESTING"] = tobool(BuildingHelper.Settings["TESTING"])
+    BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"] = tobool(BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"])
+
+    CustomNetTables:SetTableValue("building_settings", "grid_alpha", { value = BuildingHelper.Settings["GRID_ALPHA"] })
+    CustomNetTables:SetTableValue("building_settings", "alt_grid_alpha", { value = BuildingHelper.Settings["ALT_GRID_ALPHA"] })
+    CustomNetTables:SetTableValue("building_settings", "range_overlay_alpha", { value = BuildingHelper.Settings["RANGE_OVERLAY_ALPHA"] })
+    CustomNetTables:SetTableValue("building_settings", "model_alpha", { value = BuildingHelper.Settings["MODEL_ALPHA"] })
+    CustomNetTables:SetTableValue("building_settings", "recolor_ghost", { value = tobool(BuildingHelper.Settings["RECOLOR_GHOST_MODEL"]) })
+    CustomNetTables:SetTableValue("building_settings", "turn_red", { value = tobool(BuildingHelper.Settings["RED_MODEL_WHEN_INVALID"]) })
+    
+    if BuildingHelper.Settings["HEIGHT_RESTRICTION"] ~= "" then
+        CustomNetTables:SetTableValue("building_settings", "height_restriction", { value = BuildingHelper.Settings["HEIGHT_RESTRICTION"] })
+    end
 end
 
 function BuildingHelper:ParseKV( t, result )
@@ -387,8 +397,7 @@ function BuildingHelper:AddBuilding(keys)
     end
 
     -- Basic event table to send
-    local event = { state = "active", size = size, scale = fMaxScale, builderIndex = builder:GetEntityIndex(),
-                    grid_alpha = GRID_ALPHA, model_alpha = MODEL_ALPHA, recolor_ghost = RECOLOR_GHOST_MODEL, }
+    local event = { state = "active", size = size, scale = fMaxScale, builderIndex = builder:GetEntityIndex() }
 
     -- Set the active variables and callbacks
     local playerID = builder:GetMainControllingPlayer()
@@ -554,6 +563,13 @@ function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
         buildingTable:SetVal("OverrideBuildingGhost", override_ghost)
     end
 
+    local build_time = buildingTable["BuildTime"] or unitTable["BuildTime"]
+    if not build_time then
+        BuildingHelper:print('Error: No BuildTime for ' .. unitName .. '. Default to 0.1')
+        build_time = 0.1
+    end
+    buildingTable:SetVal("BuildTime", build_time)
+
     local attack_range = unitTable["AttackRange"] or 0
     buildingTable:SetVal("AttackRange", attack_range)
 
@@ -701,6 +717,9 @@ function BuildingHelper:StartBuilding( builder )
         BuildingHelper:AdvanceQueue(builder)
         ParticleManager:DestroyParticle(work.particleIndex, true)
 
+        -- Remove pedestal
+        if work.entity and work.entity.prop then UTIL_Remove(work.entity.prop) end
+
         -- Building canceled, refund resources
         work.refund = true
         callbacks.onConstructionCancelled(work)
@@ -771,7 +790,7 @@ function BuildingHelper:StartBuilding( builder )
     end
 
     -- buildTime can be overriden in the construction start callback
-    local buildTime = building.overrideBuildTime or buildingTable:GetVal("BuildTime", "float") or .1
+    local buildTime = building.overrideBuildTime or buildingTable:GetVal("BuildTime", "float")
     local fTimeBuildingCompleted = GameRules:GetGameTime()+buildTime -- the gametime when the building should be completed
 
     -- Dota server updates at 30 frames per second
@@ -779,7 +798,7 @@ function BuildingHelper:StartBuilding( builder )
 
     -- Max and Initial Health factor
     local fMaxHealth = building:GetMaxHealth()
-    local fInitialHealthFactor = INITIAL_HEALTH_FACTOR
+    local fInitialHealthFactor = BuildingHelper.Settings["INITIAL_HEALTH_FACTOR"]
     local nInitialHealth = math.floor(fInitialHealthFactor * ( fMaxHealth ))
     local fUpdateHealthInterval = buildTime / math.floor(fMaxHealth-nInitialHealth) -- health to add every tick until build time is completed.
     building:SetHealth(nInitialHealth)
@@ -998,7 +1017,7 @@ function BuildingHelper:StartBuilding( builder )
                     end
                 else
                     
-                    BuildingHelper:print("Scale was off by:", fMaxScale - fCurrentScale)
+                    BuildingHelper:print("Scale was off by: "..(fMaxScale - fCurrentScale))
                     building:SetModelScale(fMaxScale)
                     return
                 end
@@ -1336,7 +1355,7 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
         local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, entity, player)
         ParticleManager:SetParticleControl(modelParticle, 0, location)
         ParticleManager:SetParticleControlEnt(modelParticle, 1, entity, 1, "attach_hitloc", entity:GetAbsOrigin(), true) -- Model attach          
-        ParticleManager:SetParticleControl(modelParticle, 3, Vector(MODEL_ALPHA,0,0)) -- Alpha
+        ParticleManager:SetParticleControl(modelParticle, 3, Vector(BuildingHelper.Settings["MODEL_ALPHA"],0,0)) -- Alpha
         ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0)) -- Scale
 
         -- Create pedestal
@@ -1354,10 +1373,10 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
             prop.pedestalParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, prop, player)
             ParticleManager:SetParticleControl(prop.pedestalParticle, 0, offset_location)
             ParticleManager:SetParticleControlEnt(prop.pedestalParticle, 1, prop, 1, "attach_hitloc", prop:GetAbsOrigin(), true) -- Model attach          
-            ParticleManager:SetParticleControl(prop.pedestalParticle, 3, Vector(MODEL_ALPHA,0,0)) -- Alpha
+            ParticleManager:SetParticleControl(prop.pedestalParticle, 3, Vector(BuildingHelper.Settings["MODEL_ALPHA"],0,0)) -- Alpha
             ParticleManager:SetParticleControl(prop.pedestalParticle, 4, Vector(scale,0,0)) -- Scale
 
-            local color = RECOLOR_BUILDING_PLACED and Vector(0,255,0) or Vector(255,255,255)
+            local color = BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"] and Vector(0,255,0) or Vector(255,255,255)
             ParticleManager:SetParticleControl(prop.pedestalParticle, 2, color) -- Color
         end
 
@@ -1365,7 +1384,7 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
         local yaw = buildingTable:GetVal("ModelRotation", "float")
         entity:SetAngles(0, -yaw, 0)
         
-        local color = RECOLOR_BUILDING_PLACED and Vector(0,255,0) or Vector(255,255,255)
+        local color = BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"] and Vector(0,255,0) or Vector(255,255,255)
         ParticleManager:SetParticleControl(modelParticle, 2, color) -- Color
 
         -- If the ability wasn't queued, override the building queue
@@ -1541,7 +1560,7 @@ function BuildingHelper:SnapToGrid32(coord)
 end
 
 function BuildingHelper:print( ... )
-    if BH_PRINT then
+    if BuildingHelper.Settings["TESTING"] then
         print('[BH] '.. ...)
     end
 end
@@ -1675,7 +1694,7 @@ end
 -- Builders are stored in a nettable in addition to the builder label
 function IsBuilder( unit )
     local table = CustomNetTables:GetTableValue("builders", tostring(unit:GetEntityIndex()))
-    return table and (table["IsBuilder"] == "1") or false
+    return unit:GetUnitLabel() == "builder" or (table and (table["IsBuilder"] == "1")) or false
 end
 
 function IsCustomBuilding( unit )
@@ -1690,6 +1709,24 @@ end
 
 function PrintGridCoords( pos )
     print('('..string.format("%.1f", pos.x)..','..string.format("%.1f", pos.y)..') = ['.. GridNav:WorldToGridPosX(pos.x)..','..GridNav:WorldToGridPosY(pos.y)..']')
+end
+
+function VectorString(v)
+    return '[' .. math.floor(v.x) .. ', ' .. math.floor(v.y) .. ', ' .. math.floor(v.z) .. ']'
+end
+
+function StringStartsWith( fullstring, substring )
+    local strlen = string.len(substring)
+    local first_characters = string.sub(fullstring, 1 , strlen)
+    return (first_characters == substring)
+end
+
+function tobool(s)
+    if s=="true" or s=="1" or s==1 then
+        return true
+    else --nil "false" "0"
+        return false
+    end
 end
 
 function DrawGridSquare( x, y, color )
@@ -1707,4 +1744,5 @@ function DrawGridSquare( x, y, color )
     end)
 end
 
+BuildingHelper:LoadSettings()
 if not BuildingHelper.KV then BuildingHelper:Init() end
