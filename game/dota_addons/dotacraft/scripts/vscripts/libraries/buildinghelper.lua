@@ -280,12 +280,15 @@ function BuildingHelper:OnPlayerSelectedEntities(event)
     -- This is for Building Helper to know which is the currently active builder
     local mainSelected = EntIndexToHScript(playerTable.SelectedEntities["0"])
     local player = BuildingHelper:GetPlayerTable(playerID)
-    if IsValidEntity(mainSelected) and IsBuilder(mainSelected) then
-        player.activeBuilder = mainSelected
-    else
-        if IsValidEntity(player.activeBuilder) then
-            -- Clear ghost particles when swapping to a non-builder
-            BuildingHelper:StopGhost(player.activeBuilder)
+
+    if IsValidEntity(mainSelected) then
+        if IsBuilder(mainSelected) then
+            player.activeBuilder = mainSelected
+        else
+            if IsValidEntity(player.activeBuilder) then
+                -- Clear ghost particles when swapping to a non-builder
+                BuildingHelper:StopGhost(player.activeBuilder)
+            end
         end
     end
 end
@@ -311,8 +314,13 @@ function BuildingHelper:OrderFilter(order)
     local abilityIndex = order.entindex_ability
     local unit = EntIndexToHScript(units["0"])
 
-    -- Cancel queue on Stop and Hold
-    if order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+    -- Item is dropped
+    if order_type == DOTA_UNIT_ORDER_DROP_ITEM and IsBuilder(unit) then
+        BuildingHelper:ClearQueue(unit)
+        return true
+
+    -- Stop and Hold
+    elseif order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
             if IsBuilder(unit) then
@@ -321,7 +329,7 @@ function BuildingHelper:OrderFilter(order)
         end
         return true
 
-    -- Cancel builder queue when casting non building abilities
+    -- Casting non building abilities
     elseif (abilityIndex and abilityIndex ~= 0) and unit and IsBuilder(unit) then
         local ability = EntIndexToHScript(abilityIndex)
         if not IsBuildingAbility(ability) then
