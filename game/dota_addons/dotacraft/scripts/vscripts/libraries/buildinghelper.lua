@@ -478,10 +478,6 @@ function BuildingHelper:SetCallbacks(keys)
         callbacks.onConstructionCompleted = callback
     end
 
-    function keys:EnableFireEffect( sFireEffect )
-        callbacks.fireEffect = sFireEffect
-    end
-
     function keys:OnBelowHalfHealth( callback )
         callbacks.onBelowHalfHealth = callback
     end
@@ -676,6 +672,10 @@ function BuildingHelper:RemoveBuilding( building, bForcedKill )
     if particleName then
         local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, building)
         ParticleManager:SetParticleControl(particle, 0, building:GetAbsOrigin())
+    end
+
+    if building.fireEffectParticle then
+        ParticleManager:DestroyParticle(building.fireEffectParticle, false)
     end
 
     if building.prop then
@@ -1027,25 +1027,35 @@ function BuildingHelper:StartBuilding( builder )
     -- OnBelowHalfHealth timer
     building.onBelowHalfHealthProc = false
     building.healthChecker = Timers:CreateTimer(.2, function()
-        if IsValidEntity(building) then
-            if building:GetHealth() < fMaxHealth/2.0 and not building.onBelowHalfHealthProc and not building.bUpdatingHealth then
-                if callbacks.fireEffect then
-                    building:AddNewModifier(building, nil, callbacks.fireEffect, nil)
+        local fireEffect = BuildingHelper.KV[unitName]["FireEffect"]
+
+        if IsValidEntity(building) and building:IsAlive() then
+            local health_percentage = building:GetHealthPercent() * 0.01
+            local belowThreshold = health_percentage < BuildingHelper.Settings["FIRE_EFFECT_FACTOR"]
+            if belowThreshold and not building.onBelowHalfHealthProc and building.state == "complete" then
+                if fireEffect then
+                    -- Fire particle
+                    if BuildingHelper.KV[unitName]["AttachPoint"] then
+                        building.fireEffectParticle = ParticleManager:CreateParticle(fireEffect, PATTACH_CUSTOMORIGIN_FOLLOW, building)
+                        ParticleManager:SetParticleControlEnt(building.fireEffectParticle, 0, building, PATTACH_POINT_FOLLOW, BuildingHelper.KV[unitName]["AttachPoint"], building:GetAbsOrigin(), true)
+                    else
+                        building.fireEffectParticle = ParticleManager:CreateParticle(fireEffect, PATTACH_ABSORIGIN_FOLLOW, building)
+                    end
                 end
             
                 callbacks.onBelowHalfHealth(building)
                 building.onBelowHalfHealthProc = true
-            elseif building:GetHealth() >= fMaxHealth/2.0 and building.onBelowHalfHealthProc and not building.bUpdatingHealth then
-                if callbacks.fireEffect then
-                    building:RemoveModifierByName(callbacks.fireEffect)
+            elseif not belowThreshold and building.onBelowHalfHealthProc and building.state == "complete" then
+                if fireEffect then
+                    ParticleManager:DestroyParticle(building.fireEffectParticle, false)
                 end
+
                 callbacks.onAboveHalfHealth(building)
                 building.onBelowHalfHealthProc = false
             end
         else
             return nil
         end
-
         return .2
     end)
 
@@ -1721,13 +1731,7 @@ function IsBuilder( unit )
 end
 
 function IsCustomBuilding( unit )
-    local ability_building = unit:FindAbilityByName("ability_building")
-    local ability_tower = unit:FindAbilityByName("ability_tower")
-    if ability_building or ability_tower then
-        return true
-    else
-        return false
-    end
+    return unit:HasAbility("ability_building") or unit:HasAbility("ability_tower")
 end
 
 function PrintGridCoords( pos )

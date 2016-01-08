@@ -1052,9 +1052,6 @@ function dotacraft:OnEntityKilled( event )
 
 		-- Cleanup building tables
 		Players:RemoveStructure( killed_playerID, killed )
-
-		local particle = ParticleManager:CreateParticle("particles/world_destruction_fx/base_statue_destruction_generic_c.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(particle,0 , killed:GetAbsOrigin())
 		killed:AddNoDraw()
 
 		-- Substract the Food Produced
