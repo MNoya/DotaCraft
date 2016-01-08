@@ -248,10 +248,9 @@ function BuildingHelper:BuildCommand( args )
     local queue = args['Queue'] == 1
     local builder = EntIndexToHScript(args['builder']) --activeBuilder
 
-    -- Cancel current repair
-    if builder:HasModifier("modifier_builder_repairing") and not queue then
-        local repair_ability = BuildingHelper:GetRepairAbility( builder )
-        BuilderStopRepairing({caster = builder, ability = repair_ability})
+    -- Cancel current action
+    if not queue then
+        ExecuteOrderFromTable({ UnitIndex = args['builder'], OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
     end
 
     BuildingHelper:AddToQueue(builder, location, queue)
