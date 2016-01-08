@@ -70,7 +70,7 @@ function GetFirstUnitFromSelectionSkipUnit ( entityList, entIndex ) {
 function SendSelectedEntities (params) {
 	var iPlayerID = Players.GetLocalPlayer();
 	var newSelectedEntities = Players.GetSelectedEntities( iPlayerID );
-	GameEvents.SendCustomGameEventToServer( "update_selected_entities", { pID: iPlayerID, selected_entities: newSelectedEntities })
+	GameEvents.SendCustomGameEventToServer( "update_selected_entities", { selected_entities: newSelectedEntities })
 }
 
 // Returns whether the selection group contains both buildings and non-building units

@@ -1150,14 +1150,14 @@ function dotacraft:OnEntityKilled( event )
 end
 
 function dotacraft:OnPlayerSelectedEntities( event )
-	local pID = event.pID
+	local playerID = event.PlayerID
 
-	GameRules.SELECTED_UNITS[pID] = event.selected_entities
-	dotacraft:UpdateRallyFlagDisplays(pID)
+	GameRules.SELECTED_UNITS[playerID] = event.selected_entities
+	dotacraft:UpdateRallyFlagDisplays(playerID)
 
 	-- This is for Building Helper to know which is the currently active builder
-	local mainSelected = GetMainSelectedEntity(pID)
-	local player = BuildingHelper:GetPlayerTable(pID)
+	local mainSelected = GetMainSelectedEntity(playerID)
+	local player = BuildingHelper:GetPlayerTable(playerID)
 	if IsValidEntity(mainSelected) and IsBuilder(mainSelected) then
 		player.activeBuilder = mainSelected
 	else

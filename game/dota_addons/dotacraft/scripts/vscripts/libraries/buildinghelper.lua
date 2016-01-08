@@ -13,6 +13,9 @@ function BuildingHelper:Init()
     BuildingHelper.ItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
     BuildingHelper.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
+    -- building_settings nettable from buildings.kv
+    BuildingHelper:LoadSettings()
+
     BuildingHelper:print("BuildingHelper Init")
     BuildingHelper.Players = {} -- Holds a table for each player ID
     BuildingHelper.Dummies = {} -- Holds up to one entity for each building name
@@ -77,11 +80,13 @@ function BuildingHelper:LoadSettings()
 
     CustomNetTables:SetTableValue("building_settings", "grid_alpha", { value = BuildingHelper.Settings["GRID_ALPHA"] })
     CustomNetTables:SetTableValue("building_settings", "alt_grid_alpha", { value = BuildingHelper.Settings["ALT_GRID_ALPHA"] })
+    CustomNetTables:SetTableValue("building_settings", "alt_grid_squares", { value = BuildingHelper.Settings["ALT_GRID_SQUARES"] })
     CustomNetTables:SetTableValue("building_settings", "range_overlay_alpha", { value = BuildingHelper.Settings["RANGE_OVERLAY_ALPHA"] })
     CustomNetTables:SetTableValue("building_settings", "model_alpha", { value = BuildingHelper.Settings["MODEL_ALPHA"] })
     CustomNetTables:SetTableValue("building_settings", "recolor_ghost", { value = tobool(BuildingHelper.Settings["RECOLOR_GHOST_MODEL"]) })
     CustomNetTables:SetTableValue("building_settings", "turn_red", { value = tobool(BuildingHelper.Settings["RED_MODEL_WHEN_INVALID"]) })
-    
+    CustomNetTables:SetTableValue("building_settings", "permanent_alt_grid", { value = tobool(BuildingHelper.Settings["PERMANENT_ALT_GRID"]) })
+
     if BuildingHelper.Settings["HEIGHT_RESTRICTION"] ~= "" then
         CustomNetTables:SetTableValue("building_settings", "height_restriction", { value = BuildingHelper.Settings["HEIGHT_RESTRICTION"] })
     end
@@ -272,13 +277,14 @@ function BuildingHelper:CancelCommand( args )
 end
 
 function BuildingHelper:OnPlayerSelectedEntities(event)
-    local pID = event.pID
+    local playerID = event.PlayerID
+    local playerTable = BuildingHelper:GetPlayerTable(playerID)
 
-    GameRules.SELECTED_UNITS[pID] = event.selected_entities
+    playerTable.SelectedEntities = event.selected_entities
 
     -- This is for Building Helper to know which is the currently active builder
-    local mainSelected = GetMainSelectedEntity(pID)
-    local player = BuildingHelper:GetPlayerTable(pID)
+    local mainSelected = EntIndexToHScript(playerTable.SelectedEntities["0"])
+    local player = BuildingHelper:GetPlayerTable(playerID)
     if IsValidEntity(mainSelected) and IsBuilder(mainSelected) then
         player.activeBuilder = mainSelected
     else
@@ -1358,6 +1364,9 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
         ParticleManager:SetParticleControl(modelParticle, 3, Vector(BuildingHelper.Settings["MODEL_ALPHA"],0,0)) -- Alpha
         ParticleManager:SetParticleControl(modelParticle, 4, Vector(fMaxScale,0,0)) -- Scale
 
+        local color = BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"] and Vector(0,255,0) or Vector(255,255,255)
+        ParticleManager:SetParticleControl(modelParticle, 2, color) -- Color
+
         -- Create pedestal
         local pedestal = buildingTable:GetVal("PedestalModel")
         local offset = buildingTable:GetVal("PedestalOffset", "float") or 0
@@ -1372,20 +1381,15 @@ function BuildingHelper:AddToQueue( builder, location, bQueued )
             prop:AddEffects(EF_NODRAW)
             prop.pedestalParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, prop, player)
             ParticleManager:SetParticleControl(prop.pedestalParticle, 0, offset_location)
-            ParticleManager:SetParticleControlEnt(prop.pedestalParticle, 1, prop, 1, "attach_hitloc", prop:GetAbsOrigin(), true) -- Model attach          
+            ParticleManager:SetParticleControlEnt(prop.pedestalParticle, 1, prop, 1, "attach_hitloc", prop:GetAbsOrigin(), true) -- Model attach
+            ParticleManager:SetParticleControl(prop.pedestalParticle, 2, color) -- Color
             ParticleManager:SetParticleControl(prop.pedestalParticle, 3, Vector(BuildingHelper.Settings["MODEL_ALPHA"],0,0)) -- Alpha
             ParticleManager:SetParticleControl(prop.pedestalParticle, 4, Vector(scale,0,0)) -- Scale
-
-            local color = BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"] and Vector(0,255,0) or Vector(255,255,255)
-            ParticleManager:SetParticleControl(prop.pedestalParticle, 2, color) -- Color
         end
 
         -- Adjust the Model Orientation
         local yaw = buildingTable:GetVal("ModelRotation", "float")
         entity:SetAngles(0, -yaw, 0)
-        
-        local color = BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"] and Vector(0,255,0) or Vector(255,255,255)
-        ParticleManager:SetParticleControl(modelParticle, 2, color) -- Color
 
         -- If the ability wasn't queued, override the building queue
         if not bQueued then
@@ -1488,10 +1492,10 @@ function BuildingHelper:ClearQueue(builder)
     if work then
         ParticleManager:DestroyParticle(work.particleIndex, true)
         if work.entity.prop then UTIL_Remove(work.entity.prop) end
-        UTIL_Remove(work.entity)
 
         -- Only refund work that hasn't been placed yet
         if not work.inProgress then
+            UTIL_Remove(work.entity)
             work.refund = true
         end
 
@@ -1521,8 +1525,20 @@ end
 ]]--
 function BuildingHelper:StopGhost( builder )
     local player = builder:GetPlayerOwner()
+    local playerID = builder:GetPlayerOwnerID()
+    local entIndex = builder:GetEntityIndex()
 
-    if IsCurrentlySelected(builder) then
+    local bCurrentlySelected = false
+    local selectedEntities = BuildingHelper:GetPlayerTable(playerID).SelectedEntities
+    if selectedEntities then
+        for _,v in pairs(selectedEntities) do
+            if v==entIndex then
+                bCurrentlySelected = true
+            end
+        end
+    end
+
+    if bCurrentlySelected then
         CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_end", {})
     end
 end
@@ -1568,6 +1584,7 @@ end
 function BuildingHelper:GetPlayerTable( playerID )
     if not BuildingHelper.Players[playerID] then
         BuildingHelper.Players[playerID] = {}
+        BuildingHelper.Players[playerID].SelectedEntities = {}
     end
 
     return BuildingHelper.Players[playerID]
@@ -1744,5 +1761,4 @@ function DrawGridSquare( x, y, color )
     end)
 end
 
-BuildingHelper:LoadSettings()
 if not BuildingHelper.KV then BuildingHelper:Init() end
