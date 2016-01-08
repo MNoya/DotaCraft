@@ -1430,13 +1430,13 @@ function BuildingHelper:AdvanceQueue(builder)
         builder.work = work
 
         -- Move towards the point at cast range
+        builder:MoveToPosition(location)
         builder.move_to_build_timer = Timers:CreateTimer(function()
             if not IsValidEntity(builder) or not builder:IsAlive() then return end
             builder.state = "moving_to_build"
 
             local distance = (location - builder:GetAbsOrigin()):Length2D()
             if distance > castRange then
-                builder:MoveToPosition(location)
                 return 0.03
             else
                 builder:Stop()
