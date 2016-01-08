@@ -439,6 +439,12 @@
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"				"0"
+	
+		// Particles
+		//----------------------------------------------------------------
+		"FireEffect"				"particles/dire_fx/fire_barracks.vpcf"
+		"AttachPoint"				"attach_fx"
+		"DestructionEffect"			"particles/world_destruction_fx/base_statue_destruction_generic_c.vpcf"
 		
 		// Status
 		//----------------------------------------------------------------
@@ -1481,6 +1487,7 @@
 		
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"human_gather"
+		"RepairAbility"				"human_gather"
 		"ReturnAbility"				"human_return_resources"
 		"GatherResources"			"lumber,gold"
 	
@@ -4253,6 +4260,7 @@
 	
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"nightelf_gather"
+		"RepairAbility"				"nightelf_gather"
 		"ReturnAbility"				"nightelf_return_resources"
 		"GatherResources"			"lumber,gold"
 		
@@ -6791,6 +6799,7 @@
 	
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"orc_gather"
+		"RepairAbility"				"orc_gather"
 		"ReturnAbility"				"orc_return_resources"
 		"GatherResources"			"lumber,gold"
 	
@@ -8319,6 +8328,7 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"8"
 		"BlockPathingSize"			"4"
+		"BlightRadius"				"960"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -8416,6 +8426,7 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"8"
 		"BlockPathingSize"			"4"
+		"BlightRadius"				"960"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -8513,6 +8524,7 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"8"
 		"BlockPathingSize"			"4"
+		"BlightRadius"				"960"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -8600,6 +8612,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"6"
 		"BlockPathingSize"			"4"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -8636,7 +8650,7 @@
 	//=================================================================================
 	// Building: Altar of Darkness
 	// Description: "Summons Heroes. Revives slain Heroes."
-	//====================z=============================================================
+	//=================================================================================
 	"undead_altar_of_darkness"
 	{
 		// General
@@ -8688,6 +8702,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"5"
 		"BlockPathingSize"			"3"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -8778,6 +8794,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"6"
 		"BlockPathingSize"			"4"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -8866,6 +8884,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"6"
 		"BlockPathingSize"			"4"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -8954,6 +8974,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"6"
 		"BlockPathingSize"			"4"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -9038,6 +9060,7 @@
 		"ConstructionSize"			"8"
 		"BlockPathingSize"			"0"
 		"Requires"					"GoldMine"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -9127,6 +9150,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"6"
 		"BlockPathingSize"			"4"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -9215,6 +9240,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"6"
 		"BlockPathingSize"			"4"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -9297,6 +9324,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"3"
 		"BlockPathingSize"			"3"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -9387,6 +9416,7 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"3"
 		"BlockPathingSize"			"3"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -9477,6 +9507,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"3"
 		"BlockPathingSize"			"3"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -9523,7 +9555,6 @@
 		"Model"						"models/props_structures/cage001.vmdl"
 		"ModelScale"				"0.8"
 		"Level"						"1"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		
 		// Abilities
@@ -9558,6 +9589,8 @@
 		//----------------------------------------------------------------
 		"ConstructionSize"			"6"
 		"BlockPathingSize"			"4"
+		"Requires"					"Buildable Blight"
+		"BlightRadius"				"704"
 		
 		// Building Cost Stats
 		//----------------------------------------------------------------
@@ -9641,6 +9674,7 @@
 			
 		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
 		"GatherAbility"				"undead_gather"
+		"RepairAbility"				"undead_gather"
 		"ReturnAbility"				"undead_return_resources"
 		"GatherResources"			"gold"
 	

@@ -87,6 +87,7 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"8"
 	"BlockPathingSize"			"4"
+	"BlightRadius"				"960"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -184,6 +185,7 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"8"
 	"BlockPathingSize"			"4"
+	"BlightRadius"				"960"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -281,6 +283,7 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"8"
 	"BlockPathingSize"			"4"
+	"BlightRadius"				"960"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -368,6 +371,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -404,7 +409,7 @@
 //=================================================================================
 // Building: Altar of Darkness
 // Description: "Summons Heroes. Revives slain Heroes."
-//====================z=============================================================
+//=================================================================================
 "undead_altar_of_darkness"
 {
 	// General
@@ -456,6 +461,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"5"
 	"BlockPathingSize"			"3"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -546,6 +553,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -634,6 +643,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -722,6 +733,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -806,6 +819,7 @@
 	"ConstructionSize"			"8"
 	"BlockPathingSize"			"0"
 	"Requires"					"GoldMine"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -895,6 +909,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -983,6 +999,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1065,6 +1083,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"3"
 	"BlockPathingSize"			"3"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1155,6 +1175,7 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"3"
 	"BlockPathingSize"			"3"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1245,6 +1266,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"3"
 	"BlockPathingSize"			"3"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1291,7 +1314,6 @@
 	"Model"						"models/props_structures/cage001.vmdl"
 	"ModelScale"				"0.8"
 	"Level"						"1"
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
 	
 	// Abilities
@@ -1326,6 +1348,8 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
+	"Requires"					"Buildable Blight"
+	"BlightRadius"				"704"
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
