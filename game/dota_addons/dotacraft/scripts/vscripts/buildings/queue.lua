@@ -55,6 +55,12 @@ function EnqueueUnit( event )
             DisableResearch(event) -- upgrades.lua
         end
 
+        -- Night Elf buildings disable attack
+        if IsNightElf(caster) then
+            caster.original_attack = caster:GetAttackCapability()
+            caster:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
+        end
+
         -- Start building upgrade actions
         if event.Action == "StartUpgrade" then
             StartUpgrade(event)
@@ -232,6 +238,13 @@ function AdvanceQueue( event )
                     return -- Don't continue, queue should strictly only take the first in line
                 end
             end
+        end
+
+        -- Empty queue
+
+        -- Night Elf buildings disable attack
+        if IsNightElf(caster) and caster.original_attack then
+            caster:SetAttackCapability(caster.original_attack)
         end
     end
 end

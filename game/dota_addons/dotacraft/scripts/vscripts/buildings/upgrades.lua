@@ -117,6 +117,10 @@ function StartUpgrade( event )
 	-- Keep the references to enable if the upgrade gets canceled
 	caster.disabled_abilities = abilities
 
+	-- Units can't attack while upgrading
+	caster.original_attack = unit:GetAttackCapability()
+	caster:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
+
 	for k,disable_ability in pairs(abilities) do
 		disable_ability:SetHidden(true)		
 	end
@@ -132,13 +136,13 @@ function StartUpgrade( event )
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
---[[
-	Replaces the building to the upgraded unit name
-]]--
+-- Resets any change done in StartUpgrade
 function CancelUpgrade( event )
-	
 	local caster = event.caster
 	local abilities = caster.disabled_abilities
+
+	-- Give the unit their original attack capability
+    caster:SetAttackCapability(caster.original_attack)
 
 	for k,ability in pairs(abilities) do
 		ability:SetHidden(false)		
