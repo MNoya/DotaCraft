@@ -477,6 +477,7 @@ end
 -- Goes through the structures of the player, checking for the max level city center
 -- If no city center is found, the player has a 2 minute window in which a city center must be built or all his structures will be revealed
 function Players:CheckCurrentCityCenters( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     local structures = Players:GetStructures( playerID )
     local city_center_level = 0
 
@@ -495,7 +496,7 @@ function Players:CheckCurrentCityCenters( playerID )
     if city_center_level == 0 then
         local time_to_reveal = 120
         print("Player "..playerID.." has no city centers left standing. Revealed in "..time_to_reveal.." seconds until a City Center is built.")
-        structures.RevealTimer = Timers:CreateTimer(time_to_reveal, function()
+        hero.RevealTimer = Timers:CreateTimer(time_to_reveal, function()
             Players:RevealToAllEnemies( playerID )
         end)
     else
@@ -522,13 +523,14 @@ function Players:RevealToAllEnemies( playerID )
 end
 
 function Players:StopRevealing( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     local structures = Players:GetStructures(playerID)
 
     print("Stop Revealing Player "..playerID)
 
-    if structures.RevealTimer then
-        Timers:RemoveTimer(structures.RevealTimer)
-        structures.RevealTimer = nil
+    if hero.RevealTimer then
+        Timers:RemoveTimer(hero.RevealTimer)
+        hero.RevealTimer = nil
     end
 
     for k,building in pairs(structures) do

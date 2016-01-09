@@ -53,9 +53,16 @@ function OnPlayerStart( args ) {
 	$('#IdleButtonImage').SetImage( "s2r://panorama/images/custom_game/"+race+"/"+race+"_builder.png" )
 }
 
+var angle = 0
+function RotateCamera() {
+	angle+= 180
+	GameUI.SetCameraYaw( angle )
+}
+
 Game.AddCommand( "+IdleBuilderSwap", OnIdleButtonPressed, "", 0 );
 
 (function () {
 	GameEvents.Subscribe( "player_show_ui", OnPlayerStart );
+	GameEvents.Subscribe( "rotate_camera", RotateCamera );
 	GameEvents.Subscribe( "player_update_idle_builders", OnPlayerUpdateIdleBuilders );
 })();

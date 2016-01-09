@@ -1270,6 +1270,25 @@ function dotacraft:RepositionPlayerCamera( event )
 	end
 end
 
+function dotacraft:RotateCamera( playerID )
+    local player = PlayerResource:GetPlayer(playerID)
+    CustomGameEventManager:Send_ServerToPlayer(player, "rotate_camera", {})
+    GameRules:SendCustomMessage("Arteezy was left", 0, 0)
+end
+
+function dotacraft:MakePlayerLose( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local playerStructures = Players:GetStructures(playerID)
+    for k,v in pairs(playerStructures) do
+        if IsValidAlive(v) then
+            v:Kill(nil, hero)
+        end
+    end
+    hero.structures = {}
+
+    dotacraft:CheckDefeatCondition( hero:GetTeamNumber() )
+end
+
 -- Whenever a building is destroyed and the player structures hit 0, check for defeat & win condition
 -- In team games, teams are defeated as a whole instead of each player (because of resource trading and other shenanigans)
 -- Defeat condition: All players of the same team have 0 buildings
@@ -1306,9 +1325,9 @@ function dotacraft:CheckDefeatCondition( teamNumber )
 	local teamCount = dotacraft:GetTeamCount()
 	print("Team Count: "..teamCount,"Defeated Teams: "..GameRules.DefeatedTeamCount)
 
-	if GameRules.DefeatedTeamCount+1 == teamCount then
-		winningTeam = dotacraft:GetWinningTeam()
-		print("Winning Team: "..winningTeam)
+	if GameRules.DefeatedTeamCount+1 >= teamCount then
+		local winningTeam = dotacraft:GetWinningTeam() or DOTA_TEAM_NEUTRALS
+		print("Winning Team: ",winningTeam)
 		dotacraft:PrintWinMessageForTeam(winningTeam)
 
 		-- Revert client convars

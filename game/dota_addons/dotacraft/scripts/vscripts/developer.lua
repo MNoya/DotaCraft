@@ -7,15 +7,17 @@ CHEAT_CODES = {
     ["pointbreak"] = function(...) dotacraft:PointBreak(...) end,            -- "Sets food limit to 1000" 
     ["synergy"] = function(...) dotacraft:Synergy(...) end,                  -- "Disable tech tree requirements"
     ["riseandshine"] = function(...) dotacraft:RiseAndShine(...) end,        -- "Set time of day to dawn" 
-    ["lightsout"] = function(...) dotacraft:LightsOut(...) end,              -- "Set time of day to dusk"                
+    ["lightsout"] = function(...) dotacraft:LightsOut(...) end,              -- "Set time of day to dusk"
+    ["kurokywasright"] = function(...) dotacraft:RotateCamera(...) end,      -- Rotates the camera 180 degrees
+    ["322"] = function(...) dotacraft:MakePlayerLose(...) end,               -- Lose the game         
 }
 
 DEBUG_CODES = {
     ["debug_trees"] = function(...) dotacraft:DebugTrees(...) end,           -- Prints the trees marked as pathable
     ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end,         -- Prints the positions marked for undead buildings
-    ["debug_food"] = function(...) dotacraft:DebugFood(...) end,           -- Prints the food count for all players, checking for inconsistencies
+    ["debug_food"] = function(...) dotacraft:DebugFood(...) end,             -- Prints the food count for all players, checking for inconsistencies
     ["debug_c"] = function(...) dotacraft:DebugCalls(...) end,               -- Spams the console with every lua call
-    ["debug_l"] = function(...) dotacraft:DebugLines(...) end,               -- Spams the console with every lua line 
+    ["debug_l"] = function(...) dotacraft:DebugLines(...) end,               -- Spams the console with every lua line
 }
 
 TEST_CODES = {
@@ -113,7 +115,7 @@ function dotacraft:PointBreak()
 end
 
 function dotacraft:Synergy()
-	GameRules.Sinergy = not GameRules.Sinergy
+	GameRules.Synergy = not GameRules.Synergy
 	
 	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(playerID) then
@@ -128,7 +130,7 @@ function dotacraft:Synergy()
 		end
 	end
 
-	local message = GameRules.Sinergy and "Cheat enabled!" or "Cheat disabled!"
+	local message = GameRules.Synergy and "Cheat enabled!" or "Cheat disabled!"
 	GameRules:SendCustomMessage(message, 0, 0)
 end
 
