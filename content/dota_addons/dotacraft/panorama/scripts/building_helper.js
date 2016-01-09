@@ -60,7 +60,7 @@ function StartBuildingHelper( params )
         range = params.range;
         overlay_size = size + alt_grid_squares * 2;
         builderIndex = params.builderIndex;
-        requires = params.requires;
+        //requires = params.requires;
         var scale = params.scale;
         var entindex = params.entindex;
         var propScale = params.propScale;
@@ -138,7 +138,7 @@ function StartBuildingHelper( params )
 
         // Get all the creature entities on the screen
         var entities = Entities.GetAllEntitiesByClassname('npc_dota_building')
-        var hero_entities = Entities.GetAllEntitiesByClassname('npc_dota_hero')
+        var hero_entities = Entities.GetAllHeroEntities()
         var creature_entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
         var tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
         entities = entities.concat(hero_entities)

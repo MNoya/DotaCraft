@@ -628,20 +628,18 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
-	"AbilityCastRange"			"100"
+	"AbilityCastRange"			"200" //Range from a corpse
 	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
+	"AbilityCooldown"			"0.5"
 	"AbilityManaCost"			"0"
-		
-	"AOERadius"					"200"
+
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"radius"		"200"
+			"search_radius"	"600"
 		}
-		// Search radius basically, it works like Cannibalize but it can be autocasted.
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
@@ -655,14 +653,15 @@
 		{
 			"ScriptFile"	"units/undead/meat_wagon.lua"
 			"Function"		"get_corpse"			
-		}	
+		}
 	}
+
 	"OnOwnerDied"
 	{
 		"RunScript"
 		{
 			"ScriptFile"	"units/undead/meat_wagon.lua"
-			"Function"		"drop_all_corps"			
+			"Function"		"drop_all_corpses"			
 		}
 	}
 	
@@ -700,7 +699,6 @@
 // Ability: Drop Corpse
 // Description: "Drops all corpses for immediate use."
 // Code Reference: Amed
-// NOTE: What do you mean by "immediate use"?
 //=================================================================================
 "undead_drop_corpse"
 {
@@ -714,27 +712,30 @@
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
-		
-	"AbilitySpecial"
-	{
-		// Can't be autocasted, of course, that'd be stupid. It also un-autocasts Get Corpse if you happen to make that ability autocast-able.
-	}
 
 	"OnSpellStart"
 	{
 		"ApplyModifier"
 		{
-			"ModifierName" "modifier_prevent_spam_click"
-			"Target" "CASTER"
-			"Duration" "0.5"
+			"ModifierName"  "modifier_dropping_corpses"
+			"Target"        "CASTER"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"modifier_prevent_spam_click"
+		"modifier_dropping_corpses"
 		{
 			"IsHidden" "1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile" "units/undead/meat_wagon.lua"
+					"Function"	"drop_corpse"
+				}
+			}
 		
 			"ThinkInterval" "0.5"
 			"OnIntervalThink"
@@ -743,6 +744,15 @@
 				{
 					"ScriptFile" "units/undead/meat_wagon.lua"
 					"Function"	"drop_corpse"
+				}
+			}
+
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_dropping_corpses"
+					"Target" 		"CASTER"
 				}
 			}
 		}

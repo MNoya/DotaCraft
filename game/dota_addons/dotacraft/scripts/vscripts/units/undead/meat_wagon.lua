@@ -4,16 +4,16 @@ function get_corpse(keys)
 	local ability = keys.ability
 
 	-- durations have be inverted due to some weird parsing bug
-	local RADIUS = keys.ability:GetSpecialValueFor("radius")
+	local search_radius = keys.ability:GetSpecialValueFor("search_radius")
 	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster)
-	local MAX_CORPSES = keys.ability:GetSpecialValueFor("max_corpses")
+	local max_corpses = keys.ability:GetSpecialValueFor("max_corpses")
 	
 	-- if equal to max allowed corpses, return
-	if StackCount >= MAX_CORPSES then
+	if StackCount >= max_corpses then
 		return
 	end
 	
-	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), RADIUS)
+	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), search_radius)
 	
 	for k,corpse in pairs(targets) do
 		if corpse.corpse_expiration ~= nil and not corpse.being_eaten then		
@@ -36,21 +36,20 @@ end
 function get_corpse_autocast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	local RADIUS = keys.ability:GetSpecialValueFor("radius")
-	local MAX_CORPSES = keys.ability:GetSpecialValueFor("max_corpses")
+	local search_radius = keys.ability:GetSpecialValueFor("search_radius")
+	local max_corpses = keys.ability:GetSpecialValueFor("max_corpses")
 	
 	Timers:CreateTimer(function()
-		local StackCount = caster:GetModifierStackCount("modifier_corpses", caster)
 		-- stop timer if the unit doesn't exist
-		if not IsValidEntity(caster) then 
-			return 
-		end	
+		if not IsValidAlive(caster) then return end	
+
+		local StackCount = caster:GetModifierStackCount("modifier_corpses", caster) or 0
 		
 		-- if not equal to max corpses
-		if StackCount < MAX_CORPSES then
+		if StackCount < max_corpses then
 			-- if ability is OFF Cooldown and AutoCastState
-			if ability:GetCooldownTimeRemaining() == 0 and ability:GetAutoCastState() then
-				local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), RADIUS)
+			if ability:GetAutoCastState() and caster:IsIdle() and ability:GetCooldownTimeRemaining() == 0 then
+				local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), search_radius)
 				
 				for k,corpse in pairs(targets) do
 					if corpse.corpse_expiration ~= nil and not corpse.being_eaten then
@@ -71,7 +70,7 @@ function drop_single_corpse(keys)
 	return CreateCorpses(keys, 3)
 end
 
--- dropses corses periodically
+-- Drop 1 corpse, called every 0.5 seconds
 function drop_corpse(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -82,48 +81,29 @@ function drop_corpse(keys)
 	if get_corpse_ability:GetAutoCastState() then
 		get_corpse_ability:ToggleAutoCast()
 	end
+
+	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster)
+	if StackCount == 0 then
+		return
+	end 
 	
-	Timers:CreateTimer(caster:GetEntityIndex().."_meat_wagon", {
-	callback = function()
-		local StackCount = caster:GetModifierStackCount("modifier_corpses", caster) 
-	
-		if StackCount == 0 then
-			return
-		end
-	
-		DecreaseCorpseCount(keys, 1)
-		CreateCorpses(keys, 1)
-		
-		return 0.5
-	end})
+	DecreaseCorpseCount(keys, 1)
+	CreateCorpses(keys, 1)
 end
 
--- called on death to drop all corpses
-function drop_all_corpse(keys)
+function drop_all_corpses(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local get_corpse_ability = caster:FindAbilityByName("undead_get_corpse")
 	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster)
-
-	-- turn off autocast so that the meat wagon doesn't automatically pick up the corpse again
-	if get_corpse_ability:GetAutoCastState() then
-		get_corpse_ability:ToggleAutoCast()
-	end
 	
-	Timers:CreateTimer(function()
-		-- check current stack count and generate random pos
-		StackCount = caster:GetModifierStackCount("modifier_corpses", caster) 
+	print("drop_all_corpses StackCount: ", stackCount)
 
-		if StackCount == 0 then
-			return
+	if StackCount > 0 then
+		for i=1,stackCount do
+			CreateCorpses(keys, 1)
 		end
-	
-		-- remove 1 modifier stack and create corpses accordingly
-		DecreaseCorpseCount(keys, 1)		
-		CreateCorpses(keys, 1)
-		
-		return 0.04
-	end)
+	end
 end
 
 -- create the corpses
@@ -275,29 +255,38 @@ end
 function IncreaseCorpseCount(keys)
 	local caster = keys.caster
 	local get_corpse_ability = caster:FindAbilityByName("undead_get_corpse")
-	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster)
+	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster) + 1
 		
-	caster:SetModifierStackCount("modifier_corpses", caster, StackCount + 1)
+	caster:SetModifierStackCount("modifier_corpses", caster, StackCount)
 		
-	for i=1,StackCount, 8 do
+	for i=1,StackCount do
 		ParticleManager:SetParticleControl(caster.counter_particle, i, Vector(1,0,0))
+	end
+	if StackCount < 8 then
+		for i=StackCount+1,8 do
+			ParticleManager:SetParticleControl(caster.counter_particle, i, Vector(0,0,0))
+		end
 	end
 end
 
 function DecreaseCorpseCount (keys, state)
-local caster
+	local caster
 	if state == 1 then
 		caster = keys.caster
 	else
 		caster = keys.ability.corpse
 	end
 	
-	local get_corpse_ability = caster:FindAbilityByName("undead_get_corpse")
-	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster)
+	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster) - 1
 		
-	caster:SetModifierStackCount("modifier_corpses", caster, StackCount - 1)
+	caster:SetModifierStackCount("modifier_corpses", caster, StackCount)
 
-	for i=1, StackCount,8 do
+	if StackCount > 0 then
+		for i=1,StackCount do
+			ParticleManager:SetParticleControl(caster.counter_particle, i, Vector(1,0,0))
+		end
+	end
+	for i=StackCount+1,8 do
 		ParticleManager:SetParticleControl(caster.counter_particle, i, Vector(0,0,0))
 	end
 end
@@ -315,106 +304,4 @@ function ToggleOnAutocast(event)
 	caster.counter_particle = ParticleManager:CreateParticle("particles/custom/undead/corpse_counter.vpcf", PATTACH_OVERHEAD_FOLLOW, caster)
 	
 	ability:ToggleAutoCast()
-end
-
-function AttackGround( event )
-	local caster = event.caster
-	local ability = event.ability
-	local point = event.target_points[1]
-	local start_time = caster:GetAttackAnimationPoint() -- Time to wait to fire the projectile
-	local speed = caster:GetProjectileSpeed()
-	local particle = "particles/neutral_fx/mud_golem_hurl_boulder.vpcf"
-	local minimum_range = ability:GetSpecialValueFor("minimum_range")
-
-	if (point - caster:GetAbsOrigin()):Length() < minimum_range then
-		SendErrorMessage(caster:GetPlayerOwnerID(), "#error_minimum_range")
-		caster:Interrupt()
-		return
-	end
-
-	ToggleOn(ability)
-
-	-- Create a dummy to fake the attacks
-	if IsValidEntity(ability.attack_ground_dummy) then ability.attack_ground_dummy:RemoveSelf() end
-	ability.attack_ground_dummy = CreateUnitByName("dummy_unit", point, false, nil, nil, DOTA_TEAM_NEUTRALS)
-
-	ability.attack_ground_timer = Timers:CreateTimer(function()
-		caster:StartGesture(ACT_DOTA_ATTACK)
-		ability.attack_ground_timer_animation = Timers:CreateTimer(start_time, function() 
-			local projectileTable = {
-				EffectName = particle,
-				Ability = ability,
-				Target = ability.attack_ground_dummy,
-				Source = caster,
-				bDodgeable = true,
-				bProvidesVision = true,
-				vSpawnOrigin = caster:GetAbsOrigin(),
-				iMoveSpeed = 900,
-				iVisionRadius = 100,
-				iVisionTeamNumber = caster:GetTeamNumber(),
-				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
-			}
-			ProjectileManager:CreateTrackingProjectile( projectileTable )
-
-		end)
-		local time = 1 / caster:GetAttacksPerSecond()	
-		return 	time
-	end)
-
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_attacking_ground", {})
-end
-
-function AttackGroundDamage( event )
-	local caster = event.caster
-	local target = event.target
-	local ability = event.ability
-	local position = target:GetAbsOrigin()
-	local damage = caster:GetAttackDamage()
-	local splash_radius = ability:GetSpecialValueFor("splash_radius")
-	local AbilityDamageType = ability:GetAbilityDamageType()
-
-	local damage_to_trees = 10
-	local trees = GridNav:GetAllTreesAroundPoint(position, 100, true)
-
-	for _,tree in pairs(trees) do
-		if tree:IsStanding() then
-			tree.health = tree.health - damage_to_trees
-
-			-- Hit tree particle
-			local particleName = "particles/custom/tree_pine_01_destruction.vpcf"
-			local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
-			ParticleManager:SetParticleControl(particle, 0, tree:GetAbsOrigin())
-		end
-		if tree.health <= 0 then
-			tree:CutDown(caster:GetPlayerOwnerID())
-		end
-	end
-
-	-- Hit ground particle
-	ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnus_dust_hit.vpcf", PATTACH_ABSORIGIN, target)
-	
-	meat_wagon_disease_cloud(event)
-	
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), position, nil, splash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for _,enemy in pairs(enemies) do
-		print(_,enemy,enemy:GetUnitName(),enemy:GetHealth())
-		damage = damage * GetDamageForAttackAndArmor( GetAttackType(caster), GetArmorType(enemy) )
-
-		ApplyDamage({ victim = enemy, attacker = caster, damage = damage, damage_type = AbilityDamageType })
-	end
-	
-end
-
-function StopAttackGround( event )	
-	local caster = event.caster
-	local ability = event.ability
-	
-	if IsValidEntity(ability.attack_ground_dummy) then ability.attack_ground_dummy:RemoveSelf() end
-
-	Timers:RemoveTimer(ability.attack_ground_timer)
-	Timers:RemoveTimer(ability.attack_ground_timer_animation)
-
-	ToggleOff(ability)
-
-	caster:RemoveGesture(ACT_DOTA_ATTACK)
 end
