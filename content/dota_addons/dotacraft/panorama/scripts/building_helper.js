@@ -4,6 +4,7 @@ GameUI.SetRenderBottomInsetOverride( 0 );
 
 var state = 'disabled';
 var frame_rate = 1/30;
+var tree_update_interval = 1;
 var size = 0;
 var overlay_size = 0;
 var range = 0;
@@ -19,8 +20,11 @@ var overlayParticles;
 var rangeOverlay;
 var rangeOverlayActive;
 var builderIndex;
-var entityGrid;
+var entityGrid = [];
+var tree_entities = [];
 var distance_to_gold_mine;
+var last_tree_update = Game.GetGameTime();
+var treeGrid = [];
 var cutTrees = [];
 var BLOCKED = 2;
 var GRID_TYPES = [];
@@ -60,7 +64,7 @@ function StartBuildingHelper( params )
         range = params.range;
         overlay_size = size + alt_grid_squares * 2;
         builderIndex = params.builderIndex;
-        //requires = params.requires;
+        requires = params.requires;
         var scale = params.scale;
         var entindex = params.entindex;
         var propScale = params.propScale;
@@ -140,7 +144,6 @@ function StartBuildingHelper( params )
         var entities = Entities.GetAllEntitiesByClassname('npc_dota_building')
         var hero_entities = Entities.GetAllHeroEntities()
         var creature_entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
-        var tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
         entities = entities.concat(hero_entities)
         entities = entities.concat(creature_entities)
 
@@ -175,13 +178,18 @@ function StartBuildingHelper( params )
             }      
         }
 
-        // Handle trees
-        for (var i = 0; i < tree_entities.length; i++) 
+        // Update treeGrid (slowly, as its the most expensive)
+        var time = Game.GetGameTime()
+        var time_since_last_tree_update = time - last_tree_update
+        if (time_since_last_tree_update > tree_update_interval)
         {
-            var treePos = Entities.GetAbsOrigin(tree_entities[i])
-            // Block the grid if the tree isn't chopped
-            if (cutTrees[treePos] === undefined)
-                BlockGridSquares(treePos, 2)
+            last_tree_update = time
+            tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
+            for (var i = 0; i < tree_entities.length; i++)
+            {
+                var treePos = Entities.GetAbsOrigin(tree_entities[i])
+                BlockGridSquares(treePos, 2, "TREE")
+            }
         }
 
         var mPos = GameUI.GetCursorPosition();
@@ -464,11 +472,15 @@ function IsBlocked(position) {
 
     var restrictHeight = (HEIGHT_RESTRICTION !== undefined) ? position[2] < HEIGHT_RESTRICTION : false
 
-    return restrictHeight || Root.GridNav[x][y] == BLOCKED || IsEntityGridBlocked(x,y)
+    return restrictHeight || Root.GridNav[x][y] == BLOCKED || IsEntityGridBlocked(x,y) || IsTreeGridBlocked(x,y)
 }
 
 function IsEntityGridBlocked(x,y) {
     return (entityGrid[x] && entityGrid[x][y] == BLOCKED)
+}
+
+function IsTreeGridBlocked(x,y) {
+    return (treeGrid[x] && treeGrid[x][y] == BLOCKED)
 }
 
 function IsSpecialGrid (x,y, gridType) {
@@ -489,6 +501,16 @@ function BlockEntityGrid(position, gridType) {
         entityGrid[x][y] = BLOCKED
 }
 
+// Trees block 2x2
+function BlockTreeGrid (position) {
+    var x = WorldToGridPosX(position[0]) + Root.squareX/2
+    var y = WorldToGridPosY(position[1]) + Root.squareY/2
+
+    if (treeGrid[x] === undefined) treeGrid[x] = []
+
+    treeGrid[x][y] = BLOCKED
+}
+
 function BlockGridSquares (position, squares, gridType) {
     var halfSide = (squares/2)*64
     var boundingRect = {}
@@ -497,12 +519,26 @@ function BlockGridSquares (position, squares, gridType) {
     boundingRect["topBorderY"] = position[1]+halfSide
     boundingRect["bottomBorderY"] = position[1]-halfSide
 
-    for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
+    if (gridType == "TREE")
     {
-        for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
+        for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
         {
-            var pos = [x,y,0]
-            BlockEntityGrid(pos, gridType)
+            for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
+            {
+                var pos = [x,y,0]
+                BlockTreeGrid(pos)
+            }
+        }
+    }
+    else
+    {
+        for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
+        {
+            for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
+            {
+                var pos = [x,y,0]
+                BlockEntityGrid(pos, gridType)
+            }
         }
     }
 }
