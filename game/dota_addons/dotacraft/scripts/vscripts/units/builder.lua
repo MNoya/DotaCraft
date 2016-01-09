@@ -211,9 +211,6 @@ function Build( event )
         if string.find( unit:GetUnitName(), "altar") then
             TeachAbility(unit, "ability_altar")
         end
-
-        -- Add the building handle to the list of structures
-        Players:AddStructure(playerID, unit)
     end)
 
     -- A building finished construction
@@ -276,13 +273,8 @@ function Build( event )
         end
         end)]]
 
-        -- Add 1 to the player building tracking table for that name
-        local buildingTable = Players:GetBuildingTable(playerID)
-        if not buildingTable[building_name] then
-            buildingTable[building_name] = 1
-        else
-            buildingTable[building_name] = buildingTable[building_name] + 1
-        end
+        -- Add the building handle to the list of structures
+        Players:AddStructure(playerID, unit)
 
         -- Add blight if its an undead building
         if IsUndead(unit) then

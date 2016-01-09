@@ -356,7 +356,6 @@ function Players:RemoveStructure( playerID, unit )
     local buildingTable = Players:GetBuildingTable(playerID)
 
     -- Substract 1 to the player building tracking table for that name
-    local buildingTable = Players:GetBuildingTable( playerID )
     local unitName = unit:GetUnitName()
     if buildingTable[unitName] then
         buildingTable[unitName] = buildingTable[unitName] - 1
