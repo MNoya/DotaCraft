@@ -217,6 +217,11 @@ function dotacraft:IncreaseAltarTier( playerID, abilityOnProgress )
 		table.insert(hero.altar_queue, abilityOnProgress:GetAbilityName())
 	end
 
+	if altar_level > 4 then
+		print("ERROR: Altar should never go over level 4")
+		return
+	end
+
 	print("ALTAR LEVEL "..altar_level.." QUEUE:")
 	DeepPrintTable(hero.altar_queue)
 

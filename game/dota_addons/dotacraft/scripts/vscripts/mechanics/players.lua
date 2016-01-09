@@ -372,7 +372,7 @@ function Players:RemoveStructure( playerID, unit )
     if IsAltar(unit) then
         -- Remove from altar structures
         local playerAltars = Players:GetAltars( playerID )
-        local altar_index = getIndexTable(playerStructures, unit)
+        local altar_index = getIndexTable(playerAltars, unit)
         if altar_index then 
             table.remove(playerAltars, altar_index)
         end
@@ -584,9 +584,14 @@ function Players:SetMainCityCenter( playerID, building )
     hero.main_city_center = building
 end
 
--- Hero count is limited to 3
+function Players:GetAltarLevel( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    return hero.altar_level or 0
+end
+
 function Players:CanTrainMoreHeroes( playerID )
-    return Players:HeroCount( playerID ) < 3
+    local altar_level = Players:GetAltarLevel(playerID)
+    return altar_level <= 3
 end
 
 function Players:HeroCount( playerID )

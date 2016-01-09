@@ -203,14 +203,7 @@ function unit_shops:TavernStockUpdater(UnitShopItem, unit)
 				
 				UpdateHeroTavernForPlayer( playerID )
 				local tier = Players:GetCityLevel(playerID) or 9000
-				local hasAltar = Players:HasAltar(playerID)
-
-				-- noya plx
-				if hasAltar then
-					hasAltar = true
-				else
-					hasAltar = false
-				end
+				local hasAltar = Players:HasAltar(playerID) and true or false
 				
 				CustomGameEventManager:Send_ServerToPlayer(player, "unitshop_updateStock", { Index = GameRules.HeroTavernEntityID, Item = UnitShopItem, playerID = playerID, Tier=tier, Altar=hasAltar})
 			end
@@ -281,10 +274,11 @@ end
 
 function unit_shops:BuyHero(data)
 	local item = data.ItemName
-	local playerID = data.PlayerID -- The player that clicked on an item to purchase. This can be an allied player
+	local playerID = data.PlayerID -- The player that clicked on an item to purchase.
 	local player = PlayerResource:GetPlayer(playerID)
 	local shopID = data.Shop
 	local Shop = EntIndexToHScript(data.Shop)
+
 	-- cost of the item
 	local Gold_Cost = data.GoldCost
 	local Lumber_Cost = data.LumberCost
@@ -296,16 +290,16 @@ function unit_shops:BuyHero(data)
 		end
 		return
 	end
-	local buyerPlayerID = buyer:GetPlayerOwnerID()
 
 	EmitSoundOnClient("General.Buy", player)
 	print("[UNIT SHOPS] Tavern creating hero for "..playerID)						
 	TavernCreateHeroForPlayer(playerID, shopID, item)
 	
 	unit_shops:RemoveHeroPanel(shopID, playerID, item)
+
 	-- deduct gold & lumber
-	Players:ModifyGold(buyerPlayerID, -Gold_Cost)
-	Players:ModifyLumber(buyerPlayerID, -Lumber_Cost)
+	Players:ModifyGold(playerID, -Gold_Cost)
+	Players:ModifyLumber(playerID, -Lumber_Cost)
 end
 
 function unit_shops:BuyHeroRevive(data)
@@ -368,10 +362,8 @@ function unit_shops:BuyItem(data)
 	local Gold_Cost = data.GoldCost
 	local Lumber_Cost = data.LumberCost
 
-	local bEnoughSlots
-
 	local isUnitItem = tobool(data.Neutral)
-	if isUnitItem then bEnoughSlots = true else bEnoughSlots = CountInventoryItems(buyer) < 6 end
+	local bEnoughSlots = isUnitItem and true or CountInventoryItems(buyer) < 6
 	
 	if bEnoughSlots then
 		EmitSoundOnClient("General.Buy", player)
@@ -444,6 +436,24 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 	local unit_name = HeroName
 	local tavern = EntIndexToHScript(shopID)
 
+	-- Add food cost
+	Players:ModifyFoodUsed(playerID, 5)
+
+	-- Acquired ability
+	local train_ability_name = "neutral_train_"..HeroName
+	train_ability_name = string.gsub(train_ability_name, "npc_dota_hero_" , "")
+	
+	-- Add the acquired ability to each altar
+	local altarStructures = Players:GetAltars(playerID)
+	for _,altar in pairs(altarStructures) do
+		local acquired_ability_name = train_ability_name.."_acquired"
+		TeachAbility(altar, acquired_ability_name)
+		SetAbilityLayout(altar, 5)	
+	end
+
+	-- Increase the altar tier
+	dotacraft:IncreaseAltarTier( playerID )
+
 	-- handle_UnitOwner needs to be nil, else it will crash the game.
 	PrecacheUnitByNameAsync(unit_name, function()
 		local new_hero = CreateUnitByName(unit_name, tavern:GetAbsOrigin(), true, hero, nil, hero:GetTeamNumber())
@@ -462,25 +472,9 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 		-- Add the hero to the table of heroes acquired by the player
 		Players:AddHero( playerID, new_hero )
 
-		-- Add food cost
-		Players:ModifyFoodUsed(playerID, 5)
+		--Reference to swap to a revive ability when the hero dies
+		new_hero.RespawnAbility = train_ability_name 
 
-		-- Acquired ability
-		local train_ability_name = "neutral_train_"..HeroName
-		train_ability_name = string.gsub(train_ability_name, "npc_dota_hero_" , "")
-		new_hero.RespawnAbility = train_ability_name --Reference to swap to a revive ability when the hero dies
-
-		-- Add the acquired ability to each altar
-		local altarStructures = Players:GetAltars(playerID)
-		for _,altar in pairs(altarStructures) do
-			local acquired_ability_name = train_ability_name.."_acquired"
-			TeachAbility(altar, acquired_ability_name)
-			SetAbilityLayout(altar, 5)	
-		end
-
-		-- Increase the altar tier
-		dotacraft:IncreaseAltarTier( playerID )
-	
 		Setup_Hero_Panel(new_hero)
 	end, playerID)
 end
