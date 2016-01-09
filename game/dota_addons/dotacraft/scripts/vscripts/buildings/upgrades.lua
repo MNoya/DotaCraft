@@ -55,9 +55,11 @@ function UpgradeBuilding( event )
 	building:SetHealth(newRelativeHP)
 
 	-- Update the references to the new building
-	if entangled_gold_mine then
+	local entangled_gold_mine = caster.entangled_gold_mine
+	if IsValidAlive(entangled_gold_mine) then
 		entangled_gold_mine.city_center = building
-    	building.entangled_gold_mine = entangled_gold_mine
+    	building.entangled_gold_mine = caster.entangled_gold_mine
+    	building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
     end
 
 	-- Add 1 to the buildings list for that name. The old name still remains
@@ -86,7 +88,7 @@ function UpgradeBuilding( event )
 	if masonry_rank and masonry_rank > 0 then
 		print("Applying masonry rank "..masonry_rank.." to this building upgrade")
 		UpdateUnitUpgrades( building, playerID, "human_research_masonry"..masonry_rank )
-	end
+	end	
 end
 
 --[[
