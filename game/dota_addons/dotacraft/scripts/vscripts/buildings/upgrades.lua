@@ -118,7 +118,7 @@ function StartUpgrade( event )
 	caster.disabled_abilities = abilities
 
 	-- Units can't attack while upgrading
-	caster.original_attack = unit:GetAttackCapability()
+	caster.original_attack = caster:GetAttackCapability()
 	caster:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
 
 	for k,disable_ability in pairs(abilities) do

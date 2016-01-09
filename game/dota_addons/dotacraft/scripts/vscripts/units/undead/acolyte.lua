@@ -115,7 +115,7 @@ function HauntGoldMine( event )
     local playerID = caster:GetPlayerOwnerID()
     local teamNumber = caster:GetTeamNumber()
     local building_name = "undead_haunted_gold_mine"
-    local construction_size = Units:GetConstructionSize(building_name)
+    local construction_size = BuildingHelper:GetConstructionSize(building_name)
     
     -- Callbacks
     event:OnPreConstruction(function(vPos) end)

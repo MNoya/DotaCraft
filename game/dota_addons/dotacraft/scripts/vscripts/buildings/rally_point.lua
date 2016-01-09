@@ -59,6 +59,7 @@ function SetRallyPoint( event )
 
 		-- For the initial rally point, get point away from the building looking towards (0,0,0)
 		local position = origin + forwardVec * 220
+		position.z = GetGroundPosition(position, caster)
 
 		-- Keep track of this position so that every unit is autospawned there (avoids going around the)
 		caster.initial_spawn_position = position
