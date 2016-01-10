@@ -38,6 +38,7 @@ var model_alpha = CustomNetTables.GetTableValue( "building_settings", "model_alp
 var recolor_ghost = CustomNetTables.GetTableValue( "building_settings", "recolor_ghost").value;
 var turn_red = CustomNetTables.GetTableValue( "building_settings", "turn_red").value;
 var permanent_alt_grid = CustomNetTables.GetTableValue( "building_settings", "permanent_alt_grid").value;
+var update_trees = CustomNetTables.GetTableValue( "building_settings", "update_trees").value;
 
 var HEIGHT_RESTRICTION
 if (CustomNetTables.GetTableValue( "building_settings", "height_restriction") !== undefined)
@@ -179,16 +180,19 @@ function StartBuildingHelper( params )
         }
 
         // Update treeGrid (slowly, as its the most expensive)
-        var time = Game.GetGameTime()
-        var time_since_last_tree_update = time - last_tree_update
-        if (time_since_last_tree_update > tree_update_interval)
+        if (update_trees)
         {
-            last_tree_update = time
-            tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
-            for (var i = 0; i < tree_entities.length; i++)
+            var time = Game.GetGameTime()
+            var time_since_last_tree_update = time - last_tree_update
+            if (time_since_last_tree_update > tree_update_interval)
             {
-                var treePos = Entities.GetAbsOrigin(tree_entities[i])
-                BlockGridSquares(treePos, 2, "TREE")
+                last_tree_update = time
+                tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
+                for (var i = 0; i < tree_entities.length; i++)
+                {
+                    var treePos = Entities.GetAbsOrigin(tree_entities[i])
+                    BlockGridSquares(treePos, 2, "TREE")
+                }
             }
         }
 
