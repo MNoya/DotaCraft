@@ -627,6 +627,11 @@ function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
     end
     buildingTable:SetVal("Requires", string.upper(requires))
 
+    local prevents = unitTable["Prevents"]
+    if prevents then
+        buildingTable:SetVal("Prevents", string.upper(prevents))
+    end
+
     local castRange = buildingTable:GetVal("AbilityCastRange", "number")
     if not castRange then
         castRange = 200
@@ -1276,11 +1281,16 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     local buildingName = playerTable.activeBuilding
     local buildingTable = buildingName and BuildingHelper.UnitKV[buildingName]
     local requires = buildingTable and buildingTable["Requires"]
+    local prevents = buildingTable and buildingTable["Prevents"]
 
     if requires then
-        bBlocked = not BuildingHelper:AreaMeetsCriteria(size, location, requires)
+        bBlocked = not BuildingHelper:AreaMeetsCriteria(size, location, requires, "all")
     else
         bBlocked = BuildingHelper:IsAreaBlocked(size, location)
+    end
+
+    if prevents then
+        bBlocked = bBlocked or BuildingHelper:AreaMeetsCriteria(size, location, prevents, "one")
     end
 
     if bBlocked then
@@ -1307,11 +1317,11 @@ end
 
 -- If not all squares are buildable, the area is blocked
 function BuildingHelper:IsAreaBlocked( size, location )
-    return not BuildingHelper:AreaMeetsCriteria( size, location, "BUILDABLE" )
+    return BuildingHelper:AreaMeetsCriteria( size, location, "BLOCKED", "one" )
 end
 
 -- Checks that all squares meet each of the passed grid_type criteria (can be multiple, split by spaces)
-function BuildingHelper:AreaMeetsCriteria( size, location, grid_type )
+function BuildingHelper:AreaMeetsCriteria( size, location, grid_type, option )
     local originX = GridNav:WorldToGridPosX(location.x)
     local originY = GridNav:WorldToGridPosY(location.y)
     local halfSize = math.floor(size/2)
@@ -1331,19 +1341,40 @@ function BuildingHelper:AreaMeetsCriteria( size, location, grid_type )
         upperBoundY = upperBoundY-1
     end
 
-    for x = lowerBoundX, upperBoundX do
-        for y = lowerBoundY, upperBoundY do
-            local grid_types = split(grid_type, " ")
-            for k,v in pairs(grid_types) do
-                local t = string.upper(v)
-                local hasGridType = BuildingHelper:CellHasGridType(x,y,t)
-                if not hasGridType then
-                    return false
+    -- Default by omission is to check if all the cells meet the criteria
+    if not option or option == "all" then
+        for x = lowerBoundX, upperBoundX do
+            for y = lowerBoundY, upperBoundY do
+                local grid_types = split(grid_type, " ")
+                for k,v in pairs(grid_types) do
+                    local t = string.upper(v)
+                    local hasGridType = BuildingHelper:CellHasGridType(x,y,t)
+                    if not hasGridType then
+                        return false
+                    end
                 end
             end
         end
+        return true -- all cells have the grid types
+
+    -- When searching for one block, stop at the first grid point found with every type
+    elseif option == "one" then
+        for x = lowerBoundX, upperBoundX do
+            for y = lowerBoundY, upperBoundY do
+                local grid_types = split(grid_type, " ")
+                local hasGridType = true
+                for k,v in pairs(grid_types) do
+                    local t = string.upper(v)
+                    hasGridType = hasGridType and BuildingHelper:CellHasGridType(x,y,t)
+                end
+
+                if hasGridType then
+                    return true
+                end
+            end
+        end
+        return false -- no cells meet the criteria
     end
-    return true
 end
 
 
