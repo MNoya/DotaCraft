@@ -311,6 +311,10 @@ function BuildingHelper:OnPlayerSelectedEntities(event)
     local playerTable = BuildingHelper:GetPlayerTable(playerID)
 
     playerTable.SelectedEntities = event.selected_entities
+    if not playerTable.SelectedEntities["0"] then
+        BuildingHelper:print("ERROR: OnPlayerSelectedEntities received an empty list")
+        return
+    end
 
     -- This is for Building Helper to know which is the currently active builder
     local mainSelected = EntIndexToHScript(playerTable.SelectedEntities["0"])
