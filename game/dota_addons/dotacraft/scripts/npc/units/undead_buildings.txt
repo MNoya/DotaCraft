@@ -87,8 +87,14 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"8"
 	"BlockPathingSize"			"4"
-	"BlightRadius"				"960"
-	"Prevents"					"Blight"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"960"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -186,7 +192,14 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"8"
 	"BlockPathingSize"			"4"
-	"BlightRadius"				"960"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"960"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -284,7 +297,14 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"8"
 	"BlockPathingSize"			"4"
-	"BlightRadius"				"960"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"960"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -373,7 +393,14 @@
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}	
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -463,7 +490,14 @@
 	"ConstructionSize"			"5"
 	"BlockPathingSize"			"3"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -555,7 +589,14 @@
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -645,7 +686,14 @@
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -735,7 +783,14 @@
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -820,7 +875,14 @@
 	"ConstructionSize"			"8"
 	"BlockPathingSize"			"0"
 	"Requires"					"GoldMine"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -911,7 +973,14 @@
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1001,7 +1070,14 @@
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1085,7 +1161,14 @@
 	"ConstructionSize"			"3"
 	"BlockPathingSize"			"3"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1176,7 +1259,14 @@
 	//----------------------------------------------------------------
 	"ConstructionSize"			"3"
 	"BlockPathingSize"			"3"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1268,7 +1358,14 @@
 	"ConstructionSize"			"3"
 	"BlockPathingSize"			"3"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
@@ -1350,7 +1447,14 @@
 	"ConstructionSize"			"6"
 	"BlockPathingSize"			"4"
 	"Requires"					"Buildable Blight"
-	"BlightRadius"				"704"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"704"
+			"RemoveOnDeath"		"false"
+		}
+	}
 	
 	// Building Cost Stats
 	//----------------------------------------------------------------
