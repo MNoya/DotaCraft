@@ -26,8 +26,6 @@ var distance_to_gold_mine;
 var last_tree_update = Game.GetGameTime();
 var treeGrid = [];
 var cutTrees = [];
-var BLOCKED = 2;
-var GRID_TYPES = [];
 
 // building_settings.kv options
 var grid_alpha = CustomNetTables.GetTableValue( "building_settings", "grid_alpha").value
@@ -40,9 +38,11 @@ var turn_red = CustomNetTables.GetTableValue( "building_settings", "turn_red").v
 var permanent_alt_grid = CustomNetTables.GetTableValue( "building_settings", "permanent_alt_grid").value;
 var update_trees = CustomNetTables.GetTableValue( "building_settings", "update_trees").value;
 
-var HEIGHT_RESTRICTION
+var height_restriction
 if (CustomNetTables.GetTableValue( "building_settings", "height_restriction") !== undefined)
-    HEIGHT_RESTRICTION = CustomNetTables.GetTableValue( "building_settings", "height_restriction").value;
+    height_restriction = CustomNetTables.GetTableValue( "building_settings", "height_restriction").value;
+
+var GRID_TYPES = CustomNetTables.GetTableValue( "building_settings", "grid_types")
 
 var Root = $.GetContextPanel()
 var localHeroIndex = Players.GetPlayerHeroEntityIndex( Players.GetLocalPlayer() );
@@ -65,18 +65,14 @@ function StartBuildingHelper( params )
         range = params.range;
         overlay_size = size + alt_grid_squares * 2;
         builderIndex = params.builderIndex;
-        requires = params.requires;
         var scale = params.scale;
         var entindex = params.entindex;
         var propScale = params.propScale;
         offsetZ = params.offsetZ;
 
-        if (requires !== undefined)
-        {
-            if (GRID_TYPES[requires] === undefined)
-                GRID_TYPES[requires] = GRID_TYPES.length + BLOCKED + 1
-        }
-
+        $.Msg(GRID_TYPES)
+        requires = GetRequiredGridType(entindex)
+        $.Msg("REQUIRES ", requires)
         distance_to_gold_mine = HasGoldMineDistanceRestriction(entindex)
         
         // If we chose to not recolor the ghost model, set it white
@@ -160,11 +156,8 @@ function StartBuildingHelper( params )
             
             if (squares > 0)
             {
-                if (IsGoldMine(entities[i]))
-                    BlockGridSquares(entPos, squares, requires)
-                else
-                    // Block squares centered on the origin
-                    BlockGridSquares(entPos, squares)
+                // Block squares centered on the origin
+                BlockGridSquares(entPos, squares, GRID_TYPES["BLOCKED"])
             }
             else
             {
@@ -177,9 +170,18 @@ function StartBuildingHelper( params )
                 // Block 2x2 squares if its an enemy unit
                 else if (Entities.GetTeamNumber(entities[i]) != Entities.GetTeamNumber(builderIndex))
                 {
-                    BlockGridSquares(entPos, 2)
+                    BlockGridSquares(entPos, 2, GRID_TYPES["BLOCKED"])
                 }
-            }      
+            }
+
+            var specialGrid = GetCustomGrid(entities[i])
+            if (specialGrid)
+            {
+                for (var gridType in specialGrid)
+                {
+                    BlockGridSquares(entPos, Number(specialGrid[gridType].Square), GRID_TYPES[gridType.toUpperCase()])
+                }              
+            }
         }
 
         // Update treeGrid (slowly, as its the most expensive)
@@ -414,7 +416,7 @@ function RegisterGNV(msg){
     for (var i = 0; i < squareX; i++) {
         GridNav[i] = []
         for (var j = 0; j < squareY; j++) {
-            GridNav[i][j] = arr[x]
+            GridNav[i][j] = (arr[x] == 1) ? GRID_TYPES["BUILDABLE"] : GRID_TYPES["BLOCKED"]
             x++
         }
 
@@ -476,24 +478,25 @@ function IsBlocked(position) {
     var x = WorldToGridPosX(position[0]) + Root.squareX/2
     var y = WorldToGridPosY(position[1]) + Root.squareY/2
 
-    if (requires !== undefined)
-        return !IsSpecialGrid(x,y, requires)
+    //{"BUILDABLE":2,"GOLDMINE":4,"BLOCKED":1}
+    // Check height restriction
+    if (height_restriction !== undefined && position[2] < height_restriction)
+        return true
 
-    var restrictHeight = (HEIGHT_RESTRICTION !== undefined) ? position[2] < HEIGHT_RESTRICTION : false
+    // Check main gridnav
+    if (!(Root.GridNav[x][y] & requires))
+        return true
 
-    return restrictHeight || Root.GridNav[x][y] == BLOCKED || IsEntityGridBlocked(x,y) || IsTreeGridBlocked(x,y)
-}
+    // Check entity grid
+    if (entityGrid[x] && entityGrid[x][y] && !(entityGrid[x][y] & requires))
+    {
+        return true
+    }
 
-function IsEntityGridBlocked(x,y) {
-    return (entityGrid[x] && entityGrid[x][y] == BLOCKED)
-}
+    if (update_trees && treeGrid[x] && (treeGrid[x][y] & GRID_TYPES["BLOCKED"]))
+        return true
 
-function IsTreeGridBlocked(x,y) {
-    return (treeGrid[x] && treeGrid[x][y] == BLOCKED)
-}
-
-function IsSpecialGrid (x,y, gridType) {
-    return (entityGrid[x] && entityGrid[x][y] == GRID_TYPES[gridType])
+    return false
 }
 
 function BlockEntityGrid(position, gridType) {
@@ -501,13 +504,9 @@ function BlockEntityGrid(position, gridType) {
     var y = WorldToGridPosY(position[1]) + Root.squareY/2
 
     if (entityGrid[x] === undefined) entityGrid[x] = []
+    if (entityGrid[x][y] === undefined) entityGrid[x][y] = 0
 
-    if (gridType !== undefined)
-    {
-        entityGrid[x][y] = GRID_TYPES[gridType]
-    }
-    else
-        entityGrid[x][y] = BLOCKED
+    entityGrid[x][y] = entityGrid[x][y] + gridType
 }
 
 // Trees block 2x2
@@ -517,7 +516,7 @@ function BlockTreeGrid (position) {
 
     if (treeGrid[x] === undefined) treeGrid[x] = []
 
-    treeGrid[x][y] = BLOCKED
+    treeGrid[x][y] = GRID_TYPES["BLOCKED"]
 }
 
 function BlockGridSquares (position, squares, gridType) {
@@ -564,6 +563,22 @@ function GetConstructionSize(entIndex) {
     var entName = Entities.GetUnitName(entIndex)
     var table = CustomNetTables.GetTableValue( "construction_size", entName)
     return table ? table.size : 0
+}
+
+function GetRequiredGridType(entIndex) {
+    var entName = Entities.GetUnitName(entIndex)
+    var table = CustomNetTables.GetTableValue( "construction_size", entName)
+    if (table && table.requires !== undefined)
+        return table.requires
+    else
+        return GRID_TYPES["BUILDABLE"]
+}
+
+function GetCustomGrid(entIndex) {
+    var entName = Entities.GetUnitName(entIndex)
+    var table = CustomNetTables.GetTableValue( "construction_size", entName)
+    if (table && table.grid !== undefined)
+        return table.grid
 }
 
 function HasGoldMineDistanceRestriction(entIndex) {
