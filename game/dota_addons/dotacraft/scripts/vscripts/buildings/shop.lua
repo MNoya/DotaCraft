@@ -88,25 +88,23 @@ function unit_shops:CreateShop(unit, shop_name)
 	if shopEnt then
 		local modelName = shopEnt:GetModelName()
 		local newshop = SpawnEntityFromTableSynchronous('trigger_shop', {origin = unit:GetAbsOrigin(), shoptype = 1, model = modelName}) -- shoptype is 0 for a "home" shop, 1 for a side shop and 2 for a secret shop
-		print("CreateShop out of "..modelName)
+		unit_shops:print("CreateShop out of "..modelName)
 	else
-		print("ERROR: CreateShop was unable to find a custom_shop trigger area. Add a custom_shop trigger to this map")
+		unit_shops:print("ERROR: CreateShop was unable to find a custom_shop trigger area. Add a custom_shop trigger to this map")
 	end
 	
-	--DeepPrintTable(GameRules.Shops["human_shop"])
 	local shopList = GameRules.Shops[shop_name]
 
 	-- Mercenaries take their list based on the tileset
 	if shop_name == "mercenary" then
 		local mapName = string.sub(GetMapName(), string.find(GetMapName(), '_', 1, true)+1)
 		local tileset = GameRules.Mercenaries["Maps"][mapName]
-		print("[UNIT SHOP] Mercenary shop for "..mapName,tileset)
+		unit_shops:print("Mercenary shop for "..mapName,tileset)
 		shopList = GameRules.Mercenaries[tileset]
 	end
 
-	DeepPrintTable(shopList)
 	for order,itemname in pairs(shopList) do
-		print("[UNIT SHOP] Creating timer for "..itemname.." new unit shop: "..shop_name)
+		unit_shops:print("Creating timer for "..itemname.." new unit shop: "..shop_name)
 		local key = itemname
 
 		-- set all variables
@@ -163,12 +161,18 @@ function unit_shops:CreateShop(unit, shop_name)
 	unit_shops:SetupShopPanels(unit, sorted_table, isTavern, isGlobal, isUnitShop, tier, shop_name)
 end
 
+local SHOPS_PRINT = false
+function unit_shops:print( ... )
+	if SHOPS_PRINT then
+		 print("[SHOPS] ".. ...)
+	end
+end
+
 function unit_shops:SetupShopPanels(unit, ShopItemTable, isTavern, isGlobal, isUnitShop, RequiredTier, ShopName)
 	local UnitID = unit:GetEntityIndex()
 	local team = unit:GetTeam()
 	if not isTavern then
-		--print("[UNIT SHOP] Create "..shop_name.." "..UnitID.." Tier "..tier)
-		--DeepPrintTable(ShopItemTable)
+		--unit_shops:print("Create "..shop_name.." "..UnitID.." Tier "..tier)
 		if isGlobal then
 			CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=0, Race=ShopName, Neutral = isUnitShop}) 		
 		else
@@ -177,7 +181,7 @@ function unit_shops:SetupShopPanels(unit, ShopItemTable, isTavern, isGlobal, isU
 	else
 		GameRules.HeroTavernEntityID = UnitID
 		CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, Tavern = true}) 
-		--print("[UNIT SHOP] Create Tavern "..GameRules.HeroTavernEntityID)		
+		--unit_shops:print("Create Tavern "..GameRules.HeroTavernEntityID)		
 	end
 
 end
@@ -197,7 +201,7 @@ function unit_shops:TavernStockUpdater(UnitShopItem, unit)
 				-- if player cannot train more heroes and tavern wasn't previously disabled, disable it now		
 				if not Players:CanTrainMoreHeroes( playerID ) then
 					CustomGameEventManager:Send_ServerToPlayer(player, "Shops_Remove_Content", {Index = GameRules.HeroTavernEntityID, Shop = UnitShopItem, playerID = i}) 
-					print("remove neutral heroes panels from player="..tostring(playerID))
+					unit_shops:print("remove neutral heroes panels from player="..tostring(playerID))
 					return
 				end
 				
@@ -223,7 +227,7 @@ function unit_shops:StockUpdater(UnitShopItem, unit, isGlobal)
 
 		if not IsValidEntity(unit) or not unit:IsAlive() then
 			-- send command to kill shop panel
-			print("[UNIT SHOP] Shop identified not valid, terminating timer")
+			unit_shops:print("Shop identified not valid, terminating timer")
 			return
 		end
 
@@ -250,16 +254,16 @@ function unit_shops:Stock_Management(UnitShopItem)
 			
 			-- reset counter for next stock
 			UnitShopItem.CurrentRefreshTime = 1
-			print("[UNIT SHOP] Increasing stock count by 1 for global shop")
+			unit_shops:print("Increasing stock count by 1 for global shop")
 		elseif UnitShopItem.CurrentRefreshTime == UnitShopItem.RestockRate then
 			-- increase stock by 1 when the currentrefreshtime == the refreshrate
 			UnitShopItem.CurrentStock = UnitShopItem.CurrentStock + 1
 			
 			-- reset counter for next stock
 			UnitShopItem.CurrentRefreshTime = 1
-			print("[UNIT SHOP] Increasing stock count by 1")
+			unit_shops:print("Increasing stock count by 1")
 		else
-			--print("[UNIT SHOP] Incrementing counter to restock")
+			--unit_shops:print("Incrementing counter to restock")
 			-- increment the time counter
 			UnitShopItem.CurrentRefreshTime = UnitShopItem.CurrentRefreshTime + 1
 		end
@@ -268,7 +272,7 @@ function unit_shops:Stock_Management(UnitShopItem)
 end
 
 function unit_shops:RemoveHeroPanel(ShopEntityIndex, playerID, ItemName)
-	print("Deleting hero panel")
+	unit_shops:print("Deleting hero panel")
 	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "Shops_Delete_Single_Panel", {Index = ShopEntityIndex, Hero = ItemName}) 
 end
 
@@ -286,13 +290,13 @@ function unit_shops:BuyHero(data)
 	local buyer = unit_shops:ValidateNearbyBuyer(playerID, Shop)
 	if not Players:CanTrainMoreHeroes( playerID ) or not unit_shops or not buyer then
 		if buyer or unit_shops then
-			print("playerID = "..tostring(playerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
+			unit_shops:print("playerID = "..tostring(playerID).." tried to create a hero at the tavern(MAX HERO LIMIT REACHED)")
 		end
 		return
 	end
 
 	EmitSoundOnClient("General.Buy", player)
-	print("[UNIT SHOPS] Tavern creating hero for "..playerID)						
+	unit_shops:print("Tavern creating hero for "..playerID)						
 	TavernCreateHeroForPlayer(playerID, shopID, item)
 	
 	unit_shops:RemoveHeroPanel(shopID, playerID, item)
@@ -317,7 +321,7 @@ function unit_shops:BuyHeroRevive(data)
 	local buyerPlayerID = buyer:GetPlayerOwnerID()	
 	
 	EmitSoundOnClient("General.Buy", player)
-	print("[UNIT SHOPS] Tavern reviving hero for "..playerID)
+	unit_shops:print("Tavern reviving hero for "..playerID)
 	TavernReviveHeroForPlayer(playerID, shopID, item)
 	
 	unit_shops:RemoveHeroPanel(shopID, playerID, item)
@@ -346,7 +350,7 @@ function unit_shops:BuyItem(data)
 	local shopID = data.Shop
 	local Shop = EntIndexToHScript(data.Shop)
 	
-	print("Player "..playerID.." trying to buy "..item.." from "..data.Shop.." "..shopID)
+	unit_shops:print("Player "..playerID.." trying to buy "..item.." from "..data.Shop.." "..shopID)
 
 	local buyer = unit_shops:ValidateNearbyBuyer(playerID, Shop)
 	if not buyer then return end
@@ -497,7 +501,7 @@ function TavernReviveHeroForPlayer(playerID, shopID, HeroName)
 			hero:SetHealth(hero:GetMaxHealth() * health_factor)
 			ability_name = hero.RespawnAbility
 			level = hero:GetLevel()
-			print("Revived "..hero_name.." with 50% Health at Level "..hero:GetLevel())
+			unit_shops:print("Revived "..hero_name.." with 50% Health at Level "..hero:GetLevel())
 		end
 	end
 
@@ -510,7 +514,7 @@ function TavernReviveHeroForPlayer(playerID, shopID, HeroName)
 		new_ability_name = GetResearchAbilityName(new_ability_name) --Take away numbers or research
 		new_ability_name = new_ability_name.."_acquired"
 
-		print("new_ability_name is "..new_ability_name..", it will replace: "..ability_name)
+		unit_shops:print("new_ability_name is "..new_ability_name..", it will replace: "..ability_name)
 
 		altar:AddAbility(new_ability_name)
 		altar:SwapAbilities(ability_name, new_ability_name, false, true)
@@ -544,7 +548,7 @@ function unit_shops:OpenClosestShop(data)
 	local player = PlayerResource:GetPlayer(playerID)
 	local mainSelected = data.UnitIndex
 
-	print("OpenClosestShop near unit "..mainSelected.." of player "..playerID)
+	unit_shops:print("OpenClosestShop near unit "..mainSelected.." of player "..playerID)
 
 	local unit = EntIndexToHScript(mainSelected)
 	local shop = FindClosestShop(unit)
