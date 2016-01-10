@@ -1463,7 +1463,8 @@ function dotacraft:OnPreGame()
 		local pathing_size = BuildingHelper:GetBlockPathingSize(gold_mine)
 		BuildingHelper:SnapToGrid(construction_size, location)
 
-		local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location, "GoldMine")
+		local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
+        BuildingHelper:AddGridType(construction_size, location, "GoldMine")
 		gold_mine:SetAbsOrigin(location)
 	    gold_mine.blockers = gridNavBlockers
 

@@ -26,8 +26,10 @@ function BuildingHelper:Init()
     BuildingHelper.squareY = 0  -- Number of Y grid points
 
     -- Grid States
-    GRID_BLOCKED = 1
-    GRID_FREE = 2
+    BuildingHelper.GridTypes = {}
+    BuildingHelper.GridTypes["BLOCKED"] = 1
+    BuildingHelper.GridTypes["BUILDABLE"] = 2
+    BuildingHelper.NextGridValue = 4
 
     -- Panorama Event Listeners
     CustomGameEventManager:RegisterListener("building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
@@ -199,17 +201,17 @@ function BuildingHelper:InitGNV()
             end
 
             if terrainBlocked then
-                BuildingHelper.Terrain[x][y] = GRID_BLOCKED
+                BuildingHelper.Terrain[x][y] = BuildingHelper.GridTypes["BLOCKED"]
                 byte = byte + bit.lshift(2,shift)
                 blockedCount = blockedCount+1
             else
-                BuildingHelper.Terrain[x][y] = GRID_FREE
+                BuildingHelper.Terrain[x][y] = BuildingHelper.GridTypes["BUILDABLE"]
                 byte = byte + bit.lshift(1,shift)
                 unblockedCount = unblockedCount+1
             end
 
             if treeBlocked then
-                BuildingHelper.Terrain[x][y] = GRID_BLOCKED
+                BuildingHelper.Terrain[x][y] = BuildingHelper.GridTypes["BLOCKED"]
             end
 
             shift = shift - 2
@@ -620,7 +622,10 @@ function BuildingHelper:SetupBuildingTable( abilityName, builderHandle )
 
     -- If the construction requires certain grid type, store it
     local requires = unitTable["Requires"]
-    buildingTable:SetVal("Requires", requires)
+    if not requires then
+        requires = "Buildable"
+    end
+    buildingTable:SetVal("Requires", string.upper(requires))
 
     local castRange = buildingTable:GetVal("AbilityCastRange", "number")
     if not castRange then
@@ -1091,35 +1096,9 @@ end
       * Blocks a square of certain construction and pathing size at a location on the server grid
       * construction_size: square of grid points to block from construction
       * pathing_size: square of pathing obstructions that will be spawned 
-      * grid_type: optional, sets a grid point with an specific name
 ]]--
-function BuildingHelper:BlockGridSquares(construction_size, pathing_size, location, grid_type)
-    local originX = GridNav:WorldToGridPosX(location.x)
-    local originY = GridNav:WorldToGridPosY(location.y)
-
-    local boundX1 = originX + math.floor(construction_size/2)
-    local boundX2 = originX - math.floor(construction_size/2)
-    local boundY1 = originY + math.floor(construction_size/2)
-    local boundY2 = originY - math.floor(construction_size/2)
-
-    local lowerBoundX = math.min(boundX1, boundX2)
-    local upperBoundX = math.max(boundX1, boundX2)
-    local lowerBoundY = math.min(boundY1, boundY2)
-    local upperBoundY = math.max(boundY1, boundY2)
-
-    -- Adjust even size
-    if (construction_size % 2) == 0 then
-        upperBoundX = upperBoundX-1
-        upperBoundY = upperBoundY-1
-    end
-
-    grid_type = grid_type or GRID_BLOCKED
-
-    for x = lowerBoundX, upperBoundX do
-        for y = lowerBoundY, upperBoundY do
-            BuildingHelper.Grid[x][y] = grid_type
-        end
-    end
+function BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
+    BuildingHelper:SetGridType(construction_size, location, "BLOCKED")
 
     return BuildingHelper:BlockPSO(pathing_size, location)
 end
@@ -1190,14 +1169,35 @@ end
       * Clears out an area for construction
 ]]--
 function BuildingHelper:FreeGridSquares(construction_size, location)
-    if not construction_size or construction_size == 0 then return end
+    BuildingHelper:RemoveGridType(construction_size, location, "BUILDABLE")
+end
+
+function BuildingHelper:AddGridType(size, location, grid_type)
+    -- If it doesn't exist, add it
+    grid_type = string.upper(grid_type)
+    if not BuildingHelper.GridTypes[grid_type] then
+        BuildingHelper:print("Adding new Grid Type: ".. grid_type.." ["..BuildingHelper.NextGridValue.."]")
+        BuildingHelper.GridTypes[grid_type] = BuildingHelper.NextGridValue
+        BuildingHelper.NextGridValue = BuildingHelper.NextGridValue * 2
+    end
+
+    BuildingHelper:SetGridType(size, location, grid_type, "add")  
+end
+
+function BuildingHelper:RemoveGridType(size, location, grid_type)
+    BuildingHelper:SetGridType(size, location, grid_type, "remove")
+end
+
+function BuildingHelper:SetGridType(size, location, grid_type, option)
+    if not size or size == 0 then return end
+
     local originX = GridNav:WorldToGridPosX(location.x)
     local originY = GridNav:WorldToGridPosY(location.y)
 
-    local boundX1 = originX + math.floor(construction_size/2)
-    local boundX2 = originX - math.floor(construction_size/2)
-    local boundY1 = originY + math.floor(construction_size/2)
-    local boundY2 = originY - math.floor(construction_size/2)
+    local boundX1 = originX + math.floor(size/2)
+    local boundX2 = originX - math.floor(size/2)
+    local boundY1 = originY + math.floor(size/2)
+    local boundY2 = originY - math.floor(size/2)
 
     local lowerBoundX = math.min(boundX1, boundX2)
     local upperBoundX = math.max(boundX1, boundX2)
@@ -1205,17 +1205,63 @@ function BuildingHelper:FreeGridSquares(construction_size, location)
     local upperBoundY = math.max(boundY1, boundY2)
 
     -- Adjust even size
-    if (construction_size % 2) == 0 then
+    if (size % 2) == 0 then
         upperBoundX = upperBoundX-1
         upperBoundY = upperBoundY-1
     end
 
-    for x = lowerBoundX, upperBoundX do
-        for y = lowerBoundY, upperBoundY do
-            BuildingHelper.Grid[x][y] = GRID_FREE
+    -- Adjust to upper case
+    grid_type = string.upper(grid_type)
+
+    -- Default by omission is to override the old value
+    if not option then
+        for x = lowerBoundX, upperBoundX do
+            for y = lowerBoundY, upperBoundY do
+                BuildingHelper.Grid[x][y] = BuildingHelper.GridTypes[grid_type]
+            end
+        end
+
+    elseif option == "add" then
+        for x = lowerBoundX, upperBoundX do
+            for y = lowerBoundY, upperBoundY do
+                -- Only add if it doesn't have it yet
+                local hasGridType = BuildingHelper:CellHasGridType(x,y, grid_type)
+                if not hasGridType then
+                    BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] + BuildingHelper.GridTypes[grid_type]
+                end
+            end
+        end
+
+    elseif option == "remove" then
+         for x = lowerBoundX, upperBoundX do
+            for y = lowerBoundY, upperBoundY do
+                -- Only remove if it has it
+                local hasGridType = BuildingHelper:CellHasGridType(x,y, grid_type)
+                if hasGridType then
+                    BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] - BuildingHelper.GridTypes[grid_type]
+                end
+            end
+        end
+    end     
+end
+
+function BuildingHelper:GetCellGridTypes(x,y)
+    local s = ""
+    for grid_string,value in pairs(BuildingHelper.GridTypes) do
+        local hasGridType = BuildingHelper:CellHasGridType(x,y, grid_type)
+        if hasGridType then
+            s = s..grid_string.." "
         end
     end
+    return s
 end
+
+function BuildingHelper:CellHasGridType(x,y, grid_type)
+    if BuildingHelper.GridTypes[grid_type] then
+        return bit.band(BuildingHelper.Grid[x][y], BuildingHelper.GridTypes[grid_type]) ~= 0
+    end
+end
+
 
 --[[
       ValidPosition
@@ -1281,7 +1327,9 @@ function BuildingHelper:IsAreaBlocked( size, location )
 
     for x = lowerBoundX, upperBoundX do
         for y = lowerBoundY, upperBoundY do
-            if BuildingHelper.Grid[x][y] ~= GRID_FREE and not string.match(BuildingHelper.Grid[x][y],"Buildable") then
+            local bBlocked = bit.band(BuildingHelper.Grid[x][y], BuildingHelper.GridTypes["BLOCKED"]) ~= 0
+            --print(BuildingHelper.Grid[x][y].." has "..BuildingHelper.GridTypes["BLOCKED"].."?", BuildingHelper:GetGridTypes(x,y), bBlocked)
+            if bBlocked then
                 return true
             end
         end
@@ -1311,8 +1359,14 @@ function BuildingHelper:AreaMeetsCriteria( size, location, grid_type )
 
     for x = lowerBoundX, upperBoundX do
         for y = lowerBoundY, upperBoundY do
-            if BuildingHelper.Grid[x][y] ~= grid_type then
-                return false
+            local grid_types = split(grid_type, " ")
+            for k,v in pairs(grid_types) do
+                local t = string.upper(v)
+                local hasGridType = bit.band(BuildingHelper.Grid[x][y], BuildingHelper.GridTypes[t]) ~= 0
+                --print(BuildingHelper.Grid[x][y].." has "..t.." ["..BuildingHelper.GridTypes[t].."]?", BuildingHelper:GetGridTypes(x,y), hasGridType)
+                if not hasGridType then
+                    return false
+                end
             end
         end
     end

@@ -30,6 +30,8 @@ function CreateBlight(location, size)
         end
     end
 
+    BuildingHelper:AddGridType(radius/32, location, "Blight")
+
     print("Made "..count.." new blight particles")
    
 end
@@ -70,12 +72,16 @@ function RemoveBlight( location, radius )
             end
         end
     end
+    BuildingHelper:RemoveGridType(radius/32, location, "Blight")
+
     print("Removed "..count.." blight particles")
 end
 
 -- Takes a Vector and checks if there is marked as blight in the grid
 function HasBlight( position )
-    return GameRules.Blight[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosY(position.y)] ~= nil
+    local x = GridNav:WorldToGridPosX(position.x)
+    local y = GridNav:WorldToGridPosY(position.y)
+    return BuildingHelper:CellHasGridType(x,y, "BLIGHT")
 end
 
 -- Not every gridnav square needs a blight particle
