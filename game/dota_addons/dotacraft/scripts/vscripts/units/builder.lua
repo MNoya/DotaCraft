@@ -370,7 +370,7 @@ function CancelBuilding( keys )
                 builder.state = "idle"
                 BuildingHelper:AdvanceQueue(builder)
 
-                local ability = builder:FindAbilityByName("human_gather")
+                local ability = FindGatherAbility(builder)
                 if ability then 
                     ToggleOff(ability)
                 end
@@ -400,8 +400,7 @@ function CancelBuilding( keys )
             if builder and IsValidEntity(builder) then
                 builder:RemoveModifierByName("modifier_on_order_cancel_repair")
                 builder:RemoveModifierByName("modifier_peasant_repairing")
-                local race = GetUnitRace(builder)
-                local repair_ability = builder:FindAbilityByName(race.."_gather")
+                local repair_ability = BuildingHelper:GetRepairAbility( builder )
                 ToggleOff(repair_ability)
             end
         end
@@ -563,7 +562,7 @@ function Gather( event )
         BuildingHelper:ClearQueue(caster)
 
         -- Disable this for Ghouls
-        if caster:GetUnitName() == "undead_ghoul" then
+        if not CanGatherGold(caster) then
             caster:Interrupt()
             return
         end

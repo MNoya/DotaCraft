@@ -1232,7 +1232,7 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     local requires = buildingTable and buildingTable["Requires"]
 
     if requires then
-        bBlocked = false--not BuildingHelper:AreaMeetsCriteria(size, location, requires)
+        bBlocked = not BuildingHelper:AreaMeetsCriteria(size, location, requires)
     else
         bBlocked = BuildingHelper:IsAreaBlocked(size, location)
     end
