@@ -145,8 +145,10 @@ function StartBuildingHelper( params )
         var entities = Entities.GetAllEntitiesByClassname('npc_dota_building')
         var hero_entities = Entities.GetAllHeroEntities()
         var creature_entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
+        var dummy_entities = Entities.GetAllEntitiesByName('npc_dota_thinker')
         entities = entities.concat(hero_entities)
         entities = entities.concat(creature_entities)
+        entities = entities.concat(dummy_entities)
 
         // Build the entity grid with the construction sizes and entity origins
         entityGrid = []
@@ -156,7 +158,7 @@ function StartBuildingHelper( params )
             var entPos = Entities.GetAbsOrigin( entities[i] )
             var squares = GetConstructionSize(entities[i])
             
-            if (squares > 0 && ( IsCustomBuilding(entities[i]) || IsGoldMine(entities[i])))
+            if (squares > 0)
             {
                 if (IsGoldMine(entities[i]))
                     BlockGridSquares(entPos, squares, requires)
@@ -166,10 +168,11 @@ function StartBuildingHelper( params )
             }
             else
             {
-                // Put visible chopped tree dummies on a separate table to skip trees
-                if (Entities.GetUnitName(entities[i]) == 'tree_chopped')
+                // Put tree dummies on a separate table to skip trees
+                if (Entities.GetUnitName(entities[i]) == 'npc_dota_thinker')
                 {
-                    cutTrees[entPos] = entities[i]
+                    if (Entities.GetAbilityByName(entities[i], "dummy_tree") != -1)
+                        cutTrees[entPos] = entities[i]
                 }
                 // Block 2x2 squares if its an enemy unit
                 else if (Entities.GetTeamNumber(entities[i]) != Entities.GetTeamNumber(builderIndex))
@@ -191,7 +194,9 @@ function StartBuildingHelper( params )
                 for (var i = 0; i < tree_entities.length; i++)
                 {
                     var treePos = Entities.GetAbsOrigin(tree_entities[i])
-                    BlockGridSquares(treePos, 2, "TREE")
+                    // Block the grid if the tree isn't chopped
+                    if (cutTrees[treePos] === undefined)
+                        BlockGridSquares(treePos, 2, "TREE")                    
                 }
             }
         }

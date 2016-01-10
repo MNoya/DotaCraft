@@ -151,7 +151,14 @@ function BuildingHelper:OnTreeCut(keys)
     local treePos = Vector(keys.tree_x,keys.tree_y,0)
 
     -- Create a dummy for clients to be able to detect trees standing and block their grid
-    CreateUnitByName("tree_chopped", treePos, false, nil, nil, 0)
+    local tree_chopped = CreateUnitByName("npc_dota_thinker", treePos, false, nil, nil, 0)
+    tree_chopped:AddAbility("dummy_tree")
+    local tree_ability = tree_chopped:FindAbilityByName("dummy_tree")
+    if not tree_ability then
+        BuildingHelper:print("ERROR: dummy_tree ability is missing!")
+    else
+        tree_ability:SetLevel(1)
+    end
 
     -- Allow construction
     if not GridNav:IsBlocked(treePos) then
