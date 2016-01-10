@@ -1098,15 +1098,13 @@ end
       * pathing_size: square of pathing obstructions that will be spawned 
 ]]--
 function BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
-    BuildingHelper:SetGridType(construction_size, location, "BLOCKED")
+    BuildingHelper:RemoveGridType(construction_size, location, "BUILDABLE")
+    BuildingHelper:AddGridType(construction_size, location, "BLOCKED")
 
     return BuildingHelper:BlockPSO(pathing_size, location)
 end
 
---[[
-      BlockPSO
-      * Spawns a square of point_simple_obstruction entities at a location
-]]--
+-- Spawns a square of point_simple_obstruction entities at a location
 function BuildingHelper:BlockPSO(size, location)
     if size == 0 then return end
 
@@ -1164,14 +1162,13 @@ function BuildingHelper:BlockPSO(size, location)
     return gridNavBlockers
 end
 
---[[
-      FreeGridSquares
-      * Clears out an area for construction
-]]--
+-- Clears out an area for construction
 function BuildingHelper:FreeGridSquares(construction_size, location)
-    BuildingHelper:RemoveGridType(construction_size, location, "BUILDABLE")
+    BuildingHelper:RemoveGridType(construction_size, location, "BLOCKED")
+    BuildingHelper:AddGridType(construction_size, location, "BUILDABLE")
 end
 
+-- Adds a grid_type to a square of size at centered at a location
 function BuildingHelper:AddGridType(size, location, grid_type)
     -- If it doesn't exist, add it
     grid_type = string.upper(grid_type)
@@ -1184,20 +1181,22 @@ function BuildingHelper:AddGridType(size, location, grid_type)
     BuildingHelper:SetGridType(size, location, grid_type, "add")  
 end
 
+-- Removes grid_type from every cell of a square around the location
 function BuildingHelper:RemoveGridType(size, location, grid_type)
     BuildingHelper:SetGridType(size, location, grid_type, "remove")
 end
 
+-- Central function used to add, remove or override multiple grid squares at once
 function BuildingHelper:SetGridType(size, location, grid_type, option)
     if not size or size == 0 then return end
 
     local originX = GridNav:WorldToGridPosX(location.x)
     local originY = GridNav:WorldToGridPosY(location.y)
-
-    local boundX1 = originX + math.floor(size/2)
-    local boundX2 = originX - math.floor(size/2)
-    local boundY1 = originY + math.floor(size/2)
-    local boundY2 = originY - math.floor(size/2)
+    local halfSize = math.floor(size/2)
+    local boundX1 = originX + halfSize
+    local boundX2 = originX - halfSize
+    local boundY1 = originY + halfSize
+    local boundY2 = originY - halfSize
 
     local lowerBoundX = math.min(boundX1, boundX2)
     local upperBoundX = math.max(boundX1, boundX2)
@@ -1225,7 +1224,7 @@ function BuildingHelper:SetGridType(size, location, grid_type, option)
         for x = lowerBoundX, upperBoundX do
             for y = lowerBoundY, upperBoundY do
                 -- Only add if it doesn't have it yet
-                local hasGridType = BuildingHelper:CellHasGridType(x,y, grid_type)
+                local hasGridType = BuildingHelper:CellHasGridType(x,y,grid_type)
                 if not hasGridType then
                     BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] + BuildingHelper.GridTypes[grid_type]
                 end
@@ -1236,7 +1235,7 @@ function BuildingHelper:SetGridType(size, location, grid_type, option)
          for x = lowerBoundX, upperBoundX do
             for y = lowerBoundY, upperBoundY do
                 -- Only remove if it has it
-                local hasGridType = BuildingHelper:CellHasGridType(x,y, grid_type)
+                local hasGridType = BuildingHelper:CellHasGridType(x,y,grid_type)
                 if hasGridType then
                     BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] - BuildingHelper.GridTypes[grid_type]
                 end
@@ -1245,10 +1244,11 @@ function BuildingHelper:SetGridType(size, location, grid_type, option)
     end     
 end
 
+-- Returns a string with each of the grid types of the cell, mostly to debug
 function BuildingHelper:GetCellGridTypes(x,y)
     local s = ""
     for grid_string,value in pairs(BuildingHelper.GridTypes) do
-        local hasGridType = BuildingHelper:CellHasGridType(x,y, grid_type)
+        local hasGridType = BuildingHelper:CellHasGridType(x,y,grid_string)
         if hasGridType then
             s = s..grid_string.." "
         end
@@ -1256,12 +1256,12 @@ function BuildingHelper:GetCellGridTypes(x,y)
     return s
 end
 
-function BuildingHelper:CellHasGridType(x,y, grid_type)
+-- Checks if the cell has a certain grid type by name
+function BuildingHelper:CellHasGridType(x,y,grid_type)
     if BuildingHelper.GridTypes[grid_type] then
         return bit.band(BuildingHelper.Grid[x][y], BuildingHelper.GridTypes[grid_type]) ~= 0
     end
 end
-
 
 --[[
       ValidPosition
@@ -1305,46 +1305,20 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     return true
 end
 
+-- If not all squares are buildable, the area is blocked
 function BuildingHelper:IsAreaBlocked( size, location )
-    local originX = GridNav:WorldToGridPosX(location.x)
-    local originY = GridNav:WorldToGridPosY(location.y)
-
-    local boundX1 = originX + math.floor(size/2)
-    local boundX2 = originX - math.floor(size/2)
-    local boundY1 = originY + math.floor(size/2)
-    local boundY2 = originY - math.floor(size/2)
-
-    local lowerBoundX = math.min(boundX1, boundX2)
-    local upperBoundX = math.max(boundX1, boundX2)
-    local lowerBoundY = math.min(boundY1, boundY2)
-    local upperBoundY = math.max(boundY1, boundY2)
-
-    -- Adjust even size
-    if (size % 2) == 0 then
-        upperBoundX = upperBoundX-1
-        upperBoundY = upperBoundY-1
-    end
-
-    for x = lowerBoundX, upperBoundX do
-        for y = lowerBoundY, upperBoundY do
-            local bBlocked = bit.band(BuildingHelper.Grid[x][y], BuildingHelper.GridTypes["BLOCKED"]) ~= 0
-            --print(BuildingHelper.Grid[x][y].." has "..BuildingHelper.GridTypes["BLOCKED"].."?", BuildingHelper:GetGridTypes(x,y), bBlocked)
-            if bBlocked then
-                return true
-            end
-        end
-    end
-    return false
+    return not BuildingHelper:AreaMeetsCriteria( size, location, "BUILDABLE" )
 end
 
+-- Checks that all squares meet each of the passed grid_type criteria (can be multiple, split by spaces)
 function BuildingHelper:AreaMeetsCriteria( size, location, grid_type )
     local originX = GridNav:WorldToGridPosX(location.x)
     local originY = GridNav:WorldToGridPosY(location.y)
-
-    local boundX1 = originX + math.floor(size/2)
-    local boundX2 = originX - math.floor(size/2)
-    local boundY1 = originY + math.floor(size/2)
-    local boundY2 = originY - math.floor(size/2)
+    local halfSize = math.floor(size/2)
+    local boundX1 = originX + halfSize
+    local boundX2 = originX - halfSize
+    local boundY1 = originY + halfSize
+    local boundY2 = originY - halfSize
 
     local lowerBoundX = math.min(boundX1, boundX2)
     local upperBoundX = math.max(boundX1, boundX2)
@@ -1362,8 +1336,7 @@ function BuildingHelper:AreaMeetsCriteria( size, location, grid_type )
             local grid_types = split(grid_type, " ")
             for k,v in pairs(grid_types) do
                 local t = string.upper(v)
-                local hasGridType = bit.band(BuildingHelper.Grid[x][y], BuildingHelper.GridTypes[t]) ~= 0
-                --print(BuildingHelper.Grid[x][y].." has "..t.." ["..BuildingHelper.GridTypes[t].."]?", BuildingHelper:GetGridTypes(x,y), hasGridType)
+                local hasGridType = BuildingHelper:CellHasGridType(x,y,t)
                 if not hasGridType then
                     return false
                 end
@@ -1831,6 +1804,18 @@ function tobool(s)
     else --nil "false" "0"
         return false
     end
+end
+
+local function split(inputstr, sep)
+    if sep == nil then
+            sep = "%s"
+    end
+    local t={} ; i=1
+    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+            t[i] = str
+            i = i + 1
+    end
+    return t
 end
 
 function DrawGridSquare( x, y, color )
