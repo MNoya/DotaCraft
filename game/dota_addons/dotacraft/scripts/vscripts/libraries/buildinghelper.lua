@@ -39,7 +39,9 @@ function BuildingHelper:Init()
     ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(BuildingHelper, 'OnGameRulesStateChange'), self)
     ListenToGameEvent('npc_spawned', Dynamic_Wrap(BuildingHelper, 'OnNPCSpawned'), self)
     ListenToGameEvent('entity_killed', Dynamic_Wrap(BuildingHelper, 'OnEntityKilled'), self)
-    ListenToGameEvent('tree_cut', Dynamic_Wrap(BuildingHelper, 'OnTreeCut'), self)
+    if BuildingHelper.Settings["UPDATE_TREES"] then
+        ListenToGameEvent('tree_cut', Dynamic_Wrap(BuildingHelper, 'OnTreeCut'), self)
+    end
 
     -- Lua modifiers
     LinkLuaModifier("modifier_out_of_world", "libraries/modifiers/modifier_out_of_world", LUA_MODIFIER_MOTION_NONE)
@@ -77,6 +79,7 @@ function BuildingHelper:LoadSettings()
     
     BuildingHelper.Settings["TESTING"] = tobool(BuildingHelper.Settings["TESTING"])
     BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"] = tobool(BuildingHelper.Settings["RECOLOR_BUILDING_PLACED"])
+    BuildingHelper.Settings["UPDATE_TREES"] = tobool(BuildingHelper.Settings["UPDATE_TREES"])
 
     CustomNetTables:SetTableValue("building_settings", "grid_alpha", { value = BuildingHelper.Settings["GRID_ALPHA"] })
     CustomNetTables:SetTableValue("building_settings", "alt_grid_alpha", { value = BuildingHelper.Settings["ALT_GRID_ALPHA"] })
@@ -86,6 +89,7 @@ function BuildingHelper:LoadSettings()
     CustomNetTables:SetTableValue("building_settings", "recolor_ghost", { value = tobool(BuildingHelper.Settings["RECOLOR_GHOST_MODEL"]) })
     CustomNetTables:SetTableValue("building_settings", "turn_red", { value = tobool(BuildingHelper.Settings["RED_MODEL_WHEN_INVALID"]) })
     CustomNetTables:SetTableValue("building_settings", "permanent_alt_grid", { value = tobool(BuildingHelper.Settings["PERMANENT_ALT_GRID"]) })
+    CustomNetTables:SetTableValue("building_settings", "update_trees", { value = BuildingHelper.Settings["UPDATE_TREES"] })
 
     if BuildingHelper.Settings["HEIGHT_RESTRICTION"] ~= "" then
         CustomNetTables:SetTableValue("building_settings", "height_restriction", { value = BuildingHelper.Settings["HEIGHT_RESTRICTION"] })
@@ -180,7 +184,12 @@ function BuildingHelper:InitGNV()
             local gridY = GridNav:GridPosToWorldCenterY(y)
             local position = Vector(gridX, gridY, 0)
             local treeBlocked = GridNav:IsNearbyTree(position, 30, true)
-            local terrainBlocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position) and not treeBlocked
+
+            -- If tree updating is enabled, trees aren't networked but detected as ent_dota_tree entities on clients
+            local terrainBlocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
+            if BuildingHelper.Settings["UPDATE_TREES"] then
+                terrainBlocked = terrainBlocked and not treeBlocked
+            end
 
             if terrainBlocked then
                 BuildingHelper.Terrain[x][y] = GRID_BLOCKED
@@ -192,7 +201,6 @@ function BuildingHelper:InitGNV()
                 unblockedCount = unblockedCount+1
             end
 
-            --Trees aren't networked but detected as ent_dota_tree entities on clients
             if treeBlocked then
                 BuildingHelper.Terrain[x][y] = GRID_BLOCKED
             end
