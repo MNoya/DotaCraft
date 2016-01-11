@@ -30,7 +30,7 @@ function CreateBlight(location, size)
         end
     end
 
-    BuildingHelper:AddGridType(radius/32, location, "Blight")
+    BuildingHelper:AddGridType(radius, location, "Blight", "radius")
 
     print("Made "..count.." new blight particles")
    
@@ -72,7 +72,7 @@ function RemoveBlight( location, radius )
             end
         end
     end
-    BuildingHelper:RemoveGridType(radius/32, location, "Blight")
+    BuildingHelper:RemoveGridType(radius, location, "Blight", "radius")
 
     print("Removed "..count.." blight particles")
 end

@@ -572,12 +572,11 @@ function BlockGridSquares (position, squares, gridType) {
 }
 
 function BlockGridInRadius (position, radius, gridType) {
-    var halfSide = (radius/32/2)*64
     var boundingRect = {}
-    boundingRect["leftBorderX"] = position[0]-halfSide
-    boundingRect["rightBorderX"] = position[0]+halfSide
-    boundingRect["topBorderY"] = position[1]+halfSide
-    boundingRect["bottomBorderY"] = position[1]-halfSide
+    boundingRect["leftBorderX"] = position[0]-radius
+    boundingRect["rightBorderX"] = position[0]+radius
+    boundingRect["topBorderY"] = position[1]+radius
+    boundingRect["bottomBorderY"] = position[1]-radius
 
     for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
     {
@@ -656,7 +655,7 @@ function TooCloseToGoldmine(position) {
 }
 
 function Length2D(v1, v2) {
-    return Math.sqrt( (v2[0]-v1[0])*(v2[0]-v1[0]) + (v2[1]-v1[1])*(v2[1]-v1[1]) + (v2[2]-v1[2])*(v2[2]-v1[2]) )
+    return Math.sqrt( (v2[0]-v1[0])*(v2[0]-v1[0]) + (v2[1]-v1[1])*(v2[1]-v1[1]) )
 }
 
 function PrintGridCoords(x,y) {

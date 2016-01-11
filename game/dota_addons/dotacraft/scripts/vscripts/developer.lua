@@ -168,22 +168,10 @@ function dotacraft:DebugTrees()
 end
 
 function dotacraft:DebugBlight()
-    local worldMin = Vector(GetWorldMinX(), GetWorldMinY(), 0)
-    local worldMax = Vector(GetWorldMaxX(), GetWorldMaxY(), 0)
-    local boundX1 = GridNav:WorldToGridPosX(worldMin.x)
-    local boundX2 = GridNav:WorldToGridPosX(worldMax.x)
-    local boundY1 = GridNav:WorldToGridPosX(worldMin.y)
-    local boundY2 = GridNav:WorldToGridPosX(worldMax.y)
-
-    for i=boundX1+1,boundX2-1 do
-        for j=(boundY1+1),boundY2-1 do
-            local position = Vector(GridNav:GridPosToWorldCenterX(i), GridNav:GridPosToWorldCenterY(j), 0)
-            if HasBlight(position) then
-                if HasBlightParticle(position) then
-                    DebugDrawCircle(position, Vector(128,128,128), 50, 256, true, 60)
-                else
-                    DebugDrawCircle(position, Vector(128,0,128), 50, 32, true, 60)
-                end
+    for x,v in pairs(BuildingHelper.Grid) do
+        for y,_ in pairs(v) do
+            if BuildingHelper:CellHasGridType(x,y,'BLIGHT') then
+                DrawGridSquare(x,y,Vector(128,0,128))
             end
         end
     end
