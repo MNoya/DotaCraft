@@ -189,6 +189,11 @@ function StartBuildingHelper( params )
                         //$.Msg("Setting ",specialGrid[gridType].Square," grid squares with ",gridType.toUpperCase()," [",GRID_TYPES[gridType.toUpperCase()],"]")
                         BlockGridSquares(entPos, Number(specialGrid[gridType].Square), GRID_TYPES[gridType.toUpperCase()])
                     }
+                    else if (specialGrid[gridType].Radius)
+                    {
+                        //$.Msg("Setting ",specialGrid[gridType].Radius," grid radius with ",gridType.toUpperCase()," [",GRID_TYPES[gridType.toUpperCase()],"]")
+                        BlockGridInRadius(entPos, Number(specialGrid[gridType].Radius), GRID_TYPES[gridType.toUpperCase()])
+                    }
                 }              
             }
         }
@@ -550,8 +555,7 @@ function BlockGridSquares (position, squares, gridType) {
         {
             for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
             {
-                var pos = [x,y,0]
-                BlockTreeGrid(pos)
+                BlockTreeGrid([x,y,0])
             }
         }
     }
@@ -561,8 +565,27 @@ function BlockGridSquares (position, squares, gridType) {
         {
             for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
             {
-                var pos = [x,y,0]
-                BlockEntityGrid(pos, gridType)
+                BlockEntityGrid([x,y,0], gridType)
+            }
+        }
+    }
+}
+
+function BlockGridInRadius (position, radius, gridType) {
+    var halfSide = (radius/32/2)*64
+    var boundingRect = {}
+    boundingRect["leftBorderX"] = position[0]-halfSide
+    boundingRect["rightBorderX"] = position[0]+halfSide
+    boundingRect["topBorderY"] = position[1]+halfSide
+    boundingRect["bottomBorderY"] = position[1]-halfSide
+
+    for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
+    {
+        for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
+        {
+            if (Length2D(position, [x,y,0]) <= radius)
+            {
+                BlockEntityGrid([x,y,0], gridType)
             }
         }
     }
