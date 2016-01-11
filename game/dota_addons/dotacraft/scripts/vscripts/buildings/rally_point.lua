@@ -76,7 +76,6 @@ function MoveToRallyPoint( event )
 	local target = event.target
 	local entityIndex = target:GetEntityIndex() -- The spawned unit
 	local playerID = caster:GetPlayerOwnerID()
-	local targetKV = GameRules.UnitKV[target:GetUnitName()]
 
 	-- Set the builders idle when they spawn
 	if IsBuilder(target) then 
@@ -96,7 +95,7 @@ function MoveToRallyPoint( event )
 				if empty_tree then
 					empty_tree.builder = target
 			        target.skip = true
-			        local gather_ability = target:FindAbilityByName(targetKV.GatherAbility)
+			        local gather_ability = target:FindAbilityByName(FindGatherAbility(target))
 			        if gather_ability then
 			        	local tree_index = GetTreeIndexFromHandle(empty_tree)
 			            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
@@ -113,7 +112,7 @@ function MoveToRallyPoint( event )
     	Timers:CreateTimer(0.05, function() 
     		if IsBuilder(target) then
 		    	local race = GetUnitRace(target)
-		    	local gather_ability = target:FindAbilityByName(targetKV.GatherAbility)
+		    	local gather_ability = target:FindAbilityByName(FindGatherAbility(target))
 		    	for i=0,15 do
 		    		local ab = target:GetAbilityByIndex(i)
 		    		if ab then print(ab:GetAbilityName()) end
