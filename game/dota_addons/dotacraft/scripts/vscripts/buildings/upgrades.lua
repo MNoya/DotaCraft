@@ -31,6 +31,13 @@ function UpgradeBuilding( event )
 		AddUnitToSelection(building)
 	end
 
+	 -- Add to the Food Limit if possible
+    local old_food = GetFoodProduced(caster)
+    local new_food = GetFoodProduced(building)
+    if new_food ~= old_food then
+        Players:ModifyFoodLimit(playerID, new_food - old_food)
+    end
+	
 	-- If the upgraded building is a city center, update the city_center_level if required
 	if IsCityCenter(building) then
 		local level = building:GetLevel()

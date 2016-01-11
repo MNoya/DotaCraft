@@ -1056,7 +1056,7 @@ function dotacraft:OnEntityKilled( event )
 
 		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killed)
-		if food_produced > 0 and killed_playerID and not killed.state == "canceled" then
+		if food_produced ~= 0 and killed.state ~= "canceled" then
 			Players:ModifyFoodLimit(killed_playerID, - food_produced)
 		end
 
