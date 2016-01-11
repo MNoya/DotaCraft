@@ -1,4 +1,4 @@
- print ('[DOTACRAFT] dotacraft.lua' )
+print ('[DOTACRAFT] dotacraft.lua' )
 --[[
 	dota_launch_custom_game dotacraft echo_isles
 	dota_launch_custom_game dotacraft hills_of_glory
@@ -1085,7 +1085,7 @@ function dotacraft:OnEntityKilled( event )
 	-- Unit Killed (Hero or Creature)
 	else
         if not attacker then return end
-        
+
 		-- Skip corpses
 		if killed.corpse_expiration then return end
 
