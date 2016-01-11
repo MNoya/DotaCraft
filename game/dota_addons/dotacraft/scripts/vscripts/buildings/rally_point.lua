@@ -95,7 +95,7 @@ function MoveToRallyPoint( event )
 				if empty_tree then
 					empty_tree.builder = target
 			        target.skip = true
-			        local gather_ability = target:FindAbilityByName(race.."_gather")
+			        local gather_ability = FindGatherAbility(target)
 			        if gather_ability then
 			        	local tree_index = GetTreeIndexFromHandle(empty_tree)
 			            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
@@ -112,7 +112,7 @@ function MoveToRallyPoint( event )
     	Timers:CreateTimer(0.05, function() 
     		if IsBuilder(target) then
 		    	local race = GetUnitRace(target)
-		    	local gather_ability = target:FindAbilityByName(race.."_gather")
+		    	local gather_ability = FindGatherAbility(target)
 		    	for i=0,15 do
 		    		local ab = target:GetAbilityByIndex(i)
 		    		if ab then print(ab:GetAbilityName()) end
