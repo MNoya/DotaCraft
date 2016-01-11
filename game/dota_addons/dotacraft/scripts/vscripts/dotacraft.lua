@@ -1084,6 +1084,8 @@ function dotacraft:OnEntityKilled( event )
 	
 	-- Unit Killed (Hero or Creature)
 	else
+        if not attacker then return end
+        
 		-- Skip corpses
 		if killed.corpse_expiration then return end
 
@@ -1096,7 +1098,7 @@ function dotacraft:OnEntityKilled( event )
 		local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
 
 		-- Grant XP in AoE
-		local heroesNearby = FindUnitsInRadius( attacker:GetTeamNumber(), killed:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local heroesNearby = FindUnitsInRadius( attacker:GetTeamNumber(), killed:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		--print("There are ",#heroesNearby," nearby the dead unit, base value for this unit is: "..XPGain)
 		for _,hero in pairs(heroesNearby) do
 			if hero:IsRealHero() and hero:GetTeam() ~= killed:GetTeam() then

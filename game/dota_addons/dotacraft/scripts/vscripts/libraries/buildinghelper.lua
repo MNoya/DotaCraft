@@ -158,12 +158,27 @@ end
 
 function BuildingHelper:OnEntityKilled(keys)
     local killed = EntIndexToHScript(keys.entindex_killed)
+    local gridTable = BuildingHelper.UnitKV[killed:GetUnitName()]["Grid"]
 
     if IsBuilder(killed) then
         BuildingHelper:ClearQueue(killed)
-    elseif IsCustomBuilding(killed) then
+    elseif IsCustomBuilding(killed) or gridTable then
         -- Building Helper grid cleanup
         BuildingHelper:RemoveBuilding(killed, true)
+
+        if gridTable then
+            for grid_type,v in pairs(gridTable) do
+                if tobool(v.RemoveOnDeath) then
+                    local location = killed:GetAbsOrigin()
+                    BuildingHelper:print("Clearing special grid of "..grid_type)
+                    if (v.Radius) then
+                        BuildingHelper:RemoveGridType(v.Radius, location, grid_type, "radius")
+                    elseif (v.Square) then
+                        BuildingHelper:RemoveGridType(v.Square, location, grid_type)
+                    end                
+                end
+            end
+        end
     end
 end
 
@@ -733,7 +748,7 @@ function BuildingHelper:RemoveBuilding( building, bForcedKill )
         UTIL_Remove(building.prop)
     end
 
-    BuildingHelper:FreeGridSquares(building.construction_size, building:GetAbsOrigin())
+    BuildingHelper:FreeGridSquares(BuildingHelper:GetConstructionSize(building), building:GetAbsOrigin())
 
     if not building.blockers then 
         return 
@@ -1316,7 +1331,6 @@ function BuildingHelper:SetGridTypeRadius(radius, location, grid_type, option)
             for y = lowerBoundY, upperBoundY do
                 local current_pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
                 local distance = (current_pos - location):Length2D()
-                print("Distance is ",distance, distance <= radius)
                 if distance <= radius then
                     BuildingHelper.Grid[x][y] = BuildingHelper.GridTypes[grid_type]
                 end
@@ -1331,7 +1345,6 @@ function BuildingHelper:SetGridTypeRadius(radius, location, grid_type, option)
                 if not hasGridType then
                     local current_pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
                     local distance = (current_pos - location):Length2D()
-                    print("Distance is ",distance, distance <= radius)
                     if distance <= radius then
                         BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] + BuildingHelper.GridTypes[grid_type]
                     end
@@ -1347,7 +1360,6 @@ function BuildingHelper:SetGridTypeRadius(radius, location, grid_type, option)
                 if hasGridType then
                     local current_pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
                     local distance = (current_pos - location):Length2D()
-                    print("Distance is ",distance, distance <= radius)
                     if distance <= radius then
                         BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] - BuildingHelper.GridTypes[grid_type]
                     end

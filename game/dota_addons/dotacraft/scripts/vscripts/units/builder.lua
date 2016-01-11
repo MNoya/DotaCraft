@@ -1088,7 +1088,9 @@ function GoldGain( event )
         ParticleManager:DestroyParticle(mine.building_on_top.counter_particle, true)
         mine.building_on_top:RemoveSelf()
 
-        mine:RemoveSelf()
+        mine:RemoveModifierByName("modifier_invulnerable")
+        mine:Kill(nil, nil)
+        mine:AddNoDraw()
 
         caster.target_mine = nil
     end
