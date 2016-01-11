@@ -1527,15 +1527,19 @@ end
 function dotacraft:Setup_Color_Table()
 	--print("creating color table")
 		
-	SetNetTableValue("dotacraft_color_table", "0", 	{r=255, g=0,   b=0	})	-- red
-	SetNetTableValue("dotacraft_color_table", "1", 	{r=0, 	g=0,   b=255})	-- blue
-	SetNetTableValue("dotacraft_color_table", "2", 	{r=0, 	g=255, b=255})	-- teal
-	SetNetTableValue("dotacraft_color_table", "3", 	{r=125, g=0,   b=255})	-- purple
-	SetNetTableValue("dotacraft_color_table", "4", 	{r=255, g=255, b=0	})	-- yellow
-	SetNetTableValue("dotacraft_color_table", "5", 	{r=255, g=125, b=0	})	-- orange
-	SetNetTableValue("dotacraft_color_table", "6", 	{r=0, 	g=255, b=0	})	-- green
-	SetNetTableValue("dotacraft_color_table", "7",	{r=255, g=100, b=255})	-- pink
-	SetNetTableValue("dotacraft_color_table", "8",	{r=125, g=125, b=125})	-- gray	
+	SetNetTableValue("dotacraft_color_table", "0", 	{r=255, g=3,   b=3	})	-- red
+	SetNetTableValue("dotacraft_color_table", "1", 	{r=0, 	g=66,  b=255})	-- blue
+	SetNetTableValue("dotacraft_color_table", "2", 	{r=28, 	g=230, b=185})	-- teal
+	SetNetTableValue("dotacraft_color_table", "3", 	{r=84, 	g=0,   b=129})	-- purple
+	SetNetTableValue("dotacraft_color_table", "4", 	{r=255, g=255, b=1	})	-- yellow
+	SetNetTableValue("dotacraft_color_table", "5", 	{r=254, g=138, b=14	})	-- orange
+	SetNetTableValue("dotacraft_color_table", "6", 	{r=32, 	g=192, b=0	})	-- green
+	SetNetTableValue("dotacraft_color_table", "7",	{r=229, g=91,  b=176})	-- pink
+	SetNetTableValue("dotacraft_color_table", "8",	{r=149, g=150, b=151})	-- gray	
+	SetNetTableValue("dotacraft_color_table", "9",	{r=126, g=191, b=241})	-- light blue	
+	SetNetTableValue("dotacraft_color_table", "10",	{r=16, 	g=98,  b=70 })	-- dark green	
+	SetNetTableValue("dotacraft_color_table", "11",	{r=78,  g=42,  b=4  })	-- brown		
+
 
 end
 
