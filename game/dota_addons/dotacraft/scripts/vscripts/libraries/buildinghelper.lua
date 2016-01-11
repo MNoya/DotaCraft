@@ -1861,7 +1861,7 @@ function tobool(s)
     end
 end
 
-local function split(inputstr, sep)
+function split(inputstr, sep)
     if sep == nil then
             sep = "%s"
     end

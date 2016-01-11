@@ -43,9 +43,12 @@ if (CustomNetTables.GetTableValue( "building_settings", "height_restriction") !=
     height_restriction = CustomNetTables.GetTableValue( "building_settings", "height_restriction").value;
 
 var GRID_TYPES = CustomNetTables.GetTableValue( "building_settings", "grid_types")
+CustomNetTables.SubscribeNetTableListener( "building_settings", function() {
+    GRID_TYPES = CustomNetTables.GetTableValue( "building_settings", "grid_types")
+})
 
 var Root = $.GetContextPanel()
-var localHeroIndex = Players.GetPlayerHeroEntityIndex( Players.GetLocalPlayer() );
+var localHeroIndex
 
 if (! Root.loaded)
 {
@@ -60,6 +63,7 @@ function StartBuildingHelper( params )
     if (params !== undefined)
     {
         // Set the parameters passed by AddBuilding
+        localHeroIndex = Players.GetPlayerHeroEntityIndex( Players.GetLocalPlayer() );
         state = params.state;
         size = params.size;
         range = params.range;
@@ -70,9 +74,8 @@ function StartBuildingHelper( params )
         var propScale = params.propScale;
         offsetZ = params.offsetZ;
 
-        $.Msg(GRID_TYPES)
         requires = GetRequiredGridType(entindex)
-        $.Msg("REQUIRES ", requires)
+        $.Msg(Entities.GetUnitName(entindex)," requires ", requires)
         distance_to_gold_mine = HasGoldMineDistanceRestriction(entindex)
         
         // If we chose to not recolor the ghost model, set it white
@@ -137,12 +140,14 @@ function StartBuildingHelper( params )
     {   
         $.Schedule(frame_rate, StartBuildingHelper);
 
-        // Get all the creature entities on the screen
+        // Get all the visible entities
         var entities = Entities.GetAllEntitiesByClassname('npc_dota_building')
         var hero_entities = Entities.GetAllHeroEntities()
         var creature_entities = Entities.GetAllEntitiesByClassname('npc_dota_creature')
         var dummy_entities = Entities.GetAllEntitiesByName('npc_dota_thinker')
+        var building_entities = Entities.GetAllBuildingEntities()
         entities = entities.concat(hero_entities)
+        entities = entities.concat(building_entities)
         entities = entities.concat(creature_entities)
         entities = entities.concat(dummy_entities)
 
@@ -179,7 +184,11 @@ function StartBuildingHelper( params )
             {
                 for (var gridType in specialGrid)
                 {
-                    BlockGridSquares(entPos, Number(specialGrid[gridType].Square), GRID_TYPES[gridType.toUpperCase()])
+                    if (specialGrid[gridType].Square)
+                    {
+                        //$.Msg("Setting ",specialGrid[gridType].Square," grid squares with ",gridType.toUpperCase()," [",GRID_TYPES[gridType.toUpperCase()],"]")
+                        BlockGridSquares(entPos, Number(specialGrid[gridType].Square), GRID_TYPES[gridType.toUpperCase()])
+                    }
                 }              
             }
         }
@@ -478,21 +487,29 @@ function IsBlocked(position) {
     var x = WorldToGridPosX(position[0]) + Root.squareX/2
     var y = WorldToGridPosY(position[1]) + Root.squareY/2
 
-    //{"BUILDABLE":2,"GOLDMINE":4,"BLOCKED":1}
+    //{"BLIGHT":8,"BUILDABLE":2,"GOLDMINE":4,"BLOCKED":1}
     // Check height restriction
     if (height_restriction !== undefined && position[2] < height_restriction)
         return true
 
-    // Check main gridnav
-    if (!(Root.GridNav[x][y] & requires))
+    // Merge grids together into the same value
+    var flag = Root.GridNav[x][y]
+    var entGridValue = (entityGrid[x] !== undefined && entityGrid[x][y] !== undefined) ? entityGrid[x][y] : GRID_TYPES["BUILDABLE"]
+    if (entityGrid[x] && entityGrid[x][y])
+        flag = flag | entityGrid[x][y]
+
+    // Don't count buildable if its blocked
+    var adjust = (GRID_TYPES["BUILDABLE"]+GRID_TYPES["BLOCKED"])
+    if ((flag & adjust)==adjust)
+        flag-=GRID_TYPES["BUILDABLE"]
+
+    //$.Msg('GRID:',Root.GridNav[x][y],' ENTGRID:',entGridValue,' FLAG:',flag,' REQUIRES:', requires)
+
+    // If the bits don't match, its invalid
+    if ((flag & requires) != requires)
         return true
 
-    // Check entity grid
-    if (entityGrid[x] && entityGrid[x][y] && !(entityGrid[x][y] & requires))
-    {
-        return true
-    }
-
+    // If there's a tree standing, its invalid
     if (update_trees && treeGrid[x] && (treeGrid[x][y] & GRID_TYPES["BLOCKED"]))
         return true
 
@@ -506,7 +523,7 @@ function BlockEntityGrid(position, gridType) {
     if (entityGrid[x] === undefined) entityGrid[x] = []
     if (entityGrid[x][y] === undefined) entityGrid[x][y] = 0
 
-    entityGrid[x][y] = entityGrid[x][y] + gridType
+    entityGrid[x][y] = entityGrid[x][y] | gridType
 }
 
 // Trees block 2x2
@@ -569,7 +586,15 @@ function GetRequiredGridType(entIndex) {
     var entName = Entities.GetUnitName(entIndex)
     var table = CustomNetTables.GetTableValue( "construction_size", entName)
     if (table && table.requires !== undefined)
-        return table.requires
+    {
+        var types = table.requires.split(" ")
+        var value = 0
+        for (var i = 0; i < types.length; i++)
+        {
+            value+=GRID_TYPES[types[i]]
+        }
+        return value
+    }
     else
         return GRID_TYPES["BUILDABLE"]
 }
