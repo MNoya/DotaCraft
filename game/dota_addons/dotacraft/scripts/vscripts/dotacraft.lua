@@ -13,6 +13,9 @@ UNSEEN_FOG_ENABLED = false
 
 UNDER_ATTACK_WARNING_INTERVAL = 60
 
+STARTING_GOLD = 500
+STARTING_LUMBER = 150
+
 TREE_HEALTH = 50
 
 DEBUG_SPEW = 1
@@ -467,7 +470,8 @@ function dotacraft:InitializePlayer( hero )
 	CheckAbilityRequirements( building, playerID )
 
 	-- Give Initial Food
-    Players:ModifyFoodLimit(playerID, GetFoodProduced(building))
+	-- Give Initial Gold and Lumber
+	dotacraft:InitializePlayerStartingResources( hero, building )
 
 	-- Create Builders in between the gold mine and the city center
 	local num_builders = 5
@@ -562,10 +566,41 @@ function dotacraft:InitializePlayer( hero )
 		CheckAbilityRequirements( builder, playerID )
 	end
 
-	-- Give Initial Resources
-	Players:SetGold(playerID, 500)
-	Players:ModifyLumber(playerID, 150)
+	
 
+	
+	-- Hide main hero under the main base
+	-- Snap the camera to the created building and add it to selection
+	-- Find neutrals near the starting zone and remove them
+	dotacraft:InitializePlayerSetupTownHall( hero , position, building )
+
+	-- Test options
+	if Convars:GetBool("developer") then
+		dotacraft:DeveloperMode(player)
+	end
+
+	-- Show UI elements for this race
+	local player_race = Players:GetRace(playerID)
+	CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", { race = player_race, initial_builders = num_builders })
+
+	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
+	dotacraft:InitializePlayerTrackIdleWorkers( hero )
+end
+
+function dotacraft:InitializePlayerStartingResources( hero, building )
+	local playerID = hero:GetPlayerID()
+	-- Give Initial Food
+    Players:ModifyFoodLimit(playerID, GetFoodProduced(building))
+
+    -- Give Initial Gold and Lumber
+	Players:SetGold(playerID, STARTING_GOLD)
+	Players:ModifyLumber(playerID, STARTING_LUMBER)
+
+end
+
+function dotacraft:InitializePlayerSetupTownHall( hero, position, building )
+	local player = hero:GetPlayerOwner()
+	local playerID = hero:GetPlayerID()
 	-- Hide main hero under the main base
 	local ability = hero:FindAbilityByName("hide_hero")
 	ability:UpgradeAbility(true)
@@ -586,23 +621,21 @@ function dotacraft:InitializePlayer( hero )
 		NewSelection(building)
 	end)
 
+	print("removing neutrals")
 	-- Find neutrals near the starting zone and remove them
 	local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
 	for k,v in pairs(neutrals) do
+		print("unit name: " .. v:GetUnitName())
 		if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+			print("removing!")
 			v:RemoveSelf()
 		end
 	end
+end
 
-	-- Test options
-	if Convars:GetBool("developer") then
-		dotacraft:DeveloperMode(player)
-	end
-
-	-- Show UI elements for this race
-	local player_race = Players:GetRace(playerID)
-	CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", { race = player_race, initial_builders = num_builders })
-
+function dotacraft:InitializePlayerTrackIdleWorkers( hero )
+	local player = hero:GetPlayerOwner()
+	local playerID = hero:GetPlayerID()
 	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
 	Timers:CreateTimer(1, function() 
 		local idle_builders = {}
