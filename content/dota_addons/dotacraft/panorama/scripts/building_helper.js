@@ -412,34 +412,47 @@ function RegisterGNV(msg){
     var GridNav = [];
     var squareX = msg.squareX
     var squareY = msg.squareY
-    $.Msg("Registering GNV ["+squareX+","+squareY+"]")
+    var boundX = msg.boundX
+    var boundY = msg.boundY
+    $.Msg("Registering GNV ["+squareX+","+squareY+"] ","Min Bounds: X="+boundX+", Y="+boundY)
 
     var arr = [];
     // Thanks to BMD for this method
     for (var i=0; i<msg.gnv.length; i++){
-        var code = msg.gnv.charCodeAt(i)+53;
-        for (var j=6; j>=0; j-=2){
+        var code = msg.gnv.charCodeAt(i)-32;
+        for (var j=4; j>=0; j-=2){
             var g = (code & (3 << j)) >> j;
-
-            arr.push(g);
+            if (g != 0)
+              arr.push(g);
         }
     }
 
     // Load the GridNav
     var x = 0;
-    for (var i = 0; i < squareX; i++) {
+    for (var i = 0; i < squareY; i++) {
         GridNav[i] = []
-        for (var j = 0; j < squareY; j++) {
-            GridNav[i][j] = (arr[x] == 1) ? GRID_TYPES["BUILDABLE"] : GRID_TYPES["BLOCKED"]
-            x++
+        for (var j = 0; j < squareX; j++) {
+          GridNav[i][j] = (arr[x] == 1) ? GRID_TYPES["BUILDABLE"] : GRID_TYPES["BLOCKED"]
+          x++
         }
-
-        // ASCII Art
-        //$.Msg(GridNav[i].join(''))
     }
+
     Root.GridNav = GridNav
     Root.squareX = squareX
     Root.squareY = squareY
+    Root.boundX = boundX
+    Root.boundY = boundY
+
+    // ASCII Art
+    /*
+    for (var i = 0; i<squareY; i++) {
+        var a = [];
+        for (var j = 0; j<squareX; j++){
+            a.push((GridNav[i][j] == 1 ) ? '=' : '.');
+        }
+
+        $.Msg(a.join(''))
+    }*/
 
     // Debug Prints
     var tab = {"0":0, "1":0, "2":0, "3":0};
@@ -489,8 +502,8 @@ function SnapToGrid32(coord) {
 }
 
 function IsBlocked(position) {
-    var x = WorldToGridPosX(position[0]) + Root.squareX/2
-    var y = WorldToGridPosY(position[1]) + Root.squareY/2
+    var y = WorldToGridPosX(position[0]) - Root.boundX
+    var x = WorldToGridPosY(position[1]) - Root.boundY
 
     //{"BLIGHT":8,"BUILDABLE":2,"GOLDMINE":4,"BLOCKED":1}
     // Check height restriction
@@ -522,8 +535,8 @@ function IsBlocked(position) {
 }
 
 function BlockEntityGrid(position, gridType) {
-    var x = WorldToGridPosX(position[0]) + Root.squareX/2
-    var y = WorldToGridPosY(position[1]) + Root.squareY/2
+    var y = WorldToGridPosX(position[0]) - Root.boundX
+    var x = WorldToGridPosY(position[1]) - Root.boundY
 
     if (entityGrid[x] === undefined) entityGrid[x] = []
     if (entityGrid[x][y] === undefined) entityGrid[x][y] = 0
@@ -533,8 +546,8 @@ function BlockEntityGrid(position, gridType) {
 
 // Trees block 2x2
 function BlockTreeGrid (position) {
-    var x = WorldToGridPosX(position[0]) + Root.squareX/2
-    var y = WorldToGridPosY(position[1]) + Root.squareY/2
+    var y = WorldToGridPosX(position[0]) - Root.boundX
+    var x = WorldToGridPosY(position[1]) - Root.boundY
 
     if (treeGrid[x] === undefined) treeGrid[x] = []
 

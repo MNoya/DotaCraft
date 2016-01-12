@@ -212,16 +212,20 @@ function BuildingHelper:InitGNV()
    
     BuildingHelper:print("Max World Bounds: ")
     BuildingHelper:print(GetWorldMaxX()..' '..GetWorldMaxY()..' '..GetWorldMaxX()..' '..GetWorldMaxY())
+    BuildingHelper:print(boundX1..' '..boundX2..' '..boundY1..' '..boundY2)
 
     local blockedCount = 0
     local unblockedCount = 0
 
     local gnv = {}
-    for x=boundX1,boundX2 do
-        local shift = 6
+    local line = {}
+    local ASCII_ART = false
+
+    for y=boundY1,boundY2 do
+        local shift = 4
         local byte = 0
-        BuildingHelper.Terrain[x] = {}
-        for y=boundY1,boundY2 do
+        BuildingHelper.Terrain[y] = {}
+        for x=boundX1,boundX2 do
             local gridX = GridNav:GridPosToWorldCenterX(x)
             local gridY = GridNav:GridPosToWorldCenterY(y)
             local position = Vector(gridX, gridY, 0)
@@ -234,38 +238,49 @@ function BuildingHelper:InitGNV()
             end
 
             if terrainBlocked then
-                BuildingHelper.Terrain[x][y] = BuildingHelper.GridTypes["BLOCKED"]
+                BuildingHelper.Terrain[y][x] = BuildingHelper.GridTypes["BLOCKED"]
                 byte = byte + bit.lshift(2,shift)
                 blockedCount = blockedCount+1
+                if ASCII_ART then
+                    line[#line+1] = '='
+                end
             else
-                BuildingHelper.Terrain[x][y] = BuildingHelper.GridTypes["BUILDABLE"]
+                BuildingHelper.Terrain[y][x] = BuildingHelper.GridTypes["BUILDABLE"]
                 byte = byte + bit.lshift(1,shift)
                 unblockedCount = unblockedCount+1
+                if ASCII_ART then
+                    line[#line+1] = '.'
+                end
             end
 
             if treeBlocked then
-                BuildingHelper.Terrain[x][y] = BuildingHelper.GridTypes["BLOCKED"]
+                BuildingHelper.Terrain[y][x] = BuildingHelper.GridTypes["BLOCKED"]
             end
 
             shift = shift - 2
 
             if shift == -2 then
-                gnv[#gnv+1] = string.char(byte-53)
-                shift = 6
+                gnv[#gnv+1] = string.char(byte+32)
+                shift = 4
                 byte = 0
             end
         end
 
-        if shift ~= 6 then
-            gnv[#gnv+1] = string.char(byte-53)
+        if shift ~= 4 then
+            gnv[#gnv+1] = string.char(byte+32)
+        end
+
+        if ASCII_ART then
+            print(table.concat(line,''))
+            line = {}
         end
     end
 
     local gnv_string = table.concat(gnv,'')
 
-    BuildingHelper:print(boundX1..' '..boundX2..' '..boundY1..' '..boundY2)
-    local squareX = math.abs(boundX1) + math.abs(boundX2)+1
-    local squareY = math.abs(boundY1) + math.abs(boundY2)+1
+    local squareX = boundX2 - boundX1 + 1
+    local squareY = boundY2 - boundY1 + 1
+
     print("Free: "..unblockedCount.." Blocked: "..blockedCount)
 
     -- Initially, the construction grid equals the terrain grid
@@ -276,13 +291,15 @@ function BuildingHelper:InitGNV()
     BuildingHelper.Encoded = gnv_string
     BuildingHelper.squareX = squareX
     BuildingHelper.squareY = squareY
+    BuildingHelper.minBoundX = boundX1
+    BuildingHelper.minBoundY = boundY1
 end
 
 function BuildingHelper:SendGNV( args )
     local playerID = args.PlayerID
     local player = PlayerResource:GetPlayer(playerID)
     BuildingHelper:print("Sending GNV to player "..playerID)
-    CustomGameEventManager:Send_ServerToPlayer(player, "gnv_register", {gnv=BuildingHelper.Encoded, squareX = BuildingHelper.squareX, squareY = BuildingHelper.squareY})
+    CustomGameEventManager:Send_ServerToPlayer(player, "gnv_register", {gnv=BuildingHelper.Encoded, squareX = BuildingHelper.squareX, squareY = BuildingHelper.squareY, boundX = BuildingHelper.minBoundX, boundY = BuildingHelper.minBoundY })
 end
 
 --[[
@@ -1266,30 +1283,30 @@ function BuildingHelper:SetGridType(size, location, grid_type, option)
 
     -- Default by omission is to override the old value
     if not option then
-        for x = lowerBoundX, upperBoundX do
-            for y = lowerBoundY, upperBoundY do
-                BuildingHelper.Grid[x][y] = BuildingHelper.GridTypes[grid_type]
+        for y = lowerBoundY, upperBoundY do
+            for x = lowerBoundX, upperBoundX do
+                BuildingHelper.Grid[y][x] = BuildingHelper.GridTypes[grid_type]
             end
         end
 
     elseif option == "add" then
-        for x = lowerBoundX, upperBoundX do
-            for y = lowerBoundY, upperBoundY do
+        for y = lowerBoundY, upperBoundY do
+            for x = lowerBoundX, upperBoundX do
                 -- Only add if it doesn't have it yet
                 local hasGridType = BuildingHelper:CellHasGridType(x,y,grid_type)
                 if not hasGridType then
-                    BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] + BuildingHelper.GridTypes[grid_type]
+                    BuildingHelper.Grid[y][x] = BuildingHelper.Grid[y][x] + BuildingHelper.GridTypes[grid_type]
                 end
             end
         end
 
     elseif option == "remove" then
-         for x = lowerBoundX, upperBoundX do
-            for y = lowerBoundY, upperBoundY do
+        for y = lowerBoundY, upperBoundY do
+            for x = lowerBoundX, upperBoundX do
                 -- Only remove if it has it
                 local hasGridType = BuildingHelper:CellHasGridType(x,y,grid_type)
                 if hasGridType then
-                    BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] - BuildingHelper.GridTypes[grid_type]
+                    BuildingHelper.Grid[y][x] = BuildingHelper.Grid[y][x] - BuildingHelper.GridTypes[grid_type]
                 end
             end
         end
@@ -1327,41 +1344,41 @@ function BuildingHelper:SetGridTypeRadius(radius, location, grid_type, option)
 
     -- Default by omission is to override the old value
     if not option then
-        for x = lowerBoundX, upperBoundX do
-            for y = lowerBoundY, upperBoundY do
+        for y = lowerBoundY, upperBoundY do
+            for x = lowerBoundX, upperBoundX do
                 local current_pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
                 local distance = (current_pos - location):Length2D()
                 if distance <= radius then
-                    BuildingHelper.Grid[x][y] = BuildingHelper.GridTypes[grid_type]
+                    BuildingHelper.Grid[y][x] = BuildingHelper.GridTypes[grid_type]
                 end
             end
         end
 
     elseif option == "add" then
-        for x = lowerBoundX, upperBoundX do
-            for y = lowerBoundY, upperBoundY do
+        for y = lowerBoundY, upperBoundY do
+            for x = lowerBoundX, upperBoundX do
                 -- Only add if it doesn't have it yet
                 local hasGridType = BuildingHelper:CellHasGridType(x,y,grid_type)
                 if not hasGridType then
                     local current_pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
                     local distance = (current_pos - location):Length2D()
                     if distance <= radius then
-                        BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] + BuildingHelper.GridTypes[grid_type]
+                        BuildingHelper.Grid[y][x] = BuildingHelper.Grid[y][x] + BuildingHelper.GridTypes[grid_type]
                     end
                 end
             end
         end
 
     elseif option == "remove" then
-         for x = lowerBoundX, upperBoundX do
-            for y = lowerBoundY, upperBoundY do
+         for y = lowerBoundY, upperBoundY do
+            for x = lowerBoundX, upperBoundX do
                 -- Only remove if it has it
                 local hasGridType = BuildingHelper:CellHasGridType(x,y,grid_type)
                 if hasGridType then
                     local current_pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
                     local distance = (current_pos - location):Length2D()
                     if distance <= radius then
-                        BuildingHelper.Grid[x][y] = BuildingHelper.Grid[x][y] - BuildingHelper.GridTypes[grid_type]
+                        BuildingHelper.Grid[y][x] = BuildingHelper.Grid[y][x] - BuildingHelper.GridTypes[grid_type]
                     end
                 end
             end
@@ -1384,7 +1401,7 @@ end
 -- Checks if the cell has a certain grid type by name
 function BuildingHelper:CellHasGridType(x,y,grid_type)
     if BuildingHelper.GridTypes[grid_type] then
-        return bit.band(BuildingHelper.Grid[x][y], BuildingHelper.GridTypes[grid_type]) ~= 0
+        return bit.band(BuildingHelper.Grid[y][x], BuildingHelper.GridTypes[grid_type]) ~= 0
     end
 end
 
@@ -1463,8 +1480,8 @@ function BuildingHelper:AreaMeetsCriteria( size, location, grid_type, option )
 
     -- Default by omission is to check if all the cells meet the criteria
     if not option or option == "all" then
-        for x = lowerBoundX, upperBoundX do
-            for y = lowerBoundY, upperBoundY do
+        for y = lowerBoundY, upperBoundY do
+            for x = lowerBoundX, upperBoundX do
                 local grid_types = split(grid_type, " ")
                 for k,v in pairs(grid_types) do
                     local t = string.upper(v)
@@ -1479,8 +1496,8 @@ function BuildingHelper:AreaMeetsCriteria( size, location, grid_type, option )
 
     -- When searching for one block, stop at the first grid point found with every type
     elseif option == "one" then
-        for x = lowerBoundX, upperBoundX do
-            for y = lowerBoundY, upperBoundY do
+        for y = lowerBoundY, upperBoundY do
+            for x = lowerBoundX, upperBoundX do
                 local grid_types = split(grid_type, " ")
                 local hasGridType = true
                 for k,v in pairs(grid_types) do
@@ -1893,7 +1910,7 @@ function BuildingHelper:FindClosestEmptyPositionNearby( location, construction_s
 
     for x = lowerBoundX, upperBoundX do
         for y = lowerBoundY, upperBoundY do
-            if BuildingHelper.Grid[x][y] == GRID_FREE then
+            if BuildingHelper.Grid[y][x] == GRID_FREE then
                 local pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
                 BuildingHelper:SnapToGrid(construction_size, pos)
                 if not BuildingHelper:IsAreaBlocked(construction_size, pos) then
