@@ -107,6 +107,13 @@ function StartUpgrade( event )
 	local ability = event.ability
 	local modifier_name = event.ModifierName
 	local abilities = {}
+	local lumberCost = event.ability:GetSpecialValueFor("lumber_cost")
+	local playerID = caster:GetPlayerOwner():GetPlayerID()
+
+	if lumberCost > Players:GetLumber(playerID) then
+		return
+	end
+
 
 	-- Iterate through abilities marking those to disable
 	for i=0,15 do
