@@ -31,8 +31,8 @@ function Build( event )
     local gold_cost = ability:GetSpecialValueFor("gold_cost")
     local lumber_cost = ability:GetSpecialValueFor("lumber_cost")
 
-    local hero = caster:GetOwner()
-    local playerID = hero:GetPlayerID()
+    local hero = caster:IsRealHero() and caster or caster:GetOwner()
+    local playerID = caster:GetPlayerOwnerID()
     local player = PlayerResource:GetPlayer(playerID)    
     local teamNumber = hero:GetTeamNumber()
 
