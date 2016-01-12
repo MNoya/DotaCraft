@@ -471,87 +471,37 @@ function dotacraft:InitializePlayer( hero )
 
 	-- Give Initial Food
 	-- Give Initial Gold and Lumber
-	dotacraft:InitializePlayerStartingResources( hero, building )
+	dotacraft:InitializeResources( hero, building )
 
 	-- Create Builders in between the gold mine and the city center
-	local num_builders = 5
-	local angle = 360 / num_builders
-	local closest_mine = GetClosestGoldMineToPosition(position)
-	local closest_mine_pos = closest_mine:GetAbsOrigin()
-	local mid_point = closest_mine_pos + (position-closest_mine_pos)/2
+	local race_setup_table = {}
+	race_setup_table.num_builders = 5
+	race_setup_table.angle = 360 / race_setup_table.num_builders
+	race_setup_table.closest_mine = GetClosestGoldMineToPosition(position)
+	race_setup_table.closest_mine_pos = race_setup_table.closest_mine:GetAbsOrigin()
+	race_setup_table.mid_point = race_setup_table.closest_mine_pos + (position-race_setup_table.closest_mine_pos)/2
 
 	-- Undead special rules
 	if hero_name == "npc_dota_hero_life_stealer" then
-		num_builders = 3
-		local ghoul = CreateUnitByName("undead_ghoul", mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
-		ghoul:SetOwner(hero)
-		ghoul:SetControllableByPlayer(playerID, true)
-		Players:ModifyFoodUsed(playerID, GetFoodCost(ghoul))
-		Players:AddUnit(playerID, ghoul)
-
 		-- Haunt the closest gold mine
-        local construction_size = BuildingHelper:GetConstructionSize("undead_haunted_gold_mine")
-		local haunted_gold_mine = BuildingHelper:PlaceBuilding(player, "undead_haunted_gold_mine", closest_mine_pos, construction_size, 0)
-        Players:AddStructure(playerID, haunted_gold_mine)
-
-		haunted_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
-		ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
-		haunted_gold_mine.builders = {}
-
-         -- Hide the targeted gold mine    
-        ApplyModifier(closest_mine, "modifier_unselectable")
-
-        -- Create sigil prop
-        local modelName = "models/props_magic/bad_sigil_ancient001.vmdl"
-        haunted_gold_mine.sigil = SpawnEntityFromTableSynchronous("prop_dynamic", {model = modelName, DefaultAnim = 'bad_sigil_ancient001_rotate'})
-        haunted_gold_mine.sigil:SetAbsOrigin(Vector(closest_mine_pos.x, closest_mine_pos.y, closest_mine_pos.z-60))
-        haunted_gold_mine.sigil:SetModelScale(haunted_gold_mine:GetModelScale())
-
-        -- Create blight
-		Timers:CreateTimer(function() 
-			CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
-			CreateBlight(building:GetAbsOrigin(), "large")
-		end)
-
-		hero.lumber_carried = 20 -- Ghouls carry harder
-
-		haunted_gold_mine.mine = closest_mine -- A reference to the mine that the haunted mine is associated with
-		closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine]]
+		-- Hide the targeted gold mine    
+		-- Create blight
+		dotacraft:InitializeUndead( hero , race_setup_table, building )
 	end
 
 	-- Night Elf special rules
 	if hero_name == "npc_dota_hero_furion" then
-        -- Apply rooted particles
-        local uproot_ability = building:FindAbilityByName("nightelf_uproot")
-        uproot_ability:ApplyDataDrivenModifier(building, building, "modifier_rooted_ancient", {})
-        
+		-- Apply rooted particles
 		-- Entangle the closest gold mine
-		local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
-		entangled_gold_mine:SetOwner(hero)
-		entangled_gold_mine:SetControllableByPlayer(playerID, true)
-		entangled_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
-		ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, 0, Vector(closest_mine_pos.x,closest_mine_pos.y,closest_mine_pos.z+200))
-		entangled_gold_mine.builders = {}
-
-		entangled_gold_mine.mine = closest_mine -- A reference to the mine that the entangled mine is associated with
-		entangled_gold_mine.city_center = building -- A reference to the city center that entangles this mine
-		building.entangled_gold_mine = entangled_gold_mine -- A reference to the entangled building of the city center
-		closest_mine.building_on_top = entangled_gold_mine -- A reference to the building that entangles this gold mine
-
-		building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
-
-		building:SetAngles(0,-90,0)
-	end
-
-	if hero_name == "npc_dota_hero_dragon_knight" or hero_name == "npc_dota_hero_huskar" then
-		hero.lumber_carried = 10
+		-- Hide the targeted gold mine   
+        dotacraft:InitializeNightElf( hero, race_setup_table, building )
 	end
 
 	local units = Players:GetUnits(playerID)
-	for i=1,num_builders do	
+	for i=1,race_setup_table.num_builders do	
 		--DebugDrawCircle(mid_point, Vector(255, 0 , 0), 255, 100, true, 10)
-		local rotate_pos = mid_point + Vector(1,0,0) * 100
-		local builder_pos = RotatePosition(mid_point, QAngle(0, angle*i, 0), rotate_pos)
+		local rotate_pos = race_setup_table.mid_point + Vector(1,0,0) * 100
+		local builder_pos = RotatePosition(race_setup_table.mid_point, QAngle(0, race_setup_table.angle*i, 0), rotate_pos)
 
 		local builder = CreateUnitByName(builder_name, builder_pos, true, hero, hero, hero:GetTeamNumber())
 		builder:SetOwner(hero)
@@ -572,7 +522,7 @@ function dotacraft:InitializePlayer( hero )
 	-- Hide main hero under the main base
 	-- Snap the camera to the created building and add it to selection
 	-- Find neutrals near the starting zone and remove them
-	dotacraft:InitializePlayerSetupTownHall( hero , position, building )
+	dotacraft:InitializeTownHall( hero , position, building )
 
 	-- Test options
 	if Convars:GetBool("developer") then
@@ -584,10 +534,10 @@ function dotacraft:InitializePlayer( hero )
 	CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", { race = player_race, initial_builders = num_builders })
 
 	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
-	dotacraft:InitializePlayerTrackIdleWorkers( hero )
+	dotacraft:TrackIdleWorkers( hero )
 end
 
-function dotacraft:InitializePlayerStartingResources( hero, building )
+function dotacraft:InitializeResources( hero, building )
 	local playerID = hero:GetPlayerID()
 	-- Give Initial Food
     Players:ModifyFoodLimit(playerID, GetFoodProduced(building))
@@ -595,10 +545,78 @@ function dotacraft:InitializePlayerStartingResources( hero, building )
     -- Give Initial Gold and Lumber
 	Players:SetGold(playerID, STARTING_GOLD)
 	Players:ModifyLumber(playerID, STARTING_LUMBER)
-
 end
 
-function dotacraft:InitializePlayerSetupTownHall( hero, position, building )
+function dotacraft:InitializeUndead( hero , race_setup_table, building )
+	local playerID = hero:GetPlayerID()
+	local player = hero:GetPlayerOwner()
+
+	race_setup_table.num_builders = 3
+	local ghoul = CreateUnitByName("undead_ghoul", race_setup_table.mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
+	ghoul:SetOwner(hero)
+	ghoul:SetControllableByPlayer(playerID, true)
+	Players:ModifyFoodUsed(playerID, GetFoodCost(ghoul))
+	Players:AddUnit(playerID, ghoul)
+
+	-- Haunt the closest gold mine
+    local construction_size = BuildingHelper:GetConstructionSize("undead_haunted_gold_mine")
+	local haunted_gold_mine = BuildingHelper:PlaceBuilding(player, "undead_haunted_gold_mine", race_setup_table.closest_mine_pos, construction_size, 0)
+    Players:AddStructure(playerID, haunted_gold_mine)
+
+	haunted_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
+	ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(race_setup_table.closest_mine_pos.x,race_setup_table.closest_mine_pos.y,race_setup_table.closest_mine_pos.z+200))
+	haunted_gold_mine.builders = {}
+
+     -- Hide the targeted gold mine    
+    ApplyModifier(race_setup_table.closest_mine, "modifier_unselectable")
+
+    -- Create sigil prop
+    local modelName = "models/props_magic/bad_sigil_ancient001.vmdl"
+    haunted_gold_mine.sigil = SpawnEntityFromTableSynchronous("prop_dynamic", {model = modelName, DefaultAnim = 'bad_sigil_ancient001_rotate'})
+    haunted_gold_mine.sigil:SetAbsOrigin(Vector(race_setup_table.closest_mine_pos.x, race_setup_table.closest_mine_pos.y, race_setup_table.closest_mine_pos.z-60))
+    haunted_gold_mine.sigil:SetModelScale(haunted_gold_mine:GetModelScale())
+
+    -- Create blight
+	Timers:CreateTimer(function() 
+		CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
+		CreateBlight(building:GetAbsOrigin(), "large")
+	end)
+
+	haunted_gold_mine.mine = race_setup_table.closest_mine -- A reference to the mine that the haunted mine is associated with
+	race_setup_table.closest_mine.building_on_top = haunted_gold_mine -- A reference to the building that haunts this gold mine]]
+end
+
+function dotacraft:InitializeNightElf( hero, race_setup_table, building )
+	local playerID = hero:GetPlayerID()
+	local player = hero:GetPlayerOwner()
+	-- Apply rooted particles
+    local uproot_ability = building:FindAbilityByName("nightelf_uproot")
+    uproot_ability:ApplyDataDrivenModifier(building, building, "modifier_rooted_ancient", {})
+    
+	-- Entangle the closest gold mine
+	local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", race_setup_table.closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
+	entangled_gold_mine:SetOwner(hero)
+	entangled_gold_mine:SetControllableByPlayer(playerID, true)
+	entangled_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
+	ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, 0, Vector(race_setup_table.closest_mine_pos.x,race_setup_table.closest_mine_pos.y,race_setup_table.closest_mine_pos.z+200))
+	entangled_gold_mine.builders = {}
+
+	entangled_gold_mine.mine = race_setup_table.closest_mine -- A reference to the mine that the entangled mine is associated with
+	entangled_gold_mine.city_center = building -- A reference to the city center that entangles this mine
+	building.entangled_gold_mine = entangled_gold_mine -- A reference to the entangled building of the city center
+	race_setup_table.closest_mine.building_on_top = entangled_gold_mine -- A reference to the building that entangles this gold mine
+
+	 -- Hide the targeted gold mine    
+    ApplyModifier(race_setup_table.closest_mine, "modifier_unselectable")
+
+	building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
+
+	building:SetAngles(0,-90,0)
+end
+
+
+
+function dotacraft:InitializeTownHall( hero, position, building )
 	local player = hero:GetPlayerOwner()
 	local playerID = hero:GetPlayerID()
 	-- Hide main hero under the main base
@@ -633,7 +651,7 @@ function dotacraft:InitializePlayerSetupTownHall( hero, position, building )
 	end
 end
 
-function dotacraft:InitializePlayerTrackIdleWorkers( hero )
+function dotacraft:TrackIdleWorkers( hero )
 	local player = hero:GetPlayerOwner()
 	local playerID = hero:GetPlayerID()
 	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
