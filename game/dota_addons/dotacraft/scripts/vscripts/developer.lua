@@ -168,8 +168,8 @@ function dotacraft:DebugTrees()
 end
 
 function dotacraft:DebugBlight()
-    for x,v in pairs(BuildingHelper.Grid) do
-        for y,_ in pairs(v) do
+    for y,v in pairs(BuildingHelper.Grid) do
+        for x,_ in pairs(v) do
             if BuildingHelper:CellHasGridType(x,y,'BLIGHT') then
                 DrawGridSquare(x,y,Vector(128,0,128))
             end
