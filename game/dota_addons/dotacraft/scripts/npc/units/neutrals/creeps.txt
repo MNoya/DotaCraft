@@ -1,19 +1,9 @@
 // Hills of Glory
-	// neutral_gnoll
-	// neutral_gnoll_assassin
-	// neutral_gnoll_poacher
-	// neutral_gnoll_overseer
-
-	// neutral_forest_troll_trapper
-	// neutral_forest_troll_berserker
-	// neutral_forest_troll_high_priest
-
-	// neutral_red_dragon
-
-	// neutral_rock_golem
-
-	// neutral_ogre_magi
-	// neutral_ogre_warrior
+	// Gnoll, Gnoll Assassin, Gnoll Poacher, Gnoll Overseer
+	// Forest Troll Trapper, Forest Troll Berserker, Forest Troll High Priest
+	// Red Dragon
+	// Rock Golem
+	// Ogre Magi, Ogre Warrior
 
 //=================================================================================
 // Creature: Gnoll
@@ -913,15 +903,8 @@
 
 ///////////////////////////////////////
 // Copper Canyon
-	//neutral_centaur_drudge
-	//neutral_centaur_archer
-	//neutral_centaur_impaler
-	//neutral_centaur_sorcerer
-
-	//neutral_quillboar_hunter
-	//neutral_razormane_scout
-	//neutral_razormane_medicine_man
-	//neutral_razormane_chieftain
+	// Centaur Drudge, Centaur Archer, Centaur Impaler, Centaur Sorcerer
+	// Quillboar Hunter, Razormane Scout, Razormane Medicine Man, Razormane Chieftain
 
 //=================================================================================
 // Creature: Centaur Drudge
@@ -1616,6 +1599,10 @@
 }
 
 // Turtle Rock
+	// Forest Troll, Forest Troll Trapper, Forest Troll Berserker, Forest Troll Warlord
+	// Sea Turtle Hatchling, Giant Sea Turtle, Gargantuan Sea Turtle
+	// Ogre Lord, Ogre Warrior, Ogre Magi
+	// Murloc Nightcrawler, Murloc Huntsman
 
 //=================================================================================
 // Creature: Forest Troll
@@ -3223,3 +3210,386 @@
 	//----------------------------------------------------------------
 }
 
+// Echo Isles
+	// Gnoll Brute, Gnoll Poacher
+	// Ogre Warrior, Ogre Magi, Ogre Mauler
+	// Forest Troll Trapper, Forest Troll Berserker
+	// Kobold Geomancer, Kobold Tunneler, Kobold
+	// Renegade Wizard
+	// Murloc Tiderunner, Murloc Huntsman, Murloc Nightcrawler
+
+//=================================================================================
+// Creature: Kobold Geomancer
+// Description: "Light ranged unit that casts Slow and Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_kobold_geomancer"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_kobold/kobold_a/n_creep_kobold_a.vmdl"
+	"ModelScale"				"1"
+	"Level"						"3"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"FormationRank"				"2"
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACsw
+	"Ability2"					""	 //Reference: ACdm
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"23.0"
+	"AttackDamageMax"			"27.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.8"
+	"AttackAnimationPoint"		"0.38"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			"particles/base_attacks/ranged_badguy.vpcf"
+	"ProjectileSpeed"			"900"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"8.0"
+	"BountyGoldMax"				"10.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"31"
+	"CollisionSize"				"31"
+	"FormationRank"				"2"
+	
+	// Unit Costs
+	//----------------------------------------------------------------
+	"GoldCost"					"255"
+	"LumberCost"				"30"
+	"FoodCost"					"2"
+	"StockMax"					"1"
+	"StockTime"					"160"
+	"StockInitial"				"0"
+	"StockStartDelay"			"440"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"300"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"300"
+	"StatusManaRegen"			"0.75"
+	"StatusStartingMana"		"300"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Kobold Tunneler
+// Description: "Light melee unit that can Bash opponents. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_kobold_tunneler"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/meepo/meepo.vmdl"
+	"ModelScale"				"0.85"
+	"Level"						"3"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"FormationRank"				"0"
+	"AttacksEnabled"			"ground"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					"models/creeps/neutral_creeps/n_creep_kobold/kobold_b/n_creep_kobold_b.vmdl"
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"14.0"
+	"AttackDamageMax"			"15.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.38"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"8.0"
+	"BountyGoldMax"				"10.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"31"
+	"CollisionSize"				"31"
+	"FormationRank"				"0"
+	
+	// Unit Costs
+	//----------------------------------------------------------------
+	"GoldCost"					"215"
+	"LumberCost"				"20"
+	"FoodCost"					"2"
+	"StockMax"					"1"
+	"StockTime"					"160"
+	"StockInitial"				"0"
+	"StockStartDelay"			"440"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"325"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"AttachWearables"
+		{
+			"Wearable1"	{ "ItemDef" "104" } //weapon
+		}
+	}
+}
+
+//=================================================================================
+// Creature: Kobold
+// Description: "Light melee unit. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"neutral_kobold"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/creeps/neutral_creeps/n_creep_kobold/kobold_c/n_creep_kobold_c.vmdl"
+	"ModelScale"				"1"
+	"Level"						"1"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"AttackDamageMin"			"10.0"
+	"AttackDamageMax"			"11.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.35"
+	"AttackAnimationPoint"		"0.38"
+	"AttackAcquisitionRange"	"500"
+	"AttackRange"				"100"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"4.0"
+	"BountyGoldMax"				"6.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"31"
+	"CollisionSize"				"31"
+	"FormationRank"				"0"
+	
+	// Unit Costs
+	//----------------------------------------------------------------
+	"GoldCost"					"90"
+	"LumberCost"				"0"
+	"FoodCost"					"1"
+	"StockMax"					"1"
+	"StockTime"					"60"
+	"StockInitial"				"0"
+	"StockStartDelay"			"60"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"240"
+	"StatusHealthRegen"			"0.5"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Renegade Wizard
+// Description: "Medium ranged unit that can cast Purge and Lightning Shield. |n|n|cffffcc00Attacks land and air units.|r"
+//=================================================================================
+"neutral_renegade_wizard"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/keeper_of_the_light/keeper_of_the_light.vmdl"
+	"ModelScale"				"1"
+	"Level"						"5"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"HealthBarOffset"			"140"
+
+	"AttacksEnabled"			"ground,air"
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""	 //Reference: ACpu
+	"Ability2"					""	 //Reference: ACls
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"1"
+	"MagicalResistance"			"0"
+	
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"30.0"
+	"AttackDamageMax"			"39.0"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"1.8"
+	"AttackAnimationPoint"		"0.55"
+	"AttackAcquisitionRange"	"600"
+	"AttackRange"				"600"
+	"ProjectileModel"			"particles/units/heroes/hero_keeper_of_the_light/keeper_base_attack.vpcf"
+	"ProjectileSpeed"			"1200"
+	
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"20.0"
+	"BountyGoldMax"				"26.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"RingRadius"				"32"
+	"CollisionSize"				"32"
+	"FormationRank"				"2"
+	
+	// Unit Costs
+	//----------------------------------------------------------------
+	"GoldCost"					"320"
+	"LumberCost"				"50"
+	"FoodCost"					"4"
+	"StockMax"					"1"
+	"StockTime"					"260"
+	"StockInitial"				"0"
+	"StockStartDelay"			"440"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"270"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"600"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"400"
+	"StatusManaRegen"			"1"
+	"StatusStartingMana"		"400"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"
+	"VisionNighttimeRange"		"800"
+	
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+    {
+        "AttachWearables" // Keeper of the Northlight Set
+        {
+            "1" { "ItemDef" "5770" } // Robe of the Northlight
+            "2" { "ItemDef" "5771" } // Hood of the Northlight
+            "3" { "ItemDef" "5773" } // Stag of the Northlight
+            "4" { "ItemDef" "5769" } // Equipment of the Northlight
+            "5" { "ItemDef" "5772" } // Staff of the Northlight
+            "6" { "ItemDef" "528" } // Keeper of the Light's Ambient Effects
+        }
+    }
+}
