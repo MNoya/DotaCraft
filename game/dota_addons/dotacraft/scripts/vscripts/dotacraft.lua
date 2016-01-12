@@ -310,11 +310,12 @@ function dotacraft:InitGameMode()
 
 	GameRules.DefeatedTeamCount = 0
 
-	-- Full units file to get the custom values
+	-- Load Key Values
 	GameRules.AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
   	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
-  	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
   	GameRules.ItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
+    MergeTables(GameRules.UnitKV, LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) --Load HeroKV into UnitKV
+
   	GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
   	GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
   	GameRules.Modifiers = LoadKeyValues("scripts/kv/modifiers.kv")

@@ -915,15 +915,7 @@ end
 
 -- Returns the FormationRank defined in npc_units_custom
 function GetFormationRank( unit )
-    local rank = 0
-    if unit:IsHero() then
-        if GameRules.HeroKV[unit] then
-            rank = GameRules.HeroKV[unit:GetUnitName()]["FormationRank"]
-        end
-    elseif unit:IsCreature() then
-        rank = GameRules.UnitKV[unit:GetUnitName()]["FormationRank"]
-    end
-    return rank
+    return GameRules.UnitKV[unit:GetUnitName()]["FormationRank"] or 0
 end
 
 -- Does awful table-recreation because table.remove refuses to work. Lua pls

@@ -92,7 +92,11 @@ function TableFindKey( table, val )
     return nil
 end
 
-
+function MergeTables( t, kv )
+    for name,info in pairs(t) do
+        kv[name] = info
+    end
+end
 
 function split(inputstr, sep)
     if sep == nil then

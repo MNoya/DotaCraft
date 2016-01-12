@@ -70,8 +70,6 @@ function GetFoodCost( unit )
     if unit and IsValidEntity(unit) then
         if GameRules.UnitKV[unit:GetUnitName()] and GameRules.UnitKV[unit:GetUnitName()].FoodCost then
             return GameRules.UnitKV[unit:GetUnitName()].FoodCost
-        elseif GameRules.HeroKV[unit:GetUnitName()] and GameRules.HeroKV[unit:GetUnitName()].FoodCost then
-            return GameRules.HeroKV[unit:GetUnitName()].FoodCost
         end
     end
     return 0
@@ -109,9 +107,7 @@ end
 
 function GetCollisionSize( unit )
     if unit and IsValidEntity(unit) then
-        local unitName = unit:GetUnitName()
-        local unitTable = unit:IsHero() and GameRules.HeroKV or GameRules.UnitKV
-        return unitTable[unitName] and unitTable[unitName]["CollisionSize"] or 0
+        return GameRules.UnitKV[unit:GetUnitName()]["CollisionSize"] or 0
     end
     return 0
 end
@@ -124,17 +120,12 @@ function GetUnitRace( unit )
 end
 
 function GetOriginalModelScale( unit )
-    local unit_name = unit:GetUnitName()
-    local unit_table = unit:IsHero() and GameRules.HeroKV[unit_name] or GameRules.UnitKV[unit_name]
-    return unit_table and unit_table["ModelScale"] or unit:GetModelScale()
+    return GameRules.UnitKV[unit:GetUnitName()]["ModelScale"] or unit:GetModelScale()
 end
 
 function GetRangedProjectileName( unit )
-    local unit_name = unit:GetUnitName()
-    local unit_table = unit:IsHero() and GameRules.HeroKV[unit_name] or GameRules.UnitKV[unit_name]
-    return unit_table and unit_table["ProjectileModel"] or ""
+    return GameRules.UnitKV[unit:GetUnitName()]["ProjectileModel"] or ""
 end
-
 
 -- Checks the UnitLabel for "city_center"
 function IsCityCenter( unit )

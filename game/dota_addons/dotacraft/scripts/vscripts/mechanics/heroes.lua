@@ -29,7 +29,7 @@ function GetBuilderNameForHeroRace( hero_name )
 end
 
 function GetInternalHeroName( hero_name )
-    local hero_table = GameRules.HeroKV[hero_name]
+    local hero_table = GameRules.UnitKV[hero_name]
     if hero_table and hero_table["InternalName"] then
         return hero_table["InternalName"]
     else
@@ -38,7 +38,7 @@ function GetInternalHeroName( hero_name )
 end
 
 function GetRealHeroName( internal_hero_name )
-    local heroes = GameRules.HeroKV
+    local heroes = GameRules.UnitKV
     for hero_name,v in pairs(heroes) do
         for key,value in pairs(v) do
             if value == internal_hero_name then
