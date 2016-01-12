@@ -118,38 +118,38 @@ var Player = (function() {
 	};
 	
 	Player.prototype.Update = function(pValue){
-		$.Msg("[PLAYER OBJECT] Updating Player: "+ this.getPlayerID());
+		//$.Msg("[PLAYER OBJECT] Updating Player: "+ this.getPlayerID());
 		
 		if(pValue.lumber){
 			this.setLumber(pValue.lumber);
-			$.Msg("Updating Lumber = "+this.getLumber());			
+			//$.Msg("Updating Lumber = "+this.getLumber());			
 		};
 		if(pValue.gold){
 			this.setGold(pValue.gold);
-			$.Msg("Updating Gold = "+this.getGold());
+			//$.Msg("Updating Gold = "+this.getGold());
 		};
 		if(pValue.food_used){
 			this.setFoodUsed(pValue.food_used);
-			$.Msg("Updating Food Used = "+this.getFoodUsed());
+			//$.Msg("Updating Food Used = "+this.getFoodUsed());
 		};
 		if(pValue.food_limit){
 			this.setFoodLimit(pValue.food_limit)
-			$.Msg("Updating Food Limit = "+this.getFoodLimit());
+			//$.Msg("Updating Food Limit = "+this.getFoodLimit());
 		};
 		if(pValue.hero_count){
 			this.setHeroCount(pValue.hero_count);
-			$.Msg("Updating Hero Count = "+this.getHeroCount());			
+			//$.Msg("Updating Hero Count = "+this.getHeroCount());			
 		};
 		if(pValue.has_altar){
 			this.setHasAltar(pValue.has_altar);
-			$.Msg("Updating Has Altar = "+ this.getHasAltar());			
+			//$.Msg("Updating Has Altar = "+ this.getHasAltar());			
 		};
 		if(pValue.tech_tier){
 			this.setTechTier(pValue.tech_tier);
-			$.Msg("Updating Tech Tier = "+this.getTechTier());
+			//$.Msg("Updating Tech Tier = "+this.getTechTier());
 		};
 		
-		$.Msg("[PLAYER OBJECT] Finished Updating");
+		//$.Msg("[PLAYER OBJECT] Finished Updating");
 		//$.Msg("Gold = "+this.getGold());
 		//$.Msg("Lumber = "+this.getLumber());
 		//$.Msg(this.getFoodLimit());
