@@ -63,7 +63,7 @@ function LiquidOrbThink( event )
 	local target = event.target
 	local ability = event.ability
     local damage = ability:GetSpecialValueFor('damage_per_second')/2
-    damage = damage * GetDamageForAttackAndArmor('magic', GetArmorType(target))
+    
 	ApplyDamage({
 		victim = target,
 		attacker = caster,

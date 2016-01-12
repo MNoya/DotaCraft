@@ -57,7 +57,7 @@ function WarClub( event )
 		local strikes = ability:GetSpecialValueFor("strikes")
 		caster:SetModifierStackCount("modifier_war_club_strikes", caster, strikes)
 
-		SetAttackType(caster, "siege")
+		caster:SetAttackType("siege")
 	end)
 end
 

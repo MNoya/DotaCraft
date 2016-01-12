@@ -30,9 +30,9 @@ function dotacraft:FilterDamage( filterTable )
 			attack_damage = attacker:GetAttackDamage()
 		end
 
-		local attack_type  = GetAttackType( attacker )
-		local armor_type = GetArmorType( victim )
-		local multiplier = GetDamageForAttackAndArmor(attack_type, armor_type)
+		local attack_type  = attacker:GetAttackType()
+		local armor_type = victim:GetArmorType()
+		local multiplier = attacker:GetAttackFactorAgainstTarget(victim)
 
 		local damage = ( attack_damage * (1 - damage_reduction)) * multiplier
 

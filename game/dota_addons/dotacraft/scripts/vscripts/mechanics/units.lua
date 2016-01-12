@@ -6,12 +6,12 @@ end
 function Units:Init( unit )
 
     -- Apply armor and damage modifier (for visuals)
-    local attack_type = GetAttackType(unit)
+    local attack_type = unit:GetAttackType()
     if attack_type ~= 0 and unit:GetAttackDamage() > 0 then
         ApplyModifier(unit, "modifier_attack_"..attack_type)
     end
 
-    local armor_type = GetArmorType(unit)
+    local armor_type = unit:GetArmorType()
     if armor_type ~= 0 then
         ApplyModifier(unit, "modifier_armor_"..armor_type)
     end
@@ -383,4 +383,41 @@ end
 function HasArtilleryAttack( unit )
     local unitTable = GameRules.UnitKV[unit:GetUnitName()]
     return unitTable and unitTable["Artillery"]
+end
+
+-- All units should have DOTA_COMBAT_CLASS_DEFEND_HERO and DOTA_COMBAT_CLASS_DEFEND_HERO, or no CombatClassAttack/ArmorType defined
+-- Returns a string with the wc3 damage name
+function CDOTA_BaseNPC:GetAttackType()
+    return GameRules.UnitKV[self:GetUnitName()]["AttackType"] or "normal"
+end
+
+-- Returns a string with the wc3 armor name
+function CDOTA_BaseNPC:GetArmorType()
+    return GameRules.UnitKV[self:GetUnitName()]["ArmorType"] or "normal"
+end
+
+-- Changes the Attack Type string defined in the KV, and the current visual tooltip
+function CDOTA_BaseNPC:SetAttackType( attack_type )
+    local current_attack_type = self:GetAttackType()
+    unit:RemoveModifierByName("modifier_attack_"..current_attack_type)
+
+    GameRules.UnitKV[unit:GetUnitName()]["AttackType"] = attack_type        
+    ApplyModifier(unit, "modifier_attack_"..attack_type)
+end
+
+-- Changes the Armor Type string defined in the KV, and the current visual tooltip
+function CDOTA_BaseNPC:SetArmorType( armor_type )
+    local current_armor_type = self:GetArmorType()
+    unit:RemoveModifierByName("modifier_armor_"..current_armor_type)
+
+    GameRules.UnitKV[unitName]["ArmorType"] = armor_type
+    ApplyModifier(unit, "modifier_armor_"..armor_type)
+end
+
+-- Returns the damage factor this unit does against another
+function CDOTA_BaseNPC:GetAttackFactorAgainstTarget( unit )
+    local attack_type = self:GetAttackType()
+    local armor_type = unit:GetArmorType()
+    local damageTable = GameRules.Damage
+    return damageTable[attack_type] and damageTable[attack_type][armor_type] or 1
 end

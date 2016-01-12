@@ -324,6 +324,7 @@ function dotacraft:InitGameMode()
   	GameRules.Buildings = LoadKeyValues("scripts/kv/buildings.kv")
     GameRules.Drops = LoadKeyValues("scripts/kv/map_drops.kv")
     GameRules.Items = LoadKeyValues("scripts/kv/items.kv")
+    GameRules.Damage = LoadKeyValues("scripts/kv/damage_table.kv")
 
   	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
   	for _,t in pairs(GameRules.ALLTREES) do

@@ -44,11 +44,7 @@ function VorpalBladeDamage( event )
 	
 	-- Don't damage the main target of the attack
 	if ability.initial_target ~= target then
-		-- Adjust by damage type
-		damage = damage * GetDamageForAttackAndArmor( GetAttackType(caster), GetArmorType(target) )
-
 		ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType })
-		print("Vorpal Blade dealt "..damage.." to "..target:GetUnitName().." number ".. target:GetEntityIndex())
 
 		ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnus_dust_hit.vpcf", PATTACH_ABSORIGIN, target)
 	end

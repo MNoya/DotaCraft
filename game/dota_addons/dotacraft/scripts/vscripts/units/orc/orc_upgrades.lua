@@ -79,5 +79,5 @@ end
 
 function ReinforcedDefenses( event )
 	local building = event.caster
-	SetArmorType(building, "fortified")
+	building:SetArmorType("fortified")
 end

@@ -78,7 +78,7 @@ function RootStart( unit )
 end
 
 function RootEnd( unit )
-    SetArmorType(unit, "fortified")
+    unit:SetArmorType("fortified")
 
     -- Show all train and research abilities
     for i=0,15 do
@@ -176,7 +176,7 @@ function UpRoot( event )
 
     caster:RemoveModifierByName("modifier_building")
 
-    SetArmorType(caster, "heavy")
+    unit:SetArmorType("heavy")
 
     -- Set the builder abilities
     BuildingHelper:InitializeBuilder(caster)

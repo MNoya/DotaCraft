@@ -16,11 +16,11 @@ function Pillage(event)
 	local damage = event.attack_damage
 	local unitName = caster:GetUnitName()
 
-	-- Adjust by damage type
-	damage = damage * GetDamageForAttackAndArmor( GetAttackType(caster), GetArmorType(target) )
+	-- Find out the damage done
+	local multiplier = caster:GetAttackFactorAgainstTarget(target)
+	damage = damage * multiplier
 
 	local armor = target:GetPhysicalArmorValue()
-
 	damage = damage * (1 - 0.06 * armor / (1 + 0.06 * math.abs(armor)))
 
 	local pillage = (damage/target:GetMaxHealth()) * pillage_ratio * GetGoldCost(target)
