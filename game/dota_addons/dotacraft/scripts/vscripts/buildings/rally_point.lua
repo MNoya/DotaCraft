@@ -1,9 +1,7 @@
 function SpawnUnit( event )
 	local caster = event.caster
-	local owner = caster:GetOwner()
-	local player = caster:GetPlayerOwner()
-	local playerID = player:GetPlayerID()
-	local hero = player:GetAssignedHero()
+	local playerID = caster:GetPlayerOwnerID()
+	local hero = caster:GetOwner()
 	local unit_name = event.UnitName
 	local position = caster.initial_spawn_position
 	local teamID = caster:GetTeam()
@@ -18,7 +16,7 @@ function SpawnUnit( event )
 		unit_name = "orc_troll_berserker"
 	end
 		
-	local unit = CreateUnitByName(unit_name, position, true, owner, owner, caster:GetTeamNumber())
+	local unit = CreateUnitByName(unit_name, position, true, hero, hero, caster:GetTeamNumber())
 	unit:AddNewModifier(caster, nil, "modifier_phased", { duration = 0.03 })
 	unit:SetOwner(hero)
 	unit:SetControllableByPlayer(playerID, true)
@@ -138,8 +136,7 @@ function MoveToRallyPoint( event )
 		--print(target:GetUnitName().." moving to follow",flag:GetUnitName())
 	end
 
-	local player = caster:GetPlayerOwner()
-	local hero = player:GetAssignedHero()
+	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 	target:SetOwner(hero)
 	Players:AddUnit(playerID, target)
 	CheckAbilityRequirements(target, playerID)

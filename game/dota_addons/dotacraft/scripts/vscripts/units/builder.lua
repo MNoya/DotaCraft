@@ -9,7 +9,6 @@ function Build( event )
     local ability_name = ability:GetAbilityName()
     local AbilityKV = GameRules.AbilityKV
     local UnitKV = GameRules.UnitKV
-    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
 
     if caster:IsIdle() then
         caster:Interrupt()
@@ -32,9 +31,8 @@ function Build( event )
     local lumber_cost = ability:GetSpecialValueFor("lumber_cost")
 
     local hero = caster:IsRealHero() and caster or caster:GetOwner()
-    local playerID = caster:GetPlayerOwnerID()
-    local player = PlayerResource:GetPlayer(playerID)    
-    local teamNumber = hero:GetTeamNumber()
+    local playerID = caster:GetPlayerOwnerID()  
+    local teamNumber = caster:GetTeamNumber()
 
     -- If the ability has an AbilityGoldCost, it's impossible to not have enough gold the first time it's cast
     -- Always refund the gold here, as the building hasn't been placed yet
@@ -56,7 +54,7 @@ function Build( event )
         local enemies = FindUnitsInRadius(teamNumber, vPos, nil, construction_size, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
 
         if #enemies > 0 then
-            SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
+            SendErrorMessage(playerID, "#error_invalid_build_position")
             return false
         end
 
@@ -65,7 +63,7 @@ function Build( event )
                local bHasBlight = HasBlight(vPos)
                BuildingHelper:print("Blight check for "..building_name..":", bHasBlight)
                if not bHasBlight then
-                   SendErrorMessage(caster:GetPlayerOwnerID(), "#error_must_build_on_blight")
+                   SendErrorMessage(playerID, "#error_must_build_on_blight")
                    return false
                end
            end
@@ -152,7 +150,7 @@ function Build( event )
         -- Play construction sound
 
         -- Adjust health for human research
-        local masonry_rank = Players:GetCurrentResearchRank(player:GetPlayerID(), "human_research_masonry1")
+        local masonry_rank = Players:GetCurrentResearchRank(getPlayerID, "human_research_masonry1")
         local maxHealth = unit:GetMaxHealth() * (1 + 0.2 * masonry_rank)
         unit:SetMaxHealth(maxHealth)
         unit:SetBaseMaxHealth(maxHealth)
@@ -178,7 +176,7 @@ function Build( event )
         unit:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
 
         -- Give item to cancel
-        local item = CreateItem("item_building_cancel", playersHero, playersHero)
+        local item = CreateItem("item_building_cancel", hero, hero)
         unit:AddItem(item)
 
         -- FindClearSpace for the builder
@@ -336,8 +334,7 @@ end
 -- Called when the Cancel ability-item is used, refunds the cost by a factor
 function CancelBuilding( keys )
     local building = keys.unit
-    local hero = building:GetOwner()
-    local playerID = hero:GetPlayerID()
+    local playerID = building:GetPlayerOwnerID()
 
     BuildingHelper:print("CancelBuilding "..building:GetUnitName().." "..building:GetEntityIndex())
 
@@ -436,7 +433,6 @@ function Gather( event )
     local target = event.target
     local ability = event.ability
     local target_class = target:GetClassname()
-    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
 
     caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
 
@@ -915,13 +911,10 @@ function GatherLumber( event )
     local abilityLevel = ability:GetLevel() - 1
     local max_lumber_carried = ability:GetLevelSpecialValueFor("lumber_capacity", abilityLevel)
     local tree = caster.target_tree
-    local casterKV = GameRules.UnitKV[caster:GetUnitName()] --
     local UnitKV = GameRules.UnitKV
     local lumber_per_hit = ability:GetLevelSpecialValueFor("lumber_per_hit", abilityLevel)
     local damage_to_tree = ability:GetLevelSpecialValueFor("damage_to_tree", abilityLevel)
-
-    -- Builder race
-    local race = GetUnitRace(caster)
+    local playerID = caster:GetPlayerOwnerID()
 
     caster.state = "gathering_lumber"
 
@@ -947,11 +940,10 @@ function GatherLumber( event )
                 if DEBUG_TREES then DebugDrawCircle(a_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
             else
                 -- Go to return resources (where it will find a tree nearby the town instead)
-                local player = caster:GetPlayerOwnerID()
                 return_ability:SetHidden(false)
                 ability:SetHidden(true)
                 
-                caster:CastAbilityNoTarget(return_ability, player)
+                caster:CastAbilityNoTarget(return_ability, playerID)
             end
         end
     end
@@ -971,12 +963,11 @@ function GatherLumber( event )
             caster:SwapAbilities(casterKV.GatherAbility, casterKV.ReturnAbility, false, true)
         end
     else
-        -- RETURN
-        local player = caster:GetOwner():GetPlayerID()
+        -- RETURN     
         caster:RemoveModifierByName("modifier_gathering_lumber")
 
         -- Cast Return Resources    
-        caster:CastAbilityNoTarget(return_ability, player)
+        caster:CastAbilityNoTarget(return_ability, playerID)
     end
 end
 
@@ -987,7 +978,7 @@ function GatherGold( event )
     local caster = event.caster
     local ability = event.ability
     local mine = caster.target_mine
-    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
+    local playerID = caster:GetPlayerOwnerID()
 
     -- Builder race
     local race = GetUnitRace(caster)
@@ -1019,8 +1010,6 @@ function GatherGold( event )
     ability:SetHidden(true)
 
     caster:SetModifierStackCount("modifier_carrying_gold", caster, DAMAGE_TO_MINE)
-
-    local player = caster:GetOwner():GetPlayerID()
                     
     -- Find where to put the builder outside the mine
     local position = mine.entrance
@@ -1045,7 +1034,6 @@ function GoldGain( event )
     local ability = event.ability
     local caster = event.caster
     local playerID = caster:GetPlayerOwnerID()
-    local hero = caster:GetOwner()
     local race = GetUnitRace(caster)
     local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
     local casterKV = GameRules.UnitKV[caster:GetUnitName()]
@@ -1115,16 +1103,11 @@ end
 function ReturnResources( event )
     local caster = event.caster
     local ability = event.ability
-    local hero = caster:GetOwner()
-    local player = caster:GetPlayerOwner()
-    local playerID = hero:GetPlayerID()
+    local playerID = caster:GetPlayerOwnerID()
     local casterKV = GameRules.UnitKV[caster:GetUnitName()]
     
     caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
     
-    -- Builder race
-    local race = GetUnitRace(caster)
-
     -- Return Ability On
     ability.cancelled = false
     if ability:GetToggleState() == false then
@@ -1269,7 +1252,6 @@ function ReturnResources( event )
 end
 
 function SendBackToGather( unit, ability, resource_type )
-    local race = GetUnitRace(unit)
     local playerID = unit:GetPlayerOwnerID()
     local casterKV = GameRules.UnitKV[unit:GetUnitName()]
 
@@ -1343,10 +1325,7 @@ function Repair( event )
     local caster = event.caster -- The builder
     local ability = event.ability
     local building = event.target -- The building to repair
-
-    local hero = caster:GetOwner()
-    local player = caster:GetPlayerOwner()
-    local playerID = hero:GetPlayerID()
+    local playerID = caster:GetPlayerOwnerID()
 
     local building_name = building:GetUnitName()
     local building_info = GameRules.UnitKV[building_name]

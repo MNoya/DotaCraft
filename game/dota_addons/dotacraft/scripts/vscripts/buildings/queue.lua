@@ -2,7 +2,7 @@
 function EnqueueUnit( event )
     local caster = event.caster
     local ability = event.ability
-    local playerID = caster:GetPlayerOwner():GetPlayerID()
+    local playerID = caster:GetPlayerOwnerID()
     local gold_cost = ability:GetGoldCost( ability:GetLevel() - 1 )
     local lumber_cost = ability:GetLevelSpecialValueFor("lumber_cost", ability:GetLevel() - 1) or 0
 
@@ -79,7 +79,6 @@ end
 function DequeueUnit( event )
     local caster = event.caster
     local item_ability = event.ability
-    local player = caster:GetPlayerOwner()
     local playerID = caster:GetPlayerOwnerID()
     local item_ability_name = item_ability:GetAbilityName()
 
@@ -161,7 +160,6 @@ end
 function AdvanceQueue( event )
     local caster = event.caster
     local ability = event.ability
-    local player = caster:GetPlayerOwner()
     local playerID = caster:GetPlayerOwnerID()
 
     if not IsChanneling( caster ) then

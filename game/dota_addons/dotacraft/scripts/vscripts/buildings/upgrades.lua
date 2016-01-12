@@ -5,8 +5,7 @@ function UpgradeBuilding( event )
 	local caster = event.caster
 	local new_unit = event.UnitName
 	local position = caster:GetAbsOrigin()
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	local playerID = hero:GetPlayerID()
+	local playerID = caster:GetPlayerOwnerID()
 	local player = PlayerResource:GetPlayer(playerID)
 	local currentHealthPercentage = caster:GetHealthPercent() * 0.01
 
@@ -106,16 +105,15 @@ function StartUpgrade( event )
 	local caster = event.caster
 	local ability = event.ability
 	local modifier_name = event.ModifierName
-	local abilities = {}
 	local lumberCost = event.ability:GetSpecialValueFor("lumber_cost")
-	local playerID = caster:GetPlayerOwner():GetPlayerID()
+	local playerID = caster:GetPlayerOwnerID()
 
-	if lumberCost > Players:GetLumber(playerID) then
+	if lumberCost and lumberCost > Players:GetLumber(playerID) then
 		return
 	end
 
-
 	-- Iterate through abilities marking those to disable
+	local abilities = {}
 	for i=0,15 do
 		local abil = caster:GetAbilityByIndex(i)
 		if abil then
@@ -145,8 +143,6 @@ function StartUpgrade( event )
 		caster.upgrade_modifier = modifier_name
 	end
 
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	local playerID = hero:GetPlayerID()
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
@@ -154,6 +150,7 @@ end
 function CancelUpgrade( event )
 	local caster = event.caster
 	local abilities = caster.disabled_abilities
+	local playerID = caster:GetPlayerOwnerID()
 
 	-- Give the unit their original attack capability
     caster:SetAttackCapability(caster.original_attack)
@@ -167,8 +164,6 @@ function CancelUpgrade( event )
 		caster:RemoveModifierByName(upgrade_modifier)
 	end
 
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	local playerID = hero:GetPlayerID()
 	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 

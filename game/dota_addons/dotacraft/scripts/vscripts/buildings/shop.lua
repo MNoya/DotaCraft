@@ -56,6 +56,7 @@ local NEUTRAL_TAVERN_UNLOCKTIME = 1
 
 function unit_shops:CreateShop(unit, shop_name)
 	local UnitID = unit:GetEntityIndex()
+	local playerID = unit:GetPlayerOwnerID()
 	
 	if unit_shops.Units[UnitID] == nil then
 	-- initialise Shop item table
@@ -63,9 +64,9 @@ function unit_shops:CreateShop(unit, shop_name)
 		unit_shops.Units[UnitID].Items = {}
 	end
 	
-	if unit_shops.Players[unit:GetPlayerOwnerID()] == nil then
-		unit_shops.Players[unit:GetPlayerOwnerID()] = {}
-		unit_shops.Players[unit:GetPlayerOwnerID()].Items = {}
+	if unit_shops.Players[playerID] == nil then
+		unit_shops.Players[playerID] = {}
+		unit_shops.Players[playerID].Items = {}
 	end
 	
 	local UnitShop = unit_shops.Units[UnitID]

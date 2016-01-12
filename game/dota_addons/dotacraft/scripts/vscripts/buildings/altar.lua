@@ -7,9 +7,9 @@
 
 function BuildHero( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwner()
-	local hero = player:GetAssignedHero()
-	local playerID = player:GetPlayerID()
+	local playerID = caster:GetPlayerOwnerID()
+	local player = PlayerResource:GetPlayer(playerID)
+	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 	local unit_name = event.Hero
 	local origin = caster.initial_spawn_position
 
