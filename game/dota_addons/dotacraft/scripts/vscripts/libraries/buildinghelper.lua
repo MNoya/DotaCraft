@@ -222,6 +222,9 @@ function BuildingHelper:InitGNV()
     local line = {}
     local ASCII_ART = false
 
+    -- Trigger zones named "bh_blocked" will block the terrain for construction
+    local blocked_map_zones = Entities:FindAllByName("*bh_blocked")
+
     for y=boundY1,boundY2 do
         local shift = 4
         local byte = 0
@@ -236,6 +239,17 @@ function BuildingHelper:InitGNV()
             local terrainBlocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
             if BuildingHelper.Settings["UPDATE_TREES"] then
                 terrainBlocked = terrainBlocked and not treeBlocked
+            end
+
+            if not terrainBlocked then
+                -- Check if the position is inside any blocking trigger
+                for _,ent in pairs(blocked_map_zones) do
+                    local triggerBlocked = BuildingHelper:IsInsideEntityBounds(ent, position)
+                    if triggerBlocked then
+                        terrainBlocked = true
+                        break
+                    end
+                end
             end
 
             if terrainBlocked then
@@ -1926,6 +1940,24 @@ function BuildingHelper:FindClosestEmptyPositionNearby( location, construction_s
     end
     BuildingHelper:SnapToGrid(construction_size, towerPos)
     return towerPos
+end
+
+-- Used to find if a position is insde the trigger entity bounds
+function BuildingHelper:IsInsideEntityBounds(entity, location)
+    local origin = entity:GetAbsOrigin()
+    local bounds = entity:GetBounds()
+    local min = bounds.Mins
+    local max = bounds.Maxs
+    local X = location.x
+    local Y = location.y
+    local minX = min.x + origin.x
+    local minY = min.y + origin.y
+    local maxX = max.x + origin.x
+    local maxY = max.y + origin.y
+    local betweenX = X >= minX and X <= maxX
+    local betweenY = Y >= minY and Y <= maxY
+
+    return betweenX and betweenY
 end
 
 -- A BuildingHelper ability is identified by the "Building" key.
