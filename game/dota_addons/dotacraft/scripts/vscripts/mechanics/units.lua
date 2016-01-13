@@ -399,25 +399,25 @@ end
 -- Changes the Attack Type string defined in the KV, and the current visual tooltip
 function CDOTA_BaseNPC:SetAttackType( attack_type )
     local current_attack_type = self:GetAttackType()
-    unit:RemoveModifierByName("modifier_attack_"..current_attack_type)
+    self:RemoveModifierByName("modifier_attack_"..current_attack_type)
 
-    GameRules.UnitKV[unit:GetUnitName()]["AttackType"] = attack_type        
-    ApplyModifier(unit, "modifier_attack_"..attack_type)
+    GameRules.UnitKV[self:GetUnitName()]["AttackType"] = attack_type        
+    ApplyModifier(self, "modifier_attack_"..attack_type)
 end
 
 -- Changes the Armor Type string defined in the KV, and the current visual tooltip
 function CDOTA_BaseNPC:SetArmorType( armor_type )
     local current_armor_type = self:GetArmorType()
-    unit:RemoveModifierByName("modifier_armor_"..current_armor_type)
+    self:RemoveModifierByName("modifier_armor_"..current_armor_type)
 
-    GameRules.UnitKV[unitName]["ArmorType"] = armor_type
-    ApplyModifier(unit, "modifier_armor_"..armor_type)
+    GameRules.UnitKV[self:GetUnitName()]["ArmorType"] = armor_type
+    ApplyModifier(self, "modifier_armor_"..armor_type)
 end
 
 -- Returns the damage factor this unit does against another
 function CDOTA_BaseNPC:GetAttackFactorAgainstTarget( unit )
     local attack_type = self:GetAttackType()
-    local armor_type = unit:GetArmorType()
+    local armor_type = self:GetArmorType()
     local damageTable = GameRules.Damage
     return damageTable[attack_type] and damageTable[attack_type][armor_type] or 1
 end

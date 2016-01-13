@@ -1,4 +1,4 @@
-LinkLuaModifier("modifier_minimap", "libraries/modifiers/modifier_minimap", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_minimap", "mechanics/minimap", LUA_MODIFIER_MOTION_NONE)
 modifier_minimap = class({})
 
 if IsServer() then
@@ -11,7 +11,7 @@ if IsServer() then
             [MODIFIER_STATE_NO_HEALTH_BAR] = true,
             [MODIFIER_STATE_OUT_OF_GAME] = true,
             [MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES] = true,
-            [MODIFIER_STATE_NOT_ON_MINIMAP] = modifier_minimap.hidden,
+            [MODIFIER_STATE_NOT_ON_MINIMAP] = self.hidden,
         }
 
         return state
@@ -29,45 +29,36 @@ end
 -- Drop out of self-include
 if not Entities or not Entities.CreateByClassname then return end
 
+-----------------------------------------------------------------
+
 if not Minimap then
     Minimap = class({})
 end
 
 -- Called when game starts
 function Minimap:InitializeCampIcons()
-    local entities = Entities:FindAllByClassname("npc_dota_building")
 
-    for _,ent in pairs(entities) do
-        if string.match(ent:GetUnitName(), "minimap_") then
-            Minimap:SetupNeutralCamp(ent)
-        end
-    end
-end
-
-function Minimap:SetupNeutralCamp(entity)
-    local unitName = entity:GetUnitName()
-
+    -- Build a list of teams with players on them
+    local validTeams = {}
     for teamID=DOTA_TEAM_FIRST,DOTA_TEAM_CUSTOM_MAX do
         local playerCount = PlayerResource:GetPlayerCountForTeam(teamID)
         if playerCount > 0 then
-            -- Create a minimap camp entity for this team
-            local dummy = CreateUnitByName(unitName, entity:GetAbsOrigin(), false, nil, nil, teamID)
-            dummy:AddNewModifier(dummy, nil, "modifier_minimap", {})
+            table.insert(validTeams, teamID)
         end
     end
 
-    -- Finally, remove the initial entity
-    entity:RemoveSelf()
-end
-
-function Minimap:HideIcon(entity, teamID)
-
-end
-
-function Minimap:ShowIcon(entity, teamID)
-
-end
-
-function Minimap:CampKilled(entity, teamID)
-
+    -- For each minimap_ entity, replicate one for each team
+    local entities = Entities:FindAllByClassname("npc_dota_building")
+    for _,ent in pairs(entities) do
+        if string.match(ent:GetUnitName(), "minimap_") then
+            local unitName = ent:GetUnitName()
+            for _,teamID in pairs(validTeams) do
+                -- Create a minimap camp entity for this team
+                local dummy = CreateUnitByName(unitName, ent:GetAbsOrigin(), false, nil, nil, teamID)
+                dummy:AddNewModifier(dummy, nil, "modifier_minimap", {})
+            end
+            -- Finally, remove the initial entity
+            ent:RemoveSelf()
+        end
+    end
 end

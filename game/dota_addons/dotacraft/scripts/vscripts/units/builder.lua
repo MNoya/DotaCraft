@@ -150,7 +150,7 @@ function Build( event )
         -- Play construction sound
 
         -- Adjust health for human research
-        local masonry_rank = Players:GetCurrentResearchRank(getPlayerID, "human_research_masonry1")
+        local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
         local maxHealth = unit:GetMaxHealth() * (1 + 0.2 * masonry_rank)
         unit:SetMaxHealth(maxHealth)
         unit:SetBaseMaxHealth(maxHealth)
