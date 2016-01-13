@@ -175,13 +175,13 @@ function unit_shops:SetupShopPanels(unit, ShopItemTable, isTavern, isGlobal, isU
 	if not isTavern then
 		--unit_shops:print("Create "..shop_name.." "..UnitID.." Tier "..tier)
 		if isGlobal then
-			CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=0, Race=ShopName, Neutral = isUnitShop}) 		
+			CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=0, ShopName=ShopName, Neutral = isUnitShop}) 		
 		else
-			CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, Race=ShopName }) 
+			CustomGameEventManager:Send_ServerToTeam(team, "Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, ShopName=ShopName }) 
 		end
 	else
 		GameRules.HeroTavernEntityID = UnitID
-		CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, Tavern = true}) 
+		CustomGameEventManager:Send_ServerToAllClients("Shops_Create", {Index = UnitID, Shop = ShopItemTable, Tier=RequiredTier, Tavern = true, ShopName="Tavern"}) 
 		--unit_shops:print("Create Tavern "..GameRules.HeroTavernEntityID)		
 	end
 

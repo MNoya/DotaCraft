@@ -7,9 +7,22 @@ var shop_state = "on"
 function Create_Shop(args){	
 	// create the primary container
 	var Container = $.CreatePanel("Panel", Root, args.Index)
-	Container.AddClass("Container")	
-	//Container.visible = false
-	 
+	Container.AddClass("Container")
+	
+	// to lazy to convert to xml
+	var Header = $.CreatePanel("Panel", Container, "ShopHeader");
+	var HeaderText = $.CreatePanel("Label", Header, "ShopHeaderText");
+	HeaderText.text = $.Localize( Entities.GetUnitName( args.Index ) );
+	
+	var Button = $.CreatePanel("Button", Header, "CloseButton");
+	Button.SetPanelEvent('onactivate', (function(){
+      return function(){
+         Hide_All_Shops();
+      };
+    })());
+	var ButtonLBL = $.CreatePanel("Label", Button, "CloseButtonText")
+	ButtonLBL.text = "X";
+	
 	// create all the items
 	for(var orderIndex in args.Shop){
 		var key = args.Shop[orderIndex].ItemName
@@ -19,7 +32,7 @@ function Create_Shop(args){
 		shop_item.ItemName = key
 		shop_item.ItemInfo = args.Shop[orderIndex]
 		shop_item.Entity = args.Index
-		shop_item.Race = args.Race
+		shop_item.Race = args.ShopName
 		shop_item.Tier = args.Tier  
 		shop_item.Order = orderIndex   
 		
