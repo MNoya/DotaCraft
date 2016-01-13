@@ -94,10 +94,10 @@ function Setup_Panel(){
 	
 	$( "#Stock").text = Root.ItemInfo.CurrentStock;
 	
-	if(Root.ItemInfo.FoodCost != null)
+	if(Root.ItemInfo.FoodCost != null && Root.ItemInfo.FoodCost != 0)
 		$("#Food").text = Root.ItemInfo.FoodCost; 	
 	else
-		$("#Food").visible = false;
+		$("#FoodPanel").visible = false;
 	
 	$( "#ItemName").text = $.Localize(Root.ItemName);
 	

@@ -199,3 +199,41 @@
 	horizontal-align: middle;
 	vertical-align: middle;
 }
+
+#ShopHeader
+{
+	height: 25px;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+#ShopHeaderText
+{
+	color: white;
+	font-size: 24px;
+	font-family: tahoma;
+	vertical-align: middle;
+}
+
+#CloseButton
+{
+	height: 100%;
+	width: 10%;
+	vertical-align: middle;
+	horizontal-align: right;
+}
+
+#CloseButtonText
+{
+	color: grey;
+	vertical-align: middle;
+	horizontal-align: middle;
+}
+#CloseButtonText:hover
+{
+	color: yellow;
+}
+#CloseButtonText:active
+{
+	color: brown;
+}
