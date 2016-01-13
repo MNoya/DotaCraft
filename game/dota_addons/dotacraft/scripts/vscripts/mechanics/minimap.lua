@@ -18,11 +18,53 @@ if IsServer() then
     end
 
     function modifier_minimap:OnCreated( params )    
-        modifier_minimap.hidden = true
-    end
+        local minimap_entity = self:GetParent()
+        local teamNumber = minimap_entity:GetTeamNumber()
+        local origin = minimap_entity:GetAbsOrigin()
+        self.neutrals = FindUnitsInRadius(teamNumber, origin, nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
+        self.hidden = true
+        
+        Timers:CreateTimer(0.5, function()
+            self.hidden = false
+            self.allDead = true
+            
 
-    function modifier_minimap:OnDestroy( params )
+            -- Does the team have vision of any neutral on the camp?
+            for _,creep in pairs(self.neutrals) do                
+                if IsValidAlive(creep) and minimap_entity:CanEntityBeSeenByMyTeam(creep) then
+                    self.hidden = true
+                    break
+                end
+            end
 
+            -- Also check for allied proximity, in case all creeps died and the visibility check is impossible
+            if not self.hidden then
+                local allies = FindAlliesInRadius(minimap_entity, 900)
+                if #allies > 0 then
+                    self.hidden = true
+                end
+            end
+
+            -- If its hidden, allow the entity to be removed
+            if self.hidden then
+                local allDead = true
+                for _,creep in pairs(self.neutrals) do
+                    if IsValidAlive(creep) then
+                        allDead = false
+                        break
+                    end
+                end
+
+                if allDead then
+                    print(minimap_entity:GetUnitName().." killed for team "..minimap_entity:GetTeamNumber())
+                    minimap_entity:RemoveSelf()
+                    return
+                end
+            end
+
+            self:CheckState()
+            return 0.5
+        end)
     end
 end
 
