@@ -9,12 +9,6 @@ function Attacks:Init()
             CustomNetTables:SetTableValue("attacks_enabled", name, {enabled = values['AttacksEnabled']})
         end
     end
-
-    for name,values in pairs(GameRules.HeroKV) do
-        if values['AttacksEnabled'] then
-            CustomNetTables:SetTableValue("attacks_enabled", name, {enabled = values['AttacksEnabled']})
-        end
-    end
 end
 
 -- Ground/Air Attack mechanics

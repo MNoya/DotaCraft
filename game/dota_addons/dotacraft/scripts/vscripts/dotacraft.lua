@@ -685,6 +685,9 @@ function dotacraft:OnGameInProgress()
         end
 	end
 
+    -- Setup easy/medium/hard minimap icons
+    Minimap:InitializeCampIcons()
+
 	GameRules.DayTime = true
 	Timers:CreateTimer(240, function() 
 		if GameRules.DayTime then
