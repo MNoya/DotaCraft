@@ -92,9 +92,9 @@ function TableFindKey( table, val )
     return nil
 end
 
-function MergeTables( t, kv )
-    for name,info in pairs(t) do
-        kv[name] = info
+function MergeTables( t1, t2 )
+    for name,info in pairs(t2) do
+        t1[name] = info
     end
 end
 
