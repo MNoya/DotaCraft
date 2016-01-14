@@ -4,7 +4,7 @@ function CreateBlight(location, size)
     -- Radius should be an odd number for precision
     local radius = 960
     if size == "small" then
-        radius = 704
+        radius = 768
     elseif size == "item" then
         radius = 384
     end
@@ -12,8 +12,8 @@ function CreateBlight(location, size)
     local count = 0
     
     -- Mark every grid square as blighted
-    for x = location.x - radius, location.x + radius, 64 do
-        for y = location.y - radius, location.y + radius, 64 do
+    for x = location.x - radius, location.x + radius - particle_spread, 64 do
+        for y = location.y - radius, location.y + radius - particle_spread, 64 do
             local position = Vector(x, y, location.z)
             if not HasBlight(position) then
 

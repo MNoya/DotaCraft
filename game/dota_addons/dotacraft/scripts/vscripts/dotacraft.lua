@@ -1110,6 +1110,12 @@ function dotacraft:OnEntityKilled( event )
 		Players:RemoveStructure( killed_playerID, killed )
 		killed:AddNoDraw()
 
+        if killed:GetUnitName() == "haunted_gold_mine" then
+            if IsValidEntity(killed.sigil) then
+                killed.sigil:RemoveSelf()
+            end
+        end
+
 		-- Substract the Food Produced
 		local food_produced = GetFoodProduced(killed)
 		if food_produced ~= 0 and killed.state ~= "canceled" then
