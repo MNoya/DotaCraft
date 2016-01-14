@@ -1,17 +1,15 @@
 .ButtonPanel
 {
-    width: 96px;
-    height: 700px;
-    color: white;
-    font-weight: bold;
-    font-family: Goudy Trajan Medium;
-    margin-left: 24px;
-    margin-top: 69px;
-    border-radius:5px;
+	height: 100%;
+	width: 100%;
 }
-
+.ControlGroupButtonRoot
+{
+	height: 50px;
+	width: 75px;
+}
 .Hidden 
-{ 
+{
     visibility: collapse;
     opacity: 0;
 }
@@ -37,19 +35,125 @@
 
 #IdleButton
 {
-	width: 96px;
-    height: 56px;
+    width: 54px;
+    height: 54px;
+	
+    color: white;
+    font-weight: bold;
+    font-family: Goudy Trajan Medium;
+	
     border-radius:5px;
-    vertical-align: bottom;
+	border: 1px solid #616161;
+	
+	margin-bottom: 300px;
+	margin-left: 25px;
+	
+	horizontal-align: left;
+	vertical-align: bottom; 
+}
+
+#IdleButton:hover
+{
+	color: yellow;
+	border: 1px solid yellow;
+}
+
+#IdleButton:active
+{
+	color: orange;
+	border: 1px solid orange;
+}
+
+#lol{
+	flow-children: right;
+	height: 600px;
+	width: 600px;
+}
+#but1, #but2, #but3{
+	height: 200px;
+	width: 200px;
+	background-color: red;
+	border: 5px solid black;
+}
+
+#IdleButtonImage
+{
+	height: 100%;
+	width: 100%;
 }
 
 #IdleNumber
 {
-	font-size: 20;
 	horizontal-align: right;
     vertical-align: bottom;
-    background-color:#616161;
+	
+    background-color: #616161;
     border-radius:2px;
+	width: 20px;
+		
+	font-size: 20px;
     text-align: center;
-    width: 20px;
+}
+
+#ControlGroups
+{
+	vertical-align: bottom;
+	horizontal-align: middle;
+	
+	height: 50px;
+	width: 600px;
+	margin-bottom: 225px;
+	
+	flow-children: right;
+}
+
+#ControlGroupButton
+{
+	height: 100%;
+	width: 100%;
+}
+
+#UnitCount
+{
+	height: 70%;
+	width: 70%;
+	
+	vertical-align: top;
+	horizontal-align: middle; 
+	
+	background-color: #333333;
+	border: 1px solid yellow;
+	border-radius: 10px;
+	
+	padding: 5px;
+	
+	font-size: 18px;
+	color: white;
+	text-align: center;
+}
+
+#ID
+{
+	height: 40%;
+	width: 30%;
+	
+	padding: 1px;
+	
+	vertical-align: bottom;
+	horizontal-align: middle;	
+	
+	background-color: #333333;
+	border: 1px solid yellow;
+	border-radius: 5px;
+	
+	font-size: 16px;
+	color: white;
+	text-align: center;
+}
+
+#UnitCount:hover
+{
+	background-color: #222222;
+	transition-property: background-color;
+	transition-duration: 0.2s;
 }

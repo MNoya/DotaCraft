@@ -1,0 +1,14 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/buttons.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/control_group_button.js" />
+	</scripts>
+	<Panel class="ControlGroupButtonRoot" hittest="false">
+		<Button id="ControlGroupButton" onactivate="OnControlGroupButtonPressed()">
+			<Label id="UnitCount" text="" />
+			<Label id="ID" text="" />
+		</Button>	
+	</Panel>
+</root>
