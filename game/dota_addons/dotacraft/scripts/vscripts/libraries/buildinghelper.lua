@@ -34,7 +34,7 @@ function BuildingHelper:Init()
     -- Panorama Event Listeners
     CustomGameEventManager:RegisterListener("building_helper_build_command", Dynamic_Wrap(BuildingHelper, "BuildCommand"))
     CustomGameEventManager:RegisterListener("building_helper_cancel_command", Dynamic_Wrap(BuildingHelper, "CancelCommand"))
-    CustomGameEventManager:RegisterListener("update_selected_entities", Dynamic_Wrap(BuildingHelper, 'OnPlayerSelectedEntities'))
+    CustomGameEventManager:RegisterListener("bh_update_selected_entities", Dynamic_Wrap(BuildingHelper, 'OnPlayerSelectedEntities'))
     CustomGameEventManager:RegisterListener("gnv_request", Dynamic_Wrap(BuildingHelper, "SendGNV"))
 
      -- Game Event Listeners
@@ -1756,22 +1756,8 @@ end
 ]]--
 function BuildingHelper:StopGhost( builder )
     local player = builder:GetPlayerOwner()
-    local playerID = builder:GetPlayerOwnerID()
-    local entIndex = builder:GetEntityIndex()
-
-    local bCurrentlySelected = false
-    local selectedEntities = BuildingHelper:GetPlayerTable(playerID).SelectedEntities
-    if selectedEntities then
-        for _,v in pairs(selectedEntities) do
-            if v==entIndex then
-                bCurrentlySelected = true
-            end
-        end
-    end
-
-    if bCurrentlySelected then
-        CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_end", {})
-    end
+    
+    CustomGameEventManager:Send_ServerToPlayer(player, "building_helper_end", {})
 end
 
 

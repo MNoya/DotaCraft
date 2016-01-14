@@ -1215,18 +1215,6 @@ function dotacraft:OnPlayerSelectedEntities( event )
 
 	GameRules.SELECTED_UNITS[playerID] = event.selected_entities
 	dotacraft:UpdateRallyFlagDisplays(playerID)
-
-	-- This is for Building Helper to know which is the currently active builder
-	local mainSelected = GetMainSelectedEntity(playerID)
-	local player = BuildingHelper:GetPlayerTable(playerID)
-	if IsValidEntity(mainSelected) and IsBuilder(mainSelected) then
-		player.activeBuilder = mainSelected
-	else
-		if IsValidEntity(player.activeBuilder) then
-			-- Clear ghost particles when swapping to a non-builder
-			BuildingHelper:StopGhost(player.activeBuilder)
-		end
-	end
 end
 
 

@@ -408,6 +408,11 @@ function SendCancelCommand( params )
     GameEvents.SendCustomGameEventToServer( "building_helper_cancel_command", {} );
 }
 
+function UpdateSelectedUnits( argument ) {
+    var newSelectedEntities = Players.GetSelectedEntities( Players.GetLocalPlayer() );
+    GameEvents.SendCustomGameEventToServer( "bh_update_selected_entities", { selected_entities: newSelectedEntities })
+}
+
 function RegisterGNV(msg){
     var GridNav = [];
     var squareX = msg.squareX
@@ -473,7 +478,8 @@ function RequestGNV () {
 
     GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
     GameEvents.Subscribe( "building_helper_end", EndBuildingHelper);
-    
+    GameEvents.Subscribe( "dota_player_update_selected_unit", UpdateSelectedUnits );
+
     GameEvents.Subscribe( "gnv_register", RegisterGNV);
 })();
 
