@@ -874,7 +874,6 @@ end
 function CancelReturn( event )
     local caster = event.caster
     local ability = event.ability
-    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
 
     local ability_order = event.event_ability
     if ability_order then
@@ -911,7 +910,7 @@ function GatherLumber( event )
     local abilityLevel = ability:GetLevel() - 1
     local max_lumber_carried = ability:GetLevelSpecialValueFor("lumber_capacity", abilityLevel)
     local tree = caster.target_tree
-    local UnitKV = GameRules.UnitKV
+    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
     local lumber_per_hit = ability:GetLevelSpecialValueFor("lumber_per_hit", abilityLevel)
     local damage_to_tree = ability:GetLevelSpecialValueFor("damage_to_tree", abilityLevel)
     local playerID = caster:GetPlayerOwnerID()

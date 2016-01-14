@@ -26,8 +26,6 @@ if IsServer() then
         
         Timers:CreateTimer(0.5, function()
             self.hidden = false
-            self.allDead = true
-            
 
             -- Does the team have vision of any neutral on the camp?
             for _,creep in pairs(self.neutrals) do                

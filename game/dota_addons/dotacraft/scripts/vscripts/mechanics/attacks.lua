@@ -69,7 +69,7 @@ end
 -- Searches for "AttacksEnabled" in the KV files
 -- Default by omission is "none", other possible returns should be "ground,air" or "air"
 function GetAttacksEnabled( unit )
-    return GameRules.UnitKV[unit:GetUnitName()]["AttacksEnabled"] or none
+    return GameRules.UnitKV[unit:GetUnitName()]["AttacksEnabled"] or "none"
 end
 
 function SetAttacksEnabled( unit, attack_string )
