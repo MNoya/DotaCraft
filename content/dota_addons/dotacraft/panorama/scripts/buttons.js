@@ -19,7 +19,7 @@ function OnIdleButtonPressed( data ) {
 
 	nextBuilder = builderList[String(currentBuilder)];
 	GameUI.SelectUnit(nextBuilder, false);
-	GameEvents.SendCustomGameEventToServer( "reposition_player_camera", { pID: iPlayerID, entIndex: nextBuilder });
+	GameEvents.SendCustomGameEventToServer( "reposition_player_camera", { entIndex: nextBuilder });
 }
 
 function OnPlayerUpdateIdleBuilders( args ) {
@@ -80,16 +80,17 @@ function CreateControlGroupButton( index, entities){
 		SortChildren( $("#ControlGroups") );
 };
 
-function OnCreateControlGroupPressed1(){
-	CreateControlGroup(1);
+function IdentifyKey( keystring ){
+	return parseInt( keystring.substring(keystring.length-1), 10 );
 };
 
-function OnCreateControlGroupPressed2(){
-	CreateControlGroup(2);
-};
-
-function OnCreateControlGroupPressed3(){
-	CreateControlGroup(3);
+function OnCreateControlGroupPressed( args ){
+	var Index = IdentifyKey(args);
+	if( isControlDown() )
+		CreateControlGroup(Index);
+	else
+		if( $("#ControlGroups").GetChild(Index-1) != null )
+			$("#ControlGroups").GetChild(Index-1).OnControlGroupButtonPressed();
 };
 
 function SortChildren( Container ){
@@ -108,6 +109,9 @@ function SortChildren( Container ){
 	};
 };
 
+function isControlDown(){
+	return GameUI.IsControlDown();
+};
 (function () {
 	GameEvents.Subscribe( "player_show_ui", OnPlayerStart );
 	GameEvents.Subscribe( "rotate_camera", RotateCamera );
@@ -117,7 +121,11 @@ function SortChildren( Container ){
 	Game.AddCommand( "+IdleBuilderSwap", OnIdleButtonPressed, "", 0 );
 
 	// Create Control Group Key
-	Game.AddCommand( "+CreateControlGroup1", OnCreateControlGroupPressed1, "", 0 );
-	Game.AddCommand( "+CreateControlGroup2", OnCreateControlGroupPressed2, "", 0 );
-	Game.AddCommand( "+CreateControlGroup3", OnCreateControlGroupPressed3, "", 0 );
+	Game.AddCommand( "+SelectCreateControlGroup1", OnCreateControlGroupPressed, "", 0 );
+	Game.AddCommand( "+SelectCreateControlGroup2", OnCreateControlGroupPressed, "", 0 );
+	Game.AddCommand( "+SelectCreateControlGroup3", OnCreateControlGroupPressed, "", 0 );
+	Game.AddCommand( "+SelectCreateControlGroup4", OnCreateControlGroupPressed, "", 0 );
+	Game.AddCommand( "+SelectCreateControlGroup5", OnCreateControlGroupPressed, "", 0 );
+	Game.AddCommand( "+SelectCreateControlGroup6", OnCreateControlGroupPressed, "", 0 );
+	Game.AddCommand( "+SelectCreateControlGroup7", OnCreateControlGroupPressed, "", 0 );				
 })();

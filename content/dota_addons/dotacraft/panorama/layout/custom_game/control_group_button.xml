@@ -6,8 +6,11 @@
 		<include src="file://{resources}/scripts/control_group_button.js" />
 	</scripts>
 	<Panel class="ControlGroupButtonRoot" hittest="false">
-		<Button id="ControlGroupButton" onactivate="OnControlGroupButtonPressed()">
-			<Label id="UnitCount" text="" />
+		<Button id="ControlGroupButton" onactivate="SelectGroupButtonPress()">
+			<Panel id="UnitContainer" >
+				<Panel id="UnitImage" />
+				<Label id="UnitCount" text="" />
+			</Panel>
 			<Label id="ID" text="" />
 		</Button>	
 	</Panel>

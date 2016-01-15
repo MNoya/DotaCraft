@@ -101,7 +101,7 @@
 	width: 100%;
 }
 
-#UnitCount
+#UnitContainer
 {
 	height: 70%;
 	width: 70%;
@@ -113,11 +113,27 @@
 	border: 1px solid yellow;
 	border-radius: 10px;
 	
-	padding: 5px;
+	padding: 2px;
 	
-	font-size: 18px;
+	flow-children: right; 
+}
+
+#UnitCount
+{
+	height: 100%;
+	width: 40%;
+	
+	font-size: 16px;
 	color: white;
 	text-align: center;
+}
+
+#UnitImage
+{
+	height: 100%;
+	width: 60%;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 #ID

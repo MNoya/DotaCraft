@@ -1311,7 +1311,8 @@ function dotacraft:DeterminePathableTrees()
 end
 
 function dotacraft:RepositionPlayerCamera( event )
-	local pID = event.pID
+	DeepPrintTable(event)
+	local pID = event.PlayerID
 	local entIndex = event.entIndex
 	local entity = EntIndexToHScript(entIndex)
 	if entity and IsValidEntity(entity) then

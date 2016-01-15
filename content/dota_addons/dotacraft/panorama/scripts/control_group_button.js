@@ -1,11 +1,10 @@
 var Root = $.GetContextPanel()
+var LeaderOfControlGroupEntIndex;
 
 function Setup_Panel(){
 	$.Msg("[CONTROL GROUP BUTTON] Creating control group button #: "+Root.index);
 	$("#UnitCount").text = CountEntitiesInControlGroup();
 	$("#ID").text = Root.index;
-	
-	AssignHotkeyPressedEvent()
 	
 	CheckSavedSelectionStates();
 };  
@@ -18,11 +17,6 @@ function CountEntitiesInControlGroup(){
 	return count;
 };
 
-function AssignHotkeyPressedEvent(){
-	// Select Control Group Hotkeys
-	Game.AddCommand( "+SelectControlGroup"+Root.index, OnControlGroupButtonPressed, "", 0 );
-};
-
 function CheckSavedSelectionStates(){
 	var done = true;
 
@@ -33,10 +27,44 @@ function CheckSavedSelectionStates(){
 	
 	if(!done){
 		CheckUnitsInSelection();
+		var newLeader = DetermineLeader();
+
+		if( newLeader != LeaderOfControlGroupEntIndex ){
+			LeaderOfControlGroupEntIndex = newLeader;
+			SetUnitImage();
+		};
+		
 		$.Schedule(0.1, CheckSavedSelectionStates);
 	}else{
 		Remove_Self();
 	};
+};
+
+function SetUnitImage(){
+	var unitName = Entities.GetUnitName(LeaderOfControlGroupEntIndex);
+	var path = "url('file://{images}/units/"+unitName+".png');";
+	$("#UnitImage").style["background-image"] = path;
+};
+
+var unitCounter = {}
+function DetermineLeader(){
+	// empty out existing array
+	unitCounter = {}
+	var newLeader = 0;
+
+	// check all units
+	for(var unit of Root.currentSelection){
+		var unitName = Entities.GetUnitName(unit);
+		if( Entities.IsHero(unit) ){
+			newLeader = unit;
+			break;
+		};
+	};
+	
+	if( newLeader == 0)
+		newLeader = Root.currentSelection[0];
+	
+	return newLeader;
 };
 
 function CheckUnitsInSelection(){	
@@ -49,13 +77,34 @@ function CheckUnitsInSelection(){
 	$("#UnitCount").text = CountEntitiesInControlGroup();
 };
 
-function OnControlGroupButtonPressed(){
+// NOTE
+// Change event entity index being send once future implementations have been made to priorities units
+// NOTE
+function SelectGroupButtonPress(){
+	var context = $.GetContextPanel();
+	context.OnControlGroupButtonPressed();
+};
+
+var lastTime = 0;
+var DOUBLE_CLICK_THRESHOLD = 0.5;
+function WasPanelDoubleClicked(){
+	var time = Game.GetGameTime();
+	var lastClick = time - lastTime;
+	
+	if (lastClick <= DOUBLE_CLICK_THRESHOLD)
+		GameEvents.SendCustomGameEventToServer( "reposition_player_camera", { entIndex: LeaderOfControlGroupEntIndex });
+
+	lastTime = time;
+};
+
+Root.OnControlGroupButtonPressed = function(){
 	ClearCurrentSelection();
 	for(var unit of Root.currentSelection){
 		if( isValidUnit(unit) ){ 
 			GameUI.SelectUnit(unit, true);
 		};
 	};
+	WasPanelDoubleClicked();
 };
 
 (function () { 
