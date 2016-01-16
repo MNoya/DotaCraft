@@ -1,0 +1,29 @@
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/hero_panels.css" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/custom_game/hero_panels_unit.js" /> 
+  </scripts>
+	<Panel hittest="false" class="HeroPanelsUnitRoot">
+		<Button id="HeroButton" onactivate="SelectHero()" > 
+			<DOTAHeroImage id="HeroImage" />	
+			
+			<Panel id="HeroOverlay" hittest="false" />
+			<Panel id="HeroFooter">
+				<Panel id="HeroStatusContainer" >	
+					<Panel id="HeroHealthBar" />
+					<Panel id="HeroManaBar" />
+				</Panel>
+				<Panel id="AbilityPoints" >
+					<Label id="AbilityPointsText" text="" />
+				</Panel>
+			</Panel>
+
+			
+			<Button id="HeroReviveButton" onactivate="ReviveHero()" >
+				<Label id="HeroReviveButtonText" text="Revive" />
+			</Button>
+		</Button>
+	</Panel>
+</root>

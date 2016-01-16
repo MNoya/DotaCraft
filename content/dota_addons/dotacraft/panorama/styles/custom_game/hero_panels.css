@@ -4,88 +4,87 @@
 	height: 100%;
 }
 
+.HeroPanelsUnitRoot{
+	height: 100px;
+	width: 100px;
+	margin-bottom: 10px;
+}
+
 #HeroPanelsContainer
 {	
-	flow-children: down;	
-
-	visibility: visible;
+	flow-children: down;
+	visibility: visible; 
 	
 	margin-top: 50px;
-	margin-left: 10px;
-	
-
+	margin-left: 40px;
 }
 
-.HeroSection{
-	flow-children: down;
-	
-	margin-top: 50px;	
-	
-	padding: 0 20px 20px 20px;
-
-	opacity: 0.95;
-	
-}
-
-.HeroImage
-{	
-	margin-top: 10px;
-    vertical-align: center;
-    horizontal-align: center;
-
-	border: 3px solid grey;
-	border-bottom: 0px;
-}
-
-.HeroImageDead{
-
+#HeroButton
+{
 	height: 100%;
 	width: 100%;
-	background-color: black;
-	opacity: 0.8;
-	
+	border: 1px solid grey;
 }
 
-.HeroStatusContainer{
-	vertical-align: bottom;	
-	height: 24px;   
+#HeroOverlay{
 	width: 100%;
+	height: 70%;
+	
+	vertical-align: center;
+    horizontal-align: center;
+}
+
+#HeroImage
+{	
+	width: 100%;
+	height: 70%;
+	
+    vertical-align: center;
+    horizontal-align: center;
+}
+
+#HeroStatusContainer{
+	width: 100%;
+	height: 100%;
 	flow-children: down;
+}
+
+
+#HeroFooter{
+	vertical-align: bottom;	
+	height: 20%;   
+	width: 100%;
 	
 	background-color: #191919;
-	border: 1px solid #464646;
-	border-top: 0px;
-	
 }
 
-.HeroReviveButton{
+#HeroReviveButton{
 	vertical-align: bottom;	
 	height: 24px;   
 	width: 100%;
 	flow-children: down;
 		
-	border: 1px solid black;
 	background-image: url("file://{images}/revive_bar.png"); 
 }  
 
-.HeroReviveButton:hover{
+#HeroReviveButton:hover{
 	border: 1px solid grey;	
 }  
 
-.HeroReviveButton:active{
+#HeroReviveButton:active{
 	border: 1px solid white;
 }
  
-.HeroReviveButtonText{
+#HeroReviveButtonText{
 	vertical-align: middle;
 	horizontal-align: middle;
 	
 	font-size: 18px;
 	color: white;
 	text-shadow: 1px 1px 1px black; 
-}
- 
-.LevelUp{
+} 
+
+#AbilityPoints{
   	vertical-align: bottom;
 	horizontal-align: right;
 	
@@ -97,7 +96,7 @@
 	background-image: url("file://{images}/revive_bar.png");
  }
  
-.LevelUpText{
+#AbilityPoints Label{
 	vertical-align: middle;
 	horizontal-align: middle;
 	
@@ -105,7 +104,7 @@
 	text-shadow: 1px 1px 1px black; 
  }
  
-.HeroHealthBar
+#HeroHealthBar
 {
 	height: 12px;
 	width: 100%;
@@ -115,7 +114,7 @@
 	border-bottom: 2px solid black;
 }
 
-.HeroManaBar
+#HeroManaBar
 {
 	height: 8px;
 	width: 100%;
@@ -124,21 +123,20 @@
 	/*background-color: #0073E5;*/
 }
 
-.AbilityPoints{
-	height: 8px;
-	width: 100%;
-	
-	background-image: url("file://{images}/mana_bar.png"); 
-	/*background-color: #0073E5;*/
-
-}
-
-.Focus{
-	height: 100%;
-	width: 100%;
-	
+.FocusOverlay{
 	/*background-color: gold;*/
 	/*opacity: 0.05;*/
 	opacity: 0.2;
-	box-shadow: inset 1px 1px 50% gold;
+	box-shadow: inset 1px 1px 100% gold;
+}
+
+.DeadOverlay{
+	background-color: black;
+	opacity: 0.8;
+}
+
+.AttackedOverlay{
+	box-shadow: inset 1px 1px 50% red;
+	opacity: 0.6;
+	background-color: red;
 }
