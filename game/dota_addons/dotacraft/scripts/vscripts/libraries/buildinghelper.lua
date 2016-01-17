@@ -1914,7 +1914,7 @@ function BuildingHelper:FindClosestEmptyPositionNearby( location, construction_s
 
     for x = lowerBoundX, upperBoundX do
         for y = lowerBoundY, upperBoundY do
-            if BuildingHelper.Grid[y][x] == GRID_FREE then
+            if BuildingHelper:CellHasGridType(x,y,"BUILDABLE") then
                 local pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
                 BuildingHelper:SnapToGrid(construction_size, pos)
                 if not BuildingHelper:IsAreaBlocked(construction_size, pos) then
