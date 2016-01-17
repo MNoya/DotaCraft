@@ -398,7 +398,10 @@ function BuildingHelper:OrderFilter(order)
     local order_type = order.order_type
     local units = order.units
     local abilityIndex = order.entindex_ability
-    local unit = EntIndexToHScript(units["0"])
+    local unit = nil
+    if units["0"] then
+        unit = EntIndexToHScript(units["0"])
+    end
 
     -- Item is dropped
     if order_type == DOTA_UNIT_ORDER_DROP_ITEM and IsBuilder(unit) then
