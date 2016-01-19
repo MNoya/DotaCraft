@@ -75,15 +75,15 @@
 								m_sBoneName = "Cube"
 								m_vMinBounds =
 								[
-									-50.000000,
-									-50.000000,
-									100.000000,
+									50.000000,
+									50.000000,
+									80.000000,
 								]
 								m_vMaxBounds =
 								[
-									50.000000,
-									50.000000,
 									-50.000000,
+									-50.000000,
+									0.000000,
 								]
 								m_bTranslationOnly = false
 								m_cRenderColor =
@@ -247,18 +247,7 @@
 	m_scriptFiles =
 	[
 	]
-	m_pMaterialRemapList =
-	{
-		_class = "CVMaterialRemapList"
-		m_vMaterialRemapList =
-		[
-			{
-				_class = "CVMaterialRemap"
-				m_sSearchMaterial = "materials/blends/cracks_base001_fall.vmat"
-				m_sReplaceMaterial = "materials/dev/primary_black.vmat"
-			},
-		]
-	}
+	m_pMaterialRemapList = null
 	m_flFbxScale = 1.000000
 	m_flQCScale = 1.000000
 	m_vOrigin =
