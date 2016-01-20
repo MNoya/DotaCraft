@@ -1054,6 +1054,10 @@ function dotacraft:OnEntityKilled( event )
     -- Check for neutral item drops
     if killed_teamNumber == DOTA_TEAM_NEUTRALS and killed:IsCreature() then
         DropItems( killed )
+
+        if attacker_playerID then
+            Scores:IncrementItemsObtained( attacker_playerID )
+        end
     end
 
     -- Remove dead units from selection group
@@ -1116,6 +1120,10 @@ function dotacraft:OnEntityKilled( event )
 		Players:RemoveStructure( killed_playerID, killed )
 		killed:AddNoDraw()
 
+        if attacker_playerID then
+            Scores:IncrementBuildingsRazed( attacker_playerID, killed )
+        end
+
         if killed:GetUnitName() == "haunted_gold_mine" then
             if IsValidEntity(killed.sigil) then
                 killed.sigil:RemoveSelf()
@@ -1162,6 +1170,14 @@ function dotacraft:OnEntityKilled( event )
 			Players:RemoveUnit( killed_playerID, killed )
 		end
 
+        if attacker_playerID then
+            if killed:IsRealHero() then
+                Scores:IncrementHeroesKilled( attacker_playerID, killed )
+            else
+                Scores:IncrementUnitsKilled( attacker_playerID, killed )
+            end
+        end
+
 		-- Give Experience to heroes based on the level of the killed creature
 		local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
 
@@ -1174,10 +1190,12 @@ function dotacraft:OnEntityKilled( event )
 				-- Scale XP if neutral
 				local xp = XPGain
 				if killed:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-					xp = ( XPGain * XP_NEUTRAL_SCALING[hero:GetLevel()] ) / #heroesNearby
+					xp = math.floor(( XPGain * XP_NEUTRAL_SCALING[hero:GetLevel()] ) / #heroesNearby)
 				end
 
-				hero:AddExperience(math.floor(xp), false, false)
+				hero:AddExperience(xp, false, false)
+
+                Scores:IncrementXPGained( playerID, xp )
 				--print("granted "..xp.." to "..hero:GetUnitName())
 			end	
 		end
@@ -1541,19 +1559,21 @@ function dotacraft:Trade_Offers(args)
 	--DeepPrintTable(args.Trade);
 	-- not much error handling going on yet, will attempt do most of it at the javascript side
 	
-	local SendingPlayerID = args.Trade.SendID;
-	local RecievingPlayerID = args.Trade.RecieveID;
+	local SendingPlayerID = args.Trade.SendID
+	local RecievingPlayerID = args.Trade.RecieveID
 	
-	local GoldAmount = args.Trade.Gold;
-	local LumberAmount = args.Trade.Lumber;
+	local GoldAmount = args.Trade.Gold
+	local LumberAmount = args.Trade.Lumber
 
 	-- deduct gold & lumber from sending player
-	Players:ModifyLumber(SendingPlayerID, -LumberAmount);
-	Players:ModifyGold(SendingPlayerID, -GoldAmount);
+	Players:ModifyLumber(SendingPlayerID, -LumberAmount)
+	Players:ModifyGold(SendingPlayerID, -GoldAmount)
 	
 	-- add gold & lumber to recieving player
-	Players:ModifyLumber(RecievingPlayerID, LumberAmount);
-	Players:ModifyGold(RecievingPlayerID, GoldAmount);
+	Players:ModifyLumber(RecievingPlayerID, LumberAmount)
+	Players:ModifyGold(RecievingPlayerID, GoldAmount)
+
+    Scores:IncrementResourcesTraded( SendingPlayerID, LumberAmount + GoldAmount )
 end
 
 function dotacraft:PreGame_Update(data)

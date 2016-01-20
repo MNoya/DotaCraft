@@ -1026,6 +1026,8 @@ function LumberGain( event )
     local playerID = caster:GetPlayerOwnerID()
     Players:ModifyLumber( playerID, lumber_gain )
     PopupLumber( caster, lumber_gain)
+
+    Scores:IncrementLumberHarvested( playerID, lumber_gain )
 end
 
 -- Used in Nigh Elf and Undead Gather Gold
@@ -1034,8 +1036,13 @@ function GoldGain( event )
     local caster = event.caster
     local playerID = caster:GetPlayerOwnerID()
     local race = GetUnitRace(caster)
-    local gold_gain = ability:GetSpecialValueFor("gold_per_interval")
-    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
+    local upkeep = Players:GetUpkeep(playerID)
+    local gold_base = ability:GetSpecialValueFor("gold_per_interval")
+    local gold_gain = gold_base * upkeep
+
+    Scores:IncrementGoldMined( playerID, gold_gain )
+    Scores:AddGoldLostToUpkeep( playerID, gold_base - gold_gain )
+
     Players:ModifyGold(playerID, gold_gain)
     PopupGoldGain( caster, gold_gain)
 
@@ -1153,6 +1160,7 @@ function ReturnResources( event )
                         caster:RemoveModifierByName("modifier_carrying_lumber")
                         PopupLumber(caster, caster.lumber_gathered)
                         Players:ModifyLumber(playerID, caster.lumber_gathered)
+                        Scores:IncrementLumberHarvested( playerID, caster.lumber_gathered )
 
                         -- Also handle possible gold leftovers if its being deposited in a city center
                         if caster:HasModifier("modifier_carrying_gold") then
@@ -1161,6 +1169,10 @@ function ReturnResources( event )
                             if gold_building == caster.target_building then 
                                 local upkeep = Players:GetUpkeep( playerID )
                                 local gold_gain = caster.gold_gathered * upkeep
+
+                                Scores:IncrementGoldMined( playerID, caster.gold_gathered )
+                                Scores:AddGoldLostToUpkeep( playerID, caster.gold_gathered - gold_gain )
+
                                 Players:ModifyGold(playerID, gold_gain)
                                 PopupGoldGain(caster, gold_gain)
                             end
@@ -1213,6 +1225,9 @@ function ReturnResources( event )
                         local upkeep = Players:GetUpkeep( playerID )
                         local gold_gain = caster.gold_gathered * upkeep
 
+                        Scores:IncrementGoldMined( playerID, caster.gold_gathered )
+                        Scores:AddGoldLostToUpkeep( playerID, caster.gold_gathered - gold_gain )
+
                         Players:ModifyGold(playerID, gold_gain)
                         PopupGoldGain(caster, gold_gain)
 
@@ -1223,6 +1238,7 @@ function ReturnResources( event )
                             caster:RemoveModifierByName("modifier_carrying_lumber")
                             PopupLumber(caster, caster.lumber_gathered)
                             Players:ModifyLumber(playerID, caster.lumber_gathered)
+                            Scores:IncrementLumberHarvested( playerID, caster.lumber_gathered )
                             caster.lumber_gathered = 0
                         end
 

@@ -321,12 +321,16 @@ function Players:AddUnit( playerID, unit )
     local playerUnits = Players:GetUnits(playerID)
 
     table.insert(playerUnits, unit)
+
+    Scores:IncrementUnitsProduced(playerID, unit)
 end
 
 function Players:AddHero( playerID, hero )
     local playerHeroes = Players:GetHeroes(playerID)
 
     table.insert(playerHeroes, hero)
+
+    Scores:AddHeroesUsed(playerID, hero:GetUnitName())
 end
 
 function Players:AddStructure( playerID, building )
@@ -337,6 +341,8 @@ function Players:AddStructure( playerID, building )
     buildingTable[name] = buildingTable[name] and (buildingTable[name] + 1) or 1
 
     table.insert(playerStructures, building)
+
+    Scores:IncrementBuildingsProduced( playerID, unit )
 end
 
 ---------------------------------------------------------------

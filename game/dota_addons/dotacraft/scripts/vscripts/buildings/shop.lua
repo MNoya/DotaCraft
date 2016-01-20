@@ -305,6 +305,8 @@ function unit_shops:BuyHero(data)
 	-- deduct gold & lumber
 	Players:ModifyGold(playerID, -Gold_Cost)
 	Players:ModifyLumber(playerID, -Lumber_Cost)
+
+	Scores:IncrementMercenariesHired( playerID )
 end
 
 function unit_shops:BuyHeroRevive(data)
@@ -377,6 +379,8 @@ function unit_shops:BuyItem(data)
 		else
 			local Bought_Item = CreateItem(item, buyerPlayerOwner, buyerPlayerOwner)
 			buyer:AddItem(Bought_Item)
+
+			Scores:IncrementItemsObtained( buyerPlayerID )
 		end	
 		-- lower stock count by 1
 		Purchased(item, Shop)
@@ -541,6 +545,8 @@ function CreateMercenaryForPlayer(playerID, shopID, unitName)
 
 	-- Add to player table
 	Players:AddUnit(playerID, mercenary)
+
+	Scores:IncrementMercenariesHired( playerID )
 end
 
 -- Find a shop to open nearby the currently selected unit

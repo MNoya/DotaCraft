@@ -28,6 +28,8 @@ function ResearchComplete( event )
 		CheckAbilityRequirements( structure, playerID )
 		UpdateUnitUpgrades( structure, playerID, research_name)
 	end
+
+	Scores:IncrementTechPercentage( playerID )
 end
 
 -- When queing a research, disable it to prevent from being queued again
