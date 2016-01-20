@@ -459,9 +459,6 @@ function Gather( event )
     -- Gather Lumber
     if target_class == "ent_dota_tree" then
         
-        -- Gather cancels queue
-        BuildingHelper:ClearQueue(caster)
-
         local tree = target
 
         caster.last_resource_gathered = "lumber"
@@ -553,9 +550,6 @@ function Gather( event )
     elseif string.match(target:GetUnitName(),"gold_mine") then
 
         caster.last_resource_gathered = "gold"
-
-        -- Gather cancels queue
-        BuildingHelper:ClearQueue(caster)
 
         -- Disable this for Ghouls
         if not CanGatherGold(caster) then
