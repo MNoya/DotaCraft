@@ -85,7 +85,7 @@ function dotacraft:InitGameMode()
     GameRules:SetSameHeroSelectionEnabled( true )
     GameRules:SetHeroSelectionTime( 0 )
     GameRules:SetPreGameTime( 1 )
-    GameRules:SetPostGameTime( 0 )
+    GameRules:SetPostGameTime( 9001 )
     GameRules:SetTreeRegrowTime( 10000.0 )
     GameRules:SetUseCustomHeroXPValues ( true )
     GameRules:SetGoldPerTick(0)
@@ -200,6 +200,9 @@ function dotacraft:InitGameMode()
 	
 	-- Listeners for Trading Alliances
 	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
+	
+	-- Listeners for endscreen_data
+	CustomGameEventManager:RegisterListener( "endscreen_request_data", Dynamic_Wrap(dotacraft, "EndScreenRequestData"))	
 	
 	-- register panaroma tables
 	dotacraft:Setup_Tables()   
@@ -1624,6 +1627,41 @@ function dotacraft:ColorForPlayer( playerID )
 	local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
 	
 	return Vector(color.r, color.g, color.b)
+end
+
+function dotacraft:EndScreenRequestData()
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			local player = PlayerResource:GetPlayer(playerID)
+			
+			-- some table with all those stats
+			local info_table = {	unit_score=5,
+									hero_score=5,
+									resource_score=5,
+									total_score=5,
+									
+									units_produced=5,
+									units_killed=5,
+									buildings_produced=5,
+									buildings_razed=5,
+									largest_army=5,
+									
+									heroes_used={"npc_dota_hero_keeper_of_the_light", "npc_dota_hero_antimage", "npc_dota_hero_beastmaster"},
+									heroes_killed=8,
+									items_obtained=6,
+									mercenaries_hired=6,
+									experienced_gained=100,
+									
+									gold_mined=5,
+									lumber_harvested=10,
+									resource_traded=100,
+									tech_percentage=100,
+									gold_lost_to_upkeep=100
+								}
+			
+			CustomGameEventManager:Send_ServerToAllClients("endscreen_data", {key=playerID, table=info_table})
+		end
+	end
 end
 
 function dotacraft:FilterProjectile( filterTable )

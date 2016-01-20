@@ -1,0 +1,269 @@
+.EndScreenRoot{
+	height: 100%;
+	width: 100%;
+}
+
+#EndScreenBlackOut{
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	opacity: 0.5;
+}
+
+#EndScreenContainer{ 
+	height: 80%;
+	width: 80%;
+	
+	vertical-align: middle;
+	horizontal-align: middle;
+	
+	padding: 25px;
+	
+	border: 1px solid #5e686966;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+	flow-children: down;
+}
+
+/*==============================
+		Header Columns
+==============================*/
+#GlobalColumnHeaders{
+	flow-children: right;
+	height: 100%;
+	width: 10%;
+}
+
+.ColumnHeader, #PlayerColumnStats, .HeroColumns{
+	flow-children: right;
+	width: 100%;
+	height: 90%;
+	
+	vertical-align: middle;
+}
+
+#Teams{
+	height: 35px;
+	width: 50px;
+	
+	vertical-align: middle;	
+	border: 1px solid gold;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+}
+
+.ColumnButton{
+	height: 50px;
+	
+	border: 1px solid gold;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+	margin-right: 25px;
+}
+
+.ColumnButton Label{
+	font-size: 16px;
+	font-family: tahoma;
+	color: white;
+	
+	horizontal-align: middle;
+	vertical-align: middle;
+}
+
+.CategoryButton{
+	width: 200px;
+	height: 100%;
+	
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+
+	border: 1px solid grey;
+	border-bottom: 0px;
+	
+	border-radius: 10px 10px 0px 0px;
+	
+	margin-right: 25px;
+}
+
+.CategoryButton Label{
+	color: white;
+	font-size: 24px;
+	font-family: tahoma;
+	text-shadow: 1px 1px 1px #000;
+	
+	vertical-align: middle;
+	horizontal-align: middle;
+}
+
+.collapse{
+	visibility: collapse;
+}
+
+.visible{
+	visibility: visible;
+}
+
+.Active{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #000e0e ) );
+}
+
+.Idle{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+}
+
+#Teams:hover Label, .ColumnButton:hover Label, .ColumnText:hover Label,.Idle:hover Label, .Active:hover Label, #DisconnectButton:hover Label
+{ 
+	color: gold;
+	
+	transition-property: color;
+	transition-duration: 0.3s;
+	transition-timing-function: linear;
+}
+
+.ColumnButton:hover, #Teams:hover, .Idle:hover, #DisconnectButton:hover
+{ 
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #393e3e ), to( #292e2e ) );
+	
+	transition-property: background-color;
+	transition-duration: 0.3s;
+	transition-timing-function: linear;
+}
+
+/*==============================
+			MAIN BODY
+==============================*/
+#Header
+{
+	height: 10%;
+	flow-children: right;
+	horizontal-align: middle;
+}
+
+#Body{
+	width: 100%;
+	height: 80%;
+	
+	flow-children: down;
+	
+	/*background-image: url('file://{images}/selection/background_1.png');  
+	background-repeat: no-repeat;
+	background-size: 60% 80%;
+	background-position: right bottom;*/
+}
+
+#BodyHeader{
+	width: 100%;
+	height: 10%;
+	flow-children: right;
+	
+	border: 1px solid grey;
+	border-bottom: 0px;
+	padding: 10px;
+}
+
+#PlayerContainer{
+	width: 100%;
+	height: 100%;
+	overflow: squish scroll;
+	background-color: black;
+	
+	border: 1px solid grey;
+	flow-children: down;
+}
+
+/*==============================
+			MAIN FOOTER
+==============================*/
+#Footer{
+	height: 100%;
+	width: 100%;
+	padding: 10px;
+}
+
+#ElapsedTime{
+	font-size: 16px;
+	color: white;
+	
+	height: 100px;
+	width: 200px;
+	
+	margin-left: 75px;
+}
+
+#DisconnectButton{
+	height: 35px;
+	width: 100px;
+	
+	border: 1px solid gold;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+	
+	vertical-align: middle;
+	horizontal-align: middle;
+	
+	margin-top: 10px;
+}
+/*==============================
+			PLAYER
+==============================*/
+.EndScreenPlayerRoot{
+	width: 100%;
+	height: 10%;
+	padding: 10px;
+	
+	flow-children: right;
+}
+
+#PlayerDetails{
+	height: 100%;
+	width: 10%;
+	
+	flow-children: right;
+}
+
+#PlayerName{
+	vertical-align: middle;
+	margin-left: 15px;
+
+}
+
+#PlayerAvatar{
+	vertical-align: middle;
+}
+
+#PlayerColumnStats{
+	height: 100%;
+	width: 90%;
+	
+	border: 1px solid gold;
+	border-left: 0px;
+	border-right: 0px;
+	
+	flow-children: right;
+	margin-right: 25px;
+}
+
+.ColumnText{
+	color: white;
+	font-size: 24px;
+	font-family: tahoma;
+	text-shadow: 1px 1px 1px #000;
+	
+	vertical-align: middle;
+	horizontal-align: middle;
+}
+
+.PlayerColumns{
+	height: 50px;
+	
+	margin-right: 35px;
+	flow-children: right;
+}
+
+.MiniHeroPanel{
+	height: 100%;
+	width: 30%;
+	margin-right: 5px;
+}
+
+Label{
+	vertical-align: middle;
+	horizontal-align: middle;
+	color: white;
+	font-size: 16px;
+}

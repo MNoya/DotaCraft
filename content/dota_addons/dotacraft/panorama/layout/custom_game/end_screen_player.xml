@@ -1,0 +1,85 @@
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/end_screen.css" />
+  </styles>
+  <scripts>
+    <include src="file://{resources}/scripts/end_screen_player.js" /> 
+  </scripts>
+	<Panel class="EndScreenPlayerRoot" hittest="false">	
+		<Panel id="PlayerDetails" >
+			<DOTAAvatarImage id="PlayerAvatar" />
+			<DOTAUserName id="PlayerName" />
+		</Panel>
+		<Panel id="PlayerColumnStats">
+			<Panel id="OverviewHeaders" class="ColumnHeader">
+				<Panel class="PlayerColumns">
+					<Label id="UnitScore" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="HeroScore" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="ResourceScore" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="TotalScore" text="9001" class="ColumnText" />
+				</Panel>
+			</Panel>
+			<Panel id="UnitsHeaders" class="ColumnHeader" >
+				<Panel class="PlayerColumns">
+					<Label id="UnitsProduced" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="UnitsKilled" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="BuildingsProduced" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="BuildingsRazed" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="LargestArmy" text="9001" class="ColumnText" />
+				</Panel> 
+			</Panel>
+
+			<Panel id="HeroesHeaders" class="ColumnHeader" >
+				<Panel class="PlayerColumns">
+					<DOTAHeroImage id="1" class="MiniHeroPanel" />
+					<DOTAHeroImage id="2" class="MiniHeroPanel" />
+					<DOTAHeroImage id="3" class="MiniHeroPanel" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="HeroesKilled" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="ItemsObtained" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="MercenariesHired" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="ExperiencedGained" text="9001" class="ColumnText" />
+				</Panel>
+			</Panel>
+
+			<Panel id="ResourcesHeaders" class="ColumnHeader" >
+				<Panel class="PlayerColumns">
+					<Label id="GoldMined" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="LumberHarvested" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="ResourceTraded" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="TechPercentage" text="9001" class="ColumnText" />
+				</Panel>
+				<Panel class="PlayerColumns">
+					<Label id="GoldLostToUpkeep" text="9001" class="ColumnText" />
+				</Panel>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>
