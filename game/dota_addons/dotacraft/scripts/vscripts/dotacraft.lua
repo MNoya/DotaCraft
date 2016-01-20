@@ -691,9 +691,6 @@ function dotacraft:OnGameInProgress()
     -- Setup easy/medium/hard minimap icons
     Minimap:InitializeCampIcons()
 
-    -- Start score tracking for all players
-    Scores:Init()
-
 	GameRules.DayTime = true
 	Timers:CreateTimer(240, function() 
 		if GameRules.DayTime then
@@ -757,7 +754,7 @@ function dotacraft:OnGameRulesStateChange(keys)
 			dotacraft:OnAllPlayersLoaded()
 		end
 	elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		
+        Scores:Init() -- Start score tracking for all players
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		dotacraft:OnGameInProgress()
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
@@ -771,8 +768,10 @@ function dotacraft:OnNPCSpawned(keys)
 	--DeepPrintTable(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
-    -- Hardcoded fuckery to ignore tree of life overriden ghost
-    if npc:GetUnitName() == "npc_dota_hero_treant" then return end
+    -- Ignore specific units
+    local unitName = npc:GetUnitName()
+    if unitName == "npc_dota_hero_treant" then return end
+    if unitName == "npc_dota_thinker" then return end
 
 	if npc:IsHero() then
 		npc.strBonus = 0
@@ -1120,7 +1119,7 @@ function dotacraft:OnEntityKilled( event )
 		Players:RemoveStructure( killed_playerID, killed )
 		killed:AddNoDraw()
 
-        if attacker_playerID then
+        if attacker_playerID and attacker_playerID ~= -1 and attacker_playerID ~= killed_playerID then
             Scores:IncrementBuildingsRazed( attacker_playerID, killed )
         end
 
@@ -1170,10 +1169,11 @@ function dotacraft:OnEntityKilled( event )
 			Players:RemoveUnit( killed_playerID, killed )
 		end
 
-        if attacker_playerID then
+        if attacker_playerID and attacker_playerID ~= -1 then
+            print(attacker_playerID)
             if killed:IsRealHero() then
                 Scores:IncrementHeroesKilled( attacker_playerID, killed )
-            else
+            elseif killed:IsCreature() then
                 Scores:IncrementUnitsKilled( attacker_playerID, killed )
             end
         end
@@ -1656,31 +1656,7 @@ function dotacraft:EndScreenRequestData()
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(playerID) then
 			local player = PlayerResource:GetPlayer(playerID)
-			
-			-- some table with all those stats
-			local info_table = {	unit_score=5,
-									hero_score=5,
-									resource_score=5,
-									total_score=5,
-									
-									units_produced=5,
-									units_killed=5,
-									buildings_produced=5,
-									buildings_razed=5,
-									largest_army=5,
-									
-									heroes_used={"npc_dota_hero_keeper_of_the_light", "npc_dota_hero_antimage", "npc_dota_hero_beastmaster"},
-									heroes_killed=8,
-									items_obtained=6,
-									mercenaries_hired=6,
-									experienced_gained=100,
-									
-									gold_mined=5,
-									lumber_harvested=10,
-									resource_traded=100,
-									tech_percentage=100,
-									gold_lost_to_upkeep=100
-								}
+			local info_table = Players:GetPlayerScores( playerID )
 			
 			CustomGameEventManager:Send_ServerToAllClients("endscreen_data", {key=playerID, table=info_table})
 		end

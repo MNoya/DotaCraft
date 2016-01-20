@@ -1015,7 +1015,7 @@ function GatherGold( event )
     FindClearSpaceForUnit(caster, position, true)
 
     -- Cast ReturnResources
-    caster:CastAbilityNoTarget(return_ability, player)
+    caster:CastAbilityNoTarget(return_ability, playerID)
 end
 
 -- Used in Night Elf Gather Lumber

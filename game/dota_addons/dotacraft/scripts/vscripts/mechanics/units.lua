@@ -26,6 +26,11 @@ function Units:Init( unit )
         function unit:IsIdle()
             return unit:oldIdle() and unit.state == "idle"
         end
+
+        function unit:GetLumberCapacity()
+            local gather_ability = FindGatherAbility( unit )
+            return gather_ability and gather_ability:GetLevelSpecialValueFor("lumber_capacity", gather_ability:GetLevel()-1) or 0
+        end
     end
 
     -- Attack system, only applied to units and buildings with an attack
