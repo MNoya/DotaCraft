@@ -15,6 +15,7 @@ var modelParticle;
 var propParticle;
 var propScale;
 var offsetZ;
+var modelOffset;
 var gridParticles;
 var overlayParticles;
 var rangeOverlay;
@@ -73,6 +74,7 @@ function StartBuildingHelper( params )
         var entindex = params.entindex;
         var propScale = params.propScale;
         offsetZ = params.offsetZ;
+        modelOffset = params.modelOffset;
 
         requires = GetRequiredGridType(entindex)
         $.Msg(Entities.GetUnitName(entindex)," requires ", requires)
@@ -320,7 +322,7 @@ function StartBuildingHelper( params )
             }
 
             // Update the model particle
-            Particles.SetParticleControl(modelParticle, 0, GamePos)
+            Particles.SetParticleControl(modelParticle, 0, [GamePos[0],GamePos[1],GamePos[2]+modelOffset])
             if (propParticle !== undefined) Particles.SetParticleControl(propParticle, 0, [GamePos[0],GamePos[1],GamePos[2]+offsetZ])
 
             // Destroy the range overlay if its not a valid building location
