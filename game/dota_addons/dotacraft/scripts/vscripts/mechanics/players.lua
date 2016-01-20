@@ -132,7 +132,6 @@ function Players:ClearPlayerFlags( playerID )
     end
 end
 
-
 ---------------------------------------------------------------
 
 function Players:GetGold( playerID )
@@ -424,6 +423,12 @@ function Players:HasAltar( playerID )
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
     return IsValidAlive(hero.altar) and hero.altar or false
+end
+
+function Players:GetResearchCountForPlayerRace(playerID)
+    local race = Players:GetRace( playerID )
+    local techCount = { human = 34, orc = 30, undead = 28, nightelf = 32 }
+    return techCount[race]
 end
 
 ---------------------------------------------------------------

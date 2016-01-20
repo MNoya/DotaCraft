@@ -691,6 +691,9 @@ function dotacraft:OnGameInProgress()
     -- Setup easy/medium/hard minimap icons
     Minimap:InitializeCampIcons()
 
+    -- Start score tracking for all players
+    Scores:Init()
+
 	GameRules.DayTime = true
 	Timers:CreateTimer(240, function() 
 		if GameRules.DayTime then
