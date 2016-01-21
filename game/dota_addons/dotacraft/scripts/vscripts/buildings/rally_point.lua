@@ -80,61 +80,7 @@ function MoveToRallyPoint( event )
 		target.state = "idle" 
 	end
 
-	local flag = caster.flag
-	local rally_type = caster.flag_type
-
-	-- If its a tree and this is a builder, cast gather
-	if rally_type == "tree" then
-		Timers:CreateTimer(0.05, function() 
-			if IsBuilder(target) then
-				local race = GetUnitRace(caster)
-				local position = caster.flag:GetAbsOrigin()
-				local empty_tree = FindEmptyNavigableTreeNearby(target, position, 150)
-				if empty_tree then
-					empty_tree.builder = target
-			        target.skip = true
-			        local gather_ability = FindGatherAbility(target)
-			        if gather_ability then
-			        	local tree_index = GetTreeIndexFromHandle(empty_tree)
-			            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
-			        end
-			    end
-			else
-				-- Move
-				local position = caster.flag:GetAbsOrigin()
-				target:MoveToPosition(position)
-			end
-	    end)
-
-    elseif rally_type == "mine" then
-    	Timers:CreateTimer(0.05, function() 
-    		if IsBuilder(target) then
-		    	local race = GetUnitRace(target)
-		    	local gather_ability = FindGatherAbility(target)
-		    	for i=0,15 do
-		    		local ab = target:GetAbilityByIndex(i)
-		    		if ab then print(ab:GetAbilityName()) end
-		    	end
-		        if gather_ability then
-		            target.skip = true
-		            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = flag:GetEntityIndex(), AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
-		        end
-		    else
-		    	-- Move
-		    	local position = flag:GetAbsOrigin()
-				target:MoveToPosition(position)
-			end
-	    end)
-
-	-- If its a dummy - Move to position
-	elseif rally_type == "position" then
-		Timers:CreateTimer(0.05, function() target:MoveToPosition(flag) end)
-		--print(target:GetUnitName().." moving to position",flag)
-	elseif rally_type == "target" then
-		-- If its a target unit, Move to follow
-		Timers:CreateTimer(0.05, function() target:MoveToNPC(flag) end)
-		--print(target:GetUnitName().." moving to follow",flag:GetUnitName())
-	end
+	dotacraft:ResolveRallyPointOrder(target, caster)
 
 	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 	target:SetOwner(hero)

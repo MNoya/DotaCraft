@@ -813,6 +813,60 @@ function dotacraft:OnBuildingRallyOrder( event )
     end
 end
 
+function dotacraft:ResolveRallyPointOrder( unit, building )
+    local entityIndex = unit:GetEntityIndex()
+    local flag = building.flag
+    local rally_type = building.flag_type
+
+    Timers:CreateTimer(0.05, function()
+
+        -- Move to Position
+        if rally_type == "position" then
+            unit:MoveToPosition(flag)
+    
+        -- Move to follow NPC
+        elseif rally_type == "target" then
+            unit:MoveToNPC(flag)        
+
+        -- Move to Gather Tree
+        elseif rally_type == "tree" then
+
+            if IsBuilder(unit) then
+                local race = GetUnitRace(unit)
+                local position = flag:GetAbsOrigin()
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150)
+                if empty_tree then
+                    empty_tree.builder = unit
+                    local gather_ability = FindGatherAbility(unit)
+                    if gather_ability then
+                        unit.skip = true
+                        local tree_index = GetTreeIndexFromHandle(empty_tree)
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+                    end
+                end
+            else
+                -- Move
+                unit:MoveToPosition(flag:GetAbsOrigin())
+            end
+
+        -- Move to Gather Gold
+        elseif rally_type == "mine" then
+
+            if IsBuilder(unit) then
+                local race = GetUnitRace(unit)
+                local gather_ability = FindGatherAbility(unit)
+                if gather_ability then
+                    unit.skip = true
+                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = flag:GetEntityIndex(), AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
+                end
+            else
+                -- Move
+                unit:MoveToPosition(flag:GetAbsOrigin())
+            end
+        end
+    end)    
+end
+
 
 function CreateRallyFlagForBuilding( building )
     local flag_type = building.flag_type

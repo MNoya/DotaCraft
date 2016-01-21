@@ -24,18 +24,8 @@ function BuildHero( event )
 
 		CreateAttachmentsForPlayerHero(playerID, new_hero)
 		
-		if caster.flag_type == "position" then
-			local position = caster.flag
-			Timers:CreateTimer(0.05, function() 
-				FindClearSpaceForUnit(new_hero, new_hero:GetAbsOrigin(), true)
-				new_hero:MoveToPosition(position) 
-			end)
-		elseif caster.flag_type == "target" and IsValidAlive(caster.flag) then
-			Timers:CreateTimer(0.05, function() 
-				FindClearSpaceForUnit(new_hero, new_hero:GetAbsOrigin(), true)
-				new_hero:MoveToNPC(caster.flag) 
-			end)
-		end
+		-- Move to rally point
+		dotacraft:ResolveRallyPointOrder(new_hero, caster)
 
 		-- Add a teleport scroll
 		local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
@@ -433,11 +423,7 @@ function ReviveHero( event )
 		if hero:GetUnitName() == hero_name then
 			hero:RespawnUnit()
 			FindClearSpaceForUnit(hero, caster:GetAbsOrigin(), true)
-			Timers:CreateTimer(function() 
-				if IsValidEntity(caster.flag) then 
-					hero:MoveToPositionAggressive(caster.flag:GetAbsOrigin())
-				end
-			end)
+			dotacraft:ResolveRallyPointOrder(hero, caster)
 			print("Revived "..hero_name)
 		end
 	end
