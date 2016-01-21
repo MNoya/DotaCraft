@@ -140,11 +140,10 @@ function SortByTeam(){
 		for(var j=0; j < Container.GetChildCount() - 1; j++){
 			var child = Container.GetChild(i);
 			var child2 = Container.GetChild(i+1);
-
-			var playerInfo2 = Game.GetPlayerInfo(j);
-			var teamID2 = playerInfo2.player_team_id;		
-
+			
 			if( child2 != null ){
+				var playerInfo2 = Game.GetPlayerInfo(j);
+				var teamID2 = playerInfo2.player_team_id;		
 				if( teamID > teamID2 ){
 					Container.MoveChildAfter(child, child2);
 				};
@@ -164,11 +163,10 @@ function SortPlayersByColumn(columnID){
 			var child2 = Container.GetChild(i+1);
 			
 			var playerInfo = child.data;
-			var playerInfo2 = child2.data;
-
 			if( child2 != null ){
+				var playerInfo2 = child2.data;
 				var isLower = CheckColumnValue(columnID, playerInfo, playerInfo2)
-				$.Msg(isLower)
+
 				if( isLower ){
 					Container.MoveChildAfter(child, child2);
 				};

@@ -103,6 +103,10 @@
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #000e0e ) );
 }
 
+.Active Label{
+	color: gold;
+}
+
 .Idle{
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
 }
@@ -230,10 +234,6 @@
 #PlayerColumnStats{
 	height: 100%;
 	width: 90%;
-	
-	border: 1px solid gold;
-	border-left: 0px;
-	border-right: 0px;
 	
 	flow-children: right;
 	margin-right: 25px;
