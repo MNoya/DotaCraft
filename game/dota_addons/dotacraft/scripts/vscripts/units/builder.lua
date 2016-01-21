@@ -653,7 +653,7 @@ function Gather( event )
                             mine.builders = {}
                         end
 
-                        local counter = #mine.builders
+                        local counter = TableCount(mine.builders)
                         print(counter, "Builders inside")
                         if counter >= 5 then
                             print(" Mine full")

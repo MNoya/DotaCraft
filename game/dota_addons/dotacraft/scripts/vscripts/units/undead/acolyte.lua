@@ -212,7 +212,7 @@ function ShowGoldMine( event )
 
 	print("Removing Haunted Gold Mine")
 
-	mine:RemoveModifierByName("modifier_unselectable_mine")
+	mine:RemoveModifierByName("modifier_unselectable")
 
 	-- Stop all builders
 	local builders = mine.builders

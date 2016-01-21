@@ -41877,6 +41877,15 @@
 					}
 				}
 	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+	
 				"ThinkInterval"  "%lumber_interval"
 				"OnIntervalThink"
 				{
@@ -65020,6 +65029,15 @@
 				"IsHidden"				"0"
 				"OverrideAnimation"		"ACT_DOTA_CHANNEL_ABILITY_3"
 				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"CancelGather"
+					}
+				}
+	
+				"OnDeath"
 				{
 					"RunScript"
 					{

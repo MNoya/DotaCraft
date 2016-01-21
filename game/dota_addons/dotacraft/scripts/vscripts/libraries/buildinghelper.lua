@@ -1476,6 +1476,7 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
     local enemies = FindUnitsInRadius(unit:GetTeamNumber(), location, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
     if #enemies > 0 then
+        print(#enemies)
         if callbacks.onConstructionFailed then
             callbacks.onConstructionFailed()
             return false

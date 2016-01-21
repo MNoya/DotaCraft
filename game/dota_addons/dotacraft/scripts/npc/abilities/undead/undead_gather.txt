@@ -136,6 +136,15 @@
 				}
 			}
 
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/builder.lua"
+					"Function"		"CancelGather"
+				}
+			}
+
 			"OnUnitMoved"
 			{
 				"RunScript"
