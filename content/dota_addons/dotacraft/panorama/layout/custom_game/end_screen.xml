@@ -3,7 +3,7 @@
     <include src="file://{resources}/styles/custom_game/end_screen.css" />
   </styles>
   <scripts>
-    <include src="file://{resources}/scripts/end_screen.js" /> 
+    <include src="file://{resources}/scripts/end_screen/end_screen.js" /> 
   </scripts>
 	<Panel class="EndScreenRoot" hittest="false">	
 		<Panel id="EndScreenBlackOut" />
@@ -29,76 +29,76 @@
 						<Button id="Teams" onactivate="SortByTeam()" >
 							<Label text="Teams" />
 						</Button>
-						<!--<Button id="AllyColors" onactivate="ToggleAllyColors()" class="ColumnButton" >
+						<Button id="AllyColors" onactivate="ToggleTeamColors()" class="ColumnButton" >
 							<Label text="AllyColors" />
-						</Button>-->
+						</Button>
 					</Panel>
 					
 					<Panel id="OverviewHeaders" class="ColumnHeader visible">					
-						<Button id="UnitScore" onactivate="SortPlayersByColumn(1, 1)" class="ColumnButton" >
+						<Button id="UnitScore" onactivate="SortPlayersByColumn(1)" class="ColumnButton" >
 							<Label text="Unit Score" />
 						</Button>
-						<Button id="HeroScore" onactivate="SortPlayersByColumn(1, 2)" class="ColumnButton" >
+						<Button id="HeroScore" onactivate="SortPlayersByColumn(2)" class="ColumnButton" >
 							<Label text="Hero Score" />
 						</Button>
-						<Button id="ResourceScore" onactivate="SortPlayersByColumn(1, 3)" class="ColumnButton" >
+						<Button id="ResourceScore" onactivate="SortPlayersByColumn(3)" class="ColumnButton" >
 							<Label text="Resource Score" />
 						</Button>
-						<Button id="TotalScore" onactivate="SortPlayersByColumn(1, 4)" class="ColumnButton" >
+						<Button id="TotalScore" onactivate="SortPlayersByColumn(4)" class="ColumnButton" >
 							<Label text="Total Score" />
 						</Button>
 					</Panel>
 
 					<Panel id="UnitsHeaders" class="ColumnHeader collapse" >
-						<Button id="UnitsProduced" onactivate="SortPlayersByColumn(2, 1)" class="ColumnButton" >
+						<Button id="UnitsProduced" onactivate="SortPlayersByColumn(5)" class="ColumnButton" >
 							<Label text="Units Produced" />
 						</Button>
-						<Button id="UnitsKilled" onactivate="SortPlayersByColumn(2, 2)" class="ColumnButton" >
+						<Button id="UnitsKilled" onactivate="SortPlayersByColumn(6)" class="ColumnButton" >
 							<Label text="Units Killed" />
 						</Button>
-						<Button id="BuildingsProduced" onactivate="SortPlayersByColumn(2, 3)" class="ColumnButton" >
+						<Button id="BuildingsProduced" onactivate="SortPlayersByColumn(7)" class="ColumnButton" >
 							<Label text="Buildings Produced" />
 						</Button>
-						<Button id="BuildingsRazed" onactivate="SortPlayersByColumn(2, 4)" class="ColumnButton" >
+						<Button id="BuildingsRazed" onactivate="SortPlayersByColumn(8)" class="ColumnButton" >
 							<Label text="Buildings Razed" />
 						</Button>
-						<Button id="LargestArmy" onactivate="SortPlayersByColumn(2, 5)" class="ColumnButton" >
+						<Button id="LargestArmy" onactivate="SortPlayersByColumn(9)" class="ColumnButton" >
 							<Label text="Largest Army" />
 						</Button>
 					</Panel>
 
 					<Panel id="HeroesHeaders" class="ColumnHeader collapse">
-						<Button id="HeroesUsed" onactivate="SortPlayersByColumn(3, 1)" class="ColumnButton" >
+						<Button id="HeroesUsed" onactivate="SortPlayersByColumn(10)" class="ColumnButton" >
 							<Label text="Heroes Used" />
 						</Button>
-						<Button id="HeroesKilled" onactivate="SortPlayersByColumn(3, 2)" class="ColumnButton" >
+						<Button id="HeroesKilled" onactivate="SortPlayersByColumn(11)" class="ColumnButton" >
 							<Label text="Heroes Killed" />
 						</Button>
-						<Button id="ItemsObtained" onactivate="SortPlayersByColumn(3, 3)" class="ColumnButton" >
+						<Button id="ItemsObtained" onactivate="SortPlayersByColumn(12)" class="ColumnButton" >
 							<Label text="Items Obtained" />
 						</Button>
-						<Button id="MercenariesHired" onactivate="SortPlayersByColumn(3, 4)" class="ColumnButton" >
+						<Button id="MercenariesHired" onactivate="SortPlayersByColumn(13)" class="ColumnButton" >
 							<Label text="Mercenaries Hired" />
 						</Button>
-						<Button id="ExperienceGained" onactivate="SortPlayersByColumn(3, 5)" class="ColumnButton" >
+						<Button id="ExperienceGained" onactivate="SortPlayersByColumn(14)" class="ColumnButton" >
 							<Label text="Experience Gained" />
 						</Button>
 					</Panel>
 
 					<Panel id="ResourcesHeaders" class="ColumnHeader collapse">
-						<Button id="GoldMined" onactivate="SortPlayersByColumn(4, 1)" class="ColumnButton" >
+						<Button id="GoldMined" onactivate="SortPlayersByColumn(15)" class="ColumnButton" >
 							<Label text="Gold Mined" />
 						</Button>
-						<Button id="LumberHarvested" onactivate="SortPlayersByColumn(4, 2)" class="ColumnButton" >
+						<Button id="LumberHarvested" onactivate="SortPlayersByColumn(16)" class="ColumnButton" >
 							<Label text="Lumber Harvested" />
 						</Button>
-						<Button id="ResourceTraded" onactivate="SortPlayersByColumn(4, 3)" class="ColumnButton" >
+						<Button id="ResourceTraded" onactivate="SortPlayersByColumn(17)" class="ColumnButton" >
 							<Label text="Resource Traded" />
 						</Button>
-						<Button id="TechPercentage" onactivate="SortPlayersByColumn(4, 4)" class="ColumnButton" >
+						<Button id="TechPercentage" onactivate="SortPlayersByColumn(18)" class="ColumnButton" >
 							<Label text="Tech Percentage" />
 						</Button>
-						<Button id="GoldLostToUpkeep" onactivate="SortPlayersByColumn(4, 5)" class="ColumnButton" >
+						<Button id="GoldLostToUpkeep" onactivate="SortPlayersByColumn(19)" class="ColumnButton" >
 							<Label text="Gold Lost To Upkeep" />
 						</Button>
 					</Panel>

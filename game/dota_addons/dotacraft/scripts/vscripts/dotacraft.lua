@@ -1506,12 +1506,11 @@ function dotacraft:OnPreGame()
 			PlayerResource:SetCustomTeamAssignment(playerID, team)
 			--PrecacheUnitByNameAsync(race, function() --Race Heroes are already precached
 				local player = PlayerResource:GetPlayer(playerID)
-				CreateHeroForPlayer(race, player)
+				local hero = CreateHeroForPlayer(race, player)
+				
+				hero.color_id = color
+				
 				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
-			--end, playerID)
-			
-			-- got to give it colorID for the javascript player object call in players.lua
-			SetNetTableValue("dotacraft_player_table", tostring(playerID), {Color = color})
  		elseif playerID > 9000 then
 			-- Create ai player here
 		else
@@ -1615,7 +1614,6 @@ function dotacraft:Setup_Color_Table()
 	SetNetTableValue("dotacraft_color_table", "9",	{r=126, g=191, b=241})	-- light blue	
 	SetNetTableValue("dotacraft_color_table", "10",	{r=16, 	g=98,  b=70 })	-- dark green	
 	SetNetTableValue("dotacraft_color_table", "11",	{r=78,  g=42,  b=4  })	-- brown		
-
 
 end
 

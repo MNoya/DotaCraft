@@ -24,7 +24,35 @@ function SetupPlayer(){
 		$("#PlayerName").GetChild(0).text = AI_Names[Root.PlayerID];  
 	};
 	
-	Root.UpdateState(Root.state);
+	SetupPlayerColors();
+	
+	Root.UpdateState(Root.state);  
+};
+
+function SetupPlayerColors(){ 
+	var playerColorID = CustomNetTables.GetTableValue( "dotacraft_player_table", Root.PlayerID).color_id;
+	var playerColor =  CustomNetTables.GetTableValue( "dotacraft_color_table", playerColorID );
+	Root.colorID = playerColorID;
+	Root.RGB = playerColor;
+	
+	SetPlayerBackGroundColor(Root.RGB);
+};
+
+function SetPlayerBackGroundColor(color){
+	Root.style["background-color"] = "rgb("+color.r+","+color.g+","+color.b+")";	
+};
+
+// team == true | set color either blue or red depending on enemy flag
+// team == false | set playercolor which is stored in Root.RGB
+Root.SetTeamColor = function(team, ally){
+	if(team){ // set background to blue or red
+		if(ally)
+			SetPlayerBackGroundColor( {r:0, g:0, b:255} );	
+		else
+			SetPlayerBackGroundColor( {r:255, g:0, b:0} );
+	}else{ // set back to player color
+		SetPlayerBackGroundColor(Root.RGB);
+	};
 };
 
 var lastState = Root.state;
@@ -56,7 +84,8 @@ function SetupColumnHeaderChildSizes(){
 
 function UpdatePlayer(data){
 	$.Msg(data);
-	if(data.key == Root.PlayerID){	
+	if(data.key == Root.PlayerID){
+		Root.data = data.table;
 		$("#UnitScore").text = data.table.unit_score;
 		$("#HeroScore").text =  data.table.hero_score;
 		$("#ResourceScore").text =  data.table.resource_score;

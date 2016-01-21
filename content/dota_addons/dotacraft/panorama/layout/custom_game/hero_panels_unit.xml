@@ -3,7 +3,7 @@
     <include src="file://{resources}/styles/custom_game/hero_panels.css" />
   </styles>
   <scripts>
-    <include src="file://{resources}/scripts/custom_game/hero_panels_unit.js" /> 
+    <include src="file://{resources}/scripts/hero_panels/hero_panels_unit.js" /> 
   </scripts>
 	<Panel hittest="false" class="HeroPanelsUnitRoot">
 		<Button id="HeroButton" onactivate="SelectHero()" > 

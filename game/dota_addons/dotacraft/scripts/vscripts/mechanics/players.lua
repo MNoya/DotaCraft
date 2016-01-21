@@ -206,16 +206,13 @@ function Players:UpdateJavaScriptPlayer( playerID )
 			local FoodUsed = hero.food_used
 			local FoodLimit = hero.food_limit
 	
-			local PlayerTable = GetNetTableValue("dotacraft_player_table", tostring(playerID))
-			local ColorID = PlayerTable.Color;
-	
 			local HasAltar = Players:HasAltar(playerID)
 			if HasAltar then HasAltar = true else HasAltar = false end
 	
 			local TechTier = Players:GetCityLevel(playerID)
 			local HeroCount = 0
+			local ColorID = hero.color_id
 			-- WIP Noya herocounter
-	
 			SetNetTableValue("dotacraft_player_table", tostring(playerID), {color_id = ColorID, food_used = FoodUsed, food_limit = FoodLimit, lumber = Lumber, gold = Gold, tech_tier = TechTier, has_altar = HasAltar, hero_count = HeroCount})
 		end
 		
