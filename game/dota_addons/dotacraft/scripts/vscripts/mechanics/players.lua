@@ -116,6 +116,8 @@ function Players:ClearPlayerFlags( playerID )
     local flags = Players:GetPlayerFlags( playerID )
     local selected = GetSelectedEntities(playerID)
 
+    if not flags then return end
+    
     for entIndex,particleTable in pairs(flags) do
         local flagParticle = particleTable.flagParticle
         local lineParticle = particleTable.lineParticle

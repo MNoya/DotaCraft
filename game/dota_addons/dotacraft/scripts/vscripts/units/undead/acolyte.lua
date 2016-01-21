@@ -243,7 +243,7 @@ function ShowGoldMine( event )
     BuildingHelper:BlockGridSquares(8, 0, building:GetAbsOrigin(), "GoldMine")
 
 	building.sigil:RemoveSelf()
-	building:RemoveSelf()
+	building:AddNoDraw()
 
 	mine.building_on_top = nil
 
