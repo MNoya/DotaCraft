@@ -52,7 +52,7 @@ function EnqueueUnit( event )
 
         -- Disable research
         if string.match(ability_name, "research_") then
-            DisableResearch(event) -- upgrades.lua
+            DisableResearch(event) -- buildings/research.lua
         end
 
         -- Night Elf buildings disable attack
