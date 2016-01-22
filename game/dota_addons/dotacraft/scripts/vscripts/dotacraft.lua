@@ -870,7 +870,17 @@ end
 -- state as necessary
 function dotacraft:OnPlayerReconnect(keys)
 	print ( '[DOTACRAFT] OnPlayerReconnect' )
-	--DeepPrintTable(keys) 
+	--DeepPrintTable(keys)
+	local player = PlayerResource:GetPlayer(keys.PlayerID)
+	local playerHero = player:GetAssignedHero()
+	
+	
+	-- re-create js hero panels for player
+	local heroes = playerHero.heroes
+	for _,hero in pairs(heroes) do
+		CreateHeroPanel(hero)
+	end
+	
 end
 
 -- An item was purchased by a player

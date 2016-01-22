@@ -153,7 +153,6 @@ function isUnitSelected(){
 	$("#HeroOverlay").visible = false;
 	$("#HeroReviveButton").visible = false;
 	
-	$("#HeroImage").heroid = Root.heroImageID;
 	$("#HeroImage").heroname = Entities.GetUnitName(unit);
 	$("#HeroImage").heroimagestyle = "landscape";
 	

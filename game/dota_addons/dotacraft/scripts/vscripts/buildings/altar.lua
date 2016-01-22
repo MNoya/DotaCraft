@@ -118,9 +118,8 @@ function CreateHeroPanel(unit)
 	local unitName = unit:GetUnitName()
 	local playerID = unit:GetPlayerOwnerID()
 	local player = PlayerResource:GetPlayer(playerID)
-	local heroID = PlayerResource:GetSelectedHeroID(playerID)
 	
-	CustomGameEventManager:Send_ServerToPlayer(player, "create_hero", {name=unitName, entityIndex=unitEntIndex, heroImageID=heroID})
+	CustomGameEventManager:Send_ServerToPlayer(player, "create_hero", {entityIndex=unitEntIndex})
 end
 
 function UpgradeAltarAbilities( event )
