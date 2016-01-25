@@ -4256,6 +4256,86 @@
 		"ItemPurchasable" 				"0"
 	    "ItemSellable"                  "0"
 	}
+	"item_bh_modifiers"
+	{
+	    "BaseClass"                     "item_datadriven"
+	
+	    "Modifiers"
+	    {
+	        "modifier_out_of_world"
+	        {
+	            "IsHidden"  "1"
+	            "States"
+	            {
+	                "MODIFIER_STATE_OUT_OF_GAME" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_PASSIVES_DISABLED" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_PROVIDES_VISION" "MODIFIER_STATE_VALUE_DISABLED"
+	                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "libraries/modifiers/vision.lua"
+	                    "Function"      "DisableVision"
+	                }
+	            }
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "libraries/modifiers/vision.lua"
+	                    "Function"      "RecoverVision"
+	                }
+	            }
+	        }
+	
+	        "modifier_disable_turning"
+	        {
+	            "IsHidden"  "1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_DISABLE_TURNING" "1"
+	                "MODIFIER_PROPERTY_IGNORE_CAST_ANGLE" "1"
+	            }
+	        }
+	
+	        "modifier_builder_hidden"
+	        {
+	            "IsHidden"  "1"
+	            "States"
+	            {
+	                "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "libraries/modifiers/vision.lua"
+	                    "Function"      "DisableVision"
+	                }
+	            }
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "libraries/modifiers/vision.lua"
+	                    "Function"      "RecoverVision"
+	                }
+	            }
+	                    
+	        }
+	    }
+	}
 	"item_building_cancel"
 	{
 		"BaseClass"             		"item_datadriven"
