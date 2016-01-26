@@ -19,7 +19,7 @@ function SetupPlayer(){
 };
 
 function SetupPanels(){
-	var PlayerColor = GameUI.CustomUIConfig.GetColor(LocalPlayerID);
+	var PlayerColor = PlayerTables.GetColor(LocalPlayerID);
 	
 	if(PlayerColor != null){
 		var Color = "rgb("+PlayerColor.r+","+PlayerColor.g+","+PlayerColor.b+")";
@@ -56,8 +56,8 @@ function CalculateCurrentPendingResources(){
 };
 
 function CalculatePlayerResourcesLeft(pendingGold, pendingLumber){
-	var PlayerGold = GameUI.CustomUIConfig.GetGold(LocalPlayerID);
-	var PlayerLumber = GameUI.CustomUIConfig.GetLumber(LocalPlayerID);
+	var PlayerGold = PlayerTables.GetGold(LocalPlayerID);
+	var PlayerLumber = PlayerTables.GetLumber(LocalPlayerID);
 
 	var GoldLeft = PlayerGold - pendingGold;
 	var LumberLeft = PlayerLumber - pendingLumber;

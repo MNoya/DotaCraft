@@ -3,9 +3,10 @@
     <include src="file://{resources}/styles/custom_game/end_screen.css" />
   </styles>
   <scripts>
-    <include src="file://{resources}/scripts/end_screen/end_screen_player.js" /> 
+ 	<include src="file://{resources}/scripts/playertables/playertables.js" />
+    <include src="file://{resources}/scripts/end_screen/end_screen_player.js" />
   </scripts>
-	<Panel class="EndScreenPlayerRoot" hittest="false">	
+	<Panel class="EndScreenPlayerRoot" hittest="false">
 		<Panel id="PlayerDetails" >
 			<DOTAAvatarImage id="PlayerAvatar" />
 			<DOTAUserName id="PlayerName" />

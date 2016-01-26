@@ -30,7 +30,7 @@ function SetupPlayer(){
 };
 
 function SetupPlayerColors(){ 
-	var playerColor = GameUI.CustomUIConfig.GetColor(Root.PlayerID);
+	var playerColor = PlayerTables.GetColor(Root.PlayerID);
 	Root.RGB = playerColor;
 	
 	SetPlayerBackGroundColor(Root.RGB);

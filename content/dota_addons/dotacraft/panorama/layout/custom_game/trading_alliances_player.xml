@@ -3,8 +3,8 @@
 		<include src="file://{resources}/styles/custom_game/trading_alliances.css" />
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/playertables/playertables.js" />
 		<include src="file://{resources}/scripts/trading_alliances/trading_alliances_player.js" />
-		<include src="file://{resources}/scripts/Player.js" />
 	</scripts>
 	<Panel class="Player">	
 		<Panel class="PlayerInfo">
