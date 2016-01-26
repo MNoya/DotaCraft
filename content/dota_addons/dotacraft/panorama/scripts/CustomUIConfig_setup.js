@@ -1,8 +1,9 @@
 (function () {
 	$.Msg("[Initializing Custom NetTable Getters]");
 	
-	// CONST string to indicate the player net table name
+	// CONST table names
 	GameUI.CustomUIConfig.PLAYERTABLENAME = "dotacraft_player_table";
+	GameUI.CustomUIConfig.COLORTABLENAME = "dotacraft_color_table";
 	
 	GameUI.CustomUIConfig.GetGold = function(pPlayerID){
 		return CustomNetTables.GetTableValue( this.PLAYERTABLENAME, pPlayerID).gold;
@@ -47,6 +48,11 @@
 	
 	GameUI.CustomUIConfig.HeroCount = function(pPlayerID){
 		return CustomNetTables.GetTableValue( this.PLAYERTABLENAME, pPlayerID).hero_count;		
+	};
+	
+	GameUI.CustomUIConfig.GetColor = function(pPlayerID){
+		var color_index = this.GetColorID(pPlayerID);
+		return CustomNetTables.GetTableValue( this.COLORTABLENAME, color_index);
 	};
 	
 	$.Msg("[Finished Initializing Custom NetTable Getters]");

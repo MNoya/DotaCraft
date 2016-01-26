@@ -243,22 +243,6 @@ function CheckColumnValue(columnID, data1, data2){
 	
 };
 
-function SortChildren( Container ){
-	$.Msg("Sorting child of panel: "+Container.id);
-	for(var i =0; i < Container.GetChildCount(); i++){
-		for(var j=0; j < Container.GetChildCount() - 1; j++){
-			var child = Container.GetChild(i);
-			var child2 = Container.GetChild(i+1);
-			
-			if( child2 != null ){
-				if( child.index > child2.index ){
-					Container.MoveChildAfter(child, child2);
-				};
-			};
-		};
-	};
-};
-
 (function () {
 	SetupColumnHeaderChildSizes();
 	SetupFooter();

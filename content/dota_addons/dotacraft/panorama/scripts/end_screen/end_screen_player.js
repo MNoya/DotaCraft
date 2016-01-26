@@ -30,9 +30,7 @@ function SetupPlayer(){
 };
 
 function SetupPlayerColors(){ 
-	var playerColorID = CustomNetTables.GetTableValue( "dotacraft_player_table", Root.PlayerID).color_id;
-	var playerColor =  CustomNetTables.GetTableValue( "dotacraft_color_table", playerColorID );
-	Root.colorID = playerColorID;
+	var playerColor = GameUI.CustomUIConfig.GetColor(Root.PlayerID);
 	Root.RGB = playerColor;
 	
 	SetPlayerBackGroundColor(Root.RGB);

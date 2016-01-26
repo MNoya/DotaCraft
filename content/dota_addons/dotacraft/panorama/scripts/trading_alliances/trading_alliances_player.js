@@ -19,11 +19,10 @@ function SetupPlayer(){
 };
 
 function SetupPanels(){
-	var PlayerColorID = GameUI.CustomUIConfig.GetColorID(LocalPlayerID);
-	var PlayerColorTable = CustomNetTables.GetTableValue("dotacraft_color_table", PlayerColorID);
+	var PlayerColor = GameUI.CustomUIConfig.GetColor(LocalPlayerID);
 	
-	if(PlayerColorID != null){
-		var Color = "rgb("+PlayerColorTable.r+","+PlayerColorTable.g+","+PlayerColorTable.b+")";
+	if(PlayerColor != null){
+		var Color = "rgb("+PlayerColor.r+","+PlayerColor.g+","+PlayerColor.b+")";
 		$("#PlayerAvatar").style["border"] = "2px solid "+Color;
 	};
 };
