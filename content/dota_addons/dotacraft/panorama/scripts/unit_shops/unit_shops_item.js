@@ -1,24 +1,22 @@
 var Root = $.GetContextPanel()
 var LocalPlayerID = Game.GetLocalPlayerID()
-var LocalPlayerObject;
+
 function Buy_Item(){	
 	if(Root.Revive == null)
 		Root.Revive = false
 	
-	var Player = GameUI.CustomUIConfig.GetPlayer(Game.GetLocalPlayerID());
-	$.Msg(Player)
 	var event, food_cost;
 	if(Root.Revive){ // Tavern purchase - Revive hero
 		food_cost = 5;
 		event = "Shops_Buy_Tavern_Revive_Hero"
 		
-		EnoughFood = Player.HasEnoughFood(food_cost);
+		EnoughFood = GameUI.CustomUIConfig.HasEnoughFood(LocalPlayerID, food_cost);
 		EnoughStock = true;
 	}else if(Root.Tavern){ // Tavern purchase - buying a hero
 		food_cost = 5;
 		event = "Shops_Buy_Tavern_Buy_Hero"
 		
-		EnoughFood = Player.HasEnoughFood(food_cost);
+		EnoughFood = GameUI.CustomUIConfig.HasEnoughFood(LocalPlayerID, food_cost);
 		EnoughStock = true;
 	}else{ // Item
 		event = "Shops_Buy_Item";
@@ -26,13 +24,13 @@ function Buy_Item(){
 		if(!Root.Neutral)
 			EnoughFood = true;
 		else
-			EnoughFood = Player.HasEnoughFood(Root.ItemInfo.FoodCost);
+			EnoughFood = GameUI.CustomUIConfig.HasEnoughFood(LocalPlayerID, Root.ItemInfo.FoodCost);
 			
 		EnoughStock = Root.ItemInfo.CurrentStock > 0;
 	};
 	
-		var EnoughLumber = Player.HasEnoughLumber(Root.ItemInfo.LumberCost);
-		var EnoughGold = Player.HasEnoughGold(Root.ItemInfo.GoldCost);
+		var EnoughLumber = GameUI.CustomUIConfig.HasEnoughLumber(LocalPlayerID, Root.ItemInfo.LumberCost);
+		var EnoughGold = GameUI.CustomUIConfig.HasEnoughGold(LocalPlayerID, Root.ItemInfo.GoldCost);
 		
 		var bAllowedToPurchase =  EnoughLumber && EnoughGold && EnoughStock && EnoughFood;
 		
@@ -111,8 +109,6 @@ function Setup_Panel(){
 	}else if(Root.Hero){
 		$( "#RequiredTier").text = "Revive this Hero instantly"
 	}
-	
-	LocalPlayerObject = new Player(Game.GetLocalPlayerID());
 }
 
 function Update_Central(data){

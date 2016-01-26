@@ -1,6 +1,6 @@
 var Root = $.GetContextPanel();
 var Parent = Root.GetParent();
-var LocalPlayerObject;
+var LocalPlayerID = Game.GetLocalPlayerID();
 (function () {
 	$.Msg("setting up trading_alliances player");
 	$.Schedule(1, SetupPlayer);
@@ -14,19 +14,17 @@ function SetupPlayer(){
 	$("#PlayerAvatar").steamid = PlayerSteamID;
 	$("#PlayerName").steamid = PlayerSteamID;
 	
-	LocalPlayerObject = GameUI.CustomUIConfig.GetPlayer(Game.GetLocalPlayerID());
-	
 	// setup panels
 	SetupPanels();
 };
 
 function SetupPanels(){
-	var PlayerTable = CustomNetTables.GetTableValue( "dotacraft_player_table", Root.PlayerID);
-	var PlayerColorTable = CustomNetTables.GetAllTableValues("dotacraft_color_table");
+	var PlayerColorID = GameUI.CustomUIConfig.GetColorID(LocalPlayerID);
+	var PlayerColorTable = CustomNetTables.GetTableValue("dotacraft_color_table", PlayerColorID);
 	
-	if(PlayerTable != null){
-		var Color = "rgb("+PlayerColorTable[PlayerTable.Color].value.r+","+PlayerColorTable[PlayerTable.Color].value.g+","+PlayerColorTable[PlayerTable.Color].value.b+")";
-		$("#PlayerAvatar").style["border"] = "2px solid "+Color; 
+	if(PlayerColorID != null){
+		var Color = "rgb("+PlayerColorTable.r+","+PlayerColorTable.g+","+PlayerColorTable.b+")";
+		$("#PlayerAvatar").style["border"] = "2px solid "+Color;
 	};
 };
 
@@ -59,8 +57,8 @@ function CalculateCurrentPendingResources(){
 };
 
 function CalculatePlayerResourcesLeft(pendingGold, pendingLumber){
-	var PlayerGold = LocalPlayerObject.getGold();
-	var PlayerLumber = LocalPlayerObject.getLumber();
+	var PlayerGold = GameUI.CustomUIConfig.GetGold(LocalPlayerID);
+	var PlayerLumber = GameUI.CustomUIConfig.GetLumber(LocalPlayerID);
 
 	var GoldLeft = PlayerGold - pendingGold;
 	var LumberLeft = PlayerLumber - pendingLumber;

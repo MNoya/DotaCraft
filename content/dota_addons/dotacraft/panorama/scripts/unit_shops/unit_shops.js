@@ -105,20 +105,6 @@ function Delete_Single_Panel(args){
 	HeroItemPanel.DeleteAsync(0.01);
 }
 
-function Current_Selected(){
-	var PlayerID = Players.GetLocalPlayer();
-	var mainSelected = Players.GetLocalPlayerPortraitUnit();
-	 
-	/*var Shop = Root.FindChildTraverse(mainSelected)
-	if(Shop != null){
-		ShowShop(mainSelected)
-	}else{
-		Hide_All_Shops()
-	}
-	
-	$.Schedule(0.1, Current_Selected)*/
-}
-
 function Open_Shop(args) {
 	var index = args.Shop
 	ShowShop(index)

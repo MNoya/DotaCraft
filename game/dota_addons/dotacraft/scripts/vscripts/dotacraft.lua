@@ -1652,8 +1652,7 @@ end
 -- Returns a Vector with the color of the player
 function dotacraft:ColorForPlayer( playerID )
 	local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
-	local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.Color))
-	
+	local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.color_id))
 	return Vector(color.r, color.g, color.b)
 end
 
