@@ -1,4 +1,7 @@
 <root>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game_ui_expanded.js" />
+	</scripts>
 	<Panel>
 		<CustomUIElement type="GameSetup" 			layoutfile="file://{resources}/layout/custom_game/pre_game_selection.xml" />
 		<CustomUIElement type="LoadingScreen" 		layoutfile="file://{resources}/layout/custom_game/custom_loading_screen.xml" />

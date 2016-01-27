@@ -10,27 +10,26 @@ function Buy_Item(){
 		food_cost = 5;
 		event = "Shops_Buy_Tavern_Revive_Hero"
 		
-		EnoughFood = GameUI.CustomUIConfig.HasEnoughFood(LocalPlayerID, food_cost);
+		EnoughFood = PlayerTables.HasEnoughFood(LocalPlayerID, food_cost);
 		EnoughStock = true;
 	}else if(Root.Tavern){ // Tavern purchase - buying a hero
 		food_cost = 5;
 		event = "Shops_Buy_Tavern_Buy_Hero"
 		
-		EnoughFood = GameUI.CustomUIConfig.HasEnoughFood(LocalPlayerID, food_cost);
+		EnoughFood = PlayerTables.HasEnoughFood(LocalPlayerID, food_cost);
 		EnoughStock = true;
 	}else{ // Item
 		event = "Shops_Buy_Item";
-		$.Msg(Root.ItemInfo.FoodCost)
 		if(!Root.Neutral)
 			EnoughFood = true;
 		else
-			EnoughFood = GameUI.CustomUIConfig.HasEnoughFood(LocalPlayerID, Root.ItemInfo.FoodCost);
+			EnoughFood = PlayerTables.HasEnoughFood(LocalPlayerID, Root.ItemInfo.FoodCost);
 			
 		EnoughStock = Root.ItemInfo.CurrentStock > 0;
 	};
 	
-		var EnoughLumber = GameUI.CustomUIConfig.HasEnoughLumber(LocalPlayerID, Root.ItemInfo.LumberCost);
-		var EnoughGold = GameUI.CustomUIConfig.HasEnoughGold(LocalPlayerID, Root.ItemInfo.GoldCost);
+		var EnoughLumber = PlayerTables.HasEnoughLumber(LocalPlayerID, Root.ItemInfo.LumberCost);
+		var EnoughGold = PlayerTables.HasEnoughGold(LocalPlayerID, Root.ItemInfo.GoldCost);
 		
 		var bAllowedToPurchase =  EnoughLumber && EnoughGold && EnoughStock && EnoughFood;
 		

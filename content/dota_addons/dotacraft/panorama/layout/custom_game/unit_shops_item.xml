@@ -3,8 +3,8 @@
 		<include src="file://{resources}/styles/custom_game/unit_shops.css" />
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/playertables/playertables.js" />
 		<include src="file://{resources}/scripts/unit_shops/unit_shops_item.js" />
-		<include src="file://{resources}/scripts/Player.js" />
 	</scripts>
 	<Panel class="ItemContainer" hittest="false">
 

@@ -172,17 +172,6 @@ function dotacraft:InitGameMode()
     GameMode:SetDamageFilter( Dynamic_Wrap( dotacraft, "FilterDamage" ), self )
     GameMode:SetTrackingProjectileFilter( Dynamic_Wrap( dotacraft, "FilterProjectile" ), self )
 
-    -- Register Listener
-    CustomGameEventManager:RegisterListener( "reposition_player_camera", Dynamic_Wrap(dotacraft, "RepositionPlayerCamera"))
-    CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
-    CustomGameEventManager:RegisterListener( "gold_gather_order", Dynamic_Wrap(dotacraft, "GoldGatherOrder")) --Right click through panorama
-    CustomGameEventManager:RegisterListener( "repair_order", Dynamic_Wrap(dotacraft, "RepairOrder")) --Right click through panorama
-    CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
-    CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) --Right click through panorama 
-    CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
-    CustomGameEventManager:RegisterListener( "right_click_order", Dynamic_Wrap(dotacraft, "RightClickOrder")) --Right click through panorama
-    CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
-
 	-- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
@@ -192,20 +181,6 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
-
-	-- Listeners for Pre_Game_Selection
-	CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGame_Update"))
-	CustomGameEventManager:RegisterListener( "pregame_countdown", Dynamic_Wrap(dotacraft, "PreGame_StartCountDown"))	
-	CustomGameEventManager:RegisterListener( "pregame_lock", Dynamic_Wrap(dotacraft, "PreGame_ToggleLock"))	
-	
-	-- Listeners for Trading Alliances
-	CustomGameEventManager:RegisterListener( "trading_alliances_trade_confirm", Dynamic_Wrap(dotacraft, "Trade_Offers"))	
-	
-	-- Listeners for endscreen_data
-	CustomGameEventManager:RegisterListener( "endscreen_request_data", Dynamic_Wrap(dotacraft, "EndScreenRequestData"))	
-	
-	-- register panaroma tables
-	dotacraft:Setup_Tables()   
 	
 	-- Remove building invulnerability
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
@@ -219,9 +194,6 @@ function dotacraft:InitGameMode()
 	-- Don't end the game if everyone is unassigned
     SendToServerConsole("dota_surrender_on_disconnect 0")
 
-	-- Console Commands
-	Convars:RegisterCommand( "skip_selection", Dynamic_Wrap(dotacraft, 'Skip_Selection'), "Skip Selection", 0 )
-	
 	-- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
 	-- Note: When the abilities change, we need to update this value.
 	Convars:RegisterCommand( "ability_values_entity", function(name, entityIndex)
@@ -353,6 +325,7 @@ function dotacraft:InitGameMode()
 		GameRules.StartingPositions[k-1] = pos_table
 	end
 
+	dotacraft:UI_Init()
 	print('[DOTACRAFT] Done loading dotacraft gamemode!')
 end
 
@@ -521,9 +494,6 @@ function dotacraft:InitializePlayer( hero )
 		CheckAbilityRequirements( builder, playerID )
 	end
 
-	
-
-	
 	-- Hide main hero under the main base
 	-- Snap the camera to the created building and add it to selection
 	-- Find neutrals near the starting zone and remove them
@@ -619,8 +589,6 @@ function dotacraft:InitializeNightElf( hero, race_setup_table, building )
 	building:SetAngles(0,-90,0)
 end
 
-
-
 function dotacraft:InitializeTownHall( hero, position, building )
 	local player = hero:GetPlayerOwner()
 	local playerID = hero:GetPlayerID()
@@ -651,27 +619,6 @@ function dotacraft:InitializeTownHall( hero, position, building )
 			v:RemoveSelf()
 		end
 	end
-end
-
-function dotacraft:TrackIdleWorkers( hero )
-	local player = hero:GetPlayerOwner()
-	local playerID = hero:GetPlayerID()
-	-- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
-	Timers:CreateTimer(1, function() 
-		local idle_builders = {}
-		local playerUnits = Players:GetUnits(playerID)
-		for k,unit in pairs(playerUnits) do
-			if IsValidAlive(unit) and IsBuilder(unit) and IsIdleBuilder(unit) then
-				table.insert(idle_builders, unit:GetEntityIndex())
-			end
-		end
-		if #idle_builders ~= #hero.idle_builders then
-			--print("#Idle Builders changed: "..#idle_builders..", was "..#hero.idle_builders)
-			hero.idle_builders = idle_builders
-			CustomGameEventManager:Send_ServerToPlayer(player, "player_update_idle_builders", { idle_builder_entities = idle_builders })
-		end
-		return 0.3
-	end)
 end
 
 function dotacraft:OnGameInProgress()
@@ -744,7 +691,7 @@ function dotacraft:OnGameRulesStateChange(keys)
 	print("[DOTACRAFT] GameRules State Changed: ",gamestates[newState])
 		
 	-- send the panaroma developer at each stage to ensure all js are exposed to it
-	dotacraft:Panaroma_Developer_Mode(newState)
+	dotacraft:PanaromaDeveloperMode(newState)
 	
 	if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		if PlayerResource:HaveAllPlayersJoined() then
@@ -1241,14 +1188,6 @@ function dotacraft:OnEntityKilled( event )
 	end)
 end
 
-function dotacraft:OnPlayerSelectedEntities( event )
-	local playerID = event.PlayerID
-
-	GameRules.SELECTED_UNITS[playerID] = event.selected_entities
-	dotacraft:UpdateRallyFlagDisplays(playerID)
-end
-
-
 -- Hides or shows the rally flag particles for the player (avoids visual clutter)
 function dotacraft:UpdateRallyFlagDisplays( playerID )
     local player = PlayerResource:GetPlayer(playerID)
@@ -1339,25 +1278,6 @@ function dotacraft:DeterminePathableTrees()
 	--end
 
 	print('[DOTACRAFT] Pathable Trees set')
-end
-
-function dotacraft:RepositionPlayerCamera( event )
-	DeepPrintTable(event)
-	local pID = event.PlayerID
-	local entIndex = event.entIndex
-	local entity = EntIndexToHScript(entIndex)
-	if entity and IsValidEntity(entity) then
-		PlayerResource:SetCameraTarget(pID, entity)
-		Timers:CreateTimer(0.1, function()
-			PlayerResource:SetCameraTarget(pID, nil)
-		end)
-	end
-end
-
-function dotacraft:RotateCamera( playerID )
-    local player = PlayerResource:GetPlayer(playerID)
-    CustomGameEventManager:Send_ServerToPlayer(player, "rotate_camera", {})
-    GameRules:SendCustomMessage("Arteezy was left", 0, 0)
 end
 
 function dotacraft:MakePlayerLose( playerID )
@@ -1475,194 +1395,6 @@ function dotacraft:PrintWinMessageForTeam( teamID )
 				if playerName == "" then playerName = "Player "..playerID end
 				GameRules:SendCustomMessage(playerName.." was victorious", 0, 0)
 			end
-		end
-	end
-end
-
---[[
-
-Pre_Game_Selection
-
-]]
-function dotacraft:Skip_Selection()
-	CustomGameEventManager:Send_ServerToAllClients("dotacraft_skip_selection", {}) 
-end
-
-function dotacraft:OnPreGame()
-	print("[DOTACRAFT] OnPreGame")
-	local Finished = false
-	local currentIndex = 0
-	while not Finished do
-		
-		local Player_Table = GetNetTableValue("dotacraft_pregame_table", tostring(currentIndex))
-		local NextTable = GetNetTableValue("dotacraft_pregame_table", tostring(currentIndex+1))
-		if not NextTable then
-			Finished = true
-		end
-		local playerID = Player_Table.PlayerIndex
-		local color = Player_Table.Color
-		local team = Player_Table.Team
-		local race = GameRules.raceTable[Player_Table.Race]
-		
-		-- if race is nil it means that the id supplied is random since that is the only fallout index
-		if race == nil then
-			race = GameRules.raceTable[RandomInt(1, 4)]
-		end
-		
-		if PlayerResource:IsValidPlayerID(playerID) then
-			-- player stuff
-			local PlayerColor = GetNetTableValue("dotacraft_color_table", tostring(color))
-			PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
-			PlayerResource:SetCustomTeamAssignment(playerID, team)
-			--PrecacheUnitByNameAsync(race, function() --Race Heroes are already precached
-				local player = PlayerResource:GetPlayer(playerID)
-				local hero = CreateHeroForPlayer(race, player)
-				
-				hero.color_id = color
-				
-				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
- 		elseif playerID > 9000 then
-			-- Create ai player here
-		else
-			-- do nothing
-		end
-		
-		currentIndex = currentIndex + 1
- 	end
-	
-	--[[
-	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
-		if PlayerResource:IsValidPlayerID(playerID) && PlayerResource:GetTeam(playerID) == 1 then
-			-- spectator
-		end
-	end
-	--]]
-	
- 	-- Add gridnav blockers to the gold mines
-	GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
-	for k,gold_mine in pairs (GameRules.GoldMines) do
-		local location = gold_mine:GetAbsOrigin()
-		local construction_size = BuildingHelper:GetConstructionSize(gold_mine)
-		local pathing_size = BuildingHelper:GetBlockPathingSize(gold_mine)
-		BuildingHelper:SnapToGrid(construction_size, location)
-
-		local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
-        BuildingHelper:AddGridType(construction_size, location, "GoldMine")
-		gold_mine:SetAbsOrigin(location)
-	    gold_mine.blockers = gridNavBlockers
-
-	    -- Find and store the mine entrance
-		local mine_entrance = Entities:FindAllByNameWithin("*mine_entrance", location, 300)
-		for k,v in pairs(mine_entrance) do
-			gold_mine.entrance = v:GetAbsOrigin()
-		end
-
-		-- Find and store the mine light
-	end
-end
-
-function dotacraft:Trade_Offers(args)
-	--DeepPrintTable(args.Trade);
-	-- not much error handling going on yet, will attempt do most of it at the javascript side
-	
-	local SendingPlayerID = args.Trade.SendID
-	local RecievingPlayerID = args.Trade.RecieveID
-	
-	local GoldAmount = args.Trade.Gold
-	local LumberAmount = args.Trade.Lumber
-
-	-- deduct gold & lumber from sending player
-	Players:ModifyLumber(SendingPlayerID, -LumberAmount)
-	Players:ModifyGold(SendingPlayerID, -GoldAmount)
-	
-	-- add gold & lumber to recieving player
-	Players:ModifyLumber(RecievingPlayerID, LumberAmount)
-	Players:ModifyGold(RecievingPlayerID, GoldAmount)
-
-    Scores:IncrementResourcesTraded( SendingPlayerID, LumberAmount + GoldAmount )
-end
-
-function dotacraft:PreGame_Update(data)
-	SetNetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex})
-end
-
-function dotacraft:PreGame_ToggleLock(data)
-	CustomGameEventManager:Send_ServerToAllClients("pregame_toggle_lock", {})
-end
-
-function dotacraft:PreGame_StartCountDown(data)
-	CustomGameEventManager:Send_ServerToAllClients("pregame_countdown_start", {})
-end
-
-function dotacraft:Setup_Tables()
-	-- setup color table
-	dotacraft:Setup_Color_Table()
-	
-	-- setup race reference table
-	if GameRules.raceTable == nil then
-		GameRules.raceTable = {}
-		
-		GameRules.raceTable[1] = "npc_dota_hero_dragon_knight"
-		GameRules.raceTable[2] = "npc_dota_hero_huskar"
-		GameRules.raceTable[3] = "npc_dota_hero_furion"
-		GameRules.raceTable[4] = "npc_dota_hero_life_stealer"
-	end
-end
-
-function dotacraft:Setup_Color_Table()
-	--print("creating color table")
-		
-	SetNetTableValue("dotacraft_color_table", "0", 	{r=255, g=3,   b=3	})	-- red
-	SetNetTableValue("dotacraft_color_table", "1", 	{r=0, 	g=66,  b=255})	-- blue
-	SetNetTableValue("dotacraft_color_table", "2", 	{r=28, 	g=230, b=185})	-- teal
-	SetNetTableValue("dotacraft_color_table", "3", 	{r=84, 	g=0,   b=129})	-- purple
-	SetNetTableValue("dotacraft_color_table", "4", 	{r=255, g=255, b=1	})	-- yellow
-	SetNetTableValue("dotacraft_color_table", "5", 	{r=254, g=138, b=14	})	-- orange
-	SetNetTableValue("dotacraft_color_table", "6", 	{r=32, 	g=192, b=0	})	-- green
-	SetNetTableValue("dotacraft_color_table", "7",	{r=229, g=91,  b=176})	-- pink
-	SetNetTableValue("dotacraft_color_table", "8",	{r=149, g=150, b=151})	-- gray	
-	SetNetTableValue("dotacraft_color_table", "9",	{r=126, g=191, b=241})	-- light blue	
-	SetNetTableValue("dotacraft_color_table", "10",	{r=16, 	g=98,  b=70 })	-- dark green	
-	SetNetTableValue("dotacraft_color_table", "11",	{r=78,  g=42,  b=4  })	-- brown		
-
-end
-
--- this function is called every state change so that each JS file will recieve the developer args
-function dotacraft:Panaroma_Developer_Mode(state)
-	-- the reason for this function is that some JS are initialised later at the given state defined in the uimanifest.
-	-- use this event inside your JS to catch it: 	GameEvents.Subscribe( "panaroma_developer", Developer_Mode ); Developer_Mode is the function inside js
-
-	-- check if developer mode
-	if Convars:GetBool("developer") then	
-		Timers:CreateTimer(1, function()
-			CustomGameEventManager:Send_ServerToAllClients("panaroma_developer", {developer = true})
-		end)
-	end
-end
-
-function SetNetTableValue(NetTableName, key, table)
-	CustomNetTables:SetTableValue(NetTableName, key, table)
-end
-
-function GetNetTableValue(NetTableName, key)
-    --print("NetTable", key, CustomNetTables:GetTableValue("dotacraft_color_table", key))
-    return CustomNetTables:GetTableValue(NetTableName, key)
-end
-
--- Returns a Vector with the color of the player
-function dotacraft:ColorForPlayer( playerID )
-	local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
-	local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.color_id))
-	return Vector(color.r, color.g, color.b)
-end
-
-function dotacraft:EndScreenRequestData()
-	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
-		if PlayerResource:IsValidPlayerID(playerID) then
-			local player = PlayerResource:GetPlayer(playerID)
-			local info_table = Players:GetPlayerScores( playerID )
-			
-			CustomGameEventManager:Send_ServerToAllClients("endscreen_data", {key=playerID, table=info_table})
 		end
 	end
 end

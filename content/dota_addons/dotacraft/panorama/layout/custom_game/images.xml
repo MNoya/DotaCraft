@@ -3,21 +3,26 @@
         $.Msg( "Images compiled" );
     </script>     
     <Panel hittest="false" class="ImagesRoot">
+	
+		<!-- Loading screen map -->
         <Image style="opacity:0;" src="file://{images}/loading/hillsofglory.png" />
         <Image style="opacity:0;" src="file://{images}/loading/turtlerock.png" />
         <Image style="opacity:0;" src="file://{images}/loading/coppercanyon.png" />
         <Image style="opacity:0;" src="file://{images}/loading/echoisles.png" />
 
-        <Image style="opacity:0;" src="file://{images}/selection/maps/hillsofglory.tga" />
-        <Image style="opacity:0;" src="file://{images}/selection/maps/turtlerock.tga" />
-        <Image style="opacity:0;" src="file://{images}/selection/maps/coppercanyon.tga" />
-
+		<!-- Team selection right-panel minimap -->
+        <Image style="opacity:0;" src="file://{images}/selection/maps/hillsofglory.png" />
+        <Image style="opacity:0;" src="file://{images}/selection/maps/turtlerock.png" />
+        <Image style="opacity:0;" src="file://{images}/selection/maps/coppercanyon.png" />
+		
+		<!-- DEPRECATED - Team selection race background -->
         <Image style="opacity:0;" src="file://{images}/selection/background_1.png" />
         <Image style="opacity:0;" src="file://{images}/selection/background_2.png" />
         <Image style="opacity:0;" src="file://{images}/selection/background_3.png" />
         <Image style="opacity:0;" src="file://{images}/selection/background_4.png" />
         <Image style="opacity:0;" src="file://{images}/selection/pattern.png" />
 
+		<!-- unit shops item images -->
         <Image style="opacity:0;" src="file://{images}/items/anti_magic_potion.png" />
         <Image style="opacity:0;" src="file://{images}/items/build_ivory_tower.png" />
         <Image style="opacity:0;" src="file://{images}/items/build_tiny_great_hall_orc.png" />
@@ -76,5 +81,17 @@
         <Image style="opacity:0;" src="file://{images}/items/neutral_gnoll_overseer.png" />
         <Image style="opacity:0;" src="file://{images}/items/neutral_ice_troll_berserker.png" />
         <Image style="opacity:0;" src="file://{images}/items/neutral_ice_troll_trapper.png" />
+		
+		<!-- race builders primarly used in idle builders -->
+        <Image style="opacity:0;" src="file://{images}/custom_game/undead/undead_builder.png" />
+	    <Image style="opacity:0;" src="file://{images}/custom_game/human/human_builder.png" />
+		<Image style="opacity:0;" src="file://{images}/custom_game/orc/orc_builder.png" />
+		<Image style="opacity:0;" src="file://{images}/custom_game/nightelf/nightelf_builder.png" />
+		
+		<!-- Trading alliances -->
+		<Image style="opacity:0;" src="file://{images}/trading_alliances/coins.png" />		
+		<Image style="opacity:0;" src="file://{images}/trading_alliances/gold_icon.png" />
+		<Image style="opacity:0;" src="file://{images}/trading_alliances/lumber_icon.png" />	
+		
     </Panel>
 </root>
