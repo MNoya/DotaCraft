@@ -130,37 +130,16 @@ function SetupColumnHeaderChildSizes(){
 };
 
 function SortByTeam(){
-	var Container = PlayerContainer;
-	$.Msg("Sorting child of panel: "+Container.id);
-	for(var i =0; i < Container.GetChildCount(); i++){
-		
-		var playerInfo = Game.GetPlayerInfo(i);
-		var teamID = playerInfo.player_team_id;
-
-		for(var j=0; j < Container.GetChildCount() - 1; j++){
-			var child = Container.GetChild(i);
-			var child2 = Container.GetChild(i+1);
-			
-			if( child2 != null ){
-				var playerInfo2 = Game.GetPlayerInfo(j);
-				var teamID2 = playerInfo2.player_team_id;		
-				if( teamID > teamID2 ){
-					Container.MoveChildAfter(child, child2);
-				};
-			};
-			
-		};
-	};
+	GameUI.CustomUIConfig.SortByTeamID( PlayerContainer, true );
 };
 
 function SortPlayersByColumn(columnID){
-	
-	var Container = PlayerContainer;
-	$.Msg("Sorting child of panel: "+Container.id);
-	for(var i =0; i < Container.GetChildCount(); i++){
-		for(var j=0; j < Container.GetChildCount() - 1; j++){
-			var child = Container.GetChild(i);
-			var child2 = Container.GetChild(i+1);
+	var container = PlayerContainer;
+	$.Msg("Sorting child of panel: "+container.id);
+	for(var i =0; i < container.GetChildCount() -1; i++){
+		for(var j=0; j < container.GetChildCount() - i; j++){
+			var child = container.GetChild(j);
+			var child2 = container.GetChild(j+1);
 			
 			var playerInfo = child.data;
 			if( child2 != null ){
@@ -168,13 +147,12 @@ function SortPlayersByColumn(columnID){
 				var isLower = CheckColumnValue(columnID, playerInfo, playerInfo2)
 
 				if( isLower ){
-					Container.MoveChildAfter(child, child2);
+					container.MoveChildAfter(child, child2);
 				};
 			};
 			
 		};
 	};	
-	
 };
 
 function CheckColumnValue(columnID, data1, data2){

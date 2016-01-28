@@ -16,7 +16,7 @@ function CreateControlGroupButton( index, entities){
 	};
 	
 	if( $("#ControlGroups").GetChildCount() >= 2 )
-		SortChildren( $("#ControlGroups") );
+		GameUI.CustomUIConfig.SortByCustomIndex( $("#ControlGroups"), false );
 };
 
 function IdentifyKey( keystring ){
@@ -30,22 +30,6 @@ function OnCreateControlGroupPressed( args ){
 	else
 		if( $("#ControlGroups").GetChild(Index-1) != null )
 			$("#ControlGroups").GetChild(Index-1).OnControlGroupButtonPressed();
-};
-
-function SortChildren( Container ){
-	$.Msg("Sorting child of panel: "+Container.id);
-	for(var i =0; i < Container.GetChildCount(); i++){
-		for(var j=0; j < Container.GetChildCount() - 1; j++){
-			var child = Container.GetChild(i);
-			var child2 = Container.GetChild(i+1);
-			
-			if( child2 != null ){
-				if( child.index > child2.index ){
-					Container.MoveChildAfter(child, child2);
-				};
-			};
-		};
-	};
 };
 
 function isControlDown(){
