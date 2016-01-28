@@ -7,7 +7,7 @@ require('ui/player_actions')
 require('ui/hud')
 require('ui/sounds')
 require('ui/messages')
-require('ui/shops')
+require('ui/shop')
 
 function dotacraft:UI_Init()
 	GameRules.UI_COLORTABLE = "dotacraft_color_table"
