@@ -1,42 +1,26 @@
-.ButtonPanel
+/* MAIN XML */
+.RootMechanicsPanel
 {
 	height: 100%;
 	width: 100%;
 }
-.ControlGroupButtonRoot
-{
-	height: 50px;
-	width: 75px;
-}
-.Hidden 
-{
-    visibility: collapse;
-    opacity: 0;
-}
 
-.HeroButtonsPanel
+/* buttons.js */
+#IdleWorkers
 {
-    width: 96px;
-    height: 500px;
-    border-radius:5px;
-    vertical-align: top;
-    flow-children: down;
-}
+    height: 54px;
+    width: 54px;
+	
+	vertical-align: bottom;
 
-.HeroButton
-{
-    width: 96px;
-    height: 56px;
-    border-radius:5px;
-    background-color: #ff0000;
-    vertical-align: top;
-    margin-bottom: 30px;
+	margin-bottom: 300px;
+	margin-left: 25px;
 }
 
 #IdleButton
 {
-    width: 54px;
-    height: 54px;
+	height: 100%;
+	width: 100%;
 	
     color: white;
     font-weight: bold;
@@ -44,12 +28,6 @@
 	
     border-radius:5px;
 	border: 1px solid #616161;
-	
-	margin-bottom: 300px;
-	margin-left: 25px;
-	
-	horizontal-align: left;
-	vertical-align: bottom; 
 }
 
 #IdleButton:hover
@@ -81,6 +59,13 @@
 		
 	font-size: 20px;
     text-align: center;
+}
+
+/* control_group.js | control_group_button.js */
+.ControlGroupButtonRoot
+{
+	height: 50px;
+	width: 75px;
 }
 
 #ControlGroups

@@ -1,9 +1,9 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/custom_game/buttons.css" />
+		<include src="file://{resources}/styles/custom_game/mechanics.css" />
 	</styles>
 	<scripts>
-		<include src="file://{resources}/scripts/control_group_button.js" />
+		<include src="file://{resources}/scripts/mechanics/control_group/control_group_button.js" />
 	</scripts>
 	<Panel class="ControlGroupButtonRoot" hittest="false">
 		<Button id="ControlGroupButton" onactivate="SelectGroupButtonPress()">

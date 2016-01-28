@@ -1,0 +1,25 @@
+<root>
+	<scripts>
+		<include src="file://{resources}/scripts/mechanics/control_group/control_group.js" />
+		<include src="file://{resources}/scripts/mechanics/idle_workers.js" />
+	</scripts>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/mechanics.css" />
+	</styles>
+	<script>
+		$.Msg( "Compiled Mechanics!" );
+	</script>
+	<Panel hittest="false" class="RootMechanicsPanel">
+	
+		<Panel id="IdleWorkers" >
+			<Button id="IdleButton" onactivate="OnIdleButtonPressed()">
+				<Image id="IdleButtonImage" />
+				<Label id="IdleNumber" text="" />
+			</Button>
+		</Panel>
+		
+		<Panel id="ControlGroups" />
+		
+	</Panel>
+</root>
+

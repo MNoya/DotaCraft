@@ -1,5 +1,5 @@
 <root>
-	<scripts>
+	<scripts> <!-- include scripts here that need to be active ASAP, otherwise mechanics.xml for GAME_IN_PROGRESS -->
 		<include src="file://{resources}/scripts/custom_game_ui_expanded.js" />
 	</scripts>
 	<Panel>
@@ -9,10 +9,10 @@
 		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/scripts.xml" />
 		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/resource.xml" />
 		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/notifications.xml" /> 
-		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/buttons.xml" /> 
 		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/hero_panels.xml" />
         <CustomUIElement type="Hud"                 layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
 		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/trading_alliances.xml" />
+		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/mechanics.xml" />
 		<CustomUIElement type="EndScreen"			layoutfile="file://{resources}/layout/custom_game/end_screen.xml" />
 	</Panel>
 </root>
