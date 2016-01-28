@@ -16,4 +16,3 @@ function dotacraft:RotateCamera( playerID )
     CustomGameEventManager:Send_ServerToPlayer(player, "rotate_camera", {})
     GameRules:SendCustomMessage("Arteezy was left", 0, 0)
 end
-

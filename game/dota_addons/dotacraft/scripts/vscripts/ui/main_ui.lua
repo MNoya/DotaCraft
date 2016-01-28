@@ -5,12 +5,15 @@ require('ui/pre_game')
 require('ui/end_screen')
 require('ui/player_actions')
 require('ui/hud')
-
-local UI_PLAYERTABLE = "dotacraft_player_table"
-local UI_COLORTABLE = "dotacraft_color_table"
-local UI_PREGAMETABLE = "dotacraft_pregame_table"
+require('ui/sounds')
+require('ui/messages')
+require('ui/shops')
 
 function dotacraft:UI_Init()
+	GameRules.UI_COLORTABLE = "dotacraft_color_table"
+	GameRules.UI_PLAYERTABLE = "dotacraft_player_table"
+	GameRules.UI_PREGAMETABLE = "dotacraft_pregame_table_table"
+	
 	dotacraft:UI_Listeners()
 	dotacraft:UI_SetupTables()
 end
@@ -70,18 +73,18 @@ end
 function dotacraft:SetupColorTable()
 	--print("creating color table")
 		
-	SetNetTableValue("dotacraft_color_table", "0", 	{r=255, g=3,   b=3	})	-- red
-	SetNetTableValue("dotacraft_color_table", "1", 	{r=0, 	g=66,  b=255})	-- blue
-	SetNetTableValue("dotacraft_color_table", "2", 	{r=28, 	g=230, b=185})	-- teal
-	SetNetTableValue("dotacraft_color_table", "3", 	{r=84, 	g=0,   b=129})	-- purple
-	SetNetTableValue("dotacraft_color_table", "4", 	{r=255, g=255, b=1	})	-- yellow
-	SetNetTableValue("dotacraft_color_table", "5", 	{r=254, g=138, b=14	})	-- orange
-	SetNetTableValue("dotacraft_color_table", "6", 	{r=32, 	g=192, b=0	})	-- green
-	SetNetTableValue("dotacraft_color_table", "7",	{r=229, g=91,  b=176})	-- pink
-	SetNetTableValue("dotacraft_color_table", "8",	{r=149, g=150, b=151})	-- gray	
-	SetNetTableValue("dotacraft_color_table", "9",	{r=126, g=191, b=241})	-- light blue	
-	SetNetTableValue("dotacraft_color_table", "10",	{r=16, 	g=98,  b=70 })	-- dark green	
-	SetNetTableValue("dotacraft_color_table", "11",	{r=78,  g=42,  b=4  })	-- brown		
+	SetNetTableValue(GameRules.UI_COLORTABLE, "0", 	{r=255, g=3,   b=3	})	-- red
+	SetNetTableValue(GameRules.UI_COLORTABLE, "1", 	{r=0, 	g=66,  b=255})	-- blue
+	SetNetTableValue(GameRules.UI_COLORTABLE, "2", 	{r=28, 	g=230, b=185})	-- teal
+	SetNetTableValue(GameRules.UI_COLORTABLE, "3", 	{r=84, 	g=0,   b=129})	-- purple
+	SetNetTableValue(GameRules.UI_COLORTABLE, "4", 	{r=255, g=255, b=1	})	-- yellow
+	SetNetTableValue(GameRules.UI_COLORTABLE, "5", 	{r=254, g=138, b=14	})	-- orange
+	SetNetTableValue(GameRules.UI_COLORTABLE, "6", 	{r=32, 	g=192, b=0	})	-- green
+	SetNetTableValue(GameRules.UI_COLORTABLE, "7",	{r=229, g=91,  b=176})	-- pink
+	SetNetTableValue(GameRules.UI_COLORTABLE, "8",	{r=149, g=150, b=151})	-- gray	
+	SetNetTableValue(GameRules.UI_COLORTABLE, "9",	{r=126, g=191, b=241})	-- light blue	
+	SetNetTableValue(GameRules.UI_COLORTABLE, "10",	{r=16, 	g=98,  b=70 })	-- dark green	
+	SetNetTableValue(GameRules.UI_COLORTABLE, "11",	{r=78,  g=42,  b=4  })	-- brown		
 
 end
 
@@ -111,7 +114,7 @@ end
 
 -- Returns a Vector with the color of the player
 function dotacraft:ColorForPlayer( playerID )
-	local Player_Table = GetNetTableValue("dotacraft_player_table", tostring(playerID))
-	local color = GetNetTableValue("dotacraft_color_table", tostring(Player_Table.color_id))
+	local Player_Table = GetNetTableValue(GameRules.UI_PLAYERTABLE, tostring(playerID))
+	local color = GetNetTableValue(GameRules.UI_COLORTABLE, tostring(Player_Table.color_id))
 	return Vector(color.r, color.g, color.b)
 end
