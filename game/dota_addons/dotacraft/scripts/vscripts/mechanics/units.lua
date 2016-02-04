@@ -422,7 +422,7 @@ end
 -- Returns the damage factor this unit does against another
 function CDOTA_BaseNPC:GetAttackFactorAgainstTarget( unit )
     local attack_type = self:GetAttackType()
-    local armor_type = self:GetArmorType()
+    local armor_type = unit:GetArmorType()
     local damageTable = GameRules.Damage
     return damageTable[attack_type] and damageTable[attack_type][armor_type] or 1
 end
