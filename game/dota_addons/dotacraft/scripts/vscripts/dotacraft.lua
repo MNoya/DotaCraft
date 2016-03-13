@@ -306,9 +306,6 @@ function dotacraft:InitGameMode()
   		t.health = TREE_HEALTH
   	end
 
-  	-- Store and update selected units of each pID
-	GameRules.SELECTED_UNITS = {}
-
 	-- Keeps the blighted gridnav positions
 	GameRules.Blight = {}
 
@@ -609,7 +606,7 @@ function dotacraft:InitializeTownHall( hero, position, building )
 
 	Timers:CreateTimer(0.5, function()
 		PlayerResource:SetCameraTarget(playerID, nil)
-		NewSelection(building)
+		PlayerResource:NewSelection(playerID, building)
 	end)
 
 	-- Find neutrals near the starting zone and remove them
@@ -1014,7 +1011,7 @@ function dotacraft:OnEntityKilled( event )
     end
 
     -- Remove dead units from selection group
-    RemoveUnitFromSelection(killed)
+    PlayerResource:RemoveFromSelection(killed_playerID, killed)
 
 	-- Hero Killed
 	if killed:IsRealHero() then
@@ -1191,7 +1188,7 @@ end
 -- Hides or shows the rally flag particles for the player (avoids visual clutter)
 function dotacraft:UpdateRallyFlagDisplays( playerID )
     local player = PlayerResource:GetPlayer(playerID)
-    local units = GetSelectedEntities(playerID)
+    local units = PlayerResource:GetSelectedEntities(playerID)
 
     Players:ClearPlayerFlags(playerID)
 

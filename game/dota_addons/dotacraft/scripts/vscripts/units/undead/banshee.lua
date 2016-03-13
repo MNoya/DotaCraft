@@ -39,7 +39,7 @@ function undead_possession( keys )
 			ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf", 1, target)
 			
 			-- kill and set selection
-			AddUnitToSelection(target)
+			PlayerResource:AddToSelection(target:GetPlayerOwnerID(), target)
 			caster:RemoveSelf()
 			
 			-- convert target unit information to match caster

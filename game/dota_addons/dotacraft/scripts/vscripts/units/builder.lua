@@ -677,7 +677,7 @@ function Gather( event )
                         Timers:CreateTimer(0.06, function() 
                             caster:Stop() 
                             caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
-                            RemoveUnitFromSelection(caster)
+                            PlayerResource:RemoveFromSelection(caster:GetPlayerOwnerID(), caster)
                         end)
 
                         -- Particle Counter on overhead

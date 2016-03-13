@@ -26,8 +26,8 @@ function UpgradeBuilding( event )
     building.flag = flag
 
 	-- If the building to ugprade is selected, change the selection to the new one
-	if IsCurrentlySelected(caster) then
-		AddUnitToSelection(building)
+	if PlayerResource:IsUnitSelected(playerID, caster) then
+		PlayerResource:AddToSelection(playerID, building)
 	end
 
 	 -- Add to the Food Limit if possible

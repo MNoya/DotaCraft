@@ -145,11 +145,15 @@ end
 function dotacraft:GiveItem(playerID, item_name)
 	local cmdPlayer = Convars:GetCommandClient()
 	
-	local selected = GetMainSelectedEntity(playerID)
-	local new_item = CreateItem(item_name, selected, selected)
-	if new_item then
-		selected:AddItem(new_item)
-	end
+	local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    if selected then
+        selected = EntIndexToHScript(selected)
+
+    	local new_item = CreateItem(item_name, selected, selected)
+    	if new_item then
+    		selected:AddItem(new_item)
+    	end
+    end
 end
 
 function dotacraft:DebugTrees()
@@ -243,7 +247,11 @@ function dotacraft:DebugFood()
 end
 
 function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
-    local pos = GetMainSelectedEntity(pID):GetAbsOrigin()
+    local selected = PlayerResource:GetMainSelectedEntity(pID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+
+    local pos = selected:GetAbsOrigin()
     local player = PlayerResource:GetPlayer(pID)
     local hero = player:GetAssignedHero()
 
@@ -276,7 +284,11 @@ function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
 end
 
 function dotacraft:TestHero( heroName, bEnemy )
-    local pos = GetMainSelectedEntity(0):GetAbsOrigin()
+    local selected = PlayerResource:GetMainSelectedEntity(pID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+
+    local pos = selected:GetAbsOrigin()
     local unitName = GetRealHeroName(heroName)
     local team = bEnemy and DOTA_TEAM_NEUTRALS or PlayerResource:GetTeam(0)
 

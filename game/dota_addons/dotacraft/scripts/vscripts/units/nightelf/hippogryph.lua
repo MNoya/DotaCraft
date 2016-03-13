@@ -76,7 +76,7 @@ function PickUpArcher( event )
 						archer:SetAngles(90,30,0)
 					end)
 
-					AddUnitToSelection(new_hippo)
+					PlayerResource:AddToSelection(playerID, new_hippo)
 
 					-- Add the archer upgrades to the new hippo rider
 					Players:AddUnit(playerID, new_hippo)
@@ -178,8 +178,8 @@ function Dismount( event )
 				pick_up_ability.archer = nil
 			end
 		end
-		AddUnitToSelection(new_hippo)
-		AddUnitToSelection(archer)
+		PlayerResource:AddToSelection(playerID, new_hippo)
+		PlayerResource:AddToSelection(playerID, archer)
 	
 
 		-- Add weapon/armor upgrade benefits

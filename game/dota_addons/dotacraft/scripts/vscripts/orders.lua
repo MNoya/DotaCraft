@@ -54,7 +54,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
-        local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+        local entityList = PlayerResource:GetSelectedEntities(playerID)
         if not entityList then return true end
         for _,entityIndex in pairs(entityList) do
             local caster = EntIndexToHScript(entityIndex)
@@ -184,7 +184,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             return true
         end
         local abilityName = ability:GetAbilityName()
-        local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+        local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
 
         if string.match(abilityName, "_return_resources") then
             for k,entityIndex in pairs(entityList) do
@@ -228,7 +228,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if DEBUG then DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10) end
         
         -- Get the currently selected units and send new orders
-        local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+        local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
         if not entityList then
             return true
         end
@@ -314,7 +314,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local return_ability = FindReturnAbility(unit)
         local pID = unit:GetPlayerOwnerID()
         local player = PlayerResource:GetPlayer(pID)
-        local entityList = GetSelectedEntities(pID)
+        local entityList = PlayerResource:GetSelectedEntities(pID)
         local numBuilders = 0
         for k,entityIndex in pairs(entityList) do
             if CanGatherLumber(EntIndexToHScript(entityIndex)) then
@@ -508,7 +508,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             -- Get the currently selected units and send new orders
             local pID = unit:GetPlayerOwnerID()
             local player = PlayerResource:GetPlayer(pID)
-            local entityList = GetSelectedEntities(pID)
+            local entityList = PlayerResource:GetSelectedEntities(pID)
             if not entityList then
                 return true
             end
@@ -548,7 +548,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
             --print("Order: Repair ",target_handle:GetUnitName())
 
             -- Get the currently selected units and send new orders
-            local entityList = GetSelectedEntities(unit:GetPlayerOwnerID())
+            local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
             if not entityList then
                 return true
             end
@@ -653,7 +653,7 @@ function dotacraft:BurrowOrder( event )
 
     if peons_inside < 4 then
         local ability = burrow:FindAbilityByName("orc_burrow_peon")
-        local selectedEntities = GetSelectedEntities(pID)
+        local selectedEntities = PlayerResource:GetSelectedEntities(pID)
 
         -- Send the main unit
         ExecuteOrderFromTable({ UnitIndex = burrowIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = entityIndex, AbilityIndex = ability:GetEntityIndex(), Queue = false})
@@ -682,7 +682,7 @@ function dotacraft:RepairOrder( event )
     local entityIndex = event.mainSelected
     local targetIndex = event.targetIndex
     local building = EntIndexToHScript(targetIndex)
-    local selectedEntities = GetSelectedEntities(pID)
+    local selectedEntities = PlayerResource:GetSelectedEntities(pID)
     local queue = tobool(event.queue)
     dotacraft:RightClickOrder(event)
 
@@ -732,7 +732,7 @@ end
 ------------------------------------------------ 
 function dotacraft:RightClickOrder( event )
     local pID = event.pID
-    local selectedEntities = GetSelectedEntities(pID)
+    local selectedEntities = PlayerResource:GetSelectedEntities(pID)
 
     for _,entityIndex in pairs(selectedEntities) do
         local unit = EntIndexToHScript(entityIndex)
@@ -760,7 +760,7 @@ function dotacraft:OnBuildingRallyOrder( event )
     end
 
     local player = PlayerResource:GetPlayer(pID)
-    local units = GetSelectedEntities(pID)
+    local units = PlayerResource:GetSelectedEntities(pID)
 
     Players:ClearPlayerFlags(pID)
 

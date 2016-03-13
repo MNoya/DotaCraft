@@ -188,7 +188,7 @@ function morph_into_destroyer(keys)
 		Players:AddUnit(playerID, CreatedUnit)
 		
 		ParticleManager:CreateParticle("particles/siege_fx/siege_bad_death_01.vpcf", 0, CreatedUnit)
-		AddUnitToSelection(CreatedUnit)
+		PlayerResource:AddToSelection(playerID, CreatedUnit)
 		caster:RemoveSelf()
 	end)
 end

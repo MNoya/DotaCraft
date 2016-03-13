@@ -322,7 +322,6 @@ function ReplaceUnit( unit, new_unit_name )
 
     local position = unit:GetAbsOrigin()
     local relative_health = unit:GetHealthPercent()
-    local bSelected = IsCurrentlySelected(unit)
 
     local new_unit = CreateUnitByName(new_unit_name, position, true, hero, hero, hero:GetTeamNumber())
     new_unit:SetOwner(hero)
@@ -330,8 +329,8 @@ function ReplaceUnit( unit, new_unit_name )
     new_unit:SetHealth(new_unit:GetMaxHealth() * relative_health)
     FindClearSpaceForUnit(new_unit, position, true)
 
-    if bSelected then
-        AddUnitToSelection(new_unit)
+    if PlayerResource:IsUnitSelected(playerID, unit) then
+        PlayerResource:AddToSelection(playerID, new_unit)
     end
 
     -- Add the new unit to the player units

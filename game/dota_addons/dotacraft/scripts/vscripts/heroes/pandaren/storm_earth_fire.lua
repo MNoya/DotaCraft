@@ -7,7 +7,7 @@
 -- Starts the ability
 function PrimalSplit( event )
 	local caster = event.caster
-	local player = caster:GetPlayerID()
+	local playerID = caster:GetPlayerID()
 	local ability = event.ability
 	local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1 )
 	local level = ability:GetLevel()
@@ -43,15 +43,15 @@ function PrimalSplit( event )
 	caster.Storm = CreateUnitByName(unit_name_storm, storm_position, true, caster, caster, caster:GetTeamNumber())
 	caster.Fire = CreateUnitByName(unit_name_fire, fire_position, true, caster, caster, caster:GetTeamNumber())
 
-	AddUnitToSelection(caster.Earth)
-	AddUnitToSelection(caster.Storm)
-	AddUnitToSelection(caster.Fire)
-	RemoveUnitFromSelection(caster)
+	PlayerResource:AddToSelection(playerID, caster.Earth)
+	PlayerResource:AddToSelection(playerID, caster.Storm)
+	PlayerResource:AddToSelection(playerID, caster.Fire)
+	PlayerResource:RemoveFromSelection(playerID, caster)
 
 	-- Make them controllable
-	caster.Earth:SetControllableByPlayer(player, true)
-	caster.Storm:SetControllableByPlayer(player, true)
-	caster.Fire:SetControllableByPlayer(player, true)
+	caster.Earth:SetControllableByPlayer(playerID, true)
+	caster.Storm:SetControllableByPlayer(playerID, true)
+	caster.Fire:SetControllableByPlayer(playerID, true)
 
 	-- Set all of them looking at the same point as the caster
 	caster.Earth:SetForwardVector(forwardV)

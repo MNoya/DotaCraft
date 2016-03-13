@@ -114,7 +114,7 @@ end
 function Players:ClearPlayerFlags( playerID )
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     local flags = Players:GetPlayerFlags( playerID )
-    local selected = GetSelectedEntities(playerID)
+    local selected = PlayerResource:GetSelectedEntities(playerID)
 
     if not flags then return end
     
@@ -591,6 +591,8 @@ end
 
 function Players:SetMainCityCenter( playerID, building )
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    PlayerResource:SetDefaultSelectionEntity(playerID, building)
 
     hero.main_city_center = building
 end

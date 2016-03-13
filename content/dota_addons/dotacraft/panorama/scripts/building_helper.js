@@ -77,7 +77,6 @@ function StartBuildingHelper( params )
         modelOffset = params.modelOffset;
 
         requires = GetRequiredGridType(entindex)
-        $.Msg(Entities.GetUnitName(entindex)," requires ", requires)
         distance_to_gold_mine = HasGoldMineDistanceRestriction(entindex)
         
         // If we chose to not recolor the ghost model, set it white
@@ -244,7 +243,7 @@ function StartBuildingHelper( params )
             {
                 for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
                 {
-                    var pos = [x,y,GamePos[2]]
+                    var pos = SnapHeight(x,y,GamePos[2])
                     if (part>size*size)
                         return
 
@@ -293,7 +292,7 @@ function StartBuildingHelper( params )
                 {
                     for (var y2=boundingRect2["topBorderY"]-32; y2 >= boundingRect2["bottomBorderY"]+32; y2-=64)
                     {
-                        var pos2 = [x2,y2,GamePos[2]]
+                        var pos2 = SnapHeight(x2,y2,GamePos[2])
                         if (part2>=overlay_size*overlay_size)
                             return
 
@@ -321,9 +320,7 @@ function StartBuildingHelper( params )
                 }
             }
 
-            // Update the model particle
-            Particles.SetParticleControl(modelParticle, 0, [GamePos[0],GamePos[1],GamePos[2]+modelOffset])
-            if (propParticle !== undefined) Particles.SetParticleControl(propParticle, 0, [GamePos[0],GamePos[1],GamePos[2]+offsetZ])
+            var modelPos = SnapHeight(GamePos[0],GamePos[1],GamePos[2])
 
             // Destroy the range overlay if its not a valid building location
             if (invalid)
@@ -347,7 +344,18 @@ function StartBuildingHelper( params )
             }
 
             if (rangeOverlay !== undefined)
-                Particles.SetParticleControl(rangeOverlay, 0, GamePos)
+                Particles.SetParticleControl(rangeOverlay, 0, modelPos)
+
+            // Update the model particle
+            modelPos[2]+=modelOffset
+            Particles.SetParticleControl(modelParticle, 0, modelPos)
+
+            if (propParticle !== undefined)
+            {
+                var pedestalPos = SnapHeight(GamePos[0],GamePos[1],GamePos[2])
+                pedestalPos[2]+=offsetZ
+                Particles.SetParticleControl(propParticle, 0, pedestalPos)
+            }
 
             // Turn the model red if we can't build there
             if (turn_red){
@@ -389,7 +397,6 @@ function SendBuildCommand( params )
     pressedShift = GameUI.IsShiftDown();
     var mainSelected = Players.GetLocalPlayerPortraitUnit(); 
 
-    $.Msg("Send Build command. Queue: "+pressedShift)
     var mPos = GameUI.GetCursorPosition();
     var GamePos = Game.ScreenXYToWorld(mPos[0], mPos[1]);
 
@@ -408,11 +415,6 @@ function SendCancelCommand( params )
 {
     EndBuildingHelper();
     GameEvents.SendCustomGameEventToServer( "building_helper_cancel_command", {} );
-}
-
-function UpdateSelectedUnits( argument ) {
-    var newSelectedEntities = Players.GetSelectedEntities( Players.GetLocalPlayer() );
-    GameEvents.SendCustomGameEventToServer( "bh_update_selected_entities", { selected_entities: newSelectedEntities })
 }
 
 function RegisterGNV(msg){
@@ -480,7 +482,6 @@ function RequestGNV () {
 
     GameEvents.Subscribe( "building_helper_enable", StartBuildingHelper);
     GameEvents.Subscribe( "building_helper_end", EndBuildingHelper);
-    GameEvents.Subscribe( "dota_player_update_selected_unit", UpdateSelectedUnits );
 
     GameEvents.Subscribe( "gnv_register", RegisterGNV);
 })();
@@ -507,6 +508,10 @@ function SnapToGrid64(coord) {
 
 function SnapToGrid32(coord) {
     return 32+64*Math.floor(coord/64);
+}
+
+function SnapHeight(x,y,z){
+    return [x, y, z - ((z+1)%128)]
 }
 
 function IsBlocked(position) {
