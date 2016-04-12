@@ -389,6 +389,10 @@ function HasArtilleryAttack( unit )
     return unitTable and unitTable["Artillery"]
 end
 
+function CDOTA_BaseNPC:RenderTeamColor()
+    return GameRules.UnitKV[self:GetUnitName()]["RenderTeamColor"]
+end
+
 -- All units should have DOTA_COMBAT_CLASS_DEFEND_HERO and DOTA_COMBAT_CLASS_DEFEND_HERO, or no CombatClassAttack/ArmorType defined
 -- Returns a string with the wc3 damage name
 function CDOTA_BaseNPC:GetAttackType()

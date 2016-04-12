@@ -145,6 +145,11 @@ function Build( event )
             unit.overrideBuildTime = .1
         end
 
+        if unit:RenderTeamColor() then
+            local color = TEAM_COLORS[teamNumber]
+            unit:SetRenderColor(color[1], color[2], color[3])
+        end
+
         -- If it's an item-ability and has charges, remove a charge or remove the item if no charges left
         if ability.GetCurrentCharges and not ability:IsPermanent() then
             local charges = ability:GetCurrentCharges()

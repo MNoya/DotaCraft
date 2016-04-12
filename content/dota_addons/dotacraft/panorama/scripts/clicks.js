@@ -229,6 +229,10 @@ function IsBuilder(entIndex) {
     return (tableValue !== undefined) && (tableValue.IsBuilder == 1)
 }
 
+function IsCustomBuilding(entIndex) {
+    return (Entities.GetAbilityByName( entIndex, "ability_building") != -1 || Entities.GetAbilityByName( entIndex, "ability_tower") != -1)
+}
+
 function IsShop(entIndex) {
     return (IsCustomBuilding(entIndex) && Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
 }
