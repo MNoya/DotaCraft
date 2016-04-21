@@ -23,8 +23,8 @@ if IsServer() then
         local origin = minimap_entity:GetAbsOrigin()
         self.neutrals = FindUnitsInRadius(teamNumber, origin, nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
         self.hidden = true
-        
-        Timers:CreateTimer(0.5, function()
+
+        Timers:CreateTimer(0.1, function()
             self.hidden = false
 
             -- Does the team have vision of any neutral on the camp?
@@ -88,7 +88,7 @@ function Minimap:InitializeCampIcons()
     end
 
     -- For each minimap_ entity, replicate one for each team
-    local entities = Entities:FindAllByClassname("npc_dota_building")
+    local entities = Entities:FindAllByClassname("npc_dota_creature")
     for _,ent in pairs(entities) do
         if string.match(ent:GetUnitName(), "minimap_") then
             local unitName = ent:GetUnitName()
