@@ -31,6 +31,10 @@ function Units:Init( unit )
             local gather_ability = FindGatherAbility( unit )
             return gather_ability and gather_ability:GetLevelSpecialValueFor("lumber_capacity", gather_ability:GetLevel()-1) or 0
         end
+
+        if CanGatherLumber(unit) then
+            unit:SetCanAttackTrees(true)
+        end
     end
 
     -- Attack system, only applied to units and buildings with an attack
@@ -428,4 +432,13 @@ function CDOTA_BaseNPC:GetAttackFactorAgainstTarget( unit )
     local armor_type = unit:GetArmorType()
     local damageTable = GameRules.Damage
     return damageTable[attack_type] and damageTable[attack_type][armor_type] or 1
+end
+
+-- Enables/disables the access to right-clicking
+function CDOTA_BaseNPC:SetCanAttackTrees(bAble)
+    if bAble then
+        ApplyModifier(self, "modifier_attack_trees")
+    else
+        self:RemoveModifierByName("modifier_attack_trees")
+    end
 end

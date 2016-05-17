@@ -1,4 +1,4 @@
-BH_VERSION = "1.1.0"
+BH_VERSION = "1.1.4"
 
 require('libraries/timers')
 require('libraries/selection')
@@ -58,26 +58,46 @@ function BuildingHelper:Init()
     BuildingHelper:ParseKV(BuildingHelper.ItemKV, BuildingHelper.KV)
     BuildingHelper:ParseKV(BuildingHelper.UnitKV, BuildingHelper.KV)
 
-    -- Hook to override the order filter
-    debug.sethook(function(...)
-        local info = debug.getinfo(2)
-        local src = tostring(info.short_src)
-        local name = tostring(info.name)
-        if name ~= "__index" then
+    -- Hook Boilerplate
+    if not __ACTIVATE_HOOK then
+        __ACTIVATE_HOOK = {funcs={}}
+        setmetatable(__ACTIVATE_HOOK, {
+          __call = function(t, func)
+            table.insert(t.funcs, func)
+          end
+        })
+
+        debug.sethook(function(...)
+          local info = debug.getinfo(2)
+          local src = tostring(info.short_src)
+          local name = tostring(info.name)
+          if name ~= "__index" then
             if string.find(src, "addon_game_mode") then
-                if GameRules:GetGameModeEntity() then
-                    local mode = GameRules:GetGameModeEntity()
-                    mode:SetExecuteOrderFilter(Dynamic_Wrap(BuildingHelper, 'OrderFilter'), BuildingHelper)
-                    self.oldFilter = mode.SetExecuteOrderFilter
-                    mode.SetExecuteOrderFilter = function(mode, fun, context)
-                        BuildingHelper.nextFilter = fun
-                        BuildingHelper.nextContext = context
-                    end
-                    debug.sethook(nil, "c")
+              if GameRules:GetGameModeEntity() then
+                for _, func in ipairs(__ACTIVATE_HOOK.funcs) do
+                  local status, err = pcall(func)
+                  if not status then
+                    print("__ACTIVATE_HOOK callback error: " .. err)
+                  end
                 end
+
+                debug.sethook(nil, "c")
+              end
             end
+          end
+        end, "c")
+    end
+
+    -- Hook the order filter
+    __ACTIVATE_HOOK(function()
+        local mode = GameRules:GetGameModeEntity()
+        mode:SetExecuteOrderFilter(Dynamic_Wrap(BuildingHelper, 'OrderFilter'), BuildingHelper)
+        self.oldFilter = mode.SetExecuteOrderFilter
+        mode.SetExecuteOrderFilter = function(mode, fun, context)
+            BuildingHelper.nextFilter = fun
+            BuildingHelper.nextContext = context
         end
-    end, "c")
+    end)
 end
 
 function BuildingHelper:LoadSettings()
@@ -98,7 +118,7 @@ function BuildingHelper:LoadSettings()
     CustomNetTables:SetTableValue("building_settings", "permanent_alt_grid", { value = tobool(BuildingHelper.Settings["PERMANENT_ALT_GRID"]) })
     CustomNetTables:SetTableValue("building_settings", "update_trees", { value = BuildingHelper.Settings["UPDATE_TREES"] })
 
-    if BuildingHelper.Settings["HEIGHT_RESTRICTION"] ~= "" then
+    if BuildingHelper.Settings["HEIGHT_RESTRICTION"] and BuildingHelper.Settings["HEIGHT_RESTRICTION"] ~= "" then
         CustomNetTables:SetTableValue("building_settings", "height_restriction", { value = BuildingHelper.Settings["HEIGHT_RESTRICTION"] })
     end
 end
@@ -599,6 +619,11 @@ function BuildingHelper:SetupBuildingTable(abilityName, builderHandle)
     function buildingTable:GetVal(key, expectedType)
         local val = buildingTable[key]
 
+        -- Return value directly if no second parameter
+        if not expectedType then
+            return val
+        end
+
         -- Handle missing values.
         if val == nil then
             if expectedType == "bool" then
@@ -840,7 +865,7 @@ function BuildingHelper:RemoveBuilding(building, bSkipEffects)
         local particleName = BuildingHelper.UnitKV[building:GetUnitName()]["DestructionEffect"]
         if particleName then
             local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, building)
-            ParticleManager:SetParticleControl(particle, 0, building:GetAbsOrigin())
+            ParticleManager:SetParticleControlEnt(particle, 0, building, PATTACH_POINT_FOLLOW, "attach_origin", building:GetAbsOrigin(), true)
         end
 
         if building.fireEffectParticle then
@@ -859,8 +884,7 @@ function BuildingHelper:RemoveBuilding(building, bSkipEffects)
     end
 
     for k, v in pairs(building.blockers) do
-        DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
-        DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
+        UTIL_Remove(v)
     end
 end
 
@@ -981,7 +1005,7 @@ function BuildingHelper:StartBuilding(builder)
 
     local bScale = buildingTable:GetVal("Scale", "bool") -- whether we should scale the building.
     local fInitialModelScale = 0.2 -- initial size
-    local fMaxScale = buildingTable:GetVal("MaxScale", "float") or 1 -- the amount to scale to
+    local fMaxScale = building.overrideMaxScale or buildingTable:GetVal("MaxScale", "float") or 1 -- the amount to scale to
     local fScaleInterval = (fMaxScale-fInitialModelScale) / (buildTime / fserverFrameRate) -- scale to add every frame, distributed by build time
     local fCurrentScale = fInitialModelScale -- start the building at the initial model scale
     local bScaling = false -- Keep tracking if we're currently model scaling.
@@ -1258,17 +1282,9 @@ function BuildingHelper:BlockPSO(size, location)
     BuildingHelper:SnapToGrid(size, pos)
 
     local gridNavBlockers = {}
-    if size == 5 then
+    if size % 2 == 1 then
         for x = pos.x - (size-2) * 32, pos.x + (size-2) * 32, 64 do
             for y = pos.y - (size-2) * 32, pos.y + (size-2) * 32, 64 do
-                local blockerLocation = Vector(x, y, pos.z)
-                local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
-                table.insert(gridNavBlockers, ent)
-            end
-        end
-    elseif size == 3 then
-        for x = pos.x - (size / 2) * 32 , pos.x + (size / 2) * 32 , 64 do
-            for y = pos.y - (size / 2) * 32 , pos.y + (size / 2) * 32 , 64 do
                 local blockerLocation = Vector(x, y, pos.z)
                 local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
                 table.insert(gridNavBlockers, ent)
@@ -1280,8 +1296,8 @@ function BuildingHelper:BlockPSO(size, location)
             local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = pos})
             table.insert(gridNavBlockers, ent)
         else
-            for x = pos.x - len, pos.x + len, len do
-                for y = pos.y - len, pos.y + len, len do
+            for x = pos.x - len, pos.x + len, 128 do
+                for y = pos.y - len, pos.y + len, 128 do
                     local blockerLocation = Vector(x, y, pos.z)
                     local ent = SpawnEntityFromTableSynchronous("point_simple_obstruction", {origin = blockerLocation})
                     table.insert(gridNavBlockers, ent)
@@ -1513,18 +1529,50 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     end
 
     -- Check enemy units blocking the area
-    local construction_radius = size * 64 - 32
+    local construction_radius = size * 64
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
     local enemies = FindUnitsInRadius(unit:GetTeamNumber(), location, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
-    if #enemies > 0 then
-        if callbacks.onConstructionFailed then
-            callbacks.onConstructionFailed()
-            return false
-        end
+
+    for _,enemy in pairs(enemies) do
+        local origin = enemy:GetAbsOrigin()
+        if not IsCustomBuilding(enemy) and BuildingHelper:EnemyIsInsideBuildingArea(enemy:GetAbsOrigin(), location, size) then
+            if callbacks.onConstructionFailed then
+                callbacks.onConstructionFailed()
+                return false
+            end
+        end      
     end
 
     return true
+end
+
+function BuildingHelper:GetBounds(point, len)
+    local bounds = {}
+    local X1 = point.x + len
+    local X2 = point.x - len
+    local Y1 = point.y + len
+    local Y2 = point.y - len
+    bounds.Min = {x=math.min(X1, X2),y=math.min(Y1, Y2)}
+    bounds.Max = {x=math.max(X1, X2),y=math.max(Y1, Y2)}
+    return bounds
+end
+
+function BuildingHelper:EnemyIsInsideBuildingArea(enemy_location, building_location, size)
+    local bBounds = BuildingHelper:GetBounds(building_location, size * 32)
+    
+    -- Enemy covers 2x2 squares
+    BuildingHelper:SnapToGrid(2, enemy_location)
+    local eBounds = BuildingHelper:GetBounds(enemy_location, 64)
+
+    local function between(num, lower, upper)
+        return num < upper and num > lower
+    end
+
+    local betweenX = between(eBounds.Min.x, bBounds.Min.x, bBounds.Max.x) or between(eBounds.Max.x, bBounds.Min.x, bBounds.Max.x)
+    local betweenY = between(eBounds.Min.y, bBounds.Min.y, bBounds.Max.y) or between(eBounds.Max.y, bBounds.Min.y, bBounds.Max.y)
+
+    return betweenX and betweenY
 end
 
 -- If not all squares are buildable, the area is blocked
@@ -2044,8 +2092,10 @@ end
 
 -- In case a height restriction was defined, checks if the location passes the height test
 function BuildingHelper:MeetsHeightCondition(location)
-    if BuildingHelper.Settings["HEIGHT_RESTRICTION"] ~= "" then
+    if BuildingHelper.Settings["HEIGHT_RESTRICTION"] and BuildingHelper.Settings["HEIGHT_RESTRICTION"] ~= "" then
         return location.z >= BuildingHelper.Settings["HEIGHT_RESTRICTION"]
+    else
+        return true
     end
 end
 

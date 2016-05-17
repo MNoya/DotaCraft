@@ -395,7 +395,7 @@ function CancelBuilding( keys )
 
     building.state = "canceled"
     Timers:CreateTimer(1/5, function() 
-        BuildingHelper:RemoveBuilding(building, true)
+        building:ForceKill(true)
     end)
 end
 
@@ -468,13 +468,13 @@ function Gather( event )
         end
 
         local tree_pos = tree:GetAbsOrigin()
-        local particleName = "particles/ui_mouseactions/ping_circle_static.vpcf"
+        --[[local particleName = "particles/ui_mouseactions/ping_circle_static.vpcf"
         local particle = ParticleManager:CreateParticleForPlayer(particleName, PATTACH_CUSTOMORIGIN, caster, caster:GetPlayerOwner())
         ParticleManager:SetParticleControl(particle, 0, Vector(tree_pos.x, tree_pos.y, tree_pos.z+20))
         ParticleManager:SetParticleControl(particle, 1, Vector(0,255,0))
         Timers:CreateTimer(3, function() 
             ParticleManager:DestroyParticle(particle, true)
-        end)
+        end)]]
 
         -- If the caster already had a tree targeted but changed with a right click to another tree, destroy the old move timer
         if caster.moving_timer then

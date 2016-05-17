@@ -731,11 +731,17 @@ end
 --             Generic Right-Click            --
 ------------------------------------------------ 
 function dotacraft:RightClickOrder( event )
-    local pID = event.pID
+    local pID = event.PlayerID
     local selectedEntities = PlayerResource:GetSelectedEntities(pID)
+    local point = event.position
+    if not point then return end
+    local position = GetGroundPosition(Vector(point["0"], point["1"], 0), nil)
 
     for _,entityIndex in pairs(selectedEntities) do
         local unit = EntIndexToHScript(entityIndex)
+
+        ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = position, Queue = false})
+
         if IsValidAlive(unit) and unit:HasModifier("modifier_hold_position") then
             unit:RemoveModifierByName("modifier_hold_position")
         end

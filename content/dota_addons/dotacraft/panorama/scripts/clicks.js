@@ -107,6 +107,11 @@ function OnRightButtonPressed()
             }
             return false
         }
+        else
+        {
+            $.Msg("Builder right click without a target")
+            GameEvents.SendCustomGameEventToServer("right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
+        }
     }
 
     // Building Right Click
@@ -158,7 +163,7 @@ function OnRightButtonPressed()
 
         else
         {
-            GameEvents.SendCustomGameEventToServer( "right_click_order", { pID: iPlayerID })
+            GameEvents.SendCustomGameEventToServer( "right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
         }
     }
 
@@ -231,6 +236,10 @@ function IsBuilder(entIndex) {
 
 function IsCustomBuilding(entIndex) {
     return (Entities.GetAbilityByName( entIndex, "ability_building") != -1 || Entities.GetAbilityByName( entIndex, "ability_tower") != -1)
+}
+
+function IsMechanical(entIndex) {
+    return (Entities.GetAbilityByName( entIndex, "ability_siege") != -1)
 }
 
 function IsShop(entIndex) {

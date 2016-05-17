@@ -180,7 +180,6 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
-    LinkLuaModifier("modifier_attack_trees", "libraries/modifiers/modifier_attack_trees", LUA_MODIFIER_MOTION_NONE)
 	
 	-- Remove building invulnerability
 	local allBuildings = Entities:FindAllByClassname('npc_dota_building')
@@ -486,8 +485,6 @@ function dotacraft:InitializePlayer( hero )
 
 		-- Increment food used
 		Players:ModifyFoodUsed(playerID, GetFoodCost(builder))
-
-        builder:AddNewModifier(builder, nil, "modifier_attack_trees", {})
 
 		-- Go through the abilities and upgrade
 		CheckAbilityRequirements( builder, playerID )
