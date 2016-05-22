@@ -176,7 +176,7 @@ function DispelMagic( event )
 		unit:Purge(true, false, false, false, false)
 
 		if unit:IsSummoned() then
-			ApplyDamage({ victim = unit, attacker = event.target, damage = damage, damage_type = abilityDamageType}) 
+			ApplyDamage({ victim = unit, attacker = event.target, damage = damage, ability = ability, damage_type = abilityDamageType}) 
 		end
 	end
 end

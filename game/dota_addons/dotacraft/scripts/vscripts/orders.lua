@@ -46,6 +46,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
     end
 
+    -- Don't need this.
+    if order_type == DOTA_UNIT_ORDER_RADAR then return end
+
     ------------------------------------------------
     --           Ability Multi Order              --
     ------------------------------------------------
@@ -1041,4 +1044,7 @@ ORDERS = {
     [27] = "DOTA_UNIT_ORDER_PING_ABILITY",
     [28] = "DOTA_UNIT_ORDER_MOVE_TO_DIRECTION",
     [29] = "DOTA_UNIT_ORDER_PATROL",
+    [30] = "DOTA_UNIT_ORDER_VECTOR_TARGET_POSITION",
+    [31] = "DOTA_UNIT_ORDER_RADAR",
+    [32] = "DOTA_UNIT_ORDER_SET_ITEM_COMBINE_LOCK",
 }

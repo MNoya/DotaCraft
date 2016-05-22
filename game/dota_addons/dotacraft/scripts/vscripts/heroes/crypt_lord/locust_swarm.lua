@@ -222,6 +222,7 @@ function LocustSwarmPhysics( event )
 						damage_table.attacker = caster					
 						damage_table.damage_type = abilityDamageType
 						damage_table.damage = locust_damage
+						damage_table.ability = ability
 
 						ApplyDamage(damage_table)
 

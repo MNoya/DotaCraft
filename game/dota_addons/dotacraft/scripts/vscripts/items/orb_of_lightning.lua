@@ -17,6 +17,6 @@ function SummonDamage( event )
 	local damage_to_summons = ability:GetLevelSpecialValueFor("damage_to_summons", (ability:GetLevel() - 1))
 
 	if target:IsSummoned() or target:IsDominated() then
-		ApplyDamage({ victim = target, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_MAGICAL })
+		ApplyDamage({ victim = target, attacker = caster, damage = damage_to_summons, ability = ability, damage_type = DAMAGE_TYPE_MAGICAL })
 	end
 end

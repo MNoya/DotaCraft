@@ -34,7 +34,7 @@ function ChainLightning( event )
         start_position.z = start_position.z + target:GetBoundingMaxs().z
     end
 
-    local current_position = CreateChainLightning(caster, start_position, target, damage)
+    local current_position = CreateChainLightning(caster, start_position, target, damage, ability)
 
     -- Every target struck by the chain is added to an entity index list
     local targetsStruck = {}
@@ -58,7 +58,7 @@ function ChainLightning( event )
 
             if bounce_target then
                 damage = damage - (damage*decay)
-                current_position = CreateChainLightning(caster, current_position, bounce_target, damage)
+                current_position = CreateChainLightning(caster, current_position, bounce_target, damage, ability)
 
                 -- decrement remaining spell bounces
                 bounces = bounces - 1
@@ -73,7 +73,7 @@ function ChainLightning( event )
 end
 
 -- Creates a chain lightning on a start position towards a target. Also does sound, damage and popup
-function CreateChainLightning( caster, start_position, target, damage )
+function CreateChainLightning( caster, start_position, target, damage, ability )
     local target_position = target:GetAbsOrigin()
     local attach_hitloc = target:ScriptLookupAttachment("attach_hitloc")
     if attach_hitloc ~= 0 then
@@ -87,7 +87,7 @@ function CreateChainLightning( caster, start_position, target, damage )
     ParticleManager:SetParticleControl(particle,1, target_position)
 
     EmitSoundOn("Hero_Zuus.ArcLightning.Target", target)    
-    ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
+    ApplyDamage({ victim = target, attacker = caster, damage = damage, ability = ability, damage_type = DAMAGE_TYPE_MAGICAL })
     PopupDamage(target, math.floor(damage))
 
     return target_position

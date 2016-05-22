@@ -15,6 +15,6 @@ function ThornsAura( event )
 	-- Apply the damage only to ranged attacker
 	if not attacker:IsRangedAttacker() then
 
-		ApplyDamage({ victim = attacker, attacker = target, damage = return_damage, damage_type = abilityDamageType })
+		ApplyDamage({ victim = attacker, attacker = target, damage = return_damage, ability = ability, damage_type = abilityDamageType })
 	end
 end

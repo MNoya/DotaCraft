@@ -39,7 +39,7 @@ function death_knight_death_coil:OnProjectileHit( target, location )
 	local heal = ability:GetLevelSpecialValueFor( "heal_amount" , ability:GetLevel() - 1 )
 	
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
+		ApplyDamage({ victim = target, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 	else
 		local healDone = math.min(heal,target:GetHealthDeficit())
 		if healDone > 0 then

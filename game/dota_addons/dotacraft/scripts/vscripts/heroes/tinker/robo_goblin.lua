@@ -79,7 +79,7 @@ function DealSiegeDamage( event )
 	print("damage siege")
 	if target.GetInvulnCount then
 		print(damage)
-		ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
+		ApplyDamage({ victim = target, attacker = caster, damage = damage, ability = ability, damage_type = DAMAGE_TYPE_PHYSICAL })
 	end
 
  end 

@@ -36,9 +36,7 @@ function DeathAndDecayDamage( event )
 		local targetHP = target:GetMaxHealth()
 		local damage = targetHP * health_percent_damage_per_sec
 
-		--ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType })
-		ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES}) 
-		
+		ApplyDamage({ victim = target, attacker = caster, damage = damage, ability = ability, damage_type = AbilityDamageType, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES})
 
 		local isBuilding = target:FindAbilityByName("ability_building")
 		if isBuilding then

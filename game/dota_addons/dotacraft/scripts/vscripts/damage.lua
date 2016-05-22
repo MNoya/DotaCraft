@@ -85,7 +85,12 @@ function dotacraft:FilterDamage( filterTable )
 		
 		-- Reassign the new damage
 		filterTable["damage"] = damage
+	end
 
+	-- Revert damage from MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+    local inflictor = filterTable["entindex_inflictor_const"]
+	if inflictor and attacker:IsHero() then
+	    filterTable["damage"] = filterTable["damage"]/(1+((attacker:GetIntellect()/16)/100))
 	end
 
 	-- Cheat code host only

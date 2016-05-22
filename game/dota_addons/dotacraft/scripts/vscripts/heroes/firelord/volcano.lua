@@ -61,7 +61,7 @@ function VolcanoWave( event )
 	for _,unit in pairs(targets) do
 		if unit ~= caster then
 			ability:ApplyDataDrivenModifier(caster, unit, "modifier_volcano_stun", {duration = stun_duration})
-			ApplyDamage({ victim = unit, attacker = caster, damage = wave_damage, damage_type = abilityDamageType })
+			ApplyDamage({ victim = unit, attacker = caster, ability = ability, damage = wave_damage, damage_type = abilityDamageType })
 		end
 	end			
 end
