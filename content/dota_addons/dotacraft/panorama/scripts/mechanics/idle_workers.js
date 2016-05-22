@@ -65,5 +65,5 @@ function RotateCamera() {
 	GameEvents.Subscribe( "player_update_idle_builders", OnPlayerUpdateIdleBuilders );
 	
 	// Idle Builders Key
-	Game.AddCommand( "+IdleBuilderSwap", OnIdleButtonPressed, "", 0 );			
+	GameUI.Keybinds.IdleBuilderSwap = function() { OnIdleButtonPressed() }
 })();

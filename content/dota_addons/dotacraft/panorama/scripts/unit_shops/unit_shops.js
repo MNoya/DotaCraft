@@ -162,8 +162,6 @@ function Hide_All_Shops(){
 	}
 }
 
-Game.AddCommand( "+ToggleShop", OnShopToggle, "", 0 );
-
 function Delete_Shop_Content(args){
 	var Shop = $("#"+args.Index)
 	var PlayerID = args.playerID
@@ -189,6 +187,7 @@ function Delete_Shop_Content(args){
 	GameEvents.Subscribe( "Shops_Create_Single_Panel", Create_Single_Panel);
 	GameEvents.Subscribe( "Shops_Delete_Single_Panel", Delete_Single_Panel);
 	GameEvents.Subscribe( "Shops_Remove_Content", Delete_Shop_Content);
-	
 	GameEvents.Subscribe( "shop_force_hide", Hide_All_Shops );
+
+	GameUI.Keybinds.ToggleShop = function() { OnShopToggle() }
 })();

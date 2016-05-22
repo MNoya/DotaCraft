@@ -158,5 +158,5 @@ function isUnitSelected(){
 	
 	Update();
 	
-	Game.AddCommand( "+SelectHeropanel"+Root.index, SelectHero, "", 0 );
+	GameUI.Keybinds["SelectHeropanel"+Root.index] = function() { SelectHero() }
 })();

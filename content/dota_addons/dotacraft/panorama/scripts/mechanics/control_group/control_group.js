@@ -19,17 +19,12 @@ function CreateControlGroupButton( index, entities){
 		GameUI.CustomUIConfig.SortByCustomIndex( $("#ControlGroups"), false );
 };
 
-function IdentifyKey( keystring ){
-	return parseInt( keystring.substring(keystring.length-1), 10 );
-};
-
-function OnCreateControlGroupPressed( args ){
-	var Index = IdentifyKey(args);
+function OnCreateControlGroupPressed( index ){
 	if( isControlDown() )
-		CreateControlGroup(Index);
+		CreateControlGroup(index);
 	else
-		if( $("#ControlGroups").GetChild(Index-1) != null )
-			$("#ControlGroups").GetChild(Index-1).OnControlGroupButtonPressed();
+		if( $("#ControlGroups").GetChild(index-1) != null )
+			$("#ControlGroups").GetChild(index-1).OnControlGroupButtonPressed();
 };
 
 function isControlDown(){
@@ -37,12 +32,12 @@ function isControlDown(){
 };
 
 (function () {
-	// Create Control Group Key
-	Game.AddCommand( "+SelectCreateControlGroup1", OnCreateControlGroupPressed, "", 0 );
-	Game.AddCommand( "+SelectCreateControlGroup2", OnCreateControlGroupPressed, "", 0 );
-	Game.AddCommand( "+SelectCreateControlGroup3", OnCreateControlGroupPressed, "", 0 );
-	Game.AddCommand( "+SelectCreateControlGroup4", OnCreateControlGroupPressed, "", 0 );
-	Game.AddCommand( "+SelectCreateControlGroup5", OnCreateControlGroupPressed, "", 0 );
-	Game.AddCommand( "+SelectCreateControlGroup6", OnCreateControlGroupPressed, "", 0 );
-	Game.AddCommand( "+SelectCreateControlGroup7", OnCreateControlGroupPressed, "", 0 );				
+	// Create Control Group Keybinds
+	GameUI.Keybinds.ControlGroup1 = function() { OnCreateControlGroupPressed(1) }
+	GameUI.Keybinds.ControlGroup2 = function() { OnCreateControlGroupPressed(2) }
+	GameUI.Keybinds.ControlGroup3 = function() { OnCreateControlGroupPressed(3) }
+	GameUI.Keybinds.ControlGroup4 = function() { OnCreateControlGroupPressed(4) }
+	GameUI.Keybinds.ControlGroup5 = function() { OnCreateControlGroupPressed(5) }
+	GameUI.Keybinds.ControlGroup6 = function() { OnCreateControlGroupPressed(6) }
+	GameUI.Keybinds.ControlGroup7 = function() { OnCreateControlGroupPressed(7) }
 })();
