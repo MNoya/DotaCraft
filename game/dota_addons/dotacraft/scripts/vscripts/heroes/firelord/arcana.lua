@@ -10,6 +10,8 @@ function ModelChange( event )
     SwapWearable(caster, "models/heroes/shadow_fiend/shadow_fiend_head.vmdl", "models/heroes/shadow_fiend/head_arcana.vmdl")
     SwapWearable(caster, "models/heroes/shadow_fiend/shadow_fiend_arms.vmdl", "models/items/shadow_fiend/arms_deso/arms_deso.vmdl")
 
+    AddAnimationTranslate(caster, "arcana")
+
     -- Trail
     local particle = ParticleManager:CreateParticle("particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
     ParticleManager:SetParticleControl(particle, 2, Vector(1,0,0))

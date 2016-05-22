@@ -12,6 +12,30 @@ function VolcanoStart( event )
 	event.ability:ApplyDataDrivenModifier(caster, caster.volcano_dummy, "modifier_volcano_thinker", nil)
 end
 
+function StartChannelingAnimation( event )
+	local caster = event.caster
+	local ability = event.ability
+	local interval = ability:GetSpecialValueFor("wave_interval")
+
+	ability.animationTimer = Timers:CreateTimer(function()
+		if not caster:IsAlive() or not caster:HasModifier("modifier_volcano_channelling") then return end
+
+		StartAnimation(caster, {duration=2.55, activity=ACT_DOTA_CAST_ABILITY_6, rate=1})
+		Timers:CreateTimer(2.6, function()
+			if caster:IsAlive() and caster:HasModifier("modifier_volcano_channelling") then
+				StartAnimation(caster, {duration=2.35, activity=ACT_DOTA_TELEPORT, rate=1.2})
+			end
+		end)
+
+		return interval
+	end)
+end
+
+function StopChannelingAnimation( event )
+	Timers:RemoveTimer(event.ability.animationTimer)
+	EndAnimation(event.caster)
+end
+
 function VolcanoEnd( event )
 	local caster = event.caster
 

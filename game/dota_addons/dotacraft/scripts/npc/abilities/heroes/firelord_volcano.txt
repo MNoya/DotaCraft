@@ -3,352 +3,315 @@
 // Date: 05.02.2015.
 // Notes: Causes the ground to erupt into a massive Volcano. Every 5 seconds, a wave of molten rocks is hurled from the Volcano at nearby ground units and buildings, 
 // causing 100 damage to each target and stunning it for 2 seconds. Buildings take 2 times more damage from molten rocks than units do.
-//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	35 sec.	180 sec.	200	80	50	Ground, Building, Not Self, Tree, Debris	Creates Volcano	6
+//Level Duration (Hero) Cooldown    Mana Cost   Range   Area of Effect  Allowed Targets Effect  Hero Level Req
+//N/A   35 sec. 180 sec.    200 80  50  Ground, Building, Not Self, Tree, Debris    Creates Volcano 6
 
 // Extra notes: Stuns all friendly units except for the hero channelling.
 // Transforms the terrain.
 "firelord_volcano"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"firelord_volcano"
-	"MaxLevel" 						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "firelord_volcano"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
-	"AbilityCastRange"				"800"
-	"AbilityCastPoint"				"1.67"	
-	"AbilityCooldown"				"180.0"
-	"AbilityManaCost"				"200"
+    "AbilityCastRange"              "800"
+    "AbilityCastPoint"              "1.67"  
+    "AbilityCooldown"               "180.0"
+    "AbilityManaCost"               "200"
 
-	"AOERadius"     				"%radius"
-	"AbilityChannelTime"			"35.0"
-	
-	"precache"
-	{
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
-		"particle"	"particles/custom/sf_fire_arcana_wings.vpcf"
-		"particle"  "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
-		"particle"  "particles/custom/sf_fire_arcana_base_attack_impact.vpcf"
-		"particle"	"particles/custom/custom_stunned.vpcf"
-		"particle"  "models/particle/soil_rupture.vmdl"
-	}
+    "AOERadius"                     "%radius"
+    "AbilityChannelTime"            "35.0"
+    
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+        "particle"  "particles/custom/sf_fire_arcana_wings.vpcf"
+        "particle"  "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
+        "particle"  "particles/custom/sf_fire_arcana_base_attack_impact.vpcf"
+        "particle"  "particles/custom/custom_stunned.vpcf"
+        "particle"  "models/particle/soil_rupture.vmdl"
+    }
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"500"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"wave_interval"			"5.0"
-		}		
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"wave_damage"			"100"	//buildings take *2
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"stun_duration"			"2"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "500"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "wave_interval"         "5.0"
+        }       
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "wave_damage"           "100"   //buildings take *2
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "stun_duration"         "2"
+        }
+    }
 
-	"OnAbilityPhaseStart"
-	{
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_volcano_channelling"
-			"Target" 		"CASTER"
-		}
+    "OnAbilityPhaseStart"
+    {
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_volcano_channelling"
+            "Target"        "CASTER"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Nevermore.RequiemOfSoulsCast"
-			"Target" 		"CASTER"
-		}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Nevermore.RequiemOfSoulsCast"
+            "Target"        "CASTER"
+        }
+    }
 
-		"DelayedAction"
-		{
-			"Delay"     "2.6"
-			"Action"    
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_volcano_channeling_idle"
-					"Target" 		"CASTER"
-				}
-			}
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/firelord/volcano.lua"
+            "Function"      "VolcanoStart"
+            "Target"        "POINT"
+        }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/firelord/volcano.lua"
-			"Function"		"VolcanoStart"
-			"Target"		"POINT"
-		}
-
-		"DestroyTrees"
-		{
-			"Target" 		"POINT"
-			"Radius"		"%radius"
-		}
-	
-		"FireSound"
-		{
-			"EffectName"	"Hero_EmberSpirit.FlameGuard.Loop"
-			"Target" 		"CASTER"
-		}
+        "DestroyTrees"
+        {
+            "Target"        "POINT"
+            "Radius"        "%radius"
+        }
+    
+        "FireSound"
+        {
+            "EffectName"    "Hero_EmberSpirit.FlameGuard.Loop"
+            "Target"        "CASTER"
+        }
     }
 
     "OnChannelFinish"
     {
-    	"RunScript"
-    	{
-    		"ScriptFile"	"heroes/firelord/volcano.lua"
-			"Function"		"VolcanoEnd"
-    	} 
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/firelord/volcano.lua"
+            "Function"      "VolcanoEnd"
+        } 
 
-    	"RemoveModifier"
-		{
-			"ModifierName"	"modifier_volcano_channelling"
-			"Target" 		"CASTER"
-		} 
-
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_volcano_channeling_idle"
-			"Target" 		"CASTER"
-		}
+        "RemoveModifier"
+        {
+            "ModifierName"  "modifier_volcano_channelling"
+            "Target"        "CASTER"
+        }
     }
     
     "Modifiers"
     {
         "modifier_volcano_channelling"
         {
-        	"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
-        	"IsHidden"				"0"
+            "IsHidden"              "0"
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/firelord/volcano.lua"
+                    "Function"      "StartChannelingAnimation"
+                }
+            }
 
-			// Every 5 seconds, one wave is launched, then an idle channeling animation
-           	"ThinkInterval"			"5"
+            "OnOrder"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_volcano_channelling"
+                    "Target"        "CASTER"
+                }
+            }
+
+            "OnDestroy"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/firelord/volcano.lua"
+                    "Function"      "StopChannelingAnimation"
+                }
+            }
+        }
+
+        "modifier_volcano_thinker"
+        {
+            "States"
+            {
+                //"MODIFIER_STATE_NO_UNIT_COLLISION"    "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_TEAM_MOVE_TO"    "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_TEAM_SELECT" "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_UNSELECTABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_HEALTH_BAR"         "MODIFIER_STATE_VALUE_ENABLED"   
+            }
+
+            "EffectName"        "particles/custom/sf_fire_arcana_wings.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "Target"            "TARGET"
+            "ControlPointEntities"
+            {
+                "TARGET"    "attach_origin"
+                "TARGET"    "attach_origin"
+            }
+
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/firelord/volcano.lua"
+                    "Function"      "VolcanoKnockback"
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Radius"    "%radius / 2"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //Exclude self in the code
+                    }
+                }
+
+                "FireEffect"
+                {
+                    "EffectName"        "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "TARGET"
+                }
+
+                "FireSound"
+                {
+                    "EffectName"    "Hero_Nevermore.RequiemOfSouls"
+                    "Target"        "CASTER"
+                }
+
+                "DelayedAction"
+                {
+                    "Delay"     "0.5"
+                    "Action"    
+                    {
+                        "RunScript"
+                        {
+                            "ScriptFile"    "heroes/firelord/volcano.lua"
+                            "Function"      "VolcanoWave"
+                            "Target"
+                            {
+                                "Center"    "TARGET"
+                                "Radius"    "%radius"
+                                "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+                                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                            }
+                        }
+
+                        // Custom Building Damage
+                        "RunScript"
+                        {
+                            "ScriptFile"    "buildings/damage.lua"
+                            "Function"      "DoBuildingDamage"
+                            "Target"
+                            {
+                                "Center"    "TARGET"
+                                "Radius"    "%radius"
+                                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                                "Types"     "DOTA_UNIT_TARGET_BASIC"
+                                "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                            }
+                            "Damage"        "%wave_damage * 2"
+                        }
+                    }
+                }
+            }
+
+            "ThinkInterval"  "%wave_interval"
             "OnIntervalThink"
-        	{
-        		"ApplyModifier"
-         		{
-         			"ModifierName"	"modifier_channeling"
-        			"Target" 		"CASTER"
-        			"Duration"		"2.46" //74 frames
-        		}
-			}
-		}
+            {
+                "FireEffect"
+                {
+                    "EffectName"        "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "TARGET"
+                }
 
-		"modifier_channeling"
-		{
-			"IsHidden"				"0"
-			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"
-		}
+                "FireSound"
+                {
+                    "EffectName"    "Hero_Nevermore.RequiemOfSouls"
+                    "Target"        "CASTER"
+                }
 
-		"modifier_volcano_channeling_idle"
-		{
-			"OverrideAnimation"		"ACT_DOTA_TELEPORT"
-        	"IsHidden"				"0"
+                "DelayedAction"
+                {
+                    "Delay"     "0.5"
+                    "Action"    
+                    {
+                        "RunScript"
+                        {
+                            "ScriptFile"    "heroes/firelord/volcano.lua"
+                            "Function"      "VolcanoWave"
+                            "Target"
+                            {
+                                "Center"    "TARGET"
+                                "Radius"    "%radius"
+                                "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+                                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                            }
+                        }
 
-			// Every 5 seconds after a 2.6 delay, make an idle channeling animation
-           	"ThinkInterval"			"5"
-            "OnIntervalThink"
-        	{
-        		// First after finishing ACT_DOTA_CAST_ABILITY_6	
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_channeling_idle"
-					"Target" 		"CASTER"
-					"Duration"		"2.33" //67 frames
-				}
-			}
-		}	
+                        // Custom Building Damage
+                        "RunScript"
+                        {
+                            "ScriptFile"    "buildings/damage.lua"
+                            "Function"      "DoBuildingDamage"
+                            "Target"
+                            {
+                                "Center"    "TARGET"
+                                "Radius"    "%radius"
+                                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                                "Types"     "DOTA_UNIT_TARGET_BASIC"
+                                "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                            }
+                            "Damage"        "%wave_damage * 2"
+                        }
+                    }
+                }
+            }           
+        }
 
-		"modifier_channeling_idle"
-		{
-			"IsHidden"				"0"
-			"OverrideAnimation"     "ACT_DOTA_TELEPORT"
-		}
+        "modifier_volcano_stun"
+        {
+            "IsDebuff"          "1"
+        
+            "EffectName"        "particles/custom/sf_fire_arcana_base_attack_impact.vpcf"
+            "EffectAttachType"  "follow_origin"
+        
+            "OnCreated"
+            {
+                "FireSound"
+                {
+                    "EffectName"    "Hero_Nevermore.RequiemOfSouls.Damage"
+                    "Target"        "TARGET"
+                }
+            }
 
-		"modifier_volcano_thinker"
-		{
-			"States"
-			{
-				//"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_TEAM_MOVE_TO"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_TEAM_SELECT"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"	
-			}
-
-			"EffectName"		"particles/custom/sf_fire_arcana_wings.vpcf"
-			"EffectAttachType"	"follow_origin"
-			"Target"			"TARGET"
-			"ControlPointEntities"
-			{
-				"TARGET"	"attach_origin"
-				"TARGET"	"attach_origin"
-			}
-
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/firelord/volcano.lua"
-					"Function"		"VolcanoKnockback"
-					"Target"
-					{
-						"Center"  	"TARGET"
-						"Radius" 	"%radius / 2"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //Exclude self in the code
-					}
-				}
-
-				"FireEffect"
-				{
-					"EffectName"        "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-				}
-
-				"FireSound"
-				{
-					"EffectName"	"Hero_Nevermore.RequiemOfSouls"
-					"Target"		"CASTER"
-				}
-
-				"DelayedAction"
-				{
-					"Delay"     "0.5"
-					"Action"    
-					{
-						"RunScript"
-						{
-							"ScriptFile"	"heroes/firelord/volcano.lua"
-							"Function"		"VolcanoWave"
-							"Target"
-							{
-								"Center"  	"TARGET"
-								"Radius" 	"%radius"
-								"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							}
-						}
-
-						// Custom Building Damage
-						"RunScript"
-						{
-							"ScriptFile"	"buildings/damage.lua"
-							"Function"		"DoBuildingDamage"
-							"Target"
-							{
-								"Center"  	"TARGET"
-								"Radius" 	"%radius"
-								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-								"Types" 	"DOTA_UNIT_TARGET_BASIC"
-								"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-							}
-							"Damage"		"%wave_damage * 2"
-						}
-					}
-				}
-			}
-
-			"ThinkInterval"  "%wave_interval"
-			"OnIntervalThink"
-			{
-				"FireEffect"
-				{
-					"EffectName"        "particles/custom/warlock_rain_of_chaos_explosion.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-				}
-
-				"FireSound"
-				{
-					"EffectName"	"Hero_Nevermore.RequiemOfSouls"
-					"Target"		"CASTER"
-				}
-
-				"DelayedAction"
-				{
-					"Delay"     "0.5"
-					"Action"    
-					{
-						"RunScript"
-						{
-							"ScriptFile"	"heroes/firelord/volcano.lua"
-							"Function"		"VolcanoWave"
-							"Target"
-							{
-								"Center"  	"TARGET"
-								"Radius" 	"%radius"
-								"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							}
-						}
-
-						// Custom Building Damage
-						"RunScript"
-						{
-							"ScriptFile"	"buildings/damage.lua"
-							"Function"		"DoBuildingDamage"
-							"Target"
-							{
-								"Center"  	"TARGET"
-								"Radius" 	"%radius"
-								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-								"Types" 	"DOTA_UNIT_TARGET_BASIC"
-								"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-							}
-							"Damage"		"%wave_damage * 2"
-						}
-					}
-				}
-			}			
-		}
-
-		"modifier_volcano_stun"
-		{
-			"IsDebuff"			"1"
-		
-			"EffectName"        "particles/custom/sf_fire_arcana_base_attack_impact.vpcf"
-			"EffectAttachType"  "follow_origin"
-		
-			"OnCreated"
-			{
-				"FireSound"
-				{
-					"EffectName"	"Hero_Nevermore.RequiemOfSouls.Damage"
-					"Target" 		"TARGET"
-				}
-			}
-
-			"States"
-			{
-				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-			"OverrideAnimation"     "ACT_DOTA_DISABLED"
-		}
-	}	
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+            }
+            "OverrideAnimation"     "ACT_DOTA_DISABLED"
+        }
+    }   
 }
