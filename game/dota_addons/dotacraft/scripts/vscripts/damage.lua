@@ -15,26 +15,19 @@ function dotacraft:FilterDamage( filterTable )
 	-- Physical attack damage filtering
 	if damagetype == DAMAGE_TYPE_PHYSICAL then
 		local original_damage = filterTable["damage"] --Post reduction
-		local inflictor = filterTable["entindex_inflictor_const"]
 
 		local armor = victim:GetPhysicalArmorValue()
 		local damage_reduction = ((armor)*0.06) / (1+0.06*(armor))
 
-		-- If there is an inflictor, the damage came from an ability
-		local attack_damage
-		if inflictor then
-			--Remake the full damage to apply our custom handling
-			attack_damage = original_damage / ( 1 - damage_reduction )
-			--print(original_damage,"=",attack_damage,"*",1-damage_reduction)
-		else
-			attack_damage = attacker:GetAttackDamage()
-		end
+		--Remake the full damage to apply our custom handling
+		local attack_damage = original_damage / (1 - damage_reduction)
+		--print(original_damage,"=",attack_damage,"*",1-damage_reduction)
 
 		local attack_type  = attacker:GetAttackType()
 		local armor_type = victim:GetArmorType()
 		local multiplier = attacker:GetAttackFactorAgainstTarget(victim)
 
-		local damage = ( attack_damage * (1 - damage_reduction)) * multiplier
+		local damage = (attack_damage * (1 - damage_reduction)) * multiplier
 
 		-- Extra rules for certain ability modifiers
 		-- modifier_defend (50% less damage from Piercing attacks)
