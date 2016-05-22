@@ -1,4 +1,4 @@
-BH_VERSION = "1.1.4"
+BH_VERSION = "1.1.6"
 
 require('libraries/timers')
 require('libraries/selection')
@@ -762,9 +762,13 @@ end
     * Make sure the position is valid before calling this in code.
 ]]--
 function BuildingHelper:PlaceBuilding(player, name, location, construction_size, pathing_size, angle)
+    construction_size = construction_size or BuildingHelper:GetConstructionSize(name)
+    pathing_size = pathing_size or BuildingHelper:GetBlockPathingSize(name)
     BuildingHelper:SnapToGrid(construction_size, location)
-    local playerID = player:GetPlayerID()
-    local playersHero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local playerID = type(player)=="number" and player or player.GetPlayerID and player:GetPlayerID() --accept pass player ID or player Handle
+    local player = playerID and PlayerResource:GetPlayer(playerID)
+    local hero = playerID and PlayerResource:GetSelectedHeroEntity(playerID)
+    local teamNumber = hero and hero:GetTeamNumber() or DOTA_TEAM_NEUTRALS
     BuildingHelper:print("PlaceBuilding for playerID ".. playerID)
 
     -- Spawn point obstructions before placing the building
@@ -775,24 +779,41 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     local model_location = Vector(location.x, location.y, location.z + model_offset)
 
     -- Spawn the building
-    local building = CreateUnitByName(name, model_location, false, playersHero, player, playersHero:GetTeamNumber())
-    building:SetControllableByPlayer(playerID, true)
+    local building = CreateUnitByName(name, model_location, false, hero, player, teamNumber)
+    if PlayerResource:IsValidPlayerID(playerID) then building:SetControllableByPlayer(playerID, true) end
     building:SetNeverMoveToClearSpace(true)
-    building:SetOwner(playersHero)
+    if hero then building:SetOwner(hero) end
+    building:SetAbsOrigin(model_location)
     building.construction_size = construction_size
     building.blockers = gridNavBlockers
+
+    -- Model rotation
+    angle = angle or BuildingHelper.UnitKV[name]["ModelRotation"]
+    if angle then building:SetAngles(0,-angle,0) end
+
+    -- Disable turning. If DisableTurning unit KV setting is not defined, use the global setting
+    local disableTurning = BuildingHelper.UnitKV[name]["DisableTurning"]
+    if not disableTurning then
+        if BuildingHelper.Settings["DISABLE_BUILDING_TURNING"] then
+            building:AddNewModifier(building, nil, "modifier_disable_turning", {})
+        end
+    elseif disableTurning == 1 then
+        building:AddNewModifier(building, nil, "modifier_disable_turning", {})
+    end
 
     -- Create pedestal
     local pedestal = BuildingHelper.UnitKV[name]["PedestalModel"]
     if pedestal then
-        local prop = BuildingHelper:CreatePedestalForBuilding(building, name, location, pedestal)
+        BuildingHelper:CreatePedestalForBuilding(building, name, GetGroundPosition(location, nil), pedestal)
     end
 
-    if angle then
-        building:SetAngles(0,-angle,0)
+    if not building:HasAbility("ability_building") then
+        building:AddAbility("ability_building")
     end
 
     building.state = "complete"
+
+    BuildingHelper:AddBuildingToPlayerTable(playerID, building)
 
     -- Return the created building
     return building
@@ -806,51 +827,19 @@ function BuildingHelper:UpgradeBuilding(building, newName)
     local oldBuildingName = building:GetUnitName()
     BuildingHelper:print("Upgrading Building: "..oldBuildingName.." -> "..newName)
     local playerID = building:GetPlayerOwnerID()
-    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     local position = building:GetAbsOrigin()
-    local model_offset = BuildingHelper.UnitKV[newName]["ModelOffset"] or 0
+    local angle = BuildingHelper.UnitKV[newName]["ModelRotation"] or -building:GetAngles().y
+    
     local old_offset = BuildingHelper.UnitKV[oldBuildingName]["ModelOffset"] or 0
-    position.z = position.z + model_offset - old_offset
-    
-    local newBuilding = CreateUnitByName(newName, position, false, nil, nil, building:GetTeamNumber()) 
-    newBuilding:SetOwner(hero)
-    newBuilding:SetControllableByPlayer(playerID, true)
-    newBuilding:SetNeverMoveToClearSpace(true)
-    newBuilding:SetAbsOrigin(position)
-    
-    -- Update visuals
-    local angles = BuildingHelper.UnitKV[newName]["ModelRotation"] or -building:GetAngles().y
-    newBuilding:SetAngles(0, -angles, 0)
-
-    -- Disable turning. If DisableTurning unit KV setting is not defined, use the global setting
-    local disableTurning = BuildingHelper.UnitKV[newName]["DisableTurning"]
-    if not disableTurning then
-        if BuildingHelper.Settings["DISABLE_BUILDING_TURNING"] then
-            newBuilding:AddNewModifier(newBuilding, nil, "modifier_disable_turning", {})
-        end
-    elseif disableTurning == 1 then
-        newBuilding:AddNewModifier(newBuilding, nil, "modifier_disable_turning", {})
-    end
-    
-    local pedestalName = BuildingHelper.UnitKV[newName]["PedestalModel"]
-    if pedestalName then
-        BuildingHelper:CreatePedestalForBuilding(newBuilding, newName, GetGroundPosition(position, nil), pedestalName)
-    end    
+    position.z = position.z - old_offset
 
     -- Kill the old building
     building:AddEffects(EF_NODRAW) --Hide it, so that it's still accessible after this script
     building.upgraded = true --Skips visual effects
     building:ForceKill(true) --This will call RemoveBuilding
-
-    -- Block the grid
-    newBuilding.construction_size = BuildingHelper:GetConstructionSize(newName)
-    newBuilding.blockers = BuildingHelper:BlockGridSquares(newBuilding.construction_size, BuildingHelper:GetBlockPathingSize(newName), position)
-
-    if not newBuilding:HasAbility("ability_building") then
-        newBuilding:AddAbility("ability_building")
-    end
-
-    return newBuilding
+    
+    -- Create the new building
+    return BuildingHelper:PlaceBuilding(playerID, newName, position, BuildingHelper:GetConstructionSize(newName), BuildingHelper:GetBlockPathingSize(newName), angle)  
 end
 
 --[[
@@ -858,7 +847,8 @@ end
     * Removes a building, removing it from the gridnav, with an optional parameter to skip particle effects
 ]]--
 function BuildingHelper:RemoveBuilding(building, bSkipEffects)
-    BuildingHelper:print("Removing Building: "..building:GetUnitName())
+    local buildingName = building:GetUnitName()
+    BuildingHelper:print("Removing Building: "..buildingName)
 
     -- Don't show the destruction effects when specified or killed to due UpgradeBuilding
     if not bSkipEffects and building.upgraded ~= true then
@@ -879,10 +869,14 @@ function BuildingHelper:RemoveBuilding(building, bSkipEffects)
 
     BuildingHelper:FreeGridSquares(BuildingHelper:GetConstructionSize(building), building:GetAbsOrigin())
 
-    if not building.blockers then 
-        return 
-    end
+    -- Remove handle and decrement count tracking
+    local playerID = building:GetPlayerOwnerID()
+    local buidingList = BuildingHelper:GetBuildings(playerID)
+    local index = getIndexTable(buidingList, building)
+    if index then table.remove(buidingList, index) end
+    BuildingHelper:SetBuildingCount(playerID, buildingName, BuildingHelper:GetBuildingCount(playerID, buildingName)-1)
 
+    if not building.blockers then return end
     for k, v in pairs(building.blockers) do
         UTIL_Remove(v)
     end
@@ -952,6 +946,7 @@ function BuildingHelper:StartBuilding(builder)
     building.construction_size = construction_size
     building.buildingTable = buildingTable
     building.state = "building"
+    function building:IsUnderConstruction() return true end
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
@@ -1066,6 +1061,7 @@ function BuildingHelper:StartBuilding(builder)
                         building.state = "complete"
                         building.builder = builder
                         callbacks.onConstructionCompleted(building)
+                        BuildingHelper:AddBuildingToPlayerTable(playerID, building)
                     end
                     
                     BuildingHelper:print("HP was off by: ".. fMaxHealth - fAddedHealth)
@@ -1128,6 +1124,7 @@ function BuildingHelper:StartBuilding(builder)
                         building.state = "complete"
                         building.builder = builder
                         callbacks.onConstructionCompleted(building)
+                        BuildingHelper:AddBuildingToPlayerTable(playerID, building)
                     end
 
                     -- Eject Builder
@@ -1184,6 +1181,8 @@ function BuildingHelper:StartBuilding(builder)
                     BuildingHelper:AdvanceQueue(builder)
 
                     building.state = "complete"
+
+                    BuildingHelper:AddBuildingToPlayerTable(playerID, building)
                     return
                 else
                     return 0.1
@@ -1992,11 +1991,43 @@ function BuildingHelper:GetRepairAbility(unit)
     end
 end
 
+-- Retrieves a list of all the buildings built by a player
+function BuildingHelper:GetBuildings(playerID)
+    local playerTable = BuildingHelper:GetPlayerTable(playerID)
+    playerTable.BuildingHandles = playerTable.BuildingHandles or {}
+    return playerTable.BuildingHandles
+end
+
+-- Returns number of buildings by name of a player
+function BuildingHelper:GetBuildingCount(playerID, buildingName)
+    local playerTable = BuildingHelper:GetPlayerTable(playerID)
+    playerTable.BuildingCount = playerTable.BuildingCount or {}
+    playerTable.BuildingCount[buildingName] = playerTable.BuildingCount[buildingName] or 0
+    return playerTable.BuildingCount[buildingName]
+end
+
+-- Sets the number of buildings by name of a player
+function BuildingHelper:SetBuildingCount(playerID, buildingName, number)
+    local playerTable = BuildingHelper:GetPlayerTable(playerID)
+    playerTable.BuildingCount = playerTable.BuildingCount or {}
+    playerTable.BuildingCount[buildingName] = number
+end
+
+-- Store handle and increment count tracking
+function BuildingHelper:AddBuildingToPlayerTable(playerID, building)
+    local buildingName = building:GetUnitName()
+    table.insert(BuildingHelper:GetBuildings(playerID), building)
+    BuildingHelper:SetBuildingCount(playerID, buildingName, BuildingHelper:GetBuildingCount(playerID, buildingName)+1)
+    function building:IsUnderConstruction() return false end
+end
+
+-- Returns "ConstructionSize" value of a unit handle or unit name
 function BuildingHelper:GetConstructionSize(unit)
     local unitTable = (type(unit) == "table") and BuildingHelper.UnitKV[unit:GetUnitName()] or BuildingHelper.UnitKV[unit]
     return unitTable["ConstructionSize"]
 end
 
+-- Returns "BlockPathingSize" kv of a unit handle or unit name
 function BuildingHelper:GetBlockPathingSize(unit)
     local unitTable = (type(unit) == "table") and BuildingHelper.UnitKV[unit:GetUnitName()] or BuildingHelper.UnitKV[unit]
     return unitTable["BlockPathingSize"]
@@ -2143,15 +2174,18 @@ function tobool(s)
 end
 
 function split(inputstr, sep)
-    if sep == nil then
-            sep = "%s"
-    end
+    if sep == nil then sep = "%s" end
     local t={} ; i=1
     for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-            t[i] = str
-            i = i + 1
+        t[i] = str
+        i = i + 1
     end
     return t
+end
+
+function getIndexTable(list, element)
+    if list == nil then return false end
+    for k,v in pairs(list) do if v == element then return k end end
 end
 
 function DrawGridSquare(x, y, color)
