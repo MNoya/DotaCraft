@@ -803,11 +803,15 @@ function RepositionAroundRallyPoint(unit, building, point)
     end
     units[#units+1] = unit:GetEntityIndex()
 
-    if #units > 0 then
-        MoveUnitsInGrid(units, point, DOTA_UNIT_ORDER_MOVE_TO_POSITION, false, (point-origin):Normalized())
+    local count = #units
+    if count > 0 then
+        if count == 1 then
+            unit:MoveToPosition(point)
+        else
+            MoveUnitsInGrid(units, point, DOTA_UNIT_ORDER_MOVE_TO_POSITION, false, (point-origin):Normalized())
+        end
     end
 end
-
 
 function CreateRallyFlagForBuilding( building )
     local flag_type = building.flag_type
