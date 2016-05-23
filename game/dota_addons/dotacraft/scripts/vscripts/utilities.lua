@@ -145,3 +145,52 @@ function RotateVector2D(v, theta)
     local yPrime = v.x*math.sin(theta)+v.y*math.cos(theta)
     return Vector(xPrime, yPrime, v.z)
 end
+
+function GenerateNumPointsAround(num, center, distance)
+    local points = {}
+    local angle = 360/num
+    for i=0,num-1 do
+        local rotate_pos = center + Vector(1,0,0) * distance
+        table.insert(points, RotatePosition(center, QAngle(0, angle*i, 0), rotate_pos) )
+    end
+    return points
+end
+
+function GetGridAroundPoint( numUnits, point )
+    local navPoints = {}  
+
+    local unitsPerRow = math.floor(math.sqrt(numUnits))
+    local unitsPerColumn = math.floor((numUnits / unitsPerRow))
+    local remainder = numUnits - (unitsPerRow*unitsPerColumn) 
+
+    local forward = point:Normalized()
+    local right = RotatePosition(Vector(0,0,0), QAngle(0,90,0), forward)
+
+    local start = (unitsPerColumn-1)* -.5
+
+    local curX = start
+    local curY = 0
+
+    local offsetX = UNIT_FORMATION_DISTANCE
+    local offsetY = UNIT_FORMATION_DISTANCE
+
+    for i=1,unitsPerRow do
+      for j=1,unitsPerColumn do
+        local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
+        navPoints[#navPoints+1] = newPoint
+        curX = curX + 1
+      end
+      curX = start
+      curY = curY - 1
+    end
+
+    local curX = ((remainder-1) * -.5)
+
+    for i=1,remainder do 
+        local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
+        navPoints[#navPoints+1] = newPoint
+        curX = curX + 1
+    end
+
+    return navPoints
+end

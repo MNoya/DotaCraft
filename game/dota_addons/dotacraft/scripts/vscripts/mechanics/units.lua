@@ -274,19 +274,19 @@ function IsChanneling ( unit )
     return false
 end
 
--- Returns all visible enemies in radius of the unit
-function FindEnemiesInRadius( unit, radius )
+-- Returns all visible enemies in radius of the unit/point
+function FindEnemiesInRadius( unit, radius, point )
     local team = unit:GetTeamNumber()
-    local position = unit:GetAbsOrigin()
+    local position = point or unit:GetAbsOrigin()
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
     return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_CLOSEST, false)
 end
 
--- Returns all units (friendly and enemy) in radius of the unit
-function FindAllUnitsInRadius( unit, radius )
+-- Returns all units (friendly and enemy) in radius of the unit/point
+function FindAllUnitsInRadius( unit, radius, point )
     local team = unit:GetTeamNumber()
-    local position = unit:GetAbsOrigin()
+    local position = point or unit:GetAbsOrigin()
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
     return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
@@ -300,9 +300,9 @@ function FindAllUnitsAroundPoint( unit, point, radius )
     return FindUnitsInRadius(team, point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
 end
 
-function FindAlliesInRadius( unit, radius )
+function FindAlliesInRadius( unit, radius, point )
     local team = unit:GetTeamNumber()
-    local position = unit:GetAbsOrigin()
+    local position = point or unit:GetAbsOrigin()
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_INVULNERABLE
     return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, flags, FIND_CLOSEST, false)

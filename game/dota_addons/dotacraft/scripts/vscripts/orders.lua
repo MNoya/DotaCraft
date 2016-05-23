@@ -1,3 +1,7 @@
+SQUARE_FACTOR = 1.3 --1 is a perfect square, higher numbers will increase the units per row
+UNIT_FORMATION_DISTANCE = 130
+DEBUG = false
+
 function dotacraft:FilterExecuteOrder( filterTable )
     --[[
     print("-----------------------------------------")
@@ -5,8 +9,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
         print("Order: " .. k .. " " .. tostring(v) )
     end
     ]]
-
-    local DEBUG = false
 
     local units = filterTable["units"]
     local order_type = filterTable["order_type"]
@@ -389,104 +391,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local y = tonumber(filterTable["position_y"])
         local z = tonumber(filterTable["position_z"])
 
-        local SQUARE_FACTOR = 1.3 --1 is a perfect square, higher numbers will increase the units per row
-
-        local navPoints = {}
-        local first_unit = EntIndexToHScript(units[1])
-        local origin = first_unit:GetAbsOrigin()
-
         local point = Vector(x,y,z) -- initial goal
-
-        if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 100, 18, true, 3) end
-
-        local unitsPerRow = math.floor(math.sqrt(numUnits/SQUARE_FACTOR))
-        local unitsPerColumn = math.floor((numUnits / unitsPerRow))
-        local remainder = numUnits - (unitsPerRow*unitsPerColumn) 
-        --print(numUnits.." units = "..unitsPerRow.." rows of "..unitsPerColumn.." with a remainder of "..remainder)
-
-        local start = (unitsPerColumn-1)* -.5
-
-        local curX = start
-        local curY = 0
-
-        local offsetX = 150
-        local offsetY = 150
-        local forward = (point-origin):Normalized()
-        local right = RotatePosition(Vector(0,0,0), QAngle(0,90,0), forward)
-
-        for i=1,unitsPerRow do
-          for j=1,unitsPerColumn do
-            --print ('grid point (' .. curX .. ', ' .. curY .. ')')
-            local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
-            if DEBUG then 
-                DebugDrawCircle(newPoint, Vector(0,0,0), 255, 25, true, 5)
-                DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
-            end
-            navPoints[#navPoints+1] = newPoint
-            curX = curX + 1
-          end
-          curX = start
-          curY = curY - 1
-        end
-
-        local curX = ((remainder-1) * -.5)
-
-        for i=1,remainder do 
-            --print ('grid point (' .. curX .. ', ' .. curY .. ')')
-            local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
-            if DEBUG then 
-                DebugDrawCircle(newPoint, Vector(0,0,255), 255, 25, true, 5)
-                DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
-            end
-            navPoints[#navPoints+1] = newPoint
-            curX = curX + 1
-        end
-
-        for i=1,#navPoints do 
-            local point = navPoints[i]
-            --print(i,navPoints[i])
-        end
-
-        -- Sort the units by distance to the nav points
-        sortedUnits = {}
-        for i=1,#navPoints do
-            local point = navPoints[i]
-            local closest_unit_index = GetClosestUnitToPoint(units, point)
-            if closest_unit_index then
-                --print("Closest to point is ",closest_unit_index," - inserting in table of sorted units")
-                table.insert(sortedUnits, closest_unit_index)
-
-                --print("Removing unit of index "..closest_unit_index.." from the table:")
-                --DeepPrintTable(units)
-                units = RemoveElementFromTable(units, closest_unit_index)
-            end
-        end
-
-        -- Sort the units by rank (1)
-        unitsByRank = {}
-        for i=0,4 do
-            local units = GetUnitsWithFormationRank(sortedUnits, i)
-            if units then
-                unitsByRank[i] = units
-            end
-        end
-
-        -- Order each unit sorted to move to its respective Nav Point
-        local n = 0
-        for i=0,4 do
-            if unitsByRank[i] then
-                for _,unit_index in pairs(unitsByRank[i]) do
-                    local unit = EntIndexToHScript(unit_index)
-                    --print("Issuing a New Movement Order to unit index: ",unit_index)
-
-                    local pos = navPoints[tonumber(n)+1]
-                    --print("Unit Number "..n.." moving to ", pos)
-                    n = n+1
-                    
-                    ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = order_type, Position = pos, Queue = queue})
-                end
-            end
-        end
+        MoveUnitsInGrid(units, point, order_type, queue)
+        
         return false
     
     ------------------------------------------------
@@ -831,7 +738,9 @@ function dotacraft:ResolveRallyPointOrder( unit, building )
 
         -- Move to Position
         if rally_type == "position" then
-            unit:MoveToPosition(flag)
+
+            -- Reposition units nearby the rally flag, including the newly created unit
+            RepositionAroundRallyPoint(unit, building, flag)
     
         -- Move to follow NPC
         elseif rally_type == "target" then
@@ -874,6 +783,29 @@ function dotacraft:ResolveRallyPointOrder( unit, building )
             end
         end
     end)    
+end
+
+-- Pick which units we want to move
+function RepositionAroundRallyPoint(unit, building, point)
+    local playerID = unit:GetPlayerOwnerID()
+    local origin = building:GetAbsOrigin()
+    local radius = UNIT_FORMATION_DISTANCE*1.2
+    local units = {}
+
+    local allies = FindAlliesInRadius(unit, radius, point)
+    if allies[1] then
+        local grouped_allies = GetUnitGroupWithin(allies[1], radius)      
+        for _,v in pairs(grouped_allies) do
+            if v:GetPlayerOwnerID() == playerID and v:IsIdle() and not IsCustomBuilding(v) then
+                units[#units+1] = v:GetEntityIndex()
+            end
+        end
+    end
+    units[#units+1] = unit:GetEntityIndex()
+
+    if #units > 0 then
+        MoveUnitsInGrid(units, point, DOTA_UNIT_ORDER_MOVE_TO_POSITION, false, (point-origin):Normalized())
+    end
 end
 
 
@@ -935,6 +867,132 @@ function CreateRallyFlagForBuilding( building )
     flags[buildingIndex].flagParticle = particle
     flags[buildingIndex].lineParticle = line
 end
+
+function MoveUnitsInGrid(units, point, order_type, queue, forward)
+    local navPoints = {}
+    local first_unit = EntIndexToHScript(units[1])
+    local origin = first_unit:GetAbsOrigin()
+
+    if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 100, 18, true, 3) end
+
+    local numUnits = #units
+    local unitsPerRow = math.floor(math.sqrt(numUnits/SQUARE_FACTOR))
+    local unitsPerColumn = math.floor((numUnits / unitsPerRow))
+    local remainder = numUnits - (unitsPerRow*unitsPerColumn) 
+    --print(numUnits.." units = "..unitsPerRow.." rows of "..unitsPerColumn.." with a remainder of "..remainder)
+
+    local start = (unitsPerColumn-1)* -.5
+
+    local curX = start
+    local curY = 0
+
+    local offsetX = UNIT_FORMATION_DISTANCE
+    local offsetY = UNIT_FORMATION_DISTANCE
+    local forward = forward or (point-origin):Normalized()
+    if forward.x == 0 then forward.x = 0.5 end
+    if forward.y == 0 then forward.y = 0.5 end
+    local right = RotatePosition(Vector(0,0,0), QAngle(0,90,0), forward)
+
+    for i=1,unitsPerRow do
+      for j=1,unitsPerColumn do
+        local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
+        --print ('grid point (' .. curX .. ', ' .. curY .. '): '..VectorString(newPoint))
+        if DEBUG then 
+            DebugDrawCircle(newPoint, Vector(0,0,0), 255, 25, true, 5)
+            DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
+        end
+        navPoints[#navPoints+1] = newPoint
+        curX = curX + 1
+      end
+      curX = start
+      curY = curY - 1
+    end
+
+    local curX = ((remainder-1) * -.5)
+
+    for i=1,remainder do 
+        --print ('grid point (' .. curX .. ', ' .. curY .. ')')
+        local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
+        if DEBUG then 
+            DebugDrawCircle(newPoint, Vector(0,0,255), 255, 25, true, 5)
+            DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
+        end
+        navPoints[#navPoints+1] = newPoint
+        curX = curX + 1
+    end
+
+    for i=1,#navPoints do 
+        local point = navPoints[i]
+        --print(i,navPoints[i])
+    end
+
+    -- Sort the units by distance to the nav points
+    sortedUnits = {}
+    for i=1,#navPoints do
+        local point = navPoints[i]
+        local closest_unit_index = GetClosestUnitToPoint(units, point)
+        if closest_unit_index then
+            --print("Closest to point is ",closest_unit_index," - inserting in table of sorted units")
+            table.insert(sortedUnits, closest_unit_index)
+
+            --print("Removing unit of index "..closest_unit_index.." from the table:")
+            --DeepPrintTable(units)
+            units = RemoveElementFromTable(units, closest_unit_index)
+        end
+    end
+
+    -- Sort the units by rank (1)
+    unitsByRank = {}
+    for i=0,4 do
+        local units = GetUnitsWithFormationRank(sortedUnits, i)
+        if units then
+            unitsByRank[i] = units
+        end
+    end
+
+    -- Order each unit sorted to move to its respective Nav Point
+    local n = 0
+    for i=0,4 do
+        if unitsByRank[i] then
+            for _,unit_index in pairs(unitsByRank[i]) do
+                local unit = EntIndexToHScript(unit_index)
+                --print("Issuing a New Movement Order to unit index: ",unit_index)
+
+                local pos = navPoints[tonumber(n)+1]
+                --print("Unit Number "..n.." moving to ", pos)
+                n = n+1
+                
+                ExecuteOrderFromTable({UnitIndex = unit_index, OrderType = order_type, Position = pos, Queue = queue})
+            end
+        end
+    end
+end
+
+-- Returns units within a certain radius of each other
+function GetUnitGroupWithin(startingUnit, radius)
+    local group = {}
+    RecursiveFind(startingUnit, radius, group)
+        
+    return group
+end
+
+function RecursiveFind(unit, radius, group)
+    local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), unit, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, FIND_ANY_ORDER, true)
+
+    if units then
+        -- Add to group
+        for k,v in pairs(units) do
+            local index = v:GetEntityIndex()
+            if not group[index] then
+                group[index] = v
+                RecursiveFind(v, radius, group)
+            end
+        end
+    else
+        return group
+    end
+end
+
 
 ------------------------------------------------
 --              Utility functions             --
