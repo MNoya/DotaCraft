@@ -3,6 +3,7 @@ if not Gatherer then
 end
 
 TREE_HEALTH = 50 --TODO: Setings file
+TREE_RADIUS = 50
 function Gatherer:start()
     if IsInToolsMode() then    
         local src = debug.getinfo(1).source
@@ -18,6 +19,8 @@ function Gatherer:start()
 
     ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(Gatherer, 'OnGameRulesStateChange'), self)
     ListenToGameEvent('tree_cut', Dynamic_Wrap(Gatherer, 'OnTreeCut'), self)
+
+    CustomGameEventManager:RegisterListener("right_click_order", Dynamic_Wrap(Gatherer, "OnRightClick")) --Right click through panorama
 
     self.bShouldLoadTreeMap = not IsInToolsMode() -- Always re-determine pathable trees in tools, to account for map changes.
     self.DebugPrint = true
@@ -111,22 +114,229 @@ function Gatherer:OnTreeCut(event)
     end
 end
 
+function Gatherer:OnRightClick(event)
+    local playerID = event.PlayerID
+    local point = event.position
+    if not point then return end
+    local position = GetGroundPosition(Vector(point["0"], point["1"], 0), nil)
+
+    if Gatherer:ClickedOnTrees(position) then
+        Gatherer:print("Clicked On Trees around "..VectorString(position))
+        Gatherer:OnTreeClick(PlayerResource:GetSelectedEntities(playerID), position)
+    end
+end
+
+-- Tree Gather Right-Click
+function Gatherer:OnTreeClick(units, position)
+    local entityIndex = units["0"]
+    local unit = EntIndexToHScript(entityIndex)
+    if not CanGatherLumber(unit) then return end
+   
+    local race = GetUnitRace(unit)
+    local gather_ability = FindGatherAbility(unit)
+    local return_ability = FindReturnAbility(unit)
+    local pID = unit:GetPlayerOwnerID()
+    local player = PlayerResource:GetPlayer(pID)
+    local numBuilders = 0
+
+    for k,entIndex in pairs(units) do
+        if CanGatherLumber(EntIndexToHScript(entIndex)) then
+            numBuilders = numBuilders + 1
+        end
+    end
+
+    -- If clicking near a tree
+    if CanGatherLumber(unit) then
+        if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
+            local empty_tree = FindEmptyNavigableTreeNearby(unit, position, TREE_RADIUS)
+            if empty_tree then
+                local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
+                --print("Order: Cast on Tree ",tree_index)
+                ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+            end
+        elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
+            -- Can the unit still gather more resources?
+            if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) and not unit:HasModifier("modifier_returning_gold") then
+                --print("Keep gathering")
+
+                -- Swap to a gather ability and keep extracting
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, TREE_RADIUS)
+                if empty_tree then
+                    local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
+                    unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
+                    --print("Order: Cast on Tree ",tree_index)
+                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+                end
+            else
+                -- Return
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, TREE_RADIUS)
+                unit.target_tree = empty_tree --The new selected tree
+                --print("Order: Return resources")
+                unit.gatherer_skip = false -- Let it propagate to all selected units
+                ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
+            end
+        end
+        return false
+    end
+end
+
 function Gatherer:OrderFilter(order)
     local ret = true    
 
     if Gatherer.nextFilter then
         ret = Gatherer.nextFilter(Gatherer.nextContext, order)
     end
-
-    if not ret then
-        return false
-    end
+    if not ret then return false end
 
     local issuerID = order.issuer_player_id_const
+    local units = order.units
+    local order_type = order.order_type
+    local issuer = order.issuer_player_id_const
+    local abilityIndex = order.entindex_ability
+    local targetIndex = order.entindex_target
+    local x = tonumber(order.position_x)
+    local y = tonumber(order.position_y)
+    local z = tonumber(order.position_z)
+    local point = Vector(x,y,z)
+    local queue = order["queue"] == 1
+    local entityIndex = units["0"]
+    local unit = EntIndexToHScript(entityIndex)
 
-    if issuerID == -1 then return true end
+    -- Skip Prevents order loops
+    if unit then
+        if unit.gatherer_skip then
+            unit.gatherer_skip = false
+            return true
+        end
+    else
+        print("No unit!", entityIndex, unit)
+        return
+    end
 
-    -- Order filter goes here
+    ------------------------------------------------
+    --              No Target Return              --
+    ------------------------------------------------
+    if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET and abilityIndex and abilityIndex ~= 0 then
+        
+        local ability = EntIndexToHScript(abilityIndex)
+        if not ability then
+            print("Error: CAST_NO_TARGET with an incorrect index")
+            return true
+        end
+        local abilityName = ability:GetAbilityName()
+        local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
+
+        if string.match(abilityName, "_return_resources") then
+            for k,entityIndex in pairs(entityList) do
+                local unit = EntIndexToHScript(entityIndex)
+                unit.gatherer_skip = true
+
+                local return_ability = FindReturnAbility(unit)
+                if return_ability and not return_ability:IsHidden() then
+                    --print("Order: Return resources")
+                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
+                end
+            end
+        end
+        return true
+
+    ------------------------------------------------
+    --          Tree Gather Multi Orders          --
+    ------------------------------------------------
+    elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
+        if DEBUG then print("DOTA_UNIT_ORDER_CAST_TARGET_TREE ",unit) end
+    
+        local abilityIndex = abilityIndex
+        local ability = EntIndexToHScript(abilityIndex) 
+        local abilityName = ability:GetAbilityName()
+
+        local treeID = targetIndex
+        local tree_index = GetEntityIndexForTreeId(treeID)
+        local tree_handle = EntIndexToHScript(tree_index)
+
+        local position = tree_handle:GetAbsOrigin()
+        if DEBUG then
+            DebugDrawCircle(position, Vector(255,0,0), 100, 150, true, 5)
+            DebugDrawLine(unit:GetAbsOrigin(), position, 255, 255, 255, true, 5)
+            print("Ability "..abilityName.." cast on tree number ",targetIndex, " handle index ",tree_handle:GetEntityIndex(),"position ",position)
+        end
+        if not string.match(abilityName, "gather") then
+            return true
+        end
+
+        if DEBUG then DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10) end
+        
+        -- Get the currently selected units and send new orders
+        local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
+        if not entityList then
+            return true
+        end
+
+        local numBuilders = 0
+        for k,entityIndex in pairs(entityList) do
+            if CanGatherLumber(EntIndexToHScript(entityIndex)) then
+                numBuilders = numBuilders + 1
+            end
+        end
+
+        if numBuilders == 1 then
+            return true
+        end
+
+        if abilityName == "nightelf_gather" then
+            for k,entityIndex in pairs(entityList) do
+                --print("GatherTreeOrder for unit index ",entityIndex, position)
+
+                --Execute the order to a navigable tree
+                local unit = EntIndexToHScript(entityIndex)
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
+                if empty_tree then
+                    local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
+                    empty_tree.builder = unit -- Assign the wisp to this tree, so next time this isn't empty
+                    unit.gatherer_skip = true
+                    local gather_ability = unit:FindAbilityByName("nightelf_gather")
+                    if gather_ability and gather_ability:IsFullyCastable() then
+                        --print("Order: Cast on Tree ",tree_index)
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+                    end
+                else
+                    --print("No Empty Tree?")
+                end
+            end
+
+        elseif string.match(abilityName,"_gather") then
+
+            for k,entityIndex in pairs(entityList) do
+                --print("GatherTreeOrder for unit index ",entityIndex, position)
+
+                --Execute the order to a navigable tree
+                local unit = EntIndexToHScript(entityIndex)
+                local race = GetUnitRace(unit)
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
+                if empty_tree then 
+
+                    empty_tree.builder = unit
+                    unit.gatherer_skip = true
+                    local gather_ability = FindGatherAbility(unit)
+                    local return_ability = FindReturnAbility(unit)
+                    if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
+                        local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
+                        --print("Order: Cast on Tree ",tree_index)
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+                    elseif return_ability and not return_ability:IsHidden() then
+                        --print("Order: Return resources")
+                        unit.gatherer_skip = false -- Let it propagate to all selected units
+                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
+                    end
+                else
+                    print("No Empty Tree?")
+                end
+            end
+        end
+
+        -- Drop the original order
+        return false
+    end
 
     return true
 end
@@ -259,33 +469,47 @@ end
 -- TODO
 function Gatherer:Init(unit)
     -- index gather/return ability
-    -- give ability modifier to attack trees  
+    -- give ability modifier to attack trees
+
+    function unit:FindGatherTree()
+        -- similar to to FindEmptyNavigableTreeNearby
+    end
+
+    function unit:FindGoldMine()
+        -- this could be not just gold mine but other npc based resource nodes
+    end
+
+    function unit:ReturnResources()
+        -- use the return ability
+    end
+
+    function unit:CancelGather()
+        -- cancel process
+    end
+
+    function unit:CancelReturn()
+        -- cancel process
+    end
+
+    function unit:GetLumberCapacity()
+        local gather_ability = FindGatherAbility( unit )
+        return gather_ability and gather_ability:GetLevelSpecialValueFor("lumber_capacity", gather_ability:GetLevel()-1) or 0
+    end
+
+    unit:SetCanAttackTrees(true)
 end
 
 function CDOTA_BaseNPC:IsGatherer()
     -- return if it has been Init
 end
 
-function CDOTA_BaseNPC:FindGatherTree()
-    -- similar to to FindEmptyNavigableTreeNearby
-end
-
-function CDOTA_BaseNPC:FindGoldMine()
-    -- body
-end
-
-function CDOTA_BaseNPC:ReturnResources()
-    -- use the return ability
-end
-
-function CDOTA_BaseNPC:CancelGather()
-    -- cancel process
-end
-
-
 ------------------------------------------------
 --         Short methods and functions        --
 ------------------------------------------------
+
+function Gatherer:ClickedOnTrees(point)
+    return #GridNav:GetAllTreesAroundPoint(point, TREE_RADIUS, true) > 0
+end
 
 -- Defined on DeterminePathableTrees() and updated on tree_cut
 function CDOTA_MapTree:IsPathable()
@@ -294,6 +518,15 @@ end
 
 function CDOTA_MapTree:GetTreeID()
     return GetTreeIdForEntityIndex(self:GetEntityIndex())
+end
+
+-- Enables/disables the access to right-clicking
+function CDOTA_BaseNPC:SetCanAttackTrees(bAble)
+    if bAble then
+        ApplyModifier(self, "modifier_attack_trees")
+    else
+        self:RemoveModifierByName("modifier_attack_trees")
+    end
 end
 
 -- Deprecated, should be replaced by tree:GetTreeID()
@@ -396,6 +629,51 @@ function SortListByClosest( list, position )
         trees[closest_tree] = nil -- Remove it
     end
     return sorted_list
+end
+
+function GetClosestEntityToPosition(list, position)
+    local distance = 20000
+    local closest = nil
+
+    for k,ent in pairs(list) do
+        local this_distance = (position - ent:GetAbsOrigin()):Length()
+        if this_distance < distance then
+            distance = this_distance
+            closest = k
+        end
+    end
+
+    return closest  
+end
+
+-- Returns true if the unit is a valid lumberjack
+function CanGatherLumber( unit )
+    local unitName = unit:GetUnitName()
+    local unitTable = GameRules.UnitKV[unitName]
+    local gatherResources = unitTable and unitTable["GatherResources"]
+    return gatherResources and string.match(gatherResources,"lumber")
+end
+
+-- Returns true if the unit is a gold miner
+function CanGatherGold( unit )
+    local unitName = unit:GetUnitName()
+    local unitTable = GameRules.UnitKV[unitName]
+    local gatherResources = unitTable and unitTable["GatherResources"]
+    return gatherResources and string.match(gatherResources,"gold")
+end
+
+function FindGatherAbility( unit )
+    local unitName = unit:GetUnitName()
+    local unitTable = GameRules.UnitKV[unitName]
+    local abilityName = unitTable and unitTable["GatherAbility"]
+    return unit:FindAbilityByName(abilityName)
+end
+
+function FindReturnAbility( unit )
+    local unitName = unit:GetUnitName()
+    local unitTable = GameRules.UnitKV[unitName]
+    local abilityName = unitTable and unitTable["ReturnAbility"]
+    return unit:FindAbilityByName(abilityName)
 end
 
 ---------------------------------------------------------------

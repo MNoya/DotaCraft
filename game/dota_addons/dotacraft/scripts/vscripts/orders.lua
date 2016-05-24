@@ -177,191 +177,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
         errorMsg = nil
         return false
-
-    ------------------------------------------------
-    --             No Target Orders               --
-    ------------------------------------------------
-    elseif order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET and abilityIndex and abilityIndex ~= 0 then
-        
-        local ability = EntIndexToHScript(abilityIndex)
-        if not ability then
-            print("Error: CAST_NO_TARGET with an incorrect index")
-            return true
-        end
-        local abilityName = ability:GetAbilityName()
-        local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
-
-        if string.match(abilityName, "_return_resources") then
-            for k,entityIndex in pairs(entityList) do
-                local unit = EntIndexToHScript(entityIndex)
-                unit.skip = true
-
-                local return_ability = FindReturnAbility(unit)
-                if return_ability and not return_ability:IsHidden() then
-                    --print("Order: Return resources")
-                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
-                end
-            end
-        end
-        return true
-
-    ------------------------------------------------
-    --          Tree Gather Multi Orders          --
-    ------------------------------------------------
-    elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
-        local unit = EntIndexToHScript(units["0"])
-        if DEBUG then print("DOTA_UNIT_ORDER_CAST_TARGET_TREE ",unit) end
-    
-        local abilityIndex = filterTable["entindex_ability"]
-        local ability = EntIndexToHScript(abilityIndex) 
-        local abilityName = ability:GetAbilityName()
-
-        local treeID = filterTable["entindex_target"]
-        local tree_index = GetEntityIndexForTreeId(treeID)
-        local tree_handle = EntIndexToHScript(tree_index)
-
-        local position = tree_handle:GetAbsOrigin()
-        if DEBUG then
-            DebugDrawCircle(position, Vector(255,0,0), 100, 150, true, 5)
-            DebugDrawLine(unit:GetAbsOrigin(), position, 255, 255, 255, true, 5)
-            print("Ability "..abilityName.." cast on tree number ",targetIndex, " handle index ",tree_handle:GetEntityIndex(),"position ",position)
-        end
-        if not string.match(abilityName, "gather") then
-            return true
-        end
-
-        if DEBUG then DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10) end
-        
-        -- Get the currently selected units and send new orders
-        local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
-        if not entityList then
-            return true
-        end
-
-        local numBuilders = 0
-        for k,entityIndex in pairs(entityList) do
-            if CanGatherLumber(EntIndexToHScript(entityIndex)) then
-                numBuilders = numBuilders + 1
-            end
-        end
-
-        if numBuilders == 1 then
-            return true
-        end
-
-        if abilityName == "nightelf_gather" then
-            for k,entityIndex in pairs(entityList) do
-                --print("GatherTreeOrder for unit index ",entityIndex, position)
-
-                --Execute the order to a navigable tree
-                local unit = EntIndexToHScript(entityIndex)
-                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
-                if empty_tree then
-                    local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
-                    empty_tree.builder = unit -- Assign the wisp to this tree, so next time this isn't empty
-                    unit.skip = true
-                    local gather_ability = unit:FindAbilityByName("nightelf_gather")
-                    if gather_ability and gather_ability:IsFullyCastable() then
-                        --print("Order: Cast on Tree ",tree_index)
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-                    end
-                else
-                    --print("No Empty Tree?")
-                end
-            end
-
-        elseif string.match(abilityName,"_gather") then
-
-            for k,entityIndex in pairs(entityList) do
-                --print("GatherTreeOrder for unit index ",entityIndex, position)
-
-                --Execute the order to a navigable tree
-                local unit = EntIndexToHScript(entityIndex)
-                local race = GetUnitRace(unit)
-                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
-                if empty_tree then 
-
-                    empty_tree.builder = unit
-                    unit.skip = true
-                    local gather_ability = FindGatherAbility(unit)
-                    local return_ability = FindReturnAbility(unit)
-                    if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-                        local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
-                        --print("Order: Cast on Tree ",tree_index)
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-                    elseif return_ability and not return_ability:IsHidden() then
-                        --print("Order: Return resources")
-                        unit.skip = false -- Let it propagate to all selected units
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
-                    end
-                else
-                    print("No Empty Tree?")
-                end
-            end
-        end
-
-        -- Drop the original order
-        return false
-    end
-
-    ------------------------------------------------
-    --          Tree Gather Right-Click           --
-    ------------------------------------------------
-    local TREE_RADIUS = 50
-    local trees = GridNav:GetAllTreesAroundPoint(point, TREE_RADIUS, true)
-    local entityIndex = units["0"]
-    local unit = EntIndexToHScript(entityIndex)
-
-    if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and CanGatherLumber(unit) and #trees>0 then
-        
-        local race = GetUnitRace(unit)
-        local gather_ability = FindGatherAbility(unit)
-        local return_ability = FindReturnAbility(unit)
-        local pID = unit:GetPlayerOwnerID()
-        local player = PlayerResource:GetPlayer(pID)
-        local entityList = PlayerResource:GetSelectedEntities(pID)
-        local numBuilders = 0
-        for k,entityIndex in pairs(entityList) do
-            if CanGatherLumber(EntIndexToHScript(entityIndex)) then
-                numBuilders = numBuilders + 1
-            end
-        end
-
-        -- If clicking near a tree
-        if CanGatherLumber(unit) and #trees>0 then
-            if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-                local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS)
-                if empty_tree then
-                    local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
-                    --print("Order: Cast on Tree ",tree_index)
-                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-                end
-            elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
-                -- Can the unit still gather more resources?
-                if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) and not unit:HasModifier("modifier_returning_gold") then
-                    --print("Keep gathering")
-
-                    -- Swap to a gather ability and keep extracting
-                    local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS)
-                    if empty_tree then
-                        local tree_index = GetTreeIdForEntityIndex( empty_tree:GetEntityIndex() )
-                        unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
-                        --print("Order: Cast on Tree ",tree_index)
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-                    end
-                else
-                    -- Return
-                    local empty_tree = FindEmptyNavigableTreeNearby(unit, point, TREE_RADIUS)
-                    unit.target_tree = empty_tree --The new selected tree
-                    --print("Order: Return resources")
-                    unit.skip = false -- Let it propagate to all selected units
-                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
-                end
-            end
-            return false
-        else
-            return true
-        end
     end
 
     if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and numBuildings > 0 then
@@ -436,7 +251,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
                 elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
                     -- Can the unit still gather more resources?
-                    if (unit.lumber_gathered and unit.lumber_gathered < Units:GetLumberCapacity(unit)) and not unit:HasModifier("modifier_returning_gold") then
+                    if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) and not unit:HasModifier("modifier_returning_gold") then
                         --print("Keep gathering")
 
                         -- Swap to a gather ability and keep extracting
@@ -512,7 +327,7 @@ function dotacraft:GoldGatherOrder( event )
         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
     elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
         -- Can the unit still gather more resources?
-        if (unit.lumber_gathered and unit.lumber_gathered < Units:GetLumberCapacity(unit)) and not unit:HasModifier("modifier_returning_gold") then
+        if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) and not unit:HasModifier("modifier_returning_gold") then
             --print("Keep gathering")
 
             -- Swap to a gather ability and keep extracting
@@ -649,8 +464,6 @@ function dotacraft:RightClickOrder( event )
 
     for _,entityIndex in pairs(selectedEntities) do
         local unit = EntIndexToHScript(entityIndex)
-
-        ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = position, Queue = false})
 
         if IsValidAlive(unit) and unit:HasModifier("modifier_hold_position") then
             unit:RemoveModifierByName("modifier_hold_position")

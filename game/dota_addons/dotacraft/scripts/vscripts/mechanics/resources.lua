@@ -1,18 +1,3 @@
-function GetClosestEntityToPosition(list, position)
-    local distance = 20000
-    local closest = nil
-
-    for k,ent in pairs(list) do
-        local this_distance = (position - ent:GetAbsOrigin()):Length()
-        if this_distance < distance then
-            distance = this_distance
-            closest = k
-        end
-    end
-
-    return closest  
-end
-
 function GetClosestGoldMineToPosition( position )
     local allGoldMines = Entities:FindAllByModel('models/mine/mine.vmdl') --Target name in Hammer
     local distance = 20000

@@ -27,13 +27,8 @@ function Units:Init( unit )
             return unit:oldIdle() and unit.state == "idle"
         end
 
-        function unit:GetLumberCapacity()
-            local gather_ability = FindGatherAbility( unit )
-            return gather_ability and gather_ability:GetLevelSpecialValueFor("lumber_capacity", gather_ability:GetLevel()-1) or 0
-        end
-
         if CanGatherLumber(unit) then
-            unit:SetCanAttackTrees(true)
+            Gatherer:Init(unit)
         end
     end
 
@@ -176,36 +171,6 @@ function IsBase( unit )
         end
     end
     return false
-end
-
--- Returns true if the unit is a valid lumberjack
-function CanGatherLumber( unit )
-    local unitName = unit:GetUnitName()
-    local unitTable = GameRules.UnitKV[unitName]
-    local gatherResources = unitTable and unitTable["GatherResources"]
-    return gatherResources and string.match(gatherResources,"lumber")
-end
-
--- Returns true if the unit is a gold miner
-function CanGatherGold( unit )
-    local unitName = unit:GetUnitName()
-    local unitTable = GameRules.UnitKV[unitName]
-    local gatherResources = unitTable and unitTable["GatherResources"]
-    return gatherResources and string.match(gatherResources,"gold")
-end
-
-function FindGatherAbility( unit )
-    local unitName = unit:GetUnitName()
-    local unitTable = GameRules.UnitKV[unitName]
-    local abilityName = unitTable and unitTable["GatherAbility"]
-    return unit:FindAbilityByName(abilityName)
-end
-
-function FindReturnAbility( unit )
-    local unitName = unit:GetUnitName()
-    local unitTable = GameRules.UnitKV[unitName]
-    local abilityName = unitTable and unitTable["ReturnAbility"]
-    return unit:FindAbilityByName(abilityName)
 end
 
 function IsHuman( unit )
@@ -432,13 +397,4 @@ function CDOTA_BaseNPC:GetAttackFactorAgainstTarget( unit )
     local armor_type = unit:GetArmorType()
     local damageTable = GameRules.Damage
     return damageTable[attack_type] and damageTable[attack_type][armor_type] or 1
-end
-
--- Enables/disables the access to right-clicking
-function CDOTA_BaseNPC:SetCanAttackTrees(bAble)
-    if bAble then
-        ApplyModifier(self, "modifier_attack_trees")
-    else
-        self:RemoveModifierByName("modifier_attack_trees")
-    end
 end

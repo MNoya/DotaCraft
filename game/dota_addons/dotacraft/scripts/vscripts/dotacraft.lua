@@ -312,7 +312,9 @@ function dotacraft:InitGameMode()
 		GameRules.StartingPositions[k-1] = pos_table
 	end
 
-	dotacraft:UI_Init()
+    if not UI_PLAYERTABLE then
+	   dotacraft:UI_Init()
+    end
 	print('[DOTACRAFT] Done loading dotacraft gamemode!')
 end
 
