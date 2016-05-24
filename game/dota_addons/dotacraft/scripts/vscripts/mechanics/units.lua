@@ -27,7 +27,7 @@ function Units:Init( unit )
             return unit:oldIdle() and unit.state == "idle"
         end
 
-        if CanGatherLumber(unit) then
+        if unit:CanGatherLumber() then
             Gatherer:Init(unit)
         end
     end

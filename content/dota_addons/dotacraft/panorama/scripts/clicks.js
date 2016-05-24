@@ -105,6 +105,10 @@ function OnRightButtonPressed()
                 $.Msg(" Targeted orc burrow")
                 GameEvents.SendCustomGameEventToServer( "burrow_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex })
             }
+            else if (IsBuilder(targetIndex) && Entities.IsControllableByPlayer(targetIndex, iPlayerID))
+            {
+                GameEvents.SendCustomGameEventToServer("right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
+            }
             return false
         }
         else

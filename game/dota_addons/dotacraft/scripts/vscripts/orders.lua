@@ -571,7 +571,7 @@ function dotacraft:ResolveRallyPointOrder( unit, building )
                     local gather_ability = FindGatherAbility(unit)
                     if gather_ability then
                         unit.skip = true
-                        local tree_index = GetTreeIndexFromHandle(empty_tree)
+                        local tree_index = empty_tree:GetTreeID()
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
                     end
                 end

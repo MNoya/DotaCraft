@@ -462,9 +462,12 @@ function Gather( event )
 
         -- Check for empty tree for Wisps
         if IsNightElf(caster) and (tree.builder ~= nil and tree.builder ~= caster) then
-            print(" The Tree already has a wisp in it, find another one!")
-            caster:Interrupt()
-            return
+            local tree = FindEmptyNavigableTreeNearby(caster, tree:GetAbsOrigin(), 150)
+            if tree then
+                caster:Interrupt()
+                ExecuteOrderFromTable({UnitIndex = caster:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree:GetTreeID(), AbilityIndex = ability:GetEntityIndex(), Queue = false})
+                return
+            end
         end
 
         local tree_pos = tree:GetAbsOrigin()
