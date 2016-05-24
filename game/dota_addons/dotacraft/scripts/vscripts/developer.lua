@@ -13,9 +13,10 @@ CHEAT_CODES = {
 }
 
 DEBUG_CODES = {
-    ["debug_trees"] = function(...) dotacraft:DebugTrees(...) end,           -- Prints the trees marked as pathable
+    ["debug_trees"] = function(...) Gatherer:DebugTrees() end,               -- Prints the trees marked as pathable
     ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end,         -- Prints the positions marked for undead buildings
     ["debug_food"] = function(...) dotacraft:DebugFood(...) end,             -- Prints the food count for all players, checking for inconsistencies
+    ["debug_clear"] = function(...) DebugDrawClear() end,                    -- Clears all debug world elements
     ["debug_c"] = function(...) dotacraft:DebugCalls(...) end,               -- Spams the console with every lua call
     ["debug_l"] = function(...) dotacraft:DebugLines(...) end,               -- Spams the console with every lua line
 }
@@ -156,21 +157,6 @@ function dotacraft:GiveItem(playerID, item_name)
     end
 end
 
-function dotacraft:DebugTrees()
-    for k,v in pairs(GameRules.ALLTREES) do
-        if v:IsStanding() then
-            if IsTreePathable(v) then
-                DebugDrawCircle(v:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
-                if not v.builder then
-                    DebugDrawText(v:GetAbsOrigin(), "OK", true, 60)
-                end
-            else
-                DebugDrawCircle(v:GetAbsOrigin(), Vector(255,0,0), 255, 32, true, 60)
-            end
-        end
-    end
-end
-
 function dotacraft:DebugBlight()
     for y,v in pairs(BuildingHelper.Grid) do
         for x,_ in pairs(v) do
@@ -284,7 +270,7 @@ function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
 end
 
 function dotacraft:TestHero( heroName, bEnemy )
-    local selected = PlayerResource:GetMainSelectedEntity(pID)
+    local selected = PlayerResource:GetMainSelectedEntity(0)
     if not selected then return end
     selected = EntIndexToHScript(selected)
 

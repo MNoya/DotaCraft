@@ -16,8 +16,6 @@ UNDER_ATTACK_WARNING_INTERVAL = 60
 STARTING_GOLD = 500
 STARTING_LUMBER = 150
 
-TREE_HEALTH = 50
-
 DEBUG_SPEW = 1
 
 XP_PER_LEVEL_TABLE = {
@@ -133,8 +131,6 @@ function dotacraft:InitGameMode()
 	-- Keep track of the last time each player was damaged (to play warnings/"we are under attack")
 	GameRules.PLAYER_BUILDINGS_DAMAGED = {}	
 	GameRules.PLAYER_DAMAGE_WARNING = {}
-	
-	dotacraft:DeterminePathableTrees()
 
 	-- Event Hooks
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
@@ -299,11 +295,6 @@ function dotacraft:InitGameMode()
     GameRules.Drops = LoadKeyValues("scripts/kv/map_drops.kv")
     GameRules.Items = LoadKeyValues("scripts/kv/items.kv")
     GameRules.Damage = LoadKeyValues("scripts/kv/damage_table.kv")
-
-  	GameRules.ALLTREES = Entities:FindAllByClassname("ent_dota_tree")
-  	for _,t in pairs(GameRules.ALLTREES) do
-  		t.health = TREE_HEALTH
-  	end
 
 	-- Keeps the blighted gridnav positions
 	GameRules.Blight = {}
@@ -913,34 +904,6 @@ function dotacraft:OnTreeCut(keys)
 	local treeX = keys.tree_x
 	local treeY = keys.tree_y
 	local treePos = Vector(treeX,treeY,0)
-
-	-- Update the pathable trees nearby
-	local vecs = {
-    	Vector(0,64,0),-- N
-    	Vector(64,64,0), -- NE
-    	Vector(64,0,0), -- E
-    	Vector(64,-64,0), -- SE
-    	Vector(0,-64,0), -- S
-    	Vector(-64,-64,0), -- SW
-    	Vector(-64,0,0), -- W
-    	Vector(-64,64,0) -- NW
-  	}
-
-  	for k=1,#vecs do
-  		local vec = vecs[k]
- 		local xoff = vec.x
- 		local yoff = vec.y
- 		local pos = Vector(treeX + xoff, treeY + yoff, 0)
-
- 		local nearbyTree = GridNav:IsNearbyTree(pos, 64, true)
-	    if nearbyTree then
-	    	local trees = GridNav:GetAllTreesAroundPoint(pos, 32, true)
-	    	for _,t in pairs(trees) do
-	    		--DebugDrawCircle(t:GetAbsOrigin(), Vector(0,255,0), 255, 32, true, 60)
-	    		t.pathable = true
-	    	end
-	    end
-	end
 	
 	-- Check for Night Elf Sentinels and Wisps
 	local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, treePos, nil, 64, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
@@ -1197,83 +1160,6 @@ function dotacraft:UpdateRallyFlagDisplays( playerID )
             CreateRallyFlagForBuilding( building )
         end
     end
-end
-
---https://en.wikipedia.org/wiki/Flood_fill
-function dotacraft:DeterminePathableTrees()
-
-	--------------------------
-	--      Flood Fill      --
-	--------------------------
-
-	print("[DOTACRAFT] Determining pathable trees...")
-
-	local world_positions = {}
-	local valid_trees = {}
-	local seen = {}
-
-	--Set Q to the empty queue.
-	local Q = {}
-
- 	--Add node to the end of Q.
- 	table.insert(Q, Vector(0,0,0))
-
- 	local vecs = {
-    	Vector(0,64,0),-- N
-    	Vector(64,64,0), -- NE
-    	Vector(64,0,0), -- E
-    	Vector(64,-64,0), -- SE
-    	Vector(0,-64,0), -- S
-    	Vector(-64,-64,0), -- SW
-    	Vector(-64,0,0), -- W
-    	Vector(-64,64,0) -- NW
-  	}
-  	local cont = 0
-
- 	while #Q > 0 do
- 		--Set n equal to the first element of Q and Remove first element from Q.
- 		local position = table.remove(Q)
-
- 		--If the color of n is equal to target-color:
- 		local blocked = not GridNav:IsTraversable(position) or GridNav:IsBlocked(position)
- 		if not blocked then
- 			--table.insert(world_positions, position)
-
- 			-- Mark position processed.
- 			seen[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosX(position.y)] = 1
-
- 			for k=1,#vecs do
- 				local vec = vecs[k]
- 				local xoff = vec.x
- 				local yoff = vec.y
- 				local pos = Vector(position.x + xoff, position.y + yoff, position.z)
-
- 				-- Add unprocessed nodes
- 				if not seen[GridNav:WorldToGridPosX(pos.x)..","..GridNav:WorldToGridPosX(pos.y)] then
- 					--table.insert(world_positions, position)
- 					table.insert(Q, pos)
- 				end
- 			end
-	    
-	    else
-	    	local nearbyTree = GridNav:IsNearbyTree(position, 64, true)
-	    	if nearbyTree then
-	    		local trees = GridNav:GetAllTreesAroundPoint(position, 1, true)
-	    		if #trees > 0 then
-	    			local t = trees[1]
-	    			t.pathable = true
-	    			--table.insert(valid_trees,t)
-	    		end
-	    	end
-	    end
-	end
-
-	--DEBUG
-	--for k,tree in pairs(valid_trees) do
-		--DebugDrawCircle(tree:GetAbsOrigin(), Vector(0,255,0), 0, 32, true, 60)
-	--end
-
-	print('[DOTACRAFT] Pathable Trees set')
 end
 
 function dotacraft:MakePlayerLose( playerID )
