@@ -753,8 +753,7 @@ function MoveUnitsInGrid(units, point, order_type, queue, forward)
             table.insert(sortedUnits, closest_unit_index)
 
             --print("Removing unit of index "..closest_unit_index.." from the table:")
-            --DeepPrintTable(units)
-            units = RemoveElementFromTable(units, closest_unit_index)
+            table.remove(units, getIndexTable(units, closest_unit_index))
         end
     end
 
@@ -817,10 +816,7 @@ end
 
 -- Returns the closest unit to a point from a table of unit indexes
 function GetClosestUnitToPoint( units_table, point )
-    local closest_unit = units_table["0"]
-    if not closest_unit then
-        closest_unit = units_table[1]
-    end
+    local closest_unit = units_table[1]
     if closest_unit then   
         local min_distance = (point - EntIndexToHScript(closest_unit):GetAbsOrigin()):Length()
 
@@ -841,7 +837,7 @@ end
 function GetUnitsWithFormationRank( units_table, rank )
     local allUnitsOfRank = {}
     for _,unit_index in pairs(units_table) do
-        if GetFormationRank( EntIndexToHScript(unit_index) ) == rank then
+        if EntIndexToHScript(unit_index):GetFormationRank() == rank then
             table.insert(allUnitsOfRank, unit_index)
         end
     end
@@ -850,24 +846,6 @@ function GetUnitsWithFormationRank( units_table, rank )
     end
     return allUnitsOfRank
 end
-
--- Returns the FormationRank defined in npc_units_custom
-function GetFormationRank( unit )
-    return GameRules.UnitKV[unit:GetUnitName()]["FormationRank"] or 0
-end
-
--- Does awful table-recreation because table.remove refuses to work. Lua pls
-function RemoveElementFromTable(table, element)
-    local new_table = {}
-    for k,v in pairs(table) do
-        if v and v ~= element then
-            new_table[#new_table+1] = v
-        end
-    end
-
-    return new_table
-end
-
 
 -- Returns wether the unit is trying to buy from an enemy shop
 function OnEnemyShop( unit )

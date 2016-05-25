@@ -358,6 +358,11 @@ function HasArtilleryAttack( unit )
     return unitTable and unitTable["Artillery"]
 end
 
+-- Default 0 (melee)
+function CDOTA_BaseNPC:GetFormationRank()
+    return self:GetKeyValues()["FormationRank"] or 0
+end
+
 function CDOTA_BaseNPC:RenderTeamColor()
     return GameRules.UnitKV[self:GetUnitName()]["RenderTeamColor"]
 end
