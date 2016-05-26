@@ -1455,7 +1455,7 @@
 		"Ability7"					"human_build_gryphon_aviary_disabled"				
 		"Ability8"					"build_human_items" // Provides 6 additional building abilities
 		
-		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
+		// Gatherer KeyValues
 		"GatherAbility"				"human_gather"
 		"RepairAbility"				"human_gather"
 		"ReturnAbility"				"human_return_resources"
@@ -4174,7 +4174,7 @@
 		"Ability7"					"build_nightelf_items"
 		"Ability11"					"nightelf_night_regen"
 	
-		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
+		// Gatherer KeyValues
 		"GatherAbility"				"nightelf_gather"
 		"RepairAbility"				"nightelf_gather"
 		"ReturnAbility"				"nightelf_return_resources"
@@ -6661,7 +6661,7 @@
 		"Ability9"					""
 		"Ability10"					"orc_pillage_disabled"	 //Reference: Asal
 	
-		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
+		// Gatherer KeyValues
 		"GatherAbility"				"orc_gather"
 		"RepairAbility"				"orc_gather"
 		"ReturnAbility"				"orc_return_resources"
@@ -9587,11 +9587,12 @@
 		"Ability9"					"build_undead_items"
 		"Ability11"					"undead_blight_regen"
 			
-		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
+		// Gatherer KeyValues
 		"GatherAbility"				"undead_gather"
-		"RepairAbility"				"undead_gather"
 		"ReturnAbility"				"undead_return_resources"
 		"GatherResources"			"gold"
+	
+		"RepairAbility"				"undead_gather"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -9780,13 +9781,6 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
 	
 		"AttacksEnabled"			"ground"
-	
-		"LumberCapacity"			"20"
-	
-		// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
-		"GatherAbility"				"undead_gather"
-		"ReturnAbility"				"undead_return_resources"
-		"GatherResources"			"lumber"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -9797,6 +9791,11 @@
 		"Ability4"					"undead_ghoul_frenzy_disabled"
 		"Ability10"					"undead_backpack_disabled"
 		"Ability11"					"undead_blight_regen"
+	
+		// Gatherer KeyValues
+		"GatherAbility"				"undead_gather"
+		"ReturnAbility"				"undead_return_resources"
+		"GatherResources"			"lumber"
 		
 		// Armor
 		//----------------------------------------------------------------

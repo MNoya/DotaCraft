@@ -47,11 +47,12 @@
 	"Ability9"					"build_undead_items"
 	"Ability11"					"undead_blight_regen"
 		
-	// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
+	// Gatherer KeyValues
 	"GatherAbility"				"undead_gather"
-	"RepairAbility"				"undead_gather"
 	"ReturnAbility"				"undead_return_resources"
 	"GatherResources"			"gold"
+
+	"RepairAbility"				"undead_gather"
 
 	// Armor
 	//----------------------------------------------------------------
@@ -240,13 +241,6 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
 
 	"AttacksEnabled"			"ground"
-
-	"LumberCapacity"			"20"
-
-	// Gather Ability, used to link the ability to the unit when swapping between gather/return resources
-	"GatherAbility"				"undead_gather"
-	"ReturnAbility"				"undead_return_resources"
-	"GatherResources"			"lumber"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -257,6 +251,11 @@
 	"Ability4"					"undead_ghoul_frenzy_disabled"
 	"Ability10"					"undead_backpack_disabled"
 	"Ability11"					"undead_blight_regen"
+
+	// Gatherer KeyValues
+	"GatherAbility"				"undead_gather"
+	"ReturnAbility"				"undead_return_resources"
+	"GatherResources"			"lumber"
 	
 	// Armor
 	//----------------------------------------------------------------

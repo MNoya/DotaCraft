@@ -29,12 +29,9 @@ end
 function dotacraft:UI_Listeners()
     CustomGameEventManager:RegisterListener( "reposition_player_camera", Dynamic_Wrap(dotacraft, "RepositionPlayerCamera"))
     CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
-    CustomGameEventManager:RegisterListener( "gold_gather_order", Dynamic_Wrap(dotacraft, "GoldGatherOrder")) --Right click through panorama
-    CustomGameEventManager:RegisterListener( "repair_order", Dynamic_Wrap(dotacraft, "RepairOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) --Right click through panorama 
     CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
-    CustomGameEventManager:RegisterListener( "right_click_order", Dynamic_Wrap(dotacraft, "RightClickOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
 	
 	-- PreGame Selection

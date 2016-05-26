@@ -179,6 +179,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
         return false
     end
 
+    ------------------------------------------------
+    --              Rally Flag Order              --
+    ------------------------------------------------
     if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and numBuildings > 0 then
         if unit and IsCustomBuilding(unit) then
 
@@ -212,64 +215,18 @@ function dotacraft:FilterExecuteOrder( filterTable )
         return false
     
     ------------------------------------------------
-    --        Gold Gather/Repair Multi Order      --
+    --               Repair Multi Order           --
     ------------------------------------------------
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
-        local unit = EntIndexToHScript(units["0"])
-    
-        local abilityIndex = filterTable["entindex_ability"]
+
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
 
         local targetIndex = filterTable["entindex_target"]
         local target_handle = EntIndexToHScript(targetIndex)
         local target_name = target_handle:GetUnitName()
-
-        if target_name == "gold_mine" or
-          ( (target_name == "nightelf_entangled_gold_mine" or target_name == "undead_haunted_mine" ) and target_handle:GetTeamNumber() == unit:GetTeamNumber()) then
-
-            local gold_mine = target_handle
             
-            -- Get the currently selected units and send new orders
-            local pID = unit:GetPlayerOwnerID()
-            local player = PlayerResource:GetPlayer(pID)
-            local entityList = PlayerResource:GetSelectedEntities(pID)
-            if not entityList then
-                return true
-            end
-
-            for k,entityIndex in pairs(entityList) do
-                local unit = EntIndexToHScript(entityIndex)
-                local race = GetUnitRace(unit)
-                local gather_ability = FindGatherAbility(unit)
-                local return_ability = FindReturnAbility(unit)
-
-                -- Gold gather
-                if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-                    unit.skip = true
-                    --print("Order: Cast on ",gold_mine:GetUnitName())
-                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-                elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
-                    -- Can the unit still gather more resources?
-                    if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) and not unit:HasModifier("modifier_returning_gold") then
-                        --print("Keep gathering")
-
-                        -- Swap to a gather ability and keep extracting
-                        unit.skip = true
-                        unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
-                        --print("Order: Cast on ",gold_mine:GetUnitName())
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-                    else
-                        -- Return
-                        unit.target_mine = gold_mine
-                        --print("Order: Return resources")
-                        unit.skip = false -- Let it propagate to all selected units
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
-                    end
-                end
-            end
-            
-        elseif (IsCustomBuilding(target_handle) or IsMechanical(target_handle)) and target_handle:GetTeamNumber() == unit:GetTeamNumber() then
+        if (IsCustomBuilding(target_handle) or IsMechanical(target_handle)) and target_handle:GetTeamNumber() == unit:GetTeamNumber() then
             --print("Order: Repair ",target_handle:GetUnitName())
 
             -- Get the currently selected units and send new orders
@@ -278,8 +235,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 return true
             end
 
+            -- TODO: Use API here, BuildingHelper Repair
             for k,entityIndex in pairs(entityList) do
-
                 local unit = EntIndexToHScript(entityIndex)
                 local race = GetUnitRace(unit)
                 local repair_ability = unit:FindAbilityByName(race.."_gather")
@@ -400,35 +357,6 @@ function dotacraft:BurrowOrder( event )
 end
 
 ------------------------------------------------
---             Repair Right-Click             --
-------------------------------------------------
-function dotacraft:RepairOrder( event )
-    local pID = event.pID
-    local entityIndex = event.mainSelected
-    local targetIndex = event.targetIndex
-    local building = EntIndexToHScript(targetIndex)
-    local selectedEntities = PlayerResource:GetSelectedEntities(pID)
-    local queue = tobool(event.queue)
-    dotacraft:RightClickOrder(event)
-
-    local unit = EntIndexToHScript(entityIndex)
-    local race = GetUnitRace(unit)
-    local repair_ability = unit:FindAbilityByName(race.."_gather")
-
-    -- Repair
-    if repair_ability and repair_ability:IsFullyCastable() and not repair_ability:IsHidden() then
-        --print("Order: Repair ",building:GetUnitName())
-        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
-    elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
-        --print("Order: Repair ",building:GetUnitName())
-        
-        -- Swap to the repair ability and send repair order
-        unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
-        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
-    end
-end
-
-------------------------------------------------
 --            Shop->Unit Right-Click          --
 --            Unit->Shop Left-Click           --
 ------------------------------------------------
@@ -450,25 +378,6 @@ function dotacraft:ShopActiveOrder( event )
     shop.active_particle[pID] = ParticleManager:CreateParticleForPlayer("particles/custom/shop_arrow.vpcf", PATTACH_OVERHEAD_FOLLOW, unit, player)
 
     ParticleManager:SetParticleControl(shop.active_particle[pID], 0, unit:GetAbsOrigin())
-end
-
-------------------------------------------------
---             Generic Right-Click            --
------------------------------------------------- 
-function dotacraft:RightClickOrder( event )
-    local pID = event.PlayerID
-    local selectedEntities = PlayerResource:GetSelectedEntities(pID)
-    local point = event.position
-    if not point then return end
-    local position = GetGroundPosition(Vector(point["0"], point["1"], 0), nil)
-
-    for _,entityIndex in pairs(selectedEntities) do
-        local unit = EntIndexToHScript(entityIndex)
-
-        if IsValidAlive(unit) and unit:HasModifier("modifier_hold_position") then
-            unit:RemoveModifierByName("modifier_hold_position")
-        end
-    end
 end
 
 ------------------------------------------------
@@ -502,6 +411,7 @@ function dotacraft:OnBuildingRallyOrder( event )
                 if rally_type == "position" then
                     --DebugDrawCircle(position, Vector(255,0,0), 255, 20, true, 3)
                    
+                   -- TODO: Use API
                     -- Tree rally
                     local trees = GridNav:GetAllTreesAroundPoint(position, 50, true)
                     if #trees>0 then
@@ -561,7 +471,7 @@ function dotacraft:ResolveRallyPointOrder( unit, building )
 
         -- Move to Gather Tree
         elseif rally_type == "tree" then
-
+            -- TODO Use API HERE
             if IsBuilder(unit) then
                 local race = GetUnitRace(unit)
                 local position = flag:GetAbsOrigin()
@@ -583,8 +493,8 @@ function dotacraft:ResolveRallyPointOrder( unit, building )
         -- Move to Gather Gold
         elseif rally_type == "mine" then
 
+            -- Use API here too
             if IsBuilder(unit) then
-                local race = GetUnitRace(unit)
                 local gather_ability = FindGatherAbility(unit)
                 if gather_ability then
                     unit.skip = true

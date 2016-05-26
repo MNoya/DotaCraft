@@ -26,10 +26,6 @@ function Units:Init( unit )
         function unit:IsIdle()
             return unit:oldIdle() and unit.state == "idle"
         end
-
-        if unit:CanGatherLumber() then
-            Gatherer:Init(unit)
-        end
     end
 
     -- Attack system, only applied to units and buildings with an attack
@@ -360,22 +356,22 @@ end
 
 -- Default 0 (melee)
 function CDOTA_BaseNPC:GetFormationRank()
-    return self:GetKeyValues()["FormationRank"] or 0
+    return self:GetKeyValue("FormationRank") or 0
 end
 
 function CDOTA_BaseNPC:RenderTeamColor()
-    return GameRules.UnitKV[self:GetUnitName()]["RenderTeamColor"]
+    return self:GetKeyValue("RenderTeamColor")
 end
 
 -- All units should have DOTA_COMBAT_CLASS_DEFEND_HERO and DOTA_COMBAT_CLASS_DEFEND_HERO, or no CombatClassAttack/ArmorType defined
 -- Returns a string with the wc3 damage name
 function CDOTA_BaseNPC:GetAttackType()
-    return GameRules.UnitKV[self:GetUnitName()]["AttackType"] or "normal"
+    return self:GetKeyValue("AttackType") or "normal"
 end
 
 -- Returns a string with the wc3 armor name
 function CDOTA_BaseNPC:GetArmorType()
-    return GameRules.UnitKV[self:GetUnitName()]["ArmorType"] or "normal"
+    return self:GetKeyValue("ArmorType") or "normal"
 end
 
 -- Changes the Attack Type string defined in the KV, and the current visual tooltip
@@ -383,7 +379,7 @@ function CDOTA_BaseNPC:SetAttackType( attack_type )
     local current_attack_type = self:GetAttackType()
     self:RemoveModifierByName("modifier_attack_"..current_attack_type)
 
-    GameRules.UnitKV[self:GetUnitName()]["AttackType"] = attack_type        
+    GameRules.UnitKV[self:GetUnitName()]["AttackType"] = attack_type
     ApplyModifier(self, "modifier_attack_"..attack_type)
 end
 

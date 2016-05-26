@@ -38,7 +38,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/builder.lua"
+			"ScriptFile"	"units/gather.lua"
 			"Function"		"Gather"
 		}
 	}
@@ -46,37 +46,10 @@
 	"Modifiers"
 	{
 		// LUMBER GATHER
-		"modifier_on_order_cancel_lumber"
-		{
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelGather"
-				}
-			}
-
-			// Builders have no collision while moving to gather
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
 		"modifier_gathering_lumber"
 		{
 			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
 			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelGather"
-				}
-			}
 
 			// Lumber Gain
 			"ThinkInterval"  "1.0"
@@ -84,7 +57,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"GatherLumber"
 				}
 			}		
@@ -92,25 +65,6 @@
 		// END LUMBER GATHER
 
 		// GOLD GATHER
-		"modifier_on_order_cancel_gold"
-		{
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelGather"
-				}
-			}
-
-			// Builders have no collision while moving to gather
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
 		"modifier_gathering_gold"
 		{			
 			"States"
@@ -127,7 +81,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"GatherGold"
 				}			
 			}
@@ -142,7 +96,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -157,7 +111,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 				
@@ -197,7 +151,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"Repair"
 				}
 			}
@@ -234,7 +188,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/builder.lua"
+			"ScriptFile"	"units/gather.lua"
 			"Function"		"ReturnResources"
 		}
 	}
@@ -246,15 +200,6 @@
 		{
 			"IsHidden"				"0"
 			"TextureName"			"furion_sprout"
-
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelReturn"
-				}
-			}
 
 			"OnCreated"
 			{
@@ -284,15 +229,6 @@
 			"States"
 			{
 				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelReturn"
-				}
 			}
 
 			"OnCreated"

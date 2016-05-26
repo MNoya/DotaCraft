@@ -8,10 +8,13 @@
 	"AbilityTextureName"		"nightelf_gather"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+
+	"RequiresEmptyTree"			"1"
+	"GoldMineTarget" 			"nightelf_entangled_gold_mine"
 				
 	"AbilitySpecial"
 	{
@@ -34,8 +37,7 @@
 		{
 			"var_type"			"FIELD_INTEGER"
 			"gold_per_interval"	"10"
-		}	
-		
+		}
 	}
 
 	"precache"
@@ -48,7 +50,7 @@
 		// Move towards the tree, repeat until ~100 distance
 		// Only one wisp per tree, if tree busy find another
 		// OnOrder, toggle off and cancel the skill
-		// When close to the tree, give the wisp flying movement and position it on top
+		// When close to the tree, smoothly move the wisp on top
 		// Modifier generates lumber every think interval, OnOrder cancels
 		// If possible try to make some circular rotation around the tree
 
@@ -64,7 +66,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/builder.lua"
+			"ScriptFile"	"units/gather.lua"
 			"Function"		"Gather"
 		}
 	}
@@ -78,7 +80,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -95,7 +97,7 @@
 			{			
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -104,7 +106,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -114,12 +116,12 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"LumberGain"
 				}
 			}
 
-			"States"
+			"States" //TODO: Fix #217
 			{
 				"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
 			}	
@@ -132,7 +134,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -152,7 +154,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"GoldGain"
 				}
 			}
@@ -175,7 +177,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -193,7 +195,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 				
@@ -225,7 +227,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"Repair"
 				}
 			}

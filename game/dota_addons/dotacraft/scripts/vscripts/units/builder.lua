@@ -545,7 +545,7 @@ function Gather( event )
         caster.last_resource_gathered = "gold"
 
         -- Disable this for Ghouls
-        if not CanGatherGold(caster) then
+        if not caster:CanGatherGold() then
             caster:Interrupt()
             return
         end

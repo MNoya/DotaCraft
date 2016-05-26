@@ -58,7 +58,10 @@ function BuildingHelper:Init()
     BuildingHelper:ParseKV(BuildingHelper.ItemKV, BuildingHelper.KV)
     BuildingHelper:ParseKV(BuildingHelper.UnitKV, BuildingHelper.KV)
 
-    -- Hook Boilerplate
+    self:HookBoilerplate()
+end
+
+function BuildingHelper:HookBoilerplate()
     if not __ACTIVATE_HOOK then
         __ACTIVATE_HOOK = {funcs={}}
         setmetatable(__ACTIVATE_HOOK, {
@@ -129,11 +132,10 @@ function BuildingHelper:ParseKV(t, result)
             local isBuilding = info["Building"] or info["ConstructionSize"]
             if isBuilding then
                 if result[name] then
-                    BuildingHelper:print("Error: There's more than 2 entries for "..name)
+                    BuildingHelper:print("Error: There's a duplicated entry for "..name)
                 else
                     result[name] = info
                 end
-
                 -- Build NetTable with the building properties
                 local values = {}
                 if info['ConstructionSize'] then
@@ -762,13 +764,12 @@ end
     * Make sure the position is valid before calling this in code.
 ]]--
 function BuildingHelper:PlaceBuilding(player, name, location, construction_size, pathing_size, angle)
-    construction_size = construction_size or BuildingHelper:GetConstructionSize(name)
-    pathing_size = pathing_size or BuildingHelper:GetBlockPathingSize(name)
+    construction_size = construction_size or BuildingHelper:GetConstructionSize(newName)
+    pathing_size = pathing_size or BuildingHelper:GetBlockPathingSize(newName)
     BuildingHelper:SnapToGrid(construction_size, location)
-    local playerID = type(player)=="number" and player or player.GetPlayerID and player:GetPlayerID() --accept pass player ID or player Handle
-    local player = playerID and PlayerResource:GetPlayer(playerID)
-    local hero = playerID and PlayerResource:GetSelectedHeroEntity(playerID)
-    local teamNumber = hero and hero:GetTeamNumber() or DOTA_TEAM_NEUTRALS
+    local playerID = type(player)=="number" and player or player:GetPlayerID() --accept pass player ID or player Handle
+    local player = PlayerResource:GetPlayer(playerID)
+    local playersHero = PlayerResource:GetSelectedHeroEntity(playerID)
     BuildingHelper:print("PlaceBuilding for playerID ".. playerID)
 
     -- Spawn point obstructions before placing the building
@@ -779,17 +780,13 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     local model_location = Vector(location.x, location.y, location.z + model_offset)
 
     -- Spawn the building
-    local building = CreateUnitByName(name, model_location, false, hero, player, teamNumber)
-    if PlayerResource:IsValidPlayerID(playerID) then building:SetControllableByPlayer(playerID, true) end
+    local building = CreateUnitByName(name, model_location, false, playersHero, player, playersHero:GetTeamNumber())
+    building:SetControllableByPlayer(playerID, true)
     building:SetNeverMoveToClearSpace(true)
-    if hero then building:SetOwner(hero) end
+    building:SetOwner(playersHero)
     building:SetAbsOrigin(model_location)
     building.construction_size = construction_size
     building.blockers = gridNavBlockers
-
-    -- Model rotation
-    angle = angle or BuildingHelper.UnitKV[name]["ModelRotation"]
-    if angle then building:SetAngles(0,-angle,0) end
 
     -- Disable turning. If DisableTurning unit KV setting is not defined, use the global setting
     local disableTurning = BuildingHelper.UnitKV[name]["DisableTurning"]
@@ -805,6 +802,10 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     local pedestal = BuildingHelper.UnitKV[name]["PedestalModel"]
     if pedestal then
         BuildingHelper:CreatePedestalForBuilding(building, name, GetGroundPosition(location, nil), pedestal)
+    end
+
+    if angle then
+        building:SetAngles(0,-angle,0)
     end
 
     if not building:HasAbility("ability_building") then

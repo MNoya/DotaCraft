@@ -22068,7 +22068,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/builder.lua"
+				"ScriptFile"	"units/gather.lua"
 				"Function"		"Gather"
 			}
 		}
@@ -22076,37 +22076,10 @@
 		"Modifiers"
 		{
 			// LUMBER GATHER
-			"modifier_on_order_cancel_lumber"
-			{
-				"IsHidden"				"1"
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/builder.lua"
-						"Function"		"CancelGather"
-					}
-				}
-	
-				// Builders have no collision while moving to gather
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
 			"modifier_gathering_lumber"
 			{
 				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
 				"IsHidden"				"1"
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/builder.lua"
-						"Function"		"CancelGather"
-					}
-				}
 	
 				// Lumber Gain
 				"ThinkInterval"  "1.0"
@@ -22114,7 +22087,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"GatherLumber"
 					}
 				}		
@@ -22122,25 +22095,6 @@
 			// END LUMBER GATHER
 	
 			// GOLD GATHER
-			"modifier_on_order_cancel_gold"
-			{
-				"IsHidden"				"1"
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/builder.lua"
-						"Function"		"CancelGather"
-					}
-				}
-	
-				// Builders have no collision while moving to gather
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
 			"modifier_gathering_gold"
 			{			
 				"States"
@@ -22157,7 +22111,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"GatherGold"
 					}			
 				}
@@ -22172,7 +22126,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -22187,7 +22141,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 					
@@ -22227,7 +22181,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"Repair"
 					}
 				}
@@ -22264,7 +22218,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/builder.lua"
+				"ScriptFile"	"units/gather.lua"
 				"Function"		"ReturnResources"
 			}
 		}
@@ -22276,15 +22230,6 @@
 			{
 				"IsHidden"				"0"
 				"TextureName"			"furion_sprout"
-	
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/builder.lua"
-						"Function"		"CancelReturn"
-					}
-				}
 	
 				"OnCreated"
 				{
@@ -22314,15 +22259,6 @@
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/builder.lua"
-						"Function"		"CancelReturn"
-					}
 				}
 	
 				"OnCreated"
@@ -41562,10 +41498,13 @@
 		"AbilityTextureName"		"nightelf_gather"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	
+		"RequiresEmptyTree"			"1"
+		"GoldMineTarget" 			"nightelf_entangled_gold_mine"
 					
 		"AbilitySpecial"
 		{
@@ -41588,8 +41527,7 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"gold_per_interval"	"10"
-			}	
-			
+			}
 		}
 	
 		"precache"
@@ -41602,7 +41540,7 @@
 			// Move towards the tree, repeat until ~100 distance
 			// Only one wisp per tree, if tree busy find another
 			// OnOrder, toggle off and cancel the skill
-			// When close to the tree, give the wisp flying movement and position it on top
+			// When close to the tree, smoothly move the wisp on top
 			// Modifier generates lumber every think interval, OnOrder cancels
 			// If possible try to make some circular rotation around the tree
 	
@@ -41618,7 +41556,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/builder.lua"
+				"ScriptFile"	"units/gather.lua"
 				"Function"		"Gather"
 			}
 		}
@@ -41632,7 +41570,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -41649,7 +41587,7 @@
 				{			
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -41658,7 +41596,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -41668,12 +41606,12 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"LumberGain"
 					}
 				}
 	
-				"States"
+				"States" //TODO: Fix #217
 				{
 					"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
 				}	
@@ -41686,7 +41624,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -41706,7 +41644,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"GoldGain"
 					}
 				}
@@ -41729,7 +41667,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -41747,7 +41685,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 					
@@ -41779,7 +41717,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"Repair"
 					}
 				}
@@ -52777,7 +52715,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -52792,7 +52730,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 					
@@ -52854,7 +52792,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/builder.lua"
+				"ScriptFile"	"units/gather.lua"
 				"Function"		"ReturnResources"
 			}
 		}
@@ -52871,7 +52809,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelReturn"
 					}
 				}		
@@ -52892,7 +52830,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelReturn"
 					}
 				}		
@@ -64687,6 +64625,8 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	
+		"GoldMineTarget" 				"undead_haunted_gold_mine"
+	
 		"AbilitySpecial"
 		{
 			// Acolyte Only
@@ -64730,7 +64670,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/builder.lua"
+				"ScriptFile"	"units/gather.lua"
 				"Function"		"Gather"
 			}
 		}
@@ -64745,7 +64685,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 					"RemoveModifier"
@@ -64769,7 +64709,7 @@
 				{			
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -64780,7 +64720,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"GatherLumber"
 					}
 				}		
@@ -64795,7 +64735,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -64809,7 +64749,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -64818,7 +64758,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -64827,7 +64767,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -64837,7 +64777,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"GoldGain"
 					}
 				}
@@ -64859,7 +64799,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 				}
@@ -64873,7 +64813,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelGather"
 					}
 					
@@ -64935,7 +64875,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/builder.lua"
+				"ScriptFile"	"units/gather.lua"
 				"Function"		"ReturnResources"
 			}
 		}
@@ -64952,7 +64892,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelReturn"
 					}
 				}		
@@ -64973,7 +64913,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/builder.lua"
+						"ScriptFile"	"units/gather.lua"
 						"Function"		"CancelReturn"
 					}
 				}		

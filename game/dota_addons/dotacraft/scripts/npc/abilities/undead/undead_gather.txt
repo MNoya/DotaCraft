@@ -9,6 +9,8 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
+	"GoldMineTarget" 				"undead_haunted_gold_mine"
+
 	"AbilitySpecial"
 	{
 		// Acolyte Only
@@ -52,7 +54,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/builder.lua"
+			"ScriptFile"	"units/gather.lua"
 			"Function"		"Gather"
 		}
 	}
@@ -67,7 +69,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 				"RemoveModifier"
@@ -91,7 +93,7 @@
 			{			
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -102,7 +104,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"GatherLumber"
 				}
 			}		
@@ -117,7 +119,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -131,7 +133,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -140,7 +142,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -149,7 +151,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -159,7 +161,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"GoldGain"
 				}
 			}
@@ -181,7 +183,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 			}
@@ -195,7 +197,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelGather"
 				}
 				
@@ -257,7 +259,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/builder.lua"
+			"ScriptFile"	"units/gather.lua"
 			"Function"		"ReturnResources"
 		}
 	}
@@ -274,7 +276,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelReturn"
 				}
 			}		
@@ -295,7 +297,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/builder.lua"
+					"ScriptFile"	"units/gather.lua"
 					"Function"		"CancelReturn"
 				}
 			}		

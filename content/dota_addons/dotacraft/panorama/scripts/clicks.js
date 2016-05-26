@@ -68,7 +68,7 @@ function OnRightButtonPressed()
     }
 
     // Builder Right Click
-    if ( IsBuilder( mainSelected ) )
+    if ( IsBuilder( mainSelected ) || Entities.GetUnitName(mainSelected) == "undead_ghoul" ) //TODO: Proper Gatherer click handler
     {
         // Cancel BH
         if (!pressedShift) SendCancelCommand()
