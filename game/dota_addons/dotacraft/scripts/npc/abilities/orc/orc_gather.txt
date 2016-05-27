@@ -10,6 +10,15 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
+	// Gatherer Key Values
+	"LumberGainInterval"			"1"
+	"LumberPerInterval"				"1"
+	"DamageTree"					"1"
+	"GoldGainInterval"				"0.5"
+	"GoldPerInterval"				"10"
+	"GoldMineInside"				"1"
+	"DamageMine"					"10"
+
 	"AbilitySpecial"
 	{
 		"01"
@@ -20,17 +29,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"lumber_capacity"		"10" //Can be upgraded
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_per_hit"		"1" //also deals this much damage to tree
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"damage_to_tree"		"1" //mainly here for nightelf wisp to deal 0 damage to trees without having to do a race check
+			"lumber_capacity"		"10"
 		}
 	}
 
@@ -38,101 +37,13 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"units/builder.lua"
+			"ScriptFile"	"units/gather.lua"
 			"Function"		"Gather"
 		}
 	}
 
 	"Modifiers"
 	{
-		// LUMBER GATHER
-		"modifier_on_order_cancel_lumber"
-		{
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelGather"
-				}
-			}
-
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
-		"modifier_gathering_lumber"
-		{
-			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
-			"IsHidden"				"1"
-			"OnOrder"
-			{			
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelGather"
-				}
-			}
-
-			// Lumber Gain
-			"ThinkInterval"  "1.0"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"GatherLumber"
-				}
-			}		
-		}
-		// END LUMBER GATHER
-
-		// GOLD GATHER
-		"modifier_on_order_cancel_gold"
-		{
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelGather"
-				}
-			}
-
-			// Builders have no collision while moving to gather
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
-		"modifier_gathering_gold"
-		{			
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-
-			// Gold Gain
-			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"GatherGold"
-				}
-			}
-		}
-		// END GOLD GATHER
-
 		// REPAIR
 		"modifier_on_order_cancel_repair"
 		{
@@ -220,46 +131,6 @@
 		{
 			"ScriptFile"	"units/gather.lua"
 			"Function"		"ReturnResources"
-		}
-	}
-
-	"Modifiers"
-	{
-		// Shows the stacks of carried lumber
-		"modifier_carrying_lumber"
-		{
-			"IsHidden"				"0"
-			"TextureName"			"furion_sprout"
-
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/gather.lua"
-					"Function"		"CancelReturn"
-				}
-			}		
-		}
-
-		// Shows that the builder has acquired gold
-		"modifier_carrying_gold"
-		{
-			"IsHidden"				"0"
-			"TextureName"			"alchemist_goblins_greed"
-
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/gather.lua"
-					"Function"		"CancelReturn"
-				}
-			}		
 		}
 	}
 }

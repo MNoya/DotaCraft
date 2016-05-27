@@ -22,7 +22,11 @@ function Gatherer:start()
 
     -- Lua modifiers
     LinkLuaModifier("modifier_attack_trees", "libraries/modifiers/modifier_attack_trees", LUA_MODIFIER_MOTION_NONE)
-    
+    LinkLuaModifier("modifier_no_collision", "libraries/modifiers/modifier_no_collision", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_carrying_lumber", "libraries/modifiers/gatherer_modifiers", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_carrying_gold", "libraries/modifiers/gatherer_modifiers", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_gatherer_hidden", "libraries/modifiers/gatherer_modifiers", LUA_MODIFIER_MOTION_NONE)
+
     -- Game Event Listeners
     ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(Gatherer, 'OnGameRulesStateChange'), self)
     ListenToGameEvent('npc_spawned', Dynamic_Wrap(Gatherer, 'OnNPCSpawned'), self)
@@ -31,13 +35,14 @@ function Gatherer:start()
     -- Panorama Event Listeners
     CustomGameEventManager:RegisterListener("right_click_order", Dynamic_Wrap(Gatherer, "OnRightClick"))
     CustomGameEventManager:RegisterListener("gold_gather_order", Dynamic_Wrap(Gatherer, "OnGoldMineClick"))
-    CustomGameEventManager:RegisterListener("repair_order", Dynamic_Wrap(Gatherer, "OnBuildingRepairClick"))
 
     self.bShouldLoadTreeMap = not IsInToolsMode() -- Always re-determine pathable trees in tools, to account for map changes.
+    self.ThinkInterval = 0.5
     self.DebugPrint = true
     self.DebugDraw = false
-    self.DebugDrawDuration = 60
+    self.DebugDrawDuration = 10
     self.indent = string.rep(" ",4)
+    self.GathererUnits = {}
 
     self:HookBoilerplate()
 end
@@ -84,10 +89,25 @@ function Gatherer:HookBoilerplate()
     end)
 end
 
+function Gatherer:OnScriptReload(event)
+    for index,ent in pairs(self.GathererUnits) do
+        if IsValidEntity(ent) and ent:IsAlive() then
+            Gatherer:Init(ent)
+        end
+    end
+    for _,t in pairs(self.AllTrees) do
+        t.health = TREE_HEALTH
+        t.builder = nil
+    end
+    LoadGameKeyValues()
+end
+
 function Gatherer:OnGameRulesStateChange(event)
     local newState = GameRules:State_Get()
     if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
         self:InitTrees()
+    elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
+        self:InitGoldMines()
     end
 end
 
@@ -167,7 +187,7 @@ function Gatherer:OnTreeClick(units, position)
         end
     elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
         -- Can the unit still gather more resources?
-        if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) and not unit:HasModifier("modifier_returning_gold") then
+        if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) then
             --print("Keep gathering")
 
             -- Swap to a gather ability and keep extracting
@@ -182,9 +202,7 @@ function Gatherer:OnTreeClick(units, position)
             -- Return
             local empty_tree = FindEmptyNavigableTreeNearby(unit, position, TREE_RADIUS)
             unit.target_tree = empty_tree --The new selected tree
-            --print("Order: Return resources")
-            unit.gatherer_skip = false -- Let it propagate to all selected units
-            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
+            unit:ReturnResources(queue, false) -- Propagate return order
         end
     end
 end
@@ -203,13 +221,16 @@ function Gatherer:OnGoldMineClick(event)
     local unit = EntIndexToHScript(entityIndex)
     local gather_ability = unit:GetGatherAbility()
 
+    print("OnGoldMineClick")
+
     -- Gold gather
     if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-        --print("Order: Cast on ",gold_mine:GetUnitName())
+        print("Order: Cast on ",gold_mine:GetUnitName())
+        unit.gatherer_skip = true
         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
     elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
         -- Can the unit still gather more resources?
-        if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) and not unit:HasModifier("modifier_returning_gold") then
+        if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) then
             --print("Keep gathering")
 
             -- Swap to a gather ability and keep extracting
@@ -218,39 +239,9 @@ function Gatherer:OnGoldMineClick(event)
             ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
         else
             -- Return
-            local return_ability = unit:GetReturnAbility()
             unit.target_mine = gold_mine
-            --print("Order: Return resources")
-            unit.gatherer_skip = false -- Let it propagate to all selected units
-            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
+            unit:ReturnResources(queue, false) -- Propagate return order
         end
-    end
-end
-
-------------------------------------------------
---             Repair Right-Click             --
-------------------------------------------------
-function Gatherer:OnBuildingRepairClick(event)
-    local playerID = event.PlayerID
-    local entityIndex = event.mainSelected
-    local targetIndex = event.targetIndex
-    local building = EntIndexToHScript(targetIndex)
-    local selectedEntities = PlayerResource:GetSelectedEntities(playerID)
-    local queue = tobool(event.queue)
-
-    local unit = EntIndexToHScript(entityIndex)
-    local repair_ability = unit:GetRepairAbility()
-
-    -- Repair
-    if repair_ability and repair_ability:IsFullyCastable() and not repair_ability:IsHidden() then
-        --print("Order: Repair ",building:GetUnitName())
-        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
-    elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
-        --print("Order: Repair ",building:GetUnitName())
-        
-        -- Swap to the repair ability and send repair order
-        unit:SwapAbilities(repair_ability:GetAbilityName(), unit:GetReturnAbility():GetAbilityName(), true, false)
-        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
     end
 end
 
@@ -301,21 +292,18 @@ function Gatherer:OrderFilter(order)
         
         local ability = EntIndexToHScript(abilityIndex)
         if not ability then
-            print("Error: CAST_NO_TARGET with an incorrect index")
+            self:print("Error: CAST_NO_TARGET with an incorrect index")
             return true
         end
-        local abilityName = ability:GetAbilityName()
 
-        -- TODO this sucks
-        if string.match(abilityName, "_return_resources") then
+        -- If the return ability was cast, spread to other gatherers on the selected group
+        if ability == unit:GetReturnAbility() then
             for k,entIndex in pairs(entityList) do
                 local ent = EntIndexToHScript(entIndex)
-                ent.gatherer_skip = true
-
                 local return_ability = ent:GetReturnAbility()
+
                 if return_ability and not return_ability:IsHidden() then
-                    --print("Order: Return resources")
-                    ExecuteOrderFromTable({ UnitIndex = entIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
+                    ent:ReturnResources(queue)
                 end
             end
         end
@@ -325,41 +313,26 @@ function Gatherer:OrderFilter(order)
     --          Tree Gather Multi Orders          --
     ------------------------------------------------
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
-        if DEBUG then print("DOTA_UNIT_ORDER_CAST_TARGET_TREE ",unit) end
     
         local abilityIndex = abilityIndex
         local ability = EntIndexToHScript(abilityIndex) 
-        local abilityName = ability:GetAbilityName()
+
+        -- Only continue in case the ability cast is the gather ability
+        if ability ~= unit:GetGatherAbility() then return true end
 
         local treeID = targetIndex
         local tree_index = GetEntityIndexForTreeId(treeID)
         local tree_handle = EntIndexToHScript(tree_index)
-
         local position = tree_handle:GetAbsOrigin()
-        if DEBUG then --TODO debug properly
-            DebugDrawCircle(position, Vector(255,0,0), 100, 150, true, 5)
-            DebugDrawLine(unit:GetAbsOrigin(), position, 255, 255, 255, true, 5)
-            print("Ability "..abilityName.." cast on tree number ",targetIndex, " handle index ",tree_handle:GetEntityIndex(),"position ",position)
-        end
-        if not string.match(abilityName, "gather") then
-            return true
-        end
 
-        if DEBUG then DebugDrawText(unit:GetAbsOrigin(), "LOOKING FOR TREE INDEX "..targetIndex, true, 10) end
+        Gatherer:DrawCircle(position, Vector(255,0,0), 150)
+        Gatherer:DrawLine(unit:GetAbsOrigin(), position)
 
-        -- TODO filter
-        local numBuilders = 0
-        for k,entityIndex in pairs(entityList) do
-            local u = EntIndexToHScript(entityIndex)
-            if u:CanGatherLumber() then
-                numBuilders = numBuilders + 1
-            end
-        end
+        local gatherer_units = filter(function(index) return EntIndexToHScript(index):CanGatherLumber() end, entityList)
+        local numGatherers = #gatherer_units
+        if numGatherers == 1 then return true end
 
-        if numBuilders == 1 then
-            return true
-        end
-
+        local abilityName = ability:GetAbilityName()
         if abilityName == "nightelf_gather" then
             -- TODO: This sucks
             for k,entityIndex in pairs(entityList) do
@@ -367,7 +340,7 @@ function Gatherer:OrderFilter(order)
 
                 --Execute the order to a navigable tree
                 local ent = EntIndexToHScript(entityIndex)
-                local empty_tree = FindEmptyNavigableTreeNearby(ent, position, 150 + 20 * numBuilders)
+                local empty_tree = FindEmptyNavigableTreeNearby(ent, position, 150 + 20 * numGatherers)
                 if empty_tree then
                     local tree_index = empty_tree:GetTreeID()
                     empty_tree.builder = ent -- Assign the wisp to this tree, so next time this isn't empty
@@ -390,7 +363,7 @@ function Gatherer:OrderFilter(order)
                 --Execute the order to a navigable tree
                 local unit = EntIndexToHScript(entityIndex)
                 local race = GetUnitRace(unit)
-                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numBuilders)
+                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numGatherers)
                 if empty_tree then 
 
                     empty_tree.builder = unit
@@ -418,7 +391,7 @@ function Gatherer:OrderFilter(order)
     ------------------------------------------------
     --        Gold Mine Gather Multi Orders       --
     ------------------------------------------------
-    elseif DOTA_UNIT_ORDER_CAST_TARGET and targetIndex ~= 0 then
+    elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET and targetIndex ~= 0 then
         local target_handle = EntIndexToHScript(targetIndex)
         local target_name = target_handle:GetUnitName()
 
@@ -429,28 +402,29 @@ function Gatherer:OrderFilter(order)
             for k,entityIndex in pairs(entityList) do
                 local unit = EntIndexToHScript(entityIndex)
                 local race = GetUnitRace(unit)
-                local gather_ability = FindGatherAbility(unit)
-                local return_ability = FindReturnAbility(unit)
+                local gather_ability = unit:GetGatherAbility()
+                local return_ability = unit:GetReturnAbility()
 
                 -- Gold gather
                 if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
                     unit.gatherer_skip = true
-                    --print("Order: Cast on ",gold_mine:GetUnitName())
+                    unit.skip = true
+                    print("Order: Cast on ",gold_mine:GetUnitName())
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
                 elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
                     -- Can the unit still gather more resources?
-                    if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) and not unit:HasModifier("modifier_returning_gold") then
-                        --print("Keep gathering")
+                    if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) then
+                        print("Keep gathering")
 
                         -- Swap to a gather ability and keep extracting
                         unit.gatherer_skip = true
                         unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
-                        --print("Order: Cast on ",gold_mine:GetUnitName())
+                        print("Order: Cast on ",gold_mine:GetUnitName())
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
                     else
                         -- Return
                         unit.target_mine = gold_mine
-                        --print("Order: Return resources")
+                        print("Order: Return resources")
                         unit.gatherer_skip = false -- Let it propagate to all selected units
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
                     end
@@ -589,23 +563,80 @@ function Gatherer:DetermineForests()
     -- body
 end
 
+function Gatherer:InitGoldMines()
+    Gatherer.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
+    
+    for k,gold_mine in pairs(Gatherer.GoldMines) do
+        local location = gold_mine:GetAbsOrigin()
+        local construction_size = BuildingHelper:GetConstructionSize(gold_mine)
+        local pathing_size = BuildingHelper:GetBlockPathingSize(gold_mine)
+        BuildingHelper:SnapToGrid(construction_size, location)
+
+        -- Add gridnav blockers to the gold mines
+        local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
+        BuildingHelper:AddGridType(construction_size, location, "GoldMine")
+        gold_mine:SetAbsOrigin(location)
+        gold_mine.blockers = gridNavBlockers
+
+        -- Find and store the mine entrance
+        local mine_entrance = Entities:FindAllByNameWithin("*mine_entrance", location, 300)
+        for k,v in pairs(mine_entrance) do
+            gold_mine.entrance = v:GetAbsOrigin()
+        end
+
+        function gold_mine:SetCapacity(value)
+            gold_mine.max_capacity = value
+        end
+
+        function gold_mine:GetMaxCapacity(value)
+            return gold_mine.max_capacity
+        end
+
+        function gold_mine:HasRoomForGatherer()
+            return TableCount(gold_mine.gatherers) < gold_mine:GetMaxCapacity()
+        end
+
+        function gold_mine:AddGatherer(unit)
+            gold_mine.gatherers[#gold_mine.gatherers+1] = unit
+            print("Added Gatherer, currently ", TableCount(gold_mine.gatherers))
+        end
+
+        function gold_mine:RemoveGatherer(unit)
+            for k,v in pairs(gold_mine.gatherers) do
+                if v == unit then
+                    gold_mine.gatherers[k] = nil
+                    print("Removed Gatherer currently ", TableCount(gold_mine.gatherers))
+                    break
+                end
+            end
+        end
+
+        -- Keep a list of gatherers currently working inside the gold mine
+        gold_mine.gatherers = {}
+        gold_mine:SetCapacity(1)
+
+        -- Find and store the mine light
+    end
+end
+
 ------------------------------------------------
---                Unit Methods                --
+--           Gatherer Unit Methods            --
 ------------------------------------------------
 
--- TODO
 function Gatherer:Init(unit)
     self:print("Init "..unit:GetUnitName().." "..unit:GetEntityIndex())
 
     -- Give modifier to attack trees
     unit:SetCanAttackTrees(true)
 
+    -- Store unit
+    if not self.GathererUnits[unit:GetEntityIndex()] then
+        self.GathererUnits[unit:GetEntityIndex()] = unit
+    end
+
     -- Permanent access to gather and return abilities (if any)
     unit.GatherAbility = unit:FindAbilityByKeyValue("GatherAbility")
     unit.ReturnAbility = unit:FindAbilityByKeyValue("ReturnAbility")
-
-    print("Gather Ability is ",unit.GatherAbility)
-    print("Return Ability is ",unit.ReturnAbility)
 
     -- Keep track of how much resources is the unit carrying
     unit.lumber_gathered = 0
@@ -631,8 +662,12 @@ function Gatherer:Init(unit)
         -- this could be not just gold mine but other npc based resource nodes
     end
 
-    function unit:ReturnResources()
-        -- use the return ability, swap as required
+    -- use the return ability, swap as required
+    function unit:ReturnResources(bQueue, bSkip)
+        unit.gatherer_skip = bSkip ~= nil and bSkip or true -- Skip order filter?
+        Gatherer:print("Order: Return resources")
+        ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET,
+                            AbilityIndex = unit.ReturnAbility:GetEntityIndex(), Queue = queue })
     end
 
     -- After returning resource, if note was removed, find another, else gather from the same node
@@ -644,12 +679,9 @@ function Gatherer:Init(unit)
         local caster = unit
         caster.state = "idle"
 
-        print("CancelGather")
-
         if unit.gatherer_timer then Timers:RemoveTimer(unit.gatherer_timer) end
 
-        unit:RemoveModifierByName("modifier_gathering_lumber")
-        unit:RemoveModifierByName("modifier_gathering_gold")
+        caster:SetNoCollision(false)
 
         if unit.GatherAbility and unit.GatherAbility.callbacks and unit.GatherAbility.OnCancelGather then
             unit.GatherAbility.callbacks.OnCancelGather()
@@ -668,26 +700,186 @@ function Gatherer:Init(unit)
         end
     end
 
+    -- Show the stack of resources that the unit is carrying
+    function unit:SetCarriedResourceStacks(resource_name, value)
+        unit[resource_name.."_gathered"] = value
+
+        local modifierName = "modifier_carrying_"..resource_name
+        if not unit:HasModifier(modifierName) then
+            unit:AddNewModifier(unit, nil, modifierName, {})
+        end
+        unit:SetModifierStackCount(modifierName, unit, value)
+    end
+
     -- Carrying capacity can be enhanced by upgrades, in that case the ability must have a lumber_capacity AbilitySpecial
     function unit:GetLumberCapacity()
         return unit.GatherAbility and unit.GatherAbility:GetLevelSpecialValueFor("lumber_capacity", unit.GatherAbility:GetLevel()-1) or 0
     end
 
-    function unit:GetGatherAbility()
-        return unit.GatherAbility
+    function unit:CanCarryMoreLumber()
+        return unit.lumber_gathered < unit:GetLumberCapacity()
     end
 
-    function unit:GetReturnAbility()
-        return unit.ReturnAbility
+    function unit:GetGoldCapacity()
+        return unit.GatherAbility and unit.GatherAbility:GetLevelSpecialValueFor("gold_capacity", unit.GatherAbility:GetLevel()-1) or 0
     end
 
     function unit.GatherAbility:RequiresEmptyTree()
         return unit.GatherAbility:GetKeyValue("RequiresEmptyTree") == 1 or false
     end
 
-    function unit.GatherAbility:GetGoldMineTarget()
-        return unit.GatherAbility:GetKeyValue("GoldMineTarget") or "gold_mine"
+    function unit.GatherAbility:GetGoldMineBuilding()
+        return unit.GatherAbility:GetKeyValue("GoldMineBuilding") or "gold_mine"
     end
+
+    -- Used as soon as the unit reaches the tree
+    function unit:StartGatheringLumber(tree)
+        local lumber_interval = unit.GatherAbility:GetKeyValue("LumberGainInterval") or 1
+        local lumber_per_interval = unit.GatherAbility:GetKeyValue("LumberPerInterval") or 1
+        local damage_to_tree = unit.GatherAbility:GetKeyValue("DamageTree")
+        local return_ability = unit:GetReturnAbility()
+        
+        Gatherer:print("StartGatheringLumber - Gain "..lumber_per_interval.." lumber every "..lumber_interval.." seconds")
+        unit.gatherer_timer = Timers:CreateTimer(lumber_interval, function()
+            if damage_to_tree then
+                Gatherer:DamageTree(unit, tree, damage_to_tree)
+            end
+
+            -- Increase up to the max, or return the resources
+            if unit:CanCarryMoreLumber() then
+                if tree:IsStanding() then
+                    -- Show the return ability
+                    if return_ability and return_ability:IsHidden() then
+                        unit:SwapAbilities(unit.GatherAbility:GetAbilityName(), return_ability:GetAbilityName(), false, true)
+                    end
+                else
+                    --TODO: Find another tree
+                end
+
+                return lumber_interval
+            else  
+                -- If no return, gain the resource directly
+                if not return_ability then
+                    unit.GatherAbility.callbacks.OnLumberGained(lumber_per_interval)
+                    return lumber_interval
+                else
+                    -- Cast Return Resources
+                    unit:CastAbilityNoTarget(return_ability, unit:GetPlayerOwnerID())
+                end
+            end
+        end)
+    end
+
+    -- Used as soon as the unit goes inside the mine
+    function unit:StartGatheringGold(mine)
+        local gold_interval = unit.GatherAbility:GetKeyValue("GoldGainInterval") or 1
+        local gold_per_interval = unit.GatherAbility:GetKeyValue("GoldPerInterval") or 10
+        local damage_to_mine = unit.GatherAbility:GetKeyValue("DamageMine")
+        local inside_gold_mine = unit.GatherAbility:GetKeyValue("GoldMineInside")
+        local return_ability = unit:GetReturnAbility()
+
+        if inside_gold_mine then
+             -- Hide builder
+            mine:AddGatherer(unit)
+            unit:AddNoDraw()
+            unit:SetAbsOrigin(mine:GetAbsOrigin())
+            unit:AddNewModifier(unit, nil, "modifier_gatherer_hidden", {})
+        end
+        
+        unit.gatherer_timer = Timers:CreateTimer(gold_interval, function()
+            local gold_gain = gold_per_interval
+            if damage_to_mine then
+                gold_gain = Gatherer:DamageMine(unit, mine, damage_to_mine)
+            end
+
+            -- If no return, gain the resource directly
+            if not return_ability then
+                unit.GatherAbility.callbacks.OnGoldGained(gold_interval)
+                return gold_interval
+            else
+                -- Exit mine and return the resources
+                mine:RemoveGatherer(unit)
+                unit:RemoveNoDraw()
+                unit:RemoveModifierByName("modifier_gatherer_hidden")
+                unit.state = "gathering_gold"
+
+                local return_ability = unit:GetReturnAbility()
+                return_ability:SetHidden(false)
+                unit.GatherAbility:SetHidden(true)
+
+                -- Set modifier_carrying_gold stacks
+                unit:SetCarriedResourceStacks("gold", gold_gain)
+                                
+                -- Find where to put the builder outside the mine
+                FindClearSpaceForUnit(unit, mine.entrance, true)
+
+                -- Cast ReturnResources
+                unit:ReturnResources(false)
+            end
+        end)
+    end
+end
+
+function Gatherer:DamageTree(unit, tree, value)
+    local return_ability = unit:GetReturnAbility()
+    local playerID = unit:GetPlayerOwnerID()
+
+    unit.state = "gathering_lumber"
+    local lumber_gain = math.min(tree.health, value)
+    tree.health = tree.health - value
+    
+    if tree.health <= 0 then
+        tree:CutDown(unit:GetTeamNumber())
+        unit.GatherAbility.callbacks.OnTreeCutDown(value)
+
+        -- Move to a new tree nearby
+        local new_tree = FindEmptyNavigableTreeNearby(unit, tree:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TREE)
+        if new_tree then
+            unit.target_tree = new_tree
+            unit:MoveToTargetToAttack(new_tree) --TODO ???
+            self:DrawCircle(new_tree:GetAbsOrigin(), Vector(0,255,0), 64)
+        else
+            -- Go to return resources (where it will find a tree nearby the town instead)
+            return_ability:SetHidden(false)
+            ability:SetHidden(true)
+            
+            unit:CastAbilityNoTarget(return_ability, playerID)
+        end
+    else
+        unit.GatherAbility.callbacks.OnTreeDamaged(tree)
+    end
+        
+    -- Increment lumber_gathered stacks
+    unit:SetCarriedResourceStacks("lumber", unit.lumber_gathered + lumber_gain)
+
+    return lumber_gain
+end
+
+-- Gets called after the builder goes outside the mine
+-- Used in Human and Orc Gather Gold
+function Gatherer:DamageMine(unit, mine, value)
+    local gold_gain = math.min(mine:GetHealth(), value)
+
+    mine:SetHealth(mine:GetHealth() - value)
+    unit.gold_gathered = gold_gain
+
+    -- If the gold mine has no health left for another harvest
+    if mine:GetHealth() < DAMAGE_TO_MINE then
+
+        -- TODO: DestroyGoldMine method
+        -- Destroy the nav blockers associated with it
+        for k, v in pairs(mine.blockers) do
+          DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
+          DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
+        end
+        print("Gold Mine Collapsed at ", mine:GetHealth())
+        mine:RemoveSelf()
+
+        unit.GatherAbility.callbacks.OnGoldMineCollapsed(mine)
+        unit.target_mine = nil
+    end
+
+    return gold_gain
 end
 
 function Gatherer:CheckGatherCancel(order)
@@ -768,10 +960,8 @@ function Gatherer:CastGatherAbility(event)
         -- Fake toggle the ability, cancel if any other order is given
         ability:ToggleOn()
 
-        -- Recieving another order will cancel this
-        --ability:ApplyDataDrivenModifier(caster, caster, "modifier_on_order_cancel_lumber", {})
-        --apply MODIFIER_STATE_NO_UNIT_COLLISION
-        --TODO: Do this without a modifier, or with lua modifier. Ability should be clean.
+        -- No Collision while moving to gather
+        caster:SetNoCollision(true)
 
         caster.gatherer_timer = Timers:CreateTimer(function() 
             if not IsValidEntity(caster) or not caster:IsAlive() then return end -- End if killed
@@ -781,13 +971,13 @@ function Gatherer:CastGatherAbility(event)
             
             if distance > MIN_DISTANCE_TO_TREE then
                 caster:MoveToPosition(tree_pos)
-                return THINK_INTERVAL
+                return self.ThinkInterval
             else
                 -- Fire the callback to Gather
                 callbacks.OnTreeReached(tree)
 
-                -- TODO: code this without a modifier, remove MODIFIER_STATE_NO_UNIT_COLLISION
-                ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_lumber", {})
+                -- Start the timer for lumber gain
+                caster:StartGatheringLumber(tree)
                 return
             end
         end)
@@ -796,7 +986,7 @@ function Gatherer:CastGatherAbility(event)
     elseif string.match(target:GetUnitName(),"gold_mine") and caster:CanGatherGold() then
         local gold_mine --target can be a gold_mine or a certain type of gathering platform stored on the target.mine
         local target_name = target:GetUnitName()
-        local mine_target_name = ability:GetGoldMineTarget()
+        local mine_target_name = ability:GetGoldMineBuilding()
         
         if target_name ~= mine_target_name then
             print("Must target a "..mine_target_name..", not a "..target_name)
@@ -818,26 +1008,38 @@ function Gatherer:CastGatherAbility(event)
         caster.state = "moving_to_mine"
 
         -- Destroy any old move timer
-        if caster.gatherer_timer then
-            Timers:RemoveTimer(caster.gatherer_timer)
-        end
+        if caster.gatherer_timer then Timers:RemoveTimer(caster.gatherer_timer) end
 
         -- Fake toggle the ability, cancel if any other order is given
         ability:SetHidden(false)
         ability:ToggleOn()
 
+        -- No Collision while moving to gather
+        caster:SetNoCollision(true)
+
         local mine_entrance_pos = gold_mine.entrance+RandomVector(50)
         caster.gatherer_timer = Timers:CreateTimer(function() 
-            if not IsValidEntity(caster) or not caster:IsAlive() then return end -- End if killed
+            if not IsValidEntity(caster) or not caster:IsAlive() then return end -- End if unit killed
+            if not IsValidEntity(gold_mine) or not gold_mine:IsAlive() then caster:CancelGather() end -- Cancel if mine killed
 
             -- Move towards the mine until close range
             local distance = (mine_pos - caster:GetAbsOrigin()):Length()
             
             if distance > MIN_DISTANCE_TO_MINE then
                 caster:MoveToPosition(mine_entrance_pos)
-                return THINK_INTERVAL
+                return self.ThinkInterval
             else
                 callbacks.OnGoldMineReached(gold_mine)
+                
+                if gold_mine:HasRoomForGatherer() then
+                    callbacks.OnGoldMineFree(gold_mine)
+
+                    -- Start the timer for gold gain
+                    caster:StartGatheringGold(gold_mine)
+
+                else --wait until its free
+                    return self.ThinkInterval
+                end
             end
         end)
             
@@ -869,7 +1071,8 @@ function Gatherer:CastReturnAbility(event)
     local coming_from = caster.last_resource_gathered
 
     -- LUMBER
-    if caster:HasModifier("modifier_carrying_lumber") then
+    if coming_from == "lumber" then
+
         -- Find where to return the resources
         local building = FindClosestResourceDeposit( caster, "lumber" )
         caster.target_building = building
@@ -879,14 +1082,14 @@ function Gatherer:CastReturnAbility(event)
         caster.gatherer_timer = Timers:CreateTimer(function() 
             if not (caster and IsValidEntity(caster) and caster:IsAlive()) then return end -- End if killed
 
-            if caster.target_building and IsValidEntity(caster.target_building) and caster.gatherer_state == "returning_lumber" then
+            if caster.target_building and IsValidEntity(caster.target_building) then
                 local building_pos = caster.target_building:GetAbsOrigin()
                 local collision_size = GetCollisionSize(building)*2 --TODO Require BuildingHelper ?
                 local distance = (building_pos - caster:GetAbsOrigin()):Length()
             
                 if distance > collision_size then
                     caster:MoveToPosition(GetReturnPosition( caster, building ))        
-                    return THINK_INTERVAL
+                    return self.ThinkInterval
                 elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
                     
                     callbacks.OnLumberDepositReached(caster.target_building)
@@ -899,12 +1102,12 @@ function Gatherer:CastReturnAbility(event)
                 -- Find a new building deposit
                 building = FindClosestResourceDeposit( caster, "lumber" )
                 caster.target_building = building
-                return THINK_INTERVAL
+                return self.ThinkInterval
             end
         end)
 
     -- GOLD
-    elseif caster:HasModifier("modifier_carrying_gold") then
+    elseif coming_from == "gold" then
         -- Find where to return the resources
         local building = FindClosestResourceDeposit( caster, "gold" ) --TODO Clean method
         caster.target_building = building
@@ -921,7 +1124,7 @@ function Gatherer:CastReturnAbility(event)
             
                 if distance > collision_size then
                     caster:MoveToPosition(GetReturnPosition( caster, building ))
-                    return THINK_INTERVAL
+                    return self.ThinkInterval
                 elseif caster.gold_gathered and caster.gold_gathered > 0 then
 
                     callbacks.OnGoldDepositReached(caster.target_building)
@@ -931,7 +1134,7 @@ function Gatherer:CastReturnAbility(event)
                 -- Find a new building deposit
                 building = FindClosestResourceDeposit( caster, "gold" )
                 caster.target_building = building
-                return THINK_INTERVAL
+                return self.ThinkInterval
             end
         end)
     
@@ -953,13 +1156,29 @@ function Gatherer:SetGatherCallbacks(event)
         callbacks.OnTreeReached = callback
     end
 
-    function event:OnCurrentTreeCutDown(callback)
-        callbacks.OnCurrentTreeCutDown = callback
+    function event:OnLumberGained(callback)
+        callbacks.OnLumberGained = callback
+    end
+
+    function event:OnTreeDamaged(callback)
+        callbacks.OnTreeDamaged = callback
+    end
+
+    function event:OnTreeCutDown(callback)
+        callbacks.OnTreeCutDown = callback
     end
 
     -- Gold Mine Related Callbacks
     function event:OnGoldMineReached(callback)
         callbacks.OnGoldMineReached = callback
+    end
+
+    function event:OnGoldMineFree(callback)
+        callbacks.OnGoldMineFree = callback
+    end
+
+    function event:OnGoldGained(callback)
+        callbacks.OnGoldGained = callback
     end
 
     function event:OnGoldMineCollapsed(callback)
@@ -992,26 +1211,16 @@ function Gatherer:SetReturnCallbacks(event)
     return callbacks
 end
 
-function CDOTA_BaseNPC:FindAbilityByKeyValue(key)
-    local abilityName = self:GetKeyValue(key)
-    if abilityName then
-        return self:FindAbilityByName(abilityName)
-    end
-end
-
--- A unit is a gatherer if it has a GatherAbility KV
-function CDOTA_BaseNPC:IsGatherer()
-    return self:GetKeyValue("GatherAbility") ~= nil
-end
-
 -- These should be deprecated all across the files
 function FindGatherAbility( unit )
+    print("FindGatherAbility is deprecated, use :GetGatherAbility() instead")
     if IsValidEntity(unit.GatherAbility) then return unit.GatherAbility end
     local abilityName = unit:GetKeyValue("GatherAbility")
     if abilityName then unit:FindAbilityByName(abilityName) end
 end
 
 function FindReturnAbility( unit )
+    print("FindReturnAbility is deprecated, use :GetGatherAbility() instead")
     if IsValidEntity(unit.ReturnAbility) then return unit.ReturnAbility end
     local abilityName = unit:GetKeyValue("ReturnAbility")
     if abilityName then return unit:FindAbilityByName(abilityName) end
@@ -1038,12 +1247,41 @@ function GetTreeHandleFromId(treeID)
     return EntIndexToHScript(GetEntityIndexForTreeId(tonumber(treeID)))
 end
 
+function CDOTA_BaseNPC:FindAbilityByKeyValue(key)
+    local abilityName = self:GetKeyValue(key)
+    if abilityName then
+        return self:FindAbilityByName(abilityName)
+    end
+end
+
+-- A unit is a gatherer if it has a GatherAbility KV
+function CDOTA_BaseNPC:IsGatherer()
+    return self:GetKeyValue("GatherAbility") ~= nil
+end
+
+function CDOTA_BaseNPC:GetGatherAbility()
+    return self.GatherAbility
+end
+
+function CDOTA_BaseNPC:GetReturnAbility()
+    return self.ReturnAbility
+end
+
 -- Enables/disables the access to right-clicking
 function CDOTA_BaseNPC:SetCanAttackTrees(bAble)
     if bAble then
         self:AddNewModifier(self, nil, "modifier_attack_trees", {})
     else
         self:RemoveModifierByName("modifier_attack_trees")
+    end
+end
+
+-- Enables/disables collision (phasing)
+function CDOTA_BaseNPC:SetNoCollision(bAble)
+    if bAble then
+        self:AddNewModifier(self, nil, "modifier_no_collision", {})
+    else
+        self:RemoveModifierByName("modifier_no_collision")
     end
 end
 
@@ -1085,13 +1323,18 @@ function Gatherer:DrawCircle(position, vColor, radius)
     if self.DebugDraw then DebugDrawCircle(position, vColor, 100, radius, true, self.DebugDrawDuration) end
 end
 
+function Gatherer:DrawLine(start, target)
+    if self.DebugDraw then DebugDrawLine(start, target, 255, 255, 255, true, 5) end
+end
+
 function Gatherer:DrawText(position, text)
     if self.DebugDraw then DebugDrawText(position, text, true, self.DebugDrawDuration) end
 end
 
 -- Goes through all trees showing whether they are pathable or not
 function Gatherer:DebugTrees()
-    if not self.DebugDraw then return end
+    self.DebugDraw = not self.DebugDraw
+    if not self.DebugDraw then DebugDrawClear() return end
     self:print("Debug drawing "..self.TreeCount.." trees")
     
     for _,tree in pairs(self.AllTrees) do
@@ -1108,7 +1351,7 @@ function Gatherer:DebugTrees()
     end
 end
 
-if not Gatherer.AllTrees then Gatherer:start() end
+if not Gatherer.AllTrees then Gatherer:start() else Gatherer:OnScriptReload() end
 
 
 ------------------------------------------------

@@ -1,14 +1,14 @@
 --[[=============================================================
                          Gather Scripts    
  Unit KeyValues
-"GatherBehaviour"   "Return" or "Static"
 "GatherAbility"     "undead_gather"
 "ReturnAbility"     "undead_return_resources" //only for "Return" behaviour
 "GatherResources"   "lumber" or "gold" or "lumber,gold"
 
  Ability KeyValues
 "RequiresEmptyTree" "1" //0 by default
-"GoldMineTarget"    "nightelf_entangled_gold_mine" //"gold_mine" by default
+"GoldMineBuilding"  "nightelf_entangled_gold_mine" //"gold_mine" by default
+"GoldMineCapacity"  "5" //1 by default, 5 with building_on_top
 
 ===============================================================]]
 
@@ -17,9 +17,6 @@ MIN_DISTANCE_TO_TREE = 200
 MIN_DISTANCE_TO_MINE = 300
 TREE_FIND_RADIUS_FROM_TREE = 200
 TREE_FIND_RADIUS_FROM_TOWN = 2000
-DURATION_INSIDE_MINE = 0.5
-DAMAGE_TO_MINE = 10
-THINK_INTERVAL = 0.5
 DEBUG_TREES = false
 VALID_DEPOSITS = LoadKeyValues("scripts/kv/buildings.kv")
 
@@ -29,11 +26,15 @@ function Gather( event )
     local target = event.target
     local ability = event.ability
     local race = GetUnitRace(caster)
+    local playerID = caster:GetPlayerOwnerID()
 
     Gatherer:CastGatherAbility(event)
 
     event:OnTreeReached(function(tree)
         Gatherer:print("Tree reached")
+        -- TODO VISUAL Z HERE
+
+        caster:StartGesture(ACT_DOTA_ATTACK)
 
         if race == "nightelf" then
             local tree_pos = tree:GetAbsOrigin()
@@ -43,8 +44,29 @@ function Gather( event )
         end
     end)
 
-    event:OnCurrentTreeCutDown(function(tree)
-        Gatherer:print("OnCurrentTreeCutDown")
+    -- For gathering without a return ability
+    event:OnLumberGained(function(value)
+        Gatherer:print("Gained "..value.." lumber")
+        Players:ModifyLumber(playerID, value)
+        PopupLumber(caster, value)
+        Scores:IncrementLumberHarvested(playerID, value)
+    end)
+
+    event:OnTreeDamaged(function(tree)
+        Gatherer:print("OnTreeDamaged: "..tree.health)
+
+        caster:StartGesture(ACT_DOTA_ATTACK)
+
+        -- Hit particle
+        local particleName = "particles/custom/tree_pine_01_destruction.vpcf"
+        local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
+        ParticleManager:SetParticleControl(particle, 0, tree:GetAbsOrigin())
+
+        -- Peasant backpack create
+    end)
+
+    event:OnTreeCutDown(function(tree)
+        Gatherer:print("OnTreeCutDown")
     end)
 
     event:OnMaxResourceGathered(function(node_type)
@@ -53,32 +75,23 @@ function Gather( event )
 
     event:OnGoldMineReached(function(mine)
         Gatherer:print("Gold Mine reached")
+    end)
+
+    event:OnGoldMineFree(function(mine)
+        Gatherer:print("On Gold Mine Free")      
 
         -- 2 Possible behaviours: Human/Orc vs NE/UD
-        -- NE/UD requires another building on top (Missing at the moment)
-        if race == "human" or race == "orc" then
-            if mine.builder then
-                --print("Waiting for the builder inside to leave")
-                return THINK_INTERVAL
-            elseif mine and IsValidEntity(mine) then
-                mine.builder = caster
-                caster:AddNoDraw()
-                ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {duration = DURATION_INSIDE_MINE})
-                caster:SetAbsOrigin(mine:GetAbsOrigin()) -- Send builder inside
-                return
-            else
-                caster:CancelGather()
-            end
+        -- NE/UD requires another building on top
 
-        elseif race == "undead" or race == "nightelf" then
+        if race == "undead" or race == "nightelf" then
             if not IsMineOccupiedByTeam(mine, caster:GetTeamNumber()) then
                 print("Mine must be occupied by your team, fool")
                 return
             end
 
-            if target.state == "building" then
+            if mine.building_on_top and mine.building_on_top:IsUnderConstruction() then
                 --print("Extraction Building is still in construction, wait...")
-                return THINK_INTERVAL
+                return self.ThinkInterval
             end
 
             if not mine.builders then
@@ -133,7 +146,20 @@ function Gather( event )
         end
     end)
 
-    event:OnGoldMineCollapsed(function(node_type)
+    -- For gathering without return
+    event:OnGoldGained(function(value)
+        Gatherer:print("Gained "..value.." gold")
+        local upkeep = Players:GetUpkeep(playerID)
+        local gold_gain = value * upkeep
+
+        Scores:IncrementGoldMined(playerID, gold_gain)
+        Scores:AddGoldLostToUpkeep(playerID, value - gold_gain)
+
+        Players:ModifyGold(playerID, gold_gain)
+        PopupGoldGain(caster, gold_gain)
+    end)
+
+    event:OnGoldMineCollapsed(function(mine)
         Gatherer:print("OnGoldMineCollapsed")
     end)
 
@@ -210,7 +236,7 @@ function ReturnResources( event )
     end)
 end
 
--- Toggles Off Gather - TODO: Replace by unit method, call it OnOrder
+-- Toggles Off Gather
 function CancelGather( event )
     print("CancelGather Datadriven Event is Deprecated, using :CancelGather() lua")
     event.caster:CancelGather()
@@ -222,138 +248,16 @@ function CancelReturn( event )
     event.caster:CancelGather()
 end
 
--- Used in Human and Orc Gather Lumber
--- Gets called every second, increases the carried lumber of the builder by 1 until it can't carry more
--- Also does tree cutting and reacquiring of new trees when necessary.
-function GatherLumber( event )
-    local caster = event.caster
-    local ability = event.ability
-    local abilityLevel = ability:GetLevel() - 1
-    local max_lumber_carried = ability:GetLevelSpecialValueFor("lumber_capacity", abilityLevel)
-    local tree = caster.target_tree
-    local casterKV = GameRules.UnitKV[caster:GetUnitName()]
-    local lumber_per_hit = ability:GetLevelSpecialValueFor("lumber_per_hit", abilityLevel)
-    local damage_to_tree = ability:GetLevelSpecialValueFor("damage_to_tree", abilityLevel)
-    local playerID = caster:GetPlayerOwnerID()
-
-    caster.state = "gathering_lumber"
-
-    local return_ability = FindReturnAbility(caster)
-
-    caster.lumber_gathered = caster.lumber_gathered + lumber_per_hit
-    if tree and tree.health then
-
-        -- Hit particle
-        local particleName = "particles/custom/tree_pine_01_destruction.vpcf"
-        local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
-        ParticleManager:SetParticleControl(particle, 0, tree:GetAbsOrigin())
-
-        tree.health = tree.health - damage_to_tree
-        if tree.health <= 0 then
-            tree:CutDown(caster:GetTeamNumber())
-
-            -- TODO CALL BACK: OnCurrentTreeCutDown()
-
-            -- Move to a new tree nearby
-            local a_tree = FindEmptyNavigableTreeNearby(caster, tree:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TREE)
-            if a_tree then
-                caster.target_tree = a_tree
-                caster:MoveToTargetToAttack(a_tree)
-                if DEBUG_TREES then DebugDrawCircle(a_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
-            else
-                -- Go to return resources (where it will find a tree nearby the town instead)
-                return_ability:SetHidden(false)
-                ability:SetHidden(true)
-                
-                caster:CastAbilityNoTarget(return_ability, playerID)
-            end
-        end
-    end
-        
-    -- Show the stack of resources that the unit is carrying
-    if not caster:HasModifier("modifier_carrying_lumber") then
-        return_ability:ApplyDataDrivenModifier( caster, caster, "modifier_carrying_lumber", nil)
-    end
-    caster:SetModifierStackCount("modifier_carrying_lumber", caster, caster.lumber_gathered)
- 
-    -- Increase up to the max, or cancel
-    if caster.lumber_gathered < max_lumber_carried and tree:IsStanding() then
-        caster:StartGesture(ACT_DOTA_ATTACK)
-
-        -- Show the return ability
-        if return_ability:IsHidden() then
-            caster:SwapAbilities(casterKV.GatherAbility, casterKV.ReturnAbility, false, true)
-        end
-    else
-        -- RETURN     
-        caster:RemoveModifierByName("modifier_gathering_lumber")
-
-        -- Cast Return Resources    
-        caster:CastAbilityNoTarget(return_ability, playerID)
-    end
-end
-
--- Used in Human and Orc Gather Gold
--- Gets called after the builder goes outside the mine
--- Takes DAMAGE_TO_MINE hit points away from the gold mine and starts the return
-function GatherGold( event )
-    local caster = event.caster
-    local ability = event.ability
-    local mine = caster.target_mine
-    local playerID = caster:GetPlayerOwnerID()
-
-    -- Builder race
-    local race = GetUnitRace(caster)
-
-    mine:SetHealth( mine:GetHealth() - DAMAGE_TO_MINE )
-    caster.gold_gathered = DAMAGE_TO_MINE
-    mine.builder = nil --Set the mine free for other builders to enter
-    caster:RemoveNoDraw()
-    caster.state = "gathering_gold"
-
-    -- If the gold mine has no health left for another harvest
-    if mine:GetHealth() < DAMAGE_TO_MINE then
-
-        -- Destroy the nav blockers associated with it
-        for k, v in pairs(mine.blockers) do
-          DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
-          DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
-        end
-        print("Gold Mine Collapsed at ", mine:GetHealth())
-        mine:RemoveSelf()
-
-        -- TODO CALL BACK: OnGoldMineCollapsed("lumber")
-
-        caster.target_mine = nil
-    end
-
-    local return_ability = FindReturnAbility(caster)
-    return_ability:SetHidden(false)
-    return_ability:ApplyDataDrivenModifier( caster, caster, "modifier_carrying_gold", nil)
-    
-    ability:SetHidden(true)
-
-    caster:SetModifierStackCount("modifier_carrying_gold", caster, DAMAGE_TO_MINE)
-                    
-    -- Find where to put the builder outside the mine
-    local position = mine.entrance
-    FindClearSpaceForUnit(caster, position, true)
-
-    -- Cast ReturnResources
-    caster:CastAbilityNoTarget(return_ability, playerID)
-end
-
--- Used in Night Elf Gather Lumber
-function LumberGain( event )
-    local ability = event.ability
-    local caster = event.caster
-    local lumber_gain = ability:GetSpecialValueFor("lumber_per_interval")
-    local playerID = caster:GetPlayerOwnerID()
-    Players:ModifyLumber( playerID, lumber_gain )
-    PopupLumber( caster, lumber_gain)
-
-    Scores:IncrementLumberHarvested( playerID, lumber_gain )
-end
+----------------------------------------------------------------------------------
+-- Code to refactor below
+--[[
+    GatherLumber - Should be a timer iniside Gatherer, with a callback per tick
+    GatherGold - Should be a timer iniside Gatherer, with a callback per tick
+    LumberGain (Static)
+    GoldGain (Static)
+    SetGoldMineCounter (cosmetic)
+    SendBackToGather should be a gather unit method
+]]
 
 -- Used in Nigh Elf and Undead Gather Gold
 function GoldGain( event )
@@ -393,9 +297,7 @@ function GoldGain( event )
             -- Cancel gather effects
             builder:RemoveModifierByName("modifier_gathering_gold")
             builder.state = "idle"
-
-            local ability = FindGatherAbility(builder)
-            ToggleOff(ability)
+            builder.GatherAbility:ToggleOff()
 
             if race == "nightelf" then
                 FindClearSpaceForUnit(builder, mine.entrance, true)
@@ -413,9 +315,8 @@ function GoldGain( event )
     end
 end
 
-function SetGoldMineCounter( mine, count )
+function SetGoldMineCounter(mine, count)
     local building_on_top = mine.building_on_top
-
     print("SetGoldMineCounter ",count)
 
     for i=1,count do

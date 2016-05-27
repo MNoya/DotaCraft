@@ -14,26 +14,21 @@
 	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
 	"RequiresEmptyTree"			"1"
-	"GoldMineTarget" 			"nightelf_entangled_gold_mine"
+	"LumberGainInterval"		"8"
+	"LumberPerInterval"			"5"
+	"GoldMineBuilding" 			"nightelf_entangled_gold_mine"
+	"GoldGainInterval"			"5"
+	"GoldPerInterval"			"10"
+	"DamageMine"				"10"
 				
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"lumber_interval"	"8"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
+			"var_type"				"FIELD_INTEGER"
 			"lumber_per_interval"	"5"
 		}
-		"03"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"gold_interval"		"5"
-		}
-		"04"
+		"02"
 		{
 			"var_type"			"FIELD_INTEGER"
 			"gold_per_interval"	"10"

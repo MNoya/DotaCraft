@@ -813,6 +813,7 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     end
 
     building.state = "complete"
+    function building:IsUnderConstruction() return false end
 
     BuildingHelper:AddBuildingToPlayerTable(playerID, building)
 

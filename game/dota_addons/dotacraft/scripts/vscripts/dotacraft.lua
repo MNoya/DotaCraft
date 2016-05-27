@@ -547,12 +547,17 @@ end
 function dotacraft:InitializeNightElf( hero, race_setup_table, building )
 	local playerID = hero:GetPlayerID()
 	local player = hero:GetPlayerOwner()
+
 	-- Apply rooted particles
     local uproot_ability = building:FindAbilityByName("nightelf_uproot")
     uproot_ability:ApplyDataDrivenModifier(building, building, "modifier_rooted_ancient", {})
     
 	-- Entangle the closest gold mine
-	local entangled_gold_mine = CreateUnitByName("nightelf_entangled_gold_mine", race_setup_table.closest_mine_pos, false, hero, hero, hero:GetTeamNumber())
+    local construction_size = BuildingHelper:GetConstructionSize("nightelf_entangled_gold_mine")
+	local entangled_gold_mine = BuildingHelper:PlaceBuilding(player, "nightelf_entangled_gold_mine", race_setup_table.closest_mine_pos, construction_size, 0, angle)
+    entangled_gold_mine:SetForwardVector(race_setup_table.closest_mine:GetForwardVector())
+    Players:AddStructure(playerID, entangled_gold_mine)
+
 	entangled_gold_mine:SetOwner(hero)
 	entangled_gold_mine:SetControllableByPlayer(playerID, true)
 	entangled_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
@@ -568,8 +573,6 @@ function dotacraft:InitializeNightElf( hero, race_setup_table, building )
     ApplyModifier(race_setup_table.closest_mine, "modifier_unselectable")
 
 	building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
-
-	building:SetAngles(0,-90,0)
 end
 
 function dotacraft:InitializeTownHall( hero, position, building )

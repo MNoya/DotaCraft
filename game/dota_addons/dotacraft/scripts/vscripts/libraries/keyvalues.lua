@@ -20,12 +20,13 @@
             handle:GetKeyValue() -- returns the whole table based on the handles baseclass
             handle:GetKeyValue("CustomName") -- returns "Barbarian"
             handle:GetKeyValue("CustomKey")  -- returns 1 (number)
-            handle:GetKeyValue("CustomStat") -- returns 100 or 200 if level of the handle equals 2
+            handle:GetKeyValue("CustomStat") -- returns "100 200"
+            handle:GetKeyValue("CustomStat", 2) -- returns "200"
         
         Same results with strings:
             GetKeyValue("some_custom_entry")
             GetKeyValue("some_custom_entry", "CustomName")
-            GetKeyValue("some_custom_entry", "CustomStat") -- default level 1
+            GetKeyValue("some_custom_entry", "CustomStat") -- returns 100 200
             GetKeyValue("some_custom_entry", "CustomStat", 2) -- get the level 2 of the value
 
     - Ability Special value grabbing:
@@ -99,18 +100,21 @@ function LoadGameKeyValues()
 end
 
 -- Works for heroes and units on the same table due to merging both tables on game init
-function CDOTA_BaseNPC:GetKeyValue(key)
-    return GetUnitKV(self:GetUnitName(), key, self:GetLevel())
+function CDOTA_BaseNPC:GetKeyValue(key, level)
+    if level then return GetUnitKV(self:GetUnitName(), key, level)
+    else return GetUnitKV(self:GetUnitName(), key) end
 end
 
 -- Dynamic version of CDOTABaseAbility:GetAbilityKeyValues()
-function CDOTABaseAbility:GetKeyValue(key)
-    return GetAbilityKV(self:GetAbilityName(), key, self:GetLevel())
+function CDOTABaseAbility:GetKeyValue(key, level)
+    if level then return GetUnitKV(self:GetAbilityName(), key, level)
+    else return GetAbilityKV(self:GetAbilityName(), key) end
 end
 
 -- Item version
-function CDOTA_Item:GetKeyValue(key)
-    return GetItemKV(self:GetAbilityName(), key, self:GetLevel())
+function CDOTA_Item:GetKeyValue(key, level)
+    if level then return GetUnitKV(self:GetAbilityName(), key, level)
+    else return GetItemKV(self:GetAbilityName(), key) end
 end
 
 function CDOTABaseAbility:GetAbilitySpecial(key)
@@ -162,7 +166,6 @@ function GetAbilitySpecial(name, key, level)
                 if values[key] then
                     if not level then return values[key]
                     else
-                        print(values[key])
                         local s = split(values[key])
                         if s[level] then return s[level] -- If we match the level, return that one
                         else return s[#s] end -- Otherwise, return the max
