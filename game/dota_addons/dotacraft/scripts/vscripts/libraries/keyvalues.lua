@@ -42,6 +42,9 @@
             }
         }
 
+        With a handle:
+            ability:GetAbilitySpecial("some_key") -- returns based on the level of the ability/item
+
         With string:
             GetAbilitySpecial("some_custom_ability", "some_key")    -- returns "-3 -4 -5"
             GetAbilitySpecial("some_custom_ability", "some_key", 2) -- returns "-4"
@@ -108,6 +111,10 @@ end
 -- Item version
 function CDOTA_Item:GetKeyValue(key)
     return GetItemKV(self:GetAbilityName(), key, self:GetLevel())
+end
+
+function CDOTABaseAbility:GetAbilitySpecial(key)
+    return GetAbilitySpecial(self:GetAbilityName(), key, self:GetLevel())
 end
 
 -- Global functions
