@@ -20,14 +20,14 @@
             handle:GetKeyValue() -- returns the whole table based on the handles baseclass
             handle:GetKeyValue("CustomName") -- returns "Barbarian"
             handle:GetKeyValue("CustomKey")  -- returns 1 (number)
-            handle:GetKeyValue("CustomStat") -- returns "100 200"
-            handle:GetKeyValue("CustomStat", 2) -- returns "200"
+            handle:GetKeyValue("CustomStat") -- returns "100 200" (string)
+            handle:GetKeyValue("CustomStat", 2) -- returns 200 (number)
         
         Same results with strings:
             GetKeyValue("some_custom_entry")
             GetKeyValue("some_custom_entry", "CustomName")
-            GetKeyValue("some_custom_entry", "CustomStat") -- returns 100 200
-            GetKeyValue("some_custom_entry", "CustomStat", 2) -- get the level 2 of the value
+            GetKeyValue("some_custom_entry", "CustomStat")
+            GetKeyValue("some_custom_entry", "CustomStat", 2)
 
     - Ability Special value grabbing:
 
@@ -47,8 +47,8 @@
             ability:GetAbilitySpecial("some_key") -- returns based on the level of the ability/item
 
         With string:
-            GetAbilitySpecial("some_custom_ability", "some_key")    -- returns "-3 -4 -5"
-            GetAbilitySpecial("some_custom_ability", "some_key", 2) -- returns "-4"
+            GetAbilitySpecial("some_custom_ability", "some_key")    -- returns "-3 -4 -5" (string)
+            GetAbilitySpecial("some_custom_ability", "some_key", 2) -- returns -4 (number)
 
     Notes:
     - In case a key can't be matched, the returned value will be nil
