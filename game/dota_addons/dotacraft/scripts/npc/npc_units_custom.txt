@@ -9576,7 +9576,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
-		"Ability1"					"undead_gather"	 // Only Gold and Repair
+		"Ability1"					"undead_gather_gold" // Only Gold and Repair
 		"Ability2"					"undead_restore"	 //Reference: Arst
 		"Ability3"					"undead_build_crypt"	 //Reference: Alam
 		"Ability4"					"undead_build_temple_of_the_damned_disabled"
@@ -9588,8 +9588,7 @@
 		"Ability11"					"undead_blight_regen"
 			
 		// Gatherer KeyValues
-		"GatherAbility"				"undead_gather"
-		"ReturnAbility"				"undead_return_resources"
+		"GatherAbility"				"undead_gather_gold"
 		"GatherResources"			"gold"
 	
 		"RepairAbility"				"undead_gather"
@@ -9785,7 +9784,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"5"
-		"Ability1"					"undead_gather" //Only Lumber
+		"Ability1"					"undead_gather_lumber"
 		"Ability2"					"undead_return_resources"	
 		"Ability3"					"undead_cannibalize_disabled"	 //Reference: Acan
 		"Ability4"					"undead_ghoul_frenzy_disabled"
@@ -9793,7 +9792,7 @@
 		"Ability11"					"undead_blight_regen"
 	
 		// Gatherer KeyValues
-		"GatherAbility"				"undead_gather"
+		"GatherAbility"				"undead_gather_lumber"
 		"ReturnAbility"				"undead_return_resources"
 		"GatherResources"			"lumber"
 		

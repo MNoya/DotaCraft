@@ -5,20 +5,21 @@
 "ReturnAbility"     "undead_return_resources" //only for "Return" behaviour
 "GatherResources"   "lumber" or "gold" or "lumber,gold"
 
- Ability KeyValues
-"RequiresEmptyTree" "1" //0 by default
+ Lumber Ability KeyValues
+"LumberGainInterval" "1"
+"LumberPerInterval"  "1"
+"DamageTree"         "1"
+"RequiresEmptyTree"  "1" //0 by default
+ 
+ Gold Ability KeyValues
+"GoldGainInterval"   "0.5"
+"GoldPerInterval"    "10"
+"GoldMineInside"     "1"
+"DamageMine"         "10"
 "GoldMineBuilding"  "nightelf_entangled_gold_mine" //"gold_mine" by default
 "GoldMineCapacity"  "5" //1 by default, 5 with building_on_top
 
 ===============================================================]]
-
---TODO: Centralized gatherer settings file
-MIN_DISTANCE_TO_TREE = 200
-MIN_DISTANCE_TO_MINE = 300
-TREE_FIND_RADIUS_FROM_TREE = 200
-TREE_FIND_RADIUS_FROM_TOWN = 2000
-DEBUG_TREES = false
-VALID_DEPOSITS = LoadKeyValues("scripts/kv/buildings.kv")
 
 -- Gather Start - Decides what behavior to use
 function Gather( event )
@@ -326,51 +327,5 @@ function SetGoldMineCounter(mine, count)
     for i=count+1,5 do
         --print("Set ",i," turned off")
         ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(0,0,0))
-    end
-end
-
-function SendBackToGather( unit, ability, resource_type )
-    local playerID = unit:GetPlayerOwnerID()
-    local casterKV = GameRules.UnitKV[unit:GetUnitName()]
-
-    if resource_type == "lumber" then
-        --print("Back to the trees")
-        if unit.target_tree and unit.target_tree:IsStanding() then
-            unit:CastAbilityOnTarget(unit.target_tree, ability, playerID)
-        else
-            -- Find closest near the city center in a huge radius
-            if unit.target_building then
-                unit.target_tree = FindEmptyNavigableTreeNearby(unit, unit.target_building:GetAbsOrigin(), TREE_FIND_RADIUS_FROM_TOWN)
-                if unit.target_tree and DEBUG_TREES then
-                    DebugDrawCircle(unit.target_building:GetAbsOrigin(), Vector(255,0,0), 5, TREE_FIND_RADIUS_FROM_TOWN, true, 60)
-                    DebugDrawCircle(unit.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10)
-                end
-            end
-                                        
-            if unit.target_tree then
-                if DEBUG_TREES then DebugDrawCircle(unit.target_tree:GetAbsOrigin(), Vector(0,255,0), 255, 64, true, 10) end
-                if unit.target_tree then
-                    unit:CastAbilityOnTarget(unit.target_tree, ability, playerID)
-                end
-            else
-                -- Cancel ability, couldn't find moar trees...
-                ToggleOff(ability)
-
-                unit:SwapAbilities(casterKV.GatherAbility, casterKV.ReturnAbility, true, false)
-            end
-        end
-
-    elseif resource_type == "gold" then
-
-        if unit.target_mine and IsValidEntity(unit.target_mine) then
-
-            unit:SwapAbilities(casterKV.GatherAbility,casterKV.ReturnAbility, true, false)
-
-            unit:CastAbilityOnTarget(unit.target_mine, ability, playerID)
-        else
-            print("Mine Collapsed")
-            ToggleOff(ability)
-            unit:SwapAbilities(casterKV.GatherAbility,casterKV.ReturnAbility, true, false)
-        end
     end
 end

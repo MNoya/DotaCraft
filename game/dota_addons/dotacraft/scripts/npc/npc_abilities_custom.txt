@@ -64386,10 +64386,11 @@
 			}
 		}
 	}
-	"undead_gather"
+	// Acolyte Only
+	"undead_gather_gold"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"undead_gather"
+		"AbilityTextureName"			"undead_gather_gold"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -64397,11 +64398,13 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	
-		"GoldMineTarget" 				"undead_haunted_gold_mine"
+		"GoldMineBuilding" 				"undead_haunted_gold_mine"
+		"GoldGainInterval"				"5"
+		"GoldPerInterval"				"10"
+		"DamageMine"					"10"
 	
 		"AbilitySpecial"
 		{
-			// Acolyte Only
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -64411,30 +64414,227 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"gold_per_interval"	"10"
-			}	
+			}
+		}
 	
-			// Ghoul Only
-			"03"
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"ghoul_lumber_capacity"	"20" //Can be upgraded
+				"ScriptFile"	"units/gather.lua"
+				"Function"		"Gather"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// LUMBER GATHER
+			"modifier_on_order_cancel_lumber"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"CancelGather"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_on_order_cancel_lumber"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 	
-			// regular gather stuff
-			"04"
+			"modifier_gathering_lumber"
+			{
+				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+				"IsHidden"				"1"
+				"OnOrder"
+				{			
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"CancelGather"
+					}
+				}
+	
+				// Lumber Gain
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"GatherLumber"
+					}
+				}		
+			}
+			// END LUMBER GATHER
+	
+			// GOLD GATHER
+			"modifier_on_order_cancel_gold"
+			{
+				"IsHidden"	"1"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"CancelGather"
+					}
+				}
+			}
+	
+			"modifier_gathering_gold"
+			{
+				"IsHidden"				"0"
+				"OverrideAnimation"		"ACT_DOTA_CHANNEL_ABILITY_3"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"CancelGather"
+					}
+				}
+	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"CancelGather"
+					}
+				}
+	
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"CancelGather"
+					}
+				}
+				
+				"ThinkInterval"  "%gold_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"GoldGain"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+	
+			// END GOLD GATHER
+	
+			// REPAIR
+			"modifier_on_order_cancel_repair"
+			{
+				"IsHidden"				"1"
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"CancelGather"
+					}
+				}
+			}
+	
+			"modifier_builder_repairing"
+			{
+				"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/gather.lua"
+						"Function"		"CancelGather"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuilderRepairing"
+					}
+				}
+	
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"BuilderStopRepairing"
+					}
+				}
+	
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"RepairAnimation"
+					}
+				}		
+			}
+	
+			// Stackable modifier on the building
+			"modifier_repairing_building"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"ThinkInterval"  	"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"units/builder.lua"
+						"Function"		"Repair"
+					}
+				}
+			}
+			// END REPAIR
+		}
+	}
+	
+	// Ghoul Only
+	"undead_gather_lumber"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"undead_gather_lumber"
+		"MaxLevel" 						"1"
+	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	
+		"LumberGainInterval"			"1"
+		"LumberPerInterval"				"2"
+		"DamageTree"					"2"
+	
+		"AbilitySpecial"
+		{	
+			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"lumber_capacity"		"20" //Can be upgraded
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lumber_per_hit"		"2" //also deals this much damage to tree
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_to_tree"		"2" //mainly here for nightelf wisp to deal 0 damage to trees without having to do a race check
 			}
 		}
 	
