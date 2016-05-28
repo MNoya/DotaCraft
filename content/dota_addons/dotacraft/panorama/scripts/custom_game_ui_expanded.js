@@ -54,6 +54,15 @@ GameUI.CustomUIConfig.isNumber = function( value ){
 	return !isNan(value);
 };
 
+Entities.HasModifier = function(entIndex, modifierName){
+	var nBuffs = Entities.GetNumBuffs(entIndex)
+	for (var i = 0; i < nBuffs; i++) {
+		if (Buffs.GetName(entIndex, Entities.GetBuff(entIndex, i)) == modifierName)
+			return true
+	};
+	return false
+};
+
 (function () {
 	$.Msg("Expanding CustomGameUI functionality");
 })();
