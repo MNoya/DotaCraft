@@ -124,36 +124,27 @@ end
 -- Global functions
 -- Key is optional, returns the whole table by omission
 -- Level is optional, returns the whole value by omission
-function GetKeyValue(name, key, level)
-    local t = KeyValues.All[name]
+function GetKeyValue(name, key, level, tbl)
+    local t = tbl or KeyValues.All[name]
     if key and t then
-        if t[key] and level then return split(t[key])[level]
+        if t[key] and level then
+            local s = split(t[key])
+            if s[level] then return tonumber(s[level]) or s[level] -- Try to cast to number
+            else return tonumber(s[#s]) or s[#s] end
         else return t[key] end
     else return t end
 end
 
 function GetUnitKV(unitName, key, level)
-    local t = KeyValues.UnitKV[unitName]
-    if key and t then
-        if t[key] and level then return split(t[key])[level]
-        else return t[key] end
-    else return t end
+    return GetKeyValue(unitName, key, level, KeyValues.UnitKV[unitName])
 end
 
 function GetAbilityKV(abilityName, key, level)
-    local t = KeyValues.AbilityKV[abilityName]
-    if key and t then
-        if t[key] and level then return split(t[key])[level]
-        else return t[key] end
-    else return t end
+    return GetKeyValue(abilityName, key, level, KeyValues.AbilityKV[abilityName])
 end
 
 function GetItemKV(itemName, key, level)
-    local t = KeyValues.ItemKV[itemName]
-    if key and t then
-        if t[key] and level then return split(t[key])[level]
-        else return t[key] end
-    else return t end
+    return GetKeyValue(itemName, key, level, KeyValues.ItemKV[itemName])
 end
 
 function GetAbilitySpecial(name, key, level)
@@ -167,8 +158,8 @@ function GetAbilitySpecial(name, key, level)
                     if not level then return values[key]
                     else
                         local s = split(values[key])
-                        if s[level] then return s[level] -- If we match the level, return that one
-                        else return s[#s] end -- Otherwise, return the max
+                        if s[level] then return tonumber(s[level]) -- If we match the level, return that one
+                        else return tonumber(s[#s]) end -- Otherwise, return the max
                     end
                     break
                 end
