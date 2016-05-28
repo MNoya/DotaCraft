@@ -53,6 +53,11 @@ function Units:Init( unit )
     if collision_size and collision_size > hull_radius+10 then
         unit:SetHullRadius(GetCollisionSize(unit))
     end
+
+    -- Special Tree-Attacking units
+    if unit:GetKeyValue("AttacksTrees") then
+        unit:SetCanAttackTrees(true)
+    end
 end
 
 -- Returns Int

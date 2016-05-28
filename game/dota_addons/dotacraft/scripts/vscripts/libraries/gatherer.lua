@@ -176,41 +176,68 @@ end
 function Gatherer:OnTreeClick(units, position)
     local entityIndex = units["0"]
     local unit = EntIndexToHScript(entityIndex)
-    if not unit:CanGatherLumber() then return end -- first unit must be able to get lumber
-   
-    local gather_ability = unit:GetGatherAbility()
-    local return_ability = unit:GetReturnAbility()
+    if not unit:CanAttackTrees() then return end -- first unit must be able to attack trees
 
     self:print("OnTreeClick around "..VectorString(position))
 
-    -- If clicking near a tree
-    if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
+    if unit:CanGatherLumber() then
+        local gather_ability = unit:GetGatherAbility()
+        local return_ability = unit:GetReturnAbility()
         local empty_tree = FindEmptyNavigableTreeNearby(unit, position, self.MinDistanceToTree)
-        if empty_tree then
-            local tree_index = empty_tree:GetTreeID()
-            --print("Order: Cast on Tree ",tree_index)
-            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-        end
-    elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
-        -- Can the unit still gather more resources?
-        if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) then
-            --print("Keep gathering")
 
-            -- Swap to a gather ability and keep extracting
-            local empty_tree = FindEmptyNavigableTreeNearby(unit, position, self.MinDistanceToTree)
+        -- Can the unit still gather more resources?
+        if unit:CanCarryMoreLumber() then 
+            if gather_ability:IsHidden() then -- Swap to a gather ability and keep extracting
+                unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
+            end
+
             if empty_tree then
                 local tree_index = empty_tree:GetTreeID()
-                unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
-                --print("Order: Cast on Tree ",tree_index)
+                self:print("Now targeting Tree "..tree_index)
+                self:CreateSelectionParticle(unit, tree)
                 ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
             end
-        else
-            -- Return
-            local empty_tree = FindEmptyNavigableTreeNearby(unit, position, self.MinDistanceToTree)
+
+        else -- Return
             unit.target_tree = empty_tree --The new selected tree
             unit:ReturnResources(queue, false) -- Propagate return order
         end
+
+    -- Not a gatherer but can attack trees via raw attacks
+    else
+        local trees = GridNav:GetAllTreesAroundPoint(position, self.TreeRadius, true)
+        for _,tree in pairs(trees) do
+            if tree:IsPathable() then
+                Gatherer:AttackTree(unit, tree)
+                break
+            end
+        end
     end
+end
+
+function Gatherer:AttackTree(unit, tree)
+    local tree_pos = tree:GetAbsOrigin()
+    self:print("Now attacking tree "..tree:GetTreeID())
+    self:CreateSelectionParticle(unit, tree)
+    ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = location, Queue = false}) 
+
+    -- Move towards the tree until close range    
+    unit.gatherer_timer = Timers:CreateTimer(0.03, function() 
+        if not IsValidEntity(unit) or not unit:IsAlive() then return end -- End if killed
+
+        local distance = (tree_pos - unit:GetAbsOrigin()):Length()
+        unit:MoveToPosition(tree_pos)
+        
+        if distance > self.MinDistanceToTree then
+            return self.ThinkInterval
+        else
+            unit:StartGesture(ACT_DOTA_ATTACK)
+            unit.gatherer_timer = Timers:CreateTimer(0.5, function() 
+                tree:CutDown(unit:GetTeamNumber())
+            end)
+            return
+        end
+    end)
 end
 
 ------------------------------------------------
@@ -966,6 +993,8 @@ function Gatherer:CheckGatherCancel(order)
         
         end
         unit:CancelGather()
+    elseif unit and unit.gatherer_timer then
+        Timers:RemoveTimer(unit.gatherer_timer)
     end
 end
 
@@ -1151,7 +1180,7 @@ function Gatherer:CastReturnAbility(event)
 
             if caster.target_building and IsValidEntity(caster.target_building) then
                 local building_pos = caster.target_building:GetAbsOrigin()
-                local collision_size = unit:GetHullRadius() * 2
+                local collision_size = building:GetHullRadius() * 2
                 local distance = (building_pos - caster:GetAbsOrigin()):Length()
             
                 if distance > collision_size then
@@ -1299,6 +1328,13 @@ function Gatherer:ClickedOnTrees(point)
     return #GridNav:GetAllTreesAroundPoint(point, self.TreeRadius, true) > 0
 end
 
+function Gatherer:CreateSelectionParticle(unit, target)
+    local particle = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/clicked_unit_select.vpcf", PATTACH_CUSTOMORIGIN, nil, unit:GetPlayerOwner())
+    ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
+    ParticleManager:SetParticleControl(particle, 1, Vector(255,255,255))
+    ParticleManager:SetParticleControl(particle, 2, Vector(64,0,0))
+end
+
 -- Defined on DeterminePathableTrees() and updated on tree_cut
 function CDOTA_MapTree:IsPathable()
     return self.pathable == true
@@ -1339,6 +1375,10 @@ function CDOTA_BaseNPC:SetCanAttackTrees(bAble)
     else
         self:RemoveModifierByName("modifier_attack_trees")
     end
+end
+
+function CDOTA_BaseNPC:CanAttackTrees()
+    return self:HasModifier("modifier_attack_trees")
 end
 
 -- Enables/disables collision (phasing)

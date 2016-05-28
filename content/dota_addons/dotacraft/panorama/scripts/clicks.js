@@ -67,8 +67,13 @@ function OnRightButtonPressed()
         }
     }
 
+    if (Entities.HasModifier(mainSelected, "modifier_attack_trees"))
+    {
+        GameEvents.SendCustomGameEventToServer("right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
+    }
+
     // Builder Right Click
-    if ( IsBuilder( mainSelected ) || Entities.GetUnitName(mainSelected) == "undead_ghoul" ) //TODO: Proper Gatherer click handler
+    if ( IsBuilder( mainSelected ) )
     {
         // Cancel BH
         if (!pressedShift) SendCancelCommand()
@@ -110,11 +115,6 @@ function OnRightButtonPressed()
                 GameEvents.SendCustomGameEventToServer("right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
             }
             return false
-        }
-        else
-        {
-            $.Msg("Builder right click without a target")
-            GameEvents.SendCustomGameEventToServer("right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
         }
     }
 
