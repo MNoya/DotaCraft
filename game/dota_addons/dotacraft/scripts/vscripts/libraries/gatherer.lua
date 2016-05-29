@@ -181,30 +181,9 @@ function Gatherer:OnTreeClick(units, position)
     self:print("OnTreeClick around "..VectorString(position))
 
     if unit:CanGatherLumber() then
-        local gather_ability = unit:GetGatherAbility()
-        local return_ability = unit:GetReturnAbility()
-        local empty_tree = FindEmptyNavigableTreeNearby(unit, position, self.MinDistanceToTree)
+        unit:GatherFromNearestTree(position)
 
-        -- Can the unit still gather more resources?
-        if unit.lumber_gathered == 0 or unit:CanCarryMoreLumber() then 
-            if gather_ability:IsHidden() then -- Swap to a gather ability and keep extracting
-                unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
-            end
-
-            if empty_tree then
-                local tree_index = empty_tree:GetTreeID()
-                self:print("Now targeting Tree "..tree_index)
-                self:CreateSelectionParticle(unit, empty_tree)
-                ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-            end
-
-        else -- Return
-            unit.target_tree = empty_tree --The new selected tree
-            unit:ReturnResources(queue, false) -- Propagate return order
-        end
-
-    -- Not a gatherer but can attack trees via raw attacks
-    else
+    else -- Not a gatherer but can attack trees via raw attacks
         local trees = GridNav:GetAllTreesAroundPoint(position, self.TreeRadius, true)
         for _,tree in pairs(trees) do
             if tree:IsPathable() then
@@ -250,32 +229,11 @@ function Gatherer:OnGoldMineClick(event)
     local targetIndex = event.targetIndex
     local gold_mine = EntIndexToHScript(targetIndex)
     local queue = event.queue == 1
-
     local unit = EntIndexToHScript(entityIndex)
-    local gather_ability = unit:GetGatherAbility()
 
-    Gatherer:print("OnGoldMineClick!!")
+    Gatherer:print("OnGoldMineClick!")
 
-    -- Gold gather
-    if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-        Gatherer:print("Order: Cast on "..gold_mine:GetUnitName())
-        -- Propagate to all units
-        ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-    elseif gather_ability and gather_ability:IsFullyCastable() and gather_ability:IsHidden() then
-        -- Can the unit still gather more resources?
-        if (unit.lumber_gathered and unit.lumber_gathered < unit:GetLumberCapacity()) then
-            --print("Keep gathering")
-
-            -- Swap to a gather ability and keep extracting
-            unit:SwapAbilities(gather_ability:GetAbilityName(), unit:GetReturnAbility():GetAbilityName(), true, false)
-            --print("Order: Cast on ",gold_mine:GetUnitName())
-            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-        else
-            -- Return
-            unit.target_mine = gold_mine
-            unit:ReturnResources(queue, false) -- Propagate return order
-        end
-    end
+    unit:GatherFromNearestGoldMine(gold_mine)
 end
 
 ------------------------------------------------
@@ -675,23 +633,54 @@ function Gatherer:Init(unit)
     unit.gold_gathered = 0
 
     -- Find a tree near a position and cast the gather ability on it
-    function unit:GatherFromNearestTree(position)
+    function unit:GatherFromNearestTree(position, distance)
         position = position or unit:GetAbsOrigin() -- If no position, use the unit origin
+        distance = distance or Gatherer.MinDistanceToTree -- If no distance, use the minimum
 
+        local gather_ability = unit:GetGatherAbility()
+        local return_ability = unit:GetReturnAbility()
+        local empty_tree = FindEmptyNavigableTreeNearby(unit, position, distance) --TODO: Not Empty
 
+        -- Can the unit still gather more resources?
+        if unit.lumber_gathered == 0 or unit:CanCarryMoreLumber() then 
+            if gather_ability:IsHidden() and return_ability then -- Swap to a gather ability and keep extracting
+                unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
+            end
+
+            if empty_tree then
+                local tree_index = empty_tree:GetTreeID()
+                Gatherer:print("Now targeting Tree "..tree_index)
+                Gatherer:CreateSelectionParticle(unit, empty_tree)
+                ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+            end
+
+        else -- Return
+            unit.target_tree = empty_tree --The new selected tree
+            unit:ReturnResources(queue, false) -- Propagate return order
+        end
     end
 
-    function unit:FindGatherTree()
-        -- similar to to FindEmptyNavigableTreeNearby
-    end
+    -- Find a gold mine and cast the gather ability on it
+    function unit:GatherFromNearestGoldMine(target)
+        local gather_ability = unit:GetGatherAbility()
+        local return_ability = unit:GetReturnAbility()
+        local gold_mine = target or Gatherer:GetClosestGoldMineToPosition(unit:GetAbsOrigin())
 
-    -- Find a gold mine near the unit current position and cast the gather ability on it
-    function unit:GatherFromNearestGoldMine()
-        -- body
-    end
+        -- Gold gather
+        if gold_mine and unit:CanCarryMoreGold() then
+            if gather_ability:IsHidden() and return_ability then -- Swap to a gather ability and keep extracting
+                unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
+            end
 
-    function unit:FindGoldMine()
-        -- this could be not just gold mine but other npc based resource nodes
+            local mine_index = gold_mine:GetEntityIndex()
+            Gatherer:print("Gathering From Nearest Gold Mine: "..mine_index)
+            Gatherer:CreateSelectionParticle(unit, gold_mine, 220)
+            ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = mine_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+        
+        else -- Return
+            unit.target_mine = gold_mine
+            unit:ReturnResources(queue, false) -- Propagate return order
+        end
     end
 
     -- use the return ability, swap as required
@@ -700,6 +689,10 @@ function Gatherer:Init(unit)
         Gatherer:print("ReturnResources Order")
         ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET,
                             AbilityIndex = unit.ReturnAbility:GetEntityIndex(), Queue = queue })
+    end
+
+    function unit:FindGatherTree()
+        -- similar to to FindEmptyNavigableTreeNearby
     end
 
     -- Goes through the structures of the player checking for the closest valid resource deposit of this type
@@ -714,7 +707,7 @@ function Gatherer:Init(unit)
 
         for _,building in pairs(buildings) do
             local buildingName = building:GetUnitName()
-            local bValidResourceDeposit = Gatherer.Deposits[buildingName] and Gatherer.Deposits[buildingName]:match(resource_type)
+            local bValidResourceDeposit = Gatherer:IsUnitValidDepositForResource(building, resource_type)
             if bValidResourceDeposit and not building:IsUnderConstruction() then
                 local this_distance = (position - building:GetAbsOrigin()):Length()
                 if this_distance < distance then
@@ -816,6 +809,10 @@ function Gatherer:Init(unit)
 
     function unit:GetGoldCapacity()
         return unit.GatherAbility and unit.GatherAbility:GetLevelSpecialValueFor("gold_capacity", unit.GatherAbility:GetLevel()-1) or 0
+    end
+
+    function unit:CanCarryMoreGold()
+        return not unit:HasModifier("modifier_carrying_gold")
     end
 
     function unit.GatherAbility:RequiresEmptyTree()
@@ -958,7 +955,7 @@ function Gatherer:DamageMine(unit, mine, value)
     unit.gold_gathered = gold_gain
 
     -- If the gold mine has no health left for another harvest
-    if mine:GetHealth() < DAMAGE_TO_MINE then
+    if mine:GetHealth() < value then
 
         -- TODO: DestroyGoldMine method
         -- Destroy the nav blockers associated with it
@@ -1305,6 +1302,24 @@ function Gatherer:SetReturnCallbacks(event)
     return callbacks
 end
 
+function Gatherer:GetClosestGoldMineToPosition(position)
+    local allGoldMines = self.GoldMines
+    local distance = math.huge
+    local closest_mine = nil
+
+    for k,gold_mine in pairs (allGoldMines) do
+        if IsValidEntity(gold_mine) and not gold_mine.building_on_top then
+            local mine_location = gold_mine:GetAbsOrigin()
+            local this_distance = (position - mine_location):Length2D()
+            if this_distance < distance then
+                distance = this_distance
+                closest_mine = gold_mine
+            end
+        end
+    end
+    return closest_mine
+end
+
 -- These should be deprecated all across the files
 function FindGatherAbility( unit )
     print("FindGatherAbility is deprecated, use :GetGatherAbility() instead")
@@ -1328,11 +1343,16 @@ function Gatherer:ClickedOnTrees(point)
     return #GridNav:GetAllTreesAroundPoint(point, self.TreeRadius, true) > 0
 end
 
-function Gatherer:CreateSelectionParticle(unit, target)
+function Gatherer:CreateSelectionParticle(unit, target, radius)
+    radius = radius or 64
     local particle = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/clicked_unit_select.vpcf", PATTACH_CUSTOMORIGIN, nil, unit:GetPlayerOwner())
     ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
     ParticleManager:SetParticleControl(particle, 1, Vector(255,255,255))
-    ParticleManager:SetParticleControl(particle, 2, Vector(64,0,0))
+    ParticleManager:SetParticleControl(particle, 2, Vector(radius,0,0))
+end
+
+function Gatherer:IsUnitValidDepositForResource(unit, resource_type)
+    return self.Deposits[unit:GetUnitName()] and self.Deposits[unit:GetUnitName()]:match(resource_type)
 end
 
 -- Defined on DeterminePathableTrees() and updated on tree_cut
@@ -1523,21 +1543,6 @@ function GetReturnPosition( unit, target )
     local building_pos = target:GetAbsOrigin()
     local distance = target:GetHullRadius()
     return building_pos + (origin - building_pos):Normalized() * distance
-end
-
-function GetClosestGoldMineToPosition( position )
-    local allGoldMines = Entities:FindAllByModel('models/mine/mine.vmdl') --Target name in Hammer
-    local distance = 20000
-    local closest_mine = nil
-    for k,gold_mine in pairs (allGoldMines) do
-        local mine_location = gold_mine:GetAbsOrigin()
-        local this_distance = (position - mine_location):Length()
-        if this_distance < distance then
-            distance = this_distance
-            closest_mine = gold_mine
-        end
-    end
-    return closest_mine
 end
 
 function IsMineOccupiedByTeam( mine, teamID )

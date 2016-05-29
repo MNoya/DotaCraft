@@ -437,7 +437,7 @@ function dotacraft:InitializePlayer( hero )
 	local race_setup_table = {}
 	race_setup_table.num_builders = 5
 	race_setup_table.angle = 360 / race_setup_table.num_builders
-	race_setup_table.closest_mine = GetClosestGoldMineToPosition(position)
+	race_setup_table.closest_mine = Gatherer:GetClosestGoldMineToPosition(position)
 	race_setup_table.closest_mine_pos = race_setup_table.closest_mine:GetAbsOrigin()
 	race_setup_table.mid_point = race_setup_table.closest_mine_pos + (position-race_setup_table.closest_mine_pos)/2
 
