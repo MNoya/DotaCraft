@@ -186,7 +186,7 @@ function Gatherer:OnTreeClick(units, position)
         local empty_tree = FindEmptyNavigableTreeNearby(unit, position, self.MinDistanceToTree)
 
         -- Can the unit still gather more resources?
-        if unit:CanCarryMoreLumber() then 
+        if unit.lumber_gathered == 0 or unit:CanCarryMoreLumber() then 
             if gather_ability:IsHidden() then -- Swap to a gather ability and keep extracting
                 unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
             end
@@ -194,8 +194,8 @@ function Gatherer:OnTreeClick(units, position)
             if empty_tree then
                 local tree_index = empty_tree:GetTreeID()
                 self:print("Now targeting Tree "..tree_index)
-                self:CreateSelectionParticle(unit, tree)
-                ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+                self:CreateSelectionParticle(unit, empty_tree)
+                ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
             end
 
         else -- Return
@@ -771,16 +771,16 @@ function Gatherer:Init(unit)
 
     function unit:CancelGather()
         local caster = unit
+        caster.gatherer_state = "idle"
         caster.state = "idle"
 
         if unit.gatherer_timer then Timers:RemoveTimer(unit.gatherer_timer) end
 
         caster:SetNoCollision(false)
 
-        if unit.GatherAbility and unit.GatherAbility.callbacks and unit.GatherAbility.OnCancelGather then
+        if unit.GatherAbility.callbacks and unit.GatherAbility.callbacks.OnCancelGather then
             unit.GatherAbility.callbacks.OnCancelGather()
         end
-        
         unit.GatherAbility:ToggleOff()
 
         if unit.ReturnAbility then
@@ -984,7 +984,7 @@ function Gatherer:CheckGatherCancel(order)
     local entityIndex = units["0"]
     local unit = EntIndexToHScript(entityIndex)
 
-    if unit and unit.CancelGather then
+    if unit and unit.CancelGather and unit.gatherer_state ~= "idle" then
         if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET and abilityIndex ~= 0 then
 
             -- Skip BuildingHelper ghost cast
@@ -1440,8 +1440,6 @@ end
 
 -- Goes through all trees showing whether they are pathable or not
 function Gatherer:DebugTrees()
-    self.DebugDraw = not self.DebugDraw
-    if not self.DebugDraw then DebugDrawClear() return end
     self:print("Debug drawing "..self.TreeCount.." trees")
     
     for _,tree in pairs(self.AllTrees) do

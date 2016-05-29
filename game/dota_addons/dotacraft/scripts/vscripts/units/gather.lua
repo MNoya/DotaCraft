@@ -33,15 +33,34 @@ function Gather( event )
 
     event:OnTreeReached(function(tree)
         Gatherer:print("Tree reached")
-        -- TODO VISUAL Z HERE
-
-        caster:StartGesture(ACT_DOTA_ATTACK)
 
         if race == "nightelf" then
+            caster:AddNewModifier(nil, nil, "modifier_stunned", {})
             local tree_pos = tree:GetAbsOrigin()
-            tree_pos.z = tree_pos.z - 28
-            caster:SetAbsOrigin(tree_pos)
-            tree.wisp_gathering = true
+            local caster_location = caster:GetAbsOrigin()
+            local speed = caster:GetBaseMoveSpeed() * 0.03
+            local distance = (tree_pos - caster_location):Length()
+            local direction = (tree_pos - caster_location):Normalized()
+
+            -- Move the wisp on top of the tree
+            Timers:CreateTimer(function()
+                if not caster:IsAlive() then return end
+
+                local new_location = caster:GetAbsOrigin() + direction * speed
+                caster:SetAbsOrigin(new_location)
+
+                local distance = (tree_pos - caster:GetAbsOrigin()):Length()
+                if distance > 10 then
+                    return 0.03
+                else
+                    caster:RemoveModifierByName("modifier_stunned")
+                    caster.tree_fx = ParticleManager:CreateParticle("particles/custom/nightelf/gather.vpcf", PATTACH_CUSTOMORIGIN, caster)
+                    tree_pos.z = tree_pos.z + 100
+                    ParticleManager:SetParticleControl(caster.tree_fx, 0, tree_pos)
+                end
+            end)
+        else
+            caster:StartGesture(ACT_DOTA_ATTACK)
         end
     end)
 
@@ -173,13 +192,8 @@ function Gather( event )
             tree.builder = nil
         end
 
-        if race == "nightelf" then
-            -- Give 1 extra second of fly movement
-            caster:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
-            Timers:CreateTimer(2,function() 
-                caster:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
-                caster:AddNewModifier(caster, nil, "modifier_phased", {duration=0.03})
-            end)
+        if caster.tree_fx then
+            ParticleManager:DestroyParticle(caster.tree_fx, true)
         end
 
         local mine = caster.target_mine
