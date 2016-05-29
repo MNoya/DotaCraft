@@ -7,12 +7,12 @@ function Units:Init( unit )
 
     -- Apply armor and damage modifier (for visuals)
     local attack_type = unit:GetAttackType()
-    if attack_type ~= 0 and unit:GetAttackDamage() > 0 then
+    if attack_type and unit:GetAttackDamage() > 0 then
         ApplyModifier(unit, "modifier_attack_"..attack_type)
     end
 
     local armor_type = unit:GetArmorType()
-    if armor_type ~= 0 then
+    if armor_type then
         ApplyModifier(unit, "modifier_armor_"..armor_type)
     end
 
@@ -368,32 +368,30 @@ function CDOTA_BaseNPC:RenderTeamColor()
     return self:GetKeyValue("RenderTeamColor")
 end
 
--- All units should have DOTA_COMBAT_CLASS_DEFEND_HERO and DOTA_COMBAT_CLASS_DEFEND_HERO, or no CombatClassAttack/ArmorType defined
+-- All units should have DOTA_COMBAT_CLASS_ATTACK_HERO and DOTA_COMBAT_CLASS_DEFEND_HERO, or no CombatClassAttack/ArmorType defined
 -- Returns a string with the wc3 damage name
 function CDOTA_BaseNPC:GetAttackType()
-    return self:GetKeyValue("AttackType") or "normal"
+    return self.AttackType or self:GetKeyValue("AttackType")
 end
 
 -- Returns a string with the wc3 armor name
 function CDOTA_BaseNPC:GetArmorType()
-    return self:GetKeyValue("ArmorType") or "normal"
+    return self.ArmorType or self:GetKeyValue("ArmorType")
 end
 
--- Changes the Attack Type string defined in the KV, and the current visual tooltip
+-- Changes the AttackType and current visual tooltip of the unit
 function CDOTA_BaseNPC:SetAttackType( attack_type )
     local current_attack_type = self:GetAttackType()
     self:RemoveModifierByName("modifier_attack_"..current_attack_type)
-
-    GameRules.UnitKV[self:GetUnitName()]["AttackType"] = attack_type
+    self.AttackType = current_attack_type
     ApplyModifier(self, "modifier_attack_"..attack_type)
 end
 
--- Changes the Armor Type string defined in the KV, and the current visual tooltip
+-- Changes the ArmorType and current visual tooltip of the unit
 function CDOTA_BaseNPC:SetArmorType( armor_type )
     local current_armor_type = self:GetArmorType()
     self:RemoveModifierByName("modifier_armor_"..current_armor_type)
-
-    GameRules.UnitKV[self:GetUnitName()]["ArmorType"] = armor_type
+    self.ArmorType = armor_type
     ApplyModifier(self, "modifier_armor_"..armor_type)
 end
 

@@ -81,7 +81,7 @@ function WarClubStrike( event )
 		caster:RemoveModifierByName("modifier_animation_translate")
 		caster.tree:RemoveSelf()
 
-		SetAttackType(caster, "normal")
+		caster:SetAttackType("normal")
 	end	
 end
 
