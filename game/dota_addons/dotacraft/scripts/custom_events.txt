@@ -1,70 +1,5 @@
 "CustomEvents"
 {
-	
-	"custom_error_show"
-	{
-		"player_ID"		"short"
-		"_error"		"string"
-	}
-
-	//This is fired when a player's lumber changes
-	"cgm_player_lumber_changed"
-	{
-		"player_ID"		"short"
-		"lumber"		"long"
-	}
-
-	// This is fired when a player's food limit changes
-	"cgm_player_food_limit_changed"
-	{
-		"player_ID"		"short"
-		"food_used"		"short"
-		"food_limit"	"short"
-	}
-
-	// This is fired when a player's food used changes
-	"cgm_player_food_used_changed"
-	{
-		"player_ID"		"short"
-		"food_used"		"short"
-		"food_limit"	"short"
-	}
-
-	"FlashUtil_request"
-	{
-		"request_id"		"string"
-		"data_name"			"string"
-		"target_player"		"short"
-	}
-
-	"FlashUtil_request_stream"
-	{
-		"request_id"		"string"
-		"data_name"			"string"
-		"requests_per_second"		"short"
-		"target_player"		"short"
-	}
-
-	"FlashUtil_stop_stream"
-	{
-		"stream_id"			"string"
-	}
-	"build_command_executed"
-	{
-		"player_id"			"short"
-		"building_size"		"short"
-	}
-
-    // Stat collection
-    "stat_collection_part"
-    {
-        "data"          "string"
-    }
-
-    "stat_collection_send"
-    {
-    }
-
     "ability_values_send"
 	{
 		"player_ID"	"short"
@@ -114,11 +49,5 @@
 	"ability_values_force_check"
 	{
 		"player_ID"	"short"
-	}
-
-	"player_overview_cast"
-	{
-		"player_ID"	"short"
-		"ability"	"string"
 	}
 }
