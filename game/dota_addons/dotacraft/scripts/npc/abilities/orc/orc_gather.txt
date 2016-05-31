@@ -40,79 +40,12 @@
 			"ScriptFile"	"units/gather.lua"
 			"Function"		"Gather"
 		}
-	}
 
-	"Modifiers"
-	{
-		// REPAIR
-		"modifier_on_order_cancel_repair"
-		{
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/gather.lua"
-					"Function"		"CancelGather"
-				}
-			}
-		}
-
-		// On the caster, does the animation and removal if killed or moved
-		"modifier_builder_repairing"
-		{
-			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
-
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/gather.lua"
-					"Function"		"CancelGather"
-				}
-				
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"BuilderRepairing"
-				}
-			}
-
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"BuilderStopRepairing"
-				}
-			}
-
-			"ThinkInterval"  	"1.0"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"RepairAnimation"
-				}
-			}		
-		}
-
-		// Stackable modifier on the building
-		"modifier_repairing_building"
-		{
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			"ThinkInterval"  	"1.0"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"Repair"
-				}
-			}
-		}
-		// END REPAIR
+		"RunScript"
+        {
+            "ScriptFile"    "units/repair.lua"
+            "Function"      "Repair"
+        }
 	}
 }
 

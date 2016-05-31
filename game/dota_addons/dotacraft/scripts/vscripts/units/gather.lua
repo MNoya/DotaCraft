@@ -29,7 +29,10 @@ function Gather( event )
     local race = GetUnitRace(caster)
     local playerID = caster:GetPlayerOwnerID()
 
-    Gatherer:CastGatherAbility(event)
+    local bValidRepair = IsValidRepairTarget(target)
+    if not bValidRepair then
+        Gatherer:CastGatherAbility(event)
+    else return end -- Exit out of repair ability usage
 
     event:OnTreeReached(function(tree)
         Gatherer:print("Tree reached")

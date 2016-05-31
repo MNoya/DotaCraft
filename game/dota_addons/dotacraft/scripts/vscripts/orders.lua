@@ -213,50 +213,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
         MoveUnitsInGrid(units, point, order_type, queue)
         
         return false
-    
-    ------------------------------------------------
-    --               Repair Multi Order           --
-    ------------------------------------------------
-    elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
-
-        local ability = EntIndexToHScript(abilityIndex) 
-        local abilityName = ability:GetAbilityName()
-
-        local targetIndex = filterTable["entindex_target"]
-        local target_handle = EntIndexToHScript(targetIndex)
-        local target_name = target_handle:GetUnitName()
-            
-        if (IsCustomBuilding(target_handle) or IsMechanical(target_handle)) and target_handle:GetTeamNumber() == unit:GetTeamNumber() then
-            --print("Order: Repair ",target_handle:GetUnitName())
-
-            -- Get the currently selected units and send new orders
-            local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
-            if not entityList then
-                return true
-            end
-
-            -- TODO: Use API here, BuildingHelper Repair
-            for k,entityIndex in pairs(entityList) do
-                local unit = EntIndexToHScript(entityIndex)
-                local race = GetUnitRace(unit)
-                local repair_ability = unit:FindAbilityByName(race.."_gather")
-
-                -- Repair
-                if repair_ability and repair_ability:IsFullyCastable() and not repair_ability:IsHidden() then
-                    --print("Order: Repair ",building:GetUnitName())
-                    unit.skip = true
-                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
-                
-                elseif repair_ability and repair_ability:IsFullyCastable() and repair_ability:IsHidden() then
-                    --print("Order: Repair ",building:GetUnitName())
-        
-                    -- Swap to the repair ability and send repair order
-                    unit:SwapAbilities(race.."_gather", race.."_return_resources", true, false)
-                    unit.skip = true
-                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
-                end
-            end
-        end
     end
 
     return true
@@ -271,7 +227,6 @@ function dotacraft:MoonWellOrder( event )
     local target = EntIndexToHScript(entityIndex)
     local targetIndex = event.targetIndex
     local moon_well = EntIndexToHScript(targetIndex)
-    dotacraft:RightClickOrder(event)
 
     local replenish = moon_well:FindAbilityByName("nightelf_replenish_mana_and_life")
     moon_well:CastAbilityOnTarget(target, replenish, moon_well:GetPlayerOwnerID())
@@ -285,7 +240,6 @@ function dotacraft:BurrowOrder( event )
     local entityIndex = event.mainSelected
     local burrowIndex = event.targetIndex
     local burrow = EntIndexToHScript(burrowIndex)
-    dotacraft:RightClickOrder(event)
 
     if not burrow.peons_inside then
         burrow.peons_inside = {}

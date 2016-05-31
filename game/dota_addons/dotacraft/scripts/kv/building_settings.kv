@@ -26,6 +26,21 @@
     // Should we disable building turnrate by default? Defining a "DisableTurning" kv on the unit will still override the global setting
     "DISABLE_BUILDING_TURNING" "true"
 
+    // Should we try to tie allied building rightclick to a "RepairAbility" usage ?
+    "RIGHT_CLICK_REPAIR"        "true"
+
+    // The following can be overriden in each ability KV if different ratios are necessary
+    "REPAIR_SETTINGS"
+    {
+        "RepairCostRatio"       "0.35" //Resource cost needed to heal the buildings HP based on the original cost
+        "RepairTimeRatio"       "1.5"  //Time needed to heal the buildings HP based on the original time
+
+        // Powerbuild is applied for every extra builder working on the same building
+        // Factor = Base * PowerBuild^(Builders-1)
+        "PowerbuildCost"        "0.15"
+        "PowerbuildRate"        "0.6"
+    }
+
     // Turn this off to hide the console print messages
     "TESTING"                   "true"
 }

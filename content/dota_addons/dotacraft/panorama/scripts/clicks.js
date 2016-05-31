@@ -1,6 +1,7 @@
 "use strict"
 
 var attackTable = CustomNetTables.GetAllTableValues( "attacks_enabled" )
+var right_click_repair = CustomNetTables.GetTableValue( "building_settings", "right_click_repair").value;
 
 function GetMouseTarget()
 {
@@ -82,8 +83,15 @@ function OnRightButtonPressed()
         if (targetIndex)
         {
             var entityName = Entities.GetUnitName(targetIndex)
+            
+            // Repair rightclick
+            if (right_click_repair && (IsCustomBuilding(targetIndex) || IsMechanical(targetIndex)) && Entities.GetHealthPercent(targetIndex) < 100 && IsAlliedUnit(targetIndex, mainSelected)) {
+                GameEvents.SendCustomGameEventToServer( "building_helper_repair_command", {builder: mainSelected, targetIndex: targetIndex, queue: pressedShift })
+                return true
+            }
+
             // Gold mine rightclick
-            if (entityName == "gold_mine"){
+            else if (entityName == "gold_mine"){
                 $.Msg("Player "+iPlayerID+" Clicked on a gold mine")
                 GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift})
                 return true
@@ -98,12 +106,6 @@ function OnRightButtonPressed()
             else if (mainSelectedName == "undead_acolyte" && entityName == "undead_haunted_gold_mine" && Entities.IsControllableByPlayer( targetIndex, iPlayerID )){
                 $.Msg("Player "+iPlayerID+" Clicked on a haunted gold mine")
                 GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift })
-                return true
-            }
-            // Repair rightclick
-            else if ( (IsCustomBuilding(targetIndex) || IsMechanical(targetIndex)) && Entities.GetHealthPercent(targetIndex) < 100 && Entities.IsControllableByPlayer( targetIndex, iPlayerID ) ){
-                $.Msg("Player "+iPlayerID+" Clicked on a building or mechanical unit with health missing")
-                GameEvents.SendCustomGameEventToServer( "repair_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift })
                 return true
             }
             else if (IsCustomBuilding(targetIndex) && mainSelectedName == "orc_peon" && Entities.GetUnitName( targetIndex ) == "orc_burrow"){

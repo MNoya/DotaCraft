@@ -268,7 +268,6 @@ function Gatherer:OrderFilter(order)
             return true
         end
     else
-        print("No unit!", entityIndex, unit)
         return true
     end
 
@@ -386,10 +385,10 @@ function Gatherer:OrderFilter(order)
         local target_handle = EntIndexToHScript(targetIndex)
         local target_name = target_handle:GetUnitName()
 
-        self:print("Gold Mine Gather Multi Orders")
-
         if target_name == "gold_mine" or
           ((target_name == "nightelf_entangled_gold_mine" or target_name == "undead_haunted_mine") and target_handle:GetTeamNumber() == unit:GetTeamNumber()) then
+
+            self:print("Gold Mine Gather Multi Orders")
 
             local gold_mine = target_handle
             for k,entityIndex in pairs(entityList) do
@@ -425,7 +424,7 @@ function Gatherer:OrderFilter(order)
 
     Gatherer:CheckGatherCancel(order)
 
-    return true
+    return ret
 end
 
 ------------------------------------------------

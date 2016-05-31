@@ -1,159 +1,83 @@
 
 "human_gather"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_gather"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "human_gather"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
-	// Gatherer Key Values
-	"LumberGainInterval"			"1"
-	"LumberPerInterval"				"1"
-	"DamageTree"					"1"
-	"GoldGainInterval"				"0.5"
-	"GoldPerInterval"				"10"
-	"GoldMineInside"				"1"
-	"DamageMine"					"10"
+    // Gatherer Key Values
+    "LumberGainInterval"            "1"
+    "LumberPerInterval"             "1"
+    "DamageTree"                    "1"
+    "GoldGainInterval"              "0.5"
+    "GoldPerInterval"               "10"
+    "GoldMineInside"                "1"
+    "DamageMine"                    "10"
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_capacity"			"10"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_capacity"		"10 20 30"
-		}
-	}
+    // Repair Key Values
+    "CanAssistConstruction"         "1"
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/gather.lua"
-			"Function"		"Gather"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_capacity"         "10"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_capacity"       "10 20 30"
+        }
+    }
 
-	"Modifiers"
-	{
-		// REPAIR
-		"modifier_on_order_cancel_repair"
-		{
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/gather.lua"
-					"Function"		"CancelGather"
-				}
-			}
-		}
+    "OnAbilityPhaseStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/gather.lua"
+            "Function"      "Gather"
+        }
 
-		// On the caster, does the animation and removal if killed or moved
-		"modifier_builder_repairing"
-		{
-			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
+        "RunScript"
+        {
+            "ScriptFile"    "units/repair.lua"
+            "Function"      "Repair"
+        }
+    }
 
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/gather.lua"
-					"Function"		"CancelGather"
-				}
-				
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"BuilderRepairing"
-				}
-			}
-
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"BuilderStopRepairing"
-				}
-			}
-
-			"ThinkInterval"  	"1.0"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"RepairAnimation"
-				}
-			}		
-		}
-
-		// Stackable modifier on the building
-		"modifier_repairing_building"
-		{
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			"ThinkInterval"  	"1.0"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/gather.lua"
-					"Function"		"Repair"
-				}
-			}
-		}
-		// END REPAIR
-
-		// Cosmetic Backpack
-		"modifier_cosmetic_backpack"
-		{
-			"Passive"	"1"
-			"IsHidden"	"1"
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/human/peasant.lua"
-					"Function"		"HideBackpack"
-				}
-			}
-		}
-	}
+    //"ScriptFile"  "units/human/peasant.lua"
+    //"Function"        "HideBackpack"
 }
 
 "human_return_resources"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_return_resources"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "human_return_resources"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle
 
-	// When the ability is active, it means there are resources left to return (else it will be hidden)
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/gather.lua"
-			"Function"		"ReturnResources"
-		}
-	}
+    // When the ability is active, it means there are resources left to return (else it will be hidden)
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/gather.lua"
+            "Function"      "ReturnResources"
+        }
+    }
 
-	//ScriptFile"	"units/human/peasant.lua"
-	//"Function"		"ShowBackpack"
-	
-	//"ScriptFile"	"units/human/peasant.lua"
-	//"Function"		"HideBackpack"
-	
-	//"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+    //ScriptFile"   "units/human/peasant.lua"
+    //"Function"        "ShowBackpack"
+    
+    //"ScriptFile"  "units/human/peasant.lua"
+    //"Function"        "HideBackpack"
+    
+    //"MODIFIER_STATE_NO_UNIT_COLLISION"        "MODIFIER_STATE_VALUE_ENABLED"
 }
