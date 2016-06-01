@@ -8,8 +8,6 @@ function Repair(event)
     if IsValidRepairTarget(target) then
         print("Repair.lua - Target: "..target:GetUnitName())
         BuildingHelper:AddRepair(event)
-    else
-        print("Not a valid repair target")
     end
 end
 
@@ -33,6 +31,14 @@ function BuildingHelper:OnRepairStarted(builder, building)
     self:print("OnRepairStarted "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
 end
 
+function BuildingHelper:OnRepairTick(building, hp)
+    print("OnRepairTick",hp)
+
+    -- Can pay the resource cost?
+    -- Important: can repair allied resources?
+    return false -- cancels all
+end
+
 -- After an ongoing move-to-building or repair process is cancelled
 function BuildingHelper:OnRepairCancelled(builder, building)
     self:print("OnRepairCancelled "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
@@ -47,7 +53,7 @@ end
 -- Outdated code ahead
 
 -- Health increase thinker on the building being repaired
-function Repair( event )
+function OldRepair( event )
     local caster = event.caster -- The builder
     local ability = event.ability
     local building = event.target -- The building to repair

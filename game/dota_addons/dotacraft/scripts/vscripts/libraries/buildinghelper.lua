@@ -54,6 +54,8 @@ function BuildingHelper:Init()
     LinkLuaModifier("modifier_out_of_world", "libraries/modifiers/modifier_out_of_world", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_builder_hidden", "libraries/modifiers/modifier_builder_hidden", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_disable_turning", "libraries/modifiers/modifier_disable_turning", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_repairing_building", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_builder_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     
     BuildingHelper.KV = {} -- Merge KVs into a single table
     BuildingHelper:ParseKV(BuildingHelper.AbilityKV, BuildingHelper.KV)
@@ -497,7 +499,7 @@ function BuildingHelper:OrderFilter(order)
 
                     ent.skip = true
                     BuildingHelper:print("Repair Multi Order "..building:GetUnitName())
-                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
+                    ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
                 end
             end
         end
@@ -1055,7 +1057,8 @@ function BuildingHelper:StartBuilding(builder)
 
     -- buildTime can be overriden in the construction start callback
     local buildTime = building.overrideBuildTime or buildingTable:GetVal("BuildTime", "float")
-    local fTimeBuildingCompleted = GameRules:GetGameTime()+buildTime -- the gametime when the building should be completed
+    local startTime = GameRules:GetGameTime()
+    local fTimeBuildingCompleted = startTime+buildTime -- the gametime when the building should be completed
 
     -- Dota server updates at 30 frames per second
     local fserverFrameRate = 1/30
@@ -1064,9 +1067,8 @@ function BuildingHelper:StartBuilding(builder)
     local fMaxHealth = building:GetMaxHealth()
     local fInitialHealthFactor = BuildingHelper.Settings["INITIAL_HEALTH_FACTOR"]
     local nInitialHealth = math.floor(fInitialHealthFactor * (fMaxHealth))
-    local fUpdateHealthInterval = buildTime / math.floor(fMaxHealth-nInitialHealth) -- health to add every tick until build time is completed.
+    local fUpdateHealthInterval = math.max(fserverFrameRate, buildTime / math.floor(fMaxHealth-nInitialHealth)) -- health tick interval
     building:SetHealth(nInitialHealth)
-    building.bUpdatingHealth = true
 
     local bScale = buildingTable:GetVal("Scale", "bool") -- whether we should scale the building.
     local fInitialModelScale = 0.2 -- initial size
@@ -1086,15 +1088,8 @@ function BuildingHelper:StartBuilding(builder)
         BuildingHelper:HideBuilder(builder, location, building)
     end
 
-     -- Health Update Timer and Behaviors
-    -- If BuildTime*30 > Health, the tick would be faster than 1 frame, adjust the HP gained per frame (This doesn't work well with repair)
-    -- Otherwise just add 1 health each frame.
-    if fUpdateHealthInterval <= fserverFrameRate then
-
-        BuildingHelper:print("Building needs float adjust")
-        if bRequiresRepair then
-            BuildingHelper:print("Error: Don't use Repair with fast-ticking buildings!")
-        end
+    -- Health Update Timer and Behaviors
+    if not bRequiresRepair then
 
         if not bBuilderInside then
             -- Advance Queue
@@ -1111,7 +1106,8 @@ function BuildingHelper:StartBuilding(builder)
             if IsValidEntity(building) and building:IsAlive() then
                 local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
                 if not timesUp then
-                    if building.bUpdatingHealth then
+                    -- Use +1 every frame or float adjustment
+                    if fUpdateHealthInterval <= fserverFrameRate then
                         fHPAdjustment = fHPAdjustment + fSmallHealthInterval
                         if fHPAdjustment > 1 then
                             building:SetHealth(building:GetHealth() + nHealthInterval + 1)
@@ -1121,73 +1117,14 @@ function BuildingHelper:StartBuilding(builder)
                             building:SetHealth(building:GetHealth() + nHealthInterval)
                             fAddedHealth = fAddedHealth + nHealthInterval
                         end
+                    else
+                        building:SetHealth(building:GetHealth() + 1)
+                        fAddedHealth = fAddedHealth + 1
                     end
                 else
-                    building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth) -- round up the last little bit
+                    building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth - nInitialHealth) -- round up the last little bit
+                    BuildingHelper:print("Finished "..building:GetUnitName().." in "..math.floor(GameRules:GetGameTime()-startTime).." seconds. HP was off by "..fMaxHealth - fAddedHealth - nInitialHealth)
 
-                     -- completion: timesUp is true
-                    if callbacks.onConstructionCompleted then
-                        building.constructionCompleted = true
-                        building.state = "complete"
-                        building.builder = builder
-                        callbacks.onConstructionCompleted(building)
-                        BuildingHelper:AddBuildingToPlayerTable(playerID, building)
-                    end
-                    
-                    BuildingHelper:print("HP was off by: ".. fMaxHealth - fAddedHealth)
-
-                    -- Eject Builder
-                    if bBuilderInside then
-                    
-                        -- Consume Builder
-                        if bConsumesBuilder then
-                            builder:ForceKill(true)
-                        else
-                            BuildingHelper:ShowBuilder(builder)
-                        end
-
-                        -- Advance Queue
-                        BuildingHelper:AdvanceQueue(builder)           
-                    end
-                
-                    return
-                end
-            else
-                -- Building destroyed
-
-                -- Eject Builder
-                if bBuilderInside then
-                    builder:RemoveModifierByName("modifier_builder_hidden")
-                    builder:RemoveNoDraw()
-                end
-
-                -- Advance Queue
-                BuildingHelper:AdvanceQueue(builder)
-
-                return nil
-            end
-            return fserverFrameRate
-        end)
-    
-    elseif not bRequiresRepair then
-
-        if not bBuilderInside then
-            -- Advance Queue
-            BuildingHelper:AdvanceQueue(builder)
-        end
-
-        building.updateHealthTimer = Timers:CreateTimer(function()
-            if IsValidEntity(building) and building:IsAlive() then
-                local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted
-                if not timesUp then
-                    if building.bUpdatingHealth then
-                        if building:GetHealth() < fMaxHealth then
-                            building:SetHealth(building:GetHealth() + 1)
-                        else
-                            building.bUpdatingHealth = false
-                        end
-                    end
-                else
                     -- completion: timesUp is true
                     if callbacks.onConstructionCompleted then
                         building.constructionCompleted = true
@@ -1208,9 +1145,9 @@ function BuildingHelper:StartBuilding(builder)
                         end
 
                         -- Advance Queue
-                        BuildingHelper:AdvanceQueue(builder)           
+                        BuildingHelper:AdvanceQueue(builder)
                     end
-                    
+                
                     return
                 end
             else
@@ -1227,17 +1164,14 @@ function BuildingHelper:StartBuilding(builder)
 
                 return nil
             end
-
-            -- Update health every frame
             return fUpdateHealthInterval
-        end)
-    
+        end)    
     else
 
         -- The building will have to be assisted through a repair ability
         local repair_ability = BuildingHelper:GetRepairAbility(builder)
         if repair_ability then
-            self:print("Building "..building:GetUnitName().." still be constructed using RepairAbility")
+            self:print("Building "..building:GetUnitName().." will be constructed using RepairAbility")
             building.repair_distance = (builder:GetAbsOrigin() - building:GetAbsOrigin()):Length2D() -- To instantly start repairing
             builder:CastAbilityOnTarget(building, repair_ability, playerID)
         else
@@ -1356,10 +1290,85 @@ function BuildingHelper:StartRepair(builder, building)
     -- External repair callback
     self:OnRepairStarted(builder, building)
 
+    -- Initialize builder list
+    building.units_repairing = building.units_repairing or {}
+    table.insert(building.units_repairing, builder)
+    builder.repair_target = building
+
+    local playerID = building:GetPlayerOwnerID()
+    local goldCost = building:GetKeyValue("GoldCost")
+    local lumberCost = building:GetKeyValue("LumberCost")
+    local buildTime = building:GetKeyValue("BuildTime")
+    local costRatio = repair_ability and repair_ability:GetKeyValue("RepairCostRatio") or BuildingHelper.Settings.REPAIR_SETTINGS["RepairCostRatio"]
+    local timeRatio = repair_ability and repair_ability:GetKeyValue("RepairTimeRatio") or BuildingHelper.Settings.REPAIR_SETTINGS["RepairTimeRatio"]
+    local powerBuildCost = repair_ability and repair_ability:GetKeyValue("PowerbuildCost") or BuildingHelper.Settings.REPAIR_SETTINGS["PowerbuildCost"]
+    local powerBuildRate = repair_ability and repair_ability:GetKeyValue("PowerbuildRate") or BuildingHelper.Settings.REPAIR_SETTINGS["PowerbuildRate"]
+
+    -- C++ -> Lua Double nonsense
+    function correctFloat(f) return tonumber(string.format("%.4f", f)) end
+    timeRatio = correctFloat(timeRatio)
+    costRatio = correctFloat(costRatio)
+    powerBuildCost = correctFloat(powerBuildCost)
+    powerBuildRate = correctFloat(powerBuildRate)
+
+    local fserverFrameRate = 1/30
+    local fAddedHealth = 0
+    local fHPAdjustment = 0
+
+    builder:AddNewModifier(builder, repair_ability, "modifier_builder_repairing", {})
+    building:AddNewModifier(building, repair_ability, "modifier_repairing_building", {})
+    building:SetModifierStackCount("modifier_repairing_building", building, getTableCount(building.units_repairing))
+
+    if not building.repairTimer then
+        building.repairTimer = Timers:CreateTimer(function()
+            if not IsValidEntity(building) or not building:IsAlive() then return end
+
+            local builderCount = getTableCount(building.units_repairing)
+            if builderCount == 0 then
+                building:RemoveModifierByName("modifier_repairing_building")
+                building.repairTimer = nil
+                -- remove stacks and vpfc
+                return
+            end
+
+            local health_deficit = building:GetHealthDeficit()
+            if health_deficit == 0 then
+                building:RemoveModifierByName("modifier_repairing_building")
+                building.repairTimer = nil
+                return
+            end
+
+            local buildTimeFactor = buildTime * (timeRatio*(powerBuildRate^(builderCount-1)))
+            local timeFor1HP = buildTimeFactor/building:GetMaxHealth()
+            local nextTick = timeFor1HP
+
+            if nextTick > fserverFrameRate then
+                building:SetHealth(building:GetHealth() + 1)
+                BuildingHelper:OnRepairTick(building, 1)
+            else
+                local nHealthInterval = building:GetMaxHealth() / (buildTimeFactor / fserverFrameRate)
+                local fSmallHealthInterval = nHealthInterval - math.floor(nHealthInterval) --floating point component
+                nHealthInterval = math.floor(nHealthInterval)
+
+                -- How much HP do we add this frame?
+                fHPAdjustment = fHPAdjustment + fSmallHealthInterval
+                local heal = 0
+                if fHPAdjustment > 1 then
+                    fHPAdjustment = fHPAdjustment - 1
+                    building:SetHealth(building:GetHealth() + nHealthInterval + 1)
+                    BuildingHelper:OnRepairTick(building, nHealthInterval + 1)
+                elseif nHealthInterval > 0 then
+                    building:SetHealth(building:GetHealth() + nHealthInterval)
+                    BuildingHelper:OnRepairTick(building, nHealthInterval)
+                end
+
+                nextTick = fserverFrameRate
+            end
+            return nextTick
+        end)
+    end
+
     --[[ TODO
-        Initialize builder list
-        Add or Remove builders from the list
-        Run thinker for builders currently working on the building
         Callback to spend resources every tick or cancel repairing
         Callback to repair finished when reaching full hp/finished construction (timed)
     ]]
@@ -1940,8 +1949,9 @@ function BuildingHelper:AdvanceQueue(builder)
                 self:AdvanceQueue(builder)                
             else
                 local building = work.building
-                local castRange = building.repair_distance or building:GetHullRadius()*2 + 64 -- Set when placing the building
                 local callbacks = work.callbacks
+                local castRange = building:GetHullRadius() + 100 + builder:GetHullRadius()
+                castRange = math.max(building.repair_distance, castRange)
                 builder.work = work
                 builder.repair_target = building
                 builder.state = "moving_to_repair"
@@ -2024,6 +2034,16 @@ function BuildingHelper:ClearQueue(builder)
     -- Clear movement
     if builder.move_to_build_timer then
         Timers:RemoveTimer(builder.move_to_build_timer)
+    end
+
+    -- Clear repair
+    if builder.repair_target then
+        local building = builder.repair_target
+        local index = getIndexTable(building.units_repairing, builder)
+        if index then
+            table.remove(building.units_repairing, index)
+            print("Currently "..getTableCount(building.units_repairing).." units repairing")
+        end
     end
 
     -- Skip if there's nothing to clear
@@ -2374,6 +2394,14 @@ function split(inputstr, sep)
         i = i + 1
     end
     return t
+end
+
+function getTableCount(t)
+    local n = 0
+    for _ in pairs( t ) do
+        n = n + 1
+    end
+    return n
 end
 
 function getIndexTable(list, element)
