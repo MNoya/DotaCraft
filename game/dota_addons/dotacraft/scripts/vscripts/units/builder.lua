@@ -147,11 +147,6 @@ function Build( event )
         unit:SetMaxHealth(maxHealth)
         unit:SetBaseMaxHealth(maxHealth)
 
-        -- Override construction time for instant placement cheat code
-        if GameRules.WarpTen then
-            unit.overrideBuildTime = .1
-        end
-
         if unit:RenderTeamColor() then
             local color = TEAM_COLORS[teamNumber]
             unit:SetRenderColor(color[1], color[2], color[3])
@@ -313,7 +308,7 @@ end
 
 -- Called when the Cancel ability-item is used, refunds the cost by a factor
 function CancelBuilding( keys )
-    local building = keys.unit
+    local building = keys.caster
     local playerID = building:GetPlayerOwnerID()
 
     BuildingHelper:print("CancelBuilding "..building:GetUnitName().." "..building:GetEntityIndex())
@@ -323,11 +318,6 @@ function CancelBuilding( keys )
     local gold_cost = math.floor(GetGoldCost(building) * refund_factor)
     local lumber_cost = math.floor(GetLumberCost(building) * refund_factor)
 
-    Players:ModifyGold(playerID, gold_cost)
-    Players:ModifyLumber(playerID, lumber_cost)
-    PopupGoldGain(building, gold_cost)
-    PopupLumber(building, lumber_cost)
-
     -- Eject builder
     local builder = building.builder_inside
     if builder then   
@@ -335,25 +325,7 @@ function CancelBuilding( keys )
     end
 
     -- Cancel builders repairing
-    local builders = building.units_repairing
-    if builders then
-        -- Remove the modifiers on the building and the builders
-        building:RemoveModifierByName("modifier_repairing_building")
-        for _,v in pairs(builders) do
-            local builder = EntIndexToHScript(v)
-            if builder and IsValidEntity(builder) then
-                builder:RemoveModifierByName("modifier_builder_repairing")
-
-                builder.state = "idle"
-                BuildingHelper:AdvanceQueue(builder)
-
-                local ability = FindGatherAbility(builder)
-                if ability then 
-                    ToggleOff(ability)
-                end
-            end
-        end
-    end
+    BuildingHelper:CancelBuildingRepair(building)
 
     -- Refund items (In the item-queue system, units can be queued before the building is finished)
     for i=0,5 do
@@ -369,19 +341,10 @@ function CancelBuilding( keys )
         end
     end
 
-    -- Special for RequiresRepair
-    local units_repairing = building.units_repairing
-    if units_repairing then
-        for k,v in pairs(units_repairing) do
-            local builder = EntIndexToHScript(v)
-            if builder and IsValidEntity(builder) then
-                builder:RemoveModifierByName("modifier_on_order_cancel_repair")
-                builder:RemoveModifierByName("modifier_peasant_repairing")
-                local repair_ability = BuildingHelper:GetRepairAbility( builder )
-                ToggleOff(repair_ability)
-            end
-        end
-    end
+    Players:ModifyGold(playerID, gold_cost)
+    Players:ModifyLumber(playerID, lumber_cost)
+    PopupGoldGain(building, gold_cost)
+    PopupLumber(building, lumber_cost)
 
     building.state = "canceled"
     Timers:CreateTimer(1/5, function() 

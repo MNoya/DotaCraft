@@ -36,9 +36,8 @@
         "RepairTimeRatio"       "1.5"  //Time needed to heal the buildings HP based on the original time
 
         // Powerbuild is applied for every extra builder working on the same building
-        // Factor = Base * PowerBuild^(Builders-1)
-        "PowerbuildCost"        "0.15"
-        "PowerbuildRate"        "0.6"
+        "PowerbuildCost"        "0.15" //Cost Ratio = RepairCostRatio + PowerbuildCost*(Builders-1)
+        "PowerbuildRate"        "0.6"  //Time Ratio = RepairTimeRatio * PowerbuildRate^(Builders-1)
     }
 
     // Turn this off to hide the console print messages

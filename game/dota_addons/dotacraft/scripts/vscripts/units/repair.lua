@@ -3,11 +3,13 @@
 --------------------------------
 
 function Repair(event)
+    local caster = event.caster
     local target = event.target
 
-    if IsValidRepairTarget(target) then
+    if IsValidRepairTarget(target, caster) then
         print("Repair.lua - Target: "..target:GetUnitName())
-        BuildingHelper:AddRepair(event)
+        caster:Interrupt()
+        BuildingHelper:AddRepairToQueue(caster, target, false)
     end
 end
 
@@ -31,12 +33,48 @@ function BuildingHelper:OnRepairStarted(builder, building)
     self:print("OnRepairStarted "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
 end
 
-function BuildingHelper:OnRepairTick(building, hp)
-    print("OnRepairTick",hp)
-
+function BuildingHelper:OnRepairTick(building, hpGain, costFactor)
     -- Can pay the resource cost?
     -- Important: can repair allied resources?
-    return false -- cancels all
+
+    local playerID = building:GetPlayerOwnerID()
+    local goldCost = building:GetKeyValue("GoldCost")
+    local lumberCost = building:GetKeyValue("LumberCost")
+    local buildTime = building:GetKeyValue("BuildTime")
+    building.GoldAdjustment = building.GoldAdjustment or 0
+    building.gold_used = 0
+    building.lumber_used = 0
+
+    -- Keep adding the floating point values every tick
+    local pct_healed = hpGain / building:GetMaxHealth()
+    local gold_tick = pct_healed * goldCost * costFactor
+    local gold_float = gold_tick - math.floor(gold_tick)
+    gold_tick = math.floor(gold_tick)
+
+    -- Lumber is custom so we can get away with storing the floating point value
+    local lumber_tick = pct_healed * lumberCost * costFactor
+
+    if Players:HasEnoughGold(playerID, gold_tick+gold_float) and Players:HasEnoughLumber(playerID, lumber_tick) then
+        building.GoldAdjustment = building.GoldAdjustment + gold_float
+        if building.GoldAdjustment > 1 then
+            Players:ModifyGold(playerID, -gold_tick - 1)
+            building.GoldAdjustment = building.GoldAdjustment - 1
+            building.gold_used = building.gold_used + gold_tick + 1
+
+        else
+            Players:ModifyGold(playerID, -gold_tick)
+            building.gold_used = building.gold_used + gold_tick
+        end
+        
+        Players:ModifyLumber(playerID, -lumber_tick)
+        building.lumber_used = building.lumber_used + lumber_tick
+
+
+    else
+        building.gold_used = nil
+        building.lumber_used = 0
+        return false -- cancels the repair on all builders
+    end
 end
 
 -- After an ongoing move-to-building or repair process is cancelled

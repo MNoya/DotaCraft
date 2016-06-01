@@ -63,8 +63,7 @@ function dotacraft:OnPlayerChat(keys)
 end
 
 function dotacraft:WarpTen()
-	GameRules.WarpTen = not GameRules.WarpTen
-	
+	BuildingHelper:WarpTen()
 	local message = GameRules.WarpTen and "Cheat enabled!" or "Cheat disabled!"
 	GameRules:SendCustomMessage(message, 0, 0)
 end

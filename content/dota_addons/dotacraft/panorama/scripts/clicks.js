@@ -86,7 +86,7 @@ function OnRightButtonPressed()
             
             // Repair rightclick
             if (right_click_repair && (IsCustomBuilding(targetIndex) || IsMechanical(targetIndex)) && Entities.GetHealthPercent(targetIndex) < 100 && IsAlliedUnit(targetIndex, mainSelected)) {
-                GameEvents.SendCustomGameEventToServer( "building_helper_repair_command", {builder: mainSelected, targetIndex: targetIndex, queue: pressedShift })
+                GameEvents.SendCustomGameEventToServer( "building_helper_repair_command", {targetIndex: targetIndex, queue: pressedShift})
                 return true
             }
 
