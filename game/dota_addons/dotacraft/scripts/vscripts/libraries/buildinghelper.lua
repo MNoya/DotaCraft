@@ -1315,7 +1315,12 @@ function BuildingHelper:StartRepair(builder, target)
     if not target.repairTimer then
         target.repairTimer = Timers:CreateTimer(function()
             local target = builder.repair_target -- This can change if the target is upgraded
-            if not IsValidEntity(target) or not target:IsAlive() then return end
+            if not IsValidEntity(target) or not target:IsAlive() then
+                if target and target.units_repairing then
+                    self:CancelRepair(target)
+                end
+                return
+            end
 
             local builderCount = getTableCount(target.units_repairing)
             if builderCount == 0 then
