@@ -1427,6 +1427,7 @@ function BuildingHelper:CancelRepair(building)
             repair_ability:ToggleAbility()
         end
         v.state = "idle"
+        self:OnRepairCancelled(v, building)
         BuildingHelper:AdvanceQueue(v)
     end
 end
@@ -2074,6 +2075,7 @@ function BuildingHelper:AdvanceQueue(builder)
         -- Set the builder work to nil to accept next work directly
         BuildingHelper:print("Builder "..builder:GetUnitName().." "..builder:GetEntityIndex().." finished its building Queue")
         builder.state = "idle"
+        builder.repair_target = nil
         builder.work = nil
     end
 end

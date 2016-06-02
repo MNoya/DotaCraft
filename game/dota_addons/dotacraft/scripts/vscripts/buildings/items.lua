@@ -81,7 +81,12 @@ function ApplyConstructionEffect( event )
 	local target = event.target
 
 	local race = GetUnitRace(target)
-	ability:ApplyDataDrivenModifier(target, target, "modifier_construction_"..race, {})
+
+	if race == "orc" then
+		target.construction_particle = ParticleManager:CreateParticle("particles/custom/construction_dust.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	else
+		ability:ApplyDataDrivenModifier(target, target, "modifier_construction_"..race, {})
+	end
 end
 
 function RemoveConstructionEffect( event )
@@ -89,6 +94,11 @@ function RemoveConstructionEffect( event )
 
 	local race = GetUnitRace(target)
 	target:RemoveModifierByName("modifier_construction_"..race)
+
+	if target.construction_particle then 
+		ParticleManager:DestroyParticle(target.construction_particle, true)
+		target.construction_particle = nil
+	end	
 end
 
 function NightElfConstructionParticle( event )

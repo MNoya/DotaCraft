@@ -3921,42 +3921,6 @@
 				}
 			}
 	
-			"modifier_construction_human"
-			{
-				"IsHidden"				"1"
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/custom/sandking_sandstorm.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-						"ControlPoints"
-						{
-							"01"			"0 250 0"
-						}
-					}
-				}
-			}
-	
-			"modifier_construction_orc"
-			{
-				"IsHidden"				"1"
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/custom/sandking_sandstorm.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-						"ControlPoints"
-						{
-							"01"			"0 250 0"
-						}
-					}
-				}
-			}
-	
 			"modifier_construction_nightelf"
 			{
 				"IsHidden"				"1"
