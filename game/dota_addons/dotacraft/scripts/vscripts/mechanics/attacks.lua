@@ -5,7 +5,7 @@ end
 function Attacks:Init()
     -- Build NetTable with the attacks enabled
     for name,values in pairs(GameRules.UnitKV) do
-        if values['AttacksEnabled'] then
+        if type(values)=="table" and values['AttacksEnabled'] then
             CustomNetTables:SetTableValue("attacks_enabled", name, {enabled = values['AttacksEnabled']})
         end
     end
