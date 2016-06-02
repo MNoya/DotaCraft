@@ -1,4 +1,4 @@
-BH_VERSION = "1.1.6"
+BH_VERSION = "1.2.0"
 
 require('libraries/timers')
 require('libraries/selection')
@@ -13,10 +13,6 @@ end
     * Loads Key Values into the BuildingAbilities
 ]]--
 function BuildingHelper:Init()
-    BuildingHelper.AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
-    BuildingHelper.ItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
-    BuildingHelper.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
-
     -- building_settings nettable from buildings.kv
     BuildingHelper:LoadSettings()
 
@@ -57,10 +53,8 @@ function BuildingHelper:Init()
     LinkLuaModifier("modifier_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_builder_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     
-    BuildingHelper.KV = {} -- Merge KVs into a single table
-    BuildingHelper:ParseKV(BuildingHelper.AbilityKV, BuildingHelper.KV)
-    BuildingHelper:ParseKV(BuildingHelper.ItemKV, BuildingHelper.KV)
-    BuildingHelper:ParseKV(BuildingHelper.UnitKV, BuildingHelper.KV)
+    -- Check KVs and set relevant construction_size nettable values
+    BuildingHelper:ParseKV()
 
     self:HookBoilerplate()
 end
@@ -132,16 +126,11 @@ function BuildingHelper:LoadSettings()
     end
 end
 
-function BuildingHelper:ParseKV(t, result)
-    for name,info in pairs(t) do
+function BuildingHelper:ParseKV()
+    for name,info in pairs(KeyValues.All) do
         if type(info) == "table" then
             local isBuilding = info["Building"] or info["ConstructionSize"]
             if isBuilding then
-                if result[name] then
-                    BuildingHelper:print("Error: There's a duplicated entry for "..name)
-                else
-                    result[name] = info
-                end
                 -- Build NetTable with the building properties
                 local values = {}
                 if info['ConstructionSize'] then
@@ -191,7 +180,7 @@ end
 
 function BuildingHelper:OnEntityKilled(keys)
     local killed = EntIndexToHScript(keys.entindex_killed)
-    local unitTable = BuildingHelper.UnitKV[killed:GetUnitName()]
+    local unitTable = killed:GetKeyValue()
     local gridTable = unitTable and unitTable["Grid"]
 
     if IsBuilder(killed) then
@@ -565,7 +554,7 @@ function BuildingHelper:AddBuilding(keys)
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
     if not fMaxScale then
         -- If no MaxScale is defined, check the "ModelScale" KeyValue. Otherwise just default to 1
-        local fModelScale = BuildingHelper.UnitKV[unitName].ModelScale
+        local fModelScale = GetUnitKV(unitName, "ModelScale")
         if fModelScale then
           fMaxScale = fModelScale
         else
@@ -592,7 +581,7 @@ function BuildingHelper:AddBuilding(keys)
     playerTable.activeCallbacks = callbacks
 
     -- Offset Z on the model particle
-    event.modelOffset = BuildingHelper.UnitKV[unitName]["ModelOffset"] or 0
+    event.modelOffset = GetUnitKV(unitName, "ModelOffset") or 0
 
     -- npc_dota_creature doesn't render cosmetics on the particle ghost, use hero names instead
     local overrideGhost = buildingTable:GetVal("OverrideBuildingGhost", "string")
@@ -674,7 +663,7 @@ end
 ]]--
 function BuildingHelper:SetupBuildingTable(abilityName, builderHandle)
 
-    local buildingTable = BuildingHelper.KV[abilityName]
+    local buildingTable = GetKeyValue(abilityName)
 
     function buildingTable:GetVal(key, expectedType)
         local val = buildingTable[key]
@@ -725,7 +714,7 @@ function BuildingHelper:SetupBuildingTable(abilityName, builderHandle)
     end
 
     -- Ensure that the unit actually exists
-    local unitTable = BuildingHelper.UnitKV[unitName]
+    local unitTable = GetUnitKV(unitName)
     if not unitTable then
         BuildingHelper:print('Error: Definition for Unit ' .. unitName .. ' could not be found in the KeyValue files.')
         return
@@ -739,7 +728,7 @@ function BuildingHelper:SetupBuildingTable(abilityName, builderHandle)
     buildingTable:SetVal("ConstructionSize", construction_size)
 
     -- OverrideBuildingGhost
-    local override_ghost = BuildingHelper.UnitKV[unitName]["OverrideBuildingGhost"]
+    local override_ghost = GetUnitKV(unitName, "OverrideBuildingGhost")
     if override_ghost then
         buildingTable:SetVal("OverrideBuildingGhost", override_ghost)
     end
@@ -762,19 +751,19 @@ function BuildingHelper:SetupBuildingTable(abilityName, builderHandle)
     buildingTable:SetVal("BlockPathingSize", pathing_size)
 
     -- Pedestal Model
-    local pedestal_model = BuildingHelper.UnitKV[unitName]["PedestalModel"]
+    local pedestal_model = GetUnitKV(unitName, "PedestalModel")
     if pedestal_model then
         buildingTable:SetVal("PedestalModel", pedestal_model)
     end
 
     -- Pedestal Scale
-    local pedestal_scale = BuildingHelper.UnitKV[unitName]["PedestalModelScale"]
+    local pedestal_scale = GetUnitKV(unitName, "PedestalModelScale")
     if pedestal_scale then
         buildingTable:SetVal("PedestalModelScale", pedestal_scale)
     end
 
     -- Pedestal Offset
-    local pedestal_offset = BuildingHelper.UnitKV[unitName]["PedestalOffset"]
+    local pedestal_offset = GetUnitKV(unitName, "PedestalOffset")
     if pedestal_offset then
         buildingTable:SetVal("PedestalOffset", pedestal_offset)
     end
@@ -800,14 +789,14 @@ function BuildingHelper:SetupBuildingTable(abilityName, builderHandle)
     local fMaxScale = buildingTable:GetVal("MaxScale", "float")
     if not fMaxScale then
         -- If no MaxScale is defined, check the Units "ModelScale" KeyValue. Otherwise just default to 1
-        fMaxScale = BuildingHelper.UnitKV[unitName].ModelScale or 1
+        fMaxScale = GetUnitKV(unitName, "ModelScale") or 1
     end
     buildingTable:SetVal("MaxScale", fMaxScale)
 
     local fModelRotation = buildingTable:GetVal("ModelRotation", "float")
     if not fModelRotation then
         -- If no defined, check the Units KeyValue. Otherwise just default to 0
-        fModelRotation = BuildingHelper.UnitKV[unitName].ModelRotation or 0
+        fModelRotation = GetUnitKV(unitName, "ModelRotation") or 0
     end
     buildingTable:SetVal("ModelRotation", fModelRotation)
 
@@ -834,7 +823,7 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
 
     -- Adjust the model position z
-    local model_offset = BuildingHelper.UnitKV[name]["ModelOffset"] or 0
+    local model_offset = GetUnitKV(name, "ModelOffset") or 0
     local model_location = Vector(location.x, location.y, location.z + model_offset)
 
     -- Spawn the building
@@ -847,7 +836,7 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     building.blockers = gridNavBlockers
 
     -- Disable turning. If DisableTurning unit KV setting is not defined, use the global setting
-    local disableTurning = BuildingHelper.UnitKV[name]["DisableTurning"]
+    local disableTurning = GetUnitKV(name, "DisableTurning")
     if not disableTurning then
         if BuildingHelper.Settings["DISABLE_BUILDING_TURNING"] then
             building:AddNewModifier(building, nil, "modifier_disable_turning", {})
@@ -857,7 +846,7 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
     end
 
     -- Create pedestal
-    local pedestal = BuildingHelper.UnitKV[name]["PedestalModel"]
+    local pedestal = GetUnitKV(name, "PedestalModel")
     if pedestal then
         BuildingHelper:CreatePedestalForBuilding(building, name, GetGroundPosition(location, nil), pedestal)
     end
@@ -886,9 +875,9 @@ function BuildingHelper:UpgradeBuilding(building, newName)
     BuildingHelper:print("Upgrading Building: "..oldBuildingName.." -> "..newName)
     local playerID = building:GetPlayerOwnerID()
     local position = building:GetAbsOrigin()
-    local angle = BuildingHelper.UnitKV[newName]["ModelRotation"] or -building:GetAngles().y
+    local angle = GetUntiKV(newName, "ModelRotation") or -building:GetAngles().y
     
-    local old_offset = BuildingHelper.UnitKV[oldBuildingName]["ModelOffset"] or 0
+    local old_offset = GetUntiKV(oldBuildingName, "ModelOffset") or 0
     position.z = position.z - old_offset
 
     -- Kill the old building
@@ -920,7 +909,7 @@ function BuildingHelper:RemoveBuilding(building, bSkipEffects)
 
     -- Don't show the destruction effects when specified or killed to due UpgradeBuilding
     if not bSkipEffects and building.upgraded ~= true then
-        local particleName = BuildingHelper.UnitKV[building:GetUnitName()]["DestructionEffect"]
+        local particleName = building:GetKeyValue("DestructionEffect")
         if particleName then
             local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, building)
             ParticleManager:SetParticleControlEnt(particle, 0, building, PATTACH_POINT_FOLLOW, "attach_origin", building:GetAbsOrigin(), true)
@@ -1001,13 +990,13 @@ function BuildingHelper:StartBuilding(builder)
     end
 
     -- Make pedestal
-    local pedestal = BuildingHelper.UnitKV[unitName]["PedestalModel"]
+    local pedestal = GetUnitKV(unitName, "PedestalModel")
     if pedestal then
         BuildingHelper:CreatePedestalForBuilding(building, unitName, location, pedestal)
     end
 
     -- Initialize the building
-    local model_offset = BuildingHelper.UnitKV[unitName]["ModelOffset"] or 0
+    local model_offset = GetUnitKV(unitName, "ModelOffset") or 0
     location.z = location.z + model_offset
     building:SetAbsOrigin(location)
     building.blockers = gridNavBlockers
@@ -1021,7 +1010,7 @@ function BuildingHelper:StartBuilding(builder)
     building:SetAngles(0, -yaw, 0)
 
     -- Disable turning
-    if BuildingHelper.UnitKV[unitName]["DisableTurning"]==1 or BuildingHelper.Settings["DISABLE_BUILDING_TURNING"] then
+    if GetUnitKV(unitName, "DisableTurning")==1 or BuildingHelper.Settings["DISABLE_BUILDING_TURNING"] then
         building:AddNewModifier(building, nil, "modifier_disable_turning", {})
     end
 
@@ -1219,7 +1208,8 @@ function BuildingHelper:StartBuilding(builder)
     -- OnBelowHalfHealth timer
     building.onBelowHalfHealthProc = false
     building.healthChecker = Timers:CreateTimer(.2, function()
-        local fireEffect = BuildingHelper.KV[unitName]["FireEffect"]
+        local fireEffect = GetUnitKV(unitName, "FireEffect")
+        local attachPoint = GetUnitKV(unitName, "AttachPoint")
 
         if IsValidEntity(building) and building:IsAlive() then
             local health_percentage = building:GetHealthPercent() * 0.01
@@ -1227,9 +1217,9 @@ function BuildingHelper:StartBuilding(builder)
             if belowThreshold and not building.onBelowHalfHealthProc and building.state == "complete" then
                 if fireEffect then
                     -- Fire particle
-                    if BuildingHelper.KV[unitName]["AttachPoint"] then
+                    if attachPoint then
                         building.fireEffectParticle = ParticleManager:CreateParticle(fireEffect, PATTACH_CUSTOMORIGIN_FOLLOW, building)
-                        ParticleManager:SetParticleControlEnt(building.fireEffectParticle, 0, building, PATTACH_POINT_FOLLOW, BuildingHelper.KV[unitName]["AttachPoint"], building:GetAbsOrigin(), true)
+                        ParticleManager:SetParticleControlEnt(building.fireEffectParticle, 0, building, PATTACH_POINT_FOLLOW, attachPoint, building:GetAbsOrigin(), true)
                     else
                         building.fireEffectParticle = ParticleManager:CreateParticle(fireEffect, PATTACH_ABSORIGIN_FOLLOW, building)
                     end
@@ -1701,7 +1691,7 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     -- Check for special requirement
     local playerTable = BuildingHelper:GetPlayerTable(unit:GetPlayerOwnerID())
     local buildingName = playerTable.activeBuilding
-    local buildingTable = buildingName and BuildingHelper.UnitKV[buildingName]
+    local buildingTable = buildingName and GetUnitKV(buildingName)
     local requires = buildingTable and buildingTable["Requires"]
     local prevents = buildingTable and buildingTable["Prevents"]
 
@@ -1882,7 +1872,7 @@ function BuildingHelper:AddToQueue(builder, location, bQueued)
 
     else
         -- Adjust the model position z
-        local model_offset = BuildingHelper.UnitKV[buildingName]["ModelOffset"] or 0
+        local model_offset = GetUnitKV(buildingName, "ModelOffset") or 0
         local model_location = Vector(location.x, location.y, location.z + model_offset)
 
         -- npc_dota_creature doesn't render cosmetics on the particle ghost, use hero names instead
@@ -2285,9 +2275,9 @@ function BuildingHelper:GetOrCreateProp(propName)
 end
 
 function BuildingHelper:CreatePedestalForBuilding(entity, buildingName, location, pedestalName)
-    local offset = BuildingHelper.UnitKV[buildingName]["PedestalOffset"] or 0
+    local offset = GetUnitKV(buildingName, "PedestalOffset") or 0
     local prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = pedestalName})
-    local scale = BuildingHelper.UnitKV[buildingName]["PedestalModelScale"] or entity:GetModelScale()
+    local scale = GetUnitKV(buildingName, "PedestalModelScale") or entity:GetModelScale()
     local offset_location = Vector(location.x, location.y, location.z + offset)
     prop:SetModelScale(scale)
     prop:SetAbsOrigin(offset_location)
@@ -2298,7 +2288,7 @@ end
 -- Retrieves the handle of the ability marked as "RepairAbility" on the unit key values
 function BuildingHelper:GetRepairAbility(unit)
     local unitName = unit:GetUnitName()
-    local abilityName = BuildingHelper.UnitKV[unitName]["RepairAbility"]
+    local abilityName = GetUnitKV(unitName, "RepairAbility")
     if abilityName then
         return unit:FindAbilityByName(abilityName)
     end
@@ -2336,13 +2326,13 @@ end
 
 -- Returns "ConstructionSize" value of a unit handle or unit name
 function BuildingHelper:GetConstructionSize(unit)
-    local unitTable = (type(unit) == "table") and BuildingHelper.UnitKV[unit:GetUnitName()] or BuildingHelper.UnitKV[unit]
+    local unitTable = (type(unit) == "table") and unit:GetKeyValue() or GetUnitKV(unit)
     return unitTable["ConstructionSize"]
 end
 
 -- Returns "BlockPathingSize" kv of a unit handle or unit name
 function BuildingHelper:GetBlockPathingSize(unit)
-    local unitTable = (type(unit) == "table") and BuildingHelper.UnitKV[unit:GetUnitName()] or BuildingHelper.UnitKV[unit]
+    local unitTable = (type(unit) == "table") and unit:GetKeyValue() or GetUnitKV(unit)
     return unitTable["BlockPathingSize"]
 end
 
@@ -2450,12 +2440,7 @@ function IsBuildingAbility(ability)
     end
 
     local ability_name = ability:GetAbilityName()
-    local ability_table = BuildingHelper.KV[ability_name]
-    if ability_table and ability_table["Building"] then
-        return true
-    end
-
-    return false
+    return GetKeyValue(ability_name, "Building")
 end
 
 -- Builders are stored in a nettable in addition to the builder label
@@ -2529,4 +2514,4 @@ function DrawGridSquare(x, y, color)
     end)
 end
 
-if not BuildingHelper.KV then BuildingHelper:Init() end
+if not BuildingHelper.Players then BuildingHelper:Init() end
