@@ -18,7 +18,7 @@ GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, fals
 function OnPlayerLumberChanged ( args ) {
 	var iPlayerID = Players.GetLocalPlayer()
 	var lumber = args.lumber
-	$.Msg("Player "+iPlayerID+" Lumber: "+lumber)
+	//$.Msg("Player "+iPlayerID+" Lumber: "+lumber)
 	$('#LumberText').text = lumber
 }
 
@@ -26,7 +26,7 @@ function OnPlayerFoodChanged ( args ) {
 	var iPlayerID = Players.GetLocalPlayer()
 	var food_used = args.food_used
 	var food_limit = args.food_limit
-	$.Msg("Player "+iPlayerID+" Food: "+food_used+"/"+food_limit)
+	//$.Msg("Player "+iPlayerID+" Food: "+food_used+"/"+food_limit)
 	$('#FoodText').text = food_used+"/"+food_limit
 
 	//decide to show No/Low/High Upkeep message

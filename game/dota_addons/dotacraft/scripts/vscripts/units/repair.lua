@@ -22,15 +22,23 @@ function BuildingHelper:OnPreRepair(builder, building)
     self:print("OnPreRepair "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
 
     -- Return false to stop the repair process
-    local repair_ability = self:GetRepairAbility(builder)
-    if repair_ability and repair_ability:GetToggleState() == false then
-        repair_ability:ToggleAbility() -- Fake toggle the ability
-    end
 end
 
 -- As soon as the builder reaches the building
 function BuildingHelper:OnRepairStarted(builder, building)
     self:print("OnRepairStarted "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
+
+    local repair_ability = self:GetRepairAbility(builder)
+    if repair_ability and repair_ability:GetToggleState() == false then
+        repair_ability:ToggleAbility() -- Fake toggle the ability
+    end
+
+    builder.repair_animation_timer = Timers:CreateTimer(function()
+        if builder.state == "repairing" then
+            builder:StartGesture(ACT_DOTA_ATTACK)
+        end
+        return 1
+    end)
 end
 
 function BuildingHelper:OnRepairTick(building, hpGain, costFactor)
@@ -80,11 +88,21 @@ end
 -- After an ongoing move-to-building or repair process is cancelled
 function BuildingHelper:OnRepairCancelled(builder, building)
     self:print("OnRepairCancelled "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
+
+    if builder.repair_animation_timer then
+        builder:RemoveGesture(ACT_DOTA_ATTACK)
+        Timers:RemoveTimer(builder.repair_animation_timer)
+    end
 end
 
 -- After a building is fully constructed via repair ("RequiresRepair" buildings), or is fully repaired
 function BuildingHelper:OnRepairFinished(builder, building)
     self:print("OnRepairFinished "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
+
+    if builder.repair_animation_timer then 
+        builder:RemoveGesture(ACT_DOTA_ATTACK)
+        Timers:RemoveTimer(builder.repair_animation_timer)
+    end
 end
 
 -------------------------------------------------------------------------------------------

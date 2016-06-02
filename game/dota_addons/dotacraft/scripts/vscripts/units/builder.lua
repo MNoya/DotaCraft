@@ -325,7 +325,7 @@ function CancelBuilding( keys )
     end
 
     -- Cancel builders repairing
-    BuildingHelper:CancelBuildingRepair(building)
+    BuildingHelper:CancelRepair(building)
 
     -- Refund items (In the item-queue system, units can be queued before the building is finished)
     for i=0,5 do

@@ -54,7 +54,7 @@ function BuildingHelper:Init()
     LinkLuaModifier("modifier_out_of_world", "libraries/modifiers/modifier_out_of_world", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_builder_hidden", "libraries/modifiers/modifier_builder_hidden", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_disable_turning", "libraries/modifiers/modifier_disable_turning", LUA_MODIFIER_MOTION_NONE)
-    LinkLuaModifier("modifier_repairing_building", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_builder_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     
     BuildingHelper.KV = {} -- Merge KVs into a single table
@@ -480,31 +480,32 @@ function BuildingHelper:OrderFilter(order)
             BuildingHelper:ClearQueue(unit)
         end
 
-    -- Repair Multi Order
-    elseif targetIndex ~= 0 and order_type == DOTA_UNIT_ORDER_CAST_TARGET and BuildingHelper:GetRepairAbility(unit) then
-        local ability = EntIndexToHScript(abilityIndex) 
-        local abilityName = ability:GetAbilityName()
-        local target_handle = EntIndexToHScript(targetIndex)
-        local target_name = target_handle:GetUnitName()
+        -- Repair Multi Order
+        if order_type == DOTA_UNIT_ORDER_CAST_TARGET and BuildingHelper:GetRepairAbility(unit) then
+            local ability = EntIndexToHScript(abilityIndex) 
+            local abilityName = ability:GetAbilityName()
+            local target_handle = EntIndexToHScript(targetIndex)
+            local target_name = target_handle:GetUnitName()
             
-        if IsValidRepairTarget(target_handle, unit) then
-            self:print("Order: Repair "..target_handle:GetUnitName())
+            if IsValidRepairTarget(target_handle, unit) then
+                self:print("Order: Repair "..target_handle:GetUnitName())
 
-            -- Get the currently selected units and send new orders
-            local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
-            if not entityList or #entityList == 1 then return true end
+                -- Get the currently selected units and send new orders
+                local entityList = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
+                if not entityList or #entityList == 1 then return true end
 
-            for k,entityIndex in pairs(entityList) do
-                local ent = EntIndexToHScript(entityIndex)
-                local repair_ability = BuildingHelper:GetRepairAbility(ent)
-                if ent ~= unit and repair_ability then
-                    if repair_ability:IsHidden() and ent.ReturnAbility then -- Swap to the repair ability
-                        ent:SwapAbilities(repair_ability:GetAbilityName(), ent.ReturnAbility:GetAbilityName(), true, false)
+                for k,entityIndex in pairs(entityList) do
+                    local ent = EntIndexToHScript(entityIndex)
+                    local repair_ability = BuildingHelper:GetRepairAbility(ent)
+                    if ent ~= unit and repair_ability then
+                        if repair_ability:IsHidden() and ent.ReturnAbility then -- Swap to the repair ability
+                            ent:SwapAbilities(repair_ability:GetAbilityName(), ent.ReturnAbility:GetAbilityName(), true, false)
+                        end
+
+                        ent.skip = true
+                        BuildingHelper:print("Repair Multi Order "..target_handle:GetUnitName())
+                        ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
                     end
-
-                    ent.skip = true
-                    BuildingHelper:print("Repair Multi Order "..building:GetUnitName())
-                    ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
                 end
             end
         end
@@ -1163,36 +1164,16 @@ function BuildingHelper:StartBuilding(builder)
             return fUpdateHealthInterval
         end)    
     else
-
         -- The building will have to be assisted through a repair ability
         local repair_ability = BuildingHelper:GetRepairAbility(builder)
         if repair_ability then
             self:print("Building "..building:GetUnitName().." will be constructed using RepairAbility")
             building.repair_distance = (builder:GetAbsOrigin() - building:GetAbsOrigin()):Length2D() -- To instantly start repairing
-            builder:CastAbilityOnTarget(building, repair_ability, playerID)
+            building.callbacks = callbacks
+            BuildingHelper:StartRepair(builder, building)
         else
             self:print("Error, couldn't find \"RepairAbility\" of "..builder:GetUnitName())
         end
-
-        building.updateHealthTimer = Timers:CreateTimer(function()
-            if IsValidEntity(building) then
-                if building.constructionCompleted then --This is set on the repair ability when the builders have restored the necessary health
-                    if callbacks.onConstructionCompleted and building:IsAlive() then
-                        callbacks.onConstructionCompleted(building)
-                    end
-
-                     -- Finished repair-construction
-                    BuildingHelper:AdvanceQueue(builder)
-
-                    building.state = "complete"
-
-                    BuildingHelper:AddBuildingToPlayerTable(playerID, building)
-                    return
-                else
-                    return 0.1
-                end
-            end
-        end)
     end
 
     -- Scale Update Timer
@@ -1268,30 +1249,30 @@ end
       StartRepair
       * Starts the repair process when the builder is on range of the target
 ]]--
-function BuildingHelper:StartRepair(builder, building)
+function BuildingHelper:StartRepair(builder, target)
     local work = builder.work
     
     -- Check target and cancel if invalid
     local repair_ability = BuildingHelper:GetRepairAbility(builder)
-    if repair_ability and not repair_ability:GetKeyValue("CanAssistConstruction") and building:IsUnderConstruction() then
+    if IsCustomBuilding(target) and repair_ability and not repair_ability:GetKeyValue("CanAssistConstruction") and target:IsUnderConstruction() then
         self:print("The Repair Ability "..repair_ability:GetAbilityName().." can't be used to assist construction! Cancelling")
 
         -- Advance Queue
         BuildingHelper:AdvanceQueue(builder)
 
-        BuildingHelper:OnRepairCancelled(builder, building)
+        BuildingHelper:OnRepairCancelled(builder, target)
         return
     end
 
     -- External repair callback
-    self:OnRepairStarted(builder, building)
+    self:OnRepairStarted(builder, target)
 
     -- Initialize builder list
-    building.units_repairing = building.units_repairing or {}
-    table.insert(building.units_repairing, builder)
-    builder.repair_target = building
+    target.units_repairing = target.units_repairing or {}
+    table.insert(target.units_repairing, builder)
+    builder.repair_target = target
 
-    local buildTime = building.buildTime or building:GetKeyValue("BuildTime")
+    local buildTime = target.buildTime or target:GetKeyValue("BuildTime")
     local costRatio = repair_ability and repair_ability:GetKeyValue("RepairCostRatio") or BuildingHelper.Settings.REPAIR_SETTINGS["RepairCostRatio"]
     local timeRatio = repair_ability and repair_ability:GetKeyValue("RepairTimeRatio") or BuildingHelper.Settings.REPAIR_SETTINGS["RepairTimeRatio"]
     local powerBuildCost = repair_ability and repair_ability:GetKeyValue("PowerbuildCost") or BuildingHelper.Settings.REPAIR_SETTINGS["PowerbuildCost"]
@@ -1308,38 +1289,51 @@ function BuildingHelper:StartRepair(builder, building)
     local fAddedHealth = 0
     local fHPAdjustment = 0
 
+    builder.state = "repairing"
     builder:AddNewModifier(builder, repair_ability, "modifier_builder_repairing", {})
-    building:AddNewModifier(building, repair_ability, "modifier_repairing_building", {})
-    building:SetModifierStackCount("modifier_repairing_building", building, getTableCount(building.units_repairing))
+    target:AddNewModifier(target, repair_ability, "modifier_repairing", {})
+    target:SetModifierStackCount("modifier_repairing", target, getTableCount(target.units_repairing))
 
     -- Repair Dynamic Tick
-    if not building.repairTimer then
-        building.repairTimer = Timers:CreateTimer(function()
-            if not IsValidEntity(building) or not building:IsAlive() then return end
+    if not target.repairTimer then
+        target.repairTimer = Timers:CreateTimer(function()
+            if not IsValidEntity(target) or not target:IsAlive() then return end
 
-            local builderCount = getTableCount(building.units_repairing)
+            -- TODO: Builders must be stopped to count and heal hitpoints
+
+            local builderCount = getTableCount(target.units_repairing)
             if builderCount == 0 then
-                self:CancelBuildingRepair(building)
+                self:CancelRepair(target)
                 return
             end
 
-            local health_deficit = building:GetHealthDeficit()
+            local health_deficit = target:GetHealthDeficit()
             if health_deficit == 0 then
-                building.constructionCompleted = true
-                self:CancelBuildingRepair(building)
-                self:OnRepairFinished(builder, building)
+                -- Finished repair-construction
+                self:CancelRepair(target)
+
+                if IsCustomBuilding(target) then
+                    if target.callbacks.onConstructionCompleted then
+                        target.callbacks.onConstructionCompleted(target)
+                    end
+                    target.constructionCompleted = true
+                    target.state = "complete"
+                    BuildingHelper:AddBuildingToPlayerTable(target:GetPlayerOwnerID(), target)
+                end
+
+                self:OnRepairFinished(builder, target)
                 return
             end
 
             local buildTimeFactor = timeRatio*(powerBuildRate^(builderCount-1))
-            local nextTick = (buildTime*buildTimeFactor)/building:GetMaxHealth()
+            local nextTick = (buildTime*buildTimeFactor)/target:GetMaxHealth()
             local hpGain = 0
 
             -- Calculate the HP to be gained on this tick
             if nextTick > fserverFrameRate then
                 hpGain = 1
             else
-                local nHealthInterval = building:GetMaxHealth() / (buildTime*buildTimeFactor / fserverFrameRate)
+                local nHealthInterval = target:GetMaxHealth() / (buildTime*buildTimeFactor / fserverFrameRate)
                 local fSmallHealthInterval = nHealthInterval - math.floor(nHealthInterval) --floating point component
                 nHealthInterval = math.floor(nHealthInterval)
 
@@ -1357,8 +1351,8 @@ function BuildingHelper:StartRepair(builder, building)
 
             local buildCostFactor = costRatio + powerBuildCost*(builderCount-1)
 
-            -- Don't expend resources for the first unit repairing the building if its a construction
-            if building:IsUnderConstruction() then
+            -- Don't expend resources for the first unit repairing a building if its a construction
+            if target.IsUnderConstruction and target:IsUnderConstruction() then
                 if builderCount == 1 then
                     buildCostFactor = 0
                 else
@@ -1375,15 +1369,15 @@ function BuildingHelper:StartRepair(builder, building)
             if hpGain > 0 then
                 local bCanPayResource = true
                 if buildCostFactor > 0 then
-                    bCanPayResource = self:OnRepairTick(building, hpGain, buildCostFactor) ~= false
+                    bCanPayResource = self:OnRepairTick(target, hpGain, buildCostFactor) ~= false
                 end
                 
                 if bCanPayResource then
-                    self:print("Repaired "..building:GetUnitName().." with "..builderCount.." builders for "..hpGain.." | Time Factor: "..buildTimeFactor.." | Cost Factor: "..buildCostFactor)
-                    building:SetHealth(building:GetHealth() + hpGain)
+                    self:print("Repaired "..target:GetUnitName().." with "..builderCount.." builders for "..hpGain.." | Time Factor: "..buildTimeFactor.." | Cost Factor: "..buildCostFactor)
+                    target:SetHealth(target:GetHealth() + hpGain)
                 else
                     self:print("Repair Ended, not enough resources!")
-                    self:CancelBuildingRepair(building)
+                    self:CancelRepair(target)
                     return
                 end
             end
@@ -1391,14 +1385,10 @@ function BuildingHelper:StartRepair(builder, building)
             return nextTick
         end)
     end
-
-    --[[ TODO
-        Callback to repair finished when reaching full hp/finished construction (timed)
-    ]]
 end
 
-function BuildingHelper:CancelBuildingRepair(building)
-    building:RemoveModifierByName("modifier_repairing_building")
+function BuildingHelper:CancelRepair(building)
+    building:RemoveModifierByName("modifier_repairing")
     building.repairTimer = nil
     if building.units_repairing == nil then return end
     for k,v in pairs(building.units_repairing) do
@@ -1407,6 +1397,7 @@ function BuildingHelper:CancelBuildingRepair(building)
         if repair_ability and repair_ability:GetToggleState() then
             repair_ability:ToggleAbility()
         end
+        v.state = "idle"
         BuildingHelper:AdvanceQueue(v)
     end
 end
@@ -1911,7 +1902,7 @@ function BuildingHelper:AddToQueue(builder, location, bQueued)
 end
 
 --[[
-    AddRepair
+    AddRepairToQueue
     * Adds a repair to the builders work queue
     * bQueued will be true if the command was done with shift pressed
     * If bQueued is false, the queue is cleared and this repair is put on top
@@ -1934,9 +1925,9 @@ function BuildingHelper:AddRepairToQueue(builder, building, bQueued)
     local work = {["building"] = building, ["name"] = buildingName, ["buildingTable"] = buildingTable, ["callbacks"] = callbacks}
 
     -- If the ability wasn't queued, override the building queue
-    if not bQueued then
+    --[[if not bQueued then
         BuildingHelper:ClearQueue(builder)
-    end
+    end]]
 
     -- Add this to the builder queue
     table.insert(builder.buildingQueue, work)
@@ -2007,7 +1998,7 @@ function BuildingHelper:AdvanceQueue(builder)
                         return 0.03
                     else
                         self:print("Reached building, start the Repair process!")
-                        builder:Stop()
+                        --builder:Stop()
                         
                         BuildingHelper:StartRepair(builder, building)
                         return
@@ -2080,8 +2071,15 @@ function BuildingHelper:ClearQueue(builder)
         local index = getIndexTable(building.units_repairing, builder)
         if index then
             table.remove(building.units_repairing, index)
-            print("Currently "..getTableCount(building.units_repairing).." units repairing "..building:GetUnitName())
+            self:print("Builder stopped repairing, currently "..getTableCount(building.units_repairing).." left.")
         end
+        self:OnRepairCancelled(builder, building)
+    end
+
+    local repair_ability = self:GetRepairAbility(builder)
+    if repair_ability then
+        if repair_ability:GetToggleState() then repair_ability:ToggleAbility() end
+        builder:RemoveModifierByName("modifier_builder_repairing")
     end
 
     -- Skip if there's nothing to clear
