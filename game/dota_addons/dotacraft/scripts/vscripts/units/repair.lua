@@ -6,22 +6,16 @@ function Repair(event)
     local caster = event.caster
     local target = event.target
 
-    if IsValidRepairTarget(target, caster) then
-        print("Repair.lua - Target: "..target:GetUnitName())
-        caster:Interrupt()
-        BuildingHelper:AddRepairToQueue(caster, target, false)
-    end
+    BuildingHelper:AddRepairToQueue(caster, target, false)
 end
 
-function IsValidRepairTarget(target, builder)
-    return target:GetClassname() == "npc_dota_creature" and (IsCustomBuilding(target) or IsMechanical(target)) and target:GetHealthPercent() < 100 and not target.unsummoning and not target.frozen
-end
-
--- Right before starting to move towards the target building. 
-function BuildingHelper:OnPreRepair(builder, building)
-    self:print("OnPreRepair "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
+-- Right before starting to move towards the target
+function BuildingHelper:OnPreRepair(builder, target)
+    -- Custom repair target rules
+    local bValidRepair = target:GetClassname() == "npc_dota_creature" and (IsCustomBuilding(target) or IsMechanical(target)) and target:GetHealthPercent() < 100 and not target.unsummoning and not target.frozen
 
     -- Return false to stop the repair process
+    return bValidRepair
 end
 
 -- As soon as the builder reaches the building

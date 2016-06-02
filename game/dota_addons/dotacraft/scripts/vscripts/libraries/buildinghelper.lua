@@ -1,4 +1,9 @@
-BH_VERSION = "1.2.0"
+BH_VERSION = "1.2.1"
+
+--[[
+    For installation, usage and implementation examples check the wiki:
+        https://github.com/MNoya/BuildingHelper/wiki
+]]
 
 require('libraries/timers')
 require('libraries/selection')
@@ -44,6 +49,10 @@ function BuildingHelper:Init()
     ListenToGameEvent('entity_killed', Dynamic_Wrap(BuildingHelper, 'OnEntityKilled'), self)
     if BuildingHelper.Settings["UPDATE_TREES"] then
         ListenToGameEvent('tree_cut', Dynamic_Wrap(BuildingHelper, 'OnTreeCut'), self)
+    end
+
+    if BuildingHelper.Settings["REPAIR_PATH"] then
+        require(BuildingHelper.Settings["REPAIR_PATH"])
     end
 
     -- Lua Modifiers
@@ -343,6 +352,21 @@ function BuildingHelper:SendGNV(args)
     end
 end
 
+-- Used to find the closest builder to a building location
+local GetClosestToPosition = function(unitList, position)
+    local t = {}
+    local distance = math.huge
+    local closest
+    for _,unit in pairs(unitList) do
+        local thisDistance = (unit:GetAbsOrigin()-position):Length2D()
+        if thisDistance < distance then
+            closest = unit
+            distance = thisDistance
+        end
+    end
+    return closest
+end
+
 --[[
     BuildCommand
     * Detects a Left Click with a builder through Panorama
@@ -355,10 +379,32 @@ function BuildingHelper:BuildCommand(args)
     local location = Vector(x, y, z)
     local queue = args['Queue'] == 1
     local builder = EntIndexToHScript(args['builder']) --activeBuilder
+    local name = builder:GetUnitName()
+    local builders = {}
+    local idle_builders = {}
+    local entityList = PlayerResource:GetSelectedEntities(playerID)
+
+    -- Filter all the selected builders
+    for k,entIndex in pairs(entityList) do
+        local unit = EntIndexToHScript(entIndex)
+        if unit:GetUnitName() == name then
+            if unit:IsIdle() then
+                table.insert(idle_builders, unit)
+            end
+            table.insert(builders, unit)
+        end
+    end
+
+    -- First select from idle builders
+    if #idle_builders > 0 then
+        builder = GetClosestToPosition(idle_builders, location)
+    else
+        builder = GetClosestToPosition(builders, location)
+    end
 
     -- Cancel current action
     if not queue then
-        ExecuteOrderFromTable({ UnitIndex = args['builder'], OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
+        ExecuteOrderFromTable({UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
     end
 
     BuildingHelper:AddToQueue(builder, location, queue)
@@ -369,14 +415,17 @@ end
     * Detects a Right Click/Tab with a builder through Panorama
 ]]--
 function BuildingHelper:CancelCommand(args)
-    local playerID = args['PlayerID']
+    local playerID = args.PlayerID
     local playerTable = BuildingHelper:GetPlayerTable(playerID)
     playerTable.activeBuilding = nil
 
-    if not playerTable.activeBuilder or not IsValidEntity(playerTable.activeBuilder) then
-        return
+    local selectedEntities = PlayerResource:GetSelectedEntities(playerID)
+    for _,entityIndex in pairs(selectedEntities) do
+        local unit = EntIndexToHScript(entityIndex)
+        if IsBuilder(unit) then
+            BuildingHelper:ClearQueue(unit)
+        end
     end
-    BuildingHelper:ClearQueue(playerTable.activeBuilder)
 end
 
 function BuildingHelper:RepairCommand(args)
@@ -476,7 +525,7 @@ function BuildingHelper:OrderFilter(order)
             local target_handle = EntIndexToHScript(targetIndex)
             local target_name = target_handle:GetUnitName()
             
-            if IsValidRepairTarget(target_handle, unit) then
+            if self:OnPreRepair(target_handle, unit) then
                 self:print("Order: Repair "..target_handle:GetUnitName())
 
                 -- Get the currently selected units and send new orders
@@ -499,6 +548,7 @@ function BuildingHelper:OrderFilter(order)
             end
         end
     end
+
 
     return ret
 end    
@@ -2106,9 +2156,7 @@ function BuildingHelper:ClearQueue(builder)
     BuildingHelper:StopGhost(builder)
 
     -- Clear movement
-    if builder.move_to_build_timer then
-        Timers:RemoveTimer(builder.move_to_build_timer)
-    end
+    if builder.move_to_build_timer then Timers:RemoveTimer(builder.move_to_build_timer) end
 
     -- Clear repair
     if builder.repair_target then
@@ -2118,6 +2166,7 @@ function BuildingHelper:ClearQueue(builder)
             table.remove(target.units_repairing, index)
             self:print("Builder stopped repairing, currently "..getTableCount(target.units_repairing).." left.")
         end
+        builder.repair_target = nil
         self:OnRepairCancelled(builder, target)
     end
 
