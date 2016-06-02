@@ -948,6 +948,7 @@ function dotacraft:OnEntityKilled( event )
 
 	-- Safeguard
     if killed.reincarnating then return end
+    if killed.upgraded then return end
 
 	-- Killed credentials
     local killed_player = killed:GetPlayerOwner()

@@ -897,7 +897,17 @@ function BuildingHelper:UpgradeBuilding(building, newName)
     building:ForceKill(true) --This will call RemoveBuilding
     
     -- Create the new building
-    return BuildingHelper:PlaceBuilding(playerID, newName, position, BuildingHelper:GetConstructionSize(newName), BuildingHelper:GetBlockPathingSize(newName), angle)  
+    local new_building = BuildingHelper:PlaceBuilding(playerID, newName, position, BuildingHelper:GetConstructionSize(newName), BuildingHelper:GetBlockPathingSize(newName), angle)
+
+    -- If there were units repairing the old building, redirect them to the new building
+    if building.units_repairing then
+        for _,builder in pairs(building.units_repairing) do
+            builder.repair_target = new_building
+        end
+    end
+    new_building.units_repairing = building.units_repairing
+
+    return new_building
 end
 
 --[[
@@ -1298,6 +1308,7 @@ function BuildingHelper:StartRepair(builder, target)
     -- Repair Dynamic Tick
     if not target.repairTimer then
         target.repairTimer = Timers:CreateTimer(function()
+            local target = builder.repair_target -- This can change if the target is upgraded
             if not IsValidEntity(target) or not target:IsAlive() then return end
 
             local builderCount = getTableCount(target.units_repairing)
@@ -1311,10 +1322,8 @@ function BuildingHelper:StartRepair(builder, target)
                 -- Finished repair-construction
                 self:CancelRepair(target)
 
-                if IsCustomBuilding(target) then
-                    if target.callbacks.onConstructionCompleted then
-                        target.callbacks.onConstructionCompleted(target)
-                    end
+                if IsCustomBuilding(target) and target.callbacks and target.callbacks.onConstructionCompleted then
+                    target.callbacks.onConstructionCompleted(target)
                     target.constructionCompleted = true
                     target.state = "complete"
                     BuildingHelper:AddBuildingToPlayerTable(target:GetPlayerOwnerID(), target)

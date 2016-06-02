@@ -17,10 +17,8 @@ function UpgradeBuilding( event )
 	local angle = caster:GetAngles()
 
     -- New building
-	local building = BuildingHelper:PlaceBuilding(player, new_unit, position, caster.construction_size, 0, 0)
-	building.blockers = blockers
+	local building = BuildingHelper:UpgradeBuilding(caster, new_unit)
 	building:SetHullRadius(hull_radius)
-	building:SetAngles(0, angle.y, 0)
 
 	-- Keep the rally flag reference if there is one
     building.flag = flag
