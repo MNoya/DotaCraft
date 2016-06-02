@@ -1261,10 +1261,11 @@ end
 ]]--
 function BuildingHelper:StartRepair(builder, target)
     local work = builder.work
+    local underConstruction = IsCustomBuilding(target) and target:IsUnderConstruction() -- For RequiresRepair building behaviour
     
     -- Check target and cancel if invalid
     local repair_ability = BuildingHelper:GetRepairAbility(builder)
-    if IsCustomBuilding(target) and repair_ability and not repair_ability:GetKeyValue("CanAssistConstruction") and target:IsUnderConstruction() then
+    if underConstruction and repair_ability and not repair_ability:GetKeyValue("CanAssistConstruction") then
         self:print("The Repair Ability "..repair_ability:GetAbilityName().." can't be used to assist construction! Cancelling")
 
         -- Advance Queue
@@ -1305,6 +1306,11 @@ function BuildingHelper:StartRepair(builder, target)
     target:AddNewModifier(target, repair_ability, "modifier_repairing", {})
     target:SetModifierStackCount("modifier_repairing", target, getTableCount(target.units_repairing))
 
+    -- If its an unfinished building, keep track of how much does it require to mark as finished
+    if underConstruction and not target.missingHealthToComplete then
+        target.missingHealthToComplete = target:GetHealthDeficit()
+    end
+
     -- Repair Dynamic Tick
     if not target.repairTimer then
         target.repairTimer = Timers:CreateTimer(function()
@@ -1317,8 +1323,8 @@ function BuildingHelper:StartRepair(builder, target)
                 return
             end
 
-            local health_deficit = target:GetHealthDeficit()
-            if health_deficit == 0 then
+            local health_deficit = target.missingHealthToComplete or target:GetHealthDeficit()
+            if health_deficit <= 0 then
                 -- Finished repair-construction
                 self:CancelRepair(target)
 
@@ -1364,7 +1370,7 @@ function BuildingHelper:StartRepair(builder, target)
             local buildCostFactor = costRatio + powerBuildCost*(builderCount-1)
 
             -- Don't expend resources for the first unit repairing a building if its a construction
-            if target.IsUnderConstruction and target:IsUnderConstruction() then
+            if underConstruction then
                 if builderCount == 1 then
                     buildCostFactor = 0
                 else
@@ -1379,6 +1385,9 @@ function BuildingHelper:StartRepair(builder, target)
             end
             
             if hpGain > 0 then
+                if target.missingHealthToComplete then
+                    target.missingHealthToComplete = target.missingHealthToComplete - hpGain
+                end
                 local bCanPayResource = true
                 if buildCostFactor > 0 then
                     bCanPayResource = self:OnRepairTick(target, hpGain, buildCostFactor) ~= false
