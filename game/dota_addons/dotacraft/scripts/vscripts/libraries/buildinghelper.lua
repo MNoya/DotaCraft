@@ -1290,6 +1290,7 @@ function BuildingHelper:StartRepair(builder, target)
     local fHPAdjustment = 0
 
     builder.state = "repairing"
+    builder.lastRepairPosition = builder:GetAbsOrigin()
     builder:AddNewModifier(builder, repair_ability, "modifier_builder_repairing", {})
     target:AddNewModifier(target, repair_ability, "modifier_repairing", {})
     target:SetModifierStackCount("modifier_repairing", target, getTableCount(target.units_repairing))
@@ -1298,8 +1299,6 @@ function BuildingHelper:StartRepair(builder, target)
     if not target.repairTimer then
         target.repairTimer = Timers:CreateTimer(function()
             if not IsValidEntity(target) or not target:IsAlive() then return end
-
-            -- TODO: Builders must be stopped to count and heal hitpoints
 
             local builderCount = getTableCount(target.units_repairing)
             if builderCount == 0 then
@@ -1324,6 +1323,10 @@ function BuildingHelper:StartRepair(builder, target)
                 self:OnRepairFinished(builder, target)
                 return
             end
+
+            -- Builders must be stopped and close to the target to count and heal hitpoints
+            builderCount = BuildingHelper:GetNumBuildersRepairing(target)
+            if builderCount == 0 then return fserverFrameRate end
 
             local buildTimeFactor = timeRatio*(powerBuildRate^(builderCount-1))
             local nextTick = (buildTime*buildTimeFactor)/target:GetMaxHealth()
@@ -1385,6 +1388,32 @@ function BuildingHelper:StartRepair(builder, target)
             return nextTick
         end)
     end
+end
+
+function BuildingHelper:GetNumBuildersRepairing(target)
+    if not target.units_repairing then return 0 end
+
+    local targetPos = target:GetAbsOrigin()
+    local numReparing = 0
+    for _,unit in pairs(target.units_repairing) do
+        local currentPos = unit:GetAbsOrigin()
+        if not unit.lastRepairPosition then
+            unit.lastRepairPosition = currentPos
+            unit.state = "repairing"
+            numReparing = numReparing + 1
+        else
+            local changedPosition = (unit.lastRepairPosition-currentPos):Length2D() > 1
+            if changedPosition or (targetPos-currentPos):Length2D() > unit:GetFollowRange(target) then
+                unit.state = "moving_to_repair"
+                unit:MoveToNPC(target)
+            else
+                unit.state = "repairing"
+                numReparing = numReparing + 1
+            end
+            unit.lastRepairPosition = currentPos
+        end
+    end
+    return numReparing
 end
 
 function BuildingHelper:CancelRepair(building)
@@ -1978,7 +2007,7 @@ function BuildingHelper:AdvanceQueue(builder)
             else
                 local building = work.building
                 local callbacks = work.callbacks
-                local castRange = building:GetHullRadius() + 100 + builder:GetHullRadius()
+                local castRange = builder:GetFollowRange(building)
                 if building.repair_distance then castRange = math.max(building.repair_distance, castRange) end
                 builder.work = work
                 builder.repair_target = building
@@ -2000,6 +2029,7 @@ function BuildingHelper:AdvanceQueue(builder)
                         self:print("Reached building, start the Repair process!")
                         --builder:Stop()
                         
+                        builder.repairRange = castRange
                         BuildingHelper:StartRepair(builder, building)
                         return
                     end
@@ -2067,13 +2097,13 @@ function BuildingHelper:ClearQueue(builder)
 
     -- Clear repair
     if builder.repair_target then
-        local building = builder.repair_target
-        local index = getIndexTable(building.units_repairing, builder)
+        local target = builder.repair_target
+        local index = getIndexTable(target.units_repairing, builder)
         if index then
-            table.remove(building.units_repairing, index)
-            self:print("Builder stopped repairing, currently "..getTableCount(building.units_repairing).." left.")
+            table.remove(target.units_repairing, index)
+            self:print("Builder stopped repairing, currently "..getTableCount(target.units_repairing).." left.")
         end
-        self:OnRepairCancelled(builder, building)
+        self:OnRepairCancelled(builder, target)
     end
 
     local repair_ability = self:GetRepairAbility(builder)
@@ -2407,6 +2437,10 @@ end
 function IsBuilder(unit)
     local table = CustomNetTables:GetTableValue("builders", tostring(unit:GetEntityIndex()))
     return unit:GetUnitLabel() == "builder" or (table and (table["IsBuilder"] == 1)) or false
+end
+
+function CDOTA_BaseNPC:GetFollowRange(target)
+    return self:GetHullRadius() + target:GetHullRadius() + 100
 end
 
 function IsCustomBuilding(unit)
