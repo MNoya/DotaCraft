@@ -29,7 +29,7 @@ function Gather( event )
     local race = GetUnitRace(caster)
     local playerID = caster:GetPlayerOwnerID()
 
-    local bValidRepair = IsValidRepairTarget(target)
+    local bValidRepair = BuildingHelper:OnPreRepair(caster, target)
     if not bValidRepair then
         Gatherer:CastGatherAbility(event)
     else return end -- Exit out of repair ability usage

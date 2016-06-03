@@ -208,6 +208,7 @@ function StartBuildingHelper( params )
             {
                 last_tree_update = time
                 tree_entities = Entities.GetAllEntitiesByClassname('ent_dota_tree')
+                treeGrid = [];
                 for (var i = 0; i < tree_entities.length; i++)
                 {
                     var treePos = Entities.GetAbsOrigin(tree_entities[i])

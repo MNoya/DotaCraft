@@ -1,4 +1,4 @@
-BH_VERSION = "1.2.1"
+BH_VERSION = "1.2.2"
 
 --[[
     For installation, usage and implementation examples check the wiki:
@@ -1936,6 +1936,7 @@ function BuildingHelper:AddToQueue(builder, location, bQueued)
             -- Create the building entity that will be used to start construction and project the queue particles
             entity = CreateUnitByName(unitName, model_location, false, nil, nil, builder:GetTeam())
             entity:SetNeverMoveToClearSpace(true)
+            function entity:IsUnderConstruction() return true end
         end
         entity:AddEffects(EF_NODRAW)
         entity:AddNewModifier(entity, nil, "modifier_out_of_world", {})
@@ -2001,16 +2002,16 @@ end
     * If bQueued is false, the queue is cleared and this repair is put on top
 ]]--
 function BuildingHelper:AddRepairToQueue(builder, building, bQueued)
+    -- External pre repair checks
+    local bResult = self:OnPreRepair(builder, building)
+    if bResult == false then return end
+
     local playerID = builder:GetMainControllingPlayer()
     local player = PlayerResource:GetPlayer(playerID)
     local playerTable = BuildingHelper:GetPlayerTable(playerID)
     local buildingName = building:GetUnitName()
     local buildingTable = playerTable.activeBuildingTable
     local callbacks = playerTable.activeCallbacks
-
-    -- External pre repair checks
-    local bResult = self:OnPreRepair(builder, building)
-    if bResult == false then return end
 
     BuildingHelper:print("AddRepairToQueue "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> building "..building:GetUnitName())
     
