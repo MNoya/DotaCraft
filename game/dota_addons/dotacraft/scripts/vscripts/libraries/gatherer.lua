@@ -46,7 +46,6 @@ function Gatherer:start()
     self.DebugPrint = true
     self.DebugDraw = false
     self.DebugDrawDuration = 10
-    self.indent = string.rep(" ",4)
     self.GathererUnits = {}
 
     self:HookBoilerplate()
@@ -303,7 +302,6 @@ function Gatherer:OrderFilter(order)
     --          Tree Gather Multi Orders          --
     ------------------------------------------------
     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
-    
         local abilityIndex = abilityIndex
         local ability = EntIndexToHScript(abilityIndex) 
 
@@ -322,56 +320,26 @@ function Gatherer:OrderFilter(order)
         local numGatherers = #gatherer_units
         if numGatherers == 1 then return true end
 
-        local abilityName = ability:GetAbilityName()
-        if abilityName == "nightelf_gather" then
-            -- TODO: This sucks
-            for k,entityIndex in pairs(entityList) do
-                --print("GatherTreeOrder for unit index ",entityIndex, position)
+        for k,entityIndex in pairs(entityList) do
+            self:print("GatherTreeOrder for unit index "..entityIndex.." "..VectorString(position))
 
-                --Execute the order to a navigable tree
-                local ent = EntIndexToHScript(entityIndex)
-                local empty_tree = FindEmptyNavigableTreeNearby(ent, position, 150 + 20 * numGatherers)
-                if empty_tree then
+            --Execute the order to a navigable tree
+            local ent = EntIndexToHScript(entityIndex)
+            local empty_tree = FindEmptyNavigableTreeNearby(ent, position, 150 + 20 * numGatherers) --TODO: ability:GetKeyValue("RequiresEmptyTree")
+            if empty_tree then 
+                empty_tree.builder = unit
+                ent.gatherer_skip = true
+                local gather_ability = ent:GetGatherAbility()
+                local return_ability = ent:GetReturnAbility()
+                if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
                     local tree_index = empty_tree:GetTreeID()
-                    empty_tree.builder = ent -- Assign the wisp to this tree, so next time this isn't empty
-                    ent.gatherer_skip = true
-                    local gather_ability = ent:FindAbilityByName("nightelf_gather")
-                    if gather_ability and gather_ability:IsFullyCastable() then
-                        --print("Order: Cast on Tree ",tree_index)
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-                    end
-                else
-                    --print("No Empty Tree?")
+                    self:print("Cast Target Tree: "..tree_index.." at forest "..empty_tree:GetForestID())
+                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+                elseif return_ability and not return_ability:IsHidden() then
+                    ent:ReturnResources(queue, false) -- Let it propagate to all selected units
                 end
-            end
-
-        elseif string.match(abilityName,"_gather") then
-            -- TODO: This also sucks
-            for k,entityIndex in pairs(entityList) do
-                --print("GatherTreeOrder for unit index ",entityIndex, position)
-
-                --Execute the order to a navigable tree
-                local unit = EntIndexToHScript(entityIndex)
-                local race = GetUnitRace(unit)
-                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150 + 20 * numGatherers)
-                if empty_tree then 
-
-                    empty_tree.builder = unit
-                    unit.gatherer_skip = true
-                    local gather_ability = unit:GetGatherAbility()
-                    local return_ability = unit:GetReturnAbility()
-                    if gather_ability and gather_ability:IsFullyCastable() and not gather_ability:IsHidden() then
-                        local tree_index = empty_tree:GetTreeID()
-                        --print("Order: Cast on Tree ",tree_index)
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
-                    elseif return_ability and not return_ability:IsHidden() then
-                        --print("Order: Return resources")
-                        unit.gatherer_skip = false -- Let it propagate to all selected units
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = return_ability:GetEntityIndex(), Queue = queue})
-                    end
-                else
-                    print("No Empty Tree?")
-                end
+            else
+                print("No Empty Tree?")
             end
         end
 
@@ -442,21 +410,28 @@ function Gatherer:InitTrees()
         t.health = self.TreeHealth
     end
 
+    -- Load an existing tree map?
+    if true then--self.bShouldLoadTreeMap then
+        local treeMapFile
+        local status,ret = pcall(function()
+            treeMapFile = require("tree_maps/"..GetMapName())
+            if treeMapFile then
+                self:LoadTreeMap(treeMapFile)
+                return -- Skip heavy tree algorithms
+            else
+                self:print("No Tree Map file found for "..GetMapName())
+            end
+        end)
+    end
+    
     self:DeterminePathableTrees() -- Obtain tree map
+    self:DetermineForests()       -- Obtain tree forests
+    if IsInToolsMode() then
+        self:GenerateTreeMap()    -- Write to file
+    end
 end
 
 function Gatherer:DeterminePathableTrees()
-    -- Load an existing tree map
-    if self.bShouldLoadTreeMap then
-        local treeMapFile = LoadKeyValues("maps/tree_maps/"..GetMapName()..".txt")
-        if treeMapFile then
-            self:LoadTreeMap(treeMapFile)
-            return
-        else
-            self:print("No Tree Map file found for "..GetMapName())
-        end
-    end
-
     -- DFS Flood Fill
     self:print("Determining Pathable Trees...")
     local seen = {}
@@ -510,27 +485,79 @@ function Gatherer:DeterminePathableTrees()
 
     self:print("Pathable Trees set!")
     self:DebugTrees()
-
-    -- Write to file
-    self:GenerateTreeMap()
 end
 
-function Gatherer:LoadTreeMap(treeMapTable)
-    local pathable_count = 0
-    for treeID,value in pairs (treeMapTable) do
-        local tree = GetTreeHandleFromId(treeID)
-        if tree then
-            local bPathable = value == 1
-            if bPathable then pathable_count = pathable_count + 1 end
-            tree.pathable = bPathable
+function Gatherer:DetermineForests()
+    self.treeForests = {}
+
+    local num = 0
+    for _,tree in pairs(self.AllTrees) do
+        if not tree.forestID then
+            num = num + 1
+        end
+        Gatherer:MapTreeForest(tree, num)
+    end
+
+    local colors = {}
+    for i=1,num do
+        colors[i] = Vector(RandomInt(0,255),RandomInt(0,255),RandomInt(0,255))
+    end
+
+    -- Draw colors
+    for _,tree in pairs(self.AllTrees) do
+        local id = tree.forestID
+        self.treeForests[id] = self.treeForests[id] or {}
+        table.insert(self.treeForests[id], tree)
+        self:DrawCircle(tree:GetAbsOrigin(), colors[id], 64)
+        self:DrawText(tree:GetAbsOrigin(), tostring(id))
+    end
+
+    for k,v in pairs(self.treeForests) do
+        --self:print("Forest "..k.." has "..#v.." trees")
+    end
+end
+
+-- Recurse on the trees nearby
+function Gatherer:MapTreeForest(tree, ID)
+    if not tree.forestID then
+        tree.forestID = ID
+    end
+
+    local treesNearby = GridNav:GetAllTreesAroundPoint(tree:GetAbsOrigin(), 200, true)
+    for k,v in pairs(treesNearby) do
+        if not v.forestID then
+            Gatherer:MapTreeForest(v, ID)
         end
     end
+end
+
+-- Puts the saved tree map info on each tree handle
+function Gatherer:LoadTreeMap(treeMapTable)
+    local pathable_count = 0
+    for treeID,values in pairs(treeMapTable) do
+        local tree = GetTreeHandleFromId(treeID)
+        if tree then
+            local bPathable = values.pathable == 1
+            if bPathable then pathable_count = pathable_count + 1 end
+            tree.pathable = bPathable
+            tree.forestID = values.forestID
+        end
+    end
+
+    -- Populate the tree Forests lists
+    for _,tree in pairs(self.AllTrees) do
+        local id = tree.forestID
+        self.treeForests[id] = self.treeForests[id] or {}
+        table.insert(self.treeForests[id], tree)
+    end
+
     self:print("Loaded Tree Map for "..GetMapName())
     self:print("Pathable count: "..pathable_count.." out of "..self.TreeCount)
+    self:print(#self.treeForests.." Forests loaded.")
 end
 
 function Gatherer:GenerateTreeMap()
-    local path = "../../dota_addons/"..self.addonName.."/maps/tree_maps/"..GetMapName()..".txt"
+    local path = "../../dota_addons/"..self.addonName.."/scripts/vscripts/tree_maps/"..GetMapName()..".lua"
     self.treeMap = io.open(path, 'w')
     if not self.treeMap then
         self:print("Error: Can't open path "..path)
@@ -538,18 +565,18 @@ function Gatherer:GenerateTreeMap()
     end
 
     self:print("Generating Tree Map for "..GetMapName().."...")
-    self.treeMap:write("\""..GetMapName().."_TreeMap\"\n{\n")
-    for _,tree in pairs(self.AllTrees) do
-        local value = tree:IsPathable() and 1 or 0
-        self.treeMap:write(self.indent.."\""..tree:GetTreeID().."\" \""..value.."\"\n")
+    self.treeMap:write("local trees = {")
+    for forestID,treesInForest in pairs(self.treeForests) do
+        for _,tree in pairs(treesInForest) do
+            local pathable = tree:IsPathable() and 1 or 0
+            local forestID = tree:GetForestID()
+            self.treeMap:write("\n"..string.rep(" ",4)..string.format("%4s",tree:GetTreeID()).." = {pathable = "..pathable..", forestID = "..forestID.."},")
+        end        
     end
-    self.treeMap:write("}")
+    self.treeMap:write("\n}\n")
+    self.treeMap:write("return trees")
     self.treeMap:close()
     self:print("Tree Map generated at "..path)
-end
-
-function Gatherer:DetermineForests()
-    -- body
 end
 
 function Gatherer:InitGoldMines()
@@ -685,6 +712,7 @@ function Gatherer:Init(unit)
     -- use the return ability, swap as required
     function unit:ReturnResources(bQueue, bSkip)
         unit.gatherer_skip = bSkip ~= nil and bSkip or true -- Skip order filter?
+        local return_ability = unit.ReturnAbility
         Gatherer:print("ReturnResources Order")
         ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET,
                             AbilityIndex = unit.ReturnAbility:GetEntityIndex(), Queue = queue })
@@ -728,9 +756,13 @@ function Gatherer:Init(unit)
         local gather_ability = unit:GetGatherAbility()
         local return_ability = unit:GetReturnAbility()
 
+        if gather_ability:IsHidden() then
+            unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
+        end
+
         if resource == "lumber" then
             if unit.target_tree and unit.target_tree:IsStanding() then
-                unit:CastAbilityOnTarget(unit.target_tree, unit:GetGatherAbility(), unit:GetPlayerOwnerID())
+                unit:CastAbilityOnTarget(unit.target_tree, gather_ability, unit:GetPlayerOwnerID())
             else
                 -- Find closest near the city center in a huge radius
                 if unit.target_building then
@@ -1357,6 +1389,11 @@ end
 -- Defined on DeterminePathableTrees() and updated on tree_cut
 function CDOTA_MapTree:IsPathable()
     return self.pathable == true
+end
+
+-- Defined on DetermineForests()
+function CDOTA_MapTree:GetForestID()
+    return self.forestID or 0
 end
 
 function CDOTA_MapTree:GetTreeID()
