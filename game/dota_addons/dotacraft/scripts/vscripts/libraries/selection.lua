@@ -1,4 +1,4 @@
-SELECTION_VERSION = "1.00"
+SELECTION_VERSION = "1.01"
 
 --[[
     Lua-controlled Selection Library by Noya
@@ -47,6 +47,9 @@ SELECTION_VERSION = "1.00"
     * Use -1 to reset to default
         PlayerResource:SetDefaultSelectionEntity(playerID, -1)
         hero:SetSelectionOverride(-1)
+
+    * Call a function for all selected units of a player
+        ForAllSelectedUnits(playerID, callback)
 
     Notes:
     - Enemy units that you don't control can't be added to the selection group of a player
@@ -128,6 +131,17 @@ function CDOTA_BaseNPC:SetSelectionOverride(reselect_unit)
     local reselectIndex = type(reselect_unit)=="number" and reselect_unit or reselect_unit:GetEntityIndex()
 
     CustomNetTables:SetTableValue("selection", tostring(unit:GetEntityIndex()), {entity = reselectIndex})
+end
+
+function ForAllSelectedUnits(playerID, callback)
+    local entityList = PlayerResource:GetSelectedEntities(playerID)
+    if not entityList then return end
+    for _,entIndex in pairs(entityList) do
+        local unit = EntIndexToHScript(entIndex)
+        if unit and IsValidEntity(unit) then
+            callback(unit)
+        end
+    end
 end
 
 ------------------------------------------------------------------------
