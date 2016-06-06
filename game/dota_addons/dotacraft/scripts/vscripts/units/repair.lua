@@ -31,8 +31,10 @@ function BuildingHelper:OnRepairStarted(builder, building)
         building.construction_particle = ParticleManager:CreateParticle("particles/custom/construction_dust.vpcf", PATTACH_ABSORIGIN_FOLLOW, building)
     end
 
+    if builder.repair_animation_timer then Timers:RemoveTimer(builder.repair_animation_timer) end
     builder:StartGesture(ACT_DOTA_ATTACK)
     builder.repair_animation_timer = Timers:CreateTimer(function()
+        if not IsValidEntity(builder) or not builder:IsAlive() then return end
         if builder.state == "repairing" then
             builder:StartGesture(ACT_DOTA_ATTACK)
         end
@@ -86,8 +88,6 @@ end
 
 -- After an ongoing move-to-building or repair process is cancelled
 function BuildingHelper:OnRepairCancelled(builder, building)
-    self:print("OnRepairCancelled "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
-
     if builder.repair_animation_timer then
         builder:RemoveGesture(ACT_DOTA_ATTACK)
         Timers:RemoveTimer(builder.repair_animation_timer)
@@ -97,6 +97,8 @@ function BuildingHelper:OnRepairCancelled(builder, building)
         ParticleManager:DestroyParticle(building.construction_particle, false)
         building.construction_particle = nil
     end
+
+    self:print("OnRepairCancelled "..builder:GetUnitName().." "..builder:GetEntityIndex().." -> "..building:GetUnitName().." "..building:GetEntityIndex())
 end
 
 -- After a building is fully constructed via repair ("RequiresRepair" buildings), or is fully repaired

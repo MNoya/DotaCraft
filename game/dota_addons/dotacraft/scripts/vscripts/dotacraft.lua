@@ -424,6 +424,8 @@ function dotacraft:InitializePlayer( hero )
 
 	local building = BuildingHelper:PlaceBuilding(player, city_center_name, position, construction_size, pathing_size, 0)
 	Players:AddStructure(playerID, building)
+
+    building:SetHealth(10)
 	
 	Players:SetMainCityCenter(playerID, building)
 

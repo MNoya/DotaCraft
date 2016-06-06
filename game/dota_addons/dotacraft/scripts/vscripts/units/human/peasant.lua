@@ -12,41 +12,40 @@ function CallToArms( event )
 	for _,unit in pairs(units) do
 		if IsValidEntity(unit) and unit:GetUnitName() == "human_peasant" then
 
+			ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
+
 			local building_pos = caster:GetAbsOrigin()
 			local collision_size = caster:GetHullRadius()*2 + 64
 			unit.target_building = caster
 
-			if unit.moving_timer then
-				Timers:RemoveTimer(unit.moving_timer)
-			end
+			if unit.move_to_build_timer then Timers:RemoveTimer(unit.move_to_build_timer) end
 
-			ability:ApplyDataDrivenModifier(unit, unit, "modifier_on_order_cancel_call_to_arms", {})
+			caster:SetNoCollision(true)
 
 			-- Start moving towards the city center
-			unit.moving_timer = Timers:CreateTimer(function()
+			unit.move_to_build_timer = Timers:CreateTimer(function()
 
-				if not IsValidAlive(unit) then
-					return
-				elseif not IsValidAlive(unit.target_building) then
-					unit.target_building = FindClosestResourceDeposit( unit, "gold" )
+				if not IsValidAlive(unit) then return end
+				if not IsValidAlive(unit.target_building) then
+					unit.target_building = unit:FindClosestResourceDeposit(unit, "gold")
 					return 1/30
-				elseif unit:HasModifier("modifier_on_order_cancel_call_to_arms") then
-					local distance = (building_pos - unit:GetAbsOrigin()):Length()
-					local collision = distance <= collision_size
-					
-					if not collision then
-						unit:MoveToPosition(building_pos)
-						return CALL_THINK_INTERVAL
-					else
-						local militia = ReplaceUnit(unit, "human_militia")
-						ability:ApplyDataDrivenModifier(militia, militia, "modifier_militia", {})
+				end
 
-						-- Add the units to a table so they are easier to find later
-						if not hero.militia then
-							hero.militia = {}
-						end
-						table.insert(hero.militia, militia)
+				local distance = (building_pos - unit:GetAbsOrigin()):Length()
+				local collision = distance <= collision_size
+				
+				if not collision then
+					unit:MoveToPosition(building_pos)
+					return CALL_THINK_INTERVAL
+				else
+					local militia = ReplaceUnit(unit, "human_militia")
+					ability:ApplyDataDrivenModifier(militia, militia, "modifier_militia", {})
+
+					-- Add the units to a table so they are easier to find later
+					if not hero.militia then
+						hero.militia = {}
 					end
+					table.insert(hero.militia, militia)
 				end
 			end)
 		end
@@ -68,37 +67,31 @@ function BackToWork( event )
 	local ability = event.ability
 	local playerID = unit:GetPlayerOwnerID()
 
-	local building = FindClosestResourceDeposit( unit, "gold" )
-	local building_pos = building :GetAbsOrigin()
-	local collision_size = building :GetHullRadius()*2 + 64
+	local building = unit:FindClosestResourceDeposit("gold")
+	local building_pos = building:GetAbsOrigin()
+	local collision_size = building:GetHullRadius()*2 + 64
 	unit.target_building = building
 
-	if unit.moving_timer then
-		Timers:RemoveTimer(unit.moving_timer)
-	end
+	if unit.move_to_build_timer then Timers:RemoveTimer(unit.move_to_build_timer) end
 
 	-- Start moving towards the city center
-	unit.moving_timer = Timers:CreateTimer(function()
-
-		ability:ApplyDataDrivenModifier(unit, unit, "modifier_on_order_back_to_work", {})
-
-		if not IsValidAlive(unit) then
-			return
-		elseif not IsValidAlive(unit.target_building) then
-			unit.target_building = FindClosestResourceDeposit( unit, "gold" )
+	unit.move_to_build_timer = Timers:CreateTimer(function()
+		if not IsValidAlive(unit) then return end
+		if not IsValidAlive(unit.target_building) then
+			unit.target_building = unit:FindClosestResourceDeposit("gold")
 			return 1/30
-		elseif unit:HasModifier("modifier_on_order_back_to_work") then
-			local distance = (building_pos - unit:GetAbsOrigin()):Length()
-			local collision = distance <= collision_size
+		end
+
+		local distance = (building_pos - unit:GetAbsOrigin()):Length()
+		local collision = distance <= collision_size
+		
+		if not collision then
+			unit:MoveToPosition(building_pos)
+			return CALL_THINK_INTERVAL
+		else
+			local peasant = ReplaceUnit(unit, "human_peasant")
 			
-			if not collision then
-				unit:MoveToPosition(building_pos)
-				return CALL_THINK_INTERVAL
-			else
-				local peasant = ReplaceUnit(unit, "human_peasant")
-				
-				CheckAbilityRequirements(peasant, playerID)
-			end
+			CheckAbilityRequirements(peasant, playerID)
 		end
 	end)
 end

@@ -59,8 +59,9 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         local ability = EntIndexToHScript(abilityIndex) 
         local abilityName = ability:GetAbilityName()
-        local entityList = PlayerResource:GetSelectedEntities(playerID)
-        if not entityList then return true end
+        local entityList = PlayerResource:GetSelectedEntities(issuer)
+        if not entityList or #entityList == 1 then return true end
+
         for _,entityIndex in pairs(entityList) do
             local caster = EntIndexToHScript(entityIndex)
             -- Make sure the original caster unit doesn't cast twice

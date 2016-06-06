@@ -925,9 +925,9 @@ function BuildingHelper:UpgradeBuilding(building, newName)
     BuildingHelper:print("Upgrading Building: "..oldBuildingName.." -> "..newName)
     local playerID = building:GetPlayerOwnerID()
     local position = building:GetAbsOrigin()
-    local angle = GetUntiKV(newName, "ModelRotation") or -building:GetAngles().y
+    local angle = GetUnitKV(newName, "ModelRotation") or -building:GetAngles().y
     
-    local old_offset = GetUntiKV(oldBuildingName, "ModelOffset") or 0
+    local old_offset = GetUnitKV(oldBuildingName, "ModelOffset") or 0
     position.z = position.z - old_offset
 
     -- Kill the old building
@@ -945,6 +945,7 @@ function BuildingHelper:UpgradeBuilding(building, newName)
         end
     end
     new_building.units_repairing = building.units_repairing
+    building.upgraded_to = new_building
 
     return new_building
 end
@@ -1340,6 +1341,14 @@ function BuildingHelper:StartRepair(builder, target)
     local fAddedHealth = 0
     local fHPAdjustment = 0
 
+    local repairing = {}
+    for k,v in pairs(target.units_repairing) do
+        if IsValidEntity(v) and v:IsAlive() then
+            table.insert(repairing, v)
+        end
+    end
+    target.units_repairing = repairing
+
     builder.state = "repairing"
     builder.lastRepairPosition = builder:GetAbsOrigin()
     builder:AddNewModifier(builder, repair_ability, "modifier_builder_repairing", {})
@@ -1354,15 +1363,32 @@ function BuildingHelper:StartRepair(builder, target)
     -- Repair Dynamic Tick
     if not target.repairTimer then
         target.repairTimer = Timers:CreateTimer(function()
-            local target = builder.repair_target -- This can change if the target is upgraded
-            if not IsValidEntity(target) or not target:IsAlive() then
-                if target and target.units_repairing then
-                    self:CancelRepair(target)
-                end
-                return
+            local builderCount = 0
+            for k,v in pairs(target.units_repairing) do
+                if IsValidEntity(v) and v:IsAlive() then builderCount = builderCount + 1 end
             end
 
-            local builderCount = getTableCount(target.units_repairing)
+            if not IsValidEntity(target) or not target:IsAlive() then
+                if target and target.units_repairing and not target.upgraded then
+                    self:CancelRepair(target)
+                    return
+                end
+
+                -- Redirect in case of upgrade
+                if target.upgraded and target.units_repairing then
+                    target = target.upgraded_to
+                    if not IsValidEntity(repair_ability) then
+                        repair_ability = target.units_repairing[1]:GetRepairAbility()
+                    end
+                    if not IsValidEntity(repair_ability) then
+                        self:print("Something went wrong, couldn't get a RepairAbility on the first repairing unit")
+                    else
+                        target:AddNewModifier(target, repair_ability, "modifier_repairing", {})
+                    end
+                end
+            end
+
+            target:SetModifierStackCount("modifier_repairing", target, builderCount)
             if builderCount == 0 then
                 self:CancelRepair(target)
                 return
@@ -1459,39 +1485,51 @@ function BuildingHelper:GetNumBuildersRepairing(target)
     local targetPos = target:GetAbsOrigin()
     local numReparing = 0
     for _,unit in pairs(target.units_repairing) do
-        local currentPos = unit:GetAbsOrigin()
-        if not unit.lastRepairPosition then
-            unit.lastRepairPosition = currentPos
-            unit.state = "repairing"
-            numReparing = numReparing + 1
-        else
-            local changedPosition = (unit.lastRepairPosition-currentPos):Length2D() > 1
-            if changedPosition or (targetPos-currentPos):Length2D() > unit:GetFollowRange(target) then
-                unit.state = "moving_to_repair"
-                unit:MoveToNPC(target)
-            else
+        if IsValidEntity(unit) then
+            local currentPos = unit:GetAbsOrigin()
+            if not unit.lastRepairPosition then
+                unit.lastRepairPosition = currentPos
                 unit.state = "repairing"
                 numReparing = numReparing + 1
+            else
+                local changedPosition = (unit.lastRepairPosition-currentPos):Length2D() > 1
+                if changedPosition or (targetPos-currentPos):Length2D() > unit:GetFollowRange(target) then
+                    unit.state = "moving_to_repair"
+                    unit:MoveToNPC(target)
+                else
+                    unit.state = "repairing"
+                    numReparing = numReparing + 1
+                end
+                unit.lastRepairPosition = currentPos
             end
-            unit.lastRepairPosition = currentPos
         end
     end
     return numReparing
 end
 
 function BuildingHelper:CancelRepair(building)
-    building:RemoveModifierByName("modifier_repairing")
     building.repairTimer = nil
     if building.units_repairing == nil then return end
     for k,v in pairs(building.units_repairing) do
-        v:RemoveModifierByName("modifier_builder_repairing")
-        local repair_ability = BuildingHelper:GetRepairAbility(v)
-        if repair_ability and repair_ability:GetToggleState() then
-            repair_ability:ToggleAbility()
+        if IsValidEntity(v) and v:IsAlive() then
+            v:RemoveModifierByName("modifier_builder_repairing")
+            local repair_ability = BuildingHelper:GetRepairAbility(v)
+            if repair_ability and repair_ability:GetToggleState() then
+                repair_ability:ToggleAbility()
+            end
+            v.state = "idle"
+            if IsValidEntity(building) then
+                self:OnRepairCancelled(v, building)
+            end
+            BuildingHelper:AdvanceQueue(v)
         end
-        v.state = "idle"
-        self:OnRepairCancelled(v, building)
-        BuildingHelper:AdvanceQueue(v)
+    end
+
+    if IsValidEntity(building) then
+        building:RemoveModifierByName("modifier_repairing")
+        self:print("Repair of "..building:GetUnitName().." fully cancelled")
+    else
+        self:print("Building removed during the repair process")
     end
 end
 
@@ -2019,9 +2057,9 @@ function BuildingHelper:AddRepairToQueue(builder, building, bQueued)
     local work = {["building"] = building, ["name"] = buildingName, ["buildingTable"] = buildingTable, ["callbacks"] = callbacks}
 
     -- If the ability wasn't queued, override the building queue
-    --[[if not bQueued then
+    if not bQueued then
         BuildingHelper:ClearQueue(builder)
-    end]]
+    end
 
     -- Add this to the builder queue
     table.insert(builder.buildingQueue, work)
@@ -2036,19 +2074,6 @@ function BuildingHelper:AddRepairToQueue(builder, building, bQueued)
         BuildingHelper:print("Repair Work was queued, builder already has work to do")
         BuildingHelper:PrintQueue(builder)
     end
-
-    --[[ The Cast.
-    local unit = EntIndexToHScript(entityIndex)
-    local repair_ability = BuildingHelper:GetRepairAbility(unit)
-    if repair_ability then
-        if repair_ability:IsHidden() and unit.ReturnAbility then -- Swap to the repair ability
-            unit:SwapAbilities(repair_ability:GetAbilityName(), unit.ReturnAbility:GetAbilityName(), true, false)
-        end
-
-        BuildingHelper:print("RepairCommand on "..building:GetUnitName().." "..targetIndex)
-        ExecuteOrderFromTable({UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = repair_ability:GetEntityIndex(), Queue = queue})
-    end
-    ]]
 end
 
 --[[
@@ -2081,7 +2106,6 @@ function BuildingHelper:AdvanceQueue(builder)
                 self:print("AdvanceQueue: Repair "..work.name.." "..work.building:GetEntityIndex())
 
                 -- Move towards the building until close range
-                -- TODO: The Cast. Multi Order via either Right Click or Repair Ability
                 ExecuteOrderFromTable({UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, TargetIndex = building:GetEntityIndex(), Queue = false}) 
                 builder.move_to_build_timer = Timers:CreateTimer(function()
                     if not IsValidEntity(builder) or not builder:IsAlive() then return end -- End if killed

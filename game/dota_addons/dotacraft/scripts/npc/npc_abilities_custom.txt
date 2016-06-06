@@ -21910,32 +21910,6 @@
 				"Function"		"CallToArms"
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_on_order_cancel_call_to_arms"
-			{
-				"IsHidden"				"1"
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CancelCallToArms"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_cancel_call_to_arms"
-						"Target" 		"CASTER"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 	
 	
@@ -21970,29 +21944,6 @@
 	
 		"Modifiers"
 		{
-			"modifier_on_order_back_to_work"
-			{
-				"IsHidden"				"1"
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CancelCallToArms"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_on_order_back_to_work"
-						"Target" 		"CASTER"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
 			"modifier_militia"
 			{
 				"Duration"			"%duration"

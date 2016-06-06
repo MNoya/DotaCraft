@@ -722,34 +722,6 @@ function Gatherer:Init(unit)
         -- similar to to FindEmptyNavigableTreeNearby
     end
 
-    -- Goes through the structures of the player checking for the closest valid resource deposit of this type
-    function unit:FindClosestResourceDeposit(resource_type)
-        local position = unit:GetAbsOrigin()
-        
-        -- Find a building to deliver
-        local playerID = unit:GetPlayerOwnerID()
-        local buildings = BuildingHelper:GetBuildings(playerID)
-        local distance = math.huge
-        local closest_building = nil
-
-        for _,building in pairs(buildings) do
-            local buildingName = building:GetUnitName()
-            local bValidResourceDeposit = Gatherer:IsUnitValidDepositForResource(building, resource_type)
-            if bValidResourceDeposit and not building:IsUnderConstruction() then
-                local this_distance = (position - building:GetAbsOrigin()):Length()
-                if this_distance < distance then
-                    distance = this_distance
-                    closest_building = building
-                end
-            end
-        end
-
-        if not closest_building then
-            Gatherer:print("Error: Can't find a deposit for "..resource_type.."!")
-        end
-        return closest_building     
-    end
-
     -- After returning resource, if node was removed, find another, else gather from the same node
     function unit:ResumeGather()
         local resource = unit.last_resource_gathered
@@ -940,6 +912,34 @@ function Gatherer:Init(unit)
             end
         end)
     end
+end
+
+-- Goes through the structures of the player checking for the closest valid resource deposit of this type
+function CDOTA_BaseNPC:FindClosestResourceDeposit(resource_type)
+    local position = self:GetAbsOrigin()
+    
+    -- Find a building to deliver
+    local playerID = self:GetPlayerOwnerID()
+    local buildings = BuildingHelper:GetBuildings(playerID)
+    local distance = math.huge
+    local closest_building = nil
+
+    for _,building in pairs(buildings) do
+        local buildingName = building:GetUnitName()
+        local bValidResourceDeposit = Gatherer:IsUnitValidDepositForResource(building, resource_type)
+        if bValidResourceDeposit and not building:IsUnderConstruction() then
+            local this_distance = (position - building:GetAbsOrigin()):Length()
+            if this_distance < distance then
+                distance = this_distance
+                closest_building = building
+            end
+        end
+    end
+
+    if not closest_building then
+        Gatherer:print("Error: Can't find a deposit for "..resource_type.."!")
+    end
+    return closest_building     
 end
 
 function Gatherer:DamageTree(unit, tree, value)
