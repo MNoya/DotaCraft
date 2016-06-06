@@ -1177,8 +1177,8 @@ function BuildingHelper:StartBuilding(builder)
                         building.constructionCompleted = true
                         building.state = "complete"
                         building.builder = builder
-                        callbacks.onConstructionCompleted(building)
                         BuildingHelper:AddBuildingToPlayerTable(playerID, building)
+                        callbacks.onConstructionCompleted(building)
                     end
 
                     -- Eject Builder
@@ -1400,10 +1400,10 @@ function BuildingHelper:StartRepair(builder, target)
                 self:CancelRepair(target)
 
                 if IsCustomBuilding(target) and target.callbacks and target.callbacks.onConstructionCompleted then
-                    target.callbacks.onConstructionCompleted(target)
                     target.constructionCompleted = true
                     target.state = "complete"
                     BuildingHelper:AddBuildingToPlayerTable(target:GetPlayerOwnerID(), target)
+                    target.callbacks.onConstructionCompleted(target)
                 end
 
                 self:OnRepairFinished(builder, target)
