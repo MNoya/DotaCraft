@@ -1,6 +1,5 @@
 -- NOTE: There should be a separate Call To Arms ability on each peasant but it's
 -- 		 currently not possible because there's not enough ability slots visible
-CALL_THINK_INTERVAL = 0.1
 function CallToArms( event )
 	local caster = event.caster
 	local hero = caster:GetOwner()
@@ -15,28 +14,29 @@ function CallToArms( event )
 			ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
 
 			local building_pos = caster:GetAbsOrigin()
-			local collision_size = caster:GetHullRadius()*2 + 64
+			local collision_size = unit:GetFollowRange(caster)
 			unit.target_building = caster
 
 			if unit.move_to_build_timer then Timers:RemoveTimer(unit.move_to_build_timer) end
 
-			caster:SetNoCollision(true)
-
 			-- Start moving towards the city center
+			unit:MoveToPosition(building_pos)
 			unit.move_to_build_timer = Timers:CreateTimer(function()
 
 				if not IsValidAlive(unit) then return end
 				if not IsValidAlive(unit.target_building) then
-					unit.target_building = unit:FindClosestResourceDeposit(unit, "gold")
+					building = unit:FindClosestResourceDeposit("gold")
+					unit.target_building = building
 					return 1/30
 				end
-
+				
+				building_pos = building:GetAbsOrigin()
 				local distance = (building_pos - unit:GetAbsOrigin()):Length()
 				local collision = distance <= collision_size
 				
 				if not collision then
-					unit:MoveToPosition(building_pos)
-					return CALL_THINK_INTERVAL
+					unit:MoveToPosition(unit:GetReturnPosition(building))
+					return 0.1
 				else
 					local militia = ReplaceUnit(unit, "human_militia")
 					ability:ApplyDataDrivenModifier(militia, militia, "modifier_militia", {})
@@ -69,25 +69,28 @@ function BackToWork( event )
 
 	local building = unit:FindClosestResourceDeposit("gold")
 	local building_pos = building:GetAbsOrigin()
-	local collision_size = building:GetHullRadius()*2 + 64
+	local collision_size = unit:GetFollowRange(building)
 	unit.target_building = building
 
-	if unit.move_to_build_timer then Timers:RemoveTimer(unit.move_to_build_timer) end
+	if unit.moving_timer then Timers:RemoveTimer(unit.moving_timer) end
 
 	-- Start moving towards the city center
-	unit.move_to_build_timer = Timers:CreateTimer(function()
+	unit:MoveToPosition(building_pos)
+	unit.moving_timer = Timers:CreateTimer(function()
 		if not IsValidAlive(unit) then return end
 		if not IsValidAlive(unit.target_building) then
-			unit.target_building = unit:FindClosestResourceDeposit("gold")
+			building = unit:FindClosestResourceDeposit("gold")
+			unit.target_building = building
 			return 1/30
 		end
 
+		building_pos = building:GetAbsOrigin()
 		local distance = (building_pos - unit:GetAbsOrigin()):Length()
 		local collision = distance <= collision_size
 		
 		if not collision then
-			unit:MoveToPosition(building_pos)
-			return CALL_THINK_INTERVAL
+			unit:MoveToPosition(unit:GetReturnPosition(building))
+			return 0.1
 		else
 			local peasant = ReplaceUnit(unit, "human_peasant")
 			

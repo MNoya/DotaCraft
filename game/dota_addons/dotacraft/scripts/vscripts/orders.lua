@@ -51,6 +51,14 @@ function dotacraft:FilterExecuteOrder( filterTable )
     -- Don't need this.
     if order_type == DOTA_UNIT_ORDER_RADAR then return end
 
+    -- Remove moving timers
+    ForAllSelectedUnits(issuer, function(v)
+        if v.moving_timer then
+            Timers:RemoveTimer(v.moving_timer)
+            v.moving_timer = nil
+        end
+    end)
+
     ------------------------------------------------
     --           Ability Multi Order              --
     ------------------------------------------------

@@ -1212,7 +1212,7 @@ function Gatherer:CastReturnAbility(event)
                 local distance = (building_pos - caster:GetAbsOrigin()):Length()
             
                 if distance > collision_size then
-                    caster:MoveToPosition(GetReturnPosition( caster, building ))        
+                    caster:MoveToPosition(caster:GetReturnPosition(building))        
                     return self.ThinkInterval
                 elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
                     
@@ -1245,7 +1245,7 @@ function Gatherer:CastReturnAbility(event)
                 local distance = (building_pos - caster:GetAbsOrigin()):Length()
             
                 if distance > collision_size then
-                    caster:MoveToPosition(GetReturnPosition( caster, building ))
+                    caster:MoveToPosition(caster:GetReturnPosition(building))
                     return self.ThinkInterval
                 elseif caster.gold_gathered and caster.gold_gathered > 0 then
 
@@ -1424,6 +1424,10 @@ function CDOTA_BaseNPC:GetReturnAbility()
     return self.ReturnAbility
 end
 
+function CDOTA_BaseNPC:GetReturnPosition(target)
+    return target:GetAbsOrigin() + (self:GetAbsOrigin() - target:GetAbsOrigin()):Normalized() * target:GetHullRadius()
+end
+
 -- Enables/disables the access to right-clicking
 function CDOTA_BaseNPC:SetCanAttackTrees(bAble)
     if bAble then
@@ -1572,13 +1576,6 @@ function GetClosestEntityToPosition(list, position)
     end
 
     return closest  
-end
-
-function GetReturnPosition( unit, target )
-    local origin = unit:GetAbsOrigin()
-    local building_pos = target:GetAbsOrigin()
-    local distance = target:GetHullRadius()
-    return building_pos + (origin - building_pos):Normalized() * distance
 end
 
 function IsMineOccupiedByTeam( mine, teamID )
