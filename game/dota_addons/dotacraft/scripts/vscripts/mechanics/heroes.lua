@@ -41,7 +41,7 @@ function GetRealHeroName( internal_hero_name )
     local heroes = GameRules.UnitKV
     for hero_name,v in pairs(heroes) do
         for key,value in pairs(v) do
-            if type(value) == "string" and value:match(internal_hero_name) then
+            if key == "InternalName" and type(value) == "string" and value:match(internal_hero_name) then
                 return hero_name
             end
         end

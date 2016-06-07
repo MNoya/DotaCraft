@@ -5,6 +5,12 @@ if not Gatherer then
     Gatherer = class({})
 end
 
+--[[ TODO:
+Wisp shouldn't be selectable/controllable inside mine (add keyvalue to the gather ability)
+Warlocks aren't cancel repair toggle (due to them not having gather)
+Shouldnt hardcode gold_mine on-top building names in the filter
+]]
+
 function Gatherer:start()
     if IsInToolsMode() then    
         local src = debug.getinfo(1).source
@@ -317,8 +323,8 @@ function Gatherer:OrderFilter(order)
         Gatherer:DrawLine(unit:GetAbsOrigin(), position)
 
         local gatherer_units = filter(function(index) return EntIndexToHScript(index):CanGatherLumber() end, entityList)
-        local numGatherers = #gatherer_units
-        if numGatherers == 1 then return true end
+        local numGatherers = TableCount(gatherer_units)
+        if numGatherers <= 1 then return true end
 
         for k,entityIndex in pairs(entityList) do
             self:print("GatherTreeOrder for unit index "..entityIndex.." "..VectorString(position))
@@ -353,8 +359,9 @@ function Gatherer:OrderFilter(order)
         local target_handle = EntIndexToHScript(targetIndex)
         local target_name = target_handle:GetUnitName()
 
+        -- TODO: Correct building on top mine names
         if target_name == "gold_mine" or
-          ((target_name == "nightelf_entangled_gold_mine" or target_name == "undead_haunted_mine") and target_handle:GetTeamNumber() == unit:GetTeamNumber()) then
+          ((target_name == "nightelf_entangled_gold_mine" or target_name == "undead_haunted_gold_mine") and target_handle:GetTeamNumber() == unit:GetTeamNumber()) then
 
             self:print("Gold Mine Gather Multi Orders")
 
@@ -643,7 +650,9 @@ function Gatherer:Init(unit)
     self:print("Init "..unit:GetUnitName().." "..unit:GetEntityIndex())
 
     -- Give modifier to attack trees
-    unit:SetCanAttackTrees(true)
+    if unit:CanGatherLumber() then
+        unit:SetCanAttackTrees(true)
+    end
 
     -- Store unit
     if not self.GathererUnits[unit:GetEntityIndex()] then
@@ -677,12 +686,12 @@ function Gatherer:Init(unit)
                 local tree_index = empty_tree:GetTreeID()
                 Gatherer:print("Now targeting Tree "..tree_index)
                 Gatherer:CreateSelectionParticle(unit, empty_tree)
-                ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+                ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
             end
 
         else -- Return
             unit.target_tree = empty_tree --The new selected tree
-            unit:ReturnResources(queue, false) -- Propagate return order
+            unit:ReturnResources(false, false) -- Propagate return order
         end
     end
 

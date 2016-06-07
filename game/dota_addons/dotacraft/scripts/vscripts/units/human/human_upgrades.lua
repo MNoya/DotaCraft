@@ -101,6 +101,5 @@ function HarvestUpgrade( event )
 	local upgrades = Players:GetUpgradeTable(playerID)
 
 	local level = Players:GetCurrentResearchRank(playerID, "human_research_lumber_harvesting1")
-	local ability = FindGatherAbility(peasant)
-	ability:SetLevel(1+level)
+	local ability = peasant:GetGatherAbility():SetLevel(1+level)
 end

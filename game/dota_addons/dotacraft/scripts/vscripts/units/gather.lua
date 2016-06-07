@@ -156,12 +156,15 @@ function Gather( event )
             local pos = RotatePosition(mine_origin, QAngle(0, 72*free_pos, 0), front_position)
             caster:Stop()
             caster:SetAbsOrigin(Vector(pos.x, pos.y, pos.z+height))
-            caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
-            Timers:CreateTimer(0.06, function() 
-                caster:Stop() 
+            
+            if race == "undead" then
                 caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
-                PlayerResource:RemoveFromSelection(caster:GetPlayerOwnerID(), caster)
-            end)
+                Timers:CreateTimer(0.06, function() 
+                    caster:Stop() 
+                    caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
+                    PlayerResource:RemoveFromSelection(caster:GetPlayerOwnerID(), caster)
+                end)
+            end
 
             -- Particle Counter on overhead
             counter = #mine.builders

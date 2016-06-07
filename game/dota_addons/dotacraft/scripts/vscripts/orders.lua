@@ -394,20 +394,8 @@ function dotacraft:ResolveRallyPointOrder( unit, building )
 
         -- Move to Gather Tree
         elseif rally_type == "tree" then
-            -- TODO Use API HERE
-            if IsBuilder(unit) then
-                local race = GetUnitRace(unit)
-                local position = flag:GetAbsOrigin()
-                local empty_tree = FindEmptyNavigableTreeNearby(unit, position, 150)
-                if empty_tree then
-                    empty_tree.builder = unit
-                    local gather_ability = FindGatherAbility(unit)
-                    if gather_ability then
-                        unit.skip = true
-                        local tree_index = empty_tree:GetTreeID()
-                        ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
-                    end
-                end
+            if unit:IsGatherer() then
+                unit:GatherFromNearestTree(flag:GetAbsOrigin())
             else
                 -- Move
                 unit:MoveToPosition(flag:GetAbsOrigin())
@@ -415,14 +403,8 @@ function dotacraft:ResolveRallyPointOrder( unit, building )
 
         -- Move to Gather Gold
         elseif rally_type == "mine" then
-
-            -- Use API here too
-            if IsBuilder(unit) then
-                local gather_ability = FindGatherAbility(unit)
-                if gather_ability then
-                    unit.skip = true
-                    ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = flag:GetEntityIndex(), AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
-                end
+            if unit:IsGatherer() then
+                unit:GatherFromNearestGoldMine(flag)
             else
                 -- Move
                 unit:MoveToPosition(flag:GetAbsOrigin())
