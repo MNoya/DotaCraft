@@ -1,63 +1,68 @@
 // Paladin Divine Shield
 // Author: Noya
-// Date: 13.1.2015.
 // Description: An impenetrable shield surrounds the Paladin, protecting him from all damage and spells for a set amount of time
 // Notes: Magic & Attack immune instead of total invulnerability to prevent issues.
+
 "paladin_divine_shield"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"paladin_divine_shield"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "paladin_divine_shield"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-	"AbilityCooldown"				"35 50 65"
-	"AbilityManaCost"				"25"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+    "AbilityCooldown"               "35 50 65"
+    "AbilityManaCost"               "25"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 
-	"precache"
-	{
-		"particle"				"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
-		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_FLOAT"
-			"shield_duration"	"15 30 45"
-		}
-	}
-	"OnSpellStart"
-	{
-		"ApplyModifier"
-		{
-			"Target"		"CASTER"
-			"ModifierName"	"modifier_paladin_divine_shield"
-		}
-		
-		"FireSound"
-		{
-			"Target" 		"CASTER"
-			"EffectName" 	"Hero_Omniknight.GuardianAngel.Cast"
-		}
-	}
-	
-	"Modifiers"
-	{
-		"modifier_paladin_divine_shield"
-		{
-			"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
-			"EffectAttachType"	"follow_origin"
+    "precache"
+    {
+        "particle"              "particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+        "soundfile"             "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "shield_duration"   "15 30 45"
+        }
+    }
+    "OnSpellStart"
+    {
+        "ApplyModifier"
+        {
+            "Target"        "CASTER"
+            "ModifierName"  "modifier_paladin_divine_shield"
+        }
+        
+        "FireSound"
+        {
+            "Target"        "CASTER"
+            "EffectName"    "Hero_Omniknight.GuardianAngel.Cast"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_paladin_divine_shield"
+        {
+            "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+            "EffectAttachType"  "follow_origin"
 
-			"Duration"	"%shield_duration"
+            "Duration"  "%shield_duration"
 
-			"States"
-			{
-				//"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
-			}
-		}
-	}
+            "RunScript"
+            {
+                "ScriptFile"    "heroes/paladin/divine_shield.lua"
+                "Function"      "DivineShieldPurge"
+            }
+
+            "States"
+            {
+                "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"  
+            }
+        }
+    }
 }
