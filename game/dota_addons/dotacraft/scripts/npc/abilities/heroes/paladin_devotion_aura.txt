@@ -1,61 +1,34 @@
 // Paladin Devotion Aura
 // Author: Noya
-// Date: 13.1.2015.
 // Description: Gives additional armor to nearby friendly units.
-// Notes: TODO - Make custom aura particle
+
 "paladin_devotion_aura"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"paladin_devotion_aura"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/paladin/devotion_aura.lua"
+    "AbilityTextureName"            "paladin_devotion_aura"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"	
-	"AbilityCastRange"    			"900"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"    
+    "AbilityCastRange"              "900"
 
-	"precache"
-	{
-		"particle"				"particles/custom/aura_devotion.vpcf"
-	}
+    "precache"
+    {
+        "particle"              "particles/custom/aura_devotion.vpcf"
+    }
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"armor_bonus"	"1.5 3 4.5"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"900"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_devotion_aura"
-		{
-			"EffectName"		"particles/custom/aura_devotion.vpcf"
-			"EffectAttachType" 	"follow_origin"
-
-			"Passive" 			"1"
-			"IsHidden" 			"1"
-			"IsBuff"			"1"
-
-			"Aura" 				"modifier_devotion_aura_buff"
-			"Aura_Radius" 		"%radius"
-			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
-		}
-
-		"modifier_devotion_aura_buff"
-		{
-			"IsBuff"				"1"
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
-			}
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "armor_bonus"   "1.5 3 4.5"
+        }
+        "02"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "radius"        "900"
+        }
+    }
 }
