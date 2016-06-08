@@ -13,8 +13,6 @@ function paladin_holy_light:OnSpellStart( event )
 
 	local damage = ability:GetLevelSpecialValueFor( "target_damage" , ability:GetLevel() - 1  )
 	local heal = ability:GetLevelSpecialValueFor( "heal_amount" , ability:GetLevel() - 1 )
-	local particle_radius = ability:GetLevelSpecialValueFor( "particle_radius" , ability:GetLevel() - 1 )
-	local particle_name = "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
 
 	-- Play the ability sound
 	target:EmitSound("Hero_Omniknight.Purification")
@@ -31,9 +29,9 @@ function paladin_holy_light:OnSpellStart( event )
 	end
 
 	-- Particle 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_purification.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	local particle = ParticleManager:CreateParticle("particles/custom/human/paladin/holy_light.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle, 1, Vector(particle_radius,0,0))
+	ParticleManager:SetParticleControl(particle, 1, Vector(200,0,0))
 end
 
 --------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 // Paladin Holy Light
 // Author: Noya
-// Date: 9 September 2015
 // Description: A holy light that can heal a friendly living unit or damage an enemy undead unit.
+
 "paladin_holy_light"
 {
 	"BaseClass" 					"ability_lua"
@@ -35,11 +35,6 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"heal_amount"			"200 400 600"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"particle_radius"		"200 400 600"
 		}
 	}
 }
