@@ -1,140 +1,131 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
-// Notes: A wave of force that ripples out from the Hero, causing damage to land units in a line.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	8 sec.	100	70	15	Ground, Enemy	75 damage	1
-//2	N/A	8 sec.	100	70	15	Ground, Enemy	130 damage	3
-//3	N/A	8 sec.	100	70	15	Ground, Enemy	200 damage	5
+// Tauren Chieftain Shockwave
+// Author: Noya
+// Description: A wave of force that ripples out from the Hero, causing damage to land units in a line.
+
 "tauren_chieftain_shockwave"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"tauren_chieftain_shockwave"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "tauren_chieftain_shockwave"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_5"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "8.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+    "AbilityManaCost"               "100"
+    "AbilityDamage"                 "75 130 200"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		"particle"	"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"shock_speed"			"900"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"shock_width"			"250"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"shock_distance"		"700"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"shock_vision"			"300"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/econ/items/magnataur/shock_of_the_anvil/magnataur_shockanvil.vpcf"
+        "particle"  "particles/econ/items/magnataur/shock_of_the_anvil/magnataur_shockanvil_cast.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "shock_distance"        "700"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "max_damage"            "1000 1500 2000"
+        }
+    }
 
-	"OnAbilityPhaseStart"
-	{
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shockwave_hidden_cast"
-			"Target"		"CASTER"
-		}
-	}
+    "OnAbilityPhaseStart"
+    {
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_shockwave_hidden_cast"
+            "Target"        "CASTER"
+        }
+    }
 
-	"OnSpellStart"
-	{	
-		"FireSound"
-		{
-			"EffectName"		"Hero_Magnataur.ShockWave.Cast"
-			"Target"			"CASTER"
-		}
+    "OnSpellStart"
+    {   
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/tauren_chieftain/shockwave.lua"
+            "Function"      "ShockwaveStart"
+        }
+        
+        "FireSound"
+        {
+            "EffectName"        "Hero_Magnataur.ShockWave.Cast"
+            "Target"            "CASTER"
+        }
 
-		"FireSound"
-		{
-			"EffectName"		"Hero_Magnataur.ShockWave.Particle"
-			"Target"			"CASTER"
-		}
+        "FireSound"
+        {
+            "EffectName"        "Hero_Magnataur.ShockWave.Particle"
+            "Target"            "CASTER"
+        }
 
-		"LinearProjectile"
-		{
-		    "Target"      	"POINT"
-		    "EffectName" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-		    "MoveSpeed"   	"%shock_speed"
-		    "StartRadius"   "%shock_width"
-		    "StartPosition" "attach_attack1"
-		    "EndRadius"     "%shock_width"
-		    "FixedDistance" "%shock_distance"
-		    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
-		    "HasFrontalCone" "0"
-		    "ProvidesVision" "1"
-		    "VisionRadius" 	"%shock_vision"
-		}
-	}
+        "LinearProjectile"
+        {
+            "Target"        "POINT"
+            "EffectName"    "particles/econ/items/magnataur/shock_of_the_anvil/magnataur_shockanvil.vpcf"
+            "MoveSpeed"     "900"
+            "StartRadius"   "250"
+            "StartPosition" "attach_attack1"
+            "EndRadius"     "250"
+            "FixedDistance" "%shock_distance"
+            "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+            "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+            "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+            "HasFrontalCone" "0"
+            "ProvidesVision" "1"
+            "VisionRadius"  "300"
+        }
+    }
 
-	"OnProjectileHitUnit"
-	{
-		"DeleteOnHit"		"0"
+    "OnProjectileHitUnit"
+    {
+        "DeleteOnHit"       "0"
 
-		"Damage"
-		{
-			"Target"		 "TARGET"
-			"Type"			 "DAMAGE_TYPE_MAGICAL"
-			"Damage"		 "%AbilityDamage"
-		}
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/tauren_chieftain/shockwave.lua"
+            "Function"      "ShockwaveDamage"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Magnataur.ShockWave.Target"
-			"Target"		"TARGET"
-		}			
-	}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Magnataur.ShockWave.Target"
+            "Target"        "TARGET"
+        }           
+    }
 
-	"Modifiers"
-	{
-		"modifier_shockwave_hidden_cast"
-		{
-			"IsHidden"	"1"
-			"Duration"	"0.5"
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
-					"EffectAttachType" 	"attach_attack1"
-					"Target" 			"CASTER"
-					"ControlPointEntities"
-					{
-						"CASTER"		"attach_attack1"
-						"CASTER"		"attach_attack1"
-					}
-				}
-			}
-		}
-	}
+    "Modifiers"
+    {
+        "modifier_shockwave_hidden_cast"
+        {
+            "IsHidden"  "1"
+            "Duration"  "0.5"
+            "OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/econ/items/magnataur/shock_of_the_anvil/magnataur_shockanvil_cast.vpcf"
+                    "EffectAttachType"  "attach_attack1"
+                    "Target"            "CASTER"
+                    "ControlPointEntities"
+                    {
+                        "CASTER"        "attach_attack1"
+                        "CASTER"        "attach_attack1"
+                    }
+                }
+            }
+        }
+    }
 }

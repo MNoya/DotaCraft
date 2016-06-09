@@ -1,21 +1,16 @@
-function BreathFireStart(event)
+function ShockwaveStart(event)
     local caster = event.caster
     local ability = event.ability
     ability.maxDamage = ability:GetLevelSpecialValueFor("max_damage",ability:GetLevel()-1)
     ability.damageDone = 0
 end
 
--- Checks if the target has the modifier_drunken_haze to apply a burn modifier
-function BreathFire( event )
+function ShockwaveDamage(event)
     local caster = event.caster
-    local target = event.target
     local ability = event.ability
-
-    if target:HasModifier("modifier_drunken_haze") then
-        ability:ApplyDataDrivenModifier(caster, target, "modifier_breath_fire_burn", {})
-    end
-
+    local target = event.target
     local damage = ability:GetAbilityDamage()
+
     if damage + ability.damageDone > ability.maxDamage then
         damage = ability.maxDamage - ability.damageDone
     end

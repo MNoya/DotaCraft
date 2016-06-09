@@ -1,132 +1,124 @@
 // Pandaren Breath of Fire
 // Author: Noya, adapted from SpellLibrary dragon_knight_breathe_fire_datadriven
-// Date: 13.1.2015.
-// Notes: Breathes a cone of fire at enemy units which deals damage. Units that have Drunken Haze on them will ignite and take burn damage over time.
-//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	5 (5) sec.	10 sec.	70	50	15	Air, Ground, Building	65 initial damage, 7 damage/sec.	1
-//2	5 (5) sec.	10 sec.	70	50	15	Air, Ground, Building	125 initial damage, 14 damage/sec.	3
-//3	5 (5) sec.	10 sec.	70	50	15	Air, Ground, Building	170 initial damage, 21 damage/sec.	5
+// Description: Breathes a cone of fire at enemy units which deals damage. Units that have Drunken Haze on them will ignite and take burn damage over time.
+
 "pandaren_breath_of_fire"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"pandaren_breath_of_fire"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "pandaren_breath_of_fire"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"	
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"   
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"500"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"10.0"
+    "AbilityCastRange"              "500"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "10.0"
 
-	"AbilityManaCost"				"70"
-	"AbilityDamage"					"75 130 200"
+    "AbilityManaCost"               "70"
+    "AbilityDamage"                 "75 130 200"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
-		"particle"	"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn_creep.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"drunken_haze_burn_dps"	"7 14 21"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"burn_duration"			"5"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"start_radius"			"150"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"end_radius"			"250"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"range"					"500"
-		}
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"speed"					"1000"
-		}	
-	}
-	
-	"OnSpellStart"
-	{
-		"LinearProjectile"
-		{
-			"Target" 		"POINT"
-			"EffectName" 	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
-			"MoveSpeed" 	"%speed"
-			"StartRadius" 	"%start_radius"
-			"StartPosition" "attach_origin"
-			"EndRadius" 	"%end_radius"
-			"FixedDistance" "%range"
-			"TargetTeams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"TargetTypes" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_MECHANICAL"
-			"HasFrontalCone" "1"
-			"ProvidesVision" "0"
-		}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+        "particle"  "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn_creep.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "drunken_haze_burn_dps" "7 14 21"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "burn_duration"         "5"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "burn_duration"         "5"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "max_damage"            "520 1000 1360"
+        }
+        "05"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "range"                 "500"
+        }   
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/pandaren/breath_of_fire.lua"
+            "Function"      "BreathFireStart"
+        }
 
-		"FireSound"
-		{
-			"EffectName" 	"Hero_DragonKnight.BreathFire"
-			"Target" 		"CASTER"
-		}
-	}
+        "LinearProjectile"
+        {
+            "Target"        "POINT"
+            "EffectName"    "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+            "MoveSpeed"     "1000"
+            "StartRadius"   "150"
+            "StartPosition" "attach_origin"
+            "EndRadius"     "250"
+            "FixedDistance" "%range"
+            "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+            "TargetTypes"   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
+            "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+            "HasFrontalCone" "1"
+            "ProvidesVision" "0"
+        }
 
-	"OnProjectileHitUnit"
-	{
-		"DeleteOnHit" "0"
-		"Damage"
-		{
-			"Target" 	"TARGET"
-			"Type" 		"DAMAGE_TYPE_MAGICAL"
-			"Damage" 	"%AbilityDamage"
-		}
+        "FireSound"
+        {
+            "EffectName"    "Hero_DragonKnight.BreathFire"
+            "Target"        "CASTER"
+        }
+    }
 
-		"RunScript"
-	    {
-	        "ScriptFile"    "heroes/pandaren/breath_of_fire.lua"
-	        "Function"      "BreathFire"
-	    }
-	}
+    "OnProjectileHitUnit"
+    {
+        "DeleteOnHit" "0"
 
-	"Modifiers"
-	{
-		"modifier_breath_fire_burn"
-		{	
-			"IsDebuff"			"1"
-			"Duration"			"%burn_duration"
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/pandaren/breath_of_fire.lua"
+            "Function"      "BreathFire"
+        }
+    }
 
-			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn_creep.vpcf"
-			"EffectAttachType"	"follow_origin"
+    "Modifiers"
+    {
+        "modifier_breath_fire_burn"
+        {   
+            "IsDebuff"          "1"
+            "Duration"          "%burn_duration"
 
-			"ThinkInterval"		"1.0"
-			"OnIntervalThink"
-			{
-				"Damage"
-				{
-					"Type"		"DAMAGE_TYPE_MAGICAL"
-					"Target"	"TARGET"
-					"Damage"	"%drunken_haze_burn_dps"
-				}
-			}
-		}
-	}
+            "EffectName"        "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn_creep.vpcf"
+            "EffectAttachType"  "follow_origin"
+
+            "ThinkInterval"     "1.0"
+            "OnIntervalThink"
+            {
+                "Damage"
+                {
+                    "Type"      "DAMAGE_TYPE_MAGICAL"
+                    "Target"    "TARGET"
+                    "Damage"    "%drunken_haze_burn_dps"
+                }
+            }
+        }
+    }
 }

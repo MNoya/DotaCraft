@@ -27,15 +27,7 @@ function CDOTABaseAbility:ApplyDamageUnitsMax(damage, units, maxDamage)
         if not target:IsDummy() then
             local damageDone = damage * factor
             if IsCustomBuilding(target) then
-                damageDone = damageDone*buildingFactor
-                local currentHP = target:GetHealth()
-                local newHP = currentHP - damageDone
-
-                if newHP <= 0 then
-                    target:Kill(self, caster)
-                else
-                    target:SetHealth( newHP)
-                end
+                DamageBuilding(target, damageDone*buildingFactor, self, caster)
             else
                 ApplyDamage({ victim = target, attacker = caster, damage = damageDone, ability = self, damage_type = self:GetAbilityDamageType() })
             end

@@ -16,15 +16,7 @@ function DoBuildingDamage( event )
 		local isBuilding = target:FindAbilityByName("ability_building")
 		if isBuilding then
 			print("DoBuildingDamage on:",target:GetUnitName(),damage)
-			local currentHP = target:GetHealth()
-			local newHP = currentHP - damage
-
-			-- If the HP would hit 0 with this damage, kill the unit
-			if newHP <= 0 then
-				target:Kill(ability, caster)
-			else
-				target:SetHealth( newHP)
-			end
+			DamageBuilding(target, damage, ability, caster)
 		end
 	end	
 end

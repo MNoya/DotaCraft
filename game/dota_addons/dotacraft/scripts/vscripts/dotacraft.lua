@@ -685,6 +685,7 @@ function dotacraft:OnNPCSpawned(keys)
     local unitName = npc:GetUnitName()
     if unitName == "npc_dota_hero_treant" then return end
     if unitName == "npc_dota_thinker" then return end
+    if unitName == "" then return end
 
 	if npc:IsHero() then
 		npc.strBonus = 0
