@@ -1,69 +1,63 @@
 // Warden Fan of Knives
 // Author: Noya
-// Date: 14.1.2015.
-// Notes: The Warden flings a flurry of knives at multiple enemy targets around her.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	9 sec.	100	N/A	40	Air, Ground, Enemy	75 damage per target, 300 max damage	1
-//2	N/A	9 sec.	100	N/A	50	Air, Ground, Enemy	125 damage per target, 625 max damage	3
-//3	N/A	9 sec.	100	N/A	60	Air, Ground, Enemy	190 damage per target, 950 max damage	5
+// Description: The Warden flings a flurry of knives at multiple enemy targets around her.
+
 "warden_fan_of_knives"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"warden_fan_of_knives"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "warden_fan_of_knives"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_SPAWN"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_SPAWN"
 
-	"AbilityCastRange"				"400 500 600"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"9.0"
+    "AbilityCastRange"              "400 500 600"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "9.0"
 
-	"AbilityManacost" 				"100"
-	"AbilityDamage"					"75 125 190"
+    "AbilityManacost"               "100"
+    "AbilityDamage"                 "75 125 190"
 
-	"precache"
-	{
-		"particle" 	"particles/custom/warden_fan_of_knives.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"400 500 600"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/custom/warden_fan_of_knives.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "400 500 600"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "max_damage"             "300 625 950"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"AttachEffect"
-		{
-			"EffectName"		"particles/custom/warden_fan_of_knives.vpcf"
-			"EffectAttachType"	"follow_origin"
-			"Target"			"CASTER"
-		}
-		"FireSound"
-		{	
-			"EffectName"		"Hero_PhantomAssassin.Dagger.Target"
-			"Target"			"CASTER"
-		}
-		"Damage"
-		{
-			"Type"          "DAMAGE_TYPE_MAGICAL"
-			"Damage"        "%AbilityDamage"
-			"Target"
-			{
-				"Center"  				"CASTER"
-				"Radius" 				"%radius"
-				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-			}
-		}
-	}
+    "OnSpellStart"
+    {
+        "AttachEffect"
+        {
+            "EffectName"        "particles/custom/warden_fan_of_knives.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "Target"            "CASTER"
+        }
+        "FireSound"
+        {   
+            "EffectName"        "Hero_PhantomAssassin.Dagger.Target"
+            "Target"            "CASTER"
+        }
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/warden/fan_of_knives.lua"
+            "Function"      "DoDamage"
+        }
+    }
 }
