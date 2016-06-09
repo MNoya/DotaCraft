@@ -909,7 +909,6 @@ function BuildingHelper:PlaceBuilding(player, name, location, construction_size,
         building:AddAbility("ability_building")
     end
 
-    building.state = "complete"
     BuildingHelper:AddBuildingToPlayerTable(playerID, building)
 
     -- Return the created building
@@ -981,8 +980,17 @@ function BuildingHelper:RemoveBuilding(building, bSkipEffects)
     local playerID = building:GetPlayerOwnerID()
     local buidingList = BuildingHelper:GetBuildings(playerID)
     local index = getIndexTable(buidingList, building)
-    if index then table.remove(buidingList, index) end
-    BuildingHelper:SetBuildingCount(playerID, buildingName, BuildingHelper:GetBuildingCount(playerID, buildingName)-1)
+    if index then
+        table.remove(buidingList, index)
+        BuildingHelper:SetBuildingCount(playerID, buildingName, BuildingHelper:GetBuildingCount(playerID, buildingName)-1)
+    else
+        buildingList = BuildingHelper:GetBuildingsUnderConstruction(playerID)
+        index = getIndexTable(buildingList, building)
+        if index then
+            table.remove(buildingList, index)
+            BuildingHelper:SetBuildingCount(playerID, buildingName, BuildingHelper:GetBuildingCount(playerID, buildingName)-1)
+        end
+    end
 
     if not building.blockers then return end
     for k, v in pairs(building.blockers) do
@@ -1053,8 +1061,7 @@ function BuildingHelper:StartBuilding(builder)
     building.blockers = gridNavBlockers
     building.construction_size = construction_size
     building.buildingTable = buildingTable
-    building.state = "building"
-    function building:IsUnderConstruction() return true end
+    self:AddBuildingToPlayerTable(playerID, building, true)
 
     -- Adjust the Model Orientation
     local yaw = buildingTable:GetVal("ModelRotation", "float")
@@ -1175,7 +1182,6 @@ function BuildingHelper:StartBuilding(builder)
                     -- completion: timesUp is true
                     if callbacks.onConstructionCompleted then
                         building.constructionCompleted = true
-                        building.state = "complete"
                         building.builder = builder
                         BuildingHelper:AddBuildingToPlayerTable(playerID, building)
                         callbacks.onConstructionCompleted(building)
@@ -1401,7 +1407,6 @@ function BuildingHelper:StartRepair(builder, target)
 
                 if IsCustomBuilding(target) and target.callbacks and target.callbacks.onConstructionCompleted then
                     target.constructionCompleted = true
-                    target.state = "complete"
                     BuildingHelper:AddBuildingToPlayerTable(target:GetPlayerOwnerID(), target)
                     target.callbacks.onConstructionCompleted(target)
                 end
@@ -2370,32 +2375,79 @@ end
 
 -- Retrieves a list of all the buildings built by a player
 function BuildingHelper:GetBuildings(playerID)
-    local playerTable = BuildingHelper:GetPlayerTable(playerID)
+    local playerTable = self:GetPlayerTable(playerID)
     playerTable.BuildingHandles = playerTable.BuildingHandles or {}
     return playerTable.BuildingHandles
 end
 
+function BuildingHelper:GetBuildingsUnderConstruction(playerID)
+    local playerTable = self:GetPlayerTable(playerID)
+    playerTable.BuildingConstructionHandles = playerTable.BuildingConstructionHandles or {}
+    return playerTable.BuildingConstructionHandles
+end
+
+-- This includes both buildings completed and under construction
+function BuildingHelper:GetAllBuildings(playerID)
+    local buildings = {}
+    local finished = self:GetBuildings(playerID)
+    local construction = self:GetBuildingsUnderConstruction(playerID) 
+    for k,v in pairs(finished) do
+        table.insert(buildings, v)
+    end
+    for k,v in pairs(construction) do
+        table.insert(buildings, v)
+    end
+    return buildings
+end
+
 -- Returns number of buildings by name of a player
-function BuildingHelper:GetBuildingCount(playerID, buildingName)
-    local playerTable = BuildingHelper:GetPlayerTable(playerID)
+function BuildingHelper:GetBuildingCount(playerID, buildingName, bIncludeUnderConstruction)
+    local playerTable = self:GetPlayerTable(playerID)
     playerTable.BuildingCount = playerTable.BuildingCount or {}
     playerTable.BuildingCount[buildingName] = playerTable.BuildingCount[buildingName] or 0
-    return playerTable.BuildingCount[buildingName]
+    local count = playerTable.BuildingCount[buildingName]
+    if includeUnderConstruction then
+        playerTable.BuildingConstructionCount = playerTable.BuildingConstructionCount or {}
+        playerTable.BuildingConstructionCount[buildingName] = playerTable.BuildingConstructionCount[buildingName] or 0
+        count = count + playerTable.BuildingConstructionCount[buildingName]
+    end
+    return count
 end
 
 -- Sets the number of buildings by name of a player
-function BuildingHelper:SetBuildingCount(playerID, buildingName, number)
-    local playerTable = BuildingHelper:GetPlayerTable(playerID)
-    playerTable.BuildingCount = playerTable.BuildingCount or {}
-    playerTable.BuildingCount[buildingName] = number
+function BuildingHelper:SetBuildingCount(playerID, buildingName, number, bUnderConstruction)
+    local playerTable = self:GetPlayerTable(playerID)
+    if bUnderConstruction then
+        playerTable.BuildingConstructionCount = playerTable.BuildingConstructionCount or {}
+        playerTable.BuildingConstructionCount[buildingName] = number
+    else
+        playerTable.BuildingCount = playerTable.BuildingCount or {}
+        playerTable.BuildingCount[buildingName] = number
+    end
 end
 
 -- Store handle and increment count tracking
-function BuildingHelper:AddBuildingToPlayerTable(playerID, building)
+function BuildingHelper:AddBuildingToPlayerTable(playerID, building, bUnderConstruction)
     local buildingName = building:GetUnitName()
-    table.insert(BuildingHelper:GetBuildings(playerID), building)
-    BuildingHelper:SetBuildingCount(playerID, buildingName, BuildingHelper:GetBuildingCount(playerID, buildingName)+1)
-    function building:IsUnderConstruction() return false end
+    if bUnderConstruction then
+        building.state = "building"
+        table.insert(self:GetBuildingsUnderConstruction(playerID), building)
+        self:SetBuildingCount(playerID, buildingName, self:GetBuildingCount(playerID, buildingName, true)+1)
+        function building:IsUnderConstruction() return true end
+    else
+        -- Remove from construction
+        local buildingList = self:GetBuildingsUnderConstruction(playerID)
+        local index = getIndexTable(buildingList, building)
+        if index then
+            table.remove(buildingList, index)
+            self:SetBuildingCount(playerID, buildingName, self:GetBuildingCount(playerID, buildingName)-1)
+        end
+
+        building.state = "complete"
+        table.insert(self:GetBuildings(playerID), building)
+        self:SetBuildingCount(playerID, buildingName, self:GetBuildingCount(playerID, buildingName)+1)
+        function building:IsUnderConstruction() return false end
+    end
 end
 
 -- Returns "ConstructionSize" value of a unit handle or unit name
