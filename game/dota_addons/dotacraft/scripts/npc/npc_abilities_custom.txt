@@ -516,204 +516,128 @@
 	// Author: Noya
 	// Date: 20.01.2015.
 	// Notes: Calls down waves of freezing ice shards that damage units in a target area.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	6 sec.	6 sec.	75	80	20	N/A	6 waves at 30 damage each, 150 max damage	1
-	//2	8 sec.	6 sec.	75	80	20	N/A	8 waves at 40 damage each, 200 max damage	3
-	//3	10 sec.	6 sec.	75	80	20	N/A	10 waves at 50 damage each, 250 max damage	5
+	//Level Duration    Cooldown    Mana Cost   Range   Area of Effect  Allowed Targets Effect  Hero Level Req
+	//1 6 sec.  6 sec.  75  80  20  N/A 6 waves at 30 damage each, 150 max damage   1
+	//2 8 sec.  6 sec.  75  80  20  N/A 8 waves at 40 damage each, 200 max damage   3
+	//3 10 sec. 6 sec.  75  80  20  N/A 10 waves at 50 damage each, 250 max damage  5
 	
 	// NOTE: No max damage for now
 	"archmage_blizzard"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"archmage_blizzard"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "archmage_blizzard"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_5"
+	    "AnimationPlaybackRate"         "0.5"
 	
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"6.0"
-		"AbilityManaCost"				"75"
+	    "AbilityCastRange"              "800"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "6.0"
+	    "AbilityManaCost"               "75"
 	
-		"AOERadius"     				"%radius"
-		"AbilityChannelTime"			"7.0 9.0 11.0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"wave_duration"			"7.0 9.0 11.0"
-			}		
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wave_count"			"6 8 10"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wave_damage"			"25 30 35"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"wave_interval"			"1.0"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"	"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-			"particle"	"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
-			"particle"	"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"	"particles/status_fx/status_effect_frost_lich.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/archmage/blizzard.lua"
-				"Function"		"BlizzardStartPoint"
-				"Target"		"POINT"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_blizzard_channelling"
-				"Target" 		"CASTER"
-			}
-		}
-	
-		"OnChannelFinish"
+	    "AOERadius"                     "%radius"
+	    "AbilityChannelTime"            "6.0 8.0 10.0"
+	    
+	    "AbilitySpecial"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"heroes/archmage/blizzard.lua"
-				"Function"		"BlizzardEnd"
-	    	}
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "200"
+	        }      
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "wave_count"            "6 8 10"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "wave_damage"           "30 40 50"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "max_wave_damage"       "150 200 250"
+	        }
 	    }
 	
-		"Modifiers"
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+	        "particle"  "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
+	        "particle"  "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+	        "particle"  "particles/generic_gameplay/generic_slowed_cold.vpcf"
+	        "particle"  "particles/status_fx/status_effect_frost_lich.vpcf"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/archmage/blizzard.lua"
+	            "Function"      "BlizzardStartPoint"
+	            "Target"        "POINT"
+	        }
+	
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_blizzard_channelling"
+	            "Target"        "CASTER"
+	        }
+	    }
+	
+	    "OnChannelFinish"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/archmage/blizzard.lua"
+	            "Function"      "BlizzardEnd"
+	        }
+	    }
+	
+	    "Modifiers"
 	    {
 	        "modifier_blizzard_channelling"
 	        {
-	        	"IsHidden"			"1"
-	            "ThinkInterval"		"0.99"
+	            "IsHidden"          "1"
+	            "ThinkInterval"     "0.99"
 	            "OnIntervalThink"
-	         	{
-	         		"RunScript"
-	         		{
-	         			"ScriptFile"	"heroes/archmage/blizzard.lua"
-	         			"Function"		"ApplyAnimation"
-	         		}
-				}
-			}
-	
-			"modifier_channeling"
-			{
-				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
-			}
-			
-			"modifier_blizzard_wave"
-			{
-				"OnCreated"
-				{
-					"ApplyModifier"
-	         		{
-						"ModifierName"	"modifier_blizzard_thinker"
-	         			"Target" 		"TARGET"
-					}
-				}
-				"ThinkInterval"  "%wave_interval"
-				"OnIntervalThink"
-				{
-					"ApplyModifier"
-	         		{
-						"ModifierName"	"modifier_blizzard_thinker"
-	         			"Target" 		"TARGET"
-					}
-				}
-			}
-			
-			"modifier_blizzard_thinker"
-			{
-				"OnCreated"
-				{
-					"DelayedAction"
-					{
-						"Delay"     "0.3"
-						"Action"    
-						{						
-							"Damage"
-							{
-								"Target"
-								{
-									"Center"  	"TARGET"
-									"Radius" 	"%radius"
-									"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-								}
-								"Type"			"DAMAGE_TYPE_MAGICAL"
-								"Damage"		"%wave_damage"
-							}
-	
-							// Custom Building Damage
-							"RunScript"
-							{
-								"ScriptFile"	"buildings/damage.lua"
-								"Function"		"DoBuildingDamage"
-								"Target"
-								{
-									"Center"  	"TARGET"
-									"Radius" 	"%radius"
-									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-								}
-								"Damage"		"%wave_damage / 2"
-							}
-	
-							"FireSound"
-							{
-								"EffectName"	"hero_Crystal.freezingField.explosion"
-								"Target"
-								{
-									"Center"  	"TARGET"
-									"Radius" 	"%radius"
-									"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-								}
-							}
-							
-							"RemoveModifier"
-							{
-								"ModifierName"	"modifier_blizzard_thinker"
-								"Target" 		"TARGET"
-							}
-						}
-					}
-					
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/archmage/blizzard.lua"
-						"Function"		"BlizzardWave"
-					}
-				}			
-			}
-		}
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/archmage/blizzard.lua"
+	                    "Function"      "ApplyAnimation"
+	                }
+	            }
+	        }
+	        
+	        "modifier_blizzard_wave"
+	        {
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/archmage/blizzard.lua"
+	                    "Function"      "BlizzardWave"
+	                }
+	            }
+	            "ThinkInterval"  "1.0"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/archmage/blizzard.lua"
+	                    "Function"      "BlizzardWave"
+	                }
+	            }
+	        }
+	    }
 	}
 	// Archmage Brilliance Aura
 	// Author: Noya
@@ -10082,39 +10006,39 @@
 	
 	"paladin_holy_light"
 	{
-		"BaseClass" 					"ability_lua"
-		"ScriptFile"					"heroes/paladin/holy_light.lua"
-		"AbilityTextureName"			"paladin_holy_light"
-		"MaxLevel"						"3"
-		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"5"
-		"AbilityManaCost"				"65"
-		"AbilityCastPoint"    			"0.3"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/paladin/holy_light.lua"
+	    "AbilityTextureName"            "paladin_holy_light"
+	    "MaxLevel"                      "3"
+	    
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityCastRange"              "800"
+	    "AbilityCooldown"               "5"
+	    "AbilityManaCost"               "65"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
-		}
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+	    }
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"target_damage"			"100 200 300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"heal_amount"			"200 400 600"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "target_damage"         "100 200 300"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "heal_amount"           "200 400 600"
+	        }
+	    }
 	}
 	// Paladin Resurrection
 	// Author: Noya
@@ -10122,110 +10046,108 @@
 	
 	"paladin_resurrection"
 	{
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"			"paladin_resurrection"
-		"MaxLevel"						"1"
-		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
-		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "paladin_resurrection"
+	    "MaxLevel"                      "1"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+	    
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
 	
-		"AbilityCastRange"				"400"
-		"AbilityCooldown"				"240"
-		"AbilityManaCost"				"200"
-		"AbilityCastPoint"    			"0.3"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+	    "AbilityCastRange"              "400"
+	    "AbilityCooldown"               "240"
+	    "AbilityManaCost"               "200"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-			"particle"	"particles/status_fx/status_effect_guardian_angel.vpcf"
-			"particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_units_resurrected"		"6"
-			}		
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+	        "particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "radius"                    "900"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "max_units_resurrected"     "6"
+	        }       
+	    }
 	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/paladin/resurrection.lua"
-				"Function"		"ResurrectionPrecast"
-			}
-		}
-		
+	    "OnAbilityPhaseStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/paladin/resurrection.lua"
+	            "Function"      "ResurrectionPrecast"
+	        }
+	    }
+	    
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
-				"Target"		"CASTER"
-			}
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Omniknight.GuardianAngel.Cast"
+	            "Target"        "CASTER"
+	        }
 	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/paladin/resurrection.lua"
-				"Function"		"Resurrection"
-			}		
-		}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/paladin/resurrection.lua"
+	            "Function"      "Resurrection"
+	        }       
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_resurrection"
-			{
-				"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
-				"StatusEffectPriority" "10"
+	    "Modifiers"
+	    {
+	        "modifier_resurrection"
+	        {
+	            "StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
+	            "StatusEffectPriority" "10"
 	
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-						"EffectAttachType"	"follow_overhead"
-						"Target"			"TARGET"
-					}
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+	                    "EffectAttachType"  "follow_overhead"
+	                    "Target"            "TARGET"
+	                }
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_resurrection_fx"
-						"Target" 		"TARGET"
-					}
-					
-				}
-			}
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_resurrection_fx"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	        }
 	
-			"modifier_resurrection_fx"
-			{
-				"IsHidden"		"1"
-				"Duration"		"0.5"
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"100"
-					}
-				}
-					
-			}
-		}
+	        "modifier_resurrection_fx"
+	        {
+	            "IsHidden"      "1"
+	            "Duration"      "0.5"
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "EffectRadius"      "100"
+	                }
+	            }   
+	        }
+	    }
 	}
 	// Pandaren Breath of Fire
 	// Author: Noya, adapted from SpellLibrary dragon_knight_breathe_fire_datadriven

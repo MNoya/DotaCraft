@@ -3,6 +3,37 @@ function CDOTABaseAbility:AffectsBuildings()
     return bit.band(self:GetAbilityTargetType(), DOTA_UNIT_TARGET_BUILDING) == DOTA_UNIT_TARGET_BUILDING
 end
 
+-- Deals damage to units with an optional buildingFactor, if the total passes maxDamage, the damage each unit receives is split
+function CDOTABaseAbility:ApplyDamageUnitsMax(damage, units, maxDamage, buildingFactor)
+    local caster = self:GetCaster()
+    local expectedDamage = 0
+    buildingFactor = buildingFactor or 1
+    for k,target in pairs(units) do
+        if not target:IsDummy() then
+            if IsCustomBuilding(target) then
+                expectedDamage = expectedDamage + damage*buildingFactor
+            else
+                expectedDamage = expectedDamage + damage
+            end
+        end
+    end
+
+    local factor = 1
+    if expectedDamage > maxDamage then
+        factor = maxDamage/expectedDamage
+    end
+
+    for k,target in pairs(units) do
+        if not target:IsDummy() then
+            local damageDone = damage * factor
+            if IsCustomBuilding(target) then
+                damageDone = damageDone*buildingFactor
+            end
+            ApplyDamage({ victim = target, attacker = caster, damage = damageDone, ability = self, damage_type = self:GetAbilityDamageType() })
+        end
+    end
+end
+
 -- Returns int, 0 if it doesnt exist
 function MaxResearchRank( research_name )
     local unit_upgrades = GameRules.UnitUpgrades

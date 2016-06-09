@@ -359,6 +359,10 @@ function HasArtilleryAttack( unit )
     return unitTable and unitTable["Artillery"]
 end
 
+function CDOTA_BaseNPC:IsDummy()
+    return self:GetUnitName():match("dummy_")
+end
+
 -- Default 0 (melee)
 function CDOTA_BaseNPC:GetFormationRank()
     return self:GetKeyValue("FormationRank") or 0

@@ -2,202 +2,126 @@
 // Author: Noya
 // Date: 20.01.2015.
 // Notes: Calls down waves of freezing ice shards that damage units in a target area.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	6 sec.	6 sec.	75	80	20	N/A	6 waves at 30 damage each, 150 max damage	1
-//2	8 sec.	6 sec.	75	80	20	N/A	8 waves at 40 damage each, 200 max damage	3
-//3	10 sec.	6 sec.	75	80	20	N/A	10 waves at 50 damage each, 250 max damage	5
+//Level Duration    Cooldown    Mana Cost   Range   Area of Effect  Allowed Targets Effect  Hero Level Req
+//1 6 sec.  6 sec.  75  80  20  N/A 6 waves at 30 damage each, 150 max damage   1
+//2 8 sec.  6 sec.  75  80  20  N/A 8 waves at 40 damage each, 200 max damage   3
+//3 10 sec. 6 sec.  75  80  20  N/A 10 waves at 50 damage each, 250 max damage  5
 
 // NOTE: No max damage for now
 "archmage_blizzard"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"archmage_blizzard"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "archmage_blizzard"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_5"
+    "AnimationPlaybackRate"         "0.5"
 
-	"AbilityCastRange"				"800"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"6.0"
-	"AbilityManaCost"				"75"
+    "AbilityCastRange"              "800"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "6.0"
+    "AbilityManaCost"               "75"
 
-	"AOERadius"     				"%radius"
-	"AbilityChannelTime"			"7.0 9.0 11.0"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"200"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"wave_duration"			"7.0 9.0 11.0"
-		}		
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"wave_count"			"6 8 10"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"wave_damage"			"25 30 35"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"wave_interval"			"1.0"
-		}
-	}
-
-	"precache"
-	{
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-		"particle"	"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-		"particle"	"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
-		"particle"	"particles/generic_gameplay/generic_slowed_cold.vpcf"
-		"particle"	"particles/status_fx/status_effect_frost_lich.vpcf"
-	}
-
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/archmage/blizzard.lua"
-			"Function"		"BlizzardStartPoint"
-			"Target"		"POINT"
-		}
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_blizzard_channelling"
-			"Target" 		"CASTER"
-		}
-	}
-
-	"OnChannelFinish"
+    "AOERadius"                     "%radius"
+    "AbilityChannelTime"            "6.0 8.0 10.0"
+    
+    "AbilitySpecial"
     {
-    	"RunScript"
-    	{
-    		"ScriptFile"	"heroes/archmage/blizzard.lua"
-			"Function"		"BlizzardEnd"
-    	}
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "200"
+        }      
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "wave_count"            "6 8 10"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "wave_damage"           "30 40 50"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "max_wave_damage"       "150 200 250"
+        }
     }
 
-	"Modifiers"
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+        "particle"  "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
+        "particle"  "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+        "particle"  "particles/generic_gameplay/generic_slowed_cold.vpcf"
+        "particle"  "particles/status_fx/status_effect_frost_lich.vpcf"
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/archmage/blizzard.lua"
+            "Function"      "BlizzardStartPoint"
+            "Target"        "POINT"
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_blizzard_channelling"
+            "Target"        "CASTER"
+        }
+    }
+
+    "OnChannelFinish"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/archmage/blizzard.lua"
+            "Function"      "BlizzardEnd"
+        }
+    }
+
+    "Modifiers"
     {
         "modifier_blizzard_channelling"
         {
-        	"IsHidden"			"1"
-            "ThinkInterval"		"0.99"
+            "IsHidden"          "1"
+            "ThinkInterval"     "0.99"
             "OnIntervalThink"
-         	{
-         		"RunScript"
-         		{
-         			"ScriptFile"	"heroes/archmage/blizzard.lua"
-         			"Function"		"ApplyAnimation"
-         		}
-			}
-		}
-
-		"modifier_channeling"
-		{
-			"IsHidden"				"1"
-			"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
-		}
-		
-		"modifier_blizzard_wave"
-		{
-			"OnCreated"
-			{
-				"ApplyModifier"
-         		{
-					"ModifierName"	"modifier_blizzard_thinker"
-         			"Target" 		"TARGET"
-				}
-			}
-			"ThinkInterval"  "%wave_interval"
-			"OnIntervalThink"
-			{
-				"ApplyModifier"
-         		{
-					"ModifierName"	"modifier_blizzard_thinker"
-         			"Target" 		"TARGET"
-				}
-			}
-		}
-		
-		"modifier_blizzard_thinker"
-		{
-			"OnCreated"
-			{
-				"DelayedAction"
-				{
-					"Delay"     "0.3"
-					"Action"    
-					{						
-						"Damage"
-						{
-							"Target"
-							{
-								"Center"  	"TARGET"
-								"Radius" 	"%radius"
-								"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							}
-							"Type"			"DAMAGE_TYPE_MAGICAL"
-							"Damage"		"%wave_damage"
-						}
-
-						// Custom Building Damage
-						"RunScript"
-						{
-							"ScriptFile"	"buildings/damage.lua"
-							"Function"		"DoBuildingDamage"
-							"Target"
-							{
-								"Center"  	"TARGET"
-								"Radius" 	"%radius"
-								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-								"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-								"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-							}
-							"Damage"		"%wave_damage / 2"
-						}
-
-						"FireSound"
-						{
-							"EffectName"	"hero_Crystal.freezingField.explosion"
-							"Target"
-							{
-								"Center"  	"TARGET"
-								"Radius" 	"%radius"
-								"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							}
-						}
-						
-						"RemoveModifier"
-						{
-							"ModifierName"	"modifier_blizzard_thinker"
-							"Target" 		"TARGET"
-						}
-					}
-				}
-				
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/archmage/blizzard.lua"
-					"Function"		"BlizzardWave"
-				}
-			}			
-		}
-	}
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/archmage/blizzard.lua"
+                    "Function"      "ApplyAnimation"
+                }
+            }
+        }
+        
+        "modifier_blizzard_wave"
+        {
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/archmage/blizzard.lua"
+                    "Function"      "BlizzardWave"
+                }
+            }
+            "ThinkInterval"  "1.0"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/archmage/blizzard.lua"
+                    "Function"      "BlizzardWave"
+                }
+            }
+        }
+    }
 }
