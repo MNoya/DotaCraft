@@ -9976,132 +9976,110 @@
 	}
 	// Paladin Devotion Aura
 	// Author: Noya
-	// Date: 13.1.2015.
 	// Description: Gives additional armor to nearby friendly units.
-	// Notes: TODO - Make custom aura particle
+	
 	"paladin_devotion_aura"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"paladin_devotion_aura"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/paladin/devotion_aura.lua"
+	    "AbilityTextureName"            "paladin_devotion_aura"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"	
-		"AbilityCastRange"    			"900"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"    
+	    "AbilityCastRange"              "900"
 	
-		"precache"
-		{
-			"particle"				"particles/custom/aura_devotion.vpcf"
-		}
+	    "precache"
+	    {
+	        "particle"              "particles/custom/aura_devotion.vpcf"
+	    }
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"armor_bonus"	"1.5 3 4.5"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"900"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_devotion_aura"
-			{
-				"EffectName"		"particles/custom/aura_devotion.vpcf"
-				"EffectAttachType" 	"follow_origin"
-	
-				"Passive" 			"1"
-				"IsHidden" 			"1"
-				"IsBuff"			"1"
-	
-				"Aura" 				"modifier_devotion_aura_buff"
-				"Aura_Radius" 		"%radius"
-				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
-			}
-	
-			"modifier_devotion_aura_buff"
-			{
-				"IsBuff"				"1"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
-				}
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_FLOAT"
+	            "armor_bonus"   "1.5 3 4.5"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "900"
+	        }
+	    }
 	}
 	// Paladin Divine Shield
 	// Author: Noya
-	// Date: 13.1.2015.
 	// Description: An impenetrable shield surrounds the Paladin, protecting him from all damage and spells for a set amount of time
 	// Notes: Magic & Attack immune instead of total invulnerability to prevent issues.
+	
 	"paladin_divine_shield"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"paladin_divine_shield"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "paladin_divine_shield"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityCooldown"				"35 50 65"
-		"AbilityManaCost"				"25"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	    "AbilityCooldown"               "35 50 65"
+	    "AbilityManaCost"               "25"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 	
-		"precache"
-		{
-			"particle"				"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"shield_duration"	"15 30 45"
-			}
-		}
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_paladin_divine_shield"
-			}
-			
-			"FireSound"
-			{
-				"Target" 		"CASTER"
-				"EffectName" 	"Hero_Omniknight.GuardianAngel.Cast"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_paladin_divine_shield"
-			{
-				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
-				"EffectAttachType"	"follow_origin"
+	    "precache"
+	    {
+	        "particle"              "particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+	        "soundfile"             "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "shield_duration"   "15 30 45"
+	        }
+	    }
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "Target"        "CASTER"
+	            "ModifierName"  "modifier_paladin_divine_shield"
+	        }
+	        
+	        "FireSound"
+	        {
+	            "Target"        "CASTER"
+	            "EffectName"    "Hero_Omniknight.GuardianAngel.Cast"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_paladin_divine_shield"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+	            "EffectAttachType"  "follow_origin"
 	
-				"Duration"	"%shield_duration"
+	            "Duration"  "%shield_duration"
 	
-				"States"
-				{
-					//"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"	
-				}
-			}
-		}
+	            "RunScript"
+	            {
+	                "ScriptFile"    "heroes/paladin/divine_shield.lua"
+	                "Function"      "DivineShieldPurge"
+	            }
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"  
+	            }
+	        }
+	    }
 	}
 	// Paladin Holy Light
 	// Author: Noya
-	// Date: 9 September 2015
 	// Description: A holy light that can heal a friendly living unit or damage an enemy undead unit.
+	
 	"paladin_holy_light"
 	{
 		"BaseClass" 					"ability_lua"
@@ -10136,21 +10114,12 @@
 				"var_type"				"FIELD_FLOAT"
 				"heal_amount"			"200 400 600"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"particle_radius"		"200 400 600"
-			}
 		}
 	}
 	// Paladin Resurrection
 	// Author: Noya
-	// Date: 26.01.2015.
-	// Notes: Brings back to life the corpses of 6 friendly nearby units.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	N/A	240 sec.	200	40	90	Ground, Dead, Friend	Resurrects up to 6 Units	6 
+	// Description: Brings back to life the corpses of 6 friendly nearby units.
 	
-	// TODO: The spell will choose the most powerful corpses to resurrect if there are more than 6.
 	"paladin_resurrection"
 	{
 		"BaseClass" 					"ability_datadriven"
@@ -10237,11 +10206,6 @@
 						"Target" 		"TARGET"
 					}
 					
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	

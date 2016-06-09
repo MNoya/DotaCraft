@@ -1,120 +1,109 @@
 // Paladin Resurrection
 // Author: Noya
-// Date: 26.01.2015.
-// Notes: Brings back to life the corpses of 6 friendly nearby units.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	N/A	240 sec.	200	40	90	Ground, Dead, Friend	Resurrects up to 6 Units	6 
+// Description: Brings back to life the corpses of 6 friendly nearby units.
 
-// TODO: The spell will choose the most powerful corpses to resurrect if there are more than 6.
 "paladin_resurrection"
 {
-	"BaseClass" 					"ability_datadriven"
-	"AbilityTextureName"			"paladin_resurrection"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
-	
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "paladin_resurrection"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+    
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
 
-	"AbilityCastRange"				"400"
-	"AbilityCooldown"				"240"
-	"AbilityManaCost"				"200"
-	"AbilityCastPoint"    			"0.3"
-	"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+    "AbilityCastRange"              "400"
+    "AbilityCooldown"               "240"
+    "AbilityManaCost"               "200"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-		"particle"	"particles/status_fx/status_effect_guardian_angel.vpcf"
-		"particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"radius"					"900"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"max_units_resurrected"		"6"
-		}		
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+        "particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "radius"                    "900"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "max_units_resurrected"     "6"
+        }       
+    }
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/paladin/resurrection.lua"
-			"Function"		"ResurrectionPrecast"
-		}
-	}
-	
+    "OnAbilityPhaseStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/paladin/resurrection.lua"
+            "Function"      "ResurrectionPrecast"
+        }
+    }
+    
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
-			"Target"		"CASTER"
-		}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_Omniknight.GuardianAngel.Cast"
+            "Target"        "CASTER"
+        }
 
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/paladin/resurrection.lua"
-			"Function"		"Resurrection"
-		}		
-	}
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/paladin/resurrection.lua"
+            "Function"      "Resurrection"
+        }       
+    }
 
-	"Modifiers"
-	{
-		"modifier_resurrection"
-		{
-			"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
-			"StatusEffectPriority" "10"
+    "Modifiers"
+    {
+        "modifier_resurrection"
+        {
+            "StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
+            "StatusEffectPriority" "10"
 
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-					"EffectAttachType"	"follow_overhead"
-					"Target"			"TARGET"
-				}
+            "OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+                    "EffectAttachType"  "follow_overhead"
+                    "Target"            "TARGET"
+                }
 
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_resurrection_fx"
-					"Target" 		"TARGET"
-				}
-				
-			}
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_resurrection_fx"
+                    "Target"        "TARGET"
+                }
+            }
+        }
 
-			"States"
-			{
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
-		"modifier_resurrection_fx"
-		{
-			"IsHidden"		"1"
-			"Duration"		"0.5"
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"Target"			"TARGET"
-					"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"EffectRadius"		"100"
-				}
-			}
-				
-		}
-	}
+        "modifier_resurrection_fx"
+        {
+            "IsHidden"      "1"
+            "Duration"      "0.5"
+            "OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "Target"            "TARGET"
+                    "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "EffectRadius"      "100"
+                }
+            }   
+        }
+    }
 }

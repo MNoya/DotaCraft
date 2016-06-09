@@ -280,6 +280,10 @@ function dotacraft:TestHero( heroName, bEnemy )
     PrecacheUnitByNameAsync(unitName, function()
         local hero = CreateUnitByName(unitName, pos, true, nil, nil, team)
         hero:SetControllableByPlayer(0, true)
+        if not bEnemy then
+            hero:SetOwner(PlayerResource:GetPlayer(0))
+            hero:SetPlayerID(0)
+        end
 
         for i=1,8 do
             hero:HeroLevelUp(false)

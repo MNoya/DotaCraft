@@ -1,3 +1,8 @@
+-- All abilities that affect buildings must have DOTA_UNIT_TARGET_BUILDING in its AbilityUnitTargetType
+function CDOTABaseAbility:AffectsBuildings()
+    return bit.band(self:GetAbilityTargetType(), DOTA_UNIT_TARGET_BUILDING) == DOTA_UNIT_TARGET_BUILDING
+end
+
 -- Returns int, 0 if it doesnt exist
 function MaxResearchRank( research_name )
     local unit_upgrades = GameRules.UnitUpgrades
