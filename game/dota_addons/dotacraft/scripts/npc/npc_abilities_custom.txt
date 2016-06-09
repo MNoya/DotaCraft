@@ -514,14 +514,8 @@
 	}
 	// Archmage Blizzard
 	// Author: Noya
-	// Date: 20.01.2015.
-	// Notes: Calls down waves of freezing ice shards that damage units in a target area.
-	//Level Duration    Cooldown    Mana Cost   Range   Area of Effect  Allowed Targets Effect  Hero Level Req
-	//1 6 sec.  6 sec.  75  80  20  N/A 6 waves at 30 damage each, 150 max damage   1
-	//2 8 sec.  6 sec.  75  80  20  N/A 8 waves at 40 damage each, 200 max damage   3
-	//3 10 sec. 6 sec.  75  80  20  N/A 10 waves at 50 damage each, 250 max damage  5
+	// Description: Calls down waves of freezing ice shards that damage units in a target area.
 	
-	// NOTE: No max damage for now
 	"archmage_blizzard"
 	{
 	    "BaseClass"                     "ability_datadriven"
@@ -533,7 +527,6 @@
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_5"
-	    "AnimationPlaybackRate"         "0.5"
 	
 	    "AbilityCastRange"              "800"
 	    "AbilityCastPoint"              "0.3"
@@ -542,6 +535,8 @@
 	
 	    "AOERadius"                     "%radius"
 	    "AbilityChannelTime"            "6.0 8.0 10.0"
+	
+	    "BuildingReduction"             "0.5"
 	    
 	    "AbilitySpecial"
 	    {
@@ -3033,260 +3028,280 @@
 	}
 	// Blood Mage Flame Strike
 	// Author: Noya
-	// Date: 17.1.2015.
-	// Notes: Conjures a pillar of fire which damages ground units in a target area over time.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	6 sec.	10 sec.	135	80	20	Ground, Enemy, Neutral, Friend, Building, Self, Tree	45 damage/sec. for 3 seconds, minor damage for 6 sec.	1
-	//2	6 sec.	10 sec.	135	80	20	Ground, Enemy, Neutral, Friend, Building, Self, Tree	80 damage/sec. for 3 seconds, light damage for 6 sec.	3
-	//3	6 sec.	10 sec.	135	80	20	Ground, Enemy, Neutral, Friend, Building, Self, Tree	110 damage/sec. for 3 seconds, moderate damage for 6 sec.	5
+	// Description: Conjures a pillar of fire which damages ground units in a target area over time.
+	
 	"blood_mage_flame_strike"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"blood_mage_flame_strike"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "blood_mage_flame_strike"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_CHAOS_METEOR"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_TORNADO"
 	
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.5"
-		"AbilityCooldown"				"10.0"
+	    "AbilityCastRange"              "800"
+	    "AbilityCastPoint"              "0.5"
+	    "AbilityCooldown"               "10.0"
 	
-		"AbilityManaCost"				"135"
+	    "AbilityManaCost"               "135"
 	
-		"AoERadius"						"200"
+	    "AoERadius"                     "200"
+	    "BuildingReduction"             "0.75"
 	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-			"particle"	"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
-			"particle" 	"particles/custom/phoenix_fire_spirit_ground.vpcf"
-			"particle" 	"particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"first_strike_dps"		"45 80 110"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"first_strike_duration"	"3"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_dps"				"5 10 15"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_duration"			"6"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"delay"					"1.6"
-			}
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+	        "particle"  "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+	        "particle"  "particles/custom/phoenix_fire_spirit_ground.vpcf"
+	        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "200"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "first_strike_dps"      "45 80 110"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "first_strike_duration" "3.0"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "burn_dps"              "5 10 15"
+	        }
+	        "05"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "burn_duration"         "6"
+	        }
+	        "06"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "delay"                 "1.6"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Invoker.SunStrike.Charge"
-				"Target" 		"CASTER"
-			}
 	
-			"FireEffect"
-			{
-				"EffectName"        "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
-				"EffectAttachType"  "world_origin"
-				"TargetPoint"       "POINT"
-			}
+	    "OnAbilityPhaseStart"
+	    {
+	        "FireEffect"
+	        {
+	            "EffectName"        "particles/custom/human/blood_mage/invoker_sun_strike_team_immortal1.vpcf"
+	            "EffectAttachType"  "world_origin"
+	            "TargetPoint"       "POINT"
+	        }
+	    }
 	
-			"DelayedAction"
-			{
-				"Delay"     "%delay"
-				"Action"    
-				{
-					"CreateThinker"
-					{
-						"ModifierName"	"modifier_flame_strike_thinker1"
-						"Target"		"POINT"
-					}
-				}
-			}
-			
-			"DestroyTrees"
-			{
-				"Target"		"POINT"
-				"Radius"		"%radius"
-			}
-		}
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
+	            "Function"      "FlameStrikeAnimation"
+	        }
 	
-		"Modifiers"
-		{
-			"modifier_flame_strike_thinker1"
-			{
-				"IsHidden"		"1"
-				"Duration"		"%first_strike_duration + 0.1"
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Invoker.SunStrike.Charge"
+	            "Target"        "CASTER"
+	        }
 	
-				"Aura" 				"modifier_flame_strike_first_burn"
-	    		"Aura_Radius" 		"%radius"
-	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
-	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	        "FireEffect"
+	        {
+	            "EffectName"        "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
+	            "EffectAttachType"  "world_origin"
+	            "TargetPoint"       "POINT"
+	        }
 	
-	    		"OnCreated"
-	    		{
-	    			"Damage"
-					{
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%first_strike_dps"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Radius"	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					}
+	        "DelayedAction"
+	        {
+	            "Delay"     "%delay"
+	            "Action"    
+	            {
+	                "CreateThinker"
+	                {
+	                    "ModifierName"  "modifier_flame_strike_thinker1"
+	                    "Target"        "POINT"
+	                }
+	            }
+	        }
+	        
+	        "DestroyTrees"
+	        {
+	            "Target"        "POINT"
+	            "Radius"        "%radius"
+	        }
+	    }
 	
-					"FireSound"
-					{
-						"EffectName"	"Ability.LightStrikeArray"
-						"Target" 		"TARGET"
-					}
+	    "Modifiers"
+	    {
+	        "modifier_flame_strike_thinker1"
+	        {
+	            "IsHidden"      "1"
+	            "Duration"      "2.1"
 	
-	    			"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"%radius"
-					}
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"%radius"
-					}
-	    		}
+	            "Aura"              "modifier_flame_strike_first_burn"
+	            "Aura_Radius"       "%radius"
+	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_BOTH"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            "Flags"             "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
-	    		"ThinkInterval"		"1"
-	    		"OnIntervalThink"
-	    		{
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"%radius"
-					}
-	    		}
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
+	                    "Function"      "FlameStrikeDamage"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Radius"    "%radius"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+	                        "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                    }
+	                    "Damage"        "%first_strike_dps"
+	                }
 	
-	    		"OnDestroy"
-	    		{
-	    			"CreateThinker"
-					{
-						"ModifierName"	"modifier_flame_strike_thinker2"
-						"Target"		"TARGET"
-					}
-	    		}
-			}
+	                "FireSound"
+	                {
+	                    "EffectName"    "Ability.LightStrikeArray"
+	                    "Target"        "TARGET"
+	                }
 	
-			"modifier_flame_strike_thinker2"
-			{
-				"IsHidden"		"1"
-				"Duration"		"%burn_duration + 0.1"
+	                "AttachEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "EffectRadius"      "%radius"
+	                }
+	                "AttachEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "EffectRadius"      "%radius"
+	                }
+	            }
 	
-				"Aura" 				"modifier_flame_strike_second_burn"
-	    		"Aura_Radius" 		"%radius"
-	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
-	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            "ThinkInterval"     "1"
+	            "OnIntervalThink"
+	            {
+	                "AttachEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "EffectRadius"      "%radius"
+	                }
+	            }
 	
-	    		"OnCreated"
-	    		{
-	    			"Damage"
-					{
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%burn_duration"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Radius"	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					}
+	            "OnDestroy"
+	            {
+	                "CreateThinker"
+	                {
+	                    "ModifierName"  "modifier_flame_strike_thinker2"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	        }
 	
-	    			"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/custom/phoenix_fire_spirit_ground.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-	    		}
+	        "modifier_flame_strike_thinker2"
+	        {
+	            "IsHidden"      "1"
+	            "Duration"      "%burn_duration"
 	
-	    		"ThinkInterval"		"1"
-	    		"OnIntervalThink"
-	    		{
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/custom/phoenix_fire_spirit_ground.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"%radius"
-					}
-	    		}
-			}
+	            "Aura"              "modifier_flame_strike_second_burn"
+	            "Aura_Radius"       "%radius"
+	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_BOTH"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            "Aura_Flags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
-			"modifier_flame_strike_first_burn"
-			{
-				"IsDebuff"	"1"
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
+	                    "Function"      "FlameStrikeDamage"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Radius"    "%radius"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+	                        "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                    }
+	                    "Damage"        "%burn_dps"
+	                }
 	
-				"ThinkInterval"	"1"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%first_strike_dps"
-						"Target"	"TARGET"
-					}
-				}
-			}
+	                "AttachEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/custom/phoenix_fire_spirit_ground.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
+	            }
 	
-			"modifier_flame_strike_second_burn"
-			{
-				"IsDebuff"	"1"
+	            "ThinkInterval"     "1"
+	            "OnIntervalThink"
+	            {
+	                "AttachEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/custom/phoenix_fire_spirit_ground.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "EffectRadius"      "%radius"
+	                }
+	            }
+	        }
 	
-				"ThinkInterval"	"1"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%burn_dps"
-						"Target"	"TARGET"
-					}
-				}
-			}
-		}
+	        "modifier_flame_strike_first_burn"
+	        {
+	            "IsDebuff"  "1"
+	
+	            "ThinkInterval" "1"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
+	                    "Function"      "FlameStrikeDamage"
+	                    "Damage"        "%first_strike_dps"
+	                }
+	            }
+	        }
+	
+	        "modifier_flame_strike_second_burn"
+	        {
+	            "IsDebuff"  "1"
+	
+	            "ThinkInterval" "1"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
+	                    "Function"      "FlameStrikeDamage"
+	                    "Damage"        "%burn_dps"
+	                }
+	            }
+	        }
+	    }
 	}
 	// Creates 3 floating orbs just for looks
 	"blood_mage_orbs"
@@ -12128,257 +12143,213 @@
 	}
 	// Pit Lord Rain of Fire
 	// Author: Noya
-	// Date: 20.01.2015.
-	// Notes: Calls down waves of fire that damage units in an area. Each wave deals initial damage and then burns enemies for 3 seconds.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	3 sec.	8 sec.	85	80	20	N/A	25 wave damage, 6 waves, 5 damage/sec., 125 max damage	1
-	//2	3 sec.	8 sec.	85	80	20	N/A	30 wave damage, 8 waves, 10 damage/sec., 150 max damage	3
-	//3	3 sec.	8 sec.	85	80	20	N/A	35 wave damage, 10 waves, 15 damage/sec., 175 max damage	5
+	// Description: Calls down waves of fire that damage units in an area. Each wave deals initial damage and then burns enemies for 3 seconds.
 	
-	// NOTE: No max damage for now
 	"pit_lord_rain_of_fire"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"pit_lord_rain_of_fire"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "pit_lord_rain_of_fire"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_VICTORY"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "AbilityCastAnimation"          "ACT_DOTA_VICTORY"
 	
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.6"		
-		"AbilityCooldown"				"8"
-		"AbilityManaCost"				"85"
+	    "AbilityCastRange"              "800"
+	    "AbilityCastPoint"              "0.6"       
+	    "AbilityCooldown"               "8"
+	    "AbilityManaCost"               "85"
 	
-		"AOERadius"     				"%radius"
-		"AbilityChannelTime"			"7.0 9.0 11.0"
-		
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-			"particle"	"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
-			"particle"	"particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
-			"particle"	"particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
-			"particle"	"particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
-			"particle"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
-		}
+	    "AOERadius"                     "%radius"
+	    "AbilityChannelTime"            "6.0 8.0 10.0"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"wave_duration"			"7.0 9.0 11.0"
-			}		
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wave_count"			"6 8 10"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wave_damage"			"25 30 35"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"wave_interval"			"1.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"5 10 15"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_interval"			"1.0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_duration"			"3.0"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"first_wave_delay"		"0.9"
-			}
-		}
+	    "BuildingReduction"             "0.5"
+	    
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+	        "particle"  "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+	        "particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+	        "particle"  "particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
+	        "particle"  "particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
+	        "particle"  "particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
+	    }
 	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/pit_lord/rain_of_fire.lua"
-				"Function"		"RainOfFireStart"
-				"Target"		"POINT"
-			}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "200"
+	        }       
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "wave_count"            "6 8 10"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "wave_damage"           "25 30 35"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "max_wave_damage"       "125 150 175"
+	        }
+	        "05"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "burn_damage"           "5 10 15"
+	        }
+	        "06"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "burn_interval"         "1.0"
+	        }
+	        "07"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "burn_duration"         "3.0"
+	        }
+	    }
 	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_rain_of_fire_channelling"
-				"Target" 		"CASTER"
-			}
-			
-			"FireSound"
-			{
-				"EffectName"	"Hero_Jakiro.DualBreath"
-				"Target"		"CASTER"
-			}
+	    "OnAbilityPhaseStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Jakiro.DualBreath"
+	            "Target"        "CASTER"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
+	            "Function"      "RainOfFireStart"
+	            "Target"        "POINT"
+	        }
+	
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_rain_of_fire_channelling"
+	            "Target"        "CASTER"
+	        }
 	    }
 	
 	    "OnChannelFinish"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"heroes/pit_lord/rain_of_fire.lua"
-				"Function"		"RainOfFireEnd"
-	    	} 
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
+	            "Function"      "RainOfFireEnd"
+	        } 
 	
-	    	"RemoveModifier"
-			{
-				"ModifierName"	"modifier_rain_of_fire_channelling"
-				"Target" 		"CASTER"
-			}
-	   			
+	        "RemoveModifier"
+	        {
+	            "ModifierName"  "modifier_rain_of_fire_channelling"
+	            "Target"        "CASTER"
+	        }   
 	    }
 	    
 	    "Modifiers"
 	    {
 	        "modifier_rain_of_fire_channelling"
 	        {
-	        	"IsHidden"			"1"
-	            "ThinkInterval"		"1.0"
+	            "IsHidden"          "1"
+	            "ThinkInterval"     "1.0"
 	            "OnIntervalThink"
-	         	{
-	         		"ApplyModifier"
-	         		{
-	         			"ModifierName"	"modifier_channeling"
-	         			"Target" 		"CASTER"
-	         			"Duration"		"0.9"
-	         		}
-				}
-			}
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
+	                    "Function"      "ApplyAnimation"
+	                }
+	            }
+	        }
 	
-			"modifier_channeling"
-			{
-				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_SPAWN"
-			}
+	        "modifier_rain_of_fire_thinker"
+	        {
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
+	                    "Function"      "RainOfFireWave"
+	                }
+	                        
+	                "ApplyModifier"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Radius"    "%radius"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+	                    }
+	                    "ModifierName"  "modifier_rain_of_fire_burn"
+	                }
+	            }
+	            "ThinkInterval"  "1.0"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
+	                    "Function"      "RainOfFireWave"
+	                }
+	                        
+	                "ApplyModifier"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Radius"    "%radius"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+	                    }
+	                    "ModifierName"  "modifier_rain_of_fire_burn"
+	                }
 	
-			"modifier_rain_of_fire_thinker"
-			{
-				"ThinkInterval"  "%wave_interval"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-											
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%wave_damage"
-					}
+	                "FireSound"
+	                {
+	                    "EffectName"        "Hero_Jakiro.LiquidFire"
+	                    "Target"            "TARGET"
+	                }
+	            }
+	        }
 	
-					// Custom Building Damage
-					"RunScript"
-					{
-						"ScriptFile"	"buildings/damage.lua"
-						"Function"		"DoBuildingDamage"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BASIC"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-						"Damage"		"%wave_damage / 2"
-					}
-							
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Radius"	"%radius"
-							"Teams"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
-						}
-						"ModifierName"	"modifier_rain_of_fire_burn"
-					}
+	        "modifier_rain_of_fire_burn"
+	        {
+	            "IsHidden"  "0"
+	            "IsDebuff"  "1"
+	            "Duration"  "%burn_duration"
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "Target"        "TARGET"
+	                    "EffectName"    "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
+	            }                                                                                                                                                                           
 	
-					"FireSound"
-					{
-						"EffectName"		"Hero_Jakiro.LiquidFire"
-						"Target"			"TARGET"
-					}
-	
-					"AttachEffect"
-					{
-						"Target" 			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
-						"EffectAttachType" 	"follow_origin"
-					}
-					"AttachEffect"
-					{
-						"Target" 			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
-						"EffectAttachType" 	"follow_origin"
-					}
-	
-					"AttachEffect"
-					{
-						"Target" 			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
-						"EffectAttachType" 	"follow_origin"
-					}
-				}
-				
-			}
-	
-			"modifier_rain_of_fire_burn"
-			{
-				"IsHidden"	"0"
-				"IsDebuff"	"1"
-				"Duration"	"%burn_duration"
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"		"TARGET"
-						"EffectName"	"particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-				}																																											
-	
-				"ThinkInterval"  "%burn_interval"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"		"TARGET"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%burn_damage"
-					}				
-				}	
-			}
-		}	
+	            "ThinkInterval"  "%burn_interval"
+	            "OnIntervalThink"
+	            {
+	                "Damage"
+	                {
+	                    "Target"        "TARGET"
+	                    "Type"          "DAMAGE_TYPE_MAGICAL"
+	                    "Damage"        "%burn_damage"
+	                }               
+	            }   
+	        }
+	    }   
 	}
 	// Priestess of the Moon Scout
 	// Author: Noya

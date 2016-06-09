@@ -2,14 +2,14 @@
     Author: Noya
     Creates a dummy unit to apply the Blizzard thinker modifier which does the waves
 ]]
-
 function BlizzardStartPoint( event )
     local caster = event.caster
     local point = event.target_points[1]
+    local ability = event.ability
 
     caster.blizzard_dummy_point = CreateUnitByName("dummy_unit_vulnerable", point, false, caster, caster, caster:GetTeam())
-    event.ability:ApplyDataDrivenModifier(caster, caster.blizzard_dummy_point, "modifier_blizzard_wave", nil)
-    --caster.blizzard_dummy_point:EmitSound("hero_Crystal.freezingField.wind")
+    event.ability:ApplyDataDrivenModifier(caster, caster.blizzard_dummy_point, "modifier_blizzard_wave", {duration=ability:GetChannelTime()-0.5})
+    caster.blizzard_dummy_point:EmitSound("hero_Crystal.freezingField.wind")
 end
 
 
@@ -50,7 +50,7 @@ function BlizzardWave( event )
     --Blizzard: 150/200/250 Max Damage Per Wave (5 units), 0.5 building reduction
     Timers:CreateTimer(0.3, function()
         caster:EmitSound("hero_Crystal.freezingField.explosion")
-        ability:ApplyDamageUnitsMax(damage, FindAllUnitsInRadius(caster, radius, target_position), max_wave_damage, 0.5)
+        ability:ApplyDamageUnitsMax(damage, FindAllUnitsInRadius(caster, radius, target_position), max_wave_damage)
     end)
 end
 
@@ -72,5 +72,5 @@ function BlizzardEnd( event )
     caster.blizzard_dummy_point:StopSound("hero_Crystal.freezingField.wind")
     
     local blizzard_dummy_point_pointer = caster.blizzard_dummy_point
-    Timers:CreateTimer(0.4,function() blizzard_dummy_point_pointer:RemoveSelf() end)
+    blizzard_dummy_point_pointer:RemoveSelf()
 end

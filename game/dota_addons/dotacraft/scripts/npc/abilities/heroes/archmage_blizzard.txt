@@ -1,13 +1,7 @@
 // Archmage Blizzard
 // Author: Noya
-// Date: 20.01.2015.
-// Notes: Calls down waves of freezing ice shards that damage units in a target area.
-//Level Duration    Cooldown    Mana Cost   Range   Area of Effect  Allowed Targets Effect  Hero Level Req
-//1 6 sec.  6 sec.  75  80  20  N/A 6 waves at 30 damage each, 150 max damage   1
-//2 8 sec.  6 sec.  75  80  20  N/A 8 waves at 40 damage each, 200 max damage   3
-//3 10 sec. 6 sec.  75  80  20  N/A 10 waves at 50 damage each, 250 max damage  5
+// Description: Calls down waves of freezing ice shards that damage units in a target area.
 
-// NOTE: No max damage for now
 "archmage_blizzard"
 {
     "BaseClass"                     "ability_datadriven"
@@ -19,7 +13,6 @@
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
     "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
     "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_5"
-    "AnimationPlaybackRate"         "0.5"
 
     "AbilityCastRange"              "800"
     "AbilityCastPoint"              "0.3"
@@ -28,6 +21,8 @@
 
     "AOERadius"                     "%radius"
     "AbilityChannelTime"            "6.0 8.0 10.0"
+
+    "BuildingReduction"             "0.5"
     
     "AbilitySpecial"
     {

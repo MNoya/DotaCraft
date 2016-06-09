@@ -4,10 +4,10 @@ function CDOTABaseAbility:AffectsBuildings()
 end
 
 -- Deals damage to units with an optional buildingFactor, if the total passes maxDamage, the damage each unit receives is split
-function CDOTABaseAbility:ApplyDamageUnitsMax(damage, units, maxDamage, buildingFactor)
+function CDOTABaseAbility:ApplyDamageUnitsMax(damage, units, maxDamage)
     local caster = self:GetCaster()
     local expectedDamage = 0
-    buildingFactor = buildingFactor or 1
+    local buildingFactor = self:GetKeyValue("BuildingReduction") or 1
     for k,target in pairs(units) do
         if not target:IsDummy() then
             if IsCustomBuilding(target) then
@@ -28,8 +28,17 @@ function CDOTABaseAbility:ApplyDamageUnitsMax(damage, units, maxDamage, building
             local damageDone = damage * factor
             if IsCustomBuilding(target) then
                 damageDone = damageDone*buildingFactor
+                local currentHP = target:GetHealth()
+                local newHP = currentHP - damageDone
+
+                if newHP <= 0 then
+                    target:Kill(self, caster)
+                else
+                    target:SetHealth( newHP)
+                end
+            else
+                ApplyDamage({ victim = target, attacker = caster, damage = damageDone, ability = self, damage_type = self:GetAbilityDamageType() })
             end
-            ApplyDamage({ victim = target, attacker = caster, damage = damageDone, ability = self, damage_type = self:GetAbilityDamageType() })
         end
     end
 end
