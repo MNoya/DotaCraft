@@ -1,4 +1,4 @@
-BH_VERSION = "1.2.2"
+BH_VERSION = "1.2.3"
 
 --[[
     For installation, usage and implementation examples check the wiki:
@@ -51,10 +51,6 @@ function BuildingHelper:Init()
         ListenToGameEvent('tree_cut', Dynamic_Wrap(BuildingHelper, 'OnTreeCut'), self)
     end
 
-    if BuildingHelper.Settings["REPAIR_PATH"] then
-        require(BuildingHelper.Settings["REPAIR_PATH"])
-    end
-
     -- Lua Modifiers
     LinkLuaModifier("modifier_out_of_world", "libraries/modifiers/modifier_out_of_world", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_builder_hidden", "libraries/modifiers/modifier_builder_hidden", LUA_MODIFIER_MOTION_NONE)
@@ -66,6 +62,14 @@ function BuildingHelper:Init()
     BuildingHelper:ParseKV()
 
     self:HookBoilerplate()
+    self:OnScriptReload()
+end
+
+function BuildingHelper:OnScriptReload()
+    BuildingHelper:LoadSettings()
+    if BuildingHelper.Settings["REPAIR_PATH"] then
+        require(BuildingHelper.Settings["REPAIR_PATH"])
+    end
 end
 
 function BuildingHelper:HookBoilerplate()
@@ -1400,12 +1404,13 @@ function BuildingHelper:StartRepair(builder, target)
                 return
             end
 
+            -- Finished repairing?
             local health_deficit = target.missingHealthToComplete or target:GetHealthDeficit()
             if health_deficit <= 0 then
-                -- Finished repair-construction
+                target.missingHealthToComplete = nil
                 self:CancelRepair(target)
 
-                if IsCustomBuilding(target) and target.callbacks and target.callbacks.onConstructionCompleted then
+                if target.callbacks and target.callbacks.onConstructionCompleted then
                     target.constructionCompleted = true
                     BuildingHelper:AddBuildingToPlayerTable(target:GetPlayerOwnerID(), target)
                     target.callbacks.onConstructionCompleted(target)
@@ -1470,7 +1475,7 @@ function BuildingHelper:StartRepair(builder, target)
                 end
                 
                 if bCanPayResource then
-                    self:print("Repaired "..target:GetUnitName().." with "..builderCount.." builders for "..hpGain.." | Time Factor: "..buildTimeFactor.." | Cost Factor: "..buildCostFactor)
+                    --self:print("Repaired "..target:GetUnitName().." with "..builderCount.." builders for "..hpGain.." | Time Factor: "..buildTimeFactor.." | Cost Factor: "..buildCostFactor)
                     target:SetHealth(target:GetHealth() + hpGain)
                 else
                     self:print("Repair Ended, not enough resources!")
@@ -1529,6 +1534,7 @@ function BuildingHelper:CancelRepair(building)
             BuildingHelper:AdvanceQueue(v)
         end
     end
+    building.units_repairing = {}
 
     if IsValidEntity(building) then
         building:RemoveModifierByName("modifier_repairing")
@@ -2640,4 +2646,4 @@ function DrawGridSquare(x, y, color)
     end)
 end
 
-if not BuildingHelper.Players then BuildingHelper:Init() end
+if not BuildingHelper.Players then BuildingHelper:Init() else BuildingHelper:OnScriptReload() end

@@ -27,6 +27,10 @@ function BuildingHelper:OnRepairStarted(builder, building)
         repair_ability:ToggleAbility() -- Fake toggle the ability
     end
 
+    if not builder.gathering_particle and GetUnitRace(builder) == "nightelf" then
+        builder.gathering_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_overcharge.vpcf", PATTACH_ABSORIGIN_FOLLOW, builder)
+        ParticleManager:SetParticleControlEnt(builder.gathering_particle, 0, builder, PATTACH_POINT_FOLLOW, "attach_hitloc", builder:GetAbsOrigin(), true)
+    end
     if not building.construction_particle and GetUnitRace(building) == "human" and IsCustomBuilding(building) and building:IsUnderConstruction() then
         building.construction_particle = ParticleManager:CreateParticle("particles/custom/construction_dust.vpcf", PATTACH_ABSORIGIN_FOLLOW, building)
     end
@@ -43,7 +47,6 @@ function BuildingHelper:OnRepairStarted(builder, building)
 end
 
 function BuildingHelper:OnRepairTick(building, hpGain, costFactor)
-    -- Can pay the resource cost?
     -- Important: can repair allied resources?
 
     local playerID = building:GetPlayerOwnerID()
@@ -77,8 +80,6 @@ function BuildingHelper:OnRepairTick(building, hpGain, costFactor)
         
         Players:ModifyLumber(playerID, -lumber_tick)
         building.lumber_used = building.lumber_used + lumber_tick
-
-
     else
         building.gold_used = nil
         building.lumber_used = 0
@@ -91,6 +92,11 @@ function BuildingHelper:OnRepairCancelled(builder, building)
     if builder.repair_animation_timer then
         builder:RemoveGesture(ACT_DOTA_ATTACK)
         Timers:RemoveTimer(builder.repair_animation_timer)
+    end
+
+    if builder.gathering_particle then
+        ParticleManager:DestroyParticle(builder.gathering_particle, false)
+        builder.gathering_particle = nil
     end
 
     if building.construction_particle and BuildingHelper:GetNumBuildersRepairing(building) == 0 then 
