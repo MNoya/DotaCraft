@@ -474,10 +474,9 @@
 		}
 		"04"
 		{
-			"var_type"						"FIELD_FLOAT"
-			"scaling_factor"				"0.3"
+			"var_type"						"FIELD_INTEGER"
+			"scaling_factor"				"30"
 		}
-		// For model scaling.
 	}
 
 	"precache"
@@ -524,15 +523,6 @@
             {
                 "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_increase"
                 "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_increase"
-            }
-
-            "OnDestroy"
-            {
-                "RunScript"
-                {
-                    "ScriptFile"    "units/orc/shaman.lua"
-                    "Function"      "BloodlustDelete"
-                }
             }
         }
 

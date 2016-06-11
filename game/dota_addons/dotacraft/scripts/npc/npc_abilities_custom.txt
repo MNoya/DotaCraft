@@ -2285,14 +2285,14 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
+				"var_type"			"FIELD_INTEGER"
 				"duration"			"20"
 			}
 	
 			"02"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"model_size"		"1.25"
+				"var_type"			"FIELD_INTEGER"
+				"model_size"		"25"
 			}	
 	
 			"03"
@@ -8613,10 +8613,8 @@
 	}
 	// Mountain King Avatar
 	// Author: Noya
-	// Date: 13.1.2015.
-	// Notes: Activate Avatar to temporarily give the Mountain King 5 bonus armor, 500 bonus hit points, 20 bonus damage and spell immunity.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	60 sec.	180 sec.	150	N/A	Personal	Self	+5 Armor, +500 hit points, +20 damage, spell immunity	6
+	// Description: Activate Avatar to temporarily give the Mountain King 5 bonus armor, 500 bonus hit points, 20 bonus damage and spell immunity.
+	
 	"mountain_king_avatar"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -8652,8 +8650,8 @@
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"model_size"			"1.2"
+				"var_type"				"FIELD_INTEGER"
+				"model_size"			"20"
 			}
 		}
 	
@@ -45785,10 +45783,9 @@
 			}
 			"04"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"scaling_factor"				"0.3"
+				"var_type"						"FIELD_INTEGER"
+				"scaling_factor"				"30"
 			}
-			// For model scaling.
 		}
 	
 		"precache"
@@ -45835,15 +45832,6 @@
 	            {
 	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_increase"
 	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_increase"
-	            }
-	
-	            "OnDestroy"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "units/orc/shaman.lua"
-	                    "Function"      "BloodlustDelete"
-	                }
 	            }
 	        }
 	
