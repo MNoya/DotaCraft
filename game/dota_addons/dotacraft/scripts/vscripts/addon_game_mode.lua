@@ -60,6 +60,11 @@ end
 function Activate()
     print ( '[DOTACRAFT] creating dotacraft game mode' )
     dotacraft:InitGameMode()
+    dotacraft.Initialized = true
+end
+
+if dotacraft.Initialized then
+    dotacraft:OnScriptReload()
 end
 
 ---------------------------------------------------------------------------

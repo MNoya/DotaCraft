@@ -263,14 +263,7 @@ function dotacraft:InitGameMode()
 
 	GameRules.DefeatedTeamCount = 0
 
-  	GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
-  	GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
-  	GameRules.Modifiers = LoadKeyValues("scripts/kv/modifiers.kv")
-  	GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
-  	GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
-    GameRules.Drops = LoadKeyValues("scripts/kv/map_drops.kv")
-    GameRules.Items = LoadKeyValues("scripts/kv/items.kv")
-    GameRules.Damage = LoadKeyValues("scripts/kv/damage_table.kv")
+    dotacraft:LoadKV()
 
 	-- Keeps the blighted gridnav positions
 	GameRules.Blight = {}
@@ -292,6 +285,21 @@ function dotacraft:InitGameMode()
 	   dotacraft:UI_Init()
     end
 	print('[DOTACRAFT] Done loading dotacraft gamemode!')
+end
+
+function dotacraft:LoadKV()
+    GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
+    GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
+    GameRules.Modifiers = LoadKeyValues("scripts/kv/modifiers.kv")
+    GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
+    GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
+    GameRules.Drops = LoadKeyValues("scripts/kv/map_drops.kv")
+    GameRules.Items = LoadKeyValues("scripts/kv/items.kv")
+    GameRules.Damage = LoadKeyValues("scripts/kv/damage_table.kv")
+end
+
+function dotacraft:OnScriptReload()
+    dotacraft:LoadKV()
 end
 
 -- This function is called 1 to 2 times as the player connects initially but before they 
