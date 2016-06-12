@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 32
+	m_nMaxParticles = 16
 	m_nConstantSequenceNumber = 4
 	m_Renderers =
 	[
@@ -37,7 +37,7 @@
 		},
 		{
 			_class = "C_OP_BasicMovement"
-			m_fDrag = 0.150000
+			m_fDrag = 0.100000
 			m_Gravity =
 			[
 				0.000000,
@@ -55,15 +55,15 @@
 			m_nFieldOutput = 0
 			m_vecOutputMin =
 			[
-				-5.000000,
-				-5.000000,
-				-5.000000,
+				-8.000000,
+				-8.000000,
+				-8.000000,
 			]
 			m_vecOutputMax =
 			[
-				5.000000,
-				5.000000,
-				5.000000,
+				8.000000,
+				8.000000,
+				8.000000,
 			]
 			m_bAdditive = true
 		},
@@ -77,9 +77,6 @@
 				255,
 			]
 		},
-		{
-			_class = "C_OP_PositionLock"
-		},
 	]
 	m_Initializers =
 	[
@@ -91,7 +88,7 @@
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMax = 0.650000
+			m_fLifetimeMax = 0.750000
 			m_fLifetimeMin = 0.500000
 		},
 		{
@@ -119,31 +116,30 @@
 			m_flNoiseScaleLoc = 0.780000
 			m_vecOutputMin =
 			[
-				-200.000000,
-				-200.000000,
-				200.000000,
+				-128.000000,
+				-128.000000,
+				-128.000000,
 			]
 			m_vecOutputMax =
 			[
-				200.000000,
-				200.000000,
-				400.000000,
+				128.000000,
+				128.000000,
+				128.000000,
 			]
-			m_bDisableOperator = true
 		},
 		{
 			_class = "C_INIT_RandomColor"
 			m_ColorMin =
 			[
+				0,
 				85,
-				170,
 				0,
 				255,
 			]
 			m_ColorMax =
 			[
 				85,
-				255,
+				170,
 				0,
 				255,
 			]
@@ -160,15 +156,16 @@
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 50.000000
+			m_flEmitRate = 16.000000
 		},
 	]
 	m_ForceGenerators =
 	[
 		{
 			_class = "C_OP_AttractToControlPoint"
-			m_fForceAmount = -2000.000000
-			m_fFalloffPower = 0.100000
+			m_fForceAmount = -1500.000000
+			m_fFalloffPower = 0.000000
+			m_nControlPointNumber = 1
 		},
 	]
 }

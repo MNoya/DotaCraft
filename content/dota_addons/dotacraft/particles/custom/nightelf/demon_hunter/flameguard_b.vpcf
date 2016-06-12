@@ -14,7 +14,7 @@
 			m_flOverbrightFactor = 5.000000
 			m_flAddSelfAmount = 2.500000
 			m_bSaturateColorPreAlphaBlend = false
-			m_hTexture = resource:"materials/particle/fire_particle_10/fire_particle_10_low.vtex"
+			m_hTexture = resource:"materials/particle/fire_particle_10/fire_particle_10_low_white.vtex"
 			m_flAnimationRate = 0.200000
 		},
 	]
@@ -38,8 +38,8 @@
 			_class = "C_OP_ColorInterpolate"
 			m_ColorFade =
 			[
-				142,
-				30,
+				85,
+				170,
 				0,
 				255,
 			]
@@ -91,16 +91,16 @@
 			_class = "C_INIT_RandomColor"
 			m_ColorMax =
 			[
-				255,
-				236,
-				189,
+				85,
+				170,
+				0,
 				255,
 			]
 			m_ColorMin =
 			[
+				85,
 				255,
-				252,
-				236,
+				0,
 				255,
 			]
 		},

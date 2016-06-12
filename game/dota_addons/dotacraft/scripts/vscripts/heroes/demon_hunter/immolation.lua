@@ -1,11 +1,8 @@
 --[[
 	Author: Noya
-	Date: 14.1.2015.
 	Deals AoE damage over time while the ability maintain cost can be paid
 ]]
 function Immolation( event )
-	-- Variables
-	if true then return true end
 	local caster = event.caster
 	local ability = event.ability
 	local abilityDamageType = ability:GetAbilityDamageType()
@@ -18,6 +15,7 @@ function Immolation( event )
 		caster:SpendMana( manacost_per_second, ability)
 
 		-- Deal damage to all targets passed
+		local origin = caster:GetAbsOrigin()
 		for _,v in pairs(targets) do
 			ApplyDamage({ victim = v, attacker = caster, damage = damage_per_second, damage_type = abilityDamageType })
 		end

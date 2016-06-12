@@ -2,28 +2,13 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 32
+	m_nMaxParticles = 16
 	m_nConstantSequenceNumber = 4
 	m_Renderers =
 	[
 		{
-			_class = "C_OP_RenderTrails"
-			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
-			m_flOverbrightFactor = 6.000000
-			m_flAddSelfAmount = 2.000000
-			m_bSaturateColorPreAlphaBlend = false
-			m_hTexture = resource:"materials/particle/sparks/sparks.vtex"
-			m_flMaxLength = 50.000000
-			m_flRadiusScale = 0.500000
-			m_flFinalTextureScaleV = -1.000000
-			m_flFinalTextureOffsetV = 1.000000
-			m_vEndTrailTintFactor =
-			[
-				1.000000,
-				1.000000,
-				1.000000,
-				0.000000,
-			]
+			_class = "C_OP_RenderSprites"
+			m_hTexture = resource:"materials/particle/impact/fleks3.vtex"
 		},
 	]
 	m_Operators =
@@ -34,10 +19,11 @@
 		{
 			_class = "C_OP_FadeOutSimple"
 			m_flFadeOutTime = 0.400000
+			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_BasicMovement"
-			m_fDrag = 0.150000
+			m_fDrag = 0.100000
 			m_Gravity =
 			[
 				0.000000,
@@ -47,7 +33,8 @@
 		},
 		{
 			_class = "C_OP_InterpolateRadius"
-			m_flEndScale = 0.200000
+			m_flEndScale = 0.000000
+			m_flBias = 0.100000
 		},
 		{
 			_class = "C_OP_VectorNoise"
@@ -55,15 +42,15 @@
 			m_nFieldOutput = 0
 			m_vecOutputMin =
 			[
-				-5.000000,
-				-5.000000,
-				-5.000000,
+				-8.000000,
+				-8.000000,
+				-8.000000,
 			]
 			m_vecOutputMax =
 			[
-				5.000000,
-				5.000000,
-				5.000000,
+				8.000000,
+				8.000000,
+				8.000000,
 			]
 			m_bAdditive = true
 		},
@@ -72,13 +59,17 @@
 			m_ColorFade =
 			[
 				0,
-				85,
+				48,
 				0,
 				255,
 			]
+			m_flFadeEndTime = 0.700000
 		},
 		{
-			_class = "C_OP_PositionLock"
+			_class = "C_OP_FadeInSimple"
+		},
+		{
+			_class = "C_OP_SpinUpdate"
 		},
 	]
 	m_Initializers =
@@ -91,7 +82,7 @@
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMax = 0.650000
+			m_fLifetimeMax = 0.950000
 			m_fLifetimeMin = 0.500000
 		},
 		{
@@ -99,19 +90,29 @@
 		},
 		{
 			_class = "C_INIT_RandomSequence"
-			m_nSequenceMax = 2
+			m_nSequenceMax = 39
 			m_nSequenceMin = 15
 		},
 		{
 			_class = "C_INIT_PositionOffset"
-			m_bLocalCoords = true
 			m_nControlPointNumber = 1
-			m_bDisableOperator = true
+			m_OffsetMin =
+			[
+				-5.000000,
+				-5.000000,
+				-5.000000,
+			]
+			m_OffsetMax =
+			[
+				5.000000,
+				5.000000,
+				5.000000,
+			]
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMax = 6.000000
-			m_flRadiusMin = 3.000000
+			m_flRadiusMax = 8.000000
+			m_flRadiusMin = 5.000000
 		},
 		{
 			_class = "C_INIT_InitialVelocityNoise"
@@ -119,31 +120,30 @@
 			m_flNoiseScaleLoc = 0.780000
 			m_vecOutputMin =
 			[
-				-200.000000,
-				-200.000000,
-				200.000000,
+				-128.000000,
+				-128.000000,
+				-128.000000,
 			]
 			m_vecOutputMax =
 			[
-				200.000000,
-				200.000000,
-				400.000000,
+				128.000000,
+				128.000000,
+				128.000000,
 			]
-			m_bDisableOperator = true
 		},
 		{
 			_class = "C_INIT_RandomColor"
 			m_ColorMin =
 			[
+				0,
 				85,
-				170,
 				0,
 				255,
 			]
 			m_ColorMax =
 			[
 				85,
-				255,
+				170,
 				0,
 				255,
 			]
@@ -155,20 +155,25 @@
 		{
 			_class = "C_INIT_CreateOnModel"
 		},
+		{
+			_class = "C_INIT_RandomRotationSpeed"
+			m_flDegreesMin = 120.000000
+		},
 	]
 	m_Emitters =
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 50.000000
+			m_flEmitRate = 10.000000
 		},
 	]
 	m_ForceGenerators =
 	[
 		{
 			_class = "C_OP_AttractToControlPoint"
-			m_fForceAmount = -2000.000000
-			m_fFalloffPower = 0.100000
+			m_fForceAmount = -1500.000000
+			m_fFalloffPower = 0.000000
+			m_nControlPointNumber = 1
 		},
 	]
 }
