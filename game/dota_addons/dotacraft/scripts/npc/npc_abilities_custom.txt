@@ -5465,21 +5465,20 @@
 				"IsBuff"		"1"
 				"IsPurgable"	"0"
 				
-	
 				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
-						"EffectAttachType"		"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"TARGET"			"attach_origin"
-							"TARGET"			"attach_origin"
-						}
-					}
-				}
+	            {
+	                "AttachEffect"
+	                {
+	                    "Target"                "TARGET"
+	                    "EffectName"            "particles/custom/nightelf/demon_hunter/flameguard.vpcf"
+	                    "EffectAttachType"      "start_at_customorigin"
+	                    "ControlPointEntities"
+	                    {
+	                        "TARGET"            "attach_origin"
+	                        "TARGET"            "attach_origin"
+	                    }
+	                }
+	            }
 				
 				"ThinkInterval"		"1"
 				"OnIntervalThink"
@@ -15617,7 +15616,7 @@
 				{
 					"AttachEffect"
 					{
-						"EffectName"		"particles/items_fx/buckler.vpcf"
+						"EffectName"		"particles/custom/human/inner_fire.vpcf"
 						"EffectAttachType"	"follow_origin"
 						"Target"			"TARGET"
 					}

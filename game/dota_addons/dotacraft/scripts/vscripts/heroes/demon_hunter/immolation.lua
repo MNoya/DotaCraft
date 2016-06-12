@@ -5,6 +5,7 @@
 ]]
 function Immolation( event )
 	-- Variables
+	if true then return true end
 	local caster = event.caster
 	local ability = event.ability
 	local abilityDamageType = ability:GetAbilityDamageType()
