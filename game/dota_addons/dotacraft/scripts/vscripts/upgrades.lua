@@ -184,9 +184,17 @@ function UpdateUnitUpgrades( unit, playerID, research_name )
 
         --print("UUU",unit_name.." - "..ability_name.." - rank "..rank)
 
+        if tonumber(rank) == nil then
+            -- Update cosmetics of the unit if possible
+            rank = 1
+            local wearable_upgrade_type = unit_upgrades[ability_name].wearable_upgrade_type
+            if wearable_upgrade_type then
+                UpgradeWearables(unit, rank, wearable_upgrade_type)
+            end
+
         -- If its the first rank of the ability, simply add it
         -- If the unit already has a previous rank, remove it
-        if rank > 1 then
+        elseif rank > 1 then
             local old_rank = rank-1
             local old_ability_name = ability_name..old_rank
             local old_ability = unit:FindAbilityByName(old_ability_name)
@@ -222,6 +230,10 @@ function UpdateUnitUpgrades( unit, playerID, research_name )
         local wearable_upgrade_type = unit_upgrades[ability_name].wearable_upgrade_type
         if wearable_upgrade_type then
             UpgradeWearables(unit, rank, wearable_upgrade_type)
+            -- Update rider cosmetics if there is possible
+            if unit.rider then
+                UpgradeWearables(unit.rider, rank, wearable_upgrade_type)
+            end
         end
     end
 end

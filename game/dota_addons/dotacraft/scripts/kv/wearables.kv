@@ -215,12 +215,20 @@
 	{
 		"weapon"
 		{
-			"1"
+			"1" //Weapon
 			{
 				"0"	"models/heroes/gyro/gyro_guns.vmdl"
 				"1" "models/items/gyrocopter/skyhigh_wing_guns_weapon/skyhigh_wing_guns_weapon.vmdl" 
 				"2" "models/items/gyrocopter/rainmaker_weapon/rainmaker_weapon.vmdl"
 				"3" "models/items/gyrocopter/immortal_guns/immortal_guns.vmdl"
+			}
+
+			"2" //Offhand
+			{
+				"0"	"models/heroes/gyro/gyro_missile.vmdl"
+				"1" "models/items/gyrocopter/skyhigh_bomb_missle/skyhigh_bomb.vmdl"
+				"2" "models/items/gyrocopter/rainmaker_offhand/rainmaker_offhand.vmdl"
+				"3" "models/items/gyrocopter/flying_dutchman_offhand/flying_dutchman_offhand.vmdl"
 			}
 		}
 
@@ -231,7 +239,7 @@
 				"0"	"models/heroes/gyro/gyro_bottles.vmdl"
 				"1" "models/items/gyrocopter/skyhigh_back/skyhigh_back.vmdl"
 				"2" "models/items/gyrocopter/rainmaker_back/rainmaker_back.vmdl"
-				"3" "models/items/gyrocopter/rainmaker_back/rainmaker_back.vmdl"
+				"3" "models/items/gyrocopter/flying_dutchman_back/flying_dutchman_back.vmdl"
 			}
 
 			"2"	//Propeller
@@ -239,7 +247,7 @@
 				"0"	"models/heroes/gyro/gyro_propeller.vmdl"
 				"1" "models/items/gyrocopter/skyhigh_propeller/skyhigh_propeller.vmdl"
 				"2" "models/items/gyrocopter/rainmaker_misc/rainmaker_misc.vmdl"
-				"3" "models/items/gyrocopter/rainmaker_misc/rainmaker_misc.vmdl"
+				"3" "models/items/gyrocopter/flying_dutchman_misc/flying_dutchman_misc.vmdl"
 			}
 
 			"3"	//Head
@@ -247,7 +255,7 @@
 				"0"	"models/heroes/gyro/gyro_goggles.vmdl"
 				"1" "models/items/gyrocopter/skyhigh_head/skyhigh_head.vmdl"
 				"2" "models/items/gyrocopter/rainmaker_head/rainmaker_head.vmdl"
-				"3" "models/items/gyrocopter/rainmaker_head/rainmaker_head.vmdl"
+				"3" "models/items/gyrocopter/flying_dutchman_head/flying_dutchman_head.vmdl"
 			}
 		}
 	}
@@ -315,6 +323,63 @@
 	//human_siege_engine-Courier, no cosmetics
 
 	//human_gryphon_rider-Courier, no cosmetics
+	"human_gryphon_mounted_dummy"
+	{
+		//Default -> Frostiron Raider -> Barrier Rogue -> Brawler of the Glacier Sea+Snowball Stinger
+		"weapon"
+		{
+			"1"
+			{
+				"0"	"models/heroes/tuskarr/tusk_weapon.vmdl"
+				"1" "models/items/tuskarr/frostiron_raider_axe/frostiron_raider_axe.vmdl" 
+				"2" "models/items/tuskarr/barrierrogue_tusk_weapon/barrierrogue_tusk_weapon.vmdl"
+				"3" "models/items/tuskarr/glaciomarine_weapon/glaciomarine_weapon.vmdl"
+			}
+			
+			"2"
+			{
+				"0"	"models/heroes/tuskarr/tusk_armor_glove.vmdl"
+				"1" "models/items/tuskarr/frostiron_raider_fist/frostiron_raider_fist.vmdl" 
+				"2" "models/items/tuskarr/barrierrogue_tusk_arns/barrierrogue_tusk_arns.vmdl"
+				"3" "models/items/tuskarr/snowball_stinger/snowball_stinger.vmdl"
+			}
+		}
+
+		"armor"
+		{
+			"1" 
+			{
+				"0"	"models/heroes/tuskarr/tusk_horns.vmdl"
+				"1" "models/items/tuskarr/frostiron_raider_tusks/frostiron_raider_tusks.vmdl" 
+				"2" "models/items/tuskarr/barrierrogue_tusk_neck/barrierrogue_tusk_neck.vmdl"
+				"3" "models/items/tuskarr/glaciomarine_neck/glaciomarine_neck.vmdl"
+			}
+
+			"2"
+			{
+				"0"	"models/heroes/tuskarr/tusk_fish_basket.vmdl"
+				"1" "models/items/tuskarr/frostiron_raider_back/frostiron_raider_back.vmdl" 
+				"2" "models/items/tuskarr/barrierrogue_tusk_back/barrierrogue_tusk_back.vmdl"
+				"3" "models/items/tuskarr/glaciomarine_back/glaciomarine_back.vmdl"
+			}
+
+			"3"
+			{
+				"0"	"models/heroes/tuskarr/tusk_hat.vmdl"
+				"1" "models/items/tuskarr/frostiron_raider_helm/frostiron_raider_helm.vmdl" 
+				"2" "models/items/tuskarr/barrierrogue_tusk_head/barrierrogue_tusk_head.vmdl"
+				"3" "models/items/tuskarr/glaciomarine_head/glaciomarine_head.vmdl"
+			}
+
+			"4"
+			{
+				"0"	"models/heroes/tuskarr/tusk_cowl.vmdl"
+				"1" "models/items/tuskarr/frostiron_raider_cape/frostiron_raider_cape.vmdl" 
+				"2" "models/items/tuskarr/barrierrogue_tusk_shoulder/barrierrogue_tusk_shoulder.vmdl"
+				"3" "models/items/tuskarr/glaciomarine_shoulder/glaciomarine_shoulder.vmdl"
+			}
+		}
+	}
 
 	//=================================================================================
 	//                                       Orc                                      //
@@ -370,8 +435,8 @@
 			{
 				"0"	"models/heroes/huskar/huskar_spear.vmdl"
 				"1" "models/items/huskar/sacred_bones_spear/sacred_bones_spear.vmdl" 
-				"2" "models/items/huskar/burning_spear/burning_spear.vmdl"
-				"3" "models/items/huskar/obsidian_blade_spear/obsidian_blade_spear.vmdl"
+				"2" "models/items/huskar/obsidian_blade_spear/obsidian_blade_spear.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_weapon/armor_of_reckless_vigor_weapon.vmdl"
 			}
 		}
 
@@ -382,7 +447,7 @@
 				"0"	"models/heroes/huskar/huskar_helmet.vmdl"
 				"1" "models/items/huskar/sacred_bones_helmet/sacred_bones_helmet.vmdl"
 				"2" "models/items/huskar/obsidian_claw_of_the_jaguar_helmet/obsidian_claw_of_the_jaguar_helmet.vmdl"
-				"3" "models/items/huskar/searing_dominator/searing_dominator.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_head/armor_of_reckless_vigor_head.vmdl"
 			}
 
 			"2" //Shoulder
@@ -390,7 +455,7 @@
 				"0"	"models/heroes/huskar/huskar_shoulder.vmdl"
 				"1" "models/items/huskar/sacred_bones_shoulder/sacred_bones_shoulder.vmdl"
 				"2" "models/items/huskar/obsidian_claw_of_the_jaguar_shoulder/obsidian_claw_of_the_jaguar_shoulder.vmdl"
-				"3" "models/items/huskar/obsidian_claw_of_the_jaguar_shoulder/obsidian_claw_of_the_jaguar_shoulder.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_shoulder/armor_of_reckless_vigor_shoulder.vmdl"
 			}
 
 			"3" //Bracer
@@ -398,7 +463,7 @@
 				"0"	"models/heroes/huskar/huskar_bracer.vmdl"
 				"1" "models/items/huskar/sacred_bones_arms/sacred_bones_arms.vmdl"
 				"2" "models/items/huskar/obsidian_claw_of_the_jaguar_arms/obsidian_claw_of_the_jaguar_arms.vmdl"
-				"3" "models/items/huskar/obsidian_claw_of_the_jaguar_arms/obsidian_claw_of_the_jaguar_arms.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_arms/armor_of_reckless_vigor_arms.vmdl"
 			}
 		}
 	}
@@ -411,16 +476,16 @@
 			{
 				"0"	"models/heroes/huskar/huskar_spear.vmdl"
 				"1" "models/items/huskar/sacred_bones_spear/sacred_bones_spear.vmdl" 
-				"2" "models/items/huskar/burning_spear/burning_spear.vmdl"
-				"3" "models/items/huskar/obsidian_blade_spear/obsidian_blade_spear.vmdl"
+				"2" "models/items/huskar/obsidian_blade_spear/obsidian_blade_spear.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_weapon/armor_of_reckless_vigor_weapon.vmdl"
 			}
 
 			"2" //Dagger
 			{
 				"0"	"models/heroes/huskar/huskar_dagger.vmdl"
 				"1" "models/items/huskar/sacred_bones_offhand_weapon/sacred_bones_offhand_weapon.vmdl" 
-				"2" "models/items/huskar/sacred_bones_offhand_weapon/sacred_bones_offhand_weapon.vmdl"
-				"3" "models/items/huskar/obsidian_claw_of_the_jaguar_dagger/obsidian_claw_of_the_jaguar_dagger.vmdl"
+				"2" "models/items/huskar/obsidian_claw_of_the_jaguar_dagger/obsidian_claw_of_the_jaguar_dagger.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_offhand/armor_of_reckless_vigor_offhand.vmdl"
 			}
 		}
 
@@ -431,7 +496,7 @@
 				"0"	"models/heroes/huskar/huskar_helmet.vmdl"
 				"1" "models/items/huskar/sacred_bones_helmet/sacred_bones_helmet.vmdl"
 				"2" "models/items/huskar/obsidian_claw_of_the_jaguar_helmet/obsidian_claw_of_the_jaguar_helmet.vmdl"
-				"3" "models/items/huskar/searing_dominator/searing_dominator.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_head/armor_of_reckless_vigor_head.vmdl"
 			}
 
 			"2" //Shoulder
@@ -439,7 +504,7 @@
 				"0"	"models/heroes/huskar/huskar_shoulder.vmdl"
 				"1" "models/items/huskar/sacred_bones_shoulder/sacred_bones_shoulder.vmdl"
 				"2" "models/items/huskar/obsidian_claw_of_the_jaguar_shoulder/obsidian_claw_of_the_jaguar_shoulder.vmdl"
-				"3" "models/items/huskar/obsidian_claw_of_the_jaguar_shoulder/obsidian_claw_of_the_jaguar_shoulder.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_shoulder/armor_of_reckless_vigor_shoulder.vmdl"
 			}
 
 			"3" //Bracer
@@ -447,7 +512,7 @@
 				"0"	"models/heroes/huskar/huskar_bracer.vmdl"
 				"1" "models/items/huskar/sacred_bones_arms/sacred_bones_arms.vmdl"
 				"2" "models/items/huskar/obsidian_claw_of_the_jaguar_arms/obsidian_claw_of_the_jaguar_arms.vmdl"
-				"3" "models/items/huskar/obsidian_claw_of_the_jaguar_arms/obsidian_claw_of_the_jaguar_arms.vmdl"
+				"3" "models/items/huskar/armor_of_reckless_vigor_arms/armor_of_reckless_vigor_arms.vmdl"
 			}
 		}
 	}
@@ -1258,7 +1323,25 @@
 		}
 	}
 
-	//wrym, gargoyle and meat wagon have no cosmetics
+	"undead_frost_wyrm"
+	{
+		"training"
+		{
+			"1" //Back
+			{
+				"0"	"models/heroes/winterwyvern/winterwyvern_backitem.vmdl"
+				"1" "models/items/winter_wyvern/ice_splinters_back/ice_splinters_back.vmdl"
+			}
+
+			"2" //Head
+			{
+				"0"	"models/heroes/winterwyvern/winterwyvern_crown.vmdl"
+				"1" "models/items/winter_wyvern/ice_splinters_head/ice_splinters_head.vmdl"
+			}
+		}
+	}
+
+	//gargoyle and meat wagon have no cosmetics
 
 	//=================================================================================
 

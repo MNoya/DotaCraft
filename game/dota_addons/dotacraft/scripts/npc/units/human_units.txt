@@ -964,14 +964,16 @@
 	"Creature"
 	{
 		"DisableClumpingBehavior"	"1"
-		"AttachWearables"
-		{
-			"Wearable1"		{	"ItemDef"		"126"		}
-			"Wearable2"		{	"ItemDef"		"131"		}
-			"Wearable3" 	{	"ItemDef"		"176"		}
-			"Wearable4"		{	"ItemDef"		"177"		}
-			"Wearable5"		{	"ItemDef"		"178"		}
-		}
+		"AttachWearables" // Default npc_dota_hero_gyrocopter
+        {
+            "1" { "ItemDef" "126" } // Gyrocopter's Bottles
+            "2" { "ItemDef" "527" } // Gyrocopter's Ambient Effects
+            "3" { "ItemDef" "177" } // Gyrocopter's Guns
+            "4" { "ItemDef" "176" } // Gyrocopter's Goggles
+            "5" { "ItemDef" "131" } // Gyrocopter's head
+            "6" { "ItemDef" "179" } // Gyrocopter's Homing Missile
+            "7" { "ItemDef" "178" } // Gyrocopter's Propeller
+        }
 	}
 }
 

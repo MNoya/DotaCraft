@@ -45396,6 +45396,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"30"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"			"1"
 			
 		"AbilitySpecial"
 		{
@@ -67105,6 +67107,14 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"undead_research_creature_carapace"
 						"WearableType"	"armor"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplySingleRankUpgrade"
+						"ResearchName"	"undead_research_freezing_breath"
+						"WearableType"	"training"
 					}
 				}
 			}

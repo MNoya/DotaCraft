@@ -1090,6 +1090,14 @@
 					"ResearchName"	"undead_research_creature_carapace"
 					"WearableType"	"armor"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplySingleRankUpgrade"
+					"ResearchName"	"undead_research_freezing_breath"
+					"WearableType"	"training"
+				}
 			}
 		}
 	}
