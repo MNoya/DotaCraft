@@ -28,6 +28,18 @@ function GetBuilderNameForHeroRace( hero_name )
     return builder_name
 end
 
+function GetHeroNameForRace( race )
+    if race == "human" then
+        return "npc_dota_hero_dragon_knight"
+    elseif race == "orc" then
+        return "npc_dota_hero_huskar"
+    elseif race == "nightelf" then
+        return "npc_dota_hero_furion"
+    elseif race == "undead" then
+        return "npc_dota_hero_life_stealer"
+    end
+end
+
 function GetInternalHeroName( hero_name )
     local hero_table = GameRules.UnitKV[hero_name]
     if hero_table and hero_table["InternalName"] then
