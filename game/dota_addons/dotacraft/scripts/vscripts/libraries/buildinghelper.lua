@@ -1,4 +1,4 @@
-BH_VERSION = "1.2.3"
+BH_VERSION = "1.2.4"
 
 --[[
     For installation, usage and implementation examples check the wiki:
@@ -24,6 +24,7 @@ function BuildingHelper:Init()
     BuildingHelper:print("BuildingHelper Init")
     BuildingHelper.Players = {} -- Holds a table for each player ID
     BuildingHelper.Dummies = {} -- Holds up to one entity for each building name
+    BuildingHelper.TreeDummies = {} -- Holds tree chopped dummies
     BuildingHelper.Grid = {}    -- Construction grid
     BuildingHelper.Terrain = {} -- Terrain grid, this only changes when a tree is cut
     BuildingHelper.Encoded = "" -- String containing the base terrain, networked to clients
@@ -59,9 +60,15 @@ function BuildingHelper:Init()
     LinkLuaModifier("modifier_builder_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     
     -- Check KVs and set relevant construction_size nettable values
-    BuildingHelper:ParseKV()
+    self:ParseKV()
 
+    -- Order Filter override
     self:HookBoilerplate()
+
+    -- Some game function overrides
+    self:HookFunctions()
+
+    -- Reload settings file
     self:OnScriptReload()
 end
 
@@ -112,6 +119,41 @@ function BuildingHelper:HookBoilerplate()
             BuildingHelper.nextContext = context
         end
     end)
+end
+
+-- This requires that buildinghelper is required before the usage of these functions
+function BuildingHelper:HookFunctions()
+    local oldSetTreeRegrowTime = GameRules.SetTreeRegrowTime
+    BuildingHelper.TreeRegrowTime = 300
+    GameRules.SetTreeRegrowTime = function(gameRules, time)
+        BuildingHelper.TreeRegrowTime = time
+        oldSetTreeRegrowTime(gameRules, time)
+    end
+
+    local oldRegrowAllTrees = GridNav.RegrowAllTrees
+    GridNav.RegrowAllTrees = function(gridNav)
+        for _,dummy in pairs(BuildingHelper.TreeDummies) do
+            UTIL_Remove(dummy)
+        end
+        BuildingHelper.TreeDummies = {}
+        oldRegrowAllTrees(gridNav)
+    end
+
+    local oldCutDownRegrowAfter = CDOTA_MapTree.CutDownRegrowAfter
+    CDOTA_MapTree.CutDownRegrowAfter = function(tree, time, team)
+        oldCutDownRegrowAfter(tree, time, team)
+        Timers:CreateTimer(time, function()
+            BuildingHelper.TreeDummies[tree:GetEntityIndex()] = nil
+            UTIL_Remove(tree.chopped_dummy)
+        end)
+    end
+
+    local oldGrowBack = CDOTA_MapTree.GrowBack
+    CDOTA_MapTree.GrowBack = function(tree)
+        BuildingHelper.TreeDummies[tree:GetEntityIndex()] = nil
+        UTIL_Remove(tree.chopped_dummy)
+        oldGrowBack(tree)
+    end
 end
 
 function BuildingHelper:LoadSettings()
@@ -220,11 +262,27 @@ end
 
 function BuildingHelper:OnTreeCut(keys)
     local treePos = Vector(keys.tree_x,keys.tree_y,0)
+    local tree -- Figure out which tree was cut
+    for _,t in pairs(BuildingHelper.AllTrees) do
+        local pos = t:GetAbsOrigin()
+        if pos.x == treePos.x and pos.y == treePos.y then
+            tree = t
+            break
+        end
+    end
+
+    if not tree then
+        BuildingHelper:print("ERROR: OnTreeCut couldn't find a tree for pos "..treePos.x..","..treePos.y)
+        return
+    elseif tree.chopped_dummy then
+        UTIL_Remove(tree.chopped_dummy)
+    end
 
     -- Create a dummy for clients to be able to detect trees standing and block their grid
-    local tree_chopped = CreateUnitByName("npc_dota_thinker", treePos, false, nil, nil, 0)
-    tree_chopped:AddAbility("dummy_tree")
-    local tree_ability = tree_chopped:FindAbilityByName("dummy_tree")
+    tree.chopped_dummy = CreateUnitByName("npc_dota_thinker", treePos, false, nil, nil, 0)
+    BuildingHelper.TreeDummies[tree:GetEntityIndex()] = tree.chopped_dummy
+
+    local tree_ability = tree.chopped_dummy:AddAbility("dummy_tree")
     if not tree_ability then
         BuildingHelper:print("ERROR: dummy_tree ability is missing!")
     else
@@ -235,6 +293,14 @@ function BuildingHelper:OnTreeCut(keys)
     if not GridNav:IsBlocked(treePos) then
         BuildingHelper:FreeGridSquares(2, treePos)
     end
+
+    -- Remove the dummy, allowing the tree to regrow
+    Timers:CreateTimer(BuildingHelper.TreeRegrowTime, function()
+        if IsValidEntity(tree.chopped_dummy) then
+            BuildingHelper.TreeDummies[tree:GetEntityIndex()] = nil
+            UTIL_Remove(tree.chopped_dummy)
+        end
+    end)
 end
 
 function BuildingHelper:InitGNV()
@@ -343,6 +409,8 @@ function BuildingHelper:InitGNV()
     BuildingHelper.squareY = squareY
     BuildingHelper.minBoundX = boundX1
     BuildingHelper.minBoundY = boundY1
+
+    BuildingHelper.AllTrees = Entities:FindAllByClassname("ent_dota_tree")
 end
 
 function BuildingHelper:SendGNV(args)
@@ -2412,7 +2480,7 @@ function BuildingHelper:GetBuildingCount(playerID, buildingName, bIncludeUnderCo
     playerTable.BuildingCount = playerTable.BuildingCount or {}
     playerTable.BuildingCount[buildingName] = playerTable.BuildingCount[buildingName] or 0
     local count = playerTable.BuildingCount[buildingName]
-    if includeUnderConstruction then
+    if bIncludeUnderConstruction then
         playerTable.BuildingConstructionCount = playerTable.BuildingConstructionCount or {}
         playerTable.BuildingConstructionCount[buildingName] = playerTable.BuildingConstructionCount[buildingName] or 0
         count = count + playerTable.BuildingConstructionCount[buildingName]
@@ -2438,7 +2506,7 @@ function BuildingHelper:AddBuildingToPlayerTable(playerID, building, bUnderConst
     if bUnderConstruction then
         building.state = "building"
         table.insert(self:GetBuildingsUnderConstruction(playerID), building)
-        self:SetBuildingCount(playerID, buildingName, self:GetBuildingCount(playerID, buildingName, true)+1)
+        self:SetBuildingCount(playerID, buildingName, self:GetBuildingCount(playerID, buildingName, true)+1, true)
         function building:IsUnderConstruction() return true end
     else
         -- Remove from construction
