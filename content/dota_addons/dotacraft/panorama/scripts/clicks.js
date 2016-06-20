@@ -273,6 +273,20 @@ function IsNeutralUnit(entIndex) {
     CustomNetTables.SubscribeNetTableListener( "attacks_enabled", OnAttacksEnabledChanged );
 })();
 
+var cameraDistance = 1600
+var maxCameraDistance = 2600
+var minCameraDistance = 500
+GameUI.SetCameraDistance( cameraDistance )
+
+function ZoomEvent(zoom_distance)
+{
+    if (zoom_distance > maxCameraDistance) zoom_distance = maxCameraDistance
+    if (zoom_distance < minCameraDistance) zoom_distance = minCameraDistance
+
+    cameraDistance = zoom_distance
+    GameUI.SetCameraDistance( zoom_distance )
+}
+
 // Main mouse event callback
 GameUI.SetMouseCallback( function( eventName, arg ) {
     var CONSUME_EVENT = true
@@ -299,6 +313,12 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
         else if (RIGHT_CLICK) 
             return OnRightButtonPressed() 
         
+    }
+
+    if (eventName === "wheeled") {
+        var value = arg == 1 ? -10 : 10;
+        ZoomEvent(cameraDistance+value)
+        return CONSUME_EVENT;
     }
     return CONTINUE_PROCESSING_EVENT
 } )
