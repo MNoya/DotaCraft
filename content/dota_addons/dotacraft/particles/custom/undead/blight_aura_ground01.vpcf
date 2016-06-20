@@ -86,6 +86,13 @@
 			m_nFieldOutput = 7
 			m_flRadiusScale = 0.010000
 		},
+		{
+			_class = "C_OP_MovementPlaceOnGround"
+			m_flOffset = 5.000000
+			m_flTolerance = 0.000000
+			m_CollisionGroupName = "DEBRIS"
+			m_bSetNormal = true
+		},
 	]
 	m_Initializers =
 	[

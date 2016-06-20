@@ -11,9 +11,10 @@ function CreateBlight(location, size)
     local particle_spread = 256
     local count = 0
 
-    BuildingHelper:AddGridType(radius, location, "Blight", "radius")
-
-    if GetMapName() == "1_dotacraft" then return end
+    if GetMapName() == "1_dotacraft" then 
+        BuildingHelper:AddGridType(radius, location, "Blight", "radius")
+        return
+    end
     
     -- Mark every grid square as blighted
     for x = location.x - radius, location.x + radius - particle_spread, 64 do
@@ -33,6 +34,8 @@ function CreateBlight(location, size)
             end
         end
     end
+
+    BuildingHelper:AddGridType(radius, location, "Blight", "radius")
 
     print("Made "..count.." new blight particles")
    
