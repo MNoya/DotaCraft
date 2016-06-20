@@ -9,6 +9,7 @@ end
 Wisp shouldn't be selectable/controllable inside mine (add keyvalue to the gather ability)
 Warlocks aren't cancel repair toggle (due to them not having gather)
 Shouldnt hardcode gold_mine on-top building names in the filter
+Make it possible to work without a GatherAbility
 ]]
 
 function Gatherer:start()

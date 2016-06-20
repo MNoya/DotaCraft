@@ -10,6 +10,10 @@ function CreateBlight(location, size)
     end
     local particle_spread = 256
     local count = 0
+
+    BuildingHelper:AddGridType(radius, location, "Blight", "radius")
+
+    if GetMapName() == "1_dotacraft" then return end
     
     -- Mark every grid square as blighted
     for x = location.x - radius, location.x + radius - particle_spread, 64 do
@@ -21,7 +25,7 @@ function CreateBlight(location, size)
                 if (x-location.x) % particle_spread == 0 and (y-location.y) % particle_spread == 0 then
                     local particle = ParticleManager:CreateParticle("particles/custom/undead/blight_aura.vpcf", PATTACH_CUSTOMORIGIN, nil)
                     ParticleManager:SetParticleControl(particle, 0, position)
-                    GameRules.Blight[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosY(position.y)] = particle
+                    GameRules.Blight[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosY(position.y)] = particle or true
                     count = count+1
                 else
                     GameRules.Blight[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosY(position.y)] = false
@@ -29,8 +33,6 @@ function CreateBlight(location, size)
             end
         end
     end
-
-    BuildingHelper:AddGridType(radius, location, "Blight", "radius")
 
     print("Made "..count.." new blight particles")
    

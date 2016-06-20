@@ -6,7 +6,7 @@
 
 .HeroPanelsUnitRoot{
 	height: 100px;
-	width: 100px;
+	width: 128px;
 	margin-bottom: 10px;
 }
 
@@ -16,28 +16,30 @@
 	visibility: visible; 
 	
 	margin-top: 50px;
-	margin-left: 40px;
+	margin-left: 10px;
 }
 
 #HeroButton
 {
-	height: 100%;
-	width: 100%;
+	height: 93px;
+	width: 128px;
 	border: 1px solid grey;
 }
 
-#HeroOverlay{
-	width: 100%;
-	height: 80%;
+#HeroOverlay
+{	
+	width: 128px;
+	height: 72px;
 }
 
 #HeroImage
 {	
-	width: 100%;
-	height: 80%;
+	width: 128px;
+	height: 72px;
 }
 
-#HeroStatusContainer{
+#HeroStatusContainer
+{
 	width: 100%;
 	height: 100%;
 	flow-children: down;

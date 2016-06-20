@@ -8,7 +8,6 @@ CORPSE_MODEL = "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_trol
 CORPSE_DURATION = 88
 
 DISABLE_FOG_OF_WAR_ENTIRELY = false
-CAMERA_DISTANCE_OVERRIDE = 1600
 UNSEEN_FOG_ENABLED = false
 
 UNDER_ATTACK_WARNING_INTERVAL = 60
@@ -105,7 +104,6 @@ function dotacraft:InitGameMode()
     GameMode:SetRemoveIllusionsOnDeath( true )
     GameMode:SetAnnouncerDisabled( true )
     GameMode:SetLoseGoldOnDeath( false )
-    GameMode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
     GameMode:SetUseCustomHeroLevels ( true )
     GameMode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
     GameMode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
@@ -617,7 +615,7 @@ function dotacraft:InitializeTownHall( hero, position, building )
     end)
 
     -- Find neutrals near the starting zone and remove them
-    local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
+    local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
     for k,v in pairs(neutrals) do
         if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
             v:RemoveSelf()
