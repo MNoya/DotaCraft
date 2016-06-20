@@ -1,4 +1,4 @@
-BH_VERSION = "1.2.4"
+BH_VERSION = "1.2.5"
 
 --[[
     For installation, usage and implementation examples check the wiki:
@@ -1215,7 +1215,7 @@ function BuildingHelper:StartBuilding(builder)
         end
 
         local fAddedHealth = 0
-        local nHealthInterval = fMaxHealth / (buildTime / fserverFrameRate)
+        local nHealthInterval = (fMaxHealth-nInitialHealth) / (buildTime / fserverFrameRate)
         local fSmallHealthInterval = nHealthInterval - math.floor(nHealthInterval) -- just the floating point component
         nHealthInterval = math.floor(nHealthInterval)
         local fHPAdjustment = 0
@@ -1246,10 +1246,13 @@ function BuildingHelper:StartBuilding(builder)
                     if hpGain > 0 then
                         fAddedHealth = fAddedHealth + hpGain
                         building:SetHealth(building:GetHealth() + hpGain)
-                    end                    
+                    end
                 else
-                    building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth - nInitialHealth) -- round up the last little bit
-                    BuildingHelper:print("Finished "..building:GetUnitName().." in "..math.floor(GameRules:GetGameTime()-startTime).." seconds. HP was off by "..fMaxHealth - fAddedHealth - nInitialHealth)
+                    local adjustment = fMaxHealth - fAddedHealth - nInitialHealth
+                    if adjustment > 0 then
+                        building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth - nInitialHealth) -- round up the last little bit
+                    end
+                    BuildingHelper:print(string.format("Finished %s in %.2f seconds. HP was off by %.2f",building:GetUnitName(),GameRules:GetGameTime()-startTime,adjustment))
 
                     -- completion: timesUp is true
                     if callbacks.onConstructionCompleted then
@@ -1920,8 +1923,8 @@ function BuildingHelper:EnemyIsInsideBuildingArea(enemy_location, building_locat
         return num < upper and num > lower
     end
 
-    local betweenX = between(eBounds.Min.x, bBounds.Min.x, bBounds.Max.x) or between(eBounds.Max.x, bBounds.Min.x, bBounds.Max.x)
-    local betweenY = between(eBounds.Min.y, bBounds.Min.y, bBounds.Max.y) or between(eBounds.Max.y, bBounds.Min.y, bBounds.Max.y)
+    local betweenX = between(eBounds.Min.x, bBounds.Min.x, bBounds.Max.x) or between(eBounds.Max.x, bBounds.Min.x, bBounds.Max.x) or between(enemy_location.x,bBounds.Min.x,bBounds.Max.x)
+    local betweenY = between(eBounds.Min.y, bBounds.Min.y, bBounds.Max.y) or between(eBounds.Max.y, bBounds.Min.y, bBounds.Max.y) or between(enemy_location.y,bBounds.Min.y,bBounds.Max.y)
 
     return betweenX and betweenY
 end
