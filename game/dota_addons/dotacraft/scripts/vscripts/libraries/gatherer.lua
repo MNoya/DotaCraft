@@ -6,7 +6,6 @@ if not Gatherer then
 end
 
 --[[ TODO:
-Wisp shouldn't be selectable/controllable inside mine (add keyvalue to the gather ability)
 Warlocks aren't cancel repair toggle (due to them not having gather)
 Shouldnt hardcode gold_mine on-top building names in the filter
 Make it possible to work without a GatherAbility
@@ -780,6 +779,7 @@ function Gatherer:Init(unit)
         caster.gatherer_state = "idle"
         caster.state = "idle"
 
+        unit:RemoveModifierByName("modifier_gatherer_hidden")
         if unit.gatherer_timer then Timers:RemoveTimer(unit.gatherer_timer) end
 
         caster:SetNoCollision(false)
@@ -887,8 +887,8 @@ function Gatherer:Init(unit)
             mine:AddGatherer(unit)
             unit:AddNoDraw()
             unit:SetAbsOrigin(mine:GetAbsOrigin())
-            unit:AddNewModifier(unit, nil, "modifier_gatherer_hidden", {})
         end
+        unit:AddNewModifier(unit, nil, "modifier_gatherer_hidden", {restricted=not unit:GetKeyValue("GoldMineControllable")})
         
         unit.gatherer_timer = Timers:CreateTimer(gold_interval, function()
             local gold_gain = gold_per_interval

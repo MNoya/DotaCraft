@@ -405,14 +405,8 @@ function UnloadWisp( event )
     FindClearSpaceForUnit(wisp, mine.entrance, true)
 
     -- Cancel gather effects
-    wisp:RemoveModifierByName("modifier_on_order_cancel_gold")
-    wisp:RemoveModifierByName("modifier_gathering_gold")
-    wisp.state = "idle"
-
-    local ability = wisp:FindAbilityByName("nightelf_gather")
-    ability.cancelled = true
-    ToggleOff(ability)
-
+    wisp:CancelGather()
+    
     -- Set gold mine counter
     local entangled_gold_mine = mine.building_on_top
     local count = #builders

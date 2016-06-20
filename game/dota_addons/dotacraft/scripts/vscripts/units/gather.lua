@@ -162,8 +162,9 @@ function Gather( event )
                 Timers:CreateTimer(0.06, function() 
                     caster:Stop() 
                     caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
-                    PlayerResource:RemoveFromSelection(caster:GetPlayerOwnerID(), caster)
                 end)
+            elseif race == "nightelf" then
+                PlayerResource:RemoveFromSelection(playerID, caster)
             end
 
             -- Particle Counter on overhead

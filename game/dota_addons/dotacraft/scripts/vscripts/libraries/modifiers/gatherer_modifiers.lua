@@ -24,7 +24,13 @@ function modifier_gatherer_hidden:CheckState()
         [MODIFIER_STATE_DISARMED] = true,
         [MODIFIER_STATE_NOT_ON_MINIMAP] = true,
         [MODIFIER_STATE_NO_HEALTH_BAR] = true,
+        [MODIFIER_STATE_COMMAND_RESTRICTED] = self.restricted,
+        [MODIFIER_STATE_UNSELECTABLE] = self.restricted,
     }
+end
+
+function modifier_gatherer_hidden:OnCreated(kv)
+    self.restricted = kv.restricted == 1
 end
 
 function modifier_gatherer_hidden:IsHidden()
