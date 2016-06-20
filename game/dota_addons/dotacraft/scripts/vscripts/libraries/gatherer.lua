@@ -6,7 +6,6 @@ if not Gatherer then
 end
 
 --[[ TODO:
-Warlocks aren't cancel repair toggle (due to them not having gather)
 Shouldnt hardcode gold_mine on-top building names in the filter
 Make it possible to work without a GatherAbility
 ]]
@@ -775,14 +774,13 @@ function Gatherer:Init(unit)
     end
 
     function unit:CancelGather()
-        local caster = unit
-        caster.gatherer_state = "idle"
-        caster.state = "idle"
+        unit.state = "idle"
+        unit.gatherer_state = "idle"
 
         unit:RemoveModifierByName("modifier_gatherer_hidden")
         if unit.gatherer_timer then Timers:RemoveTimer(unit.gatherer_timer) end
 
-        caster:SetNoCollision(false)
+        unit:SetNoCollision(false)
 
         if unit.GatherAbility.callbacks and unit.GatherAbility.callbacks.OnCancelGather then
             unit.GatherAbility.callbacks.OnCancelGather()
@@ -889,6 +887,7 @@ function Gatherer:Init(unit)
             unit:SetAbsOrigin(mine:GetAbsOrigin())
         end
         unit:AddNewModifier(unit, nil, "modifier_gatherer_hidden", {restricted=not unit:GetKeyValue("GoldMineControllable")})
+        unit.gatherer_state = "gathering_gold"
         
         unit.gatherer_timer = Timers:CreateTimer(gold_interval, function()
             local gold_gain = gold_per_interval
@@ -905,7 +904,6 @@ function Gatherer:Init(unit)
                 mine:RemoveGatherer(unit)
                 unit:RemoveNoDraw()
                 unit:RemoveModifierByName("modifier_gatherer_hidden")
-                unit.state = "gathering_gold"
 
                 local return_ability = unit:GetReturnAbility()
                 return_ability:SetHidden(false)
@@ -956,7 +954,7 @@ function Gatherer:DamageTree(unit, tree, value)
     local return_ability = unit:GetReturnAbility()
     local playerID = unit:GetPlayerOwnerID()
 
-    unit.state = "gathering_lumber"
+    unit.gatherer_state = "gathering_lumber"
     local lumber_gain = math.min(tree.health, value)
     tree.health = tree.health - value
     
@@ -1139,7 +1137,7 @@ function Gatherer:CastGatherAbility(event)
         caster.target_mine = gold_mine
         caster.target_tree = nil -- Forget the tree
         caster.last_resource_gathered = "gold"
-        caster.state = "moving_to_mine"
+        caster.gatherer_state = "moving_to_mine"
 
         -- Destroy any old move timer
         if caster.gatherer_timer then Timers:RemoveTimer(caster.gatherer_timer) end
