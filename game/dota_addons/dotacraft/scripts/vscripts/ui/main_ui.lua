@@ -3,7 +3,6 @@ print("[DOTACRAFT] ui.lua")
 require('ui/trading_alliances')
 require('ui/pre_game')
 require('ui/end_screen')
-require('ui/player_actions')
 require('ui/hud')
 require('ui/sounds')
 require('ui/messages')
@@ -27,7 +26,6 @@ end
 
 -- Register Listeners
 function dotacraft:UI_Listeners()
-    CustomGameEventManager:RegisterListener( "reposition_player_camera", Dynamic_Wrap(dotacraft, "RepositionPlayerCamera"))
     CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
     CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) --Right click through panorama 

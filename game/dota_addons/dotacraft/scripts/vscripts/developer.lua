@@ -8,7 +8,6 @@ CHEAT_CODES = {
     ["synergy"] = function(...) dotacraft:Synergy(...) end,                  -- "Disable tech tree requirements"
     ["riseandshine"] = function(...) dotacraft:RiseAndShine(...) end,        -- "Set time of day to dawn" 
     ["lightsout"] = function(...) dotacraft:LightsOut(...) end,              -- "Set time of day to dusk"
-    ["kurokywasright"] = function(...) dotacraft:RotateCamera(...) end,      -- Rotates the camera 180 degrees
     ["322"] = function(...) dotacraft:MakePlayerLose(...) end,               -- Lose the game         
 }
 

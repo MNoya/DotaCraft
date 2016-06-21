@@ -1,105 +1,117 @@
 "AddonInfo"
 {
-	"maps"			"4_turtlerock 4_phantomgrove 2_meltingvalley 2_echoisles 2_hillsofglory 6_coppercanyon"
-	"IsPlayable"	"1"
-	"2_hillsofglory"
-	{
-		"MaxPlayers" "2"
-	}
-	"2_echoisles"
-	{
-		"MaxPlayers" "2"
-	}
-	"2_meltingvalley"
-	{
-		"MaxPlayers" "2"
-	}
-	"4_turtlerock"
-	{
-		"MaxPlayers" "4"
-	}
-	"4_phantomgrove"
-	{
-		"MaxPlayers" "4"
-	}
-	"6_coppercanyon"
-	{
-		"MaxPlayers" "6"
-	}
+    "maps"          "4_turtlerock 4_phantomgrove 2_meltingvalley 2_echoisles 2_hillsofglory 6_coppercanyon"
+    "IsPlayable"    "1"
+    "2_hillsofglory"
+    {
+        "MaxPlayers" "2"
+    }
+    "2_echoisles"
+    {
+        "MaxPlayers" "2"
+    }
+    "2_meltingvalley"
+    {
+        "MaxPlayers" "2"
+    }
+    "4_turtlerock"
+    {
+        "MaxPlayers" "4"
+    }
+    "4_phantomgrove"
+    {
+        "MaxPlayers" "4"
+    }
+    "6_coppercanyon"
+    {
+        "MaxPlayers" "6"
+    }
 
-	"Default_Keys"
-	{
-		"01"
-		{
-			"Key"		"F1"
-		 	"Command" 	"+SelectHeropanel1"
-		 	"Name"		"Select the first hero"
-		}
-		"02"
-		{
-			"Key"		"F2"
-		 	"Command" 	"+SelectHeropanel2"
-		 	"Name"		"Select the second hero"
-		}
-		"03"
-		{
-			"Key"		"F3"
-		 	"Command" 	"+SelectHeropanel3"
-		 	"Name"		"Select the third hero"
-		}
-		"04"
-		{
-			"Key"		"F8"
-		 	"Command" 	"+IdleBuilderSwap"
-		 	"Name"		"Move to next idle builder"
-		}
-		"05"
-		{
-			"Key"		"B"
-		 	"Command" 	"+ToggleShop"
-		 	"Name"		"Toggle shop closest to the selected unit"
-		}
-		"06"
-		{
-			"Key"		"1"
-		 	"Command" 	"+SelectCreateControlGroup1"
-		 	"Name"		"Select or Create Control Group 1"
-		}
-		"07"
-		{
-			"Key"		"2"
-		 	"Command" 	"+SelectCreateControlGroup2"
-		 	"Name"		"Select or Create Control Group 2"
-		}
-		"08"
-		{
-			"Key"		"3"
-		 	"Command" 	"+SelectCreateControlGroup3"
-		 	"Name"		"Select or Create Control Group 3"
-		}
-		"09"
-		{
-			"Key"		"4"
-		 	"Command" 	"+SelectCreateControlGroup4"
-		 	"Name"		"Select or Create Control Group 4"
-		}
-		"10"
-		{
-			"Key"		"5"
-		 	"Command" 	"+SelectCreateControlGroup5"
-		 	"Name"		"Select or Create Control Group 5"
-		}
-		"11"
-		{
-			"Key"		"6"
-		 	"Command" 	"+SelectCreateControlGroup6"
-		 	"Name"		"Select or Create Control Group 6"
-		}
-		"12"
-		{
-			"Key"		"7"
-		 	"Command" 	"+SelectCreateControlGroup7"
-		 	"Name"		"Select or Create Control Group 7"
-		}
-	}
+    "Default_Keys"
+    {
+        "01"
+        {
+            "Key"       "F1"
+            "Command"   "+SelectHeropanel1"
+            "Name"      "Select the first hero"
+        }
+        "02"
+        {
+            "Key"       "F2"
+            "Command"   "+SelectHeropanel2"
+            "Name"      "Select the second hero"
+        }
+        "03"
+        {
+            "Key"       "F3"
+            "Command"   "+SelectHeropanel3"
+            "Name"      "Select the third hero"
+        }
+        "04"
+        {
+            "Key"       "F8"
+            "Command"   "+IdleBuilderSwap"
+            "Name"      "Move to next idle builder"
+        }
+        "05"
+        {
+            "Key"       "B"
+            "Command"   "+ToggleShop"
+            "Name"      "Toggle shop closest to the selected unit"
+        }
+        "06"
+        {
+            "Key"       "1"
+            "Command"   "+SelectCreateControlGroup1"
+            "Name"      "Select or Create Control Group 1"
+        }
+        "07"
+        {
+            "Key"       "2"
+            "Command"   "+SelectCreateControlGroup2"
+            "Name"      "Select or Create Control Group 2"
+        }
+        "08"
+        {
+            "Key"       "3"
+            "Command"   "+SelectCreateControlGroup3"
+            "Name"      "Select or Create Control Group 3"
+        }
+        "09"
+        {
+            "Key"       "4"
+            "Command"   "+SelectCreateControlGroup4"
+            "Name"      "Select or Create Control Group 4"
+        }
+        "10"
+        {
+            "Key"       "5"
+            "Command"   "+SelectCreateControlGroup5"
+            "Name"      "Select or Create Control Group 5"
+        }
+        "11"
+        {
+            "Key"       "6"
+            "Command"   "+SelectCreateControlGroup6"
+            "Name"      "Select or Create Control Group 6"
+        }
+        "12"
+        {
+            "Key"       "7"
+            "Command"   "+SelectCreateControlGroup7"
+            "Name"      "Select or Create Control Group 7"
+        }
+        "13"
+        {
+            "Key"       "F10"
+            "Command"   "+RotateLeft"
+            "Name"      "Minus Yaw"
+        }
+        "14"
+        {
+            "Key"       "F11"
+            "Command"   "+RotateRight"
+            "Name"      "Plus Yaw"
+        }
+    }
 }

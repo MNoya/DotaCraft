@@ -15,7 +15,10 @@ function SelectHero(){
 	};
 
 	if( WasMouseDoubleClicked() )
-		GameEvents.SendCustomGameEventToServer( "reposition_player_camera", { entIndex: unit} );
+	{
+		GameUI.SetCameraTarget(unit);
+		$.Schedule(1/10, function(){GameUI.SetCameraTarget(-1);})
+	}
 };
 
 var lastTime = 0;

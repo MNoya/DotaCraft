@@ -19,7 +19,8 @@ function OnIdleButtonPressed( data ) {
 
 	nextBuilder = builderList[String(currentBuilder)];
 	GameUI.SelectUnit(nextBuilder, false);
-	GameEvents.SendCustomGameEventToServer( "reposition_player_camera", { entIndex: nextBuilder });
+	GameUI.SetCameraTarget(nextBuilder);
+	$.Schedule(1/10, function(){GameUI.SetCameraTarget(-1);})
 }
 
 function OnPlayerUpdateIdleBuilders( args ) {
@@ -52,16 +53,9 @@ function OnPlayerStart( args ) {
 	$('#IdleNumber').text = idleCount;
 	$('#IdleButtonImage').SetImage( "s2r://panorama/images/custom_game/"+race+"/"+race+"_builder.png" );
 };
-
-var angle = 0;
-function RotateCamera() {
-	angle+= 180;
-	GameUI.SetCameraYaw( angle );
-};
  
 (function () {
 	GameEvents.Subscribe( "player_show_ui", OnPlayerStart );
-	GameEvents.Subscribe( "rotate_camera", RotateCamera );
 	GameEvents.Subscribe( "player_update_idle_builders", OnPlayerUpdateIdleBuilders );
 	
 	// Idle Builders Key

@@ -271,6 +271,11 @@ function IsNeutralUnit(entIndex) {
 
 (function () {
     CustomNetTables.SubscribeNetTableListener( "attacks_enabled", OnAttacksEnabledChanged );
+
+    GameUI.Keybinds.OnRotateLeft = function() { OnRotateLeft() }
+    GameUI.Keybinds.OnRotateRight = function() { OnRotateRight() }
+    GameUI.Keybinds.OnReleaseRotateLeft = function() { OnReleaseRotateLeft() }
+    GameUI.Keybinds.OnReleaseRotateRight = function() { OnReleaseRotateRight() }
 })();
 
 var cameraDistance = 1600
@@ -285,6 +290,43 @@ function ZoomEvent(zoom_distance)
 
     cameraDistance = zoom_distance
     GameUI.SetCameraDistance( zoom_distance )
+}
+
+var angle = 0;
+var rotatingLeft = false;
+function OnRotateLeft() {
+    rotatingLeft = true
+    RotateTimerLeft()
+}
+
+function OnReleaseRotateLeft() {
+    rotatingLeft = false;
+}
+
+function RotateTimerLeft() {
+    if (rotatingLeft) {
+        angle-=1
+        GameUI.SetCameraYaw( angle );
+        $.Schedule(1/60, RotateTimerLeft)
+    }
+}
+
+var rotatingRight = false;
+function OnRotateRight() {
+    rotatingRight = true
+    RotateTimerRight()
+}
+
+function OnReleaseRotateRight() {
+    rotatingRight = false;
+}
+
+function RotateTimerRight() {
+    if (rotatingRight) {
+        angle+=1
+        GameUI.SetCameraYaw( angle );
+        $.Schedule(1/60, RotateTimerRight)
+    }
 }
 
 // Main mouse event callback
