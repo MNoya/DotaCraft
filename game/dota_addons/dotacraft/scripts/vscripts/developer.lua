@@ -275,7 +275,7 @@ function dotacraft:TestHero( heroName, bEnemy )
 
     local pos = selected:GetAbsOrigin()
     local unitName = GetRealHeroName(heroName)
-    local team = bEnemy and DOTA_TEAM_NEUTRALS or PlayerResource:GetTeam(0)
+    local team = bEnemy and DOTA_TEAM_BADGUYS or PlayerResource:GetTeam(0)
 
     PrecacheUnitByNameAsync(unitName, function()
         local hero = CreateUnitByName(unitName, pos, true, nil, nil, team)
@@ -285,7 +285,7 @@ function dotacraft:TestHero( heroName, bEnemy )
             hero:SetPlayerID(0)
         end
 
-        for i=1,8 do
+        for i=1,9 do
             hero:HeroLevelUp(false)
         end
 

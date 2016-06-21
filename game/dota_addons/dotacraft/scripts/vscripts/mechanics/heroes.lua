@@ -15,8 +15,11 @@ XP_PER_LEVEL_TABLE = {
     5400 -- 10 +1000
  }
 
-XP_BOUNTY_TABLE = {
+XP_CREEP_BOUNTY_TABLE = {
     25, 40, 60, 85, 115, 150, 190, 235, 285, 340
+}
+XP_HERO_BOUNTY_TABLE = {
+    100, 120, 160, 220, 300, 400, 500, 600, 700, 800
 }
 
 XP_NEUTRAL_SCALING = {
@@ -27,14 +30,16 @@ XP_NEUTRAL_SCALING = {
 XP_SINGLEHERO_TIER_BONUS = {[2] = 1.15, [3] = 1.30}
 
 function Heroes:DistributeXP(killed, attacker)
-    local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
-    if not XPGain then return end
+    if killed:IsIllusion() then return end
 
     -- You do not receive experience if any building such as a tower or ancient makes the killing blow.
     if IsCustomBuilding(attacker) then return end
     
     -- Heroes gain experience for attacking buildings with attacks such as towers.
     if IsCustomBuilding(killed) and not killed:HasAttackCapability() then return end
+
+    local XPGain = killed:IsRealHero() and XP_HERO_BOUNTY_TABLE[killed:GetLevel()] or XP_CREEP_BOUNTY_TABLE[killed:GetLevel()]
+    if not XPGain then return end
 
     -- You can receive experience for killing units of dropped players, but not get experience if your Heroes are over level 5
     local bDisconnectedOwner = false
@@ -51,7 +56,7 @@ function Heroes:DistributeXP(killed, attacker)
     if teamNumber == DOTA_TEAM_NEUTRALS then return end
 
     -- If one Hero is nearby, but another is not, only the nearby Hero gains experience
-    local heroList = FindUnitsInRadius(teamNumber, killed:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+    local heroList = FindUnitsInRadius(teamNumber, killed:GetAbsOrigin(), nil, XP_FIND_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
     -- Kills made when no Hero is nearby result in all your Heroes' (even allies) receiving experience
     if #heroList == 0 then

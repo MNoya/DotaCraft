@@ -102,6 +102,8 @@ function dotacraft:InitGameMode()
     GameMode:SetExecuteOrderFilter( Dynamic_Wrap( dotacraft, "FilterExecuteOrder" ), self )
     GameMode:SetDamageFilter( Dynamic_Wrap( dotacraft, "FilterDamage" ), self )
     GameMode:SetTrackingProjectileFilter( Dynamic_Wrap( dotacraft, "FilterProjectile" ), self )
+    GameMode:SetModifyExperienceFilter( Dynamic_Wrap( dotacraft, "FilterExperience" ), self )
+    GameMode:SetModifyGoldFilter( Dynamic_Wrap( dotacraft, "FilterGold" ), self )
 
     -- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
@@ -948,7 +950,7 @@ function dotacraft:OnEntityKilled( event )
     PlayerResource:RemoveFromSelection(killed_playerID, killed)
 
     -- Hero Killed
-    if killed:IsRealHero() then
+    if killed:IsRealHero() and killed_playerID ~= -1 then
         print("A Hero was killed")
         
         -- add hero to tavern, this function also works out cost etc
@@ -1244,6 +1246,9 @@ function dotacraft:PrintWinMessageForTeam( teamID )
     end
 end
 
+------------------------------------------------------------------
+--                      Projectile Filter                       --
+------------------------------------------------------------------
 function dotacraft:FilterProjectile( filterTable )
     local attacker_index = filterTable["entindex_source_const"]
     local victim_index = filterTable["entindex_target_const"]
@@ -1259,6 +1264,38 @@ function dotacraft:FilterProjectile( filterTable )
 
     if is_attack and HasArtilleryAttack(attacker) then
         AttackGroundPos(attacker, victim:GetAbsOrigin(), move_speed)
+        return false
+    end
+
+    return true
+end
+
+------------------------------------------------------------------
+--                       Experience Filter                      --
+------------------------------------------------------------------
+function dotacraft:FilterExperience( filterTable )
+    local experience = filterTable["experience"]
+    local playerID = filterTable["player_id_const"]
+    local reason = filterTable["reason_const"]
+
+    -- Disable all hero kill experience
+    if reason == DOTA_ModifyXP_HeroKill then
+        return false
+    end
+
+    return true
+end
+
+------------------------------------------------------------------
+--                          Gold Filter                         --
+------------------------------------------------------------------
+function dotacraft:FilterGold( filterTable )
+    local gold = filterTable["gold"]
+    local playerID = filterTable["player_id_const"]
+    local reason = filterTable["reason_const"]
+
+    -- Disable all hero kill gold
+    if reason == DOTA_ModifyGold_HeroKill then
         return false
     end
 
