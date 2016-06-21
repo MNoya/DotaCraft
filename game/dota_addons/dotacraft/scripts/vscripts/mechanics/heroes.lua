@@ -1,3 +1,117 @@
+if not Heroes then
+    Heroes = class({})
+end
+
+XP_PER_LEVEL_TABLE = {
+    0, -- 1
+    200, -- 2 +200
+    500, -- 3 +300
+    900, -- 4 +400
+    1400, -- 5 +500
+    2000, -- 6 +600
+    2700, -- 7 +700
+    3500, -- 8 +800
+    4400, -- 9 +900
+    5400 -- 10 +1000
+ }
+
+XP_BOUNTY_TABLE = {
+    25, 40, 60, 85, 115, 150, 190, 235, 285, 340
+}
+
+XP_NEUTRAL_SCALING = {
+    0.80, 0.70, 0.62, 0.55,
+    0, 0, 0, 0, 0, 0 
+}
+
+XP_SINGLEHERO_TIER_BONUS = {[2] = 1.15, [3] = 1.30}
+
+function Heroes:DistributeXP(killed, attacker)
+    local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
+    if not XPGain then return end
+
+    -- You do not receive experience if any building such as a tower or ancient makes the killing blow.
+    if IsCustomBuilding(attacker) then return end
+    
+    -- Heroes gain experience for attacking buildings with attacks such as towers.
+    if IsCustomBuilding(killed) and not killed:HasAttackCapability() then return end
+
+    -- You can receive experience for killing units of dropped players, but not get experience if your Heroes are over level 5
+    local bDisconnectedOwner = false
+    local bNeutral = killed:GetTeamNumber() == DOTA_TEAM_NEUTRALS
+    local killedID = killed:GetPlayerOwnerID() or -1
+    if killedID ~= -1 then
+        local kHero = PlayerResource:GetSelectedHeroEntity(killedID)
+        if kHero and kHero:HasOwnerAbandoned() then
+            bDisconnectedOwner = true
+        end
+    end
+
+    local teamNumber = attacker:GetTeamNumber()
+    if teamNumber == DOTA_TEAM_NEUTRALS then return end
+
+    -- If one Hero is nearby, but another is not, only the nearby Hero gains experience
+    local heroList = FindUnitsInRadius(teamNumber, killed:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+    -- Kills made when no Hero is nearby result in all your Heroes' (even allies) receiving experience
+    if #heroList == 0 then
+        heroList = Heroes:TeamHeroList(teamNumber)
+    end
+
+    local validHeroes = {}
+    for _,hero in pairs(heroList) do
+        local heroLevel = hero:GetLevel()
+         -- Don't split experience if the heroes can't gain it (Improvement over wc3, where the XP is just lost)
+        if hero:IsAlive() and ((bNeutral and heroLevel < 5) or (not bNeutral and heroLevel < 10)) then
+            table.insert(validHeroes, hero)
+        end
+    end
+
+    local heroCount = #validHeroes
+    print("Distribute "..XPGain.." XP between "..heroCount.." heroes")
+    for _,hero in pairs(validHeroes) do
+        if hero:IsRealHero() and hero:GetTeam() ~= killed:GetTeam() then
+            local bonus = ""
+
+            -- Scale XP if neutral
+            local xp = XPGain
+            if bNeutral then
+                local heroLevel = hero:GetLevel()
+                xp = (XPGain * XP_NEUTRAL_SCALING[heroLevel]) / heroCount
+                bonus = bonus.." [-"..(100-XP_NEUTRAL_SCALING[heroLevel]*100).."% due to neutral]"
+            end
+
+            -- If a player owns only one hero (dead heroes count), and is at tier 2 or Tier 3, they gain bonus experience.
+            local playerID = hero:GetPlayerOwnerID()
+            if #Players:GetHeroes(playerID) == 1 then
+                local cityLevel = Players:GetCityLevel(playerID) or 0
+                if cityLevel > 1 then
+                    bonus = bonus.." [+"..(XP_SINGLEHERO_TIER_BONUS[cityLevel]-1).."% due to city level "..cityLevel.."]"
+                    xp = xp * XP_SINGLEHERO_TIER_BONUS[cityLevel]
+                end
+            end
+            xp = math.floor(xp+0.5)
+
+            hero:AddExperience(xp, false, false)
+            Scores:IncrementXPGained( hero:GetPlayerID(), xp )
+            print("  Granted "..xp.." XP"..bonus.." to "..hero:GetUnitName())
+        end 
+    end
+end
+
+-- Returns a list of all heroes trained by this team, to use when spliting XP globally
+function Heroes:TeamHeroList(teamNumber)
+    local heroes = {}
+    local playerIDs = dotacraft:GetPlayersOnTeam(teamNumber)
+    for _,playerID in pairs(playerIDs) do
+        local playerHeroes = Players:GetHeroes(playerID)
+        for _,hero in pairs(playerHeroes) do
+            table.insert(heroes, hero)
+        end
+    end
+    return heroes
+end
+
 -- Returns string with the name of the city center associated with the hero_name
 function GetCityCenterNameForHeroRace( hero_name )
     local citycenter_name = ""

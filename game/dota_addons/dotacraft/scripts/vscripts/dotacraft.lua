@@ -15,45 +15,6 @@ UNDER_ATTACK_WARNING_INTERVAL = 60
 STARTING_GOLD = 500
 STARTING_LUMBER = 150
 
-XP_PER_LEVEL_TABLE = {
-    0, -- 1
-    200, -- 2 +200
-    500, -- 3 +300
-    900, -- 4 +400
-    1400, -- 5 +500
-    2000, -- 6 +600
-    2700, -- 7 +700
-    3500, -- 8 +800
-    4400, -- 9 +900
-    5400 -- 10 +1000
- }
-
-XP_BOUNTY_TABLE = {
-    25,
-    40,
-    60,
-    85,
-    115,
-    150,
-    190,
-    235,
-    285,
-    340
-}
-
-XP_NEUTRAL_SCALING = {
-    0.80,
-    0.70, 
-    0.62,
-    0.55,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-}
-
 TEAM_COLORS = {}
 TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 52, 85, 255 }   --  Blue
 TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 255, 52, 85 }   --  Red
@@ -355,12 +316,6 @@ function dotacraft:OnHeroInGame(hero)
         end)
     else
         print("[DOTACRAFT] Hero spawned in game for first time -- " .. hero:GetUnitName())
-
-        if Convars:GetBool("developer") then
-            for i=1,9 do
-                hero:HeroLevelUp(false)
-            end
-        end
 
         Attributes:ModifyBonuses(hero)
 
@@ -1100,35 +1055,12 @@ function dotacraft:OnEntityKilled( event )
         end
 
         if attacker_playerID and attacker_playerID ~= -1 then
-            print(attacker_playerID)
             if killed:IsRealHero() then
                 Scores:IncrementHeroesKilled( attacker_playerID, killed )
             elseif killed:IsCreature() then
                 Scores:IncrementUnitsKilled( attacker_playerID, killed )
             end
-        end
-
-        -- Give Experience to heroes based on the level of the killed creature
-        local XPGain = XP_BOUNTY_TABLE[killed:GetLevel()]
-
-        -- Grant XP in AoE
-        local heroesNearby = FindUnitsInRadius( attacker:GetTeamNumber(), killed:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-        --print("There are ",#heroesNearby," nearby the dead unit, base value for this unit is: "..XPGain)
-        for _,hero in pairs(heroesNearby) do
-            if hero:IsRealHero() and hero:GetTeam() ~= killed:GetTeam() then
-
-                -- Scale XP if neutral
-                local xp = XPGain
-                if killed:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-                    xp = math.floor(( XPGain * XP_NEUTRAL_SCALING[hero:GetLevel()] ) / #heroesNearby)
-                end
-
-                hero:AddExperience(xp, false, false)
-
-                Scores:IncrementXPGained( playerID, xp )
-                --print("granted "..xp.." to "..hero:GetUnitName())
-            end 
-        end
+        end     
 
         -- Substract the Food Used
         local food_cost = GetFoodCost(killed)
@@ -1136,6 +1068,9 @@ function dotacraft:OnEntityKilled( event )
             Players:ModifyFoodUsed(killed_playerID, - food_cost)
         end
     end
+
+    -- Give Experience to heroes based on the level of the killed creature
+    Heroes:DistributeXP(killed, attacker)   
 
     -- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
     Timers:CreateTimer(1, function() 
@@ -1257,6 +1192,17 @@ function dotacraft:GetTeamCount()
         end
     end
     return teamCount
+end
+
+-- Gets a list of playerIDs on a team
+function dotacraft:GetPlayersOnTeam( teamNumber )
+    local players = {}
+    for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:GetTeam(playerID) == teamNumber then
+            table.insert(players, playerID)
+        end
+    end
+    return players
 end
 
 -- This should only be called when all teams but one are defeated
