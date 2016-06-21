@@ -249,8 +249,6 @@ function dotacraft:LoadKV()
     GameRules.Modifiers = LoadKeyValues("scripts/kv/modifiers.kv")
     GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
     GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
-    GameRules.Drops = LoadKeyValues("scripts/kv/map_drops.kv")
-    GameRules.Items = LoadKeyValues("scripts/kv/items.kv")
     GameRules.Damage = LoadKeyValues("scripts/kv/damage_table.kv")
 end
 
@@ -939,7 +937,7 @@ function dotacraft:OnEntityKilled( event )
 
     -- Check for neutral item drops
     if killed_teamNumber == DOTA_TEAM_NEUTRALS and killed:IsCreature() then
-        DropItems( killed )
+        Drops:Roll(killed)
 
         if attacker_playerID then
             Scores:IncrementItemsObtained( attacker_playerID )

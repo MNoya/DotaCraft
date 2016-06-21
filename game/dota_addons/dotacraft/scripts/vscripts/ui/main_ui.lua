@@ -19,14 +19,12 @@ end
 
 function dotacraft:OnPlayerSelectedEntities( event )
 	local playerID = event.PlayerID
-
-	GameRules.SELECTED_UNITS[playerID] = event.selected_entities
 	dotacraft:UpdateRallyFlagDisplays(playerID)
 end
 
 -- Register Listeners
 function dotacraft:UI_Listeners()
-    CustomGameEventManager:RegisterListener( "update_selected_entities", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
+    CustomGameEventManager:RegisterListener( "selection_update", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
     CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
     CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) --Right click through panorama 
     CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
