@@ -1,4 +1,4 @@
-"tome_of_retraining"
+"item_tome_of_retraining"
 {
     "BaseClass"                     "item_datadriven"
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -11,8 +11,572 @@
     {
         "RunScript"
         {
-            "ScriptFile"    "items/tome_of_retraining.lua"
+            "ScriptFile"    "items/tomes.lua"
             "Function"      "Retrain"
+        }
+    }
+}
+
+"item_tome_of_experience" //100xp
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_manual_of_health"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_trail_divine/courier_divine_ambient.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_xp"              "100"
+        }
+    }
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"            "items/tomes.lua"
+            "Function"              "Experience"
+        }
+        "FireSound"
+        {
+            "EffectName"            "DOTA_Item.Refresher.Activate"
+            "Target"                "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"                "CASTER"
+            "EffectName"            "particles/units/heroes/hero_omniknight/omniknight_purification_b.vpcf"
+            "EffectAttachType"      "follow_origin"
+        }      
+    }
+}
+
+"item_manual_of_health" //50hp
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_manual_of_health"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_trail_divine/courier_divine_ambient.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_health"          "50"
+        }
+    }
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"            "items/tomes.lua"
+            "Function"              "StatTome"
+            "ModifierName"          "modifier_manual_of_health"
+        }
+        "FireSound"
+        {
+            "EffectName"            "DOTA_Item.Refresher.Activate"
+            "Target"                "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"                "CASTER"
+            "EffectName"            "particles/units/heroes/hero_omniknight/omniknight_purification_b.vpcf"
+            "EffectAttachType"      "follow_origin"
+        }      
+    }
+
+    "Modifiers"
+    {
+        "modifier_manual_of_health"
+        {
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_HEALTH_BONUS"  "%bonus_health"
+            }
+        }
+    }
+}
+
+"item_tome_of_strength"
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_tome_of_strength"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "bonus_stat"    "1"
+        }
+    }
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"            "items/tomes.lua"
+            "Function"              "StatTome"
+            "ModifierName"          "modifier_tome_of_strength"
+        }
+        "FireSound"
+        {
+            "EffectName"            "DOTA_Item.Refresher.Activate"
+            "Target"                "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"                "CASTER"
+            "EffectName"            "particles/sweep_generic/sweep_2.vpcf"
+            "EffectAttachType"      "follow_origin"
+        }
+        "FireEffect"
+        {
+            "Target"                "CASTER"
+            "EffectName"            "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+            "EffectAttachType"      "follow_origin"
+        }           
+    }
+    "Modifiers"
+    {
+        "modifier_tome_of_strength"
+        {
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"  "%bonus_stat"
+            }
+        }
+    }
+}
+"item_tome_of_agility"
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_tome_of_agility"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_trail_international_2013/courier_international_2013.vpcf"
+
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "bonus_stat"    "1"
+        }
+    }
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"        "items/tomes.lua"
+            "Function"          "StatTome"
+            "ModifierName"      "modifier_tome_of_agility"
+        }
+        "FireSound"
+        {
+            "EffectName"        "DOTA_Item.Refresher.Activate"
+            "Target"            "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }   
+        "AttachEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/sweep_generic/sweep_1.vpcf"
+            "EffectAttachType"  "follow_overhead"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_tome_of_agility"
+        {
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_stat"
+            }
+        }
+    }
+}
+"item_tome_of_intelligence"
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_tome_of_intellect"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "bonus_stat"    "1"
+        }
+    }
+    
+    "ItemCastOnPickup" "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"        "items/tomes.lua"
+            "Function"          "StatTome"
+            "ModifierName"      "modifier_tome_of_intellect"
+        }
+        "FireSound"
+        {
+            "EffectName"        "DOTA_Item.Refresher.Activate"
+            "Target"            "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/items2_fx/shivas_guard_impact.vpcf"
+            "EffectAttachType"  "follow_overhead"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }
+    }
+    "Modifiers"
+    {
+        "modifier_tome_of_intellect"
+        {
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_stat"
+            }
+        }
+    }
+}
+
+"item_tome_of_knowledge" //+1 all
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_tome_of_knowledge"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "bonus_stat"    "1"
+        }
+    }
+    
+    "ItemCastOnPickup" "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"        "items/tomes.lua"
+            "Function"          "StatTome"
+            "ModifierName"      "modifier_tome_of_knowledge"
+        }
+        "FireSound"
+        {
+            "EffectName"        "DOTA_Item.Refresher.Activate"
+            "Target"            "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/items2_fx/shivas_guard_impact.vpcf"
+            "EffectAttachType"  "follow_overhead"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }   
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }
+    }
+    "Modifiers"
+    {
+        "modifier_tome_of_knowledge"
+        {
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"  "%bonus_stat"
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"   "%bonus_stat"
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_stat"
+            }
+        }
+    }
+}
+
+"item_tome_of_strength2"
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_tome_of_strength"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "bonus_stat"    "2"
+        }
+    }
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"            "items/tomes.lua"
+            "Function"              "StatTome"
+            "ModifierName"          "modifier_tome_of_strength"
+        }
+        "FireSound"
+        {
+            "EffectName"            "DOTA_Item.Refresher.Activate"
+            "Target"                "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"                "CASTER"
+            "EffectName"            "particles/sweep_generic/sweep_2.vpcf"
+            "EffectAttachType"      "follow_origin"
+        }
+        "FireEffect"
+        {
+            "Target"                "CASTER"
+            "EffectName"            "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+            "EffectAttachType"      "follow_origin"
+        }           
+    }
+    "Modifiers"
+    {
+        "modifier_tome_of_strength"
+        {
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"  "%bonus_stat"
+            }
+        }
+    }
+}
+"item_tome_of_agility2"
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_tome_of_agility"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_trail_international_2013/courier_international_2013.vpcf"
+
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "bonus_stat"    "2"
+        }
+    }
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"        "items/tomes.lua"
+            "Function"          "StatTome"
+            "ModifierName"      "modifier_tome_of_agility"
+        }
+        "FireSound"
+        {
+            "EffectName"        "DOTA_Item.Refresher.Activate"
+            "Target"            "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }   
+        "AttachEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/sweep_generic/sweep_1.vpcf"
+            "EffectAttachType"  "follow_overhead"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_tome_of_agility"
+        {
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_stat"
+            }
+        }
+    }
+}
+"item_tome_of_intelligence2"
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_tome_of_intellect"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "bonus_stat"    "2"
+        }
+    }
+    
+    "ItemCastOnPickup" "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"        "items/tomes.lua"
+            "Function"          "StatTome"
+            "ModifierName"      "modifier_tome_of_intellect"
+        }
+        "FireSound"
+        {
+            "EffectName"        "DOTA_Item.Refresher.Activate"
+            "Target"            "CASTER"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/items2_fx/shivas_guard_impact.vpcf"
+            "EffectAttachType"  "follow_overhead"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }
+    }
+    "Modifiers"
+    {
+        "modifier_tome_of_intellect"
+        {
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_stat"
+            }
         }
     }
 }

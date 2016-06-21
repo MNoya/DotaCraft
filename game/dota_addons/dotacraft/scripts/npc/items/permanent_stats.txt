@@ -1,0 +1,888 @@
+// Permanent Passive Stats
+
+"item_claws_of_attack_6"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_claws_of_attack"
+    
+    "ItemCost"                      "125"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_damage"          "6"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_claws_of_attack_6"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"        "%bonus_damage"
+            }
+        }
+    }
+}
+"item_claws_of_attack_9"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_claws_of_attack"
+    
+    "ItemCost"                      "300"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_damage"          "9"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_claws_of_attack_12"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"        "%bonus_damage"
+            }
+        }
+    }
+}
+"item_claws_of_attack_12"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_claws_of_attack"
+    
+    "ItemCost"                      "500"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_damage"          "12"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_claws_of_attack_12"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"        "%bonus_damage"
+            }
+        }
+    }
+}
+
+"item_gauntlets_of_ogre_strength_3"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_gauntlets_of_ogre_strength_3"
+    
+    "ItemCost"                      "100"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_str"             "3"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_gauntlets_of_ogre_strength_3"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_str"
+            }
+        }
+    }
+}
+
+"item_slippers_of_agility_3"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_slippers_of_agility_3"
+    
+    "ItemCost"                      "100"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_agility"         "3"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_slippers_of_agility_3"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_agility"
+            }
+        }
+    }
+}
+
+"item_mantle_of_intelligence_3"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_mantle_of_intelligence_3"
+    
+    "ItemCost"                      "100"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_int"             "3"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_mantle_of_intelligence_3"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_int"
+            }
+        }
+    }
+}
+
+"item_belt_of_giant_strength_6"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_belt_of_giant_strength_6"
+    
+    "ItemCost"                      "400"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_str"             "6"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_belt_of_giant_strength_6"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_str"
+            }
+        }
+    }
+}
+
+"item_boots_of_quel_thalas_6"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_boots_of_quel_thalas_6"
+    
+    "ItemCost"                      "400"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_agility"         "6"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_boots_of_quel_thalas_6"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_agility"
+            }
+        }
+    }
+}
+
+"item_robe_of_the_magi"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_mantle_of_intelligence_3"
+    
+    "ItemCost"                      "400"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_int"             "6"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_robe_of_the_magi"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_int"
+            }
+        }
+    }
+}
+
+"item_circlet_of_nobility"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_circlet_of_nobility"
+    
+    "ItemCost"                      "175"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_all_stats"       "2"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_circlet_of_nobility"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_all_stats"
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_all_stats"
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_all_stats"
+            }
+        }
+    }
+}
+
+"item_periapt_of_vitality"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_periapt_of_vitality"
+    
+    "ItemCost"                      "350"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_health"          "150"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_periapt_of_vitality"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+            }
+        }
+    }
+}
+
+"item_khadgars_gem_of_health"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_khadgars_gem_of_health"
+    
+    "ItemCost"                      "600"
+    "ItemQuality"                   "rare"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_health"          "300"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_khadgars_gem_of_health"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_HEALTH_BONUS" "%bonus_health"
+            }
+        }
+    }
+}
+
+"item_pendant_of_energy"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_pendant_of_energy"
+    
+    "ItemCost"                      "300"
+    "ItemQuality"                   "rare"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_mana"            "150"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_pendant_of_energy"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+            }
+        }
+    }
+}
+
+"item_pendant_of_mana"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_pendant_of_mana"
+    
+    "ItemCost"                      "600"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_mana"            "300"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_pendant_of_mana"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MANA_BONUS" "%bonus_mana"
+            }
+        }
+    }
+}
+
+"item_boots_of_speed"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_boots_of_speed"
+    
+    "ItemCost"                      "250"
+    "ItemQuality"                   "common"
+    "ItemAliases"                   "circlet"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_movement_speed"  "50"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_boots_of_speed"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE" "%bonus_movement_speed"
+            }
+        }
+    }
+}
+
+"item_ring_of_protection_2"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_ring_of_protection"
+    
+    "ItemCost"                      "125"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_armor"           "2"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_ring_of_protection"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"  
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+            }
+        }
+    }
+}
+"item_ring_of_protection_3"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_ring_of_protection"
+    
+    "ItemCost"                      "300"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_armor"           "3"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_ring_of_protection"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+            }
+        }
+    }
+}
+"item_ring_of_protection_4"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_ring_of_protection"
+    
+    "ItemCost"                      "600"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_armor"           "4"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_ring_of_protection"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+            }
+        }
+    }
+}
+
+"item_ring_of_regeneration"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_ring_of_regeneration"
+    
+    "ItemCost"                      "300"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_hp_regen"        "2"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_ring_of_regeneration"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%bonus_hp_regen"
+            }
+        }
+    }
+}
+
+"item_sobi_mask"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_ring_of_regeneration"
+    
+    "ItemCost"                      "400"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_mana_regen"      "2"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_sobi_mask"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "%bonus_mana_regen"
+            }
+        }
+    }
+}
+
+"item_gloves_of_haste"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_gloves_of_haste"
+    
+    "ItemCost"                      "125"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_attack_speed"    "15"
+        }
+    }
+    "Modifiers"
+    {
+        "modifier_gloves_of_haste"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+            }
+        }
+    }
+}
+
+"item_runed_bracers"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_runed_bracers"
+    
+    "ItemCost"                      "400"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_magic_res_pct"   "33"
+        }
+    }
+    "Modifiers"
+    {
+        "modifier_runed_bracers"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" "%bonus_magic_res_pct"
+            }
+        }
+    }
+}
+
+"item_talisman_of_evasion"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_talisman_of_evasion"
+    
+    "ItemCost"                      "400"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "evasion_chance_pct"    "15"
+        }
+    }
+    "Modifiers"
+    {
+        "modifier_talisman_of_evasion"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_EVASION_CONSTANT" "%evasion_chance_pct"
+            }
+        }
+    }
+}
+
+// +4 2-stat combo
+"item_helm_of_valor"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_helm_of_valor"
+    
+    "ItemCost"                      "500"
+    "ItemQuality"                   "rare"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_strength"        "4"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_agility"         "4"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_helm_of_valor"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_strength"
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_agility"
+            }
+        }
+    }
+}
+
+"item_medallion_of_courage"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_medallion_of_courage"
+    
+    "ItemCost"                      "500"
+    "ItemQuality"                   "rare"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_strength"        "4"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_intellect"       "4"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_medallion_of_courage"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_strength"
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_intellect"
+            }
+        }
+    }
+}
+
+"item_hood_of_cunning"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_hood_of_cunning"
+    
+    "ItemCost"                      "500"
+    "ItemQuality"                   "rare"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_agility"         "4"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_intellect"       "4"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_hood_of_cunning"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_agility"
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_intellect"
+            }
+        }
+    }
+}

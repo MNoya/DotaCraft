@@ -2,7 +2,6 @@
 
 // Scroll of Mana (100 mana)
 // Scroll of Protection (2 armor for 30 seconds)
-// Scroll of the Beast (25% bonus damage for 45 seconds)
 // Scroll of Resurrection (Paladin)
 // Scroll of Animate Dead (Death Knight)
 
@@ -246,6 +245,88 @@
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor" 
+			}
+		}
+	}
+}
+
+// Scroll of the Beast (25% bonus damage for 45 seconds)
+"item_scroll_of_the_beast"
+{
+	"BaseClass"                     "item_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityTextureName"            "item_scroll_of_the_beast"
+	"AbilityCooldown"               "60"
+	"AbilityManaCost"               "0"
+	"AbilityCastRange"				"500"
+		
+	"Model"							"models/props_gameplay/tpscroll01.vmdl"
+	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+	
+	"ItemCost"                      "400"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
+	"ItemShopTags"					"rare"
+	"ItemQuality"					"rare"
+	"ItemPermanent"					"0"
+	"ItemKillable"                  "1"
+	"ItemSellable"                  "1"
+	"ItemDroppable"                 "1"
+	"ItemInitialCharges"            "1"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_damage_pct"  "25"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"500"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"45"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		//TODO: Add cast fx
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_scroll_of_the_beast"
+			"Target"
+			{
+				"Center" 	"CASTER"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+			}
+			"Duration"		"%duration"
+		}
+
+		"SpendCharge"
+		{}
+	}
+
+	"Modifiers"
+	{
+		"modifier_scroll_of_the_beast"
+		{
+			// TODO: Add fx	
+			//"EffectName"		"particle_name"
+			//"EffectAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE" "%bonus_damage_pct" 
 			}
 		}
 	}

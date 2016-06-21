@@ -57,7 +57,7 @@ function dotacraft:OnPlayerChat(keys)
 	elseif DEBUG_CODES[command] then
         DEBUG_CODES[command](input[2])
     elseif TEST_CODES[command] then
-        TEST_CODES[command](input[2], input[3], input[4], playerID)
+        TEST_CODES[command](playerID, input[2], input[3], input[4])
     end        
 end
 
@@ -142,16 +142,22 @@ function dotacraft:LightsOut()
 end
 
 function dotacraft:GiveItem(playerID, item_name)
-	local cmdPlayer = Convars:GetCommandClient()
-	
 	local selected = PlayerResource:GetMainSelectedEntity(playerID)
     if selected then
         selected = EntIndexToHScript(selected)
 
     	local new_item = CreateItem(item_name, selected, selected)
     	if new_item then
-    		selected:AddItem(new_item)
-    	end
+            if selected:IsRealHero() then
+                selected:AddItem(new_item)
+            else
+                local pos = selected:GetAbsOrigin()+RandomVector(200)
+                CreateItemOnPositionSync(pos,new_item)
+                new_item:LaunchLoot(false, 200, 0.75,pos)
+            end
+    	else
+            print("ERROR, can't find "..item_name)
+        end
     end
 end
 
@@ -230,7 +236,7 @@ function dotacraft:DebugFood()
     end
 end
 
-function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
+function dotacraft:CreateUnits(pID, unitName, numUnits, bEnemy)
     local selected = PlayerResource:GetMainSelectedEntity(pID)
     if not selected then return end
     selected = EntIndexToHScript(selected)
@@ -267,28 +273,28 @@ function dotacraft:CreateUnits(unitName, numUnits, bEnemy, pID)
     end, pID)
 end
 
-function dotacraft:TestHero( heroName, bEnemy )
-    local selected = PlayerResource:GetMainSelectedEntity(0)
+function dotacraft:TestHero(playerID, heroName, bEnemy)
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
     if not selected then return end
     selected = EntIndexToHScript(selected)
 
     local pos = selected:GetAbsOrigin()
     local unitName = GetRealHeroName(heroName)
-    local team = bEnemy and DOTA_TEAM_BADGUYS or PlayerResource:GetTeam(0)
+    local team = bEnemy and DOTA_TEAM_BADGUYS or PlayerResource:GetTeam(playerID)
 
     PrecacheUnitByNameAsync(unitName, function()
         local hero = CreateUnitByName(unitName, pos, true, nil, nil, team)
-        hero:SetControllableByPlayer(0, true)
+        hero:SetControllableByPlayer(playerID, true)
         if not bEnemy then
-            hero:SetOwner(PlayerResource:GetPlayer(0))
-            hero:SetPlayerID(0)
+            hero:SetOwner(PlayerResource:GetPlayer(playerID))
+            hero:SetPlayerID(playerID)
         end
 
         for i=1,9 do
             hero:HeroLevelUp(false)
         end
 
-    end, 0)
+    end, playerID)
 end
 
 function dotacraft:DebugCalls()

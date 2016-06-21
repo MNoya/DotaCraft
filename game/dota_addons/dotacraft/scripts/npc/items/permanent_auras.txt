@@ -1,0 +1,80 @@
+// Permanent Aura Items
+// TODO: Use the lua modifier version of the original abilities, to prevent the aura from stacking or affecting building creatures
+
+"item_allerias_flute_of_accuracy" //trueshot aura
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_ALL"
+    "AbilityTextureName"            "item_allerias_flute_of_accuracy"
+
+    "Model"                         "models/props_items/monkey_king_bar01.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+
+    "UIPickupSound"                 "Item.PickUpGemShop"
+    "UIDropSound"                   "Item.DropGemShop"
+    "WorldDropSound"                "Item.DropGemWorld"
+    
+    "AbilityCastPoint"              "0.0"
+    "AbilityCastRange"              "900"
+
+    "ItemCost"                      "1200"
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"
+    "ItemShopTags"                  "artifact"
+    "ItemQuality"                   "artifact"
+    "ItemPermanent"                 "1"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_range_damage_pct" "10"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "900"
+        }
+    }
+ 
+    "Modifiers"
+    {
+        "modifier_flute_aura"
+        {
+            "Passive"       "1"
+            "IsHidden"      "1"
+            "Aura"          "modifier_flute_aura_buff"
+
+            "Aura_Radius"   "%radius"
+            "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+            "Aura_Types"    "DOTA_UNIT_TARGET_ALL"
+            "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
+
+            "EffectName" "particles/items_fx/cyclone.vpcf"
+            "EffectAttachType" "follow_origin" // "attach_hitloc"
+            "EffectLifeDurationScale" "1"
+            "EffectColorA" "255 255 0"
+        }
+ 
+        "modifier_flute_aura_buff"
+        {
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%bonus_range_damage_pct"
+            }
+        }
+    }
+}
+
+//"item_khadgars_pipe_of_insight" //brilliance aura
+//"item_legion_doom_horn" //unholy aura
+//"item_cloak_of_flames" //immolation
+//"item_the_lion_horn_of_stormwind" //devotion aura
+//"item_warsong_battle_drums" //command aura
+//"item_ancient_janngo_of_endurance" //endurance aura
+//"item_scourge_bone_chimes" //vampiric aura

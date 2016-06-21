@@ -1,0 +1,28 @@
+// Permanent Active Items
+
+"item_staff_of_teleportation"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityTextureName"            "item_staff_of_teleportation"
+    
+    "ItemCost"                      "150"
+    "ItemQuality"                   "common"
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/staff_of_teleportation.lua"
+            "Function"      "SelfTeleport"
+        }
+    }
+}
+
+//"item_staff_of_silence"
+//"item_cloak_of_shadows"
+//"item_amulet_of_spell_shield" //linkens
+//"item_diamond_of_summoning" //Teleports <AUds,DataA1> of the player's units within the targeted area to the location of the Hero when used.
+//"item_crystal_ball" //Reveals a targeted area. Invisible units are also revealed by the Crystal Ball's effect. |nLasts <AIta,Dur1> seconds.

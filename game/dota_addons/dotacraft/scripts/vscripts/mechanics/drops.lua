@@ -6,26 +6,41 @@ function Drops:Init()
     self.DropList = LoadKeyValues("scripts/kv/map_drops.kv")
     self.TierList = LoadKeyValues(("scripts/kv/items.kv"))
 
-    -- Validate item drops of the current map
+    -- Validate item drops
     local cutMap = string.find(GetMapName(), '_', 1, true)
     local mapName = string.sub(GetMapName(), cutMap+1)
     local mapDrops = self.DropList[mapName]
-
-    for creepName,creepDrops in pairs(mapDrops) do
-        for item_type,v in pairs(creepDrops) do
-            if item_type == "item" then
-                if not GetItemKV(v) then
-                    self:print("MISSING "..v.." for "..creepName)
-                end
-            else
-                local item_type_table = self.TierList[item_type]
-                local possible_item_drops = item_type_table[tostring(v)]
-                local choices = TableCount(possible_item_drops)
-                for i=1,choices do
-                    if not GetItemKV(possible_item_drops[tostring(i)]) then
-                        self:print("MISSING "..possible_item_drops[tostring(i)].." for "..creepName)
+    local missing = {}
+    for mapName,mapDrops in pairs(self.DropList) do
+        for creepName,creepDrops in pairs(mapDrops) do
+            for item_type,v in pairs(creepDrops) do
+                if item_type == "item" then
+                    if not GetItemKV(v) then
+                        if not missing.singles then missing.singles = {} end
+                        missing.singles[v] = 1
+                    end
+                else
+                    local item_type_table = self.TierList[item_type]
+                    local possible_item_drops = item_type_table[tostring(v)]
+                    local choices = TableCount(possible_item_drops)
+                    for i=1,choices do
+                        local itemName = "item_"..possible_item_drops[tostring(i)]
+                        if not GetItemKV(itemName) then
+                            if not missing[item_type] then missing[item_type] = {} end
+                            missing[item_type][itemName] = 1
+                        end
                     end
                 end
+            end
+        end
+    end
+    local miss = TableCount(missing)
+    if miss > 0 then
+        self:print("MISSING ITEMS")
+        for k,cat in pairs(missing) do
+            print("-- "..k:upper().." --")
+            for name,_ in pairs(cat) do
+                print("\""..name.."\"")
             end
         end
     end
@@ -64,7 +79,7 @@ function Drops:Roll( creep )
                 local item_type_table = self.TierList[item_type]
                 local possible_item_drops = item_type_table[tostring(v)]
                 local choices = TableCount(possible_item_drops)
-                local itemName = possible_item_drops[tostring(RandomInt(1, choices))]
+                local itemName = "item_"..possible_item_drops[tostring(RandomInt(1, choices))]
                 self:print("Dropping one "..item_type.." from level "..v.." at random... "..itemName)
                 self:Create(itemName, creep:GetAbsOrigin())
             end
@@ -90,3 +105,4 @@ function Drops:print( ... )
 end
 
 if not Drops.DropList then Drops:Init() end
+Drops:Init()
