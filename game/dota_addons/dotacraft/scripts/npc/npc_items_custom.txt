@@ -841,7 +841,7 @@
 	//"item_staff_of_silence"
 	//"item_cloak_of_shadows"
 	//"item_amulet_of_spell_shield" //linkens
-	//"item_diamond_of_summoning" //Teleports <AUds,DataA1> of the player's units within the targeted area to the location of the Hero when used.
+	//"item_diamond_of_summoning" //Teleports 12 of the player's units within the targeted area to the location of the Hero when used.
 	//"item_crystal_ball" //Reveals a targeted area. Invisible units are also revealed by the Crystal Ball's effect. |nLasts <AIta,Dur1> seconds.
 	// Permanent Aura Items
 	// TODO: Use the lua modifier version of the original abilities, to prevent the aura from stacking or affecting building creatures
@@ -894,10 +894,11 @@
 	            "Passive"       "1"
 	            "IsHidden"      "1"
 	            "Aura"          "modifier_flute_aura_buff"
+	
 	            "Aura_Radius"   "%radius"
-	            "Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	            "Aura_Types" "DOTA_UNIT_TARGET_ALL"
-	            "Aura_Flags" "DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
+	            "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	            "Aura_Types"    "DOTA_UNIT_TARGET_ALL"
+	            "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
 	
 	            "EffectName" "particles/items_fx/cyclone.vpcf"
 	            "EffectAttachType" "follow_origin" // "attach_hitloc"
@@ -928,7 +929,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_claws_of_attack"
+	    "AbilityTextureName"            "item_claws_of_attack_6"
 	    
 	    "ItemCost"                      "125"
 	    "ItemQuality"                   "common"
@@ -961,7 +962,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_claws_of_attack"
+	    "AbilityTextureName"            "item_claws_of_attack_9"
 	    
 	    "ItemCost"                      "300"
 	    "ItemQuality"                   "common"
@@ -994,7 +995,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_claws_of_attack"
+	    "AbilityTextureName"            "item_claws_of_attack_12"
 	    
 	    "ItemCost"                      "500"
 	    "ItemQuality"                   "common"
@@ -1198,7 +1199,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_mantle_of_intelligence_3"
+	    "AbilityTextureName"            "item_robe_of_the_magi"
 	    
 	    "ItemCost"                      "400"
 	    "ItemQuality"                   "common"
@@ -1435,7 +1436,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_ring_of_protection"
+	    "AbilityTextureName"            "item_rop"
 	    
 	    "ItemCost"                      "125"
 	    "ItemQuality"                   "common"
@@ -1467,7 +1468,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_ring_of_protection"
+	    "AbilityTextureName"            "item_rop"
 	    
 	    "ItemCost"                      "300"
 	    "ItemQuality"                   "common"
@@ -1499,7 +1500,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_ring_of_protection"
+	    "AbilityTextureName"            "item_rop_4"
 	    
 	    "ItemCost"                      "600"
 	    "ItemQuality"                   "common"
@@ -1561,11 +1562,11 @@
 	    }
 	}
 	
-	"item_sobi_mask"
+	"item_sobi"
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_ring_of_regeneration"
+	    "AbilityTextureName"            "item_sobi"
 	    
 	    "ItemCost"                      "400"
 	    "ItemQuality"                   "common"
@@ -1658,11 +1659,11 @@
 	    }
 	}
 	
-	"item_talisman_of_evasion"
+	"item_talisman_evasion"
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_talisman_of_evasion"
+	    "AbilityTextureName"            "item_talisman_evasion"
 	    
 	    "ItemCost"                      "400"
 	    "ItemQuality"                   "common"
@@ -1731,11 +1732,11 @@
 	    }
 	}
 	
-	"item_medallion_of_courage"
+	"item_medallion_courage"
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_medallion_of_courage"
+	    "AbilityTextureName"            "item_medallion_courage"
 	    
 	    "ItemCost"                      "500"
 	    "ItemQuality"                   "rare"
@@ -2866,7 +2867,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	    "AbilityTextureName"            "tome_of_retraining"
+	    "AbilityTextureName"            "item_tome_of_retraining"
 	    
 	    "ItemCost"                      "300"
 	    "ItemQuality"                   "common"
@@ -2885,7 +2886,7 @@
 	{
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 	    "BaseClass"                     "item_datadriven"
-	    "AbilityTextureName"            "item_manual_of_health"
+	    "AbilityTextureName"            "item_tome_of_experience"
 	    
 	    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
 	    "Effect"                        "particles/econ/courier/courier_trail_divine/courier_divine_ambient.vpcf"

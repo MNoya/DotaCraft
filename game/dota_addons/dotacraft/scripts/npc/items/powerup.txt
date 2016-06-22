@@ -2,7 +2,7 @@
 {
     "BaseClass"                     "item_datadriven"
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-    "AbilityTextureName"            "tome_of_retraining"
+    "AbilityTextureName"            "item_tome_of_retraining"
     
     "ItemCost"                      "300"
     "ItemQuality"                   "common"
@@ -21,7 +21,7 @@
 {
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
     "BaseClass"                     "item_datadriven"
-    "AbilityTextureName"            "item_manual_of_health"
+    "AbilityTextureName"            "item_tome_of_experience"
     
     "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
     "Effect"                        "particles/econ/courier/courier_trail_divine/courier_divine_ambient.vpcf"
