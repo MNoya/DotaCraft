@@ -1,7 +1,119 @@
 // Restores 250 hit points, 800 aoe
-//"rune_of_healing"
-//models/props_gameplay/rune_regeneration01.vmdl
+"item_rune_of_healing"
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    
+    "Model"                         "models/props_gameplay/rune_regeneration01.vmdl"
+    "Effect"                        "particles/generic_gameplay/rune_regeneration.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "heal"              "250"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "radius"            "800"
+        }
+    }
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"            "items/runes.lua"
+            "Function"              "Healing"
+        }
+        "FireSound"
+        {
+            "EffectName"            "DOTA_Item.Refresher.Activate"
+            "Target"                "CASTER"
+        }
+    }
+}
 
 // Creates a Watcher (same as Sentry) Ward right here. The Watcher Ward does not have a timer.
-//"rune_of_the_watcher"
-//models/props_gameplay/rune_arcane.vmdl
+"item_rune_of_the_watcher"
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    
+    "Model"                         "models/props_gameplay/rune_arcane.vmdl"
+    "Effect"                        "particles/generic_gameplay/rune_arcane.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"            "items/runes.lua"
+            "Function"              "Watcher"
+        }
+        "FireSound"
+        {
+            "EffectName"            "DOTA_Item.ObserverWard.Activate"
+            "Target"                "CASTER"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_sentry_ward"
+        {
+            "IsHidden"          "1"
+    
+            "EffectName"        "particles/items2_fx/ward_true_sight.vpcf"
+            "EffectAttachType"  "follow_origin"
+    
+            "States"
+            {
+                "MODIFIER_STATE_INVISIBLE"   "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "ThinkInterval"  "0.03"
+            "OnIntervalThink"
+            {
+                "RemoveModifier"
+                {
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Radius"    "1600"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                    }
+                    "ModifierName"  "modifier_truesight"
+                }
+                "ApplyModifier"
+                {
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Radius"    "1600"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                    }
+                    "ModifierName"  "modifier_truesight"
+                    "Duration"      "0.50"
+                }           
+            }       
+        }
+    }
+}

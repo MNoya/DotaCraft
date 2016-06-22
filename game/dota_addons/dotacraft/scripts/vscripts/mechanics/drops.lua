@@ -15,7 +15,8 @@ function Drops:Init()
         for creepName,creepDrops in pairs(mapDrops) do
             for item_type,v in pairs(creepDrops) do
                 if item_type == "item" then
-                    if not GetItemKV(v) then
+                    local itemName = "item_"..v
+                    if not GetItemKV(itemName) then
                         if not missing.singles then missing.singles = {} end
                         missing.singles[v] = 1
                     end
