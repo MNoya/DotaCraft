@@ -21,8 +21,217 @@
     }
 }
 
-//"item_staff_of_silence"
+"item_staff_of_silence"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityTextureName"            "item_staff_of_silence"
+    
+    "ItemCost"                      "600"
+    "AbilityCooldown"               "30"
+    "ItemQuality"                   "artifact"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "hero_duration"         "10"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "creep_duration"        "45"
+        }
+    }
+    
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "DOTA_Item.Orchid.Activate"
+            "Target"        "TARGET"
+        }
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_staff_of_silence"
+            "Target"
+            {
+                "Center"    "TARGET"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_HERO"
+            }
+            "Duration"      "%hero_duration"
+        }
+        
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_staff_of_silence"
+            "Target"
+            {
+                "Center"    "TARGET"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_BASIC"
+            }
+            "Duration"      "%creep_duration"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_staff_of_silence"
+        {
+            "IsDebuff"          "1"
+    
+            "EffectName"        "particles/items2_fx/orchid.vpcf"
+            "EffectAttachType"  "follow_overhead"
+    
+            "States"
+            {
+                "MODIFIER_STATE_SILENCED"   "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
+}
+
 //"item_cloak_of_shadows"
 //"item_amulet_of_spell_shield" //linkens
-//"item_diamond_of_summoning" //Teleports 12 of the player's units within the targeted area to the location of the Hero when used.
-//"item_crystal_ball" //Reveals a targeted area. Invisible units are also revealed by the Crystal Ball's effect. |nLasts <AIta,Dur1> seconds.
+
+//Teleports 12 of the player's units within the targeted area to the location of the Hero when used.
+"item_diamond_of_summoning"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_diamond_of_summoning"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityCooldown"               "60"
+    "AoERadius"                     "500"
+
+    "precache"
+    {
+        "particle"  "particles/econ/items/necrolyte/necrophos_sullen/necro_sullen_pulse_friend.vpcf"
+        "particle"  "particles/econ/items/necrolyte/necrophos_sullen/necro_sullen_pulse_friend_explosion.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+    }
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "teleport_units"        "12"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "500"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/diamond_of_summoning.lua"
+            "Function"      "SummoningStart"
+            "Target"        "POINT"
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "DeleteOnHit"    "1"
+        "RunScript"
+        {
+            "ScriptFile"    "items/diamond_of_summoning.lua"
+            "Function"      "SummoningEnd"
+        }
+    }
+}
+
+
+//Reveals a targeted area. Invisible units are also revealed by the Crystal Ball's effect.
+"item_crystal_ball"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_crystal_ball"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityCooldown"               "60"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "reveal_radius" "900"
+        }
+        "02"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "duration"      "10"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "DOTA_Item.DustOfAppearance.Activate"
+            "Target"        "TARGET"
+        }
+        "RunScript"
+        {
+            "ScriptFile"    "items/crystal_ball.lua"
+            "Function"      "Reveal"
+            "Target"        "POINT"
+        }
+
+        "CreateThinker"
+        {
+            "ModifierName"  "modifier_reveal"
+            "Target"        "POINT"
+            "Duration"      "%duration"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_reveal"
+        {
+            "IsHidden"          "1"
+            "Duration"          "%duration"
+            "ThinkInterval"     "0.03"
+            "OnIntervalThink"
+            {
+                "RemoveModifier"
+                {
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Radius"    "%reveal_radius"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                    }
+                    "ModifierName"  "modifier_truesight"
+                }
+                "ApplyModifier"
+                {
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Radius"    "%reveal_radius"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                    }
+                    "ModifierName"  "modifier_truesight"
+                    "Duration"      "0.50"
+                }           
+            }       
+        }
+    }
+}
