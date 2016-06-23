@@ -9,6 +9,7 @@ CHEAT_CODES = {
     ["riseandshine"] = function(...) dotacraft:RiseAndShine(...) end,        -- "Set time of day to dawn" 
     ["lightsout"] = function(...) dotacraft:LightsOut(...) end,              -- "Set time of day to dusk"
     ["322"] = function(...) dotacraft:MakePlayerLose(...) end,               -- Lose the game         
+    ["lvlup"] = function(...) dotacraft:LevelUp(...) end,                    -- Level all heroes    
 }
 
 DEBUG_CODES = {
@@ -295,6 +296,16 @@ function dotacraft:TestHero(playerID, heroName, bEnemy)
         end
 
     end, playerID)
+end
+
+function dotacraft:LevelUp(playerID, lvl)
+    lvl = lvl or 1
+    local heroes = Players:GetHeroes(playerID)
+    for _,hero in pairs(heroes) do
+        for i=1,lvl do
+            hero:HeroLevelUp(false)
+        end
+    end
 end
 
 function dotacraft:DebugCalls()

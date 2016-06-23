@@ -1,4 +1,4 @@
-BH_VERSION = "1.2.5"
+BH_VERSION = "1.2.6"
 
 --[[
     For installation, usage and implementation examples check the wiki:
@@ -2517,7 +2517,8 @@ function BuildingHelper:AddBuildingToPlayerTable(playerID, building, bUnderConst
         local index = getIndexTable(buildingList, building)
         if index then
             table.remove(buildingList, index)
-            self:SetBuildingCount(playerID, buildingName, self:GetBuildingCount(playerID, buildingName)-1)
+            local constructionCount = self:GetBuildingCount(playerID, buildingName, true)
+            self:SetBuildingCount(playerID, buildingName, constructionCount-1, true)
         end
 
         building.state = "complete"

@@ -253,6 +253,7 @@ function dotacraft:LoadKV()
 end
 
 function dotacraft:OnScriptReload()
+    SendToConsole("cl_script_reload")
     dotacraft:LoadKV()
 end
 
