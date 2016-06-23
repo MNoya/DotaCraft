@@ -24,9 +24,12 @@ function demon_hunter_immolation:OnToggleOn()
 
     caster:AddNewModifier(caster,self,"modifier_immolation_aura",{})
     caster:EmitSound("Hero_EmberSpirit.FlameGuard.Cast")
+    print("OnToggleOn")
     self.think = Timers:CreateTimer(1, function()
-        self:OnIntervalThink()
-        return 1
+        if self:GetToggleState() then
+            self:OnIntervalThink()
+            return 1
+        end
     end)
 end
 
@@ -50,9 +53,10 @@ function demon_hunter_immolation:OnIntervalThink()
     -- Check if the spell mana cost can be maintained
     if caster:GetMana() >= manacost_per_second then
         caster:SpendMana(manacost_per_second, self)
-
     else
-        self:ToggleAbility()
+        if self:GetToggleState() then
+            self:ToggleAbility()
+        end
     end
 end
 
@@ -125,8 +129,8 @@ modifier_immolation_aura_debuff = class({})
 function modifier_immolation_aura_debuff:OnCreated()
     local unit = self:GetParent()
     local particle = ParticleManager:CreateParticle("particles/particles/custom/nightelf/demon_hunter/immolation_damage.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, unit)
-    ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT_FOLLOW, "attach_origin", unit:GetAbsOrigin(), true)
-    ParticleManager:SetParticleControlEnt(particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetCaster():GetAbsOrigin(), true)
+    ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
+    ParticleManager:SetParticleControlEnt(particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
     self:AddParticle(particle, false, false, 1, false, false)
 end
 
