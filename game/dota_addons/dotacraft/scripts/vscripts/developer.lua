@@ -147,7 +147,7 @@ function dotacraft:GiveItem(playerID, item_name)
     if selected then
         selected = EntIndexToHScript(selected)
 
-    	local new_item = CreateItem(item_name, selected, selected)
+    	local new_item = CreateItem(item_name, nil, nil)
     	if new_item then
             if selected:IsRealHero() then
                 selected:AddItem(new_item)
