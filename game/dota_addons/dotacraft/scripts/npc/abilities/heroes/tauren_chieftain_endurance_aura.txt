@@ -1,69 +1,35 @@
 // Tauren Chieftain Endurance Aura
 // Author: Noya
-// Date: 13.01.2015.
-// Notes: Increases the movement speed and attack rate of nearby friendly units.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +10%, Attack Rate +5%	1
-//2	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +20%, Attack Rate +10%	3
-//3	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +30%, Attack Rate +15%	5
+// Description: Increases the movement speed and attack rate of nearby friendly units.
+
 "tauren_chieftain_endurance_aura"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"tauren_chieftain_endurance_aura"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/tauren_chieftain/endurance_aura.lua"
+    "AbilityTextureName"            "tauren_chieftain_endurance_aura"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 
-	"AbilityCastRange"    			"900"
+    "AbilityCastRange"              "900"
 
-	"precache"
-	{
-		"particle"	"particles/custom/aura_endurance.vpcf"
-	}
-
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"move_speed_bonus"		"10 20 30"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"attack_speed_bonus"	"5 10 15"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"900"
-		}
-	}
-	"Modifiers"
-	{
-		"modifier_endurance_aura"
-		{
-			"EffectName"		"particles/custom/aura_endurance.vpcf"
-			"EffectAttachType" 	"follow_origin"
-
-			"Passive" 			"1"
-			"IsHidden" 			"1"
-			"IsBuff"			"1"
-
-			"Aura" 				"modifier_endurance_aura_effect"
-			"Aura_Radius" 		"%radius"
-			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
-		}
-		"modifier_endurance_aura_effect"
-		{
-			"IsBuff"				"1"
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_bonus"
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_bonus"
-			}
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "move_speed_bonus"      "10 20 30"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "attack_speed_bonus"    "5 10 15"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "900"
+        }
+    }
 }

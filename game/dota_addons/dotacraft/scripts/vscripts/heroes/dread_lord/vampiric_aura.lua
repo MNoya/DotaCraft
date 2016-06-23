@@ -1,16 +1,76 @@
---[[
-	Author: Noya
-	Date: 14.01.2015.
-	Applies a Lifesteal modifier if the attacked target is not a building and not a mechanical unit
-]]
-function VampiricAuraApply( event )
-	-- Variables
-	local attacker = event.attacker
-	local target = event.target
-	local ability = event.ability
+dread_lord_vampiric_aura = class({})
 
-	local isBuilding = target:FindAbilityByName("ability_building")
-	if not isBuilding == nil and not target:IsMechanical() then
-		ability:ApplyDataDrivenModifier(attacker, attacker, "modifier_vampiric_aura_lifesteal", {duration = 0.03})
-	end
+LinkLuaModifier("modifier_vampiric_aura", "heroes/dread_lord/vampiric_aura", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_vampiric_aura_buff", "heroes/dread_lord/vampiric_aura", LUA_MODIFIER_MOTION_NONE)
+
+function dread_lord_vampiric_aura:GetIntrinsicModifierName()
+    return "modifier_vampiric_aura"
+end
+
+--------------------------------------------------------------------------------
+
+modifier_vampiric_aura = class({})
+
+function modifier_vampiric_aura:IsAura()
+    return true
+end
+
+function modifier_vampiric_aura:IsHidden()
+    return true
+end
+
+function modifier_vampiric_aura:GetAuraRadius()
+    return self:GetAbility():GetSpecialValueFor("radius")
+end
+
+function modifier_vampiric_aura:GetModifierAura()
+    return "modifier_vampiric_aura_buff"
+end
+
+function modifier_vampiric_aura:GetEffectName()
+    return "particles/items_fx/aura_vlads.vpcf"
+end
+
+function modifier_vampiric_aura:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW
+end
+   
+function modifier_vampiric_aura:GetAuraSearchTeam()
+    return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
+
+function modifier_vampiric_aura:GetAuraSearchFlags()
+    return DOTA_UNIT_TARGET_FLAG_MELEE_ONLY
+end
+
+function modifier_vampiric_aura:GetAuraEntityReject(target)
+    return IsCustomBuilding(target)
+end
+
+function modifier_vampiric_aura:GetAuraSearchType()
+    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_vampiric_aura:GetAuraDuration()
+    return 0.5
+end
+
+--------------------------------------------------------------------------------
+
+modifier_vampiric_aura_buff = class({})
+
+function modifier_vampiric_aura:DeclareFunctions()
+    return { MODIFIER_EVENT_ON_ATTACK_LANDED }
+end
+
+function modifier_vampiric_aura:OnAttackLanded(event)
+    local attacker = event.attacker
+    if attacker == self:GetParent() then
+        if not IsCustomBuilding(event.target) then
+            local lifesteal = self:GetAbility():GetSpecialValueFor("lifesteal") * event.damage * 0.01
+            attacker:Heal(lifesteal,self)
+            local particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, self:GetParent())
+            ParticleManager:SetParticleControlEnt(particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+        end
+    end
 end

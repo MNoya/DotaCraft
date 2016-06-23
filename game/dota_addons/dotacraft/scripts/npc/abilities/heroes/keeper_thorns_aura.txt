@@ -1,71 +1,32 @@
 // Keeper Thorns Aura
 // Author: Noya
-// Date: 14.1.2015.
-// Notes: An aura that gives friendly units around the Keeper of the Grove a damage shield, which wounds enemy melee attackers.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 10% of melee damage	1
-//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 20% of melee damage	3
-//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 30% of melee damage	5
+// Description: An aura that gives friendly units around the Keeper of the Grove a damage shield, which wounds enemy melee attackers.
+
 "keeper_thorns_aura"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"keeper_thorns_aura"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/keeper/thorns_aura.lua"
+    "AbilityTextureName"            "keeper_thorns_aura"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"
 
-	"AbilityCastRange"				"900"
+    "AbilityCastRange"              "900"
 
-	"precache"
-	{
-		"particle"				"particles/units/heroes/hero_omniknight/omniknight_degen_aura_b.vpcf"
-		"particle"				"particles/custom/aura_thorns.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"melee_damage_return"	"10 20 30"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"900"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifiers_thorns_aura"
-		{
-			"IsHidden" 			"1"
-			"Passive" 			"1"
-
-			"Aura" 				"modifiers_thorns_aura_buff"
-			"Aura_Radius" 		"%radius"
-			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
-
-			"EffectName"		"particles/custom/aura_thorns.vpcf"
-			"EffectAttachType"	"follow_origin"
-		}
-
-		"modifiers_thorns_aura_buff"
-		{			
-			"OnAttacked"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/keeper/thorns_aura.lua"
-					"Function"		"ThornsAura"
-					"Damage"		"%attack_damage"
-				}
-			}	
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "melee_damage_return"   "10 20 30"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "900"
+        }
+    }
 }

@@ -1,64 +1,30 @@
 // Archmage Brilliance Aura
 // Author: Noya
-// Date: 13.1.2015.
-// Notes: Gives additional mana regeneration to nearby friendly units.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 0.75 mana per sec.	1
-//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 1.5 mana per sec.	3
-//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 2.25 mana per sec.	5
+// Description: Gives additional mana regeneration to nearby friendly units.
+
 "archmage_brilliance_aura"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"archmage_brilliance_aura"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/archmage/brilliance_aura.lua"
+    "AbilityTextureName"            "archmage_brilliance_aura"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 
-	"AbilityCastRange"    			"900"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"mana_regen"	"0.75 1.5 2.25"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"900"
-		}
-	}
-
-	"precache"
-	{
-		"particle"	"particles/items_fx/aura_shivas.vpcf"
-	}
-	
-	"Modifiers"
-	{
-		"modifier_brilliance_aura"
-		{
-			"EffectName"		"particles/items_fx/aura_shivas.vpcf"
-			"EffectAttachType" "follow_origin"
-			
-			"Passive" 			"1"
-			"IsHidden" 			"1"
-			"IsBuff"			"1"
-			"Aura" 				"modifier_brilliance_aura_mana_regen"
-			"Aura_Radius" 		"%radius"
-			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
-		}
-		
-		"modifier_brilliance_aura_mana_regen"
-		{
-			"IsBuff"				"1"
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
-			}
-		}
-	}
+    "AbilityCastRange"              "900"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "mana_regen"    "0.75 1.5 2.25"
+        }
+        "02"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "radius"        "900"
+        }
+    }
 }

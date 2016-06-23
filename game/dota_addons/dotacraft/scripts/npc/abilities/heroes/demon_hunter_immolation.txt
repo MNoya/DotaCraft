@@ -4,17 +4,16 @@
 
 "demon_hunter_immolation"
 {
-    "BaseClass"                     "ability_datadriven"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/demon_hunter/immolation.lua"
     "AbilityTextureName"            "demon_hunter_immolation"
     "MaxLevel"                      "3"
 
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
     "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
     "AbilityCastRange"              "160"
-
     "AbilityManaCost"               "35"
 
     "precache"
@@ -39,95 +38,6 @@
         {
             "var_type"              "FIELD_INTEGER"
             "radius"                "160"
-        }
-    }
-
-    "OnToggleOn"
-    {
-        "ApplyModifier"
-        {
-            "Target"            "CASTER"
-            "ModifierName"      "modifier_immolation"
-        }
-        "FireSound"
-        {
-            "EffectName"        "Hero_EmberSpirit.FlameGuard.Cast"
-            "Target"            "CASTER"
-        }
-    }
-
-    "OnToggleOff"
-    {
-        "RemoveModifier"
-        {
-            "Target"            "CASTER"
-            "ModifierName"      "modifier_immolation"
-        }
-    }
-
-    "Modifiers"
-    {
-        "modifier_immolation"
-        {   
-            "IsPassive"     "1"
-            "IsBuff"        "1"
-            "IsPurgable"    "0"
-            
-            "OnCreated"
-            {
-                "AttachEffect"
-                {
-                    "Target"                "TARGET"
-                    "EffectName"            "particles/custom/nightelf/demon_hunter/flameguard.vpcf"
-                    "EffectAttachType"      "start_at_customorigin"
-                    "ControlPointEntities"
-                    {
-                        "TARGET"            "attach_origin"
-                        "TARGET"            "attach_origin"
-                    }
-                }
-            }
-
-            "Aura"              "modifier_immolation_fx"
-            "Aura_Radius"       "%radius"
-            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
-            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-
-            "ThinkInterval"     "1"
-            "OnIntervalThink"
-            {
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/demon_hunter/immolation.lua"
-                    "Function"      "Immolation"
-                    "Target"
-                    {
-                        "Center"    "CASTER"
-                        "Radius"    "%radius"
-                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                    }
-                }
-            }
-        }
-
-        "modifier_immolation_fx"
-        {
-            "IsDebuff"  "1"
-            "OnCreated"
-            {
-                "AttachEffect"
-                {
-                    "Target"            "TARGET"
-                    "EffectName"        "particles/particles/custom/nightelf/demon_hunter/immolation_damage.vpcf"
-                    "EffectAttachType"  "start_at_customorigin"
-                    "ControlPointEntities"
-                    {
-                        "TARGET" "attach_origin"
-                        "CASTER" "attach_origin"
-                    }
-                }
-            }     
         }
     }
 }

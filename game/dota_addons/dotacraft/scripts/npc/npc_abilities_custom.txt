@@ -636,67 +636,33 @@
 	}
 	// Archmage Brilliance Aura
 	// Author: Noya
-	// Date: 13.1.2015.
-	// Notes: Gives additional mana regeneration to nearby friendly units.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 0.75 mana per sec.	1
-	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 1.5 mana per sec.	3
-	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Adds 2.25 mana per sec.	5
+	// Description: Gives additional mana regeneration to nearby friendly units.
+	
 	"archmage_brilliance_aura"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"archmage_brilliance_aura"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/archmage/brilliance_aura.lua"
+	    "AbilityTextureName"            "archmage_brilliance_aura"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	
-		"AbilityCastRange"    			"900"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"mana_regen"	"0.75 1.5 2.25"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"900"
-			}
-		}
-	
-		"precache"
-		{
-			"particle"	"particles/items_fx/aura_shivas.vpcf"
-		}
-		
-		"Modifiers"
-		{
-			"modifier_brilliance_aura"
-			{
-				"EffectName"		"particles/items_fx/aura_shivas.vpcf"
-				"EffectAttachType" "follow_origin"
-				
-				"Passive" 			"1"
-				"IsHidden" 			"1"
-				"IsBuff"			"1"
-				"Aura" 				"modifier_brilliance_aura_mana_regen"
-				"Aura_Radius" 		"%radius"
-				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
-			}
-			
-			"modifier_brilliance_aura_mana_regen"
-			{
-				"IsBuff"				"1"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
-				}
-			}
-		}
+	    "AbilityCastRange"              "900"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_FLOAT"
+	            "mana_regen"    "0.75 1.5 2.25"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "900"
+	        }
+	    }
 	}
 	// Archmage Mass Teleport
 	// Author: Noya
@@ -5115,75 +5081,40 @@
 			
 		}
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
-	// Notes: Increases the movement speed and life regeneration rate of nearby friendly units.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+10% movement, +0.5 HP/sec.	1
-	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+20% movement, +1 HP/sec.	3
-	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	+30% movement, +1.5 HP/sec.	5
+	// Death Knight Unholy Aura
+	// Author: Noya
+	// Description: Increases the movement speed and life regeneration rate of nearby friendly units.
+	
 	"death_knight_unholy_aura"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"death_knight_unholy_aura"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/death_knight/unholy_aura.lua"
+	    "AbilityTextureName"            "death_knight_unholy_aura"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	
-		"AbilityCastRange"				"900"
+	    "AbilityCastRange"              "900"
 	
-		"precache"
-		{
-			"particle"	"particles/custom/doom_bringer_doom.vpcf"
-		}
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"move_speed_bonus"		"10 20 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"health_regen_bonus"	"0.5 1 1.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_unholy_aura"
-			{
-				"EffectName"		"particles/custom/doom_bringer_doom.vpcf"
-				"EffectAttachType"  "follow_origin"
-				
-				"Passive" 			"1"
-				"IsHidden" 			"1"
-				"IsBuff"			"1"
-				"Aura" 				"modifier_unholy_aura_buff"
-				"Aura_Radius" 		"%radius"
-				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			}
-	
-			"modifier_unholy_aura_buff"
-			{
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_bonus"
-				}
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "move_speed_bonus"      "10 20 30"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "health_regen_bonus"    "0.5 1 1.5"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "900"
+	        }
+	    }
 	}
 	// Demon Hunter Demon Form
 	// Author: Noya
@@ -5392,17 +5323,16 @@
 	
 	"demon_hunter_immolation"
 	{
-	    "BaseClass"                     "ability_datadriven"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/demon_hunter/immolation.lua"
 	    "AbilityTextureName"            "demon_hunter_immolation"
 	    "MaxLevel"                      "3"
 	
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	
 	    "AbilityCastRange"              "160"
-	
 	    "AbilityManaCost"               "35"
 	
 	    "precache"
@@ -5427,95 +5357,6 @@
 	        {
 	            "var_type"              "FIELD_INTEGER"
 	            "radius"                "160"
-	        }
-	    }
-	
-	    "OnToggleOn"
-	    {
-	        "ApplyModifier"
-	        {
-	            "Target"            "CASTER"
-	            "ModifierName"      "modifier_immolation"
-	        }
-	        "FireSound"
-	        {
-	            "EffectName"        "Hero_EmberSpirit.FlameGuard.Cast"
-	            "Target"            "CASTER"
-	        }
-	    }
-	
-	    "OnToggleOff"
-	    {
-	        "RemoveModifier"
-	        {
-	            "Target"            "CASTER"
-	            "ModifierName"      "modifier_immolation"
-	        }
-	    }
-	
-	    "Modifiers"
-	    {
-	        "modifier_immolation"
-	        {   
-	            "IsPassive"     "1"
-	            "IsBuff"        "1"
-	            "IsPurgable"    "0"
-	            
-	            "OnCreated"
-	            {
-	                "AttachEffect"
-	                {
-	                    "Target"                "TARGET"
-	                    "EffectName"            "particles/custom/nightelf/demon_hunter/flameguard.vpcf"
-	                    "EffectAttachType"      "start_at_customorigin"
-	                    "ControlPointEntities"
-	                    {
-	                        "TARGET"            "attach_origin"
-	                        "TARGET"            "attach_origin"
-	                    }
-	                }
-	            }
-	
-	            "Aura"              "modifier_immolation_fx"
-	            "Aura_Radius"       "%radius"
-	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	
-	            "ThinkInterval"     "1"
-	            "OnIntervalThink"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "heroes/demon_hunter/immolation.lua"
-	                    "Function"      "Immolation"
-	                    "Target"
-	                    {
-	                        "Center"    "CASTER"
-	                        "Radius"    "%radius"
-	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                    }
-	                }
-	            }
-	        }
-	
-	        "modifier_immolation_fx"
-	        {
-	            "IsDebuff"  "1"
-	            "OnCreated"
-	            {
-	                "AttachEffect"
-	                {
-	                    "Target"            "TARGET"
-	                    "EffectName"        "particles/particles/custom/nightelf/demon_hunter/immolation_damage.vpcf"
-	                    "EffectAttachType"  "start_at_customorigin"
-	                    "ControlPointEntities"
-	                    {
-	                        "TARGET" "attach_origin"
-	                        "CASTER" "attach_origin"
-	                    }
-	                }
-	            }     
 	        }
 	    }
 	}
@@ -6014,86 +5855,33 @@
 	}
 	// Dread Lord Vampiric Aura
 	// Author: Noya
-	// Date: 14.1.2015.
-	// Notes: Nearby friendly melee units gain hit points when they hit a unit.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 15% of Attack Damage	1
-	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 30% of Attack Damage	3
-	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 45% of Attack Damage	5
+	// Description: Nearby friendly melee units gain hit points when they hit a unit.
+	
 	"dread_lord_vampiric_aura"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"dread_lord_vampiric_aura"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/dread_lord/vampiric_aura.lua"
+	    "AbilityTextureName"            "dread_lord_vampiric_aura"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	
-		"AbilityCastRange"				"900"
-	
-		"precache"
-		{
-			"particle"	"particles/items_fx/aura_vlads.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"lifesteal"		"15 30 45"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"900"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_vampiric_aura"
-	   		{
-	    		"Passive" 			"1"
-	    		"IsHidden" 			"1"
-	
-	    		"Aura" 				"modifier_vampiric_aura_buff"
-	    		"Aura_Radius" 		"%radius"
-	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	    		"Aura_Flags" 		"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
-	
-	            "EffectName"		"particles/items_fx/aura_vlads.vpcf"
-				"EffectAttachType" 	"follow_origin"
-	   		}
-			
-			"modifier_vampiric_aura_buff"
-	   		{	
-	   			"OnAttackLanded"    	
-	   			{
-	   				"RunScript"
-					{
-						"ScriptFile"	"heroes/dread_lord/vampiric_aura.lua"
-						"Function"		"VampiricAuraApply"
-					}
-				}
-		    }
-	
-		    "modifier_vampiric_aura_lifesteal"
-		    {
-		    	"IsHidden"		"1"
-		    	"OnDealDamage"
-				{
-					"Lifesteal"
-					{
-						"Target" 				"ATTACKER"
-						"LifestealPercent"		"%lifesteal"
-					}
-				}
-			}
-		}
+	    "AbilityCastRange"              "900"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "lifesteal"     "15 30 45"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "900"
+	        }
+	    }
 	}
 	// Far Seer Chain Lightning
 	// Author: Noya
@@ -7847,74 +7635,35 @@
 	}
 	// Keeper Thorns Aura
 	// Author: Noya
-	// Date: 14.1.2015.
-	// Notes: An aura that gives friendly units around the Keeper of the Grove a damage shield, which wounds enemy melee attackers.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 10% of melee damage	1
-	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 20% of melee damage	3
-	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Reflects 30% of melee damage	5
+	// Description: An aura that gives friendly units around the Keeper of the Grove a damage shield, which wounds enemy melee attackers.
+	
 	"keeper_thorns_aura"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"keeper_thorns_aura"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/keeper/thorns_aura.lua"
+	    "AbilityTextureName"            "keeper_thorns_aura"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"
 	
-		"AbilityCastRange"				"900"
+	    "AbilityCastRange"              "900"
 	
-		"precache"
-		{
-			"particle"				"particles/units/heroes/hero_omniknight/omniknight_degen_aura_b.vpcf"
-			"particle"				"particles/custom/aura_thorns.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"melee_damage_return"	"10 20 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifiers_thorns_aura"
-			{
-				"IsHidden" 			"1"
-				"Passive" 			"1"
-	
-				"Aura" 				"modifiers_thorns_aura_buff"
-				"Aura_Radius" 		"%radius"
-				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
-	
-				"EffectName"		"particles/custom/aura_thorns.vpcf"
-				"EffectAttachType"	"follow_origin"
-			}
-	
-			"modifiers_thorns_aura_buff"
-			{			
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/keeper/thorns_aura.lua"
-						"Function"		"ThornsAura"
-						"Damage"		"%attack_damage"
-					}
-				}	
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "melee_damage_return"   "10 20 30"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "900"
+	        }
+	    }
 	}
 	// Keeper of the Grove Tranquility
 	// Author: Noya
@@ -12836,69 +12585,33 @@
 	}
 	// Priestess of the Moon Trueshot Aura
 	// Author: Noya
-	// Date: 14.1.2015.
-	// Notes: An aura that gives friendly units around the Priestess bonus damage to their ranged attacks.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Base ranged damage increased 10%	1
-	//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Base ranged damage increased 20%	3
-	//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self	Base ranged damage increased 30%	5
+	// Description: An aura that gives friendly units around the Priestess bonus damage to their ranged attacks.
+	
 	"potm_trueshot_aura"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"potm_trueshot_aura"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/potm/trueshot_aura.lua"
+	    "AbilityTextureName"            "potm_trueshot_aura"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	
-		"AbilityCastRange"				"900"
-	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_cyclone_swirl.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_bonus_percent"	"10 20 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_trueshot_aura"
-	   		{
-	    		"Passive" 			"1"
-	    		"IsHidden" 			"1"
-	
-	    		"Aura" 				"modifier_trueshot_aura_buff"
-	    		"Aura_Radius" 		"%radius"
-	    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-	    		"Aura_Flags" 		"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
-	
-	            "EffectName"		"particles/custom/aura_trueshot.vpcf"
-				"EffectAttachType" 	"follow_origin"
-	   		}
-			
-			"modifier_trueshot_aura_buff"
-	   		{	    	
-		    	"Properties"
-		    	{
-		     		"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%damage_bonus_percent"
-		    	}
-		    }
-		}
+	    "AbilityCastRange"              "900"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "damage_bonus_percent"  "10 20 30"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "900"
+	        }
+	    }
 	}
 	// Shadow Hunter Big Bad Voodoo
 	// Author: Noya
@@ -13394,72 +13107,38 @@
 	}
 	// Tauren Chieftain Endurance Aura
 	// Author: Noya
-	// Date: 13.01.2015.
-	// Notes: Increases the movement speed and attack rate of nearby friendly units.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +10%, Attack Rate +5%	1
-	//2	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +20%, Attack Rate +10%	3
-	//3	N/A	N/A	N/A	N/A	90	Air, Ground, Friend, Self	Movement Speed +30%, Attack Rate +15%	5
+	// Description: Increases the movement speed and attack rate of nearby friendly units.
+	
 	"tauren_chieftain_endurance_aura"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"tauren_chieftain_endurance_aura"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/tauren_chieftain/endurance_aura.lua"
+	    "AbilityTextureName"            "tauren_chieftain_endurance_aura"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	
-		"AbilityCastRange"    			"900"
+	    "AbilityCastRange"              "900"
 	
-		"precache"
-		{
-			"particle"	"particles/custom/aura_endurance.vpcf"
-		}
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"move_speed_bonus"		"10 20 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"attack_speed_bonus"	"5 10 15"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-		}
-		"Modifiers"
-		{
-			"modifier_endurance_aura"
-			{
-				"EffectName"		"particles/custom/aura_endurance.vpcf"
-				"EffectAttachType" 	"follow_origin"
-	
-				"Passive" 			"1"
-				"IsHidden" 			"1"
-				"IsBuff"			"1"
-	
-				"Aura" 				"modifier_endurance_aura_effect"
-				"Aura_Radius" 		"%radius"
-				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
-			}
-			"modifier_endurance_aura_effect"
-			{
-				"IsBuff"				"1"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_bonus"
-				}
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "move_speed_bonus"      "10 20 30"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "attack_speed_bonus"    "5 10 15"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "900"
+	        }
+	    }
 	}
 	// Tauren Chieftain Reincarnation
 	// Author: Noya

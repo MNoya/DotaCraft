@@ -1,83 +1,30 @@
 // Dread Lord Vampiric Aura
 // Author: Noya
-// Date: 14.1.2015.
-// Notes: Nearby friendly melee units gain hit points when they hit a unit.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 15% of Attack Damage	1
-//2	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 30% of Attack Damage	3
-//3	Unlimited	N/A	None	N/A	90	Air, Ground, Friend, Self, Organic	Gains 45% of Attack Damage	5
+// Description: Nearby friendly melee units gain hit points when they hit a unit.
+
 "dread_lord_vampiric_aura"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"dread_lord_vampiric_aura"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/dread_lord/vampiric_aura.lua"
+    "AbilityTextureName"            "dread_lord_vampiric_aura"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 
-	"AbilityCastRange"				"900"
-
-	"precache"
-	{
-		"particle"	"particles/items_fx/aura_vlads.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"lifesteal"		"15 30 45"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"900"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_vampiric_aura"
-   		{
-    		"Passive" 			"1"
-    		"IsHidden" 			"1"
-
-    		"Aura" 				"modifier_vampiric_aura_buff"
-    		"Aura_Radius" 		"%radius"
-    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-    		"Aura_Flags" 		"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
-
-            "EffectName"		"particles/items_fx/aura_vlads.vpcf"
-			"EffectAttachType" 	"follow_origin"
-   		}
-		
-		"modifier_vampiric_aura_buff"
-   		{	
-   			"OnAttackLanded"    	
-   			{
-   				"RunScript"
-				{
-					"ScriptFile"	"heroes/dread_lord/vampiric_aura.lua"
-					"Function"		"VampiricAuraApply"
-				}
-			}
-	    }
-
-	    "modifier_vampiric_aura_lifesteal"
-	    {
-	    	"IsHidden"		"1"
-	    	"OnDealDamage"
-			{
-				"Lifesteal"
-				{
-					"Target" 				"ATTACKER"
-					"LifestealPercent"		"%lifesteal"
-				}
-			}
-		}
-	}
+    "AbilityCastRange"              "900"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "lifesteal"     "15 30 45"
+        }
+        "02"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "radius"        "900"
+        }
+    }
 }

@@ -844,34 +844,19 @@
 	//"item_diamond_of_summoning" //Teleports 12 of the player's units within the targeted area to the location of the Hero when used.
 	//"item_crystal_ball" //Reveals a targeted area. Invisible units are also revealed by the Crystal Ball's effect. |nLasts <AIta,Dur1> seconds.
 	// Permanent Aura Items
-	// TODO: Use the lua modifier version of the original abilities, to prevent the aura from stacking or affecting building creatures
 	
-	"item_allerias_flute_of_accuracy" //trueshot aura
+	//Increases nearby ranged units' damage by 10%. Does not stack with Trueshot Aura.
+	"item_allerias_flute_of_accuracy"
 	{
-	    "BaseClass"                     "item_datadriven"
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/auras/trueshot.lua"
+	    "AbilityTextureName"            "item_allerias_flute_of_accuracy"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_ALL"
-	    "AbilityTextureName"            "item_allerias_flute_of_accuracy"
 	
-	    "Model"                         "models/props_items/monkey_king_bar01.vmdl"
-	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
-	
-	    "UIPickupSound"                 "Item.PickUpGemShop"
-	    "UIDropSound"                   "Item.DropGemShop"
-	    "WorldDropSound"                "Item.DropGemWorld"
-	    
-	    "AbilityCastPoint"              "0.0"
 	    "AbilityCastRange"              "900"
-	
-	    "ItemCost"                      "1200"
-	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"
-	    "ItemShopTags"                  "artifact"
+	    "ItemCost"                      "400"
 	    "ItemQuality"                   "artifact"
-	    "ItemPermanent"                 "1"
-	    "ItemKillable"                  "1"
-	    "ItemSellable"                  "1"
-	    "ItemDroppable"                 "1"
 	    
 	    "AbilitySpecial"
 	    {
@@ -886,43 +871,213 @@
 	            "radius"                "900"
 	        }
 	    }
-	 
-	    "Modifiers"
+	}
+	
+	//Grants the Hero and friendly nearby units a bonus to mana regeneration. Does not stack with Brilliance Aura.
+	"item_khadgars_pipe_of_insight"
+	{
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/auras/brilliance.lua"
+	    "AbilityTextureName"            "item_khadgars_pipe_of_insight"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+	    "AbilityCastRange"              "900"
+	    "ItemCost"                      "500"
+	    "ItemQuality"                   "artifact"
+	    
+	    "AbilitySpecial"
 	    {
-	        "modifier_flute_aura"
+	        "01"
 	        {
-	            "Passive"       "1"
-	            "IsHidden"      "1"
-	            "Aura"          "modifier_flute_aura_buff"
-	
-	            "Aura_Radius"   "%radius"
-	            "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	            "Aura_Types"    "DOTA_UNIT_TARGET_ALL"
-	            "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
-	
-	            "EffectName" "particles/items_fx/cyclone.vpcf"
-	            "EffectAttachType" "follow_origin" // "attach_hitloc"
-	            "EffectLifeDurationScale" "1"
-	            "EffectColorA" "255 255 0"
+	            "var_type"      "FIELD_INTEGER"
+	            "mana_regen"    "1"
 	        }
-	 
-	        "modifier_flute_aura_buff"
+	        "02"
 	        {
-	            "Properties"
-	            {
-	                "MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%bonus_range_damage_pct"
-	            }
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "900"
 	        }
 	    }
 	}
 	
-	//"item_khadgars_pipe_of_insight" //brilliance aura
-	//"item_legion_doom_horn" //unholy aura
-	//"item_cloak_of_flames" //immolation
-	//"item_the_lion_horn_of_stormwind" //devotion aura
-	//"item_warsong_battle_drums" //command aura
-	//"item_ancient_janngo_of_endurance" //endurance aura
-	//"item_scourge_bone_chimes" //vampiric aura
+	// Grants the Hero and friendly nearby units 1 bonus armor. Does not stack with Devotion Aura.
+	"item_the_lion_horn_of_stormwind"
+	{
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/auras/devotion.lua"
+	    "AbilityTextureName"            "item_the_lion_horn_of_stormwind"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+	    "AbilityCastRange"              "900"
+	    "ItemCost"                      "400"
+	    "ItemQuality"                   "artifact"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "bonus_armor"    "1"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "900"
+	        }
+	    }
+	}
+	
+	//Grants the Hero and friendly nearby units increased life regeneration and movement speed. Does not stack with Unholy Aura.
+	"item_legion_doom_horn"
+	{
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/auras/unholy.lua"
+	    "AbilityTextureName"            "item_legion_doom_horn"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+	    "AbilityCastRange"              "900"
+	    "ItemCost"                      "500"
+	    "ItemQuality"                   "artifact"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "move_speed_bonus"      "10"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "health_regen_bonus"    "0.5"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "900"
+	        }
+	    }
+	}
+	
+	// Grants the Hero and friendly nearby units increased attack rate and movement speed. Does not stack with Endurance Aura.
+	"item_ancient_janngo_of_endurance"
+	{
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/auras/endurance.lua"
+	    "AbilityTextureName"            "item_ancient_janngo_of_endurance"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+	    "AbilityCastRange"              "900"
+	    "ItemCost"                      "500"
+	    "ItemQuality"                   "artifact"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "move_speed_bonus"      "10"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "health_regen_bonus"    "0.5"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "900"
+	        }
+	    }
+	}
+	
+	//Engulfs the Hero in fire which deals 10 damage per second to nearby enemy land units. Does not stack with Immolation.
+	"item_cloak_of_flames"
+	{
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/auras/immolation.lua"
+	    "AbilityTextureName"            "item_cloak_of_flames"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+	    "AbilityCastRange"              "160"
+	    "ItemCost"                      "500"
+	    "ItemQuality"                   "artifact"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "damage_per_second"     "10"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "160"
+	        }
+	    }
+	}
+	
+	//Increases the attack damage of nearby friendly units by 10% when worn. Does not stack with Command Aura.
+	"item_warsong_battle_drums"
+	{
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/auras/command.lua"
+	    "AbilityTextureName"            "item_warsong_battle_drums"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+	    "AbilityCastRange"              "900"
+	    "ItemCost"                      "500"
+	    "ItemQuality"                   "artifact"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "damage_bonus_pct"      "10"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "900"
+	        }
+	    }
+	}
+	
+	//Grants a melee Hero and friendly nearby melee units life stealing attacks which take 15% of the damage they deal and convert it into life. Does not stack with Vampiric Aura.
+	"item_scourge_bone_chimes"
+	{
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/auras/vampiric.lua"
+	    "AbilityTextureName"            "item_scourge_bone_chimes"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	
+	    "AbilityCastRange"              "900"
+	    "ItemCost"                      "500"
+	    "ItemQuality"                   "artifact"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "lifesteal"     "15"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "900"
+	        }
+	    }
+	}
 	// Permanent Passive Stats
 	
 	"item_claws_of_attack_6"
