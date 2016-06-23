@@ -406,3 +406,13 @@ function CDOTA_BaseNPC:GetAttackFactorAgainstTarget( unit )
     local damageTable = GameRules.Damage
     return damageTable[attack_type] and damageTable[attack_type][armor_type] or 1
 end
+
+function CDOTA_BaseNPC:FindItemByName(item_name)
+    for i=0,15 do
+        local item = self:GetItemInSlot(i)
+        if item and item:GetAbilityName() == item_name then
+            return item
+        end
+    end
+    return nil
+end
