@@ -107,7 +107,7 @@ function StartBuildingHelper( params )
         }
 
         // Building Ghost
-        modelParticle = Particles.CreateParticle("particles/buildinghelper/ghost_model.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN, localHeroIndex);
+        modelParticle = Particles.CreateParticle("particles/buildinghelper/ghost_model.vpcf", ParticleAttachment_t.PATTACH_CUSTOMORIGIN, 0);
         Particles.SetParticleControlEnt(modelParticle, 1, entindex, ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, "follow_origin", Entities.GetAbsOrigin(entindex), true)
         Particles.SetParticleControl(modelParticle, 2, ghost_color)
         Particles.SetParticleControl(modelParticle, 3, [model_alpha,0,0])
@@ -126,7 +126,7 @@ function StartBuildingHelper( params )
         // Prop particle attachment
         if (params.propIndex !== undefined)
         {
-            propParticle = Particles.CreateParticle("particles/buildinghelper/ghost_model.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN, localHeroIndex);
+            propParticle = Particles.CreateParticle("particles/buildinghelper/ghost_model.vpcf", ParticleAttachment_t.PATTACH_CUSTOMORIGIN, 0);
             Particles.SetParticleControlEnt(propParticle, 1, params.propIndex, ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", Entities.GetAbsOrigin(params.propIndex), true)
             Particles.SetParticleControl(propParticle, 2, ghost_color)
             Particles.SetParticleControl(propParticle, 3, [model_alpha,0,0])

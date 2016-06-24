@@ -1002,7 +1002,7 @@ function BuildingHelper:UpgradeBuilding(building, newName)
     position.z = position.z - old_offset
 
     -- Kill the old building
-    --building:AddEffects(EF_NODRAW) --Hide it, so that it's still accessible after this script
+    building:AddEffects(EF_NODRAW) --Hide it, so that it's still accessible after this script
     building:SetAbsOrigin(Vector(0,0,10000))
     building.upgraded = true --Skips visual effects
     building:ForceKill(true) --This will call RemoveBuilding
@@ -2059,12 +2059,11 @@ function BuildingHelper:AddToQueue(builder, location, bQueued)
             entity:SetNeverMoveToClearSpace(true)
             function entity:IsUnderConstruction() return true end
         end
-        --entity:AddEffects(EF_NODRAW)
-        entity:SetAbsOrigin(Vector(0,0,10000))
+        entity:AddEffects(EF_NODRAW)
         entity:AddNewModifier(entity, nil, "modifier_out_of_world", {})
         work.entity = entity
 
-        local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, entity, player)
+        local modelParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_CUSTOMORIGIN, nil, player)
         ParticleManager:SetParticleControl(modelParticle, 0, model_location)
         ParticleManager:SetParticleControlEnt(modelParticle, 1, entity, 1, "attach_hitloc", entity:GetAbsOrigin(), true) -- Model attach          
         ParticleManager:SetParticleControl(modelParticle, 3, Vector(BuildingHelper.Settings["MODEL_ALPHA"],0,0)) -- Alpha
@@ -2082,9 +2081,8 @@ function BuildingHelper:AddToQueue(builder, location, bQueued)
             local offset = buildingTable:GetVal("PedestalOffset", "float") or 0
             local offset_location = Vector(location.x, location.y, location.z + offset)
 
-            --prop:AddEffects(EF_NODRAW)
-            entity:SetAbsOrigin(Vector(0,0,10000))
-            prop.pedestalParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_ABSORIGIN, prop, player)
+            prop:AddEffects(EF_NODRAW)
+            prop.pedestalParticle = ParticleManager:CreateParticleForPlayer("particles/buildinghelper/ghost_model.vpcf", PATTACH_CUSTOMORIGIN, nil, player)
             ParticleManager:SetParticleControl(prop.pedestalParticle, 0, offset_location)
             ParticleManager:SetParticleControlEnt(prop.pedestalParticle, 1, prop, 1, "attach_hitloc", prop:GetAbsOrigin(), true) -- Model attach
             ParticleManager:SetParticleControl(prop.pedestalParticle, 2, color) -- Color
@@ -2413,8 +2411,7 @@ function BuildingHelper:GetOrCreateDummy(unitName)
     else
         BuildingHelper:print("AddBuilding "..unitName)
         local mgd = CreateUnitByName(unitName, Vector(0,0,0), false, nil, nil, 0)
-        --mgd:AddEffects(EF_NODRAW)
-        mgd:SetAbsOrigin(Vector(0,0,10000))
+        mgd:AddEffects(EF_NODRAW)
         mgd:AddNewModifier(mgd, nil, "modifier_out_of_world", {})
         BuildingHelper.Dummies[unitName] = mgd
         mgd.BHDUMMY = true -- Skip removing this entity
@@ -2427,8 +2424,7 @@ function BuildingHelper:GetOrCreateProp(propName)
         return BuildingHelper.Dummies[propName]
     else
         local prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propName})
-        --prop:AddEffects(EF_NODRAW)
-        prop:SetAbsOrigin(Vector(0,0,10000))
+        prop:AddEffects(EF_NODRAW)
         BuildingHelper.Dummies[propName] = prop
         prop.BHDUMMY = true -- Skip removing this entity
         return prop
