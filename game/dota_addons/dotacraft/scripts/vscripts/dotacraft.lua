@@ -557,7 +557,7 @@ function dotacraft:InitializeTownHall( hero, position, building )
     hero:SetAbilityPoints(0)
     hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 ))
     Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
-    hero:AddNoDraw()
+    --hero:AddNoDraw()
 
     -- Snap the camera to the created building and add it to selection
     for i=1,15 do
