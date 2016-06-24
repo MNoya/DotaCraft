@@ -943,7 +943,127 @@
 	    }
 	}
 	
-	//"item_cloak_of_shadows"
+	"item_cloak_of_shadows"
+	{
+	    "BaseClass"                 "item_datadriven"
+	    "AbilityTextureName"        "item_cloak_of_shadows"        
+	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	    
+	    "ItemCost"                  "100"
+	    "AbilityCastPoint"          "0"
+	    "AbilityCooldown"           "0"
+	    "AbilityManaCost"           "0"
+	        
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "inaction_duration" "0.5"
+	        }
+	        "02"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "fade_time"         "1.5"
+	        }
+	    }
+	
+	    "precache"
+	    {
+	        "particle"  "particles/econ/items/templar_assassin/templar_assassin_focal/templar_assassin_meld_focal.vpcf"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/nightelf/shared.lua"
+	            "Function"      "ShadowMeld"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_shadow_meld_passive"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            
+	            "ThinkInterval"     "0.5"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/nightelf/shared.lua"
+	                    "Function"      "ShadowMeldThink"
+	                }
+	            }
+	            "OnOrder"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/nightelf/shared.lua"
+	                    "Function"      "ShadowMeldRemove"
+	                }
+	            }
+	            "OnUnitMoved"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/nightelf/shared.lua"
+	                    "Function"      "ShadowMeldRemove"
+	                }
+	            }
+	            "OnAttack"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/nightelf/shared.lua"
+	                    "Function"      "ShadowMeldRemove"
+	                }
+	            }
+	        }
+	
+	        "modifier_shadow_meld_fade"
+	        {
+	            "IsHidden"      "1"
+	            "OnDestroy"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_shadow_meld"
+	                    "Target"        "CASTER"
+	                }
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_invisible"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	
+	        "modifier_shadow_meld"
+	        {
+	            "IsHidden"          "1"
+	            "IsBuff"            "1"
+	            "IsPurgable"        "1"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVISIBLE"  "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	
+	        "modifier_shadow_meld_active"
+	        {
+	            "IsHidden"          "1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_DISABLE_AUTOATTACK"  "1"
+	            }
+	        }
+	    }
+	}
 	
 	// Blocks a negative spell that an enemy casts on the Hero once every 40 seconds.
 	"item_amulet_of_spell_shield"

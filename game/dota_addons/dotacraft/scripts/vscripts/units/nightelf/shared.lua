@@ -23,8 +23,9 @@ function ShadowMeld( event )
 		ToggleOn(ability)
 
 		caster:Stop()		
+	elseif GameRules:IsDaytime() then
+		SendErrorMessage(caster:GetPlayerOwnerID(), "Can only Shadow Meld at night!")
 	end
-
 end
 
 -- This is for the passive component
@@ -47,7 +48,9 @@ function ShadowMeldThink( event )
 		-- Turn off in day time
 		if ability:GetLevel() == 1 then
 			ShadowMeldRemove(event)
-			ability:SetLevel(0)
+			if not ability:IsItem() then
+				ability:SetLevel(0)
+			end
 		end
 	end
 end
