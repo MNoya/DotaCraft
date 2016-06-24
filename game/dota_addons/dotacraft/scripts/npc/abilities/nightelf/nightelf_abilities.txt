@@ -58,52 +58,6 @@
 }
 
 //=================================================================================
-// Ability: Renew
-// Description: "Renews friendly Night Elf buildings, allied buildings, and friendly mechanical units."
-// Code Reference: Aren
-//=================================================================================
-"nightelf_renew"
-{
-	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"nightelf_renew"
-	"MaxLevel"					"1"
-		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		
-	"AbilityCastRange"			"50"
-	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
-	"AbilityManaCost"			"0"
-		
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"repair_cost_ratio"			"0.35"
-		}
-		// Total cost for a full repair will be repair_cost_ratio times the original gold cost.
-		"02"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"repair_time_ratio"			"1.5"
-		}
-		// Total time for a full repair will be repair_time_ratio times the original build time.
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"naval_repair_range"			"175"
-		}
-		// The range at which the wisps repair naval units.
-	}
-
-	// Done
-}
-
-//=================================================================================
 // Ability: Shadow Meld
 // Description: "Stops the unit from auto-acquiring enemies, allowing it to Shadowmeld and remain unseen at night."
 // Code Reference: Ashm

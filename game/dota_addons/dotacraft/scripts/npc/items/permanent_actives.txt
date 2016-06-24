@@ -122,6 +122,7 @@
     {
         "particle"  "particles/econ/items/necrolyte/necrophos_sullen/necro_sullen_pulse_friend.vpcf"
         "particle"  "particles/econ/items/necrolyte/necrophos_sullen/necro_sullen_pulse_friend_explosion.vpcf"
+        "particle"  "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
     }
 
@@ -156,6 +157,26 @@
         {
             "ScriptFile"    "items/diamond_of_summoning.lua"
             "Function"      "SummoningEnd"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_diamond_of_summoning_hidden"
+        {
+            "IsHidden"          "1"
+            
+            "States"
+            {
+                "MODIFIER_STATE_OUT_OF_GAME"    "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_PASSIVES_DISABLED"  "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_PROVIDES_VISION"    "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_STUNNED"    "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_UNSELECTABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_INVULNERABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+            }
         }
     }
 }

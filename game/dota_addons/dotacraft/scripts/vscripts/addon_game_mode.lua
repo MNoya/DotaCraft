@@ -42,7 +42,7 @@ function Precache( context )
     end
 
     for k,_ in pairs(PRECACHE_TABLE.ItemSync) do
-        PrecacheUnitByNameSync(k, context)
+        PrecacheItemByNameSync(k, context)
     end
 
     for resource_type,v in pairs(PRECACHE_TABLE.Resource) do

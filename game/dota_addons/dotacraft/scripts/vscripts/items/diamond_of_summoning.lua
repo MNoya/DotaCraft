@@ -10,7 +10,7 @@ function SummoningStart(event)
     if ability.teleport_units and #ability.teleport_units > 0 then
         for k,v in pairs(ability.teleport_units) do
             v:RemoveNoDraw()
-            v:RemoveModifierByName("modifier_invulnerable")
+            v:RemoveModifierByName("modifier_diamond_of_summoning_hidden")
         end
         ability.teleport_units = {}
         return
@@ -37,7 +37,7 @@ function SummoningStart(event)
 
     for _,teleport_target in pairs(teleport_units) do
         teleport_target:AddNoDraw()
-        teleport_target:AddNewModifier(nil,nil,"modifier_invulnerable",{})
+        ability:ApplyDataDrivenModifier(caster,teleport_target,"modifier_diamond_of_summoning_hidden",{})
 
         local particle = ParticleManager:CreateParticle("particles/econ/items/necrolyte/necrophos_sullen/necro_sullen_pulse_friend_explosion.vpcf",PATTACH_CUSTOMORIGIN,caster)
         ParticleManager:SetParticleControl(particle, 0, teleport_target:GetAbsOrigin())
@@ -76,5 +76,5 @@ function SummoningEnd(event)
 
     FindClearSpaceForUnit(target,caster:GetAbsOrigin()+RandomVector(100),true)
     target:RemoveNoDraw()
-    target:RemoveModifierByName("modifier_invulnerable")
+    target:RemoveModifierByName("modifier_diamond_of_summoning_hidden")
 end
