@@ -419,9 +419,9 @@ end
 
 function CDOTA_BaseNPC:ShouldAbsorbSpell(caster, ability)
     if self:IsOpposingTeam(caster:GetTeamNumber()) then
-        if ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) then
+        if ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) and not ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_ATTACK) then
             local item = self:FindItemByName("item_amulet_of_spell_shield") 
-            if item and item:IsCooldownReady() and 
+            if item and item:IsCooldownReady() then 
                 ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, self)
                 Timers:CreateTimer(0.03, function()
                     self:EmitSound("DOTA_Item.LinkensSphere.Activate")

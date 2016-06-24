@@ -1263,7 +1263,7 @@ function dotacraft:FilterProjectile( filterTable )
     local move_speed = filterTable["move_speed"]
 
     if is_attack then
-        if HasArtilleryAttack(attacker) 
+        if HasArtilleryAttack(attacker) then
             AttackGroundPos(attacker, victim:GetAbsOrigin(), move_speed)
             return false
         end
