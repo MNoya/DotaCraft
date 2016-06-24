@@ -43,7 +43,7 @@ function paladin_holy_light:CastFilterResultTarget( target )
     local casterTeam = caster:GetTeamNumber()
     local targetTeam = target:GetTeamNumber()
     local allied = casterTeam == targetTeam
-    local bUndead = string.match(target:GetUnitName(),"undead")
+    local bUndead = string.match(target:GetUnitName(),"undead") or string.match(target:GetUnitLabel(),"undead")
 
     -- Check self-target
     if caster == target then 

@@ -61,7 +61,7 @@ function death_knight_death_coil:CastFilterResultTarget( target )
 	local casterTeam = caster:GetTeamNumber()
  	local targetTeam = target:GetTeamNumber()
  	local allied = casterTeam == targetTeam
- 	local bUndead = string.match(target:GetUnitName(),"undead")
+ 	local bUndead = string.match(target:GetUnitName(),"undead") or string.match(target:GetUnitLabel(),"undead")
 
 	-- Check self-target
 	if caster == target then 

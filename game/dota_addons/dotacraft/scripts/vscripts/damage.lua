@@ -14,7 +14,7 @@ function dotacraft:FilterDamage( filterTable )
     local inflictor = filterTable["entindex_inflictor_const"]
 
     if inflictor then
-        local bBlock = victim:ShouldAbsorbSpell(attacker, ability)
+        local bBlock = victim:ShouldAbsorbSpell(attacker, EntIndexToHScript(filterTable["entindex_inflictor_const"]))
         if bBlock then
             return false
         end
