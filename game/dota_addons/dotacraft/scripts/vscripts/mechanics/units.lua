@@ -408,11 +408,28 @@ function CDOTA_BaseNPC:GetAttackFactorAgainstTarget( unit )
 end
 
 function CDOTA_BaseNPC:FindItemByName(item_name)
-    for i=0,15 do
+    for i=0,5 do
         local item = self:GetItemInSlot(i)
         if item and item:GetAbilityName() == item_name then
             return item
         end
     end
     return nil
+end
+
+function CDOTA_BaseNPC:ShouldAbsorbSpell(caster, ability)
+    if self:IsOpposingTeam(caster:GetTeamNumber()) then
+        if ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) then
+            local item = self:FindItemByName("item_amulet_of_spell_shield") 
+            if item and item:IsCooldownReady() and 
+                ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, self)
+                Timers:CreateTimer(0.03, function()
+                    self:EmitSound("DOTA_Item.LinkensSphere.Activate")
+                    item:StartCooldown(item:GetCooldown(1))
+                end)
+                return true
+            end
+        end
+    end
+    return false
 end

@@ -1,6 +1,14 @@
 -- All abilities that affect buildings must have DOTA_UNIT_TARGET_BUILDING in its AbilityUnitTargetType
 function CDOTABaseAbility:AffectsBuildings()
-    return bit.band(self:GetAbilityTargetType(), DOTA_UNIT_TARGET_BUILDING) == DOTA_UNIT_TARGET_BUILDING
+    return self:HasFlag(DOTA_UNIT_TARGET_BUILDING)
+end
+
+function CDOTABaseAbility:HasFlag(flag)
+    return bit.band(self:GetAbilityTargetType(), flag) == flag
+end
+
+function CDOTABaseAbility:HasBehavior(flag)
+    return bit.band(self:GetBehavior(), flag) == flag
 end
 
 -- Deals damage to units with an optional buildingFactor, if the total passes maxDamage, the damage each unit receives is split

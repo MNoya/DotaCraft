@@ -104,6 +104,7 @@ function dotacraft:InitGameMode()
     GameMode:SetTrackingProjectileFilter( Dynamic_Wrap( dotacraft, "FilterProjectile" ), self )
     GameMode:SetModifyExperienceFilter( Dynamic_Wrap( dotacraft, "FilterExperience" ), self )
     GameMode:SetModifyGoldFilter( Dynamic_Wrap( dotacraft, "FilterGold" ), self )
+    GameMode:SetModifierGainedFilter( Dynamic_Wrap(dotacraft, "FilterModifier"), self )
 
     -- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
@@ -1261,9 +1262,17 @@ function dotacraft:FilterProjectile( filterTable )
     local is_attack = tobool(filterTable["is_attack"])
     local move_speed = filterTable["move_speed"]
 
-    if is_attack and HasArtilleryAttack(attacker) then
-        AttackGroundPos(attacker, victim:GetAbsOrigin(), move_speed)
-        return false
+    if is_attack then
+        if HasArtilleryAttack(attacker) 
+            AttackGroundPos(attacker, victim:GetAbsOrigin(), move_speed)
+            return false
+        end
+    else
+        local ability = EntIndexToHScript(filterTable["entindex_ability_const"])
+        local bBlock = victim:ShouldAbsorbSpell(attacker, ability)
+        if bBlock then
+            return false
+        end
     end
 
     return true
@@ -1295,6 +1304,29 @@ function dotacraft:FilterGold( filterTable )
 
     -- Disable all hero kill gold
     if reason == DOTA_ModifyGold_HeroKill then
+        return false
+    end
+
+    return true
+end
+
+------------------------------------------------------------------
+--                        Modifier Filter                       --
+------------------------------------------------------------------
+function dotacraft:FilterModifier( filterTable )
+    local target_index = filterTable['entindex_parent_const']
+    local caster_index = filterTable['entindex_caster_const']
+    local ability_index = filterTable["entindex_ability_const"]
+    
+    if not target_index or not caster_index or not ability_index then
+        return true
+    end
+
+    local ability = EntIndexToHScript(ability_index)
+    local target = EntIndexToHScript(target_index)
+    local caster = EntIndexToHScript(caster_index)
+    local bBlock = target:ShouldAbsorbSpell(caster, ability)
+    if bBlock then
         return false
     end
 

@@ -97,7 +97,16 @@
 }
 
 //"item_cloak_of_shadows"
-//"item_amulet_of_spell_shield" //linkens
+
+// Blocks a negative spell that an enemy casts on the Hero once every 40 seconds.
+"item_amulet_of_spell_shield"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_amulet_of_spell_shield"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityCooldown"               "40"
+}
 
 //Teleports 12 of the player's units within the targeted area to the location of the Hero when used.
 "item_diamond_of_summoning"
