@@ -3,17 +3,11 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 1
-	m_flConstantRadius = 1.000000
-	m_ConstantColor =
-	[
-		0,
-		0,
-		0,
-		255,
-	]
+	m_flConstantRadius = 1.0
+	m_ConstantColor = [ 0, 0, 0, 255 ]
 	m_nConstantSequenceNumber1 = 18
 	m_bShouldSort = false
-	m_Renderers =
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderModels"
@@ -24,7 +18,7 @@
 			m_bOrientZ = true
 			m_nSkin = 1
 			m_nModelCP = 1
-			m_ModelList =
+			m_ModelList = 
 			[
 				{
 					m_model = resource:"models/heroes/storm_spirit/storm_spirit.vmdl"
@@ -33,31 +27,31 @@
 			m_nLOD = 1
 		},
 	]
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_Orient2DRelToCP"
 			m_nFieldOutput = 12
-			m_flRotOffset = 90.000000
-			m_flOpStartFadeOutTime = 0.100000
-			m_flOpEndFadeOutTime = 0.100000
+			m_flRotOffset = 90.0
+			m_flOpStartFadeOutTime = 0.1
+			m_flOpEndFadeOutTime = 0.1
 			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_RemapCPtoScalar"
-			m_flOutputMax = 10.100000
-			m_flInputMax = 10.000000
+			m_flOutputMax = 10.1
+			m_flInputMax = 10.0
 			m_nCPInput = 2
 			m_nField = 1
 			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_SequenceFromModel"
-			m_flOpEndFadeOutTime = 0.250000
-			m_flOpStartFadeOutTime = 0.250000
-			m_flOutputMax = 1000.000000
+			m_flOpEndFadeOutTime = 0.25
+			m_flOpStartFadeOutTime = 0.25
+			m_flOutputMax = 1000.0
 			m_nFieldOutput = 13
-			m_flInputMax = 1000.000000
+			m_flInputMax = 1000.0
 			m_nControlPointNumber = 1
 		},
 		{
@@ -65,87 +59,67 @@
 		},
 		{
 			_class = "C_OP_RampScalarLinearSimple"
-			m_flEndTime = 0.500000
-			m_Rate = 30.000000
+			m_flEndTime = 0.5
+			m_Rate = 30.0
 			m_nField = 18
 		},
 		{
 			_class = "C_OP_RemapCPtoVector"
 			m_nCPInput = 2
 			m_nFieldOutput = 6
-			m_vInputMax =
-			[
-				255.000000,
-				255.000000,
-				255.000000,
-			]
-			m_vOutputMax =
-			[
-				1.000000,
-				1.000000,
-				1.000000,
-			]
+			m_vInputMax = [ 255.0, 255.0, 255.0 ]
+			m_vOutputMax = [ 1.0, 1.0, 1.0 ]
 		},
 		{
 			_class = "C_OP_PositionLock"
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RemapInitialCPDirectionToRotation"
 			m_nCP = 1
 			m_nFieldOutput = 12
-			m_flOffsetRot = 90.000000
+			m_flOffsetRot = 90.0
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMin = 1.000000
-			m_fLifetimeMax = 1.000000
+			m_fLifetimeMin = 1.0
+			m_fLifetimeMax = 1.0
 		},
 		{
 			_class = "C_INIT_CreateWithinSphere"
 		},
 		{
 			_class = "C_INIT_PositionOffset"
-			m_OffsetMin =
-			[
-				2.000000,
-				0.000000,
-				0.000000,
-			]
-			m_OffsetMax =
-			[
-				2.000000,
-				0.000000,
-				0.000000,
-			]
+			m_OffsetMin = [ 2.0, 0.0, 0.0 ]
+			m_OffsetMax = [ 2.0, 0.0, 0.0 ]
 			m_bLocalCoords = true
 		},
 		{
 			_class = "C_INIT_RandomAlphaWindowThreshold"
-			m_flMin = 18.000000
-			m_flMax = 18.000000
+			m_flMin = 18.0
+			m_flMax = 18.0
 		},
 		{
 			_class = "C_INIT_RemapCPtoScalar"
 			m_nCPInput = 3
 			m_nFieldOutput = 7
-			m_flInputMax = 100.000000
+			m_flInputMax = 100.0
 		},
 		{
 			_class = "C_INIT_RemapCPtoScalar"
 			m_nCPInput = 4
-			m_flInputMax = 1000.000000
-			m_flOutputMax = 1000.000000
+			m_flInputMax = 1000.0
+			m_flOutputMax = 1000.0
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
 			m_nParticlesToEmit = 1
 		},
 	]
-	m_flCullRadius = -1.000000
+	m_flCullRadius = -1.0
 }
