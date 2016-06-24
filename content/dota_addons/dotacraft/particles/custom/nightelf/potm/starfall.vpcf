@@ -1,0 +1,174 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_nMaxParticles = 16
+	m_flConstantRadius = 128.0
+	m_nConstantSequenceNumber = 6
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_hTexture = resource:"materials/particle/particle_glow_oval02_half.vtex"
+			m_nOrientationType = 4
+			m_flCenterYOffset = -0.5
+			m_flAddSelfAmount = 2.0
+			m_bAdditive = true
+			m_flOverbrightFactor = 2.0
+		},
+		{
+			_class = "C_OP_RenderScreenVelocityRotate"
+			m_flForwardDegrees = 90.0
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_BasicMovement"
+		},
+		{
+			_class = "C_OP_SetChildControlPoints"
+			m_nFirstControlPoint = 3
+		},
+		{
+			_class = "C_OP_SetControlPointPositions"
+			m_vecCP1Pos = [ 0.0, 0.0, 1140.0 ]
+			m_nCP2 = 4
+			m_nCP3 = 4
+			m_flOpStartFadeOutTime = 0.1
+			m_flOpEndFadeOutTime = 0.1
+			m_vecCP2Pos = [ 0.0, 0.0, 32.0 ]
+			m_vecCP3Pos = [ 0.0, 0.0, 32.0 ]
+			m_vecCP4Pos = [ 0.0, 0.0, 32.0 ]
+		},
+		{
+			_class = "C_OP_SpinYaw"
+			m_nSpinRateDegrees = 10
+			m_nSpinRateMinDegrees = 100
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_bDisableOperator = true
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 1
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 0.5
+			m_fLifetimeMax = 0.5
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+			m_flDegreesMin = 90.0
+			m_flDegreesMax = 90.0
+			m_bRandomlyFlipDirection = false
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+			m_flDegreesMin = 128.0
+			m_nFieldOutput = 12
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 48.0
+			m_flRadiusMax = 80.0
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 116, 88, 253, 255 ]
+			m_ColorMax = [ 72, 84, 253, 255 ]
+		},
+		{
+			_class = "C_INIT_SetRigidAttachment"
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 32
+		},
+	]
+	m_Constraints = 
+	[
+		{
+			_class = "C_OP_ConstrainDistanceToPath"
+			m_flMaxDistance0 = 0.0
+			m_flTravelTime = 0.5
+			m_PathParameters = 
+			{
+				m_nStartControlPointNumber = 1
+			}
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_a.vpcf"
+			m_flDelay = 0.5
+		},
+		{
+			m_flDelay = 0.5
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_b.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_c.vpcf"
+			m_flDelay = 0.5
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_d.vpcf"
+			m_flDelay = 0.5
+		},
+		{
+			m_flDelay = 0.5
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_e.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_f.vpcf"
+			m_flDelay = 0.25
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_g.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_h.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_i.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_j.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_k.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_l.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_m.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_n.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_o.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_p.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_q.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/nightelf/potm/starfall_r.vpcf"
+		},
+	]
+}

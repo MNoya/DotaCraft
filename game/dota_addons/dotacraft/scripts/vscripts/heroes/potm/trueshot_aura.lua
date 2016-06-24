@@ -1,7 +1,7 @@
 potm_trueshot_aura = class({})
 
-LinkLuaModifier("modifier_trueshot_aura", "heroes/dread_lord/trueshot_aura", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_trueshot_aura_buff", "heroes/dread_lord/trueshot_aura", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_trueshot_aura", "heroes/potm/trueshot_aura", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_trueshot_aura_buff", "heroes/potm/trueshot_aura", LUA_MODIFIER_MOTION_NONE)
 
 function potm_trueshot_aura:GetIntrinsicModifierName()
     return "modifier_trueshot_aura"
@@ -39,7 +39,7 @@ function modifier_trueshot_aura:GetAuraSearchTeam()
     return DOTA_UNIT_TARGET_TEAM_FRIENDLY
 end
 
-function modifier_thorns_aura:GetAuraSearchFlags()
+function modifier_trueshot_aura:GetAuraSearchFlags()
     return DOTA_UNIT_TARGET_FLAG_RANGED_ONLY
 end
 

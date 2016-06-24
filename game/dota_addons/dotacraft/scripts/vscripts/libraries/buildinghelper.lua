@@ -1003,7 +1003,6 @@ function BuildingHelper:UpgradeBuilding(building, newName)
 
     -- Kill the old building
     building:AddEffects(EF_NODRAW) --Hide it, so that it's still accessible after this script
-    building:SetAbsOrigin(Vector(0,0,10000))
     building.upgraded = true --Skips visual effects
     building:ForceKill(true) --This will call RemoveBuilding
     
