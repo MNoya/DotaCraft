@@ -11,11 +11,201 @@
 	    "ItemSellable"                  "0"
 	}
 	// Summons
-	//"item_book_of_the_dead"
-	//"item_talisman_of_the_wild"
-	//"item_red_drake_egg"
-	//"item_spiked_collar"
-	//"item_stone_token"
+	"item_book_of_the_dead"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_book_of_the_dead"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+	    
+	    "AbilityCooldown"               "20"
+	    "ItemCost"                      "450"
+	    "ItemShopTags"                  "rare"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "120"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/book_of_the_dead.lua"
+	            "Function"      "BookSpawn"
+	        }
+	    }
+	}
+	
+	"item_talisman_of_the_wild"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_talisman_of_the_wild"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+	    
+	    "AbilityCooldown"               "20"
+	    "ItemCost"                      "550"
+	    "ItemShopTags"                  "rare"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "3"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+	    }
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "180"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/summons.lua"
+	            "Function"      "SummonInFront"
+	            "Unit"          "neutral_furbolg"
+	            "Distance"      "100"
+	            "Duration"      "%duration"
+	            "Particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+	        }
+	    }
+	}
+	
+	"item_red_drake_egg"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_red_drake_egg"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+	    
+	    "AbilityCooldown"               "20"
+	    "ItemCost"                      "550"
+	    "ItemShopTags"                  "rare"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+	    }
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "180"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/summons.lua"
+	            "Function"      "SummonInFront"
+	            "Unit"          "neutral_red_drake"
+	            "Distance"      "200"
+	            "Duration"      "%duration"
+	            "Particle"      "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+	        }
+	    }
+	}
+	
+	"item_spiked_collar"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_spiked_collar"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+	    
+	    "AbilityCooldown"               "20"
+	    "ItemCost"                      "550"
+	    "ItemShopTags"                  "rare"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death.vpcf"
+	    }
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "180"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/summons.lua"
+	            "Function"      "SummonInFront"
+	            "Unit"          "demon_fel_stalker"
+	            "Distance"      "150"
+	            "Duration"      "%duration"
+	            "Particle"      "particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death.vpcf"
+	        }
+	    }
+	}
+	
+	"item_stone_token"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_stone_token"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+	    
+	    "AbilityCooldown"               "20"
+	    "ItemCost"                      "550"
+	    "ItemShopTags"                  "rare"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "180"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/summons.lua"
+	            "Function"      "SummonInFront"
+	            "Unit"          "neutral_rock_golem"
+	            "Distance"      "150"
+	            "Duration"      "%duration"
+	            "Particle"      "particles/units/heroes/hero_tiny/tiny_transform.vpcf"
+	        }
+	    }
+	}
 	
 	// Aegis
 	"item_ankh_of_reincarnation"
@@ -51,8 +241,141 @@
 	
 	
 	// Wards
-	//"item_healing_wards"
-	//"item_sentry_wards"
+	"item_healing_wards"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_healing_wards"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AOE"
+	    
+	    "AbilityCastRange"              "500"
+	    "ItemCost"                      "450"
+	    "ItemShopTags"                  "rare"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "3"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "30"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "500"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "regeneration"          "2"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"            "items/summons.lua"
+	            "Function"              "SummonHealingWard"
+	            "Target"                "POINT"
+	        }
+	    }
+	}
+	
+	"item_sentry_wards"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_sentry_wards"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AOE"
+	    
+	    "AbilityCastRange"              "500"
+	    "ItemCost"                      "150"
+	    "ItemShopTags"                  "uncommon"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "3"
+	
+	    "AoERadius"                     "1600"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "300"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "1600"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"            "items/summons.lua"
+	            "Function"              "SummonSentryWard"
+	            "Target"                "POINT"
+	        }
+	        "FireSound"
+	        {
+	            "EffectName"            "DOTA_Item.ObserverWard.Activate"
+	            "Target"                "CASTER"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_sentry_ward"
+	        {
+	            "IsHidden"          "1"
+	    
+	            "EffectName"        "particles/items2_fx/ward_true_sight.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	    
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVISIBLE"   "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "ThinkInterval"  "0.03"
+	            "OnIntervalThink"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Radius"    "%radius"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                    }
+	                    "ModifierName"  "modifier_truesight"
+	                }
+	                "ApplyModifier"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Radius"    "%radius"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                    }
+	                    "ModifierName"  "modifier_truesight"
+	                    "Duration"      "0.50"
+	                }           
+	            }       
+	        }
+	    }
+	}
 	
 	// Wands
 	//"item_wand_of_illusion"
@@ -4054,11 +4377,6 @@
 	        {
 	            "ScriptFile"            "items/runes.lua"
 	            "Function"              "Watcher"
-	        }
-	        "FireSound"
-	        {
-	            "EffectName"            "DOTA_Item.ObserverWard.Activate"
-	            "Target"                "CASTER"
 	        }
 	    }
 	

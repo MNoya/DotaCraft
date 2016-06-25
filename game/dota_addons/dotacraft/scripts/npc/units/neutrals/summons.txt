@@ -1,0 +1,321 @@
+//Skeleton Archer - item_book_of_the_dead
+//Furbolg - item_talisman_of_the_wild
+//Red Drake - item_red_drake_egg
+//Fel Stalker - item_spiked_collar
+//Rest are covered elsewhere
+
+//=================================================================================
+// Creature: Skeleton Archer
+// Description: "Light ranged unit. Attacks land and air units."
+//=================================================================================
+"undead_skeleton_archer"
+{
+    // General
+    //----------------------------------------------------------------
+    "BaseClass"                 "npc_dota_creature"
+    "Model"                     "models/heroes/clinkz/clinkz.vmdl"
+    "ModelScale"                "0.5"
+    "SoundSet"                  "Hero_Clinkz"           
+    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+    "Level"                     "1"
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "HealthBarOffset"           "140"
+
+    "FormationRank"             "2"
+    "AttacksEnabled"            "ground,air"
+    "LeavesCorpse"              "0"
+    
+    // Abilities
+    //----------------------------------------------------------------
+    
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "0"
+    "MagicalResistance"         "0"
+    
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+    "AttackDamageMin"           "13.0"
+    "AttackDamageMax"           "15.0"
+    "AttackDamageType"          "DAMAGE_TYPE_PHYSICAL"
+    "AttackRate"                "1.8"
+    "AttackAnimationPoint"      "0.7"
+    "AttackAcquisitionRange"    "600"
+    "AttackRange"               "500"
+    "ProjectileModel"           "particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
+    "ProjectileSpeed"           "900"
+    
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyGoldMin"             "4.0"
+    "BountyGoldMax"             "6.0"
+    
+    // Gold and Lumber
+    //----------------------------------------------------------------
+    "GoldCost"                  "105"
+    "LumberCost"                "0"
+    
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+    "MovementSpeed"             "270"
+    "MovementTurnRate"          "0.5"
+    
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "180"
+    "StatusHealthRegen"         "0.5"
+    "StatusMana"                "0"
+    "StatusManaRegen"           "0"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1400"
+    "VisionNighttimeRange"      "800"
+    
+    // Attack Damage types
+    //----------------------------------------------------------------
+    "AttackType"                "piercing"
+    "ArmorType"                 "heavy"
+
+    // Creature Data
+    //----------------------------------------------------------------
+    "Creature"
+    {
+        "AttachWearables"
+        {
+            "Wearable1" { "ItemDef" "4600" } //spine bow
+            "Wearable2" { "ItemDef" "56" } //skull
+            "Wearable3" { "ItemDef" "4972" } //gauntlets
+            "Wearable4" { "ItemDef" "59" } //quiver
+            "Wearable5" { "ItemDef" "4742" } //pauldrons
+            "Wearable6" { "ItemDef" "4971" } //horns crypt guardian
+        }
+    }
+}
+
+//=================================================================================
+// Creature: Furbolg
+// Description: "Medium melee unit. Attacks land units."
+//=================================================================================
+"neutral_furbolg"
+{
+    // General
+    //----------------------------------------------------------------
+    "BaseClass"                 "npc_dota_creature"
+    "Model"                     "models/creeps/neutral_creeps/n_creep_beast/n_creep_beast.vmdl"
+    "ModelScale"                "1"
+    "Level"                     "4"
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "HealthBarOffset"           "140"
+
+    "FormationRank"             "0"
+    "AttacksEnabled"            "ground"
+    "LeavesCorpse"              "1"
+    
+    // Abilities
+    //----------------------------------------------------------------
+    
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "2"
+    "MagicalResistance"         "0"
+    
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+    "AttackDamageMin"           "18.0"
+    "AttackDamageMax"           "21.0"
+    "AttackDamageType"          "DAMAGE_TYPE_PHYSICAL"
+    "AttackRate"                "1.35"
+    "AttackAnimationPoint"      "0.3"
+    "AttackAcquisitionRange"    "500"
+    "AttackRange"               "100"
+    
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyGoldMin"             "11.0"
+    "BountyGoldMax"             "15.0"
+    
+    // Gold and Lumber
+    //----------------------------------------------------------------
+    "GoldCost"                  "255"
+    "LumberCost"                "30"
+    
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+    "MovementSpeed"             "300"
+    "MovementTurnRate"          "0.5"
+    
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "550"
+    "StatusHealthRegen"         "0.5"
+    "StatusMana"                "0"
+    "StatusManaRegen"           "0"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1400"
+    "VisionNighttimeRange"      "800"
+    
+    // Attack Damage types
+    //----------------------------------------------------------------
+    "AttackType"                "normal"
+    "ArmorType"                 "heavy"
+}
+
+//=================================================================================
+// Creature: Red Drake
+// Description: "Small ranged flying unit. Attacks land and air units."
+//=================================================================================
+"neutral_red_drake"
+{
+    // General
+    //----------------------------------------------------------------
+    "BaseClass"                 "npc_dota_creature"
+    "Model"                     "models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
+    "ModelScale"                "1"
+    "Level"                     "6"
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "HealthBarOffset"           "140"
+
+    "FormationRank"             "2"
+    "AttacksEnabled"            "ground,air"
+    "LeavesCorpse"              "0"
+    
+    // Abilities
+    //----------------------------------------------------------------
+    
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "2"
+    "MagicalResistance"         "0"
+    
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+    "AttackDamageMin"           "36.0"
+    "AttackDamageMax"           "47.0"
+    "AttackDamageType"          "DAMAGE_TYPE_PHYSICAL"
+    "AttackRate"                "1.8"
+    "AttackAnimationPoint"      "0.94"
+    "AttackAcquisitionRange"    "500"
+    "AttackRange"               "400"
+    "ProjectileModel"           "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+    "ProjectileSpeed"           "900"
+    
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyGoldMin"             "44.0"
+    "BountyGoldMax"             "52.0"
+    
+    // Gold and Lumber
+    //----------------------------------------------------------------
+    "GoldCost"                  "365"
+    "LumberCost"                "80"
+    
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+    "MovementSpeed"             "350"
+    "MovementTurnRate"          "0.1"
+    
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "950"
+    "StatusHealthRegen"         "0.5"
+    "StatusMana"                "0"
+    "StatusManaRegen"           "0"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1400"
+    "VisionNighttimeRange"      "800"
+    
+    // Attack Damage types
+    //----------------------------------------------------------------
+    "AttackType"                "piercing"
+    "ArmorType"                 "heavy"
+    
+    // Creature Data
+    //----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Fel Stalker
+// Description: "Demonic beast that casts Mana Burn. Attacks land units."
+//=================================================================================
+"demon_fel_stalker"
+{
+    // General
+    //----------------------------------------------------------------
+    "BaseClass"                 "npc_dota_creature"
+    "Model"                     "models/items/warlock/warlock_fourleg_demon.vmdl"
+    "ModelScale"                "1"
+    "Level"                     "5"
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "HealthBarOffset"           "140"
+
+    "FormationRank"             "0"
+    "AttacksEnabled"            "ground"
+    "LeavesCorpse"              "0"
+    
+    // Abilities
+    //----------------------------------------------------------------
+    "Ability1"                  ""   //Reference: Ambb
+    
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "3"
+    "MagicalResistance"         "0"
+    
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+    "AttackDamageMin"           "24.0"
+    "AttackDamageMax"           "27.0"
+    "AttackDamageType"          "DAMAGE_TYPE_PHYSICAL"
+    "AttackRate"                "1.35"
+    "AttackAnimationPoint"      "0.4"
+    "AttackAcquisitionRange"    "500"
+    "AttackRange"               "100"
+    
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyGoldMin"             "20.0"
+    "BountyGoldMax"             "26.0"
+    
+    // Gold and Lumber
+    //----------------------------------------------------------------
+    "GoldCost"                  "320"
+    "LumberCost"                "50"
+    
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+    "MovementSpeed"             "350"
+    "MovementTurnRate"          "0.5"
+    
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "750"
+    "StatusHealthRegen"         "0.5"
+    "StatusMana"                "200"
+    "StatusManaRegen"           "200"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1400"
+    "VisionNighttimeRange"      "800"
+    
+    // Attack Damage types
+    //----------------------------------------------------------------
+    "AttackType"                "chaos"
+    "ArmorType"                 "heavy"
+    
+    // Creature Data
+    //----------------------------------------------------------------
+}

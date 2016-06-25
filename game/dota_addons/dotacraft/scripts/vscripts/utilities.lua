@@ -157,8 +157,8 @@ function GenerateNumPointsAround(num, center, distance)
 end
 
 function GetGridAroundPoint( numUnits, point )
-    local navPoints = {}  
-
+    local navPoints = {}
+    if numUnits == 1 then return {point} end
     local unitsPerRow = math.floor(math.sqrt(numUnits))
     local unitsPerColumn = math.floor((numUnits / unitsPerRow))
     local remainder = numUnits - (unitsPerRow*unitsPerColumn) 
@@ -190,6 +190,10 @@ function GetGridAroundPoint( numUnits, point )
         local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
         navPoints[#navPoints+1] = newPoint
         curX = curX + 1
+    end
+
+    for k,v in pairs(navPoints) do
+        DebugDrawCircle(v,Vector(255,0,0),100,10,true,10)
     end
 
     return navPoints

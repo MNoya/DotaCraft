@@ -18,6 +18,5 @@ function Watcher(event)
     local point = origin + caster:GetForwardVector() * 150
     local sentry = CreateUnitByName('warcraft_sentry_ward', point, false, caster, caster, caster:GetTeamNumber())
     ability:ApplyDataDrivenModifier(sentry,sentry,"modifier_sentry_ward",{})
-    sentry:EmitSound('DOTA_Item.SentryWard.Activate')
-    sentry:EmitSound('DOTA_Item.ObserverWard.Activate')
+    sentry:EmitSound("DOTA_Item.ObserverWard.Activate")
 end

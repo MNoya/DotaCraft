@@ -31,7 +31,8 @@ XP_NEUTRAL_SCALING = {
 XP_SINGLEHERO_TIER_BONUS = {[2] = 1.15, [3] = 1.30}
 
 function Heroes:DistributeXP(killed, attacker)
-    if killed:IsIllusion() then return end
+    if killed:IsIllusion() then return end -- Illusions don't grant XP
+    -- TODO: Timed-out summons don't grant XP
 
     -- You do not receive experience if any building such as a tower or ancient makes the killing blow.
     if IsCustomBuilding(attacker) then return end
