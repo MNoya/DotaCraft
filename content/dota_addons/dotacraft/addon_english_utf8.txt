@@ -14,6 +14,9 @@
 		"DOTA_StatTooltip_StrengthBonus"	"- Each point increases hit points by 25\n- Each point increases hit point regen by 0.03\n"
 		"DOTA_StatTooltip_AgilityBonus"		"- Every 3 points increase armor by 1\n- Each point increases attack speed by 2\n"
 		"DOTA_StatTooltip_IntelligenceBonus"	"- Each point increases mana by 15\n- Each point increases mana regen by 0.05\n"
+		"DOTA_Chat_PickedUpAegis"		""
+		"DOTA_Chat_DeniedAegis"			""
+		"DOTA_Chat_AegisStolen"			""
 		
 		// ******************** HEROES ********************
 		"npc_dota_hero_dragon_knight"				"Human"
@@ -48,7 +51,9 @@
 		// *************** ERROR MESSAGES ****************
 
 		"error_full_health"							"Already on full health"
+		"error_full_mana"							"Already on full mana"
 		"error_cant_target_self"					"Unable to target self"
+		"error_need_target_with_mana"				"Must target a unit with mana"
 		"error_cant_target_undead_allies"			"Must target friendly living units or enemy Undead units"
 		"error_must_target_undead_allies"			"Must target enemy living units or friendly Undead units"
 
@@ -1489,8 +1494,8 @@
 		"DOTA_Tooltip_modifier_purge"                                                     "Purge"
 		"DOTA_Tooltip_modifier_purge_Description"                                         ""
 
-		"DOTA_Tooltip_modifier_orc_lightning_shield"                                      "Orc Lightning Shield"
-		"DOTA_Tooltip_modifier_orc_lightning_shield_Description"                          ""
+		"DOTA_Tooltip_modifier_lightning_shield"                                      	  "Lightning Shield"
+		"DOTA_Tooltip_modifier_lightning_shield_Description"                              ""
 
 		"DOTA_Tooltip_modifier_orc_bloodlust"                                             "Orc Bloodlust"
 		"DOTA_Tooltip_modifier_orc_bloodlust_Description"                                 ""
@@ -8999,7 +9004,277 @@
 
         "DOTA_Tooltip_ability_item_backpack"                                              ""
         "DOTA_Tooltip_ability_item_backpack_Description"                                  ""
- 
 
+        // ******************** ITEM DROPS ********************
+		"DOTA_Tooltip_ability_item_book_of_the_dead"                                      "Book of the Dead"
+		"DOTA_Tooltip_ability_item_book_of_the_dead_Description"                          "Summons four Skeleton Warriors and four Skeleton Archers to fight for you. Lasts 120 seconds."
+		"DOTA_Tooltip_ability_item_book_of_the_dead_duration"                             "DURATION:"
+
+		"DOTA_Tooltip_ability_item_talisman_of_the_wild"                                  "Talisman of the Wild"
+		"DOTA_Tooltip_ability_item_talisman_of_the_wild_Description"                      "This mystic stone summons 1 Furbolg to fight for you. Lasts %duration% seconds."
+		"DOTA_Tooltip_ability_item_talisman_of_the_wild_duration"                         "DURATION:"
+
+		"DOTA_Tooltip_ability_item_red_drake_egg"                                         "Red Drake Egg"
+		"DOTA_Tooltip_ability_item_red_drake_egg_Description"                             "Summons a Red Drake to fight for you. Lasts %duration% seconds."
+		"DOTA_Tooltip_ability_item_red_drake_egg_duration"                                "DURATION:"
+
+		"DOTA_Tooltip_ability_item_spiked_collar"                                         "Spiked Collar"
+		"DOTA_Tooltip_ability_item_spiked_collar_Description"                             "Summons a Fel Stalker to fight for you. Lasts %duration% seconds."
+		"DOTA_Tooltip_ability_item_spiked_collar_duration"                                "DURATION:"
+
+		"DOTA_Tooltip_ability_item_stone_token"                                           "Stone Token"
+		"DOTA_Tooltip_ability_item_stone_token_Description"                               "Summons a Rock Golem to fight for you. Lasts %duration% seconds."
+		"DOTA_Tooltip_ability_item_stone_token_duration"                                  "DURATION:"
+
+		"DOTA_Tooltip_ability_item_ankh_of_reincarnation"                                 "Ankh of Reincarnation"
+		"DOTA_Tooltip_ability_item_ankh_of_reincarnation_Description"                     "Automatically brings the Hero back to life when the Hero wearing the Ankh dies."
+		"DOTA_Tooltip_ability_item_ankh_of_reincarnation_reincarnate_time"                "REINCARNATE TIME:"
+
+		"DOTA_Tooltip_ability_item_sentry_wards"                                          "Sentry Wards"
+		"DOTA_Tooltip_ability_item_sentry_wards_Description"                              "Drops a Sentry Ward to spy upon an area for 5 minutes. Sentry Wards can be used to reveal invisible units."
+		"DOTA_Tooltip_ability_item_sentry_wards_duration"                                 "DURATION:"
+		"DOTA_Tooltip_ability_item_sentry_wards_radius"                                   "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_healing_wards"                                         "Healing Wards"
+		"DOTA_Tooltip_ability_item_healing_wards_Description"                             "Drops a ward that heals nearby friendly units for %duration% seconds."
+		"DOTA_Tooltip_ability_item_healing_wards_duration"                                "DURATION:"
+		"DOTA_Tooltip_ability_item_healing_wards_radius"                                  "RADIUS:"
+		"DOTA_Tooltip_ability_item_healing_wards_regeneration"                            "%HP REGEN:"
+
+		"DOTA_Tooltip_ability_item_wand_of_illusion"                                      "Wand of Illusion"
+		"DOTA_Tooltip_ability_item_wand_of_illusion_Description"                          "Create an illusory double of the targeted unit when used. The illusory double deals no damage to enemy units, takes 2 times the damage from enemy attacks, and will disappear after %illusion_duration% seconds or when its hit points reach zero. You cannot cast Illusion on hostile units."
+		"DOTA_Tooltip_ability_item_wand_of_illusion_illusion_duration"                    "ILLUSION DURATION:"
+		"DOTA_Tooltip_ability_item_wand_of_illusion_illusion_outgoing_damage"             "ILLUSION OUTGOING DAMAGE:"
+		"DOTA_Tooltip_ability_item_wand_of_illusion_illusion_incoming_damage"             "ILLUSION INCOMING DAMAGE:"
+
+		"DOTA_Tooltip_ability_item_wand_of_lightning_shield"                              "Wand of Lightning Shield"
+		"DOTA_Tooltip_ability_item_wand_of_lightning_shield_Description"                  "Allows the Hero to cast Lightning Shield on a target unit. Lightning Shield surrounds a unit with electricity, damaging nearby units."
+		"DOTA_Tooltip_ability_item_wand_of_lightning_shield_duration"                     "DURATION:"
+		"DOTA_Tooltip_ability_item_wand_of_lightning_shield_radius"                       "RADIUS:"
+		"DOTA_Tooltip_ability_item_wand_of_lightning_shield_damage_per_second"            "DAMAGE PER SECOND:"
+		"DOTA_Tooltip_ability_item_wand_of_lightning_shield_think_interval"               "THINK INTERVAL:"
+
+		"DOTA_Tooltip_ability_item_wand_of_mana_stealing"                                 "Wand of Mana Stealing"
+		"DOTA_Tooltip_ability_item_wand_of_mana_stealing_Description"                     "Steals mana from a target unit and gives it to the Hero."
+		"DOTA_Tooltip_ability_item_wand_of_mana_stealing_mana_stolen"                     "MANA STOLEN:"
+
+		"DOTA_Tooltip_ability_item_wand_of_the_wind"                                      "Wand of the Wind"
+		"DOTA_Tooltip_ability_item_wand_of_the_wind_Description"                          "Allows the Hero to cast Cyclone. Cyclone tosses a target enemy unit into the air, rendering them unable to attack, move, or casts spells."
+		"DOTA_Tooltip_ability_item_wand_of_the_wind_duration"                             "DURATION:"
+		"DOTA_Tooltip_ability_item_wand_of_the_wind_hero_duration"                        "HERO DURATION:"
+
+		"DOTA_Tooltip_ability_item_staff_of_silence"                                      "Staff of Silence"
+		"DOTA_Tooltip_ability_item_staff_of_silence_Description"                          "Stops a target enemy unit from casting spells."
+		"DOTA_Tooltip_ability_item_staff_of_silence_hero_duration"                        "HERO DURATION:"
+		"DOTA_Tooltip_ability_item_staff_of_silence_creep_duration"                       "CREEP DURATION:"
+
+		"DOTA_Tooltip_ability_item_cloak_of_shadows"                                      "Cloak of Shadows"
+		"DOTA_Tooltip_ability_item_cloak_of_shadows_Description"                          "Provides the Hero with invisibility at night when worn. An invisible Hero is untargetable by the enemy unless detected. If the Hero moves, attacks, uses an ability, or casts a spell, the invisibility effect is lost."
+		"DOTA_Tooltip_ability_item_cloak_of_shadows_inaction_duration"                    "INACTION DURATION:"
+		"DOTA_Tooltip_ability_item_cloak_of_shadows_fade_time"                            "FADE TIME:"
+
+		"DOTA_Tooltip_ability_item_amulet_of_spell_shield"                                "Amulet of Spell Shield"
+		"DOTA_Tooltip_ability_item_amulet_of_spell_shield_Description"                    "Blocks a negative spell that an enemy casts on the Hero once every 40 seconds."
+
+		"DOTA_Tooltip_ability_item_diamond_of_summoning"                                  "Diamond of Summoning"
+		"DOTA_Tooltip_ability_item_diamond_of_summoning_Description"                      "Teleports 12 of the player's units within the targeted area to the location of the Hero when used."
+		"DOTA_Tooltip_ability_item_diamond_of_summoning_teleport_units"                   "TELEPORT UNITS:"
+		"DOTA_Tooltip_ability_item_diamond_of_summoning_radius"                           "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_crystal_ball"                                          "Crystal Ball"
+		"DOTA_Tooltip_ability_item_crystal_ball_Description"                              "Reveals a targeted area. Invisible units are also revealed by the Crystal Ball's effect."
+		"DOTA_Tooltip_ability_item_crystal_ball_reveal_radius"                            "REVEAL RADIUS:"
+		"DOTA_Tooltip_ability_item_crystal_ball_duration"                                 "DURATION:"
+
+		"DOTA_Tooltip_ability_item_allerias_flute_of_accuracy"                            "Allerias Flute of Accuracy"
+		"DOTA_Tooltip_ability_item_allerias_flute_of_accuracy_Description"                "Increases nearby ranged units damage by %bonus_range_damage_pct%%%."
+		"DOTA_Tooltip_ability_item_allerias_flute_of_accuracy_bonus_range_damage_pct"     "BONUS RANGE DAMAGE PCT:"
+		"DOTA_Tooltip_ability_item_allerias_flute_of_accuracy_radius"                     "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_khadgars_pipe_of_insight"                              "Khadgars Pipe of Insight"
+		"DOTA_Tooltip_ability_item_khadgars_pipe_of_insight_Description"                  "<font color='#F0BA36'>Brilliance Aura</font>\nGrants the Hero and friendly nearby units 1 bonus mana regeneration per second."
+		"DOTA_Tooltip_ability_item_khadgars_pipe_of_insight_mana_regen"                   "MANA REGEN:"
+		"DOTA_Tooltip_ability_item_khadgars_pipe_of_insight_radius"                       "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_the_lion_horn_of_stormwind"                            "The Lion Horn of Stormwind"
+		"DOTA_Tooltip_ability_item_the_lion_horn_of_stormwind_Description"                "<font color='#F0BA36'>Devotion Aura</font>\nGrants the Hero and friendly nearby units 1 bonus armor."
+		"DOTA_Tooltip_ability_item_the_lion_horn_of_stormwind_bonus_armor"                "BONUS ARMOR:"
+		"DOTA_Tooltip_ability_item_the_lion_horn_of_stormwind_radius"                     "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_legion_doom_horn"                                      "Legion Doom Horn"
+		"DOTA_Tooltip_ability_item_legion_doom_horn_Description"                          "<font color='#F0BA36'>Unholy Aura</font>\nGrants the Hero and friendly nearby units increased life regeneration and movement speed."
+		"DOTA_Tooltip_ability_item_legion_doom_horn_move_speed_bonus"                     "MOVE SPEED BONUS:"
+		"DOTA_Tooltip_ability_item_legion_doom_horn_health_regen_bonus"                   "HEALTH REGEN BONUS:"
+		"DOTA_Tooltip_ability_item_legion_doom_horn_radius"                               "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_ancient_janngo_of_endurance"                           "Ancient Janngo of Endurance"
+		"DOTA_Tooltip_ability_item_ancient_janngo_of_endurance_Description"               "<font color='#F0BA36'>Endurance Aura</font>\nGrants the Hero and friendly nearby units increased attack rate and movement speed."
+		"DOTA_Tooltip_ability_item_ancient_janngo_of_endurance_move_speed_bonus"          "MOVE SPEED BONUS:"
+		"DOTA_Tooltip_ability_item_ancient_janngo_of_endurance_health_regen_bonus"        "HEALTH REGEN BONUS:"
+		"DOTA_Tooltip_ability_item_ancient_janngo_of_endurance_radius"                    "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_cloak_of_flames"                                       "Cloak of Flames"
+		"DOTA_Tooltip_ability_item_cloak_of_flames_Description"                           "Engulfs the Hero in fire which deals %damage_per_second% damage per second to nearby enemy units."
+		"DOTA_Tooltip_ability_item_cloak_of_flames_damage_per_second"                     "DAMAGE PER SECOND:"
+		"DOTA_Tooltip_ability_item_cloak_of_flames_radius"                                "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_warsong_battle_drums"                                  "Warsong Battle Drums"
+		"DOTA_Tooltip_ability_item_warsong_battle_drums_Description"                      "<font color='#F0BA36'>Command Aura</font>Increases the attack damage of nearby friendly units by %damage_bonus_pct%%% when worn."
+		"DOTA_Tooltip_ability_item_warsong_battle_drums_damage_bonus_pct"                 "DAMAGE BONUS PCT:"
+		"DOTA_Tooltip_ability_item_warsong_battle_drums_radius"                           "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_scourge_bone_chimes"                                   "Scourge Bone Chimes"
+		"DOTA_Tooltip_ability_item_scourge_bone_chimes_Description"                       "<font color='#F0BA36'>Command Aura</font>Grants the Hero and friendly nearby units a vampiric aura which steals %lifesteal%%% of the damage they deal and converts it into life."
+		"DOTA_Tooltip_ability_item_scourge_bone_chimes_lifesteal"                         "LIFESTEAL:"
+		"DOTA_Tooltip_ability_item_scourge_bone_chimes_radius"                            "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_claws_of_attack_6"                                     "Claws of Attack +6"
+		"DOTA_Tooltip_ability_item_claws_of_attack_6_Description"                         "Increases the attack damage of the Hero by %bonus_damage% when worn."
+		"DOTA_Tooltip_ability_item_claws_of_attack_6_bonus_damage"                        "BONUS DAMAGE:"
+
+		"DOTA_Tooltip_ability_item_claws_of_attack_9"                                     "Claws of Attack +9"
+		"DOTA_Tooltip_ability_item_claws_of_attack_9_Description"                         "Increases the attack damage of the Hero by %bonus_damage% when worn."
+		"DOTA_Tooltip_ability_item_claws_of_attack_9_bonus_damage"                        "BONUS DAMAGE:"
+
+		"DOTA_Tooltip_ability_item_claws_of_attack_12"                                    "Claws of Attack +12"
+		"DOTA_Tooltip_ability_item_claws_of_attack_12_Description"                        "Increases the attack damage of the Hero by %bonus_damage% when worn."
+		"DOTA_Tooltip_ability_item_claws_of_attack_12_bonus_damage"                       "BONUS DAMAGE:"
+
+		"DOTA_Tooltip_ability_item_gauntlets_of_ogre_strength_3"                          "Gauntlets of Ogre Strength +3"
+		"DOTA_Tooltip_ability_item_gauntlets_of_ogre_strength_3_Description"              "Increases the Strength of the Hero by %bonus_str% when worn."
+		"DOTA_Tooltip_ability_item_gauntlets_of_ogre_strength_3_bonus_str"                "BONUS STR:"
+
+		"DOTA_Tooltip_ability_item_slippers_of_agility_3"                                 "Slippers of Agility +3"
+		"DOTA_Tooltip_ability_item_slippers_of_agility_3_Description"                     "Increases the Agility of the Hero by %bonus_agility% when worn."
+		"DOTA_Tooltip_ability_item_slippers_of_agility_3_bonus_agility"                   "BONUS AGILITY:"
+
+		"DOTA_Tooltip_ability_item_mantle_of_intelligence_3"                              "Mantle of Intelligence +3"
+		"DOTA_Tooltip_ability_item_mantle_of_intelligence_3_Description"                  "Increases the Intelligence of the Hero by %bonus_int% when worn."
+		"DOTA_Tooltip_ability_item_mantle_of_intelligence_3_bonus_int"                    "BONUS INT:"
+
+		"DOTA_Tooltip_ability_item_belt_of_giant_strength_6"                              "Belt of Giant Strength +6"
+		"DOTA_Tooltip_ability_item_belt_of_giant_strength_6_Description"                  "Increases the Strength of the Hero by %bonus_str% when worn."
+		"DOTA_Tooltip_ability_item_belt_of_giant_strength_6_bonus_str"                    "BONUS STR:"
+
+		"DOTA_Tooltip_ability_item_boots_of_quel_thalas_6"                                "Boots of Quel Thalas +6"
+		"DOTA_Tooltip_ability_item_boots_of_quel_thalas_6_Description"                    "Increases the Agility of the Hero by %bonus_agility% when worn."
+		"DOTA_Tooltip_ability_item_boots_of_quel_thalas_6_bonus_agility"                  "BONUS AGILITY:"
+
+		"DOTA_Tooltip_ability_item_robe_of_the_magi"                                      "Robe of the Magi"
+		"DOTA_Tooltip_ability_item_robe_of_the_magi_Description"                          "Increases the Intelligence of the Hero by %bonus_int% when worn."
+		"DOTA_Tooltip_ability_item_robe_of_the_magi_bonus_int"                            "BONUS INT:"
+
+		"DOTA_Tooltip_ability_item_khadgars_gem_of_health"                                "Khadgars Gem of Health"
+		"DOTA_Tooltip_ability_item_khadgars_gem_of_health_Description"                    "Increases the hit points of the Hero by %bonus_health% when worn."
+		"DOTA_Tooltip_ability_item_khadgars_gem_of_health_bonus_health"                   "BONUS HEALTH:"
+
+		"DOTA_Tooltip_ability_item_pendant_of_energy"                                     "Pendant of Energy"
+		"DOTA_Tooltip_ability_item_pendant_of_energy_Description"                         "Increases the mana capacity of the Hero by %bonus_mana% when worn."
+		"DOTA_Tooltip_ability_item_pendant_of_energy_bonus_mana"                          "BONUS MANA:"
+
+		"DOTA_Tooltip_ability_item_pendant_of_mana"                                       "Pendant of Mana"
+		"DOTA_Tooltip_ability_item_pendant_of_mana_Description"                           "Increases the mana capacity of the Hero by %bonus_mana% when worn."
+		"DOTA_Tooltip_ability_item_pendant_of_mana_bonus_mana"                            "BONUS MANA:"
+
+		"DOTA_Tooltip_ability_item_ring_of_protection_2"                                  "Ring of Protection +2"
+		"DOTA_Tooltip_ability_item_ring_of_protection_2_Description"                      "Increases the armor of the Hero by %bonus_armor% when worn."
+		"DOTA_Tooltip_ability_item_ring_of_protection_2_bonus_armor"                      "BONUS ARMOR:"
+
+		"DOTA_Tooltip_ability_item_ring_of_protection_3"                                  "Ring of Protection +3"
+		"DOTA_Tooltip_ability_item_ring_of_protection_3_Description"                      "Increases the armor of the Hero by %bonus_armor% when worn."
+		"DOTA_Tooltip_ability_item_ring_of_protection_3_bonus_armor"                      "BONUS ARMOR:"
+
+		"DOTA_Tooltip_ability_item_ring_of_protection_4"                                  "Ring of Protection +4"
+		"DOTA_Tooltip_ability_item_ring_of_protection_4_Description"                      "Increases the armor of the Hero by %bonus_armor% when worn."
+		"DOTA_Tooltip_ability_item_ring_of_protection_4_bonus_armor"                      "BONUS ARMOR:"
+
+		"DOTA_Tooltip_ability_item_ring_of_regeneration"                                  "Ring of Regeneration"
+		"DOTA_Tooltip_ability_item_ring_of_regeneration_Description"                      "Increases the Hero's rate of hit point regeneration when worn."
+		"DOTA_Tooltip_ability_item_ring_of_regeneration_bonus_hp_regen"                   "BONUS HP REGEN:"
+
+		"DOTA_Tooltip_ability_item_sobi"                                                  "Sobi Mask"
+		"DOTA_Tooltip_ability_item_sobi_Description"                                      "Increases the Hero's rate of mana regeneration when worn."
+		"DOTA_Tooltip_ability_item_sobi_bonus_mana_regen"                                 "BONUS MANA REGEN:"
+
+		"DOTA_Tooltip_ability_item_gloves_of_haste"                                       "Gloves of Haste"
+		"DOTA_Tooltip_ability_item_gloves_of_haste_Description"                           "Increases the attack speed of the Hero by %bonus_attack_speed% when worn."
+		"DOTA_Tooltip_ability_item_gloves_of_haste_bonus_attack_speed"                    "BONUS ATTACK SPEED:"
+
+		"DOTA_Tooltip_ability_item_runed_bracers"                                         "Runed Bracers"
+		"DOTA_Tooltip_ability_item_runed_bracers_Description"                             "Reduces magical damage dealt to the Hero by %bonus_magic_res_pct%%%."
+		"DOTA_Tooltip_ability_item_runed_bracers_bonus_magic_res_pct"                     "%BONUS MAGIC RESISTANCE:"
+
+		"DOTA_Tooltip_ability_item_talisman_evasion"                                      "Talisman Evasion"
+		"DOTA_Tooltip_ability_item_talisman_evasion_Description"                          "Causes attacks against the wearer to miss %evasion_chance_pct%%% of the time"
+		"DOTA_Tooltip_ability_item_talisman_evasion_evasion_chance_pct"                   "%EVASION CHANCE:"
+
+		"DOTA_Tooltip_ability_item_helm_of_valor"                                         "Helm of Valor"
+		"DOTA_Tooltip_ability_item_helm_of_valor_Description"                             "Increases the Strength and Agility of the Hero by %bonus_strength% when worn."
+		"DOTA_Tooltip_ability_item_helm_of_valor_bonus_strength"                          "BONUS STRENGTH:"
+		"DOTA_Tooltip_ability_item_helm_of_valor_bonus_agility"                           "BONUS AGILITY:"
+
+		"DOTA_Tooltip_ability_item_medallion_courage"                                     "Medallion of Courage"
+		"DOTA_Tooltip_ability_item_medallion_courage_Description"                         "Increases the Strength and Intelligence of the Hero by %bonus_strength% when worn."
+		"DOTA_Tooltip_ability_item_medallion_courage_bonus_strength"                      "BONUS STRENGTH:"
+		"DOTA_Tooltip_ability_item_medallion_courage_bonus_intellect"                     "BONUS INTELLECT:"
+
+		"DOTA_Tooltip_ability_item_hood_of_cunning"                                       "Hood of Cunning"
+		"DOTA_Tooltip_ability_item_hood_of_cunning_Description"                           "Increases the Agility and Intelligence of the Hero by %bonus_agility% when worn"
+		"DOTA_Tooltip_ability_item_hood_of_cunning_bonus_agility"                         "BONUS AGILITY:"
+		"DOTA_Tooltip_ability_item_hood_of_cunning_bonus_intellect"                       "BONUS INTELLECT:"
+
+		"DOTA_Tooltip_ability_item_tome_of_retraining"                                    "Tome of Retraining"
+		"DOTA_Tooltip_ability_item_tome_of_retraining_Description"                        "Unlearns all of the Hero's spells, allowing the Hero to learn different spells."
+
+		"DOTA_Tooltip_ability_item_tome_of_experience"                                    "Tome of Experience"
+		"DOTA_Tooltip_ability_item_tome_of_experience_Description"                        "Gives %bonus_xp% experience to the Hero when used."
+		"DOTA_Tooltip_ability_item_tome_of_experience_bonus_xp"                           "BONUS XP:"
+
+		"DOTA_Tooltip_ability_item_manual_of_health"                                      "Manual of Health"
+		"DOTA_Tooltip_ability_item_manual_of_health_Description"                          "Permanently increases the hit points of the Hero by %bonus_health% when used."
+		"DOTA_Tooltip_ability_item_manual_of_health_bonus_health"                         "BONUS HEALTH:"
+
+		"DOTA_Tooltip_ability_item_tome_of_strength"                                      "Tome of Strength"
+		"DOTA_Tooltip_ability_item_tome_of_strength_Description"                          "Permanently increases the Strength of the Hero by %bonus_stat% when used."
+		"DOTA_Tooltip_ability_item_tome_of_strength_bonus_stat"                           "BONUS STAT:"
+
+		"DOTA_Tooltip_ability_item_tome_of_agility"                                       "Tome of Agility"
+		"DOTA_Tooltip_ability_item_tome_of_agility_Description"                           "Permanently increases the Agility of the Hero by %bonus_stat% when used."
+		"DOTA_Tooltip_ability_item_tome_of_agility_bonus_stat"                            "BONUS STAT:"
+
+		"DOTA_Tooltip_ability_item_tome_of_intelligence"                                  "Tome of Intelligence"
+		"DOTA_Tooltip_ability_item_tome_of_intelligence_Description"                      "Permanently increases the Intelligence of the Hero by %bonus_stat% when used."
+		"DOTA_Tooltip_ability_item_tome_of_intelligence_bonus_stat"                       "BONUS STAT:"
+
+		"DOTA_Tooltip_ability_item_tome_of_knowledge"                                     "Tome of Knowledge"
+		"DOTA_Tooltip_ability_item_tome_of_knowledge_Description"                         "Permanently increases the Strength, Agility and Intelligence of the Hero by %bonus_stat% when used."
+		"DOTA_Tooltip_ability_item_tome_of_knowledge_bonus_stat"                          "BONUS STAT:"
+
+		"DOTA_Tooltip_ability_item_tome_of_strength2"                                     "Tome of Strength +2"
+		"DOTA_Tooltip_ability_item_tome_of_strength2_Description"                         "Permanently increases the Strength of the Hero by %bonus_stat% when used."
+		"DOTA_Tooltip_ability_item_tome_of_strength2_bonus_stat"                          "BONUS STAT:"
+
+		"DOTA_Tooltip_ability_item_tome_of_agility2"                                      "Tome of Agility +2"
+		"DOTA_Tooltip_ability_item_tome_of_agility2_Description"                          "Permanently increases the Agility of the Hero by %bonus_stat% when used."
+		"DOTA_Tooltip_ability_item_tome_of_agility2_bonus_stat"                           "BONUS STAT:"
+
+		"DOTA_Tooltip_ability_item_tome_of_intelligence2"                                 "Tome of Intelligence +2"
+		"DOTA_Tooltip_ability_item_tome_of_intelligence2_Description"                     "Permanently increases the Intelligence of the Hero by %bonus_stat% when used."
+		"DOTA_Tooltip_ability_item_tome_of_intelligence2_bonus_stat"                      "BONUS STAT:"
+
+		"DOTA_Tooltip_ability_item_rune_of_healing"                                       "Rune of Healing"
+		"DOTA_Tooltip_ability_item_rune_of_healing_Description"                           "Restores hit points to nearby units."
+		"DOTA_Tooltip_ability_item_rune_of_healing_heal"                                  "HEAL:"
+		"DOTA_Tooltip_ability_item_rune_of_healing_radius"                                "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_rune_of_the_watcher"                                   "Rune of the Watcher"
+		"DOTA_Tooltip_ability_item_rune_of_the_watcher_Description"                       "Creates a Sentry Ward right here. The Watcher Ward does not have a timer."
+		"DOTA_Tooltip_ability_item_rune_of_the_watcher_radius"                            "RADIUS:"
+
+		"DOTA_Tooltip_ability_item_scroll_of_the_beast"                                   "Scroll of the Beast"
+		"DOTA_Tooltip_ability_item_scroll_of_the_beast_Description"                       "Gives friendly nearby units a %bonus_damage_pct%%% bonus to damage for %duration% seconds"
+		"DOTA_Tooltip_ability_item_scroll_of_the_beast_bonus_damage_pct"                  "BONUS DAMAGE PCT:"
+		"DOTA_Tooltip_ability_item_scroll_of_the_beast_radius"                            "RADIUS:"
+		"DOTA_Tooltip_ability_item_scroll_of_the_beast_duration"                          "DURATION:"
 	}
 }
