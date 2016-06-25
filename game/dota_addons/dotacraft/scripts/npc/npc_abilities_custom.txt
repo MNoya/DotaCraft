@@ -45284,8 +45284,9 @@
 		"BaseClass"					"ability_datadriven"
 		"AbilityTextureName"		"orc_lightning_shield"
 		"MaxLevel"					"1"
+		"CastFilterRejectCaster"	"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
@@ -45301,26 +45302,24 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"20"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"20"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"160"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"160"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage_per_second"			"20"
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"20"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"think_interval"		"0.3"
+				"think_interval"		"0.5"
 			}
-			// It ticks every second Kappa (actually is 0.1 now Keepo)
-			// Edit: 0.3 looks nicer with a particle hit :D
 		}
 	
 		"OnSpellStart"
@@ -45334,7 +45333,7 @@
 		
 		"Modifiers"
 		{
-			"modifier_orc_lightning_shield"
+			"modifier_lightning_shield"
 			{
 				"IsPurgable"		"1"
 				"Duration"			"%duration"
@@ -45353,8 +45352,6 @@
 				}
 			}
 		}
-	
-		// Done
 	}
 	
 	//=================================================================================

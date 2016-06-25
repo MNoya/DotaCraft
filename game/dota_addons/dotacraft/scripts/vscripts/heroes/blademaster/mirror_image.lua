@@ -51,18 +51,20 @@ function MirrorImage( event )
 		illusion:SetAbilityPoints(0)
 		for abilitySlot=0,15 do
 			local ability = caster:GetAbilityByIndex(abilitySlot)
-			if ability ~= nil then 
+			if ability then 
 				local abilityLevel = ability:GetLevel()
-				local abilityName = ability:GetAbilityName()
-				local illusionAbility = illusion:FindAbilityByName(abilityName)
-				illusionAbility:SetLevel(abilityLevel)
+				if abilityLevel > 0 then
+                    local abilityName = ability:GetAbilityName()
+                    local illusionAbility = illusion:FindAbilityByName(abilityName)
+                    illusionAbility:SetLevel(abilityLevel)
+                end
 			end
 		end
 
 		-- Recreate the items of the caster
 		for itemSlot=0,5 do
 			local item = caster:GetItemInSlot(itemSlot)
-			if item ~= nil then
+			if item then
 				local itemName = item:GetName()
 				local newItem = CreateItem(itemName, illusion, illusion)
 				illusion:AddItem(newItem)

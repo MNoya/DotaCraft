@@ -334,10 +334,229 @@
 	}
 	
 	// Wands
-	//"item_wand_of_illusion"
-	//"item_wand_of_lightning_shield"
-	//"item_wand_of_mana_stealing"
-	//"item_wand_of_the_wind"
+	"item_wand_of_illusion"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+	    "AbilityTextureName"            "item_wand_of_illusion"
+	    
+	    "AbilityCastRange"              "500"
+	
+	    "ItemCost"                      "150"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "3"
+	    "ItemQuality"                   "uncommon"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "illusion_duration"         "10"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "illusion_outgoing_damage"  "0"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "illusion_incoming_damage"  "200"
+	        }
+	    }
+	    
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/wand_of_illusion.lua"
+	            "Function"      "Illusion"
+	        }
+	    }
+	}
+	
+	"item_wand_of_lightning_shield"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+	    "AbilityTextureName"            "item_wand_of_lightning_shield"
+	    "CastFilterRejectCaster"        "1"
+	    
+	    "AbilityCastRange"              "500"
+	    "AbilityCooldown"               "10"
+	
+	    "ItemCost"                      "150"
+	    "ItemQuality"                   "uncommon"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "3"
+	        
+	    "AOERadius"                     "160"
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "20"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "160"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "damage_per_second"     "20"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "think_interval"        "0.5"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"            "units/orc/shaman.lua"
+	            "Function"              "LightningShieldOnSpellStart"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_lightning_shield"
+	        {
+	            "IsPurgable"            "1"
+	            "Duration"              "%duration"
+	            
+	            "EffectName"            "particles/custom/orc/lightning_shield.vpcf"
+	            "EffectAttachType"      "follow_origin"
+	            
+	            "ThinkInterval"         "%think_interval"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "units/orc/shaman.lua"
+	                    "Function"              "ModifierLightningShieldOnIntervalThink"
+	                }
+	            }
+	        }
+	    }
+	}
+	
+	"item_wand_of_mana_stealing"
+	{
+	    "BaseClass"                     "item_lua"
+	    "ScriptFile"                    "items/wand_of_mana_stealing.lua"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "item_wand_of_mana_stealing"
+	    
+	    "AbilityCastRange"              "500"
+	    "AbilityCooldown"               "10"
+	
+	    "ItemCost"                      "450"
+	    "ItemQuality"                   "uncommon"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "2"
+	
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
+	    }
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "mana_stolen"           "50"
+	        }
+	    }
+	}
+	
+	
+	"item_wand_of_the_wind"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "item_wand_of_the_wind"
+	    
+	    "AbilityCastRange"              "500"
+	    "AbilityCooldown"               "10"
+	
+	    "ItemCost"                      "450"
+	    "ItemQuality"                   "rare"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "3"
+	        
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "duration"      "20"
+	        }
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "hero_duration" "6"
+	        }
+	    }
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_brewmaster_storm_cyclone"
+	            "Target"
+	            {
+	                "Center"    "TARGET"
+	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                "Types"     "DOTA_UNIT_TARGET_HERO"
+	            }
+	            "Duration"      "%hero_duration"
+	        }
+	        
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_brewmaster_storm_cyclone"
+	            "Target"
+	            {
+	                "Center"    "TARGET"
+	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                "Types"     "DOTA_UNIT_TARGET_BASIC"
+	            }
+	            "Duration"      "%duration"
+	        }
+	    }
+	}
 	// Each Races Orb:
 	// Human: 	Fire
 	// Orc: 	Lightning
