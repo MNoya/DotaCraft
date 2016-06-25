@@ -1,68 +1,9 @@
-function SentryStart( event )
-	local caster = event.caster
-	local ability = event.ability
-	local target_point = event.target_points[1]
-	local duration = ability:GetSpecialValueFor('duration') 
-	local sentry = CreateUnitByName('orc_sentry_ward_unit', target_point, true, caster, caster, caster:GetTeamNumber())
-	sentry:AddNewModifier(sentry, nil, "modifier_kill", {duration = duration})
-	sentry:AddNewModifier(sentry, nil, "modifier_invisible", {duration = 1})
-	ability:ApplyDataDrivenModifier(sentry, sentry, 'modifier_sentry_ward', {})
-	sentry:EmitSound('DOTA_Item.SentryWard.Activate')
-	sentry:EmitSound('DOTA_Item.ObserverWard.Activate')
-end
-
-function SentrySight( event )
-	local caster = event.caster
-	local ability = event.ability
-	caster:AddNewModifier(caster, nil, "modifier_invisible", {duration = 1})
-	local radius = ability:GetSpecialValueFor('radius') 
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	for _,enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, ability, 'modifier_truesight', {duration = '0.5'}) 
-	end
-end
-
-function HealingStart( event )
-	local caster = event.caster
-	local ability = event.ability
-	local target_point = event.target_points[1]
-	local duration = ability:GetSpecialValueFor('duration') 
-	local radius = ability:GetSpecialValueFor('radius') 
-	local heal = CreateUnitByName('orc_healing_ward_unit', target_point, true, caster, caster, caster:GetTeamNumber())
-	heal:AddNewModifier(heal, nil, "modifier_kill", {duration = duration})
-	ability:ApplyDataDrivenModifier(heal, heal, 'modifier_healing_ward', {})
-	heal:EmitSound('Hero_Juggernaut.HealingWard.Cast')
-	heal:EmitSound('Hero_Juggernaut.HealingWard.Loop')
-	heal.radius = ability:GetSpecialValueFor('radius') 
-	heal.ratio = ability:GetSpecialValueFor('regeneration')
-end
-
-function HealingThink( event )
-	local caster = event.caster
-	local radius = caster.radius
-	local ratio = caster.ratio
-	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
-	for _,ally in pairs(allies) do
-		if not IsMechanical(ally) and not IsCustomBuilding(ally) then
-			local amount = ally:GetMaxHealth() * (ratio/100)
-			ally:Heal(amount, caster)
-			PopupHealing(ally, amount)
-		end
-	end
-end
-
-function HealingEnd( event )
-	local heal = event.caster
-	heal:StopSound('Hero_Juggernaut.HealingWard.Loop')
-	heal:EmitSound('Hero_Juggernaut.HealingWard.Stop')
-end
-
 function StasisStart( event )
 	local caster = event.caster
 	local ability = event.ability
 	local target_point = event.target_points[1]
 	local duration = ability:GetSpecialValueFor('duration') 
-	local stasis = CreateUnitByName('orc_stasis_ward_unit', target_point, true, caster, caster, caster:GetTeamNumber())
+	local stasis = CreateUnitByName('dotacraft_stasis_ward', target_point, true, caster, caster, caster:GetTeamNumber())
 	stasis:AddNewModifier(stasis, nil, "modifier_kill", {duration = duration})
 	ability:ApplyDataDrivenModifier(stasis, stasis, 'modifier_stasis_ward', nil)	
 	stasis:EmitSound('Hero_Techies.StasisTrap.Plant')
@@ -101,7 +42,7 @@ function StasisThink( event )
 							enemy:AddNewModifier(stasis, ability, 'modifier_stunned', {duration = duration})
 						end
 						for _,ally in pairs(allies) do
-							if ally:GetUnitName() == 'orc_stasis_ward_unit' then
+							if ally:GetUnitName() == 'dotacraft_stasis_ward' then
 								ally:ForceKill(true)
 							end
 						end

@@ -45516,57 +45516,34 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"50"
+		"AOERadius"					"1600"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"600"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"600"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"1600"	
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1600"
 			}
-		}
-	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_items.vsndevts"
-			"model"		"models/items/wards/esl_wardchest_ward_of_foresight/esl_wardchest_ward_of_foresight.vmdl"
 		}
 	
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/orc/witchdoctor.lua"
-				"Function"		"SentryStart"
+				"ScriptFile"	"items/wards.lua"
+				"Function"		"SummonSentryWard"
 				"Target" 		"POINT"
 			}
 		}
-	
-		"Modifiers"
-		{
-			"modifier_sentry_ward"
-			{
-				"IsPurgable"		"0"
-				"IsBuff"			"1"
-				"ThinkInterval"		"0.5"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/orc/witchdoctor.lua"
-						"Function"		"SentrySight"
-					}
-				}
-			}
-		}
 	}
-	
-	
+		
+		
 	//=================================================================================
 	// Ability: Stasis Trap
 	// Description: "Summons an invisible and immovable ward that stuns enemy land units around it.
@@ -45607,13 +45584,11 @@
 				"var_type"		"FIELD_FLOAT"
 				"stun_duration"				"6"
 			}
-			// Phew, I'm glad they balanced Techies.
 			"04"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"activation_delay"			"10"
 			}
-			// Wew, I'm sad they imbalanced Techies.
 			"05"
 			{
 				"var_type"		"FIELD_INTEGER"
@@ -45674,7 +45649,7 @@
 			}
 		}
 	}
-	
+		
 	//=================================================================================
 	// Ability: Healing Ward
 	// Description: "Summons an immovable ward that heals <Aoar,DataA1,%>% of a nearby friendly non-mechanical unit's hit points per second.
@@ -45688,13 +45663,22 @@
 		"AbilityTextureName"		"orc_healing_ward"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastRange"			"500"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"200"
+		"AOERadius"					"500"
+	
+		"precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+	        "model"     "models/heroes/juggernaut/jugg_healing_ward.vmdl"
+	        "particle"  "particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf"
+	        "particle"  "particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
+	    }
 			
 		"AbilitySpecial"
 		{
@@ -45715,46 +45699,14 @@
 			}
 		}
 	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
-			"model"		"models/heroes/juggernaut/jugg_healing_ward.vmdl"
-		}
-	
 		"OnSpellStart"
 		{
 			"RunScript"
-			{
-				"ScriptFile"	"units/orc/witchdoctor.lua"
-				"Function"		"HealingStart"
-				"Target" 		"POINT"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_healing_ward"
-			{
-				"IsPurgable"		"0"
-				"IsBuff"			"1"
-				"ThinkInterval"		"1"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/orc/witchdoctor.lua"
-						"Function"		"HealingThink"
-					}
-				}
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/orc/witchdoctor.lua"
-						"Function"		"HealingEnd"
-					}
-				}
-			}
+	        {
+	            "ScriptFile"	"items/wards.lua"
+	            "Function"		"SummonHealingWard"
+	            "Target"		"POINT"
+	        }
 		}
 	}
 	

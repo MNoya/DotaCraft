@@ -239,8 +239,47 @@
 	    }
 	}
 	
-	
 	// Wards
+	"item_sentry_wards"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_sentry_wards"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AOE"
+	    
+	    "AbilityCastRange"              "500"
+	    "ItemCost"                      "150"
+	    "ItemShopTags"                  "uncommon"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "3"
+	    "AOERadius"                     "1600"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "duration"          "300"
+	        }
+	        "02"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "radius"            "1600"  
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"            "items/wards.lua"
+	            "Function"              "SummonSentryWard"
+	            "Target"                "POINT"
+	        }
+	    }
+	}
+	
 	"item_healing_wards"
 	{
 	    "BaseClass"                     "item_datadriven"
@@ -253,6 +292,15 @@
 	    "ItemStackable"                 "0"
 	    "ItemPermanent"                 "0"
 	    "ItemInitialCharges"            "3"
+	    "AOERadius"                     "500"
+	
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+	        "model"     "models/heroes/juggernaut/jugg_healing_ward.vmdl"
+	        "particle"  "particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf"
+	        "particle"  "particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
+	    }
 	
 	    "AbilitySpecial"
 	    {
@@ -278,101 +326,9 @@
 	        "SpendCharge" {}
 	        "RunScript"
 	        {
-	            "ScriptFile"            "items/summons.lua"
+	            "ScriptFile"            "items/wards.lua"
 	            "Function"              "SummonHealingWard"
 	            "Target"                "POINT"
-	        }
-	    }
-	}
-	
-	"item_sentry_wards"
-	{
-	    "BaseClass"                     "item_datadriven"
-	    "AbilityTextureName"            "item_sentry_wards"
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AOE"
-	    
-	    "AbilityCastRange"              "500"
-	    "ItemCost"                      "150"
-	    "ItemShopTags"                  "uncommon"
-	    "ItemStackable"                 "0"
-	    "ItemPermanent"                 "0"
-	    "ItemInitialCharges"            "3"
-	
-	    "AoERadius"                     "1600"
-	
-	    "AbilitySpecial"
-	    {
-	        "01"
-	        {
-	            "var_type"              "FIELD_INTEGER"
-	            "duration"              "300"
-	        }
-	        "02"
-	        {
-	            "var_type"              "FIELD_INTEGER"
-	            "radius"                "1600"
-	        }
-	    }
-	
-	    "OnSpellStart"
-	    {
-	        "SpendCharge" {}
-	        "RunScript"
-	        {
-	            "ScriptFile"            "items/summons.lua"
-	            "Function"              "SummonSentryWard"
-	            "Target"                "POINT"
-	        }
-	        "FireSound"
-	        {
-	            "EffectName"            "DOTA_Item.ObserverWard.Activate"
-	            "Target"                "CASTER"
-	        }
-	    }
-	
-	    "Modifiers"
-	    {
-	        "modifier_sentry_ward"
-	        {
-	            "IsHidden"          "1"
-	    
-	            "EffectName"        "particles/items2_fx/ward_true_sight.vpcf"
-	            "EffectAttachType"  "follow_origin"
-	    
-	            "States"
-	            {
-	                "MODIFIER_STATE_INVISIBLE"   "MODIFIER_STATE_VALUE_ENABLED"
-	            }
-	
-	            "ThinkInterval"  "0.03"
-	            "OnIntervalThink"
-	            {
-	                "RemoveModifier"
-	                {
-	                    "Target"
-	                    {
-	                        "Center"    "TARGET"
-	                        "Radius"    "%radius"
-	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-	                    }
-	                    "ModifierName"  "modifier_truesight"
-	                }
-	                "ApplyModifier"
-	                {
-	                    "Target"
-	                    {
-	                        "Center"    "TARGET"
-	                        "Radius"    "%radius"
-	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-	                    }
-	                    "ModifierName"  "modifier_truesight"
-	                    "Duration"      "0.50"
-	                }           
-	            }       
 	        }
 	    }
 	}
@@ -4367,6 +4323,15 @@
 	    
 	    "ItemPermanent"                 "0"
 	    "ItemInitialCharges"            "1"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "1600"
+	        }
+	    }
 	    
 	    "ItemCastOnPickup"              "1"
 	    "OnSpellStart"
@@ -4377,52 +4342,6 @@
 	        {
 	            "ScriptFile"            "items/runes.lua"
 	            "Function"              "Watcher"
-	        }
-	    }
-	
-	    "Modifiers"
-	    {
-	        "modifier_sentry_ward"
-	        {
-	            "IsHidden"          "1"
-	    
-	            "EffectName"        "particles/items2_fx/ward_true_sight.vpcf"
-	            "EffectAttachType"  "follow_origin"
-	    
-	            "States"
-	            {
-	                "MODIFIER_STATE_INVISIBLE"   "MODIFIER_STATE_VALUE_ENABLED"
-	            }
-	
-	            "ThinkInterval"  "0.03"
-	            "OnIntervalThink"
-	            {
-	                "RemoveModifier"
-	                {
-	                    "Target"
-	                    {
-	                        "Center"    "TARGET"
-	                        "Radius"    "1600"
-	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-	                    }
-	                    "ModifierName"  "modifier_truesight"
-	                }
-	                "ApplyModifier"
-	                {
-	                    "Target"
-	                    {
-	                        "Center"    "TARGET"
-	                        "Radius"    "1600"
-	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-	                    }
-	                    "ModifierName"  "modifier_truesight"
-	                    "Duration"      "0.50"
-	                }           
-	            }       
 	        }
 	    }
 	}

@@ -1,8 +1,6 @@
 -- Global item applier
 function ApplyModifier( unit, modifier_name )
-    local item = CreateItem("item_apply_modifiers", nil, nil)
-    item:ApplyDataDrivenModifier(unit, unit, modifier_name, {})
-    item:RemoveSelf()
+    GameRules.Applier:ApplyDataDrivenModifier(unit, unit, modifier_name, {})
 end
 
 -- Takes a CDOTA_Buff handle and checks the Ability KV table for the IsPurgable key

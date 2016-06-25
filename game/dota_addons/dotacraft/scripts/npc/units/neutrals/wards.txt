@@ -1,0 +1,118 @@
+"dotacraft_sentry_ward"
+{
+    // General
+    "BaseClass"                 "npc_dota_ward_base_truesight"
+    "Model"                     "models/props_gameplay/default_ward.vmdl"
+    "Level"                     "0"
+    "ModelScale"                "1"
+    "MinimapIcon"               "minimap_ward_invis"
+    "MinimapIconSize"           "300"
+
+    // Bounds
+    //----------------------------------------------------------------
+    "BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+    "HealthBarOffset"           "140"
+
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "200"
+    "StatusHealthRegen"         "0"
+    "StatusMana"                "0"
+    "StatusManaRegen"           "0"
+
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyXP"                  "0"
+    "BountyGoldMin"             "0"
+    "BountyGoldMax"             "0"
+
+    // Attack Damage types
+    //----------------------------------------------------------------
+    "ArmorType"                 "unarmored"
+    "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1600"
+    "VisionNighttimeRange"      "1600"
+}
+
+"dotacraft_stasis_ward"
+{                                       
+    // General
+    "BaseClass"                 "npc_dota_ward_base_truesight"
+    "Model"                     "models/heroes/techies/fx_techiesfx_stasis.vmdl"
+    "SoundSet"                  ""
+    "Level"                     "0"
+    "ModelScale"                "1"
+    "MinimapIcon"               "minimap_ward_invis"
+    "MinimapIconSize"           "300"
+
+    // Bounds
+    //----------------------------------------------------------------
+    "BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
+    "HealthBarOffset"           "140"
+
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground,air
+
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "100"       // Base health.
+    "StatusHealthRegen"         "0"         // Health regeneration rate.
+    "StatusMana"                "0"         // Base mana.
+    "StatusManaRegen"           "0"         // Mana regeneration rate.
+
+    // Attack Damage types
+    //----------------------------------------------------------------
+    "ArmorType"                 "unarmored"
+    "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "400"
+    "VisionNighttimeRange"      "400"
+}
+
+"dotacraft_healing_ward"
+{                                       
+    // General
+    "BaseClass"                 "npc_dota_ward_base_truesight"
+    "Model"                     "models/heroes/juggernaut/jugg_healing_ward.vmdl"
+    "SoundSet"                  ""
+    "Level"                     "0"
+    "ModelScale"                "1"
+    "MinimapIcon"               "minimap_ward_invis"
+    "MinimapIconSize"           "300"
+
+    // Bounds
+    //----------------------------------------------------------------
+    "BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
+    "HealthBarOffset"           "140"
+
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground,air
+
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "5"       // Base health.
+    "StatusHealthRegen"         "0"         // Health regeneration rate.
+    "StatusMana"                "0"         // Base mana.
+    "StatusManaRegen"           "0"         // Mana regeneration rate.
+
+    // Attack Damage types
+    //----------------------------------------------------------------
+    "ArmorType"                 "unarmored"
+    "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "500"
+    "VisionNighttimeRange"      "500"   
+}

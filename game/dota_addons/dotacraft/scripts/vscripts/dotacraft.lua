@@ -86,6 +86,9 @@ function dotacraft:InitGameMode()
     GameRules.PLAYER_BUILDINGS_DAMAGED = {} 
     GameRules.PLAYER_DAMAGE_WARNING = {}
 
+    -- Modifier Applier
+    GameRules.Applier = CreateItem("item_apply_modifiers", nil, nil)
+
     -- Event Hooks
     ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
     ListenToGameEvent('player_connect_full', Dynamic_Wrap(dotacraft, 'OnConnectFull'), self)
@@ -117,6 +120,8 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_healing_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_sentry_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     
     -- Remove building invulnerability
     local allBuildings = Entities:FindAllByClassname('npc_dota_building')
