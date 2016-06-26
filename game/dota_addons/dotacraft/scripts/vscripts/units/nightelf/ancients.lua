@@ -176,7 +176,7 @@ function UpRoot( event )
 
     caster:RemoveModifierByName("modifier_building")
 
-    unit:SetArmorType("heavy")
+    caster:SetArmorType("heavy")
 
     -- Set the builder abilities
     BuildingHelper:InitializeBuilder(caster)
