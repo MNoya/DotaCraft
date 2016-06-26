@@ -42,6 +42,9 @@ function SelectionFilter( entityList ) {
         var overrideEntityIndex = GetSelectionOverride(entityList[i])
         if (overrideEntityIndex != -1) {
             GameUI.SelectUnit(overrideEntityIndex, false);
+            $.Schedule(1/60, function() {
+                GameUI.SelectUnit(overrideEntityIndex, false);
+            })
         }
     };
 }
