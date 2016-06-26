@@ -63,7 +63,10 @@ function Buy_Item(){
 
 function ShowToolTip(){ 
 	var abilityButton = $( "#ItemButton" );
-	$.DispatchEvent( "DOTAShowAbilityTooltip", abilityButton, Root.ItemName );
+	if(!Root.Revive) // normal tooltip -- any non-revive function
+		$.DispatchEvent( "DOTAShowAbilityTooltip", abilityButton, Root.ItemName );
+	else
+		$.DispatchEvent( "DOTAShowAbilityTooltip", abilityButton, "UI_UNITSHOPS_PLACEHOLDER_Hero_Revive" );		
 }
 
 function HideToolTip(){
