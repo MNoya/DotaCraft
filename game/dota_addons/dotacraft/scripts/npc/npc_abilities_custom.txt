@@ -27373,14 +27373,11 @@
 	        "modifier_minimum_range"
 	        {
 	            "Passive"            "1"
-	            "IsHidden"			"1"
+	            "IsHidden"          "1"
 	            "OnAttackStart"
 	            {
-	                "RunScript"     
-	                {
-	                	"ScriptFile" 	"units/minimum_range.lua"
-	                	"Function"      "OnSiegeAttackStart"
-	                }
+	                "RunScript"     "units/minimum_range.lua"
+	                "Function"      "OnSiegeAttackStart"
 	            }
 	        }
 	    }
