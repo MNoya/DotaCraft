@@ -132,7 +132,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local bDragCondition = bDroppable and bFriendly and bValidBuilding
 
         if bDragCondition then
-            unit:MoveToNPCToGiveItem(target, item)
+            return true
         else
             local pID = unit:GetPlayerOwnerID()
             if not bDroppable then
@@ -142,9 +142,52 @@ function dotacraft:FilterExecuteOrder( filterTable )
             elseif not bValidBuilding then
                 SendErrorMessage( pID, "#error_must_target_shop" )
             end
+            return false
         end
 
-        return false
+    ------------------------------------------------
+    --            Item Pickup Orders              --
+    ------------------------------------------------
+    elseif order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+        local drop = EntIndexToHScript(targetIndex)
+        local item = drop:GetContainedItem()
+        local item_name = item:GetAbilityName()
+        
+        -- Units can't activate powerups, redirect order to hero if there is one or deny it
+        local bPowerUp = item:IsCastOnPickup()
+        local bHeroPickup = unit:IsRealHero()
+        local bValidPickup = not bPowerUp or bHeroPickup
+
+        if bValidPickup then
+            return true
+        else
+            -- Does the selected group have a hero?
+            local selectedUnits = PlayerResource:GetSelectedEntities(issuer)
+            local heroes = {}
+            for _,ent_index in pairs(selectedUnits) do
+                local u = EntIndexToHScript(ent_index)
+                if u:IsRealHero() then
+                    table.insert(heroes, u)
+                end
+            end
+
+             -- Try to redirect to the first possible hero
+            if #heroes > 0 then
+                for _,hero in pairs(heroes) do
+                    if bPowerUp or hero:GetNumItemsInInventory() < 6 then
+                        -- Recreate the order
+                        hero.skip = true
+                        ExecuteOrderFromTable({UnitIndex = hero:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_PICKUP_ITEM, TargetIndex = targetIndex, Queue = queue})
+                        return false
+                    end
+                end
+            else
+                SendErrorMessage(unit:GetPlayerOwnerID(), "#error_unable_to_use_powerups")
+            end
+
+            return false
+        end
+        
 
     ------------------------------------------------
     --               Attack Orders                --
