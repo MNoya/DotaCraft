@@ -31,9 +31,8 @@ end
 
 function modifier_autoattack:OnIntervalThink()
     local unit = self:GetParent()
-
     AggroFilter(unit)
-       
+    
     -- Disabled autoattack state
     if unit.disable_autoattack == 1 then
         local enemies = FindEnemiesInRadius(unit, unit:GetAcquisitionRange())
@@ -41,6 +40,7 @@ function modifier_autoattack:OnIntervalThink()
             -- If an enemy is valid, attack it and stop the thinker
             for _,enemy in pairs(enemies) do
                 if UnitCanAttackTarget(unit, enemy) and ShouldAggroNeutral(unit, enemy) then
+                    --print("[ATTACK] attacking unit from modifier_autoattack thinker")
                     Attack(unit, enemy)
                     return
                 end
@@ -74,7 +74,6 @@ end
 
 function modifier_autoattack_passive:OnIntervalThink()
     local unit = self:GetParent()
-
     -- If the last order was not an Attack-Move or Attack-Target order, disable autoattack
     if not (unit.current_order == DOTA_UNIT_ORDER_ATTACK_MOVE or unit.current_order == DOTA_UNIT_ORDER_ATTACK_TARGET) then
         DisableAggro(unit)
@@ -122,10 +121,8 @@ end
 
 function AggroFilter( unit )
     local target = unit:GetAttackTarget() or unit:GetAggroTarget()
-
     if target then
         local bCanAttackTarget = UnitCanAttackTarget(unit, target) and ShouldAggroNeutral(unit, target)
-
         if unit.disable_autoattack == 0 then
             -- The unit acquired a new attack target
             if target ~= unit.attack_target then
@@ -138,6 +135,7 @@ function AggroFilter( unit )
                     if #enemies > 0 then
                         for _,enemy in pairs(enemies) do
                             if UnitCanAttackTarget(unit, enemy) and ShouldAggroNeutral(unit, enemy) then
+                                --print("[ATTACK] attacking unit from modifier_autoattack thinker")
                                 Attack(unit, enemy)
                                 return
                             end
@@ -173,13 +171,26 @@ function DisableAggro( unit )
     end
 end
 
+SIEGE_UNIT_MIN_RANGE = 250
+SIEGE_UNITS = {
+    "human_mortar_team",
+    "nightelf_glaive_thrower",
+    "orc_demolisher",
+    "undead_meat_wagon"
+}
 -- Aggro a target
 function Attack( unit, target )
+    -- if siege unit is attacking, let OnSiegeAttackStart control the behavior
+    for i=1, #SIEGE_UNITS do
+        if unit:GetUnitName() == SIEGE_UNITS[i] then return end
+    end
+    --print(unit:GetName() .. " has started attacking " .. target:GetName())
     unit:AlertNearbyUnits(target, nil)
     unit:MoveToTargetToAttack(target)
     unit.attack_target = target
     unit.disable_autoattack = 0
 end
+
 
 -- Run away from the attacker
 function Flee( unit, attacker )
@@ -197,7 +208,6 @@ end
 function OnAttacked( event )
     local unit = event.target
     local attacker = event.attacker
-
     if unit:HasModifier("modifier_shadow_meld_active") then
         return
     end
@@ -207,6 +217,7 @@ function OnAttacked( event )
     if enemyAttack and unit:IsIdle() and not unit:GetAggroTarget() then
         unit:AlertNearbyUnits(attacker, nil)
         if UnitCanAttackTarget(unit, attacker) then
+            --print("[ATTACK] attacking unit from OnAttacked block")
             Attack(unit, attacker)
         else
             Flee(unit, attacker)

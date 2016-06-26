@@ -27360,6 +27360,31 @@
 			}
 		}		
 	}
+	"minimum_range"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            ""
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityCastRange"              "250"
+	    "Modifiers"
+	    {
+	        "modifier_minimum_range"
+	        {
+	            "Passive"            "1"
+	            "IsHidden"			"1"
+	            "OnAttackStart"
+	            {
+	                "RunScript"     
+	                {
+	                	"ScriptFile" 	"units/minimum_range.lua"
+	                	"Function"      "OnSiegeAttackStart"
+	                }
+	            }
+	        }
+	    }
+	}
 	"shredder_gather"
 	{
 		"BaseClass"             		"ability_datadriven"
