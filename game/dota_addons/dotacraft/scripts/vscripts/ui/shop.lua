@@ -635,7 +635,7 @@ function CheckHeroInRadius( event )
 
 					-- If the current_unit is a creature and was autoassigned (not through rightclick), find heroes
 					if current_unit:IsCreature() and not shop.targeted then
-						local foundHero = FindShopAbleUnit(shop, DOTA_UNIT_TARGET_HERO)
+						local foundHero = FindShopAbleUnit(shop, playerID, DOTA_UNIT_TARGET_HERO)
 						if foundHero then
 							event.shop = shop:GetEntityIndex()
 							event.unit = foundHero:GetEntityIndex()
@@ -645,7 +645,7 @@ function CheckHeroInRadius( event )
 					end		
 				else
 					-- Find a nearby units in radius
-					local foundUnit = FindShopAbleUnit(shop, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC)
+					local foundUnit = FindShopAbleUnit(shop, playerID, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC)
 
 					-- If a valid shop unit is found, update the current hero and set the replicated items
 					if foundUnit then
@@ -660,7 +660,7 @@ function CheckHeroInRadius( event )
 	end
 end
 
-function FindShopAbleUnit( shop, unit_types )
+function FindShopAbleUnit( shop, playerID, unit_types )
 	local teamNumber = shop:GetTeamNumber()
 	local units
 	if teamNumber == DOTA_TEAM_NEUTRALS then
@@ -672,14 +672,14 @@ function FindShopAbleUnit( shop, unit_types )
 	if units then
 		-- Check for heroes
 		for k,unit in pairs(units) do		
-			if string.match(unit:GetClassname(),"npc_dota_hero") then
+			if unit:GetPlayerOwnerID() == playerID and string.match(unit:GetClassname(),"npc_dota_hero") then
 				return unit
 			end
 		end
 
 		-- Check for creature units with inventory
 		for k,unit in pairs(units) do
-			if not IsCustomBuilding(unit) and unit:HasInventory() then
+			if unit:GetPlayerOwnerID() == playerID and not IsCustomBuilding(unit) and unit:HasInventory() then
 				return unit
 			end
 		end
@@ -687,7 +687,9 @@ function FindShopAbleUnit( shop, unit_types )
 		-- For npc-selling buildings, check any unit
 		if shop.SellsNPCs then
 			for k,unit in pairs(units) do
-				return unit
+				if unit:GetPlayerOwnerID() == playerID then
+					return unit
+				end
 			end
 		end
 	end
