@@ -575,6 +575,7 @@ function dotacraft:InitializeTownHall( hero, position, building )
     Timers:CreateTimer(0.5, function()
         PlayerResource:SetCameraTarget(playerID, nil)
         PlayerResource:NewSelection(playerID, building)
+        PlayerResource:SetDefaultSelectionEntity(playerID, building)
     end)
 
     -- Find neutrals near the starting zone and remove them

@@ -39,6 +39,7 @@ function UpgradeBuilding( event )
 	if IsCityCenter(building) then
 		local level = building:GetLevel()
 		local city_center_level = Players:GetCityLevel(playerID)
+		PlayerResource:SetDefaultSelectionEntity(playerID, building)
 		if level > city_center_level then
 			Players:SetCityCenterLevel( playerID, level )
 		end
