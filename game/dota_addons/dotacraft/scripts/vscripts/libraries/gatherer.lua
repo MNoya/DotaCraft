@@ -897,7 +897,7 @@ function Gatherer:Init(unit)
 
             -- If no return, gain the resource directly
             if not return_ability then
-                unit.GatherAbility.callbacks.OnGoldGained(gold_interval)
+                unit.GatherAbility.callbacks.OnGoldGained(gold_gain)
                 return gold_interval
             else
                 -- Exit mine and return the resources
