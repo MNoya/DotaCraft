@@ -132,7 +132,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         local bDragCondition = bDroppable and bFriendly and bValidBuilding
 
         if bDragCondition then
-            return true
+            unit:MoveToNPCToGiveItem(target,item)
         else
             local pID = unit:GetPlayerOwnerID()
             if not bDroppable then
@@ -142,8 +142,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
             elseif not bValidBuilding then
                 SendErrorMessage( pID, "#error_must_target_shop" )
             end
-            return false
         end
+        return false
 
     ------------------------------------------------
     --            Item Pickup Orders              --
