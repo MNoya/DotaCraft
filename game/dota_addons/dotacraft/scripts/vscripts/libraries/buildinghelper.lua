@@ -1574,7 +1574,7 @@ function BuildingHelper:GetNumBuildersRepairing(target)
                 numReparing = numReparing + 1
             else
                 local changedPosition = (unit.lastRepairPosition-currentPos):Length2D() > 1
-                if changedPosition or (targetPos-currentPos):Length2D() > unit:GetFollowRange(target) then
+                if changedPosition or (targetPos-currentPos):Length2D() > (unit.repairRange or unit:GetFollowRange(target)) then
                     unit.state = "moving_to_repair"
                     unit:MoveToNPC(target)
                 else
