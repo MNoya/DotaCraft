@@ -7,9 +7,6 @@ function Drops:Init()
     self.TierList = LoadKeyValues(("scripts/kv/items.kv"))
 
     -- Validate item drops
-    local cutMap = string.find(GetMapName(), '_', 1, true)
-    local mapName = string.sub(GetMapName(), cutMap+1)
-    local mapDrops = self.DropList[mapName]
     local missing = {}
     for mapName,mapDrops in pairs(self.DropList) do
         for creepName,creepDrops in pairs(mapDrops) do
@@ -47,6 +44,39 @@ function Drops:Init()
     end
 end
 
+-- Returns a list of all the possible map drops of the current map
+function Drops:GetMapDropList()
+    local drops = {}
+    local mapDrops = self.DropList[dotacraft:GetMapName()]
+    for creepName,creepDrops in pairs(mapDrops) do
+        for item_type,v in pairs(creepDrops) do
+            if item_type == "item" then
+                local itemName = "item_"..v
+                drops[itemName] = true
+            else
+                local item_type_table = self.TierList[item_type]
+                local possible_item_drops = item_type_table[tostring(v)]
+                local choices = TableCount(possible_item_drops)
+                for i=1,choices do
+                    local itemName = "item_"..possible_item_drops[tostring(i)]
+                    drops[itemName] = true
+                end
+            end
+        end
+    end
+    local dropList = {}
+    for k,v in pairs(drops) do
+        table.insert(dropList,k)
+    end
+
+    return dropList    
+end
+
+function Drops:GetRandomDrop()
+    local possible_item_drops = self:GetMapDropList()
+    return possible_item_drops[RandomInt(1, #possible_item_drops)]
+end
+
 function Drops:Roll( creep )
     if creep:GetName() == "npc_dota_creature" then return end -- If the creep doesnt have a hammer name, it won't drop items
     local cutCreep = string.find(creep:GetName(), '_', 1, true)
@@ -55,12 +85,8 @@ function Drops:Roll( creep )
         return
     end
     local targetName = string.sub(creep:GetName(), cutCreep+1) -- Name of the entity in hammer, starting after first entityIndex_
-    local cutMap = string.find(GetMapName(), '_', 1, true)
-    if not cutMap then
-        self:print("ERROR: Map name should follow the naming format X_mapname, got '"..GetMapName().."' instead")
-        return
-    end
-    local mapName = string.sub(GetMapName(), cutMap+1) -- Map name starting after first X_
+
+    local mapName = dotacraft:GetMapName()
     local mapDrops = self.DropList[mapName]
     if not mapDrops then
         self:print("ERROR: Missing drop info for "..mapName)

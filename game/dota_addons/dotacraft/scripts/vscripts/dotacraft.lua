@@ -1315,6 +1315,16 @@ function dotacraft:ColorForPlayer( playerID )
     return Vector(color.r, color.g, color.b)
 end
 
+function dotacraft:GetMapName()
+    local cutMap = string.find(GetMapName(), '_', 1, true)
+    if not cutMap then
+        print("ERROR: Map name should follow the naming format X_mapname, got '"..GetMapName().."' instead")
+        return
+    end
+    return string.sub(GetMapName(), cutMap+1)
+
+end
+
 -- Returns an Int with the number of teams with valid players in them
 function dotacraft:GetTeamCount()
     local teamCount = 0
