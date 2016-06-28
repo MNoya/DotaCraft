@@ -22,12 +22,12 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"ui/shop.lua"
+					"ScriptFile"	"mechanics/shop.lua"
 					"Function"		"CheckHeroInRadius"
 				}
 				"RunScript"
 				{
-					"ScriptFile"	"ui/shop.lua"
+					"ScriptFile"	"mechanics/shop.lua"
 					"Function"		"SellItemsInInventory"
 				}
 			}
@@ -36,7 +36,7 @@
             {
                 "RunScript"
                 {
-                    "ScriptFile"    "ui/shop.lua"
+                    "ScriptFile"    "mechanics/shop.lua"
                     "Function"      "RemoveShop"
                 }
             }
@@ -51,7 +51,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile" 	"ui/shop.lua"
+					"ScriptFile" 	"mechanics/shop.lua"
 					"Function"		"Setup_Shop"			
 				}		
 			}

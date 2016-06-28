@@ -40,7 +40,7 @@ function modifier_brilliance_aura:GetAuraSearchTeam()
 end
 
 function modifier_brilliance_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:GetMaxMana() == 0
 end
 
 function modifier_brilliance_aura:GetAuraSearchType()
