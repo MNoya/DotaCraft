@@ -1060,7 +1060,8 @@ function BuildingHelper:RemoveBuilding(building, bSkipEffects)
         index = getIndexTable(buildingList, building)
         if index then
             table.remove(buildingList, index)
-            BuildingHelper:SetBuildingCount(playerID, buildingName, BuildingHelper:GetBuildingCount(playerID, buildingName)-1)
+            local constructionCount = self:GetBuildingCount(playerID, buildingName, true)
+            self:SetBuildingCount(playerID, buildingName, constructionCount-1, true)
         end
     end
 
