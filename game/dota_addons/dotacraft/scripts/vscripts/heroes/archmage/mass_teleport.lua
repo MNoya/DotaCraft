@@ -19,7 +19,10 @@ function MassTeleportStart( event )
 	for _,unit in pairs(targets) do
 		unit.teleport_particle = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN_FOLLOW, unit)
 	end
-		
+
+	if not IsCustomBuilding(target) then
+		ability:ApplyDataDrivenModifier(caster,target,"modifier_mass_teleport_target",{})
+	end		
 end
 
 -- Stops the channeling sound and particles

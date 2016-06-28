@@ -813,9 +813,17 @@
 		{
 			"modifier_channeling_animation"
 			{
-				"Passive"			"0"
-				
 				"OverrideAnimation" "ACT_DOTA_CAST_ABILITY_1"
+			}
+	
+			"modifier_mass_teleport_target"
+			{
+				"IsHidden"	"1"
+				"Duration"	"3.0"
+				"States"
+				{
+				    "MODIFIER_STATE_STUNNED"   "MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
