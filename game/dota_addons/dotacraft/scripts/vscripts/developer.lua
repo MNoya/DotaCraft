@@ -168,6 +168,11 @@ function dotacraft:DebugBlight()
             if BuildingHelper:CellHasGridType(x,y,'BLIGHT') then
                 DrawGridSquare(x,y,Vector(128,0,128))
             end
+            local pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
+            pos = GetGroundPosition(pos,nil)
+            if HasBlightParticle(pos) then
+                DebugDrawCircle(pos,Vector(128,0,128),100,32,true,10)
+            end
         end
     end
 end

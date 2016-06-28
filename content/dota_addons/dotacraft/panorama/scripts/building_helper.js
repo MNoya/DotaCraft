@@ -605,11 +605,11 @@ function BlockGridInRadius (position, radius, gridType) {
     boundingRect["topBorderY"] = position[1]+radius
     boundingRect["bottomBorderY"] = position[1]-radius
 
-    for (var x=boundingRect["leftBorderX"]+32; x <= boundingRect["rightBorderX"]-32; x+=64)
+    for (var x=boundingRect["leftBorderX"]; x <= boundingRect["rightBorderX"]-32; x+=64)
     {
-        for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]+32; y-=64)
+        for (var y=boundingRect["topBorderY"]-32; y >= boundingRect["bottomBorderY"]; y-=64)
         {
-            if (Length2D(position, [x,y,0]) <= radius)
+            if (Length2D(position, [x,y]) <= radius)
             {
                 BlockEntityGrid([x,y,0], gridType)
             }

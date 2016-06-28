@@ -8,7 +8,7 @@ function CreateBlight(location, size)
     elseif size == "item" then
         radius = 384
     end
-    local particle_spread = 256
+    local particle_spread = 128
     local count = 0
 
     if GetMapName() == "1_dotacraft" then 
@@ -20,8 +20,8 @@ function CreateBlight(location, size)
     for x = location.x - radius, location.x + radius - particle_spread, 64 do
         for y = location.y - radius, location.y + radius - particle_spread, 64 do
             local position = Vector(x, y, location.z)
-            if not HasBlight(position) then
 
+            if (Vector(x,y,0) - location):Length2D() < radius and not HasBlight(position) then
                 -- Make particle effects every particle_spread
                 if (x-location.x) % particle_spread == 0 and (y-location.y) % particle_spread == 0 then
                     local particle = ParticleManager:CreateParticle("particles/custom/undead/blight_aura.vpcf", PATTACH_CUSTOMORIGIN, nil)

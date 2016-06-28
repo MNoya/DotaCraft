@@ -3,27 +3,11 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 16
-	m_BoundingBoxMin =
-	[
-		-400.000000,
-		-400.000000,
-		-1000.000000,
-	]
-	m_BoundingBoxMax =
-	[
-		400.000000,
-		400.000000,
-		-200.000000,
-	]
-	m_flConstantRadius = 220.000000
-	m_ConstantColor =
-	[
-		0,
-		0,
-		0,
-		255,
-	]
-	m_Renderers =
+	m_BoundingBoxMin = [ -400.0, -400.0, -1000.0 ]
+	m_BoundingBoxMax = [ 400.0, 400.0, -200.0 ]
+	m_flConstantRadius = 220.0
+	m_ConstantColor = [ 0, 0, 0, 255 ]
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderSprites"
@@ -31,39 +15,42 @@
 			m_nOrientationType = 3
 			m_hTexture = resource:"materials/particle/dirt/ground_decay/ground_decay01.vtex"
 			m_bGammaCorrectVertexColors = false
-			m_flDepthBias = 1.000000
+			m_flDepthBias = 1.0
 			m_bParticleFeathering = true
+			m_flDiffuseAmount = 0.7
 		},
 		{
 			_class = "C_OP_RenderProjected"
-			m_flMaxProjectionDepth = 256.000000
-			m_hProjectedMaterial = resource:"materials/particle/dirt/ground_decay/ground_decay01_projected.vmat"
+			m_flMaxProjectionDepth = 256.0
+			m_hProjectedMaterial = resource:"materials/particle/ground/ground_mulch.vmat"
 			m_bDisableOperator = true
+			m_bFlipHorizontal = true
+			m_flMinProjectionDepth = 128.0
 		},
 	]
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_BasicMovement"
 		},
 		{
 			_class = "C_OP_DistanceToCP"
-			m_flInputMin = 768.000000
-			m_flInputMax = 768.000000
+			m_flInputMin = 768.0
+			m_flInputMax = 768.0
 			m_nFieldOutput = 16
-			m_flOutputMin = 1.000000
-			m_flOutputMax = 0.000000
+			m_flOutputMin = 1.0
+			m_flOutputMax = 0.0
 			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_DistanceCull"
-			m_flDistance = 256.000000
+			m_flDistance = 256.0
 			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_FadeIn"
-			m_flFadeInTimeMin = 0.300000
-			m_flFadeInTimeMax = 0.400000
+			m_flFadeInTimeMin = 0.3
+			m_flFadeInTimeMax = 0.4
 			m_bProportional = false
 			m_bDisableOperator = true
 		},
@@ -73,45 +60,40 @@
 		},
 		{
 			_class = "C_OP_EndCapTimedDecay"
-			m_flDecayTime = 1.000000
+			m_flDecayTime = 1.0
 		},
 		{
 			_class = "C_OP_LerpEndCapScalar"
-			m_flOutput = 0.000000
+			m_flOutput = 0.0
 			m_nFieldOutput = 7
 			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_RemapVisibilityScalar"
 			m_nFieldOutput = 7
-			m_flRadiusScale = 0.010000
+			m_flRadiusScale = 0.01
 		},
 		{
 			_class = "C_OP_MovementPlaceOnGround"
-			m_flOffset = 5.000000
-			m_flTolerance = 0.000000
+			m_flOffset = 5.0
+			m_flTolerance = 0.0
 			m_CollisionGroupName = "DEBRIS"
 			m_bSetNormal = true
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_CreateWithinSphere"
-			m_fRadiusMax = 256.000000
-			m_vecDistanceBias =
-			[
-				1.000000,
-				1.000000,
-				0.000000,
-			]
+			m_fRadiusMax = 128.0
+			m_vecDistanceBias = [ 1.0, 1.0, 0.0 ]
 		},
 		{
 			_class = "C_INIT_RandomRotation"
 		},
 		{
 			_class = "C_INIT_PositionPlaceOnGround"
-			m_flOffset = 3.000000
+			m_flOffset = 3.0
 			m_CollisionGroupName = "DEBRIS"
 		},
 		{
@@ -119,51 +101,29 @@
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMax = 256.000000
-			m_flRadiusMin = 256.000000
+			m_flRadiusMax = 128.0
+			m_flRadiusMin = 128.0
 		},
 		{
 			_class = "C_INIT_RandomColor"
-			m_ColorMin =
-			[
-				30,
-				30,
-				30,
-				100,
-			]
-			m_ColorMax =
-			[
-				30,
-				30,
-				30,
-				255,
-			]
-			m_TintMax =
-			[
-				255,
-				255,
-				255,
-				50,
-			]
+			m_ColorMin = [ 30, 30, 30, 100 ]
+			m_ColorMax = [ 30, 30, 30, 255 ]
+			m_TintMax = [ 255, 255, 255, 50 ]
 		},
 		{
 			_class = "C_INIT_RandomAlpha"
 		},
 		{
 			_class = "C_INIT_PositionOffset"
-			m_OffsetMax =
-			[
-				0.000000,
-				0.000000,
-				10.000000,
-			]
+			m_OffsetMax = [ 0.0, 0.0, 10.0 ]
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_MaintainEmitter"
 			m_nParticlesToMaintain = 16
 		},
 	]
+	m_bShouldSort = false
 }
