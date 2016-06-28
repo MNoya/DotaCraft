@@ -375,8 +375,8 @@ function CountDown(){
 // 				Setup & Commands			 //
 ///////////////////////////////////////////////
 
-function Developer_Mode(args){
-	if(args.developer){
+function Developer_Mode(){
+	if (CustomNetTables.GetTableValue("dotacraft_settings", "developer").value == true){
 		$.Msg("[Panaroma Developer Mode]");
 		DEVELOPER = true;
 	}else{
@@ -429,8 +429,9 @@ function Setup_Minimap(){
 (function () {
 	// default to spectator
 	Game.PlayerJoinTeam(1)
+
+	Developer_Mode()
 	
-	GameEvents.Subscribe( "panaroma_developer", Developer_Mode );
 	//GameEvents subscribes
 	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
 	GameEvents.Subscribe( "pregame_countdown_start", Start_Game );

@@ -109,6 +109,18 @@ function dotacraft:InitGameMode()
     GameMode:SetModifyGoldFilter( Dynamic_Wrap( dotacraft, "FilterGold" ), self )
     GameMode:SetModifierGainedFilter( Dynamic_Wrap(dotacraft, "FilterModifier"), self )
 
+    -- Panorama listeners
+    CustomGameEventManager:RegisterListener( "selection_update", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
+    CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
+    CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) --Right click through panorama 
+    CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
+    CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
+
+    -- PreGame Selection
+    CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGameUpdate"))
+    CustomGameEventManager:RegisterListener( "pregame_countdown", Dynamic_Wrap(dotacraft, "PreGameStartCountDown")) 
+    CustomGameEventManager:RegisterListener( "pregame_lock", Dynamic_Wrap(dotacraft, "PreGameToggleLock"))  
+
     -- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
@@ -244,9 +256,9 @@ function dotacraft:InitGameMode()
         GameRules.StartingPositions[k-1] = pos_table
     end
 
-    if not UI_PLAYERTABLE then
-       dotacraft:UI_Init()
-    end
+    -- Panorama Developer setting
+    CustomNetTables:SetTableValue("dotacraft_settings","developer",{value=IsInToolsMode()})
+
     print('[DOTACRAFT] Done loading dotacraft gamemode!')
 end
 
@@ -449,6 +461,27 @@ function dotacraft:InitializePlayer( hero )
             end
         end
     end
+end
+
+function dotacraft:TrackIdleWorkers( hero )
+    local player = hero:GetPlayerOwner()
+    local playerID = hero:GetPlayerID()
+    -- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
+    Timers:CreateTimer(1, function() 
+        local idle_builders = {}
+        local playerUnits = Players:GetUnits(playerID)
+        for k,unit in pairs(playerUnits) do
+            if IsValidAlive(unit) and IsBuilder(unit) and IsIdleBuilder(unit) then
+                table.insert(idle_builders, unit:GetEntityIndex())
+            end
+        end
+        if #idle_builders ~= #hero.idle_builders then
+            --print("#Idle Builders changed: "..#idle_builders..", was "..#hero.idle_builders)
+            hero.idle_builders = idle_builders
+            CustomGameEventManager:Send_ServerToPlayer(player, "player_update_idle_builders", { idle_builder_entities = idle_builders })
+        end
+        return 0.3
+    end)
 end
 
 function dotacraft:InitializeResources( hero, building )
@@ -656,9 +689,6 @@ function dotacraft:OnGameRulesStateChange(keys)
 
     print("[DOTACRAFT] GameRules State Changed: ",gamestates[newState])
         
-    -- send the panaroma developer at each stage to ensure all js are exposed to it
-    dotacraft:PanaromaDeveloperMode(newState)
-    
     if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
         if PlayerResource:HaveAllPlayersJoined() then
             dotacraft:OnAllPlayersLoaded()
@@ -670,6 +700,91 @@ function dotacraft:OnGameRulesStateChange(keys)
     elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
         dotacraft:OnPreGame()
     end
+end
+
+function dotacraft:OnPreGame()
+    print("[DOTACRAFT] OnPreGame")
+    local Finished = false
+    local currentIndex = 0
+    while not Finished do
+        
+        local Player_Table = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(currentIndex))
+        local NextTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(currentIndex+1))
+        if not NextTable then
+            Finished = true
+        end
+        local playerID = Player_Table.PlayerIndex
+        local color = Player_Table.Color
+        local team = Player_Table.Team
+        local race = GameRules.raceTable[Player_Table.Race]
+        
+        -- if race is nil it means that the id supplied is random since that is the only fallout index
+        if race == nil then
+            race = GameRules.raceTable[RandomInt(1, 4)]
+        end
+        
+        if PlayerResource:IsValidPlayerID(playerID) then
+            -- player stuff
+            local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
+            PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
+            PlayerResource:SetCustomTeamAssignment(playerID, team)
+            --PrecacheUnitByNameAsync(race, function() --Race Heroes are already precached
+                local player = PlayerResource:GetPlayer(playerID)
+                local hero = CreateHeroForPlayer(race, player)
+                
+                hero.color_id = color
+                
+                print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
+        elseif playerID > 9000 then
+            -- Create ai player here
+        else
+            -- do nothing
+        end
+        
+        currentIndex = currentIndex + 1
+    end
+    
+    --[[
+    for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) && PlayerResource:GetTeam(playerID) == 1 then
+            -- spectator
+        end
+    end
+    --]]
+    
+    -- Add gridnav blockers to the gold mines
+    GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
+    for k,gold_mine in pairs (GameRules.GoldMines) do
+        local location = gold_mine:GetAbsOrigin()
+        local construction_size = BuildingHelper:GetConstructionSize(gold_mine)
+        local pathing_size = BuildingHelper:GetBlockPathingSize(gold_mine)
+        BuildingHelper:SnapToGrid(construction_size, location)
+
+        local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
+        BuildingHelper:AddGridType(construction_size, location, "GoldMine")
+        gold_mine:SetAbsOrigin(location)
+        gold_mine.blockers = gridNavBlockers
+
+        -- Find and store the mine entrance
+        local mine_entrance = Entities:FindAllByNameWithin("*mine_entrance", location, 300)
+        for k,v in pairs(mine_entrance) do
+            gold_mine.entrance = v:GetAbsOrigin()
+        end
+
+        -- Find and store the mine light
+    end
+end
+
+function dotacraft:PreGameUpdate(data)
+    CustomNetTables:SetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex})
+end
+
+function dotacraft:PreGameToggleLock(data)
+    CustomGameEventManager:Send_ServerToAllClients("pregame_toggle_lock", {})
+end
+
+function dotacraft:PreGameStartCountDown(data)
+    CustomGameEventManager:Send_ServerToAllClients("pregame_countdown_start", {})
 end
 
 -- An NPC has spawned somewhere in game.  This includes heroes
@@ -1108,6 +1223,11 @@ function dotacraft:OnEntityKilled( event )
     end)
 end
 
+function dotacraft:OnPlayerSelectedEntities( event )
+    local playerID = event.PlayerID
+    dotacraft:UpdateRallyFlagDisplays(playerID)
+end
+
 -- Hides or shows the rally flag particles for the player (avoids visual clutter)
 function dotacraft:UpdateRallyFlagDisplays( playerID )
     local player = PlayerResource:GetPlayer(playerID)
@@ -1142,7 +1262,7 @@ end
 -- Win condition: All teams have been defeated but one (i.e. there are only structures left standing for players of the same team)
 function dotacraft:CheckDefeatCondition( teamNumber )
 
-    --SetNetTableValue("dotacraft_player_table", tostring(player:GetPlayerID()), {Status = "defeated"})
+    --CustomNetTables:SetTableValue("dotacraft_player_table", tostring(player:GetPlayerID()), {Status = "defeated"})
 
     -- Check the player structures of all the members of that team to determine defeat
     local teamMembers = 0
@@ -1187,7 +1307,13 @@ function dotacraft:CheckDefeatCondition( teamNumber )
 
         GameRules:SetGameWinner(winningTeam)
     end
+end
 
+-- Returns a Vector with the color of the player
+function dotacraft:ColorForPlayer( playerID )
+    local Player_Table = CustomNetTables:GetTableValue(GameRules.UI_PLAYERTABLE, tostring(playerID))
+    local color = CustomNetTables:GetTableValue(GameRules.UI_COLORTABLE, tostring(Player_Table.color_id))
+    return Vector(color.r, color.g, color.b)
 end
 
 -- Returns an Int with the number of teams with valid players in them
