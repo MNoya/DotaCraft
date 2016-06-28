@@ -58,8 +58,7 @@ end
 
 function TrainPriest( event )
 	local caster = event.caster
-	local hero = caster:GetOwner()
-	local playerID = hero:GetPlayerOwnerID()
+	local playerID = caster:GetPlayerOwnerID()
 	local upgrades = Players:GetUpgradeTable(playerID)
 
 	local target = event.target
@@ -77,8 +76,7 @@ end
 
 function TrainSorceress( event )
 	local caster = event.caster
-	local hero = caster:GetOwner()
-	local playerID = hero:GetPlayerOwnerID()
+	local playerID = caster:GetPlayerOwnerID()
 	local upgrades = Players:GetUpgradeTable(playerID)
 
 	local target = event.target
