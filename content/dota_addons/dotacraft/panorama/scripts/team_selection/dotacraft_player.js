@@ -199,7 +199,6 @@ function UpdatePlayerRace(){
 	else
 		OptionsDropDown.visible = false;
 	
-	$.Schedule(0.1, UpdatePlayer);
 	$.Schedule(0.1, Update);
 })();
 

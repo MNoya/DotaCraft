@@ -145,13 +145,17 @@ function AssignYourself(){
 	
 	if( !System.isPlayerAssigned(LocalPlayerID) && System.EmptyPanelsLeft){
 		var PlayerPanel = System.assignPlayer(LocalPlayerID, LocalPlayerID);
+
 		$.Msg("PlayerPanel ="+PlayerPanel);
 		if( PlayerPanel != false ){
-			// Assign panel teamIndex and Color
-			PlayerPanel.SitPlayer(LocalPlayerID, dotacraft_Teams[current_TeamIndex], current_ColorIndex, 0, true)
-
-			// increment current team index
-			Increment_Variables(); 
+			
+		var teamID = 0;	
+		if( LocalPlayerID <= Length(dotacraft_Teams) )
+			teamID = LocalPlayerID;
+		else
+			teamID = Length(dotacraft_Teams) - LocalPlayerID;
+		
+			PlayerPanel.SitPlayer(LocalPlayerID, dotacraft_Teams[teamID], current_ColorIndex, 0, true)
 		}else
 			$.Msg("Unable to assign local player")
 	};
