@@ -10,12 +10,12 @@ function modifier_hex_frog:DeclareFunctions()
 end
 
 function modifier_hex_frog:CheckState() 
-  local state = {
-      [MODIFIER_STATE_DISARMED] = true,
-      [MODIFIER_STATE_MUTED] = true,
-      [MODIFIER_STATE_HEXED] = true,
-      [MODIFIER_STATE_EVADE_DISABLED] = true,
-      [MODIFIER_STATE_SILENCED] = true,
+    local state = {
+        [MODIFIER_STATE_DISARMED] = true,
+        [MODIFIER_STATE_MUTED] = true,
+        [MODIFIER_STATE_HEXED] = true,
+        [MODIFIER_STATE_EVADE_DISABLED] = true,
+        [MODIFIER_STATE_SILENCED] = true,
   }
 
   return state
@@ -43,19 +43,23 @@ function modifier_hex_sheep:DeclareFunctions()
 end
 
 function modifier_hex_sheep:CheckState() 
-  local state = {
-    [MODIFIER_STATE_DISARMED] = true,
-    [MODIFIER_STATE_MUTED] = true,
-    [MODIFIER_STATE_HEXED] = true,
-    [MODIFIER_STATE_EVADE_DISABLED] = true,
-    [MODIFIER_STATE_SILENCED] = true,
-  }
+    local state = {
+        [MODIFIER_STATE_DISARMED] = true,
+        [MODIFIER_STATE_MUTED] = true,
+        [MODIFIER_STATE_HEXED] = true,
+        [MODIFIER_STATE_EVADE_DISABLED] = true,
+        [MODIFIER_STATE_SILENCED] = true,
+    }
 
   return state
 end
 
 function modifier_hex_sheep:GetModifierModelChange()
-    return "models/items/hex/sheep_hex/sheep_hex.vmdl"
+    if self:GetParent():HasFlyMovementCapability() then
+        return "models/courier/defense3_sheep/defense3_sheep_flying.vmdl"
+    else
+        return "models/items/hex/sheep_hex/sheep_hex.vmdl"
+    end
 end
 
 function modifier_hex_sheep:GetModifierMoveSpeedOverride()

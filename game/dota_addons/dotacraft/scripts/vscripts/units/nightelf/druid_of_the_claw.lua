@@ -41,7 +41,7 @@ function BearFormOff( event )
     ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
 
     -- Enable rejuvenation if the research is valid
-    if not Players:HasResearch(playerID, "nightelf_research_druid_of_the_claw_training1") then
+    if Players:HasResearch(playerID, "nightelf_research_druid_of_the_claw_training1") then
         local rejuvenation = caster:FindAbilityByName("nightelf_rejuvenation")
         rejuvenation:SetHidden(false)
     else
@@ -83,8 +83,6 @@ function TrueFormStart( event )
     local main_ability_name = ability:GetAbilityName()
 
     caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
-    print("Swapped "..main_ability_name.." with " ..sub_ability_name)
-
 end
 
 -- Reverts back to the original model, swaps abilities, removes modifier passed
@@ -123,7 +121,6 @@ function TrueFormEnd( event )
     local sub_ability_name = ability:GetAbilityName()
 
     caster:SwapAbilities(sub_ability_name, main_ability_name, false, true)
-    print("Swapped "..sub_ability_name.." with " ..main_ability_name)
 
     -- Remove modifier
     caster:RemoveModifierByName("modifier_bear_form")

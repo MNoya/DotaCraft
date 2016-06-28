@@ -47,7 +47,7 @@ end
 -- Upgrade all Huntresses
 function UpgradeMoonGlaives( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwner()
+	local playerID = caster:GetPlayerOwnerID()
 	local units = Players:GetUnits( playerID )
 
 	for _,unit in pairs(units) do
@@ -64,7 +64,7 @@ end
 -- Upgrade all transformed Druids of the Claw
 function UpgradeMarkOfTheClaw( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwnerID()
+	local playerID = caster:GetPlayerOwnerID()
 	local units = Players:GetUnits( playerID )
 
 	for _,unit in pairs(units) do
@@ -79,7 +79,7 @@ end
 -- Upgrade all transformed Druids of the Talon
 function UpgradeMarkOfTheTalon( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwnerID()
+	local playerID = caster:GetPlayerOwnerID()
 	local units = Players:GetUnits( playerID )
 
 	for _,unit in pairs(units) do
@@ -94,7 +94,7 @@ end
 -- Upgrade all Mountain Giants with Resistant Skin by replacing them
 function UpgradeResistantSkin( event )
 	local caster = event.caster
-	local player = caster:GetPlayerOwnerID()
+	local playerID = caster:GetPlayerOwnerID()
 	local units = Players:GetUnits( playerID )
 
 	for _,unit in pairs(units) do
