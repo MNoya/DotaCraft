@@ -251,7 +251,7 @@ function dotacraft:InitGameMode()
     local targets = Entities:FindAllByName( "*starting_position" ) --Inside player_start.vmap prefab
     for k,v in pairs(targets) do
         local pos_table = {}
-        pos_table.position = v:GetOrigin()
+        pos_table.position = v:GetAbsOrigin()
         pos_table.playerID = -1
         GameRules.StartingPositions[k-1] = pos_table
     end
@@ -391,6 +391,14 @@ function dotacraft:InitializePlayer( hero )
     race_setup_table.closest_mine_pos = race_setup_table.closest_mine:GetAbsOrigin()
     race_setup_table.mid_point = race_setup_table.closest_mine_pos + (position-race_setup_table.closest_mine_pos)/2
 
+    -- Find neutrals near the starting zone and remove them
+    local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
+    for k,v in pairs(neutrals) do
+        if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+            v:RemoveSelf()
+        end
+    end
+
     -- Special spawn rules
     if race == "undead" then
         -- Haunt the closest gold mine
@@ -409,7 +417,6 @@ function dotacraft:InitializePlayer( hero )
 
     -- Hide main hero under the main base
     -- Snap the camera to the created building and add it to selection
-    -- Find neutrals near the starting zone and remove them
     dotacraft:InitializeTownHall( hero , position, building )
 
     -- Test options
@@ -610,14 +617,6 @@ function dotacraft:InitializeTownHall( hero, position, building )
         PlayerResource:NewSelection(playerID, building)
         PlayerResource:SetDefaultSelectionEntity(playerID, building)
     end)
-
-    -- Find neutrals near the starting zone and remove them
-    local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
-    for k,v in pairs(neutrals) do
-        if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
-            v:RemoveSelf()
-        end
-    end
 end
 
 function dotacraft:OnGameInProgress()
