@@ -120,7 +120,7 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGameUpdate"))
     CustomGameEventManager:RegisterListener( "pregame_countdown", Dynamic_Wrap(dotacraft, "PreGameStartCountDown")) 
     CustomGameEventManager:RegisterListener( "pregame_lock", Dynamic_Wrap(dotacraft, "PreGameToggleLock"))  
-
+	
     -- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
@@ -775,7 +775,7 @@ function dotacraft:OnPreGame()
 end
 
 function dotacraft:PreGameUpdate(data)
-    CustomNetTables:SetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, PlayerIndex = data.PlayerIndex})
+    CustomNetTables:SetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, OldColor = data.OldColor, PlayerIndex = data.PlayerIndex})
 end
 
 function dotacraft:PreGameToggleLock(data)

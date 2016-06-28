@@ -133,12 +133,9 @@ function CheckAndCreateCurrentPlayers(){
 			
 			var PanelID = parseInt(table.key);
 			var PlayerPanel = System.assignPlayer(PlayerID, PanelID);
-
-			// Assign panel teamIndex and Color
-			PlayerPanel.PlayerID = PlayerID;
-			PlayerPanel.PlayerTeam = parseInt(table.value.Team);
-			PlayerPanel.PlayerColor = parseInt(table.value.Color);
-			PlayerPanel.Race = parseInt(table.value.Race);
+			
+			// sit player
+			PlayerPanel.SitPlayer(PlayerID, parseInt(table.value.Team), parseInt(table.value.Color),parseInt(table.value.Race), false)
 		};
 	};
 };
@@ -151,16 +148,10 @@ function AssignYourself(){
 		$.Msg("PlayerPanel ="+PlayerPanel);
 		if( PlayerPanel != false ){
 			// Assign panel teamIndex and Color
-			PlayerPanel.PlayerID = LocalPlayerID;
-			PlayerPanel.PlayerTeam = dotacraft_Teams[current_TeamIndex];
-			PlayerPanel.PlayerColor = current_ColorIndex;
-			PlayerPanel.PlayerRace = 0;
-			
+			PlayerPanel.SitPlayer(LocalPlayerID, dotacraft_Teams[current_TeamIndex], current_ColorIndex, 0, true)
+
 			// increment current team index
-			Increment_Variables();
-			 
-			// send new player Information
-			GameEvents.SendCustomGameEventToServer("update_pregame", {"PlayerID" : LocalPlayerID, "PanelID" : LocalPlayerID, "Team" : PlayerPanel.PlayerTeam, "Color" : PlayerPanel.PlayerColor, "Race" : PlayerPanel.PlayerRace});
+			Increment_Variables(); 
 		}else
 			$.Msg("Unable to assign local player")
 	};
@@ -183,10 +174,7 @@ function CheckForHostprivileges(){
 function Update(){ 
 	CheckCurrentSpectators(); 
 	UpdateCurrentSpectators();
-	
-	ResetColorDropDownState();
-	Update_Available_Colors();
-	
+
 	$.Schedule(0.1, Update); 
 };
 
@@ -230,43 +218,6 @@ function UpdateCurrentSpectators(){
 	};
 };  
 
-function Update_Available_Colors(){
-	for( var PlayerPanel of System.getAllPanels() ){
-		var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
-		
-		for( var Panel of System.getAllPanels() ){
-			var color_index = Panel.PlayerColor;
-			var PanelIDToCheck = Panel.PlayerID;
-			//$.Msg("Disabling ColorID: "+color_index+", used by playerID: "+PanelIDToCheck+" in panel: "+Root.PanelID);
-			
-			if( PanelIDToCheck != 9000 && PanelIDToCheck != 8999 ){
-				// find dropdown child
-				var dropdown_child = dropdown.FindDropDownMenuChild(color_index);
-				if( dropdown_child != null){
-					dropdown_child.visible = false
-				};
-			};
-		};
-	};
-};
-
-function ResetColorDropDownState(){
-	for( var PlayerPanel of System.getAllPanels() ){
-		var dropdown = PlayerPanel.FindChildTraverse("ColorDropDown");
-		
-		if( dropdown != null){
-			var ID3 = 0;
-			for(var ID2=0; ID2 < ID3+1; ID2++){ 
-				var dropdown_child = dropdown.FindDropDownMenuChild(ID2);
-				if( dropdown_child != null ){
-					dropdown_child.visible = true
-					ID3++;
-				};
-			}; 
-		};  
-	};		
-};
-
 function SetupPreGame(){
 	// check for new players, this also sets up the $.Schedule inside the function
 	CheckAndCreateCurrentPlayers(); 
@@ -284,7 +235,16 @@ function SetupPreGame(){
 ///////////////////////////////////////////////
 
 function InitStartGame(){ 
+	UpdatePreGameTable();
 	GameEvents.SendCustomGameEventToServer("pregame_countdown", {});	
+};
+
+function UpdatePreGameTable()
+{
+	// populate pregame table with all information needed
+	for(var Panel of System.getAllPanels()){
+		Panel.UpdateAllProperties();
+	};
 };
 
 // if everyone is ready this will be called

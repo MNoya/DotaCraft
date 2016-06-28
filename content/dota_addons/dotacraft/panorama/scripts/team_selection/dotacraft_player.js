@@ -1,53 +1,54 @@
 //////////////////////////////////////////////
 // 				Local Variables				//
 //////////////////////////////////////////////
-// panaroma color table, will most likely make a nettable for this
 var COLOUR_TABLE = {}
 var Root = $.GetContextPanel();
 var LocalPlayerID = Game.GetLocalPlayerID();
-		
+
 //////////////////////////////////////////////
 // 					BUTTONS					//
 //////////////////////////////////////////////
 
-function Sit(){
-	var Continue = true;
-	if(Root.PlayerID == LocalPlayerID ){
-		Root.PlayerID = 9000; 
-		Continue = false;
-	}else
-		Root.PlayerID = LocalPlayerID;
+// function for player to sit initially
+Root.SitPlayer = function(playerID, teamID, colorID, raceID, update){
+	Root.PlayerID = playerID;
+	Root.PlayerTeam = teamID;
+	Root.PlayerColor = colorID;
+	Root.PlayerRace = raceID;
 	
-	if(Continue){
-		$.Msg("Changing slots");
-		var Parent = Root.GetParent();
-		var SavedInformation = {PlayerTeam : Root.PlayerTeam, PlayerRace : Root.PlayerRace, PlayerColor : Root.PlayerColor};
-		for(var i=0; i < i +1;i+=1){
-			var PlayerPanel = Parent.GetChild(i);
-			if(PlayerPanel == null)
-				break;
-			
-			if( PlayerPanel.PlayerID == LocalPlayerID && Root.PanelID != PlayerPanel.PanelID){
-				Root.PlayerTeam = PlayerPanel.PlayerTeam;
-				Root.PlayerRace = PlayerPanel.PlayerRace;
-				Root.PlayerColor = PlayerPanel.PlayerColor;
-				
-				PlayerPanel.PlayerID = 9000;
-				PlayerPanel.PlayerTeam = SavedInformation.PlayerTeam; 
-				PlayerPanel.PlayerRace = SavedInformation.PlayerRace;
-				PlayerPanel.PlayerColor = SavedInformation.PlayerColor;
-				
-				GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": PlayerPanel.PanelID, "PlayerIndex": PlayerPanel.PlayerID, "Race": PlayerPanel.PlayerRace, "Team": PlayerPanel.PlayerTeam, "Color": PlayerPanel.PlayerColor});
-			}else{
-				Root.PlayerColor = SelectNewColor();
-			};
-			
-			// this should never be met but just in case lal
-			if(i > 100)
-				break;
-		};
-	};
+	if( update )
+		UpdatePlayer();
+};
+
+Root.UpdateAllProperties = function(){
 	UpdatePlayer();
+};
+
+function Sit(){
+	Root.PlayerID = LocalPlayerID;
+	$.Msg("Changing slots");
+	
+	var Parent = Root.GetParent();
+	var SavedInformation = {PlayerTeam : Root.PlayerTeam, PlayerRace : Root.PlayerRace, PlayerColor : Root.PlayerColor};
+	
+	for(var i=0; i < i +1;i+=1){
+		var PlayerPanel = Parent.GetChild(i);
+		if(PlayerPanel == null)
+			break;
+		
+		if( PlayerPanel.PlayerID == LocalPlayerID && Root.PanelID != PlayerPanel.PanelID){ // swap panel information			
+			// new player panel
+			Root.SitPlayer(LocalPlayerID, PlayerPanel.PlayerTeam, PlayerPanel.PlayerColor, PlayerPanel.PlayerRace, true);
+			
+			// last player panel
+			PlayerPanel.SitPlayer(9000, SavedInformation.PlayerTeam, SavedInformation.PlayerColor, SavedInformation.PlayerRace, true);
+			
+			break; // don't continue with loop
+		}
+		// this should never be met but just in case lal
+		if(i > 100)
+			break;
+	};
 };
 
 // ready up button
@@ -72,7 +73,7 @@ function PlayerTeamChanged(){
 	dropdown.SetSelected(team_index);
 	Root.PlayerTeam = parseInt(team_index);
 	
-	UpdatePlayer();
+	UpdatePlayerTeam();
 };
 
 // button click function for the race dropdown
@@ -84,29 +85,19 @@ function PlayerRaceChanged(){
 	dropdown.SetSelected(race_index);
 	Root.PlayerRace = parseInt(race_index);	
 	
-	UpdatePlayer();
+	UpdatePlayerRace();
 };
 
 // button click function for the color dropdown
 function PlayerColorChanged(){
 	var dropdown = Root.FindChildTraverse("ColorDropDown");
 	var color_index = dropdown.GetSelected().id;
-	
-	// set selected dropdown child and assign the index of the GetSelected as the new value
-	dropdown.SetSelected(color_index);
-	
-	// reset last color
-	var previous_dropdown_child = dropdown.FindDropDownMenuChild (Root.PlayerColor);
-	previous_dropdown_child.enabled = true;
-	previous_dropdown_child.style["border"] = "0px solid black";
-	
+
 	// save the new color index in the local variable
+	var old_color_index = Root.PlayerColor;
 	Root.PlayerColor = parseInt(color_index);
 
-	// change background color to match the setselected
-	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[color_index].r+","+COLOUR_TABLE[color_index].g+","+COLOUR_TABLE[color_index].b+")";
-	
-	UpdatePlayer();
+	UpdatePlayerColor(old_color_index);
 };
 
 function OptionsInput(){
@@ -123,23 +114,24 @@ function OptionsInput(){
 				break;				
 			case 2:
 				Root.PlayerID = 9001;
-				Root.PlayerColor = SelectNewColor();
+				//Root.PlayerColor = SelectNewColor();
 				UpdatePlayer();
 				break;
 			case 3:
 				Root.PlayerID = 9002;
-				Root.PlayerColor = SelectNewColor();
+				//Root.PlayerColor = SelectNewColor();
 				UpdatePlayer();
 				break;
 			case 4:
 				Root.PlayerID = 9003;
-				Root.PlayerColor = SelectNewColor();
+				//Root.PlayerColor = SelectNewColor();
 				UpdatePlayer();
 				break;
 		};
 	};
 };
 
+// DEPRECATE POSSIBLY 
 function SelectNewColor(){
 	var ColorsUsed = new Array();
 	var PlayerContainer = Root.GetParent();
@@ -175,6 +167,18 @@ function UpdatePlayer(){
 	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Race": Root.PlayerRace, "Team": Root.PlayerTeam, "Color": Root.PlayerColor});
 };  
 
+function UpdatePlayerColor(oldColour){
+	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Color": Root.PlayerColor, "OldColor": oldColour});
+};
+
+function UpdatePlayerTeam(){
+	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Team": Root.PlayerTeam});
+};
+
+function UpdatePlayerRace(){
+	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Race": Root.PlayerRace});
+};
+
 // Globally available panel to this context
 (function () {
 	// default values
@@ -209,28 +213,28 @@ function NetTableUpdatePlayer(TableName, Key, Value){
 		
 		PlayerPanel.PlayerID = PlayerID;
 
-		if( Value.Team )
+		if( Value.Team != null)
 			PlayerPanel.PlayerTeam = Value.Team;
-		if( Value.Race )
+		if( Value.Race != null)
 			PlayerPanel.PlayerRace = Value.Race;
-		if( Value.Color )
+		if( Value.Color != null)
 			PlayerPanel.PlayerColor = Value.Color;
 		
 		$.Msg("[Panel]: "+PanelID+" - [Player]: "+PlayerID+" is updating"); 
 		
-		if( Value.Team || Value.Color || Value.Race ){
+		if( Value.Team != null || Value.Color != null|| Value.Race != null){
 			// find all drop-downs and update their selection
 			for(var index in dotacraft_DropDowns){ 	 
 				var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[index]);
 				
 				// determine which dropdown the current index is, and update accordingly
-				if(dotacraft_DropDowns[index] == "ColorDropDown" && Value.Color){
+				if(dotacraft_DropDowns[index] == "ColorDropDown" && Value.Color != null){
 					dropdown.SetSelected(Value.Color);
 				} 
-				else if (dotacraft_DropDowns[index] == "TeamDropDown" && Value.Team){ 
+				else if (dotacraft_DropDowns[index] == "TeamDropDown" && Value.Team != null){ 
 					dropdown.SetSelected(Value.Team);
 				}
-				else if (dotacraft_DropDowns[index] == "RaceDropDown" && Value.Race){
+				else if (dotacraft_DropDowns[index] == "RaceDropDown" && Value.Race != null){
 					dropdown.SetSelected(Value.Race);
 					
 					// if local player change the race background to match the select race
@@ -241,7 +245,23 @@ function NetTableUpdatePlayer(TableName, Key, Value){
 			};
 		};
 	};
+	
+	if( Value.Color != null ){ // update colors
+		ChangeColourOfDropDownChild(Value.Color, Value.OldColor);
+	};
 }; 
+
+function ChangeColourOfDropDownChild(newID, oldID){
+	var dropdown = Root.FindChildTraverse("ColorDropDown");
+
+	if(oldID != null){	
+		var oldChild = dropdown.FindDropDownMenuChild(oldID);
+		oldChild.visible = true;
+	};
+	
+	var newChild = dropdown.FindDropDownMenuChild(newID);
+	newChild.visible = false;
+};
 
 // function which sets the local background image to that of the race
 function SetRaceBackgroundImage(race){
@@ -301,7 +321,6 @@ var dotacraft_DropDowns = {
 	3: "RaceDropDown"
 };
 
-// this function sets up all the components for the player once
 function PlayerPanelUpdate(){
 	var PlayerInfo;
 	

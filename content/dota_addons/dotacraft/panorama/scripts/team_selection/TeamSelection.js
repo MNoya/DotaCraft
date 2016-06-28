@@ -63,7 +63,7 @@ var TeamSelection = (function() {
 	TeamSelection.prototype.EmptyPanelsLeft = function(){
 		var EmptyPanelsLeft = false;
 		
-		if( FindEmptySlot() )
+		if( this.FindEmptySlot() )
 			EmptyPanelsLeft = true;
 		
 		return EmptyPanelsLeft;
