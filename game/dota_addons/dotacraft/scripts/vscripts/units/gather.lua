@@ -40,15 +40,16 @@ function Gather( event )
         if race == "nightelf" then
             caster:AddNewModifier(nil, nil, "modifier_stunned", {})
             local tree_pos = tree:GetAbsOrigin()
-            local caster_location = caster:GetAbsOrigin()
             local speed = caster:GetBaseMoveSpeed() * 0.03
-            local distance = (tree_pos - caster_location):Length()
-            local direction = (tree_pos - caster_location):Normalized()
+
+            if caster.tree_fx then
+                ParticleManager:DestroyParticle(caster.tree_fx, true)
+            end
 
             -- Move the wisp on top of the tree
             Timers:CreateTimer(function()
                 if not caster:IsAlive() then return end
-
+                local direction = (tree_pos - caster:GetAbsOrigin()):Normalized()
                 local new_location = caster:GetAbsOrigin() + direction * speed
                 caster:SetAbsOrigin(new_location)
 

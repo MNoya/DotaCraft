@@ -109,5 +109,7 @@ end
 
 function NightElfConstructionParticleEnd( event )
 	local target = event.target
-	ParticleManager:DestroyParticle(target.construction_particle, true)
+	if target and target.construction_particle then
+		ParticleManager:DestroyParticle(target.construction_particle, true)
+	end
 end
