@@ -17584,15 +17584,15 @@
 	    // Shops
 	    "ItemCost"                      "40"
 	    "LumberCost"                    "20" //Extra for Shop
-	    "StockMax"                  "3" 
-	    "StockTime"                 "30"
-	    "StockInitial"              "3"
-	    "RequiresTier"              "2"
+	    "StockMax"                      "3" 
+	    "StockTime"                     "30"
+	    "StockInitial"                  "3"
+	    "RequiresTier"                  "2"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
 	    "BuildingSize"                  "3"
-	    "BuildTime"                     "25.0"
+	    "BuildTime"                     "4.0"
 	    "AbilityCastRange"              "200"
 	    "Scale"                         "0" //bool
 	    "PlayerCanControl"              "1" //bool
@@ -17968,205 +17968,205 @@
 	// 400 over 45 seconds. Cancel on damage
 	"item_healing_salve"
 	{
-		"BaseClass"                     "item_datadriven"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName"            "item_healing_salve"
-		"AbilityCooldown"               "0"
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "item_healing_salve"
+	    "AbilityCooldown"               "0"
 	    "AbilitySharedCooldown"         "healing"
-		"AbilityManaCost"               "0"
-		"AbilityCastRange"				"500"
-			
-		"Model"                         "models/props_gameplay/salve.vmdl" //Green
+	    "AbilityManaCost"               "0"
+	    "AbilityCastRange"              "500"
+	        
+	    "Model"                         "models/props_gameplay/salve.vmdl" //Green
 	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
-		
-		"ItemShareability"              "ITEM_FULLY_SHAREABLE_STACKING"		
-		"ItemShopTags"					"flask"
-		"ItemQuality"                   "common"
-		"ItemPermanent"                 "0"
+	    
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE_STACKING"     
+	    "ItemShopTags"                  "flask"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
 	    "ItemStackable"                 "0"
-		"ItemKillable"                  "1"
-		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
-		"ItemInitialCharges"            "3"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "3"
 	    "ItemAlertable"                 "1" 
 	
 	    // Shops
 	    "ItemCost"                      "100"
-		"StockMax"                  "2" 
-		"StockTime"                 "60"
-		"StockInitial"              "2"
+	    "StockMax"                  "2" 
+	    "StockTime"                 "60"
+	    "StockInitial"              "2"
 	    "RequiresTier"              "1"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"45"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"total_health_regen"	"400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"health_per_second"		"9.0"
-			}
-		}
-		
-		"OnSpellStart"
-		{				
-			"ApplyModifier"
-			{
-				"Target"				"TARGET"
-				"ModifierName"			"modifier_healing_salve"
-				"Duration"				"%duration"
-			}
-			
-			"FireSound"
-			{
-				"EffectName"			"DOTA_Item.HealingSalve.Activate"
-				"Target"				"CASTER"
-			}
-			"SpendCharge"
-			{}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_healing_salve"
-			{
-				"Duration"              	"%duration"
-				
-				"EffectName"            	"particles/items_fx/healing_flask.vpcf"
-				"EffectAttachType"      	"follow_origin"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_per_second"
-				}
-				
-				"OnTakeDamage"
-				{
-					"RemoveModifier"
-					{
-						"Target"			"UNIT"
-						"ModifierName"		"modifier_healing_salve"
-					}
-				}
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "45"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "total_health_regen"    "400"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "health_per_second"     "9.0"
+	        }
+	    }
+	    
+	    "OnSpellStart"
+	    {               
+	        "ApplyModifier"
+	        {
+	            "Target"                "TARGET"
+	            "ModifierName"          "modifier_healing_salve"
+	            "Duration"              "%duration"
+	        }
+	        
+	        "FireSound"
+	        {
+	            "EffectName"            "DOTA_Item.HealingSalve.Activate"
+	            "Target"                "CASTER"
+	        }
+	        "SpendCharge"
+	        {}
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_healing_salve"
+	        {
+	            "Duration"                  "%duration"
+	            
+	            "EffectName"                "particles/items_fx/healing_flask.vpcf"
+	            "EffectAttachType"          "follow_origin"
+	            
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%health_per_second"
+	            }
+	            
+	            "OnTakeDamage"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "Target"            "UNIT"
+	                    "ModifierName"      "modifier_healing_salve"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	"item_scroll_of_speed"
 	{
-		"BaseClass"                     "item_datadriven"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName"            "item_scroll_of_speed"
-		"AbilityCooldown"               "60"
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "item_scroll_of_speed"
+	    "AbilityCooldown"               "60"
 	    "AbilitySharedCooldown"         "scroll_of_speed"
-		"AbilityManaCost"               "0"
-		
-		"AbilityCastRange"				"600"
+	    "AbilityManaCost"               "0"
+	    
+	    "AbilityCastRange"              "600"
 	
-		"Model"							"models/props_gameplay/tpscroll01.vmdl"
-		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
-		
-		"ItemShareability"              "ITEM_FULLY_SHAREABLE"		
-		"ItemShopTags"					"scroll"
-		"ItemQuality"                   "common"
-		"ItemPermanent"                 "0"
+	    "Model"                         "models/props_gameplay/tpscroll01.vmdl"
+	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+	    
+	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+	    "ItemShopTags"                  "scroll"
+	    "ItemQuality"                   "common"
+	    "ItemPermanent"                 "0"
 	    "ItemStackable"                 "0"
-		"ItemKillable"                  "1"
-		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
-		"ItemInitialCharges"            "1"
+	    "ItemKillable"                  "1"
+	    "ItemSellable"                  "1"
+	    "ItemDroppable"                 "1"
+	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
 	    // Shops
 	    "ItemCost"                  "50"
-		"StockMax"                  "1" 
-		"StockTime"                 "60"
-		"StockInitial"              "1"
+	    "StockMax"                  "1" 
+	    "StockTime"                 "60"
+	    "StockInitial"              "1"
 	    "RequiresTier"              "1"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movement_speed"	"400"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"   		"10"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"600"
-			}
-		}
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "movement_speed"    "400"
+	        }
+	        "02"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "duration"          "10"
+	        }
+	        "03"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "radius"            "600"
+	        }
+	    }
 	
-		"precache"
-		{
-			"particle"  "particles/units/heroes/hero_centaur/centaur_stampede_cast.vpcf"
-			"particle"  "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_centaur/centaur_stampede_cast.vpcf"
+	        "particle"  "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"Target" 			"CASTER"
-				"EffectName"		"particles/units/heroes/hero_centaur/centaur_stampede_cast.vpcf"
-				"EffectAttachType" 	"follow_origin"
-			}
+	    "OnSpellStart"
+	    {
+	        "FireEffect"
+	        {
+	            "Target"            "CASTER"
+	            "EffectName"        "particles/units/heroes/hero_centaur/centaur_stampede_cast.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	        }
 	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_scroll_of_speed"
-				"Target"
-				{
-					"Center" 	"CASTER"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_scroll_of_speed"
+	            "Target"
+	            {
+	                "Center"    "CASTER"
+	                "Radius"    "%radius"
+	                "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-				}
-				"Duration"		"%duration"
-			}			
-			"FireSound"
-			{
-				"EffectName"	"DOTA_Item.DoE.Activate"
-				"Target" 		"CASTER"
-			}
+	            }
+	            "Duration"      "%duration"
+	        }           
+	        "FireSound"
+	        {
+	            "EffectName"    "DOTA_Item.DoE.Activate"
+	            "Target"        "CASTER"
+	        }
 	
-			"SpendCharge"
-			{}
-		}
+	        "SpendCharge"
+	        {}
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_scroll_of_speed"
-			{
-				"EffectName"		"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
-				"EffectAttachType"	"follow_overhead"
+	    "Modifiers"
+	    {
+	        "modifier_scroll_of_speed"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+	            "EffectAttachType"  "follow_overhead"
 	            "TextureName"       "item_scroll_of_speed"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"  "400"
-				}
-			}
-		}
+	    
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"  "400"
+	            }
+	        }
+	    }
 	}
 	
 	// Creates a Great Hall at a target location. Human, Night Elf, and Undead players will get their racial equivalent town hall.
@@ -18191,21 +18191,21 @@
 	
 	    // Shops
 	    "ItemCost"                      "600"
-	    "LumberCost"					"185"
-	    "StockMax"                  "1" 
-	    "StockTime"                 "30"
-	    "StockInitial"              "3"
-	    "RequiresTier"              "3"
+	    "LumberCost"                    "185"
+	    "StockMax"                      "1" 
+	    "StockTime"                     "30"
+	    "StockInitial"                  "3"
+	    "RequiresTier"                  "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
 	    "BuildingSize"                  "5"
-	    "BuildTime"                     "120.0"
+	    "BuildTime"                     "20.0"
 	    "AbilityCastRange"              "200"
 	    "Scale"                         "0" //bool
 	    "PlayerCanControl"              "1" //bool
 	
-	    "BuilderInside"					"0"	
+	    "BuilderInside"                 "0" 
 	
 	    "UnitName"                      "orc_great_hall"
 	    "AbilityCooldown"               "0"
@@ -18233,11 +18233,11 @@
 	
 	    "OnEquip"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"items/great_hall.lua"
-	    		"Function"		"ChangeGreatHall"
-	    	}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/great_hall.lua"
+	            "Function"      "ChangeGreatHall"
+	        }
 	    }
 	
 	    "OnSpellStart"
@@ -18273,21 +18273,21 @@
 	
 	    // Shops
 	    "ItemCost"                      "600"
-	    "LumberCost"					"185"
-	    "StockMax"                  "1" 
-	    "StockTime"                 "30"
-	    "StockInitial"              "3"
-	    "RequiresTier"              "3"
+	    "LumberCost"                    "185"
+	    "StockMax"                      "1" 
+	    "StockTime"                     "30"
+	    "StockInitial"                  "3"
+	    "RequiresTier"                  "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
 	    "BuildingSize"                  "5"
-	    "BuildTime"                     "120.0"
+	    "BuildTime"                     "20.0"
 	    "AbilityCastRange"              "200"
 	    "Scale"                         "0" //bool
 	    "PlayerCanControl"              "1" //bool
 	
-	    "BuilderInside"					"0"	
+	    "BuilderInside"                 "0" 
 	
 	    "UnitName"                      "human_town_hall"
 	    "AbilityCooldown"               "0"
@@ -18315,11 +18315,11 @@
 	
 	    "OnEquip"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"items/great_hall.lua"
-	    		"Function"		"ChangeGreatHall"
-	    	}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/great_hall.lua"
+	            "Function"      "ChangeGreatHall"
+	        }
 	    }
 	
 	    "OnSpellStart"
@@ -18355,21 +18355,21 @@
 	
 	    // Shops
 	    "ItemCost"                      "600"
-	    "LumberCost"					"185"
-	    "StockMax"                  "1" 
-	    "StockTime"                 "30"
-	    "StockInitial"              "3"
-	    "RequiresTier"              "3"
+	    "LumberCost"                    "185"
+	    "StockMax"                      "1" 
+	    "StockTime"                     "30"
+	    "StockInitial"                  "3"
+	    "RequiresTier"                  "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
 	    "BuildingSize"                  "5"
-	    "BuildTime"                     "120.0"
+	    "BuildTime"                     "20.0"
 	    "AbilityCastRange"              "200"
 	    "Scale"                         "0" //bool
 	    "PlayerCanControl"              "1" //bool
 	
-	    "BuilderInside"					"0"	
+	    "BuilderInside"                 "0" 
 	
 	    "UnitName"                      "nightelf_tree_of_life"
 	    "AbilityCooldown"               "0"
@@ -18397,11 +18397,11 @@
 	
 	    "OnEquip"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"items/great_hall.lua"
-	    		"Function"		"ChangeGreatHall"
-	    	}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/great_hall.lua"
+	            "Function"      "ChangeGreatHall"
+	        }
 	    }
 	
 	    "OnSpellStart"
@@ -18437,21 +18437,21 @@
 	
 	    // Shops
 	    "ItemCost"                      "600"
-	    "LumberCost"					"185"
-	    "StockMax"                  "1" 
-	    "StockTime"                 "30"
-	    "StockInitial"              "3"
-	    "RequiresTier"              "3"
+	    "LumberCost"                    "185"
+	    "StockMax"                      "1" 
+	    "StockTime"                     "30"
+	    "StockInitial"                  "3"
+	    "RequiresTier"                  "3"
 	
 	    // BuildingHelper info
 	    "Building"                      "1" //bool
 	    "BuildingSize"                  "5"
-	    "BuildTime"                     "120.0"
+	    "BuildTime"                     "20.0"
 	    "AbilityCastRange"              "200"
 	    "Scale"                         "0" //bool
 	    "PlayerCanControl"              "1" //bool
 	
-	    "BuilderInside"					"0"	
+	    "BuilderInside"                 "0" 
 	
 	    "UnitName"                      "orc_great_hall"
 	    "AbilityCooldown"               "0"
@@ -18479,11 +18479,11 @@
 	
 	    "OnEquip"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"items/great_hall.lua"
-	    		"Function"		"ChangeGreatHall"
-	    	}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/great_hall.lua"
+	            "Function"      "ChangeGreatHall"
+	        }
 	    }
 	
 	    "OnSpellStart"

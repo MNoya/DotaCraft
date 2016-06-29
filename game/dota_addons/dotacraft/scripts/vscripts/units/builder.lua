@@ -168,7 +168,7 @@ function Build( event )
         unit:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
 
         -- Give item to cancel
-        local item = CreateItem("item_building_cancel", hero, hero)
+        local item = CreateItem("item_building_cancel", nil, nil)
         unit:AddItem(item)
 
         -- FindClearSpace for the builder
