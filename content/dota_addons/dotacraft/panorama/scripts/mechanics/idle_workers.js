@@ -53,10 +53,15 @@ function OnPlayerStart( args ) {
 	$('#IdleNumber').text = idleCount;
 	$('#IdleButtonImage').SetImage( "s2r://panorama/images/custom_game/"+race+"/"+race+"_builder.png" );
 };
+
+function OnMapOverview (args) {
+	$("#IdleWorkers").visible = false
+}
  
 (function () {
 	GameEvents.Subscribe( "player_show_ui", OnPlayerStart );
 	GameEvents.Subscribe( "player_update_idle_builders", OnPlayerUpdateIdleBuilders );
+	GameEvents.Subscribe( "map_overview", OnMapOverview );
 	
 	// Idle Builders Key
 	GameUI.Keybinds.IdleBuilderSwap = function() { OnIdleButtonPressed() }

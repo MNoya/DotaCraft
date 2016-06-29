@@ -10,10 +10,12 @@ CHEAT_CODES = {
     ["lightsout"] = function(...) dotacraft:LightsOut(...) end,              -- "Set time of day to dusk"
     ["322"] = function(...) dotacraft:MakePlayerLose(...) end,               -- Lose the game         
     ["lvlup"] = function(...) dotacraft:LevelUp(...) end,                    -- Level all heroes    
+    ["map_view"] = function(...) dotacraft:MapOverview(...) end,             -- Hides UI elements and sets flying camera distance
 }
 
 DEBUG_CODES = {
     ["debug_trees"] = function(...) Gatherer:DebugTrees() end,               -- Prints the trees marked as pathable
+    ["debug_forests"] = function(...) Gatherer:DebugForests() end,           -- Prints the forest of each tree
     ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end,         -- Prints the positions marked for undead buildings
     ["debug_food"] = function(...) dotacraft:DebugFood(...) end,             -- Prints the food count for all players, checking for inconsistencies
     ["debug_clear"] = function(...) DebugDrawClear() end,                    -- Clears all debug world elements
@@ -160,6 +162,22 @@ function dotacraft:GiveItem(playerID, item_name)
             print("ERROR, can't find "..item_name)
         end
     end
+end
+
+function dotacraft:MapOverview(playerID, distance)
+    playerID = playerID or 0
+    distance = distance or math.max((math.abs(GetWorldMinX())+GetWorldMaxX()), (math.abs(GetWorldMinY())+GetWorldMaxY()))
+
+    GameRules:GetGameModeEntity():SetFogOfWarDisabled( true )
+    SendToServerConsole("r_farz 100000")
+    SendToServerConsole("fog_enable 0")
+    SendToServerConsole("dota_hud_healthbars 0")
+
+    dotacraft.center_unit = dotacraft.center_unit or CreateUnitByName("nightelf_wisp",Vector(0,0,0),true,nil,nil,0)
+    dotacraft.center_unit:AddNoDraw()
+    Timers:CreateTimer(0.1, function()
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "map_overview", {center = dotacraft.center_unit:GetEntityIndex(), distance = distance})
+    end)
 end
 
 function dotacraft:DebugBlight()

@@ -269,8 +269,31 @@ function IsNeutralUnit(entIndex) {
     return (Entities.GetTeamNumber(entIndex) == DOTATeam_t.DOTA_TEAM_NEUTRALS)
 }
 
+function OnMapOverview (args) {
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false );
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false );
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false );
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );
+    GameUI.SetRenderTopInsetOverride( 0 )
+    GameUI.SetCameraPitchMax( 90 )
+
+    cameraDistance = maxCameraDistance
+    maxCameraDistance = args.distance
+    //minCameraDistance = args.distance
+    cameraInterval = 1000
+    GameUI.SetCameraDistance( maxCameraDistance )
+
+    var center = args.center
+    GameUI.SetCameraTarget(center);
+    $.Schedule(1, function(){GameUI.SetCameraTarget(-1)} )
+}
+
 (function () {
     CustomNetTables.SubscribeNetTableListener( "attacks_enabled", OnAttacksEnabledChanged );
+    GameEvents.Subscribe( "map_overview", OnMapOverview );
 
     GameUI.Keybinds.OnRotateLeft = function() { OnRotateLeft() }
     GameUI.Keybinds.OnRotateRight = function() { OnRotateRight() }
@@ -281,6 +304,7 @@ function IsNeutralUnit(entIndex) {
 var cameraDistance = 1600
 var maxCameraDistance = 2600
 var minCameraDistance = 500
+var cameraInterval = 10
 GameUI.SetCameraDistance( cameraDistance )
 
 function ZoomEvent(zoom_distance)
@@ -358,7 +382,7 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
     }
 
     if (eventName === "wheeled") {
-        var value = arg == 1 ? -10 : 10;
+        var value = arg == 1 ? -cameraInterval : cameraInterval;
         ZoomEvent(cameraDistance+value)
         return CONSUME_EVENT;
     }

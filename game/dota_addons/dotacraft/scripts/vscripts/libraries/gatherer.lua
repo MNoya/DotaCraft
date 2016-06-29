@@ -11,7 +11,7 @@ Make it possible to work without a GatherAbility
 ]]
 
 function Gatherer:start()
-    if IsInToolsMode() then    
+    if IsInToolsMode() then
         local src = debug.getinfo(1).source
         self.gameDir = ""
         self.addonName = ""
@@ -318,7 +318,7 @@ function Gatherer:OrderFilter(order)
         local tree_handle = EntIndexToHScript(tree_index)
         local position = tree_handle:GetAbsOrigin()
 
-        Gatherer:DrawCircle(position, Vector(255,0,0), 150)
+        Gatherer:DrawCircle(position, Vector(255,0,0), 32)
         Gatherer:DrawLine(unit:GetAbsOrigin(), position)
 
         local gatherer_units = filter(function(index) return EntIndexToHScript(index):CanGatherLumber() end, entityList)
@@ -332,7 +332,7 @@ function Gatherer:OrderFilter(order)
             local ent = EntIndexToHScript(entityIndex)
             local empty_tree = FindEmptyNavigableTreeNearby(ent, position, 150 + 20 * numGatherers) --TODO: ability:GetKeyValue("RequiresEmptyTree")
             if empty_tree then 
-                empty_tree.builder = unit
+                empty_tree.builder = ent
                 ent.gatherer_skip = true
                 local gather_ability = ent:GetGatherAbility()
                 local return_ability = ent:GetReturnAbility()
@@ -340,6 +340,8 @@ function Gatherer:OrderFilter(order)
                     local tree_index = empty_tree:GetTreeID()
                     self:print("Cast Target Tree: "..tree_index.." at forest "..empty_tree:GetForestID())
                     ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
+                    Gatherer:DrawCircle(empty_tree:GetAbsOrigin(), Vector(255,255,255), 16)
+                    Gatherer:DrawLine(ent:GetAbsOrigin(), empty_tree:GetAbsOrigin())
                 elseif return_ability and not return_ability:IsHidden() then
                     ent:ReturnResources(queue, false) -- Let it propagate to all selected units
                 end
@@ -466,7 +468,6 @@ function Gatherer:DeterminePathableTrees()
 
             -- Mark position processed.
             seen[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosX(position.y)] = 1
-
             for k=1,#vecs do
                 local vec = vecs[k]
                 local pos = Vector(position.x + vec.x, position.y + vec.y, position.z)
@@ -504,22 +505,29 @@ function Gatherer:DetermineForests()
         Gatherer:MapTreeForest(tree, num)
     end
 
-    local colors = {}
-    for i=1,num do
-        colors[i] = Vector(RandomInt(0,255),RandomInt(0,255),RandomInt(0,255))
-    end
-
-    -- Draw colors
+    -- Set
     for _,tree in pairs(self.AllTrees) do
         local id = tree.forestID
         self.treeForests[id] = self.treeForests[id] or {}
         table.insert(self.treeForests[id], tree)
-        self:DrawCircle(tree:GetAbsOrigin(), colors[id], 64)
-        self:DrawText(tree:GetAbsOrigin(), tostring(id))
     end
 
     for k,v in pairs(self.treeForests) do
         --self:print("Forest "..k.." has "..#v.." trees")
+    end
+end
+
+-- Draw random color for each forest
+function Gatherer:DebugForests()
+    local colors = {}
+    for i=1,#self.treeForests do
+        colors[i] = Vector(RandomInt(0,255),RandomInt(0,255),RandomInt(0,255))
+    end
+
+    for _,tree in pairs(self.AllTrees) do
+        local id = tree.forestID
+        self:DrawCircle(tree:GetAbsOrigin(), colors[id], 64)
+        self:DrawText(tree:GetAbsOrigin(), tostring(id))
     end
 end
 
@@ -1494,8 +1502,8 @@ end
 
 function Gatherer:DrawCircle(position, vColor, radius)
     vColor = vColor or Vector(255,255,255)
-    radius = radius or 64
-    if self.DebugDraw then DebugDrawCircle(position, vColor, 100, radius, true, self.DebugDrawDuration) end
+    radius = radius or 32
+    if self.DebugDraw then DebugDrawCircle(position, vColor, 255, radius, true, self.DebugDrawDuration) end
 end
 
 function Gatherer:DrawLine(start, target)
@@ -1503,7 +1511,7 @@ function Gatherer:DrawLine(start, target)
 end
 
 function Gatherer:DrawText(position, text)
-    if self.DebugDraw then DebugDrawText(position, text, true, self.DebugDrawDuration) end
+    if self.DebugDraw then DebugDrawText(Vector(position.x-text:len()*16, position.y, position.z), text, true, self.DebugDrawDuration) end
 end
 
 -- Goes through all trees showing whether they are pathable or not

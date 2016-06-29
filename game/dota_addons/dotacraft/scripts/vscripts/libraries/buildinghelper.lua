@@ -313,7 +313,7 @@ function BuildingHelper:InitGNV()
     local boundY2 = GridNav:WorldToGridPosY(worldMax.y)
    
     BuildingHelper:print("Max World Bounds: ")
-    BuildingHelper:print(GetWorldMaxX()..' '..GetWorldMaxY()..' '..GetWorldMaxX()..' '..GetWorldMaxY())
+    BuildingHelper:print(GetWorldMinX()..' '..GetWorldMaxX()..' '..GetWorldMinY()..' '..GetWorldMaxY())
     BuildingHelper:print(boundX1..' '..boundX2..' '..boundY1..' '..boundY2)
 
     local blockedCount = 0

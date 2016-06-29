@@ -92,9 +92,14 @@ function OnPlayerFoodChanged ( args ) {
 	}
 }
 
+function OnMapOverview (args) {
+    $("#ResourceContainer").visible = false
+}
+
 (function () {
 	GameEvents.Subscribe( "player_lumber_changed", OnPlayerLumberChanged );
 	GameEvents.Subscribe( "player_food_changed", OnPlayerFoodChanged );
+	GameEvents.Subscribe( "map_overview", OnMapOverview );
 	
 	UpdateGold();
 })();
