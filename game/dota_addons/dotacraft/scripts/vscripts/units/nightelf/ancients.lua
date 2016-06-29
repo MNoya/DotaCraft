@@ -124,7 +124,7 @@ function AutoEntangle( event )
 end
 
 function FindGoldMineForEntangling( unit )
-    local radius = 900
+    local radius = 900+unit:GetHullRadius()
     local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
     for k,gold_mine in pairs(units) do
         if not gold_mine.building_on_top then
@@ -138,7 +138,7 @@ function UpRootStart( event )
     local caster = event.caster
 
     -- Don't allow uprooting until the ancient has finished construction
-    if caster:HasModifier("modifier_construction") then
+    if caster:IsUnderConstruction() then
         caster:Stop()
         return
     end
@@ -174,6 +174,7 @@ function UpRoot( event )
         caster:RemoveModifierByName("modifier_shop")
     end
 
+    caster:RemoveModifierByName("modifier_disable_turning")
     caster:RemoveModifierByName("modifier_building")
 
     caster:SetArmorType("heavy")
@@ -267,7 +268,7 @@ function EntangleGoldMine( event )
 
             -- Particle effect
             ApplyConstructionEffect(building)
-
+            function building:IsUnderConstruction() return true end
             building.updateHealthTimer = Timers:CreateTimer(function()
                 if IsValidAlive(building) then
                       local timesUp = GameRules:GetGameTime() >= time_completed
@@ -288,7 +289,7 @@ function EntangleGoldMine( event )
 
                         building.constructionCompleted = true
                         building.state = "complete"
-
+                        function building:IsUnderConstruction() return false end
                         return
                     end
                 
@@ -310,10 +311,10 @@ function EntangleGoldMine( event )
     end
 end
 
--- Triggers ShowGoldMine on the entangled mine
+-- Triggers ShowGoldMine on the entangled mine OnOwnerDied
 function RemoveEntangledMine( event )
     local caster = event.caster
-    if IsValidEntity(caster.entangled_gold_mine) then
+    if IsValidEntity(caster.entangled_gold_mine) and caster.entangled_gold_mine == caster then
         caster.entangled_gold_mine:RemoveModifierByName("modifier_entangled_mine")
     end
 end
@@ -343,14 +344,7 @@ function ShowGoldMine( event )
 
         FindClearSpaceForUnit(wisp, mine.entrance, true)
 
-        -- Cancel gather effects
-        wisp:RemoveModifierByName("modifier_on_order_cancel_gold")
-        wisp:RemoveModifierByName("modifier_gathering_gold")
-        wisp.state = "idle"
-
-        local ability = wisp:FindAbilityByName("nightelf_gather")
-        ability.cancelled = true
-        ToggleOff(ability)
+        wisp:CancelGather()
     end
 
     if building.counter_particle then

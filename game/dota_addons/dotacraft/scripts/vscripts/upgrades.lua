@@ -101,8 +101,8 @@ function CheckAbilityRequirements( unit, playerID )
             end
         end
     else
-        print("FIX THIS ALREADY YOU IDIOT")
-        print("! Not a Valid Entity !, there's currently ",#units,"units and",#structures,"structures in the table")
+        print("ERROR, called CheckAbilityRequirements on a invalid unit. Fixing all tables...")
+        Players:FixAllTables(playerID)
     end
 
     -- Fire update lumber costs UI

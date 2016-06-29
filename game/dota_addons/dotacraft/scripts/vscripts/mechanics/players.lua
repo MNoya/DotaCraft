@@ -150,6 +150,25 @@ function Players:AssignEmptyPositionForPlayer(playerID)
     end
 end
 
+-- In case of objects being removed from the game but still kept on the player tables
+function Players:FixAllTables(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    hero.units = Players:FixTable(Players:GetUnits(playerID))
+    hero.structures = Players:FixTable(Players:GetStructures(playerID))
+    hero.heroes = Players:FixTable(Players:GetHeroes(playerID))
+    hero.altar_structures = Players:FixTable(Players:GetAltars(playerID))
+end
+
+function Players:FixTable(list)
+    local newList = {}
+    for _,v in pairs(list) do
+        if IsValidEntity(v) and v:IsAlive() then
+            table.insert(v, newList)
+        end
+    end
+    return newList
+end
+
 ---------------------------------------------------------------
 
 function Players:GetGold( playerID )
