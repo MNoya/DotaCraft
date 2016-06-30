@@ -417,6 +417,20 @@ function Players:RemoveStructure( playerID, unit )
     end
 end
 
+function Players:UpgradeStructure(playerID, oldUnit, newUnit)
+    local playerStructures = Players:GetStructures(playerID)
+    local buildingTable = Players:GetBuildingTable(playerID)
+
+    -- Remove the handle from the player structures
+    local playerStructures = Players:GetStructures( playerID )
+    local structure_index = getIndexTable(playerStructures, oldUnit)
+    if structure_index then 
+        table.remove(playerStructures, structure_index)
+    end
+
+    Players:AddStructure( playerID, newUnit )
+end
+
 ---------------------------------------------------------------
 
 -- Returns bool

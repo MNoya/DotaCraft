@@ -51,8 +51,8 @@ function UpgradeBuilding( event )
         end
     end
 
-    -- Remove the old building from the structures list
-    Players:RemoveStructure( playerID, caster )
+    -- Remove the old building from the structures list and add the new building to the structures list
+    Players:UpgradeStructure( playerID, caster, building )
         
     -- Remove old building entity
     caster:RemoveSelf()
@@ -68,17 +68,6 @@ function UpgradeBuilding( event )
         building.entangled_gold_mine = caster.entangled_gold_mine
         building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
     end
-
-    -- Add 1 to the buildings list for that name. The old name still remains
-    local buildingTable = Players:GetBuildingTable(playerID)
-    if not buildingTable[new_unit] then
-        buildingTable[new_unit] = 1
-    else
-        buildingTable[new_unit] = buildingTable[new_unit] + 1
-    end
-
-    -- Add the new building to the structures list
-    Players:AddStructure(playerID, building)
 
     -- Update the abilities of the units and structures
     local playerUnits = Players:GetUnits(playerID)
