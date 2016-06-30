@@ -1,163 +1,163 @@
 // Archmage Mass Teleport
 // Author: Noya
-// Date: 26.01.2015.
-// Notes: Teleports 24 of the player's nearby units, including the Archmage, to a friendly ground unit or structure.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	N/A	20 sec.	100	Unlimited	70	Friendly Ground Units, Friendly Buildings	Teleports up to 24 units	6
+// Description: Teleports 24 of the player's nearby units, including the Archmage, to a friendly ground unit or structure.
+
 "archmage_mass_teleport"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"archmage_mass_teleport"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "archmage_mass_teleport"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"20.0"
+    "TargetsAllowed"                "ground"
 
-	"AbilityManaCost"				"100"
-	"AbilityChannelTime"			"3.0"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "20.0"
 
-	"precache"
-	{
-		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
-		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"max_units_teleported"	"24"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"700"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"channel_time"			"3.0"
-		}
-	}
+    "AbilityManaCost"               "100"
+    "AbilityChannelTime"            "3.0"
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/archmage/mass_teleport.lua"
-			"Function"		"BuildingCheck"
-		}
-	}
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+        "particle"          "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
+        "particle"          "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "max_units_teleported"  "24"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "700"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "channel_time"          "3.0"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/archmage/mass_teleport.lua"
-			"Function"		"MassTeleportStart"
-			"Target"
-			{
-				"Center"  	"CASTER"
-				"Radius" 	"%radius"
-				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-				"MaxTargets" "%max_units_teleported"
-			}
-		}
+    "OnAbilityPhaseStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/archmage/mass_teleport.lua"
+            "Function"      "BuildingCheck"
+        }
+    }
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_channeling_animation"
-			"Target" 		"CASTER"
-			"Duration"		"%channel_time"
-		}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/archmage/mass_teleport.lua"
+            "Function"      "MassTeleportStart"
+            "Target"
+            {
+                "Center"    "CASTER"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+                "MaxTargets" "%max_units_teleported"
+            }
+        }
 
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
-			"EffectAttachType"	"start_at_custom_origin"
-			
-			"ControlPointEntities"
-			{
-				"CASTER"	"attach_origin"
-				"CASTER"	"attach_origin"
-			}
-		}
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_channeling_animation"
+            "Target"        "CASTER"
+            "Duration"      "%channel_time"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_KeeperOfTheLight.Recall.Cast"
-			"Target"		"CASTER"
-		}
-		
-	}
+        "FireEffect"
+        {
+            "EffectName"    "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
+            "EffectAttachType"  "start_at_custom_origin"
+            
+            "ControlPointEntities"
+            {
+                "CASTER"    "attach_origin"
+                "CASTER"    "attach_origin"
+            }
+        }
 
-	"OnChannelInterrupted"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/archmage/mass_teleport.lua"
-			"Function"		"MassTeleportStop"
-		}
+        "FireSound"
+        {
+            "EffectName"    "Hero_KeeperOfTheLight.Recall.Cast"
+            "Target"        "CASTER"
+        }
+        
+    }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_KeeperOfTheLight.Recall.Fail"
-			"Target" 		"CASTER"
-		}	
+    "OnChannelInterrupted"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/archmage/mass_teleport.lua"
+            "Function"      "MassTeleportStop"
+        }
 
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_channeling_animation"
-			"Target" 		"CASTER"
-		}
-	}	
+        "FireSound"
+        {
+            "EffectName"    "Hero_KeeperOfTheLight.Recall.Fail"
+            "Target"        "CASTER"
+        }   
 
-	"OnChannelSucceeded"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/archmage/mass_teleport.lua"
-			"Function"		"MassTeleport"
-		}
+        "RemoveModifier"
+        {
+            "ModifierName"  "modifier_channeling_animation"
+            "Target"        "CASTER"
+        }
+    }   
 
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_channeling_animation"
-			"Target" 		"CASTER"
-		}
+    "OnChannelSucceeded"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/archmage/mass_teleport.lua"
+            "Function"      "MassTeleport"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_KeeperOfTheLight.Recall.End"
-			"Target" 		"TARGET"
-		}										
-	}	
+        "RemoveModifier"
+        {
+            "ModifierName"  "modifier_channeling_animation"
+            "Target"        "CASTER"
+        }
 
-	"Modifiers"
-	{
-		"modifier_channeling_animation"
-		{
-			"OverrideAnimation" "ACT_DOTA_CAST_ABILITY_1"
-		}
+        "FireSound"
+        {
+            "EffectName"    "Hero_KeeperOfTheLight.Recall.End"
+            "Target"        "TARGET"
+        }                                       
+    }   
 
-		"modifier_mass_teleport_target"
-		{
-			"IsHidden"	"1"
-			"Duration"	"3.0"
-			"States"
-			{
-			    "MODIFIER_STATE_STUNNED"   "MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-	}
+    "Modifiers"
+    {
+        "modifier_channeling_animation"
+        {
+            "OverrideAnimation" "ACT_DOTA_CAST_ABILITY_1"
+        }
+
+        "modifier_mass_teleport_target"
+        {
+            "IsHidden"  "1"
+            "Duration"  "3.0"
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED"   "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
 }

@@ -59,6 +59,17 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
     end)
 
+    -- Deny Unit-Target Orders to Building/Flying/Mechanical
+    if order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+        local ability = EntIndexToHScript(abilityIndex)
+        local target = EntIndexToHScript(targetIndex)
+        local bAllowTarget,msg = ability:IsAllowedTarget(target)
+        if not bAllowTarget then
+            SendErrorMessage( issuer, msg )
+            return false
+        end
+    end
+
     ------------------------------------------------
     --           Ability Multi Order              --
     ------------------------------------------------

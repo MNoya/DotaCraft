@@ -1,6 +1,6 @@
 // Pandaren Storm, Earth, And Fire
 // Author: Noya
-// Date: 21.1.2015.
+
 "pandaren_storm_earth_fire"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -445,6 +445,8 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"AbilityTextureName"			"pandaren_storm_cyclone"
 	"MaxLevel"						"1"
+
+	"TargetsAllowed"            "ground"
 
 	"AbilityCastRange"				"600 600 600 600"
 

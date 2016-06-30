@@ -1,18 +1,3 @@
-// Undead Unit List
-//	undead_acolyte - models/heroes/warlock/warlock.vmdl
-//	undead_ghoul - models/heroes/life_stealer/life_stealer.vmdl
-//	undead_crypt_fiend - models/heroes/weaver/weaver.vmdl
-//	undead_gargoyle - models/heroes/visage/visage_familiar.vmdl
-//	undead_abomination - models/heroes/pudge/pudge.vmdl
-//	undead_meat_wagon - Dire Catapult
-// 	undead_obsidian_statue - ?
-//	undead_destroyer - models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl
-//	undead_necromancer - models/heroes/necrolyte/necrolyte.vmdl
-//	undead_banshee - models/heroes/death_prophet/death_prophet.vmdl
-//	undead_skeleton_warrior - models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl
-//	undead_skeletal_mage - models/heroes/pugna/pugna.vmdl
-//	undead_frost_wyrm - models/heroes/winterwyvern/winterwyvern.vmdl
-
 //=================================================================================
 // Creature: Acolyte
 // Description: "Basic worker. Can summon structures, harvest gold, and Restore. Acolytes may be sacrificed at a Sacrificial Pit to create Shades. |n|n|cffffcc00Attacks land units.|r"
@@ -647,6 +632,7 @@
 
 	"AttacksEnabled"			"ground"
 	"LeavesCorpse"				"0"
+	"Mechanical"				"1"
 
 	"Artillery"					"1"
 	"SplashAttack"				"1"
@@ -752,9 +738,10 @@
 	"FormationRank"				"2"
 	"SoundSet"                  "Hero_ObsidianDestroyer"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
-	
+
 	"AttacksEnabled"			"ground,air"
 	"LeavesCorpse"				"0"
+	"Mechanical"				"1"
 
 	// Abilities
 	//----------------------------------------------------------------

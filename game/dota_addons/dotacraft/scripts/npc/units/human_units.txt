@@ -1,18 +1,3 @@
-// Human Unit List
-//	human_peasant - models/creeps/lane_creeps/creep_good_ranged/creep_good_ranged.vmdl
-//	human_militia - models/creeps/lane_creeps/creep_good_melee/creep_good_melee.vmdl
-//	human_footman - models/heroes/dragon_knight/dragon_knight.vmdl
-//	human_rifleman - models/heroes/sniper/sniper.vmdl
-//	human_sorceress - models/heroes/lina/lina.vmdl
-//	human_spell_breaker - models/heroes/silencer/silencer.vmdl
-//	human_flying_machine - models/heroes/gyro/gyro.vmdl
-//	human_dragonhawk_rider - models/heroes/skywrath_mage/skywrath_mage.vmdl
-//	human_knight - models/heroes/legion_commander/legion_commander.vmdl
-//	human_priest - models/heroes/oracle/oracle.vmdl
-//	human_mortar_team - models/heroes/techies/techies.vmdl
-//	human_siege_engine - models/items/courier/carty/carty.vmdl
-//	human_gryphon_rider - models/items/courier/royal_griffin_cub/royal_griffin_cub_flying.vmdl + meepo/tusk
-
 //=================================================================================
 // Creature: Peasant
 // Description: "Basic worker unit. Can harvest gold and lumber, build structures and Repair. Can become Militia. \n\n|cffffcc00Attacks land units and trees.|r"
@@ -894,8 +879,8 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 
 	"AttacksEnabled"			"air"
-	
 	"LeavesCorpse"				"0"
+	"Mechanical"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1209,8 +1194,8 @@
 	"SoundSet"					"Creep_Good_Engine"
 
 	"AttacksEnabled"			"ground"
-	
 	"LeavesCorpse"				"0"
+	"Mechanical"				"1"
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1397,8 +1382,6 @@
 		}
 	}
 }
-
-
 
 "human_mechanical_critter"
 {

@@ -1,220 +1,223 @@
 // Dread Lord Inferno
 // Author: Noya
-// Date: 17.1.2015.
-// Notes: Calls an Infernal down from the sky, dealing 50 damage and stunning enemy land units for 4 seconds in an area. The Infernal lasts 180 seconds.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	N/A	180 sec.	175	90	25	Ground, Structure, Debris, Enemy	Creates an Infernal, 4 (2) second stun, 50 damage	6
+// Description: Calls an Infernal down from the sky, dealing 50 damage and stunning enemy land units for 4 seconds in an area. The Infernal lasts 180 seconds.
+
 "dread_lord_inferno"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"dread_lord_inferno"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "dread_lord_inferno"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 
-	"AbilityCastRange"				"900"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"180"
+    "TargetsAllowed"                "ground"
 
-	"AbilityManaCost"				"175"
-	"AbilityDamage"					"50"
+    "AbilityCastRange"              "900"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "180"
 
-	"AOERadius"						"250"
+    "AbilityManaCost"               "175"
+    "AbilityDamage"                 "50"
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"250"
-		}
-		"02"
-		{	
-			"var_type"				"FIELD_FLOAT"
-			"infernal_duration"		"180"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"stun_hero_duration"	"2"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"stun_creep_duration"	"4"
-		}
-	}
+    "AOERadius"                     "250"
 
-	"precache"
-	{
-		"particle"	"particles/custom/warlock_rain_of_chaos_start.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "250"
+        }
+        "02"
+        {   
+            "var_type"              "FIELD_FLOAT"
+            "infernal_duration"     "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "stun_hero_duration"    "2"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "stun_creep_duration"   "4"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"			"Hero_Warlock.RainOfChaos_buildup"
-			"Target"				"CASTER"
-		}
+    "precache"
+    {
+        "particle"  "particles/custom/warlock_rain_of_chaos_start.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+    }
 
-		"SpawnUnit"
-		{
-			"Target"            	"POINT"
-			"UnitName"              "undead_inferno"
-			"UnitCount"             "1"
-			"Duration"				"180"
-			"OnSpawn"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "heroes/dread_lord/inferno.lua"
-        			"Function"      "RenderInferno"
-				}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"            "Hero_Warlock.RainOfChaos_buildup"
+            "Target"                "CASTER"
+        }
 
-				"FireEffect"
-				{
-					"EffectName"        "particles/custom/warlock_rain_of_chaos_start.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-				}	
-			}
-		}
+        "SpawnUnit"
+        {
+            "Target"                "POINT"
+            "UnitName"              "undead_inferno"
+            "UnitCount"             "1"
+            "Duration"              "180"
+            "OnSpawn"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/dread_lord/inferno.lua"
+                    "Function"      "RenderInferno"
+                }
 
-		"DestroyTrees"
-		{
-			"Target"	"POINT"
-			"Radius"	"%radius"
-		}
+                "FireEffect"
+                {
+                    "EffectName"        "particles/custom/warlock_rain_of_chaos_start.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "TARGET"
+                }   
+            }
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"    "modifier_inferno_stun"
-			"Target"
-			{
-				"Center"	"POINT"
-				"Radius"	"%radius"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_HERO"
-			}
-			"Duration"		"%stun_hero_duration"
-		}
+        "DestroyTrees"
+        {
+            "Target"    "POINT"
+            "Radius"    "%radius"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"    "modifier_inferno_stun"
-			"Target"
-			{
-				"Center"	"POINT"
-				"Radius"	"%radius"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_BASIC"
-			}
-			"Duration"		"%stun_creep_duration"
-		}
+        "ApplyModifier"
+        {
+            "ModifierName"    "modifier_inferno_stun"
+            "Target"
+            {
+                "Center"    "POINT"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_HERO"
+            }
+            "Duration"      "%stun_hero_duration"
+        }
 
-		"Damage"
-		{
-			"Type" 		"DAMAGE_TYPE_MAGICAL"
-			"Damage" 	"%AbilityDamage"
-			"Target"
-			{
-				"Center"	"POINT"
-				"Radius"	"%radius"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			}
-		}
-	}
+        "ApplyModifier"
+        {
+            "ModifierName"    "modifier_inferno_stun"
+            "Target"
+            {
+                "Center"    "POINT"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_BASIC"
+            }
+            "Duration"      "%stun_creep_duration"
+        }
 
-	"Modifiers"
-	{
-		"modifier_inferno_stun"
-		{
-			"IsDebuff"	"1"
-			"States"
-			{
-				"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"			
-			}
-			"OverrideAnimation"	"ACT_DOTA_DISABLED"
-			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-			"EffectAttachType"	"follow_overhead"
-		}
-	}
+        "Damage"
+        {
+            "Type"      "DAMAGE_TYPE_MAGICAL"
+            "Damage"    "%AbilityDamage"
+            "Target"
+            {
+                "Center"    "POINT"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_inferno_stun"
+        {
+            "IsDebuff"  "1"
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"         
+            }
+            "OverrideAnimation" "ACT_DOTA_DISABLED"
+            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+            "EffectAttachType"  "follow_overhead"
+        }
+    }
 }
 
 // Ability for the Infernal Unit
 "dread_lord_inferno_immolation"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"dread_lord_inferno_immolation"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "dread_lord_inferno_immolation"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
-	"AbilityCastRange"				"220"
+    "TargetsAllowed"                "ground"
 
-	"precache"
-	{
-		"particle"	"particles/items2_fx/radiance.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"220"
-		}
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dps"			"10"
-		}
-	}
+    "AbilityCastRange"              "220"
 
-	"Modifiers"
-	{
-		"modifier_inferno_immolation"
-   		{
-    		"Passive" 			"1"
-    		"IsHidden" 			"1"
+    "precache"
+    {
+        "particle"  "particles/items2_fx/radiance.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "radius"        "220"
+        }
+        "02"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "dps"           "10"
+        }
+    }
 
-    		"States"
-			{
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
+    "Modifiers"
+    {
+        "modifier_inferno_immolation"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
 
-    		"Aura" 				"modifier_inferno_immolation_burn"
-    		"Aura_Radius" 		"%radius"
-    		"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-    		"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+            "States"
+            {
+                "MODIFIER_STATE_DOMINATED"      "MODIFIER_STATE_VALUE_ENABLED"
+            }
 
-            "EffectName"		"particles/items2_fx/radiance.vpcf"
-			"EffectAttachType" 	"attach_hitloc"
-   		}
-		
-		"modifier_inferno_immolation_burn"
-   		{
-   			"ThinkInterval"		"1"
-   			"OnIntervalThink"    	
-   			{
-   				"Damage"
-				{		
-					"Type" 		"DAMAGE_TYPE_MAGICAL"
-					"Damage" 	"%dps"
-					"Target"	"TARGET"
-				}
-			}
-	    }
-	}
+            "Aura"              "modifier_inferno_immolation_burn"
+            "Aura_Radius"       "%radius"
+            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
+            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+            "EffectName"        "particles/items2_fx/radiance.vpcf"
+            "EffectAttachType"  "attach_hitloc"
+        }
+        
+        "modifier_inferno_immolation_burn"
+        {
+            "IsDebuff"          "1"
+            "ThinkInterval"     "1"
+            "OnIntervalThink"       
+            {
+                "Damage"
+                {       
+                    "Type"      "DAMAGE_TYPE_MAGICAL"
+                    "Damage"    "%dps"
+                    "Target"    "TARGET"
+                }
+            }
+        }
+    }
 }

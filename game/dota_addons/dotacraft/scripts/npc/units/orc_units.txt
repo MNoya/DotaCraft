@@ -1,18 +1,3 @@
-// Orc Unit List
-//	orc_peon - models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_berserker.vmdl
-//	orc_grunt - models/heroes/axe/axe.vmdl
-//	orc_troll_headhunter/berserker - models/heroes/huskar/huskar.vmdl / models/heroes/troll_warlord/troll_warlord.vmdl
-//	orc_demolisher - models/items/courier/carty_dire/carty_dire.vmdl
-//	orc_shaman - models/heroes/blood_seeker/blood_seeker.vmdl
-//	orc_troll_witch_doctor - models/heroes/witchdoctor/witchdoctor.vmdl
-//	orc_spirit_walker - models/heroes/spirit_breaker/spirit_breaker.vmdl
-//	orc_raider - models/heroes/chen/chen.vmdl
-//	orc_kodo_beast - models/courier/smeevil_mammoth/smeevil_mammoth.vmdl
-//	orc_wind_rider - models/creeps/neutral_creeps/n_creep_gargoyle/n_creep_gargoyle.vmdl
-//	orc_troll_batrider - models/heroes/batrider/batrider.vmdl
-//	orc_tauren - models/heroes/earthshaker/earthshaker.vmdl
-
-
 //=================================================================================
 // Creature: Peon
 // Description: "Basic worker unit. Can harvest gold and lumber, build structures, and Repair. Can also go inside Orc Burrows to give it an attack. |n|n|cffffcc00Attacks land units and trees.|r"
@@ -448,6 +433,7 @@
 
 	"AttacksEnabled"			"ground"
 	"LeavesCorpse"				"0"
+	"Mechanical"				"1"
 
 	"Artillery"					"1"
 	"SplashAttack"				"1"

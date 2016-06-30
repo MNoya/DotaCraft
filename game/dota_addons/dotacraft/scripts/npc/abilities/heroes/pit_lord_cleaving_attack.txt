@@ -1,56 +1,54 @@
 // Pit Lord Cleaving Attack
 // Author: Noya
-// Date: 14.1.2015.
-// Notes: The Pit Lord strikes with such force that he damages multiple enemies with his attack.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	N/A	None	N/A	20	Ground, Enemy, Neutral	30% damage is splash	1
-//2	N/A	N/A	None	N/A	20	Ground, Enemy, Neutral	55% damage is splash	3
-//3	N/A	N/A	None	N/A	20	Ground, Enemy, Neutral	80% damage is splash	5
+// Description: The Pit Lord strikes with such force that he damages multiple enemies with his attack.
+
 "pit_lord_cleaving_attack"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"pit_lord_cleaving_attack"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "pit_lord_cleaving_attack"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-	"AbilityCastRange"				"200"
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"cleave_damage"			"30 55 80"
-		}
-		
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"cleave_radius"			"200.0"
-		}
-	}
+    "TargetsAllowed"                "ground"
 
-	"Modifiers"
-	{
-		"modifier_cleaving_attack"
-		{
-			"Passive"	"1"
-			"IsHidden"	"1"
+    "AbilityCastRange"              "200"
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "cleave_damage"         "30 55 80"
+        }
+        
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "cleave_radius"         "200.0"
+        }
+    }
 
-			"OnAttackLanded"
-			{
-				"CleaveAttack"
-				{
-					"CleavePercent"		"%cleave_damage"
-					"CleaveRadius"		"%cleave_radius"
-					"CleaveEffect"		"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
-				}
-			}
-		}
-	}
+    "Modifiers"
+    {
+        "modifier_cleaving_attack"
+        {
+            "Passive"   "1"
+            "IsHidden"  "1"
+
+            "OnAttackLanded"
+            {
+                "CleaveAttack"
+                {
+                    "CleavePercent"     "%cleave_damage"
+                    "CleaveRadius"      "%cleave_radius"
+                    "CleaveEffect"      "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+                }
+            }
+        }
+    }
 }

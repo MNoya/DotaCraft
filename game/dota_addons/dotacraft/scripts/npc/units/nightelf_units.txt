@@ -1,17 +1,3 @@
-// Night Elf Unit List
-//	nightelf_wisp -	models/heroes/wisp/wisp.vmdl + particles/units/heroes/hero_wisp/wisp_ambient.vpcf
-//	nightelf_archer - models/heroes/windrunner/windrunner.vmdl
-//	nightelf_huntress - models/heroes/luna/luna.vmdl
-//	nightelf_glaive_thrower - models/creeps/lane_creeps/creep_good_siege/creep_good_siege.vmdl
-//	nightelf_dryad - models/heroes/enchantress/enchantress.vmdl
-//	nightelf_druid_of_the_claw - models/heroes/lone_druid/lone_druid.vmdl
-//	nightelf_mountain_giant - models/heroes/tiny_01/tiny_01.vmdl
-//	nightelf_druid_of_the_talon - models/heroes/furion/furion.vmdl
-//	nightelf_faerie_dragon - models/heroes/puck/puck.vmdl
-//	nightelf_chimaera - models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl
-//	nightelf_hippogryph - models/items/courier/throe/throe_flying.vmdl
-// 	nightelf_hippogryph_rider -- mount archer in hippogryph?
-
 //=================================================================================
 // Creature: Wisp
 // Description: "Basic worker unit. Can harvest gold and lumber, create Night Elf buildings and Renew. \nCan Detonate to dispel magic, hurt summoned creatures and drain mana in an area."
@@ -357,6 +343,7 @@
 
 	"AttacksEnabled"			"ground"
 	"LeavesCorpse"				"0"
+	"Mechanical"				"1"
 
 	"SplashAttack"				"1"
 	"SplashFullRadius"			"25"

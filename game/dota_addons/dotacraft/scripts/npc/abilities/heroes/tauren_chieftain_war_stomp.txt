@@ -1,121 +1,119 @@
 // Tauren Chieftain War Stomp
 // Author: Noya
-// Date: 13.1.2015.
-// Notes: Slams the ground, stunning and damaging nearby enemy units.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	6 sec.	90	N/A	25	Ground, Enemy	25 damage, 3 (Hero 2) sec. stun	1
-//2	N/A	6 sec.	90	N/A	30	Ground, Enemy	50 damage, 4 (Hero 3) sec. stun	3
-//3	N/A	6 sec.	90	N/A	35	Ground, Enemy	75 damage, 5 (Hero 4) sec. stun	5
+// Description: Slams the ground, stunning and damaging nearby enemy units.
+
 "tauren_chieftain_war_stomp"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"tauren_chieftain_war_stomp"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "tauren_chieftain_war_stomp"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 
-	"AbilityCastRange"				"250 300 350"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"6.0"
+    "TargetsAllowed"                "ground"
 
-	"AbilityManaCost"				"90"
-	"AbilityDamage"					"25 50 75"
+    "AbilityCastRange"              "250 300 350"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "6.0"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"250 300 350"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"stun_hero_duration"	"2.0 3.0 4.0"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"stun_creep_duration"	"3.0 4.0 5.0"
-		}
-	}
+    "AbilityManaCost"               "90"
+    "AbilityDamage"                 "25 50 75"
 
-	"OnSpellStart"
-	{
-		"FireEffect"
-		{
-			"EffectName"		"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-			"EffectAttachType" 	"follow_origin"
-			"EffectRadius"		"%radius"
-			"Target" 			"CASTER"
-			"ControlPoints"
-			{
-				"01"	"%radius 0 %radius"
-			}
-		}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "250 300 350"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "stun_hero_duration"    "2.0 3.0 4.0"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "stun_creep_duration"   "3.0 4.0 5.0"
+        }
+    }
 
-		"FireSound"
-		{
-			"EffectName"		"Hero_Centaur.HoofStomp"
-			"Target" 			"CASTER"
-		}
+    "OnSpellStart"
+    {
+        "FireEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "EffectRadius"      "%radius"
+            "Target"            "CASTER"
+            "ControlPoints"
+            {
+                "01"    "%radius 0 %radius"
+            }
+        }
 
-		"Damage"
-		{
-			"Target"		 "TARGET"
-			"Type"			 "DAMAGE_TYPE_MAGICAL"
-			"Damage"		 "%AbilityDamage"
-		}
+        "FireSound"
+        {
+            "EffectName"        "Hero_Centaur.HoofStomp"
+            "Target"            "CASTER"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"    "modifier_war_stomp"
-			"Target"
-			{
-				"Center"	"CASTER"
-				"Radius"	"%radius"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_HERO"
-			}
-			"Duration"		"%stun_hero_duration"
-		}
+        "Damage"
+        {
+            "Target"         "TARGET"
+            "Type"           "DAMAGE_TYPE_MAGICAL"
+            "Damage"         "%AbilityDamage"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"    "modifier_war_stomp"
-			"Target"
-			{
-				"Center"	"CASTER"
-				"Radius"	"%radius"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_BASIC"
-			}
-			"Duration"		"%stun_creep_duration"
-		}
-	}
+        "ApplyModifier"
+        {
+            "ModifierName"    "modifier_war_stomp"
+            "Target"
+            {
+                "Center"    "CASTER"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_HERO"
+            }
+            "Duration"      "%stun_hero_duration"
+        }
 
-	"Modifiers"
-	{
-		"modifier_war_stomp"
-		{
-			"IsDebuff"	"1"
-			"States"
-			{
-				"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"			
-			}
-			"OverrideAnimation"	"ACT_DOTA_DISABLED"
-			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-			"EffectAttachType"	"follow_overhead"
-		}
-	}
+        "ApplyModifier"
+        {
+            "ModifierName"    "modifier_war_stomp"
+            "Target"
+            {
+                "Center"    "CASTER"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_BASIC"
+            }
+            "Duration"      "%stun_creep_duration"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_war_stomp"
+        {
+            "IsDebuff"  "1"
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"         
+            }
+            "OverrideAnimation" "ACT_DOTA_DISABLED"
+            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+            "EffectAttachType"  "follow_overhead"
+        }
+    }
 }

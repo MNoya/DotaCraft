@@ -1,154 +1,152 @@
 // Mountain King Thunder Clap
 // Author: Noya
-// Date: 20.01.2015.
-// Notes: Slams the ground, damaging nearby enemy units. Units are also slowed for the duration listed below.
-//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	5 (3) sec.	6 sec.	90	N/A	25	Ground, Enemy	60 damage, Movement Speed Slowed 50%, Attack Rate Slowed 50%	1
-//2	5 (3) sec.	6 sec.	90	N/A	30	Ground, Enemy	100 damage, Movement Speed Slowed 50%, Attack Rate Slowed 50%	3
-//3	5 (3) sec.	6 sec.	90	N/A	35	Ground, Enemy	140 damage, Movement Speed Slowed 50%, Attack Rate Slowed 50%	5
+// Description: Slams the ground, damaging nearby enemy units. Units are also slowed for the duration listed below.
+
 "mountain_king_thunder_clap"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"mountain_king_thunder_clap"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "mountain_king_thunder_clap"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
+    
+    "TargetsAllowed"                "ground"
 
-	"AbilityCastRange"				"250 300 350"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"6.0"
+    "AbilityCastRange"              "250 300 350"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "6.0"
 
-	"AbilityManaCost"				"90"
+    "AbilityManaCost"               "90"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
-		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap_debuff.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"radius"					"250 300 350"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"duration"					"3.0 3.0 3.0"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"duration_creeps"			"5.0 5.0 5.0"
-		}
-		"04"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"damage"					"60 100 140"
-		}
-		"05"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"movement_slow"				"-50 -50 -50"
-		}
-		"06"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"attack_speed_slow"			"-50 -50 -50"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+        "particle"  "particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap_debuff.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "radius"                    "250 300 350"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "duration"                  "3.0 3.0 3.0"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "duration_creeps"           "5.0 5.0 5.0"
+        }
+        "04"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "damage"                    "60 100 140"
+        }
+        "05"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "movement_slow"             "-50 -50 -50"
+        }
+        "06"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "attack_speed_slow"         "-50 -50 -50"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"	"Hero_Brewmaster.ThunderClap"
-			"Target" 		"CASTER"
-		}
-		
-		"FireEffect"
-		{
-			"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
-			"EffectAttachType"  "follow_origin"
-			"EffectRadius"		"%radius"
-			"Target"            "CASTER"
-		}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_Brewmaster.ThunderClap"
+            "Target"        "CASTER"
+        }
+        
+        "FireEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "EffectRadius"      "%radius"
+            "Target"            "CASTER"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_thunder_clap"
-			"Target"
-			{
-				"Center"	"CASTER"
-				"Radius"	"%radius"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_HERO"
-			}
-			"Duration"		"%duration"
-		}
-		
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_thunder_clap"
-			"Target"
-			{
-				"Center"	"CASTER"
-				"Radius"	"%radius"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_BASIC"
-			}
-			"Duration"		"%duration_creeps"
-		}
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_thunder_clap"
+            "Target"
+            {
+                "Center"    "CASTER"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_HERO"
+            }
+            "Duration"      "%duration"
+        }
+        
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_thunder_clap"
+            "Target"
+            {
+                "Center"    "CASTER"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_BASIC"
+            }
+            "Duration"      "%duration_creeps"
+        }
 
-		"Damage"
-		{
-			"Target"
-			{
-				"Center"  	"CASTER"
-				"Radius" 	"%radius"
-				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			}
-			"Type"			"DAMAGE_TYPE_MAGICAL"
-			"Damage"		"%damage"
-		}
-	}
+        "Damage"
+        {
+            "Target"
+            {
+                "Center"    "CASTER"
+                "Radius"    "%radius"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+            }
+            "Type"          "DAMAGE_TYPE_MAGICAL"
+            "Damage"        "%damage"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_thunder_clap"
-		{
-			"Passive"			"0"
-			"IsHidden"			"0"
-			"IsDebuff"			"1"
-	
-			"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap_debuff.vpcf"
-			"EffectAttachType"	"follow_origin"
+    "Modifiers"
+    {
+        "modifier_thunder_clap"
+        {
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "IsDebuff"          "1"
+    
+            "EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap_debuff.vpcf"
+            "EffectAttachType"  "follow_origin"
 
-			"StatusEffectName" 		"particles/status_fx/status_effect_brewmaster_thunder_clap.vpcf" 	   
-			"StatusEffectPriority"  "10"
-	
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%movement_slow"
-			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%attack_speed_slow" 
-			}
+            "StatusEffectName"      "particles/status_fx/status_effect_brewmaster_thunder_clap.vpcf"       
+            "StatusEffectPriority"  "10"
+    
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%movement_slow"
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%attack_speed_slow" 
+            }
 
-			"OnCreated"
-			{
-				"FireSound"
-				{
-					"EffectName"	"Hero_Brewmaster.ThunderClap.Target"
-					"Target" 		"TARGET"
-				}			
-			}		
-		}
-	}
+            "OnCreated"
+            {
+                "FireSound"
+                {
+                    "EffectName"    "Hero_Brewmaster.ThunderClap.Target"
+                    "Target"        "TARGET"
+                }           
+            }       
+        }
+    }
 }

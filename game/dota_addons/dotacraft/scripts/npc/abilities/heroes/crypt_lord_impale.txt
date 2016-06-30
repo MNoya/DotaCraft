@@ -1,22 +1,20 @@
 // Crypt Lord Impale
 // Author: Noya, adapted from SpellLibrary's nyx_assassin_impale by kritth
-// Date: 17.1.2015.
-// Notes: Slams the ground with the Crypt Lord's massive claws, shooting spiked tendrils out in a straight line, dealing damage and hurling enemy ground units into the air in their wake.
-//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	2 (1) sec.	9 sec.	100	70	25	Ground, Enemy, Neutral, Organic	50 damage, 2 (1) second stun	1
-//2	3 (2) sec.	9 sec.	100	70	25	Ground, Enemy, Neutral, Organic	80 damage, 3 (2) second stun	3
-//3	4 (3) sec.	9 sec.	100	70	25	Ground, Enemy, Neutral, Organic	110 damage, 4 (3) second stun	5
+// Description: Slams the ground with the Crypt Lord's massive claws, shooting spiked tendrils out in a straight line, dealing damage and hurling enemy ground units into the air in their wake.
+
 "crypt_lord_impale"
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"crypt_lord_impale"
 	"MaxLevel" 						"3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+	"TargetsAllowed"                "ground"
 
 	"AbilityCastRange"				"700"
 	"AbilityCastPoint"				"0.3"

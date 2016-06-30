@@ -1407,21 +1407,6 @@
 		"ArmorType"					"fortified"
 		
 	}
-	// Human Unit List
-	//	human_peasant - models/creeps/lane_creeps/creep_good_ranged/creep_good_ranged.vmdl
-	//	human_militia - models/creeps/lane_creeps/creep_good_melee/creep_good_melee.vmdl
-	//	human_footman - models/heroes/dragon_knight/dragon_knight.vmdl
-	//	human_rifleman - models/heroes/sniper/sniper.vmdl
-	//	human_sorceress - models/heroes/lina/lina.vmdl
-	//	human_spell_breaker - models/heroes/silencer/silencer.vmdl
-	//	human_flying_machine - models/heroes/gyro/gyro.vmdl
-	//	human_dragonhawk_rider - models/heroes/skywrath_mage/skywrath_mage.vmdl
-	//	human_knight - models/heroes/legion_commander/legion_commander.vmdl
-	//	human_priest - models/heroes/oracle/oracle.vmdl
-	//	human_mortar_team - models/heroes/techies/techies.vmdl
-	//	human_siege_engine - models/items/courier/carty/carty.vmdl
-	//	human_gryphon_rider - models/items/courier/royal_griffin_cub/royal_griffin_cub_flying.vmdl + meepo/tusk
-	
 	//=================================================================================
 	// Creature: Peasant
 	// Description: "Basic worker unit. Can harvest gold and lumber, build structures and Repair. Can become Militia. \n\n|cffffcc00Attacks land units and trees.|r"
@@ -2303,8 +2288,8 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 	
 		"AttacksEnabled"			"air"
-		
 		"LeavesCorpse"				"0"
+		"Mechanical"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2618,8 +2603,8 @@
 		"SoundSet"					"Creep_Good_Engine"
 	
 		"AttacksEnabled"			"ground"
-		
 		"LeavesCorpse"				"0"
+		"Mechanical"				"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2806,8 +2791,6 @@
 			}
 		}
 	}
-	
-	
 	
 	"human_mechanical_critter"
 	{
@@ -4130,20 +4113,6 @@
 		"ArmorType"					"fortified"
 		
 	}
-	// Night Elf Unit List
-	//	nightelf_wisp -	models/heroes/wisp/wisp.vmdl + particles/units/heroes/hero_wisp/wisp_ambient.vpcf
-	//	nightelf_archer - models/heroes/windrunner/windrunner.vmdl
-	//	nightelf_huntress - models/heroes/luna/luna.vmdl
-	//	nightelf_glaive_thrower - models/creeps/lane_creeps/creep_good_siege/creep_good_siege.vmdl
-	//	nightelf_dryad - models/heroes/enchantress/enchantress.vmdl
-	//	nightelf_druid_of_the_claw - models/heroes/lone_druid/lone_druid.vmdl
-	//	nightelf_mountain_giant - models/heroes/tiny_01/tiny_01.vmdl
-	//	nightelf_druid_of_the_talon - models/heroes/furion/furion.vmdl
-	//	nightelf_faerie_dragon - models/heroes/puck/puck.vmdl
-	//	nightelf_chimaera - models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl
-	//	nightelf_hippogryph - models/items/courier/throe/throe_flying.vmdl
-	// 	nightelf_hippogryph_rider -- mount archer in hippogryph?
-	
 	//=================================================================================
 	// Creature: Wisp
 	// Description: "Basic worker unit. Can harvest gold and lumber, create Night Elf buildings and Renew. \nCan Detonate to dispel magic, hurt summoned creatures and drain mana in an area."
@@ -4489,6 +4458,7 @@
 	
 		"AttacksEnabled"			"ground"
 		"LeavesCorpse"				"0"
+		"Mechanical"				"1"
 	
 		"SplashAttack"				"1"
 		"SplashFullRadius"			"25"
@@ -6613,21 +6583,6 @@
 		
 	}
 	
-	// Orc Unit List
-	//	orc_peon - models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_berserker.vmdl
-	//	orc_grunt - models/heroes/axe/axe.vmdl
-	//	orc_troll_headhunter/berserker - models/heroes/huskar/huskar.vmdl / models/heroes/troll_warlord/troll_warlord.vmdl
-	//	orc_demolisher - models/items/courier/carty_dire/carty_dire.vmdl
-	//	orc_shaman - models/heroes/blood_seeker/blood_seeker.vmdl
-	//	orc_troll_witch_doctor - models/heroes/witchdoctor/witchdoctor.vmdl
-	//	orc_spirit_walker - models/heroes/spirit_breaker/spirit_breaker.vmdl
-	//	orc_raider - models/heroes/chen/chen.vmdl
-	//	orc_kodo_beast - models/courier/smeevil_mammoth/smeevil_mammoth.vmdl
-	//	orc_wind_rider - models/creeps/neutral_creeps/n_creep_gargoyle/n_creep_gargoyle.vmdl
-	//	orc_troll_batrider - models/heroes/batrider/batrider.vmdl
-	//	orc_tauren - models/heroes/earthshaker/earthshaker.vmdl
-	
-	
 	//=================================================================================
 	// Creature: Peon
 	// Description: "Basic worker unit. Can harvest gold and lumber, build structures, and Repair. Can also go inside Orc Burrows to give it an attack. |n|n|cffffcc00Attacks land units and trees.|r"
@@ -7063,6 +7018,7 @@
 	
 		"AttacksEnabled"			"ground"
 		"LeavesCorpse"				"0"
+		"Mechanical"				"1"
 	
 		"Artillery"					"1"
 		"SplashAttack"				"1"
@@ -9426,21 +9382,6 @@
 		// Creature Data
 		//----------------------------------------------------------------
 	}
-	// Undead Unit List
-	//	undead_acolyte - models/heroes/warlock/warlock.vmdl
-	//	undead_ghoul - models/heroes/life_stealer/life_stealer.vmdl
-	//	undead_crypt_fiend - models/heroes/weaver/weaver.vmdl
-	//	undead_gargoyle - models/heroes/visage/visage_familiar.vmdl
-	//	undead_abomination - models/heroes/pudge/pudge.vmdl
-	//	undead_meat_wagon - Dire Catapult
-	// 	undead_obsidian_statue - ?
-	//	undead_destroyer - models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl
-	//	undead_necromancer - models/heroes/necrolyte/necrolyte.vmdl
-	//	undead_banshee - models/heroes/death_prophet/death_prophet.vmdl
-	//	undead_skeleton_warrior - models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl
-	//	undead_skeletal_mage - models/heroes/pugna/pugna.vmdl
-	//	undead_frost_wyrm - models/heroes/winterwyvern/winterwyvern.vmdl
-	
 	//=================================================================================
 	// Creature: Acolyte
 	// Description: "Basic worker. Can summon structures, harvest gold, and Restore. Acolytes may be sacrificed at a Sacrificial Pit to create Shades. |n|n|cffffcc00Attacks land units.|r"
@@ -10075,6 +10016,7 @@
 	
 		"AttacksEnabled"			"ground"
 		"LeavesCorpse"				"0"
+		"Mechanical"				"1"
 	
 		"Artillery"					"1"
 		"SplashAttack"				"1"
@@ -10180,9 +10122,10 @@
 		"FormationRank"				"2"
 		"SoundSet"                  "Hero_ObsidianDestroyer"
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
-		
+	
 		"AttacksEnabled"			"ground,air"
 		"LeavesCorpse"				"0"
+		"Mechanical"				"1"
 	
 		// Abilities
 		//----------------------------------------------------------------

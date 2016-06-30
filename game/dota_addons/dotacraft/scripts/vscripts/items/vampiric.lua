@@ -1,5 +1,4 @@
 function LifestealApply( event )
-	-- Variables
 	local attacker = event.attacker
 	local target = event.target
 	local ability = event.ability

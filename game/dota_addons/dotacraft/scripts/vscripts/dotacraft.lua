@@ -1405,9 +1405,10 @@ function dotacraft:FilterProjectile( filterTable )
             AttackGroundPos(attacker, victim:GetAbsOrigin(), move_speed)
             return false
         end
-    else
+    elseif attacker_index ~= -1 then
         local ability = EntIndexToHScript(filterTable["entindex_ability_const"])
         local bBlock = victim:ShouldAbsorbSpell(attacker, ability)
+        print(ability:GetAbilityName())
         if bBlock then
             return false
         end
@@ -1465,6 +1466,16 @@ function dotacraft:FilterModifier( filterTable )
     local caster = EntIndexToHScript(caster_index)
     local bBlock = target:ShouldAbsorbSpell(caster, ability)
     if bBlock then
+        return false
+    end
+
+    local bIgnoreAir = target:HasFlyMovementCapability() and not ability:AffectsAir()
+    if bIgnoreAir then
+        return false
+    end
+
+    local bIgnoreMechanical = target:IsMechanical() and not ability:AffectsMechanical()
+    if bIgnoreMechanical then
         return false
     end
 

@@ -1,6 +1,36 @@
+function CDOTABaseAbility:IsAllowedTarget(target)
+    local bIgnoreAir = target:HasFlyMovementCapability() and not self:AffectsAir()
+    if bIgnoreAir then
+        return false,"error_cant_target_air"
+    end
+
+    local bIgnoreMechanical = target:IsMechanical() and not self:AffectsMechanical()
+    if bIgnoreMechanical then
+        return false,"error_must_target_organic"
+    end
+
+    local bIgnoreBuilding = IsCustomBuilding(target) and not self:AffectsBuildings()
+    if bIgnoreBuilding then
+        return false,"error_cant_target_buildings"
+    end
+    return true
+end
+
 -- All abilities that affect buildings must have DOTA_UNIT_TARGET_BUILDING in its AbilityUnitTargetType
 function CDOTABaseAbility:AffectsBuildings()
     return self:HasFlag(DOTA_UNIT_TARGET_BUILDING)
+end
+
+-- Keyword 'organic' in TargetsAllowed will prevent the ability from affecting (targeting/damaging/modifying) units marked with "Mechanical" "1"
+function CDOTABaseAbility:AffectsMechanical()
+    local targets = self:GetKeyValue("TargetsAllowed") or ""
+    return not targets:match("organic")
+end
+
+-- Keyword 'ground' in TargetsAllowed will prevent the ability from affecting (targeting/damaging/modifying) units with DOTA_UNIT_CAP_MOVE_FLY
+function CDOTABaseAbility:AffectsAir()
+    local targets = self:GetKeyValue("TargetsAllowed") or ""
+    return not targets:match("ground")
 end
 
 function CDOTABaseAbility:HasFlag(flag)

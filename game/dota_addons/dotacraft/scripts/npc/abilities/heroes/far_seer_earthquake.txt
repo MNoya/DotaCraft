@@ -1,9 +1,7 @@
 // Far Seer Earthquake
 // Author: Noya
-// Date: 26.01.2015.
-// Notes: Makes the ground tremble and break, causing 50 damage per second to buildings and slowing units by 75% within area of effect. Lasts 25 seconds.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	25 sec.	90 sec.	150	100	25	Ground, Structures	50 damage/sec to buildings, slows units 75%	6
+// Description: Makes the ground tremble and break, causing 50 damage per second to buildings and slowing units by 75% within area of effect. Lasts 25 seconds.
+
 "far_seer_earthquake"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -16,6 +14,8 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_SPAWN"
+	
+	"TargetsAllowed"                "ground"
 
 	"AbilityCastRange"				"1000"
 	"AbilityCastPoint"				"0.5"

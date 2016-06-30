@@ -237,9 +237,10 @@ function IsCustomShop( unit )
     return unit:HasAbility("ability_shop")
 end
 
-function IsMechanical( unit )
-    return unit:HasAbility("ability_siege")
+function CDOTA_BaseNPC:IsMechanical()
+    return self:GetKeyValue("Mechanical")
 end
+
 -- Shortcut for a very common check
 function IsValidAlive( unit )
     return (IsValidEntity(unit) and unit:IsAlive())

@@ -149,6 +149,8 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+	"TargetsAllowed"                "ground"
 			
 	"AbilitySpecial"
 	{
@@ -369,6 +371,8 @@
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+
+	"TargetsAllowed"            "ground"
 		
 	"AbilityCastRange"			"600"
 	"AbilityCastPoint"			"0"
@@ -636,6 +640,8 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+
+	"TargetsAllowed"            "ground"
 		
 	"AbilityCastRange"			"500"
 	"AbilityCastPoint"			"0"
@@ -1742,6 +1748,8 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
+
+	"TargetsAllowed"            "ground"
 		
 	"AbilitySpecial"
 	{

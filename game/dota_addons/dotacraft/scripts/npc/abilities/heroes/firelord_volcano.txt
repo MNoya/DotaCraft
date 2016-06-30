@@ -1,13 +1,9 @@
 // Fire Lord Volcano
 // Author: Noya
-// Date: 05.02.2015.
-// Notes: Causes the ground to erupt into a massive Volcano. Every 5 seconds, a wave of molten rocks is hurled from the Volcano at nearby ground units and buildings, 
-// causing 100 damage to each target and stunning it for 2 seconds. Buildings take 2 times more damage from molten rocks than units do.
-//Level Duration (Hero) Cooldown    Mana Cost   Range   Area of Effect  Allowed Targets Effect  Hero Level Req
-//N/A   35 sec. 180 sec.    200 80  50  Ground, Building, Not Self, Tree, Debris    Creates Volcano 6
+// Description: Causes the ground to erupt into a massive Volcano. Every 5 seconds, a wave of molten rocks is hurled from the Volcano at nearby ground units and buildings, 
+// causing 100 damage to each target and stunning it for 2 seconds. Buildings take 2 times more damage from molten rocks than units do. 
+// Stuns all friendly units except for the hero channelling.
 
-// Extra notes: Stuns all friendly units except for the hero channelling.
-// Transforms the terrain.
 "firelord_volcano"
 {
     "BaseClass"                     "ability_datadriven"
@@ -19,6 +15,8 @@
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
     "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+    "TargetsAllowed"                "ground"
 
     "AbilityCastRange"              "800"
     "AbilityCastPoint"              "1.67"  

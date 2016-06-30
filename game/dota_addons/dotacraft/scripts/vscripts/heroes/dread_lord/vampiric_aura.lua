@@ -66,7 +66,8 @@ end
 function modifier_vampiric_aura:OnAttackLanded(event)
     local attacker = event.attacker
     if attacker == self:GetParent() then
-        if not IsCustomBuilding(event.target) then
+        local target = event.target
+        if not IsCustomBuilding(target) and not target:IsMechanical() then
             local lifesteal = self:GetAbility():GetSpecialValueFor("lifesteal") * event.damage * 0.01
             attacker:Heal(lifesteal,self)
             local particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, self:GetParent())

@@ -1,5 +1,5 @@
 --[[ ============================================================================================================
-	Author: wFX, based on Noya/Rook code.
+    Author: wFX, based on Noya/Rook code.
 ================================================================================================================= ]]
 
 function Bloodlust(event)   
@@ -21,7 +21,7 @@ function Bloodlust(event)
 end
 
 function ToggleOnAutocast( event )
-	event.ability:ToggleAutoCast()
+    event.ability:ToggleAutoCast()
 end
 
 -- Handles the autocast logic
@@ -61,99 +61,101 @@ end
 
 
 function LightningShieldOnSpellStart(event)
-	local caster = event.caster
-	local ability = event.ability
-	local target = event.target
-	local duration = ability:GetSpecialValueFor("duration")
-	target:EmitSound("Hero_Zuus.StaticField")
+    local caster = event.caster
+    local ability = event.ability
+    local target = event.target
+    local duration = ability:GetSpecialValueFor("duration")
+    target:EmitSound("Hero_Zuus.StaticField")
 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_bolt_parent.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
-	Timers:CreateTimer(0.1, function()
-		ability:ApplyDataDrivenModifier(caster, target, 'modifier_lightning_shield', {})
-	end)
+    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_bolt_parent.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+    ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
+    Timers:CreateTimer(0.1, function()
+        ability:ApplyDataDrivenModifier(caster, target, 'modifier_lightning_shield', {})
+    end)
 end
 
 function ModifierLightningShieldOnIntervalThink(event)
-	local caster = event.caster
-	local target = event.target
-	local ability = event.ability
-	local radius = ability:GetSpecialValueFor("radius")
-	local dps = ability:GetSpecialValueFor("damage_per_second")
-	local factor = ability:GetSpecialValueFor("think_interval")
-	local damage = dps*factor
+    local caster = event.caster
+    local target = event.target
+    local ability = event.ability
+    local radius = ability:GetSpecialValueFor("radius")
+    local dps = ability:GetSpecialValueFor("damage_per_second")
+    local factor = ability:GetSpecialValueFor("think_interval")
+    local damage = dps*factor
 
-	local nearby_units = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, FIND_ANY_ORDER, false)
-	
-	for i, nUnit in pairs(nearby_units) do
-		if target ~= nUnit then  --The carrier of Lightning Shield cannot damage itself.
-			ApplyDamage({victim = nUnit, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-			ParticleManager:CreateParticle("particles/custom/orc/lightning_shield_hit.vpcf", PATTACH_ABSORIGIN, nUnit)
-		end
-	end
+    local nearby_units = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH,
+            DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, FIND_ANY_ORDER, false)
+    
+    for i, nUnit in pairs(nearby_units) do
+        if target ~= nUnit then  --The carrier of Lightning Shield cannot damage itself.
+            if not nUnit:HasFlyMovementCapability() then
+                ApplyDamage({victim = nUnit, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = ability})
+                ParticleManager:CreateParticle("particles/custom/orc/lightning_shield_hit.vpcf", PATTACH_ABSORIGIN, nUnit)
+            end
+        end
+    end
 end
 
 
 function PurgeStart( event )
-	local caster = event.caster
-	local target = event.target
-	local ability = event.ability
-	local bRemovePositiveBuffs = false
-	local bRemoveDebuffs = false
-	
-	-- Note: I really need to make a filter for buildings...
-	if IsCustomBuilding(target) then
-		ability:RefundManaCost()
-		ability:EndCooldown()
-		return
-	end
-	
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		bRemovePositiveBuffs = true
-	else
-		bRemoveDebuffs = true
-	end
-	target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
-	target:EmitSound('n_creep_SatyrTrickster.Cast')
-	ParticleManager:CreateParticle('particles/generic_gameplay/generic_purge.vpcf', PATTACH_ABSORIGIN_FOLLOW, target)
-	if bRemovePositiveBuffs then
-		if target:IsSummoned() or target:IsDominated() then
-			ApplyDamage({
-				victim = target,
-				attacker = caster,
-				damage = ability:GetSpecialValueFor('summoned_unit_damage'),
-				damage_type = DAMAGE_TYPE_PURE, --Goes through MI
-				ability = ability
-			})
-		end
-		local duration = 0
-		if target:IsHero() or target:IsConsideredHero() then
-			duration = ability:GetSpecialValueFor('duration_hero')
-		else
-			duration = ability:GetSpecialValueFor('duration')
-		end
-		ability:ApplyDataDrivenModifier(caster, target, 'modifier_purge', {duration = duration}) 
-	end
+    local caster = event.caster
+    local target = event.target
+    local ability = event.ability
+    local bRemovePositiveBuffs = false
+    local bRemoveDebuffs = false
+    
+    -- Note: I really need to make a filter for buildings...
+    if IsCustomBuilding(target) then
+        ability:RefundManaCost()
+        ability:EndCooldown()
+        return
+    end
+    
+    if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+        bRemovePositiveBuffs = true
+    else
+        bRemoveDebuffs = true
+    end
+    target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
+    target:EmitSound('n_creep_SatyrTrickster.Cast')
+    ParticleManager:CreateParticle('particles/generic_gameplay/generic_purge.vpcf', PATTACH_ABSORIGIN_FOLLOW, target)
+    if bRemovePositiveBuffs then
+        if target:IsSummoned() or target:IsDominated() then
+            ApplyDamage({
+                victim = target,
+                attacker = caster,
+                damage = ability:GetSpecialValueFor('summoned_unit_damage'),
+                damage_type = DAMAGE_TYPE_PURE, --Goes through MI
+                ability = ability
+            })
+        end
+        local duration = 0
+        if target:IsHero() or target:IsConsideredHero() then
+            duration = ability:GetSpecialValueFor('duration_hero')
+        else
+            duration = ability:GetSpecialValueFor('duration')
+        end
+        ability:ApplyDataDrivenModifier(caster, target, 'modifier_purge', {duration = duration}) 
+    end
 end
 
 function ApplyPurge( event )
-	local caster = event.caster
-	local target = event.target
-	local ability = event.ability
-	local duration = 0 
-	local modifier = 'modifier_purge_slow'
-	ability:ApplyDataDrivenModifier(caster, target, modifier, nil) 
-	local stacks = ability:GetSpecialValueFor('stack_multi')
-	target:SetModifierStackCount(modifier, ability, stacks)
+    local caster = event.caster
+    local target = event.target
+    local ability = event.ability
+    local duration = 0 
+    local modifier = 'modifier_purge_slow'
+    ability:ApplyDataDrivenModifier(caster, target, modifier, nil) 
+    local stacks = ability:GetSpecialValueFor('stack_multi')
+    target:SetModifierStackCount(modifier, ability, stacks)
 end
 
 function PurgeThink( event )
-	local target = event.target
-	local ability = event.ability
-	local modifier = 'modifier_purge_slow'
-	local new_stack = target:GetModifierStackCount(modifier, nil) - 1
-	if new_stack > 0 then
-		target:SetModifierStackCount(modifier, ability, new_stack)
-	end
+    local target = event.target
+    local ability = event.ability
+    local modifier = 'modifier_purge_slow'
+    local new_stack = target:GetModifierStackCount(modifier, nil) - 1
+    if new_stack > 0 then
+        target:SetModifierStackCount(modifier, ability, new_stack)
+    end
 end

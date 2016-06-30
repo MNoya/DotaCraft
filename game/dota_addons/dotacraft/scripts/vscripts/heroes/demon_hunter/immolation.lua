@@ -111,7 +111,7 @@ function modifier_immolation_aura:GetAuraSearchTeam()
 end
 
 function modifier_immolation_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:HasFlyMovementCapability()
 end
 
 function modifier_immolation_aura:GetAuraSearchType()
