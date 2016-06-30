@@ -443,7 +443,6 @@ function dotacraft:InitializePlayer( hero )
                 local city_center_name = Units:GetCityCenterNameForRace(k)
                 local building = BuildingHelper:PlaceBuilding(player, city_center_name, position)
                 Players:AddStructure(playerID, building)
-                Players:SetMainCityCenter(playerID, building)
                 CheckAbilityRequirements( building, playerID )
 
                 -- Create Builders in between the gold mine and the city center

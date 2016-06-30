@@ -6,6 +6,7 @@ function CallToArms( event )
 	local ability = event.ability
 	local player = caster:GetPlayerOwner()
 	local playerID = caster:GetPlayerOwnerID()
+	local building = caster -- Can change during the course of the timer if the building is upgraded
 
 	local units = FindAlliesInRadius(caster, 3000) --Radius of the bell ring
 	for _,unit in pairs(units) do
