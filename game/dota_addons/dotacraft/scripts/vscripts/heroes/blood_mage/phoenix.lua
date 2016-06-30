@@ -74,13 +74,12 @@ function PhoenixEgg( event )
 	local ability = event.ability
 	local hero = caster:GetOwner()
 	local phoenix_egg_duration = ability:GetLevelSpecialValueFor( "phoenix_egg_duration", ability:GetLevel() - 1 )
-	local unit_name = "npc_phoenix_egg"
 
 	-- Set the position, a bit floating over the ground
 	local origin = caster:GetAbsOrigin()
 	local position = Vector(origin.x, origin.y, origin.z+50)
 
-	local egg = CreateUnitByName(unit_name, origin, true, hero, hero, hero:GetTeamNumber())
+	local egg = CreateUnitByName("human_phoenix_egg", origin, true, hero, hero, hero:GetTeamNumber())
 	egg:SetAbsOrigin(position)
 
 	-- Add the spawned unit to the table
@@ -110,9 +109,7 @@ function PhoenixEggCheckReborn( event )
 
 	if unit == attacker then
 		print("Spawn a Phoenix")
-		local unit_name = "npc_phoenix"
-
-		local phoenix = CreateUnitByName(unit_name, unit:GetAbsOrigin(), true, player, hero, hero:GetTeamNumber())
+		local phoenix = CreateUnitByName("human_phoenix", unit:GetAbsOrigin(), true, player, hero, hero:GetTeamNumber())
 		phoenix:SetControllableByPlayer(playerID, true)
 
 		-- Add the spawned unit to the table

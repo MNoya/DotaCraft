@@ -9,7 +9,7 @@ function CarrionBeetleSpawn( event )
 	local ability = event.ability
 	local level = ability:GetLevel()
 	local beetle_limit = ability:GetLevelSpecialValueFor( "beetle_limit", ability:GetLevel() - 1 )
-	local unit_name = "npc_carrion_beetle_"..level
+	local unit_name = "undead_carrion_beetle_"..level
 
 	-- Initialize the table of beetles
 	if caster.beetles == nil then

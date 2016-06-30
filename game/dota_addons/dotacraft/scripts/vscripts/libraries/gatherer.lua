@@ -6,7 +6,11 @@ if not Gatherer then
 end
 
 --[[ TODO:
+Fix whatever happens that makes them get stuck and never able to gather again
+Fix attempting bad tree getting "stuck" with a timer while moving to gather
 Shouldnt hardcode gold_mine on-top building names in the filter
+Make a Built-In ExtractionBuilding system
+Wait for building on top construction then go inside right after
 Make it possible to work without a GatherAbility
 ]]
 

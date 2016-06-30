@@ -10,7 +10,7 @@ function BuildPocketFactory( event )
 	local point = event.target_points[1]
 	local factory_duration =  ability:GetLevelSpecialValueFor( "factory_duration" , ability:GetLevel() - 1  )
 	local ability_level = ability:GetLevel()
-	local building_name = "tinker_pocket_factory_building"..ability_level
+	local building_name = "neutral_pocket_factory_building"..ability_level
 	local construction_size = BuildingHelper:GetConstructionSize(building_name)
 	local pathing_size = BuildingHelper:GetBlockPathingSize(building_name)
 
@@ -35,7 +35,7 @@ function StartGoblinSpawn( event )
 	local spawn_ratio = ability:GetLevelSpecialValueFor( "spawn_ratio" , ability:GetLevel() - 1  )
 	local goblin_duration = ability:GetLevelSpecialValueFor( "goblin_duration" , ability:GetLevel() - 1  )
 	local engineering_ability = hero:FindAbilityByName("tinker_engineering_upgrade")
-	local unit_name = "tinker_clockwerk_goblin"
+	local unit_name = "neutral_clockwerk_goblin"
 	local goblin_ability_name = "tinker_clockwerk_goblin_kaboom"
 
 	-- If the upgrade is found, check if it has been leveled up

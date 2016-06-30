@@ -8,7 +8,7 @@ function VolcanoStart( event )
 	local caster = event.caster
 	local point = event.target_points[1]
 
-	caster.volcano_dummy = CreateUnitByName("firelord_volcano", point, false, caster, caster, caster:GetTeam())
+	caster.volcano_dummy = CreateUnitByName("neutral_volcano", point, false, caster, caster, caster:GetTeam())
 	event.ability:ApplyDataDrivenModifier(caster, caster.volcano_dummy, "modifier_volcano_thinker", nil)
 end
 

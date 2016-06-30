@@ -484,7 +484,7 @@ function TavernCreateHeroForPlayer(playerID, shopID, HeroName)
 		--Reference to swap to a revive ability when the hero dies
 		new_hero.RespawnAbility = train_ability_name 
 
-		Setup_Hero_Panel(new_hero)
+		CreateHeroPanel(new_hero)
 	end, playerID)
 end
 

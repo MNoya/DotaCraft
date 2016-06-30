@@ -589,18 +589,7 @@ end
 -- Returns a string with the race of the player
 function Players:GetRace( playerID )
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
-    local hero_name = hero:GetUnitName()
-    local race
-    if hero_name == "npc_dota_hero_dragon_knight" then
-        race = "human"
-    elseif hero_name == "npc_dota_hero_furion" then
-        race = "nightelf"
-    elseif hero_name == "npc_dota_hero_life_stealer" then
-        race = "undead"
-    elseif hero_name == "npc_dota_hero_huskar" then
-        race = "orc"
-    end
-    return race
+    return hero:GetRace()
 end
 
 function Players:FindHighestLevelCityCenter( unit )
@@ -645,3 +634,23 @@ end
 function Players:HeroCount( playerID )
     return #Players:GetHeroes(playerID)
 end
+
+---------------------------------------------------------------
+
+-- defined in races.kv, loaded on Units
+function Players:GetBaseHeroName(playerID)
+    return Units:GetBaseHeroNameForRace(Players:GetRace(playerID))
+end
+function Players:GetCityCenterName(playerID)
+    return Units:GetCityCenterNameForRace(Players:GetRace(playerID))
+end
+
+function Players:GetBuilderName(playerID)
+    return Units:GetBuilderNameForRace(Players:GetRace(playerID))
+end
+
+function Players:GetNumInitialBuilders(playerID)
+    return Units:GetNumInitialBuildersForRace(Players:GetRace(playerID))
+end
+
+---------------------------------------------------------------

@@ -32,7 +32,7 @@ function ForceOfNature( event )
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
 	local treant_count = ability:GetLevelSpecialValueFor( "treant_count", ability:GetLevel() - 1 )
 	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
-	local unit_name = "npc_treant"
+	local unit_name = "nightelf_treant"
 
 	-- Reinitialize the trees cut count
 	ability.trees_cut = 0

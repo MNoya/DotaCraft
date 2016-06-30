@@ -67,7 +67,7 @@
 		"SpawnUnit"
 		{
 			"Target"            	"POINT"
-			"UnitName"              "npc_dread_lord_inferno"
+			"UnitName"              "undead_inferno"
 			"UnitCount"             "1"
 			"Duration"				"180"
 			"OnSpawn"
@@ -114,7 +114,7 @@
 				"Center"	"POINT"
 				"Radius"	"%radius"
 				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Types"		"DOTA_UNIT_TARGET_BASIC"
 			}
 			"Duration"		"%stun_creep_duration"
 		}
@@ -128,7 +128,7 @@
 				"Center"	"POINT"
 				"Radius"	"%radius"
 				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			}
 		}
 	}

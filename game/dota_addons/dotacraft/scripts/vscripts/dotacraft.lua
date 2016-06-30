@@ -367,10 +367,7 @@ function dotacraft:InitializePlayer( hero )
 
     -- Create Main Building, define the initial unit names to spawn for this hero_race
     local position = Players:AssignEmptyPositionForPlayer(playerID)
-    local hero_name = hero:GetUnitName()
-    local race = hero:GetKeyValue("Race")
-    local city_center_name = GetCityCenterNameForHeroRace(hero_name)
-    local builder_name = GetBuilderNameForHeroRace(hero_name)
+    local city_center_name = Players:GetCityCenterName(playerID)
     local construction_size = BuildingHelper:GetConstructionSize(city_center_name) 
     local pathing_size = BuildingHelper:GetBlockPathingSize(city_center_name)
 
@@ -384,8 +381,8 @@ function dotacraft:InitializePlayer( hero )
 
     -- Create Builders in between the gold mine and the city center
     local race_setup_table = {}
-    race_setup_table.builder_name = GetBuilderNameForHeroRace(hero_name)
-    race_setup_table.num_builders = 5
+    race_setup_table.builder_name = Players:GetBuilderName(playerID)
+    race_setup_table.num_builders = Players:GetNumInitialBuilders(playerID)
     race_setup_table.angle = 360 / race_setup_table.num_builders
     race_setup_table.closest_mine = Gatherer:GetClosestGoldMineToPosition(position)
     race_setup_table.closest_mine_pos = race_setup_table.closest_mine:GetAbsOrigin()
@@ -400,6 +397,7 @@ function dotacraft:InitializePlayer( hero )
     end
 
     -- Special spawn rules
+    local race = hero:GetRace()
     if race == "undead" then
         -- Haunt the closest gold mine
         -- Hide the targeted gold mine    
@@ -441,8 +439,8 @@ function dotacraft:InitializePlayer( hero )
         for k,v in pairs(races) do
             if v == 0 then
                 local position = Players:AssignEmptyPositionForPlayer(playerID)
-                local hero_name = GetHeroNameForRace(k)
-                local city_center_name = GetCityCenterNameForHeroRace(hero_name)
+                local hero_name = Units:GetBaseHeroNameForRace(k)
+                local city_center_name = Units:GetCityCenterNameForRace(k)
                 local building = BuildingHelper:PlaceBuilding(player, city_center_name, position)
                 Players:AddStructure(playerID, building)
                 Players:SetMainCityCenter(playerID, building)
@@ -450,8 +448,8 @@ function dotacraft:InitializePlayer( hero )
 
                 -- Create Builders in between the gold mine and the city center
                 local race_setup_table = {}
-                race_setup_table.builder_name = GetBuilderNameForHeroRace(hero_name)
-                race_setup_table.num_builders = 5
+                race_setup_table.builder_name = Units:GetBuilderNameForRace(k)
+                race_setup_table.num_builders = Units:GetNumInitialBuildersForRace(k)
                 race_setup_table.angle = 360 / race_setup_table.num_builders
                 race_setup_table.closest_mine = Gatherer:GetClosestGoldMineToPosition(position)
                 race_setup_table.closest_mine_pos = race_setup_table.closest_mine:GetAbsOrigin()
@@ -527,7 +525,6 @@ function dotacraft:InitializeUndead( hero, race_setup_table, building )
     local playerID = hero:GetPlayerID()
     local player = hero:GetPlayerOwner()
 
-    race_setup_table.num_builders = 3
     local ghoul = CreateUnitByName("undead_ghoul", race_setup_table.mid_point+Vector(1,0,0) * 200, true, hero, hero, hero:GetTeamNumber())
     ghoul:SetOwner(hero)
     ghoul:SetControllableByPlayer(playerID, true)

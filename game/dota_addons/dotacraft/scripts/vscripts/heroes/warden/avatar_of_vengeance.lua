@@ -1,7 +1,7 @@
 --[[
 	Author: Noya
 	Date: 14.1.2015
-	Finds the npc_spirit_of_vengeance in the map and kills them
+	Finds the nightelf_spirit_of_vengeance in the map and kills them
 ]]
 function KillVengeanceSpirits(event)
 	local caster = event.caster
@@ -73,7 +73,7 @@ function SpiritOfVengeanceSpawn( event )
 	local level = ability:GetLevel()
 	local spirit_limit = ability:GetSpecialValueFor( "spirit_limit" )
 	local duration = ability:GetSpecialValueFor( "spirit_limit" )
-	local unit_name = "npc_spirit_of_vengeance"
+	local unit_name = "nightelf_spirit_of_vengeance"
 
 	-- Find all corpse entities in the radius
 	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), ability:GetCastRange())

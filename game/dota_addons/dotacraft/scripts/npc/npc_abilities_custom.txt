@@ -889,7 +889,7 @@
 		{
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_water_elemental_1"
+				"UnitName"		"human_water_elemental_1"
 				"UnitCount"		"%lvl1_unit_count"
 				"SpawnRadius"	"100"
 				"Duration"		"%duration"
@@ -919,7 +919,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_water_elemental_2"
+				"UnitName"		"human_water_elemental_2"
 				"UnitCount"		"%lvl2_unit_count"
 				"SpawnRadius"	"100"
 				"Duration"		"%duration"
@@ -949,7 +949,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_water_elemental_3"
+				"UnitName"		"human_water_elemental_3"
 				"UnitCount"		"%lvl3_unit_count"
 				"SpawnRadius"	"100"
 				"Duration"		"%duration"
@@ -1299,7 +1299,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_bear"
+				"UnitName"			"neutral_beastmaster_bear"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -1337,7 +1337,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_raging_bear"
+				"UnitName"			"neutral_beastmaster_raging_bear"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -1374,7 +1374,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_spirit_bear"
+				"UnitName"			"neutral_beastmaster_spirit_bear"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -1717,7 +1717,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_hawk"
+				"UnitName"			"neutral_beastmaster_hawk"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -1755,7 +1755,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_thunder_hawk"
+				"UnitName"			"neutral_beastmaster_thunder_hawk"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -1792,7 +1792,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_spirit_hawk"
+				"UnitName"			"neutral_beastmaster_spirit_hawk"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -2076,7 +2076,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_quilbeast"
+				"UnitName"			"neutral_beastmaster_quilbeast"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -2114,7 +2114,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_dire_quilbeast"
+				"UnitName"			"neutral_beastmaster_dire_quilbeast"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -2151,7 +2151,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_beastmaster_raging_quilbeast"
+				"UnitName"			"neutral_beastmaster_raging_quilbeast"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -3375,7 +3375,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_phoenix"
+				"UnitName"		"dotacraft_phoenix"
 				"Target"
 				{
 					"Center"		    "CASTER"
@@ -4461,7 +4461,7 @@
 				{
 					"SpawnUnit"
 					{
-						"UnitName"		"npc_black_arrow_minion_1"
+						"UnitName"		"undead_black_arrow_minion_1"
 						"UnitCount"		"%dark_minion_1_count"
 						"SpawnRadius"	"1"
 						"Duration"		"%duration"
@@ -4483,7 +4483,7 @@
 	
 					"SpawnUnit"
 					{
-						"UnitName"		"npc_black_arrow_minion_2"
+						"UnitName"		"undead_black_arrow_minion_2"
 						"UnitCount"		"%dark_minion_2_count"
 						"SpawnRadius"	"1"
 						"Duration"		"%duration"
@@ -4504,7 +4504,7 @@
 					}
 					"SpawnUnit"
 					{
-						"UnitName"		"npc_black_arrow_minion_3"
+						"UnitName"		"undead_black_arrow_minion_3"
 						"UnitCount"		"%dark_minion_3_count"
 						"SpawnRadius"	"1"
 						"Duration"		"%duration"
@@ -5601,7 +5601,7 @@
 			"SpawnUnit"
 			{
 				"Target"            	"POINT"
-				"UnitName"              "npc_dread_lord_inferno"
+				"UnitName"              "undead_inferno"
 				"UnitCount"             "1"
 				"Duration"				"180"
 				"OnSpawn"
@@ -5648,7 +5648,7 @@
 					"Center"	"POINT"
 					"Radius"	"%radius"
 					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
 				}
 				"Duration"		"%stun_creep_duration"
 			}
@@ -5662,7 +5662,7 @@
 					"Center"	"POINT"
 					"Radius"	"%radius"
 					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				}
 			}
 		}
@@ -6406,7 +6406,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_far_seer_spirit_wolf"
+				"UnitName"		"orc_spirit_wolf"
 				"Target"
 				{
 					"Center"		    "CASTER"
@@ -6452,7 +6452,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_far_seer_dire_wolf"
+				"UnitName"		"orc_dire_wolf"
 				"Target"
 				{
 					"Center"		    "CASTER"
@@ -6498,7 +6498,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_far_seer_shadow_wolf"
+				"UnitName"		"orc_shadow_wolf"
 				"Target"
 				{
 					"Center"		    "CASTER"
@@ -6900,7 +6900,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"firelord_lava_spawn1"
+				"UnitName"		"neutral_lava_spawn1"
 				"Target"
 				{
 					"Center"		    "CASTER"
@@ -6950,7 +6950,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"firelord_lava_spawn2"
+				"UnitName"		"neutral_lava_spawn2"
 				"Target"
 				{
 					"Center"		    "CASTER"
@@ -7000,7 +7000,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"firelord_lava_spawn3"
+				"UnitName"		"neutral_lava_spawn3"
 				"Target"
 				{
 					"Center"		    "CASTER"
@@ -9346,7 +9346,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_naga_sea_witch_tornado"
+				"UnitName"		"neutral_tornado"
 				"UnitCount"		"1"
 				"SpawnRadius"	"1"
 				"Target"		"POINT"
@@ -10434,9 +10434,9 @@
 					{
 						"ScriptFile"		"heroes/pandaren/storm_earth_fire.lua"
 						"Function"			"PrimalSplit"
-						"unit_name_earth"	"npc_earth_panda"
-						"unit_name_storm"	"npc_storm_panda"
-						"unit_name_fire"	"npc_fire_panda"
+						"unit_name_earth"	"neutral_earth_panda"
+						"unit_name_storm"	"neutral_storm_panda"
+						"unit_name_fire"	"neutral_fire_panda"
 					}			
 				}
 	
@@ -11279,7 +11279,7 @@
 					
 					"SpawnUnit"
 					{
-						"UnitName"		"npc_doom_guard"
+						"UnitName"		"undead_doom_guard"
 						"Target"
 						{
 							"Center" 	"UNIT"
@@ -11740,7 +11740,7 @@
 							"Center"	"TARGET"
 							"Radius"	"%radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 						}
 						"ModifierName"	"modifier_rain_of_fire_burn"
 					}
@@ -12039,7 +12039,7 @@
 	                        "Center"    "TARGET"
 	                        "Radius"    "%radius"
 	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 	                    }
 	                    "ModifierName"  "modifier_rain_of_fire_burn"
 	                }
@@ -12060,7 +12060,7 @@
 	                        "Center"    "TARGET"
 	                        "Radius"    "%radius"
 	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 	                    }
 	                    "ModifierName"  "modifier_rain_of_fire_burn"
 	                }
@@ -12184,7 +12184,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_potm_owl_1"
+				"UnitName"		"nightelf_owl_1"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -12227,7 +12227,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_potm_owl_2"
+				"UnitName"		"nightelf_owl_2"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -12270,7 +12270,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_potm_owl_3"
+				"UnitName"		"nightelf_owl_3"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -13011,7 +13011,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_serpent_ward_1"
+				"UnitName"			"orc_serpent_ward_1"
 				"Target"			"POINT"
 				"UnitCount"			"%plague_ward_1_count"
 				"Duration"			"%duration"
@@ -13033,7 +13033,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_serpent_ward_2"
+				"UnitName"			"orc_serpent_ward_2"
 				"Target"			"POINT"
 				"UnitCount"			"%plague_ward_2_count"
 				"Duration"			"%duration"
@@ -13054,7 +13054,7 @@
 	
 			"SpawnUnit"
 			{
-				"UnitName"			"npc_serpent_ward_3"
+				"UnitName"			"orc_serpent_ward_3"
 				"Target"			"POINT"
 				"UnitCount"			"%plague_ward_3_count"
 				"Duration"			"%duration"
@@ -14189,7 +14189,7 @@
 		{
 			"SpawnUnit"
 			{
-				"UnitName"		"npc_avatar_of_vengeance"
+				"UnitName"		"nightelf_avatar_of_vengeance"
 				"UnitCount"		"1"
 				"SpawnRadius"	"100"
 				"Duration"		"%duration"

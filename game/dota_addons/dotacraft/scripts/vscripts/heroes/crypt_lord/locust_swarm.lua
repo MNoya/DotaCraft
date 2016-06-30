@@ -11,7 +11,7 @@ function LocustSwarmStart( event )
 	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
 	local locusts = ability:GetLevelSpecialValueFor( "locusts", ability:GetLevel() - 1 )
 	local delay_between_locusts = ability:GetLevelSpecialValueFor( "delay_between_locusts", ability:GetLevel() - 1 )
-	local unit_name = "npc_crypt_lord_locust"
+	local unit_name = "undead_crypt_lord_locust"
 
 	-- Initialize the table to keep track of all locusts
 	caster.swarm = {}

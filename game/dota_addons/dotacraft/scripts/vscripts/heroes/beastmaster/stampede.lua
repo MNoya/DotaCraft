@@ -39,7 +39,7 @@ function Stampede( event )
 	perpendicularVec = perpendicularVec:Normalized()
 	
 	-- Create dummy to store data in case of multiple instances are called
-	local dummy = CreateUnitByName( "npc_dummy_blank", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
+	local dummy = CreateUnitByName( "npc_dota_thinker", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
 	ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
 	dummy.lizards_num = 0
 	
@@ -66,7 +66,7 @@ function Stampede( event )
 				bReplaceExisting = false,
 				bProvidesVision = false,
 				iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING,
+				iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
 				iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 				vVelocity = velocityVec * projectile_speed
 			}

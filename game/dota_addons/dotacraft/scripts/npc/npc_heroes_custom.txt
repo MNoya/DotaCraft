@@ -5,7 +5,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_dragon_knight"
-		"Race"						"human"
+		"UnitLabel"					"human"
 		
 		"Ability1" 					"hide_hero"
 		"Ability2" 					""
@@ -23,7 +23,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_huskar"
-		"Race"						"orc"
+		"UnitLabel"					"orc"
 		
 		"Ability1" 					"hide_hero"
 		"Ability2" 					""
@@ -41,7 +41,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_furion"
-		"Race"						"nightelf"
+		"UnitLabel"					"nightelf"
 		
 		"Ability1" 					"hide_hero"
 		"Ability2" 					""
@@ -59,7 +59,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_life_stealer"
-		"Race"						"undead"
+		"UnitLabel"					"undead"
 		
 		"Ability1" 					"hide_hero"
 		"Ability2" 					""
@@ -81,6 +81,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_keeper_of_the_light"
 		"InternalName"				"human_archmage"
+		"UnitLabel"					"human"
 		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
@@ -177,6 +178,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_invoker"
 		"InternalName"				"human_blood_mage"
+		"UnitLabel"					"human"
 		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
@@ -272,6 +274,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_zuus"
 		"InternalName"				"human_mountain_king"
+		"UnitLabel"					"human"
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -365,6 +368,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_omniknight"
 		"InternalName"				"human_paladin"
+		"UnitLabel"					"human"
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -459,6 +463,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_alchemist"
 		"InternalName"				"neutral_alchemist"
+		"UnitLabel"					"neutral"
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -551,6 +556,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_beastmaster"
 		"InternalName"				"neutral_beastmaster"
+		"UnitLabel"					"neutral"
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -644,6 +650,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_drow_ranger"	
 		"InternalName"				"neutral_drow_ranger"
+		"UnitLabel"					"undead"
 		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
@@ -738,6 +745,7 @@
 		"override_hero"				"npc_dota_hero_nevermore"
 		"InternalName"				"neutral_nevermore"
 		"Model"						"models/heroes/shadow_fiend/shadow_fiend_arcana.vmdl"
+		"UnitLabel"					"neutral"
 		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
@@ -833,6 +841,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_medusa"
 		"InternalName"				"neutral_medusa"
+		"UnitLabel"					"naga"
 		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
@@ -926,6 +935,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_brewmaster"
 		"InternalName"				"neutral_brewmaster"
+		"UnitLabel"					"neutral"
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -1017,7 +1027,7 @@
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_undying"	 // Placeholder
-		"InternalName"				"neutral_undying"
+		"InternalName"				"neutral_pit_lord"
 		"model"						"models/heroes/undying/undying.vmdl"
 		"AttacksEnabled"			"ground"
 		"UnitLabel"					"undead"
@@ -1123,6 +1133,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_tinker"
 		"InternalName"				"neutral_tinker"
+		"UnitLabel"					"neutral"
 		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
@@ -1214,6 +1225,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_antimage"
 		"InternalName"				"nightelf_demon_hunter"
+		"UnitLabel"					"nightelf"
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -1306,6 +1318,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_leshrac"
 		"InternalName"				"nightelf_keeper"
+		"UnitLabel"					"nightelf"
 		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
@@ -1399,6 +1412,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_mirana"
 		"InternalName"				"nightelf_potm"
+		"UnitLabel"					"nightelf"
 		"AttacksEnabled"			"ground, air"
 		
 		// Abilities
@@ -1493,6 +1507,7 @@
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_phantom_assassin"
 		"InternalName"				"nightelf_warden"
+		"UnitLabel"					"nightelf"
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -1587,6 +1602,7 @@
 		"override_hero"				"npc_dota_hero_juggernaut"
 		"InternalName"				"orc_blademaster"
 		"AttacksEnabled"			"ground"
+		"UnitLabel"					"orc"
 		"ModelScale"				"1.1"
 		
 		// Abilities
@@ -1680,6 +1696,7 @@
 		"override_hero"				"npc_dota_hero_disruptor"
 		"InternalName"				"orc_far_seer"
 		"AttacksEnabled"			"ground, air"
+		"UnitLabel"					"orc"
 		"ModelScale"				"1.1"
 		
 		// Abilities
@@ -1772,6 +1789,7 @@
 		"override_hero"				"npc_dota_hero_shadow_shaman"
 		"InternalName"				"orc_shadow_hunter"
 		"AttacksEnabled"			"ground, air"
+		"UnitLabel"					"orc"
 		"ModelScale"				"1.1"
 		
 		// Abilities
@@ -1855,13 +1873,18 @@
 	}
 	
 	
+	//=================================================================================
+	// Creature: Tauren Chieftain
+	// Description: "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Shockwave, War Stomp, Endurance Aura and Reincarnation. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
 	"npc_dota_hero_elder_titan"
 	{
 		// General
 		//----------------------------------------------------------------
 		"override_hero"				"npc_dota_hero_elder_titan"
-		"InternalName"				"orc_chieftain"
+		"InternalName"				"orc_tauren_chieftain"
 		"AttacksEnabled"			"ground"
+		"UnitLabel"					"orc"
 		"ModelScale"				"1.1"
 		
 		// Abilities

@@ -2,6 +2,11 @@ if not Units then
     Units = class({})
 end
 
+function Units:start()
+    self.Races = LoadKeyValues("scripts/kv/races.kv")
+    self.started = true
+end
+
 -- Initializes one unit with all its required modifiers and functions
 function Units:Init( unit )
 
@@ -58,6 +63,22 @@ function Units:Init( unit )
     if unit:GetKeyValue("AttacksTrees") then
         unit:SetCanAttackTrees(true)
     end
+end
+
+function Units:GetBaseHeroNameForRace(raceName)
+    return Units.Races[raceName]["BaseHero"]
+end
+
+function Units:GetBuilderNameForRace(raceName)
+    return Units.Races[raceName]["BuilderName"]
+end
+
+function Units:GetCityCenterNameForRace(raceName)
+    return Units.Races[raceName]["CityCenterName"]
+end
+
+function Units:GetNumInitialBuildersForRace(raceName)
+    return Units.Races[raceName]["BuilderCount"]
 end
 
 -- Returns Int
@@ -117,11 +138,15 @@ function GetCollisionSize( unit )
     return 0
 end
 
--- Returns a string with the race of the unit
+-- Resolve to the method in CDOTA_BaseNPC_Creature or CDOTA_BaseNPC_Hero if its a hero
 function GetUnitRace( unit )
-    local name = unit:GetUnitName()
-    local name_split = split(name, "_")
-    return name_split[1]
+    return unit:GetRace() 
+end
+
+-- Returns a string with the race of the unit
+-- Format for creature unit names: race_unitName
+function CDOTA_BaseNPC_Creature:GetRace()
+    return split(self:GetUnitName(), "_")[1]
 end
 
 function GetOriginalModelScale( unit )
@@ -340,7 +365,6 @@ end
 function RemoveConstructionEffect( unit )
     unit:RemoveModifierByName("modifier_construction")
 end
-
 function HoldPosition( unit )
     unit.bHold = true
     ApplyModifier(unit, "modifier_hold_position")
@@ -433,3 +457,5 @@ function CDOTA_BaseNPC:ShouldAbsorbSpell(caster, ability)
     end
     return false
 end
+
+if not Units.started then Units:start() end

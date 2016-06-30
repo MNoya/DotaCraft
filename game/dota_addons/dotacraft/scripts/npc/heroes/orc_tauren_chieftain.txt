@@ -1,10 +1,15 @@
+//=================================================================================
+// Creature: Tauren Chieftain
+// Description: "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Shockwave, War Stomp, Endurance Aura and Reincarnation. |n|n|cffffcc00Attacks land units.|r"
+//=================================================================================
 "npc_dota_hero_elder_titan"
 {
 	// General
 	//----------------------------------------------------------------
 	"override_hero"				"npc_dota_hero_elder_titan"
-	"InternalName"				"orc_chieftain"
+	"InternalName"				"orc_tauren_chieftain"
 	"AttacksEnabled"			"ground"
+	"UnitLabel"					"orc"
 	"ModelScale"				"1.1"
 	
 	// Abilities

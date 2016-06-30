@@ -14516,97 +14516,6 @@
 		"Ability2"					"true_sight"
 	}
 	
-	"npc_dummy_blank"
-	{
-		// General
-		//
-		"BaseClass"					"npc_dota_base_additive"	// Class of entity of link to.
-		"Model"						"models/development/invisiblebox.vmdl"	// Model.
-		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
-		"Level"						"0"
-		"UnitLabel"					"healing_ward"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					""			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-	
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"			// Physical protection.
-		"MagicalResistance"				"0"			// Magical protection.
-	
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"			// Type of attack - melee, ranged, etc.
-		"AttackDamageMin"			"0"			// Damage range min.
-		"AttackDamageMax"			"0"			// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"1"			// Speed of attack.
-		"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
-		"AttackRange"				"500"		// Range within a target can be attacked.
-		"ProjectileModel"			"" // Particle system model for projectile.
-		"ProjectileSpeed"			"900"		// Speed of projectile.
-	
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-	
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"			// Experience earn.
-		"BountyGoldMin"				"0"			// Gold earned min.
-		"BountyGoldMax"				"0"			// Gold earned max.
-	
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"			// Hull type used for navigation/locomotion.
-	
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground,air
-		"MovementSpeed"				"450"		// Speed
-		"MovementTurnRate"			"1.0"		// Turning rate.
-		"FollowRange"				"250"		// Distance to keep when following
-	
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"			// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-	
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"0"		// Range of vision during day light.
-		"VisionNighttimeRange"		"0"		// Range of vision at night time.
-	
-		// Bots
-		//----------------------------------------------------------------
-		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
-	}
-	
 	"dummy_mana"
 	{
 		"BaseClass"					"npc_dota_creature"
@@ -14630,18 +14539,6 @@
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 		"StatusHealth"				"5000"
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
-	}
-	
-	"attack_dummy"
-	{
-		"BaseClass"					"npc_dota_creature"
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"VisionDaytimeRange"		"0"	
-		"VisionNighttimeRange"		"0"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
-		"AbilityLayout"				"4"
-		"Ability1"					"dummy_attackable"
 	}
 	"fountain_of_health"
 	{
@@ -18710,7 +18607,7 @@
 	//- Units for archmage_summon_water_elemental ability 								 -
 	//------------------------------------------------------------------------------------
 	
-	"npc_water_elemental_1"
+	"human_water_elemental_1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18799,7 +18696,7 @@
 		}
 	}
 	
-	"npc_water_elemental_2"
+	"human_water_elemental_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18888,7 +18785,7 @@
 		}
 	}
 	
-	"npc_water_elemental_3"
+	"human_water_elemental_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18980,7 +18877,7 @@
 	//	Unit for beastmaster_summon_bear
 	//=================================================================================
 	
-	"npc_beastmaster_bear"
+	"neutral_beastmaster_bear"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19059,7 +18956,7 @@
 		
 	}
 	
-	"npc_beastmaster_raging_bear"
+	"neutral_beastmaster_raging_bear"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19138,7 +19035,7 @@
 		
 	}
 	
-	"npc_beastmaster_spirit_bear"
+	"neutral_beastmaster_spirit_bear"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19221,7 +19118,7 @@
 	//	Unit for beastmaster_summon_quilbeast
 	//=================================================================================
 	
-	"npc_beastmaster_quilbeast"
+	"neutral_beastmaster_quilbeast"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19292,7 +19189,7 @@
 		"ArmorType"						"medium"
 	}	
 	
-	"npc_beastmaster_dire_quilbeast"
+	"neutral_beastmaster_dire_quilbeast"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19363,7 +19260,7 @@
 		"ArmorType"						"medium"
 	}	
 	
-	"npc_beastmaster_raging_quilbeast"
+	"neutral_beastmaster_raging_quilbeast"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19443,7 +19340,7 @@
 	// Magic Attack AoE?
 	// Invisibility after not attacking
 	
-	"npc_beastmaster_hawk"
+	"neutral_beastmaster_hawk"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19507,7 +19404,7 @@
 		"WakesNeutrals"				"0"
 	}	
 	
-	"npc_beastmaster_spirit_hawk"
+	"neutral_beastmaster_spirit_hawk"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19580,7 +19477,7 @@
 		"WakesNeutrals"				"0"
 	}
 	
-	"npc_beastmaster_thunder_hawk"
+	"neutral_beastmaster_thunder_hawk"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -19657,7 +19554,7 @@
 	//- Units for blood_mage_phoenix ability 								 	-
 	//------------------------------------------------------------------------------------
 	
-	"npc_phoenix"
+	"human_phoenix"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -19733,7 +19630,7 @@
 	}
 	
 	
-	"npc_phoenix_egg"
+	"human_phoenix_egg"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -19805,7 +19702,7 @@
 	//- Units for crypt_lord_carrion_beetles ability 								 	-
 	//------------------------------------------------------------------------------------
 	
-	"npc_carrion_beetle_1"
+	"undead_carrion_beetle_1"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -19872,7 +19769,7 @@
 		//----------------------------------------------------------------
 	}
 	
-	"npc_carrion_beetle_2"
+	"undead_carrion_beetle_2"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -19940,7 +19837,7 @@
 		//----------------------------------------------------------------
 	}
 	
-	"npc_carrion_beetle_3"
+	"undead_carrion_beetle_3"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -20012,7 +19909,7 @@
 	//------------------------------------------------------------------------------------
 	//- Unit for crypt_lord_locust_swarm ability 								 	-
 	//------------------------------------------------------------------------------------
-	"npc_crypt_lord_locust"
+	"undead_crypt_lord_locust"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -20082,7 +19979,7 @@
 	//=================================================================================
 	
 	// Lesser Dark Minion
-	"npc_black_arrow_minion_1"
+	"undead_black_arrow_minion_1"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -20148,7 +20045,7 @@
 	}
 	
 	// Dark Minion
-	"npc_black_arrow_minion_2"
+	"undead_black_arrow_minion_2"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -20215,7 +20112,7 @@
 	
 	
 	// Greater Dark Minion
-	"npc_black_arrow_minion_3"
+	"undead_black_arrow_minion_3"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -20283,7 +20180,7 @@
 	//	Unit for dread_lord_inferno
 	//=================================================================================
 	
-	"npc_dread_lord_inferno"
+	"undead_inferno"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -20366,7 +20263,7 @@
 	//	Unit for far_seer_feral_spirit
 	//=================================================================================
 										
-	"npc_far_seer_spirit_wolf"
+	"orc_spirit_wolf"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -20446,9 +20343,7 @@
 		"ArmorType"						"heavy"
 	}	
 	
-	
-	
-	"npc_far_seer_shadow_wolf"
+	"orc_shadow_wolf"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -20523,8 +20418,7 @@
 		"ArmorType"						"heavy"
 	}
 	
-	
-	"npc_far_seer_dire_wolf"
+	"orc_dire_wolf"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -20603,7 +20497,7 @@
 	//- Units for firelord_summon_lava_spawn ability 								     -
 	//------------------------------------------------------------------------------------
 	
-	"firelord_lava_spawn1"
+	"neutral_lava_spawn1"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -20674,7 +20568,7 @@
 		//----------------------------------------------------------------
 	}
 	
-	"firelord_lava_spawn2"
+	"neutral_lava_spawn2"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -20744,7 +20638,7 @@
 		//----------------------------------------------------------------
 	}
 	
-	"firelord_lava_spawn3"
+	"neutral_lava_spawn3"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -20818,7 +20712,7 @@
 	//- Unit for firelord_volcano ability 								     			 -
 	//------------------------------------------------------------------------------------
 	
-	"firelord_volcano"
+	"neutral_volcano"
 	{
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/particle/soil_rupture.vmdl"
@@ -20833,7 +20727,7 @@
 	//------------------------------------------------------------------------------------
 	//- Units for keeper_force_of_nature ability 								 	-
 	//------------------------------------------------------------------------------------
-	"npc_treant"
+	"nightelf_treant"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -20907,8 +20801,7 @@
 	//=================================================================================
 	//	Unit for naga_sea_witch_tornado
 	//=================================================================================
-	
-	"npc_naga_sea_witch_tornado"
+	"neutral_tornado"
 	{
 		// General
 		//
@@ -20980,11 +20873,7 @@
 	//=================================================================================
 	//	Units for pandaren_storm_earth_fire
 	//=================================================================================
-	
-	// TODO - Add Abilities
-	// Cyclone
-	
-	"npc_earth_panda"
+	"neutral_earth_panda"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -21060,7 +20949,7 @@
 		"ArmorType"						"heavy"
 	}
 	
-	"npc_storm_panda"
+	"neutral_storm_panda"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -21139,7 +21028,7 @@
 		"ArmorType"						"heavy"
 	}	
 	
-	"npc_fire_panda"
+	"neutral_fire_panda"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -21215,7 +21104,7 @@
 	//- Units for pit_lord_doom ability 								 	-
 	//------------------------------------------------------------------------------------
 	
-	"npc_doom_guard"
+	"undead_doom_guard"
 	{
 		// General
 		//
@@ -21320,7 +21209,7 @@
 	//- Units for potm_scout ability 								 -
 	//------------------------------------------------------------------------------------
 	
-	"npc_potm_owl_1"
+	"nightelf_owl_1"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -21382,7 +21271,7 @@
 		"WakesNeutrals"				"0"
 	}
 	
-	"npc_potm_owl_2"
+	"nightelf_owl_2"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -21444,8 +21333,7 @@
 		"WakesNeutrals"				"0"
 	}
 	
-	
-	"npc_potm_owl_3"
+	"nightelf_owl_3"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -21511,7 +21399,7 @@
 	//=================================================================================
 	
 	// Serpent Ward Level 1
-	"npc_serpent_ward_1"
+	"orc_serpent_ward_1"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -21591,7 +21479,7 @@
 	}
 	
 	// Serpent Ward Level 2
-	"npc_serpent_ward_2"
+	"orc_serpent_ward_2"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -21671,7 +21559,7 @@
 	}
 	
 	// Serpent Ward Level 3
-	"npc_serpent_ward_3"
+	"orc_serpent_ward_3"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -21749,7 +21637,7 @@
 		//Inventory
 		"HasInventory"				"0"
 	}
-	"tinker_clockwerk_goblin"
+	"neutral_clockwerk_goblin"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -21833,7 +21721,7 @@
 	//- Units for tinker_pocket_factory ability 								 		 -
 	//------------------------------------------------------------------------------------
 	
-	"tinker_pocket_factory_building1"
+	"neutral_pocket_factory_building1"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -21910,7 +21798,7 @@
 		//----------------------------------------------------------------
 	}
 	
-	"tinker_pocket_factory_building2"
+	"neutral_pocket_factory_building2"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -21987,7 +21875,7 @@
 		//----------------------------------------------------------------
 	}
 	
-	"tinker_pocket_factory_building3"
+	"neutral_pocket_factory_building3"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -22067,8 +21955,8 @@
 	//- Units for warden_avatar_of_vengeance ability 								 -
 	//------------------------------------------------------------------------------------
 	
-	  	// Avatar of Vengeance
-	"npc_avatar_of_vengeance"
+	 // Avatar of Vengeance
+	"nightelf_avatar_of_vengeance"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -22148,7 +22036,7 @@
 	}
 	
 	// Spirit of Vengeance
-	"npc_spirit_of_vengeance"
+	"nightelf_spirit_of_vengeance"
 	{										
 		// General
 		//----------------------------------------------------------------

@@ -119,6 +119,12 @@ function Heroes:TeamHeroList(teamNumber)
     return heroes
 end
 
+-- Returns a string with the race of the hero
+-- Hero race names must be defined in the "Label" keyvalue
+function CDOTA_BaseNPC_Hero:GetRace()
+    return self:GetUnitLabel()
+end
+
 -- Returns string with the name of the city center associated with the hero_name
 function GetCityCenterNameForHeroRace( hero_name )
     local citycenter_name = ""
@@ -162,16 +168,11 @@ function GetHeroNameForRace( race )
 end
 
 function GetInternalHeroName( hero_name )
-    local hero_table = GameRules.UnitKV[hero_name]
-    if hero_table and hero_table["InternalName"] then
-        return hero_table["InternalName"]
-    else
-        return hero_name
-    end
+    return GetUnitKV(hero_name, "InternalName")
 end
 
 function GetRealHeroName( internal_hero_name )
-    local heroes = GameRules.UnitKV
+    local heroes = KeyValues.UnitKV
     for hero_name,v in pairs(heroes) do
         for key,value in pairs(v) do
             if key == "InternalName" and type(value) == "string" and value:match(internal_hero_name) then
