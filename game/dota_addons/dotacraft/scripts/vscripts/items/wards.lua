@@ -68,73 +68,6 @@ end
 
 --------------------------------------------------------------------------------
 
-modifier_healing_ward = class({})
-LinkLuaModifier("modifier_healing_ward_buff", "items/wards", LUA_MODIFIER_MOTION_NONE)
-
-function modifier_healing_ward:OnCreated()
-    if IsServer() then
-        local radius = self:GetAbility():GetSpecialValueFor("radius")
-        local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-        ParticleManager:SetParticleControl(particle, 1, Vector(radius, radius, radius))
-        ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "flame_attachment", self:GetParent():GetAbsOrigin(), true)
-        self:AddParticle(particle, false, false, 1, false, false)
-    end
-end
-
-function modifier_healing_ward:IsAura()
-    return true
-end
-
-function modifier_healing_ward:IsHidden()
-    return true
-end
-
-function modifier_healing_ward:GetAuraRadius()
-    return self:GetAbility():GetSpecialValueFor("radius")
-end
-
-function modifier_healing_ward:GetModifierAura()
-    return "modifier_healing_ward_buff"
-end
-   
-function modifier_healing_ward:GetAuraSearchTeam()
-    return DOTA_UNIT_TARGET_TEAM_FRIENDLY
-end
-
-function modifier_healing_ward:GetAuraEntityReject(target)
-    return IsCustomBuilding(target) or target:IsMechanical()
-end
-
-function modifier_healing_ward:GetAuraSearchType()
-    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-end
-
-function modifier_healing_ward:GetAuraDuration()
-    return 0.5
-end
-
---------------------------------------------------------------------------------
-
-modifier_healing_ward_buff = class({})
-
-function modifier_healing_ward_buff:DeclareFunctions()
-    return { MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE }
-end
-
-function modifier_healing_ward_buff:GetModifierHealthRegenPercentage()
-    return self:GetAbility():GetSpecialValueFor("regeneration")
-end
-
-function modifier_healing_ward_buff:GetEffectName()
-    return "particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
-end
-
-function modifier_healing_ward_buff:GetEffectAttachType()
-    return PATTACH_ABSORIGIN_FOLLOW
-end
-
---------------------------------------------------------------------------------
-
 -- Used in orc_healing_ward and item_healing_wards
 function SummonHealingWard(event)
     local caster = event.caster
@@ -183,7 +116,7 @@ function modifier_healing_ward:GetAuraSearchTeam()
 end
 
 function modifier_healing_ward:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:IsMechanical()
 end
 
 function modifier_healing_ward:GetAuraSearchType()

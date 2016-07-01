@@ -24,7 +24,7 @@ function demon_hunter_immolation:OnToggleOn()
 
     caster:AddNewModifier(caster,self,"modifier_immolation_aura",{})
     caster:EmitSound("Hero_EmberSpirit.FlameGuard.Cast")
-    print("OnToggleOn")
+
     self.think = Timers:CreateTimer(1, function()
         if self:GetToggleState() then
             self:OnIntervalThink()
@@ -111,7 +111,7 @@ function modifier_immolation_aura:GetAuraSearchTeam()
 end
 
 function modifier_immolation_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target) or target:HasFlyMovementCapability()
+    return IsCustomBuilding(target) or target:HasFlyMovementCapability() or target:IsMechanical()
 end
 
 function modifier_immolation_aura:GetAuraSearchType()

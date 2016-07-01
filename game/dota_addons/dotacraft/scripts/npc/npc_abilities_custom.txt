@@ -17,6 +17,8 @@
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	    "AbilityCastAnimation"          "ACT_DOTA_ALCHEMIST_CONCOCTION_THROW"
 	
+	    "TargetsAllowed"                "organic"
+	
 	    "AbilityCastRange"              "700"
 	    "AbilityCastPoint"              "0.3"
 	    "AbilityCooldown"               "12.0"
@@ -395,30 +397,11 @@
 	            "ThinkInterval"  "%wave_interval"
 	            "OnIntervalThink"
 	            {
-	                "Heal"
-	                {
-	                    "Target"
-	                    {
-	                        "Center"    "TARGET"
-	                        "Radius"    "%radius"
-	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-	                    }
-	                    "HealAmount"    "%wave_heal"
-	                }                   
-	
 	                "FireSound"
 	                {
 	                    "EffectName"    "Hero_Alchemist.UnstableConcoction.Throw"
 	                    "Target"        "CASTER"
-	                }
-	
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "heroes/hero_name/ability_name.lua"
-	                    "Function"      "HealingSprayCast"
-	                }                                       
+	                }                                      
 	                
 	                "RunScript"
 	                {
@@ -57321,7 +57304,6 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"1"
 		"AbilityManaCost"			"40"
-		
 			
 		"AbilitySpecial"
 		{
@@ -57423,7 +57405,7 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			

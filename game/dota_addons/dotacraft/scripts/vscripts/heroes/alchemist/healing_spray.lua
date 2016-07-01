@@ -6,6 +6,7 @@
 function HealingSprayStart( event )
 	local caster = event.caster
 	local point = event.target_points[1]
+	local ability = event.ability
 
 	caster.healing_spray_dummy = CreateUnitByName("dummy_unit_vulnerable", point, false, caster, caster, caster:GetTeam())
 	event.ability:ApplyDataDrivenModifier(caster, caster.healing_spray_dummy, "modifier_healing_spray_thinker", nil)
@@ -23,6 +24,19 @@ function HealingSprayWave( event )
 	ParticleManager:SetParticleControl(particle, 15, Vector(255,255,0))
 	ParticleManager:SetParticleControl(particle, 16, Vector(255,255,0))
 
+	local ability = event.ability
+	local radius = ability:GetLevelSpecialValueFor("radius",ability:GetLevel()-1)
+	local heal = ability:GetLevelSpecialValueFor("wave_heal",ability:GetLevel()-1)
+	local allies = FindAllUnitsInRadius(caster, radius, point)
+	for _,target in pairs(allies) do
+		if not IsCustomBuilding(target) and not target:IsMechanical() then
+			local heal = math.min(heal, target:GetHealthDeficit())
+			if heal > 0 then
+				target:Heal(heal,ability)
+				PopupHealing(target, heal)
+			end
+		end
+	end
 end
 
 function HealingSprayEnd( event )

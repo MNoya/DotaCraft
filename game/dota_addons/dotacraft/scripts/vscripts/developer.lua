@@ -27,6 +27,7 @@ TEST_CODES = {
     ["giveitem"] = function(...) dotacraft:GiveItem(...) end,          -- Gives an item by name to the currently selected unit
     ["createunits"] = function(...) dotacraft:CreateUnits(...) end,    -- Creates 'name' units around the currently selected unit, with optional num and neutral team
     ["testhero"] = function(...) dotacraft:TestHero(...) end,          -- Creates 'name' max level hero at the currently selected unit, optional team num
+    ["testunit"] = function(...) dotacraft:TestUnit(...) end,          -- Creates 'name' unit
 }
 
 function dotacraft:DeveloperMode(player)
@@ -319,6 +320,40 @@ function dotacraft:TestHero(playerID, heroName, bEnemy)
         end
 
     end, playerID)
+end
+
+function dotacraft:TestUnit(playerID, name, bEnemy)
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+
+    local pos = selected:GetAbsOrigin()
+    local unitName
+    for k,_ in pairs(KeyValues.UnitKV) do
+        if k:match(name) then
+            unitName = k
+        end
+    end
+    local team = PlayerResource:GetTeam(playerID)
+    if unitName then
+        PrecacheUnitByNameAsync(unitName, function()
+            local unit = CreateUnitByName(unitName, pos, true, nil, nil, team)
+            unit:SetOwner(selected:GetOwner())
+            unit:SetControllableByPlayer(playerID, true)
+            unit:SetMana(unit:GetMaxMana())
+
+            if bEnemy then 
+                unit:SetTeam(DOTA_TEAM_NEUTRALS)
+            else
+                Players:AddUnit(playerID, unit)
+                CheckAbilityRequirements(unit, playerID)
+            end
+
+            FindClearSpaceForUnit(unit, selected:GetAbsOrigin()+RandomVector(100), true)
+            unit:Hold()
+
+        end, playerID)
+    end
 end
 
 function dotacraft:LevelUp(playerID, lvl)

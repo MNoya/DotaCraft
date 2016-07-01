@@ -125,30 +125,11 @@
             "ThinkInterval"  "%wave_interval"
             "OnIntervalThink"
             {
-                "Heal"
-                {
-                    "Target"
-                    {
-                        "Center"    "TARGET"
-                        "Radius"    "%radius"
-                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                        "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-                    }
-                    "HealAmount"    "%wave_heal"
-                }                   
-
                 "FireSound"
                 {
                     "EffectName"    "Hero_Alchemist.UnstableConcoction.Throw"
                     "Target"        "CASTER"
-                }
-
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/hero_name/ability_name.lua"
-                    "Function"      "HealingSprayCast"
-                }                                       
+                }                                      
                 
                 "RunScript"
                 {
