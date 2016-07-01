@@ -1,179 +1,177 @@
 // Dark Ranger Black Arrow
 // Author: Noya
-// Date: 15.01.2015.
 // Notes: Adds extra damage to attacks. Units killed while under the effect of Black Arrow will turn into Dark Minions.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	None	6	60	Unit	Air, Ground, Enemy, Organic, Neutral	2 bonus damage, 215 hit point Lesser Dark Minion	1
-//2	N/A	None	6	60	Unit	Air, Ground, Enemy, Organic, Neutral	10 bonus damage, 290 hit point Dark Minion	3
-//3	N/A	None	6	60	Unit	Air, Ground, Enemy, Organic, Neutral	20 bonus damage, 405 hit point Greater Dark Minion	5
+
 "dark_ranger_black_arrow"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"dark_ranger_black_arrow"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "dark_ranger_black_arrow"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
-	"AbilityCastRange"				"600"
+    "TargetsAllowed"                "organic"
 
-	"AbilityManaCost"				"10"
-	"AbilityDamage"					"2 10 20"
+    "AbilityCastRange"              "600"
 
-	"precache"
-	{
-		"particle"				"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
-		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"duration"					"80"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"dark_minion_health"		"215 290 405"		
-		}
-		"03"
-		{
-			"var_type"          		"FIELD_INTEGER"
-			"dark_minion_damage"       	"10 16 18"
-		}
-		"04"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"dark_minion_1_count"		"1 0 0"
-		}
-		"05"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"dark_minion_2_count"		"0 1 0"
-		}
-		"06"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"dark_minion_3_count"		"0 0 1"
-		}	
-	}
+    "AbilityManaCost"               "10"
+    "AbilityDamage"                 "2 10 20"
 
-	"Modifiers"
-	{ 
-		"modifier_black_arrow"
-		{
-			"Passive"		"1"
-			"IsHidden"	 	"1"
-			"Orb"
-			{
-				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
-				"ProjectileName"    "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
-				"CastAttack"		"1"
-			}
+    "precache"
+    {
+        "particle"              "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+        "soundfile"             "soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "duration"                  "80"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "dark_minion_health"        "215 290 405"       
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "dark_minion_damage"        "10 16 18"
+        }
+        "04"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "dark_minion_1_count"       "1 0 0"
+        }
+        "05"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "dark_minion_2_count"       "0 1 0"
+        }
+        "06"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "dark_minion_3_count"       "0 0 1"
+        }   
+    }
 
-			"OnOrbFire"
-			{
-				"SpendMana"
-				{
-					"Mana"    "%AbilityManaCost"
-				}
-			}
-			
-			"OnOrbImpact"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"		"modifier_black_arrow_spawn"
-					"Target"			"TARGET"
-				}
-				"FireSound"
-				{
-					"EffectName"		"Hero_Medusa.MysticSnake.Target"
-					"Target"			"CASTER"
-				}
-				"Damage"
-				{
-					"Type"          "DAMAGE_TYPE_PHYSICAL"
-					"Damage"        "%AbilityDamage"
-					"Target"		"TARGET"
-				}
-			}
-		}
+    "Modifiers"
+    { 
+        "modifier_black_arrow"
+        {
+            "Passive"       "1"
+            "IsHidden"      "1"
+            "Orb"
+            {
+                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+                "ProjectileName"    "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+                "CastAttack"        "1"
+            }
 
-		"modifier_black_arrow_spawn"
-		{
-			"IsHidden"	"1"
-			"Duration"	"0.1"
-			"OnDeath"
-			{
-				"SpawnUnit"
-				{
-					"UnitName"		"undead_black_arrow_minion_1"
-					"UnitCount"		"%dark_minion_1_count"
-					"SpawnRadius"	"1"
-					"Duration"		"%duration"
-					"Target"
-					{
-						"Center" 	"UNIT"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-					}
+            "OnOrbFire"
+            {
+                "SpendMana"
+                {
+                    "Mana"    "%AbilityManaCost"
+                }
+            }
+            
+            "OnOrbImpact"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "modifier_black_arrow_spawn"
+                    "Target"            "TARGET"
+                }
+                "FireSound"
+                {
+                    "EffectName"        "Hero_Medusa.MysticSnake.Target"
+                    "Target"            "CASTER"
+                }
+                "Damage"
+                {
+                    "Type"          "DAMAGE_TYPE_PHYSICAL"
+                    "Damage"        "%AbilityDamage"
+                    "Target"        "TARGET"
+                }
+            }
+        }
 
-					"OnSpawn"
-					{
-						"FireSound"
-						{
-							"EffectName" "Hero_Medusa.MysticSnake.Return"
-							"Target"			"CASTER"
-						}
-					}
-				}
+        "modifier_black_arrow_spawn"
+        {
+            "IsHidden"  "1"
+            "Duration"  "0.1"
+            "OnDeath"
+            {
+                "SpawnUnit"
+                {
+                    "UnitName"      "undead_black_arrow_minion_1"
+                    "UnitCount"     "%dark_minion_1_count"
+                    "SpawnRadius"   "1"
+                    "Duration"      "%duration"
+                    "Target"
+                    {
+                        "Center"    "UNIT"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
 
-				"SpawnUnit"
-				{
-					"UnitName"		"undead_black_arrow_minion_2"
-					"UnitCount"		"%dark_minion_2_count"
-					"SpawnRadius"	"1"
-					"Duration"		"%duration"
-					"Target"
-					{
-						"Center" 	"UNIT"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-					}
+                    "OnSpawn"
+                    {
+                        "FireSound"
+                        {
+                            "EffectName" "Hero_Medusa.MysticSnake.Return"
+                            "Target"            "CASTER"
+                        }
+                    }
+                }
 
-					"OnSpawn"
-					{
-						"FireSound"
-						{
-							"EffectName" 	"Hero_Medusa.MysticSnake.Target"
-							"Target"		"CASTER"
-						}
-					}
-				}
-				"SpawnUnit"
-				{
-					"UnitName"		"undead_black_arrow_minion_3"
-					"UnitCount"		"%dark_minion_3_count"
-					"SpawnRadius"	"1"
-					"Duration"		"%duration"
-					"Target"
-					{
-						"Center" 	"UNIT"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-					}	
-					"OnSpawn"
-					{
-						"FireSound"
-						{
-							"EffectName" 	"Hero_Medusa.MysticSnake.Target"
-							"Target"		"CASTER"
-						}
-					}
-				}
-			}
-		}
-	}
+                "SpawnUnit"
+                {
+                    "UnitName"      "undead_black_arrow_minion_2"
+                    "UnitCount"     "%dark_minion_2_count"
+                    "SpawnRadius"   "1"
+                    "Duration"      "%duration"
+                    "Target"
+                    {
+                        "Center"    "UNIT"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
+
+                    "OnSpawn"
+                    {
+                        "FireSound"
+                        {
+                            "EffectName"    "Hero_Medusa.MysticSnake.Target"
+                            "Target"        "CASTER"
+                        }
+                    }
+                }
+                "SpawnUnit"
+                {
+                    "UnitName"      "undead_black_arrow_minion_3"
+                    "UnitCount"     "%dark_minion_3_count"
+                    "SpawnRadius"   "1"
+                    "Duration"      "%duration"
+                    "Target"
+                    {
+                        "Center"    "UNIT"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }   
+                    "OnSpawn"
+                    {
+                        "FireSound"
+                        {
+                            "EffectName"    "Hero_Medusa.MysticSnake.Target"
+                            "Target"        "CASTER"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

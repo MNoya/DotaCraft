@@ -125,7 +125,7 @@ function BansheeCurseAuto_Cast(keys)
 								false)
 			
 	for k,unit in pairs(units) do
-		if not unit:HasModifier(MODIFIER_NAME) and not IsCustomBuilding(unit) then
+		if not unit:HasModifier(MODIFIER_NAME) and not IsCustomBuilding(unit) and not unit:IsMechanical() then
 			target = unit
 			break
 		end

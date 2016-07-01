@@ -43,8 +43,7 @@ function HealingWave( event )
 		callback = function()
 	
 			-- unit selection and counting
-			local allies = FindUnitsInRadius(target:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 
-												DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
+			local allies = FindUnitsInRadius(target:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
 
 			-- particle
 			targetVec = target:GetAbsOrigin()
@@ -59,7 +58,7 @@ function HealingWave( event )
 			-- Add the 
 			for _,v in pairs(allies) do
 				-- if not healed and not on full health
-				if not v.healedByWave and v:GetHealth() ~= v:GetMaxHealth() then
+				if not IsCustomBuilding(v) and not v:IsMechanical() and not v.healedByWave and v:GetHealth() ~= v:GetMaxHealth() then
 					table.insert(possibleTargetsBounce,v)
 				end
 			end

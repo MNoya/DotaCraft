@@ -1,11 +1,7 @@
 // Warden Shadow Strike
 // Author: Noya
-// Date: 14.1.2015.
-// Notes: Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement rate slowed for a short duration.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	15 sec.	8 sec.	75	30	N/A	Air, Ground, Enemy, Neutral	75 strike damage, 10 damage every 3 sec., Movement Slowed 50%	1
-//2	15 sec.	8 sec.	75	30	N/A	Air, Ground, Enemy, Neutral	150 strike damage, 30 damage every 3 sec., Movement Slowed 50%	3
-//3	15 sec.	8 sec.	75	30	N/A	Air, Ground, Enemy, Neutral	225 strike damage, 45 damage every 3 sec., Movement Slowed 50%	5
+// Description: Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement rate slowed for a short duration.
+
 "warden_shadow_strike"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -17,6 +13,8 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+	"TargetsAllowed"                "organic"
 
 	"AbilityCastRange"				"600"
 	"AbilityCastPoint"				"0.3"

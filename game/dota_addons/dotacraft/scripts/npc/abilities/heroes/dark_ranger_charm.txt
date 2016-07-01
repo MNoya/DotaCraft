@@ -1,61 +1,61 @@
 // Dark Ranger Charm
 // Author: Noya
-// Date: 15.01.2015.
-// Notes: Takes control of a target enemy unit. Charm cannot be used on Heroes, or creeps above level 5.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	N/A	45 sec.	150	70	Unit	Air, Ground, NonHero, Enemy, Neutral, Organic	Takes Control of Unit Permanently	6
+// Description: Takes control of a target enemy unit. Charm cannot be used on Heroes, or creeps above level 5.
+
 "dark_ranger_charm"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"dark_ranger_charm"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "dark_ranger_charm"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
-	"AbilityCastAnimation"			"ACT_DOTA_ATTACK"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
+    "AbilityCastAnimation"          "ACT_DOTA_ATTACK"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"150.0"
+    "TargetsAllowed"                "organic"
 
-	"AbilityManaCost"				"70"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "150.0"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-	}
+    "AbilityManaCost"               "70"
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/dark_ranger/charm.lua"
-			"Function"		"CharmLevelCheck"
-		}
-	}
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/dark_ranger/charm.lua"
-			"Function"		"Charm"
-		}
-		
-		"AttachEffect"
-		{
-			"Target"			"TARGET"
-			"EffectName"		"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
-			"EffectAttachType"	"follow_origin"
-		}
-		"FireSound"
-		{
-			"EffectName"		"Hero_Chen.HolyPersuasionCast"
-			"Target" 			"CASTER"
-		}
-	}
-	
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+    }
+
+    "OnAbilityPhaseStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/dark_ranger/charm.lua"
+            "Function"      "CharmLevelCheck"
+        }
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/dark_ranger/charm.lua"
+            "Function"      "Charm"
+        }
+        
+        "AttachEffect"
+        {
+            "Target"            "TARGET"
+            "EffectName"        "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }
+        "FireSound"
+        {
+            "EffectName"        "Hero_Chen.HolyPersuasionCast"
+            "Target"            "CASTER"
+        }
+    }
+    
 }

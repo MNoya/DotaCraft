@@ -1,48 +1,50 @@
 // Death Knight Death Coil
 // Author: Noya
-// Date: 9 September 2015
-// Notes: A coil of death that can damage an enemy living unit or heal a friendly undead unit.
+// Description: A coil of death that can damage an enemy living unit or heal a friendly undead unit.
+
 "death_knight_death_coil"
 {
-	"BaseClass"             		"ability_lua"
-	"ScriptFile"					"heroes/death_knight/death_coil.lua"
-	"AbilityTextureName"			"death_knight_death_coil"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/death_knight/death_coil.lua"
+    "AbilityTextureName"            "death_knight_death_coil"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
-	"AbilityCastPoint"				"0.452"
-	  	
-	"precache"
-	{
-		"particle" 	"particles/custom/vengeful_magic_missle.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-	}
-	
-	"AbilityCastRange"				"800"
-	"AbilityCooldown"				"6"
-	"AbilityManaCost"				"75"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"projectile_speed"		"1100"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"target_damage"			"100 200 300"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"heal_amount"			"200 400 600"
-		}
-	}	
+    "TargetsAllowed"                "organic"
+    
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
+    "AbilityCastPoint"              "0.452"
+        
+    "precache"
+    {
+        "particle"  "particles/custom/vengeful_magic_missle.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+    }
+    
+    "AbilityCastRange"              "800"
+    "AbilityCooldown"               "6"
+    "AbilityManaCost"               "75"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "projectile_speed"      "1100"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "target_damage"         "100 200 300"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "heal_amount"           "200 400 600"
+        }
+    }   
 }

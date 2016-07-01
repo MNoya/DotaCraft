@@ -92,7 +92,7 @@ function undead_essence_of_blight(keys)
 		
 	-- store all valid targets(up to 5) into the target table
 	for k,unit in pairs(units) do
-		if not unit:HasModifier(MODIFIER_NAME) and not IsCustomBuilding(unit) and unit ~= caster then	
+		if not unit:HasModifier(MODIFIER_NAME) and not IsCustomBuilding(unit) and not unit:IsMechanical() and unit ~= caster then	
 		
 			if #target < MAX_TARGETS then -- if not the same as max target then
 				if index == 0 and unit:GetHealth() ~= unit:GetMaxHealth() then -- if state 0 and unit is not max health

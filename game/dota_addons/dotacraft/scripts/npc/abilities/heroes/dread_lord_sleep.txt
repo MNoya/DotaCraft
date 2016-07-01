@@ -1,109 +1,107 @@
 // Dread Lord Sleep
 // Author: Noya
-// Date: 17.01.2015.
-// Notes: Puts a target enemy unit to sleep. A sleeping unit can be awoken by attacking it.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	20 (5) sec.	6 sec.	100	80	Unit	Air, Ground, Enemy, Organic	Unit put to sleep	1
-//2	40 (10) sec.	6 sec.	75	80	Unit	Air, Ground, Enemy, Organic	Unit put to sleep	3
-//3	60 (15) sec.	6 sec.	50	80	Unit	Air, Ground, Enemy, Organic	Unit put to sleep	5
+// Description: Puts a target enemy unit to sleep. A sleeping unit can be awoken by attacking it.
+
 "dread_lord_sleep"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"dread_lord_sleep"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "dread_lord_sleep"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+    "TargetsAllowed"                "organic"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "8.0"
 
-	"precache"
-	{
-		"particle"	"particles/newplayer_fx/npx_sleeping.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
-	}
-		
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"hero_duration"		"5 10 15"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"creep_duration"	"20 40 60"
-		}
-	}
-		
-	"OnSpellStart"
-	{
-		"FireSound"				
-		{
-			"EffectName"	"Hero_Bane.Nightmare" 
-			"Target"		"TARGET"
-		}
+    "AbilityManaCost"               "100"
+    "AbilityDamage"                 "75 130 200"
 
-		"ApplyModifier"
-		{
-			"ModifierName"    "modifier_sleep"
-			"Target"
-			{
-				"Center"	"TARGET"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_HERO"
-			}
-			"Duration"		"%hero_duration"
-		}
+    "precache"
+    {
+        "particle"  "particles/newplayer_fx/npx_sleeping.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
+    }
+        
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "hero_duration"     "5 10 15"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "creep_duration"    "20 40 60"
+        }
+    }
+        
+    "OnSpellStart"
+    {
+        "FireSound"             
+        {
+            "EffectName"    "Hero_Bane.Nightmare" 
+            "Target"        "TARGET"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"    "modifier_sleep"
-			"Target"
-			{
-				"Center"	"TARGET"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_BASIC"
-			}
-			"Duration"		"%creep_duration"
-		}
-	}
-	
-	"Modifiers"
-	{
-		"modifier_sleep"
-		{
-			"IsDebuff"	"1"
+        "ApplyModifier"
+        {
+            "ModifierName"    "modifier_sleep"
+            "Target"
+            {
+                "Center"    "TARGET"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_HERO"
+            }
+            "Duration"      "%hero_duration"
+        }
 
-			"EffectName"		"particles/newplayer_fx/npx_sleeping.vpcf"
-			"EffectAttachType" "follow_overhead"
+        "ApplyModifier"
+        {
+            "ModifierName"    "modifier_sleep"
+            "Target"
+            {
+                "Center"    "TARGET"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_BASIC"
+            }
+            "Duration"      "%creep_duration"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_sleep"
+        {
+            "IsDebuff"  "1"
 
-			"States"
-			{
-				"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NIGHTMARED"				"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_LOW_ATTACK_PRIORITY" 	"MODIFIER_STATE_VALUE_ENABLED"
-			}
+            "EffectName"        "particles/newplayer_fx/npx_sleeping.vpcf"
+            "EffectAttachType" "follow_overhead"
 
-			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED"                "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NIGHTMARED"             "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_LOW_ATTACK_PRIORITY"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
 
-			"OnTakeDamage"
-			{
-				"RemoveModifier"
-				{
-					"Target"		"UNIT"
-					"ModifierName"	"modifier_sleep"
-				}					
-			}			
-		}
-	}		
+            "OverrideAnimation"     "ACT_DOTA_DISABLED"
+
+            "OnTakeDamage"
+            {
+                "RemoveModifier"
+                {
+                    "Target"        "UNIT"
+                    "ModifierName"  "modifier_sleep"
+                }                   
+            }           
+        }
+    }       
 }

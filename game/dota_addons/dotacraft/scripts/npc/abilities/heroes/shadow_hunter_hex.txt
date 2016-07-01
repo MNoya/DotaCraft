@@ -1,97 +1,95 @@
 // Shadow Hunter Hex
 // Author: Noya, adapted from spellLibrary lion_vodoo_datadriven by Pizzalol
-// Date: 20.01.2015.
-// Notes: Transforms an enemy unit into a random critter, disabling special abilities.
-//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	15 (4) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	1
-//2	30 (5) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	3
-//3	45 (6) sec.	7 sec.	70	80	Unit	Air, Ground, Enemy, Organic, Neutral	Transforms unit into a Critter	5
+// Description: Transforms an enemy unit into a random critter, disabling special abilities.
+
 "shadow_hunter_hex"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"shadow_hunter_hex"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "shadow_hunter_hex"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"800"
-	"AbilityCastPoint"				"0.0"
-	"AbilityCooldown"				"7.0"
+    "TargetsAllowed"                "organic"
 
-	"AbilityManaCost"				"80"
+    "AbilityCastRange"              "800"
+    "AbilityCastPoint"              "0.0"
+    "AbilityCooldown"               "7.0"
 
-	"precache"
-	{
-		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
-		"particle"			"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-		"model"				"models/props_gameplay/frog.vmdl"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"hero_duration"				"4 5 6"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"creep_duration"			"15 30 45"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"movespeed"					"100"
-		}
-	}
+    "AbilityManaCost"               "80"
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"	"Hero_Lion.Voodoo"
-			"Target"		"TARGET"
-		}
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+        "particle"          "particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+        "model"             "models/props_gameplay/frog.vmdl"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "hero_duration"             "4 5 6"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "creep_duration"            "15 30 45"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "movespeed"                 "100"
+        }
+    }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Lion.Hex.Target"
-			"Target"		"TARGET"
-		}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_Lion.Voodoo"
+            "Target"        "TARGET"
+        }
 
-		"FireEffect"
-		{
-			"EffectName"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-			"EffectAttachType"	"follow_origin"
-			"Target"			"TARGET"
-		}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Lion.Hex.Target"
+            "Target"        "TARGET"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_hex_frog" //Lua modifier
-			"Target"
-			{
-				"Center"	"TARGET"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_HERO"
-			}
-			"Duration"		"%hero_duration"
-		}
-		
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_hex_frog" //Lua modifier
-			"Target"
-			{
-				"Center"	"TARGET"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types"		"DOTA_UNIT_TARGET_BASIC"
-			}
-			"Duration"		"%creep_duration"
-		}	
-	}
+        "FireEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "Target"            "TARGET"
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_hex_frog" //Lua modifier
+            "Target"
+            {
+                "Center"    "TARGET"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_HERO"
+            }
+            "Duration"      "%hero_duration"
+        }
+        
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_hex_frog" //Lua modifier
+            "Target"
+            {
+                "Center"    "TARGET"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"     "DOTA_UNIT_TARGET_BASIC"
+            }
+            "Duration"      "%creep_duration"
+        }   
+    }
 }

@@ -493,7 +493,7 @@
 	"MaxLevel"					"1"
 	"AbilityTextureName"		"pudge_rot"
 
-	"TargetsAllowed"            "ground"
+	"TargetsAllowed"            "ground,organic"
 
 	"AbilitySpecial"
 	{
@@ -579,7 +579,7 @@
 	"MaxLevel"					"1"
 	"AbilityTextureName"		"pudge_rot"
 
-	"TargetsAllowed"            "ground"
+	"TargetsAllowed"            "ground,organic"
 
 	"AbilitySpecial"
 	{
@@ -907,6 +907,8 @@
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+
+	"TargetsAllowed"            "organic"
 		
 	"AbilityCastRange"			"500"
 	"AbilityCastPoint"			"0"
@@ -996,6 +998,8 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+
+	"TargetsAllowed"            "organic"
 		
 	"AbilityCastRange"			"600"
 	"AbilityCastPoint"			"0"
@@ -1162,6 +1166,8 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+
+	"TargetsAllowed"            "organic"
 		
 	"AbilityCastRange"			"700"
 	"AbilityCastPoint"			"0"
@@ -1833,6 +1839,8 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+
+	"TargetsAllowed"            "organic"
 		
 	"AbilityCastRange"			"600"
 	"AbilityCastPoint"			"0"
@@ -1942,6 +1950,8 @@
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+
+	"TargetsAllowed"            "organic"
 		
 	"AbilityCastRange"			"600"
 	"AbilityCastPoint"			"0"

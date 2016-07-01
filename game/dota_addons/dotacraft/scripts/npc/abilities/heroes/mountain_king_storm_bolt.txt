@@ -1,11 +1,7 @@
 // Mountain King Storm Bolt
 // Author: Noya
-// Date: 13.1.2015.
-// Notes: A magical hammer that is thrown at an enemy unit, causing damage and stunning the target.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	9 sec.	75	60	Unit	Air, Ground, Enemy, Neutral	100 damage and 5 (Hero 3) second stun	1
-//2	N/A	9 sec.	75	60	Unit	Air, Ground, Enemy, Neutral	225 damage and 5 (Hero 3) second stun	3
-//3	N/A	9 sec.	75	60	Unit	Air, Ground, Enemy, Neutral	350 damage and 5 (Hero 3) second stun	5
+// Description: A magical hammer that is thrown at an enemy unit, causing damage and stunning the target.
+
 "mountain_king_storm_bolt"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -21,6 +17,8 @@
 	"AbilityCastRange"				"700"
 	"AbilityCastPoint"				"0.3"
 	"AbilityCooldown"				"8.0"
+
+	"TargetsAllowed"                "organic"
 
 	"AbilityManaCost"				"75"
 	"AbilityDamage"					"100 225 350"

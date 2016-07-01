@@ -9,10 +9,10 @@ function HealAutocast( event )
 	if ability:GetAutoCastState() and ability:IsFullyCastable() then
 		-- Find damaged targets in radius
 		local target
-		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, FIND_CLOSEST, false)
+		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, FIND_CLOSEST, false)
 		for k,unit in pairs(allies) do
 			-- Target the lowest health ally
-			if unit:GetHealthDeficit() > highestDeficit then
+			if not IsCustomBuilding(unit) and not unit:IsMechanical() and unit:GetHealthDeficit() > highestDeficit then
 				target = unit
 				highestDeficit = unit:GetHealthDeficit()
 			end
@@ -36,9 +36,9 @@ function InnerFireAutocast( event )
 	if ability:GetAutoCastState() and ability:IsFullyCastable() then
 		-- Find non buffed targets in radius
 		local target
-		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, FIND_CLOSEST, false)
+		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, FIND_CLOSEST, false)
 		for k,unit in pairs(allies) do
-			if not unit:HasModifier(modifier_name) then
+			if not IsCustomBuilding(unit) and unit:HasModifier(modifier_name) then
 				target = unit
 				break
 			end

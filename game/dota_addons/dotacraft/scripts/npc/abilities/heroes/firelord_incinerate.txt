@@ -1,73 +1,71 @@
 // Fire Lord Incinerate
 // Author: Noya
-// Date: 05.02.2015.
-// Notes: Each attack made is enchanced with living flames that cling to the target. 
-//These flames add a small amount of damage on the first attack, twice as much on the second attack, three times as much on the third attack, etc. 
-//If the unit dies while under this effect, it is incinerated, causing significant damage to all nearby hostile units.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	None	6 per attack	N/A	N/A	Enemy, Organic, Neutral	1 bonus damage, 30 incineration damage	1
-//2	N/A	None	6 per attack	N/A	N/A	Enemy, Organic, Neutral	2 bonus damage, 45 incineration damage	3
-//3	N/A	None	6 per attack	N/A	N/A	Enemy, Organic, Neutral	3 bonus damage, 60 incineration damage	5
+// Description: Each attack made is enchanced with living flames that cling to the target. 
+// These flames add a small amount of damage on the first attack, twice as much on the second attack, three times as much on the third attack, etc. 
+// If the unit dies while under this effect, it is incinerated, causing significant damage to all nearby hostile units.
+
 "firelord_incinerate"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"firelord_incinerate"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "firelord_incinerate"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-    "AbilityUnitTargetType" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"
 
-	"AbilityCastRange"				"600"
-	"AbilityCastPoint"				"0.0"
-	"AbilityCooldown"				"0.0"
+    "TargetsAllowed"                "organic"
 
-	"AbilityManaCost"				"6"
+    "AbilityCastRange"              "600"
+    "AbilityCastPoint"              "0.0"
+    "AbilityCooldown"               "0.0"
 
-	"precache"
-	{
-		"particle" 	"particles/custom/ogre_magi_fireblast.vpcf"
-		"particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"						"FIELD_FLOAT"
-			"bonus_reset_time"				"6"
-		}
-		"02"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"damage_per_stack"				"1 2 3"
-		}
-		"03"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"incineration_damage"			"30 45 60"
-		}
-		"04"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"incineration_radius"			"100"
-		}
-	}
+    "AbilityManaCost"               "6"
 
-	"Modifiers"
-	{
-		"modifier_incinerate_orb"
-		{	
-			"Passive"						"1"
-			"IsHidden"						"1"
-		
-			"Orb"
+    "precache"
+    {
+        "particle"  "particles/custom/ogre_magi_fireblast.vpcf"
+        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                      "FIELD_FLOAT"
+            "bonus_reset_time"              "6"
+        }
+        "02"
+        {
+            "var_type"                      "FIELD_INTEGER"
+            "damage_per_stack"              "1 2 3"
+        }
+        "03"
+        {
+            "var_type"                      "FIELD_INTEGER"
+            "incineration_damage"           "30 45 60"
+        }
+        "04"
+        {
+            "var_type"                      "FIELD_INTEGER"
+            "incineration_radius"           "100"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_incinerate_orb"
+        {   
+            "Passive"                       "1"
+            "IsHidden"                      "1"
+        
+            "Orb"
             {
-                "Priority"  		"DOTA_ORB_PRIORITY_ABILITY"
-                "ProjectileName" 	"particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
-                "CastAttack"    	"1" 
+                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+                "ProjectileName"    "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+                "CastAttack"        "1" 
             }
 
             "OnOrbFire"
@@ -80,50 +78,50 @@
 
             "OnOrbImpact"
             {
-               	"RunScript"
-				{
-					"ScriptFile"	"heroes/firelord/incinerate.lua"
-					"Function"		"IncinerateAttack"
-				}
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/firelord/incinerate.lua"
+                    "Function"      "IncinerateAttack"
+                }
 
-               	"FireSound"
-              	{
-                   "EffectName" 	"Hero_Nevermore.Raze_Flames"
-                   "Target" 		"TARGET"
-               	}
-          	}
-		}
+                "FireSound"
+                {
+                   "EffectName"     "Hero_Nevermore.Raze_Flames"
+                   "Target"         "TARGET"
+                }
+            }
+        }
 
-		"modifier_incinerate_stack"
-		{
-			"IsDebuff"	"1"
+        "modifier_incinerate_stack"
+        {
+            "IsDebuff"  "1"
 
-			"OnDeath"
-			{
-				"FireEffect"
-				{
-					"EffectName"        "particles/custom/ogre_magi_fireblast.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"
-				    {
-				       "Center" "UNIT"
-				       "Flags"	"DOTA_UNIT_TARGET_FLAG_DEAD"
-				   	}
-				}
+            "OnDeath"
+            {
+                "FireEffect"
+                {
+                    "EffectName"        "particles/custom/ogre_magi_fireblast.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"
+                    {
+                       "Center" "UNIT"
+                       "Flags"  "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
+                }
 
-				"Damage"
-				{
-					"Target"
-					{
-						"Center"  	"TARGET"
-						"Radius" 	"%incineration_radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					}
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%incineration_damage"
-				}
-			}
-		}
-	}
+                "Damage"
+                {
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Radius"    "%incineration_radius"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                    }
+                    "Type"          "DAMAGE_TYPE_MAGICAL"
+                    "Damage"        "%incineration_damage"
+                }
+            }
+        }
+    }
 }

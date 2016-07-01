@@ -185,22 +185,28 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"duration"		"10"
+			"duration"		"60"
 		}
 
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"attack_speed"	"-25"
+			"hero_duration"	"10"
 		}
 
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"move_speed"	"-20"
+			"attack_speed"	"-25"
 		}
 
 		"04"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"move_speed"	"-20"
+		}
+
+		"05"
 		{
 			"var_type"			"FIELD_INTEGER"
 			"autocast_radius"	"500"
@@ -223,8 +229,26 @@
 
 		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_human_slow"
-			"Target"		"TARGET"
+		    "ModifierName"  "modifier_human_slow"
+		    "Target"
+		    {
+		        "Center"    "TARGET"
+		        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		        "Types"     "DOTA_UNIT_TARGET_HERO"
+		    }
+		    "Duration"      "%hero_duration"
+		}
+		
+		"ApplyModifier"
+		{
+		    "ModifierName"  "modifier_human_slow"
+		    "Target"
+		    {
+		        "Center"    "TARGET"
+		        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		        "Types"     "DOTA_UNIT_TARGET_BASIC"
+		    }
+		    "Duration"      "%duration"
 		}
 
 		"FireSound"
@@ -287,6 +311,10 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 
+	"AbilityCastRange"				"300"
+	"AbilityManaCost"				"50"
+	"TargetsAllowed"                "organic"
+
 	"AbilitySpecial"
 	{
 		"01"
@@ -319,6 +347,8 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC" //Level 5 or below
 	"AbilityCastPoint"				"0.1"
 	"AbilityCastRange"				"600"
+
+	"TargetsAllowed"                "organic"
 
 	"AbilitySpecial"
 	{
@@ -386,11 +416,13 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+
+	"TargetsAllowed"                "organic"
 	
 	"AbilityCastPoint"				"0.0"
 	"AbilityCastRange"				"250"
 	"AbilityCooldown"				"1"
-	"AbilityManacost"				"5"
+	"AbilityManaCost"				"5"
 	
 	"precache"
 	{
