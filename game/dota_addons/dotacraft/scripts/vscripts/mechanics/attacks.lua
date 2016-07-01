@@ -16,10 +16,8 @@ function UnitCanAttackTarget( unit, target )
     local attacks_enabled = GetAttacksEnabled(unit)
     local target_type = GetMovementCapability(target)
   
-    if not unit:HasAttackCapability() 
-        or (target.IsInvulnerable and target:IsInvulnerable()) 
-        or (target.IsAttackImmune and target:IsAttackImmune()) 
-        or not unit:CanEntityBeSeenByMyTeam(target) then
+    if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune()
+        or not unit:CanEntityBeSeenByMyTeam(target) or (unit:GetAttackType() == "magic" and target:IsMagicImmune()) then
             return false
     end
 
@@ -59,11 +57,7 @@ end
 
 -- Returns "air" if the unit can fly
 function GetMovementCapability( unit )
-    if unit:HasFlyMovementCapability() then
-        return "air"
-    else 
-        return "ground"
-    end
+    return unit:HasFlyMovementCapability() and "air" or "ground"
 end
 
 -- Searches for "AttacksEnabled" in the KV files

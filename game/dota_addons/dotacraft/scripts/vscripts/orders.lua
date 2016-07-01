@@ -226,11 +226,15 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = target:GetAbsOrigin(), Queue = queue})
                     
                     if not errorMsg then
-                        local error_type = GetMovementCapability(target)
-                        if error_type == "air" then
-                            errorMsg = "#error_cant_target_air"
-                        elseif error_type == "ground" then
-                            errorMsg = "#error_must_target_air"
+                        if unit:GetAttackType() == "magic" and target:IsMagicImmune() then
+                            errorMsg = "#dota_hud_error_target_magic_immune"
+                        else
+                            local error_type = GetMovementCapability(target)
+                            if error_type == "air" then
+                                errorMsg = "#error_cant_target_air"
+                            elseif error_type == "ground" then
+                                errorMsg = "#error_must_target_air"
+                            end
                         end
 
                         SendErrorMessage( unit:GetPlayerOwnerID(), errorMsg )
