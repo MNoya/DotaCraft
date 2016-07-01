@@ -171,19 +171,10 @@ function DisableAggro( unit )
     end
 end
 
-SIEGE_UNIT_MIN_RANGE = 250
-SIEGE_UNITS = {
-    "human_mortar_team",
-    "nightelf_glaive_thrower",
-    "orc_demolisher",
-    "undead_meat_wagon"
-}
 -- Aggro a target
 function Attack( unit, target )
     -- if siege unit is attacking, let OnSiegeAttackStart control the behavior
-    for i=1, #SIEGE_UNITS do
-        if unit:GetUnitName() == SIEGE_UNITS[i] then return end
-    end
+    if unit:GetKeyValue("MinimumRange") then return end
     --print(unit:GetName() .. " has started attacking " .. target:GetName())
     unit:AlertNearbyUnits(target, nil)
     unit:MoveToTargetToAttack(target)

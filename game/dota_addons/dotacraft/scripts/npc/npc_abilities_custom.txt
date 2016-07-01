@@ -27319,8 +27319,11 @@
 	            "IsHidden"          "1"
 	            "OnAttackStart"
 	            {
-	                "RunScript"     "units/minimum_range.lua"
-	                "Function"      "OnSiegeAttackStart"
+	                "RunScript"     
+	                {
+	                    "ScriptFile"    "units/minimum_range.lua"   
+	                    "Function"      "OnSiegeAttackStart"
+	                }
 	            }
 	        }
 	    }
