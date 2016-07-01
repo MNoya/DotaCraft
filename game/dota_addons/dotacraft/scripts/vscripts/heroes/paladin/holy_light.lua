@@ -60,6 +60,11 @@ function paladin_holy_light:CastFilterResultTarget( target )
         return UF_FAIL_CUSTOM
     end
 
+    -- Check mechanical
+    if target:GetUnitLabel():match("mechanical") then
+        return UF_FAIL_CUSTOM
+    end
+
     return UF_SUCCESS
 end
   
@@ -82,6 +87,10 @@ function paladin_holy_light:GetCustomCastErrorTarget( target )
 
     if (allied and bUndead) or (not allied and not bUndead) then
         return "#error_cant_target_undead_allies"
+    end
+
+    if target:GetUnitLabel():match("mechanical") then
+        return "#error_must_target_organic"
     end
  
     return ""

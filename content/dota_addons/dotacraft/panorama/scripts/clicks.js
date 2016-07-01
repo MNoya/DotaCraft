@@ -245,7 +245,7 @@ function IsCustomBuilding(entIndex) {
 }
 
 function IsMechanical(entIndex) {
-    return (Entities.GetAbilityByName( entIndex, "ability_siege") != -1)
+    return (Entities.GetUnitLabel(entIndex).indexOf("mechanical") != -1)
 }
 
 function IsShop(entIndex) {

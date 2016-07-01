@@ -238,7 +238,7 @@ function IsCustomShop( unit )
 end
 
 function CDOTA_BaseNPC:IsMechanical()
-    return self:GetKeyValue("Mechanical")
+    return self:GetUnitLabel():match("mechanical")
 end
 
 -- Shortcut for a very common check
