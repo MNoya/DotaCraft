@@ -64,8 +64,8 @@ function VolcanoKnockback( event )
 	}
 
 	for _,unit in pairs(targets) do
-		if unit ~= caster then
-			unit:AddNewModifier( caster, nil, "modifier_knockback", knockbackModifierTable )
+		if unit ~= caster and not IsCustomBuilding(unit) and not unit:HasFlyMovementCapability() then
+			unit:AddNewModifier( caster, ability, "modifier_knockback", knockbackModifierTable )
 		end
 	end			
 end

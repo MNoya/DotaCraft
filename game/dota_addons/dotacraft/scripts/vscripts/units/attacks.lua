@@ -326,13 +326,15 @@ function SplashAttackGround( attacker, position )
 
     -- Damage each unit only once
     for _,unit in pairs(splash_targets) do
-        local distance_from_impact = (unit:GetAbsOrigin() - position):Length2D()
-        if distance_from_impact <= full_damage_radius then
-            ApplyDamage({ victim = unit, attacker = attacker, damage = full_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-        elseif distance_from_impact <= medium_damage_radius then
-            ApplyDamage({ victim = unit, attacker = attacker, damage = medium_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-        else
-            ApplyDamage({ victim = unit, attacker = attacker, damage = small_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+        if not unit:HasFlyMovementCapability() then
+            local distance_from_impact = (unit:GetAbsOrigin() - position):Length2D()
+            if distance_from_impact <= full_damage_radius then
+                ApplyDamage({ victim = unit, attacker = attacker, damage = full_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+            elseif distance_from_impact <= medium_damage_radius then
+                ApplyDamage({ victim = unit, attacker = attacker, damage = medium_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+            else
+                ApplyDamage({ victim = unit, attacker = attacker, damage = small_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+            end
         end
     end
     

@@ -6,6 +6,8 @@
     "AbilityTextureName"    "attack_ground"
     "MaxLevel"              "1"
 
+    "TargetsAllowed"        "ground"
+
     "AbilityCastRange"      "1150"
     "AOERadius"             "150"
 
@@ -29,7 +31,7 @@
     {
         "RunScript"
         {
-            "ScriptFile"    "units/nightelf/glaive_thrower.lua"
+            "ScriptFile"    "units/attacks.lua"
             "Function"      "AttackGround"
             "Target"        "POINT"
         }
@@ -50,7 +52,7 @@
                 }
                 "RunScript"
                 {
-                    "ScriptFile"    "units/nightelf/glaive_thrower.lua"
+                    "ScriptFile"    "units/attacks.lua"
                     "Function"      "StopAttackGround"
                 }
             }
@@ -65,7 +67,7 @@
                 }
                 "RunScript"
                 {
-                    "ScriptFile"    "units/nightelf/glaive_thrower.lua"
+                    "ScriptFile"    "units/attacks.lua"
                     "Function"      "StopAttackGround"
                 }
             }

@@ -128,10 +128,11 @@
                     "Type"      "DAMAGE_TYPE_MAGICAL"
                 }
 
-                "Stun"
+                "ApplyModifier"
                 {
-                    "Duration"   "%stun_duration"
-                    "Target"     "TARGET"
+                    "ModifierName"  "modifier_cluster_rocket_stun"
+                    "Target"        "TARGET"
+                    "Duration"      "%stun_duration"
                 }
             }
         }
@@ -172,6 +173,20 @@
                     "ScriptFile"    "heroes/tinker/cluster_rockets.lua"
                     "Function"      "FireClusterRocket"
                 }
+            }
+        }
+
+
+        "modifier_cluster_rocket_stun"
+        {
+            "IsHidden"          "1"
+            "IsDebuff"          "1"
+            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+            "EffectAttachType"  "follow_overhead"
+
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED"    "MODIFIER_STATE_VALUE_ENABLED"
             }
         }
     }
