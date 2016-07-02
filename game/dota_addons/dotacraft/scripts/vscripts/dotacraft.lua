@@ -146,6 +146,7 @@ function dotacraft:InitGameMode()
 
     -- Don't end the game if everyone is unassigned
     SendToServerConsole("dota_surrender_on_disconnect 0")
+    SendToServerConsole("dota_auto_surrender_all_disconnected_timeout 1000000")
 
     -- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
     -- Note: When the abilities change, we need to update this value.
