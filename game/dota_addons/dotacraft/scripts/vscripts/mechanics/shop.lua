@@ -625,11 +625,7 @@ function CheckHeroInRadius( event )
 				if IsValidAlive(current_unit) then
 					-- Break out of range
 					if shop:GetRangeToUnit(current_unit) > 900 then
-						if shop.active_particle[playerID] then
-					        ParticleManager:DestroyParticle(shop.active_particle[playerID], true)
-					    end
-					    shop.current_unit[playerID] = nil
-					    
+						ResetShop(shop,playerID)					    
 					    return
 					end
 
@@ -642,7 +638,7 @@ function CheckHeroInRadius( event )
 							event.PlayerID = playerID
 							dotacraft:ShopActiveOrder(event)
 						end
-					end		
+					end
 				else
 					-- Find a nearby units in radius
 					local foundUnit = FindShopAbleUnit(shop, playerID, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC)
@@ -653,11 +649,20 @@ function CheckHeroInRadius( event )
 						event.unit = foundUnit:GetEntityIndex()
 						event.PlayerID = playerID
 						dotacraft:ShopActiveOrder(event)
+					else
+						ResetShop(shop,playerID)
 					end
 				end
 			end
 		end
 	end
+end
+
+function ResetShop(shop, playerID)
+    if shop.active_particle[playerID] then
+        ParticleManager:DestroyParticle(shop.active_particle[playerID], true)
+    end
+    shop.current_unit[playerID] = nil
 end
 
 function FindShopAbleUnit( shop, playerID, unit_types )
@@ -671,15 +676,15 @@ function FindShopAbleUnit( shop, playerID, unit_types )
 
 	if units then
 		-- Check for heroes
-		for k,unit in pairs(units) do		
-			if unit:GetPlayerOwnerID() == playerID and string.match(unit:GetClassname(),"npc_dota_hero") then
+		for k,unit in pairs(units) do
+			if unit:IsAlive() and unit:GetPlayerOwnerID() == playerID and unit:IsRealHero() then
 				return unit
 			end
 		end
 
 		-- Check for creature units with inventory
 		for k,unit in pairs(units) do
-			if unit:GetPlayerOwnerID() == playerID and not IsCustomBuilding(unit) and unit:HasInventory() then
+			if unit:IsAlive() and unit:GetPlayerOwnerID() == playerID and not IsCustomBuilding(unit) and unit:HasInventory() then
 				return unit
 			end
 		end
@@ -687,7 +692,7 @@ function FindShopAbleUnit( shop, playerID, unit_types )
 		-- For npc-selling buildings, check any unit
 		if shop.SellsNPCs then
 			for k,unit in pairs(units) do
-				if unit:GetPlayerOwnerID() == playerID then
+				if unit:IsAlive() and unit:GetPlayerOwnerID() == playerID then
 					return unit
 				end
 			end
