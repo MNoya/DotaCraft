@@ -63,6 +63,13 @@ function Units:Init( unit )
     if unit:GetKeyValue("AttacksTrees") then
         unit:SetCanAttackTrees(true)
     end
+
+    -- Flying Height Z control
+    Timers:CreateTimer(0.03, function()
+        if unit:HasFlyMovementCapability() then
+            unit:AddNewModifier(unit,nil,"modifier_flying_control",{})
+        end
+    end)
 end
 
 function Units:GetBaseHeroNameForRace(raceName)
