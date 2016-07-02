@@ -1435,6 +1435,8 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
+	"TargetsAllowed"				"air"
+
 	"AbilityCastRange"				"550"
 	"AbilityCastPoint"				"0.1"
 	"AbilityCooldown"				"30.0"
@@ -1463,15 +1465,6 @@
 	"precache"
 	{
 		"particle"  "particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
-	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/human/dragonhawk_rider.lua"
-			"Function"		"AerialShacklesCheck"
-		}
 	}
 
 	"OnSpellStart"
@@ -1525,12 +1518,6 @@
 					"Target"		"TARGET"
 					"Type"			"DAMAGE_TYPE_MAGICAL"
 					"Damage"		"%damage_per_second * %tick_rate"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"units/human/dragonhawk_rider.lua"
-					"Function"		"LoseHeight"
 				}
 			}
 

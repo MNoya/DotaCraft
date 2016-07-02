@@ -13,6 +13,11 @@ function CDOTABaseAbility:IsAllowedTarget(target)
     if bIgnoreBuilding then
         return false,"error_cant_target_buildings"
     end
+
+    local bIgnoreGround = target:GetKeyValue("MovementCapabilities") ~= "DOTA_UNIT_CAP_MOVE_FLY" and not self:AffectsGround()
+    if bIgnoreGround then
+        return false,"error_must_target_air"
+    end
     return true
 end
 
@@ -31,6 +36,12 @@ end
 function CDOTABaseAbility:AffectsAir()
     local targets = self:GetKeyValue("TargetsAllowed") or ""
     return not targets:match("ground")
+end
+
+-- Keyword 'air' in TargetsAllowed will prevent the ability from affecting (targeting/damaging/modifying) units without DOTA_UNIT_CAP_MOVE_FLY
+function CDOTABaseAbility:AffectsGround()
+    local targets = self:GetKeyValue("TargetsAllowed") or ""
+    return not targets:match("air")
 end
 
 function CDOTABaseAbility:HasFlag(flag)

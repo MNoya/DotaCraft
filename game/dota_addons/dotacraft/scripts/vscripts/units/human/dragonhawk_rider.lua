@@ -49,40 +49,14 @@ function ApplyCloud( event )
 	end
 end
 
--- Prevents casting shackles on anything that doesnt fly
-function AerialShacklesCheck( event )
-	local caster = event.caster
-	local pID = caster:GetOwner():GetPlayerID()
-	local target = event.target
-
-	if not target:HasFlyMovementCapability() then
-		caster:Interrupt()
-		SendErrorMessage(pID, "#error_must_target_air")
-	end
-end
-
 -- Loses flying capability
 function LoseFlying( event )
 	local target = event.target
 	target:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 end
 
--- Moves down a bit
-function LoseHeight( event )
-	local target = event.target
-	local origin = target:GetAbsOrigin()
-	local groundPos = GetGroundPosition(origin, target)
-
-	print(origin.z, groundPos.z)
-	if origin.z+128 > groundPos.z then
-		target:SetAbsOrigin(Vector(origin.x, origin.y, origin.z - 2))
-	end
-end
-
 -- Gains flying capability
 function ReGainFlying( event )
 	local target = event.target
-	local origin = target:GetAbsOrigin()
-	
 	target:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 end

@@ -4,7 +4,7 @@ function modifier_flying_control:OnCreated()
     if IsServer() then
         self.baseGround = GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()).z + 200
         self:StartIntervalThink(0.03)
-        self.tree_modifier_stacks = 0
+        self.treeHeight = 0
     end
 end
 
@@ -12,15 +12,19 @@ function modifier_flying_control:OnIntervalThink()
     local unit = self:GetParent()
     if unit:HasFlyMovementCapability() then
         local origin = unit:GetAbsOrigin()
-        local z = math.max(0, self.baseGround - GetGroundPosition(origin, unit).z)
+
+        -- Gain height in steps
+        local z = math.min(self:GetStackCount()+20, math.max(0, self.baseGround - GetGroundPosition(origin, unit).z))
         if GridNav:IsNearbyTree(origin,64,true) then
-            self.tree_modifier_stacks = math.min(200, self.tree_modifier_stacks+10)
+            self.treeHeight = math.min(200, self.treeHeight+10)
         else
-            self.tree_modifier_stacks = math.max(0, self.tree_modifier_stacks-10)
+            self.treeHeight = math.max(0, self.treeHeight-10)
         end
-        self:SetStackCount(z+self.tree_modifier_stacks)
+        self:SetStackCount(z+self.treeHeight)
     else
-        self:SetStackCount(0)
+        -- The unit lost its flying capability (due to an ensnare-type of spell)
+        local z = math.max(0, self:GetStackCount()-10)
+        self:SetStackCount(z)
     end
 end
 
@@ -29,7 +33,7 @@ function modifier_flying_control:DeclareFunctions()
 end
 
 function modifier_flying_control:GetVisualZDelta()
-    return 1 * self:GetStackCount()
+    return self:GetStackCount()
 end
 
 function modifier_flying_control:IsHidden()

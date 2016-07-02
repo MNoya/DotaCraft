@@ -16027,6 +16027,8 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 	
+		"TargetsAllowed"				"air"
+	
 		"AbilityCastRange"				"550"
 		"AbilityCastPoint"				"0.1"
 		"AbilityCooldown"				"30.0"
@@ -16055,15 +16057,6 @@
 		"precache"
 		{
 			"particle"  "particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"units/human/dragonhawk_rider.lua"
-				"Function"		"AerialShacklesCheck"
-			}
 		}
 	
 		"OnSpellStart"
@@ -16117,12 +16110,6 @@
 						"Target"		"TARGET"
 						"Type"			"DAMAGE_TYPE_MAGICAL"
 						"Damage"		"%damage_per_second * %tick_rate"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/dragonhawk_rider.lua"
-						"Function"		"LoseHeight"
 					}
 				}
 	
@@ -56318,6 +56305,8 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	
+		"TargetsAllowed"			"air"
 			
 		"AbilityCastRange"			"400"
 		"AbilityCastPoint"			"0"
@@ -56328,21 +56317,9 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"duration"		"12"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"12"
 			}
-			"02"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"lower_duration"			"0.6"
-			}
-			// The duration in which the flying unit is lowered.
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"lower_height"			"200"
-			}
-			// The height to which the flying unit is lowered.
 		}
 	
 		"precache"
@@ -56352,15 +56329,6 @@
 			
 			//caster projectile particle
 			"particle"	"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
-		}
-		
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"units/undead/crypt_fiend.lua"
-				"Function"		"WebCheck"
-			}
 		}
 		
 		"OnSpellStart"
@@ -56377,6 +56345,11 @@
 	            "EffectName" 			"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
 	            "Target" 				"CASTER"
 	            "EffectAttachType" 		"attach_hitloc"
+	            "ControlPointEntities"
+	            {
+	                "CASTER" "attach_hitloc"
+	                "TARGET" "attach_hitloc"
+	            }
 	        }
 		}
 	
@@ -56384,8 +56357,19 @@
 		{
 			"modifier_web"
 			{
+				"IsDebuff"	 "1"
+				"IsPurgable" "1"
 				"EffectName"			"particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_webs.vpcf"
 				"EffectAttachType"		"follow_origin"
+	
+				"OnDestroy"
+				{
+				    "RunScript"
+				    {
+				        "ScriptFile"    "units/undead/crypt_fiend.lua"
+				        "Function"      "Web_Destroy"
+				    }
+				}
 				
 				"States"
 				{
