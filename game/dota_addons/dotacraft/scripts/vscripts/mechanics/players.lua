@@ -134,22 +134,6 @@ function Players:ClearPlayerFlags( playerID )
     end
 end
 
-function Players:AssignEmptyPositionForPlayer(playerID)
-    -- If there is a position defined but not assigned yet, return and assign it
-    if GameRules.StartingPositions[playerID] and GameRules.StartingPositions[playerID].playerID == -1 then
-        GameRules.StartingPositions[playerID].playerID = playerID
-        return GameRules.StartingPositions[playerID].position
-    end
-
-    -- Return the first unassigned position and assign it
-    for k,v in pairs(GameRules.StartingPositions) do
-        if v.playerID == -1 then
-            GameRules.StartingPositions[k].playerID = playerID
-            return v.position
-        end
-    end
-end
-
 -- In case of objects being removed from the game but still kept on the player tables
 function Players:FixAllTables(playerID)
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)

@@ -120,7 +120,7 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGameUpdate"))
     CustomGameEventManager:RegisterListener( "pregame_countdown", Dynamic_Wrap(dotacraft, "PreGameStartCountDown")) 
     CustomGameEventManager:RegisterListener( "pregame_lock", Dynamic_Wrap(dotacraft, "PreGameToggleLock"))  
-	
+    
     -- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
@@ -245,16 +245,6 @@ function dotacraft:InitGameMode()
 
     -- Attack net table
     Attacks:Init()
-    
-    -- Starting positions
-    GameRules.StartingPositions = {}
-    local targets = Entities:FindAllByName( "*starting_position" ) --Inside player_start.vmap prefab
-    for k,v in pairs(targets) do
-        local pos_table = {}
-        pos_table.position = v:GetAbsOrigin()
-        pos_table.playerID = -1
-        GameRules.StartingPositions[k-1] = pos_table
-    end
 
     -- Panorama Developer setting
     CustomNetTables:SetTableValue("dotacraft_settings","developer",{value=IsInToolsMode()})
@@ -366,7 +356,7 @@ function dotacraft:InitializePlayer( hero )
     hero:AddNewModifier(hero, nil, "modifier_client_convars", {})
 
     -- Create Main Building, define the initial unit names to spawn for this hero_race
-    local position = Players:AssignEmptyPositionForPlayer(playerID)
+    local position = Teams:GetPositionForPlayer(playerID)
     local city_center_name = Players:GetCityCenterName(playerID)
     local construction_size = BuildingHelper:GetConstructionSize(city_center_name) 
     local pathing_size = BuildingHelper:GetBlockPathingSize(city_center_name)
@@ -438,7 +428,8 @@ function dotacraft:InitializePlayer( hero )
         local startID = playerID
         for k,v in pairs(races) do
             if v == 0 then
-                local position = Players:AssignEmptyPositionForPlayer(playerID)
+                startID = startID + 1
+                local position = Teams:GetPositionForPlayer(startID)
                 local hero_name = Units:GetBaseHeroNameForRace(k)
                 local city_center_name = Units:GetCityCenterNameForRace(k)
                 local building = BuildingHelper:PlaceBuilding(player, city_center_name, position)
@@ -690,28 +681,26 @@ function dotacraft:OnGameRulesStateChange(keys)
         end
     elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
         Scores:Init() -- Start score tracking for all players
-    elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-        dotacraft:OnGameInProgress()
     elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
         dotacraft:OnPreGame()
+    elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+        dotacraft:OnGameInProgress()
     end
 end
 
 function dotacraft:OnPreGame()
     print("[DOTACRAFT] OnPreGame")
-    local Finished = false
-    local currentIndex = 0
-    while not Finished do
-        
-        local Player_Table = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(currentIndex))
-        local NextTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(currentIndex+1))
-        if not NextTable then
-            Finished = true
-        end
-        local playerID = Player_Table.PlayerIndex
-        local color = Player_Table.Color
-        local team = Player_Table.Team
-        local race = GameRules.raceTable[Player_Table.Race]
+    Teams:DetermineStartingPositions()
+
+    local maxPlayers = dotacraft:GetMapMaxPlayers()
+    for playerID = 0, maxPlayers do
+        local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
+        if not playerTable then break end
+
+        local playerID = playerTable.PlayerIndex
+        local color = playerTable.Color
+        local team = playerTable.Team
+        local race = GameRules.raceTable[playerTable.Race]
         
         -- if race is nil it means that the id supplied is random since that is the only fallout index
         if race == nil then
@@ -719,24 +708,23 @@ function dotacraft:OnPreGame()
         end
         
         if PlayerResource:IsValidPlayerID(playerID) then
-            -- player stuff
             local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
             PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
             PlayerResource:SetCustomTeamAssignment(playerID, team)
-            --PrecacheUnitByNameAsync(race, function() --Race Heroes are already precached
-                local player = PlayerResource:GetPlayer(playerID)
-                local hero = CreateHeroForPlayer(race, player)
-                
-                hero.color_id = color
-                
-                print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
+
+            --Race Heroes are already precached
+            local player = PlayerResource:GetPlayer(playerID)
+            local hero = CreateHeroForPlayer(race, player)
+            
+            hero.color_id = color
+            
+            print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
+
         elseif playerID > 9000 then
             -- Create ai player here
         else
             -- do nothing
         end
-        
-        currentIndex = currentIndex + 1
     end
     
     --[[
@@ -1311,6 +1299,11 @@ function dotacraft:ColorForPlayer( playerID )
     return Vector(color.r, color.g, color.b)
 end
 
+function dotacraft:ColorForTeam(teamID)
+    local color = TEAM_COLORS[teamID]
+    return Vector(color[1], color[2], color[3])
+end
+
 function dotacraft:GetMapName()
     local cutMap = string.find(GetMapName(), '_', 1, true)
     if not cutMap then
@@ -1318,31 +1311,10 @@ function dotacraft:GetMapName()
         return
     end
     return string.sub(GetMapName(), cutMap+1)
-
 end
 
--- Returns an Int with the number of teams with valid players in them
-function dotacraft:GetTeamCount()
-    local teamCount = 0
-    for i=DOTA_TEAM_FIRST,DOTA_TEAM_CUSTOM_MAX do
-        local playerCount = PlayerResource:GetPlayerCountForTeam(i)
-        if playerCount > 0 then
-            teamCount = teamCount + 1
-            print("  Team ["..i.."] has "..playerCount.." players")
-        end
-    end
-    return teamCount
-end
-
--- Gets a list of playerIDs on a team
-function dotacraft:GetPlayersOnTeam( teamNumber )
-    local players = {}
-    for playerID=0,DOTA_MAX_TEAM_PLAYERS do
-        if PlayerResource:GetTeam(playerID) == teamNumber then
-            table.insert(players, playerID)
-        end
-    end
-    return players
+function dotacraft:GetMapMaxPlayers()
+    return split(GetMapName(), '_')[1]
 end
 
 -- This should only be called when all teams but one are defeated
@@ -1354,31 +1326,6 @@ function dotacraft:GetWinningTeam()
             local playerStructures = Players:GetStructures( playerID )
             if #playerStructures > 0 then
                 return player:GetTeamNumber()
-            end
-        end
-    end
-end
-
-function dotacraft:PrintDefeateMessageForTeam( teamID )
-    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
-        if PlayerResource:IsValidPlayerID(playerID) then
-            local player = PlayerResource:GetPlayer(playerID)
-            if player:GetTeamNumber() == teamID then
-                local playerName = Players:GetPlayerName(playerID)
-                GameRules:SendCustomMessage(playerName.." was defeated", 0, 0)
-            end
-        end
-    end
-end
-
-function dotacraft:PrintWinMessageForTeam( teamID )
-    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
-        if PlayerResource:IsValidPlayerID(playerID) then
-            local player = PlayerResource:GetPlayer(playerID)
-            if player:GetTeamNumber() == teamID then
-                local playerName = PlayerResource:GetPlayerName(playerID)
-                if playerName == "" then playerName = "Player "..playerID end
-                GameRules:SendCustomMessage(playerName.." was victorious", 0, 0)
             end
         end
     end
