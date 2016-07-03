@@ -1,4 +1,4 @@
-KEYVALUES_VERSION = "1.00"
+KEYVALUES_VERSION = "1.01"
 
  -- Change to false to skip loading the base files
 LOAD_BASE_FILES = false
@@ -203,4 +203,4 @@ function GetAbilitySpecial(name, key, level)
     else return t end
 end
 
-if not KeyValues.All then LoadGameKeyValues() end
+LoadGameKeyValues()
