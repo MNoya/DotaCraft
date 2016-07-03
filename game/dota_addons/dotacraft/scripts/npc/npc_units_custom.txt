@@ -1,22 +1,6 @@
 "DOTAUnits"
 {
 	// Human Buildings
-	// human_town_hall
-		// human_keep
-		// human_castle
-	// human_barracks
-	// human_farm
-	// human_altar_of_kings
-	// human_lumber_mill
-	// human_scout_tower
-		// human_guard_tower
-		// human_cannon_tower
-		// human_arcane_tower
-	// human_blacksmith
-	// human_workshop
-	// human_arcane_sanctum
-	// human_gryphon_aviary
-	// human_arcane_vault
 	
 	//=================================================================================
 	// Building: Town Hall
@@ -67,7 +51,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"220"
 		"CollisionSize"				"176"
 	
@@ -157,7 +141,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"220"
 		"CollisionSize"				"176"
 	
@@ -246,7 +230,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"220"
 		"CollisionSize"				"172"
 	
@@ -334,7 +318,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"220"
 		"CollisionSize"				"144"
 	
@@ -412,7 +396,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"72"
 	
@@ -504,7 +488,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"100"
 		"CollisionSize"				"144"
 	
@@ -586,7 +570,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"100"
 		"CollisionSize"				"144"
 	
@@ -669,7 +653,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"72"
 	
@@ -756,7 +740,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"72"
 	
@@ -852,7 +836,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"72"
 	
@@ -940,7 +924,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"72"
 	
@@ -1025,7 +1009,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"100"
 		"CollisionSize"				"144"
 	
@@ -1113,7 +1097,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"220"
 		"CollisionSize"				"144"
 	
@@ -1199,7 +1183,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"220"
 		"CollisionSize"				"144"
 	
@@ -1283,7 +1267,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"190"
 		"CollisionSize"				"100"
 	
@@ -1369,7 +1353,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"50"
 	
@@ -1469,7 +1453,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SIEGE"
 		"RingRadius"				"40"
 		"CollisionSize"				"16"
 		"FormationRank"				"3"
@@ -1667,7 +1651,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"31"
 		"FormationRank"				"0"
@@ -1778,7 +1762,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"2"
@@ -1879,7 +1863,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"0"
@@ -2217,7 +2201,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"31"
 		"FormationRank"				"1"
@@ -2536,7 +2520,7 @@
 	
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"40"
 		"CollisionSize"				"32"
 		"FormationRank"				"4"
@@ -2637,7 +2621,7 @@
 	
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"40"
 		"CollisionSize"				"48"
 		"FormationRank"				"0"
@@ -2728,7 +2712,7 @@
 	
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
 		"RingRadius"				"40"
 		"CollisionSize"				"8"
 		"FormationRank"				"2"
@@ -2819,7 +2803,7 @@
 	
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SIEGE"
 		"RingRadius"				"30"
 		"CollisionSize"				"16"
 		"FormationRank"				"4"
@@ -2850,37 +2834,6 @@
 		//----------------------------------------------------------------
 	}
 	// Night Elf Buildings
-	// Ancients (Creatures, can move if unrooted)
-	// nightelf_ancient_of_lore
-	// nightelf_ancient_of_war
-	// nightelf_ancient_of_wind
-	// nightelf_ancient_of_wonders
-	// nightelf_ancient_protector
-	// nightelf_tree_of_life
-	// nightelf_tree_of_ages
-	// nightelf_tree_of_eternity
-	
-	// Normal Structures
-	// nightelf_altar_of_elders
-	// nightelf_chimaera_roost
-	// nightelf_hunters_hall
-	// nightelf_moon_well
-	// nightelf_entangled_gold_mine
-	
-	// Treant Models for Ancients
-	// models/items/furion/treant/father_treant/father_treant.vmdl (City Center lvl 2)
-	// models/items/furion/treant/furion_treant_nelum_red/furion_treant_nelum_red.vmdl (Lore)
-	// models/items/furion/treant/primeval_treant/primeval_treant.vmdl (War)
-	// models/items/furion/treant/eternalseasons_treant/eternalseasons_treant.vmdl (City Center lvl 3)
-	// models/items/furion/treant_stump.vmdl (City Center lvl 1)
-	// models/items/furion/treant_flower_1.vmdl (Wind)
-	// models/items/furion/treant/shroomling_treant/shroomling_treant.vmdl (Wonders)
-	// models/heroes/treant_protector/treant_protector.vmdl + cosmetics (not on source2 yet) (Protector Tower)
-	
-	// Unused
-	// models/items/furion/treant/fungal_lord_shroomthing/fungal_lord_shroomthing.vmdl
-	// models/items/furion/treant/treant_cis/treant_cis.vmdl
-	// models/items/furion/treant/hallowed_horde/hallowed_horde.vmdl
 	
 	//=================================================================================
 	// Building: Ancient of Lore
@@ -3983,7 +3936,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"140"
 		"CollisionSize"				"72"
 		
@@ -4074,7 +4027,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"50"
 		
@@ -4278,7 +4231,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"2"
@@ -4389,7 +4342,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"0"
@@ -4501,7 +4454,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"48"
 		"FormationRank"				"3"
@@ -4599,7 +4552,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"2"
@@ -4808,7 +4761,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"48"
 		"FormationRank"				"0"
@@ -4910,7 +4863,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"48"
 		"FormationRank"				"0"
@@ -5505,32 +5458,6 @@
 	}
 	
 	// Orc Buildings
-	// orc_altar_of_storms
-	// orc_barracks
-	// orc_beastiary
-	// orc_burrow
-	// orc_great_hall
-		// orc_stronghold
-		// orc_fortress
-	// orc_spirit_lodge
-	// orc_tauren_totem
-	// orc_voodoo_lounge
-	// orc_war_mill
-	// orc_watch_tower
-	
-	// Useable models
-	// models/props_structures/bad_standard001.vmdl
-	// models/items/pugna/ward/nether_grandmasters_ward/nether_grandmasters_ward.vmdl
-	// models/items/pugna/ward/nether_heart/nether_heart.vmdl
-	// models/items/pugna/ward/tentaclesofnetherreach/tentaclesofnetherreach.vmdl
-	// models/heroes/witchdoctor/witchdoctor_ward.vmdl
-	// models/items/juggernaut/ward_foo.vmdl
-	// models/items/juggernaut/ward/healing_gills_of_the_lost_isles/healing_gills_of_the_lost_isles.vmdl
-	// models/items/wards/warding_guise/warding_guise.vmdl
-	
-	// models/props_structures/dire_ancient_base001.vmdl
-	// models/props_structures/dire_barracks_melee001.vmdl
-	// models/props_structures/dire_barracks_ranged001.vmdl
 	
 	//=================================================================================
 	// Building: Altar of Storms
@@ -6113,7 +6040,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"140"
 		"CollisionSize"				"72"
 		
@@ -6370,7 +6297,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"50"
 		
@@ -6544,7 +6471,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"80"
 		"CollisionSize"				"72"
 		
@@ -6740,7 +6667,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"0"
@@ -6847,7 +6774,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"2"
@@ -6950,7 +6877,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"2"
@@ -7061,7 +6988,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"48"
 		"FormationRank"				"3"
@@ -7380,7 +7307,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"2"
@@ -7487,7 +7414,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"0"
@@ -7589,7 +7516,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"100"
 		"CollisionSize"				"48"
 		"FormationRank"				"2"
@@ -7874,7 +7801,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"48"
 		"FormationRank"				"0"
@@ -7924,38 +7851,6 @@
 		}
 	}
 	// Undead Buildings
-	// undead_altar_of_darkness
-	// undead_necropolis
-		// undead_halls_of_the_dead
-		// undead_black_citadel
-	// undead_boneyard
-	// undead_crypt
-	// undead_graveyard
-	// undead_temple_of_the_damned
-	// undead_haunted_gold_mine
-	// undead_slaughterhouse
-	// undead_tomb_of_relics
-	// undead_ziggurat
-		// undead_nerubian_tower
-		// undead_spirit_tower
-	// undead_sacrificial_pit
-	
-	// SemiUsable models
-	// models/props_structures/bad_ancient001.vmdl
-	// models/props_structures/bad_barracks001_destruction.vmdl
-	// models/props_structures/bad_ancient002.vmdl
-	// models/props_structures/bad_barracks001_melee.vmdl
-	// models/props_structures/bad_barracks001_ranged.vmdl
-	// models/props_structures/bad_column001.vmdl
-	// models/props_structures/bad_ancient_destruction.vmdl
-	// models/props_structures/well_skull.vmdl
-	// models/props_structures/statue_dragon003.vmdl
-	// models/buildings/building_racks_melee_reference.vmdl (needs attack point, available on RetroDota)
-	// models/props_structures/tower_bad.vmdl
-	// models/props_structures/tower_dragon_black.vmdl
-	// models/heroes/undying/undying_tower.vmdl
-	// models/items/undying/idol_of_ruination/idol_tower.vmdl
-	// models/items/undying/idol_of_ruination/idol_tower_gold.vmdl
 	
 	
 	//=================================================================================
@@ -8966,7 +8861,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"50"
 		
@@ -9055,7 +8950,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"190"
 		"CollisionSize"				"120"
 		
@@ -9152,7 +9047,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"190"
 		"CollisionSize"				"120"
 		
@@ -9248,7 +9143,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"190"
 		"CollisionSize"				"120"
 		
@@ -9335,7 +9230,7 @@
 	
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"190"
 		"CollisionSize"				"120"
 		
@@ -9362,6 +9257,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"
 		
 		// Status
 		//----------------------------------------------------------------
@@ -9649,7 +9545,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"60"
 		"CollisionSize"				"31"
 		"FormationRank"				"0"
@@ -9753,7 +9649,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"32"
 		"FormationRank"				"2"
@@ -9946,7 +9842,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"48"
 		"FormationRank"				"0"
@@ -10062,7 +9958,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"48"
 		"FormationRank"				"3"
@@ -10585,7 +10481,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"40"
 		"CollisionSize"				"31"
 		"FormationRank"				"0"
@@ -10676,7 +10572,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"31"
 		"FormationRank"				"2"
@@ -10853,7 +10749,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_kobold/kobold_c/n_creep_kobold_c.vmdl"
 		"ModelScale"				"1"
 		"Level"						"1"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -10926,7 +10821,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_gnoll/n_creep_gnoll_frost.vmdl"
 		"ModelScale"				"1"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11002,7 +10896,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_gnoll/n_creep_gnoll.vmdl"
 		"ModelScale"				"1"
 		"Level"						"1"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11077,7 +10970,6 @@
 		"Model"						"models/heroes/bristleback/bristleback.vmdl"
 		"ModelScale"				"1.4"
 		"Level"						"5"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11171,7 +11063,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_troll_dark_b/n_creep_troll_dark_b.vmdl"
 		"ModelScale"				"0.75"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11248,7 +11139,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_troll_dark_a/n_creep_troll_dark_a.vmdl"
 		"ModelScale"				"1"
 		"Level"						"4"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11329,7 +11219,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_high_priest.vmdl"
 		"ModelScale"				"1.1"
 		"Level"						"4"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11414,7 +11303,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
 		"ModelScale"				"1.3"
 		"Level"						"10"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11494,7 +11382,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_golem_a/neutral_creep_golem_a.vmdl"
 		"ModelScale"				"1"
 		"Level"						"6"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11573,7 +11460,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_ogre_lrg/n_creep_ogre_lrg.vmdl"
 		"ModelScale"				"1"
 		"Level"						"5"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11654,7 +11540,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_ogre_med/n_creep_ogre_med.vmdl"
 		"ModelScale"				"1"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11732,7 +11617,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_centaur_med/n_creep_centaur_med.vmdl"
 		"ModelScale"				"0.8"
 		"Level"						"2"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11805,7 +11689,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_centaur_med/n_creep_centaur_med.vmdl"
 		"ModelScale"				"1"
 		"Level"						"2"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11880,7 +11763,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_centaur_lrg/n_creep_centaur_lrg.vmdl"
 		"ModelScale"				"0.9"
 		"Level"						"4"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -11958,7 +11840,6 @@
 		"Model"						"models/heroes/centaur/centaur.vmdl"
 		"ModelScale"				"1"
 		"Level"						"5"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -12050,7 +11931,6 @@
 		"Model"						"models/heroes/bristleback/bristleback.vmdl"
 		"ModelScale"				"0.8"
 		"Level"						"1"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -12135,7 +12015,6 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.vmdl"
 		"ModelScale"				"0.5"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -12224,7 +12103,6 @@
 		"Model"						"models/heroes/bristleback/bristleback.vmdl"
 		"ModelScale"				"0.9"
 		"Level"						"5"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -12319,7 +12197,6 @@
 		"Model"						"models/heroes/bristleback/bristleback.vmdl"
 		"ModelScale"				"1.3"
 		"Level"						"7"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -12414,7 +12291,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_berserker.vmdl"
 		"ModelScale"				"1"
 		"Level"						"2"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -12489,7 +12365,6 @@
 	    "Model"                     "models/items/courier/nexon_turtle_01_grey/nexon_turtle_01_grey.vmdl" //No Attack animation
 	    "ModelScale"                "1.2"
 	    "Level"                     "1"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	    "UseNeutralCreepBehavior" 	"0"
 	
@@ -12565,7 +12440,6 @@
 	    "Model"                     "models/items/courier/raidcall_ems_one_turtle/raidcall_ems_one_turtle.vmdl" //No Attack animation
 	    "ModelScale"                "2"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	    "UseNeutralCreepBehavior" 	"0"
 	
@@ -12641,7 +12515,6 @@
 		"Model"						"models/items/courier/nexon_turtle_13_red/nexon_turtle_13_red.vmdl"
 		"ModelScale"				"2.5"
 		"Level"						"7"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -12715,7 +12588,6 @@
 	    "Model"                     "models/heroes/troll_warlord/troll_warlord.vmdl"
 	    "ModelScale"                "1.2"
 	    "Level"                     "6"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	    "UseNeutralCreepBehavior" 	"0"
 	
@@ -12800,7 +12672,6 @@
 	    "Model"                     "models/heroes/ogre_magi/ogre_magi.vmdl"
 	    "ModelScale"                "1.6"
 	    "Level"                     "7"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	    "UseNeutralCreepBehavior" 	"0"
 	
@@ -12890,7 +12761,6 @@
 	    "Model"                     "models/heroes/slark/slark.vmdl"
 	    "ModelScale"                "1.2"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	    "UseNeutralCreepBehavior" 	"0"
 	
@@ -12976,7 +12846,6 @@
 	    "Model"                     "models/heroes/slark/slark.vmdl"
 	    "ModelScale"                "1.0"
 	    "Level"                     "2"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	    "UseNeutralCreepBehavior" 	"0"
 	
@@ -13073,7 +12942,6 @@
 		"Model"						"models/heroes/arc_warden/arc_warden.vmdl"
 		"ModelScale"				"1"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13167,7 +13035,6 @@
 		"Model"						"models/heroes/bristleback/bristleback.vmdl"
 		"ModelScale"				"1.2"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13258,7 +13125,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_ogre_med/n_creep_ogre_med.vmdl"
 		"ModelScale"				"1.3"
 		"Level"						"5"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13336,7 +13202,6 @@
 		"Model"						"models/heroes/slark/slark.vmdl"
 		"ModelScale"				"0.8"
 		"Level"						"1"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13420,7 +13285,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_golem_a/neutral_creep_golem_a.vmdl"
 		"ModelScale"				"1.2"
 		"Level"						"9"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13501,7 +13365,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_berserker.vmdl"
 		"ModelScale"				"1"
 		"Level"						"2"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13576,7 +13439,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_high_priest.vmdl"
 		"ModelScale"				"0.9"
 		"Level"						"2"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13655,7 +13517,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_troll_dark_a/n_creep_troll_dark_a.vmdl"
 		"ModelScale"				"1"
 		"Level"						"4"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13735,7 +13596,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_forest_trolls/n_creep_forest_troll_high_priest.vmdl"
 		"ModelScale"				"1.1"
 		"Level"						"4"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13816,7 +13676,6 @@
 		"Model"                     "models/heroes/troll_warlord/troll_warlord.vmdl"
 	    "ModelScale"                "1.2"
 		"Level"						"6"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13901,7 +13760,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_troll_dark_b/n_creep_troll_dark_b.vmdl"
 		"ModelScale"				"0.75"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 		"UseNeutralCreepBehavior" 	"0"
 	
@@ -13990,7 +13848,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_kobold/kobold_a/n_creep_kobold_a.vmdl"
 		"ModelScale"				"1"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 	
 		"FormationRank"				"2"
@@ -14081,7 +13938,6 @@
 		"Model"						"models/heroes/meepo/meepo.vmdl"
 		"ModelScale"				"0.85"
 		"Level"						"3"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 	
 		"FormationRank"				"0"
@@ -14114,7 +13970,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"31"
 		"CollisionSize"				"31"
 		"FormationRank"				"0"
@@ -14173,7 +14029,6 @@
 		"Model"						"models/creeps/neutral_creeps/n_creep_kobold/kobold_c/n_creep_kobold_c.vmdl"
 		"ModelScale"				"1"
 		"Level"						"1"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 	
 		"AttacksEnabled"			"ground"
@@ -14256,7 +14111,6 @@
 		"Model"						"models/heroes/keeper_of_the_light/keeper_of_the_light.vmdl"
 		"ModelScale"				"1"
 		"Level"						"5"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"140"
 	
 		"AttacksEnabled"			"ground,air"
@@ -14291,7 +14145,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"32"
 		"CollisionSize"				"32"
 		"FormationRank"				"2"
@@ -14490,7 +14344,6 @@
 	    "Model"                     "models/props_structures/structure_fountain_radiant_basic.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "10"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	    
 	    // Abilities
@@ -14516,7 +14369,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "50"
 	    "CollisionSize"             "50"
 	    "FormationRank"             "0"
@@ -14552,7 +14405,6 @@
 	    "Model"                     "models/props_structures/structure_fountain_radiant_basic.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "10"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	    
 	    // Abilities
@@ -14578,7 +14430,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "50"
 	    "CollisionSize"             "50"
 	    "FormationRank"             "0"
@@ -14648,7 +14500,7 @@
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"70"
 		"CollisionSize"				"50"
 	
@@ -14706,7 +14558,6 @@
 	    "Model"                     "models/heroes/techies/techies.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -14735,7 +14586,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -14799,7 +14650,6 @@
 	    "Model"                     "models/courier/tegu/tegu_flying.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "1"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "AttacksEnabled"            "none"
@@ -14830,7 +14680,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "48"
 	    "CollisionSize"             "48"
 	    "FormationRank"             "2"
@@ -14881,7 +14731,6 @@
 	    "Model"                     "models/heroes/shredder/shredder.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -14921,7 +14770,7 @@
 	
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "48"
 	    "CollisionSize"             "48"
 	    "FormationRank"             "0"
@@ -14986,7 +14835,6 @@
 	    "Model"                     "models/heroes/dazzle/dazzle.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "2"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -15022,7 +14870,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "2"
@@ -15088,7 +14936,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_golem_b/n_creep_golem_b.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "2"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -15122,7 +14969,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "0"
@@ -15177,7 +15024,6 @@
 	    "Model"                     "models/heroes/rikimaru/rikimaru.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -15210,7 +15056,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -15262,7 +15108,6 @@
 	    "Model"                     "models/heroes/lanaya/lanaya.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -15298,7 +15143,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "2"
@@ -15350,7 +15195,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_kobold/kobold_a/n_creep_kobold_a.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -15386,7 +15230,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "2"
@@ -15441,7 +15285,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_centaur_lrg/n_creep_centaur_lrg.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -15473,7 +15316,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -15525,7 +15368,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_harpy_a/n_creep_harpy_a.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -15559,7 +15401,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "2"
@@ -15611,7 +15453,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_harpy_b/n_creep_harpy_b.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -15646,7 +15487,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "2"
@@ -15701,7 +15542,6 @@
 	    "Model"                     "models/heroes/clinkz/clinkz.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -15736,7 +15576,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "2"
@@ -15791,7 +15631,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_vulture_a/n_creep_vulture_a.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -15823,7 +15662,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "48"
 	    "CollisionSize"             "48"
 	    "FormationRank"             "0"
@@ -15875,7 +15714,6 @@
 	    "Model"                     "models/heroes/slark/slark.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -15911,7 +15749,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "0"
@@ -15966,7 +15804,6 @@
 	    "Model"                     "models/heroes/slardar/slardar.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "5"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -15998,7 +15835,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -16050,7 +15887,6 @@
 	    "Model"                     "models/heroes/siren/siren.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "5"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -16086,7 +15922,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -16141,7 +15977,6 @@
 	    "Model"                     "models/items/warlock/warlock_fourleg_demon.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -16173,7 +16008,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_SIEGE"
 	    "RingRadius"                "16"
 	    "CollisionSize"             "16"
 	    "FormationRank"             "0"
@@ -16225,7 +16060,6 @@
 	    "Model"                     "models/heroes/oracle/oracle.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "2"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -16260,7 +16094,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_SIEGE"
 	    "RingRadius"                "16"
 	    "CollisionSize"             "16"
 	    "FormationRank"             "2"
@@ -16315,7 +16149,6 @@
 	    "Model"                     "models/heroes/bane/bane.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -16350,7 +16183,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -16405,7 +16238,6 @@
 	    "Model"                     "models/heroes/dark_seer/dark_seer.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "5"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -16438,7 +16270,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -16493,7 +16325,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_satyr_c/n_creep_satyr_c.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -16529,7 +16360,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "0"
@@ -16585,7 +16416,6 @@
 	    "Model"                     "models/items/lone_druid/true_form/wizened_bear/wizened_bear.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -16620,7 +16450,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "48"
 	    "CollisionSize"             "48"
 	    "FormationRank"             "2"
@@ -16675,7 +16505,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_thunder_lizard/n_creep_thunder_lizard_big.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "6"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -16711,7 +16540,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "48"
 	    "CollisionSize"             "48"
 	    "FormationRank"             "1"
@@ -16766,7 +16595,6 @@
 	    "Model"                     "models/heroes/slark/slark.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -16799,7 +16627,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "0"
@@ -16852,7 +16680,6 @@
 	    "Model"                     "models/heroes/venomancer/venomancer.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -16887,7 +16714,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "0"
@@ -16943,7 +16770,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_satyr_a/n_creep_satyr_a.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "5"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -16977,7 +16803,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "2"
@@ -17032,7 +16858,6 @@
 	    "Model"                     "models/heroes/broodmother/spiderling.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "1"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -17067,7 +16892,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "48"
 	    "CollisionSize"             "48"
 	    "FormationRank"             "2"
@@ -17119,7 +16944,6 @@
 	    "Model"                     "models/courier/baby_winter_wyvern/baby_winter_wyvern.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -17152,7 +16976,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "0"
@@ -17204,7 +17028,6 @@
 	    "Model"                     "models/heroes/magnataur/magnataur.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "5"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -17237,7 +17060,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -17289,7 +17112,6 @@
 	    "Model"                     "models/items/lone_druid/true_form/iron_claw_true_form/iron_claw_true_form.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -17325,7 +17147,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "2"
@@ -17380,7 +17202,6 @@
 	    "Model"                     "models/heroes/broodmother/broodmother.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -17413,7 +17234,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -17465,7 +17286,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_troll_dark_a/n_creep_troll_dark_a.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -17499,7 +17319,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "2"
@@ -17551,7 +17371,6 @@
 	    "Model"                     "models/heroes/razor/razor.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "4"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -17584,7 +17403,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "2"
@@ -17639,7 +17458,6 @@
 	    "Model"                     "models/heroes/weaver/weaver.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "3"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "2"
@@ -17676,7 +17494,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "32"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
@@ -17731,7 +17549,6 @@
 	    "Model"                     "models/creeps/neutral_creeps/n_creep_kobold/kobold_c/n_creep_kobold_c.vmdl"
 	    "ModelScale"                "1"
 	    "Level"                     "1"
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
@@ -17763,7 +17580,7 @@
 	    
 	    // Bounds
 	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
 	    "RingRadius"                "31"
 	    "CollisionSize"             "31"
 	    "FormationRank"             "0"
@@ -21727,7 +21544,7 @@
 		"ArmorType"				"fortified"
 		"UnitRelationShipClass"	"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
-		"BoundsHullName"		"DOTA_HULL_SIZE_BARRACKS"
+		"BoundsHullName"		"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"			"110"
 		"CollisionSize"			"48"
 	
@@ -21804,7 +21621,7 @@
 		"ArmorType"				"fortified"
 		"UnitRelationShipClass"	"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
-		"BoundsHullName"		"DOTA_HULL_SIZE_BARRACKS"
+		"BoundsHullName"		"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"			"110"
 		"CollisionSize"			"48"
 	
@@ -21881,7 +21698,7 @@
 		"ArmorType"				"fortified"
 		"UnitRelationShipClass"	"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
-		"BoundsHullName"		"DOTA_HULL_SIZE_BARRACKS"
+		"BoundsHullName"		"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"			"110"
 		"CollisionSize"			"48"
 	

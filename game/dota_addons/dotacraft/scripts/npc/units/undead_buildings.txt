@@ -1,36 +1,4 @@
 // Undead Buildings
-// undead_altar_of_darkness
-// undead_necropolis
-	// undead_halls_of_the_dead
-	// undead_black_citadel
-// undead_boneyard
-// undead_crypt
-// undead_graveyard
-// undead_temple_of_the_damned
-// undead_haunted_gold_mine
-// undead_slaughterhouse
-// undead_tomb_of_relics
-// undead_ziggurat
-	// undead_nerubian_tower
-	// undead_spirit_tower
-// undead_sacrificial_pit
-
-// SemiUsable models
-// models/props_structures/bad_ancient001.vmdl
-// models/props_structures/bad_barracks001_destruction.vmdl
-// models/props_structures/bad_ancient002.vmdl
-// models/props_structures/bad_barracks001_melee.vmdl
-// models/props_structures/bad_barracks001_ranged.vmdl
-// models/props_structures/bad_column001.vmdl
-// models/props_structures/bad_ancient_destruction.vmdl
-// models/props_structures/well_skull.vmdl
-// models/props_structures/statue_dragon003.vmdl
-// models/buildings/building_racks_melee_reference.vmdl (needs attack point, available on RetroDota)
-// models/props_structures/tower_bad.vmdl
-// models/props_structures/tower_dragon_black.vmdl
-// models/heroes/undying/undying_tower.vmdl
-// models/items/undying/idol_of_ruination/idol_tower.vmdl
-// models/items/undying/idol_of_ruination/idol_tower_gold.vmdl
 
 
 //=================================================================================
@@ -1041,7 +1009,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 	"RingRadius"				"70"
 	"CollisionSize"				"50"
 	
@@ -1130,7 +1098,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 	"RingRadius"				"190"
 	"CollisionSize"				"120"
 	
@@ -1227,7 +1195,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 	"RingRadius"				"190"
 	"CollisionSize"				"120"
 	
@@ -1323,7 +1291,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 	"RingRadius"				"190"
 	"CollisionSize"				"120"
 	
@@ -1410,7 +1378,7 @@
 
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 	"RingRadius"				"190"
 	"CollisionSize"				"120"
 	
@@ -1437,6 +1405,7 @@
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"0"
 	
 	// Status
 	//----------------------------------------------------------------

@@ -4,7 +4,53 @@ end
 
 function Units:start()
     self.Races = LoadKeyValues("scripts/kv/races.kv")
-    self.started = true
+
+    -- Validate BoundsHullName with CollisionSize
+    local builds = {}
+    local units = {}
+    for k,v in pairs(KeyValues.UnitKV) do
+        local hullName = GetUnitKV(k, "BoundsHullName")
+        local collisionSize = GetUnitKV(k, "CollisionSize")
+        if hullName and collisionSize and HULL_SIZES[hullName] then
+            if HULL_SIZES[hullName] ~= collisionSize then
+                local bestHull = 999
+                local bestName
+                for name,value in pairs(HULL_SIZES) do
+                    if value >= collisionSize then
+                        local difference = value-collisionSize
+                        if difference < bestHull-collisionSize then
+                            bestHull = value
+                            bestName = name
+                        end
+                    end
+                end
+                if bestName then
+                    if bestName ~= hullName then
+                        if GetUnitKV(k, "MovementSpeed") == 0 then
+                            table.insert(builds, string.format("%-40s -> %-23s", k, bestName))
+                        else
+                            table.insert(units, string.format("%-40s -> %-23s", k, bestName))
+                        end
+                    end
+                elseif hullName ~= "DOTA_HULL_SIZE_BARRACKS" then
+                    if GetUnitKV(k, "MovementSpeed") == 0 then
+                        table.insert(builds, string.format("%-40s -> %-23s", k, "DOTA_HULL_SIZE_BARRACKS"))
+                    else
+                        table.insert(units, string.format("%-40s -> %-23s", k, "DOTA_HULL_SIZE_BARRACKS"))
+                    end
+                end
+            end
+        end
+    end
+    if #units > 0 or #builds > 0 then
+        print("Problematic BoundsHullName-CollisionSize values found.\nProposed changes:")
+        for k,v in pairs(units) do
+            print(v)
+        end
+        for k,v in pairs(builds) do
+            print(v)
+        end
+    end
 end
 
 -- Initializes one unit with all its required modifiers and functions
@@ -53,10 +99,9 @@ function Units:Init( unit )
     ApplyModifier(unit, "modifier_specially_deniable")
 
     -- Adjust Hull
-    local collision_size = GetCollisionSize(unit)
-    local hull_radius = unit:GetHullRadius()
-    if collision_size and collision_size > hull_radius+10 then
-        unit:SetHullRadius(GetCollisionSize(unit))
+    local collision_size = unit:GetCollisionSize()
+    if collision_size then
+        unit:SetHullRadius(collision_size)
     end
 
     -- Special Tree-Attacking units
@@ -138,11 +183,20 @@ function GetBuildTime( unit )
     return 0
 end
 
-function GetCollisionSize( unit )
-    if unit and IsValidEntity(unit) then
-        return GameRules.UnitKV[unit:GetUnitName()]["CollisionSize"] or 0
-    end
-    return 0
+HULL_SIZES = {
+    ["DOTA_HULL_SIZE_BARRACKS"]=144,
+    ["DOTA_HULL_SIZE_BUILDING"]=81,
+    ["DOTA_HULL_SIZE_FILLER"]=96,
+    ["DOTA_HULL_SIZE_HERO"]=24,
+    ["DOTA_HULL_SIZE_HUGE"]=80,
+    ["DOTA_HULL_SIZE_REGULAR"]=16,
+    ["DOTA_HULL_SIZE_SIEGE"]=16,
+    ["DOTA_HULL_SIZE_SMALL"]=8,
+    ["DOTA_HULL_SIZE_TOWER"]=144,
+}
+
+function CDOTA_BaseNPC:GetCollisionSize()
+    return self:GetKeyValue("CollisionSize")
 end
 
 -- Resolve to the method in CDOTA_BaseNPC_Creature or CDOTA_BaseNPC_Hero if its a hero
@@ -466,4 +520,4 @@ function CDOTA_BaseNPC:ShouldAbsorbSpell(caster, ability)
     return false
 end
 
-if not Units.started then Units:start() end
+Units:start()

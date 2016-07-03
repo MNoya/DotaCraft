@@ -1,30 +1,4 @@
 // Orc Buildings
-// orc_altar_of_storms
-// orc_barracks
-// orc_beastiary
-// orc_burrow
-// orc_great_hall
-	// orc_stronghold
-	// orc_fortress
-// orc_spirit_lodge
-// orc_tauren_totem
-// orc_voodoo_lounge
-// orc_war_mill
-// orc_watch_tower
-
-// Useable models
-// models/props_structures/bad_standard001.vmdl
-// models/items/pugna/ward/nether_grandmasters_ward/nether_grandmasters_ward.vmdl
-// models/items/pugna/ward/nether_heart/nether_heart.vmdl
-// models/items/pugna/ward/tentaclesofnetherreach/tentaclesofnetherreach.vmdl
-// models/heroes/witchdoctor/witchdoctor_ward.vmdl
-// models/items/juggernaut/ward_foo.vmdl
-// models/items/juggernaut/ward/healing_gills_of_the_lost_isles/healing_gills_of_the_lost_isles.vmdl
-// models/items/wards/warding_guise/warding_guise.vmdl
-
-// models/props_structures/dire_ancient_base001.vmdl
-// models/props_structures/dire_barracks_melee001.vmdl
-// models/props_structures/dire_barracks_ranged001.vmdl
 
 //=================================================================================
 // Building: Altar of Storms
@@ -607,7 +581,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 	"RingRadius"				"140"
 	"CollisionSize"				"72"
 	
@@ -864,7 +838,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 	"RingRadius"				"70"
 	"CollisionSize"				"50"
 	
@@ -1038,7 +1012,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 	"RingRadius"				"80"
 	"CollisionSize"				"72"
 	

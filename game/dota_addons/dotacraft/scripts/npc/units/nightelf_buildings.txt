@@ -1,35 +1,4 @@
 // Night Elf Buildings
-// Ancients (Creatures, can move if unrooted)
-// nightelf_ancient_of_lore
-// nightelf_ancient_of_war
-// nightelf_ancient_of_wind
-// nightelf_ancient_of_wonders
-// nightelf_ancient_protector
-// nightelf_tree_of_life
-// nightelf_tree_of_ages
-// nightelf_tree_of_eternity
-
-// Normal Structures
-// nightelf_altar_of_elders
-// nightelf_chimaera_roost
-// nightelf_hunters_hall
-// nightelf_moon_well
-// nightelf_entangled_gold_mine
-
-// Treant Models for Ancients
-// models/items/furion/treant/father_treant/father_treant.vmdl (City Center lvl 2)
-// models/items/furion/treant/furion_treant_nelum_red/furion_treant_nelum_red.vmdl (Lore)
-// models/items/furion/treant/primeval_treant/primeval_treant.vmdl (War)
-// models/items/furion/treant/eternalseasons_treant/eternalseasons_treant.vmdl (City Center lvl 3)
-// models/items/furion/treant_stump.vmdl (City Center lvl 1)
-// models/items/furion/treant_flower_1.vmdl (Wind)
-// models/items/furion/treant/shroomling_treant/shroomling_treant.vmdl (Wonders)
-// models/heroes/treant_protector/treant_protector.vmdl + cosmetics (not on source2 yet) (Protector Tower)
-
-// Unused
-// models/items/furion/treant/fungal_lord_shroomthing/fungal_lord_shroomthing.vmdl
-// models/items/furion/treant/treant_cis/treant_cis.vmdl
-// models/items/furion/treant/hallowed_horde/hallowed_horde.vmdl
 
 //=================================================================================
 // Building: Ancient of Lore
@@ -1132,7 +1101,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 	"RingRadius"				"140"
 	"CollisionSize"				"72"
 	
@@ -1223,7 +1192,7 @@
 	
 	// Bounds
 	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 	"RingRadius"				"70"
 	"CollisionSize"				"50"
 	
