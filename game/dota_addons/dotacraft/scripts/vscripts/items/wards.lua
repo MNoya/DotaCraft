@@ -14,6 +14,20 @@ end
 
 modifier_sentry_ward = class({})
 
+function modifier_sentry_ward:OnCreated()
+    if IsServer() then
+        local ability = self:GetAbility()
+        self.radius = ability and ability:GetSpecialValueFor("radius") or 1600
+        self.team = self:GetCaster():GetTeamNumber()
+        self:OnIntervalThink()
+        self:StartIntervalThink(1)
+    end
+end
+
+function modifier_sentry_ward:OnIntervalThink()
+    AddFOWViewer(self.team, self:GetParent():GetAbsOrigin(), self.radius, 1.5, false)
+end
+
 function modifier_sentry_ward:CheckState() 
     return { [MODIFIER_STATE_INVISIBLE] = true, }
 end
@@ -43,7 +57,7 @@ function modifier_sentry_ward:IsHidden()
 end
 
 function modifier_sentry_ward:GetAuraRadius()
-    return self:GetAbility():GetSpecialValueFor("radius") or 1600
+    return self:GetAbility() and self:GetAbility():GetSpecialValueFor("radius") or 1600
 end
 
 function modifier_sentry_ward:GetModifierAura()

@@ -100,8 +100,9 @@ function Drops:Roll( creep )
         -- Reach each drop line
         for item_type,v in pairs(creepDrops) do
             if item_type == "item" then
-                self:print("Dropping "..v)
-                self:Create(v, creep:GetAbsOrigin())
+                local itemName = "item_"..v
+                self:print("Dropping "..itemName)
+                self:Create(itemName, creep:GetAbsOrigin())
             else
                 local item_type_table = self.TierList[item_type]
                 local possible_item_drops = item_type_table[tostring(v)]
