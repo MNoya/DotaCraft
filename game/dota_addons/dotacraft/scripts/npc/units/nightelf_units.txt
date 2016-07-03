@@ -552,7 +552,6 @@
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"HealthBarOffset"			"140"
 	"HasInventory"				"1"
-	"FormationRank"				"1"
     "SoundSet"                  "Hero_LoneDruid"
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
 
@@ -589,6 +588,13 @@
 	//----------------------------------------------------------------
 	"BountyGoldMin"				"32.0"
 	"BountyGoldMax"				"46.0"
+
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
+	"RingRadius"				"70"
+	"CollisionSize"				"32"
+	"FormationRank"				"1"
 	
 	// Gold and Lumber
 	//----------------------------------------------------------------

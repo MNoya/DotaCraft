@@ -101,7 +101,8 @@ function Units:Init( unit )
     -- Adjust Hull
     local collision_size = unit:GetCollisionSize()
     if collision_size then
-        unit:SetHullRadius(collision_size)
+        local offset = unit:GetKeyValue("BoundsHullName") == "DOTA_HULL_SIZE_HUGE" and 20 or 10
+        unit:SetHullRadius(collision_size+offset)
     end
 
     -- Special Tree-Attacking units
