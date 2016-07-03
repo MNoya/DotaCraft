@@ -99,9 +99,10 @@ function Units:Init( unit )
     ApplyModifier(unit, "modifier_specially_deniable")
 
     -- Adjust Hull
+    unit:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
     local collision_size = unit:GetCollisionSize()
     if collision_size then
-        local offset = unit:GetKeyValue("BoundsHullName") == "DOTA_HULL_SIZE_HUGE" and 20 or 10
+        local offset = unit:GetKeyValue("BoundsHullName") == "DOTA_HULL_SIZE_HUGE" and 10 or 0
         unit:SetHullRadius(collision_size+offset)
     end
 

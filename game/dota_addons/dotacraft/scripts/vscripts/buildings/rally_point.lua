@@ -56,7 +56,7 @@ function SetRallyPoint( event )
 		forwardVec = forwardVec:Normalized()
 
 		-- For the initial rally point, get point away from the building looking towards (0,0,0)
-		local position = origin + forwardVec * 220
+		local position = origin + forwardVec * 250
 		position = GetGroundPosition(position, caster)
 
 		-- Keep track of this position so that every unit is autospawned there (avoids going around the)

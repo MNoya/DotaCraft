@@ -20,7 +20,9 @@ function BuildHero( event )
 		new_hero:SetControllableByPlayer(playerID, true)
 		new_hero:SetOwner(player)
 		new_hero:RespawnUnit()
-		FindClearSpaceForUnit(new_hero, origin, true)
+		Timers:CreateTimer(0.03, function()
+			FindClearSpaceForUnit(new_hero, origin, true)
+		end)
 
 		CreateAttachmentsForPlayerHero(playerID, new_hero)
 		

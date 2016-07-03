@@ -1275,7 +1275,7 @@ function dotacraft:CheckDefeatCondition( teamNumber )
     end
 
     -- Victory: Only 1 team left standing
-    local teamCount = dotacraft:GetTeamCount()
+    local teamCount = #Teams:GetValidTeams()
     print("Team Count: "..teamCount,"Defeated Teams: "..GameRules.DefeatedTeamCount)
 
     if GameRules.DefeatedTeamCount+1 >= teamCount then
