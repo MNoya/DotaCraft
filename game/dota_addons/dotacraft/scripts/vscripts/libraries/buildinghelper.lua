@@ -58,6 +58,7 @@ function BuildingHelper:Init()
     LinkLuaModifier("modifier_disable_turning", "libraries/modifiers/modifier_disable_turning", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_builder_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_tree_cut", "libraries/modifiers/modifier_tree_cut", LUA_MODIFIER_MOTION_NONE)
     
     -- Check KVs and set relevant construction_size nettable values
     self:ParseKV()
@@ -279,15 +280,9 @@ function BuildingHelper:OnTreeCut(keys)
     end
 
     -- Create a dummy for clients to be able to detect trees standing and block their grid
-    tree.chopped_dummy = CreateUnitByName("npc_dota_thinker", treePos, false, nil, nil, 0)
+    tree.chopped_dummy = CreateUnitByName("npc_dota_units_base", treePos, false, nil, nil, 0)
+    tree.chopped_dummy:AddNewModifier(tree.chopped_dummy,nil,"modifier_tree_cut",{})
     BuildingHelper.TreeDummies[tree:GetEntityIndex()] = tree.chopped_dummy
-
-    local tree_ability = tree.chopped_dummy:AddAbility("dummy_tree")
-    if not tree_ability then
-        BuildingHelper:print("ERROR: dummy_tree ability is missing!")
-    else
-        tree_ability:SetLevel(1)
-    end
 
     -- Allow construction
     if not GridNav:IsBlocked(treePos) then
