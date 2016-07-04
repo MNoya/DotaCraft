@@ -57,7 +57,7 @@ function modifier_sentry_ward:IsHidden()
 end
 
 function modifier_sentry_ward:GetAuraRadius()
-    return self:GetAbility() and self:GetAbility():GetSpecialValueFor("radius") or 1600
+    return self.radius
 end
 
 function modifier_sentry_ward:GetModifierAura()

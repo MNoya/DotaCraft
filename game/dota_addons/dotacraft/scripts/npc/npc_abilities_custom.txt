@@ -6197,7 +6197,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"reveal_radius"	"600 1800 4000"
+				"radius"		"600 1800 4000"
 			}
 			"02"
 			{
@@ -6228,21 +6228,16 @@
 			{	
 				"IsHidden"			"1"
 				"Duration"			"%duration"
-				"Aura"          	"modifier_far_sight_vision"
-				"Aura_Radius"   	"%reveal_radius"
-				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
-			}
-	
-			"modifier_far_sight_vision"
-			{
-				"States"
+				"OnCreated"
 				{
-					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_true_sight_aura"
+				        "Target"        "TARGET"
+				    }
 				}
 			}
 		}
-		
 	}
 	// Far Seer Feral Spirit
 	// Author: Noya
@@ -15438,51 +15433,31 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityCastRange"              "900"
+	
+		"AbilitySpecial"
+		{
+		    "01"
+		    {
+		        "var_type"          "FIELD_INTEGER"
+		        "radius"            "900"
+		    }
+		}
 	
 		"Modifiers"
 		{
-			"modifier_true_sight"
+			"modifier_human_true_sight"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
 		
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
+				"OnCreated"
 				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"900"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					
-						"Action"    
-						{
-							"RemoveModifier"
-							{
-								"ModifierName"	"modifier_true_sight_reveal"
-								"Target" 		"TARGET"
-							}
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_true_sight_reveal"
-								"Target" 		"TARGET"
-							}
-						}
-					}			
-				}
-			}
-	
-			"modifier_true_sight_reveal"
-			{
-				"IsHidden"			"1"
-				"Duration"			"0.03"
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_true_sight_aura"
+				        "Target"        "TARGET"
+				    }
 				}
 			}
 		}	
@@ -16121,6 +16096,7 @@
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityCastRange"              "900"
 	
 		"AbilitySpecial"
 		{
@@ -16135,46 +16111,17 @@
 		{
 			"modifier_magic_sentry"
 			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				"EffectName"		"particles/items2_fx/ward_true_sight.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"OnCreated"
 				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					
-						"Action"    
-						{
-							"RemoveModifier"
-							{
-								"ModifierName"	"modifier_true_sight_reveal"
-								"Target" 		"TARGET"
-							}
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_true_sight_reveal"
-								"Target" 		"TARGET"
-							}
-						}
-					}			
-				}
-			}
-	
-			"modifier_true_sight_reveal"
-			{
-				"IsHidden"			"1"
-				"Duration"			"0.03"
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_true_sight_aura"
+				        "Target"        "TARGET"
+				    }
 				}
 			}
 		}	
@@ -16197,7 +16144,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"reveal_radius"	"1800"
+				"radius"		"1800"
 			}
 			"02"
 			{
@@ -16228,17 +16175,13 @@
 			{	
 				"IsHidden"			"1"
 				"Duration"			"%duration"
-				"Aura"          	"modifier_reveal_vision"
-				"Aura_Radius"   	"%reveal_radius"
-				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
-			}
-	
-			"modifier_reveal_vision"
-			{
-				"States"
+				"OnCreated"
 				{
-					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_true_sight_aura"
+				        "Target"        "TARGET"
+				    }
 				}
 			}
 		}

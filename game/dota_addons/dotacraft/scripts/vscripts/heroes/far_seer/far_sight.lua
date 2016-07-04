@@ -7,7 +7,7 @@ function FarSight( event )
 	local caster = event.caster
 	local ability = event.ability
 	local level = ability:GetLevel()
-	local reveal_radius = ability:GetLevelSpecialValueFor( "reveal_radius", level - 1 )
+	local reveal_radius = ability:GetLevelSpecialValueFor( "radius", level - 1 )
 	local duration = ability:GetLevelSpecialValueFor( "duration", level - 1 )
 
 	local allHeroes = HeroList:GetAllHeroes()

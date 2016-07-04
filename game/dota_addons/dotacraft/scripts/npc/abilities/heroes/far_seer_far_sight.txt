@@ -31,7 +31,7 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"reveal_radius"	"600 1800 4000"
+			"radius"		"600 1800 4000"
 		}
 		"02"
 		{
@@ -62,19 +62,14 @@
 		{	
 			"IsHidden"			"1"
 			"Duration"			"%duration"
-			"Aura"          	"modifier_far_sight_vision"
-			"Aura_Radius"   	"%reveal_radius"
-			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
-		}
-
-		"modifier_far_sight_vision"
-		{
-			"States"
+			"OnCreated"
 			{
-				"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
+			    "ApplyModifier"
+			    {
+			        "ModifierName"  "modifier_true_sight_aura"
+			        "Target"        "TARGET"
+			    }
 			}
 		}
 	}
-	
 }
