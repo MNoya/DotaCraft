@@ -28,6 +28,7 @@ TEST_CODES = {
     ["createunits"] = function(...) dotacraft:CreateUnits(...) end,    -- Creates 'name' units around the currently selected unit, with optional num and neutral team
     ["testhero"] = function(...) dotacraft:TestHero(...) end,          -- Creates 'name' max level hero at the currently selected unit, optional team num
     ["testunit"] = function(...) dotacraft:TestUnit(...) end,          -- Creates 'name' unit
+    ["testbuilding"] = function(...) dotacraft:TestBuilding(...) end,          -- Creates 'name' building unit
 }
 
 function dotacraft:DeveloperMode(player)
@@ -351,6 +352,31 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
 
             FindClearSpaceForUnit(unit, selected:GetAbsOrigin()+RandomVector(100), true)
             unit:Hold()
+
+        end, playerID)
+    end
+end
+
+function dotacraft:TestBuilding(playerID, name, bEnemy)
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+
+    local pos = selected:GetAbsOrigin() + RandomVector(300)
+    local unitName
+    for k,_ in pairs(KeyValues.UnitKV) do
+        if k:match(name) then
+            unitName = k
+        end
+    end
+    local team = PlayerResource:GetTeam(playerID)
+    if unitName then
+        PrecacheUnitByNameAsync(unitName, function()
+            local unit = BuildingHelper:PlaceBuilding(0, name, pos)
+
+            if bEnemy then 
+                unit:SetTeam(DOTA_TEAM_NEUTRALS)
+            end
 
         end, playerID)
     end

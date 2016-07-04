@@ -128,8 +128,8 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_client_convars", "libraries/modifiers/modifier_client_convars", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_summoned", "libraries/modifiers/modifier_summoned", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_flying_control", "libraries/modifiers/modifier_flying_control", LUA_MODIFIER_MOTION_NONE)
-    LinkLuaModifier("modifier_autoattack", "units/attacks", LUA_MODIFIER_MOTION_NONE)
-    LinkLuaModifier("modifier_autoattack_passive", "units/attacks", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_autoattack", "units/attack_modifiers", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_autoattack_passive", "units/attack_modifiers", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
@@ -148,6 +148,8 @@ function dotacraft:InitGameMode()
     -- Don't end the game if everyone is unassigned
     SendToServerConsole("dota_surrender_on_disconnect 0")
     SendToServerConsole("dota_auto_surrender_all_disconnected_timeout 1000000")
+
+    SendToServerConsole("r_farz 10000")
 
     -- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
     -- Note: When the abilities change, we need to update this value.

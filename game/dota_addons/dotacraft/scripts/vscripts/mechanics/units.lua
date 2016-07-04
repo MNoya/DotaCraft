@@ -439,7 +439,7 @@ function IsAlliedUnit( unit, target )
 end
 
 function IsNeutralUnit( target )
-    return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS)
+    return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS and target.campCenter)
 end
 
 function HasArtilleryAttack( unit )

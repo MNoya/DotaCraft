@@ -109,7 +109,7 @@ end
 -- Returns a list of all heroes trained by this team, to use when spliting XP globally
 function Heroes:TeamHeroList(teamNumber)
     local heroes = {}
-    local playerIDs = dotacraft:GetPlayersOnTeam(teamNumber)
+    local playerIDs = Teams:GetPlayersOnTeam(teamNumber)
     for _,playerID in pairs(playerIDs) do
         local playerHeroes = Players:GetHeroes(playerID)
         for _,hero in pairs(playerHeroes) do
