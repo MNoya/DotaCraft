@@ -2301,7 +2301,7 @@
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-	// Remember that buildings can't take magical damage.
+	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		
 	"AbilityCastRange"			"450"
 	"AbilityCastPoint"			"0"
@@ -2313,32 +2313,13 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"150"
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"150"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"damage_bonus"					"20"
-		}
-		"03"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"small_damage_factor"			"0.25"
-		}
-		"04"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"medium_damage_factor"			"0.45"
-		}
-		// I don't know what the crap these are, apparently there are 3 different zones?
-		// A value called "Full Damage Radius" is set to 1, I believe only the attacked unit can fit in this.
-		// Maybe the damage scales down to medium for the attacked building and then down to small for buildings in half damage radius.
-		// OR MAYBE the damage scales down to small for Small armor type or medium for Medium armor type.
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"half_damage_radius"	"75"
+			"var_type"			"FIELD_INTEGER"
+			"damage_bonus"		"20"
 		}
 	}
 
@@ -2358,50 +2339,26 @@
 		{
 			"Passive"		"1"
 			"IsHidden"	 	"1"
-			
-			"Orb"
+
+			"OnAttackStart"
 			{
-				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
-				"ProjectileName"    "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
-				"CastAttack"		"1"
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/undead/destroyer.lua"
+			        "Function"      "OrbStart"
+			    }
 			}
 
-			"OnOrbFire"
+			"OnAttackLanded"
 			{
-				"SpendMana"
+			    "RunScript"
 				{
-					"Mana"    "%AbilityManaCost"
+				    "ScriptFile"    "units/undead/destroyer.lua"
+				    "Function"      "OrbDamage"
 				}
-				"FireSound"
-				{
-					"EffectName"		"Hero_ObsidianDestroyer.ArcaneOrb"
-					"Target"			"CASTER"
-				}			
-			}
-			
-			"OnOrbImpact"
-			{
-				"Damage"
-				{
-					"Type"          "DAMAGE_TYPE_MAGICAL"
-					"Damage"        "%damage_bonus"
-					"Target"
-					{
-						"Center"  	"TARGET"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					}
-				}
-				"FireSound"
-				{
-					"EffectName"		"Hero_ObsidianDestroyer.ArcaneOrb.Impact"
-					"Target"			"TARGET"
-				}	
 			}
 		}
 	}
-
 }
 
 //=================================================================================

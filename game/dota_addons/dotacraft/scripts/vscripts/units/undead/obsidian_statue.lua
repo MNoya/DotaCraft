@@ -154,7 +154,11 @@ function undead_essence_of_blight(keys)
 		end
 		
 	else -- refund mana & remove cooldown
-		Timers:CreateTimer(function() caster:SetMana(caster_mana_refund) end)
+		Timers:CreateTimer(function() 
+			if IsValidEntity(caster) and caster:IsAlive() then
+				caster:SetMana(caster_mana_refund)
+			end
+		end)
 		ability:EndCooldown()
 		partnerability:EndCooldown()		
 	end

@@ -1,3 +1,44 @@
+function OrbStart(event)
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+	ability.orbAttack = false
+
+	if ability:GetAutoCastState() then
+		local manaCost = ability:GetManaCost(1)
+		if caster:GetMana() >= manaCost then
+			ability.orbAttack = true
+			caster:SetRangedProjectileName("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf")
+			caster:SpendMana(manaCost,ability)
+			caster:EmitSound("Hero_ObsidianDestroyer.ArcaneOrb")
+		end
+	end
+	
+	if not ability.orbAttack then
+		caster:SetRangedProjectileName("particles/units/heroes/hero_bane/bane_projectile.vpcf")
+	end
+end
+
+function OrbDamage(event)
+	local caster = event.caster
+	local target = event.target
+	local ability = event.ability
+	local damage = ability:GetSpecialValueFor("damage_bonus")
+	local radius = ability:GetSpecialValueFor("radius")
+	local enemies = FindEnemiesInRadius( caster, radius, target:GetAbsOrigin() )
+	
+	if ability.orbAttack then
+		enemy:EmitSound("Hero_ObsidianDestroyer.ArcaneOrb.Impact")
+		for _,enemy in pairs(enemies) do
+			if IsCustomBuilding(enemy) then
+				DamageBuilding(target, damage, ability, caster)
+			else
+				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			end
+		end
+	end
+end
+
 function undead_absorb_mana(keys)
 	local caster = keys.caster
 	local target = keys.target
