@@ -113,7 +113,7 @@ function Units:Init( unit )
 
     -- Flying Height Z control
     Timers:CreateTimer(0.03, function()
-        if unit:HasFlyMovementCapability() then
+        if unit:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY" then
             unit:AddNewModifier(unit,nil,"modifier_flying_control",{})
         end
     end)
@@ -216,8 +216,17 @@ function GetOriginalModelScale( unit )
     return GameRules.UnitKV[unit:GetUnitName()]["ModelScale"] or unit:GetModelScale()
 end
 
+function SetRangedProjectileName( unit, pProjectileName )
+    unit:SetRangedProjectileName(pProjectileName)
+    unit.projectileName = pProjectileName
+end
+
+function GetOriginalRangedProjectileName( unit )
+    return unit:GetKeyValue("ProjectileModel") or ""
+end
+
 function GetRangedProjectileName( unit )
-    return GameRules.UnitKV[unit:GetUnitName()]["ProjectileModel"] or ""
+    return unit.projectileName or unit:GetKeyValue("ProjectileModel") or ""
 end
 
 -- Checks the UnitLabel for "city_center"
@@ -475,7 +484,7 @@ end
 function CDOTA_BaseNPC:SetAttackType( attack_type )
     local current_attack_type = self:GetAttackType()
     self:RemoveModifierByName("modifier_attack_"..current_attack_type)
-    self.AttackType = current_attack_type
+    self.AttackType = attack_type
     ApplyModifier(self, "modifier_attack_"..attack_type)
 end
 
