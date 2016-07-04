@@ -4,13 +4,15 @@
 	"AbilityTextureName"			"shredder_gather"
 	"MaxLevel" 						"1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 
-	// Mark this as a BuildingHelper ability to skip CancelQueue when cast
-	"Building"						"1"
+	// Gatherer Key Values
+    "LumberGainInterval"            "1"
+    "LumberPerInterval"             "10"
+    "DamageTree"                    "10"
 
 	"AbilitySpecial"
 	{
@@ -24,70 +26,16 @@
 			"var_type"				"FIELD_INTEGER"
 			"lumber_per_hit"		"10"
 		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"damage_to_tree"		"10" //mainly here for nightelf wisp to deal 0 damage to trees without having to do a race check
-		}
 	}
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Gather"
-		}
-	}
-
-	"Modifiers"
-	{
-		// LUMBER GATHER
-		"modifier_on_order_cancel_lumber"
-		{
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelGather"
-				}
-			}
-
-			// Builders have no collision while moving to gather
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
-		"modifier_gathering_lumber"
-		{
-			"OverrideAnimation" 	"ACT_DOTA_ATTACK"
-			"IsHidden"				"1"
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelGather"
-				}
-			}
-
-			// Lumber Gain
-			"ThinkInterval"  "1.0"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"GatherLumber"
-				}
-			}		
-		}
-		// END LUMBER GATHER
-	}
+	"OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/gather.lua"
+            "Function"      "Gather"
+        }
+    }
 }
 
 "shredder_return_resources"
@@ -99,52 +47,12 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN" //Fake Toggle
 
 	// When the ability is active, it means there are resources left to return (else it will be hidden)
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"ReturnResources"
-		}
-	}
-
-	"Modifiers"
-	{
-		// Shows the stacks of carried lumber
-		"modifier_carrying_lumber"
-		{
-			"IsHidden"				"0"
-			"TextureName"			"furion_sprout"
-
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelReturn"
-				}
-			}	
-		}
-
-		// Shows that the builder has acquired gold
-		"modifier_carrying_gold"
-		{
-			"IsHidden"				"0"
-			"TextureName"			"alchemist_goblins_greed"
-
-			"States"
-			{
-				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/builder.lua"
-					"Function"		"CancelReturn"
-				}
-			}	
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/gather.lua"
+            "Function"      "ReturnResources"
+        }
+    }
 }

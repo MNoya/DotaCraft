@@ -36,7 +36,7 @@ function Gather( event )
 
     event:OnTreeReached(function(tree)
         Gatherer:print("Tree reached")
-
+        caster.state = "gathering_lumber"
         if race == "nightelf" then
             caster:AddNewModifier(nil, nil, "modifier_stunned", {})
             local tree_pos = tree:GetAbsOrigin()
@@ -232,13 +232,13 @@ function ReturnResources( event )
 
     event:OnLumberDepositReached(function(building)
         Gatherer:print("Lumber deposit reached: ".. building:GetUnitName())
-
+        local lumber_gathered = caster:GetModifierStackCount("modifier_carrying_lumber",caster)
         caster:RemoveModifierByName("modifier_carrying_lumber")
-        PopupLumber(caster, caster.lumber_gathered)
-        
-        Players:ModifyLumber(playerID, caster.lumber_gathered)
-        Scores:IncrementLumberHarvested( playerID, caster.lumber_gathered)
-
+        if lumber_gathered > 0 then
+            PopupLumber(caster, lumber_gathered)
+            Players:ModifyLumber(playerID, lumber_gathered)
+            Scores:IncrementLumberHarvested( playerID, lumber_gathered)
+        end
         caster.lumber_gathered = 0
     end)
 

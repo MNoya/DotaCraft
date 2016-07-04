@@ -6,12 +6,23 @@ if not Gatherer then
 end
 
 --[[ TODO:
-Fix whatever happens that makes them get stuck and never able to gather again
+Fix whatever happens that makes them get stuck and never able to gather again. Gather sometimes not continuing, stuck modifier/can't return 0.
+Repro
+    1. Target a tree
+    2. Target the same with another builder
+    3. Wait for tree cut
+    If the tree was cut on the way back, on resume gather, the other builders wont acquire a new one
+
+script_reload breaks returning
 Fix attempting bad tree getting "stuck" with a timer while moving to gather
 Shouldnt hardcode gold_mine on-top building names in the filter
 Make a Built-In ExtractionBuilding system
 Wait for building on top construction then go inside right after
 Make it possible to work without a GatherAbility
+Even though builders have no collision while gathering, find an empty point near the tree to path to
+Wisps got order stuck going to gold mine
+Gatherer needs to be looking towards the tree, if the ability is started in range
+Skip the extra attack animation while the builder is going back to return
 ]]
 
 function Gatherer:start()
@@ -53,7 +64,7 @@ function Gatherer:start()
     self.bShouldLoadTreeMap = not IsInToolsMode() -- Always re-determine pathable trees in tools, to account for map changes.
     self.ThinkInterval = 0.5
     self.DebugPrint = true
-    self.DebugDraw = false
+    self.DebugDraw = true
     self.DebugDrawDuration = 10
     self.GathererUnits = {}
 
@@ -189,7 +200,7 @@ function Gatherer:OnTreeClick(units, position)
     self:print("OnTreeClick around "..VectorString(position))
 
     if unit:CanGatherLumber() then
-        unit:GatherFromNearestTree(position)
+        unit:GatherFromNearestTree(position, self.MinDistanceToTree, true)
 
     else -- Not a gatherer but can attack trees via raw attacks
         local trees = GridNav:GetAllTreesAroundPoint(position, self.TreeRadius, true)
@@ -679,13 +690,16 @@ function Gatherer:Init(unit)
     unit.gold_gathered = 0
 
     -- Find a tree near a position and cast the gather ability on it
-    function unit:GatherFromNearestTree(position, distance)
+    function unit:GatherFromNearestTree(position, distance, bManualOrder)
         position = position or unit:GetAbsOrigin() -- If no position, use the unit origin
         distance = distance or Gatherer.MinDistanceToTree -- If no distance, use the minimum
 
         local gather_ability = unit:GetGatherAbility()
         local return_ability = unit:GetReturnAbility()
+
         local empty_tree = FindEmptyNavigableTreeNearby(unit, position, distance) --TODO: Not Empty
+        if empty_tree then Gatherer:print("GatherFromNearestTree "..empty_tree:GetTreeID())
+        else Gatherer:print("Error, cant find valid nearest tree") end
 
         -- Can the unit still gather more resources?
         if unit.lumber_gathered == 0 or unit:CanCarryMoreLumber() then 
@@ -695,8 +709,11 @@ function Gatherer:Init(unit)
 
             if empty_tree then
                 local tree_index = empty_tree:GetTreeID()
+                unit.target_tree = empty_tree --The new selected tree
                 Gatherer:print("Now targeting Tree "..tree_index)
-                Gatherer:CreateSelectionParticle(unit, empty_tree)
+                if bManualOrder then
+                    Gatherer:CreateSelectionParticle(unit, empty_tree)
+                end
                 ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET_TREE, TargetIndex = tree_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = false})
             end
 
@@ -753,25 +770,16 @@ function Gatherer:Init(unit)
         end
 
         if resource == "lumber" then
-            if unit.target_tree and unit.target_tree:IsStanding() then
-                unit:CastAbilityOnTarget(unit.target_tree, gather_ability, unit:GetPlayerOwnerID())
+            if unit.target_tree then
+                if unit.target_tree:IsStanding() then
+                    unit:CastAbilityOnTarget(unit.target_tree, gather_ability, unit:GetPlayerOwnerID())
+                else                                            
+                    unit:GatherFromNearestTree(unit.target_tree:GetAbsOrigin())
+                end
             else
-                -- Find closest near the city center in a huge radius
-                if unit.target_building then
-                    unit.target_tree = FindEmptyNavigableTreeNearby(unit, unit.target_building:GetAbsOrigin(), Gatherer.TreeRadius*20)
-                    if unit.target_tree then
-                        Gatherer:DrawCircle(unit.target_building:GetAbsOrigin(), Vector(255,0,0), Gatherer.TreeRadius*20)
-                        Gatherer:DrawCircle(unit.target_tree:GetAbsOrigin(), Vector(0,255,0))
-                    end
-                end
-                                            
-                if unit.target_tree then
-                    Gatherer:DrawCircle(unit.target_tree:GetAbsOrigin(), Vector(0,0,255))
-                    unit:CastAbilityOnTarget(unit.target_tree, ability, unit:GetPlayerOwnerID())
-                else -- couldn't find more trees?
-                    gather_ability:ToggleOff()
-                    unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
-                end
+                gather_ability:ToggleOff()
+                unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
+                self:print("Error, can't resume gathering lumber")
             end
 
         elseif resource == "gold" then
@@ -867,7 +875,9 @@ function Gatherer:Init(unit)
                         unit:SwapAbilities(unit.GatherAbility:GetAbilityName(), return_ability:GetAbilityName(), false, true)
                     end
                 else
-                    --TODO: Find another tree
+                    -- Find another tree
+                    unit:GatherFromNearestTree(tree:GetAbsOrigin())
+                    return
                 end
 
                 return lumber_interval
@@ -973,20 +983,6 @@ function Gatherer:DamageTree(unit, tree, value)
     if tree.health <= 0 then
         tree:CutDown(unit:GetTeamNumber())
         unit.GatherAbility.callbacks.OnTreeCutDown(value)
-
-        -- Move to a new tree nearby
-        local new_tree = FindEmptyNavigableTreeNearby(unit, tree:GetAbsOrigin(), self.MinDistanceToTree)
-        if new_tree then
-            unit.target_tree = new_tree
-            unit:MoveToTargetToAttack(new_tree) --TODO ???
-            self:DrawCircle(new_tree:GetAbsOrigin(), Vector(0,255,0), 64)
-        else
-            -- Go to return resources (where it will find a tree nearby the town instead)
-            return_ability:SetHidden(false)
-            ability:SetHidden(true)
-            
-            unit:CastAbilityNoTarget(return_ability, playerID)
-        end
     else
         unit.GatherAbility.callbacks.OnTreeDamaged(tree)
     end
@@ -1234,8 +1230,7 @@ function Gatherer:CastReturnAbility(event)
                 if distance > collision_size then
                     caster:MoveToPosition(caster:GetReturnPosition(building))        
                     return self.ThinkInterval
-                elseif caster.lumber_gathered and caster.lumber_gathered > 0 then
-                    
+                else                    
                     callbacks.OnLumberDepositReached(caster.target_building)
                     caster:ResumeGather()
                     return
@@ -1282,7 +1277,7 @@ function Gatherer:CastReturnAbility(event)
     
     -- No resources to return, give the gather ability back
     else
-        --print("TRIED TO RETURN NO RESOURCES")
+        print("TRIED TO RETURN NO RESOURCES")
         gather_ability:ToggleOff()
         gather_ability:SetHidden(false)
         return_ability:SetHidden(true)
@@ -1552,7 +1547,11 @@ function FindEmptyNavigableTreeNearby( unit, position, radius )
     local pathable_trees = filter(function(v) return v:IsPathable() end, nearby_trees)
     if #pathable_trees == 0 then
         print("FindEmptyNavigableTreeNearby Can't find a pathable tree with radius ",radius," for this position")
-        return nil
+        if radius < 1000 then
+            return FindEmptyNavigableTreeNearby( unit, position, radius*2 ) --TODO: Use Forests
+        else
+            return nil
+        end
     end
 
     -- Sort by Closest
