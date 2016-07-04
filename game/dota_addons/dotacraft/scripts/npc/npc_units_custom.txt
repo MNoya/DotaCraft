@@ -5225,7 +5225,7 @@
 		
 		// Attack Damage types
 		//----------------------------------------------------------------
-		"AttackType"				"hero"	 //MAGIC - Attacks deal magic damage, ignores physical armor
+		"AttackType"				"magic"
 		"ArmorType"					"light"
 		
 		// Creature Data
@@ -20612,7 +20612,7 @@
 	
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"			// Type of locomotion - ground,air
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground,air
 		"MovementSpeed"				"75"		// Speed
 		"MovementTurnRate"			"0.5"		// Turning rate.
 	

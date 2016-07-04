@@ -172,6 +172,10 @@ function AttackGroundPos(attacker, position)
 
         -- Deal ground attack damage
         SplashAttackGround( attacker, position )
+
+        if attacker.BurningOil then
+            attacker.BurningOil(position)
+        end
     end)
 end
 

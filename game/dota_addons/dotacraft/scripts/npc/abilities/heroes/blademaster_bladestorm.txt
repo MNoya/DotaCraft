@@ -22,6 +22,7 @@
 
     "AbilityManaCost"               "100"
     "AbilityDamage"                 "110"
+    "AbilityCastRange"              "200"
 
     "precache"
     {
@@ -36,12 +37,12 @@
             "var_type"                  "FIELD_FLOAT"
             "bladestorm_damage_tick"    "0.2"
         }
-        "02"
+        "01"
         {
             "var_type"                  "FIELD_INTEGER"
-            "bladestorm_radius"         "250"
+            "bladestorm_radius"         "200"
         }
-        "03"
+        "02"
         {
             "var_type"                  "FIELD_FLOAT"
             "duration"                  "7.0"
@@ -67,6 +68,7 @@
             {
                 "MODIFIER_STATE_MAGIC_IMMUNE"       "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_SILENCED"           "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_DISARMED"           "MODIFIER_STATE_VALUE_ENABLED"
             }
             "OnCreated"
             {
@@ -90,48 +92,11 @@
             "ThinkInterval"  "%bladestorm_damage_tick"
             "OnIntervalThink"
             {
-                "ActOnTargets"
+                "RunScript"
                 {
-                    "Target"
-                    {
-                        "Center"    "CASTER"
-                        "Radius"    "%bladestorm_radius"
-                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                    }
-                
-                    "Action"    
-                    {
-                        "Damage"
-                        {
-                            "Target"        "TARGET"
-                            "Type"          "DAMAGE_TYPE_MAGICAL"
-                            "Damage"        "%AbilityDamage * %bladestorm_damage_tick"
-                        }
-
-                        // Custom Building Damage
-                        "RunScript"
-                        {
-                            "ScriptFile"    "buildings/damage.lua"
-                            "Function"      "DoBuildingDamage"
-                            "Target"
-                            {
-                                "Center"    "TARGET"
-                                "Radius"    "%radius"
-                                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                                "Types"     "DOTA_UNIT_TARGET_BASIC"
-                                "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-                            }
-                            "Damage"        "%AbilityDamage * %bladestorm_damage_tick"
-                        }
-
-                        "FireSound"
-                        {
-                            "EffectName"    "Hero_Juggernaut.BladeFury.Impact"
-                            "Target"        "TARGET"
-                        }
-                    }
-                }       
+                    "ScriptFile"    "heroes/blademaster/bladestorm.lua"
+                    "Function"      "BladestormDamage"
+                }      
             }
 
             "OnDestroy"

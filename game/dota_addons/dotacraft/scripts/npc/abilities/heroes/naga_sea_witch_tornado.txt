@@ -176,6 +176,7 @@
     "BaseClass"                     "ability_datadriven"
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
     "AbilityTextureName"            "naga_sea_witch_tornado"
 
     "TargetsAllowed"                "ground"
@@ -254,8 +255,8 @@
             "IsHidden"              "1"
             "Passive"               "1"
 
-            "EffectName"        "particles/custom/tornado_ambient.vpcf" //could use better particle
-            "EffectAttachType"  "follow_origin"
+            "EffectName"        "particles/custom/tornado_ambient.vpcf"
+            "EffectAttachType"  "attachto_ghost_attach"
 
             "States"
             {   
@@ -378,7 +379,7 @@
                         "Center"    "CASTER"
                         "Radius"    "%center_radius"
                         "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                        "Types"     "DOTA_UNIT_TARGET_BASIC"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
                         "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
                     }
                     "Damage"        "%dps_to_buildings_center - %dps_to_buildings_outside"
@@ -394,7 +395,7 @@
                         "Center"    "CASTER"
                         "Radius"    "%outside_radius"
                         "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                        "Types"     "DOTA_UNIT_TARGET_BASIC"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
                         "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
                     }
                     "Damage"        "%dps_to_buildings_outside"

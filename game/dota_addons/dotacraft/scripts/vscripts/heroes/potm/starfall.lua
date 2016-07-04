@@ -3,8 +3,13 @@ function StarfallDamage(event)
     local caster = event.caster
     local wave_damage = ability:GetSpecialValueFor("wave_damage")
     local building_damage = wave_damage * ability:GetSpecialValueFor("building_dmg_pct") * 0.01
-    local targets = event.target_entities
+    local radius = ability:GetSpecialValueFor("radius")
+    local targets = FindEnemiesInRadius( caster, radius, caster:GetAbsOrigin() )
     local abilityDamageType = ability:GetAbilityDamageType()
+
+    for _,target in pairs(targets) do
+        ParticleManager:CreateParticle("particles/custom/nightelf/potm/starfall.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+    end 
 
     Timers:CreateTimer(0.4, function()
         for _,target in pairs(targets) do

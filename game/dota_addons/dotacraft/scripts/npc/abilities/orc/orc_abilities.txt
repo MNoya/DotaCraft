@@ -171,32 +171,21 @@
 		}
 	}
 
-	"precache"
-	{
-		"particle"  "particles/custom/sf_fire_arcana_wings_grow_rope.vpcf"
-	}
-
 	"Modifiers"
 	{
 		"modifier_burning_oil"
 		{
 			"Passive"			"1"
-			"IsHidden"			"0"
-			"Orb"
+			"IsHidden"			"1"
+
+			"OnCreated"
 			{
-				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
-				"ProjectileName"    "particles/custom/orc/burning_oil.vpcf"
-				"CastAttack"		"0"
-			}
-		
-			"OnAttackLanded"
-			{
-				"RunScript"
+			    "RunScript"
 				{
 					"ScriptFile"	"units/orc/demolisher.lua"
-					"Function"		"BurningOil"
+					"Function"		"UnlockBurningOil"
 				}
-			}					
+			}
 		}
 
 		"modifier_burning_oil_thinker"
@@ -209,7 +198,7 @@
 			"Aura_Radius"   	"%radius"
 			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		}
 
 		"modifier_burning_oil_damage"
@@ -218,11 +207,11 @@
 			"ThinkInterval"  "0.5"
 			"OnIntervalThink"
 			{
-				"Damage"
+				"RunScript"
 				{
-					"Target"		"TARGET"
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%damage_per_second / 2"
+				    "ScriptFile"    "units/orc/demolisher.lua"
+				    "Function"      "BurningOilDamage"
+				    "Damage"		"%damage_per_second / 2"
 				}
 			}
 		}

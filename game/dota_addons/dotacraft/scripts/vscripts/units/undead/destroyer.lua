@@ -31,7 +31,7 @@ function OrbDamage(event)
 		enemy:EmitSound("Hero_ObsidianDestroyer.ArcaneOrb.Impact")
 		for _,enemy in pairs(enemies) do
 			if IsCustomBuilding(enemy) then
-				DamageBuilding(target, damage, ability, caster)
+				DamageBuilding(enemy, damage, ability, caster)
 			else
 				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			end

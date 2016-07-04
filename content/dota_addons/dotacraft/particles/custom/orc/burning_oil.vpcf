@@ -3,9 +3,9 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 1
-	m_flConstantRadius = 50.000000
+	m_flConstantRadius = 50.0
 	m_nConstantSequenceNumber = 6
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_BasicMovement"
@@ -13,7 +13,7 @@
 		{
 			_class = "C_OP_MaxVelocity"
 			m_nOverrideCP = 2
-			m_flMaxVelocity = 600.000000
+			m_flMaxVelocity = 600.0
 		},
 		{
 			_class = "C_OP_Decay"
@@ -26,20 +26,15 @@
 		},
 		{
 			_class = "C_OP_CPOffsetToPercentageBetweenCPs"
-			m_flInputMin = 1.000000
-			m_flInputMax = 0.000000
+			m_flInputMin = 1.0
+			m_flInputMax = 0.0
 			m_nOffsetCP = 1
-			m_vecOffset =
-			[
-				0.000000,
-				0.000000,
-				1.000000,
-			]
-			m_flInputBias = 0.125000
+			m_vecOffset = [ 0.0, 0.0, 1.0 ]
+			m_flInputBias = 0.125
 			m_bScaleOffset = true
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_CreateWithinSphere"
@@ -48,23 +43,23 @@
 			_class = "C_INIT_RandomLifeTime"
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
 			m_nParticlesToEmit = 1
 		},
 	]
-	m_ForceGenerators =
+	m_ForceGenerators = 
 	[
 		{
 			_class = "C_OP_AttractToControlPoint"
-			m_fForceAmount = 1000000.000000
-			m_fFalloffPower = 0.000000
+			m_fForceAmount = 1000000.0
+			m_fFalloffPower = 0.0
 			m_nControlPointNumber = 4
 		},
 	]
-	m_Children =
+	m_Children = 
 	[
 		{
 			m_ChildRef = resource:"particles/custom/orc/sf_fire_arcana_base_attack.vpcf"
@@ -74,7 +69,6 @@
 		},
 		{
 			m_ChildRef = resource:"particles/custom/orc/invoker_chaos_meteor_fire_trail_b.vpcf"
-			m_bDisableChild = true
 		},
 		{
 			m_ChildRef = resource:"particles/custom/orc/burning_oil_model.vpcf"

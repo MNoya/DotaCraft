@@ -1421,7 +1421,7 @@ function dotacraft:FilterModifier( filterTable )
         return false
     end
 
-    local bIgnoreAir = target:HasFlyMovementCapability() and not ability:AffectsAir()
+    local bIgnoreAir = target ~= caster and target:HasFlyMovementCapability() and not ability:AffectsAir()
     if bIgnoreAir then
         return false
     end
