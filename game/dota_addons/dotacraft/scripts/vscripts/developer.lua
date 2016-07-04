@@ -38,9 +38,6 @@ function dotacraft:DeveloperMode(player)
     Players:ModifyGold(pID, 50000)
 	Players:ModifyLumber(pID, 50000)
 	Players:ModifyFoodLimit(pID, 100)
-	--[[local position = GameRules.StartingPositions[pID].position
-	dotacraft:SpawnTestUnits("orc_spirit_walker", 8, player, position + Vector(0,-600,0), false)
-	dotacraft:SpawnTestUnits("nightelf_mountain_giant", 10, player, position + Vector(0,-1000,0), true)]]
 end
 
 -- A player has typed something into the chat

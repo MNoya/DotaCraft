@@ -17,7 +17,7 @@ function UnitCanAttackTarget( unit, target )
     local target_type = GetMovementCapability(target)
   
     if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune()
-        or not unit:CanEntityBeSeenByMyTeam(target) or (unit:GetAttackType() == "magic" and target:IsMagicImmune()) then
+        or not unit:CanEntityBeSeenByMyTeam(target) or (unit:GetAttackType() == "magic" and target:IsMagicImmune() and not IsCustomBuilding(target)) then
             return false
     end
 
