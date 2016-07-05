@@ -377,6 +377,14 @@
 				"MODIFIER_STATE_NO_HEALTH_BAR"  "MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
+			"OnCreated"
+			{
+			    "ApplyModifier"
+			    {
+			        "ModifierName"  "modifier_true_sight_aura"
+			        "Target"        "CASTER"
+			    }
+			}
 		}
 	}
 }

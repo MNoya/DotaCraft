@@ -6215,11 +6215,11 @@
 				"Target"		"POINT"
 			}
 	
-			"CreateThinker"
-			{
-				"ModifierName"	"modifier_far_sight"
-				"Target" 		"POINT"
-			}
+			//"CreateThinker"
+			//{
+			//	"ModifierName"	"modifier_far_sight"
+			//	"Target" 		"POINT"
+			//}
 		}
 	
 		"Modifiers"
@@ -15586,11 +15586,11 @@
 				"Target"		"POINT"
 			}
 	
-			"CreateThinker"
-			{
-				"ModifierName"	"modifier_flare"
-				"Target" 		"POINT"
-			}
+			//"CreateThinker"
+			//{
+			//	"ModifierName"	"modifier_flare"
+			//	"Target" 		"POINT"
+			//}
 		}
 	
 		"Modifiers"
@@ -16130,7 +16130,7 @@
 	"human_reveal"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_flare"
+		"AbilityTextureName"			"human_research_flare"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
@@ -16162,11 +16162,11 @@
 				"Target"		"POINT"
 			}
 	
-			"CreateThinker"
-			{
-				"ModifierName"	"modifier_reveal"
-				"Target" 		"POINT"
-			}
+			//"CreateThinker"
+			//{
+			//	"ModifierName"	"modifier_reveal"
+			//	"Target" 		"POINT"
+			//}
 		}
 	
 		"Modifiers"
@@ -33266,6 +33266,14 @@
 					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"  "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OnCreated"
+				{
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_true_sight_aura"
+				        "Target"        "CASTER"
+				    }
 				}
 			}
 		}
@@ -57551,7 +57559,7 @@
 		}
 		"Modifiers"
 		{
-			"modifier_invisibility_shade"
+			"modifier_shade"
 			{
 				"Passive"	"1"
 				"IsHidden"	"1"
@@ -57565,52 +57573,12 @@
 						"ModifierName"		"modifier_invisible"
 						"Target"			"CASTER"
 					}
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_true_sight_aura"
+				        "Target"        "TARGET"
+				    }
 				}	
-			}
-			
-			"modifier_true_sight_shade"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"900"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					
-						"Action"    
-						{
-							"RemoveModifier"
-							{
-								"ModifierName"	"modifier_true_sight_reveal"
-								"Target" 		"TARGET"
-							}
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_true_sight_reveal"
-								"Target" 		"TARGET"
-							}
-						}
-					}			
-				}
-			}
-			
-			"modifier_true_sight_reveal"
-			{
-				"IsHidden"			"1"
-				"Duration"			"0.03"
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
-				}
 			}
 		}
 	}

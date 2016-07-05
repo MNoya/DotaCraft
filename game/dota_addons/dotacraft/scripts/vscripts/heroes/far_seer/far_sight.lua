@@ -13,7 +13,6 @@ function FarSight( event )
 	local allHeroes = HeroList:GetAllHeroes()
 	local particleName = "particles/items_fx/dust_of_appearance.vpcf"
 	local target = event.target_points[1]
-
 	-- Particle for team
 	for _, v in pairs( allHeroes ) do
 		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
@@ -52,7 +51,7 @@ function FarSight( event )
     	ability:CreateVisibilityNode(right_position, 1800, duration)
     end]]
     AddFOWViewer(caster:GetTeamNumber(), target, reveal_radius, duration, false)
-    --[[local visiondummy = CreateUnitByName("dummy_unit", target, false, caster, caster, caster:GetTeamNumber())
+    local visiondummy = CreateUnitByName("dummy_unit", target, false, caster, caster, caster:GetTeamNumber())
     visiondummy:AddNewModifier(caster, ability, "modifier_item_ward_true_sight", {true_sight_range = reveal_radius}) 
-    Timers:CreateTimer(duration, function() visiondummy:RemoveSelf() return end)]]
+    Timers:CreateTimer(duration, function() visiondummy:RemoveSelf() return end)
 end
