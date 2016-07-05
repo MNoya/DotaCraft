@@ -6214,29 +6214,6 @@
 				"Function"		"FarSight"
 				"Target"		"POINT"
 			}
-	
-			//"CreateThinker"
-			//{
-			//	"ModifierName"	"modifier_far_sight"
-			//	"Target" 		"POINT"
-			//}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_far_sight"
-			{	
-				"IsHidden"			"1"
-				"Duration"			"%duration"
-				"OnCreated"
-				{
-				    "ApplyModifier"
-				    {
-				        "ModifierName"  "modifier_true_sight_aura"
-				        "Target"        "TARGET"
-				    }
-				}
-			}
 		}
 	}
 	// Far Seer Feral Spirit
@@ -15550,24 +15527,30 @@
 		}
 	}
 	"human_flare"
-	// Launches a Dwarven flare above the target point, which reveals that area for 15 seconds.\nReveals invisible units
-	// TODO: Better particle and cast animation
+	// Launches a Dwarven flare above the target point, which reveals that area for 15 seconds. Reveals invisible units
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_flare"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityCastPoint"				"1"
 	
 		"AbilityCooldown"				"120.0"
+	
+		"precache"
+		{
+		    "particle"  "particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare_illumination.vpcf"
+		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_rattletrap.vsndevts"
+		}
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"reveal_radius"	"1800"
+				"radius"		"1800"
 			}
 			"02"
 			{
@@ -15578,39 +15561,16 @@
 	
 		"OnSpellStart"
 		{
-			// Review this function with dummies and a visual projectile effect
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/far_seer/far_sight.lua"
-				"Function"		"FarSight"
+				"ScriptFile"	"units/human/mortar_team.lua"
+				"Function"		"Flare"
 				"Target"		"POINT"
 			}
-	
-			//"CreateThinker"
-			//{
-			//	"ModifierName"	"modifier_flare"
-			//	"Target" 		"POINT"
-			//}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_flare"
-			{	
-				"IsHidden"			"1"
-				"Duration"			"%duration"
-				"Aura"          	"modifier_flare_vision"
-				"Aura_Radius"   	"%reveal_radius"
-				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
-			}
-	
-			"modifier_flare_vision"
+			"FireSound"
 			{
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
-				}
+			    "EffectName"    "Hero_Rattletrap.Rocket_Flare.Fire"
+			    "Target"        "CASTER"
 			}
 		}
 	}
@@ -16160,29 +16120,6 @@
 				"ScriptFile"	"heroes/far_seer/far_sight.lua"
 				"Function"		"FarSight"
 				"Target"		"POINT"
-			}
-	
-			//"CreateThinker"
-			//{
-			//	"ModifierName"	"modifier_reveal"
-			//	"Target" 		"POINT"
-			//}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_reveal"
-			{	
-				"IsHidden"			"1"
-				"Duration"			"%duration"
-				"OnCreated"
-				{
-				    "ApplyModifier"
-				    {
-				        "ModifierName"  "modifier_true_sight_aura"
-				        "Target"        "TARGET"
-				    }
-				}
 			}
 		}
 	}

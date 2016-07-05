@@ -1,32 +1,21 @@
--- Deal medium damage to units in radius, ignore the main target of the attack which was already damaged
-function MortarSplashMedium( event )
+-- Gives vision over an area and shows dust particle to the team
+function Flare(event)
 	local caster = event.caster
-	local target = event.target
-	local targets = event.target_entities
-	local attack_damage = caster:GetAverageTrueAttackDamage()
+	local ability = event.ability
+	local level = ability:GetLevel()
+	local reveal_radius = ability:GetLevelSpecialValueFor( "radius", level - 1 )
+	local duration = ability:GetLevelSpecialValueFor( "duration", level - 1 )
+	local target = event.target_points[1]
 
-	-- Units in the medium-radius will also be damaged by another 1/4 instance
-	local medium_damage = attack_damage * 0.25
-	for _,enemy in pairs(targets) do
-		if enemy ~= target then
-			ApplyDamage({ victim = enemy, attacker = caster, damage = medium_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-		end
-	end
-end
+    local fxIndex = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare_illumination.vpcf",PATTACH_WORLDORIGIN,nil,caster:GetTeamNumber())
+    ParticleManager:SetParticleControl(fxIndex, 0, target)
+    ParticleManager:SetParticleControl(fxIndex, 1, Vector(5,0,0))
 
--- Deal small damage to units in radius, ignore the main target of the attack which was already damaged
-function MortarSplashSmall( event )
-	local caster = event.caster
-	local target = event.target
-	local targets = event.target_entities
-	local attack_damage = caster:GetAverageTrueAttackDamage()
+    AddFOWViewer(caster:GetTeamNumber(), target, reveal_radius, duration, false)
 
-	local small_damage = attack_damage * 0.25
-	for _,enemy in pairs(targets) do
-		if enemy ~= target then
-			ApplyDamage({ victim = enemy, attacker = caster, damage = small_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-		end
-	end
+    local visiondummy = CreateUnitByName("dummy_unit", target, false, caster, caster, caster:GetTeamNumber())
+    visiondummy:AddNewModifier(caster, ability, "modifier_true_sight_aura", {}) 
+    Timers:CreateTimer(duration, function() UTIL_Remove(visiondummy) return end)
 end
 
 -- Deal extra damage to  Unarmored and Medium armor units in AoE
@@ -37,17 +26,11 @@ function FragmentationShard( event )
 	local extra_damage = caster:GetAverageTrueAttackDamage() -- Double damage to unarmored/medium armored units
 
 	for _,enemy in pairs(targets) do
-		-- Check the target armor type directly from the KV file (+volvo pls)
-		local unit_name = enemy:GetUnitName()
-		local target_info = GameRules.UnitKV[unit_name]
-		if target_info then
-			local armor_type = target_info.CombatClassDefend
-
-			if armor_type == "DOTA_COMBAT_CLASS_DEFEND_BASIC" or armor_type == "DOTA_COMBAT_CLASS_DEFEND_WEAK" then
-				-- Do extra damage to this unit
-				ApplyDamage({ victim = enemy, attacker = caster, damage = extra_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES})
-				print("FragmentationShard dealt extra damage to "..unit_name)
-			end
+		local armor_type = enemy:GetArmorType()
+		if armor_type == "unarmored" or armor_type == "medium" then
+			-- Do extra damage to this unit
+			ApplyDamage({ victim = enemy, attacker = caster, damage = extra_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES})
+			print("FragmentationShard dealt extra damage to "..unit_name)
 		end
 	end
 end

@@ -48,28 +48,5 @@
 			"Function"		"FarSight"
 			"Target"		"POINT"
 		}
-
-		//"CreateThinker"
-		//{
-		//	"ModifierName"	"modifier_far_sight"
-		//	"Target" 		"POINT"
-		//}
-	}
-
-	"Modifiers"
-	{
-		"modifier_far_sight"
-		{	
-			"IsHidden"			"1"
-			"Duration"			"%duration"
-			"OnCreated"
-			{
-			    "ApplyModifier"
-			    {
-			        "ModifierName"  "modifier_true_sight_aura"
-			        "Target"        "TARGET"
-			    }
-			}
-		}
 	}
 }
