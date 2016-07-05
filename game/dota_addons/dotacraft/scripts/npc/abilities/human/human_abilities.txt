@@ -1056,11 +1056,11 @@
 			"Target"		"POINT"
 		}
 
-		"CreateThinker"
-		{
-			"ModifierName"	"modifier_flare"
-			"Target" 		"POINT"
-		}
+		//"CreateThinker"
+		//{
+		//	"ModifierName"	"modifier_flare"
+		//	"Target" 		"POINT"
+		//}
 	}
 
 	"Modifiers"
@@ -1600,7 +1600,7 @@
 "human_reveal"
 {
 	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"human_flare"
+	"AbilityTextureName"			"human_research_flare"
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
@@ -1632,11 +1632,11 @@
 			"Target"		"POINT"
 		}
 
-		"CreateThinker"
-		{
-			"ModifierName"	"modifier_reveal"
-			"Target" 		"POINT"
-		}
+		//"CreateThinker"
+		//{
+		//	"ModifierName"	"modifier_reveal"
+		//	"Target" 		"POINT"
+		//}
 	}
 
 	"Modifiers"
