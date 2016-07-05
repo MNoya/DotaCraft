@@ -68,11 +68,11 @@ function TrueFormStart( event )
 
     -- Bonus Health
     local bear_hp = ability:GetSpecialValueFor("bear_hp")
+    local newCurrentHp = math.ceil(bear_hp * caster:GetHealth()/caster:GetMaxHealth())
     caster.bonus_hp = bear_hp - caster:GetMaxHealth()
-    local relative_hp = caster:GetHealthPercent() * caster:GetHealth()
     caster:SetMaxHealth(bear_hp)
     caster:SetBaseMaxHealth(bear_hp)
-    caster:SetHealth(relative_hp)
+    caster:SetHealth(newCurrentHp)
 
     -- Add weapon/armor upgrade benefits
     ApplyMultiRankUpgrade(caster, "nightelf_research_strength_of_the_wild", "weapon")
@@ -96,10 +96,11 @@ function TrueFormEnd( event )
 
     -- Minus Health
     local bonus_hp = caster.bonus_hp
-    local relative_hp = caster:GetHealthPercent() * caster:GetHealth()
-    caster:SetMaxHealth(caster:GetMaxHealth() - bonus_hp)
-    caster:SetBaseMaxHealth(caster:GetHealth() - bonus_hp)
-    caster:SetHealth(relative_hp)
+    local druid_hp = caster:GetMaxHealth() - bonus_hp
+    local newCurrentHp = math.ceil(druid_hp * caster:GetHealth()/caster:GetMaxHealth())
+    caster:SetMaxHealth(druid_hp)
+    caster:SetBaseMaxHealth(druid_hp)
+    caster:SetHealth(newCurrentHp)
 
     -- Remove abilities and modifiers from weapon/armor upgrades
     for i=0,15 do

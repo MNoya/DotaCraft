@@ -333,10 +333,11 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
         end
     end
     local team = PlayerResource:GetTeam(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     if unitName then
         PrecacheUnitByNameAsync(unitName, function()
             local unit = CreateUnitByName(unitName, pos, true, nil, nil, team)
-            unit:SetOwner(selected:GetOwner())
+            unit:SetOwner(hero)
             unit:SetControllableByPlayer(playerID, true)
             unit:SetMana(unit:GetMaxMana())
 
