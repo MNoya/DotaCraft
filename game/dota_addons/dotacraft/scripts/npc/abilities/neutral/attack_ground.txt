@@ -31,7 +31,7 @@
     {
         "RunScript"
         {
-            "ScriptFile"    "units/aggro_filter.lua"
+            "ScriptFile"    "mechanics/attacks.lua"
             "Function"      "AttackGround"
             "Target"        "POINT"
         }
@@ -52,7 +52,7 @@
                 }
                 "RunScript"
                 {
-                    "ScriptFile"    "units/aggro_filter.lua"
+                    "ScriptFile"    "mechanics/attacks.lua"
                     "Function"      "StopAttackGround"
                 }
             }
@@ -67,7 +67,7 @@
                 }
                 "RunScript"
                 {
-                    "ScriptFile"    "units/aggro_filter.lua"
+                    "ScriptFile"    "mechanics/attacks.lua"
                     "Function"      "StopAttackGround"
                 }
             }

@@ -1354,14 +1354,13 @@ function dotacraft:FilterProjectile( filterTable )
     local move_speed = filterTable["move_speed"]
 
     if is_attack then
-        if HasArtilleryAttack(attacker) then
+        if attacker:HasArtilleryAttack() then
             AttackGroundPos(attacker, victim:GetAbsOrigin(), move_speed)
             return false
         end
     elseif attacker_index ~= -1 then
         local ability = EntIndexToHScript(filterTable["entindex_ability_const"])
         local bBlock = victim:ShouldAbsorbSpell(attacker, ability)
-        print(ability:GetAbilityName())
         if bBlock then
             return false
         end

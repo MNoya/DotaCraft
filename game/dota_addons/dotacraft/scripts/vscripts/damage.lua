@@ -30,6 +30,8 @@ function dotacraft:FilterDamage( filterTable )
 
     -- Physical attack damage filtering
     if damagetype == DAMAGE_TYPE_PHYSICAL then
+        if victim == attacker and not inflictor then return end -- Self attack, for fake attack ground
+
         local original_damage = filterTable["damage"] --Post reduction
 
         local armor = victim:GetPhysicalArmorValue()

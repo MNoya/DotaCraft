@@ -451,9 +451,8 @@ function IsNeutralUnit( target )
     return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS and target.campCenter)
 end
 
-function HasArtilleryAttack( unit )
-    local unitTable = GameRules.UnitKV[unit:GetUnitName()]
-    return unitTable and unitTable["Artillery"]
+function CDOTA_BaseNPC:HasArtilleryAttack()
+    return self:GetKeyValue("Artillery")
 end
 
 function CDOTA_BaseNPC:IsDummy()
