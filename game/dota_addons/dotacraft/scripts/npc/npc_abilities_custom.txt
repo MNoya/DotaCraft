@@ -57558,10 +57558,13 @@
 				
 				"EffectName"			"particles/units/heroes/hero_bane/bane_slime_trail_b.vpcf"
 				"EffectAttachType"		"follow_origin"
-				
-				"States"
+				"OnCreated"
 				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_invisible"
+						"Target"			"CASTER"
+					}
 				}	
 			}
 			

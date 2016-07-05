@@ -24,7 +24,7 @@ function FarSight( event )
 	end
 
 	-- Vision
-	if level == 1 or level == 2 then
+	--[[if level == 1 or level == 2 then
 		ability:CreateVisibilityNode(target, reveal_radius, duration)
 	elseif level == 3 then
 		-- Central vision
@@ -50,6 +50,9 @@ function FarSight( event )
     	ability:CreateVisibilityNode(back_position, 1800, duration)
     	ability:CreateVisibilityNode(left_position, 1800, duration)
     	ability:CreateVisibilityNode(right_position, 1800, duration)
-    end
-
+    end]]
+    AddFOWViewer(caster:GetTeamNumber(), target, reveal_radius, duration, false)
+    --[[local visiondummy = CreateUnitByName("dummy_unit", target, false, caster, caster, caster:GetTeamNumber())
+    visiondummy:AddNewModifier(caster, ability, "modifier_item_ward_true_sight", {true_sight_range = reveal_radius}) 
+    Timers:CreateTimer(duration, function() visiondummy:RemoveSelf() return end)]]
 end
