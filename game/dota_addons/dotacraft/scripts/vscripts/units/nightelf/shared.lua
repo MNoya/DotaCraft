@@ -4,27 +4,33 @@ function ShadowMeld( event )
 	local ability = event.ability
 	local fade_time = ability:GetSpecialValueFor("fade_time")
 
-	if not GameRules:IsDaytime() and not caster:HasModifier("modifier_shadow_meld_fade") then
-		local animation
-		local unitName = caster:GetUnitName()
-		if unitName == "nightelf_archer" then
-			StartAnimation(caster, {duration=fade_time, activity=ACT_DOTA_OVERRIDE_ABILITY_2, rate=0.5, translate="sparrowhawk_bow"})
-		elseif unitName == "nightelf_huntress" then
-			StartAnimation(caster, {duration=fade_time, activity=ACT_DOTA_CAST_ABILITY_1, rate=0.5, translate="moonfall"})
-		elseif unitName == "npc_dota_hero_phantom_assassin" then
-			StartAnimation(caster, {duration=fade_time, activity=ACT_DOTA_SPAWN})
-		elseif unitName == "npc_dota_hero_mirana" then
-			StartAnimation(caster, {duration=fade_time, activity=ACT_DOTA_CAST_ABILITY_1})
-		end
+	if GameRules:IsDaytime() then
+		SendErrorMessage(caster:GetPlayerOwnerID(), "Can only Shadow Meld at night!")
+	elseif caster:HasModifier("modifier_shadow_meld") then
+		ShadowMeldAnimation(caster, fade_time)
 		
+		caster:AddNewModifier(caster, ability, "modifier_invisible", {})
+	elseif not GameRules:IsDaytime() and not caster:HasModifier("modifier_shadow_meld_fade") then
+		ShadowMeldAnimation(caster, fade_time)
+
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_fade", {duration = fade_time})
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_active", {})
 
 		ToggleOn(ability)
+		caster:Stop()
+	end
+end
 
-		caster:Stop()		
-	elseif GameRules:IsDaytime() then
-		SendErrorMessage(caster:GetPlayerOwnerID(), "Can only Shadow Meld at night!")
+function ShadowMeldAnimation(caster, time)
+	local unitName = caster:GetUnitName()
+	if unitName == "nightelf_archer" then
+		StartAnimation(caster, {duration=time, activity=ACT_DOTA_OVERRIDE_ABILITY_2, rate=0.5, translate="sparrowhawk_bow"})
+	elseif unitName == "nightelf_huntress" then
+		StartAnimation(caster, {duration=time, activity=ACT_DOTA_CAST_ABILITY_1, rate=0.5, translate="moonfall"})
+	elseif unitName == "npc_dota_hero_phantom_assassin" then
+		StartAnimation(caster, {duration=time, activity=ACT_DOTA_SPAWN})
+	elseif unitName == "npc_dota_hero_mirana" then
+		StartAnimation(caster, {duration=time, activity=ACT_DOTA_CAST_ABILITY_1})
 	end
 end
 
@@ -59,7 +65,9 @@ function ShadowMeldRemove( event )
 	local caster = event.caster
 	local ability = event.ability
 	local order = event.event_ability
+	
 	if order and order:GetAbilityName() == "nightelf_shadow_meld" then
+		ToggleOn(ability)
 		return
 	else
 		caster:RemoveModifierByName("modifier_shadow_meld_active")
