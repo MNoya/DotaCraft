@@ -1,4 +1,4 @@
-BH_VERSION = "1.2.6"
+BH_VERSION = "1.2.7"
 
 --[[
     For installation, usage and implementation examples check the wiki:
@@ -421,7 +421,6 @@ end
 
 -- Used to find the closest builder to a building location
 local GetClosestToPosition = function(unitList, position)
-    local t = {}
     local distance = math.huge
     local closest
     for _,unit in pairs(unitList) do
@@ -1857,6 +1856,7 @@ function BuildingHelper:ValidPosition(size, location, unit, callbacks)
     -- Check for special requirement
     local playerTable = BuildingHelper:GetPlayerTable(unit:GetPlayerOwnerID())
     local buildingName = playerTable.activeBuilding
+    if unit.work then buildingName = unit.work.name end
     local buildingTable = buildingName and GetUnitKV(buildingName)
     local requires = buildingTable and buildingTable["Requires"]
     local prevents = buildingTable and buildingTable["Prevents"]
