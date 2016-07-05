@@ -205,21 +205,22 @@ function IsMultiOrderAbility( ability )
 end
 
 function SetAbilityLayout( unit, layout_size )
-    unit:RemoveModifierByName("modifier_ability_layout4")
-    unit:RemoveModifierByName("modifier_ability_layout5")
-    unit:RemoveModifierByName("modifier_ability_layout6")
-    
-    ApplyModifier(unit, "modifier_ability_layout"..layout_size)
+    if unit:HasModifier("modifier_ability_layout"..layout_size) then
+        return
+    else
+        unit:RemoveModifierByName("modifier_ability_layout4")
+        unit:RemoveModifierByName("modifier_ability_layout5")
+        unit:RemoveModifierByName("modifier_ability_layout6")
+        ApplyModifier(unit, "modifier_ability_layout"..layout_size)
+    end
 end
 
 function AdjustAbilityLayout( unit )
     local required_layout_size = GetVisibleAbilityCount(unit)
 
     if required_layout_size > 6 then
-        print("WARNING: Unit has more than 6 visible abilities, defaulting to AbilityLayout 6")
         required_layout_size = 6
     elseif required_layout_size < 4 then
-        print("WARNING: Unit has less than 4 visible abilities, defaulting to AbilityLayout 4")
         required_layout_size = 4
     end
 
@@ -232,7 +233,7 @@ function GetVisibleAbilityCount( unit )
         local ability = unit:GetAbilityByIndex(i)
         if ability and not ability:IsHidden() then
             count = count + 1
-            ability:MarkAbilityButtonDirty()
+            --ability:MarkAbilityButtonDirty()
         end
     end
     return count

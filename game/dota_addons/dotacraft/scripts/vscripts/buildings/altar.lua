@@ -42,18 +42,13 @@ function BuildHero( event )
 		local ability_name = ability:GetAbilityName()
 		
 		-- Cut the rank, add the _acquired suffix
-		local train_ability_name = string.sub(ability_name, 1 , string.len(ability_name) - 1)
-		local new_ability_name = train_ability_name.."_acquired"
+		local train_ability_name = string.sub(ability_name, 1, string.len(ability_name) - 1)
 		new_hero.RespawnAbility = train_ability_name
 
-		-- Swap and Disable on each altars
+		-- Swap and Disable on each altar
 		local playerAltars = Players:GetAltars(playerID)
 		for _,altar in pairs(playerAltars) do
-			altar:AddAbility(new_ability_name)
-			altar:SwapAbilities(ability_name, new_ability_name, false, true)
-			altar:RemoveAbility(ability_name)
-			local new_ability = altar:FindAbilityByName(new_ability_name)
-			new_ability:SetLevel(new_ability:GetMaxLevel())
+			AddAcquiredAbilityToAltar(altar, ability_name)
 		end
 
 		FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
@@ -64,6 +59,22 @@ function BuildHero( event )
 	-- register panaroma listener
 	CustomGameEventManager:RegisterListener( "center_hero_camera", CenterCamera)
 	CustomGameEventManager:RegisterListener( "revive_hero", Revive_Hero)
+end
+
+function AddAcquiredAbilityToAltar(altar, ability_name)
+	local train_ability_name = string.sub(ability_name, 1, string.len(ability_name) - 1)
+	local new_ability_name = train_ability_name.."_acquired"
+	local new_ability = altar:AddAbility(new_ability_name)
+	if new_ability then
+		new_ability:SetLevel(new_ability:GetMaxLevel())
+	end
+
+	if altar:HasAbility(ability_name) then
+		altar:SwapAbilities(ability_name, new_ability_name, false, true)
+		altar:RemoveAbility(ability_name)
+	end
+	
+	AdjustAbilityLayout(altar)
 end
 
 function CreateAttachmentsForPlayerHero(playerID, hero)
@@ -150,73 +161,78 @@ function dotacraft:IncreaseAltarTier( playerID, abilityOnProgress )
 
 	if altar_level > 4 then
 		print("ERROR: Altar should never go over level 4")
+		hero.altar_level = 4
 		return
 	end
 
 	print("ALTAR LEVEL "..altar_level.." QUEUE:")
 	DeepPrintTable(hero.altar_queue)
 
-	-- On Each altar
 	local playerAltars = Players:GetAltars(playerID)
 	for _,altar in pairs(playerAltars) do
-		for i=0,15 do
-			local ability = altar:GetAbilityByIndex(i)
-			if ability then
-				local ability_name = ability:GetAbilityName()
-				local level = ability:GetLevel() -- Disabled abilities are level 0
-				if string.find(ability_name, "_train") and not string.find(ability_name,"_acquired") then
-					if not abilityOnProgress or ability_name ~= abilityOnProgress:GetAbilityName() then	
-						if altar_level == 4 or not Players:CanTrainMoreHeroes( playerID ) then -- Disable completely
-							ability:SetHidden(true)
-							--altar:RemoveAbility(ability_name)
-						else	
-							if string.find(ability_name, "_disabled") then
-								ability_name = string.gsub(ability_name, "_disabled" , "")
-							end
-
-							local ability_len = string.len(ability_name)
-							local rank = string.sub(ability_name, ability_len , ability_len)
-							if rank ~= "0" then
-								local new_ability_name = string.gsub(ability_name, rank , altar_level)
-								if level == 0 then ability_name = ability_name.."_disabled" end
-								print(ability_name, rank, "->", altar_level, "=",new_ability_name)
-
-								-- If the ability has to be channeled (i.e. is queued), it cant be removed!
-								if not tableContains(hero.altar_queue, ability_name) then
-									altar:AddAbility(new_ability_name)
-									altar:SwapAbilities(ability_name, new_ability_name, false, true)
-									altar:RemoveAbility(ability_name)
-
-									local new_ability = altar:FindAbilityByName(new_ability_name) 
-									new_ability:SetLevel(new_ability:GetMaxLevel())
-									print("Swapped "..ability_name.." with "..new_ability:GetAbilityName())
-								else
-									ability:SetHidden(true)
-									print("Table Contains "..ability_name.." set Hidden because the altar will be casting it later")
-								end
-							end
-						end
-					else
-						-- Things go wrong if the ability being channeled is removed so just set it hidden
-						ability:SetHidden(true)
-					end
-				end
-			end			
-		end
-
-		-- Look to disable the upgraded abilities if the requirements arent met
-		CheckAbilityRequirements(altar, playerID)
-
-		AdjustAbilityLayout(altar)
-
-		local hero = altar:GetPlayerOwner():GetAssignedHero()
-		local playerID = hero:GetPlayerID()
-		FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
-
-		PrintAbilities(altar)
+		UpdateAltar(altar, altar_level, abilityOnProgress)
 	end
 end
 
+function UpdateAltar(altar, altar_level, abilityOnProgress)
+	local playerID = altar:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+	for i=0,15 do
+		local ability = altar:GetAbilityByIndex(i)
+		if ability then
+			local ability_name = ability:GetAbilityName()
+			local level = ability:GetLevel() -- Disabled abilities are level 0
+			if string.find(ability_name, "_train") and not string.find(ability_name,"_acquired") then
+				if not abilityOnProgress or ability_name ~= abilityOnProgress:GetAbilityName() then	
+					if altar_level == 4 or not Players:CanTrainMoreHeroes( playerID ) then -- Disable completely
+						ability:SetHidden(true)
+						--altar:RemoveAbility(ability_name)
+					else	
+						if string.find(ability_name, "_disabled") then
+							ability_name = string.gsub(ability_name, "_disabled" , "")
+						end
+
+						local ability_len = string.len(ability_name)
+						local rank = string.sub(ability_name, ability_len , ability_len)
+						if rank ~= "0" then
+							local new_ability_name = string.gsub(ability_name, rank , altar_level)
+							if level == 0 then ability_name = ability_name.."_disabled" end
+							print(ability_name, rank, "->", altar_level, "=",new_ability_name)
+
+							-- If the ability has to be channeled (i.e. is queued), it cant be removed!
+							if not tableContains(hero.altar_queue, ability_name) then
+								altar:AddAbility(new_ability_name)
+								altar:SwapAbilities(ability_name, new_ability_name, false, true)
+								altar:RemoveAbility(ability_name)
+
+								local new_ability = altar:FindAbilityByName(new_ability_name) 
+								new_ability:SetLevel(new_ability:GetMaxLevel())
+								print("Swapped "..ability_name.." with "..new_ability:GetAbilityName())
+							else
+								ability:SetHidden(true)
+								print("Table Contains "..ability_name.." set Hidden because the altar will be casting it later")
+							end
+						end
+					end
+				else
+					-- Things go wrong if the ability being channeled is removed so just set it hidden
+					ability:SetHidden(true)
+				end
+			end
+		end			
+	end
+
+	-- Look to disable the upgraded abilities if the requirements arent met
+	CheckAbilityRequirements(altar, playerID)
+
+	AdjustAbilityLayout(altar)
+
+	local hero = altar:GetPlayerOwner():GetAssignedHero()
+	local playerID = hero:GetPlayerID()
+	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
+
+	PrintAbilities(altar)
+end
 
 function ReEnableAltarAbilities( event )
 	local caster = event.caster
@@ -328,6 +344,7 @@ function ReEnableAltarAbilities( event )
 		ReorderAbilities(altar)
 
 		PrintAbilities(altar)
+		AdjustAbilityLayout(altar)
 	end
 
 end
@@ -354,6 +371,7 @@ function LinkAltar( event )
 	local altar = event.caster
 	local playerID = altar:GetPlayerOwnerID()
 	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+	local altarName = altar:GetUnitName()
 
 	-- If no altar is active, this will be the reference
 	local hasAltar = Players:HasAltar(playerID)
@@ -365,9 +383,35 @@ function LinkAltar( event )
 	-- Keep all altars in a separate structure list
 	table.insert(hero.altar_structures, altar)
 
+	local cloneAltar
 	if altar ~= hero.altar and IsValidAlive(hero.altar) then
-		print("Linking this Altar to "..hero.altar:GetEntityIndex())
-		CloneAltarAbilities( altar, hero.altar )
+		if altarName == hero.altar:GetUnitName() then
+			cloneAltar = hero.altar
+		else
+			-- Handles the rare case where the player owns more than one altar type
+			for _,a in pairs(hero.altar_structures) do
+				if IsValidAlive(a) and a ~= altar and a:GetUnitName() == altarName then
+					cloneAltar = a
+					break
+				end
+			end
+		end
+		
+		if cloneAltar then
+			print("Linking "..altarName.." "..altar:GetEntityIndex().." to "..cloneAltar:GetUnitName().." "..cloneAltar:GetEntityIndex())
+			CloneAltarAbilities(altar, cloneAltar)
+		else
+			-- Adjust the altar to a new race, it needs to have the acquired hero abilities and upgrade its tiers
+			local acquired_list = {}
+			for _,ability_name in pairs(hero.altar_queue) do
+				local name = string.sub(ability_name, 1, string.len(ability_name) - 1)
+				if not altar:HasAbility(name.."_acquired") then
+					AddAcquiredAbilityToAltar(altar, ability_name)
+				end
+			end	
+
+			UpdateAltar(altar, hero.altar_level, abilityOnProgress)	
+		end
 	end
 
 	AdjustAbilityLayout(altar)
