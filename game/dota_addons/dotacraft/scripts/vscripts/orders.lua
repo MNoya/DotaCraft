@@ -209,6 +209,20 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         if not target then print("ERROR, ATTACK WITHOUT TARGET") return true end
 
+        if numUnits > 1 then
+            -- Filter channeling units
+            local non_channeling = {}
+            for _,unit_index in pairs(units) do
+                local u = EntIndexToHScript(unit_index)
+                if not IsChanneling(u) or IsCustomBuilding(u) then
+                    non_channeling[#non_channeling+1] = unit_index
+                end
+            end
+            if TableCount(non_channeling) ~= 0 then -- Ignore channeling units for the attack order
+                units = non_channeling 
+            end
+        end
+
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
             if unit then
@@ -264,13 +278,24 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         -- Get buildings out of the units table
         local _units = {}
-        for n, unit_index in pairs(units) do 
+        for _,unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
-            if unit and not unit:IsBuilding() and not IsCustomBuilding(unit) then
+            if unit and not IsCustomBuilding(unit) then
                 _units[#_units+1] = unit_index
             end
         end
-        units = _units
+        -- Filter channeling units
+        local non_channeling = {}
+        for _,unit_index in pairs(_units) do
+            if not IsChanneling(EntIndexToHScript(unit_index)) then
+                non_channeling[#non_channeling+1] = unit_index
+            end
+        end
+        if #non_channeling == 0 then -- If all units are channeling, move them all
+            units = _units
+        else
+            units = non_channeling -- Ignore channeling units for the move order
+        end
 
         local x = tonumber(filterTable["position_x"])
         local y = tonumber(filterTable["position_y"])
@@ -566,6 +591,7 @@ function MoveUnitsInGrid(units, point, order_type, queue, forward)
     if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 100, 18, true, 3) end
 
     local numUnits = #units
+    if numUnits == 1 then return ExecuteOrderFromTable({UnitIndex = units[1], OrderType = order_type, Position = point, Queue = queue}) end
     local unitsPerRow = math.floor(math.sqrt(numUnits/SQUARE_FACTOR))
     local unitsPerColumn = math.floor((numUnits / unitsPerRow))
     local remainder = numUnits - (unitsPerRow*unitsPerColumn) 
