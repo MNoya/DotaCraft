@@ -242,6 +242,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     if not errorMsg then
                         if unit:GetAttackType() == "magic" and target:IsMagicImmune() then
                             errorMsg = "#dota_hud_error_target_magic_immune"
+                        elseif GetAttacksEnabled(unit) == "building" and not IsCustomBuilding(target) then
+                            errorMsg = "#error_must_target_buildings"
                         else
                             local error_type = GetMovementCapability(target)
                             if error_type == "air" then

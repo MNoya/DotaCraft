@@ -15,6 +15,8 @@ end
 function UnitCanAttackTarget( unit, target )
     local attacks_enabled = GetAttacksEnabled(unit)
     local target_type = GetMovementCapability(target)
+    
+    if attacks_enabled == "building" and not IsCustomBuilding(target) then return false end
   
     if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune()
         or not unit:CanEntityBeSeenByMyTeam(target) or (unit:GetAttackType() == "magic" and target:IsMagicImmune() and not IsCustomBuilding(target)) then
@@ -222,7 +224,7 @@ end
 -- Searches for "AttacksEnabled" in the KV files
 -- Default by omission is "none", other possible returns should be "ground,air" or "air"
 function GetAttacksEnabled( unit )
-    return GameRules.UnitKV[unit:GetUnitName()]["AttacksEnabled"] or "none"
+    return unit:GetKeyValue("AttacksEnabled") or "none"
 end
 
 function SetAttacksEnabled( unit, attack_string )
