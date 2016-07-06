@@ -424,6 +424,9 @@ function dotacraft:InitializePlayer( hero )
     -- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
     dotacraft:TrackIdleWorkers( hero )
 
+    -- Toggle Autocast as a group
+    dotacraft:AutoCastTimer(hero)
+
     --------------------------------------------
     -- Test game logic on the model overview map
     if GetMapName() == "1_dotacraft" then
@@ -482,6 +485,55 @@ function dotacraft:TrackIdleWorkers( hero )
         end
         return 0.3
     end)
+end
+
+function dotacraft:AutoCastTimer(hero)
+    local playerID = hero:GetPlayerID()
+    Timers:CreateTimer(0.1, function()
+        local selectedEntities = PlayerResource:GetSelectedEntities(playerID)
+        if selectedEntities["0"] then
+            local unit = EntIndexToHScript(selectedEntities["0"])
+            if IsValidAlive(unit) then
+
+                -- Check autocast abilities and their last state to toggle as a group
+                for i=0,15 do
+                    local ability = unit:GetAbilityByIndex(i)
+                    if ability and ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_AUTOCAST) then
+                        local state = ability:GetAutoCastState()
+                        if not ability.last_autocast_state then
+                            ability.last_autocast_state = state
+                            if state then
+                                GroupToggleAutoCast(selectedEntities, unit, ability:GetAbilityName(), state)
+                            end
+                        elseif ability.last_autocast_state ~= state then
+                            ability.last_autocast_state = state
+                            GroupToggleAutoCast(selectedEntities, unit, ability:GetAbilityName(), state)
+                        end
+                    end
+                end
+            end
+        end
+
+        return 0.1
+    end)
+end
+
+-- Goes through all units in the group, setting the same autocast state on the passed ability
+function GroupToggleAutoCast(entityList, mainUnit, abilityName, state)
+    local unitName = mainUnit:GetUnitName()
+    for _,entIndex in pairs(entityList) do
+        local unit = EntIndexToHScript(entIndex)
+        if unit ~= mainUnit and IsValidAlive(unit) and unit:GetUnitName() == unitName then
+            for i=0,15 do
+                local ability = unit:GetAbilityByIndex(i)
+                if ability and ability:GetAbilityName() == abilityName then
+                    if ability:GetAutoCastState() ~= state then
+                        ability:ToggleAutoCast()
+                    end
+                end
+            end
+        end
+    end
 end
 
 function dotacraft:InitializeResources( hero, building )
