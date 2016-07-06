@@ -8468,6 +8468,7 @@
 		"Ability3"					"undead_research_unholy_armor1"	 //Reference: Agyd
 		"Ability4"					"undead_research_creature_attack1"	 //Reference: Arlm
 		"Ability5"					"undead_research_creature_carapace1"
+		"Ability6"					"undead_graveyard_create_corpses"
 		"Ability10"					"ability_building"
 		
 		// Armor
@@ -14208,6 +14209,19 @@
 	"dummy_unit"
 	{
 		"BaseClass"					"npc_dota_creature"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"VisionDaytimeRange"		"0"	
+		"VisionNighttimeRange"		"0"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"AbilityLayout"				"4"
+		"Ability1"					"dummy_passive"
+	}
+	
+	"dotacraft_corpse"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl"
 		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 		"VisionDaytimeRange"		"0"	
 		"VisionNighttimeRange"		"0"

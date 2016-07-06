@@ -2440,7 +2440,7 @@
 // Ability: Sacrifice
 // Description: "Target a Sacrificial Pit to sacrifice the Acolyte and turn it into a Shade. Shades are invisible spirits that can see invisible units. |nShades cannot attack."
 // Code Reference: Alam
-// NOTE: This is FOR THE UNIT ACOLYTE.
+// NOTE: This is FOR THE UNIT ACOLYTE. Not implemented due to lack of space, instead we just rely on rightclick or the building ability targeting
 //=================================================================================
 "undead_sacrifice_acolyte"
 {
@@ -2460,4 +2460,30 @@
 	// The unit will walk towards the targeted Sacrificial Pit and the Shade creation begins.
 	// Cast range is GLOBAL.
 
+}
+
+
+"undead_graveyard_create_corpses"
+{
+	"BaseClass"                 "ability_datadriven"
+	"MaxLevel"                  "1"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"Modifiers"
+	{
+	    "modifier_graveyard_create_corpses"
+	    {
+	        "Passive"           "1"
+	        "IsHidden"          "1"
+			"ThinkInterval"  	"15"
+			"OnIntervalThink"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/undead/graveyard.lua"
+			        "Function"      "ExhumeCorpse"
+			    }
+			}
+	    }
+	}
 }

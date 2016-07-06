@@ -4,9 +4,6 @@ print ('[DOTACRAFT] dotacraft.lua' )
     dota_launch_custom_game dotacraft hills_of_glory
 ]]
 
-CORPSE_MODEL = "models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_troll_skeleton_fx.vmdl"
-CORPSE_DURATION = 88
-
 DISABLE_FOG_OF_WAR_ENTIRELY = false
 UNSEEN_FOG_ENABLED = false
 
@@ -1238,30 +1235,7 @@ function dotacraft:OnEntityKilled( event )
     Heroes:DistributeXP(killed, attacker)   
 
     -- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
-    Timers:CreateTimer(1, function() 
-    if LeavesCorpse( killed ) then
-            -- Create and set model
-            local corpse = CreateUnitByName("dummy_unit", killed:GetAbsOrigin(), true, nil, nil, killed:GetTeamNumber())
-            corpse:SetModel(CORPSE_MODEL)
-
-            -- Set the corpse invisible until the dota corpse disappears
-            corpse:AddNoDraw()
-            
-            -- Keep a reference to its name and expire time
-            corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
-            corpse.unit_name = killed:GetUnitName()
-
-            -- Set custom corpse visible
-            Timers:CreateTimer(3, function() if IsValidEntity(corpse) then corpse:RemoveNoDraw() end end)
-
-            -- Remove itself after the corpse duration
-            Timers:CreateTimer(CORPSE_DURATION, function()
-                if corpse and IsValidEntity(corpse) then
-                    corpse:RemoveSelf()
-                end
-            end)
-        end
-    end)
+    Corpses:CreateFromUnit(killed)
 end
 
 function dotacraft:OnPlayerSelectedEntities( event )

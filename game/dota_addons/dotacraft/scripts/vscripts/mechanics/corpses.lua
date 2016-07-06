@@ -1,3 +1,37 @@
+if not Corpses then
+    Corpses = class({})
+end
+
+CORPSE_DURATION = 88
+CORPSE_APPEAR_DELAY = 4
+
+function Corpses:CreateFromUnit(killed)
+    if LeavesCorpse( killed ) then
+        local name = killed:GetUnitName()
+        local position = killed:GetAbsOrigin()
+        local team = killed:GetTeamNumber()
+        Timers:CreateTimer(CORPSE_APPEAR_DELAY, function()
+            Corpses:CreateByNameOnPosition(name, position, team)
+        end)
+    end
+end
+
+function Corpses:CreateByNameOnPosition(name, position, team)
+    local corpse = CreateUnitByName("dotacraft_corpse", position, true, nil, nil, team)
+
+    -- Keep a reference to its name and expire time
+    corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
+    corpse.unit_name = name
+
+    -- Remove itself after the corpse duration
+    Timers:CreateTimer(CORPSE_DURATION, function()
+        if corpse and IsValidEntity(corpse) then
+            corpse:RemoveSelf()
+        end
+    end)
+    return corpse
+end
+
 function SetNoCorpse( event )
     event.target.no_corpse = true
 end
