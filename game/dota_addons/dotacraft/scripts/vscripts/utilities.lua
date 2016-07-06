@@ -159,7 +159,7 @@ end
 function GetGridAroundPoint( numUnits, point, forward )
     local navPoints = {}
     if numUnits == 1 then return {point} end
-    local unitsPerRow = math.floor(math.sqrt(numUnits))
+    local unitsPerRow = math.floor(math.sqrt(numUnits/SQUARE_FACTOR))
     local unitsPerColumn = math.floor((numUnits / unitsPerRow))
     local remainder = numUnits - (unitsPerRow*unitsPerColumn) 
 

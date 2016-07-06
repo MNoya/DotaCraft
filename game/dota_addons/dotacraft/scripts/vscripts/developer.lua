@@ -28,7 +28,10 @@ TEST_CODES = {
     ["createunits"] = function(...) dotacraft:CreateUnits(...) end,    -- Creates 'name' units around the currently selected unit, with optional num and neutral team
     ["testhero"] = function(...) dotacraft:TestHero(...) end,          -- Creates 'name' max level hero at the currently selected unit, optional team num
     ["testunit"] = function(...) dotacraft:TestUnit(...) end,          -- Creates 'name' unit
-    ["testbuilding"] = function(...) dotacraft:TestBuilding(...) end,          -- Creates 'name' building unit
+    ["testbuilding"] = function(...) dotacraft:TestBuilding(...) end,  -- Creates 'name' building unit
+    ["testbuilders"] = function(...) dotacraft:TestBuilders(...) end,  -- Creates all builders
+    ["testheroes"] = function(...) dotacraft:TestAllHeroes(...) end,   -- Creates all heroes, optional race parameter
+    ["testunits"] = function(...) dotacraft:TestAllUnits(...) end,     -- Creates all army units, optional race parameter
 }
 
 function dotacraft:DeveloperMode(player)
@@ -312,12 +315,60 @@ function dotacraft:TestHero(playerID, heroName, bEnemy)
             hero:SetOwner(PlayerResource:GetPlayer(playerID))
             hero:SetPlayerID(playerID)
         end
+        PlayerResource:NewSelection(playerID, hero)
 
         for i=1,9 do
             hero:HeroLevelUp(false)
         end
 
     end, playerID)
+end
+
+function dotacraft:TestAllHeroes(playerID, race)
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+    local team = PlayerResource:GetTeam(playerID)
+    local forward = selected:GetForwardVector()
+    local heroes = {}
+    heroes["human"] = {"archmage","mountain_king","paladin","blood_mage"}
+    heroes["orc"] = {"blademaster","far_seer","tauren_chieftain","shadow_hunter"}
+    heroes["nightelf"] = {"demon_hunter","keeper","potm","warden"}
+    heroes["undead"] = {"death_knight","dread_lord","lich","crypt_lord"}
+    heroes["neutral"] = {"neutral_pit_lord","neutral_naga","neutral_beastmaster","neutral_tinker","neutral_drow_ranger","neutral_brewmaster","neutral_alchemist","neutral_firelord"}
+    if not race then
+        local origin = selected:GetAbsOrigin() + forward * 800
+        local positions = GetGridAroundPoint( 24, origin, forward )
+        local i = 0
+        for _,raceHeroes in pairs(heroes) do
+            for _,heroName in pairs(raceHeroes) do
+                local unitName = GetRealHeroName(heroName)
+                PrecacheUnitByNameAsync(unitName, function()
+                    i=i+1
+                    local hero = CreateUnitByName(unitName, positions[i], true, nil, nil, team)
+                    hero:SetControllableByPlayer(playerID, true)
+                    hero:SetOwner(PlayerResource:GetPlayer(playerID))
+                    hero:SetPlayerID(playerID)
+                    for l=1,9 do hero:HeroLevelUp(false) end
+                end, playerID)
+            end
+        end
+    elseif heroes[race] then
+        local i = 0
+        local origin = selected:GetAbsOrigin() + forward * 300
+        local positions = GetGridAroundPoint( #heroes[race], origin, forward )
+        for _,heroName in pairs(heroes[race]) do
+            local unitName = GetRealHeroName(heroName)
+            PrecacheUnitByNameAsync(unitName, function()
+                i=i+1
+                local hero = CreateUnitByName(unitName, positions[i], true, nil, nil, team)
+                hero:SetControllableByPlayer(playerID, true)
+                hero:SetOwner(PlayerResource:GetPlayer(playerID))
+                hero:SetPlayerID(playerID)
+                for l=1,9 do hero:HeroLevelUp(false) end
+            end, playerID)
+        end
+    end
 end
 
 function dotacraft:TestUnit(playerID, name, bEnemy)
@@ -336,7 +387,7 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     if unitName then
         PrecacheUnitByNameAsync(unitName, function()
-            local unit = CreateUnitByName(unitName, pos, true, nil, nil, team)
+            local unit = CreateUnitByName(unitName, pos, true, hero, hero, team)
             unit:SetOwner(hero)
             unit:SetControllableByPlayer(playerID, true)
             unit:SetMana(unit:GetMaxMana())
@@ -352,6 +403,56 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
             unit:Hold()
 
         end, playerID)
+    end
+end
+
+function dotacraft:TestAllUnits(playerID, race)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+    local team = PlayerResource:GetTeam(playerID)
+    local forward = selected:GetForwardVector()
+    local units = {}
+    units["human"] = {"human_militia", "human_footman", "human_rifleman", "human_knight", "human_sorceress", "human_priest", "human_spell_breaker", "human_flying_machine", "human_dragonhawk_rider", "human_mortar_team", "human_siege_engine", "human_gryphon_rider",}
+    units["orc"] = {"orc_grunt", "orc_troll_headhunter", "orc_troll_berserker", "orc_demolisher", "orc_shaman", "orc_troll_witch_doctor", "orc_spirit_walker", "orc_raider", "orc_kodo_beast", "orc_wind_rider", "orc_troll_batrider", "orc_tauren",}
+    units["nightelf"] = {"nightelf_archer", "nightelf_huntress", "nightelf_glaive_thrower", "nightelf_dryad", "nightelf_druid_of_the_claw", "nightelf_mountain_giant", "nightelf_mountain_giant_resistant_skin", "nightelf_druid_of_the_talon", "nightelf_faerie_dragon", "nightelf_chimaera", "nightelf_hippogryph", "nightelf_hippogryph_rider",}
+    units["undead"] = {"undead_shade", "undead_ghoul", "undead_crypt_fiend", "undead_gargoyle", "undead_abomination", "undead_meat_wagon", "undead_obsidian_statue", "undead_destroyer", "undead_necromancer", "undead_banshee", "undead_frost_wyrm",}
+    local count = TableCount(units["human"])+TableCount(units["orc"])+TableCount(units["nightelf"])+TableCount(units["undead"])
+    if not race then
+        local origin = selected:GetAbsOrigin() + forward * 800
+        local positions = GetGridAroundPoint( count, origin, forward )
+        local i = 0
+        for _,raceUnits in pairs(units) do
+            for _,unitName in pairs(raceUnits) do
+                PrecacheUnitByNameAsync(unitName, function()
+                    i=i+1
+                    print("Creating "..unitName)
+                    local unit = CreateUnitByName(unitName, positions[i], true, hero, hero, team)
+                    unit:SetOwner(hero)
+                    unit:SetControllableByPlayer(playerID, true)
+                    unit:SetMana(unit:GetMaxMana())
+                    Players:AddUnit(playerID, unit)
+                    CheckAbilityRequirements(unit, playerID)
+                end, playerID)
+            end
+        end
+    elseif units[race] then
+        local i = 0
+        local origin = selected:GetAbsOrigin() + forward * 300
+        local positions = GetGridAroundPoint( #heroes[race], origin, forward )
+        for _,unitName in pairs(raceUnits) do
+            PrecacheUnitByNameAsync(unitName, function()
+                i=i+1
+                print("Creating "..unitName)
+                local unit = CreateUnitByName(unitName, positions[i], true, nil, nil, team)
+                unit:SetOwner(hero)
+                unit:SetControllableByPlayer(playerID, true)
+                unit:SetMana(unit:GetMaxMana())
+                Players:AddUnit(playerID, unit)
+                CheckAbilityRequirements(unit, playerID)
+            end, playerID)
+        end
     end
 end
 
@@ -377,6 +478,29 @@ function dotacraft:TestBuilding(playerID, name, bEnemy)
             end
 
         end, playerID)
+    end
+end
+
+function dotacraft:TestBuilders(playerID)
+    local names = {"human_peasant","orc_peon","nightelf_wisp","undead_acolyte"}
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+    local pos = GenerateNumPointsAround(4, selected:GetAbsOrigin(), 150)
+
+    for i=1,4 do    
+        local builder = CreateUnitByName(names[i], pos[i], true, hero, hero, hero:GetTeamNumber())
+        builder:SetOwner(hero)
+        builder:SetControllableByPlayer(playerID, true)
+        Players:AddUnit(playerID, builder)
+        builder.state = "idle"
+
+        -- Increment food used
+        Players:ModifyFoodUsed(playerID, GetFoodCost(builder))
+
+        -- Go through the abilities and upgrade
+        CheckAbilityRequirements( builder, playerID )
     end
 end
 
