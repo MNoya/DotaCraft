@@ -32,8 +32,12 @@ function Corpses:CreateByNameOnPosition(name, position, team)
     return corpse
 end
 
+function Corpses:SetNoCorpse(target)
+    target.no_corpse = true
+end
+
 function SetNoCorpse( event )
-    event.target.no_corpse = true
+    Corpses:SetNoCorpse(event.target)
 end
 
 function FindCorpseInRadius( origin, radius )

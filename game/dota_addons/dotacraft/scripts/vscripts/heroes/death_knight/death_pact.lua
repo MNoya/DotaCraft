@@ -1,8 +1,4 @@
---[[
-	Author: Noya
-	Date: 21.01.2015.
-	Kills a target, gives Health to the caster according to the sacrificed target current Health
-]]
+-- Kills a target, gives Health to the caster according to the sacrificed target current Health
 function DeathPact( event )
 	local caster = event.caster
 	local target = event.target
@@ -11,7 +7,7 @@ function DeathPact( event )
 	local rate = ability:GetLevelSpecialValueFor( "conversion_rate" , ability:GetLevel() - 1 ) * 0.01
 
 	caster:Heal( target_health * rate, caster)
-	target:Kill(ability, caster)
+	target:Kill(nil, caster)
 end
 
 -- Denies casting on full health, with a message

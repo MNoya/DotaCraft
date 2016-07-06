@@ -1,10 +1,7 @@
 // Alchemist Transmute
 // Author: Noya
-// Date: 25.01.2015.
 // Description: Kills a target unit instantly, transforming it into gold which is added to your available gold! Transmute cannot be used on Heroes, or creeps above level 5.
-// Notes: 
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	Instant	45 sec.	150	65	Unit	Air, Ground, Enemy, Neutral, Non Hero	Kills Unit, Gains Gold Depending on Unit	6
+
 "alchemist_transmute"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -27,7 +24,7 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"gold_bounty_multiplier"	"5"	//Placeholder until unit prices are done.
+			"gold_bounty_multiplier"	"0.8"
 		}
 	}
 	
@@ -37,18 +34,6 @@
 		{
 			"EffectName"	"DOTA_Item.Hand_Of_Midas"
 			"Target" 		"TARGET"
-		}
-
-		"FireEffect"
-		{
-			"EffectName"        "particles/items2_fx/hand_of_midas.vpcf"
-			"EffectAttachType"	"follow_origiin"
-			"Target"            "TARGET"
-			"ControlPointEntities"
-			{
-				"TARGET"	"attach_hitloc"
-				"CASTER"	"attach_hitloc"
-			}
 		}
 
 		"RunScript"

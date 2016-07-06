@@ -30,7 +30,7 @@ function Reincarnation( event )
 
 		-- Kill, counts as death for the player but doesn't count the kill for the killer unit
 		caster:SetHealth(1)
-		caster:Kill(caster, nil)
+		caster:Kill(nil, nil)
 
 		-- Set the gold back
 		caster:SetGold(casterGold, false)
