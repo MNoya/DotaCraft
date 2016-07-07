@@ -5,7 +5,7 @@ function cannibalize(keys)
 	local RADIUS = ability:GetSpecialValueFor("search_radius")
 	-- find all dota creatures within radius
 	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), RADIUS)
-	
+
 	if caster:GetHealth() == caster:GetMaxHealth() then
 		caster:Stop()
 		return

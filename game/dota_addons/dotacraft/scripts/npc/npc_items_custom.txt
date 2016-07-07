@@ -20728,7 +20728,7 @@
 		"AbilityCooldown"               "22"
 	    "AbilitySharedCooldown"         "summon"
 		"AbilityCastRange"				"900"
-	    
+	
 	    "RequiresCorpsesAround"         "900"
 			
 		"Model"							"models/props_gameplay/red_box.vmdl"
@@ -20776,9 +20776,10 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile" 	"items/rod_of_necromancy.lua"
+				"ScriptFile" 	"units/undead/necromancer.lua"
 				"Function"		"RaiseDead"
 			}
+	        "SpendCharge" {}
 		}
 	}
 	

@@ -59,7 +59,7 @@ function Corpses:FindClosestInRadius(playerID, origin, radius)
 end
 
 function Corpses:FindInRadius(playerID, origin, radius)
-    local targets = Entities:FindAllByNameWithin("npc_dota_creature", origin, radius)
+    local targets = FindUnitsInRadius(PlayerResource:GetTeam(playerID), origin, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
     local corpses = {}
     for _,target in pairs(targets) do
         if IsCorpse(target) then
@@ -72,11 +72,11 @@ function Corpses:FindInRadius(playerID, origin, radius)
 end
 
 function Corpses:FindAlliedInRadius(playerID, origin, radius)
-    local targets = Entities:FindAllByNameWithin("npc_dota_creature", origin, radius)
+    local targets = FindUnitsInRadius(PlayerResource:GetTeam(playerID), origin, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
     local corpses = {}
     local teamNumber = PlayerResource:GetTeam(playerID)
     for _,target in pairs(targets) do
-        if IsCorpse(target) and target:GetTeamNumber() == teamNumber and not target.meat_wagon then -- Ignore meat wagon corpses
+        if IsCorpse(target) and not target.meat_wagon then -- Ignore meat wagon corpses
             table.insert(corpses, target)
         end
     end
@@ -127,8 +127,8 @@ function LeavesCorpse(unit)
 
     -- Read the LeavesCorpse KV
     else
-        local unit_info = GameRules.UnitKV[unit:GetUnitName()]
-        if unit_info["LeavesCorpse"] and unit_info["LeavesCorpse"] == 0 then
+        local leavesCorpse = unit:GetKeyValue("LeavesCorpse")
+        if leavesCorpse and leavesCorpse == 0 then
             return false
         else
             -- Leave corpse     

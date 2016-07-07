@@ -32,6 +32,7 @@ TEST_CODES = {
     ["testbuilders"] = function(...) dotacraft:TestBuilders(...) end,  -- Creates all builders
     ["testheroes"] = function(...) dotacraft:TestAllHeroes(...) end,   -- Creates all heroes, optional race parameter
     ["testunits"] = function(...) dotacraft:TestAllUnits(...) end,     -- Creates all army units, optional race parameter
+    ["testcorpses"] = function(...) dotacraft:TestCorpses(...) end,    -- Creates many corpses around
 }
 
 function dotacraft:DeveloperMode(player)
@@ -294,7 +295,7 @@ function dotacraft:CreateUnits(pID, unitName, numUnits, bEnemy)
             end
 
             FindClearSpaceForUnit(unit, gridPoints[i], true)
-            unit:Hold()         
+            unit:Hold()
         end
     end, pID)
 end
@@ -320,6 +321,8 @@ function dotacraft:TestHero(playerID, heroName, bEnemy)
         for i=1,9 do
             hero:HeroLevelUp(false)
         end
+        FindClearSpaceForUnit(hero, pos, true)
+        hero:Hold()
 
     end, playerID)
 end
@@ -501,6 +504,21 @@ function dotacraft:TestBuilders(playerID)
 
         -- Go through the abilities and upgrade
         CheckAbilityRequirements( builder, playerID )
+    end
+end
+
+function dotacraft:TestCorpses(playerID)
+    local names = {"undead_acolyte","undead_ghoul","undead_abomination","orc_tauren"}
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+    local forward = selected:GetForwardVector()
+    local origin = selected:GetAbsOrigin() + forward * 200
+    local gridPoints = GetGridAroundPoint(20, origin, forward)
+    for i=1,20 do
+        local team = DOTA_TEAM_BADGUYS
+        if i%2 == 0 then team = DOTA_TEAM_GOODGUYS end
+        Corpses:CreateByNameOnPosition(names[RandomInt(1,#names)], gridPoints[i], team)
     end
 end
 

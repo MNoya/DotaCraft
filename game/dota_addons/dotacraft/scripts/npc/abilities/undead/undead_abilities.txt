@@ -850,24 +850,13 @@
 		"particle" "particles/neutral_fx/skeleton_spawn.vpcf"
 		"particle" "particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"
 	}
-	
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"Target" "CASTER"
-			"ScriptFile" "units/undead/necromancer.lua"
-			"Function" "AnimateDeadPrecast"
-		}
-	}
-	
+		
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
-			"Target"		"CASTER"
 			"ScriptFile" 	"units/undead/necromancer.lua"
-			"Function"		"undead_raise_dead"
+			"Function"		"RaiseDead"
 		}
 	}
 	
@@ -882,9 +871,8 @@
 			{
 				"RunScript"
 				{
-					"Target"		"CASTER"
 					"ScriptFile" 	"units/undead/necromancer.lua"
-					"Function"		"undead_raise_dead_autocast"
+					"Function"		"RaiseDead_AutoCast"
 				}
 			}
 		}	

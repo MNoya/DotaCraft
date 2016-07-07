@@ -13,7 +13,7 @@ function Resurrection( event )
     local max_units_resurrected = ability:GetLevelSpecialValueFor( "max_units_resurrected", ability:GetLevel() - 1 )
 
     -- Find all corpse entities in the radius and start the counter of units resurrected.
-    local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), radius)
+    local targets = Corpses:FindAlliedInRadius(playerID, caster:GetAbsOrigin(), radius)
 
     -- Sort by level if necessary
     local resurrect_targets = targets
@@ -26,24 +26,21 @@ function Resurrection( event )
         end
         for i=maxLevel,0,-1 do
             for _,unit in pairs(targets) do
-                if unit.corpse_expiration ~= nil and unit:GetTeamNumber() == team then
-                    if unit:GetLevel() == i then
-                        table.insert(resurrect_targets, unit)
-                    end
-                    if #resurrect_targets == max_units_resurrected then
-                        break
-                    end
+                if unit:GetLevel() == i then
+                    table.insert(resurrect_targets, unit)
+                end
+                if #resurrect_targets == max_units_resurrected then
+                    break
                 end
             end
         end
     end
 
     -- Go through the units
-    for _, unit in pairs(resurrect_targets) do
-
+    for _, corpse in pairs(resurrect_targets) do
         -- The corpse has a unit_name associated.
-        local position = unit:GetAbsOrigin()
-        local resurrected = CreateUnitByName(unit.unit_name, position, true, hero, hero, team)
+        local position = corpse:GetAbsOrigin()
+        local resurrected = CreateUnitByName(corpse.unit_name, position, true, hero, hero, team)
         resurrected:SetControllableByPlayer(playerID, true)
         resurrected:SetOwner(hero)
         FindClearSpaceForUnit(resurrected, position, true)
@@ -60,27 +57,7 @@ function Resurrection( event )
         ability:ApplyDataDrivenModifier(caster, resurrected, "modifier_resurrection", nil)
 
         -- Leave no corpses
-        resurrected.no_corpse = true
-        unit:RemoveSelf()
+        resurrected:SetNoCorpse()
+        corpse:RemoveCorpse()
     end
-end
-
--- Denies casting if no friendly corpses near, with a message
-function ResurrectionPrecast( event )
-    local caster = event.caster
-    local playerID = caster:GetPlayerID()
-    local team = caster:GetTeamNumber()
-    local ability = event.ability
-    local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), ability:GetCastRange()) 
-    
-    -- Continue if a valid friendly corpse is found
-    for k,unit in pairs(targets) do
-        if unit.corpse_expiration and unit:GetTeamNumber() == team then
-            return
-        end
-    end
-
-    -- End the spell if no targets found
-    caster:Interrupt()
-    SendErrorMessage(playerID, "#error_no_usable_friendly_corpses")
 end

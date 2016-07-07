@@ -7,13 +7,15 @@ function DeathPact( event )
 	local rate = ability:GetLevelSpecialValueFor( "conversion_rate" , ability:GetLevel() - 1 ) * 0.01
 
 	caster:Heal( target_health * rate, caster)
+	Corpses:SetNoCorpse(target)
 	target:Kill(nil, caster)
 end
 
 -- Denies casting on full health, with a message
 function DeathPactPrecast( event )
+	local playerID = event.caster:GetPlayerOwnerID()
 	if event.caster:GetHealthPercent() == 100 then
 		event.caster:Interrupt()
-		SendErrorMessage(pID, "#error_full_health")
+		SendErrorMessage(playerID, "#error_full_health")
 	end
 end

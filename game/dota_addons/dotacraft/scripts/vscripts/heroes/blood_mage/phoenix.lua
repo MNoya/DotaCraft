@@ -1,8 +1,4 @@
---[[
-	Author: Noya
-	Date: 18.01.2015.
-	Gets the summoning location for the new unit
-]]
+-- Gets the summoning location for the new unit
 function SummonLocation( event )
     local caster = event.caster
     local fv = caster:GetForwardVector()
@@ -64,11 +60,7 @@ function PhoenixDegen( event )
 	end
 end
 
---[[
-	Author: Noya
-	Date: 26.01.2015.
-	Removes the phoenix and spawns the egg with a timer
-]]
+-- Removes the phoenix and spawns the egg with a timer
 function PhoenixEgg( event )
 	local caster = event.caster --the phoenix
 	local ability = event.ability
@@ -88,17 +80,11 @@ function PhoenixEgg( event )
 	-- Apply modifiers for the summon properties
 	egg:AddNewModifier(hero, ability, "modifier_kill", {duration = phoenix_egg_duration})
 
-	-- Leave no corpses
-	egg.no_corpse = true
-	caster.no_corpse = true
+	-- Remove the phoenix
 	caster:RemoveSelf()
 end
 
---[[
-	Author: Noya
-	Date: 26.01.2015.
-	Check if the egg died from an attacker other than the time-out
-]]
+-- Check if the egg died from an attacker other than the time-out
 function PhoenixEggCheckReborn( event )
 	local unit = event.unit --the egg
 	local attacker = event.attacker
@@ -114,11 +100,6 @@ function PhoenixEggCheckReborn( event )
 
 		-- Add the spawned unit to the table
 		table.insert(hero.phoenix, egg)
-
-		-- Leave no corpses
-		phoenix.no_corpse = true
-		unit.no_corpse = true
-		unit:RemoveSelf()
 	else
 		print("Egg killed by attacker: "..attacker:GetUnitName())
 		local particleName = "particles/units/heroes/hero_phoenix/phoenix_supernova_death.vpcf"
@@ -126,9 +107,7 @@ function PhoenixEggCheckReborn( event )
 		ParticleManager:SetParticleControl(particle, 0, unit:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle, 1, unit:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle, 3, unit:GetAbsOrigin())
-		
-		-- Remove the unit, leave no corpse
-		unit.no_corpse = true
-		unit:RemoveSelf()
 	end
+	-- Remove the egg
+	unit:RemoveSelf()
 end

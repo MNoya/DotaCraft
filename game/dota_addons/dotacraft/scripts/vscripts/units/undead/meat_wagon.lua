@@ -12,7 +12,7 @@ function get_corpse(keys)
 	
 	local corpses = Corpses:FindInRadius(playerID, caster:GetAbsOrigin(), search_radius)
 	
-	-- todo: should move towards the corpse, instead of tele-grabbing them
+	-- todo: move towards the corpse, instead of tele-grabbing them
 
 	for _,corpse in pairs(corpses) do
 		-- increase count by 1
