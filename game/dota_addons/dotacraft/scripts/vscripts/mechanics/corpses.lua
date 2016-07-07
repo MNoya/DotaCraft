@@ -18,31 +18,36 @@ end
 
 function Corpses:CreateByNameOnPosition(name, position, team)
     local corpse = CreateUnitByName("dotacraft_corpse", position, true, nil, nil, team)
-
-    -- Keep a reference to its name and expire time
-    corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
-    corpse.unit_name = name
+    corpse.unit_name = name -- Keep a reference to its name
 
     -- Remove the corpse from the game at any point
     function corpse:RemoveCorpse()
-        if corpse.removal_timer then Timers:RemoveTimer(corpse.removal_timer) end
+        corpse:StopExpiration()
         if corpse.meat_wagon then
-            -- Take the corpse from a meat wagon
-            local stacks = corpse.meat_wagon:GetModifierStackCount("modifier_corpses", corpse.meat_wagon)
-            if stacks > 0 then
-                target:SetModifierStackCount("modifier_corpses", target, stacks-1)
-            end
+            corpse.meat_wagon:RemoveCorpse(corpse)
         end 
         -- Remove the entity
         UTIL_Remove(corpse)
     end
 
+    -- Removes the removal timer
+    function corpse:StopExpiration()
+        if corpse.removal_timer then Timers:RemoveTimer(corpse.removal_timer) end
+    end
+
     -- Remove itself after the corpse duration
-    corpse.removal_timer = Timers:CreateTimer(CORPSE_DURATION, function()
-        if corpse and IsValidEntity(corpse) and not corpse.meat_wagon then
-            UTIL_Remove(corpse)
-        end
-    end)
+    function corpse:StartExpiration()
+        corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
+
+        corpse.removal_timer = Timers:CreateTimer(CORPSE_DURATION, function()
+            if corpse and IsValidEntity(corpse) and not corpse.meat_wagon then
+                UTIL_Remove(corpse)
+            end
+        end)
+    end
+
+    corpse:StartExpiration()
+    
     return corpse
 end
 
@@ -54,6 +59,10 @@ function Corpses:AreAnyAlliedInRadius(playerID, origin, radius)
     return self:FindAlliedInRadius(playerID, origin, radius)[1] ~= nil
 end
 
+function Corpses:AreAnyOutsideInRadius(playerID, origin, radius)
+    return self:FindInRadiusOutside(playerID, origin, radius)[1] ~= nil
+end
+
 function Corpses:FindClosestInRadius(playerID, origin, radius)
     return self:FindInRadius(playerID, origin, radius)[1]
 end
@@ -62,15 +71,19 @@ function Corpses:FindInRadius(playerID, origin, radius)
     local targets = FindUnitsInRadius(PlayerResource:GetTeam(playerID), origin, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
     local corpses = {}
     for _,target in pairs(targets) do
-        if IsCorpse(target) then
-            if not target.meat_wagon or target.meat_wagon:GetPlayerOwnerID() == playerID then -- Check meat wagon ownership
-                table.insert(corpses, target)
-            end
+        if IsCorpse(target) and not target.meat_wagon then -- Ignore meat wagon corpses as first targets
+            table.insert(corpses, target)
+        end
+    end
+    for _,target in pairs(targets) do
+        if IsCorpse(target) and target.meat_wagon and target.meat_wagon:GetPlayerOwnerID() == playerID then -- Check meat wagon ownership
+            table.insert(corpses, target)
         end
     end
     return corpses
 end
 
+-- Only Friendly corpses
 function Corpses:FindAlliedInRadius(playerID, origin, radius)
     local targets = FindUnitsInRadius(PlayerResource:GetTeam(playerID), origin, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
     local corpses = {}
@@ -80,8 +93,17 @@ function Corpses:FindAlliedInRadius(playerID, origin, radius)
             table.insert(corpses, target)
         end
     end
-    for k,v in pairs(corpses) do
-        print(k,v)
+    return corpses
+end
+
+-- Only corpses outside meat wagon
+function Corpses:FindInRadiusOutside(playerID, origin, radius)
+    local targets = FindUnitsInRadius(PlayerResource:GetTeam(playerID), origin, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+    local corpses = {}
+    for _,target in pairs(targets) do
+        if IsCorpse(target) and not target.meat_wagon then -- Ignore meat wagon corpses
+            table.insert(corpses, target)
+        end
     end
     return corpses
 end

@@ -1,119 +1,70 @@
-require('units/undead/meat_wagon')
-function cannibalize(keys)
-	local caster = keys.caster
-	local ability = keys.ability
-	local RADIUS = ability:GetSpecialValueFor("search_radius")
-	-- find all dota creatures within radius
-	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), RADIUS)
-	
-	for k,corpse in pairs(targets) do
-		local abilitylevel = ability:GetLevel()
-		local spawnlocation = corpse:GetAbsOrigin()
-		
-		-- if corpse is on the floor
-		if not corpse.being_eaten then
-			-- if body on floor
-			if corpse.corpse_expiration ~= nil then	
-				--print("actual corpse found")
-				corpse.being_eaten = true
-				
-				keys.ability.corpse = corpse
-				ToggleOn(keys.ability)
-				
-				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_cannibalize_properties",  nil)
-									
-				search_cannibalize(keys)
+function CannibalizeStart(event)
+	local caster = event.caster
+	local ability = event.ability
+	local playerID = caster:GetPlayerOwnerID()
+	local radius = ability:GetSpecialValueFor("search_radius")
+	local health_per_second = event.ability:GetSpecialValueFor("health_per_second")
+	local corpse = Corpses:FindClosestInRadius(playerID, caster:GetAbsOrigin(), radius)
+	if corpse then
+		if corpse.meat_wagon then -- If the corpse is inside a meat wagon, order to drop it
+			corpse.meat_wagon:ThrowCorpse()
+		end
+
+		corpse.being_eaten = true -- Only one corpse per ghoul
+		corpse.moving_to_cannibalize = true -- Flag removed on reaching the corpse, to know when it has been used
+		ToggleOn(ability)
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_cannibalize_properties",  {})						
+		caster:MoveToPosition(corpse:GetAbsOrigin())
+
+		if ability.movingTimer then Timers:RemoveTimer(ability.movingTimer) end
+		ability.movingTimer = Timers:CreateTimer(0.03, function()
+			if not IsValidEntity(caster) or not caster:IsAlive() then return end
+			if not IsValidEntity(corpse) then -- If the corpse becomes invalid, cast again
+				caster:CastAbilityNoTarget(ability,playerID)
 				return
 			end
 			
-			-- if meatwagon and has stacks
-			if corpse:GetUnitName() == "undead_meat_wagon" and corpse:GetModifierStackCount("modifier_corpses", corpse) > 0 and caster:GetPlayerOwnerID() == corpse:GetPlayerOwnerID() then	
-				local StackCount = corpse:GetModifierStackCount("modifier_corpses", corpse)
-				if  StackCount > 0 then
-					--print("meatwagon found")
-					
-					-- save corpse in keys so that it can be used to remove stackcount and generate body
-					keys.ability.corpse = corpse
-					
-					-- save new corpse in keys
-					keys.ability.corpse = drop_single_corpse(keys)
-							
-					-- toggle and cast eat
-					ToggleOn(keys.ability)
-					
-					keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_cannibalize_properties",  nil)
-					
-					search_cannibalize(keys)
-					return
-				end		
+			local distance = caster:GetRangeToUnit(corpse)
+			if distance >= 150 then
+				caster:MoveToPosition(corpse:GetAbsOrigin())
+			else
+				ability.corpse = corpse
+				ability:ApplyDataDrivenModifier(caster, caster, "modifier_cannibalize", {})
+				caster:Stop()
+				Eating(event)
+				return
 			end
-		end
-		
-	end
-	
-end
-
--- count will be set to 0 if it's a corpse, otherwise it will correlate to the StackCount
--- IsRealCorpse is to determine whether it's a catapult or actual body on the floor
--- corpse target is stored on caster under caster.corpseTarget
-function search_cannibalize(keys)
-	local corpse = keys.ability.corpse
-	local caster = keys.caster
-	--print("moving to food")
-	
-	keys.ability.MoveToFood = Timers:CreateTimer(caster:GetEntityIndex().."_cannibalizing", {
-	callback = function()
-	if not IsValidEntity(corpse) and not IsValidEntity(caster) then
-		return
-	end
-		
-		local casterposition = Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y)
-		local corpseposition = Vector(corpse:GetAbsOrigin().x, corpse:GetAbsOrigin().y)
-
-		--local distance = UnitPosition - GoalPosition
-		local CalcDistance = (corpseposition - casterposition):Length2D()
-
-		if CalcDistance >= 150 then
-			caster:MoveToPosition(corpse:GetAbsOrigin())
-		elseif CalcDistance < 150 then
-			--print("close enough to eat corpse")
-						
-			caster:Stop()
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_cannibalize",  nil)
 			
-			eating(keys)
-			return
-		end
-		
-		return 0.25
-	end})
+			return 0.25
+		end)
+	end
 end
 
-function eating (keys)
-	local ability = keys.ability
-	local corpse = keys.ability.corpse
-	local caster = keys.caster
-	
-	local HEALTH_GAIN = keys.ability:GetSpecialValueFor("health_per_second")
-	
+function Eating(event)
+	local caster = event.caster
+	local ability = event.ability
+	local corpse = ability.corpse
+		
 	-- set corpse flags
-	corpse.volumeLeft = 33
-	corpse.corpse_expiration = nil
-	
+	if not corpse.eat_duration then
+		corpse.moving_to_cannibalize = nil
+		corpse.eat_duration = ability:GetSpecialValueFor("duration")
+		corpse:StopExpiration()
+	end
+
+	caster:StartGesture(ACT_DOTA_ATTACK)
+	ability:SetChanneling(true)
 	ability.eatingTimer = Timers:CreateTimer(1, function()
-		--print(corpse.volumeLeft)
-		if not IsValidEntity(corpse) and not IsValidEntity(caster) then
+		if not IsValidEntity(caster) or not caster:IsAlive() then return end
+		if not IsValidEntity(corpse) then
+			CannibalizeEnd(event)
 			return
 		end
 		
-		if corpse.volumeLeft ~= 0 then -- if the volume is not equal to 0 then remove a second
-			corpse.volumeLeft = corpse.volumeLeft - 1
-		else -- if 0 or full hp
-			stop_cannibalize(keys)
-			return
+		if corpse.eat_duration > 0 then -- if the volume is not equal to 0 then remove a second
+			corpse.eat_duration = corpse.eat_duration - 1
 		end
 		
-		caster:SetHealth(caster:GetHealth() + HEALTH_GAIN)
 		caster:StartGesture(ACT_DOTA_ATTACK)
 		
 		local particle
@@ -126,70 +77,46 @@ function eating (keys)
 		
 		Timers:CreateTimer(0.9, function() if IsValidEntity(corpse) then ParticleManager:DestroyParticle(particle, true) end end)
 		
-		--if full hp
-		if caster:GetMaxHealth() == caster:GetHealth() or not IsValidEntity(corpse) then
-			stop_cannibalize(keys)
+		-- Check if the corpse has seconds left or if the caster is already on full health
+		if caster:GetMaxHealth() == caster:GetHealth() or corpse.eat_duration <= 0 then
+			CannibalizeEnd(event)
 			return
 		end
-			
 		return 1
 	end)
-	
 end
 
--- called if units orders, this stops the current cannibalize instantly, or leaves the body if
-function stop_cannibalize(keys)
-	--print("On Order")
-	if not IsValidEntity(keys.ability.corpse) then
+-- Called OnOrder, this stops the current cannibalize instantly, removing the body if it was already being eaten
+function CannibalizeEnd(event)
+	local caster = event.caster
+	local ability = event.ability
+	local order = event.event_ability
+	
+	if order and order:GetAbilityName() == "undead_cannibalize" then
 		return
-	end
-	
-	local ability = keys.ability
-	local corpse = keys.ability.corpse
-	local count = keys.ability.corpse.count
-	local caster = keys.caster
-	local StackCount = corpse:GetModifierStackCount("modifier_corpses", corpse)
-	
-	-- stop animation, and toggle off ability
-	caster:Stop()
-	caster:RemoveGesture(ACT_DOTA_ATTACK)
-	if keys.ability:GetToggleState() then
-		ToggleOff(keys.ability)
-	end
-	
-	-- remove timers if found
-	if ability.MoveToFood ~= nil then
-		--print("[GHOUL STOP TIMER] moving to food")
-		Timers:RemoveTimer(ability.MoveToFood)
-	end
-	
-	if ability.eatingTimer ~= nil then
-		--print("[GHOUL STOP TIMER] stop eating")
-		Timers:RemoveTimer(ability.eatingTimer)	
-	end
-	
-	-- remove modifiers if found
-	if caster:FindModifierByName("modifier_cannibalize") then
+	else
+		if ability:IsChanneling() then
+			ability:SetChanneling(false)
+		end
 		caster:RemoveModifierByName("modifier_cannibalize")
-	end
-	if caster:FindModifierByName("modifier_cannibalize_properties") then
 		caster:RemoveModifierByName("modifier_cannibalize_properties")
 	end
 	
-	if corpse.volumeLeft == nil or corpse.volumeLeft == 33 then
-		corpse.being_eaten = false
-	else
-		-- if the corpse is not equal to nil then it's a meat wagon
-		if not corpse.meatwagon then
-			corpse.no_corpse = true
-			corpse:RemoveSelf()
-		else
-			corpse:SetModifierStackCount("modifier_corpses", corpse, StackCount - 1)
-			corpse.volumeLeft[count] = nil
-		end
+	-- stop animation and toggle off ability
+	ToggleOff(ability)
+	caster:RemoveGesture(ACT_DOTA_ATTACK)
+	
+	-- remove timers if found
+	if ability.movingTimer then Timers:RemoveTimer(ability.movingTimer) end
+	if ability.eatingTimer then Timers:RemoveTimer(ability.eatingTimer) end
+	
+	local corpse = ability.corpse
+	if corpse and IsValidEntity(corpse) and not corpse.moving_to_cannibalize then
+		corpse:RemoveCorpse()
 	end
-
 end
+
+-------------------------------------------------------------------------------
 
 function frenzy ( keys )
 	local caster = keys.caster

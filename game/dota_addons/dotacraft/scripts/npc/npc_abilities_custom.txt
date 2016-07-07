@@ -55790,15 +55790,17 @@
 		"AbilityTextureName"		"undead_research_cannibalize"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityChannelTime"		"33"
 			
 		"AbilityCastRange"			"50"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
 		"AbilityMultiOrder"			"1"
-		
+	
+		"AbilityMultiOrder"			"1"	
 		"RequiresCorpsesAround"   	"800"
 		"RequiresHealthDeficit"		"self"
 			
@@ -55812,7 +55814,7 @@
 			"02"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"health_per_second"		"10"
+				"health_per_second"		"10" //TODO: 15 on abominations
 			}
 			"03"
 			{
@@ -55833,7 +55835,7 @@
 			"RunScript"
 			{
 				"ScriptFile" "units/undead/ghoul.lua"
-				"Function"	"cannibalize"
+				"Function"	"CannibalizeStart"
 			}
 		}
 		
@@ -55841,7 +55843,10 @@
 		{
 			"modifier_cannibalize"
 			{
-	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%health_per_second"
+				}
 			}
 	
 			"modifier_cannibalize_properties"
@@ -55849,17 +55854,11 @@
 				"IsHidden" "1"
 				
 				"OnOrder"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_cannibalize"
-						"Target" 		"CASTER"
-					}
-					
+				{			
 					"RunScript"
 					{
 						"ScriptFile"	"units/undead/ghoul.lua"
-						"Function"		"stop_cannibalize"
+						"Function"		"CannibalizeEnd"
 					}		
 				}
 	
@@ -55867,10 +55866,8 @@
 				{
 					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"
 				}
-				
 			}
 		}
-		
 	}			
 	
 	//=================================================================================
