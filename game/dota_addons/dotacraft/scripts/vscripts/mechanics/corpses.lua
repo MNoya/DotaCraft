@@ -23,29 +23,84 @@ function Corpses:CreateByNameOnPosition(name, position, team)
     corpse.corpse_expiration = GameRules:GetGameTime() + CORPSE_DURATION
     corpse.unit_name = name
 
+    -- Remove the corpse from the game at any point
+    function corpse:RemoveCorpse()
+        if corpse.removal_timer then Timers:RemoveTimer(corpse.removal_timer) end
+        if corpse.meat_wagon then
+            -- Take the corpse from a meat wagon
+            local stacks = corpse.meat_wagon:GetModifierStackCount("modifier_corpses", corpse.meat_wagon)
+            if stacks > 0 then
+                target:SetModifierStackCount("modifier_corpses", target, stacks-1)
+            end
+        end 
+        -- Remove the entity
+        UTIL_Remove(corpse)
+    end
+
     -- Remove itself after the corpse duration
-    Timers:CreateTimer(CORPSE_DURATION, function()
-        if corpse and IsValidEntity(corpse) then
-            corpse:RemoveSelf()
+    corpse.removal_timer = Timers:CreateTimer(CORPSE_DURATION, function()
+        if corpse and IsValidEntity(corpse) and not corpse.meat_wagon then
+            UTIL_Remove(corpse)
         end
     end)
     return corpse
 end
 
-function Corpses:SetNoCorpse(target)
-    target.no_corpse = true
+function Corpses:AreAnyInRadius(playerID, origin, radius)
+    return self:FindClosestInRadius(playerID, origin, radius) ~= nil
 end
 
-function SetNoCorpse( event )
-    Corpses:SetNoCorpse(event.target)
+function Corpses:AreAnyAlliedInRadius(playerID, origin, radius)
+    return self:FindAlliedInRadius(playerID, origin, radius)[1] ~= nil
 end
 
-function FindCorpseInRadius( origin, radius )
-    return Entities:FindByModelWithin(nil, CORPSE_MODEL, origin, radius) 
+function Corpses:FindClosestInRadius(playerID, origin, radius)
+    return self:FindInRadius(playerID, origin, radius)[1]
+end
+
+function Corpses:FindInRadius(playerID, origin, radius)
+    local targets = Entities:FindAllByNameWithin("npc_dota_creature", origin, radius)
+    local corpses = {}
+    for _,target in pairs(targets) do
+        if IsCorpse(target) then
+            if not target.meat_wagon or target.meat_wagon:GetPlayerOwnerID() == playerID then -- Check meat wagon ownership
+                table.insert(corpses, target)
+            end
+        end
+    end
+    return corpses
+end
+
+function Corpses:FindAlliedInRadius(playerID, origin, radius)
+    local targets = Entities:FindAllByNameWithin("npc_dota_creature", origin, radius)
+    local corpses = {}
+    local teamNumber = PlayerResource:GetTeam(playerID)
+    for _,target in pairs(targets) do
+        if IsCorpse(target) and target:GetTeamNumber() == teamNumber and not target.meat_wagon then -- Ignore meat wagon corpses
+            table.insert(corpses, target)
+        end
+    end
+    for k,v in pairs(corpses) do
+        print(k,v)
+    end
+    return corpses
+end
+
+function CDOTA_BaseNPC:SetNoCorpse()
+    self.no_corpse = true
+end
+
+function SetNoCorpse(event)
+    event.target:SetNoCorpse()
+end
+
+-- Needs a corpse_expiration and not being eaten by cannibalize
+function IsCorpse(unit)
+    return unit.corpse_expiration and not unit.being_eaten
 end
 
 -- Custom Corpse Mechanic
-function LeavesCorpse( unit )
+function LeavesCorpse(unit)
     
     if not unit or not IsValidEntity(unit) then
         return false

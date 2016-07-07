@@ -1,9 +1,7 @@
 // Warden Avatar of Vengeance
 // Author: Noya
-// Date: 14.1.2015.
-// Notes: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	N/A	180 sec.	200	N/A	N/A	N/A	Creates Avatar of Vengeance	6
+// Description: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
+
 "warden_avatar_of_vengeance"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -126,7 +124,9 @@
 
 	"AbilityCooldown" 		"2"
 	"AbilityManacost" 		"25"
-	"AbilityCastRange"		"600"
+	"AbilityCastRange"		"900"
+
+	"RequiresCorpsesAround"			"900"
 
 	"precache"
 	{
@@ -149,15 +149,6 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"duration"				"50"
-		}
-	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
-			"Function"		"SpiritOfVengeancePrecast"
 		}
 	}
 

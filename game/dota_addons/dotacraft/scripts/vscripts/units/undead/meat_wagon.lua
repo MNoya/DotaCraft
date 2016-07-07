@@ -2,33 +2,29 @@
 function get_corpse(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-
-	-- durations have be inverted due to some weird parsing bug
+	local playerID = caster:GetPlayerOwnerID()
 	local search_radius = keys.ability:GetSpecialValueFor("search_radius")
 	local StackCount = caster:GetModifierStackCount("modifier_corpses", caster)
 	local max_corpses = keys.ability:GetSpecialValueFor("max_corpses")
 	
 	-- if equal to max allowed corpses, return
-	if StackCount >= max_corpses then
-		return
-	end
+	if StackCount >= max_corpses then return end
 	
-	local targets = Entities:FindAllByNameWithin("npc_dota_creature", caster:GetAbsOrigin(), search_radius)
+	local corpses = Corpses:FindInRadius(playerID, caster:GetAbsOrigin(), search_radius)
 	
-	for k,corpse in pairs(targets) do
-		if corpse.corpse_expiration ~= nil and not corpse.being_eaten then		
+	-- todo: should move towards the corpse, instead of tele-grabbing them
 
-			-- increase count by 1
-			IncreaseCorpseCount(keys)
-			
-			-- save corpse name
-			caster.corpse_name[StackCount] = corpse.unit_name
-			
-			-- Leave no corpses
-			corpse.no_corpse = true
-			corpse:RemoveSelf()
-			return
-		end
+	for _,corpse in pairs(corpses) do
+		-- increase count by 1
+		IncreaseCorpseCount(keys)
+		
+		-- save corpse name
+		caster.corpse_name[StackCount] = corpse.unit_name
+		
+		-- Leave no corpses
+		corpse.no_corpse = true
+		corpse:RemoveSelf()
+		return
 	end
 end
 

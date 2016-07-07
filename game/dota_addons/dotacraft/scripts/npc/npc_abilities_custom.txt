@@ -3612,12 +3612,8 @@
 	}
 	// Crypt Lord Carrion Beetles
 	// Author: Noya
-	// Date: 25.01.2015.
-	// Notes: The Crypt Lord progenerates 1 Carrion Beetle from a target corpse to attack the Crypt Lord's enemies. Beetles are permanent but only 5 can be controlled at a time.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	N/A	6 sec.	30	90	Unit	Dead	140 hit points, 8-9 damage	1
-	//2	N/A	6 sec.	30	90	Unit	Dead	275 hit points, 15-18 damage	3
-	//3	N/A	6 sec.	30	90	Unit	Dead	410 hit points, 22-27 damage	5
+	// Description: The Crypt Lord progenerates 1 Carrion Beetle from a target corpse to attack the Crypt Lord's enemies. Beetles are permanent but only 5 can be controlled at a time.
+	
 	"crypt_lord_carrion_beetles"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -3632,6 +3628,8 @@
 		"AbilityCooldown"				"6.0"
 	
 		"AbilityManaCost"				"30"
+	
+		"RequiresCorpsesAround"			"900"
 	
 		"precache"
 		{
@@ -4761,10 +4759,8 @@
 	}
 	// Death Knight Animate Dead
 	// Author: Noya
-	// Date: 21.1.2015.
-	// Notes: Raises 6 dead units in an area to fight for the Death Knight. Animated units are invulnerable.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	40 sec.	180 sec.	175	40	90	Ground, Dead	Raises Dead Units	6
+	// Description: Raises 6 dead units in an area to fight for the Death Knight. Animated units are invulnerable.
+	
 	"death_knight_animate_dead"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -4781,6 +4777,8 @@
 	
 		"AbilityCooldown" 				"180"
 		"AbilityManacost" 				"175"
+	
+		"RequiresCorpsesAround"			"900"
 	
 		"precache"
 		{
@@ -4808,16 +4806,6 @@
 				"max_units_resurrected"		"6"
 			}		
 		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/death_knight/animate_dead.lua"
-				"Function"		"AnimateDeadPrecast"
-			}
-		}
-		
 	
 		"OnSpellStart"
 		{
@@ -9665,6 +9653,8 @@
 	    "AbilityCastPoint"              "0.3"
 	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 	
+	    "RequiresAlliedCorpsesAround"   "900"
+	
 	    "precache"
 	    {
 	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
@@ -9686,16 +9676,6 @@
 	            "max_units_resurrected"     "6"
 	        }       
 	    }
-	
-	    "OnAbilityPhaseStart"
-	    {
-	        "RunScript"
-	        {
-	            "ScriptFile"    "heroes/paladin/resurrection.lua"
-	            "Function"      "ResurrectionPrecast"
-	        }
-	    }
-	    
 	
 	    "OnSpellStart"
 	    {
@@ -13955,10 +13935,8 @@
 	}
 	// Warden Avatar of Vengeance
 	// Author: Noya
-	// Date: 14.1.2015.
-	// Notes: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	N/A	180 sec.	200	N/A	N/A	N/A	Creates Avatar of Vengeance	6
+	// Description: Creates a powerful avatar that summons invulnerable spirits from friendly corpses to attack your enemies. When the Avatar of Vengeance dies, the spirits vanish.
+	
 	"warden_avatar_of_vengeance"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -14081,7 +14059,9 @@
 	
 		"AbilityCooldown" 		"2"
 		"AbilityManacost" 		"25"
-		"AbilityCastRange"		"600"
+		"AbilityCastRange"		"900"
+	
+		"RequiresCorpsesAround"			"900"
 	
 		"precache"
 		{
@@ -14104,15 +14084,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"50"
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
-				"Function"		"SpiritOfVengeancePrecast"
 			}
 		}
 	
@@ -55822,7 +55793,8 @@
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
 		"AbilityMultiOrder"			"1"
-		// The cast range is the range in which the eating'll happen.
+		
+		"RequiresCorpsesAround"   	"800"
 			
 		"AbilitySpecial"
 		{
@@ -56623,6 +56595,8 @@
 		"AbilityCastPoint"			"0 0"
 		"AbilityCooldown"			"8 8"
 		"AbilityManaCost"			"75 75"
+	
+		"RequiresCorpsesAround"		"900"
 			
 		"AbilitySpecial"
 		{

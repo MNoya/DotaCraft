@@ -1,11 +1,7 @@
 // Crypt Lord Carrion Beetles
 // Author: Noya
-// Date: 25.01.2015.
-// Notes: The Crypt Lord progenerates 1 Carrion Beetle from a target corpse to attack the Crypt Lord's enemies. Beetles are permanent but only 5 can be controlled at a time.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	6 sec.	30	90	Unit	Dead	140 hit points, 8-9 damage	1
-//2	N/A	6 sec.	30	90	Unit	Dead	275 hit points, 15-18 damage	3
-//3	N/A	6 sec.	30	90	Unit	Dead	410 hit points, 22-27 damage	5
+// Description: The Crypt Lord progenerates 1 Carrion Beetle from a target corpse to attack the Crypt Lord's enemies. Beetles are permanent but only 5 can be controlled at a time.
+
 "crypt_lord_carrion_beetles"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -20,6 +16,8 @@
 	"AbilityCooldown"				"6.0"
 
 	"AbilityManaCost"				"30"
+
+	"RequiresCorpsesAround"			"900"
 
 	"precache"
 	{

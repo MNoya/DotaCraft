@@ -19,6 +19,8 @@
     "AbilityCastPoint"              "0.3"
     "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 
+    "RequiresAlliedCorpsesAround"   "900"
+
     "precache"
     {
         "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
@@ -40,16 +42,6 @@
             "max_units_resurrected"     "6"
         }       
     }
-
-    "OnAbilityPhaseStart"
-    {
-        "RunScript"
-        {
-            "ScriptFile"    "heroes/paladin/resurrection.lua"
-            "Function"      "ResurrectionPrecast"
-        }
-    }
-    
 
     "OnSpellStart"
     {

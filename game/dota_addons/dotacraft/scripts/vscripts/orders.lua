@@ -70,6 +70,25 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
     end
 
+    -- Deny No-Target Orders that require corpses if no corpses are found
+    if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+        local ability = EntIndexToHScript(abilityIndex)
+        local corpseRadius = ability:GetKeyValue("RequiresCorpsesAround")
+        if corpseRadius then
+            if not Corpses:AreAnyInRadius(unit:GetPlayerOwnerID(), unit:GetAbsOrigin(), corpseRadius) then
+                SendErrorMessage(issuer, "#error_no_usable_corpses")
+                return false
+            end
+        end
+        local alliedCorpseRadius = ability:GetKeyValue("RequiresAlliedCorpsesAround")
+        if alliedCorpseRadius then
+            if not Corpses:AreAnyAlliedInRadius(unit:GetPlayerOwnerID(), unit:GetAbsOrigin(), alliedCorpseRadius) then
+                SendErrorMessage(issuer, "#error_no_usable_friendly_corpses")
+                return false
+            end
+        end
+    end
+
     ------------------------------------------------
     --           Ability Multi Order              --
     ------------------------------------------------

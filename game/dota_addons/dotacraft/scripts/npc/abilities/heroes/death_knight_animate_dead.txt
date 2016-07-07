@@ -1,9 +1,7 @@
 // Death Knight Animate Dead
 // Author: Noya
-// Date: 21.1.2015.
-// Notes: Raises 6 dead units in an area to fight for the Death Knight. Animated units are invulnerable.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	40 sec.	180 sec.	175	40	90	Ground, Dead	Raises Dead Units	6
+// Description: Raises 6 dead units in an area to fight for the Death Knight. Animated units are invulnerable.
+
 "death_knight_animate_dead"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -20,6 +18,8 @@
 
 	"AbilityCooldown" 				"180"
 	"AbilityManacost" 				"175"
+
+	"RequiresCorpsesAround"			"900"
 
 	"precache"
 	{
@@ -47,16 +47,6 @@
 			"max_units_resurrected"		"6"
 		}		
 	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/death_knight/animate_dead.lua"
-			"Function"		"AnimateDeadPrecast"
-		}
-	}
-	
 
 	"OnSpellStart"
 	{
