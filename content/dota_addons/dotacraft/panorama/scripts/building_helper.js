@@ -88,22 +88,27 @@ function StartBuildingHelper( params )
 
         if (modelParticle !== undefined) {
             Particles.DestroyParticleEffect(modelParticle, true)
+            Particles.ReleaseParticleIndex(modelParticle)
         }
         if (propParticle !== undefined) {
             Particles.DestroyParticleEffect(propParticle, true)
+            Particles.ReleaseParticleIndex(propParticle)
         }
         if (gridParticles !== undefined) {
             for (var i in gridParticles) {
                 Particles.DestroyParticleEffect(gridParticles[i], true)
+                Particles.ReleaseParticleIndex(gridParticles[i])
             }
         }
         if (overlayParticles !== undefined) {
             for (var i in overlayParticles) {
                 Particles.DestroyParticleEffect(overlayParticles[i], true)
+                Particles.ReleaseParticleIndex(overlayParticles[i])
             }
         }
         if (rangeOverlay !== undefined) {
             Particles.DestroyParticleEffect(rangeOverlay, true)
+            Particles.ReleaseParticleIndex(rangeOverlay)
         }
 
         // Building Ghost
@@ -316,6 +321,7 @@ function StartBuildingHelper( params )
                 {
                     for (var i in overlayParticles) {
                         Particles.DestroyParticleEffect(overlayParticles[i], true)
+                        Particles.ReleaseParticleIndex(overlayParticles[i])
                     }
                     overlayParticles = [];
                 }
@@ -329,6 +335,7 @@ function StartBuildingHelper( params )
                 if (rangeOverlayActive && rangeOverlay !== undefined)
                 {
                     Particles.DestroyParticleEffect(rangeOverlay, true)
+                    Particles.ReleaseParticleIndex(rangeOverlay)
                     rangeOverlayActive = false
                 }
             }
@@ -378,18 +385,23 @@ function EndBuildingHelper()
     state = 'disabled'
     if (modelParticle !== undefined){
          Particles.DestroyParticleEffect(modelParticle, true)
+         Particles.ReleaseParticleIndex(modelParticle)
     }
     if (propParticle !== undefined){
          Particles.DestroyParticleEffect(propParticle, true)
+         Particles.ReleaseParticleIndex(propParticle)
     }
     if (rangeOverlay !== undefined){
         Particles.DestroyParticleEffect(rangeOverlay, true)
+        Particles.ReleaseParticleIndex(rangeOverlay)
     }
     for (var i in gridParticles) {
         Particles.DestroyParticleEffect(gridParticles[i], true)
+        Particles.ReleaseParticleIndex(gridParticles[i])
     }
     for (var i in overlayParticles) {
         Particles.DestroyParticleEffect(overlayParticles[i], true)
+        Particles.ReleaseParticleIndex(overlayParticles[i])
     }
 }
 
