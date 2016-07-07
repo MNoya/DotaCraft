@@ -90,7 +90,6 @@ function dotacraft:InitGameMode()
     ListenToGameEvent('entity_killed', Dynamic_Wrap(dotacraft, 'OnEntityKilled'), self)
     ListenToGameEvent('player_connect_full', Dynamic_Wrap(dotacraft, 'OnConnectFull'), self)
     ListenToGameEvent('player_connect', Dynamic_Wrap(dotacraft, 'PlayerConnect'), self)
-    ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(dotacraft, 'OnAbilityUsed'), self)
     ListenToGameEvent('npc_spawned', Dynamic_Wrap(dotacraft, 'OnNPCSpawned'), self)
     ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(dotacraft, 'OnPlayerPickHero'), self)
     ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
@@ -105,6 +104,7 @@ function dotacraft:InitGameMode()
     GameMode:SetModifyExperienceFilter( Dynamic_Wrap( dotacraft, "FilterExperience" ), self )
     GameMode:SetModifyGoldFilter( Dynamic_Wrap( dotacraft, "FilterGold" ), self )
     GameMode:SetModifierGainedFilter( Dynamic_Wrap(dotacraft, "FilterModifier"), self )
+    GameMode:SetItemAddedToInventoryFilter( Dynamic_Wrap(dotacraft, "FilterItemAdded"), self )
 
     -- Panorama listeners
     CustomGameEventManager:RegisterListener( "selection_update", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
@@ -148,77 +148,6 @@ function dotacraft:InitGameMode()
     SendToServerConsole("dota_auto_surrender_all_disconnected_timeout 1000000")
 
     SendToServerConsole("r_farz 10000")
-
-    -- Lumber AbilityValue, credits to zed https://github.com/zedor/AbilityValues
-    -- Note: When the abilities change, we need to update this value.
-    Convars:RegisterCommand( "ability_values_entity", function(name, entityIndex)
-        local cmdPlayer = Convars:GetCommandClient()
-        local pID = cmdPlayer:GetPlayerID()
-
-        if cmdPlayer then
-            local unit = EntIndexToHScript(tonumber(entityIndex))
-            if not IsValidEntity(unit) then
-                return
-            end
-            
-            if unit then
-                --and (unit:GetUnitName() == "human_peasant"
-                local abilityValues = {}
-                local itemValues = {}
-
-                -- Iterate over the abilities
-                for i=0,15 do
-                    local ability = unit:GetAbilityByIndex(i)
-
-                    -- If there's an ability in this slot and its not hidden, define the number to show
-                    if ability and not ability:IsHidden() then
-                        local lumberCost = ability:GetLevelSpecialValueFor("lumber_cost", ability:GetLevel() - 1)
-                        if lumberCost then
-                            table.insert(abilityValues,lumberCost)
-                        else
-                            table.insert(abilityValues,0)
-                        end
-                    end
-                end
-
-                FireGameEvent( 'ability_values_send', { player_ID = pID, 
-                                                    hue_1 = -10, val_1 = abilityValues[1], 
-                                                    hue_2 = -10, val_2 = abilityValues[2], 
-                                                    hue_3 = -10, val_3 = abilityValues[3], 
-                                                    hue_4 = -10, val_4 = abilityValues[4], 
-                                                    hue_5 = -10, val_5 = abilityValues[5],
-                                                    hue_6 = -10, val_6 = abilityValues[6] } )
-
-                -- Iterate over the items
-                for i=0,5 do
-                    local item = unit:GetItemInSlot(i)
-
-                    -- If there's an item in this slot, define the number to show
-                    if item then
-                        local lumberCost = item:GetSpecialValueFor("lumber_cost")
-                        if lumberCost then
-                            table.insert(itemValues,lumberCost)
-                        else
-                            table.insert(itemValues,0)
-                        end
-                    end
-                end
-
-                FireGameEvent( 'ability_values_send_items', { player_ID = pID, 
-                                                    hue_1 = 0, val_1 = itemValues[1], 
-                                                    hue_2 = 0, val_2 = itemValues[2], 
-                                                    hue_3 = 0, val_3 = itemValues[3], 
-                                                    hue_4 = 0, val_4 = itemValues[4], 
-                                                    hue_5 = 0, val_5 = itemValues[5],
-                                                    hue_6 = 0, val_6 = itemValues[6] } )
-                
-            else
-                -- Hide all the values if the unit is not supposed to show any.
-                FireGameEvent( 'ability_values_send', { player_ID = pID, val_1 = 0, val_2 = 0, val_3 = 0, val_4 = 0, val_5 = 0, val_6 = 0 } )
-                FireGameEvent( 'ability_values_send_items', { player_ID = pID, val_1 = 0, val_2 = 0, val_3 = 0, val_4 = 0, val_5 = 0, val_6 = 0 } )
-            end
-        end
-    end, "Change AbilityValues", 0 )
 
     -- Change random seed
     local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
@@ -917,20 +846,6 @@ function dotacraft:OnEntityHurt(keys)
             end
         end
     end
-
-
-
-end
-
--- An item was picked up off the ground
-function dotacraft:OnItemPickedUp(keys)
-    print ( '[DOTACRAFT] OnItemPurchased' )
-    --DeepPrintTable(keys)
-
-    local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-    local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-    local player = PlayerResource:GetPlayer(keys.PlayerID)
-    local itemname = keys.itemname
 end
 
 -- A player has reconnected to the game.  This function can be used to repaint Player-based particles or change
@@ -941,93 +856,12 @@ function dotacraft:OnPlayerReconnect(keys)
     local player = PlayerResource:GetPlayer(keys.PlayerID)
     local playerHero = player:GetAssignedHero()
     
-    
     -- re-create js hero panels for player
     local heroes = playerHero.heroes
     for _,hero in pairs(heroes) do
         CreateHeroPanel(hero)
     end
     
-end
-
--- An item was purchased by a player
-function dotacraft:OnItemPurchased( keys )
-    print ( '[DOTACRAFT] OnItemPurchased' )
-    --DeepPrintTable(keys)
-
-    -- The playerID of the hero who is buying something
-    local plyID = keys.PlayerID
-    if not plyID then return end
-
-    -- The name of the item purchased
-    local itemName = keys.itemname 
-
-    -- The cost of the item purchased
-    local itemcost = keys.itemcost
-
-end
-
--- An ability was used by a player
-function dotacraft:OnAbilityUsed(keys)
-
-    local player = EntIndexToHScript(keys.PlayerID)
-    local abilityname = keys.abilityname
-
-end
-
--- A non-player entity (necro-book, chen creep, etc) used an ability
-function dotacraft:OnNonPlayerUsedAbility(keys)
-    print('[DOTACRAFT] OnNonPlayerUsedAbility')
-    --DeepPrintTable(keys)
-
-    local abilityname=  keys.abilityname
-end
-
--- A player changed their name
-function dotacraft:OnPlayerChangedName(keys)
-    print('[DOTACRAFT] OnPlayerChangedName')
-    --DeepPrintTable(keys)
-
-    local newName = keys.newname
-    local oldName = keys.oldName
-end
-
--- A player leveled up an ability
-function dotacraft:OnPlayerLearnedAbility( keys)
-    print ('[DOTACRAFT] OnPlayerLearnedAbility')
-    --DeepPrintTable(keys)
-
-    local player = EntIndexToHScript(keys.player)
-    local abilityname = keys.abilityname
-end
-
--- A channelled ability finished by either completing or being interrupted
-function dotacraft:OnAbilityChannelFinished(keys)
-    print ('[DOTACRAFT] OnAbilityChannelFinished')
-    --DeepPrintTable(keys)
-
-    local abilityname = keys.abilityname
-    local interrupted = keys.interrupted == 1
-end
-
--- A player leveled up
-function dotacraft:OnPlayerLevelUp(keys)
-    print ('[DOTACRAFT] OnPlayerLevelUp')
-    --DeepPrintTable(keys)
-
-    local player = EntIndexToHScript(keys.player)
-    local level = keys.level
-end
-
--- A player last hit a creep, a tower, or a hero
-function dotacraft:OnLastHit(keys)
-    print ('[DOTACRAFT] OnLastHit')
-    --DeepPrintTable(keys)
-
-    local isFirstBlood = keys.FirstBlood == 1
-    local isHeroKill = keys.HeroKill == 1
-    local isTowerKill = keys.TowerKill == 1
-    local player = PlayerResource:GetPlayer(keys.PlayerID)
 end
 
 -- A tree was cut down
@@ -1457,5 +1291,20 @@ function dotacraft:FilterModifier( filterTable )
         return false
     end
 
+    return true
+end
+
+------------------------------------------------------------------
+--                       Item Added Filter                      --
+------------------------------------------------------------------
+function dotacraft:FilterItemAdded( filterTable )
+    local ownerIndex = filterTable["inventory_parent_entindex_const"]
+    local itemIndex = filterTable["item_entindex_const"]
+
+    if not ownerIndex or not itemIndex then return true end
+
+    local owner = EntIndexToHScript(filterTable["inventory_parent_entindex_const"])
+    local item = EntIndexToHScript(filterTable["item_entindex_const"])
+    item:SetPurchaser(owner)
     return true
 end
