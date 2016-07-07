@@ -83,7 +83,6 @@ function Build( event )
 
         -- Play a sound
         Sounds:EmitSoundOnClient(playerID, "Building.Placement")
-        EmitGlobalSound("Building.Placement")
 
         -- Cancel gather
         local gather_ability = caster:GetGatherAbility()
