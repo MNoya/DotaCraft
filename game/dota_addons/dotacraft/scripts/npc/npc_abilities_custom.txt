@@ -4935,6 +4935,8 @@
 	
 	    "AbilityManaCost"               "50"
 	
+	    "RequiresHealthDeficit"         "self"
+	
 	    "precache"
 	    {
 	        "particle"  "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
@@ -12576,6 +12578,8 @@
 	
 	    "AbilityManaCost"               "90"
 	
+	    "RequiresHealthDeficit"         "target"
+	
 	    "AbilitySpecial"
 	    {
 	        "01"
@@ -14882,6 +14886,7 @@
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 	
 		"TargetsAllowed"                "organic"
+		"RequiresHealthDeficit"			"target"
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCastRange"				"250"
@@ -55795,6 +55800,7 @@
 		"AbilityMultiOrder"			"1"
 		
 		"RequiresCorpsesAround"   	"800"
+		"RequiresHealthDeficit"		"self"
 			
 		"AbilitySpecial"
 		{
@@ -56405,10 +56411,13 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
-		"AbilityCastRange"			"200" //Range from a corpse
+		"AbilityCastRange"			"600" //Range from a corpse
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0.5"
 		"AbilityManaCost"			"0"
+	
+		"RequiresCorpsesAround"		"600"
+		"CorpseFlag"				"NotMeatWagon"
 	
 		"AbilitySpecial"
 		{
@@ -56429,7 +56438,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"units/undead/meat_wagon.lua"
-				"Function"		"get_corpse"			
+				"Function"		"GetCorpse"			
 			}
 		}
 	
@@ -56438,7 +56447,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"units/undead/meat_wagon.lua"
-				"Function"		"drop_all_corpses"			
+				"Function"		"DropAllCorpses"			
 			}
 		}
 		
@@ -56447,7 +56456,6 @@
 			"modifier_corpses"
 			{
 				"Passive" 	"1"
-			
 			}
 			
 			"modifier_get_corpse_autocast"
@@ -56456,16 +56464,11 @@
 				"IsHidden" "1"
 						
 				"OnCreated"
-				{
+				{	
 					"RunScript"
 					{
-						"ScriptFile" "units/undead/meat_wagon.lua"
-						"Function"		"ToggleOnAutocast"			
-					}		
-					"RunScript"
-					{
-						"ScriptFile" "units/undead/meat_wagon.lua"
-						"Function"		"get_corpse_autocast"			
+						"ScriptFile" 	"units/undead/meat_wagon.lua"
+						"Function"		"GetCorpse_Autocast"			
 					}	
 				}
 			}
@@ -56492,10 +56495,10 @@
 	
 		"OnSpellStart"
 		{
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"  "modifier_dropping_corpses"
-				"Target"        "CASTER"
+				"ScriptFile" "units/undead/meat_wagon.lua"
+				"Function"	 "DropCorpse"
 			}
 		}
 		
@@ -56504,26 +56507,6 @@
 			"modifier_dropping_corpses"
 			{
 				"IsHidden" "1"
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile" "units/undead/meat_wagon.lua"
-						"Function"	"drop_corpse"
-					}
-				}
-			
-				"ThinkInterval" "0.5"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile" "units/undead/meat_wagon.lua"
-						"Function"	"drop_corpse"
-					}
-				}
-	
 				"OnOrder"
 				{
 					"RemoveModifier"
@@ -56570,7 +56553,7 @@
 					"RunScript"
 					{
 						"ScriptFile" "units/undead/meat_wagon.lua"
-						"Function" "exhume_corpse"
+						"Function" "ExhumeCorpse"
 					}
 				}
 			}

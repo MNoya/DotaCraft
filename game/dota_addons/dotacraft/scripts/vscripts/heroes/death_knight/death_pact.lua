@@ -7,7 +7,7 @@ function DeathPact( event )
 	local rate = ability:GetLevelSpecialValueFor( "conversion_rate" , ability:GetLevel() - 1 ) * 0.01
 
 	caster:Heal( target_health * rate, caster)
-	Corpses:SetNoCorpse(target)
+	target:SetNoCorpse()
 	target:Kill(nil, caster)
 end
 

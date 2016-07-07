@@ -70,19 +70,37 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
     end
 
-    -- Deny No-Target Orders that require corpses if no corpses are found
+    -- Deny No-Target Orders requirements
     if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
         local ability = EntIndexToHScript(abilityIndex)
+        local playerID = unit:GetPlayerOwnerID()
+        
+        -- Check health requirements
+        local requiresHealthDeficit = ability:GetKeyValue("RequiresHealthDeficit")
+        if requiresHealthDeficit and unit:GetHealthDeficit() == 0 then
+            SendErrorMessage(issuer, "#error_full_health")
+            return false
+        end
+
+        -- Check corpse requirements
         local corpseRadius = ability:GetKeyValue("RequiresCorpsesAround")
         if corpseRadius then
-            if not Corpses:AreAnyInRadius(unit:GetPlayerOwnerID(), unit:GetAbsOrigin(), corpseRadius) then
+            local corpseFlag = ability:GetKeyValue("CorpseFlag")
+            if corpseFlag then
+                if corpseFlag == "NotMeatWagon" then
+                    if not Corpses:AreAnyOutsideInRadius(playerID, unit:GetAbsOrigin(), corpseRadius) then
+                        SendErrorMessage(issuer, "#error_no_usable_corpses")
+                        return false
+                    end
+                end
+            elseif not Corpses:AreAnyInRadius(playerID, unit:GetAbsOrigin(), corpseRadius) then
                 SendErrorMessage(issuer, "#error_no_usable_corpses")
                 return false
             end
         end
         local alliedCorpseRadius = ability:GetKeyValue("RequiresAlliedCorpsesAround")
         if alliedCorpseRadius then
-            if not Corpses:AreAnyAlliedInRadius(unit:GetPlayerOwnerID(), unit:GetAbsOrigin(), alliedCorpseRadius) then
+            if not Corpses:AreAnyAlliedInRadius(playerID, unit:GetAbsOrigin(), alliedCorpseRadius) then
                 SendErrorMessage(issuer, "#error_no_usable_friendly_corpses")
                 return false
             end

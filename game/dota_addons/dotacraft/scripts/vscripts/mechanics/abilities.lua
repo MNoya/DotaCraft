@@ -18,6 +18,30 @@ function CDOTABaseAbility:IsAllowedTarget(target)
     if bIgnoreGround then
         return false,"error_must_target_air"
     end
+
+    local bNeedsAnyDeficit = self:GetKeyValue("RequiresManaDeficit")
+    if bNeedsAnyDeficit and target:GetHealthDeficit() == 0 and target:GetMana() == target:GetMaxMana() then
+        return false,"error_full_mana_health"
+    end
+
+    local bNeedsHealthDeficit = self:GetKeyValue("RequiresHealthDeficit")
+    if bNeedsHealthDeficit then
+        if bNeedsHealthDeficit == "self" then
+            if self:GetCaster():GetHealthDeficit() == 0 then
+                return false,"error_full_health"
+            end
+        elseif bNeedsHealthDeficit == "target" then
+            if target:GetHealthDeficit() == 0 then
+                return false,"error_full_health"
+            end
+        end
+    end
+
+    local bNeedsManaDeficit = self:GetKeyValue("RequiresManaDeficit")
+    if bNeedsManaDeficit and target:GetMana() == target:GetMaxMana() then
+        return false,"error_full_mana"
+    end
+
     return true
 end
 

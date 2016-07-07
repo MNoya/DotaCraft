@@ -13,7 +13,7 @@ function Transmute( event )
 		-- Set the gold gained for killing the unit to the new multiplied number
 		target:SetMinimumGoldBounty(gold_gained)
 		target:SetMaximumGoldBounty(gold_gained)
-		Corpses:SetNoCorpse(target)
+		target:SetNoCorpse()
 		target:AddNoDraw()
 		local particle = ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas.vpcf",PATTACH_CUSTOMORIGIN,nil)
 		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
