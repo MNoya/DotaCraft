@@ -1,7 +1,7 @@
 demon_hunter_immolation = class({})
 
-LinkLuaModifier("modifier_immolation_aura", "heroes/demon_hunter/immolation.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_immolation_aura_debuff", "heroes/demon_hunter/immolation.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_immolation_aura", "heroes/demon_hunter/immolation", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_immolation_aura_debuff", "heroes/demon_hunter/immolation", LUA_MODIFIER_MOTION_NONE)
 
 function demon_hunter_immolation:OnToggle()
     if IsServer() then
