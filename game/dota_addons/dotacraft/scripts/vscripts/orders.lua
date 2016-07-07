@@ -196,9 +196,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
     ------------------------------------------------
     --            Item Pickup Orders              --
     ------------------------------------------------
-    elseif order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+    elseif order_type == DOTA_UNIT_ORDER_PICKUP_ITEM and targetIndex then
         local drop = EntIndexToHScript(targetIndex)
+        if not drop or not IsValidEntity(drop) then return false end
         local item = drop:GetContainedItem()
+        if not item or not IsValidEntity(item) then return false end
         local item_name = item:GetAbilityName()
         
         -- Units can't activate powerups, redirect order to hero if there is one or deny it
