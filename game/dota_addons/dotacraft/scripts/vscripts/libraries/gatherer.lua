@@ -23,6 +23,9 @@ Even though builders have no collision while gathering, find an empty point near
 Wisps got order stuck going to gold mine
 Gatherer needs to be looking towards the tree, if the ability is started in range
 Skip the extra attack animation while the builder is going back to return
+sometimes builders still marked as idle while gathering
+wisp on gold mine are idle
+wisp can be put in between trees
 ]]
 
 function Gatherer:start()
