@@ -12,7 +12,7 @@ function Units:start()
         local hullName = GetUnitKV(k, "BoundsHullName")
         local collisionSize = GetUnitKV(k, "CollisionSize")
         if hullName and collisionSize and HULL_SIZES[hullName] then
-            if HULL_SIZES[hullName] ~= collisionSize then
+            if HULL_SIZES[hullName] ~= collisionSize and HULL_SIZES[hullName]+10 <= collisionSize then
                 local bestHull = 999
                 local bestName
                 for name,value in pairs(HULL_SIZES) do
@@ -101,9 +101,8 @@ function Units:Init( unit )
     -- Adjust Hull
     unit:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
     local collision_size = unit:GetCollisionSize()
-    if collision_size then
-        local offset = unit:GetKeyValue("BoundsHullName") == "DOTA_HULL_SIZE_HUGE" and 10 or 0
-        unit:SetHullRadius(collision_size+offset)
+    if not IsCustomBuilding(unit) and collision_size then
+        unit:SetHullRadius(collision_size)
     end
 
     -- Special Tree-Attacking units
@@ -198,7 +197,8 @@ HULL_SIZES = {
 }
 
 function CDOTA_BaseNPC:GetCollisionSize()
-    return self:GetKeyValue("CollisionSize")
+    local collision_size = self:GetKeyValue("CollisionSize")
+    return collision_size
 end
 
 -- Resolve to the method in CDOTA_BaseNPC_Creature or CDOTA_BaseNPC_Hero if its a hero
@@ -311,6 +311,10 @@ end
 
 function CDOTA_BaseNPC:IsMechanical()
     return self:GetUnitLabel():match("mechanical")
+end
+
+function CDOTA_BaseNPC:IsFlyingUnit()
+    return self:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY"
 end
 
 -- Shortcut for a very common check
@@ -528,6 +532,60 @@ function CDOTA_BaseNPC:ShouldAbsorbSpell(caster, ability)
         end
     end
     return false
+end
+
+function CDOTA_BaseNPC:FindClearSpace(origin)
+    local collisionSize = self:GetCollisionSize()
+    local gridSize = math.ceil(collisionSize/32)+1
+    origin = origin or self:GetAbsOrigin()
+    if gridSize >= 2 then
+        local position
+        local originX = GridNav:WorldToGridPosX(origin.x)
+        local originY = GridNav:WorldToGridPosY(origin.y)
+
+        local boundX1 = originX + 10
+        local boundX2 = originX - 10
+        local boundY1 = originY + 10
+        local boundY2 = originY - 10
+
+        local lowerBoundX = math.min(boundX1, boundX2)
+        local upperBoundX = math.max(boundX1, boundX2)
+        local lowerBoundY = math.min(boundY1, boundY2)
+        local upperBoundY = math.max(boundY1, boundY2)
+
+        -- Restrict to the map edges
+        lowerBoundX = math.max(lowerBoundX, -BuildingHelper.squareX/2+1)
+        upperBoundX = math.min(upperBoundX, BuildingHelper.squareX/2-1)
+        lowerBoundY = math.max(lowerBoundY, -BuildingHelper.squareY/2+1)
+        upperBoundY = math.min(upperBoundY, BuildingHelper.squareY/2-1)
+
+        -- Adjust even size
+        if (gridSize % 2) == 0 then
+            upperBoundX = upperBoundX-1
+            upperBoundY = upperBoundY-1
+        end
+        
+        local closestDistance = math.huge
+        for x = lowerBoundX, upperBoundX do
+            for y = lowerBoundY, upperBoundY do
+                local pos = GetGroundPosition(Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0), nil)
+                if not BuildingHelper:IsAreaBlocked(gridSize, pos) then
+                    local distance = (pos - origin):Length2D()
+                    if distance < closestDistance then
+                        position = pos
+                        closestDistance = distance
+                    end
+                end
+            end
+        end
+
+        if position then
+            FindClearSpaceForUnit(self, position, true)
+            return
+        end
+    end
+    
+    FindClearSpaceForUnit(self, origin, true)
 end
 
 Units:start()

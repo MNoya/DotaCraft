@@ -92,14 +92,14 @@ function Build( event )
         local units = FindUnitsInRadius(teamNumber, vPos, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
         
         for _,unit in pairs(units) do
-            if unit ~= caster and unit:GetTeamNumber() == teamNumber and not IsCustomBuilding(unit) then
+            if unit ~= caster and not IsCustomBuilding(unit) then
                 -- This is still sketchy but works.
                 if (unit:IsIdle() and unit.state ~= "repairing") then
                     BuildingHelper:print("Moving unit "..unit:GetUnitName().." outside of the building area")
                     local origin = unit:GetAbsOrigin()
-                    local front_position = origin + (origin - vPos):Normalized() * (construction_radius - (vPos-origin):Length2D())
+                    local front_position = origin + (origin - vPos):Normalized() * (construction_radius - (vPos-origin):Length2D()+20)
                     ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = front_position, Queue = false})
-                    unit:AddNewModifier(caster, nil, "modifier_phased", {duration=1})
+                    unit:AddNewModifier(nil, nil, "modifier_phased", {duration=1})
                 end
             end
         end
@@ -159,6 +159,15 @@ function Build( event )
                 ability:RemoveSelf()
             else
                 ability:SetCurrentCharges(charges)
+            end
+        end
+
+        -- Move allied units away from the building place
+        local vPos = unit:GetAbsOrigin()
+        local units = FindUnitsInRadius(teamNumber, vPos, nil, construction_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
+        for _,unit in pairs(units) do
+            if unit ~= caster and not IsCustomBuilding(unit) then
+                unit:FindClearSpace()
             end
         end
 

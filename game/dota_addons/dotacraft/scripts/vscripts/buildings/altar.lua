@@ -20,8 +20,8 @@ function BuildHero( event )
 		new_hero:SetControllableByPlayer(playerID, true)
 		new_hero:SetOwner(player)
 		new_hero:RespawnUnit()
-		Timers:CreateTimer(0.03, function()
-			FindClearSpaceForUnit(new_hero, origin, true)
+		Timers:CreateTimer(0.05, function()
+			new_hero:FindClearSpace(origin)
 		end)
 
 		CreateAttachmentsForPlayerHero(playerID, new_hero)
@@ -467,7 +467,9 @@ function ReviveHero( event )
 	for k,hero in pairs(playerHeroes) do
 		if hero:GetUnitName() == hero_name then
 			hero:RespawnUnit()
-			FindClearSpaceForUnit(hero, caster:GetAbsOrigin(), true)
+			Timers:CreateTimer(0.05, function()
+				hero:FindClearSpace(caster.initial_spawn_position)
+			end)
 			dotacraft:ResolveRallyPointOrder(hero, caster)
 			print("Revived "..hero_name)
 		end

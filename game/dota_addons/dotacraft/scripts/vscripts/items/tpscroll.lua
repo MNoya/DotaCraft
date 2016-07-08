@@ -45,12 +45,12 @@ function Teleport( event )
 
 			for _,unit in pairs(targets) do
 				if not IsCustomBuilding(unit) and unit:GetPlayerOwner() == player then
-		     		FindClearSpaceForUnit(unit, target:GetAbsOrigin(), true)
+		     		unit:FindClearSpace(target:GetAbsOrigin())
 		     		unit:Stop()
 		     	end
 		    end
 
-		    FindClearSpaceForUnit(caster, target:GetAbsOrigin(), true)
+		    caster:FindClearSpace(target:GetAbsOrigin())
 
 		    caster:StopSound("Hero_KeeperOfTheLight.Recall.Cast")
 

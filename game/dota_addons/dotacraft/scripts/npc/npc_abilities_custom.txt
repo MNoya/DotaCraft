@@ -633,16 +633,16 @@
 	    "MaxLevel"                      "1"
 	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 	
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 	
 	    "TargetsAllowed"                "ground"
 	
 	    "AbilityCastPoint"              "0.3"
 	    "AbilityCooldown"               "20.0"
-	
+	    "AbilityCastRnage"              "700"
 	    "AbilityManaCost"               "100"
 	    "AbilityChannelTime"            "3.0"
 	
@@ -672,37 +672,13 @@
 	        }
 	    }
 	
-	    "OnAbilityPhaseStart"
-	    {
-	        "RunScript"
-	        {
-	            "ScriptFile"    "heroes/archmage/mass_teleport.lua"
-	            "Function"      "BuildingCheck"
-	        }
-	    }
-	
 	    "OnSpellStart"
 	    {
 	        "RunScript"
 	        {
 	            "ScriptFile"    "heroes/archmage/mass_teleport.lua"
 	            "Function"      "MassTeleportStart"
-	            "Target"
-	            {
-	                "Center"    "CASTER"
-	                "Radius"    "%radius"
-	                "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-	                "MaxTargets" "%max_units_teleported"
-	            }
-	        }
-	
-	        "ApplyModifier"
-	        {
-	            "ModifierName"  "modifier_channeling_animation"
-	            "Target"        "CASTER"
-	            "Duration"      "%channel_time"
+	            "Target"        "POINT"
 	        }
 	
 	        "FireEffect"
@@ -722,7 +698,6 @@
 	            "EffectName"    "Hero_KeeperOfTheLight.Recall.Cast"
 	            "Target"        "CASTER"
 	        }
-	        
 	    }
 	
 	    "OnChannelInterrupted"
@@ -737,12 +712,6 @@
 	        {
 	            "EffectName"    "Hero_KeeperOfTheLight.Recall.Fail"
 	            "Target"        "CASTER"
-	        }   
-	
-	        "RemoveModifier"
-	        {
-	            "ModifierName"  "modifier_channeling_animation"
-	            "Target"        "CASTER"
 	        }
 	    }   
 	
@@ -754,26 +723,15 @@
 	            "Function"      "MassTeleport"
 	        }
 	
-	        "RemoveModifier"
-	        {
-	            "ModifierName"  "modifier_channeling_animation"
-	            "Target"        "CASTER"
-	        }
-	
 	        "FireSound"
 	        {
 	            "EffectName"    "Hero_KeeperOfTheLight.Recall.End"
-	            "Target"        "TARGET"
+	            "Target"        "CASTER"
 	        }                                       
 	    }   
 	
 	    "Modifiers"
 	    {
-	        "modifier_channeling_animation"
-	        {
-	            "OverrideAnimation" "ACT_DOTA_CAST_ABILITY_1"
-	        }
-	
 	        "modifier_mass_teleport_target"
 	        {
 	            "IsHidden"  "1"
