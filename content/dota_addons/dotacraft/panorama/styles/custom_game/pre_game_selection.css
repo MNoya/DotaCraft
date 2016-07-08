@@ -26,7 +26,7 @@
 	margin-left: 50px;
 	margin-top: 150px;	
 	
-	horizontal-align: right;
+	horizontal-align: left;
 
 	opacity: 1;
 	height: 100%;
@@ -184,8 +184,9 @@
 	width: 200px;
 	height: 350px;
 	
-	margin-left: 320px;
 	visibility: collapse;
+	horizontal-align: right;
+	margin-right: 320px;
 }
 
 .HostContainer{
@@ -347,7 +348,7 @@
 
 #Right_Bar {
 	flow-children: down;
-	height: 73%;
+	height: 100%;
 	width: 300px;
 	 
 	background-image: url("file://{images}/selection/pattern.png");
@@ -357,7 +358,7 @@
 	border-bottom: 3px solid #444444; 
 	
 	vertical-align: top;
-	horizontal-align: left;
+	horizontal-align: right;
 
 	padding: 20px;
 	
