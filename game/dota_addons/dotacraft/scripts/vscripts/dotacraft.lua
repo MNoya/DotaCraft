@@ -144,7 +144,6 @@ function dotacraft:InitGameMode()
 
     -- Don't end the game if everyone is unassigned
     SendToServerConsole("dota_surrender_on_disconnect 0")
-    SendToServerConsole("dota_auto_surrender_all_disconnected_timeout 1000000")
 
     SendToServerConsole("r_farz 10000")
 

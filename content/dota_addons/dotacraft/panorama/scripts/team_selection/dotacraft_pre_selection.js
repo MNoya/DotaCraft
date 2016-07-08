@@ -37,8 +37,8 @@ var current_ColorIndex = 0;
 var DEVELOPER = false; 
 var MAP_PLAYER_LIMIT;
 (function () {
-	// default to spectator
-	Game.PlayerJoinTeam(1);
+	// default everyone to radiant
+	Game.PlayerJoinTeam(2);
 
 	Developer_Mode();
 
