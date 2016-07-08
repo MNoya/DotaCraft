@@ -4,51 +4,49 @@
 var COLOUR_TABLE = {}
 var Root = $.GetContextPanel();
 var LocalPlayerID = Game.GetLocalPlayerID();
+var PlayerContainer = Root.GetParent().GetParent();
 
 //////////////////////////////////////////////
 // 					BUTTONS					//
 //////////////////////////////////////////////
 
 // function for player to sit initially
-Root.SitPlayer = function(playerID, teamID, colorID, raceID, update){
+Root.Init = function(playerID, teamID, colorID, raceID){
 	Root.PlayerID = playerID;
 	Root.PlayerTeam = teamID;
 	Root.PlayerColor = colorID;
 	Root.PlayerRace = raceID;
 	
-	if( update )
+	Root.PanelID = playerID;
+	Root.PlayerReady = false;
+	Root.Locked = false;
+
+	//Root.FindChildTraverse("TeamDropDown").SetSelected(teamID);
+	//Root.FindChildTraverse("RaceDropDown").SetSelected(raceID);
+	//Root.FindChildTraverse("ColorDropDown").SetSelected(colorID);
+	
+	$.Msg("Initialising player #"+Root.PlayerID);
+	PlayerPanelSetup();
+	
+	if( Root.PlayerID == LocalPlayerID ) // initial update only done by the local player
 		UpdatePlayer();
 };
 
-Root.UpdateAllProperties = function(){
-	UpdatePlayer();
+Root.Lock = function(lock)
+{
+	UpdatePlayer( {Lock: lock} );
 };
 
-function Sit(){
-	Root.PlayerID = LocalPlayerID;
-	$.Msg("Changing slots");
+Root.SetBot = function(aiLVL){
+	if( isLocalPlayerHost() ) // host only
+		$("#OptionsDropDown").RemoveClass("hidden");
 	
-	var Parent = Root.GetParent();
-	var SavedInformation = {PlayerTeam : Root.PlayerTeam, PlayerRace : Root.PlayerRace, PlayerColor : Root.PlayerColor};
+	Root.Bot = true;
+	$("#PlayerAvatar").visible = false;
+	$("#PlayerName").GetChild(0).text = Bot_Names[aiLVL];  
 	
-	for(var i=0; i < i +1;i+=1){
-		var PlayerPanel = Parent.GetChild(i);
-		if(PlayerPanel == null)
-			break;
-		
-		if( PlayerPanel.PlayerID == LocalPlayerID && Root.PanelID != PlayerPanel.PanelID){ // swap panel information			
-			// new player panel
-			Root.SitPlayer(LocalPlayerID, PlayerPanel.PlayerTeam, PlayerPanel.PlayerColor, PlayerPanel.PlayerRace, true);
-			
-			// last player panel
-			PlayerPanel.SitPlayer(9000, SavedInformation.PlayerTeam, SavedInformation.PlayerColor, SavedInformation.PlayerRace, true);
-			
-			break; // don't continue with loop
-		}
-		// this should never be met but just in case lal
-		if(i > 100)
-			break;
-	};
+	if ( isLocalPlayerHost() )
+		UpdatePlayer();
 };
 
 // ready up button
@@ -64,177 +62,163 @@ function ReadyUp(){
 	UpdatePlayer();
 };
 
+Root.FindChildTraverse("OptionsDropDown").SetPanelEvent('oninputsubmit', function OptionsInput(){
+	var selectedID = $("#OptionsDropDown").GetSelected().id;
+	
+	if( selectedID == 0)
+		PlayerContainer.HandlePanelDeletion(Root.PlayerID);
+	else
+		UpdatePlayer( {"Bot_Name" : selectedID, "Bot": 1 });
+});
+
+/*
 // button click function for the team dropdown
-function PlayerTeamChanged(){
+Root.FindChildTraverse("TeamDropDown").SetPanelEvent('oninputsubmit', function PlayerTeamChanged(){
 	var dropdown = Root.FindChildTraverse("TeamDropDown");
 	var team_index = dropdown.GetSelected().id;
-	
-	// set selected dropdown child and assign the index of the GetSelected as the new value
+
 	dropdown.SetSelected(team_index);
-	Root.PlayerTeam = parseInt(team_index);
+	var newTeam = parseInt(team_index);
+	Root.PlayerTeam = newTeam;
 	
-	UpdatePlayerTeam();
+	UpdatePlayer( { Team: newTeam } );
+});
+*/
+
+Root.Copy = function(playerPanel){
+	UpdatePlayer({Team : playerPanel.PlayerTeam, Race: playerPanel.PlayerRace, Color: playerPanel.PlayerColor, newPlayerID: playerPanel.PlayerID});
+};
+
+Root.SetTeam = function(teamID){ 
+	if( !Root.Locked ){ // only if not locked
+		Root.PlayerTeam = teamID;
+		UpdatePlayer( { Team: teamID } );
+	};
 };
 
 // button click function for the race dropdown
-function PlayerRaceChanged(){
+Root.FindChildTraverse("RaceDropDown").SetPanelEvent('oninputsubmit', function PlayerRaceChanged(){
 	var dropdown = Root.FindChildTraverse("RaceDropDown");
 	var race_index = dropdown.GetSelected().id;
+
+	dropdown.SetSelected(race_index);	
+	var newRace = parseInt(race_index);	
+	Root.PlayerRace = newRace;
 	
-	// set selected dropdown child and assign the index of the GetSelected as the new value
-	dropdown.SetSelected(race_index);
-	Root.PlayerRace = parseInt(race_index);	
-	
-	UpdatePlayerRace();
-};
+	UpdatePlayer( { Race: newRace } );
+});
 
 // button click function for the color dropdown
-function PlayerColorChanged(){
+Root.FindChildTraverse("ColorDropDown").SetPanelEvent('oninputsubmit', function PlayerColorChanged(){
 	var dropdown = Root.FindChildTraverse("ColorDropDown");
 	var color_index = dropdown.GetSelected().id;
 
 	// save the new color index in the local variable
+	dropdown.SetSelected(color_index);
 	var old_color_index = Root.PlayerColor;
-	Root.PlayerColor = parseInt(color_index);
-
-	UpdatePlayerColor(old_color_index);
-};
-
-function OptionsInput(){
-	var OptionsDropDown = $("#OptionsDropDown");
-	var SelectedIndex = parseInt(OptionsDropDown.GetSelected().id);
-
-	if( SelectedIndex != null ){
-		switch ( SelectedIndex ){
-			case 0:
-				Root.PlayerID = 9000;
-				break;
-			case 1:
-				Root.PlayerID = 8999;
-				break;				
-			case 2:
-				Root.PlayerID = 9001;
-				//Root.PlayerColor = SelectNewColor();
-				UpdatePlayer();
-				break;
-			case 3:
-				Root.PlayerID = 9002;
-				//Root.PlayerColor = SelectNewColor();
-				UpdatePlayer();
-				break;
-			case 4:
-				Root.PlayerID = 9003;
-				//Root.PlayerColor = SelectNewColor();
-				UpdatePlayer();
-				break;
-		};
-	};
-};
-
-// DEPRECATE POSSIBLY 
-function SelectNewColor(){
-	var ColorsUsed = new Array();
-	var PlayerContainer = Root.GetParent();
-
-	var j = 1;
-	for(var i = 0; i < j; i++){
-		var PlayerPanel = PlayerContainer.FindChildTraverse(i);
-		if( PlayerPanel != null){
-			ColorsUsed.push(PlayerPanel.PlayerColor);
-			j++;
-		};
-	}; 
+	var newColor = parseInt(color_index);
+	Root.PlayerColor = newColor;
 	
-	var SelectedColorIndex = false;
-	for( var i=0; i == i; i++ ){
-		if( ColorsUsed.indexOf(i) == -1 ){ // -1 = not part of array
-			SelectedColorIndex = i;
-			break;
-		};
-	};
-
-	return SelectedColorIndex; 
-};
+	UpdateColorDropDownColor();
+	
+	UpdatePlayer( { Color : newColor, OldColor : old_color_index } );
+});
 
 //////////////////////////////////////////////
 // 					Player Update			//  
 //////////////////////////////////////////////
 // update player logic
-function UpdatePlayer(){
+function UpdatePlayer( UpdateTable ){
+	$.Msg("updating player #"+Root.PlayerID+", update changes:");
+	$.Msg(UpdateTable);
 	// save this info in the playerpanel and send it to lua net_tables
 	//$.Msg("Player: #"+Root.PlayerID+" set to Team: #"+Root.PlayerTeam+" with color: "+Root.PlayerColor+" and race: #"+Root.PlayerRace+", ReadyStatus="+Root.PlayerReady+");
-
-	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Race": Root.PlayerRace, "Team": Root.PlayerTeam, "Color": Root.PlayerColor});
-};  
-
-function UpdatePlayerColor(oldColour){
-	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Color": Root.PlayerColor, "OldColor": oldColour});
-};
-
-function UpdatePlayerTeam(){
-	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Team": Root.PlayerTeam});
-};
-
-function UpdatePlayerRace(){
-	GameEvents.SendCustomGameEventToServer("update_pregame", { "PanelID": Root.PanelID, "PlayerIndex": Root.PlayerID, "Race": Root.PlayerRace});
+	if( UpdateTable == null ) // assumes we just want to send an update of the current panel
+		UpdateTable = {};
+	
+	if( UpdateTable.Team == null ) // team
+		UpdateTable.Team = Root.PlayerTeam;
+	if( UpdateTable.Race == null ) // race
+		UpdateTable.Race = Root.PlayerRace;
+	if( UpdateTable.Color == null ) // color
+		UpdateTable.Color = Root.PlayerColor;
+	if( UpdateTable.Bot == null && Root.Bot )
+		UpdateTable.Bot = true;
+	
+	GameEvents.SendCustomGameEventToServer("update_pregame", {"ID" : Root.PlayerID, "Info" : UpdateTable});
 };
 
 // Globally available panel to this context
 (function () {
-	// default values
-	Root.PlayerRace = 0;
-	Root.PlayerTeam = 2;
-	Root.PlayerReady = false;
-	Root.Locked = false;
-	
 	// setup functions
 	Setup_Panaroma_Color_Table();
 	Setup_Colours(Root);
 	
 	CustomNetTables.SubscribeNetTableListener("dotacraft_pregame_table", NetTableUpdatePlayer);
-	
-	var OptionsDropDown = $("#OptionsDropDown");
-	if ( isLocalPlayerHost() )
-		OptionsDropDown.visible = true;
-	else
-		OptionsDropDown.visible = false;
-	
-	$.Schedule(0.1, Update);
 })();
 
 // main logic behind updating players, this is called when net_table changed
-function NetTableUpdatePlayer(TableName, Key, Value){
-	if( Key == Root.PanelID ){
+function NetTableUpdatePlayer(tableName, key, val){
+	if( key == Root.PlayerID ){
+		
+		if( val.newPlayerID != null ){ // check if there is a new player id to be assigned
+			if( Root.OldPlayerID == null ){ // if null it means that this is the correct update due to not having changed playerID previously
+				if( Root.OldPlayerID != val.newPlayerID ){
+					Root.PlayerID = val.newPlayerID;
+					Root.OldPlayerID = Root.PlayerID; // remember old id
+					Root.id = "Player_99";
+				};
+			};
+		};
+		
 		// variables  
-		var PlayerID = Value.PlayerIndex;
-		var PanelID = Key; 
-		var PlayerPanel = Root;
-		
-		PlayerPanel.PlayerID = PlayerID;
+		var PlayerID = key;
+		if(val.Bot != null && val.Bot_Name != null){
+			if( isLocalPlayerHost() ) // host only
+				$("#OptionsDropDown").RemoveClass("hidden");
+			
+			$("#PlayerAvatar").visible = false;
+			$("#PlayerName").GetChild(0).text = Bot_Names[val.Bot_Name];  
+		};
+				
+		$.Msg("[Player]: "+PlayerID+" is updating"); 
 
-		if( Value.Team != null)
-			PlayerPanel.PlayerTeam = Value.Team;
-		if( Value.Race != null)
-			PlayerPanel.PlayerRace = Value.Race;
-		if( Value.Color != null)
-			PlayerPanel.PlayerColor = Value.Color;
+		if( val.Lock != null){
+			UpdatePanelLockState(Boolise(val.Lock));
+			Root.Locked = val.Lock;
+		};
 		
-		$.Msg("[Panel]: "+PanelID+" - [Player]: "+PlayerID+" is updating"); 
-		
-		if( Value.Team != null || Value.Color != null|| Value.Race != null){
+		if( (val.Team != null) || (val.Color != null) || (val.Race != null) ){
+			if( val.Team != null){
+				Root.PlayerTeam = val.Team
+				var newTeamPanel = Root.GetParent().GetParent().FindChildTraverse("Team_"+val.Team);
+				Root.SetParent(newTeamPanel);
+			}
+			if( val.Race != null)
+				Root.PlayerRace = val.Race;
+			if( val.Color != null)
+				Root.PlayerColor = val.Color;
+			
+			
 			// find all drop-downs and update their selection
 			for(var index in dotacraft_DropDowns){ 	 
-				var dropdown = PlayerPanel.FindChildTraverse(dotacraft_DropDowns[index]);
+				var dropdown = Root.FindChildTraverse(dotacraft_DropDowns[index]);
 				
 				// determine which dropdown the current index is, and update accordingly
-				if(dotacraft_DropDowns[index] == "ColorDropDown" && Value.Color != null){
-					dropdown.SetSelected(Value.Color);
+				if(dotacraft_DropDowns[index] == "ColorDropDown" && val.Color != null){
+					$.Msg("updating color");
+					UpdateColorDropDownColor();
+					ChangeColourOfDropDownChild(val.Color, val.OldColor);
 				} 
-				else if (dotacraft_DropDowns[index] == "TeamDropDown" && Value.Team != null){ 
-					dropdown.SetSelected(Value.Team);
-				}
-				else if (dotacraft_DropDowns[index] == "RaceDropDown" && Value.Race != null){
-					dropdown.SetSelected(Value.Race);
+				/*else if (dotacraft_DropDowns[index] == "TeamDropDown" && val.Team != null  ){  
+					$.Msg("updating team");
+					dropdown.SetSelected(val.Team);
+					var newTeamPanel = Root.GetParent().GetParent().FindChildTraverse("Team_"+val.Team);
+					Root.SetParent(newTeamPanel);
+				}*/
+				else if (dotacraft_DropDowns[index] == "RaceDropDown" && val.Race != null  ){
+					$.Msg("updating race");
+					dropdown.SetSelected(val.Race);
 					
 					// if local player change the race background to match the select race
 					if(LocalPlayerID == PlayerID){
@@ -245,10 +229,40 @@ function NetTableUpdatePlayer(TableName, Key, Value){
 		};
 	};
 	
-	if( Value.Color != null ){ // update colors
-		ChangeColourOfDropDownChild(Value.Color, Value.OldColor);
-	};
+	UpdateAvailableColors();
 }; 
+
+function UpdateAvailableColors(){
+	var netTable = CustomNetTables.GetAllTableValues( "dotacraft_pregame_table" );
+	
+	var dropdown = Root.FindChildTraverse("ColorDropDown");
+	
+	for(var i =0; i < Count_Dropdown_Children(dropdown, ""); i+=1){
+		var dropdown_child = dropdown.FindDropDownMenuChild(i);
+		dropdown_child.visible = true;
+	};
+	
+	for(k in netTable){
+		if( netTable[k].value.Color != null && netTable[k].value.Color != {} ){
+			var dropdown_child = dropdown.FindDropDownMenuChild(netTable[k].value.Color);
+			dropdown_child.visible = false;
+		};
+	};
+};
+
+var Bot_Names = {
+	1: "COMPUTER (EASY)",
+	2: "COMPUTER (NORMAL)",
+	3: "COMPUTER (HARD)"
+}; 
+
+function Boolise(index){
+	if(index == 0){
+		return false;
+	}else{
+		return true;
+	};
+};
 
 function ChangeColourOfDropDownChild(newID, oldID){
 	var dropdown = Root.FindChildTraverse("ColorDropDown");
@@ -257,9 +271,11 @@ function ChangeColourOfDropDownChild(newID, oldID){
 		var oldChild = dropdown.FindDropDownMenuChild(oldID);
 		oldChild.visible = true;
 	};
-	
-	var newChild = dropdown.FindDropDownMenuChild(newID);
-	newChild.visible = false;
+
+	if(newID != null){		
+		var newChild = dropdown.FindDropDownMenuChild(newID);
+		newChild.visible = false;
+	};
 };
 
 // function which sets the local background image to that of the race
@@ -275,52 +291,13 @@ function SetRaceBackgroundImage(race){
 	};
 };
 
-function Update(){
-	PlayerPanelUpdate();
-	$.Schedule(0.1, Update);
-};
-
-function UpdateDropDownVisibility(){
-	var OptionsDropDown = $("#OptionsDropDown");
-	var SelectedIndex = OptionsDropDown.GetSelected().id;
-
-	if( SelectedIndex != null ){
-		if( Players.IsValidPlayerID(Root.PlayerID) || Root.PlayerID > 9000 ){
-			$("#ColorDropDown").visible = true;
-			$("#RaceDropDown").visible = true;
-			$("#TeamDropDown").visible = true;
-		}else{
-			$("#ColorDropDown").visible = false;
-			$("#RaceDropDown").visible = false;
-			$("#TeamDropDown").visible = false;	
-		};
-	};
-
-	if( isLocalPlayerHost() )
-		OptionsDropDown.visible = true;
-	else
-		OptionsDropDown.visible = false;
-};
-
-///////////////////////////////////////////////
-// 			One-Time INITIALISATION			 //
-///////////////////////////////////////////////
-
-var AI_Names = {
-	8999: "CLOSED",
-	9000: "OPEN",
-	9001: "COMPUTER (EASY)",
-	9002: "COMPUTER (NORMAL)",
-	9003: "COMPUTER (HARD)"
-}; 
-
 var dotacraft_DropDowns = {
 	1: "ColorDropDown",
-	2: "TeamDropDown",
+//	2: "TeamDropDown",
 	3: "RaceDropDown"
 };
 
-function PlayerPanelUpdate(){
+function PlayerPanelSetup(){
 	var PlayerInfo;
 	
 	// manage name & image
@@ -331,9 +308,6 @@ function PlayerPanelUpdate(){
 		// assign steamid to avatar and playername panels
 		$("#PlayerAvatar").steamid = PlayerInfo.player_steamid;
 		$("#PlayerName").GetChild(0).text = PlayerInfo.player_name;
-	}else{
-		$("#PlayerAvatar").visible = false;
-		$("#PlayerName").GetChild(0).text = AI_Names[Root.PlayerID];  
 	};
 	
 	if( LocalPlayerID == Root.PlayerID )
@@ -357,42 +331,31 @@ function PlayerPanelUpdate(){
 			HostIcon.visible = false;
 		};
 	};
-		
-	// set initial dropdown color
-	var dropdown = Root.FindChildTraverse("ColorDropDown");
-	dropdown.SetSelected(Root.PlayerColor);
-	var key = Root.PlayerColor;
-	// set dropdown color
-	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[key].r+","+COLOUR_TABLE[key].g+","+COLOUR_TABLE[key].b+")";
+	
+	UpdateColorDropDownColor();
 	
 	// set dropdown enabled states
-	if( Root.Locked )
-		if( isLocalPlayerHost() )
-			SetDropDownStates(true);	
-		else
-			SetDropDownStates(false);
-	else if( Root.PlayerID == LocalPlayerID || (Root.PlayerID > 9000 && isLocalPlayerHost()) )
+	if( Root.PlayerID == LocalPlayerID || ( !Players.IsValidPlayerID(Root.PlayerID) && isLocalPlayerHost()) )
 		SetDropDownStates(true);
 	else  // if Root.Locked && !isHost()
 		SetDropDownStates(false);
-	
-	// check slot is open (playerid 9000)
-	if( Root.PlayerID == 9000 )
-		$("#SitButton").visible = true;
+};
+
+function UpdatePanelLockState(lock)
+{
+	if( (isLocalPlayerHost() && lock) || ( isLocalPlayerHost() && Root.Bot) ) // if host && locked, enable all panels
+		SetDropDownStates(true);
+	else if( Root.PlayerID == LocalPlayerID && !lock ) // if panel belongs to local player && not locked, enable panel
+		SetDropDownStates(true);
 	else
-		$("#SitButton").visible = false
-	
-	//$.Msg("Player: "+Root.PlayerID+", Locked: "+Root.Locked);
-	if( Root.Locked ){
-		$("#SitButton").enabled = false;
-		$("#SitButtonText").text = "X"
-	}else{
-		$("#SitButton").enabled = true;
-		$("#SitButtonText").text = ">"
-	};
-	
-	// update dropdown visibilities accordingly
-	UpdateDropDownVisibility();
+		SetDropDownStates(false); // lock panels otherwise
+};
+
+function UpdateColorDropDownColor()
+{
+	var dropdown = Root.FindChildTraverse("ColorDropDown");
+	dropdown.SetSelected(Root.PlayerColor);
+	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[Root.PlayerColor].r+","+COLOUR_TABLE[Root.PlayerColor].g+","+COLOUR_TABLE[Root.PlayerColor].b+")";	
 };
 
 function SetDropDownStates(Enabled){

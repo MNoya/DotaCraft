@@ -115,10 +115,9 @@ function dotacraft:InitGameMode()
 
     -- PreGame Selection
     CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGameUpdate"))
-    CustomGameEventManager:RegisterListener( "pregame_countdown", Dynamic_Wrap(dotacraft, "PreGameStartCountDown")) 
-    CustomGameEventManager:RegisterListener( "pregame_lock", Dynamic_Wrap(dotacraft, "PreGameToggleLock"))  
+    CustomGameEventManager:RegisterListener( "send_pregame_event", Dynamic_Wrap(dotacraft, "PreGameEvent")) 
     
-    -- Lua Modifiers
+	-- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_model_scale", "libraries/modifiers/modifier_model_scale", LUA_MODIFIER_MOTION_NONE)
@@ -671,6 +670,11 @@ function dotacraft:OnGameRulesStateChange(keys)
     end
 end
 
+function GetRealTeamID(fakeTeamID)
+	local teamIDs = {2,3,6,7,8,9}
+	return teamIDs[fakeTeamID]
+end
+
 function dotacraft:OnPreGame()
     print("[DOTACRAFT] OnPreGame")
     Teams:DetermineStartingPositions()
@@ -680,9 +684,8 @@ function dotacraft:OnPreGame()
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
         if not playerTable then break end
 
-        local playerID = playerTable.PlayerIndex
         local color = playerTable.Color
-        local team = playerTable.Team
+        local team = GetRealTeamID(playerTable.Team)
         local race = GameRules.raceTable[playerTable.Race]
         
         -- if race is nil it means that the id supplied is random since that is the only fallout index
@@ -742,15 +745,11 @@ function dotacraft:OnPreGame()
 end
 
 function dotacraft:PreGameUpdate(data)
-    CustomNetTables:SetTableValue("dotacraft_pregame_table", tostring(data.PanelID), {Team = data.Team, Color = data.Color, Race = data.Race, OldColor = data.OldColor, PlayerIndex = data.PlayerIndex})
+    CustomNetTables:SetTableValue("dotacraft_pregame_table", tostring(data.ID), data.Info)
 end
 
-function dotacraft:PreGameToggleLock(data)
-    CustomGameEventManager:Send_ServerToAllClients("pregame_toggle_lock", {})
-end
-
-function dotacraft:PreGameStartCountDown(data)
-    CustomGameEventManager:Send_ServerToAllClients("pregame_countdown_start", {})
+function dotacraft:PreGameEvent(data)
+	CustomGameEventManager:Send_ServerToAllClients("pregame_event", data);
 end
 
 -- An NPC has spawned somewhere in game.  This includes heroes
