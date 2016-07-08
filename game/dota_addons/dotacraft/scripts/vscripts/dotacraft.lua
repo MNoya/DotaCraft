@@ -670,22 +670,18 @@ function dotacraft:OnGameRulesStateChange(keys)
     end
 end
 
-function GetRealTeamID(fakeTeamID)
-	local teamIDs = {2,3,6,7,8,9}
-	return teamIDs[fakeTeamID]
-end
-
 function dotacraft:OnPreGame()
     print("[DOTACRAFT] OnPreGame")
     Teams:DetermineStartingPositions()
-
+	
+	local teamIDs = {2,3,6,7,8,9}
     local maxPlayers = dotacraft:GetMapMaxPlayers()
     for playerID = 0, maxPlayers do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
-        if not playerTable then break end
+        if not Players:IsValidNetTablePlayer(playerTable) then break end
 
         local color = playerTable.Color
-        local team = GetRealTeamID(playerTable.Team)
+        local team = teamIDs[playerTable.Team]
         local race = GameRules.raceTable[playerTable.Race]
         
         -- if race is nil it means that the id supplied is random since that is the only fallout index

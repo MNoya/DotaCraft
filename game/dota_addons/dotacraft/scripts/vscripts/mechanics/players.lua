@@ -134,6 +134,10 @@ function Players:ClearPlayerFlags( playerID )
     end
 end
 
+function Players:IsValidNetTablePlayer(playerTable)
+	return ( playerTable ~= nil and not playerTable.isNull )
+end
+
 -- In case of objects being removed from the game but still kept on the player tables
 function Players:FixAllTables(playerID)
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)

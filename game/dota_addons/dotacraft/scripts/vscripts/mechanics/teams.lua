@@ -152,7 +152,7 @@ function Teams:GetValidTeams()
     local teamTable = {}
     for playerID = 0, maxPlayers-1 do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
-        if playerTable then 
+        if Players:IsValidNetTablePlayer(playerTable) then 
             teamTable[playerTable.Team] = true
         end
     end

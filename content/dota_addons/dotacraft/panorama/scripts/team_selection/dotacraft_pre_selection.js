@@ -147,7 +147,7 @@ PlayerContainer.HandlePanelDeletion = function(playerIDToDelete){
 
 function UpdateDeletePlayer(id){
 	SendEventToServer("delete_bot", {"ID" : id});
-	GameEvents.SendCustomGameEventToServer("update_pregame", { "ID" : id, "Info" : {} });	
+	GameEvents.SendCustomGameEventToServer("update_pregame", { "ID" : id, "Info" : {isNull : 1} });	
 };
 
 function CreateBotLocally(data){
