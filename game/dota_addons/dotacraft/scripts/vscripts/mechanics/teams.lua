@@ -111,12 +111,8 @@ function Teams:GetPlayersOnTeam(teamID)
     local maxPlayers = dotacraft:GetMapMaxPlayers()
     for playerID = 0, maxPlayers do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
-        if playerTable and playerTable.PlayerIndex ~= 9000 and playerTable.Team == teamID then -- Infekma please
-            if playerTable.PlayerIndex == 9001 then -- ugh
-                table.insert(players, playerID)
-            else
-                table.insert(players, playerTable.PlayerIndex)
-            end
+        if playerTable and playerTable.Team == teamID then
+            table.insert(players, playerID)
         end
     end
     return players
@@ -156,7 +152,7 @@ function Teams:GetValidTeams()
     local teamTable = {}
     for playerID = 0, maxPlayers-1 do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
-        if playerTable and playerTable.PlayerIndex ~= 9000 then -- Infekma please
+        if playerTable then 
             teamTable[playerTable.Team] = true
         end
     end

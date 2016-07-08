@@ -705,11 +705,8 @@ function dotacraft:OnPreGame()
             hero.color_id = color
             
             print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
-
-        elseif playerID > 9000 then
-            -- Create ai player here
         else
-            -- do nothing
+            -- BOT 
         end
     end
     
