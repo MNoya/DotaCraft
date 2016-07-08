@@ -4,18 +4,10 @@
 	<include src="s2r://panorama/styles/dotastyles.vcss_c" />
   </styles>
   <scripts>
-    <include src="file://{resources}/scripts/team_selection/TeamSelection.js" /> 
     <include src="file://{resources}/scripts/team_selection/dotacraft_pre_selection.js" /> 
   </scripts>
 	<Panel class="PreGameSelectionRoot" hittest="false">	
 		<Panel id="Left_Bar" hittest="false">
-			<Panel id="SpectatorListContainer">
-				<Label id="SpectatorTitle" text="Spectators"/>
-				<Panel id="SpectatorContainer" />
-				<Button id="SpectateButton" onactivate="Spectate()">
-					<Label id="SpectateButtonText" text="Join"/>
-				</Button> 
-			</Panel>
 			<Panel id="PlayerListContainer"/>
 		</Panel>	
 		
@@ -41,10 +33,15 @@
 		<Panel id="HostPanel">		
 			<Panel id="HostContainer" class="HostContainer">
 				<Label id="Host_Header" text="Host Control Panel" />
-					
-				<Button id="LockTeamButton" onactivate="LockPlayers()">
-					<Label id="LockTeamButtonText" text="Lock Players"/>
-				</Button>
+
+				<Panel class="ToggleItem">
+					<ToggleButton id="LockPlayers" class="ToggleItemValue" checked="false" onactivate="LockPlayers()" />
+					<Label class="ToggleItemLabel" text="Lock Players" />
+				</Panel>
+				
+				<Button id="CreateBot" class="Button" onactivate="CreateBot()">
+					<Label class="ButtonText" text="Create Bot"/>  
+				</Button> 
 			</Panel>
 				
 		</Panel>
