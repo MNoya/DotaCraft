@@ -183,13 +183,12 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if bDragCondition then
             unit:MoveToNPCToGiveItem(target,item)
         else
-            local pID = unit:GetPlayerOwnerID()
             if not bDroppable then
-                SendErrorMessage( pID, "#error_cant_drop" )
+                SendErrorMessage(issuer, "#error_cant_drop")
             elseif not bFriendly then
-                SendErrorMessage( pID, "#error_cant_take_items" )
+                SendErrorMessage(issuer, "#error_cant_take_items")
             elseif not bValidBuilding then
-                SendErrorMessage( pID, "#error_must_target_shop" )
+                SendErrorMessage(issuer, "#error_building_cant_take_items")
             end
         end
         return false
@@ -207,7 +206,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
         -- Units can't activate powerups, redirect order to hero if there is one or deny it
         local bPowerUp = item:IsCastOnPickup()
         local bHeroPickup = unit:IsRealHero()
-        local bValidPickup = not bPowerUp or bHeroPickup
+        local bUprootPickup = unit:HasModifier("modifier_uprooted")
+        local bValidPickup = (not bPowerUp or bHeroPickup) and not bUprootPickup
 
         if bValidPickup then
             return true
@@ -233,7 +233,13 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     end
                 end
             else
-                SendErrorMessage(unit:GetPlayerOwnerID(), "#error_unable_to_use_powerups")
+                if bUprootPickup then
+                    SendErrorMessage(issuer, "#error_building_cant_take_items")
+                    return false
+                else
+                    SendErrorMessage(issuer, "#error_unable_to_use_powerups")
+                    return false
+                end
             end
 
             return false
