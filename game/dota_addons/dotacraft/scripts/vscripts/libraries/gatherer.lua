@@ -110,7 +110,7 @@ function Gatherer:LoadSettings()
     self.MinDistanceToMine = self.Settings["MinDistanceToMine"] or 300
     self.ThinkInterval = 0.5
     self.DebugPrint = true
-    self.DebugDraw = true
+    self.DebugDraw = false
     self.DebugDrawDuration = 10
 end
 
@@ -888,7 +888,7 @@ function Gatherer:Init(unit)
     function unit:StartGatheringLumber(tree)
         local lumber_interval = unit.GatherAbility:GetKeyValue("LumberGainInterval") or 1
         local lumber_per_interval = unit.GatherAbility:GetKeyValue("LumberPerInterval") or 1
-        local damage_to_tree = 0--unit.GatherAbility:GetKeyValue("DamageTree")
+        local damage_to_tree = unit.GatherAbility:GetKeyValue("DamageTree")
         local return_ability = unit:GetReturnAbility()
 
         Gatherer:print("StartGatheringLumber - Gain "..lumber_per_interval.." lumber every "..lumber_interval.." seconds")
@@ -1015,7 +1015,7 @@ function Gatherer:DamageTree(unit, tree, value)
     
     if tree.health <= 0 then
         tree:CutDown(unit:GetTeamNumber())
-        unit.GatherAbility.callbacks.OnTreeCutDown(value)
+        unit.GatherAbility.callbacks.OnTreeCutDown(tree)
     else
         unit.GatherAbility.callbacks.OnTreeDamaged(tree)
     end

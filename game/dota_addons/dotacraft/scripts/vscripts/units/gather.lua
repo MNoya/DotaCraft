@@ -41,6 +41,7 @@ function Gather( event )
         caster.state = "gathering_lumber"
         if race == "nightelf" then
             caster:AddNewModifier(nil, nil, "modifier_stunned", {})
+            tree.wisp = caster
             local tree_pos = tree:GetAbsOrigin()
             local speed = caster:GetBaseMoveSpeed() * 0.03
 
@@ -98,6 +99,11 @@ function Gather( event )
 
     event:OnTreeCutDown(function(tree)
         Gatherer:print("OnTreeCutDown")
+
+        if IsValidEntity(tree.wisp) then
+            tree.wisp:CancelGather()
+            tree.wisp = nil
+        end
     end)
 
     event:OnMaxResourceGathered(function(node_type)
