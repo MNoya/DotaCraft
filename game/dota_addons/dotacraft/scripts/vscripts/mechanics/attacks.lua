@@ -13,7 +13,7 @@ end
 
 -- Ground/Air Attack mechanics
 function UnitCanAttackTarget( unit, target )
-    if not target.HasFlyMovementCapability then return true end -- filter item drops
+    if not target.IsCreature then return true end -- filter item drops
     local attacks_enabled = GetAttacksEnabled(unit)
     local target_type = GetMovementCapability(target)
     

@@ -447,6 +447,14 @@ function dotacraft:OnBuildingRallyOrder( event )
 
     local player = PlayerResource:GetPlayer(pID)
     local units = PlayerResource:GetSelectedEntities(pID)
+    local target
+    if targetIndex then
+        local target = EntIndexToHScript(targetIndex)
+        if target and not target.IsCreature then
+            rally_type = "position"
+            position = target:GetAbsOrigin()
+        end
+    end
 
     Players:ClearPlayerFlags(pID)
 
@@ -589,7 +597,7 @@ function CreateRallyFlagForBuilding( building )
 
     elseif flag_type == "target" or flag_type == "mine" then
         local target = building.flag
-        if target and IsValidEntity(target) then
+        if target and IsValidEntity(target) and target:IsAlive() then
             position = target:GetAbsOrigin()
                         
             if flag_type == "mine" then
@@ -600,6 +608,10 @@ function CreateRallyFlagForBuilding( building )
             end
 
             orientation = target:GetAbsOrigin() * target:GetForwardVector()
+        else
+            particle = ParticleManager:CreateParticleForTeam(particleName, PATTACH_CUSTOMORIGIN, building, teamNumber)
+            position = building.initial_spawn_position
+            orientation = (Vector(0,0,0) - origin):Normalized()
         end
     else
         return
