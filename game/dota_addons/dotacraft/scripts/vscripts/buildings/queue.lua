@@ -215,14 +215,12 @@ function DequeueUnit( event )
             local queue_element = getIndex(caster.queue, item:GetEntityIndex())
             table.remove(caster.queue, queue_element)
 
-            item:RemoveSelf()
-            
             -- Refund ability cost
             Players:ModifyGold(playerID, gold_cost)
             Players:ModifyLumber(playerID, lumber_cost)
 
             -- Set not channeling if the cancelled item was the first slot
-            if itemSlot == 0 then
+            if itemSlot == 0 or IsInFirstSlot(caster, item) then
                 -- Refund food used
                 local ability = caster:FindAbilityByName(train_ability_name)
                 local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel())
@@ -237,6 +235,7 @@ function DequeueUnit( event )
                 caster:SetMana(0)
                 caster:SetBaseManaRegen(0)
             end
+            item:RemoveSelf()
             ReorderItems(caster)
             break
         end
@@ -250,15 +249,13 @@ function NextQueue( event )
     ability:SetChanneling(false)
 
     local hAbility = EntIndexToHScript(ability:GetEntityIndex())
-
     for itemSlot = 0, 5, 1 do
         local item = caster:GetItemInSlot( itemSlot )
         if item ~= nil then
             local item_name = tostring(item:GetAbilityName())
 
             -- Remove the "item_" to compare
-            local train_ability_name = string.gsub(item_name, "item_", "")
-
+            local train_ability_name = item_name:gsub("item_", "")
             if train_ability_name == hAbility:GetAbilityName() then
 
                 local train_ability = caster:FindAbilityByName(train_ability_name)
@@ -269,8 +266,6 @@ function NextQueue( event )
                 end
 
                 break
-            elseif item then
-                --print(item_name,hAbility:GetAbilityName())
             end
         end
     end

@@ -31,6 +31,17 @@ function ReorderItems( caster )
     end
 end
 
+function IsInFirstSlot(unit, item)
+    local firstItem
+    for itemSlot=0,5 do
+        local i = unit:GetItemInSlot(itemSlot)
+        if i then
+            return i == item
+        end
+    end
+    return false
+end
+
 function GetNumItemsInInventory( unit )
     local count = 0
     for i=0,5 do
