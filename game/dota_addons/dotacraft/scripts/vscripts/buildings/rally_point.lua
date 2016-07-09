@@ -43,30 +43,6 @@ function SpawnUnit( event )
 
 end
 
--- Creates a rally point flag for this unit, removing the old one if there was one
-function SetRallyPoint( event )
-	local caster = event.caster
-	if not HasTrainAbility( caster ) then return end
-
-	Timers:CreateTimer(2/30, function()
-		local origin = caster:GetAbsOrigin()
-		
-		-- Find vector towards 0,0,0 for the initial rally point
-		local forwardVec = Vector(0,0,0) - origin
-		forwardVec = forwardVec:Normalized()
-
-		-- For the initial rally point, get point away from the building looking towards (0,0,0)
-		local position = origin + forwardVec * 250
-		position = GetGroundPosition(position, caster)
-
-		-- Keep track of this position so that every unit is autospawned there (avoids going around the)
-		caster.initial_spawn_position = position
-
-		caster.flag_type = "position"
-		caster.flag = position
-	end)
-end
-
 -- Queues a movement command for the spawned unit to the rally point
 -- Also adds the unit to the players army and looks for upgrades
 function MoveToRallyPoint( event )

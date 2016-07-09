@@ -72,6 +72,7 @@ function Units:Init( unit )
     end
 
     local bBuilder = IsBuilder(unit)
+    local bBuilding = IsCustomBuilding(unit)
     if bBuilder then
         unit.oldIdle = unit.IsIdle
         function unit:IsIdle()
@@ -101,7 +102,7 @@ function Units:Init( unit )
     -- Adjust Hull
     unit:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
     local collision_size = unit:GetCollisionSize()
-    if not IsCustomBuilding(unit) and collision_size then
+    if not bBuilding and collision_size then
         unit:SetHullRadius(collision_size)
     end
 
@@ -109,11 +110,16 @@ function Units:Init( unit )
     if unit:GetKeyValue("AttacksTrees") then
         unit:SetCanAttackTrees(true)
     end
-
-    -- Flying Height Z control
+    
     Timers:CreateTimer(0.03, function()
+        -- Flying Height Z control
         if unit:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY" then
             unit:AddNewModifier(unit,nil,"modifier_flying_control",{})
+        end
+
+        -- Building Queue
+        if unit:GetKeyValue("HasQueue") then
+            Queue:Init(unit)
         end
     end)
 end

@@ -65,9 +65,8 @@ function RootStart( unit )
     uproot_ability:ApplyDataDrivenModifier(unit, unit, "modifier_rooted_ancient", {})
 
     unit:AddAbility("ability_building")
-    unit:AddAbility("ability_building_queue")
     unit:FindAbilityByName("ability_building"):SetLevel(1)
-    unit:FindAbilityByName("ability_building_queue"):SetLevel(1)
+    Queue:Init(unit)
 
     local cast_time = 2--ability:GetCastPoint()
     Timers:CreateTimer(cast_time, function()
@@ -144,10 +143,9 @@ function UpRootStart( event )
     end
 
     -- Remove building properties
+    Queue:Remove(caster)
     BuildingHelper:RemoveBuilding( caster, false )
     caster:RemoveAbility("ability_building")
-    caster:RemoveAbility("ability_building_queue")
-    caster:RemoveModifierByName("modifier_building_queue")
 
     -- If the ancient had an entangled mine, remove the effect, which will trigger ShowGoldMine
     if IsValidEntity(caster.entangled_gold_mine) then

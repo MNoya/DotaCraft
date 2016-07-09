@@ -19,6 +19,7 @@
 		"ConsideredHero"			"1"
 	
 		"RestrictGoldMineDistance"	"768"
+		"HasQueue"					"1"
 	
 		"UnitLabel"					"city_center"
 		
@@ -29,7 +30,6 @@
 		"Ability2"					"human_call_to_arms"
 		"Ability3"					"human_research_backpack"
 		"Ability4"					"human_train_keep"
-		"Ability5"					"ability_building_queue"
 		"Ability6"					"ability_building"
 		
 		// Armor
@@ -108,6 +108,7 @@
 		"ConsideredHero"			"1"
 	
 		"RestrictGoldMineDistance"	"768"
+		"HasQueue"					"1"
 	
 		"UnitLabel"					"city_center"
 		
@@ -118,7 +119,6 @@
 		"Ability2"					"human_call_to_arms"
 		"Ability3"					"human_research_backpack"	
 		"Ability4"					"human_train_castle_disabled"
-		"Ability5"					"ability_building_queue"	
 		"Ability6"					"human_keep_passive"
 		"Ability7"					"ability_building"
 		
@@ -198,6 +198,7 @@
 		"ConsideredHero"			"1"
 	
 		"RestrictGoldMineDistance"	"768"
+		"HasQueue"					"1"
 	
 		"UnitLabel"					"city_center"
 		
@@ -208,7 +209,6 @@
 		"Ability2"					"human_call_to_arms"
 		"Ability3"					"human_castle_passive"	 //Reference: Amic
 		"Ability4"					"human_research_backpack"	 //Reference: Argl
-		"Ability5"					"ability_building_queue"	 //Reference: Argl
 		"Ability6"					"ability_building"
 		
 		// Armor
@@ -285,7 +285,9 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
 		"RenderTeamColor"			"1"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -296,7 +298,6 @@
 		"Ability4"					"human_research_defend"
 		"Ability5"					"human_research_long_rifles"
 		"Ability6"					"human_research_animal_war_training"
-		"Ability7"					"ability_building_queue"
 		"Ability8"					"ability_building"
 		
 		// Armor
@@ -457,6 +458,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -465,7 +468,6 @@
 		"Ability2"					"human_train_mountain_king1"
 		"Ability3"					"human_train_paladin1"
 		"Ability4"					"human_train_blood_mage1"
-		"Ability5"					"ability_building_queue"
 		"Ability6"					"ability_building"
 		"Ability7"					"" //ability_altar, learned when the building starts contruction
 		
@@ -542,14 +544,15 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"ability_building_queue"
-		"Ability2"					"human_research_lumber_harvesting1"
-		"Ability3"					"human_research_masonry1"
-		"Ability4"					"ability_building"
+		"Ability1"					"human_research_lumber_harvesting1"
+		"Ability2"					"human_research_masonry1"
+		"Ability3"					"ability_building"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -624,6 +627,8 @@
 		"Level"						"1"
 		"HealthBarOffset"			"180"
 		"HasInventory"				"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -631,7 +636,6 @@
 		"Ability1"					"human_train_guard_tower"//upgrade to guard
 		"Ability2"					"human_train_cannon_tower"//upgrade to cannon
 		"Ability3"					"human_train_arcane_tower"//upgrade to arcane
-		"Ability4"					"ability_building_queue"
 		"Ability6"					"ability_tower"		
 		
 		// Armor
@@ -979,16 +983,17 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"ability_building_queue"
+		"Ability1"					"ability_building"
 		"Ability2"					"human_research_forged_swords1"
 		"Ability3"					"human_research_plating1"
 		"Ability4"					"human_research_ranged_weapons1"
-		"Ability5"					"human_research_leather_armor1"
-		"Ability6"					"ability_building"		
+		"Ability5"					"human_research_leather_armor1"		
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -1063,6 +1068,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1075,7 +1082,6 @@
 		"Ability6"					"human_research_barrage"
 		"Ability7"					"human_research_flak_cannons"
 		"Ability8"					"human_research_flare"
-		"Ability10"					"ability_building_queue"
 		"Ability11"					"ability_building"
 		
 		// Armor
@@ -1151,7 +1157,9 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+		
 		"RenderTeamColor"			"1"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1162,7 +1170,6 @@
 		"Ability4"					"human_research_priest_training1"
 		"Ability5"					"human_research_sorceress_training1"
 		"Ability6"					"human_research_control_magic"
-		"Ability7"					"ability_building_queue"
 		"Ability8"					"ability_building"
 		
 		//----------------------------------------------------------------
@@ -1237,6 +1244,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -1245,7 +1254,6 @@
 		"Ability2"					"human_train_dragonhawk_rider"
 		"Ability3"					"human_research_storm_hammers"
 		"Ability4"					"human_research_cloud"
-		"Ability5"					"ability_building_queue"
 		"Ability6"					"ability_building"
 		
 		// Armor
@@ -2852,6 +2860,7 @@
 		"ConsideredHero"			"1"
 	
 		"AttacksEnabled"			"ground"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2866,7 +2875,6 @@
 		"Ability8"					"nightelf_research_mark_of_the_claw"
 		"Ability9"					"nightelf_uproot"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		"Ability12"					"nightelf_natures_blessing_disabled"
 		"Ability13"					"nightelf_eat_tree"
 		
@@ -2950,6 +2958,7 @@
 		"ConsideredHero"			"1"
 	
 		"AttacksEnabled"			"ground"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -2964,7 +2973,6 @@
 		"Ability8"					"nightelf_research_vorpal_blades"
 		"Ability9"					"nightelf_research_marksmanship"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		"Ability12"					"nightelf_natures_blessing_disabled"
 		"Ability13"					"nightelf_eat_tree"
 		
@@ -3049,6 +3057,7 @@
 		"ConsideredHero"			"1"
 	
 		"AttacksEnabled"			"ground"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3061,7 +3070,6 @@
 		"Ability6"					"nightelf_research_mark_of_the_talon"
 		"Ability7"					"nightelf_uproot"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		"Ability12"					"nightelf_natures_blessing_disabled"
 		"Ability13"					"nightelf_eat_tree"
 		
@@ -3145,6 +3153,7 @@
 		"ConsideredHero"			"1"
 	
 		"AttacksEnabled"			"ground,air"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3237,6 +3246,7 @@
 		"UnitLabel"					"nightelf_shop"
 	
 		"AttacksEnabled"			"ground"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3333,6 +3343,7 @@
 		"UnitLabel"					"city_center"
 	
 		"AttacksEnabled"			"ground"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3344,7 +3355,6 @@
 		"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while the tree has a mine entangled
 		"Ability6"					"nightelf_train_tree_of_ages"	 //Reference: Arlm
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		"Ability12"					"nightelf_natures_blessing_disabled"
 		"Ability13"					"nightelf_eat_tree"
 	
@@ -3442,6 +3452,7 @@
 		"UnitLabel"					"city_center"
 	
 		"AttacksEnabled"			"ground"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3454,7 +3465,6 @@
 		"Ability6"					"nightelf_entangle_gold_mine"	//Hidden while the tree has a mine entangled
 		"Ability7"					"nightelf_train_tree_of_eternity"	 //Reference: Arlm
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		"Ability12"					"nightelf_natures_blessing_disabled"
 		"Ability13"					"nightelf_eat_tree"
 	
@@ -3551,6 +3561,7 @@
 		"UnitLabel"					"city_center"
 	
 		"AttacksEnabled"			"ground"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3562,7 +3573,6 @@
 		"Ability4"					"nightelf_entangle_gold_mine_passive" //Shows while the tree has a mine entangled
 		"Ability5"					"nightelf_entangle_gold_mine"	//Hidden while the tree has a mine entangled
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		"Ability12"					"nightelf_natures_blessing_disabled"
 		"Ability13"					"nightelf_eat_tree"
 		
@@ -3656,6 +3666,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3666,7 +3678,6 @@
 		"Ability4"					"nightelf_train_warden1"
 		"Ability5"					"" //"ability_altar"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -3741,6 +3752,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -3748,7 +3761,6 @@
 		"Ability1"					"nightelf_train_chimaera"	 //Reference: Abds
 		"Ability2"					"nightelf_research_corrosive_breath"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -3824,18 +3836,19 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
-		"Ability1"					"ability_building_queue"
+		"Ability1"					"ability_building"
 		"Ability2"					"nightelf_research_strength_of_the_moon1"
 		"Ability3"					"nightelf_research_moon_armor1"
 		"Ability4"					"nightelf_research_strength_of_the_wild1"
 		"Ability5"					"nightelf_research_reinforced_hides1"
 		"Ability6"					"nightelf_research_ultravision"
 		"Ability7"					"nightelf_research_well_spring"
-		"Ability10"					"ability_building"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -5480,6 +5493,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -5489,7 +5504,6 @@
 		"Ability3"					"orc_train_tauren_chieftain1"
 		"Ability4"					"orc_train_shadow_hunter1"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -5565,6 +5579,8 @@
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
 		
+		"HasQueue"					"1"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
@@ -5577,7 +5593,6 @@
 		"Ability7"					"orc_research_burning_oil"
 		"Ability8"					""
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -5652,6 +5667,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -5665,7 +5682,6 @@
 		"Ability7"					"orc_research_envenomed_spears"
 		"Ability8"					"orc_research_liquid_fire"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -5742,6 +5758,7 @@
 		"ConsideredHero"			"1"
 	
 		"RestrictGoldMineDistance"	"768"
+		"HasQueue"					"1"
 	
 		"UnitLabel"					"city_center"
 		
@@ -5753,7 +5770,6 @@
 		"Ability3"					"orc_research_backpack"	 //Reference: Argl
 		"Ability4"					"orc_train_stronghold"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -5831,6 +5847,7 @@
 		"ConsideredHero"			"1"
 	
 		"RestrictGoldMineDistance"	"768"
+		"HasQueue"					"1"
 	
 		"UnitLabel"					"city_center"
 		
@@ -5842,7 +5859,6 @@
 		"Ability3"					"orc_research_backpack"	 //Reference: Argl
 		"Ability4"					"orc_train_fortress"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -5920,6 +5936,7 @@
 		"ConsideredHero"			"1"
 	
 		"RestrictGoldMineDistance"	"768"
+		"HasQueue"					"1"
 	
 		"UnitLabel"					"city_center"
 		
@@ -5930,7 +5947,6 @@
 		"Ability2"					"orc_research_pillage"	 //Reference: Aspi
 		"Ability3"					"orc_research_backpack"	 //Reference: Argl
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -6009,6 +6025,7 @@
 		"ConsideredHero"			"1"
 	
 		"AttacksEnabled"			"ground,air"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -6102,6 +6119,8 @@
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
 	
+		"HasQueue"					"1"
+	
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
@@ -6112,7 +6131,6 @@
 		"Ability5"					"orc_research_witch_doctor_training1"
 		"Ability6"					"orc_research_spirit_walker_training1"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -6187,6 +6205,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -6194,7 +6214,6 @@
 		"Ability1"					"orc_train_tauren"	 //Reference: Abds
 		"Ability2"					"orc_research_pulverize"	 //Reference: Aspi
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -6358,17 +6377,18 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"5"
-		"Ability1" 					"ability_building_queue"
+		"Ability1" 					"ability_building"
 		"Ability2"					"orc_research_melee_weapons1"	 //Reference: Abds
 		"Ability3"					"orc_research_unit_armor1"	 //Reference: Aspi
 		"Ability4"					"orc_research_ranged_weapons1"	 //Reference: Arlm
 		"Ability5"					"orc_research_spiked_barricades1"
 		"Ability6"					"orc_research_reinforced_defenses"
-		"Ability10"					"ability_building"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7858,7 +7878,6 @@
 	}
 	// Undead Buildings
 	
-	
 	//=================================================================================
 	// Building: Necropolis
 	// Description: "Primary structure, used to train Acolytes and receive lumber gathered by Ghouls. Can be upgraded to Halls of the Dead and then Black Citadel to enable the production of additional types of structures and units."
@@ -7876,6 +7895,7 @@
 		"ConsideredHero"			"1"
 		
 		"UnitLabel"					"city_center"
+		"HasQueue"					"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -7884,7 +7904,6 @@
 		"Ability2"					"undead_research_backpack"
 		"Ability6"					"undead_train_halls_of_the_dead"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -7972,6 +7991,7 @@
 		"UnitLabel"					"city_center"
 	
 		"AttacksEnabled"			"ground,air"
+		"HasQueue"					"1"
 	
 		// Abilities
 		//----------------------------------------------------------------
@@ -7981,7 +8001,6 @@
 		"Ability3"					""	 //Reference: Afr2
 		"Ability6"					"undead_train_black_citadel"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8076,6 +8095,7 @@
 		"UnitLabel"					"city_center"
 	
 		"AttacksEnabled"			"ground,air"
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8084,7 +8104,6 @@
 		"Ability2"					"undead_research_backpack"
 		"Ability3"					""	 //Reference: Afr2
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -8174,6 +8193,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8181,7 +8202,6 @@
 		"Ability1"					"undead_train_frost_wyrm"	 //Reference: Abgs
 		"Ability2"					"undead_research_freezing_breath"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8267,6 +8287,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8276,7 +8298,6 @@
 		"Ability3"					"undead_train_lich1"
 		"Ability4"					"undead_train_crypt_lord1"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8362,6 +8383,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8375,7 +8398,6 @@
 		"Ability7"					"undead_research_stone_form"
 		"Ability8"					"undead_research_burrow"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8459,17 +8481,18 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
-		"Ability1"					"ability_building_queue"
+		"Ability1"					"ability_building"
 		"Ability2"					"undead_research_unholy_strength1"	 //Reference: Abgs
 		"Ability3"					"undead_research_unholy_armor1"	 //Reference: Agyd
 		"Ability4"					"undead_research_creature_attack1"	 //Reference: Arlm
 		"Ability5"					"undead_research_creature_carapace1"
 		"Ability6"					"undead_graveyard_create_corpses"
-		"Ability10"					"ability_building"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8555,6 +8578,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8566,7 +8591,6 @@
 		"Ability5"					"undead_research_skeletal_longevity"
 		"Ability6"					"undead_research_skeletal_mastery"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8741,6 +8765,8 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8752,7 +8778,6 @@
 		"Ability5"					"undead_research_disease_cloud"
 		"Ability6"					"undead_research_destroyer_form"
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -8929,6 +8954,8 @@
 		"ModelScale"				"0.7"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -8936,7 +8963,6 @@
 		"Ability1"					"undead_train_nerubian_tower"	 //Reference: Abgs
 		"Ability2"					"undead_train_spirit_tower"	 //Reference: Abgs
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -9212,13 +9238,14 @@
 		"ModelScale"				"0.8"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
+	
+		"HasQueue"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"undead_sacrifice_pit"	 //Reference: Abgs
 		"Ability2"					""	 //Reference: Asac
 		"Ability10"					"ability_building"
-		"Ability11"					"ability_building_queue"
 		
 		// Armor
 		//----------------------------------------------------------------

@@ -27,6 +27,7 @@ require('units/aggro_filter')
 require('buildings/altar')
 require('buildings/research')
 require('buildings/upgrades')
+require('buildings/queue')
 require('buildings/rally_point')
 
 ---------------------------------------------------------------------------
