@@ -57357,22 +57357,27 @@
 		"AbilityTextureName"		"undead_true_sight"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 			
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
-			
-		"AbilitySpecial"
-		{
-			// Will detect Burrowed units. Remember that Burrowed is DIFFERENT from Invisible.
-		}
-	
+		
 		"precache"
 		{
 			"particle" "particles/units/heroes/hero_bane/bane_slime_trail_b.vpcf"
 		}
+	
+		"AbilitySpecial"
+		{
+		    "01"
+		    {
+		        "var_type"          "FIELD_INTEGER"
+		        "radius"            "900"
+		    }
+		}
+	
 		"Modifiers"
 		{
 			"modifier_shade"

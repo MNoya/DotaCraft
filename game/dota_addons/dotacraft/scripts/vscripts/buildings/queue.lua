@@ -162,6 +162,7 @@ function AdvanceQueue( event )
     local ability = event.ability
     local playerID = caster:GetPlayerOwnerID()
     local bChanneling = IsChanneling(caster)
+    if  not caster.IsUnderConstruction then return end
 
     if not bChanneling then
         caster:SetMana(0)
