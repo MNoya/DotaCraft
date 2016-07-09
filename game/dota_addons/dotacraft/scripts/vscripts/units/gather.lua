@@ -29,6 +29,8 @@ function Gather( event )
     local race = GetUnitRace(caster)
     local playerID = caster:GetPlayerOwnerID()
 
+    if caster.target_tree then caster:CancelGather() end
+
     local bValidRepair = BuildingHelper:OnPreRepair(caster, target)
     if not bValidRepair then
         Gatherer:CastGatherAbility(event)
@@ -46,14 +48,19 @@ function Gather( event )
                 ParticleManager:DestroyParticle(caster.tree_fx, true)
             end
 
+            Timers:CreateTimer(0.03, function()
+                caster.wisp_unstuck_position = caster:GetAbsOrigin()
+            end)
+
             -- Move the wisp on top of the tree
             Timers:CreateTimer(function()
                 if not caster:IsAlive() then return end
-                local direction = (tree_pos - caster:GetAbsOrigin()):Normalized()
-                local new_location = caster:GetAbsOrigin() + direction * speed
+                local origin = caster:GetAbsOrigin()
+                local direction = (tree_pos - origin):Normalized()
+                local new_location = origin + direction * speed
                 caster:SetAbsOrigin(new_location)
 
-                local distance = (tree_pos - caster:GetAbsOrigin()):Length()
+                local distance = (tree_pos - origin):Length()
                 if distance > 10 then
                     return 0.03
                 else
@@ -158,6 +165,7 @@ function Gather( event )
             caster:Stop()
             caster:SetAbsOrigin(Vector(pos.x, pos.y, pos.z+height))
             
+            caster.state = "gathering_gold"
             if race == "undead" then
                 caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
                 Timers:CreateTimer(0.06, function() 
@@ -198,6 +206,11 @@ function Gather( event )
             caster.target_tree = nil
             caster.target_tree = nil
             tree.builder = nil
+        end
+
+        if caster.wisp_unstuck_position then
+            FindClearSpaceForUnit(caster, caster.wisp_unstuck_position, true)
+            caster.wisp_unstuck_position = nil
         end
 
         if caster.tree_fx then

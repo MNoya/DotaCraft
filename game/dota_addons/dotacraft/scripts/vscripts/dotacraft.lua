@@ -1306,6 +1306,8 @@ function dotacraft:FilterItemAdded( filterTable )
 
     local owner = EntIndexToHScript(filterTable["inventory_parent_entindex_const"])
     local item = EntIndexToHScript(filterTable["item_entindex_const"])
-    item:SetPurchaser(owner)
+    if IsValidEntity(item) and not item:IsCastOnPickup() then
+        item:SetPurchaser(owner)
+    end
     return true
 end
