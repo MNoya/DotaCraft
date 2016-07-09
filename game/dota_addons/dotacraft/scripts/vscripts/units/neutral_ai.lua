@@ -24,6 +24,10 @@ function NeutralAI:Start( unit )
     unit.state = AI_STATE_IDLE
     unit.spawnPos = unit:GetAbsOrigin()
     unit.campCenter = FindCreepCampCenter(unit)
+    if not campCenter then
+        print("[NeutralAI] Error, couldn't find camp center for "..unit:GetName())
+        return
+    end
     unit.allies = FindAllUnitsAroundPoint(unit, unit.campCenter, 1000)
     unit.acquireRange = unit:GetAcquisitionRange()
     unit.aggroRange = 200 --Range an enemy unit has to be for the group to go from IDLE to AGGRESIVE
