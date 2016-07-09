@@ -84,7 +84,7 @@ function ApplyConstructionEffect( event )
 
 	if race == "orc" then
 		target.construction_particle = ParticleManager:CreateParticle("particles/custom/construction_dust.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	else
+	elseif race ~= "human" then
 		ability:ApplyDataDrivenModifier(target, target, "modifier_construction_"..race, {})
 	end
 end

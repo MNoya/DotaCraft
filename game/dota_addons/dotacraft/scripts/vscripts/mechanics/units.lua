@@ -328,14 +328,14 @@ function IsChanneling ( unit )
     for abilitySlot=0,15 do
         local ability = unit:GetAbilityByIndex(abilitySlot)
         if ability and ability:IsChanneling() then 
-            return true
+            return ability
         end
     end
 
     for itemSlot=0,5 do
         local item = unit:GetItemInSlot(itemSlot)
         if item and item:IsChanneling() then
-            return true
+            return ability
         end
     end
 

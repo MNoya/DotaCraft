@@ -1440,22 +1440,20 @@
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"duration"		"10"
+			"duration"		"5"
 		}
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
 			"radius"		"100"
 		}
-		// Affects buildings in the 100 radius around the attacked target.
-		// The adjacent buildings must literally be adjacent, they must be touching it to be frozen.
 		"03"
 		{
 			"var_type"		"FIELD_FLOAT"
@@ -1475,17 +1473,17 @@
 	
 	"Modifiers"
 	{
-		"modifier_frozen_attack_passive"
+		"modifier_freezing_breath_passive"
 		{
-			"Passive" "1"
-			"IsHidden" "1"
+			"Passive" 	"1"
+			"IsHidden" 	"1"
 		
 			"OnAttackLanded"
 			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/undead/frost_wyrm.lua"
-					"Function"		"freezing_attack"
+					"Function"		"FreezingAttack"
 				}
 			}
 		}
@@ -1505,22 +1503,20 @@
 				"RunScript"
 				{
 					"ScriptFile"	"units/undead/frost_wyrm.lua"
-					"Function"		"freeze"
+					"Function"		"Freeze"
 				}
 			}
-			
-			
+
 			"OnDestroy"
 			{
-				"RunScript"
+			    "RunScript"
 				{
 					"ScriptFile"	"units/undead/frost_wyrm.lua"
-					"Function"		"unfreeze"
+					"Function"		"UnFreeze"
 				}
 			}
 		}
 	}
-	
 }
 
 //=================================================================================
@@ -1529,12 +1525,12 @@
 "undead_freezing_splash"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_research_freezing_breath"
+	"AbilityTextureName"		"undead_frost_attack"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	
 	"AbilitySpecial"
 	{
@@ -1548,8 +1544,6 @@
 			"var_type"		"FIELD_INTEGER"
 			"radius"		"100"
 		}
-		// Affects buildings in the 100 radius around the attacked target.
-		// The adjacent buildings must literally be adjacent, they must be touching it to be frozen.
 		"03"
 		{
 			"var_type"		"FIELD_FLOAT"
@@ -1566,7 +1560,7 @@
 	
 	"Modifiers"
 	{
-		"modifier_freezing_attack_passive"
+		"modifier_freezing_splash_passive"
 		{
 			"Passive" "1"
 			"IsHidden" "1"

@@ -73,6 +73,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     -- Deny No-Target Orders requirements
     if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
         local ability = EntIndexToHScript(abilityIndex)
+        if not ability then return true end
         local playerID = unit:GetPlayerOwnerID()
         
         -- Check health requirements

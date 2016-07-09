@@ -1,46 +1,48 @@
-function freezing_attack (keys)
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local RADIUS = 100
-	local DURATION = ability:GetSpecialValueFor("duration")
-	
-	if IsCustomBuilding(target) then
-		print("is building")
-		if target and IsValidEntity(target) and not IsChanneling(target) and not target:HasModifier("modifier_construction") then
-			print("has met all criteria")
-
-			ability:ApplyDataDrivenModifier(caster, target, "modifier_frozen",  {duration=DURATION}) 
-			
-			-- find buildings
-			local buildings = FindUnitsInRadius(caster:GetTeamNumber(), 
-						target:GetAbsOrigin(), 
-						nil, 
-						RADIUS, 
-						DOTA_UNIT_TARGET_TEAM_ENEMY, 
-						DOTA_UNIT_TARGET_ALL, 
-						DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 
-						FIND_CLOSEST, 
-						false)
-			
-			-- find buildings from list above, just to make sure that the magic immune enemy isn't a unit I check same conditions
-			for k,building in pairs(buildings) do
-				if IsCustomBuilding(building) then
-					if IsValidEntity(building) and not IsChanneling(building) and not building:HasModifier("modifier_construction") then
-						ability:ApplyDataDrivenModifier(caster, building, "modifier_frozen",  {duration=DURATION}) 
-					end
-				end
-			end				
-
-		end
-	end
-	
+function FreezingAttack(event)
+    local caster = event.caster
+    local target = event.target
+    local ability = event.ability
+    local teamNumber = caster:GetTeamNumber()
+    local duration = ability:GetSpecialValueFor("duration")
+    local radius = ability:GetSpecialValueFor("radius")
+            
+    -- Freeze buildings in radius
+    local targets = FindUnitsInRadius(teamNumber, target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+    for k,unit in pairs(targets) do
+        if IsCustomBuilding(unit) then
+            ability:ApplyDataDrivenModifier(caster, unit, "modifier_frozen",  {duration=duration}) 
+        end
+    end
 end
 
-function freeze(keys)
-	keys.caster.frozen = true
+function Freeze(event)
+    local building = event.target
+
+    -- Stop builders repairing
+    BuildingHelper:CancelRepair(building)
+    
+    -- Stop channeling
+    local channelingAbility = IsChanneling(building)
+    if channelingAbility then
+        channelingAbility:EndChannel(true)
+    end
+
+    -- Disable all ability usage
+    building.frozen_abilities = {}
+    for i=0,15 do
+        local ability = building:GetAbilityByIndex(i)
+        if ability and ability:GetLevel() > 0 then
+            ability:SetActivated(false)
+            table.insert(building.frozen_abilities, ability)
+        end
+    end
 end
 
-function unfreeze(keys)
-	keys.caster.frozen = false
+function UnFreeze(event)
+    local building = event.target
+
+    -- Reenable abilities
+    for _,ability in pairs(building.frozen_abilities) do
+        ability:SetActivated(true)
+    end
 end

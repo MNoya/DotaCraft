@@ -107,7 +107,7 @@ function DequeueUnit( event )
                 -- Refund food used
                 local ability = caster:FindAbilityByName(train_ability_name)
                 local food_cost = ability:GetLevelSpecialValueFor("food_cost", ability:GetLevel())
-                if food_cost and not caster:HasModifier("modifier_construction") and ability:IsChanneling() then
+                if food_cost and not caster:IsUnderConstruction() and ability:IsChanneling() then
                     Players:ModifyFoodUsed(playerID, -food_cost)
                 end
 
@@ -133,7 +133,7 @@ function NextQueue( event )
     local hAbility = EntIndexToHScript(ability:GetEntityIndex())
 
     for itemSlot = 0, 5, 1 do
-           local item = caster:GetItemInSlot( itemSlot )
+        local item = caster:GetItemInSlot( itemSlot )
         if item ~= nil then
             local item_name = tostring(item:GetAbilityName())
 
@@ -161,13 +161,21 @@ function AdvanceQueue( event )
     local caster = event.caster
     local ability = event.ability
     local playerID = caster:GetPlayerOwnerID()
+    local bChanneling = IsChanneling(caster)
 
-    if not IsChanneling( caster ) then
+    if not bChanneling then
         caster:SetMana(0)
         caster:SetBaseManaRegen(0)
     end
 
-    if caster and IsValidEntity(caster) and not IsChanneling( caster ) and not caster:HasModifier("modifier_construction") then
+    if not IsValidEntity(caster) or not caster:IsAlive() then return end
+
+    if caster:HasModifier("modifier_frozen") then
+        if bChanneling then bChanneling:EndChannel(true) end
+        return
+    end
+
+    if not bChanneling and not caster:IsUnderConstruction() then
         
         -- RemakeQueue
         caster.queue = {}
