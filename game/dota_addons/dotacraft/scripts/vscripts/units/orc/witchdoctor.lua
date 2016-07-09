@@ -5,6 +5,7 @@ function StasisStart( event )
 	local duration = ability:GetSpecialValueFor('duration') 
 	local stasis = CreateUnitByName('dotacraft_stasis_ward', target_point, true, caster, caster, caster:GetTeamNumber())
 	stasis:AddNewModifier(stasis, nil, "modifier_kill", {duration = duration})
+	stasis:AddNewModifier(stasis, nil, "modifier_summoned", {})
 	ability:ApplyDataDrivenModifier(stasis, stasis, 'modifier_stasis_ward', nil)	
 	stasis:EmitSound('Hero_Techies.StasisTrap.Plant')
 end

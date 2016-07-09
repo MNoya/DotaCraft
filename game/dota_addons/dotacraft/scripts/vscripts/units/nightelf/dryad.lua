@@ -2,7 +2,7 @@ function AbolishMagic( event )
 	local caster = event.caster
 	local target = event.target
 
-	local bSummon = target:IsDominated() or target:HasModifier("modifier_kill")
+	local bSummon = target:IsSummoned() or target:HasModifier("modifier_kill")
 	if bSummon then
 		local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
 		ApplyDamage({victim = target, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
@@ -40,7 +40,7 @@ function AbolishMagicAutocast( event )
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for k,unit in pairs(units) do
 			-- Autocast Abolish Magic on enemy summons
-			if unit:IsDominated() and unit:GetTeamNumber() ~= caster:GetTeamNumber() then
+			if unit:IsSummoned() and unit:GetTeamNumber() ~= caster:GetTeamNumber() then
 				target = unit
 			
 			elseif not IsCustomBuilding(unit) and UnitHasPurgableModifiers(unit,caster) then

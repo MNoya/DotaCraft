@@ -9,7 +9,7 @@ function Detonate( event )
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for k,unit in pairs(units) do
 		-- Damage summons
-		if unit:IsDominated() and unit:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if unit:IsSummoned() and unit:GetTeamNumber() ~= caster:GetTeamNumber() then
 			ApplyDamage({ victim = unit, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE, ability = ability}) 
 		end
 

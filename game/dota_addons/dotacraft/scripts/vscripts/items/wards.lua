@@ -29,7 +29,7 @@ function modifier_sentry_ward:OnIntervalThink()
 end
 
 function modifier_sentry_ward:CheckState() 
-    return { [MODIFIER_STATE_INVISIBLE] = true, }
+    return { [MODIFIER_STATE_INVISIBLE] = true, [MODIFIER_STATE_MAGIC_IMMUNE] = true, [MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 end
 
 function modifier_sentry_ward:DeclareFunctions()
@@ -107,6 +107,10 @@ function modifier_healing_ward:OnCreated()
         ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "flame_attachment", self:GetParent():GetAbsOrigin(), true)
         self:AddParticle(particle, false, false, 1, false, false)
     end
+end
+
+function modifier_healing_ward:CheckState() 
+    return { [MODIFIER_STATE_MAGIC_IMMUNE] = true }
 end
 
 function modifier_healing_ward:IsAura()

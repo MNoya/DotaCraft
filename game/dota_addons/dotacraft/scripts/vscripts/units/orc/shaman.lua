@@ -103,14 +103,8 @@ function PurgeStart( event )
     local ability = event.ability
     local bRemovePositiveBuffs = false
     local bRemoveDebuffs = false
-    
-    -- Note: I really need to make a filter for buildings...
-    if IsCustomBuilding(target) then
-        ability:RefundManaCost()
-        ability:EndCooldown()
-        return
-    end
-    
+    local bSummoned = target:IsSummoned()
+        
     if target:GetTeamNumber() ~= caster:GetTeamNumber() then
         bRemovePositiveBuffs = true
     else
@@ -119,8 +113,9 @@ function PurgeStart( event )
     target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
     target:EmitSound('n_creep_SatyrTrickster.Cast')
     ParticleManager:CreateParticle('particles/generic_gameplay/generic_purge.vpcf', PATTACH_ABSORIGIN_FOLLOW, target)
+
     if bRemovePositiveBuffs then
-        if target:IsSummoned() or target:IsDominated() then
+        if bSummoned then
             ApplyDamage({
                 victim = target,
                 attacker = caster,
@@ -129,11 +124,9 @@ function PurgeStart( event )
                 ability = ability
             })
         end
-        local duration = 0
+        local duration = ability:GetSpecialValueFor('duration')
         if target:IsHero() or target:IsConsideredHero() then
             duration = ability:GetSpecialValueFor('duration_hero')
-        else
-            duration = ability:GetSpecialValueFor('duration')
         end
         ability:ApplyDataDrivenModifier(caster, target, 'modifier_purge', {duration = duration}) 
     end

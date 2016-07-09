@@ -289,7 +289,7 @@ function dotacraft:CreateUnits(pID, unitName, numUnits, bEnemy)
             unit:SetMana(unit:GetMaxMana())
 
             if bEnemy then 
-                unit:SetTeam(DOTA_TEAM_NEUTRALS)
+                unit:SetTeam(unit:GetOpposingTeamNumber())
             else
                 Players:AddUnit(pID, unit)
             end
@@ -396,7 +396,7 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
             unit:SetMana(unit:GetMaxMana())
 
             if bEnemy then 
-                unit:SetTeam(DOTA_TEAM_NEUTRALS)
+                unit:SetTeam(unit:GetOpposingTeamNumber())
             else
                 Players:AddUnit(playerID, unit)
                 CheckAbilityRequirements(unit, playerID)
@@ -477,7 +477,7 @@ function dotacraft:TestBuilding(playerID, name, bEnemy)
             local unit = BuildingHelper:PlaceBuilding(0, name, pos)
 
             if bEnemy then 
-                unit:SetTeam(DOTA_TEAM_NEUTRALS)
+                unit:SetTeam(unit:GetOpposingTeamNumber())
             end
 
         end, playerID)

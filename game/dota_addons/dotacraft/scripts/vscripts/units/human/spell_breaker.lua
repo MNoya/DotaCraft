@@ -136,7 +136,7 @@ function ControlMagicCheck( event )
 	local ability = event.ability
 	local pID = caster:GetPlayerOwnerID()
 	
-	if not target:IsSummoned() and not target:IsDominated() then
+	if not target:IsSummoned() then
 		caster:Interrupt()
 		SendErrorMessage(pID, "#error_must_target_summon")
 	else

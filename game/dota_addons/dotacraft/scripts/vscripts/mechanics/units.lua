@@ -461,6 +461,11 @@ function IsNeutralUnit( target )
     return (target:GetTeamNumber() == DOTA_TEAM_NEUTRALS and target.campCenter)
 end
 
+-- Overrides dota method, use modifier_summoned MODIFIER_STATE_DOMINATED
+function CDOTA_BaseNPC:IsSummoned()
+    return self:IsDominated()
+end
+
 function CDOTA_BaseNPC:HasArtilleryAttack()
     return self:GetKeyValue("Artillery")
 end

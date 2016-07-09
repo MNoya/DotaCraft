@@ -870,12 +870,6 @@ function dotacraft:OnTreeCut(keys)
         local unit_name = v:GetUnitName()
         if unit_name == "nightelf_sentinel_owl" then
             v:ForceKill(false)
-        elseif unit_name == "nightelf_wisp" then
-            local gather_ability = v:FindAbilityByName("nightelf_gather")
-            v:RemoveModifierByName("modifier_gathering_lumber")
-            v.state = "idle"
-            v:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
-            ToggleOff(gather_ability)
         end
     end
 end

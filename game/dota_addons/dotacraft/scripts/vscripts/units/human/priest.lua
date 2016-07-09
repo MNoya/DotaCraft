@@ -80,7 +80,7 @@ function Dispel( event )
 	local caster = event.caster
 	local target = event.target
 
-	local bSummon = target:IsDominated() or target:HasModifier("modifier_kill")
+	local bSummon = target:IsSummoned() or target:HasModifier("modifier_kill")
 	if bSummon then
 		local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
 		ApplyDamage({victim = target, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})

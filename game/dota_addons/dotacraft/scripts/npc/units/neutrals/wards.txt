@@ -1,7 +1,7 @@
 "dotacraft_sentry_ward"
 {
     // General
-    "BaseClass"                 "npc_dota_ward_base_truesight"
+    "BaseClass"                 "npc_dota_creature"
     "Model"                     "models/props_gameplay/default_ward.vmdl"
     "Level"                     "0"
     "ModelScale"                "1"
@@ -44,7 +44,7 @@
 "dotacraft_stasis_ward"
 {                                       
     // General
-    "BaseClass"                 "npc_dota_ward_base_truesight"
+    "BaseClass"                 "npc_dota_creature"
     "Model"                     "models/heroes/techies/fx_techiesfx_stasis.vmdl"
     "SoundSet"                  ""
     "Level"                     "0"
@@ -82,7 +82,7 @@
 "dotacraft_healing_ward"
 {                                       
     // General
-    "BaseClass"                 "npc_dota_ward_base_truesight"
+    "BaseClass"                 "npc_dota_creature"
     "Model"                     "models/heroes/juggernaut/jugg_healing_ward.vmdl"
     "SoundSet"                  ""
     "Level"                     "0"

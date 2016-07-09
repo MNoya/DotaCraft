@@ -26389,42 +26389,6 @@
 			}
 		}		
 	}
-	"ability_building_queue"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"MaxLevel" 						"1"
-	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		// Only do this once, and only for the buildings that have unit spawning
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"    "buildings/rally_point.lua"
-				"Function"      "SetRallyPoint"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_building_queue"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"buildings/queue.lua"
-						"Function"		"AdvanceQueue"
-					}
-				}
-			}
-		}
-	}
 	// AbilityName
 	// Author: 
 	// Date: 13.1.2015.
@@ -45204,6 +45168,12 @@
 			"modifier_stasis_ward"
 			{
 				"IsHidden"			"1"
+	
+				"States"
+				{
+				    "MODIFIER_STATE_NO_UNIT_COLLISION"   "MODIFIER_STATE_VALUE_ENABLED"
+				    "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"
+				}
 	
 				"Duration"			"%activation_delay"
 				"OnDestroy"
