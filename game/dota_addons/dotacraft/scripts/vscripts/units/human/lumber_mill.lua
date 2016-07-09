@@ -36,7 +36,7 @@ function HarvestResearchFinished( event )
 
 	for k,v in pairs(playerUnits) do
 		if IsValidAlive(v) and v:GetUnitName() == "human_peasant" then
-			local ability = FindGatherAbility(v)
+			local ability = v:GetGatherAbility()
 			ability:SetLevel(1+level)
 		end
 	end

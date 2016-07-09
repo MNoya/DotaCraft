@@ -20,7 +20,6 @@ Wait for building on top construction then go inside right after
 Make it possible to work without a GatherAbility
 Even though builders have no collision while gathering, find an empty point near the tree to path to
 Wisps got order stuck going to gold mine
-Gatherer needs to be looking towards the tree, if the ability is started in range
 Skip the extra attack animation while the builder is going back to return
 ]]
 
@@ -53,20 +52,10 @@ function Gatherer:start()
     CustomGameEventManager:RegisterListener("right_click_order", Dynamic_Wrap(Gatherer, "OnRightClick"))
     CustomGameEventManager:RegisterListener("gold_gather_order", Dynamic_Wrap(Gatherer, "OnGoldMineClick"))
 
-    self.Settings = LoadKeyValues("scripts/kv/gatherer_settings.kv") or {}
-    self.Deposits = self.Settings["deposits"]
-    self.TreeRadius = self.Settings["TreeRadius"] or 50
-    self.TreeHealth = self.Settings["TreeHealth"] or 50
-    self.MinDistanceToTree = self.Settings["MinDistanceToTree"] or 200
-    self.MinDistanceToMine = self.Settings["MinDistanceToMine"] or 300
-
     self.bShouldLoadTreeMap = not IsInToolsMode() -- Always re-determine pathable trees in tools, to account for map changes.
-    self.ThinkInterval = 0.5
-    self.DebugPrint = true
-    self.DebugDraw = true
-    self.DebugDrawDuration = 10
     self.GathererUnits = {}
 
+    self:LoadSettings()
     self:HookBoilerplate()
 end
 
@@ -112,7 +101,21 @@ function Gatherer:HookBoilerplate()
     end)
 end
 
-function Gatherer:OnScriptReload(event)
+function Gatherer:LoadSettings()
+    self.Settings = LoadKeyValues("scripts/kv/gatherer_settings.kv") or {}
+    self.Deposits = self.Settings["deposits"]
+    self.TreeRadius = self.Settings["TreeRadius"] or 50
+    self.TreeHealth = self.Settings["TreeHealth"] or 50
+    self.MinDistanceToTree = self.Settings["MinDistanceToTree"] or 150
+    self.MinDistanceToMine = self.Settings["MinDistanceToMine"] or 300
+    self.ThinkInterval = 0.5
+    self.DebugPrint = true
+    self.DebugDraw = true
+    self.DebugDrawDuration = 10
+end
+
+function Gatherer:OnScriptReload()
+    self:LoadSettings()
     for index,ent in pairs(self.GathererUnits) do
         if IsValidEntity(ent) and ent:IsAlive() then
             Gatherer:Init(ent)
@@ -758,6 +761,34 @@ function Gatherer:Init(unit)
         -- similar to to FindEmptyNavigableTreeNearby
     end
 
+    function unit:FindClearSpaceAroundTree(tree)
+        local points = {}
+        local size = unit:GetCollisionSize()
+        local angle = 360/size*2
+        local center = tree:GetAbsOrigin()
+        local origin = unit:GetAbsOrigin()
+        for i=0,size-1 do
+            local rotate_pos = center + Vector(1,0,0) * Gatherer.MinDistanceToTree
+            local point = RotatePosition(center, QAngle(0, angle*i, 0), rotate_pos)
+            table.insert(points, point)
+        end
+        table.sort(points, function(a,b) return (a-origin):Length2D()<(b-origin):Length2D() end) --sort by distance
+        local teamNumber = unit:GetTeamNumber()
+        for k,point in pairs(points) do
+            if not GridNav:IsBlocked(point) then
+                local units = FindUnitsInRadius(teamNumber,point,nil,size,DOTA_UNIT_TARGET_TEAM_BOTH,DOTA_UNIT_TARGET_BASIC+DOTA_UNIT_TARGET_HERO,0,0,false)
+                if #units == 0 or #units == 1 and units[1] == unit then
+                    Gatherer:DrawCircle(point, Vector(0,255,0), unit:GetCollisionSize())
+                    return point
+                else
+                    Gatherer:DrawCircle(point, Vector(255,0,0), unit:GetCollisionSize())
+                end
+            end
+        end
+
+        return center
+    end
+
     -- After returning resource, if node was removed, find another, else gather from the same node
     function unit:ResumeGather()
         local resource = unit.last_resource_gathered
@@ -778,7 +809,7 @@ function Gatherer:Init(unit)
             else
                 gather_ability:ToggleOff()
                 unit:SwapAbilities(gather_ability:GetAbilityName(), return_ability:GetAbilityName(), true, false)
-                self:print("Error, can't resume gathering lumber")
+                Gatherer:print("Error, can't resume gathering lumber")
             end
 
         elseif resource == "gold" then
@@ -857,11 +888,14 @@ function Gatherer:Init(unit)
     function unit:StartGatheringLumber(tree)
         local lumber_interval = unit.GatherAbility:GetKeyValue("LumberGainInterval") or 1
         local lumber_per_interval = unit.GatherAbility:GetKeyValue("LumberPerInterval") or 1
-        local damage_to_tree = unit.GatherAbility:GetKeyValue("DamageTree")
+        local damage_to_tree = 0--unit.GatherAbility:GetKeyValue("DamageTree")
         local return_ability = unit:GetReturnAbility()
-        
+
         Gatherer:print("StartGatheringLumber - Gain "..lumber_per_interval.." lumber every "..lumber_interval.." seconds")
+        unit:Stop()
+        unit:SetForwardVector((tree:GetAbsOrigin() - unit:GetAbsOrigin()):Normalized())
         unit.gatherer_timer = Timers:CreateTimer(lumber_interval, function()
+            unit:SetForwardVector((tree:GetAbsOrigin() - unit:GetAbsOrigin()):Normalized())
             if damage_to_tree then
                 Gatherer:DamageTree(unit, tree, damage_to_tree)
             end
@@ -1026,18 +1060,21 @@ function Gatherer:CheckGatherCancel(order)
     local queue = order["queue"] == 1
     local entityIndex = units["0"]
     local unit = EntIndexToHScript(entityIndex)
-
-    if unit and unit.CancelGather and unit.gatherer_state ~= "idle" then
-        if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET and abilityIndex ~= 0 then
-
-            -- Skip BuildingHelper ghost cast
-            local ability = EntIndexToHScript(abilityIndex)
-            if IsValidEntity(ability) and ability:GetKeyValue("Building") then return end
-        
+    if IsValidEntity(unit) then
+        local selectedEntities = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
+        for k,entIndex in pairs(selectedEntities) do
+            local ent = EntIndexToHScript(entIndex)
+            if ent.CancelGather and ent.gatherer_state ~= "idle" then
+                if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET and abilityIndex ~= 0 then
+                    -- Skip BuildingHelper ghost cast
+                    local ability = EntIndexToHScript(abilityIndex)
+                    if IsValidEntity(ability) and ability:GetKeyValue("Building") then return end
+                end
+                ent:CancelGather()
+            elseif ent and ent.gatherer_timer then
+                Timers:RemoveTimer(ent.gatherer_timer)
+            end
         end
-        unit:CancelGather()
-    elseif unit and unit.gatherer_timer then
-        Timers:RemoveTimer(unit.gatherer_timer)
     end
 end
 
@@ -1088,7 +1125,7 @@ function Gatherer:CastGatherAbility(event)
         caster.target_tree = tree
 
         tree.builder = caster --TODO: List of builders
-        local tree_pos = tree:GetAbsOrigin()
+        local tree_pos = caster:FindClearSpaceAroundTree(tree)
 
         -- Hide Return
         if return_ability then
@@ -1196,7 +1233,7 @@ function Gatherer:CastReturnAbility(event)
     local return_ability = event.ability
     local playerID = caster:GetPlayerOwnerID()
     
-    caster:Interrupt() -- Stops any instance of Hold/Stop the builder might have
+    caster:Interrupt() -- Stops any instance of Hold/Stop the gatherer might have
     
     -- Return Ability On
     return_ability:ToggleOn()
@@ -1363,21 +1400,6 @@ function Gatherer:GetClosestGoldMineToPosition(position)
         end
     end
     return closest_mine
-end
-
--- These should be deprecated all across the files
-function FindGatherAbility( unit )
-    print("FindGatherAbility is deprecated, use :GetGatherAbility() instead")
-    if IsValidEntity(unit.GatherAbility) then return unit.GatherAbility end
-    local abilityName = unit:GetKeyValue("GatherAbility")
-    if abilityName then unit:FindAbilityByName(abilityName) end
-end
-
-function FindReturnAbility( unit )
-    print("FindReturnAbility is deprecated, use :GetGatherAbility() instead")
-    if IsValidEntity(unit.ReturnAbility) then return unit.ReturnAbility end
-    local abilityName = unit:GetKeyValue("ReturnAbility")
-    if abilityName then return unit:FindAbilityByName(abilityName) end
 end
 
 ------------------------------------------------

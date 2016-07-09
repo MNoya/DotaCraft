@@ -109,7 +109,7 @@ function CallToArmsEnd( event )
 
 	-- Gather ability level adjust
 	local level = Players:GetCurrentResearchRank(playerID, "human_research_lumber_harvesting1")
-	local ability = FindGatherAbility(peasant)
+	local ability = peasant:GetGatherAbility()
 	ability:SetLevel(1+level)
 end
 
