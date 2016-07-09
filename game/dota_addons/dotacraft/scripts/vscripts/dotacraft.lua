@@ -852,7 +852,10 @@ function dotacraft:OnPlayerReconnect(keys)
     for _,hero in pairs(heroes) do
         CreateHeroPanel(hero)
     end
-    
+
+    Timers:CreateTimer(0.03, function()
+        player:SetKillCamUnit(nil)
+    end)    
 end
 
 -- A tree was cut down
@@ -921,6 +924,15 @@ function dotacraft:OnEntityKilled( event )
     local attacker_playerID = attacker and attacker:GetPlayerOwnerID()
     local attacker_teamNumber = attacker and attacker:GetTeamNumber()
     local attacker_hero = attacker_playerID and PlayerResource:GetSelectedHeroEntity(attacker_playerID)
+
+    if killed:IsRealHero() then
+        local player = PlayerResource:GetPlayer(killed_playerID)
+        if player then
+            Timers:CreateTimer(0.03, function()
+                player:SetKillCamUnit(nil)
+            end)
+        end
+    end
 
     -- Check for neutral item drops
     if killed_teamNumber == DOTA_TEAM_NEUTRALS and killed:IsCreature() then
