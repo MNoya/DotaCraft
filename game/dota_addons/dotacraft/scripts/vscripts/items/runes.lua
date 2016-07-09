@@ -7,7 +7,9 @@ function Healing(event)
     for _,unit in pairs(allies) do
         local value = math.min(heal, unit:GetHealthDeficit())
         unit:Heal(value,caster)
-        PopupHealing(unit, value)
+        if value > 0 then
+            PopupHealing(unit, value)
+        end
     end
 end
 

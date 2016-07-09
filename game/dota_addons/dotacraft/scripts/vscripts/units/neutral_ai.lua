@@ -23,15 +23,17 @@ function NeutralAI:Start( unit )
 
     unit.state = AI_STATE_IDLE
     unit.spawnPos = unit:GetAbsOrigin()
-    unit.campCenter = FindCreepCampCenter(unit)
-    if not campCenter then
-        print("[NeutralAI] Error, couldn't find camp center for "..unit:GetName())
-        return
-    end
-    unit.allies = FindAllUnitsAroundPoint(unit, unit.campCenter, 1000)
     unit.acquireRange = unit:GetAcquisitionRange()
     unit.aggroRange = 200 --Range an enemy unit has to be for the group to go from IDLE to AGGRESIVE
     unit.leashRange = unit.acquireRange * 2 --Range from spawnPos to go from AGGRESIVE to RETURNING
+    unit.campCenter = FindCreepCampCenter(unit)
+    if not unit.campCenter then
+        print("[NeutralAI] Error: Cant find minimap_ entity nearby "..unit:GetUnitName())
+        DebugDrawCircle(unit:GetAbsOrigin(),Vector(255,0,0),100,1000,true,30)
+        unit.allies = {}
+    else
+        unit.allies = FindAllUnitsAroundPoint(unit, unit.campCenter, 1000)
+    end
 
     -- Disable normal ways of acquisition
     unit:SetIdleAcquire(false)
@@ -107,6 +109,7 @@ function NeutralAI:AggressiveThink()
         unit:MoveToPosition( unit.spawnPos )
         unit.state = AI_STATE_RETURNING
         unit.aggroTarget = nil
+        print("stop at ",distanceFromSpawn, unit.leashRange)
         return true
     end
     
@@ -177,7 +180,7 @@ function FindCreepCampCenter( unit )
     local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, unit:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
                                     DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
     for _,neutral in pairs(units) do
-        if string.match(neutral:GetUnitName(), "minimap_") then
+        if neutral:GetUnitName():match("minimap_") then
             return neutral:GetAbsOrigin()
         end
     end
