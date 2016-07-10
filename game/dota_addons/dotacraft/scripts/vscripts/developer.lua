@@ -273,7 +273,7 @@ function dotacraft:CreateUnits(pID, unitName, numUnits, bEnemy)
     local hero = player:GetAssignedHero()
 
      -- Handle possible unit issues
-    numUnits = numUnits or 1
+    numUnits = tonumber(numUnits) or 1
     if not GameRules.UnitKV[unitName] then
         Say(nil,"["..unitName.."] <font color='#ff0000'> is not a valid unit name!</font>", false)
         return
