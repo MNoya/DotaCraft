@@ -12,7 +12,7 @@
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
     "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
-    "AbilityCastAnimation"          "ACT_DOTA_CAST_TORNADO"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_SUN_STRIKE"
     
     "TargetsAllowed"                "ground"
 
@@ -69,14 +69,13 @@
         }
     }
 
-
     "OnAbilityPhaseStart"
     {
-        "FireEffect"
+        "RunScript"
         {
-            "EffectName"        "particles/custom/human/blood_mage/invoker_sun_strike_team_immortal1.vpcf"
-            "EffectAttachType"  "world_origin"
-            "TargetPoint"       "POINT"
+            "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
+            "Function"      "FlameStrikeOrbThrow"
+            "Target"        "POINT"
         }
     }
 
@@ -86,19 +85,13 @@
         {
             "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
             "Function"      "FlameStrikeAnimation"
+            "Target"        "POINT"
         }
 
         "FireSound"
         {
             "EffectName"    "Hero_Invoker.SunStrike.Charge"
             "Target"        "CASTER"
-        }
-
-        "FireEffect"
-        {
-            "EffectName"        "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
-            "EffectAttachType"  "world_origin"
-            "TargetPoint"       "POINT"
         }
 
         "DelayedAction"
