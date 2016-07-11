@@ -57,11 +57,6 @@ function dotacraft:FilterDamage( filterTable )
         elseif victim:HasModifier("modifier_elunes_grace") and attack_type == "pierce" then
             print("Elunes Grace reduces this piercing attack to 65%")
             damage = damage * 0.65
-        
-        -- modifier_possession_caster (All attacks to 166%)
-        elseif victim:HasModifier("modifier_possession_caster") then
-            damage = damage * 1.66
-        end
 
         --print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. attack_damage .. " * "..1-damage_reduction..") * ".. multiplier.. " = " .. damage )
         
