@@ -28,6 +28,11 @@ function dotacraft:FilterDamage( filterTable )
         end
     end
 
+    -- Revert damage from MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+    if inflictor and attacker:IsHero() then
+        filterTable["damage"] = filterTable["damage"]/(1+((attacker:GetIntellect()/16)/100))
+    end
+
     -- Physical attack damage filtering
     if damagetype == DAMAGE_TYPE_PHYSICAL then
         if victim == attacker and not inflictor then return end -- Self attack, for fake attack ground
@@ -50,13 +55,12 @@ function dotacraft:FilterDamage( filterTable )
         -- Extra rules for certain ability modifiers
         -- modifier_defend (50% less damage from Piercing attacks)
         if victim:HasModifier("modifier_defend") and attack_type == "pierce" then
-            print("Defend reduces this piercing attack to 50%")
             damage = damage * 0.5
 
         -- modifier_elunes_grace (Piercing attacks to 65%)
         elseif victim:HasModifier("modifier_elunes_grace") and attack_type == "pierce" then
-            print("Elunes Grace reduces this piercing attack to 65%")
             damage = damage * 0.65
+        end
 
         --print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. attack_damage .. " * "..1-damage_reduction..") * ".. multiplier.. " = " .. damage )
         
@@ -82,26 +86,11 @@ function dotacraft:FilterDamage( filterTable )
                 victim:RemoveModifierByName("modifier_anti_magic_shell")
                 victim.anti_magic_shell_absorbed = nil
             end
-
-            if victim.anti_magic_shell_absorbed then
-                print("Anti-Magic Shell Absorbed "..absorbed.." damage from an instace of "..damage.." ("..victim.anti_magic_shell_absorbed.." so far)")
-            else
-                print("Anti-Magic Shell Absorbed "..absorbed.." damage from an instace of "..damage.." and ended")
-            end
             damage = damage - absorbed
         end 
-
-        if damage ~= filterTable["damage"] then
-            print("Magic Damage reduced: was ".. filterTable["damage"].." - dealt "..damage )
-        end
         
         -- Reassign the new damage
         filterTable["damage"] = damage
-    end
-
-    -- Revert damage from MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
-    if inflictor and attacker:IsHero() then
-        filterTable["damage"] = filterTable["damage"]/(1+((attacker:GetIntellect()/16)/100))
     end
 
     -- Cheat code host only
