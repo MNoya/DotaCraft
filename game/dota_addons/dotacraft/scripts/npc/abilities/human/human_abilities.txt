@@ -344,12 +344,13 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC" //Level 5 or below
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 	"AbilityCastPoint"				"0.1"
 	"AbilityCastRange"				"500"
 	"AbilityManaCost"				"220"
 
 	"TargetsAllowed"                "organic"
+	"MaxCreepLevel"					"5"
 
 	"AbilitySpecial"
 	{
@@ -370,15 +371,6 @@
 		"model"		"models/items/hex/sheep_hex/sheep_hex.vmdl"
 		"particle"  "particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
-	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/human/sorceress.lua"
-			"Function"		"PolymorphLevelCheck"
-		}
 	}
 
 	"OnSpellStart"

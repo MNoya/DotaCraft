@@ -547,6 +547,7 @@ end
 
 function CDOTA_BaseNPC:FindClearSpace(origin)
     local collisionSize = self:GetCollisionSize()
+    if not collision_size then return end
     local gridSize = math.ceil(collisionSize/32)+1
     origin = origin or self:GetAbsOrigin()
     if gridSize >= 2 then

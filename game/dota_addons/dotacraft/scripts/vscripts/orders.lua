@@ -59,7 +59,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
         end
     end)
 
-    -- Deny Unit-Target Orders to Building/Flying/Mechanical
+    -- Deny Unit-Target Orders requirements
     if order_type == DOTA_UNIT_ORDER_CAST_TARGET then
         local ability = EntIndexToHScript(abilityIndex)
         local target = EntIndexToHScript(targetIndex)

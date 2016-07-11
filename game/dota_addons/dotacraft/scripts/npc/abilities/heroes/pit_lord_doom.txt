@@ -16,6 +16,7 @@
     "AbilityCastAnimation"          "ACT_DOTA_SPAWN"
 
     "TargetsAllowed"                "organic"
+    "MaxCreepLevel"                 "5"
 
     "AbilityCastRange"              "650"
     "AbilityCastPoint"              "0.3"
@@ -56,15 +57,6 @@
         }
     }
 
-    "OnAbilityPhaseStart"
-    {
-        "RunScript"
-        {
-            "ScriptFile"    "heroes/pit_lord/doom.lua"
-            "Function"      "DoomLevelCheck"
-        }
-    }
-
     "OnSpellStart"
     {
         "ApplyModifier"
@@ -77,8 +69,7 @@
         {
             "EffectName"    "Hero_DoomBringer.Doom"
             "Target"        "TARGET"
-        }
-        
+        } 
     }
     
     "Modifiers"
@@ -118,7 +109,6 @@
                     "ScriptFile"    "heroes/pit_lord/doom.lua"
                     "Function"      "DoomStopSound"
                 }
-                
                 
                 "SpawnUnit"
                 {

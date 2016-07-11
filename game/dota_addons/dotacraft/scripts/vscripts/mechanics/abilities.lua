@@ -19,6 +19,11 @@ function CDOTABaseAbility:IsAllowedTarget(target)
         return false,"error_must_target_air"
     end
 
+    local maxLevel = self:GetKeyValue("MaxCreepLevel")
+    if maxLevel and target:GetLevel() > maxLevel then
+        return false,"error_cant_target_level6"
+    end
+
     local bNeedsAnyDeficit = self:GetKeyValue("RequiresManaDeficit")
     if bNeedsAnyDeficit and target:GetHealthDeficit() == 0 and target:GetMana() == target:GetMaxMana() then
         return false,"error_full_mana_health"

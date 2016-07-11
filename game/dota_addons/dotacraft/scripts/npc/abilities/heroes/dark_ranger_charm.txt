@@ -15,26 +15,17 @@
     "AbilityCastAnimation"          "ACT_DOTA_ATTACK"
 
     "TargetsAllowed"                "organic"
+    "MaxCreepLevel"                 "5"
 
     "AbilityCastRange"              "700"
     "AbilityCastPoint"              "0.3"
     "AbilityCooldown"               "150.0"
-
     "AbilityManaCost"               "70"
 
     "precache"
     {
         "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-    }
-
-    "OnAbilityPhaseStart"
-    {
-        "RunScript"
-        {
-            "ScriptFile"    "heroes/dark_ranger/charm.lua"
-            "Function"      "CharmLevelCheck"
-        }
     }
     
     "OnSpellStart"
@@ -57,5 +48,4 @@
             "Target"            "CASTER"
         }
     }
-    
 }

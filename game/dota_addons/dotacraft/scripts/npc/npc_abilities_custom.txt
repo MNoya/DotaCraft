@@ -441,9 +441,10 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 	
+		"MaxCreepLevel"					"5"
+	
 		"AbilityCastRange"				"650"
 		"AbilityCooldown"				"45.0"
-	
 		"AbilityManaCost"				"150"
 		
 		"AbilitySpecial"
@@ -4413,26 +4414,17 @@
 	    "AbilityCastAnimation"          "ACT_DOTA_ATTACK"
 	
 	    "TargetsAllowed"                "organic"
+	    "MaxCreepLevel"                 "5"
 	
 	    "AbilityCastRange"              "700"
 	    "AbilityCastPoint"              "0.3"
 	    "AbilityCooldown"               "150.0"
-	
 	    "AbilityManaCost"               "70"
 	
 	    "precache"
 	    {
 	        "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-	    }
-	
-	    "OnAbilityPhaseStart"
-	    {
-	        "RunScript"
-	        {
-	            "ScriptFile"    "heroes/dark_ranger/charm.lua"
-	            "Function"      "CharmLevelCheck"
-	        }
 	    }
 	    
 	    "OnSpellStart"
@@ -4455,7 +4447,6 @@
 	            "Target"            "CASTER"
 	        }
 	    }
-	    
 	}
 	// Dark Ranger Life Drain
 	// Author: Noya
@@ -10933,6 +10924,7 @@
 	    "AbilityCastAnimation"          "ACT_DOTA_SPAWN"
 	
 	    "TargetsAllowed"                "organic"
+	    "MaxCreepLevel"                 "5"
 	
 	    "AbilityCastRange"              "650"
 	    "AbilityCastPoint"              "0.3"
@@ -10973,15 +10965,6 @@
 	        }
 	    }
 	
-	    "OnAbilityPhaseStart"
-	    {
-	        "RunScript"
-	        {
-	            "ScriptFile"    "heroes/pit_lord/doom.lua"
-	            "Function"      "DoomLevelCheck"
-	        }
-	    }
-	
 	    "OnSpellStart"
 	    {
 	        "ApplyModifier"
@@ -10994,8 +10977,7 @@
 	        {
 	            "EffectName"    "Hero_DoomBringer.Doom"
 	            "Target"        "TARGET"
-	        }
-	        
+	        } 
 	    }
 	    
 	    "Modifiers"
@@ -11035,7 +11017,6 @@
 	                    "ScriptFile"    "heroes/pit_lord/doom.lua"
 	                    "Function"      "DoomStopSound"
 	                }
-	                
 	                
 	                "SpawnUnit"
 	                {
@@ -14762,12 +14743,13 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC" //Level 5 or below
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastPoint"				"0.1"
 		"AbilityCastRange"				"500"
 		"AbilityManaCost"				"220"
 	
 		"TargetsAllowed"                "organic"
+		"MaxCreepLevel"					"5"
 	
 		"AbilitySpecial"
 		{
@@ -14788,15 +14770,6 @@
 			"model"		"models/items/hex/sheep_hex/sheep_hex.vmdl"
 			"particle"  "particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf"
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"units/human/sorceress.lua"
-				"Function"		"PolymorphLevelCheck"
-			}
 		}
 	
 		"OnSpellStart"
@@ -56895,7 +56868,8 @@
 			{			
 				"EffectName" 		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead.vpcf"
 				"EffectAttachType" 	"follow_overhead"
-				"IsPurgable"      	 "1"
+				"IsPurgable"      	"1"
+				"TextureName"		"undead_curse"
 				"IsDebuff"			"1"
 				
 				"Properties"
@@ -57015,7 +56989,8 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	
-		"TargetsAllowed"            "ground"
+		"TargetsAllowed"            "ground,organic"
+		"MaxCreepLevel"				"5"
 		
 		"AbilityChannelTime" 		"4"
 		"AbilityCastRange"			"350"
@@ -57028,14 +57003,9 @@
 			
 		"precache"
 		{
-			// caster particle
 			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_spirit_model.vpcf"
-			
-			// target impact particle
 			"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf"
-			
-			
-			// target particle
+			"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_spiritsiphon.vpcf"
 			"particle"  "particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
 		}
 		
@@ -57044,7 +57014,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_increase_while_channeling"		"66"
+				"damage_increase_while_channeling"		"66" //REVIEW THIS
 			}
 			"02"
 			{
@@ -57054,12 +57024,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"duration"		"4"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"max_level"		"5"
+				"duration"			"4"
 			}
 		}
 	
@@ -57067,10 +57032,8 @@
 		{
 			"RunScript"
 			{
-				"Target"				"TARGET"
-				"Caster"				"CASTER"
 				"ScriptFile"			"units/undead/banshee.lua"
-				"Function"				"VerifyUnitPossession"
+				"Function"				"PossessionStart"
 			}	
 		}
 		
@@ -57093,10 +57056,8 @@
 		{
 			"RunScript"
 			{
-				"Target"				"TARGET"
-				"Caster"				"CASTER"
 				"ScriptFile"			"units/undead/banshee.lua"
-				"Function"				"undead_possession"
+				"Function"				"PossessionEnd"
 			}
 		}
 		
@@ -57107,12 +57068,13 @@
 				"EffectName" 		"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
 				"EffectAttachType" 	"follow_origin"
 				"OverrideAnimation" "ACT_DOTA_DISABLED"
+				"TextureName"       "undead_possession"
 				"IsDebuff"			 "1"
 					
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED" 			"MODIFIER_STATE_VALUE_ENABLED"
-				}	
+				}
 			}
 			
 			"modifier_possession_caster"
@@ -57123,6 +57085,10 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%damage_increase_while_channeling"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}	
 		}
@@ -58133,7 +58099,7 @@
 	{
 		"BaseClass"                 "ability_datadriven"
 		"MaxLevel"                  "1"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	
 		"Modifiers"
 		{

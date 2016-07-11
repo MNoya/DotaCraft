@@ -1,15 +1,3 @@
--- Denies cast on creeps higher than level 5, with a message
-function PolymorphLevelCheck( event )
-	local target = event.target
-	local hero = event.caster:GetPlayerOwner():GetAssignedHero()
-	local pID = hero:GetPlayerID()
-	
-	if target:GetLevel() > 5 then
-		event.caster:Interrupt()
-		SendErrorMessage(pID, "#error_cant_target_level6")
-	end
-end
-
 -- Handles AutoCast Logic
 function SlowAutocast( event )
 	local caster = event.caster

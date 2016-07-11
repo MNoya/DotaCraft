@@ -1,22 +1,4 @@
---[[
-	Author: Noya
-	Date: 25.01.2015.
-	Stops Doom looping sound
-]]
+-- Stops Doom looping sound
 function DoomStopSound( event )
-	-- Variables
-	local unit = event.unit
-	
-	StopSoundEvent("Hero_DoomBringer.Doom", unit)
-end
-
--- Denies cast on creeps higher than level 5, with a message
-function DoomLevelCheck( event )
-	local target = event.target
-	local pID = event.caster:GetPlayerID()
-	
-	if target:GetLevel() > 5 then
-		event.caster:Interrupt()F
-		SendErrorMessage(pID, "#error_cant_target_level6")
-	end
+    StopSoundEvent("Hero_DoomBringer.Doom", event.unit)
 end
