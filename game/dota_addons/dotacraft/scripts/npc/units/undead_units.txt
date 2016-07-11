@@ -450,7 +450,7 @@
 	"ArmorPhysical"				"3"
 	"MagicalResistance"			"0"
 	
-	// Attack
+	// Attack - AIR
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
@@ -460,7 +460,18 @@
 	"AttackAnimationPoint"		"0.33"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"128"
-	
+
+	// Secondary Attack - GROUND
+	//----------------------------------------------------------------
+	"SecondaryAttackCapabilities"			"RANGED"
+	"SecondaryAttackType"			"DAMAGE_TYPE_ArmorPhysical"
+	"SecondaryAttackDamageMin"			"18.0"
+	"SecondaryAttackDamageMax"			"21.0"
+	"SecondaryAttackRate"				"2.2"
+	"SecondaryAttackAnimationPoint"		"0.33"
+	"SecondaryAttackAcquisitionRange"	"500"
+	"SecondaryAttackRange"				"300"
+
 	// Bounty
 	//----------------------------------------------------------------
 	"BountyGoldMin"				"26.0"
@@ -1384,7 +1395,7 @@
 	"ArmorPhysical"				"1"
 	"MagicalResistance"			"0"
 	
-	// Attack
+	// Attack - GROUND
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
@@ -1396,7 +1407,18 @@
 	"AttackRange"				"300"
 	"ProjectileModel"			"particles/neutral_fx/ghost_frost_attack.vpcf"	 //Add projectile
 	"ProjectileSpeed"			"800"
-	
+
+	// Secondary Attack - AIR
+	//----------------------------------------------------------------
+	"SecondaryAttackCapabilities"			"RANGED"
+	"SecondaryAttackType"			"DAMAGE_TYPE_ArmorPhysical"
+	"SecondaryAttackDamageMin"			"84.0"
+	"SecondaryAttackDamageMax"			"94.0"
+	"SecondaryAttackRate"				"3"
+	"SecondaryAttackAnimationPoint"		"0.5"
+	"SecondaryAttackAcquisitionRange"	"500"
+	"SecondaryAttackRange"				"300"
+
 	// Bounty
 	//----------------------------------------------------------------
 	"BountyGoldMin"				"38.0"

@@ -1105,7 +1105,7 @@
 	"ArmorPhysical"				"2"
 	"MagicalResistance"			"0"
 	
-	// Attack
+	// Attack - GROUND
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
@@ -1117,7 +1117,21 @@
 	"AttackRange"				"450" //850 vs buildings
 	"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
 	"ProjectileSpeed"			"1200"
-	
+
+	// Secondary Attack - GROUND(BUILDINGS), SIEGE
+	//----------------------------------------------------------------
+	"SecondaryAttackCapabilities"			"RANGED"
+	"SecondaryAttackType"			"DAMAGE_TYPE_ArmorPhysical"
+	"SecondaryAttackDamageMin"			"45.0"
+	"SecondaryAttackDamageMax"			"55.0"
+	"SecondaryAttackRate"				"2.5"
+	"SecondaryAttackAnimationPoint"		"0.7"
+	"SecondaryAttackAcquisitionRange"	"850"
+	"SecondaryAttackRange"				"850"
+	"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
+	"ProjectileSpeed"			"1000"
+
+
 	// Bounty
 	//----------------------------------------------------------------
 	"BountyGoldMin"				"38.0"
