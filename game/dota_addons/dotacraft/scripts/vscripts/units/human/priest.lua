@@ -60,45 +60,36 @@ function ToggleOnAutocast( event )
 	ability:ToggleAutoCast()
 end
 
+-- Dispel Magic removes buffs from enemy units, removes debuffs from allies, and deals damage to summoned units
+-- Used on human_dispel_magic and pandaren_storm_dispel_magic
 function DispelMagic( event )
 	local caster = event.caster
 	local ability = event.ability
 	local point = event.target_points[1]
 	local radius = ability:GetSpecialValueFor("radius")
+	local damage_to_summons = ability:GetSpecialValueFor("damage_to_summons")
 		
 	-- Find targets in radius
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for k,unit in pairs(units) do
-		event.target = unit
-		Dispel(event)
+	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	for k,target in pairs(targets) do
+		local bSummon = target:IsSummoned() or target:HasModifier("modifier_kill")
+		if bSummon then
+			ApplyDamage({victim = target, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
+			ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		end
+
+		local bRemovePositiveBuffs = false
+		local bRemoveDebuffs = false
+
+		-- Remove buffs on enemies or debuffs on allies
+		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+			bRemovePositiveBuffs = true
+		else
+			bRemoveDebuffs = true
+		end
+		target:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
+		target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
 	end
 
 	RemoveBlight(point, radius)
-end
-
-function Dispel( event )
-	local caster = event.caster
-	local target = event.target
-
-	local bSummon = target:IsSummoned() or target:HasModifier("modifier_kill")
-	if bSummon then
-		local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
-		ApplyDamage({victim = target, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
-		ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	end
-
-	local bRemovePositiveBuffs = false
-	local bRemoveDebuffs = false
-	local bFrameOnly = false
-	local bRemoveStuns = false
-	local bRemoveExceptions = false
-
-	-- Remove buffs on enemies or debuffs on allies
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		bRemovePositiveBuffs = true
-	else
-		bRemoveDebuffs = true
-	end
-
-	target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, bFrameOnly, bRemoveStuns, bRemoveExceptions)
 end

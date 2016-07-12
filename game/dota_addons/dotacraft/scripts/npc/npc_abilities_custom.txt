@@ -5687,7 +5687,8 @@
 	    {
 	        "modifier_sleep"
 	        {
-	            "IsDebuff"  "1"
+	            "IsPurgable"    "1"
+	            "IsDebuff"      "1"
 	
 	            "EffectName"        "particles/newplayer_fx/npx_sleeping.vpcf"
 	            "EffectAttachType" "follow_overhead"
@@ -7316,6 +7317,7 @@
 	    {
 	        "modifier_entangling_roots"
 	        {
+	            "IsPurgable"    "1"
 	            "IsDebuff"      "1"
 	            "States"
 	            {
@@ -7874,175 +7876,173 @@
 	}
 	// Lich Frost Armor
 	// Author: Noya
-	// Date: 20.01.2015.
-	// Notes: Creates a shield of frost around a target friendly unit. The shield adds armor and slows melee units that attack it.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 3 armor, 5 seconds of cold	1
-	//2	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 5 armor, 5 seconds of cold	3
-	//3	45 sec.	2 sec.	40	80	Unit	Air, Ground, Friend, Self	Adds 7 armor, 5 seconds of cold	5
+	// Description: Creates a shield of frost around a target friendly unit. The shield adds armor and slows melee units that attack it.
+	
 	"lich_frost_armor_warcraft"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"lich_frost_armor_warcraft"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "lich_frost_armor_warcraft"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.4"
-		"AbilityCooldown"				"2.0"
+	    "AbilityCastRange"              "800"
+	    "AbilityCastPoint"              "0.4"
+	    "AbilityCooldown"               "2.0"
 	
-		"AbilityManaCost"				"40"
-		"AbilityDuration"				"45"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_bonus"			"3 5 7"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"5.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-50"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_attack_speed"		"-25"
-			}
+	    "AbilityManaCost"               "40"
+	    "AbilityDuration"               "45"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "armor_bonus"           "3 5 7"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "slow_duration"         "5.0"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "slow_movement_speed"   "-50"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "slow_attack_speed"     "-25"
+	        }
 	
-			// Extra values to control the Autocast AI
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"autocast_radius"		"900"
-			}
-		}
+	        // Extra values to control the Autocast AI
+	        "05"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "autocast_radius"       "900"
+	        }
+	    }
 	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
-			"particle"	"particles/status_fx/status_effect_frost_armor.vpcf"
-			"particle"	"particles/status_fx/status_effect_frost.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+	        "particle"  "particles/status_fx/status_effect_frost_armor.vpcf"
+	        "particle"  "particles/status_fx/status_effect_frost.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Lich.FrostArmor"
-				"Target"		"TARGET"
-			}
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Lich.FrostArmor"
+	            "Target"        "TARGET"
+	        }
 	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_frost_armor"
-				"Target"		"TARGET"
-				"Duration"		"%AbilityDuration"
-			}
-		}
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_frost_armor"
+	            "Target"        "TARGET"
+	            "Duration"      "%AbilityDuration"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_frost_armor"
-			{
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
-				}
+	    "Modifiers"
+	    {
+	        "modifier_frost_armor"
+	        {
+	            "IsPurgable"    "1"
+	            
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"    "%armor_bonus"
+	            }
 	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "heroes/lich/frost_armor.lua"
-				        "Function"      "FrostArmorParticle"	
-				    }
-				}
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/lich/frost_armor.lua"
+	                    "Function"      "FrostArmorParticle"    
+	                }
+	            }
 	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "heroes/lich/frost_armor.lua"
-				        "Function"      "EndFrostArmorParticle"	
-				    }
-				}
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/lich/frost_armor.lua"
+	                    "Function"      "EndFrostArmorParticle" 
+	                }
+	            }
 	
-				"StatusEffectName"		"particles/status_fx/status_effect_frost_armor.vpcf"
-				"StatusEffectPriority"	"10"
+	            "StatusEffectName"      "particles/status_fx/status_effect_frost_armor.vpcf"
+	            "StatusEffectPriority"  "10"
 	
-				//Frost Armor only slows units that attack the unit with a Melee attack.
-				"OnAttacked"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_frost_armor_slow"
-						"Target"
-						{
-							"Center"	"ATTACKER"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
-						}
-						"Duration"		"%slow_duration"
-					}
+	            //Frost Armor only slows units that attack the unit with a Melee attack.
+	            "OnAttacked"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_frost_armor_slow"
+	                    "Target"
+	                    {
+	                        "Center"    "ATTACKER"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+	                    }
+	                    "Duration"      "%slow_duration"
+	                }
 	
-					"FireSound"
-					{
-						"EffectName"	"Hero_Lich.FrostArmorDamage"
-						"Target"		"TARGET"
-					}
-				}
-			}
+	                "FireSound"
+	                {
+	                    "EffectName"    "Hero_Lich.FrostArmorDamage"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	        }
 	
-			"modifier_frost_armor_slow"
-			{
-				"IsDebuff"	"1"
+	        "modifier_frost_armor_slow"
+	        {
+	            "IsDebuff"  "1"
 	
-				"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
-				"StatusEffectPriority"	"10"
+	            "StatusEffectName"      "particles/status_fx/status_effect_frost.vpcf"
+	            "StatusEffectPriority"  "10"
 	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
-				}
-			}
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"  "%slow_attack_speed"
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%slow_movement_speed"
+	            }
+	        }
 	
-			"modifier_frost_armor_autocast_aura"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
+	        "modifier_frost_armor_autocast_aura"
+	        {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
 	
-				"Aura" 				"modifier_frost_armor_autocast_attacked"
-				"Aura_Radius" 		"%autocast_radius"
-				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 		"DOTA_UNIT_TARGET_HERO"
-			}
+	            "Aura"              "modifier_frost_armor_autocast_attacked"
+	            "Aura_Radius"       "%autocast_radius"
+	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO"
+	        }
 	
-			"modifier_frost_armor_autocast_attacked"
-			{
-				"IsHidden"	"1"
-				"OnAttacked"
-				{
-					"RunScript"
-				    {
-				        "ScriptFile"    "heroes/lich/frost_armor.lua"
-				        "Function"      "FrostArmorAutocast"
-				    }
-				}
-			}
-		}
+	        "modifier_frost_armor_autocast_attacked"
+	        {
+	            "IsHidden"  "1"
+	            "OnAttacked"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/lich/frost_armor.lua"
+	                    "Function"      "FrostArmorAutocast"
+	                }
+	            }
+	        }
+	    }
 	}
 	// Lich Frost Nova, Warcraft version
 	// Author: Noya
@@ -9503,6 +9503,12 @@
 	            "Target"        "CASTER"
 	            "ModifierName"  "modifier_paladin_divine_shield"
 	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/paladin/divine_shield.lua"
+	            "Function"      "DivineShieldPurge"
+	        }
 	        
 	        "FireSound"
 	        {
@@ -9519,12 +9525,6 @@
 	            "EffectAttachType"  "follow_origin"
 	
 	            "Duration"  "%shield_duration"
-	
-	            "RunScript"
-	            {
-	                "ScriptFile"    "heroes/paladin/divine_shield.lua"
-	                "Function"      "DivineShieldPurge"
-	            }
 	
 	            "States"
 	            {
@@ -10440,7 +10440,7 @@
 	        "01"
 	        {
 	            "var_type"                  "FIELD_INTEGER"
-	            "damage"                    "200"
+	            "damage_to_summons"         "200"
 	        }
 	        "02"
 	        {
@@ -10470,15 +10470,8 @@
 	
 	        "RunScript"
 	        {
-	            "ScriptFile"    "heroes/pandaren/storm_earth_fire.lua"
+	            "ScriptFile"    "units/human/priest.lua"
 	            "Function"      "DispelMagic"
-	            "Target"
-	            {
-	                "Center"    "POINT"
-	                "Radius"    "%radius"
-	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	            }
 	        }
 	    }
 	}
@@ -33274,7 +33267,6 @@
 			"modifier_slow_poison"
 			{
 				"IsDebuff"			"1"
-				"IsPurgable"		"0"
 				"EffectName"		"particles/neutral_fx/gnoll_poison_debuff.vpcf"
 				"EffectAttachType"	"attach_hitloc"
 	
@@ -33317,7 +33309,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
@@ -44678,7 +44670,7 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 	
 		"AbilityCastRange"			"700"
@@ -45772,9 +45764,6 @@
 	
 			"modifier_devour_devouring"
 			{
-				"IsHidden"			"0"
-				"IsPurgable"		"0"
-	
 				"OnDeath"
 				{
 					"RunScript"
@@ -45788,8 +45777,6 @@
 			"modifier_devour_debuff"
 			{
 				"IsDebuff"			"1"
-				"IsPurgable"		"0"
-	
 				"ThinkInterval"  "1"
 				"OnIntervalThink"
 				{
@@ -45934,7 +45921,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_envenomed_spears"
+			"modifier_envenomed_spears_passive"
 			{
 				"Passive"	"1"
 				"IsHidden"	"1"
@@ -45942,7 +45929,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"	"modifier_envenomed_spears_slow"
+						"ModifierName"	"modifier_envenomed_spears"
 						"Target"
 						{
 							"Center"	"TARGET"
@@ -45954,7 +45941,7 @@
 					
 					"ApplyModifier"
 					{
-						"ModifierName"	"modifier_envenomed_spears_slow"
+						"ModifierName"	"modifier_envenomed_spears"
 						"Target"
 						{
 							"Center"	"TARGET"
@@ -45966,10 +45953,9 @@
 				}
 			}
 	
-			"modifier_envenomed_spears_slow"
+			"modifier_envenomed_spears"
 			{
 				"IsDebuff"			"1"
-				"IsPurgable"		"1"
 				"EffectName"		"particles/neutral_fx/gnoll_poison_debuff.vpcf"
 				"EffectAttachType"	"attach_hitloc"
 	
@@ -55910,7 +55896,6 @@
 			"modifier_web"
 			{
 				"IsDebuff"	 "1"
-				"IsPurgable" "1"
 				"EffectName"			"particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_webs.vpcf"
 				"EffectAttachType"		"follow_origin"
 	
@@ -57257,7 +57242,6 @@
 		
 			"modifier_freezing_attack"
 			{
-				"IsPurgable" 	"1"
 				"IsDebuff"		"1"
 				
 				"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"

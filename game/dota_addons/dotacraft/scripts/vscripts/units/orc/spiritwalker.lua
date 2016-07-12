@@ -27,7 +27,7 @@ function Disenchant( event )
 	local radius = ability:GetSpecialValueFor("radius")
 		
 	-- Find targets in radius
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	local units = FindUnitsInRadius(caster:GetTeamNumber(), point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	for k,unit in pairs(units) do
 		local bSummon = unit:IsSummoned() or unit:HasModifier("modifier_kill")
 		if bSummon then
@@ -39,11 +39,7 @@ function Disenchant( event )
 		-- This ability removes both positive and negative buffs from units.
 		local bRemovePositiveBuffs = true
 		local bRemoveDebuffs = true
-		local bFrameOnly = false
-		local bRemoveStuns = false
-		local bRemoveExceptions = false
-
-		unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, bFrameOnly, bRemoveStuns, bRemoveExceptions)
+		unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
 	end
 
 	RemoveBlight(point, radius)

@@ -104,14 +104,14 @@ function PurgeStart( event )
     local bRemovePositiveBuffs = false
     local bRemoveDebuffs = false
     local bSummoned = target:IsSummoned()
-        
+
     if target:GetTeamNumber() ~= caster:GetTeamNumber() then
         bRemovePositiveBuffs = true
     else
         bRemoveDebuffs = true
     end
-    target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
-    target:EmitSound('n_creep_SatyrTrickster.Cast')
+    target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, true)
+    target:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
     ParticleManager:CreateParticle('particles/generic_gameplay/generic_purge.vpcf', PATTACH_ABSORIGIN_FOLLOW, target)
 
     if bRemovePositiveBuffs then

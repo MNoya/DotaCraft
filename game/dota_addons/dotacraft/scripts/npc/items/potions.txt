@@ -466,55 +466,6 @@
 			"Target"		"CASTER"
 			"Duration"		"%duration"
 		}
-
-		"ApplyModifier"
-		{
-			"ModifierName" 	"modifier_windwalk"
-			"Target"		"CASTER"
-			"Duration"		"%duration"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_windwalk"
-		{			
-			"States"
-			{
-				"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-			
-			"OnAttackLanded"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName" 	"modifier_invisible"
-					"Target"		"CASTER"
-				}
-
-				"RemoveModifier"
-				{
-					"ModifierName" 	"modifier_windwalk"
-					"Target"		"CASTER"
-				}
-			}
-
-			"OnAbilityExecuted"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName" 	"modifier_invisible"
-					"Target"		"CASTER"
-				}
-
-				"RemoveModifier"
-				{
-					"ModifierName" 	"modifier_windwalk"
-					"Target"		"CASTER"
-				}
-			}
-		}
 	}
 }
 
@@ -862,6 +813,8 @@
 	{
 		"modifier_vampiric_potion"
 		{
+			"IsPurgable"        "1"
+
 			"EffectName"			"particles/items2_fx/mask_of_madness.vpcf"
 			"EffectAttachType"		"follow_origin"
 
