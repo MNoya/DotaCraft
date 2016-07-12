@@ -2,7 +2,7 @@ function EtherStart( event )
 	local caster = event.caster
 	local ability = event.ability
 	caster:EmitSound('Hero_Pugna.Decrepify')
-	ability:ApplyDataDrivenModifier(caster, caster, 'modifier_ethereal_form', {})
+	ability:ApplyDataDrivenModifier(caster, caster, 'modifier_ethereal', {})
 	local cooldown = ability:GetCooldown(0)
 	ability:StartCooldown(cooldown)
 	local another = caster:FindAbilityByName('orc_corporeal_form')
@@ -14,7 +14,7 @@ end
 function EtherEnd( event )
 	local caster = event.caster
 	local ability = event.ability
-	caster:RemoveModifierByNameAndCaster('modifier_ethereal_form', caster)
+	caster:RemoveModifierByNameAndCaster('modifier_ethereal', caster)
 	local another = caster:FindAbilityByName('orc_ethereal_form')
 	ability:SetHidden(true)
 	another:SetHidden(false)

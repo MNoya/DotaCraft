@@ -1083,20 +1083,23 @@
 	{
 		"modifier_ethereal_form"
 		{
-	
-			"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-			"EffectAttachType"	"follow_origin"
-
-			"Properties"
+			"OnCreated"
 			{
-				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage"
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_ethereal"
+					"Target" 		"CASTER"
+				}
 			}
 
-			"States"
+			"OnDestroy"
 			{
-				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-			}	
+			    "RemoveModifier"
+				{
+					"ModifierName"	"modifier_ethereal"
+					"Target" 		"CASTER"
+				}
+			}
 		}
 
 		"modifier_spawning"
@@ -1108,7 +1111,7 @@
 			{
 				"ApplyModifier"
 				{
-					"ModifierName"	"modifier_ethereal_form"
+					"ModifierName"	"modifier_ethereal"
 					"Target" 		"CASTER"
 				}
 
@@ -1120,8 +1123,6 @@
 			}
 		}
 	}
-
-	// Done
 }
 
 //=================================================================================

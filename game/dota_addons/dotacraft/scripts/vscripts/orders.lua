@@ -284,12 +284,21 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 else
                     unit.skip = true
                     
-                    -- Move to position
-                    ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = target:GetAbsOrigin(), Queue = queue})
+                    -- Move to position in range of attack
+                    local attackerOrigin = unit:GetAbsOrigin()
+                    local targetOrigin = target:GetAbsOrigin()
+                    local maxPos = targetOrigin + (attackerOrigin-targetOrigin):Normalized() * unit:GetAttackRange()
+                    local pos = maxPos
+                    if (maxPos-targetOrigin):Length2D() > (attackerOrigin-targetOrigin):Length2D() then
+                        pos = attackerOrigin --stay in place if the order would move the attacker backwards
+                    end
+                    ExecuteOrderFromTable({ UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE, Position = pos, Queue = queue})
                     
                     if not errorMsg then
                         if unit:GetAttackType() == "magic" and target:IsMagicImmune() then
                             errorMsg = "#dota_hud_error_target_magic_immune"
+                        elseif unit:GetAttackType() ~= "magic" and target:IsEthereal() then
+                            errorMsg = "#error_ethereal_target"
                         elseif GetAttacksEnabled(unit) == "building" and not IsCustomBuilding(target) then
                             errorMsg = "#error_must_target_buildings"
                         else

@@ -319,6 +319,10 @@ function CDOTA_BaseNPC:IsMechanical()
     return self:GetUnitLabel():match("mechanical")
 end
 
+function CDOTA_BaseNPC:IsEthereal()
+    return self:HasModifier("modifier_ethereal")
+end
+
 function CDOTA_BaseNPC:IsFlyingUnit()
     return self:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY"
 end
@@ -547,7 +551,7 @@ end
 
 function CDOTA_BaseNPC:FindClearSpace(origin)
     local collisionSize = self:GetCollisionSize()
-    if not collision_size then return end
+    if not collisionSize then return end
     local gridSize = math.ceil(collisionSize/32)+1
     origin = origin or self:GetAbsOrigin()
     if gridSize >= 2 then

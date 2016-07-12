@@ -19,8 +19,8 @@ function UnitCanAttackTarget( unit, target )
     
     if attacks_enabled == "building" and not IsCustomBuilding(target) then return false end
   
-    if not unit:HasAttackCapability() or target:IsInvulnerable() or target:IsAttackImmune()
-        or not unit:CanEntityBeSeenByMyTeam(target) or (unit:GetAttackType() == "magic" and target:IsMagicImmune() and not IsCustomBuilding(target)) then
+    if not unit:HasAttackCapability() or unit:IsDisarmed() or target:IsInvulnerable() or target:IsAttackImmune() or not unit:CanEntityBeSeenByMyTeam(target)
+        or (unit:GetAttackType() == "magic" and target:IsMagicImmune() and not IsCustomBuilding(target)) or (target:IsEthereal() and unit:GetAttackType() ~= "magic") then
             return false
     end
 

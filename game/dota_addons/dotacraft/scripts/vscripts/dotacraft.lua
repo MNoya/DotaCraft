@@ -132,7 +132,8 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_healing_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_sentry_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_true_sight_aura", "libraries/modifiers/modifier_true_sight_aura", LUA_MODIFIER_MOTION_NONE)
-    
+    LinkLuaModifier("modifier_ethereal", "libraries/modifiers/modifier_ethereal", LUA_MODIFIER_MOTION_NONE)
+
     -- Remove building invulnerability
     local allBuildings = Entities:FindAllByClassname('npc_dota_building')
     for i = 1, #allBuildings, 1 do
