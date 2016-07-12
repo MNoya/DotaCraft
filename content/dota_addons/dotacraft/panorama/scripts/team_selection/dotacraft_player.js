@@ -5,6 +5,8 @@ var COLOUR_TABLE = {}
 var Root = $.GetContextPanel();
 var LocalPlayerID = Game.GetLocalPlayerID();
 var PlayerContainer = Root.GetParent().GetParent();
+var DROPDOWN_SOUND_EVENT_NAME = "Hero_Warlock.Attack";
+var MOVE_SOUND_EVENT_NAME = "DOTA_Item.Daedelus.Crit";
 
 //////////////////////////////////////////////
 // 					BUTTONS					//
@@ -42,11 +44,13 @@ Root.SetBot = function(aiLVL){
 		$("#OptionsDropDown").RemoveClass("hidden");
 	
 	Root.Bot = true;
+	Root.aiLVL = aiLVL;
 	$("#PlayerAvatar").visible = false;
 	$("#PlayerName").GetChild(0).text = Bot_Names[aiLVL];  
 	
-	if ( isLocalPlayerHost() )
+	if ( isLocalPlayerHost() ){
 		UpdatePlayer();
+	};
 };
 
 // ready up button
@@ -66,7 +70,7 @@ Root.FindChildTraverse("OptionsDropDown").SetPanelEvent('oninputsubmit', functio
 	var selectedID = $("#OptionsDropDown").GetSelected().id;
 	
 	if( selectedID == 0)
-		PlayerContainer.HandlePanelDeletion(Root.PlayerID);
+		PlayerContainer.HandlePanelDeletion(Root.PlayerID, Root.PanelID);
 	else
 		UpdatePlayer( {"Bot_Name" : selectedID, "Bot": 1 });
 });
@@ -90,7 +94,8 @@ Root.Copy = function(playerPanel){
 };
 
 Root.SetTeam = function(teamID){ 
-	if( !Root.Locked ){ // only if not locked
+	if( !Root.Locked && teamID != Root.PlayerTeam ){ // only if not locked
+		Game.EmitSound(MOVE_SOUND_EVENT_NAME);
 		Root.PlayerTeam = teamID;
 		UpdatePlayer( { Team: teamID } );
 	};
@@ -98,6 +103,7 @@ Root.SetTeam = function(teamID){
 
 // button click function for the race dropdown
 Root.FindChildTraverse("RaceDropDown").SetPanelEvent('oninputsubmit', function PlayerRaceChanged(){
+	Game.EmitSound(DROPDOWN_SOUND_EVENT_NAME);
 	var dropdown = Root.FindChildTraverse("RaceDropDown");
 	var race_index = dropdown.GetSelected().id;
 
@@ -110,6 +116,7 @@ Root.FindChildTraverse("RaceDropDown").SetPanelEvent('oninputsubmit', function P
 
 // button click function for the color dropdown
 Root.FindChildTraverse("ColorDropDown").SetPanelEvent('oninputsubmit', function PlayerColorChanged(){
+	Game.EmitSound(DROPDOWN_SOUND_EVENT_NAME);
 	var dropdown = Root.FindChildTraverse("ColorDropDown");
 	var color_index = dropdown.GetSelected().id;
 
@@ -144,6 +151,8 @@ function UpdatePlayer( UpdateTable ){
 		UpdateTable.Color = Root.PlayerColor;
 	if( UpdateTable.Bot == null && Root.Bot )
 		UpdateTable.Bot = true;
+	if( Root.Bot && UpdateTable.aiLVL == null )
+		UpdateTable.aiLVL = Root.aiLVL;
 	
 	GameEvents.SendCustomGameEventToServer("update_pregame", {"ID" : Root.PlayerID, "Info" : UpdateTable});
 };
@@ -161,21 +170,13 @@ function UpdatePlayer( UpdateTable ){
 function NetTableUpdatePlayer(tableName, key, val){
 	if( key == Root.PlayerID ){
 		
-		if( val.newPlayerID != null ){ // check if there is a new player id to be assigned
-			if( Root.OldPlayerID == null ){ // if null it means that this is the correct update due to not having changed playerID previously
-				if( Root.OldPlayerID != val.newPlayerID ){
-					Root.PlayerID = val.newPlayerID;
-					Root.OldPlayerID = Root.PlayerID; // remember old id
-					Root.id = "Player_99";
-				};
-			};
-		};
-		
 		// variables  
 		var PlayerID = key;
 		if(val.Bot != null && val.Bot_Name != null){
 			if( isLocalPlayerHost() ) // host only
 				$("#OptionsDropDown").RemoveClass("hidden");
+			
+			Root.aiLVL = val.Bot_Name;
 			
 			$("#PlayerAvatar").visible = false;
 			$("#PlayerName").GetChild(0).text = Bot_Names[val.Bot_Name];  
@@ -187,6 +188,7 @@ function NetTableUpdatePlayer(tableName, key, val){
 			UpdatePanelLockState(Boolise(val.Lock));
 			Root.Locked = val.Lock;
 		};
+		
 		
 		if( (val.Team != null) || (val.Color != null) || (val.Race != null) ){
 			if( val.Team != null){

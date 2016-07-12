@@ -88,16 +88,11 @@ function SendEventToServer(eventName, updateTable){
 };
 
 function DeletePlayer(data){
-	$.Msg("deleting player #"+data.ID);
-	for(var i = 0; i <= MAP_PLAYER_LIMIT; i+=1){
-		var playerPanel = FindPlayer(i);
-		
-		if( playerPanel != null){
-			if( playerPanel.PanelID == data.ID ){
-				$.Msg("Deleting player:"+playerPanel.PlayerID+" on panel: "+playerPanel.PanelID);
-				playerPanel.DeleteAsync(0.1);		
-			};
-		};
+	var playerPanel = FindPlayerByPanelID(data.ID);
+
+	if( playerPanel != null ){
+		//$.Msg("Deleting player:"+playerPanel.PlayerID+" on panel: "+playerPanel.PanelID);
+		playerPanel.DeleteAsync(0.1);		
 	};
 };
 
@@ -107,12 +102,12 @@ function DeletePlayer(data){
 function CreateBot()
 {
 	var newPlayerID = SelectBotPlayerID();
-	var newTeamID = 2;
-	//var newColorID = SelectUnusedColor();
-	var newColorID = 1;
-	$.Msg("current amount of players in game: "+newPlayerID);
-	if( newPlayerID <= MAP_PLAYER_LIMIT )
+	if( newPlayerID <= MAP_PLAYER_LIMIT ){
+		var newTeamID = SelectedTeamIDBasedOnSmallestTeam();
+		var newColorID = SelectUnusedColor();
+		//var newColorID = 1;
 		SendEventToServer("create_bot", { "ID" : newPlayerID, "TeamID" : newTeamID, "ColorID": newColorID });
+	};
 };
 
 function SelectBotPlayerID(){
@@ -127,62 +122,66 @@ function SelectBotPlayerID(){
 	return CurrentPlayersInGame();
 };
 
-PlayerContainer.HandlePanelDeletion = function(playerIDToDelete){
-	$.Msg("cascading bot player ids")
-
-	if( CurrentPlayersInGame()-1 != playerIDToDelete ){ // if ID to delete is same as the current amount of players, simply delete last bot
-		for(var i = CurrentPlayersInGame()-1; i >= playerIDToDelete; i-=1){ // iterate from max players to the playerID that wants to get delete
-			var playerPanel = FindPlayer(i);
-			var nextPanel = FindPlayer(i-1);
-			
-			if( !nextPanel.Bot ) // stop if not a bot
-				break;
-			else
-				nextPanel.Copy(playerPanel);
-		};
-		UpdateDeletePlayer(CurrentPlayersInGame()-1);
-	}else // this means the ID to be delete is identical to the last bot, we don't want to re-organise playerID if this is the case.
-		UpdateDeletePlayer(CurrentPlayersInGame()-1);
+// note: does not have to panelID, playerID also works with current system, panelID never gets changed.
+PlayerContainer.HandlePanelDeletion = function(playerIDToDelete, panelID){
+	// possible additions to come if ever :p
+	DeletePlayerByPanelID(panelID);
 };
 
-function UpdateDeletePlayer(id){
-	SendEventToServer("delete_bot", {"ID" : id});
-	GameEvents.SendCustomGameEventToServer("update_pregame", { "ID" : id, "Info" : {isNull : 1} });	
+function DeletePlayerByPanelID(panelID){
+	SendEventToServer("delete_bot", {"ID" : panelID});
+	GameEvents.SendCustomGameEventToServer("update_pregame", { "ID" : panelID, "Info" : {isNull : 1} });	
 };
 
 function CreateBotLocally(data){
 	var newPlayerID = data.ID;
 	
-	var teamID = data.TeamID;
-	var colorID = data.ColorID;
-	var TeamContainer = Root.FindChildTraverse("Team_"+teamID);
-	
-	var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+newPlayerID);
-	PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
-	
-	PlayerPanel.Init(newPlayerID, teamID, colorID, 0);
-	PlayerPanel.SetBot(1);
+	if( FindPlayer(newPlayerID) == null){
+		Game.EmitSound("Building.Placement");
+		var teamID = data.TeamID;
+		var colorID = data.ColorID;
+		var TeamContainer = Root.FindChildTraverse("Team_"+teamID);
+		
+		var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+newPlayerID);
+		PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
+		
+		PlayerPanel.Init(newPlayerID, teamID, colorID, 0);
+		PlayerPanel.SetBot(1);
+	}else
+		$.Msg("[ERROR] REQUEST RECIEVED TO CREATE A PLAYER PANEL THAT ALREADY EXIST");
+};
+
+function SelectedTeamIDBasedOnSmallestTeam(){
+	var TeamID = -1;
+	var TeamCount = 0;
+	for(var i = PlayerContainer.GetChildCount()-1; i >= 0 ; i--){ // loop through all the teams
+		var teamPanel = PlayerContainer.GetChild(i);
+		
+		if( TeamID == -1 || (teamPanel.GetChildCount()-1) <= TeamCount ){ // we take 1 away cause of label.
+			TeamID = i+1; // save team ID
+			TeamCount = teamPanel.GetChildCount()-1; // save team length
+		};
+	};		
+	return TeamID;
 };
 
 function SelectUnusedColor(){
 	var netTable = CustomNetTables.GetAllTableValues( "dotacraft_pregame_table" );
 	
-	var colorInUse = false;
 	var selectedColor = -1;
-	for(var k in dotacraft_Colors){ 
-		if(selectedColor == -1){
-			for(var nk in netTable){
-				if(k == netTable[nk].value.Color){
-					$.Msg(k+"is identical to"+nk);
-					colorInUse = true;
-					break;
-				};
-			};
+	for(var i in dotacraft_Colors){ // loop through all available colours
+		var colorInUse = false;
+		if(selectedColor != -1) // break if selectedColor is not -1(means something was assigned on last iteration)
+			break;
+		
+		for(var j in netTable){ // check if colour is already being used by another player(nettable)
+			if(i == netTable[j].value.Color)
+				colorInUse = true;
 		};
 		
-		if( !colorInUse && selectedColor == -1 )
-			selectedColor = k;
-	};
+		if( !colorInUse ) // if color is not in use, return this index
+			selectedColor = i;
+	};	
 	return selectedColor;
 };
 
@@ -211,8 +210,18 @@ function FindPlayer(playerID){
 	return PlayerContainer.FindChildTraverse("Player_"+playerID);
 };
 
-function FindPlayerByPanelId(panelID){
-	
+function FindPlayerByPanelID(panelID){
+	for(var i = 0; i < PlayerContainer.GetChildCount(); i+=1){ // loop through all the teams
+		var teamPanel = PlayerContainer.GetChild(i);
+		if( teamPanel == null )
+			continue;
+		for(var j = 1; j < teamPanel.GetChildCount(); j +=1){ // start at 1 - so to avoid the label
+			var panel = teamPanel.GetChild(j);		
+			if( panel.PanelID == panelID ) // get the child from the team panel and compare panel ID's
+				return panel;
+		};
+	};
+	return null;
 };
 
 function CurrentPlayersInGame(){
@@ -313,11 +322,11 @@ function Ready_Status(){
 function CreateAllPlayers(){
 	var playerIDs = Game.GetAllPlayerIDs()
 	
-	for(var players of playerIDs)
-		$.Msg("Player #"+players+" found");
+	//for(var players of playerIDs)
+	//	$.Msg("Player #"+players+" found");
 	for(var playerIDInList of playerIDs){
-		$.Msg("creating panel for player #"+playerIDInList);
-		var teamID = playerIDInList + 1;
+	//	$.Msg("creating panel for player #"+playerIDInList);
+		var teamID = SelectedTeamIDBasedOnSmallestTeam();
 		var colorID = playerIDInList;
 		var TeamContainer = Root.FindChildTraverse("Team_"+teamID);
 		

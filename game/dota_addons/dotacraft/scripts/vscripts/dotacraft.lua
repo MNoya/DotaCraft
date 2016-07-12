@@ -675,32 +675,32 @@ function dotacraft:OnPreGame()
     local maxPlayers = dotacraft:GetMapMaxPlayers()
     for playerID = 0, maxPlayers do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
-        if not Players:IsValidNetTablePlayer(playerTable) then break end
+        if Players:IsValidNetTablePlayer(playerTable) then 
+			local color = playerTable.Color
+			local team = teamIDs[playerTable.Team]
+			local race = GameRules.raceTable[playerTable.Race]
+			
+			-- if race is nil it means that the id supplied is random since that is the only fallout index
+			if race == nil then
+				race = GameRules.raceTable[RandomInt(1, 4)]
+			end
+			
+			if PlayerResource:IsValidPlayerID(playerID) then
+				local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
+				PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
+				PlayerResource:SetCustomTeamAssignment(playerID, team)
 
-        local color = playerTable.Color
-        local team = teamIDs[playerTable.Team]
-        local race = GameRules.raceTable[playerTable.Race]
-        
-        -- if race is nil it means that the id supplied is random since that is the only fallout index
-        if race == nil then
-            race = GameRules.raceTable[RandomInt(1, 4)]
-        end
-        
-        if PlayerResource:IsValidPlayerID(playerID) then
-            local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
-            PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
-            PlayerResource:SetCustomTeamAssignment(playerID, team)
-
-            --Race Heroes are already precached
-            local player = PlayerResource:GetPlayer(playerID)
-            local hero = CreateHeroForPlayer(race, player)
-            
-            hero.color_id = color
-            
-            print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
-        else
-            -- BOT 
-        end
+				--Race Heroes are already precached
+				local player = PlayerResource:GetPlayer(playerID)
+				local hero = CreateHeroForPlayer(race, player)
+				
+				hero.color_id = color
+				
+				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
+			else
+				-- BOT 
+			end
+		end
     end
     
     --[[
