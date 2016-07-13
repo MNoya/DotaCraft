@@ -2,6 +2,11 @@ if not Players then
     Players = class({})
 end
 
+function Players:start()
+    CustomGameEventManager:RegisterListener("reposition_player_camera", Dynamic_Wrap(Players, "RepositionCamera"))
+    self.started = true
+end
+
 function Players:Init( playerID, hero )
 
     -- Tables
@@ -26,6 +31,18 @@ function Players:Init( playerID, hero )
     hero.city_center_level = 1
     hero.altar_level = 1
 	Players:UpdateJavaScriptPlayer(playerID)
+end
+
+function Players:RepositionCamera(event)
+    local playerID = event.PlayerID
+    local entIndex = event.entIndex
+    local entity = EntIndexToHScript(entIndex)
+    if entity and IsValidEntity(entity) then
+        PlayerResource:SetCameraTarget(playerID, entity)
+        Timers:CreateTimer(0.1, function()
+            PlayerResource:SetCameraTarget(playerID, nil)
+        end)
+    end
 end
 
 ---------------------------------------------------------------
@@ -656,3 +673,6 @@ function Players:GetNumInitialBuilders(playerID)
 end
 
 ---------------------------------------------------------------
+
+
+if not Players.started then Players:start() end

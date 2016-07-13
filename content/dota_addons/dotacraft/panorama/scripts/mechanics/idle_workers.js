@@ -19,8 +19,7 @@ function OnIdleButtonPressed( data ) {
 
 	nextBuilder = builderList[String(currentBuilder)];
 	GameUI.SelectUnit(nextBuilder, false);
-	GameUI.SetCameraTarget(nextBuilder);
-	$.Schedule(1/10, function(){GameUI.SetCameraTarget(-1);})
+	GameEvents.SendCustomGameEventToServer("reposition_player_camera", {entIndex: nextBuilder});
 }
 
 function OnPlayerUpdateIdleBuilders( args ) {
