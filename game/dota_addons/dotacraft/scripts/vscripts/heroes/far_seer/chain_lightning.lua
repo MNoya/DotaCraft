@@ -1,6 +1,5 @@
 --[[
     Author: Noya
-    Date: 12 December 2015
     Bounces a chain lightning
 ]]
 function ChainLightning( event )
@@ -35,6 +34,7 @@ function ChainLightning( event )
     end
 
     local current_position = CreateChainLightning(caster, start_position, target, damage, ability)
+    bounces = bounces - 1 --The first hit counts as a bounce
 
     -- Every target struck by the chain is added to an entity index list
     local targetsStruck = {}
