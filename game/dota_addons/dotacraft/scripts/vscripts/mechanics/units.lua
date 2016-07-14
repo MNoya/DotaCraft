@@ -386,6 +386,22 @@ function FindAlliesInRadius( unit, radius, point )
     return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, flags, FIND_CLOSEST, false)
 end
 
+-- Filters buildings and mechanical units
+function FindOrganicAlliesInRadius( unit, radius, point )
+    local team = unit:GetTeamNumber()
+    local position = point or unit:GetAbsOrigin()
+    local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    local flags = DOTA_UNIT_TARGET_FLAG_INVULNERABLE
+    local allies = FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, flags, FIND_CLOSEST, false)
+    local organic_allies = {}
+    for _,ally in pairs(allies) do
+        if not IsCustomBuilding(ally) and not ally:IsMechanical() then
+            table.insert(organic_allies, ally)
+        end
+    end
+    return organic_allies
+end
+
 function HasGoldMineDistanceRestriction( unit_name )
     if GameRules.UnitKV[unit_name] then
         local restrict_distance = GameRules.UnitKV[unit_name]["RestrictGoldMineDistance"]

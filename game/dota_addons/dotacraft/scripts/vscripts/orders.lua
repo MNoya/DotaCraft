@@ -83,6 +83,13 @@ function dotacraft:FilterExecuteOrder( filterTable )
             return false
         end
 
+        -- Check mana requirements
+        local requiresManaDeficit = ability:GetKeyValue("RequiresManaDeficit")
+        if requiresManaDeficit and unit:GetMana() == unit:GetMaxMana() then
+            SendErrorMessage(issuer, "#error_full_mana")
+            return false
+        end
+
         -- Check corpse requirements
         local corpseRadius = ability:GetKeyValue("RequiresCorpsesAround")
         if corpseRadius then
