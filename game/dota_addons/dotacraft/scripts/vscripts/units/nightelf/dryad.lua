@@ -2,8 +2,7 @@ function AbolishMagic( event )
 	local caster = event.caster
 	local target = event.target
 
-	local bSummon = target:IsSummoned() or target:HasModifier("modifier_kill")
-	if bSummon then
+	if target:IsSummoned() then
 		local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
 		ApplyDamage({victim = target, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
 		ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)

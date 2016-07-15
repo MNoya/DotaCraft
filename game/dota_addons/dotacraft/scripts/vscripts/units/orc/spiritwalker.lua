@@ -29,8 +29,7 @@ function Disenchant( event )
 	-- Find targets in radius
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	for k,unit in pairs(units) do
-		local bSummon = unit:IsSummoned() or unit:HasModifier("modifier_kill")
-		if bSummon then
+		if unit:IsSummoned() then
 			local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
 			ApplyDamage({victim = unit, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
 			ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)

@@ -1,6 +1,5 @@
 --[[
 	Author: Noya
-	Date: 18.01.2015.
 	Creates Illusions, making use of the built in modifier_illusion
 
 	Note: The positions weren't random in the original ability. Fix later
@@ -74,6 +73,7 @@ function MirrorImage( event )
 		-- Set the unit as an illusion
 		-- modifier_illusion controls many illusion properties like +Green damage not adding to the unit damage, not being able to cast spells and the team-only blue particle
 		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = duration, outgoing_damage = outgoingDamage, incoming_damage = incomingDamage })
+		illusion:AddNewModifier(caster, ability, "modifier_summoned", {})
 		
 		-- Without MakeIllusion the unit counts as a hero, e.g. if it dies to neutrals it says killed by neutrals, it respawns, etc.
 		illusion:MakeIllusion()

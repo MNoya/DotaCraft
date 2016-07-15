@@ -894,26 +894,6 @@
 				}
 			}
 		}
-		"Modifiers"
-		{
-			"modifier_summoned"
-			{
-				"IsHidden"			"1"
-				
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"mechanics/corpses.lua"
-						"Function"		"SetNoCorpse"
-					}
-				}
-			}
-		}
 	}
 	// Beastmaster Stampede
 	// Author: Noya
@@ -1336,11 +1316,6 @@
 				"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
 				"StatusEffectPriority"	"1"
 	
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
 				"OnCreated"
 				{
 					"FireEffect"
@@ -1350,10 +1325,10 @@
 						"EffectAttachType"	"follow_origin"
 					}
 	
-					"RunScript"
+					"ApplyModifier"
 					{
-						"ScriptFile"	"mechanics/corpses.lua"
-						"Function"		"SetNoCorpse"
+					    "ModifierName"  "modifier_summoned"
+					    "Target"        "TARGET"
 					}
 				}
 	
@@ -1759,6 +1734,12 @@
 						"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
 						"EffectAttachType"	"follow_origin"
 					}
+	
+					"ApplyModifier"
+					{
+					    "ModifierName"  "modifier_summoned"
+					    "Target"        "TARGET"
+					}
 				}
 	
 				"OnDeath"
@@ -1818,11 +1799,6 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-	
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}		
 	
 				"OnCreated"
 				{
@@ -2110,11 +2086,6 @@
 			{
 				"IsHidden"		"1"
 	
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
 				"OnCreated"
 				{
 					"FireEffect"
@@ -2124,10 +2095,10 @@
 						"EffectAttachType"	"follow_origin"
 					}
 					
-					"RunScript"
+					"ApplyModifier"
 					{
-						"ScriptFile"	"mechanics/corpses.lua"
-						"Function"		"SetNoCorpse"
+					    "ModifierName"  "modifier_summoned"
+					    "Target"        "TARGET"
 					}
 				}
 	
@@ -2510,116 +2481,112 @@
 	}
 	// Blademaster Mirror Image
 	// Author: Noya
-	// Date: 18.01.2015.
-	// Notes: Confuses the enemy by creating illusions of the Blademaster and dispelling all magic from the Blademaster.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 1 illusion	1
-	//2	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 2 illusion	3
-	//3	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 3 illusion	5
+	// Description: Confuses the enemy by creating illusions of the Blademaster and dispelling all magic from the Blademaster.
+	
 	"blademaster_mirror_image"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"blademaster_mirror_image"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "blademaster_mirror_image"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 	
-		"AbilityCooldown"				"3.0"
-		"AbilityCastPoint"				"0.3"
+	    "AbilityCooldown"               "3.0"
+	    "AbilityCastPoint"              "0.3"
 	
-		"AbilityManaCost"				"125 125 125"
+	    "AbilityManaCost"               "125 125 125"
 	
-		"precache"
-		{
-			"particle" 			"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"images_count"				"1 2 3"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_outgoing_damage"	"-100 -100 -100"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"outgoing_damage_tooltip"	"0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_incoming_damage"	"100"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"60.0 60.0 60.0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"invuln_duration"			"0.5"
-			}			
-		}
+	    "precache"
+	    {
+	        "particle"          "particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "images_count"              "1 2 3"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "illusion_outgoing_damage"  "-100 -100 -100"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "outgoing_damage_tooltip"   "0"
+	        }
+	        "04"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "illusion_incoming_damage"  "100"
+	        }
+	        "05"
+	        {
+	            "var_type"                  "FIELD_FLOAT"
+	            "illusion_duration"         "60.0 60.0 60.0"
+	        }
+	        "06"
+	        {
+	            "var_type"                  "FIELD_FLOAT"
+	            "invuln_duration"           "0.5"
+	        }           
+	    }
 	
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_mirror_image"
-				"Target"		"CASTER"
-			}
-		}
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_mirror_image"
+	            "Target"        "CASTER"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_mirror_image"
-			{	
-				"Duration"			"%invuln_duration"
-				"IsHidden"			"1"
+	    "Modifiers"
+	    {
+	        "modifier_mirror_image"
+	        {   
+	            "Duration"          "%invuln_duration"
+	            "IsHidden"          "1"
 	
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE" 			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
-				}
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVULNERABLE"           "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_LOW_ATTACK_PRIORITY"    "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NO_HEALTH_BAR"          "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_UNSELECTABLE"           "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_STUNNED"                "MODIFIER_STATE_VALUE_ENABLED"
+	            }
 	
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"CASTER"
-					}
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "Target"            "CASTER"
+	                }
 	
-					"FireSound"
-					{
-						"EffectName"	"DOTA_Item.Manta.Activate"
-						"Target"		"CASTER"
-					}
-			    }
+	                "FireSound"
+	                {
+	                    "EffectName"    "DOTA_Item.Manta.Activate"
+	                    "Target"        "CASTER"
+	                }
+	            }
 	
-			    "OnDestroy"
-			    {
-			    	"RunScript"
-				    {
-				        "ScriptFile"    "heroes/blademaster/mirror_image.lua"
-				        "Function"      "MirrorImage"
-				    }
-			    }
-			}
-		}
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blademaster/mirror_image.lua"
+	                    "Function"      "MirrorImage"
+	                }
+	            }
+	        }
+	    }
 	}
 	// Blademaster Wind Walk
 	// Author: Noya
@@ -3202,247 +3169,231 @@
 	}
 	// Blood Mage Phoenix
 	// Author: Noya
-	// Date: 26.01.2015.
-	// Notes: Summons a powerful Phoenix. The Phoenix burns with such intensity that it damages itself and nearby enemy units. Has Spell Immunity, and Resistant Skin.
+	// Description: Summons a powerful Phoenix. The Phoenix burns with such intensity that it damages itself and nearby enemy units. Has Spell Immunity, and Resistant Skin.
 	// When a Phoenix dies, it creates an egg that will hatch into a Phoenix.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	N/A	180+ sec.	175	N/A	N/A	N/A	Summons a Phoenix	6
+	
 	"blood_mage_phoenix"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"blood_mage_phoenix"
-		"MaxLevel"						"1"
-		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "blood_mage_phoenix"
+	    "MaxLevel"                      "1"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"180.0"
-		"AbilityManaCost"				"175"
+	    "AbilityCastPoint"              "0.2"
+	    "AbilityCooldown"               "180.0"
+	    "AbilityManaCost"               "175"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
-			"particle"  "particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
-			"particle"  "particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
-			"particle"  "particles/units/heroes/hero_phoenix/phoenix_supernova_death.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
-			"model"		"models/heroes/phoenix/phoenix_bird.vmdl"
-			"model"		"models/heroes/phoenix/phoenix_egg.vmdl"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"phoenix_damage_per_second"	"25"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"phoenix_egg_duration"		"10"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spawn_distance"			"200"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"negative_regen"			"-5.0"
-			}
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
+	        "particle"  "particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+	        "particle"  "particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
+	        "particle"  "particles/units/heroes/hero_phoenix/phoenix_supernova_death.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+	        "model"     "models/heroes/phoenix/phoenix_bird.vmdl"
+	        "model"     "models/heroes/phoenix/phoenix_egg.vmdl"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "phoenix_damage_per_second" "25"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "phoenix_egg_duration"      "10"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "spawn_distance"            "200"
+	        }
+	        "04"
+	        {
+	            "var_type"                  "FIELD_FLOAT"
+	            "negative_regen"            "-5.0"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/blood_mage/phoenix.lua"
-				"Function"		"KillPhoenix"
-			}
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/blood_mage/phoenix.lua"
+	            "Function"      "KillPhoenix"
+	        }
 	
-			"SpawnUnit"
-			{
-				"UnitName"		"human_phoenix"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/blood_mage/phoenix.lua"
-						"Function"      "SummonLocation"
-						"Target"		"CASTER"
-						"Count"			"1"
-						"distance"		"%spawn_distance"
-					}
-				}
-				"UnitCount"		"1"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/blood_mage/phoenix.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
+	        "SpawnUnit"
+	        {
+	            "UnitName"      "human_phoenix"
+	            "Target"
+	            {
+	                "Center"            "CASTER"
+	                "ScriptSelectPoints"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/phoenix.lua"
+	                    "Function"      "SummonLocation"
+	                    "Target"        "CASTER"
+	                    "Count"         "1"
+	                    "distance"      "%spawn_distance"
+	                }
+	            }
+	            "UnitCount"     "1"
+	            "GrantsGold"    "1"
+	            "GrantsXP"      "1"
+	            "SpawnRadius"   "10"
+	            "OnSpawn"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/phoenix.lua"
+	                    "Function"      "SetUnitsMoveForward"
+	                }               
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-				}
-			}
-		}
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_phased"
+	                    "Target"        "TARGET"
+	                    "Duration"      "0.03"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	// Extra abilities
 	"blood_mage_phoenix_reborn"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"blood_mage_phoenix"
-		"MaxLevel"						"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "blood_mage_phoenix"
+	    "MaxLevel"                      "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"phoenix_damage_per_second"	"25"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"phoenix_egg_duration"		"10"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"phoenix_immolation_radius"	"400"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "phoenix_damage_per_second" "25"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "phoenix_egg_duration"      "10"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "phoenix_immolation_radius" "400"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_phoenix_reborn"
-			{
-				"Passive"			"1"
-				"IsHidden"			"0"
+	    "Modifiers"
+	    {
+	        "modifier_phoenix_reborn"
+	        {
+	            "Passive"           "1"
 	
-				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
-				"EffectAttachType"	"follow_origin"
+	            "EffectName"        "particles/units/heroes/hero_phoenix/phoenix_ambient_glow.vpcf"
+	            "EffectAttachType"  "follow_origin"
 	
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+	            "OnCreated"
+	            {
+	                "FireSound"
+	                {
+	                    "EffectName"    "Hero_Phoenix.SuperNova.Begin"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        
 	
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Phoenix.SuperNova.Begin"
-						"Target"		"CASTER"
-					}
+	            "ThinkInterval"  "1.0"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/phoenix.lua"
+	                    "Function"      "PhoenixDegen"
+	                }
 	
-					"RunScript"
-					{
-						"ScriptFile"	"mechanics/corpses.lua"
-						"Function"		"SetNoCorpse"
-					}
-				}
-			
-	
-				"ThinkInterval"  "1.0"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/blood_mage/phoenix.lua"
-						"Function"		"PhoenixDegen"
-					}
-	
-					"Damage"
-					{
-						"Target"
-						{
-							"Center"  	"CASTER"
-							"Radius" 	"%phoenix_immolation_radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%phoenix_damage_per_second"
-					}
-					
-				}
-								
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/blood_mage/phoenix.lua"
-						"Function"		"PhoenixEgg"
-					}
-				}
-			}
-		}
+	                "Damage"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"    "CASTER"
+	                        "Radius"    "%phoenix_immolation_radius"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                    }
+	                    "Type"          "DAMAGE_TYPE_MAGICAL"
+	                    "Damage"        "%phoenix_damage_per_second"
+	                }
+	            }
+	                            
+	            "OnDeath"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/phoenix.lua"
+	                    "Function"      "PhoenixEgg"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	
 	"blood_mage_phoenix_egg"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"blood_mage_phoenix"
-		"MaxLevel"						"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "blood_mage_phoenix"
+	    "MaxLevel"                      "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-		"Modifiers"
-		{
-			"modifier_egg"
-			{
-				"Passive"	"1"
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"            "TARGET"
-						"ControlPointEntities"
-						{
-							"TARGET"	"attach_origin"
-							"TARGET"	"attach_origin"
-						}
-					}						
-				}
+	    "Modifiers"
+	    {
+	        "modifier_egg"
+	        {
+	            "Passive"   "1"
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "Target"            "TARGET"
+	                    "ControlPointEntities"
+	                    {
+	                        "TARGET"    "attach_origin"
+	                        "TARGET"    "attach_origin"
+	                    }
+	                }                       
+	            }
 	
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/blood_mage/phoenix.lua"
-						"Function"		"PhoenixEggCheckReborn"
-					}				
-				}
+	            "OnDeath"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/phoenix.lua"
+	                    "Function"      "PhoenixEggCheckReborn"
+	                }               
+	            }
 	
-				// Prevent getting stuck
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-						
-			}
-		}
+	            // Prevent getting stuck
+	            "States"
+	            {
+	                "MODIFIER_STATE_NO_UNIT_COLLISION"      "MODIFIER_STATE_VALUE_ENABLED"
+	            }       
+	        }
+	    }
 	}
 	// Blood Mage Siphon Mana
 	// Author: Noya, adapted from SpellLibrary lion_mana_drain_datadriven
@@ -6651,12 +6602,8 @@
 	}
 	// Firelord Summon Lava Spawn
 	// Author: Noya
-	// Date: 05.02.2015.
-	// Notes: Summons a Lava Spawn, a resilient and deadly fire creature. As a Lava Spawn deals damage, it consumes the flesh of its target, eventually splitting into two healthy Lava Spawns.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	425 hit points, 11-27 damage	1
-	//2	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	550 hit points, 21-45 damage	3
-	//3	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	700 hit points, 32-56 damage	5
+	// Description: Summons a Lava Spawn, a resilient and deadly fire creature. As a Lava Spawn deals damage, it consumes the flesh of its target, eventually splitting into two healthy Lava Spawns.
+	
 	"firelord_summon_lava_spawn"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -6888,11 +6835,6 @@
 			"modifier_lava_spawn"
 			{
 				"IsHidden"			"1"
-	
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			
 				"EffectName"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
 				"EffectAttachType"	"follow_origin"
@@ -7376,101 +7318,84 @@
 	}
 	// Keeper Force of Nature
 	// Author: Noya
-	// Date: 25.01.2015.
-	// Notes: Converts an area of trees into Treants. Treants can attack land units.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	60 sec.	20 sec.	125	80	15	Trees	Raises 2 Treants	1
-	//2	60 sec.	20 sec.	125	80	22.5	Trees	Raises 3 Treants	3
-	//3	60 sec.	20 sec.	125	80	30	Trees	Raises 4 Treants	5
+	// Description: Converts an area of trees into Treants. Treants can attack land units.
+	
 	"keeper_force_of_nature"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"keeper_force_of_nature"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "keeper_force_of_nature"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
 	
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.4"
-		"AbilityCooldown"				"20.0"
+	    "AbilityCastRange"              "800"
+	    "AbilityCastPoint"              "0.4"
+	    "AbilityCooldown"               "20.0"
 	
-		"AbilityManaCost"				"125"
+	    "AbilityManaCost"               "125"
 	
-		"AOERadius"						"%radius"
+	    "AOERadius"                     "%radius"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_furion/furion_force_of_nature_cast.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
-			"model"		"models/items/furion/treant/father_treant/father_treant.vmdl"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"treant_count"	"2 3 4"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"60.0"
-			}
-			"03"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"150 225 300"
-			}
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_furion/furion_force_of_nature_cast.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
+	        "model"     "models/items/furion/treant/father_treant/father_treant.vmdl"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "treant_count"  "2 3 4"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_FLOAT"
+	            "duration"      "60.0"
+	        }
+	        "03"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "150 225 300"
+	        }
+	    }
 	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/keeper/force_of_nature.lua"
-				"Function"		"CheckTrees"
-				"Target"		"POINT"
-			}
-		}
+	    "OnAbilityPhaseStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/keeper/force_of_nature.lua"
+	            "Function"      "CheckTrees"
+	            "Target"        "POINT"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{		
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/keeper/force_of_nature.lua"
-				"Function"		"ForceOfNature"
-				"Target"		"POINT"
-			}
+	    "OnSpellStart"
+	    {       
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/keeper/force_of_nature.lua"
+	            "Function"      "ForceOfNature"
+	            "Target"        "POINT"
+	        }
 	
-			"DestroyTrees"
-			{
-				"Target" 		"POINT"
-				"Radius"		"%radius"
-			}
+	        "DestroyTrees"
+	        {
+	            "Target"        "POINT"
+	            "Radius"        "%radius"
+	        }
 	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Furion.ForceOfNature"
-				"Target" 		"CASTER"
-			}									
-		}
-	
-		"Modifiers"
-		{
-			"modifier_summoned"
-			{
-				"IsHidden"			"1"
-		
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Furion.ForceOfNature"
+	            "Target"        "CASTER"
+	        }                                   
+	    }
 	}
 	// Keeper Thorns Aura
 	// Author: Noya
@@ -13409,219 +13334,202 @@
 	}
 	// Tinker Pocket Factory
 	// Author: Noya
-	// Date: 03.02.2015.
-	// Notes: Creates a factory which automatically constructs Clockwerk Goblins. Clockwerk Goblins explode upon death, causing damage to nearby enemy units.
-	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	45 sec.	35 sec.	125	50	N/A	N/A	30 damage	1
-	//2	45 sec.	35 sec.	125	50	N/A	N/A	60 damage	3
-	//3	45 sec.	35 sec.	125	50	N/A	N/A	80 damage	5
+	// Description: Creates a factory which automatically constructs Clockwerk Goblins. Clockwerk Goblins explode upon death, causing damage to nearby enemy units.
+	
 	"tinker_pocket_factory"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"tinker_pocket_factory"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "tinker_pocket_factory"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
 	
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"35.0"
+	    "AbilityCastRange"              "500"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "35.0"
 	
-		"AbilityManaCost"				"125"
+	    "AbilityManaCost"               "125"
 	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
 	
-			//Factory
-			"model"		"models/buildings/building_plain_reference.vmdl"
+	        //Factory
+	        "model"     "models/buildings/building_plain_reference.vmdl"
 	
-			//Goblins
-			"model"		"models/heroes/rattletrap/rattletrap.vmdl"
-			"model"		"models/items/rattletrap/forge_warrior_claw/forge_warrior_claw.vmdl"
-			"model"		"models/items/rattletrap/forge_warrior_helm/forge_warrior_helm.vmdl"
-			"model"		"models/items/rattletrap/forge_warrior_steam_exoskeleton/forge_warrior_steam_exoskeleton.vmdl"
-			"model"		"models/items/rattletrap/forge_warrior_rocket_cannon/forge_warrior_rocket_cannon.vmdl"
-			"particle"	"particles/econ/items/clockwerk/clockwerk_mortar_forge/clockwerk_mortar_ambient.vpcf"
-			
-			//Goblin Ability
-			"particle"	"particles/units/heroes/hero_techies/techies_suicide.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"factory_duration"	"45"
-			}
-		}
+	        //Goblins
+	        "model"     "models/heroes/rattletrap/rattletrap.vmdl"
+	        "model"     "models/items/rattletrap/forge_warrior_claw/forge_warrior_claw.vmdl"
+	        "model"     "models/items/rattletrap/forge_warrior_helm/forge_warrior_helm.vmdl"
+	        "model"     "models/items/rattletrap/forge_warrior_steam_exoskeleton/forge_warrior_steam_exoskeleton.vmdl"
+	        "model"     "models/items/rattletrap/forge_warrior_rocket_cannon/forge_warrior_rocket_cannon.vmdl"
+	        "particle"  "particles/econ/items/clockwerk/clockwerk_mortar_forge/clockwerk_mortar_ambient.vpcf"
+	        
+	        //Goblin Ability
+	        "particle"  "particles/units/heroes/hero_techies/techies_suicide.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "factory_duration"  "45"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Tinker.Rearm"
-				"Target" 		"CASTER"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/tinker/pocket_factory.lua"
-				"Function"		"BuildPocketFactory"
-				"Target"		"POINT"
-			}
-		}
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Tinker.Rearm"
+	            "Target"        "CASTER"
+	        }
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/tinker/pocket_factory.lua"
+	            "Function"      "BuildPocketFactory"
+	            "Target"        "POINT"
+	        }
+	    }
 	}
 	
 	//Goblins have a limited duration and have suicide ability
 	"tinker_pocket_factory_train_goblin"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"tinker_pocket_factory"
-		"MaxLevel" 						"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "tinker_pocket_factory"
+	    "MaxLevel"                      "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-		"AbilityCooldown"				"8.0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"goblin_duration"	"10"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"spawn_ratio"		"5.0"
-			}
-			"03"
-			{
-				"var_type"					 "FIELD_FLOAT"
-				"reduction_per_eng_level"	"1.0"
-			}
-		}
+	    "AbilityCooldown"               "8.0"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "goblin_duration"   "10"
+	        }
+	        "02"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "spawn_ratio"       "5.0"
+	        }
+	        "03"
+	        {
+	            "var_type"                   "FIELD_FLOAT"
+	            "reduction_per_eng_level"   "1.0"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_spawn_goblin"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/tinker/pocket_factory.lua"
-						"Function"		"StartGoblinSpawn"
-					}
-				}
-			}
-		}
+	    "Modifiers"
+	    {
+	        "modifier_spawn_goblin"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/tinker/pocket_factory.lua"
+	                    "Function"      "StartGoblinSpawn"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	//Explosion deals 30/60/80 damage.
 	"tinker_clockwerk_goblin_kaboom"
 	{
-		"BaseClass"				"ability_datadriven"
-		"AbilityTextureName"	"tinker_clockwerk_goblin_kaboom"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"	"DAMAGE_TYPE_MAGICAL"
-		"MaxLevel"				"3"
+	    "BaseClass"             "ability_datadriven"
+	    "AbilityTextureName"    "tinker_clockwerk_goblin_kaboom"
+	    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType" "DAMAGE_TYPE_MAGICAL"
+	    "MaxLevel"              "3"
 	
-		"AbilityCastRange"		"100"
-		"AbilityCastPoint"		"0.0"
+	    "AbilityCastRange"      "100"
+	    "AbilityCastPoint"      "0.0"
 	
-		"AbilityDamage"			"30 60 80"
+	    "AbilityDamage"         "30 60 80"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"small_radius"		"100"
-			}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "small_radius"      "100"
+	        }
 	
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"big_radius"		"250"
-			}
+	        "02"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "big_radius"        "250"
+	        }
 	
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"big_radius_dmg"	"0.5"
-			}
-		}
+	        "03"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "big_radius_dmg"    "0.5"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"Target"		"CASTER"
-				"EffectName"	"particles/units/heroes/hero_techies/techies_suicide.vpcf"
-				"EffectAttachType"	"follow_origin"
-			}
+	    "OnSpellStart"
+	    {
+	        "FireEffect"
+	        {
+	            "Target"        "CASTER"
+	            "EffectName"    "particles/units/heroes/hero_techies/techies_suicide.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	        }
 	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Techies.Suicide"
-				"Target"	"CASTER"
-			}
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Techies.Suicide"
+	            "Target"    "CASTER"
+	        }
 	
-			"Damage"
-			{
-				"Target"
-				{
-					"Center"	"CASTER"
-					"Radius"	"%small_radius"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-				"Damage"	"%AbilityDamage * %big_radius_dmg"
-				"Type"	"DAMAGE_TYPE_MAGICAL"
-			}
-			
-			"Damage"
-			{
-				"Target"
-				{
-					"Center"	"CASTER"
-					"Radius"	"%big_radius"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-				"Damage"	"%AbilityDamage * %big_radius_dmg"
-				"Type"	"DAMAGE_TYPE_MAGICAL"
-			}
-			
-			"Damage"
-			{
-				"Target"	"CASTER"			
-				"Damage"	"99999"
-				"Type"		"DAMAGE_TYPE_PURE"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_summoned"
-			{
-				"IsHidden"			"1"
-		
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+	        "Damage"
+	        {
+	            "Target"
+	            {
+	                "Center"    "CASTER"
+	                "Radius"    "%small_radius"
+	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            }
+	            "Damage"    "%AbilityDamage * %big_radius_dmg"
+	            "Type"  "DAMAGE_TYPE_MAGICAL"
+	        }
+	        
+	        "Damage"
+	        {
+	            "Target"
+	            {
+	                "Center"    "CASTER"
+	                "Radius"    "%big_radius"
+	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            }
+	            "Damage"    "%AbilityDamage * %big_radius_dmg"
+	            "Type"  "DAMAGE_TYPE_MAGICAL"
+	        }
+	        
+	        "Damage"
+	        {
+	            "Target"    "CASTER"            
+	            "Damage"    "99999"
+	            "Type"      "DAMAGE_TYPE_PURE"
+	        }
+	    }
 	}
 	// Tinker Robo Goblin
 	// Author: Noya

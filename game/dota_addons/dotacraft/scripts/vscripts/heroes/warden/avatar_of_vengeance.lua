@@ -69,7 +69,7 @@ function SpiritOfVengeanceSpawn( event )
 
         -- Create the spirit
         local spirit = CreateUnitByName("nightelf_spirit_of_vengeance", corpse:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
-        spirit:AddNewModifier(caster, {}, "modifier_kill", {duration = 50})
+        spirit:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
         spirit.avatar = caster
         
         spirit:SetControllableByPlayer(playerID, true)

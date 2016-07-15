@@ -215,6 +215,12 @@
 					"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
 					"EffectAttachType"	"follow_origin"
 				}
+
+				"ApplyModifier"
+				{
+				    "ModifierName"  "modifier_summoned"
+				    "Target"        "TARGET"
+				}
 			}
 
 			"OnDeath"
@@ -274,11 +280,6 @@
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-
-			"States"
-			{
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}		
 
 			"OnCreated"
 			{
