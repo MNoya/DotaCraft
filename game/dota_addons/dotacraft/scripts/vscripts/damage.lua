@@ -37,6 +37,11 @@ function dotacraft:FilterDamage( filterTable )
     if damagetype == DAMAGE_TYPE_PHYSICAL then
         if victim == attacker and not inflictor then return end -- Self attack, for fake attack ground
 
+        if attacker:HasSplashAttack() and not inflictor then
+            SplashAttackUnit(attacker, victim:GetAbsOrigin())
+            return false
+        end
+
         local original_damage = filterTable["damage"] --Post reduction
 
         local armor = victim:GetPhysicalArmorValue()

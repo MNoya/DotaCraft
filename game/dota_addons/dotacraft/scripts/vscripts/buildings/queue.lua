@@ -16,7 +16,7 @@ function Queue:Init(building)
 
     building.QueueTimer = Timers:CreateTimer(function()
         if IsValidEntity(building) and building:IsAlive() then
-            if not buiding:IsUnderConstruction() then
+            if not building:IsUnderConstruction() then
                 self:Think(building)
             end
             return 0.03
@@ -203,10 +203,6 @@ function EnqueueUnit( event )
         -- Start building upgrade actions
         if event.Action == "StartUpgrade" then
             StartUpgrade(event)
-        end
-
-        if caster:GetUnitName() == "human_workshop" then
-            caster:RemoveModifierByName("modifier_animation_freeze")
         end
     else
         -- Refund with message
