@@ -3,7 +3,7 @@ function Healing(event)
     local ability = event.ability
     local heal = ability:GetSpecialValueFor("heal")
     local radius = ability:GetSpecialValueFor("radius")
-    local allies = FindAlliesInRadius(caster, radius)
+    local allies = FindOrganicAlliesInRadius(caster, radius)
     for _,unit in pairs(allies) do
         local value = math.min(heal, unit:GetHealthDeficit())
         unit:Heal(value,caster)

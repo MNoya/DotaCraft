@@ -3,7 +3,7 @@ if not Corpses then
 end
 
 CORPSE_DURATION = 88
-CORPSE_APPEAR_DELAY = 4
+CORPSE_APPEAR_DELAY = 3
 
 function Corpses:CreateFromUnit(killed)
     if LeavesCorpse( killed ) then
@@ -12,6 +12,7 @@ function Corpses:CreateFromUnit(killed)
         local team = killed:GetTeamNumber()
         Timers:CreateTimer(CORPSE_APPEAR_DELAY, function()
             Corpses:CreateByNameOnPosition(name, position, team)
+            UTIL_Remove(killed)
         end)
     end
 end
@@ -145,6 +146,14 @@ function LeavesCorpse(unit)
 
     -- Ignore units that were specifically set to leave no corpse
     elseif unit.no_corpse then
+        return false
+
+    -- Air units
+    elseif unit:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY" then
+        return false
+
+    -- Summoned units via permanent modifier
+    elseif unit:IsSummoned() then
         return false
 
     -- Read the LeavesCorpse KV

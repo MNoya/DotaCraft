@@ -1,12 +1,8 @@
 // Blood Mage Banish
 // Author: Noya
-// Date: 24.1.2015.
-// Notes: Turns a unit ethereal and slows its movement speed by 50% for 18 seconds (at level 3). 
+// Description: Turns a unit ethereal and slows its movement speed by 50% for 18 seconds (at level 3). 
 // Ethereal units cannot attack, but they can cast spells and will take 66% more damage from Magic attacks and spells.
-//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	12 (4) sec.	N/A	75	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	1
-//2	15 (5) sec.	N/A	60	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	3
-//3	18 (6) sec.	N/A	50	80	Unit	Air, Ground, Organic, Self	Unit turned Ethereal	5
+
 "blood_mage_banish"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -61,6 +57,12 @@
 			"EffectName"	"Hero_Pugna.Decrepify"
 			"Target" 		"TARGET"
 		}
+
+		"RemoveModifier"
+		{
+		    "ModifierName"  "modifier_banish"
+		    "Target"        "TARGET"
+		}
 		
 		"ApplyModifier"
 		{
@@ -92,21 +94,33 @@
 		"modifier_banish"
 		{
 			"IsDebuff"			"1"
+			"IsPurgable"		"1"
 	
 			"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
 			"EffectAttachType"	"follow_origin"
 	
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage"
 			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
 			}
 
-			"States"
+			"OnCreated"
 			{
-				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-			}			
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_ethereal"
+					"Target"		"TARGET"
+				}		
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_ethereal"
+					"Target"		"TARGET"
+				}		
+			}
 		}
 	}	
 }

@@ -1,11 +1,7 @@
 // Firelord Summon Lava Spawn
 // Author: Noya
-// Date: 05.02.2015.
-// Notes: Summons a Lava Spawn, a resilient and deadly fire creature. As a Lava Spawn deals damage, it consumes the flesh of its target, eventually splitting into two healthy Lava Spawns.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	425 hit points, 11-27 damage	1
-//2	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	550 hit points, 21-45 damage	3
-//3	70 sec.	32 sec.	150	N/A	20	Air, Ground, Enemy, Neutral, Ward	700 hit points, 32-56 damage	5
+// Description: Summons a Lava Spawn, a resilient and deadly fire creature. As a Lava Spawn deals damage, it consumes the flesh of its target, eventually splitting into two healthy Lava Spawns.
+
 "firelord_summon_lava_spawn"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -237,11 +233,6 @@
 		"modifier_lava_spawn"
 		{
 			"IsHidden"			"1"
-
-			"States"
-			{
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
 		
 			"EffectName"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
 			"EffectAttachType"	"follow_origin"

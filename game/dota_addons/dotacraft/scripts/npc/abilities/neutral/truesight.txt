@@ -8,49 +8,19 @@
 
 	"Modifiers"
 	{
-		"modifier_true_sight"
+		"modifier_passive_true_sight"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
 	
-			"ThinkInterval"  "0.03"
-			"OnIntervalThink"
+			"OnCreated"
 			{
-				"ActOnTargets"
-				{
-					"Target"
-					{
-						"Center"  	"TARGET"
-						"Radius" 	"%owl_vision"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					}
-				
-					"Action"    
-					{
-						"RemoveModifier"
-						{
-							"ModifierName"	"modifier_truesight_reveal"
-							"Target" 		"TARGET"
-						}
-						"ApplyModifier"
-						{
-							"ModifierName"	"modifier_truesight_reveal"
-							"Target" 		"TARGET"
-						}
-					}
-				}			
+			    "ApplyModifier"
+			    {
+			        "ModifierName"  "modifier_true_sight_aura"
+			        "Target"        "TARGET"
+			    }
 			}
 		}
-
-		"modifier_true_sight_reveal"
-		{
-			"IsHidden"			"1"
-			"Duration"			"0.03"
-			"States"
-			{
-				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
-			}
-		}
-	}	
+	}
 }

@@ -159,29 +159,6 @@ end
 
 --- SUB ABILITIES ---
 
-
---[[
-	Author: Noya
-	Date: 08.02.2015.
-	Dispel Magic purges buffs from all enemy targets near, and deals damage to units with the SUMMONED flag.
-]]
-function DispelMagic( event )
-	local caster = event.caster
-	local ability = event.ability
-	local damage = ability:GetLevelSpecialValueFor( "damage" , ability:GetLevel() - 1 )
-	local abilityDamageType = ability:GetAbilityDamageType()
-	local targets = event.target_entities
-
-	for _,unit in pairs(targets) do
-		unit:Purge(true, false, false, false, false)
-
-		if unit:IsSummoned() then
-			ApplyDamage({ victim = unit, attacker = event.target, damage = damage, ability = ability, damage_type = abilityDamageType}) 
-		end
-	end
-end
-
-
 --[[
 	Author: Noya
 	Date: 08.02.2015.

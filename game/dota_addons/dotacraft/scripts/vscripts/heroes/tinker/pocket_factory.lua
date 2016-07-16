@@ -61,7 +61,7 @@ function StartGoblinSpawn( event )
 			local goblin = CreateUnitByName(unit_name, caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
 			goblin:SetControllableByPlayer(player, true)
 			goblin:AddNewModifier(caster, nil, "modifier_kill", {duration = goblin_duration})
-			goblin.no_corpse = true
+			goblin:AddNewModifier(caster, ability, "modifier_summoned", {})
 
 			-- Move to rally point
 			MoveToRallyPoint({caster=caster, target=goblin})

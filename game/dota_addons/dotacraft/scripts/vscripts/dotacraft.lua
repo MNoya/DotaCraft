@@ -132,7 +132,9 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_healing_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_sentry_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_true_sight_aura", "libraries/modifiers/modifier_true_sight_aura", LUA_MODIFIER_MOTION_NONE)
-    
+    LinkLuaModifier("modifier_ethereal", "libraries/modifiers/modifier_ethereal", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_demon_form", "heroes/demon_hunter/demon_form", LUA_MODIFIER_MOTION_NONE)
+
     -- Remove building invulnerability
     local allBuildings = Entities:FindAllByClassname('npc_dota_building')
     for i = 1, #allBuildings, 1 do
@@ -340,8 +342,7 @@ function dotacraft:InitializePlayer( hero )
     end
 
     -- Show UI elements for this race
-    local player_race = Players:GetRace(playerID)
-    CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", { race = player_race, initial_builders = num_builders })
+    CustomGameEventManager:Send_ServerToPlayer(player, "player_show_ui", {race = race, initial_builders = num_builders})
 
     -- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
     dotacraft:TrackIdleWorkers( hero )
@@ -924,6 +925,14 @@ function dotacraft:OnEntityKilled( event )
                 player:SetKillCamUnit(nil)
             end)
         end
+    end
+
+    -- Don't leave corpses if the target was killed by an aoe splash
+    if IsValidEntity(attacker) and attacker:HasArtilleryAttack() then
+        killed:SetNoCorpse()
+        killed:AddNoDraw()
+        local particle = ParticleManager:CreateParticle("particles/custom/effects/corpse_blood_explosion.vpcf",PATTACH_CUSTOMORIGIN,nil)
+        ParticleManager:SetParticleControl(particle,0,killed:GetAbsOrigin())
     end
 
     -- Check for neutral item drops

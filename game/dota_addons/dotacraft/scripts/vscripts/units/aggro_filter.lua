@@ -86,7 +86,9 @@ function OnAttacked( event )
         unit:AlertNearbyUnits(attacker, nil)
         if UnitCanAttackTarget(unit, attacker) then
             --print("[ATTACK] attacking unit from OnAttacked block")
-            Attack(unit, attacker)
+            if not unit:IsDisarmed() then
+                Attack(unit, attacker)
+            end
         else
             Flee(unit, attacker)
         end

@@ -1,61 +1,69 @@
---[[Author: Pizzalol/Noya
-	Date: 10.01.2015.
-	Swaps the ranged attack, projectile and caster model
-]]
-function ModelSwapStart( keys )
-	local caster = keys.caster
-	local model = keys.model
-	local projectile_model = keys.projectile_model
+modifier_demon_form = class({})
 
-	-- Saves the original model and attack capability
-	if caster.caster_model == nil then 
-		caster.caster_model = caster:GetModelName()
-	end
-	caster.caster_attack = caster:GetAttackCapability()
-
-	-- Sets the new model and projectile
-	caster:SetOriginalModel(model)
-	caster:SetRangedProjectileName(projectile_model)
-
-	-- Sets the new attack type
-	caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+function modifier_demon_form:DeclareFunctions()
+    return { MODIFIER_PROPERTY_MODEL_CHANGE, 
+             MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+             MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+             MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT, }
 end
 
---[[Author: Pizzalol/Noya
-	Date: 10.01.2015.
-	Reverts back to the original model and attack type
-]]
-function ModelSwapEnd( keys )
-	local caster = keys.caster
-
-	caster:SetModel(caster.caster_model)
-	caster:SetOriginalModel(caster.caster_model)
-	caster:SetAttackCapability(caster.caster_attack)
-end
-
---[[Author: Noya
-	Date: 09.08.2015.
-	Hides all dem hats
-]]
-function HideWearables( event )
-	local hero = event.caster
-	local ability = event.ability
-
-	hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
-    local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() == "dota_item_wearable" then
-            model:AddEffects(EF_NODRAW) -- Set model hidden
-            table.insert(hero.hiddenWearables, model)
-        end
-        model = model:NextMovePeer()
+function modifier_demon_form:OnCreated()
+    if IsServer() then
+        local target = self:GetParent()
+        local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+        self:AddParticle(particle, false, false, 1, false, false)
+        target.old_attack_projectile = GetRangedProjectileName(target) -- In case the hero has an orb
+        SetRangedProjectileName(target, "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf")
+        target:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+        target:SetAttackType("chaos")
     end
 end
 
-function ShowWearables( event )
-	local hero = event.caster
+function modifier_demon_form:OnDestroy()
+    if IsServer() then
+        SetRangedProjectileName(target, target.old_attack_projectile)
+        target:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+        target:SetAttackType("hero")
+        target.old_attack_projectile = nil
+    end
+end
 
-	for i,v in pairs(hero.hiddenWearables) do
-		v:RemoveEffects(EF_NODRAW)
-	end
+function modifier_demon_form:GetEffectName()
+    return "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+end
+
+function modifier_demon_form:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_demon_form:GetModifierModelChange()
+    return "models/heroes/terrorblade/demon.vmdl"
+end
+
+function modifier_demon_form:IsHidden()
+    return false
+end
+
+function modifier_demon_form:IsPurgable()
+    return false
+end
+
+function modifier_demon_form:GetTexture()
+    return "demon_hunter_demon_form"
+end
+
+function modifier_demon_form:AllowIllusionDuplicate()
+    return true
+end
+
+function modifier_demon_form:GetModifierAttackRangeBonus()
+    return self:GetAbility():GetSpecialValueFor("bonus_range")
+end
+
+function modifier_demon_form:GetModifierExtraHealthBonus()
+    return self:GetAbility():GetSpecialValueFor("bonus_health")
+end
+
+function modifier_demon_form:GetModifierConstantHealthRegen()
+    return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
 end

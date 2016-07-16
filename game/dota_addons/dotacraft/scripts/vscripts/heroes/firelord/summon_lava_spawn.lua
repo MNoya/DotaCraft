@@ -62,9 +62,8 @@ function LavaSpawnAttackCounter( event )
 		lava_spawn:SetControllableByPlayer(player, true)
 		ability:ApplyDataDrivenModifier(caster, lava_spawn, "modifier_lava_spawn", nil)
 		lava_spawn:SetHealth(attacker:GetHealth())
-		local time = lava_spawn_duration - ( GameRules:GetGameTime() - attacker.creation_time) 
-		print(time)
+		local time = lava_spawn_duration - (GameRules:GetGameTime() - attacker.creation_time) 
 		lava_spawn:AddNewModifier(caster, ability, "modifier_kill", {duration = time})
-		lava_spawn.no_corpse = true
+		lava_spawn:AddNewModifier(caster, ability, "modifier_summoned", {})
 	end
 end

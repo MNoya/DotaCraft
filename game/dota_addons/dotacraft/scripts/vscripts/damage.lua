@@ -62,6 +62,11 @@ function dotacraft:FilterDamage( filterTable )
             damage = damage * 0.65
         end
 
+        -- modifier_ethereal (Magic attacks to 166%)
+        if victim:HasModifier("modifier_ethereal") and attack_type == "magic" then
+            damage = damage * 1.66
+        end
+
         --print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. attack_damage .. " * "..1-damage_reduction..") * ".. multiplier.. " = " .. damage )
         
         -- Reassign the new damage

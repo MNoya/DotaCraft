@@ -2,8 +2,7 @@ function AbolishMagic( event )
 	local caster = event.caster
 	local target = event.target
 
-	local bSummon = target:IsSummoned() or target:HasModifier("modifier_kill")
-	if bSummon then
+	if target:IsSummoned() then
 		local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
 		ApplyDamage({victim = target, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
 		ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
@@ -11,18 +10,15 @@ function AbolishMagic( event )
 
 	local bRemovePositiveBuffs = false
 	local bRemoveDebuffs = false
-	local bFrameOnly = false
-	local bRemoveStuns = false
-	local bRemoveExceptions = false
-
+	
 	-- Remove buffs on enemies or debuffs on allies
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		bRemovePositiveBuffs = true
 	else
 		bRemoveDebuffs = true
 	end
-
-	target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, bFrameOnly, bRemoveStuns, bRemoveExceptions)
+	target:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
+	target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
 
 	ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_lodestar_transform.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 end
@@ -37,7 +33,7 @@ function AbolishMagicAutocast( event )
 		
 		-- Find targets in radius
 		local target
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		for k,unit in pairs(units) do
 			-- Autocast Abolish Magic on enemy summons
 			if unit:IsSummoned() and unit:GetTeamNumber() ~= caster:GetTeamNumber() then
@@ -72,6 +68,10 @@ function UnitHasPurgableModifiers( unit, caster )
 			if IsPurgableModifier( modifier ) and IsDebuff(modifier) then
 				return true
 			end
+		end
+
+		if unit:HasModifier("modifier_brewmaster_storm_cyclone") then
+			return true
 		end
 	end
 	return false

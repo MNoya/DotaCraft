@@ -1,113 +1,109 @@
 // Blademaster Mirror Image
 // Author: Noya
-// Date: 18.01.2015.
-// Notes: Confuses the enemy by creating illusions of the Blademaster and dispelling all magic from the Blademaster.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 1 illusion	1
-//2	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 2 illusion	3
-//3	60 sec.	3 sec.	125	N/A	N/A	N/A	Creates 3 illusion	5
+// Description: Confuses the enemy by creating illusions of the Blademaster and dispelling all magic from the Blademaster.
+
 "blademaster_mirror_image"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"blademaster_mirror_image"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "blademaster_mirror_image"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 
-	"AbilityCooldown"				"3.0"
-	"AbilityCastPoint"				"0.3"
+    "AbilityCooldown"               "3.0"
+    "AbilityCastPoint"              "0.3"
 
-	"AbilityManaCost"				"125 125 125"
+    "AbilityManaCost"               "125 125 125"
 
-	"precache"
-	{
-		"particle" 			"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"images_count"				"1 2 3"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"illusion_outgoing_damage"	"-100 -100 -100"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"outgoing_damage_tooltip"	"0"
-		}
-		"04"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"illusion_incoming_damage"	"100"
-		}
-		"05"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"illusion_duration"			"60.0 60.0 60.0"
-		}
-		"06"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"invuln_duration"			"0.5"
-		}			
-	}
+    "precache"
+    {
+        "particle"          "particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "images_count"              "1 2 3"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "illusion_outgoing_damage"  "-100 -100 -100"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "outgoing_damage_tooltip"   "0"
+        }
+        "04"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "illusion_incoming_damage"  "100"
+        }
+        "05"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "illusion_duration"         "60.0 60.0 60.0"
+        }
+        "06"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "invuln_duration"           "0.5"
+        }           
+    }
 
-	"OnSpellStart"
-	{
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_mirror_image"
-			"Target"		"CASTER"
-		}
-	}
+    "OnSpellStart"
+    {
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_mirror_image"
+            "Target"        "CASTER"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_mirror_image"
-		{	
-			"Duration"			"%invuln_duration"
-			"IsHidden"			"1"
+    "Modifiers"
+    {
+        "modifier_mirror_image"
+        {   
+            "Duration"          "%invuln_duration"
+            "IsHidden"          "1"
 
-			"States"
-			{
-				"MODIFIER_STATE_INVULNERABLE" 			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
-			}
+            "States"
+            {
+                "MODIFIER_STATE_INVULNERABLE"           "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_LOW_ATTACK_PRIORITY"    "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_HEALTH_BAR"          "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_UNSELECTABLE"           "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_STUNNED"                "MODIFIER_STATE_VALUE_ENABLED"
+            }
 
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"CASTER"
-				}
+            "OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "CASTER"
+                }
 
-				"FireSound"
-				{
-					"EffectName"	"DOTA_Item.Manta.Activate"
-					"Target"		"CASTER"
-				}
-		    }
+                "FireSound"
+                {
+                    "EffectName"    "DOTA_Item.Manta.Activate"
+                    "Target"        "CASTER"
+                }
+            }
 
-		    "OnDestroy"
-		    {
-		    	"RunScript"
-			    {
-			        "ScriptFile"    "heroes/blademaster/mirror_image.lua"
-			        "Function"      "MirrorImage"
-			    }
-		    }
-		}
-	}
+            "OnDestroy"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/blademaster/mirror_image.lua"
+                    "Function"      "MirrorImage"
+                }
+            }
+        }
+    }
 }

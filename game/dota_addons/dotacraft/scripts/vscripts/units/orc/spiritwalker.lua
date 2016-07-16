@@ -2,7 +2,7 @@ function EtherStart( event )
 	local caster = event.caster
 	local ability = event.ability
 	caster:EmitSound('Hero_Pugna.Decrepify')
-	ability:ApplyDataDrivenModifier(caster, caster, 'modifier_ethereal_form', {})
+	ability:ApplyDataDrivenModifier(caster, caster, 'modifier_ethereal', {})
 	local cooldown = ability:GetCooldown(0)
 	ability:StartCooldown(cooldown)
 	local another = caster:FindAbilityByName('orc_corporeal_form')
@@ -14,7 +14,7 @@ end
 function EtherEnd( event )
 	local caster = event.caster
 	local ability = event.ability
-	caster:RemoveModifierByNameAndCaster('modifier_ethereal_form', caster)
+	caster:RemoveModifierByNameAndCaster('modifier_ethereal', caster)
 	local another = caster:FindAbilityByName('orc_ethereal_form')
 	ability:SetHidden(true)
 	another:SetHidden(false)
@@ -27,10 +27,9 @@ function Disenchant( event )
 	local radius = ability:GetSpecialValueFor("radius")
 		
 	-- Find targets in radius
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	local units = FindUnitsInRadius(caster:GetTeamNumber(), point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	for k,unit in pairs(units) do
-		local bSummon = unit:IsSummoned() or unit:HasModifier("modifier_kill")
-		if bSummon then
+		if unit:IsSummoned() then
 			local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
 			ApplyDamage({victim = unit, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
 			ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
@@ -39,11 +38,7 @@ function Disenchant( event )
 		-- This ability removes both positive and negative buffs from units.
 		local bRemovePositiveBuffs = true
 		local bRemoveDebuffs = true
-		local bFrameOnly = false
-		local bRemoveStuns = false
-		local bRemoveExceptions = false
-
-		unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, bFrameOnly, bRemoveStuns, bRemoveExceptions)
+		unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
 	end
 
 	RemoveBlight(point, radius)

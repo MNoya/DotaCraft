@@ -7,15 +7,14 @@
 	// General
 	//----------------------------------------------------------------
 	"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-	"BaseClass"					"npc_dota_lone_druid_bear"
+	"BaseClass"					"npc_dota_creature"
 	"SoundSet"					"LoneDruid_SpiritBear"
-	"Level"						"7"
+	"Level"						"4"
 	"ModelScale" 				".65"
 	"ConsideredHero"			"1"
-	"UnitLabel"					"spirit_bear"
-	"IsSummoned"				"1"
 
 	"AttacksEnabled"			"ground"
+	"LeavesCorpse"				"0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -26,7 +25,8 @@
 
 	// Armor
 	//----------------------------------------------------------------
-	"ArmorPhysical"				"0"			// Physical protection.
+	"ArmorPhysical"				"0"			// Physical protection.	
+	"MagicalResistance"			"0"			// Magical protection.
 
 	// Attack
 	//----------------------------------------------------------------
@@ -49,9 +49,13 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyXP"					"300"		// Experience earn.
-	"BountyGoldMin"				"300"		// Gold earned min.
-	"BountyGoldMax"				"300"		// Gold earned max.
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"
 
 	// Movement
 	//----------------------------------------------------------------
@@ -86,15 +90,14 @@
 	// General
 	//----------------------------------------------------------------
 	"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-	"BaseClass"					"npc_dota_lone_druid_bear"
+	"BaseClass"					"npc_dota_creature"
 	"SoundSet"					"LoneDruid_SpiritBear"
-	"Level"						"7"
+	"Level"						"5"
 	"ModelScale" 				"0.75"
 	"ConsideredHero"			"1"
-	"UnitLabel"					"spirit_bear"
-	"IsSummoned"				"1"
 
 	"AttacksEnabled"			"ground"
+	"LeavesCorpse"				"0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -106,6 +109,7 @@
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"1"			// Physical protection.
+	"MagicalResistance"			"0"
 
 	// Attack
 	//----------------------------------------------------------------
@@ -128,9 +132,13 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyXP"					"300"		// Experience earn.
-	"BountyGoldMin"				"300"		// Gold earned min.
-	"BountyGoldMax"				"300"		// Gold earned max.
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"
 
 	// Movement
 	//----------------------------------------------------------------
@@ -165,15 +173,14 @@
 	// General
 	//----------------------------------------------------------------
 	"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-	"BaseClass"					"npc_dota_lone_druid_bear"
+	"BaseClass"					"npc_dota_creature"
 	"SoundSet"					"LoneDruid_SpiritBear"
-	"Level"						"7"
+	"Level"						"6"
 	"ModelScale" 				".85"
 	"ConsideredHero"			"1"
-	"UnitLabel"					"spirit_bear"
-	"IsSummoned"				"1"
 
 	"AttacksEnabled"			"ground"
+	"LeavesCorpse"				"0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -185,6 +192,7 @@
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"2"			// Physical protection.
+	"MagicalResistance"			"0"
 
 	// Attack
 	//----------------------------------------------------------------
@@ -207,9 +215,13 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyXP"					"300"		// Experience earn.
-	"BountyGoldMin"				"300"		// Gold earned min.
-	"BountyGoldMax"				"300"		// Gold earned max.
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"
 
 	// Movement
 	//----------------------------------------------------------------
@@ -248,14 +260,14 @@
 	// General
 	//----------------------------------------------------------------
 	"Model"						"models/heroes/beastmaster/beastmaster_beast.vmdl"	// Model.
-	"BaseClass"					"npc_dota_beastmaster_boar"
+	"BaseClass"					"npc_dota_creature"
 	"SoundSet"					"Beastmaster_Boar"			// Name of sound set.
-	"Level"						"5"
+	"Level"						"3"
 	"ModelScale"				"0.65"
-	"IsSummoned"				"1"
 	"UnitLabel"					"boar"
 
 	"AttacksEnabled"			"ground,air"
+	"LeavesCorpse"				"0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -267,6 +279,7 @@
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"0"			// Physical protection.
+	"MagicalResistance"			"0"
 
 	// Attack
 	//----------------------------------------------------------------
@@ -288,9 +301,13 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyXP"					"59"		// Experience earn.
-	"BountyGoldMin"				"26"		// Gold earned min.
-	"BountyGoldMax"				"38"		// Gold earned max.
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"
 
 	// Movement
 	//----------------------------------------------------------------
@@ -319,14 +336,14 @@
 	// General
 	//----------------------------------------------------------------
 	"Model"						"models/heroes/beastmaster/beastmaster_beast.vmdl"	// Model.
-	"BaseClass"					"npc_dota_beastmaster_boar"
+	"BaseClass"					"npc_dota_creature"
 	"SoundSet"					"Beastmaster_Boar"			// Name of sound set.
-	"Level"						"5"
+	"Level"						"4"
 	"ModelScale"				"0.75"
-	"IsSummoned"				"1"
 	"UnitLabel"					"boar"
 
 	"AttacksEnabled"			"ground,air"
+	"LeavesCorpse"				"0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -338,6 +355,7 @@
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"0"			// Physical protection.
+	"MagicalResistance"			"0"
 
 	// Attack
 	//----------------------------------------------------------------
@@ -359,9 +377,13 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyXP"					"59"		// Experience earn.
-	"BountyGoldMin"				"26"		// Gold earned min.
-	"BountyGoldMax"				"38"		// Gold earned max.
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"
 
 	// Movement
 	//----------------------------------------------------------------
@@ -390,14 +412,20 @@
 	// General
 	//----------------------------------------------------------------
 	"Model"						"models/heroes/beastmaster/beastmaster_beast.vmdl"	// Model.
-	"BaseClass"					"npc_dota_beastmaster_boar"
+	"BaseClass"					"npc_dota_creature"
 	"SoundSet"					"Beastmaster_Boar"			// Name of sound set.
 	"Level"						"5"
 	"ModelScale"				"0.85"
-	"IsSummoned"				"1"
 	"UnitLabel"					"boar"
 
 	"AttacksEnabled"			"ground,air"
+	"LeavesCorpse"				"0"
+	"SplashAttack"				"1"
+	"SplashFullRadius"			"75"
+	"SplashMediumRadius"		"100"
+	"SplashMediumDamage"		"0.15" //40%
+	"SplashSmallRadius"			"150"
+	"SplashSmallDamage"			"0.25"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -430,9 +458,13 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyXP"					"59"		// Experience earn.
-	"BountyGoldMin"				"26"		// Gold earned min.
-	"BountyGoldMax"				"38"		// Gold earned max.
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"
 
 	// Movement
 	//----------------------------------------------------------------
@@ -472,10 +504,8 @@
 	"Model"						"models/heroes/beastmaster/beastmaster_bird.mdl"	// Model.
 	"BaseClass"					"npc_dota_beastmaster_hawk"
 	"SoundSet"					"Beastmaster_Hawk"			// Name of sound set.
-	"Level"						"6"
-	"ModelScale"				"1.2"
-	"IsSummoned"				"1"
-	"UnitLabel"					"hawk"
+	"Level"						"2"
+	"ModelScale"				"1.0"
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -487,6 +517,7 @@
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"0"			// Physical protection.
+	"MagicalResistance"			"0"
 
 	// Attack
 	//----------------------------------------------------------------
@@ -501,10 +532,14 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyXP"					"77"		// Experience earn.
-	"BountyGoldMin"				"30"		// Gold earned min.
-	"BountyGoldMax"				"30"		// Gold earned max.
-
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"
+	
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
@@ -525,82 +560,7 @@
 	//----------------------------------------------------------------							// Attack Damage types name.
 	"AttackType"				"normal"
 	"ArmorType"						"light"
-	
-	"WakesNeutrals"				"0"
 }	
-
-"neutral_beastmaster_spirit_hawk"
-{										
-	// General
-	//----------------------------------------------------------------
-	"Model"						"models/heroes/beastmaster/beastmaster_bird.mdl"	// Model.
-	"BaseClass"					"npc_dota_beastmaster_hawk"
-	"SoundSet"					"Beastmaster_Hawk"			// Name of sound set.
-	"Level"						"6"
-	"ModelScale"				"1.2"
-	"IsSummoned"				"1"
-	"UnitLabel"					"hawk"
-
-	"AttacksEnabled"			"ground,air"
-
-	// Abilities
-	//----------------------------------------------------------------
-	"Ability1"					"true_sight"			// Ability 1
-	"Ability2"					"beastmaster_hawk_invis"			// Ability 2
-	"Ability3"					""			// Ability 3
-	"Ability4"					""			// Ability 4
-
-	// Armor
-	//----------------------------------------------------------------
-	"ArmorPhysical"				"5"			// Physical protection.
-
-	// Attack
-	//----------------------------------------------------------------
-	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-	"AttackDamageMin"			"42"		// Damage range min.
-	"AttackDamageMax"			"42"		// Damage range max.	
-	"AttackRate"				"1.5"		// Speed of attack.
-	"AttackAnimationPoint"		"0.633"		// Normalized time in animation cycle to attack.
-	"AttackAcquisitionRange"	"600"		// Range within a target can be acquired.
-	"AttackRange"				"550"		// Range within a target can be attacked.
-	"ProjectileModel"			"particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"	// Particle system model for projectile.
-	"ProjectileSpeed"			"1500"		// Speed of projectile.		   
-
-	// Bounds
-	//----------------------------------------------------------------
-	"HealthBarOffset"			"165"
-	"FormationRank"				"2"
-
-	// Bounty
-	//----------------------------------------------------------------
-	"BountyXP"					"77"		// Experience earn.
-	"BountyGoldMin"				"50"		// Gold earned min.
-	"BountyGoldMax"				"50"		// Gold earned max.
-
-	// Movement
-	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-	"MovementSpeed"				"350"		// Speed.
-	"MovementTurnRate"			"0.6"		// Turning rate.
-
-	// Status
-	//----------------------------------------------------------------
-	"StatusHealth"				"650"		// Base health.
-	"StatusHealthRegen"			"1.5"		// Health regeneration rate.
-	
-	// Vision
-	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1300"		// Range of vision during day light.
-	"VisionNighttimeRange"		"900"		// Range of vision at night time.
-
-	// Attack Damage types
-	//----------------------------------------------------------------							// Attack Damage types name.
-	"AttackType"				"normal"
-	"ArmorType"						"light"
-	
-	"WakesNeutrals"				"0"
-}
 
 "neutral_beastmaster_thunder_hawk"
 {										
@@ -609,10 +569,8 @@
 	"Model"						"models/heroes/beastmaster/beastmaster_bird.mdl"	// Model.
 	"BaseClass"					"npc_dota_beastmaster_hawk"
 	"SoundSet"					"Beastmaster_Hawk"			// Name of sound set.
-	"Level"						"6"
-	"ModelScale"				"1.2"
-	"IsSummoned"				"1"
-	"UnitLabel"					"hawk"
+	"Level"						"5"
+	"ModelScale"				"1.1"
 
 	"AttacksEnabled"			"ground,air"
 
@@ -626,6 +584,7 @@
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"3"			// Physical protection.
+	"MagicalResistance"			"0"
 
 	// Attack
 	//----------------------------------------------------------------
@@ -648,9 +607,13 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-	"BountyXP"					"77"		// Experience earn.
-	"BountyGoldMin"				"40"		// Gold earned min.
-	"BountyGoldMax"				"40"		// Gold earned max.
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"
 
 	// Movement
 	//----------------------------------------------------------------
@@ -672,6 +635,78 @@
 	//----------------------------------------------------------------							// Attack Damage types name.
 	"AttackType"				"normal"
 	"ArmorType"						"light"
-	
-	"WakesNeutrals"				"0"
 }	
+
+"neutral_beastmaster_spirit_hawk"
+{										
+	// General
+	//----------------------------------------------------------------
+	"Model"						"models/heroes/beastmaster/beastmaster_bird.mdl"	// Model.
+	"BaseClass"					"npc_dota_beastmaster_hawk"
+	"SoundSet"					"Beastmaster_Hawk"			// Name of sound set.
+	"Level"						"6"
+	"ModelScale"				"1.2"
+
+	"AttacksEnabled"			"ground,air"
+
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					"true_sight"			// Ability 1
+	"Ability2"					"beastmaster_hawk_invis"			// Ability 2
+	"Ability3"					""			// Ability 3
+	"Ability4"					""			// Ability 4
+
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"5"			// Physical protection.
+	"MagicalResistance"			"0"
+
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"42"		// Damage range min.
+	"AttackDamageMax"			"42"		// Damage range max.	
+	"AttackRate"				"1.5"		// Speed of attack.
+	"AttackAnimationPoint"		"0.633"		// Normalized time in animation cycle to attack.
+	"AttackAcquisitionRange"	"600"		// Range within a target can be acquired.
+	"AttackRange"				"550"		// Range within a target can be attacked.
+	"ProjectileModel"			"particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"	// Particle system model for projectile.
+	"ProjectileSpeed"			"1500"		// Speed of projectile.		   
+
+	// Bounds
+	//----------------------------------------------------------------
+	"HealthBarOffset"			"165"
+	"FormationRank"				"2"
+
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"26.0"
+	"BountyGoldMax"				"38.0"
+	
+	// Gold and Lumber
+	//----------------------------------------------------------------
+	"GoldCost"					"0"
+	"LumberCost"				"0"	
+
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"350"		// Speed.
+	"MovementTurnRate"			"0.6"		// Turning rate.
+
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"650"		// Base health.
+	"StatusHealthRegen"			"1.5"		// Health regeneration rate.
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1300"		// Range of vision during day light.
+	"VisionNighttimeRange"		"900"		// Range of vision at night time.
+
+	// Attack Damage types
+	//----------------------------------------------------------------							// Attack Damage types name.
+	"AttackType"				"normal"
+	"ArmorType"						"light"
+}

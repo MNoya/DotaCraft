@@ -43,7 +43,6 @@ function ForceOfNature( event )
 		ListenToGameEvent( "tree_cut", 
 			function( event )
 				ability.trees_cut = ability.trees_cut + 1
-				print(ability,"One tree cut")	
 			end, 
 		nil	)
 	end
@@ -56,23 +55,19 @@ function ForceOfNature( event )
 	ParticleManager:SetParticleControl( particle1, 2, Vector(radius,0,0) )
 
 	-- Create the units on the next frame
-	Timers:CreateTimer(0.03,
-		function() 
-			print(ability.trees_cut)
-			local treants_spawned = treant_count
-			if ability.trees_cut < treant_count then
-				treants_spawned = ability.trees_cut
-			end
-
-			-- Spawn as many treants as possible
-			for i=1,treants_spawned do
-				local treant = CreateUnitByName(unit_name, point, true, caster, caster, caster:GetTeamNumber())
-				treant:SetControllableByPlayer(player, true)
-				treant:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
-				ability:ApplyDataDrivenModifier(caster, treant, "modifier_summoned", nil)
-				treant.no_corpse = true
-			end
+	Timers:CreateTimer(0.03, function()
+		local treants_spawned = treant_count
+		if ability.trees_cut < treant_count then
+			treants_spawned = ability.trees_cut
 		end
-	)
 
+		-- Spawn as many treants as possible
+		for i=1,treants_spawned do
+			local treant = CreateUnitByName(unit_name, point, true, caster, caster, caster:GetTeamNumber())
+			treant:SetControllableByPlayer(player, true)
+			treant:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+			treant:AddNewModifier(caster, ability, "modifier_summoned", {})
+			treant.no_corpse = true
+		end
+	end)
 end

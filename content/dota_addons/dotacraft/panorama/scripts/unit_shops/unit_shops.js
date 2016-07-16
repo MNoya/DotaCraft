@@ -22,7 +22,7 @@ function Create_Shop(args){
     })());
 	var ButtonLBL = $.CreatePanel("Label", Button, "CloseButtonText")
 	ButtonLBL.text = "X";
-	
+
 	// create all the items
 	for(var orderIndex in args.Shop){
 		var key = args.Shop[orderIndex].ItemName
@@ -33,18 +33,10 @@ function Create_Shop(args){
 		shop_item.ItemInfo = args.Shop[orderIndex]
 		shop_item.Entity = args.Index
 		shop_item.Race = args.ShopName
-		shop_item.Tier = args.Tier  
-		shop_item.Order = orderIndex   
-		
-		if(args.Tavern != null)
-			shop_item.Tavern = true;
-		else
-			shop_item.Tavern = false;
-		
-		if(args.Neutral != null)
-			shop_item.Neutral = true;
-		else
-			shop_item.Neutral = false;
+		shop_item.Tier = args.Tier
+		shop_item.Order = orderIndex
+		shop_item.Tavern = args.Tavern != null		
+		shop_item.Neutral = args.Neutral
 	} 
 	
 	Shops[args.Index] = args.Shop.Items

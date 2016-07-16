@@ -35,6 +35,12 @@
             "Target"        "CASTER"
             "ModifierName"  "modifier_paladin_divine_shield"
         }
+
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/paladin/divine_shield.lua"
+            "Function"      "DivineShieldPurge"
+        }
         
         "FireSound"
         {
@@ -51,12 +57,6 @@
             "EffectAttachType"  "follow_origin"
 
             "Duration"  "%shield_duration"
-
-            "RunScript"
-            {
-                "ScriptFile"    "heroes/paladin/divine_shield.lua"
-                "Function"      "DivineShieldPurge"
-            }
 
             "States"
             {

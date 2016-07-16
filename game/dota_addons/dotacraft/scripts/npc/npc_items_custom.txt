@@ -493,7 +493,6 @@
 	    }
 	}
 	
-	
 	"item_wand_of_the_wind"
 	{
 	    "BaseClass"                     "item_datadriven"
@@ -3325,55 +3324,6 @@
 				"Target"		"CASTER"
 				"Duration"		"%duration"
 			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName" 	"modifier_windwalk"
-				"Target"		"CASTER"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_windwalk"
-			{			
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-				
-				"OnAttackLanded"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName" 	"modifier_invisible"
-						"Target"		"CASTER"
-					}
-	
-					"RemoveModifier"
-					{
-						"ModifierName" 	"modifier_windwalk"
-						"Target"		"CASTER"
-					}
-				}
-	
-				"OnAbilityExecuted"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName" 	"modifier_invisible"
-						"Target"		"CASTER"
-					}
-	
-					"RemoveModifier"
-					{
-						"ModifierName" 	"modifier_windwalk"
-						"Target"		"CASTER"
-					}
-				}
-			}
 		}
 	}
 	
@@ -3721,6 +3671,8 @@
 		{
 			"modifier_vampiric_potion"
 			{
+				"IsPurgable"        "1"
+	
 				"EffectName"			"particles/items2_fx/mask_of_madness.vpcf"
 				"EffectAttachType"		"follow_origin"
 	
@@ -4578,12 +4530,7 @@
 	        }
 	    }
 	}
-	// List of Scrolls not sold on Race Shops
-	
-	// Scroll of Mana (100 mana)
-	// Scroll of Protection (2 armor for 30 seconds)
-	// Scroll of Resurrection (Paladin)
-	// Scroll of Animate Dead (Death Knight)
+	// Scrolls not sold on Race Shops
 	
 	"item_scroll_of_restoration"
 	{
@@ -4598,14 +4545,10 @@
 		"Model"							"models/props_gameplay/tpscroll01.vmdl"
 		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
 		
-		"ItemCost"                      "1900"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-		"ItemShopTags"					"rare"
+		"ItemCost"                      "550"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
 		"ItemQuality"					"rare"
 		"ItemPermanent"					"0"
-		"ItemKillable"                  "1"
-		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
 		"ItemInitialCharges"            "1"
 		
 		"AbilitySpecial"
@@ -4634,39 +4577,17 @@
 				"Target" 			"CASTER"
 				"EffectName"		"particles/items2_fx/mekanism.vpcf"
 				"EffectAttachType" 	"follow_origin"
-			}
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center" 	"CASTER"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-				}
-			
-				"Action"    
-				{
-					"Heal"
-					{
-						"Target"        "TARGET"
-						"HealAmount"	"%health_restored"
-					}
-					"RunScript"
-					{
-						"ScriptFile"	"items/mana.lua"
-						"Function"		"GiveMana"
-						"mana_amount"	"%mana_restored"
-					}
-				}
-			}
-				
+			}			
 			"FireSound"
 			{
 				"EffectName"	"DOTA_Item.Mekansm.Activate"
 				"Target" 		"CASTER"
 			}
-	
+			"RunScript"
+			{
+				"ScriptFile"	"items/scrolls.lua"
+				"Function"		"Restoration"
+			}
 			"SpendCharge"
 			{}
 		}
@@ -4685,14 +4606,10 @@
 		"Model"							"models/props_gameplay/tpscroll01.vmdl"
 		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
 		
-		"ItemCost"                      "1900"
+		"ItemCost"                      "150"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-		"ItemShopTags"					"rare"
-		"ItemQuality"					"rare"
+		"ItemQuality"					"common"
 		"ItemPermanent"					"0"
-		"ItemKillable"                  "1"
-		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
 		"ItemInitialCharges"            "1"
 		
 		"AbilitySpecial"
@@ -4765,12 +4682,8 @@
 		
 		"ItemCost"                      "150"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-		"ItemShopTags"					"rare"
-		"ItemQuality"					"rare"
+		"ItemQuality"					"common"
 		"ItemPermanent"					"0"
-		"ItemKillable"                  "1"
-		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
 		"ItemInitialCharges"            "1"
 		
 		"AbilitySpecial"
@@ -4818,6 +4731,8 @@
 		{
 			"modifier_scroll_of_protection"
 			{
+				"IsPurgable"	"1"
+				
 				// TODO: Add fx	
 				//"EffectName"		"particle_name"
 				//"EffectAttachType"	"follow_origin"
@@ -4830,7 +4745,6 @@
 		}
 	}
 	
-	// Scroll of the Beast (25% bonus damage for 45 seconds)
 	"item_scroll_of_the_beast"
 	{
 		"BaseClass"                     "item_datadriven"
@@ -4847,12 +4761,8 @@
 		
 		"ItemCost"                      "400"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-		"ItemShopTags"					"rare"
 		"ItemQuality"					"rare"
 		"ItemPermanent"					"0"
-		"ItemKillable"                  "1"
-		"ItemSellable"                  "1"
-		"ItemDroppable"                 "1"
 		"ItemInitialCharges"            "1"
 		
 		"AbilitySpecial"
@@ -4900,6 +4810,8 @@
 		{
 			"modifier_scroll_of_the_beast"
 			{
+				"IsPurgable"	"1"
+	
 				// TODO: Add fx	
 				//"EffectName"		"particle_name"
 				//"EffectAttachType"	"follow_origin"
@@ -17124,27 +17036,17 @@
 				"Target" 			"CASTER"
 				"EffectName"		"particles/items2_fx/mekanism.vpcf"
 				"EffectAttachType" 	"follow_origin"
-			}
-			// Doesn't affect mechanical or buildings
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_scroll_of_regeneration"
-				"Target"
-				{
-					"Center" 	"CASTER"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-				}
-				"Duration"		"%duration"
 			}			
 			"FireSound"
 			{
 				"EffectName"	"DOTA_Item.Mekansm.Activate"
 				"Target" 		"CASTER"
 			}
-	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/scrolls.lua"
+	            "Function"      "Regeneration"
+	        }
 			"SpendCharge"
 			{}
 		}
@@ -17295,12 +17197,14 @@
 	    "ItemInitialCharges"            "1"
 	    "ItemAlertable"                 "1" 
 	
+	    "RequiresManaDeficit"           "1"
+	
 	    // Shops
 	    "ItemCost"                      "70"
-	    "StockMax"                  "2" 
-	    "StockTime"                 "30"
-	    "StockInitial"              "2"
-	    "RequiresTier"              "1"
+	    "StockMax"                      "2" 
+	    "StockTime"                     "30"
+	    "StockInitial"                  "2"
+	    "RequiresTier"                  "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -17395,10 +17299,12 @@
 	
 	    // Shops
 	    "ItemCost"                      "150"
-	    "StockMax"                  "3" 
-	    "StockTime"                 "120"
-	    "StockInitial"              "3"
-	    "RequiresTier"              "2"
+	    "StockMax"                      "3" 
+	    "StockTime"                     "120"
+	    "StockInitial"                  "3"
+	    "RequiresTier"                  "2"
+	
+	    "RequiresHealthDeficit"         "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -17463,10 +17369,12 @@
 	
 	    // Shops
 	    "ItemCost"                      "200"
-	    "StockMax"                  "2" 
-	    "StockTime"                 "120"
-	    "StockInitial"              "2"
-	    "RequiresTier"              "2"
+	    "StockMax"                      "2" 
+	    "StockTime"                     "120"
+	    "StockInitial"                  "2"
+	    "RequiresTier"                  "2"
+	
+	    "RequiresManaDeficit"           "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -18008,10 +17916,13 @@
 	
 	    // Shops
 	    "ItemCost"                      "100"
-	    "StockMax"                  "2" 
-	    "StockTime"                 "60"
-	    "StockInitial"              "2"
-	    "RequiresTier"              "1"
+	    "StockMax"                      "2" 
+	    "StockTime"                     "60"
+	    "StockInitial"                  "2"
+	    "RequiresTier"                  "1"
+	
+	    "TargetsAllowed"                "organic"
+	    "RequiresHealthDeficit"         "target"
 	
 	    "AbilitySpecial"
 	    {
@@ -18171,6 +18082,8 @@
 	    {
 	        "modifier_scroll_of_speed"
 	        {
+	            "IsPurgable"    "1"
+	            
 	            "EffectName"        "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
 	            "EffectAttachType"  "follow_overhead"
 	            "TextureName"       "item_scroll_of_speed"
@@ -20890,10 +20803,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "250"
-	    "StockMax"                  "2" 
-	    "StockTime"                 "120"
-	    "StockInitial"              "2"
-	    "RequiresTier"              "3"
+	    "StockMax"                      "2" 
+	    "StockTime"                     "120"
+	    "StockInitial"                  "2"
+	    "RequiresTier"                  "3"
 	    
 	    "AbilitySpecial"
 	    {
@@ -20916,32 +20829,16 @@
 	            "Target"            "CASTER"
 	            "EffectName"        "particles/items2_fx/mekanism.vpcf"
 	            "EffectAttachType"  "follow_origin"
-	        }
-	        "ActOnTargets"
-	        {
-	            "Target"
-	            {
-	                "Center"    "CASTER"
-	                "Radius"    "%radius"
-	                "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-	            }
-	        
-	            "Action"    
-	            {
-	                "Heal"
-	                {
-	                    "Target"        "TARGET"
-	                    "HealAmount"    "%health_restored"
-	                }
-	            }
-	        }
-	            
+	        }            
 	        "FireSound"
 	        {
 	            "EffectName"    "DOTA_Item.Mekansm.Activate"
 	            "Target"        "CASTER"
+	        }
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/scrolls.lua"
+	            "Function"      "Healing"
 	        }
 	
 	        "SpendCharge"

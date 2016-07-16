@@ -64,27 +64,17 @@
 			"Target" 			"CASTER"
 			"EffectName"		"particles/items2_fx/mekanism.vpcf"
 			"EffectAttachType" 	"follow_origin"
-		}
-		// Doesn't affect mechanical or buildings
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_scroll_of_regeneration"
-			"Target"
-			{
-				"Center" 	"CASTER"
-				"Radius" 	"%radius"
-				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-			}
-			"Duration"		"%duration"
 		}			
 		"FireSound"
 		{
 			"EffectName"	"DOTA_Item.Mekansm.Activate"
 			"Target" 		"CASTER"
 		}
-
+        "RunScript"
+        {
+            "ScriptFile"    "items/scrolls.lua"
+            "Function"      "Regeneration"
+        }
 		"SpendCharge"
 		{}
 	}
@@ -235,12 +225,14 @@
     "ItemInitialCharges"            "1"
     "ItemAlertable"                 "1" 
 
+    "RequiresManaDeficit"           "1"
+
     // Shops
     "ItemCost"                      "70"
-    "StockMax"                  "2" 
-    "StockTime"                 "30"
-    "StockInitial"              "2"
-    "RequiresTier"              "1"
+    "StockMax"                      "2" 
+    "StockTime"                     "30"
+    "StockInitial"                  "2"
+    "RequiresTier"                  "1"
 
     "AbilitySpecial"
     {
@@ -335,10 +327,12 @@
 
     // Shops
     "ItemCost"                      "150"
-    "StockMax"                  "3" 
-    "StockTime"                 "120"
-    "StockInitial"              "3"
-    "RequiresTier"              "2"
+    "StockMax"                      "3" 
+    "StockTime"                     "120"
+    "StockInitial"                  "3"
+    "RequiresTier"                  "2"
+
+    "RequiresHealthDeficit"         "1"
 
     "AbilitySpecial"
     {
@@ -403,10 +397,12 @@
 
     // Shops
     "ItemCost"                      "200"
-    "StockMax"                  "2" 
-    "StockTime"                 "120"
-    "StockInitial"              "2"
-    "RequiresTier"              "2"
+    "StockMax"                      "2" 
+    "StockTime"                     "120"
+    "StockInitial"                  "2"
+    "RequiresTier"                  "2"
+
+    "RequiresManaDeficit"           "1"
 
     "AbilitySpecial"
     {

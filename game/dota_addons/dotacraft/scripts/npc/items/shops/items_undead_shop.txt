@@ -162,10 +162,10 @@
 
     // Shops
     "ItemCost"                      "250"
-    "StockMax"                  "2" 
-    "StockTime"                 "120"
-    "StockInitial"              "2"
-    "RequiresTier"              "3"
+    "StockMax"                      "2" 
+    "StockTime"                     "120"
+    "StockInitial"                  "2"
+    "RequiresTier"                  "3"
     
     "AbilitySpecial"
     {
@@ -188,32 +188,16 @@
             "Target"            "CASTER"
             "EffectName"        "particles/items2_fx/mekanism.vpcf"
             "EffectAttachType"  "follow_origin"
-        }
-        "ActOnTargets"
-        {
-            "Target"
-            {
-                "Center"    "CASTER"
-                "Radius"    "%radius"
-                "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-            }
-        
-            "Action"    
-            {
-                "Heal"
-                {
-                    "Target"        "TARGET"
-                    "HealAmount"    "%health_restored"
-                }
-            }
-        }
-            
+        }            
         "FireSound"
         {
             "EffectName"    "DOTA_Item.Mekansm.Activate"
             "Target"        "CASTER"
+        }
+        "RunScript"
+        {
+            "ScriptFile"    "items/scrolls.lua"
+            "Function"      "Healing"
         }
 
         "SpendCharge"

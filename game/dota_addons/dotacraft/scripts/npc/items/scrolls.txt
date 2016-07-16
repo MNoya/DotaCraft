@@ -1,9 +1,4 @@
-// List of Scrolls not sold on Race Shops
-
-// Scroll of Mana (100 mana)
-// Scroll of Protection (2 armor for 30 seconds)
-// Scroll of Resurrection (Paladin)
-// Scroll of Animate Dead (Death Knight)
+// Scrolls not sold on Race Shops
 
 "item_scroll_of_restoration"
 {
@@ -18,14 +13,10 @@
 	"Model"							"models/props_gameplay/tpscroll01.vmdl"
 	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
 	
-	"ItemCost"                      "1900"
-	"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-	"ItemShopTags"					"rare"
+	"ItemCost"                      "550"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
 	"ItemQuality"					"rare"
 	"ItemPermanent"					"0"
-	"ItemKillable"                  "1"
-	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
 	"ItemInitialCharges"            "1"
 	
 	"AbilitySpecial"
@@ -54,39 +45,17 @@
 			"Target" 			"CASTER"
 			"EffectName"		"particles/items2_fx/mekanism.vpcf"
 			"EffectAttachType" 	"follow_origin"
-		}
-		"ActOnTargets"
-		{
-			"Target"
-			{
-				"Center" 	"CASTER"
-				"Radius" 	"%radius"
-				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-			}
-		
-			"Action"    
-			{
-				"Heal"
-				{
-					"Target"        "TARGET"
-					"HealAmount"	"%health_restored"
-				}
-				"RunScript"
-				{
-					"ScriptFile"	"items/mana.lua"
-					"Function"		"GiveMana"
-					"mana_amount"	"%mana_restored"
-				}
-			}
-		}
-			
+		}			
 		"FireSound"
 		{
 			"EffectName"	"DOTA_Item.Mekansm.Activate"
 			"Target" 		"CASTER"
 		}
-
+		"RunScript"
+		{
+			"ScriptFile"	"items/scrolls.lua"
+			"Function"		"Restoration"
+		}
 		"SpendCharge"
 		{}
 	}
@@ -105,14 +74,10 @@
 	"Model"							"models/props_gameplay/tpscroll01.vmdl"
 	"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
 	
-	"ItemCost"                      "1900"
+	"ItemCost"                      "150"
 	"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-	"ItemShopTags"					"rare"
-	"ItemQuality"					"rare"
+	"ItemQuality"					"common"
 	"ItemPermanent"					"0"
-	"ItemKillable"                  "1"
-	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
 	"ItemInitialCharges"            "1"
 	
 	"AbilitySpecial"
@@ -185,12 +150,8 @@
 	
 	"ItemCost"                      "150"
 	"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-	"ItemShopTags"					"rare"
-	"ItemQuality"					"rare"
+	"ItemQuality"					"common"
 	"ItemPermanent"					"0"
-	"ItemKillable"                  "1"
-	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
 	"ItemInitialCharges"            "1"
 	
 	"AbilitySpecial"
@@ -238,6 +199,8 @@
 	{
 		"modifier_scroll_of_protection"
 		{
+			"IsPurgable"	"1"
+			
 			// TODO: Add fx	
 			//"EffectName"		"particle_name"
 			//"EffectAttachType"	"follow_origin"
@@ -250,7 +213,6 @@
 	}
 }
 
-// Scroll of the Beast (25% bonus damage for 45 seconds)
 "item_scroll_of_the_beast"
 {
 	"BaseClass"                     "item_datadriven"
@@ -267,12 +229,8 @@
 	
 	"ItemCost"                      "400"
 	"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
-	"ItemShopTags"					"rare"
 	"ItemQuality"					"rare"
 	"ItemPermanent"					"0"
-	"ItemKillable"                  "1"
-	"ItemSellable"                  "1"
-	"ItemDroppable"                 "1"
 	"ItemInitialCharges"            "1"
 	
 	"AbilitySpecial"
@@ -320,6 +278,8 @@
 	{
 		"modifier_scroll_of_the_beast"
 		{
+			"IsPurgable"	"1"
+
 			// TODO: Add fx	
 			//"EffectName"		"particle_name"
 			//"EffectAttachType"	"follow_origin"

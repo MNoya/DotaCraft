@@ -80,7 +80,8 @@
     {
         "modifier_sleep"
         {
-            "IsDebuff"  "1"
+            "IsPurgable"    "1"
+            "IsDebuff"      "1"
 
             "EffectName"        "particles/newplayer_fx/npx_sleeping.vpcf"
             "EffectAttachType" "follow_overhead"

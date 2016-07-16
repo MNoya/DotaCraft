@@ -319,6 +319,10 @@ function CDOTA_BaseNPC:IsMechanical()
     return self:GetUnitLabel():match("mechanical")
 end
 
+function CDOTA_BaseNPC:IsEthereal()
+    return self:HasModifier("modifier_ethereal")
+end
+
 function CDOTA_BaseNPC:IsFlyingUnit()
     return self:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY"
 end
@@ -380,6 +384,22 @@ function FindAlliesInRadius( unit, radius, point )
     local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
     local flags = DOTA_UNIT_TARGET_FLAG_INVULNERABLE
     return FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, flags, FIND_CLOSEST, false)
+end
+
+-- Filters buildings and mechanical units
+function FindOrganicAlliesInRadius( unit, radius, point )
+    local team = unit:GetTeamNumber()
+    local position = point or unit:GetAbsOrigin()
+    local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    local flags = DOTA_UNIT_TARGET_FLAG_INVULNERABLE
+    local allies = FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, flags, FIND_CLOSEST, false)
+    local organic_allies = {}
+    for _,ally in pairs(allies) do
+        if not IsCustomBuilding(ally) and not ally:IsMechanical() then
+            table.insert(organic_allies, ally)
+        end
+    end
+    return organic_allies
 end
 
 function HasGoldMineDistanceRestriction( unit_name )
@@ -547,7 +567,7 @@ end
 
 function CDOTA_BaseNPC:FindClearSpace(origin)
     local collisionSize = self:GetCollisionSize()
-    if not collision_size then return end
+    if not collisionSize then return end
     local gridSize = math.ceil(collisionSize/32)+1
     origin = origin or self:GetAbsOrigin()
     if gridSize >= 2 then

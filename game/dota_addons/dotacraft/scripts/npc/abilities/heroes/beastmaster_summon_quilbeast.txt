@@ -207,11 +207,6 @@
 		{
 			"IsHidden"		"1"
 
-			"States"
-			{
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-
 			"OnCreated"
 			{
 				"FireEffect"
@@ -221,10 +216,10 @@
 					"EffectAttachType"	"follow_origin"
 				}
 				
-				"RunScript"
+				"ApplyModifier"
 				{
-					"ScriptFile"	"mechanics/corpses.lua"
-					"Function"		"SetNoCorpse"
+				    "ModifierName"  "modifier_summoned"
+				    "Target"        "TARGET"
 				}
 			}
 
@@ -341,44 +336,6 @@
 				{
 					"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
 					"Function"		"FrenzyResize"
-				}
-			}
-		}
-	}
-}
-
-"beastmaster_quillbeast_cleave"
-{
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"radius"			"125"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_FLOAT"
-			"cleave_pct"		"100"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_quillbeast_cleave"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-
-			"OnAttackLanded"
-			{
-				"CleaveAttack"
-				{
-					"CleavePercent"         "%cleave_pct"
-					"CleaveRadius"          "%radius"
-					"CleaveEffect"          "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
 				}
 			}
 		}

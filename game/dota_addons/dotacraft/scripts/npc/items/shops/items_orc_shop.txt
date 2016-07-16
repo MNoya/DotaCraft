@@ -27,10 +27,13 @@
 
     // Shops
     "ItemCost"                      "100"
-    "StockMax"                  "2" 
-    "StockTime"                 "60"
-    "StockInitial"              "2"
-    "RequiresTier"              "1"
+    "StockMax"                      "2" 
+    "StockTime"                     "60"
+    "StockInitial"                  "2"
+    "RequiresTier"                  "1"
+
+    "TargetsAllowed"                "organic"
+    "RequiresHealthDeficit"         "target"
 
     "AbilitySpecial"
     {
@@ -190,6 +193,8 @@
     {
         "modifier_scroll_of_speed"
         {
+            "IsPurgable"    "1"
+            
             "EffectName"        "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
             "EffectAttachType"  "follow_overhead"
             "TextureName"       "item_scroll_of_speed"

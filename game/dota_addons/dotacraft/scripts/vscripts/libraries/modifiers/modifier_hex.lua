@@ -29,6 +29,10 @@ function modifier_hex_frog:GetModifierMoveSpeedOverride()
     return 100
 end
 
+function modifier_hex_frog:IsPurgable()
+    return true
+end
+
 --------------------------------------------------
 
 modifier_hex_sheep = class({})
@@ -64,4 +68,8 @@ end
 
 function modifier_hex_sheep:GetModifierMoveSpeedOverride()
     return 100
+end
+
+function modifier_hex_sheep:IsPurgable()
+    return true
 end

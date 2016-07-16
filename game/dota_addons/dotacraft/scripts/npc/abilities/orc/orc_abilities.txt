@@ -235,7 +235,7 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 
 	"AbilityCastRange"			"700"
@@ -1083,20 +1083,23 @@
 	{
 		"modifier_ethereal_form"
 		{
-	
-			"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-			"EffectAttachType"	"follow_origin"
-
-			"Properties"
+			"OnCreated"
 			{
-				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage"
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_ethereal"
+					"Target" 		"CASTER"
+				}
 			}
 
-			"States"
+			"OnDestroy"
 			{
-				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-			}	
+			    "RemoveModifier"
+				{
+					"ModifierName"	"modifier_ethereal"
+					"Target" 		"CASTER"
+				}
+			}
 		}
 
 		"modifier_spawning"
@@ -1108,7 +1111,7 @@
 			{
 				"ApplyModifier"
 				{
-					"ModifierName"	"modifier_ethereal_form"
+					"ModifierName"	"modifier_ethereal"
 					"Target" 		"CASTER"
 				}
 
@@ -1120,8 +1123,6 @@
 			}
 		}
 	}
-
-	// Done
 }
 
 //=================================================================================
@@ -1329,9 +1330,6 @@
 
 		"modifier_devour_devouring"
 		{
-			"IsHidden"			"0"
-			"IsPurgable"		"0"
-
 			"OnDeath"
 			{
 				"RunScript"
@@ -1345,8 +1343,6 @@
 		"modifier_devour_debuff"
 		{
 			"IsDebuff"			"1"
-			"IsPurgable"		"0"
-
 			"ThinkInterval"  "1"
 			"OnIntervalThink"
 			{
@@ -1491,7 +1487,7 @@
 
 	"Modifiers"
 	{
-		"modifier_envenomed_spears"
+		"modifier_envenomed_spears_passive"
 		{
 			"Passive"	"1"
 			"IsHidden"	"1"
@@ -1499,7 +1495,7 @@
 			{
 				"ApplyModifier"
 				{
-					"ModifierName"	"modifier_envenomed_spears_slow"
+					"ModifierName"	"modifier_envenomed_spears"
 					"Target"
 					{
 						"Center"	"TARGET"
@@ -1511,7 +1507,7 @@
 				
 				"ApplyModifier"
 				{
-					"ModifierName"	"modifier_envenomed_spears_slow"
+					"ModifierName"	"modifier_envenomed_spears"
 					"Target"
 					{
 						"Center"	"TARGET"
@@ -1523,10 +1519,9 @@
 			}
 		}
 
-		"modifier_envenomed_spears_slow"
+		"modifier_envenomed_spears"
 		{
 			"IsDebuff"			"1"
-			"IsPurgable"		"1"
 			"EffectName"		"particles/neutral_fx/gnoll_poison_debuff.vpcf"
 			"EffectAttachType"	"attach_hitloc"
 
