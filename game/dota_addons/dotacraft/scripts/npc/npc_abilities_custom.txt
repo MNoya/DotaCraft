@@ -2220,44 +2220,6 @@
 			}
 		}
 	}
-	
-	"beastmaster_quillbeast_cleave"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"125"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"cleave_pct"		"100"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_quillbeast_cleave"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-	
-				"OnAttackLanded"
-				{
-					"CleaveAttack"
-					{
-						"CleavePercent"         "%cleave_pct"
-						"CleaveRadius"          "%radius"
-						"CleaveEffect"          "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
-					}
-				}
-			}
-		}
-	}
 	// Blademaster Bladestorm
 	// Author: Noya
 	// Description: Causes a bladestorm of destructive force around the Blademaster, rendering him immune to magic and dealing 110 damage per second to nearby enemy land units.
@@ -4939,90 +4901,86 @@
 	}
 	// Demon Hunter Demon Form
 	// Author: Noya
-	// Date: 09.08.2015.
-	// Notes: Transforms the Demon Hunter into a powerful demon with a ranged attack (60 range) and 500 bonus hit points.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	60 sec.	180 sec.	150	N/A	N/A	Self	+500 HP, 3 HP regenerated/sec	6
+	// Description: Transforms the Demon Hunter into a powerful demon with a ranged attack (60 range) and 500 bonus hit points.
+	
 	"demon_hunter_demon_form"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"demon_hunter_demon_form"
-		"MaxLevel"						"1"
-		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "demon_hunter_demon_form"
+	    "MaxLevel"                      "1"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE" 
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"	
+	    "AbilityCooldown"               "180"
+	    "AbilityManaCost"               "150"
 	
-		"AbilityCooldown"				"180"
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "60"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_health"          "500"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_health_regen"    "3"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_range"           "422"
+	        }
+	        "05"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "range_tooltip"         "600"
+	        }
+	        "06"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "transformation_time"   "0.8"
+	        }
+	    }
 	
-		"AbilityManaCost"				"150"
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+	        "particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+	        "particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+	        "particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+	        "particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+	        "model"     "models/heroes/terrorblade/demon.vmdl"
+	    }
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"60"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"500"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"3"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"422"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"600"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"transformation_time"	"0.8"
-			}
-		}
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"        "Hero_Terrorblade.Metamorphosis"
+	            "Target"            "CASTER"
+	        }
+	        "FireEffect"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	            "Target"            "CASTER"
+	        }
+	        "ApplyModifier"
+	        {
+	            "ModifierName"      "modifier_demon_form_transform"
+	            "Target"            "CASTER"
+	        }
+	    }
 	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
-			"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
-			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
-			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
-			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
-			"model"		"models/heroes/terrorblade/demon.vmdl"
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"		"Hero_Terrorblade.Metamorphosis"
-				"Target"			"CASTER"
-			}
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"			"CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_demon_form_transform"
-				"Target"			"CASTER"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_demon_form_transform"
+	    "Modifiers"
+	    {
+	        "modifier_demon_form_transform"
 	        {
 	            "IsHidden"  "1"
 	            "Duration"  "%transformation_time"
@@ -5040,66 +4998,11 @@
 	                {
 	                    "ModifierName"  "modifier_demon_form"
 	                    "Target"        "CASTER"
+	                    "Duration"      "%duration"
 	                }
 	            }
 	        }
-	
-			"modifier_demon_form"
-			{
-				"Duration"	"%duration"
-				
-				"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
-				"EffectAttachType"  "follow_origin"
-	
-				"AllowsIllusionDuplicate"	"1"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
-					"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS" 			"%bonus_health"		
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 	"%bonus_health_regen"				
-				}
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"heroes/demon_hunter/demon_form.lua"
-						"Function"				"ModelSwapStart"
-						"model"					"models/heroes/terrorblade/demon.vmdl"
-						"projectile_model"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"		"heroes/demon_hunter/demon_form.lua"
-						"Function"			"HideWearables"
-					}
-	
-					"AttachEffect"
-					{
-						"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/demon_hunter/demon_form.lua"
-						"Function"		"ModelSwapEnd"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/demon_hunter/demon_form.lua"
-						"Function"		"ShowWearables"
-					}
-				}
-			}
-		}
+	    }
 	}
 	// Demon Hunter Evasion
 	// Author: Noya
@@ -5539,11 +5442,6 @@
 	        {
 	            "Passive"           "1"
 	            "IsHidden"          "1"
-	
-	            "States"
-	            {
-	                "MODIFIER_STATE_DOMINATED"      "MODIFIER_STATE_VALUE_ENABLED"
-	            }
 	
 	            "Aura"              "modifier_inferno_immolation_burn"
 	            "Aura_Radius"       "%radius"
@@ -32542,51 +32440,21 @@
 	
 		"Modifiers"
 		{
-			"modifier_true_sight"
+			"modifier_passive_true_sight"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
 		
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
+				"OnCreated"
 				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%owl_vision"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					
-						"Action"    
-						{
-							"RemoveModifier"
-							{
-								"ModifierName"	"modifier_truesight_reveal"
-								"Target" 		"TARGET"
-							}
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_truesight_reveal"
-								"Target" 		"TARGET"
-							}
-						}
-					}			
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_true_sight_aura"
+				        "Target"        "TARGET"
+				    }
 				}
 			}
-	
-			"modifier_true_sight_reveal"
-			{
-				"IsHidden"			"1"
-				"Duration"			"0.03"
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}
-		}	
+		}
 	}
 	//=================================================================================
 	// Ability: Detonate

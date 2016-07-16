@@ -681,7 +681,7 @@
 	"ArmorPhysical"				"4"
 	"MagicalResistance"			"0"
 	
-	// Attack
+	// Attack - GROUND
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
@@ -691,7 +691,19 @@
 	"AttackAnimationPoint"		"0.49"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"128"
-	
+
+	// Secondary Attack - GROUND(war club)
+	//----------------------------------------------------------------
+	"SecondaryAttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"SecondaryAttackType"				"siege"
+	"SecondaryAttackDamageMin"			"34"
+	"SecondaryAttackDamageMax"			"48"
+	"SecondaryAttackRate"				"2.5"
+	"SecondaryAttackAnimationPoint"		"0.49"
+	"SecondaryAttackAcquisitionRange"	"500"
+	"SecondaryAttackRange"				"250"
+	"SecondaryAttackAgainst"			"ground"
+
 	// Bounty
 	//----------------------------------------------------------------
 	"BountyGoldMin"				"38.0"
@@ -1120,8 +1132,8 @@
 
 	// Secondary Attack - GROUND(BUILDINGS), SIEGE
 	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"			"RANGED"
-	"SecondaryAttackType"			"DAMAGE_TYPE_ArmorPhysical"
+	"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"SecondaryAttackType"			"siege"
 	"SecondaryAttackDamageMin"			"45.0"
 	"SecondaryAttackDamageMax"			"55.0"
 	"SecondaryAttackRate"				"2.5"

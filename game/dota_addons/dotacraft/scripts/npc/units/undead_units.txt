@@ -463,8 +463,8 @@
 
 	// Secondary Attack - GROUND
 	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"			"RANGED"
-	"SecondaryAttackType"			"DAMAGE_TYPE_ArmorPhysical"
+	"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"SecondaryAttackType"			"pierce"
 	"SecondaryAttackDamageMin"			"18.0"
 	"SecondaryAttackDamageMax"			"21.0"
 	"SecondaryAttackRate"				"2.2"
@@ -1410,8 +1410,8 @@
 
 	// Secondary Attack - AIR
 	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"			"RANGED"
-	"SecondaryAttackType"			"DAMAGE_TYPE_ArmorPhysical"
+	"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"SecondaryAttackType"			"magic"
 	"SecondaryAttackDamageMin"			"84.0"
 	"SecondaryAttackDamageMax"			"94.0"
 	"SecondaryAttackRate"				"3"
