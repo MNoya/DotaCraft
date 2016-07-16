@@ -5,9 +5,20 @@ end
 function Queue:Init(building)
     if not building.IsUnderConstruction then return end --Dummy building
 
+    local buildingName = building:GetUnitName()
+    if buildingName == "human_workshop" then
+        Timers:CreateTimer(2.5, function()
+            if IsValidEntity(building) and building:IsAlive() then
+                building:AddNewModifier(building,nil,"modifier_animation_freeze",{})
+            end
+        end)
+    end
+
     building.QueueTimer = Timers:CreateTimer(function()
         if IsValidEntity(building) and building:IsAlive() then
-            self:Think(building)
+            if not buiding:IsUnderConstruction() then
+                self:Think(building)
+            end
             return 0.03
         end
     end)
@@ -43,6 +54,10 @@ function Queue:Think(building)
     if not bChanneling then
         building:SetMana(0)
         building:SetBaseManaRegen(0)
+    else
+        if building:GetUnitName() == "human_workshop" then
+            building:RemoveModifierByName("modifier_animation_freeze")
+        end
     end
 
     if building:HasModifier("modifier_frozen") then
@@ -100,9 +115,12 @@ function Queue:Think(building)
                             -- EndChannel(false) runs whatever is in the OnChannelSucceded of the function
                             local time = ability_to_channel:GetChannelTime()
                             Timers:CreateTimer(time, function()
-                                if IsValidEntity(item) then
+                                if IsValidEntity(building) and building:IsAlive() and IsValidEntity(item) then
                                     ability_to_channel:EndChannel(false)
                                     ReorderItems(building)
+                                    if building:GetUnitName() == "human_workshop" and GetNumItemsInInventory(building) == 0 then
+                                        building:AddNewModifier(building,nil,"modifier_animation_freeze",{})
+                                    end
                                 end
                             end)
                         end
@@ -186,6 +204,10 @@ function EnqueueUnit( event )
         if event.Action == "StartUpgrade" then
             StartUpgrade(event)
         end
+
+        if caster:GetUnitName() == "human_workshop" then
+            caster:RemoveModifierByName("modifier_animation_freeze")
+        end
     else
         -- Refund with message
         Players:ModifyLumber(playerID, lumber_cost)
@@ -234,6 +256,10 @@ function DequeueUnit( event )
                 -- Fake mana channel bar
                 caster:SetMana(0)
                 caster:SetBaseManaRegen(0)
+
+                if caster:GetUnitName() == "human_workshop" and not caster:HasModifier("modifier_animation_freeze") then
+                    caster:AddNewModifier(caster,nil,"modifier_animation_freeze",{})
+                end
             end
             item:RemoveSelf()
             ReorderItems(caster)
