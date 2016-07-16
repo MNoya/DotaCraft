@@ -443,8 +443,8 @@ function Start_Game(){
 	};
 	
 	// disable start button
-	var Button = Root.FindChildTraverse("StartButton");
-	Button.enabled = false;
+	//var Button = Root.FindChildTraverse("StartButton");
+	//Button.enabled = false;
 	
 	// set time left incase the button is pressed again
 	Root.time_left = 3;
