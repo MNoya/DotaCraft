@@ -160,11 +160,24 @@ function UpdatePlayer( UpdateTable ){
 // Globally available panel to this context
 (function () {
 	// setup functions
+	SetupLocalisation();
 	Setup_Panaroma_Color_Table();
 	Setup_Colours(Root);
-	
 	CustomNetTables.SubscribeNetTableListener("dotacraft_pregame_table", NetTableUpdatePlayer);
 })();
+
+function SetupLocalisation(){
+	var race_dropdown = Root.FindChildTraverse("RaceDropDown");
+	
+	for(var i = 0; i <= Count_Dropdown_Children(race_dropdown); i++)
+		race_dropdown.FindDropDownMenuChild(i).text = $.Localize("race_"+i);
+	
+	race_dropdown.GetChild(0).text = $.Localize("race_0"); // set race dropdown to this localisation due to the dropdown being initialised when the text was empty
+	
+	var options_dropdown = Root.FindChildTraverse("OptionsDropDown");	
+	for(var i = 0; i <= Count_Dropdown_Children(options_dropdown); i++)
+		options_dropdown.FindDropDownMenuChild(i).text = $.Localize("options_dropdown_"+i);
+};
 
 // main logic behind updating players, this is called when net_table changed
 function NetTableUpdatePlayer(tableName, key, val){
@@ -253,9 +266,9 @@ function UpdateAvailableColors(){
 };
 
 var Bot_Names = {
-	1: "COMPUTER (EASY)",
-	2: "COMPUTER (NORMAL)",
-	3: "COMPUTER (HARD)"
+	1: "AI(EASY)",
+	2: "AI(NORMAL)",
+	3: "AI(HARD)"
 }; 
 
 function Boolise(index){
@@ -320,7 +333,7 @@ function PlayerPanelSetup(){
 	// manage hosticon display
 	if( isPlayerHost() ){
 		// add Host panel class to differentiate between host and normal players
-		var Name = $("#PlayerName");
+		var Name = Root.FindChildTraverse('PanelOptions'); 
 		var HostIcon = $("#Host_Icon");
 		if( HostIcon == null ){
 			HostIcon = $.CreatePanel("Panel", Name, "Host_Icon");
@@ -358,6 +371,12 @@ function UpdateColorDropDownColor()
 	var dropdown = Root.FindChildTraverse("ColorDropDown");
 	dropdown.SetSelected(Root.PlayerColor);
 	dropdown.style["background-color"] =  "rgb("+COLOUR_TABLE[Root.PlayerColor].r+","+COLOUR_TABLE[Root.PlayerColor].g+","+COLOUR_TABLE[Root.PlayerColor].b+")";	
+	
+	var color = "rgb("+COLOUR_TABLE[Root.PlayerColor].r+","+COLOUR_TABLE[Root.PlayerColor].g+","+COLOUR_TABLE[Root.PlayerColor].b+")";
+	//var shadecolor = "rgb("+COLOUR_TABLE[Root.PlayerColor].r * 0.1+","+COLOUR_TABLE[Root.PlayerColor].g * 0.1+","+COLOUR_TABLE[Root.PlayerColor].b * 0.1+")";
+	//var colortext = "gradient( linear, 0% 0%, 0% 100%, from( "+color+" ), to( "+shadecolor+" ));"
+	var colortext = color;
+	Root.FindChildTraverse("PlayerColor").style["background-color"] = colortext;	
 };
 
 function SetDropDownStates(Enabled){

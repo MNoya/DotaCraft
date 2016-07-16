@@ -35,11 +35,7 @@
 .TeamContainer
 {
 	flow-children: down;
-	margin-right: 20px;
-
-	padding: 5px;
-	
-	width: 800px;
+	padding: 10px;	
 }
 
 .TeamContainer:hover{ 
@@ -51,19 +47,19 @@
 }
 
 .TeamLabel{
-	font-size: 24px;
-	color: white;
-	height: 30px;
+	font-size: 50px;
+	color: white;	
 	
-	margin-top: 10px;
-	horizontal-align: middle;
-
+	width: 50px;
+	
+	margin: 10px;
+	vertical-align: middle;
 	border-bottom: 2px solid #ffffff44;
 }
 
 .TeamLabel:hover{
-	color: orange;
-	border-bottom: 2px solid orange;
+	color: yellow;
+	border-bottom: 2px solid yellow;
 	
 	transition-property: color; 
 	transition-duration: 0.2s;
@@ -74,22 +70,7 @@
 {
 	visibility: collapse;
 }
-.PanelOptions
-{
-	width: 300px;
-	height: 100%;
 
-	padding: 2px;
-	height: 100%;
-	flow-children: right;
-}
-
-.PanelOptions2
-{
-	height: 100%;
-	width: 65px;
-	vertical-align: middle; 
-}
 
 #SitButton
 {
@@ -293,45 +274,6 @@
     wash-color: #ffffff;
 }
 
-.Player{
-	margin-top: 10px;
-	flow-children: right;
-	height: 60px;
-	
-	padding: 10px;
-	
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
-	border: 2px solid #5e686966;
-	
-}
-
-.Player:hover, .Local:hover{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #333333 ) );
-
-	transition-property: background-color;
-	transition-duration: 0.2s;
-	transition-timing-function: ease-in-out;
-}
-
-.Ready, .Ready:hover{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #80a438 ), to( #597227 ));
-}
-
-.Local{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
-	border: 1px solid #aea600;
-}
-
-.Host{
-	width: 50px;
-	height: 100%;
-	
-    background-image: url("s2r://panorama/images/status_icons/icon_star_png.vtex");
-
-	background-repeat: no-repeat;
-	background-position: right 38px 35%;
-	background-size: 32px 100%; 
-}
 #Left_Bar{
 	width: 100%;
 	height: 100%;
@@ -421,49 +363,9 @@
 	color: #EEEEEE;
 }
 
-#Description_Header{
+.Description_Header{
 	color: gold;
 	font-size: 22px;
-}
-
-.Player:disabled{
-	margin-top: 10px;
-	flow-children: right;
-	height: 60px;
-	width: 1000px;
-	
-	padding: 5px;
-	
-	border: 2px solid #5e686966;
-	
-}
-
-#PlayerName{
- 
-	flow-children: right;
-	margin-left: 5px;
-	margin-right: 5px;
-	
-	width: 100%;
-	height: 100%;
-
-	padding: 5px;
-}
-
-#PlayerName Label{
-	font-size: 20px;
-    font-weight: normal;
-    text-transform: uppercase;
-    color: #d5d7d7;
-	
-    vertical-align: middle;
-	margin-left: 2px; 
-}
-
-#PlayerAvatar{
-	height: 100%;
-	width: 65px;
-	vertical-align: middle; 
 }
 
 #HudButton{
@@ -530,8 +432,39 @@
 /*  DropDown                                                                 */
 /* ------------------------------------------------------------------------- */
 
-#RaceDropDown, #TeamDropDown, #ColorDropDown
-{
+
+#TeamDropDown, #ColorDropDown, #RaceDropDown{
+	margin-left: 5px;
+	background-color: #292e2e;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+
+	background-image: url("s2r://panorama/images/control_icons/arrow_dropdown_png.vtex");
+	
+	background-repeat: no-repeat;
+	background-position: right 38px 35%;
+	background-size: 32px 32px;
+	box-shadow: #000000 -2px -2px 1px 4px;
+	
+	border: 2px solid #5e686966;
+	
+	height: drop_down_height;
+	padding: 4px 8px;
+	vertical-align: center;
+	
+	transition-property: background-color, border;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
+}
+#ColorDropDown{
+	width: 45px;
+}
+#RaceDropDown{
+	width: 125px;
+}
+#TeamDropDown{
+	width: drop_down_width;
+}
+#OptionsDropDown{
 	margin-left: 5px;
 	background-color: #292e2e;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
@@ -546,40 +479,14 @@
 	border: 2px solid #5e686966;
 	
 	font-size: 24px;
-	width: drop_down_width;
+	width: 45px;
 	height: drop_down_height;
 	padding: 4px 8px;
-	z-index: 1;
 	vertical-align: center;
 	
 	transition-property: background-color, border;
 	transition-duration: 0.15s;
 	transition-timing-function: linear;
-}
-
-#OptionsDropDown{
-	background-color: #292e2e;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
-
-	background-image: url("s2r://panorama/images/control_icons/arrow_dropdown_png.vtex");
-	
-	background-repeat: no-repeat;
-	background-position: right 38px 35%;
-	background-size: 32px 32px;
-	box-shadow: #00000055 -2px -2px 1px 4px;
-	
-	border: 2px solid #5e686966;
-	
-	font-size: 24px;
-	width: 45px;
-	height: 100%;
-	z-index: 1;
-	vertical-align: center;
-	
-	transition-property: background-color, border;
-	transition-duration: 0.15s;
-	transition-timing-function: linear;
-	padding: 50px;
 }
 
 #OptionsDropDown:disabled{
@@ -613,8 +520,8 @@ opacity: 0.8;
 #RaceDropDown Label, #TeamDropDown Label, #ColorDropDown Label, #OptionsDropDown Label
 {
 	width: 100%;
-	margin: 3px 29px 0px 6px;
-	font-size: 18px;
+	padding: 2px;
+	font-size: 16px;
 		
 	transition-property: color;
 	transition-duration: 0.15s;
@@ -715,4 +622,150 @@ DropDownMenu.DropDownMenuVisible
 {
 	height: 100%;
 	width: 20%;
+}
+
+/*//////////*/
+/* OVERLAY  */
+/*//////////*/
+
+#PopUpOverlay{
+	height: 100%;
+	width: 100%;
+}
+
+#BotOptions{
+	height: 100%;
+	width: 100%;
+}
+
+.Mask{
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	opacity: 0.5;
+}
+
+.CenterContainer{
+	horizontal-align: middle;
+	vertical-align: middle;
+	border: 1px solid grey;	
+	padding: 30px;
+	flow-children: down;
+}
+
+.CenterContainer Label{
+	horizontal-align: middle;
+	vertical-align: middle;
+	padding: 10px;
+	padding-top: 0px;
+	font-size: 22px;
+	color: white;
+}
+
+/*//////////*/
+/* Player  */
+/*//////////*/
+
+.Player{
+	margin-bottom: 10px;
+	flow-children: right;
+	
+	padding: 10px;
+	
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
+	border: 2px solid #5e686966;
+	
+}
+
+.Player:hover, .Local:hover{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #333333 ) );
+
+	transition-property: background-color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.Ready, .Ready:hover{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #80a438 ), to( #597227 ));
+}
+
+.Local{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
+	border: 1px solid #aea600;
+}
+
+.Host{
+	width: 30px;
+	height: 30px;
+	horizontal-align: right;
+	
+    background-image: url("s2r://panorama/images/status_icons/icon_star_png.vtex");
+
+	background-repeat: no-repeat;
+	/*background-position: right 38px 35%;*/
+	background-size: 80%; 
+}
+
+.Player:disabled{
+	margin-top: 10px;
+	flow-children: down;
+	height: 60px;
+	width: 1000px;
+	
+	padding: 5px;
+	
+	border: 2px solid #5e686966;
+	
+}
+
+#PlayerName{ 
+	flow-children: right;
+	 
+	height: 100%;
+
+	padding: 5px;
+}
+
+#PlayerName Label{
+	font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #d5d7d7;
+}
+
+#PlayerAvatar{
+	height: 90%;
+	width: 90%;
+	vertical-align: middle; 
+	horizontal-align: middle;
+}
+
+.PanelOptions
+{
+	width: 175px;
+	height: 35px;
+
+	padding: 2px;
+	flow-children: right;
+}
+
+#PlayerHeader
+{
+	height: 45px;
+}
+
+.PlayerAvatarAndColorContainer
+{
+	height: 100%; 
+	width: 45px;
+	margin-left: 10px;
+	horizontal-align: middle;
+	vertical-align: middle;
+}
+
+#PlayerColor{
+	width: 100%;
+	height: 100%;
+	horizontal-align: middle;
+	vertical-align: middle;
 }

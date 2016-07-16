@@ -6,22 +6,22 @@
   <scripts>
     <include src="file://{resources}/scripts/team_selection/dotacraft_pre_selection.js" /> 
   </scripts>
-	<Panel class="PreGameSelectionRoot" hittest="false">	
+	<Panel class="PreGameSelectionRoot" hittest="false">			
 		<Panel id="Left_Bar" hittest="false">
-			<Panel id="PlayerListContainer" hittest="false"/>
-		</Panel>	
+			<Panel id="PlayerListContainer" hittest="false" />
+		</Panel>
 		
 		<Panel id="Right_Bar">
 			<Label id="Addon_Name" text="Dotacraft"/>
 			<Panel id="Minimap" /> 
 			<Label id="Minimap_Name" />
 			<Panel id="Suggested_Players" >
-				<Label id="Description_Header" text="Suggested Players:"/> 
+				<Label id="suggested_players_header" class="Description_Header" text=""/> 
 				<Label id="Suggested_Players_Text" /> 
 			</Panel>
 			
 			<Panel id="Map_Description">
-				<Label id="Description_Header" text="Map Description:"/> 
+				<Label id="map_description_header" class="Description_Header" text=""/> 
 				<Label id="Map_Description_Text" /> 
 			</Panel>
 				
@@ -30,21 +30,39 @@
 			</Button>
 		</Panel>
 		
+		<Panel id="PopUpOverlay" hittest="false" >
+		
+			<Panel id="BotOptions" hittest="true" class="hidden">
+				<Panel class="Mask" />
+				<Panel class="CenterContainer">
+					<Label text="Bot Creation" />
+					<DropDown id="TeamDropDown" oninputsubmit="BotTeamSpecified()" >
+						<Label text="" id="0" />
+						<Label text="" id="1" 	class="hidden" />
+						<Label text="" id="2" 	class="hidden" />
+						<Label text="" id="3" 	class="hidden" /> 
+						<Label text="" id="4" 	class="hidden" />
+						<Label text="" id="5" 	class="hidden" />
+						<Label text="" id="6" 	class="hidden" />
+					</DropDown>
+				</Panel>
+			</Panel>				
+		</Panel>
+		
 		<Panel id="HostPanel">		
 			<Panel id="HostContainer" class="HostContainer">
-				<Label id="Host_Header" text="Host Control Panel" />
+				<Label id="Host_Header" text="" />
 
 				<Panel class="ToggleItem">
 					<ToggleButton id="LockPlayers" class="ToggleItemValue" checked="false" onactivate="LockPlayers()" />
-					<Label class="ToggleItemLabel" text="Lock Players" />
+					<Label id="LockPlayerLabel" class="ToggleItemLabel" text="" />
 				</Panel>
 				
-				<Button id="CreateBot" class="Button" onactivate="CreateBot()">
-					<Label class="ButtonText" text="Create Bot"/>  
-				</Button> 
-			</Panel>
-				
-		</Panel>
+				<Button id="CreateBot" class="Button" onactivate="DisplayBotPopUp()">
+					<Label id="CreateBotText" class="ButtonText" text=""/>  
+				</Button>  
+			</Panel>				
+		</Panel>	
 		
 	</Panel>
 </root>

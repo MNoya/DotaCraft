@@ -61,11 +61,21 @@ var MAP_PLAYER_LIMIT;
 	
 	SetupTeamContainers();
 
+	SetupLocalisation();
 	Setup_Panaroma_Color_Table(); 
+	SetupTeamDropDown();
 	Setup_Minimap();	
 	CreateAllPlayers(); 
 	CheckForHostprivileges();
 })();
+
+function SetupLocalisation(){
+	Root.FindChildTraverse("CreateBotText").text = $.Localize("button_create_bot");
+	Root.FindChildTraverse("LockPlayerLabel").text = $.Localize("toggle_lock_players");
+	Root.FindChildTraverse("Host_Header").text = $.Localize("host_header");
+	Root.FindChildTraverse("map_description_header").text = $.Localize("map_description")
+	Root.FindChildTraverse("suggested_players_header").text = $.Localize("suggested_players");
+};
 
 function HandleEvents(data){
 	var event = data.Event_Name;
@@ -99,15 +109,34 @@ function DeletePlayer(data){
 ///////////////////////////////////////////////
 // 					Buttons			 		 //
 ///////////////////////////////////////////////
-function CreateBot()
+function DisplayBotPopUp(){
+	var newPlayerID = SelectBotPlayerID();
+	if( newPlayerID <= MAP_PLAYER_LIMIT ){
+		$('#BotOptions').ToggleClass("hidden");
+	}else{
+		CreateNotification("MAX BOT COUNT REACHED");
+	};
+};
+
+function CreateBot(teamID)
 {
 	var newPlayerID = SelectBotPlayerID();
 	if( newPlayerID <= MAP_PLAYER_LIMIT ){
-		var newTeamID = SelectedTeamIDBasedOnSmallestTeam();
+		//var newTeamID = SelectedTeamIDBasedOnSmallestTeam();
+		var newTeamID = teamID;
 		var newColorID = SelectUnusedColor();
 		//var newColorID = 1;
 		SendEventToServer("create_bot", { "ID" : newPlayerID, "TeamID" : newTeamID, "ColorID": newColorID });
-	};
+	}
+};
+
+function BotTeamSpecified(){
+	var panel = Root.FindChildTraverse("TeamDropDown")
+	if( panel.GetSelected().id != 0 ){
+		CreateBot( panel.GetSelected().id );
+		$('#BotOptions').ToggleClass("hidden");
+		panel.SetSelected(0);
+	}
 };
 
 function SelectBotPlayerID(){
@@ -202,10 +231,10 @@ function SetupTeamContainers(){
 	
 		var label = $.CreatePanel("Label", TeamContainer, "Team_Label");
 		label.AddClass("TeamLabel");
-		label.text = "Team "+i;
+		label.text = i;
 	};
 };
-
+ 
 function FindPlayer(playerID){
 	return PlayerContainer.FindChildTraverse("Player_"+playerID);
 };
@@ -400,6 +429,17 @@ function Initiate_Game(){
 	GameEvents.SendCustomGameEventToServer("selection_over", {});
 };
 
+function CreateNotification(inputText){
+	var Left_Bar = Root.FindChildTraverse("Left_Bar");
+	
+	// create header
+	var Timer_Header = $.CreatePanel("Label", Left_Bar, "CountDownHeader");
+	Timer_Header.text = "ERROR: " + inputText;
+
+	// delete after 1 second
+	Timer_Header.DeleteAsync(2);		
+};
+
 // simple timer function
 function CountDown(){
 	$.Msg("Countdown Time: "+Root.time_left);
@@ -472,7 +512,24 @@ function Setup_Panaroma_Color_Table(){
 		dotacraft_Colors[key] = { r: Colors[key].value.r, g: Colors[key].value.g, b: Colors[key].value.b, "taken": false };
 	};
 };    
+
+function SetupTeamDropDown(){ // enable dropdown menu children count to player count
+	var dropdown = Root.FindChildTraverse("TeamDropDown");
+
+	var count = MAP_PLAYER_LIMIT;
  
+	// init first child
+	dropdown.FindDropDownMenuChild(0).text = $.Localize("team_select");
+	dropdown.SetSelected(0);
+	dropdown.GetChild(0).text = $.Localize("team_select");
+	
+	for (i = 1; i <= count; i++) {
+		var dropdown_child = dropdown.FindDropDownMenuChild(i);
+		dropdown_child.SetHasClass('hidden', false);
+		dropdown_child.text = $.Localize("team") + " " + i;
+	};
+};  
+  
 function Setup_Minimap(){ 
 	var Map_Info = Game.GetMapInfo()
 	var Map_Name = Map_Info.map_display_name.substring(Map_Info.map_display_name.indexOf('_')+1);

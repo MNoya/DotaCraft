@@ -6,34 +6,23 @@
 		<include src="file://{resources}/scripts/team_selection/dotacraft_player.js" />
 	</scripts>
 	<Panel class="Player">
-		<Panel class="PanelOptions2" >
-			<DOTAAvatarImage id="PlayerAvatar" />
+		<Panel id="PlayerHeader" >
+			<Panel class="PlayerAvatarAndColorContainer">
+				<Panel id="PlayerColor" />
+				<DOTAAvatarImage id="PlayerAvatar" />
+			</Panel>
 		</Panel>
-		<Panel class="PanelOptions">
-			<DropDown id="OptionsDropDown" class="hidden">
-				<Label text="Computer (Easy)" 	id="1" /> 
-				<Label text="Computer (Normal)" id="2" /> 
-				<Label text="Computer (Hard)" 	id="3" /> 
-				<Label text="Remove" 			id="0" />
-			</DropDown>
+		<Panel id="PanelOptions" class="PanelOptions">
 			<DOTAUserName id="PlayerName" />
-		</Panel>
-		<!--<DropDown id="TeamDropDown">
-			<Label text="Team 1" id="2" />
-			<Label text="Team 2" id="3" />
-			<Label text="Team 3" id="6" /> 
-			<Label text="Team 4" id="7" />
-			<Label text="Team 5" id="8" />
-			<Label text="Team 6" id="9" />
-		</DropDown>-->
+		</Panel> 
 		<DropDown id="RaceDropDown">
-			<Label text="Random" 	id="0" />
-			<Label text="Human" 	id="1" />
-			<Label text="Orc" 		id="2" />
-			<Label text="Night Elf" id="3" />
-			<Label text="Undead" 	id="4" />
+			<Label text="" 	id="0" />
+			<Label text="" 	id="1" />
+			<Label text="" 	id="2" />
+			<Label text="" 	id="3" />
+			<Label text="" 	id="4" />
 		</DropDown>
-		<DropDown id="ColorDropDown">
+		<DropDown id="ColorDropDown" >
 			<Label text="" id="0" />
 			<Label text="" id="1" />
 			<Label text="" id="2" />
@@ -46,12 +35,23 @@
 			<Label text="" id="9" />
 			<Label text="" id="10" />
 			<Label text="" id="11" />
-		</DropDown>
-	
-		<!--
-		<Button id="HudButton" onactivate="ReadyUp()">
+		</DropDown>	
+		<DropDown id="OptionsDropDown" class="hidden">
+			<Label text="" 		id="1" /> 
+			<Label text="" 		id="2" /> 
+			<Label text="" 		id="3" /> 
+			<Label text="" 		id="0" />
+		</DropDown>		
+		<!--<DropDown id="TeamDropDown">
+			<Label text="Team 1" id="2" />
+			<Label text="Team 2" id="3" />
+			<Label text="Team 3" id="6" /> 
+			<Label text="Team 4" id="7" />
+			<Label text="Team 5" id="8" />
+			<Label text="Team 6" id="9" />
+		</DropDown>-->
+		<!--<Button id="HudButton" onactivate="ReadyUp()">
 			<Label id="PlayerScoreButtonLabel" text="Ready" />
-		</Button>
-		-->
+		</Button>-->
 	</Panel>
 </root>
