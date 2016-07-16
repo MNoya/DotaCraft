@@ -8,6 +8,7 @@
   </scripts>
 	<Panel class="PreGameSelectionRoot" hittest="false">			
 		<Panel id="Left_Bar" hittest="false">
+			<Panel id="NotificationContainer" hittest="false" />
 			<Panel id="PlayerListContainer" hittest="false" />
 		</Panel>
 		
@@ -25,9 +26,9 @@
 				<Label id="Map_Description_Text" /> 
 			</Panel>
 				
-			<Button id="StartButton" onactivate="InitStartGame()">
+			<!--<Button id="StartButton" onactivate="InitStartGame()">
 				<Label text="Start Game"/>
-			</Button>
+			</Button>   DISABLED FUNCTIONALITY -->
 		</Panel>
 		
 		<Panel id="PopUpOverlay" hittest="false" >
@@ -53,10 +54,10 @@
 			<Panel id="HostContainer" class="HostContainer">
 				<Label id="Host_Header" text="" />
 
-				<Panel class="ToggleItem">
+				<!--<Panel class="ToggleItem">
 					<ToggleButton id="LockPlayers" class="ToggleItemValue" checked="false" onactivate="LockPlayers()" />
 					<Label id="LockPlayerLabel" class="ToggleItemLabel" text="" />
-				</Panel>
+				</Panel>   DISABLED FUNCTIONALITY -->
 				
 				<Button id="CreateBot" class="Button" onactivate="DisplayBotPopUp()">
 					<Label id="CreateBotText" class="ButtonText" text=""/>  

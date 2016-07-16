@@ -29,6 +29,22 @@ var dotacraft_Teams = {
 	5: 9
 };
 
+var ROUND_TIME = 120;
+var currentTime = ROUND_TIME;
+function HandleRoundTime(){
+
+	if( !Root.CountDown ){
+		Root.FindChildTraverse("RoundTimer").text = "Round Time: "+currentTime+"s";
+		currentTime--;
+		if( currentTime != 0){
+			$.Schedule(1, HandleRoundTime);
+		}else{
+			Start_Game();
+		};
+	}else
+		Root.FindChildTraverse("RoundTimer").visible = false;
+};
+
 // table used to store the colors
 var dotacraft_Colors = {};
 
@@ -67,11 +83,14 @@ var MAP_PLAYER_LIMIT;
 	Setup_Minimap();	
 	CreateAllPlayers(); 
 	CheckForHostprivileges();
+	$.Schedule(1, HandleRoundTime);
+	var roundTimer = $.CreatePanel("Label", Root.FindChildTraverse("NotificationContainer"), "RoundTimer");
+	$.Schedule(1, Update);
 })();
 
 function SetupLocalisation(){
 	Root.FindChildTraverse("CreateBotText").text = $.Localize("button_create_bot");
-	Root.FindChildTraverse("LockPlayerLabel").text = $.Localize("toggle_lock_players");
+	//Root.FindChildTraverse("LockPlayerLabel").text = $.Localize("toggle_lock_players");
 	Root.FindChildTraverse("Host_Header").text = $.Localize("host_header");
 	Root.FindChildTraverse("map_description_header").text = $.Localize("map_description")
 	Root.FindChildTraverse("suggested_players_header").text = $.Localize("suggested_players");
@@ -319,25 +338,42 @@ function UpdatePlayerLock(data){
 // main logic behind when everybody is ready
 // currently NOT IN USE, this only works when it's based on a "all ready" system
 function Ready_Status(){
-	var PlayerIDList = Game.GetAllPlayerIDs();
-	var AmountOfPlayersReady = 0;
-	
 	//$.Msg("CHECKING READY STATUS")
 	// check all the player panel property .Ready
-	for(var PlayerID of PlayerIDList){
-		var PlayerPanel = PlayerContainer.FindChildTraverse(PlayerID);
-		if(PlayerPanel != null && PlayerPanel.Ready != null){
-			if(PlayerPanel.Ready){
-				AmountOfPlayersReady++;
+	var everyoneReady = true;
+	var playerCount = 0;
+	for(var i = 0; i <= MAP_PLAYER_LIMIT; i++){
+		var PlayerPanel = FindPlayer(i);
+		if(PlayerPanel != null){
+			playerCount += 1;
+			if( !PlayerPanel.PlayerReady){
+				everyoneReady = false;
 			};  
 		};  
 	}; 
 
 	// if all players are ready and game hasn't already started, then start the game
-	if(AmountOfPlayersReady == PlayerIDList+1 && !Root.Game_Started && !Root.CountDown){
-		Start_Game(); 
+	if( (everyoneReady && playerCount > 0) && !Root.Game_Started && !Root.CountDown){
+		Start_Game();
+		LockEverything();
 	};   
-};   
+};  
+
+function LockEverything(){
+	for(var i = 0; i <= MAP_PLAYER_LIMIT; i++){
+		var PlayerPanel = FindPlayer(i);
+		
+		if( PlayerPanel != null )
+			PlayerPanel.LockEverything();
+	};
+	
+	Root.FindChildTraverse("CreateBot").enabled = false;
+};
+
+function Update(){
+	Ready_Status();
+	$.Schedule(1, Update);
+};
 
 ///////////////////////////////////////////////
 // 		Create & Update Player Logic	 	 //
@@ -375,8 +411,8 @@ function CreateAllPlayers(){
 function CheckForHostprivileges(){
 	if( isHost() ){
 		// set the start button visible to the host
-		var Force_Start_Button = Root.FindChildTraverse("StartButton");
-		Force_Start_Button.visible = true;
+		//var Force_Start_Button = Root.FindChildTraverse("StartButton");
+		//Force_Start_Button.visible = true;
 
 		// enable host panel 
 		var Host_Panel = Root.FindChildTraverse("HostPanel");
@@ -430,10 +466,8 @@ function Initiate_Game(){
 };
 
 function CreateNotification(inputText){
-	var Left_Bar = Root.FindChildTraverse("Left_Bar");
-	
 	// create header
-	var Timer_Header = $.CreatePanel("Label", Left_Bar, "CountDownHeader");
+	var Timer_Header = $.CreatePanel("Label", Root.FindChildTraverse("NotificationContainer"), "CountDownHeader");
 	Timer_Header.text = "ERROR: " + inputText;
 
 	// delete after 1 second

@@ -63,7 +63,7 @@ function ReadyUp(){
 		Root.PlayerReady = false;
 	};
 
-	UpdatePlayer();
+	UpdatePlayer({ Ready: Root.PlayerReady });
 };
 
 Root.FindChildTraverse("OptionsDropDown").SetPanelEvent('oninputsubmit', function OptionsInput(){
@@ -149,6 +149,8 @@ function UpdatePlayer( UpdateTable ){
 		UpdateTable.Race = Root.PlayerRace;
 	if( UpdateTable.Color == null ) // color
 		UpdateTable.Color = Root.PlayerColor;
+	if( UpdateTable.Ready == null )
+		UpdateTable.Ready = Root.PlayerReady;
 	if( UpdateTable.Bot == null && Root.Bot )
 		UpdateTable.Bot = true;
 	if( Root.Bot && UpdateTable.aiLVL == null )
@@ -194,7 +196,13 @@ function NetTableUpdatePlayer(tableName, key, val){
 			$("#PlayerAvatar").visible = false;
 			$("#PlayerName").GetChild(0).text = Bot_Names[val.Bot_Name];  
 		};
-				
+		
+		if( val.Ready != null  ){
+			Root.SetHasClass("Ready", val.Ready);
+			Root.PlayerReady = val.Ready;
+			SetDropDownStates(!val.Ready);
+		};
+		
 		$.Msg("[Player]: "+PlayerID+" is updating"); 
 
 		if( val.Lock != null){
@@ -382,8 +390,14 @@ function UpdateColorDropDownColor()
 function SetDropDownStates(Enabled){
 	for(var index in dotacraft_DropDowns){
 		var dropdown = Root.FindChildTraverse(dotacraft_DropDowns[index]);	
-		dropdown.enabled = Enabled;
+		if( dropdown != null )
+			dropdown.enabled = Enabled;
 	};	
+};
+
+Root.LockEverything = function(){
+	SetDropDownStates(true);
+	Root.FindChildTraverse("ReadyButton").enabled = false;
 };
 
 function Setup_Panaroma_Color_Table(){

@@ -37,10 +37,10 @@
 			<Label text="" id="11" />
 		</DropDown>	
 		<DropDown id="OptionsDropDown" class="hidden">
-			<Label text="" 		id="1" /> 
-			<Label text="" 		id="2" /> 
-			<Label text="" 		id="3" /> 
-			<Label text="" 		id="0" />
+			<Label text="" 	id="1" /> 
+			<Label text="" 	id="2" /> 
+			<Label text="" 	id="3" /> 
+			<Label text="" 	id="0" />
 		</DropDown>		
 		<!--<DropDown id="TeamDropDown">
 			<Label text="Team 1" id="2" />
@@ -50,8 +50,8 @@
 			<Label text="Team 5" id="8" />
 			<Label text="Team 6" id="9" />
 		</DropDown>-->
-		<!--<Button id="HudButton" onactivate="ReadyUp()">
+		<Button id="ReadyButton" onactivate="ReadyUp()">
 			<Label id="PlayerScoreButtonLabel" text="Ready" />
-		</Button>-->
+		</Button>
 	</Panel>
 </root>

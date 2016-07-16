@@ -368,10 +368,12 @@
 	font-size: 22px;
 }
 
-#HudButton{
-	height: drop_down_height;
-	width: 100px;
+#ReadyButton{
+	width: 90px;
 	margin-right: 5px;
+	margin-left: 5px;
+	
+	padding: 4px 8px;
 	
 	vertical-align: middle;
 	horizontal-align: right; 
@@ -397,13 +399,13 @@
 	width: 75px;
 }
 
-#Hudbutton:enabled:hover
+#ReadyButton:enabled:hover
 {
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #5f6663 ), to( #b4c2c1 ));
 }
 
-#HudButton Label{
-    font-size: 24px;
+#ReadyButton Label{
+    font-size: 18px;
     font-weight: normal;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -413,16 +415,16 @@
 	horizontal-align: middle;
 }
 
-#HudButton:enabled:hover Label{
+#ReadyButton:enabled:hover Label{
     color: white;
 }
 
-#HudButton:active 
+#ReadyButton:active 
 {
     wash-color: #ffffff;
 }
 
-#HudButton:disabled
+#ReadyButton:disabled
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
 	border: 2px solid #3b414266;
@@ -499,6 +501,17 @@
 opacity: 0.8;
 
 }
+
+#NotificationContainer{
+	padding: 20px;
+	horizontal-align: middle;
+}
+
+#NotificationContainer Label{
+	color: yellow;
+	font-size: 32px;
+}
+
 #RaceDropDown:enabled:hover, #TeamDropDown:enabled:hover, #ColorDropDown:enabled:hover, #OptionsDropDown:enabled:hover
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #393e3e ), to( #292e2e ) );
@@ -673,8 +686,7 @@ DropDownMenu.DropDownMenuVisible
 	padding: 10px;
 	
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
-	border: 2px solid #5e686966;
-	
+	border: 2px solid #5e686966;	
 }
 
 .Player:hover, .Local:hover{
@@ -685,12 +697,14 @@ DropDownMenu.DropDownMenuVisible
 	transition-timing-function: ease-in-out;
 }
 
-.Ready, .Ready:hover{
+.Ready { 
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #80a438 ), to( #597227 ));
+}
+.Ready:hover{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #50a125 ), to( #699449 ));
 }
 
 .Local{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #292e2e ) );
 	border: 1px solid #aea600;
 }
 
