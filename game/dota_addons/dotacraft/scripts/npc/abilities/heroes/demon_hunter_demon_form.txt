@@ -1,89 +1,85 @@
 // Demon Hunter Demon Form
 // Author: Noya
-// Date: 09.08.2015.
-// Notes: Transforms the Demon Hunter into a powerful demon with a ranged attack (60 range) and 500 bonus hit points.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	60 sec.	180 sec.	150	N/A	N/A	Self	+500 HP, 3 HP regenerated/sec	6
+// Description: Transforms the Demon Hunter into a powerful demon with a ranged attack (60 range) and 500 bonus hit points.
+
 "demon_hunter_demon_form"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"demon_hunter_demon_form"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "demon_hunter_demon_form"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE" 
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"	
+    "AbilityCooldown"               "180"
+    "AbilityManaCost"               "150"
 
-	"AbilityCooldown"				"180"
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "60"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_health"          "500"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_health_regen"    "3"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_range"           "422"
+        }
+        "05"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "range_tooltip"         "600"
+        }
+        "06"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "transformation_time"   "0.8"
+        }
+    }
 
-	"AbilityManaCost"				"150"
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+        "particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+        "particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+        "particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+        "particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+        "model"     "models/heroes/terrorblade/demon.vmdl"
+    }
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"duration"				"60"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_health"			"500"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_health_regen"	"3"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_range"			"422"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"range_tooltip"			"600"
-		}
-		"06"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"transformation_time"	"0.8"
-		}
-	}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"        "Hero_Terrorblade.Metamorphosis"
+            "Target"            "CASTER"
+        }
+        "FireEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "Target"            "CASTER"
+        }
+        "ApplyModifier"
+        {
+            "ModifierName"      "modifier_demon_form_transform"
+            "Target"            "CASTER"
+        }
+    }
 
-	"precache"
-	{
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
-		"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
-		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
-		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
-		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
-		"model"		"models/heroes/terrorblade/demon.vmdl"
-	}
-
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"		"Hero_Terrorblade.Metamorphosis"
-			"Target"			"CASTER"
-		}
-		"FireEffect"
-		{
-			"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
-			"EffectAttachType"	"follow_origin"
-			"Target"			"CASTER"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_demon_form_transform"
-			"Target"			"CASTER"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_demon_form_transform"
+    "Modifiers"
+    {
+        "modifier_demon_form_transform"
         {
             "IsHidden"  "1"
             "Duration"  "%transformation_time"
@@ -101,64 +97,9 @@
                 {
                     "ModifierName"  "modifier_demon_form"
                     "Target"        "CASTER"
+                    "Duration"      "%duration"
                 }
             }
         }
-
-		"modifier_demon_form"
-		{
-			"Duration"	"%duration"
-			
-			"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
-			"EffectAttachType"  "follow_origin"
-
-			"AllowsIllusionDuplicate"	"1"
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
-				"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS" 			"%bonus_health"		
-				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 	"%bonus_health_regen"				
-			}
-
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"			"heroes/demon_hunter/demon_form.lua"
-					"Function"				"ModelSwapStart"
-					"model"					"models/heroes/terrorblade/demon.vmdl"
-					"projectile_model"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"		"heroes/demon_hunter/demon_form.lua"
-					"Function"			"HideWearables"
-				}
-
-				"AttachEffect"
-				{
-					"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"TARGET"
-				}
-			}
-
-			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/demon_hunter/demon_form.lua"
-					"Function"		"ModelSwapEnd"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/demon_hunter/demon_form.lua"
-					"Function"		"ShowWearables"
-				}
-			}
-		}
-	}
+    }
 }
