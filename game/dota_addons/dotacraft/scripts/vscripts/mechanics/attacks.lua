@@ -133,36 +133,8 @@ function AttackGroundPos(attacker, position)
 end
 
 -- Deals damage based on the attacker around a position, with full/medium/small factors based on distance from the impact
-function SplashAttackGround( attacker, position )
-    local full_damage_radius = GetFullSplashRadius(attacker)
-    local medium_damage_radius = GetMediumSplashRadius(attacker)
-    local small_damage_radius = GetSmallSplashRadius(attacker)
-
-    local full_damage = attacker:GetAttackDamage()
-    local medium_damage = full_damage * GetMediumSplashDamage(attacker)
-    local small_damage = full_damage * GetSmallSplashDamage(attacker)
-    medium_damage = medium_damage + small_damage -- Small damage gets added to the mid aoe
-
-    local splash_targets = FindAllUnitsAroundPoint( attacker, position, small_damage_radius )
-    if DEBUG then
-        DebugDrawCircle(position, Vector(255,0,0), 50, full_damage_radius, true, 3)
-        DebugDrawCircle(position, Vector(255,0,0), 50, medium_damage_radius, true, 3)
-        DebugDrawCircle(position, Vector(255,0,0), 50, small_damage_radius, true, 3)
-    end
-
-    -- Damage each unit only once
-    for _,unit in pairs(splash_targets) do
-        if not unit:HasFlyMovementCapability() then
-            local distance_from_impact = (unit:GetAbsOrigin() - position):Length2D()
-            if distance_from_impact <= full_damage_radius then
-                ApplyDamage({ victim = unit, attacker = attacker, damage = full_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-            elseif distance_from_impact <= medium_damage_radius then
-                ApplyDamage({ victim = unit, attacker = attacker, damage = medium_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-            else
-                ApplyDamage({ victim = unit, attacker = attacker, damage = small_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-            end
-        end
-    end
+function SplashAttackGround(attacker, position)
+    SplashAttackUnit(attacker, position)
     
     -- Hit ground particle. This could be each particle endcap instead
     local hit = ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnus_dust_hit.vpcf", PATTACH_CUSTOMORIGIN, attacker)
@@ -189,30 +161,33 @@ function SplashAttackGround( attacker, position )
     end
 end
 
-function SplashAttackUnit( attack_damage, attacker, victim )
-    local position = victim:GetAbsOrigin()
-    local medium_radius = GetMediumSplashRadius(attacker)
-    local medium_damage = attack_damage * GetMediumSplashDamage(attacker)
-    local small_radius = GetSmallSplashRadius(attacker)
-    local small_damage = attack_damage * GetSmallSplashDamage(attacker)
+function SplashAttackUnit(attacker, position)
+    local full_damage_radius = attacker:GetKeyValue("SplashFullRadius") or 0
+    local medium_damage_radius = attacker:GetKeyValue("SplashMediumRadius") or 0
+    local small_damage_radius = attacker:GetKeyValue("SplashSmallRadius") or 0
 
-    --print("Attacked for "..attack_damage.." - Splashing "..medium_damage.." damage in "..medium_radius.." (medium radius) and "..small_damage.." in "..small_radius.." (small radius)")
-
-    local targets_medium_radius = FindAllUnitsInRadius(target, medium_radius)
-    DebugDrawCircle(position, Vector(255,0,0), 100, medium_radius, true, 3)
-    for _,v in pairs(targets_medium_radius) do
-        if v ~= attacker and v ~= victim then
-            v.damage_from_splash = medium_damage
-            ApplyDamage({ victim = v, attacker = attacker, damage = medium_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-        end
+    local full_damage = attacker:GetAttackDamage()
+    local medium_damage = full_damage * attacker:GetKeyValue("SplashMediumDamage") or 0
+    local small_damage = full_damage * attacker:GetKeyValue("SplashSmallDamage") or 0
+    medium_damage = medium_damage + small_damage -- Small damage gets added to the mid aoe
+    local splash_targets = FindAllUnitsAroundPoint(attacker, position, small_damage_radius)
+    if DEBUG then
+        DebugDrawCircle(position, Vector(255,0,0), 50, full_damage_radius, true, 3)
+        DebugDrawCircle(position, Vector(255,0,0), 50, medium_damage_radius, true, 3)
+        DebugDrawCircle(position, Vector(255,0,0), 50, small_damage_radius, true, 3)
     end
 
-    local targets_small_radius = FindAllUnitsInRadius(target, small_radius)
-    DebugDrawCircle(position, Vector(255,0,0), 100, small_radius, true, 3)
-    for _,v in pairs(targets_small_radius) do
-        if v ~= attacker and v ~= victim then
-            v.damage_from_splash = small_damage
-            ApplyDamage({ victim = v, attacker = attacker, damage = small_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+    -- Damage each unit only once
+    for _,unit in pairs(splash_targets) do
+        if not unit:HasFlyMovementCapability() then
+            local distance_from_impact = (unit:GetAbsOrigin() - position):Length2D()
+            if distance_from_impact <= full_damage_radius then
+                ApplyDamage({ victim = unit, attacker = attacker, damage = full_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
+            elseif distance_from_impact <= medium_damage_radius then
+                ApplyDamage({ victim = unit, attacker = attacker, damage = medium_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
+            else
+                ApplyDamage({ victim = unit, attacker = attacker, damage = small_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
+            end
         end
     end
 end
@@ -234,63 +209,4 @@ function SetAttacksEnabled( unit, attack_string )
     
     unitTable["AttacksEnabled"] = attack_string
     CustomNetTables:SetTableValue("attacks_enabled", unitName, {enabled = attack_string})
-end
-
--- Searches for "AttacksEnabled", false by omission
-function HasSplashAttack( unit )
-    local unitName = unit:GetUnitName()
-    local unit_table = GameRules.UnitKV[unitName]
-    
-    if unit_table then
-        if unit_table["SplashAttack"] and unit_table["SplashAttack"] == 1 then
-            return true
-        end
-    end
-
-    return false
-end
-
-function GetFullSplashRadius( unit )
-    local unitName = unit:GetUnitName()
-    local unit_table = GameRules.UnitKV[unitName]
-    if unit_table["SplashFullRadius"] then
-        return unit_table["SplashFullRadius"]
-    end
-    return 0
-end
-
-function GetMediumSplashRadius( unit )
-    local unitName = unit:GetUnitName()
-    local unit_table = GameRules.UnitKV[unitName]
-    if unit_table["SplashMediumRadius"] then
-        return unit_table["SplashMediumRadius"]
-    end
-    return 0
-end
-
-function GetSmallSplashRadius( unit )
-    local unitName = unit:GetUnitName()
-    local unit_table = GameRules.UnitKV[unitName]
-    if unit_table["SplashSmallRadius"] then
-        return unit_table["SplashSmallRadius"]
-    end
-    return 0
-end
-
-function GetMediumSplashDamage( unit )
-    local unitName = unit:GetUnitName()
-    local unit_table = GameRules.UnitKV[unitName]
-    if unit_table["SplashMediumDamage"] then
-        return unit_table["SplashMediumDamage"]
-    end
-    return 0
-end
-
-function GetSmallSplashDamage( unit )
-    local unitName = unit:GetUnitName()
-    local unit_table = GameRules.UnitKV[unitName]
-    if unit_table["SplashSmallDamage"] then
-        return unit_table["SplashSmallDamage"]
-    end
-    return 0
 end

@@ -1489,6 +1489,11 @@
 			
 			"EffectName"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff_model.vpcf"
 			"EffectAttachType"		"follow_origin"
+
+			"States"
+			{
+				"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
 			
 			"OnCreated"
 			{

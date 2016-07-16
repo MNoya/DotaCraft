@@ -1,85 +1,81 @@
---[[
-	Author: Noya
-	Date: 04.02.2015.
-	Swaps caster model and ability, gives a short period of invulnerability
-	Also learns a modifier based on another ability upgrade
-]]
-function RoboGoblinStart( event )
-	local caster = event.caster
-	local model = event.model
-	local ability = event.ability
+modifier_robot_form = class({})
 
-	-- Saves the original model and attack capability
-	if caster.caster_model == nil then 
-		caster.caster_model = caster:GetModelName()
-	end
-	caster.caster_attack = caster:GetAttackCapability()
-
-	-- Sets the new model
-	caster:SetOriginalModel(model)
-
-	caster:SetModelScale(2)
-
-	-- Swap sub_ability
-	local sub_ability_name = event.sub_ability_name
-	local main_ability_name = ability:GetAbilityName()
-
-	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
-	print("Swapped "..main_ability_name.." with " ..sub_ability_name)
-
-	-- Learn upgrades
-	local upgrade_ability_name =  event.upgrade_ability_name
-	local sub_modifier_name = event.sub_modifier_name
-	local upgrade_ability = caster:FindAbilityByName(upgrade_ability_name)
-	if upgrade_ability and upgrade_ability:GetLevel() > 0 then
-		upgrade_ability:ApplyDataDrivenModifier(caster, caster, sub_modifier_name, {})
-	end
-
+function modifier_robot_form:DeclareFunctions()
+    return { MODIFIER_PROPERTY_MODEL_CHANGE,
+             MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+             MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+             MODIFIER_EVENT_ON_ATTACK_LANDED, }
 end
 
--- Reverts back to the original model and attack type, swaps abilities, removes modifier passed
-function RoboGoblinEnd( event )
-	local caster = event.caster
-	local ability = event.ability
-	local modifier = event.remove_modifier_name
-	local sub_modifier_name = event.sub_modifier_name
+function modifier_robot_form:OnCreated()
+    if IsServer() then
+        local caster = self:GetParent()
 
-	caster:SetModel(caster.caster_model)
-	caster:SetModelScale(1)
-	caster:SetOriginalModel(caster.caster_model)
-	print(caster.caster_model)
+        caster:EmitSound("tinker_tink_spawn_03")
+        caster:SetModelScale(2)
+        function caster:IsMechanical() return true end -- Set mechanical flag
 
-	-- Swap the sub_ability back to normal
-	local main_ability_name = event.main_ability_name
-	local sub_ability_name = ability:GetAbilityName()
+        -- Swap sub_ability
+        caster:SwapAbilities("tinker_robo_goblin", "tinker_normal_form", false, true)
 
-	caster:SwapAbilities(sub_ability_name, main_ability_name, false, true)
-	print("Swapped "..sub_ability_name.." with " ..main_ability_name)
-
-	-- Remove modifiers
-	caster:RemoveModifierByName(modifier)
-	caster:RemoveModifierByName(sub_modifier_name)
+        -- Learn upgrades
+        local upgrade_ability = caster:FindAbilityByName("tinker_engineering_upgrade")
+        if upgrade_ability and upgrade_ability:GetLevel() > 0 then
+            upgrade_ability:ApplyDataDrivenModifier(caster, caster, "modifier_robo_goblin_upgrade", {})
+        end
+    end
 end
 
+-- Reverts back to the original model and attack type, swaps abilities, removes modifier
+function modifier_robot_form:OnDestroy()
+    if IsServer() then
+        local caster = self:GetParent()
 
---[[
-	Author: Noya
-	Date: 04.02.2015.
-	Checks if the attacked target is a building and deals extra physical damage if so
-]]
-function DealSiegeDamage( event )
- 	-- Variables
-	local caster = event.caster
-	local target = event.target
-	local ability = event.ability
-	local attack_damage = event.Damage
-	local extra_dmg_to_buildings =  ability:GetLevelSpecialValueFor( "extra_dmg_to_buildings" , ability:GetLevel() - 1  )
-	local damage = attack_damage * ( extra_dmg_to_buildings - 1)
-	
-	print("damage siege")
-	if target.GetInvulnCount then
-		print(damage)
-		ApplyDamage({ victim = target, attacker = caster, damage = damage, ability = ability, damage_type = DAMAGE_TYPE_PHYSICAL })
-	end
+        caster:SetModelScale(1)
+        function caster:IsMechanical() return false end -- Remove mechanical flag
 
- end 
+        -- Swap the sub_ability back to normal
+        caster:SwapAbilities("tinker_robo_goblin", "tinker_normal_form", true, false)
+
+        -- Remove upgrade modifier
+        caster:RemoveModifierByName("modifier_robo_goblin_upgrade")
+    end
+end
+
+-- Extra damage against buildings
+function modifier_robot_form:OnAttackLanded(event)
+    local attacker = event.attacker
+    if attacker == self:GetParent() then
+        local target = event.target
+        if IsCustomBuilding(target) then
+            local ability = self:GetAbility()
+            local extra_dmg_to_buildings = ability:GetSpecialValueFor("extra_dmg_to_buildings")
+            local damage = event.damage * (extra_dmg_to_buildings - 1)
+            ApplyDamage({ victim = target, attacker = attacker, damage = damage, ability = ability, damage_type = DAMAGE_TYPE_PHYSICAL })
+        end
+    end
+end
+
+function modifier_robot_form:GetModifierModelChange()
+    return "models/courier/mechjaw/mechjaw.vmdl"
+end
+
+function modifier_robot_form:IsHidden()
+    return true
+end
+
+function modifier_robot_form:IsPurgable()
+    return false
+end
+
+function modifier_robot_form:AllowIllusionDuplicate()
+    return true
+end
+
+function modifier_robot_form:GetModifierBonusStats_Strength()
+    return self:GetAbility():GetSpecialValueFor("extra_str")
+end
+
+function modifier_robot_form:GetModifierPhysicalArmorBonus()
+    return self:GetAbility():GetSpecialValueFor("extra_armor")
+end

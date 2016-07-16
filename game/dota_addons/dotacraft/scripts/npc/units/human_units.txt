@@ -909,14 +909,15 @@
 
 	// Secondary Attack - GROUND
 	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"			"MELEE"
-	"SecondaryAttackType"			"DAMAGE_TYPE_ArmorPhysical"
+	"SecondaryAttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	"SecondaryAttackType"				"siege"
 	"SecondaryAttackDamageMin"			"7.0"
 	"SecondaryAttackDamageMax"			"8.0"
 	"SecondaryAttackRate"				"2"
 	"SecondaryAttackAnimationPoint"		"0.03"
 	"SecondaryAttackAcquisitionRange"	"500"
 	"SecondaryAttackRange"				"128"
+	"SecondaryAttackAgainst"			"ground"
 
 	// Bounds
 	//----------------------------------------------------------------
@@ -1234,8 +1235,8 @@
 	
 	// Secondary Attack - AIR
 	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"			"RANGED"
-	"SecondaryAttackType"			"DAMAGE_TYPE_ArmorPhysical"
+	"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"SecondaryAttackType"			"pierce"
 	"SecondaryAttackDamageMin"			"13.0"
 	"SecondaryAttackDamageMax"			"14.0"
 	"SecondaryAttackRate"				"2.1"

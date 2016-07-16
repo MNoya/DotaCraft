@@ -1,11 +1,7 @@
 // Demon Hunter Evasion
 // Author: Noya
-// Date: 14.1.2015.
-// Notes: Gives the Demon Hunter a chance to avoid attacks.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	N/A	None	N/A	N/A	N/A	10% chance opponent misses	1
-//2	N/A	N/A	None	N/A	N/A	N/A	20% chance opponent misses	3
-//3	N/A	N/A	None	N/A	N/A	N/A	30% chance opponent misses	5
+// Description: Gives the Demon Hunter a chance to avoid attacks.
+
 "demon_hunter_evasion"
 {
 	"BaseClass"             		"ability_datadriven"
@@ -25,8 +21,9 @@
 
 	"Modifiers"
 	{
-		"evasion"
+		"modifier_evasion"
 		{
+			"IsHidden"	"1"
 			"Passive"	"1"
 			"Properties"
 			{

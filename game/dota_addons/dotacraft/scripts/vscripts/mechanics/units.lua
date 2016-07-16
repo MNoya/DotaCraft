@@ -67,7 +67,7 @@ function Units:Init( unit )
         ApplyModifier(unit, "modifier_armor_"..armor_type)
     end
 
-    if HasSplashAttack(unit) then
+    if unit:HasSplashAttack() then
         ApplyModifier(unit, "modifier_splash_attack")
     end
 
@@ -488,6 +488,10 @@ end
 
 function CDOTA_BaseNPC:HasArtilleryAttack()
     return self:GetKeyValue("Artillery")
+end
+
+function CDOTA_BaseNPC:HasSplashAttack()
+    return self:GetKeyValue("SplashAttack")
 end
 
 function CDOTA_BaseNPC:IsDummy()
