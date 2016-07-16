@@ -10,8 +10,10 @@ end
 function modifier_demon_form:OnCreated()
     if IsServer() then
         local target = self:GetParent()
-        local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+        local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
         self:AddParticle(particle, false, false, 1, false, false)
+        local particleFeet = ParticleManager:CreateParticle("particles/custom/nightelf/demon_hunter/feet_effects.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+        self:AddParticle(particleFeet, false, false, 1, false, false)
         target.old_attack_projectile = GetRangedProjectileName(target) -- In case the hero has an orb
         SetRangedProjectileName(target, "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf")
         target:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
@@ -21,6 +23,7 @@ end
 
 function modifier_demon_form:OnDestroy()
     if IsServer() then
+        local target = self:GetParent()
         SetRangedProjectileName(target, target.old_attack_projectile)
         target:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
         target:SetAttackType("hero")

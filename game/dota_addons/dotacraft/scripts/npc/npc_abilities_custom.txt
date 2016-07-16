@@ -5006,12 +5006,8 @@
 	}
 	// Demon Hunter Evasion
 	// Author: Noya
-	// Date: 14.1.2015.
-	// Notes: Gives the Demon Hunter a chance to avoid attacks.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	N/A	N/A	None	N/A	N/A	N/A	10% chance opponent misses	1
-	//2	N/A	N/A	None	N/A	N/A	N/A	20% chance opponent misses	3
-	//3	N/A	N/A	None	N/A	N/A	N/A	30% chance opponent misses	5
+	// Description: Gives the Demon Hunter a chance to avoid attacks.
+	
 	"demon_hunter_evasion"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -5031,8 +5027,9 @@
 	
 		"Modifiers"
 		{
-			"evasion"
+			"modifier_evasion"
 			{
+				"IsHidden"	"1"
 				"Passive"	"1"
 				"Properties"
 				{
@@ -13431,255 +13428,159 @@
 	}
 	// Tinker Robo Goblin
 	// Author: Noya
-	// Date: 03.02.2015.
-	// Notes: Transforms the Tinker into a Robo-Goblin, a powerful armored form that has the following traits:
+	// Description: Transforms the Tinker into a Robo-Goblin, a powerful armored form that has the following traits:
 	//-Bonus Strength and armor.
 	//-Use of the Demolish ability, which grants bonus damage against buildings.
 	//-The Tinker becomes mechanical, rendering him immune to stun, most offensive spells, and several beneficial spells.
 	
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	Unlimited	1 sec.	25	N/A	Personal	Self	Transforms into Robo-Goblin	6
 	"tinker_robo_goblin"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"tinker_robo_goblin"
-		"MaxLevel"						"1"
-		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "tinker_robo_goblin"
+	    "MaxLevel"                      "1"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityCastAnimation"			"ACT_DOTA_TINKER_REARM3"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	    "AbilityCastAnimation"          "ACT_DOTA_TINKER_REARM3"
 	
-		"AbilityCastPoint"				"1.0"
-		"AbilityCooldown"				"0.0"
+	    "AbilityCastPoint"              "1.0"
+	    "AbilityCooldown"               "0.0"
 	
-		"AbilityManaCost"				"25"
+	    "AbilityManaCost"               "25"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
-			"model"		"models/courier/mechjaw/mechjaw.vmdl"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{	
-				"var_type"				"FIELD_INTEGER"
-				"extra_str"				"5"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"extra_armor"			"1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"extra_dmg_to_buildings"	"3.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"transformation_time"	"1.0"
-			}
-		}
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+	        "model"     "models/courier/mechjaw/mechjaw.vmdl"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {   
+	            "var_type"              "FIELD_INTEGER"
+	            "extra_str"             "5"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "extra_armor"           "1"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "extra_dmg_to_buildings"    "3.5"
+	        }
+	    }
 	
-		"OnUpgrade"
-		{
-			"LevelUpAbility"
-			{
-				"Target" 		"CASTER"
-				"AbilityName"	"tinker_normal_form"
-			}
-		}
+	    "OnUpgrade"
+	    {
+	        "LevelUpAbility"
+	        {
+	            "Target"        "CASTER"
+	            "AbilityName"   "tinker_normal_form"
+	        }
+	    }
 	
-		"OnAbilityPhaseStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Tinker.RearmStart"
-				"Target" 		"CASTER"
-			}
+	    "OnAbilityPhaseStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Tinker.RearmStart"
+	            "Target"        "CASTER"
+	        }
 	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_robot_transform"
-				"Target" 		"CASTER"
-			}
-		}
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_robot_transform"
+	            "Target"        "CASTER"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_robot_transform"
-			{
-				"Duration"		"%transformation_time"
+	    "Modifiers"
+	    {
+	        "modifier_robot_transform"
+	        {
+	            "Duration"      "1.0"
 	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
 	
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_invulnerable"
-						"Target"		"CASTER"
-						"Duration"		"0.03"
-					}
-				}
+	            "OnCreated"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_invulnerable"
+	                    "Target"        "CASTER"
+	                    "Duration"      "0.03"
+	                }
+	            }
 	
-				"OnDestroy"
-				{			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_robot_form"
-						"Target" 		"CASTER"
-					}
-				}
-			}
-	
-			"modifier_robot_form"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-			
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"heroes/tinker/robo_goblin.lua"
-						"Function"				"RoboGoblinStart"
-						"model"					"models/courier/mechjaw/mechjaw.vmdl"
-						"sub_ability_name"		"tinker_normal_form"
-						"upgrade_ability_name"	"tinker_engineering_upgrade"
-						"sub_modifier_name"		"modifier_robo_goblin_upgrade"
-					}
-	
-					"FireSound"
-					{
-						"EffectName"	"tinker_tink_spawn_03"
-						"Target"		"CASTER"
-					}
-	
-				}
-	
-				"OnAttackLanded"
-				// "%attack_damage" is set to the damage value before mitigation
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/tinker/robo_goblin.lua"
-						"Function"		"DealSiegeDamage"
-						"Damage"		"%attack_damage"
-					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%extra_str"
-				    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%extra_armor" 
-				}
-			}
-		}
+	            "OnDestroy"
+	            {           
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_robot_form"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	// Transform back
 	"tinker_normal_form"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"tinker_normal_form"
-		"MaxLevel"						"1"
-		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "tinker_normal_form"
+	    "MaxLevel"                      "1"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityCastAnimation"			"ACT_DOTA_TINKER_REARM3"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	    "AbilityCastAnimation"          "ACT_DOTA_SPAWN"
 	
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"1.0"
+	    "AbilityCastPoint"              "0.0"
+	    "AbilityCooldown"               "1.0"
 	
-		"AbilityManaCost"				"25"
+	    "AbilityManaCost"               "25"
 	
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
-			"model"		"models/courier/mechjaw/mechjaw.vmdl"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{	
-				"var_type"				"FIELD_INTEGER"
-				"extra_str"				"5"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"extra_armor"			"1 4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"extra_dmg_to_buildings"	"3.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"transformation_time"	"1.0"
-			}
-		}
+	    "OnAbilityPhaseStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_tinker_transform"
+	            "Target"        "CASTER"
+	        }
 	
-		"OnAbilityPhaseStart"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_tinker_transform"
-				"Target"		"CASTER"
-			}
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Tinker.Rearm"
+	            "Target"        "CASTER"
+	        }
+	    }
 	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Tinker.Rearm"
-				"Target" 		"CASTER"
-			}
-		}
+	    "Modifiers"
+	    {
+	        "modifier_tinker_transform"
+	        {
+	            "Duration"      "1.0"
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
 	
-		"Modifiers"
-		{
-			"modifier_tinker_transform"
-			{
-				"Duration"		"%transformation_time"
-	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_invulnerable"
-						"Target"		"CASTER"
-						"Duration"		"0.03"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"heroes/tinker/robo_goblin.lua"
-						"Function"				"RoboGoblinEnd"
-						"main_ability_name"		"tinker_robo_goblin"
-						"remove_modifier_name"	"modifier_robot_form"
-						"sub_modifier_name"		"modifier_robo_goblin_upgrade"					
-					}
-				}
-			}
-		}
+	            "OnDestroy"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_robot_form"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	        }
+	    }
 	}
 	// Warden Avatar of Vengeance
 	// Author: Noya

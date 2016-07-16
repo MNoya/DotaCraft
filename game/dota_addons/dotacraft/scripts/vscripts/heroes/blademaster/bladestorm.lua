@@ -10,7 +10,7 @@ function BladestormDamage(event)
         if IsCustomBuilding(target) then
             DamageBuilding(target, damage, ability, caster)
         else
-            ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+            ApplyDamage({victim = target, attacker = caster, damage = damage, ability = ability, damage_type = DAMAGE_TYPE_MAGICAL})
         end
     end
 end
