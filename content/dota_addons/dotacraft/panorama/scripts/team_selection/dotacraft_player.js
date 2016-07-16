@@ -199,8 +199,8 @@ function NetTableUpdatePlayer(tableName, key, val){
 		
 		if( val.Ready != null  ){
 			Root.SetHasClass("Ready", val.Ready);
+			UpdatePanelLockState(Boolise(val.Ready));
 			Root.PlayerReady = val.Ready;
-			SetDropDownStates(!val.Ready);
 		};
 		
 		$.Msg("[Player]: "+PlayerID+" is updating"); 
