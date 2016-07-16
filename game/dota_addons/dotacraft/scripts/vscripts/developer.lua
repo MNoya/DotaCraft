@@ -33,6 +33,7 @@ TEST_CODES = {
     ["testheroes"] = function(...) dotacraft:TestAllHeroes(...) end,   -- Creates all heroes, optional race parameter
     ["testunits"] = function(...) dotacraft:TestAllUnits(...) end,     -- Creates all army units, optional race parameter
     ["testcorpses"] = function(...) dotacraft:TestCorpses(...) end,    -- Creates many corpses around
+    ["kill"] = function(...) dotacraft:ForceKill(...) end,             -- Kills the currently selected units
 }
 
 function dotacraft:DeveloperMode(player)
@@ -386,6 +387,11 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
             unitName = k
         end
     end
+    if unitName:match('npc_dota_hero') then
+        dotacraft:TestHero(playerID, GetInternalHeroName(unitName), bEnemy)
+        return
+    end
+
     local team = PlayerResource:GetTeam(playerID)
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     if unitName then
@@ -520,6 +526,17 @@ function dotacraft:TestCorpses(playerID)
         if i%2 == 0 then team = DOTA_TEAM_GOODGUYS end
         Corpses:CreateByNameOnPosition(names[RandomInt(1,#names)], gridPoints[i], team)
     end
+end
+
+function dotacraft:ForceKill(playerID)
+    local entityList = PlayerResource:GetSelectedEntities(playerID)
+    for k,v in pairs(entityList) do
+        local unit = EntIndexToHScript(v)
+        if IsValidAlive(unit) then
+            unit:ForceKill(false)
+        end
+    end
+    
 end
 
 function dotacraft:LevelUp(playerID, lvl)
