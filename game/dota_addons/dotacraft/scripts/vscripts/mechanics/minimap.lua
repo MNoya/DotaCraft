@@ -75,6 +75,15 @@ if not Minimap then
     Minimap = class({})
 end
 
+function Minimap:PrepareCamps()
+    self.Camps = Entities:FindAllByClassname("npc_dota_creature")
+    for _,ent in pairs(self.Camps) do
+        if ent:GetUnitName():match("minimap_") then
+            ent:AddAbility("dummy_passive"):SetLevel(1)
+        end
+    end
+end
+
 -- Called when game starts
 function Minimap:InitializeCampIcons()
 
@@ -88,9 +97,8 @@ function Minimap:InitializeCampIcons()
     end
 
     -- For each minimap_ entity, replicate one for each team
-    local entities = Entities:FindAllByClassname("npc_dota_creature")
-    for _,ent in pairs(entities) do
-        if string.match(ent:GetUnitName(), "minimap_") then
+    for _,ent in pairs(self.Camps) do
+        if IsValidEntity(ent) and ent:GetUnitName():match("minimap_") then
             local unitName = ent:GetUnitName()
             for _,teamID in pairs(validTeams) do
                 -- Create a minimap camp entity for this team if there is no unit from that team nearby

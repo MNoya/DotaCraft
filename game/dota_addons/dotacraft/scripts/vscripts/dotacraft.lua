@@ -668,6 +668,7 @@ end
 function dotacraft:OnPreGame()
     print("[DOTACRAFT] OnPreGame")
     Teams:DetermineStartingPositions()
+    Minimap:PrepareCamps()
 	
 	local teamIDs = {2,3,6,7,8,9}
     local maxPlayers = dotacraft:GetMapMaxPlayers()
