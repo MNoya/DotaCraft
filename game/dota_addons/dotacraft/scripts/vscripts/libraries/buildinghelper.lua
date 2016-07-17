@@ -1,4 +1,4 @@
-BH_VERSION = "1.2.7"
+BH_VERSION = "1.2.8"
 
 --[[
     For installation, usage and implementation examples check the wiki:
@@ -467,7 +467,7 @@ function BuildingHelper:BuildCommand(args)
 
     -- Cancel current action
     if not queue then
-        ExecuteOrderFromTable({UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
+        builder:Stop()
     end
 
     BuildingHelper:AddToQueue(builder, location, queue)
@@ -2174,7 +2174,7 @@ function BuildingHelper:AdvanceQueue(builder)
             builder.work = work
 
             -- Move towards the point at cast range
-            ExecuteOrderFromTable({ UnitIndex = builder:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = location, Queue = false}) 
+            builder:MoveToPosition(location)
             builder.move_to_build_timer = Timers:CreateTimer(0.03, function()
                 builder:MoveToPosition(location)
                 if not IsValidEntity(builder) or not builder:IsAlive() then return end
