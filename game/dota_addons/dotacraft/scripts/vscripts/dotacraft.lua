@@ -111,10 +111,6 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) --Right click through panorama 
     CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
-
-    -- PreGame Selection
-    CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(dotacraft, "PreGameUpdate"))
-    CustomGameEventManager:RegisterListener( "send_pregame_event", Dynamic_Wrap(dotacraft, "PreGameEvent")) 
     
 	-- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
@@ -655,7 +651,7 @@ function dotacraft:OnGameRulesStateChange(keys)
     local newState = GameRules:State_Get()
 
     print("[DOTACRAFT] GameRules State Changed: ",gamestates[newState])
-        
+    UI:GameStateManager(newState) -- ui game state manager
     if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
         if PlayerResource:HaveAllPlayersJoined() then
             dotacraft:OnAllPlayersLoaded()
@@ -743,14 +739,6 @@ function dotacraft:OnPreGame()
 
         -- Find and store the mine light
     end
-end
-
-function dotacraft:PreGameUpdate(data)
-    CustomNetTables:SetTableValue("dotacraft_pregame_table", tostring(data.ID), data.Info)
-end
-
-function dotacraft:PreGameEvent(data)
-	CustomGameEventManager:Send_ServerToAllClients("pregame_event", data);
 end
 
 -- An NPC has spawned somewhere in game.  This includes heroes
@@ -864,7 +852,9 @@ function dotacraft:OnPlayerReconnect(keys)
 
     Timers:CreateTimer(0.03, function()
         player:SetKillCamUnit(nil)
-    end)    
+    end)   
+	
+	UI:HandlePlayerReconnect(player)
 end
 
 -- A tree was cut down

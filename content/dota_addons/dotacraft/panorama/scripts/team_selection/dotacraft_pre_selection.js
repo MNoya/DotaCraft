@@ -31,18 +31,14 @@ var dotacraft_Teams = {
 
 var ROUND_TIME = 120;
 var currentTime = ROUND_TIME;
-function HandleRoundTime(){
-
-	if( !Root.CountDown ){
-		Root.FindChildTraverse("RoundTimer").text = "Round Time: "+currentTime+"s";
-		currentTime--;
-		if( currentTime != 0){
-			$.Schedule(1, HandleRoundTime);
-		}else{
-			Start_Game();
-		};
-	}else
+function HandleRoundTime(data){
+	var time = data.Time;
+	Root.FindChildTraverse("RoundTimer").text = "Round Time: "+time+"s";
+	
+	if ( time <= 0 ){
+		Start_Game();
 		Root.FindChildTraverse("RoundTimer").visible = false;
+	};		
 };
 
 // table used to store the colors
@@ -83,7 +79,6 @@ var MAP_PLAYER_LIMIT;
 	Setup_Minimap();	
 	CreateAllPlayers(); 
 	CheckForHostprivileges();
-	$.Schedule(1, HandleRoundTime);
 	var roundTimer = $.CreatePanel("Label", Root.FindChildTraverse("NotificationContainer"), "RoundTimer");
 	$.Schedule(1, Update);
 })();
@@ -100,7 +95,7 @@ function HandleEvents(data){
 	var event = data.Event_Name;
 	var updateTable = data.Info;
 	
-	$.Msg("recieved event: "+event);
+	//$.Msg("recieved event: "+event);
 	
 	if( event == "delete_bot" )
 		DeletePlayer(updateTable);
@@ -110,6 +105,8 @@ function HandleEvents(data){
 		CreateBotLocally(updateTable);
 	else if( event == "pregame_start" ) 
 		Start_Game();
+	else if( event == "roundtimer_update" )
+		HandleRoundTime(updateTable);
 };
 
 function SendEventToServer(eventName, updateTable){

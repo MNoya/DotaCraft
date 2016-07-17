@@ -181,10 +181,18 @@ function SetupLocalisation(){
 		options_dropdown.FindDropDownMenuChild(i).text = $.Localize("options_dropdown_"+i);
 };
 
+function HandleReadyStatus(ready){
+	Root.SetHasClass("Ready", ready);
+	UpdatePanelLockState(Boolise(ready));
+	Root.PlayerReady = ready;		
+};
+
 // main logic behind updating players, this is called when net_table changed
 function NetTableUpdatePlayer(tableName, key, val){
-	if( key == Root.PlayerID ){
-		
+	if( isHost(parseInt(key)) && Root.Bot ) // mirror host ready status if bot
+		HandleReadyStatus(val.Ready);
+	
+	if( key == Root.PlayerID ){	
 		// variables  
 		var PlayerID = key;
 		if(val.Bot != null && val.Bot_Name != null){
@@ -197,11 +205,8 @@ function NetTableUpdatePlayer(tableName, key, val){
 			$("#PlayerName").GetChild(0).text = Bot_Names[val.Bot_Name];  
 		};
 		
-		if( val.Ready != null  ){
-			Root.SetHasClass("Ready", val.Ready);
-			UpdatePanelLockState(Boolise(val.Ready));
-			Root.PlayerReady = val.Ready;
-		};
+		if( val.Ready != null  )
+			HandleReadyStatus(val.Ready);
 		
 		$.Msg("[Player]: "+PlayerID+" is updating"); 
 
@@ -456,9 +461,8 @@ function Count_Dropdown_Children(dropdown, name){
 	};
 };
 
-// check if player is host
-function isPlayerHost(){
-    var Player_Info = Game.GetPlayerInfo(Root.PlayerID);
+function isHost(playerID){
+    var Player_Info = Game.GetPlayerInfo(playerID);
     
     if(!Player_Info)
     {
@@ -466,19 +470,16 @@ function isPlayerHost(){
         return false;
     };
 
-    return Player_Info.player_has_host_privileges;
+    return Player_Info.player_has_host_privileges;	
+};
+
+// check if player is host
+function isPlayerHost(){
+    return isHost(Root.PlayerID);
 };
 
 function isLocalPlayerHost(){
-    var Player_Info = Game.GetPlayerInfo(LocalPlayerID);
-    
-    if(!Player_Info)
-    {
-		//$.Msg("Player does not exist = #"+Root.PlayerID);
-        return false;
-    };
-
-    return Player_Info.player_has_host_privileges;
+    return isHost(LocalPlayerID);
 };
 
 // unused old example button click

@@ -2,6 +2,7 @@ if not UI then
 	UI = class({})
 end
 
+local ROUND_TIME = 120
 function UI:Init()
 	GameRules.UI_COLORTABLE = "dotacraft_color_table"
 	GameRules.UI_PLAYERTABLE = "dotacraft_player_table"
@@ -33,6 +34,14 @@ function UI:Init()
 
 	-- Endscreen Data
     CustomGameEventManager:RegisterListener( "endscreen_request_data", Dynamic_Wrap(UI, "EndScreenRequestData"))
+	
+	-- PreGame Selection
+    CustomGameEventManager:RegisterListener( "update_pregame", Dynamic_Wrap(UI, "PreGameUpdate"))
+    CustomGameEventManager:RegisterListener( "send_pregame_event", Dynamic_Wrap(UI, "PreGameEvent")) 
+end
+
+function UI:HandlePlayerReconnect(player)
+
 end
 
 function UI:EndScreenRequestData()
@@ -44,6 +53,37 @@ function UI:EndScreenRequestData()
 			CustomGameEventManager:Send_ServerToAllClients("endscreen_data", {key=playerID, table=info_table})
 		end
 	end
+end
+
+function UI:GameStateManager( newState )
+    if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
+    elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		UI:StartPreGameRoundTimer()
+    elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
+    elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+    end
+end
+
+function UI:StartPreGameRoundTimer()
+	GameRules.PreGameRoundTime = ROUND_TIME;
+	Timers:CreateTimer(1, function()
+	    local newState = GameRules:State_Get()
+		GameRules.PreGameRoundTime = GameRules.PreGameRoundTime - 1;
+		UI:SendRoundTimer()
+		if GameRules.PreGameRoundTime ~= 0 and newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then return 1 else return nil end
+	end)
+end
+
+function UI:SendRoundTimer()
+	UI:PreGameEvent({ ["Event_Name"] = "roundtimer_update", ["Info"] = {["Time"] = GameRules.PreGameRoundTime} })
+end
+
+function UI:PreGameUpdate(data)
+    CustomNetTables:SetTableValue("dotacraft_pregame_table", tostring(data.ID), data.Info)
+end
+
+function UI:PreGameEvent(data)
+	CustomGameEventManager:Send_ServerToAllClients("pregame_event", data);
 end
 
 function UI:Skip_Selection()
