@@ -753,6 +753,7 @@ function Gatherer:Init(unit)
         unit.gatherer_skip = bSkip ~= nil and bSkip or true -- Skip order filter?
         local return_ability = unit.ReturnAbility
         Gatherer:print("ReturnResources Order")
+        if return_ability:IsHidden() then unit:SwapAbilities(return_ability:GetAbilityName(),unit.GatherAbility:GetAbilityName(),true,false) end
         ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET,
                             AbilityIndex = unit.ReturnAbility:GetEntityIndex(), Queue = queue })
     end
@@ -828,6 +829,10 @@ function Gatherer:Init(unit)
         unit.gatherer_state = "idle"
 
         unit:RemoveModifierByName("modifier_gatherer_hidden")
+        if IsValidEntity(unit.mine) then
+            unit.mine:RemoveGatherer(unit)
+            unit:RemoveNoDraw()
+        end
         if unit.gatherer_timer then Timers:RemoveTimer(unit.gatherer_timer) end
 
         unit:SetNoCollision(false)
@@ -940,6 +945,7 @@ function Gatherer:Init(unit)
             mine:AddGatherer(unit)
             unit:AddNoDraw()
             unit:SetAbsOrigin(mine:GetAbsOrigin())
+            unit.mine = mine
         end
         unit:AddNewModifier(unit, nil, "modifier_gatherer_hidden", {restricted=not unit:GetKeyValue("GoldMineControllable")})
         unit.gatherer_state = "gathering_gold"
@@ -956,6 +962,7 @@ function Gatherer:Init(unit)
                 return gold_interval
             else
                 -- Exit mine and return the resources
+                unit.mine = nil
                 mine:RemoveGatherer(unit)
                 unit:RemoveNoDraw()
                 unit:RemoveModifierByName("modifier_gatherer_hidden")
@@ -1061,15 +1068,16 @@ function Gatherer:CheckGatherCancel(order)
     local entityIndex = units["0"]
     local unit = EntIndexToHScript(entityIndex)
     if IsValidEntity(unit) then
+        if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET and abilityIndex ~= 0 then
+            -- Skip BuildingHelper ghost cast
+            local ability = EntIndexToHScript(abilityIndex)
+            if IsValidEntity(ability) and ability:GetKeyValue("Building") then return end
+        end
+
         local selectedEntities = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
         for k,entIndex in pairs(selectedEntities) do
             local ent = EntIndexToHScript(entIndex)
             if ent.CancelGather and ent.gatherer_state ~= "idle" then
-                if order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET and abilityIndex ~= 0 then
-                    -- Skip BuildingHelper ghost cast
-                    local ability = EntIndexToHScript(abilityIndex)
-                    if IsValidEntity(ability) and ability:GetKeyValue("Building") then return end
-                end
                 ent:CancelGather()
             elseif ent and ent.gatherer_timer then
                 Timers:RemoveTimer(ent.gatherer_timer)
@@ -1251,6 +1259,7 @@ function Gatherer:CastReturnAbility(event)
 
         -- Find where to return the resources
         local building = caster:FindClosestResourceDeposit("lumber")
+        local return_position = caster:GetReturnPosition(building)
         caster.target_building = building
         caster.gatherer_state = "returning_lumber"
 
@@ -1264,7 +1273,7 @@ function Gatherer:CastReturnAbility(event)
                 local distance = (building_pos - caster:GetAbsOrigin()):Length()
             
                 if distance > collision_size then
-                    caster:MoveToPosition(caster:GetReturnPosition(building))        
+                    caster:MoveToPosition(return_position)
                     return self.ThinkInterval
                 else                    
                     callbacks.OnLumberDepositReached(caster.target_building)
@@ -1275,6 +1284,7 @@ function Gatherer:CastReturnAbility(event)
                 -- Find a new building deposit
                 building = caster:FindClosestResourceDeposit("lumber")
                 caster.target_building = building
+                return_position = caster:GetReturnPosition(building)
                 return self.ThinkInterval
             end
         end)
@@ -1283,6 +1293,8 @@ function Gatherer:CastReturnAbility(event)
     elseif coming_from == "gold" then
         -- Find where to return the resources
         local building = caster:FindClosestResourceDeposit("gold")
+        local return_position = caster:GetReturnPosition(building)
+        caster.target_building = building
         caster.target_building = building
         caster.gatherer_state = "returning_gold"
         local collision_size = building:GetHullRadius() * 2
@@ -1296,7 +1308,7 @@ function Gatherer:CastReturnAbility(event)
                 local distance = (building_pos - caster:GetAbsOrigin()):Length()
             
                 if distance > collision_size then
-                    caster:MoveToPosition(caster:GetReturnPosition(building))
+                    caster:MoveToPosition(return_position)
                     return self.ThinkInterval
                 elseif caster.gold_gathered and caster.gold_gathered > 0 then
 
@@ -1307,6 +1319,7 @@ function Gatherer:CastReturnAbility(event)
                 -- Find a new building deposit
                 building = caster:FindClosestResourceDeposit("gold")
                 caster.target_building = building
+                return_position = caster:GetReturnPosition(building)
                 return self.ThinkInterval
             end
         end)
