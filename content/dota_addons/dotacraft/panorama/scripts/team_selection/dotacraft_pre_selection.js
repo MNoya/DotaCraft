@@ -142,7 +142,7 @@ function CreateBot(teamID)
 	var newPlayerID = SelectBotPlayerID();
 	if( newPlayerID <= MAP_PLAYER_LIMIT ){
 		//var newTeamID = SelectedTeamIDBasedOnSmallestTeam();
-		var newTeamID = teamID;
+		var newTeamID = parseInt(teamID);
 		var newColorID = SelectUnusedColor();
 		//var newColorID = 1;
 		SendEventToServer("create_bot", { "ID" : newPlayerID, "TeamID" : newTeamID, "ColorID": newColorID });

@@ -93,9 +93,13 @@ function Minimap:InitializeCampIcons()
         if string.match(ent:GetUnitName(), "minimap_") then
             local unitName = ent:GetUnitName()
             for _,teamID in pairs(validTeams) do
-                -- Create a minimap camp entity for this team
-                local dummy = CreateUnitByName(unitName, ent:GetAbsOrigin(), false, nil, nil, teamID)
-                dummy:AddNewModifier(dummy, nil, "modifier_minimap", {})
+                -- Create a minimap camp entity for this team if there is no unit from that team nearby
+                local origin = ent:GetAbsOrigin()
+                local units = FindUnitsInRadius(teamID, origin, nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
+                if #units == 0 then
+                    local dummy = CreateUnitByName(unitName, origin, false, nil, nil, teamID)
+                    dummy:AddNewModifier(dummy, nil, "modifier_minimap", {})
+                end
             end
             -- Finally, remove the initial entity
             ent:RemoveSelf()

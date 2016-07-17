@@ -31,6 +31,10 @@ function Players:Init( playerID, hero )
     hero.city_center_level = 1
     hero.altar_level = 1
 	Players:UpdateJavaScriptPlayer(playerID)
+
+    if PlayerResource:IsFakeClient(playerID) then
+        Scores:InitPlayer(playerID)
+    end
 end
 
 function Players:RepositionCamera(event)
@@ -62,7 +66,7 @@ end
 function Players:GetHeroes( playerID )
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
-    return hero.heroes
+    return hero.heroes or {}
 end
 
 function Players:GetAltars( playerID )
@@ -381,7 +385,7 @@ function Players:AddStructure( playerID, building )
 
     table.insert(playerStructures, building)
 
-    Scores:IncrementBuildingsProduced( playerID, unit )
+    Scores:IncrementBuildingsProduced( playerID, building )
 end
 
 ---------------------------------------------------------------

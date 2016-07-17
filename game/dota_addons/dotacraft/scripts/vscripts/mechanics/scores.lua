@@ -6,29 +6,32 @@ function Scores:Init()
     Scores.data = {}
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
         if PlayerResource:IsValidPlayerID(playerID) then
-            Scores.data[playerID] = {}
-            
-            Scores.data[playerID].unit_score = 0
-            Scores.data[playerID].hero_score = 0
-            Scores.data[playerID].resource_score = 0
-            Scores.data[playerID].total_score = 0
-            Scores.data[playerID].units_produced = 0
-            Scores.data[playerID].units_killed = 0
-            Scores.data[playerID].buildings_produced = 0
-            Scores.data[playerID].buildings_razed = 0
-            Scores.data[playerID].largest_army = 0
-            Scores.data[playerID].heroes_used = {}
-            Scores.data[playerID].heroes_killed = 0
-            Scores.data[playerID].items_obtained = 0
-            Scores.data[playerID].mercenaries_hired = 0
-            Scores.data[playerID].experienced_gained = 0
-            Scores.data[playerID].gold_mined = 0
-            Scores.data[playerID].lumber_harvested = 0
-            Scores.data[playerID].resource_traded = 0
-            Scores.data[playerID].tech_percentage = 0
-            Scores.data[playerID].gold_lost_to_upkeep = 0
+            self:InitPlayer(playerID)
         end
     end
+end
+
+function Scores:InitPlayer(playerID)
+    Scores.data[playerID] = {}
+    Scores.data[playerID].unit_score = 0
+    Scores.data[playerID].hero_score = 0
+    Scores.data[playerID].resource_score = 0
+    Scores.data[playerID].total_score = 0
+    Scores.data[playerID].units_produced = 0
+    Scores.data[playerID].units_killed = 0
+    Scores.data[playerID].buildings_produced = 0
+    Scores.data[playerID].buildings_razed = 0
+    Scores.data[playerID].largest_army = 0
+    Scores.data[playerID].heroes_used = {}
+    Scores.data[playerID].heroes_killed = 0
+    Scores.data[playerID].items_obtained = 0
+    Scores.data[playerID].mercenaries_hired = 0
+    Scores.data[playerID].experienced_gained = 0
+    Scores.data[playerID].gold_mined = 0
+    Scores.data[playerID].lumber_harvested = 0
+    Scores.data[playerID].resource_traded = 0
+    Scores.data[playerID].tech_percentage = 0
+    Scores.data[playerID].gold_lost_to_upkeep = 0
 end
 
 ---------------------------------------------------------------

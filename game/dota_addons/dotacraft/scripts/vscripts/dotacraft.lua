@@ -91,7 +91,6 @@ function dotacraft:InitGameMode()
     ListenToGameEvent('player_connect_full', Dynamic_Wrap(dotacraft, 'OnConnectFull'), self)
     ListenToGameEvent('player_connect', Dynamic_Wrap(dotacraft, 'PlayerConnect'), self)
     ListenToGameEvent('npc_spawned', Dynamic_Wrap(dotacraft, 'OnNPCSpawned'), self)
-    ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(dotacraft, 'OnPlayerPickHero'), self)
     ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
     ListenToGameEvent('entity_hurt', Dynamic_Wrap(dotacraft, 'OnEntityHurt'), self)
     ListenToGameEvent('tree_cut', Dynamic_Wrap(dotacraft, 'OnTreeCut'), self)
@@ -312,7 +311,7 @@ function dotacraft:InitializePlayer( hero )
     -- Find neutrals near the starting zone and remove them
     local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
     for k,v in pairs(neutrals) do
-        if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS then
+        if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS and not v:GetUnitName():match("minimap_") then
             v:RemoveSelf()
         end
     end
@@ -678,30 +677,39 @@ function dotacraft:OnPreGame()
     local maxPlayers = dotacraft:GetMapMaxPlayers()
     for playerID = 0, maxPlayers do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
-        if Players:IsValidNetTablePlayer(playerTable) then 
+        if Players:IsValidNetTablePlayer(playerTable) then
 			local color = playerTable.Color
 			local team = teamIDs[playerTable.Team]
-			local race = GameRules.raceTable[playerTable.Race]
-			
-			-- if race is nil it means that the id supplied is random since that is the only fallout index
-			if race == nil then
-				race = GameRules.raceTable[RandomInt(1, 4)]
-			end
+			local race = GameRules.raceTable[playerTable.Race] or GameRules.raceTable[RandomInt(1, 4)]
+			local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
+
+            PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
+            PlayerResource:SetCustomTeamAssignment(playerID, team)
 			
 			if PlayerResource:IsValidPlayerID(playerID) then
-				local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
-				PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
-				PlayerResource:SetCustomTeamAssignment(playerID, team)
-
 				--Race Heroes are already precached
 				local player = PlayerResource:GetPlayer(playerID)
 				local hero = CreateHeroForPlayer(race, player)
-				
 				hero.color_id = color
 				
 				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
 			else
-				-- BOT 
+                Tutorial:AddBot(race,'','',false)
+
+                Timers(2, function()
+                    if PlayerResource:IsValidPlayerID(playerID) and PlayerResource:IsFakeClient(playerID) then
+                        if PlayerResource:GetSelectedHeroEntity(playerID) then
+                            -- Init AI
+                            print("[DOTACRAFT] Bot Created: ",playerID,race,team)
+                        else
+                            local player = PlayerResource:GetPlayer(playerID)
+                            if player then
+                                CreateHeroForPlayer(race, player)
+                            end
+                            return 0.1
+                        end
+                    end
+                end)
 			end
 		end
     end
@@ -876,23 +884,6 @@ function dotacraft:OnTreeCut(keys)
         end
     end
 end
-
--- A player picked a hero
-function dotacraft:OnPlayerPickHero(keys)
-    print ('[DOTACRAFT] OnPlayerPickHero')
-    --DeepPrintTable(keys)
-end
-
--- A player killed another player in a multi-team context
-function dotacraft:OnTeamKillCredit(keys)
-    print ('[DOTACRAFT] OnTeamKillCredit')
-    --DeepPrintTable(keys)
-
-    local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
-    local victimPlayer = PlayerResource:GetPlayer(keys.victim_userid)
-    local numKills = keys.herokills
-    local killerTeamNumber = keys.teamnumber
-    end
 
 -- An entity died
 function dotacraft:OnEntityKilled( event )
