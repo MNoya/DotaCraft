@@ -13,14 +13,14 @@ var MOVE_SOUND_EVENT_NAME = "DOTA_Item.Daedelus.Crit";
 //////////////////////////////////////////////
 
 // function for player to sit initially
-Root.Init = function(playerID, teamID, colorID, raceID){
+Root.Init = function(playerID, teamID, colorID, raceID, ready){
 	Root.PlayerID = playerID;
 	Root.PlayerTeam = teamID;
 	Root.PlayerColor = colorID;
 	Root.PlayerRace = raceID;
 	
 	Root.PanelID = playerID;
-	Root.PlayerReady = false;
+	Root.PlayerReady = ready;
 	Root.Locked = false;
 
 	//Root.FindChildTraverse("TeamDropDown").SetSelected(teamID);

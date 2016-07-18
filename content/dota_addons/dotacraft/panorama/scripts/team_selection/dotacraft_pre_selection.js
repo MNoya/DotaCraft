@@ -189,7 +189,7 @@ function CreateBotLocally(data){
 		var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+newPlayerID);
 		PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
 		
-		PlayerPanel.Init(newPlayerID, teamID, colorID, 0);
+		PlayerPanel.Init(newPlayerID, teamID, colorID, 0, false);
 		PlayerPanel.SetBot(1);
 	}else
 		$.Msg("[ERROR] REQUEST RECIEVED TO CREATE A PLAYER PANEL THAT ALREADY EXIST");
@@ -389,17 +389,16 @@ function CreateAllPlayers(){
 	for(var playerID in playerTable){
 		var playerDetails = playerTable[playerID];
 		
-		if( !playerDetails.isNull ){ // not empty nettable
-			$.Msg("creating player #"+players);
-			
-			var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerIDInList);
+		//if( !playerDetails.isNull ){ // not empty nettable	
+			var TeamContainer = Root.FindChildTraverse("Team_"+playerDetails.Team);
+			var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerID);
 			PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
 
-			PlayerPanel.Init(playerIDInList, teamID, colorID, 0);
+			PlayerPanel.Init(playerID, playerDetails.Team, playerDetails.Color, playerDetails.Race, playerDetails.Ready);
 			
 			if( playerID == LocalPlayerID )
 				nettableForSelfExist = true;
-		};
+		//};
 	};
 	
 	if( !nettableForSelfExist ){
@@ -412,7 +411,7 @@ function CreateAllPlayers(){
 		var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerID);
 		PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
 
-		PlayerPanel.Init(playerID, teamID, colorID, 0);
+		PlayerPanel.Init(playerID, teamID, colorID, 0, false);
 	};
 };
 
