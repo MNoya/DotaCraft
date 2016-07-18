@@ -15,7 +15,7 @@ function SelectHero(){
 	};
 
 	if (WasMouseDoubleClicked())
-		GameEvents.SendCustomGameEventToServer("reposition_player_camera", {entIndex: unit});
+		GameUI.SetCameraTargetPosition(Entities.GetAbsOrigin(unit),0.1)
 };
 
 var lastTime = 0;
