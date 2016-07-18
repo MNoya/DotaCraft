@@ -465,11 +465,6 @@
 			"var_type"						"FIELD_INTEGER"
 			"movement_speed_increase"		"25"
 		}
-		"04"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"scaling_factor"				"30"
-		}
 	}
 
 	"precache"
@@ -480,10 +475,23 @@
 
     "OnSpellStart"
     {
-        "RunScript"
+        "ApplyModifier"
         {
-            "ScriptFile"    "units/orc/shaman.lua"
-            "Function"      "Bloodlust"
+            "ModifierName"  "modifier_bloodlust"
+            "Target"        "TARGET"
+            "Duration"      "%duration"
+        }
+
+        "FireSound"
+        {
+            "EffectName"    "Hero_OgreMagi.Bloodlust.Cast"
+            "Target"        "CASTER"
+        }
+
+        "FireSound"
+        {
+            "EffectName"    "Hero_OgreMagi.Bloodlust.Target"
+            "Target"        "TARGET"
         }
         
         "FireEffect"
@@ -495,7 +503,7 @@
             {
                 "CASTER" "attach_attack1" //Start
                 "CASTER" "attach_hitloc"  //Velocity noise, not used
-                "CASTER" "attach_staff" //Hands
+                "CASTER" "attach_attack2" //Hands
                 "TARGET" "attach_hitloc"  //Hit
             }
         }
@@ -503,22 +511,6 @@
 
     "Modifiers"
     {
-        "modifier_bloodlust"
-        {
-            "IsBuff"            "1"
-            "IsPurgable"        "1"
-            "Duration"          "%duration"
-            "TextureName"       "orc_bloodlust"
-            "EffectName"        "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
-            "EffectAttachType"  "follow_origin"
-
-            "Properties"
-            {
-                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_increase"
-                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_increase"
-            }
-        }
-
         "modifier_bloodlust_autocast_aura"
         {
             "Passive"   "1"

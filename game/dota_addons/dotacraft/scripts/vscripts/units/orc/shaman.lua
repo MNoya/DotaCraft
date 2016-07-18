@@ -1,29 +1,3 @@
---[[ ============================================================================================================
-    Author: wFX, based on Noya/Rook code.
-================================================================================================================= ]]
-
-function Bloodlust(event)   
-    local caster = event.caster
-    local target = event.target
-    local ability = event.ability
-
-    if target.bloodlust_timer then
-        Timers:RemoveTimer(target.bloodlust_timer)
-    end
-
-    local scaling_factor = ability:GetSpecialValueFor('scaling_factor')
-    local duration = ability:GetSpecialValueFor("duration")
-    target:AddNewModifier(caster,ability,"modifier_model_scale",{duration=duration,scale=scaling_factor})
-    ability:ApplyDataDrivenModifier(caster, target, 'modifier_bloodlust', {})
-
-    caster:EmitSound('Hero_OgreMagi.Bloodlust.Cast')
-    target:EmitSound('Hero_OgreMagi.Bloodlust.Target')
-end
-
-function ToggleOnAutocast( event )
-    event.ability:ToggleAutoCast()
-end
-
 -- Handles the autocast logic
 function BloodlustAutocast_Attack( event )
     local caster = event.caster
@@ -57,6 +31,10 @@ function BloodlustAutocast_Attacked( event )
             caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
         end 
     end 
+end
+
+function ToggleOnAutocast( event )
+    event.ability:ToggleAutoCast()
 end
 
 
