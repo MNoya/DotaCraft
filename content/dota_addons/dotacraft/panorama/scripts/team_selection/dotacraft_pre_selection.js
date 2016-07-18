@@ -381,38 +381,41 @@ function Update(){
 // race = current race index
 
 function CreateAllPlayers(){
-	var playerIDs = Game.GetAllPlayerIDs()
-	
 	var playerTable = CustomNetTables.GetAllTableValues("dotacraft_pregame_table");
 	
-	var nettableForSelfExist = false;
+	var listOfPlayersInNettable = new Array();
 	for(var playerID in playerTable){
 		var playerDetails = playerTable[playerID];
 		
-		//if( !playerDetails.isNull ){ // not empty nettable	
+		if( playerDetails.isNull != true && playerDetails != null){ // not empty nettable	
 			var TeamContainer = Root.FindChildTraverse("Team_"+playerDetails.Team);
 			var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerID);
 			PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
 
 			PlayerPanel.Init(playerID, playerDetails.Team, playerDetails.Color, playerDetails.Race, playerDetails.Ready);
 			
-			if( playerID == LocalPlayerID )
-				nettableForSelfExist = true;
-		//};
+			listOfPlayersInNettable.push(playerID);
+		};
 	};
 	
-	if( !nettableForSelfExist ){
-		//	$.Msg("creating panel for player #"+playerIDInList);
-		var playerID = LocalPlayerID;
-		var teamID = SelectedTeamIDBasedOnSmallestTeam();
-		var colorID = SelectUnusedColor();
-		var TeamContainer = Root.FindChildTraverse("Team_"+teamID);
+	var playerIDs = Game.GetAllPlayerIDs();
+	for(var playerIDInList of playerIDs){ // create all players from player id list that was not previously created by the nettable
+		if(	!contains(listOfPlayersInNettable, playerIDInList) ){
+			var playerID = playerIDInList;
+			var teamID = SelectedTeamIDBasedOnSmallestTeam();
+			var colorID = playerID;
+			var TeamContainer = Root.FindChildTraverse("Team_"+teamID);
 		
-		var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerID);
-		PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
+			var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerID);
+			PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
 
-		PlayerPanel.Init(playerID, teamID, colorID, 0, false);
+			PlayerPanel.Init(playerID, teamID, colorID, 0, false);		
+		};
 	};
+};
+
+function contains(array, item){
+	return ( array.indexOf(item) != -1 );
 };
 
 function CheckForHostprivileges(){
