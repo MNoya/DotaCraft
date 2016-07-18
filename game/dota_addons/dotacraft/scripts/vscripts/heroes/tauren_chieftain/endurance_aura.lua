@@ -19,6 +19,10 @@ function modifier_endurance_aura:IsHidden()
     return true
 end
 
+function modifier_endurance_aura:IsPurgable()
+    return false
+end
+
 function modifier_endurance_aura:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -65,4 +69,8 @@ end
 
 function modifier_endurance_aura_buff:GetModifierAttackSpeedBonus_Constant()
     return self:GetAbility():GetSpecialValueFor("attack_speed_bonus")
+end
+
+function modifier_endurance_aura_buff:IsPurgable()
+    return false
 end

@@ -19,6 +19,10 @@ function modifier_devotion_aura:IsHidden()
     return true
 end
 
+function modifier_devotion_aura:IsPurgable()
+    return false
+end
+
 function modifier_devotion_aura:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -61,4 +65,8 @@ end
 
 function modifier_devotion_aura_buff:GetModifierPhysicalArmorBonus()
     return self:GetAbility():GetSpecialValueFor("armor_bonus")
+end
+
+function modifier_devotion_aura_buff:IsPurgable()
+    return false
 end

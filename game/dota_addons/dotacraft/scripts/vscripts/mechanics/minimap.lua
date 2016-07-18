@@ -64,6 +64,10 @@ if IsServer() then
             return 0.5
         end)
     end
+
+    function modifier_minimap:IsPurgable()
+        return false
+    end
 end
 
 -- Drop out of self-include

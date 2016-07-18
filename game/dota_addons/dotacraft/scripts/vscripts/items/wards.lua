@@ -56,6 +56,10 @@ function modifier_sentry_ward:IsHidden()
     return true
 end
 
+function modifier_sentry_ward:IsPurgable()
+    return false
+end
+
 function modifier_sentry_ward:GetAuraRadius()
     return self.radius
 end
@@ -121,6 +125,10 @@ function modifier_healing_ward:IsHidden()
     return true
 end
 
+function modifier_healing_ward:IsPurgable()
+    return false
+end
+
 function modifier_healing_ward:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -163,4 +171,8 @@ end
 
 function modifier_healing_ward_buff:GetEffectAttachType()
     return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_healing_ward_buff:IsPurgable()
+    return false
 end

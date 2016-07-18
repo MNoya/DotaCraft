@@ -53,6 +53,10 @@ function modifier_autoattack:IsHidden()
     return true
 end
 
+function modifier_autoattack:IsPurgable()
+    return false
+end
+
 ------------------------------------------------------------------------------------
 
 modifier_autoattack_passive = class({})
@@ -115,6 +119,10 @@ end
 
 function modifier_autoattack_passive:IsHidden()
     return true
+end
+
+function modifier_autoattack_passive:IsPurgable()
+    return false
 end
 
 ------------------------------------------------------------------------------------

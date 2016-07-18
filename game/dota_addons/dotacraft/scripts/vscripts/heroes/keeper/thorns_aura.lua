@@ -19,6 +19,10 @@ function modifier_thorns_aura:IsHidden()
     return true
 end
 
+function modifier_thorns_aura:IsPurgable()
+    return false
+end
+
 function modifier_thorns_aura:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -76,4 +80,8 @@ function modifier_thorns_aura_buff:OnAttacked(event)
             ParticleManager:SetParticleControlEnt(particle, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
         end
     end
+end
+
+function modifier_thorns_aura_buff:IsPurgable()
+    return false
 end

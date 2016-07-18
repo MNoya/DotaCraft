@@ -19,6 +19,10 @@ function modifier_vampiric_aura:IsHidden()
     return true
 end
 
+function modifier_vampiric_aura:IsPurgable()
+    return false
+end
+
 function modifier_vampiric_aura:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -59,11 +63,11 @@ end
 
 modifier_vampiric_aura_buff = class({})
 
-function modifier_vampiric_aura:DeclareFunctions()
+function modifier_vampiric_aura_buff:DeclareFunctions()
     return { MODIFIER_EVENT_ON_ATTACK_LANDED }
 end
 
-function modifier_vampiric_aura:OnAttackLanded(event)
+function modifier_vampiric_aura_buff:OnAttackLanded(event)
     local attacker = event.attacker
     if attacker == self:GetParent() then
         local target = event.target
@@ -74,4 +78,8 @@ function modifier_vampiric_aura:OnAttackLanded(event)
             ParticleManager:SetParticleControlEnt(particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
         end
     end
+end
+
+function modifier_vampiric_aura:IsPurgable()
+    return false
 end

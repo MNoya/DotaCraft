@@ -19,6 +19,10 @@ function modifier_unholy_aura:IsHidden()
     return true
 end
 
+function modifier_unholy_aura:IsPurgable()
+    return false
+end
+
 function modifier_unholy_aura:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -65,4 +69,8 @@ end
 
 function modifier_unholy_aura_buff:GetModifierMoveSpeedBonus_Percentage()
     return self:GetAbility():GetSpecialValueFor("move_speed_bonus")
+end
+
+function modifier_unholy_aura_buff:IsPurgable()
+    return false
 end

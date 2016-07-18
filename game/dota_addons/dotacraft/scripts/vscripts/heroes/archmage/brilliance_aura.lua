@@ -19,6 +19,10 @@ function modifier_brilliance_aura:IsHidden()
     return true
 end
 
+function modifier_brilliance_aura:IsPurgable()
+    return false
+end
+
 function modifier_brilliance_aura:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -61,4 +65,8 @@ end
 
 function modifier_brilliance_aura_buff:GetModifierConstantManaRegen()
     return self:GetAbility():GetSpecialValueFor("mana_regen")
+end
+
+function modifier_brilliance_aura_buff:IsPurgable()
+    return false
 end

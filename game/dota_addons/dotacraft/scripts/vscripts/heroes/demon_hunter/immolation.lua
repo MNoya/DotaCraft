@@ -98,6 +98,10 @@ function modifier_immolation_aura:IsHidden()
     return false
 end
 
+function modifier_immolation_aura:IsPurgable()
+    return false
+end
+
 function modifier_immolation_aura:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -136,4 +140,8 @@ end
 
 function modifier_immolation_aura_debuff:IsHidden()
     return true
+end
+
+function modifier_immolation_aura_debuff:IsPurgable()
+    return false
 end

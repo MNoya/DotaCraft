@@ -19,6 +19,10 @@ function modifier_trueshot_aura:IsHidden()
     return true
 end
 
+function modifier_trueshot_aura:IsPurgable()
+    return false
+end
+
 function modifier_trueshot_aura:GetAuraRadius()
     return self:GetAbility():GetSpecialValueFor("radius")
 end
@@ -65,4 +69,8 @@ end
 
 function modifier_trueshot_aura_buff:GetModifierBaseDamageOutgoing_Percentage()
     return self:GetAbility():GetSpecialValueFor("damage_bonus_percent")
+end
+
+function modifier_trueshot_aura_buff:IsPurgable()
+    return false
 end
