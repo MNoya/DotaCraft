@@ -52,12 +52,7 @@ var MAP_PLAYER_LIMIT;
 	// default everyone to radiant
 	Game.PlayerJoinTeam(2);
 
-	Developer_Mode();
-
-	//GameEvents subscribes 
-	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
-	GameEvents.Subscribe( "pregame_event", HandleEvents );
-	
+	Developer_Mode();	
 	Root.CountDown = false; 
 	Root.Game_Started = false;
 
@@ -81,6 +76,10 @@ var MAP_PLAYER_LIMIT;
 	CheckForHostprivileges();
 	var roundTimer = $.CreatePanel("Label", Root.FindChildTraverse("NotificationContainer"), "RoundTimer");
 	$.Schedule(1, Update);
+	
+	//GameEvents subscribes 
+	GameEvents.Subscribe( "dotacraft_skip_selection", Skip_Selection );
+	GameEvents.Subscribe( "pregame_event", HandleEvents );
 })();
 
 function SetupLocalisation(){
@@ -384,25 +383,37 @@ function Update(){
 function CreateAllPlayers(){
 	var playerIDs = Game.GetAllPlayerIDs()
 	
-	//for(var players of playerIDs)
-	//	$.Msg("Player #"+players+" found");
-	for(var playerIDInList of playerIDs){
-	//	$.Msg("creating panel for player #"+playerIDInList);
-		var teamID = SelectedTeamIDBasedOnSmallestTeam();
-		var colorID = playerIDInList;
-		var TeamContainer = Root.FindChildTraverse("Team_"+teamID);
+	var playerTable = CustomNetTables.GetAllTableValues("dotacraft_pregame_table");
+	
+	var nettableForSelfExist = false;
+	for(var playerID in playerTable){
+		var playerDetails = playerTable[playerID];
 		
-		var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerIDInList);
-		PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
+		if( !playerDetails.isNull ){ // not empty nettable
+			$.Msg("creating player #"+players);
+			
+			var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerIDInList);
+			PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
 
-		PlayerPanel.Init(playerIDInList, teamID, colorID, 0);
+			PlayerPanel.Init(playerIDInList, teamID, colorID, 0);
+			
+			if( playerID == LocalPlayerID )
+				nettableForSelfExist = true;
+		};
 	};
 	
-	//CreateBotLocally( { ID: 1, teamID : 2} );
-	//CreateBotLocally( { ID: 2, teamID : 2} );
-	//CreateBotLocally( { ID: 3, teamID : 3} );
-	//CreateBotLocally( { ID: 4, teamID : 3} );
-	//CreateBotLocally( { ID: 5, teamID : 4} );
+	if( !nettableForSelfExist ){
+		//	$.Msg("creating panel for player #"+playerIDInList);
+		var playerID = LocalPlayerID;
+		var teamID = SelectedTeamIDBasedOnSmallestTeam();
+		var colorID = SelectUnusedColor();
+		var TeamContainer = Root.FindChildTraverse("Team_"+teamID);
+		
+		var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerID);
+		PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
+
+		PlayerPanel.Init(playerID, teamID, colorID, 0);
+	};
 };
 
 function CheckForHostprivileges(){

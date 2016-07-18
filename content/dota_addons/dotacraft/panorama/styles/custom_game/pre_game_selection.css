@@ -23,13 +23,16 @@
 	padding: 10px;
 	padding-top: 0px; 
 	
-	margin-left: 50px;
-	margin-top: 150px;	
+	margin-left: 100px;	
+	margin-top: 100px;
 	
-	horizontal-align: left;
+	horizontal-align: middle;
+	vertical-align: middle;
 
 	opacity: 1;
+	
 	height: 100%;
+	overflow: scroll;
 }
 
 .TeamContainer
@@ -692,6 +695,7 @@ DropDownMenu.DropDownMenuVisible
 .Player:hover, .Local:hover{
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #191e1e ), to( #333333 ) );
 
+	transition-property: background-color;
 	transition-property: background-color;
 	transition-duration: 0.2s;
 	transition-timing-function: ease-in-out;
