@@ -13,3 +13,7 @@ end
 function modifier_client_convars:IsHidden()
     return true
 end
+
+function modifier_client_convars:IsPurgable()
+    return false
+end

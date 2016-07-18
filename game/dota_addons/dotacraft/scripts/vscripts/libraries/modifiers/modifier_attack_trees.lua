@@ -11,3 +11,7 @@ end
 function modifier_attack_trees:IsHidden()
     return true
 end
+
+function modifier_attack_trees:IsPurgable()
+    return false
+end

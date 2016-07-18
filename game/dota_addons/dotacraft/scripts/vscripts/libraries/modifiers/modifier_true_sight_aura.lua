@@ -15,6 +15,10 @@ function modifier_true_sight_aura:IsHidden()
     return true
 end
 
+function modifier_true_sight_aura:IsPurgable()
+    return false
+end
+
 function modifier_true_sight_aura:GetAuraRadius()
     return self.radius
 end

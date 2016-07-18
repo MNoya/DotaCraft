@@ -4,12 +4,20 @@ function modifier_carrying_lumber:GetTexture()
     return "furion_sprout"
 end
 
+function modifier_carrying_lumber:IsPurgable()
+    return false
+end
+
 ----------------------------------------------
 
 modifier_carrying_gold = class({})
 
 function modifier_carrying_gold:GetTexture()
     return "alchemist_goblins_greed"
+end
+
+function modifier_carrying_gold:IsPurgable()
+    return false
 end
 
 ----------------------------------------------
@@ -35,6 +43,10 @@ end
 
 function modifier_gatherer_hidden:IsHidden()
     return true
+end
+
+function modifier_gatherer_hidden:IsPurgable()
+    return false
 end
 
 ----------------------------------------------

@@ -34,3 +34,7 @@ end
 function modifier_builder_hidden:IsHidden()
     return true
 end
+
+function modifier_builder_hidden:IsPurgable()
+    return false
+end

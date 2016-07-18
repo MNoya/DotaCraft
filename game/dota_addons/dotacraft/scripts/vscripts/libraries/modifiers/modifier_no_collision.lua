@@ -7,3 +7,7 @@ end
 function modifier_no_collision:IsHidden()
     return true
 end
+
+function modifier_no_collision:IsPurgable()
+    return false
+end

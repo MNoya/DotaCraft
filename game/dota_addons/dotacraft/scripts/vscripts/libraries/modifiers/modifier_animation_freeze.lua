@@ -7,3 +7,7 @@ end
 function modifier_animation_freeze:IsHidden()
     return true
 end
+
+function modifier_animation_freeze:IsPurgable()
+    return false
+end

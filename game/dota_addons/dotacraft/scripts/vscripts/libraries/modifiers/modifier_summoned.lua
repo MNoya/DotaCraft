@@ -11,3 +11,7 @@ end
 function modifier_summoned:IsHidden()
     return true
 end
+
+function modifier_summoned:IsPurgable()
+    return false
+end

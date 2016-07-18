@@ -20,3 +20,7 @@ end
 function modifier_movespeed_cap:IsHidden()
     return true
 end
+
+function modifier_movespeed_cap:IsPurgable()
+    return false
+end

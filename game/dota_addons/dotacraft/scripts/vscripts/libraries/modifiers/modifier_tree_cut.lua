@@ -14,3 +14,5 @@ function modifier_tree_cut:CheckState()
     }
     return state
 end
+
+function modifier_tree_cut:IsPurgable() return false end

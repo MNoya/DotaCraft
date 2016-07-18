@@ -39,3 +39,7 @@ end
 function modifier_flying_control:IsHidden()
     return true
 end
+
+function modifier_flying_control:IsPurgable()
+    return false
+end

@@ -29,4 +29,8 @@ if IsServer() then
         unit:SetDayTimeVisionRange(unit.originalDayVision)
         unit:SetNightTimeVisionRange(unit.originalNightVision)
     end
+
+    function modifier_out_of_world:IsPurgable()
+        return false
+    end
 end

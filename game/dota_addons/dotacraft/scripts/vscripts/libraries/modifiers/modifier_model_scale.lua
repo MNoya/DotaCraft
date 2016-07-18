@@ -20,3 +20,7 @@ end
 function modifier_model_scale:IsHidden()
     return true
 end
+
+function modifier_model_scale:IsPurgable()
+    return false
+end

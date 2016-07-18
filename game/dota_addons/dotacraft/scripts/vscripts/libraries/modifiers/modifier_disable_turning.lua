@@ -18,3 +18,7 @@ end
 function modifier_disable_turning:IsHidden()
     return true
 end
+
+function modifier_disable_turning:IsPurgable()
+    return false
+end
