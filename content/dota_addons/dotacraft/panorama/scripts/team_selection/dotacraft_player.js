@@ -182,7 +182,7 @@ function SetupLocalisation(){
 function HandleReadyStatus(ready){
 	Root.SetHasClass("Ready", ready);
 	Root.PlayerReady = ready;	
-	SetDropDownStates(!ready);
+	UpdatePanelLockState(ready);
 };
 
 // main logic behind updating players, this is called when net_table changed
@@ -361,9 +361,9 @@ function PlayerPanelSetup(){
 	
 	UpdateColorDropDownColor();
 	
-	if( Root.PlayerID != LocalPlayerID && ( Root.Bot && !isLocalPlayerHost() ))
-		Root.FindChildTraverse("ReadyButton").enabled = false;
-		
+	if( Root.PlayerID != LocalPlayerID && (Root.Bot && !isLocalPlayerHost()) )
+		Root.FindChildTraverse("ReadyButton").AddClass("hidden");
+
 	// set dropdown enabled states
 	if( Root.PlayerID == LocalPlayerID || ( !Players.IsValidPlayerID(Root.PlayerID) && isLocalPlayerHost()) )
 		SetDropDownStates(true);
@@ -373,7 +373,7 @@ function PlayerPanelSetup(){
 
 function UpdatePanelLockState(lock)
 {	
-	if( Root.PlayerReady )
+	if( Root.PlayerReady ) // if ready always disable
 		SetDropDownStates(false)
 	else if( (isLocalPlayerHost() && lock) || ( isLocalPlayerHost() && Root.Bot) ) // if host && locked, enable all panels
 		SetDropDownStates(true);
@@ -406,7 +406,7 @@ function SetDropDownStates(Enabled){
 
 Root.LockEverything = function(){
 	SetDropDownStates(false);
-	Root.FindChildTraverse("ReadyButton").enabled = false;
+	Root.FindChildTraverse("ReadyButton").AddClass("hidden");
 };
 
 function Setup_Panaroma_Color_Table(){

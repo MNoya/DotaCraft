@@ -50,7 +50,7 @@
 			<Label text="Team 5" id="8" />
 			<Label text="Team 6" id="9" />
 		</DropDown>-->
-		<Button id="ReadyButton" onactivate="ReadyUp()">
+		<Button id="ReadyButton" onactivate="ReadyUp()" >
 			<Label id="PlayerScoreButtonLabel" text="Ready" />
 		</Button>
 	</Panel>
