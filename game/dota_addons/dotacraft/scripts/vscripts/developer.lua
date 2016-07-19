@@ -37,18 +37,18 @@ TEST_CODES = {
 }
 
 function dotacraft:DeveloperMode(player)
-	local pID = player:GetPlayerID()
-	local hero = player:GetAssignedHero()
+    local pID = player:GetPlayerID()
+    local hero = player:GetAssignedHero()
 
     Players:ModifyGold(pID, 50000)
-	Players:ModifyLumber(pID, 50000)
-	Players:ModifyFoodLimit(pID, 100)
+    Players:ModifyLumber(pID, 50000)
+    Players:ModifyFoodLimit(pID, 100)
 end
 
 -- A player has typed something into the chat
 function dotacraft:OnPlayerChat(keys)
-	local text = keys.text
-	local userID = keys.userid
+    local text = keys.text
+    local userID = keys.userid
     local playerID = self.vUserIds[userID] and self.vUserIds[userID]:GetPlayerID()
     if not playerID then return end
 
@@ -57,11 +57,11 @@ function dotacraft:OnPlayerChat(keys)
         text = string.sub(text, 2, string.len(text))
     end
 
-	local input = split(text)
-	local command = input[1]
-	if CHEAT_CODES[command] then
-		CHEAT_CODES[command](playerID, input[2])
-	elseif DEBUG_CODES[command] then
+    local input = split(text)
+    local command = input[1]
+    if CHEAT_CODES[command] then
+        CHEAT_CODES[command](playerID, input[2])
+    elseif DEBUG_CODES[command] then
         DEBUG_CODES[command](input[2])
     elseif TEST_CODES[command] then
         TEST_CODES[command](playerID, input[2], input[3], input[4])
@@ -69,92 +69,92 @@ function dotacraft:OnPlayerChat(keys)
 end
 
 function dotacraft:WarpTen()
-	BuildingHelper:WarpTen()
-	local message = GameRules.WarpTen and "Cheat enabled!" or "Cheat disabled!"
-	GameRules:SendCustomMessage(message, 0, 0)
+    BuildingHelper:WarpTen()
+    local message = GameRules.WarpTen and "Cheat enabled!" or "Cheat disabled!"
+    GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:GreedIsGood(playerID, value)
-	if not value then value = 500 end
-	
-	Players:ModifyGold(playerID, tonumber(value))
-	Players:ModifyLumber(playerID, tonumber(value))
-	
-	GameRules:SendCustomMessage("Cheat enabled!", 0, 0)
+    if not value then value = 500 end
+    
+    Players:ModifyGold(playerID, tonumber(value))
+    Players:ModifyLumber(playerID, tonumber(value))
+    
+    GameRules:SendCustomMessage("Cheat enabled!", 0, 0)
 end
 
 function dotacraft:WhosYourDaddy()
-	GameRules.WhosYourDaddy = not GameRules.WhosYourDaddy
-	
-	local message = GameRules.WhosYourDaddy and "Cheat enabled!" or "Cheat disabled!"
-	GameRules:SendCustomMessage(message, 0, 0)
+    GameRules.WhosYourDaddy = not GameRules.WhosYourDaddy
+    
+    local message = GameRules.WhosYourDaddy and "Cheat enabled!" or "Cheat disabled!"
+    GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:ThereIsNoSpoon()
-	GameRules.ThereIsNoSpoon = not GameRules.ThereIsNoSpoon
-	
-	local message = GameRules.ThereIsNoSpoon and "Cheat enabled!" or "Cheat disabled!"
-	GameRules:SendCustomMessage(message, 0, 0)
+    GameRules.ThereIsNoSpoon = not GameRules.ThereIsNoSpoon
+    
+    local message = GameRules.ThereIsNoSpoon and "Cheat enabled!" or "Cheat disabled!"
+    GameRules:SendCustomMessage(message, 0, 0)
 end
 
-function dotacraft:ISeeDeadPeople()	
-	GameRules.ISeeDeadPeople = not GameRules.ISeeDeadPeople
-	GameMode:SetFogOfWarDisabled( GameRules.ISeeDeadPeople )
+function dotacraft:ISeeDeadPeople() 
+    GameRules.ISeeDeadPeople = not GameRules.ISeeDeadPeople
+    GameMode:SetFogOfWarDisabled( GameRules.ISeeDeadPeople )
 
-	local message = GameRules.ISeeDeadPeople and "Cheat enabled!" or "Cheat disabled!"
-	GameRules:SendCustomMessage(message, 0, 0)
+    local message = GameRules.ISeeDeadPeople and "Cheat enabled!" or "Cheat disabled!"
+    GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:PointBreak()
-	GameRules.PointBreak = not GameRules.PointBreak
-	local foodBonus = GameRules.PointBreak and 1000 or 0
+    GameRules.PointBreak = not GameRules.PointBreak
+    local foodBonus = GameRules.PointBreak and 1000 or 0
 
-	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
-		if PlayerResource:IsValidPlayerID(playerID) then
-			local player = PlayerResource:GetPlayer(playerID)
-			Players:ModifyFoodLimit(playerID, foodBonus-Players:GetFoodLimit(playerID))
-		end
-	end
+    for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            local player = PlayerResource:GetPlayer(playerID)
+            Players:ModifyFoodLimit(playerID, foodBonus-Players:GetFoodLimit(playerID))
+        end
+    end
 
-	local message = GameRules.PointBreak and "Cheat enabled!" or "Cheat disabled!"
-	GameRules:SendCustomMessage(message, 0, 0)
+    local message = GameRules.PointBreak and "Cheat enabled!" or "Cheat disabled!"
+    GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:Synergy()
-	GameRules.Synergy = not GameRules.Synergy
-	
-	for playerID=0,DOTA_MAX_TEAM_PLAYERS do
-		if PlayerResource:IsValidPlayerID(playerID) then
-			local playerUnits = Players:GetUnits(playerID)
+    GameRules.Synergy = not GameRules.Synergy
+    
+    for playerID=0,DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            local playerUnits = Players:GetUnits(playerID)
             local playerStructures = Players:GetUnits(playerID)
-			for _,v in pairs(playerUnits) do
-				CheckAbilityRequirements(v, playerID)
-			end
-			for _,v in pairs(playerStructures) do
-				CheckAbilityRequirements(v, playerID)
-			end
-		end
-	end
+            for _,v in pairs(playerUnits) do
+                CheckAbilityRequirements(v, playerID)
+            end
+            for _,v in pairs(playerStructures) do
+                CheckAbilityRequirements(v, playerID)
+            end
+        end
+    end
 
-	local message = GameRules.Synergy and "Cheat enabled!" or "Cheat disabled!"
-	GameRules:SendCustomMessage(message, 0, 0)
+    local message = GameRules.Synergy and "Cheat enabled!" or "Cheat disabled!"
+    GameRules:SendCustomMessage(message, 0, 0)
 end
 
 function dotacraft:RiseAndShine()
-	GameRules:SetTimeOfDay( 0.3 )
+    GameRules:SetTimeOfDay( 0.3 )
 end
 
 function dotacraft:LightsOut()
-	GameRules:SetTimeOfDay( 0.8 )
+    GameRules:SetTimeOfDay( 0.8 )
 end
 
 function dotacraft:GiveItem(playerID, item_name)
-	local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
     if selected then
         selected = EntIndexToHScript(selected)
 
-    	local new_item = CreateItem(item_name, nil, nil)
-    	if new_item then
+        local new_item = CreateItem(item_name, nil, nil)
+        if new_item then
             if selected:IsRealHero() then
                 selected:AddItem(new_item)
             else
@@ -162,7 +162,7 @@ function dotacraft:GiveItem(playerID, item_name)
                 CreateItemOnPositionSync(pos,new_item)
                 new_item:LaunchLoot(false, 200, 0.75,pos)
             end
-    	else
+        else
             print("ERROR, can't find "..item_name)
         end
     end

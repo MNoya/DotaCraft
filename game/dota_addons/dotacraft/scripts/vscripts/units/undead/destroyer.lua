@@ -44,18 +44,13 @@ function undead_absorb_mana(keys)
 	local target = keys.target
 	local PlayerID = caster:GetPlayerOwnerID()
 
-	if target:GetMana() == 0 or IsCustomBuilding(target) then	
-		SendErrorMessage(PlayerID, "#error_target_has_no_mana")
-		return
-	else
-		-- store target mana and set target to 0
-		local target_mana = target:GetMana()		
-		local mana_to_steal = caster:GetMaxMana() - caster:GetMana() 
-		
-		-- add mana to caster
-		target:SetMana(target_mana - mana_to_steal)
-		caster:SetMana(caster:GetMana() + target_mana)
-	end
+	-- store target mana and set target to 0
+	local target_mana = target:GetMana()		
+	local mana_to_steal = caster:GetMaxMana() - caster:GetMana() 
+	
+	-- add mana to caster
+	target:SetMana(target_mana - mana_to_steal)
+	caster:SetMana(caster:GetMana() + target_mana)
 end
 
 function undead_devour_magic(keys)
@@ -118,8 +113,7 @@ function undead_devour_magic(keys)
 				-- exclusion flags
 				--if string.find(mods:GetName(), "modifier_attack") or string.find(mods:GetName(), "modifier_armor") or string.find(mods:GetName(), "modifier_devour_magic_target") then
 				
-				print(IsPurgableModifier(mods))
-				if IsPurgableModifier(mods) then
+				if mods:IsPurgableModifier() then
 					-- remove if not attack/armor/aura modifier
 					--print("purging modifier = "..mods:GetName())
 					unit:RemoveModifierByName(mods:GetName())

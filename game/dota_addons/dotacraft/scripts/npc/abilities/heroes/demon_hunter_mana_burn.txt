@@ -1,79 +1,68 @@
 // Demon Hunter Mana Burn
 // Author: Noya
-// Date: 09.08.2015.
-// Notes: Sends a bolt of negative energy that burns a target enemy unit's mana. Burned mana combusts, dealing damage to the target equal to the amount of mana burned.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	7 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 50 mana	1
-//2	N/A	6 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 100 mana	3
-//3	N/A	5 sec.	50	30	Unit	Air, Ground, Enemy, Neutral	Burns 150 mana	5
+// Description: Sends a bolt of negative energy that burns a target enemy unit's mana. Burned mana combusts, dealing damage to the target equal to the amount of mana burned.
+
 "demon_hunter_mana_burn"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"demon_hunter_mana_burn"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "demon_hunter_mana_burn"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
-	"AbilityCastRange"				"300"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"7.0 6.0 5.0"
+    "RequiresTargetMana"            "1"
+    
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 
-	"AbilityManaCost"				"50"
+    "AbilityCastRange"              "300"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "7.0 6.0 5.0"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"mana_burn"			"50 100 150"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"damage_per_mana"	"1"
-		}
-	}
+    "AbilityManaCost"               "50"
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"    "heroes/demon_hunter/mana_burn.lua"
-			"Function"      "ManaBurnCheck"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "mana_burn"         "50 100 150"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "damage_per_mana"   "1"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"	"Hero_NyxAssassin.ManaBurn.Target"
-			"Target" 		"TARGET"
-		}
-		
-		"FireEffect"
-		{
-			"Target"			"TARGET"
-			"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
-			"EffectAttachType"	"follow_origin"
-		}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_NyxAssassin.ManaBurn.Target"
+            "Target"        "TARGET"
+        }
+        
+        "FireEffect"
+        {
+            "Target"            "TARGET"
+            "EffectName"        "particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }
 
-		"RunScript"
-		{
-			"ScriptFile"    "heroes/demon_hunter/mana_burn.lua"
-			"Function"      "ManaBurn"
-		}
-	}
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/demon_hunter/mana_burn.lua"
+            "Function"      "ManaBurn"
+        }
+    }
 
 }

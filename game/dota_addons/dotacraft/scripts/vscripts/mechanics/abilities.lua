@@ -24,8 +24,14 @@ function CDOTABaseAbility:IsAllowedTarget(target)
         return false,"error_cant_target_level6"
     end
 
+    local bRequiresTargetMana = self:GetKeyValue("RequiresTargetMana")
+    local maxMana = target:GetMaxMana()
+    if bRequiresTargetMana and maxMana == 0 then
+        return false,"error_must_target_mana_unit"
+    end
+
     local bNeedsAnyDeficit = self:GetKeyValue("RequiresManaDeficit")
-    if bNeedsAnyDeficit and target:GetHealthDeficit() == 0 and target:GetMana() == target:GetMaxMana() then
+    if bNeedsAnyDeficit and target:GetHealthDeficit() == 0 and target:GetMana() == maxMana then
         return false,"error_full_mana_health"
     end
 
@@ -43,7 +49,7 @@ function CDOTABaseAbility:IsAllowedTarget(target)
     end
 
     local bNeedsManaDeficit = self:GetKeyValue("RequiresManaDeficit")
-    if bNeedsManaDeficit and target:GetMana() == target:GetMaxMana() then
+    if bNeedsManaDeficit and target:GetMana() == maxMana then
         return false,"error_full_mana"
     end
 
@@ -52,7 +58,7 @@ end
 
 -- All abilities that affect buildings must have DOTA_UNIT_TARGET_BUILDING in its AbilityUnitTargetType
 function CDOTABaseAbility:AffectsBuildings()
-    return self:HasFlag(DOTA_UNIT_TARGET_BUILDING)
+    return self:HasTargetType(DOTA_UNIT_TARGET_BUILDING)
 end
 
 -- Keyword 'organic' in TargetsAllowed will prevent the ability from affecting (targeting/damaging/modifying) units marked with "Mechanical" "1"
@@ -73,8 +79,12 @@ function CDOTABaseAbility:AffectsGround()
     return not targets:match("air")
 end
 
-function CDOTABaseAbility:HasFlag(flag)
+function CDOTABaseAbility:HasTargetType(flag)
     return bit.band(self:GetAbilityTargetType(), flag) == flag
+end
+
+function CDOTABaseAbility:HasTargetFlag(flag)
+    return bit.band(self:GetAbilityTargetFlags(), flag) == flag
 end
 
 function CDOTABaseAbility:HasBehavior(flag)

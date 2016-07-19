@@ -680,13 +680,17 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 
-	//Need parity values
 	"AbilityCastPoint"			"0.0"
-	"AbilityCastRange"			"500"
-	"AbilityCooldown"			"5"
-	"AbilityManaCost"			"35"
+	"AbilityCastRange"			"700"
+	"AbilityCooldown"			"3"
+	"AbilityManaCost"			"75"
 
-	//OnSpellStart, RunScript, check if casted on friend or enemy
+	"precache"
+	{
+	    "particle"  "particles/units/heroes/hero_rubick/rubick_spell_steal_haze.vpcf"
+	    "soundfile" "soundevents/game_sounds_heroes/game_sounds_rubick.vsndevts"
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
@@ -694,6 +698,24 @@
 			"ScriptFile"	"units/human/spell_breaker.lua"
 			"Function"		"SpellSteal"
 		}
+	}
+
+	"Modifiers"
+	{
+	    "modifier_spell_steal_autocast"
+	    {
+	        "Passive"           "1"
+	        "IsHidden"          "1"
+	
+	        "OnCreated"
+	        {
+	            "RunScript"
+	            {
+	                "ScriptFile"    "units/human/spell_breaker.lua"
+	                "Function"      "SpellSteal_AutoCast"
+	            }
+	        }
+	    }
 	}
 }
 

@@ -112,7 +112,7 @@ function dotacraft:InitGameMode()
     CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
     CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
     
-	-- Lua Modifiers
+    -- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_hex_sheep", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_model_scale", "libraries/modifiers/modifier_model_scale", LUA_MODIFIER_MOTION_NONE)
@@ -125,6 +125,7 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_druid_bear_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_bloodlust", "units/orc/modifier_bloodlust", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_healing_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_sentry_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_true_sight_aura", "libraries/modifiers/modifier_true_sight_aura", LUA_MODIFIER_MOTION_NONE)
@@ -181,7 +182,6 @@ end
 function dotacraft:LoadKV()
     GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
     GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
-    GameRules.Modifiers = LoadKeyValues("scripts/kv/modifiers.kv")
     GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
     GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
     GameRules.Damage = LoadKeyValues("scripts/kv/damage_table.kv")
@@ -669,28 +669,28 @@ function dotacraft:OnPreGame()
     print("[DOTACRAFT] OnPreGame")
     Teams:DetermineStartingPositions()
     Minimap:PrepareCamps()
-	
-	local teamIDs = {2,3,6,7,8,9}
+    
+    local teamIDs = {2,3,6,7,8,9}
     local maxPlayers = dotacraft:GetMapMaxPlayers()
     for playerID = 0, maxPlayers do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
         if Players:IsValidNetTablePlayer(playerTable) then
-			local color = playerTable.Color
-			local team = teamIDs[playerTable.Team]
-			local race = GameRules.raceTable[playerTable.Race] or GameRules.raceTable[RandomInt(1, 4)]
-			local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
+            local color = playerTable.Color
+            local team = teamIDs[playerTable.Team]
+            local race = GameRules.raceTable[playerTable.Race] or GameRules.raceTable[RandomInt(1, 4)]
+            local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
 
             PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
             PlayerResource:SetCustomTeamAssignment(playerID, team)
-			
-			if PlayerResource:IsValidPlayerID(playerID) then
-				--Race Heroes are already precached
-				local player = PlayerResource:GetPlayer(playerID)
-				local hero = CreateHeroForPlayer(race, player)
-				hero.color_id = color
-				
-				print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
-			else
+            
+            if PlayerResource:IsValidPlayerID(playerID) then
+                --Race Heroes are already precached
+                local player = PlayerResource:GetPlayer(playerID)
+                local hero = CreateHeroForPlayer(race, player)
+                hero.color_id = color
+                
+                print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)
+            else
                 Tutorial:AddBot(race,'','',false)
 
                 Timers(2, function()
@@ -707,8 +707,8 @@ function dotacraft:OnPreGame()
                         end
                     end
                 end)
-			end
-		end
+            end
+        end
     end
     
     --[[
@@ -854,8 +854,8 @@ function dotacraft:OnPlayerReconnect(keys)
     Timers:CreateTimer(0.03, function()
         player:SetKillCamUnit(nil)
     end)   
-	
-	UI:HandlePlayerReconnect(player)
+    
+    UI:HandlePlayerReconnect(player)
 end
 
 -- A tree was cut down
@@ -1278,6 +1278,16 @@ function dotacraft:FilterModifier( filterTable )
     if bIgnoreMechanical then
         return false
     end
+
+    -- Store ability name for spell steal
+    Timers:CreateTimer(0.03, function()
+        if IsValidEntity(target) and IsValidEntity(ability) then
+            local modifier = target:FindModifierByName(filterTable["name_const"])
+            if modifier then
+                modifier.abilityName = ability:GetAbilityName() -- Store ability name for spell steal
+            end
+        end
+    end)
 
     return true
 end

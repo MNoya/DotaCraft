@@ -1077,7 +1077,7 @@ function Gatherer:CheckGatherCancel(order)
         local selectedEntities = PlayerResource:GetSelectedEntities(unit:GetPlayerOwnerID())
         for k,entIndex in pairs(selectedEntities) do
             local ent = EntIndexToHScript(entIndex)
-            if ent.CancelGather and ent.gatherer_state ~= "idle" then
+            if ent and ent.CancelGather and ent.gatherer_state ~= "idle" then
                 ent:CancelGather()
             elseif ent and ent.gatherer_timer then
                 Timers:RemoveTimer(ent.gatherer_timer)

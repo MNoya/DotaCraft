@@ -2044,7 +2044,10 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+
+	"RequiresTargetMana"        "1"
 		
 	"AbilityCastRange"			"900"
 	"AbilityCastPoint"			"0"
@@ -2058,8 +2061,6 @@
 			"var_type"		"FIELD_FLOAT"
 			"duration"		"0.5"
 		}
-		// The maximum amount of mana that can be absorbed is 99999, but that's rather a technical limit.
-		// This ability does affect INVUNERABLE units.
 	}
 	
 	"precache"
