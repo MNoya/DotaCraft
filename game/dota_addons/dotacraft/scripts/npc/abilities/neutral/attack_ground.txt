@@ -57,21 +57,6 @@
                 }
             }
 
-            // Attacking ground is a fake attack
-            "OnAttack"
-            {
-                "RemoveModifier"
-                {
-                    "ModifierName"  "modifier_attacking_ground"
-                    "Target"        "CASTER"
-                }
-                "RunScript"
-                {
-                    "ScriptFile"    "mechanics/attacks.lua"
-                    "Function"      "StopAttackGround"
-                }
-            }
-
             "Properties"
             {
                 "MODIFIER_PROPERTY_DISABLE_AUTOATTACK"  "1"
