@@ -27,19 +27,21 @@ function AbolishMagicAutocast( event )
 	local caster = event.caster
 	local ability = event.ability
 	local autocast_radius = ability:GetCastRange()
+	local teamNumber = caster:GetTeamNumber()
 	
 	-- Get if the ability is on autocast mode and cast the ability on a target
 	if ability:GetAutoCastState() and ability:IsFullyCastable() then
 		
 		-- Find targets in radius
 		local target
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(teamNumber, caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		for k,unit in pairs(units) do
 			-- Autocast Abolish Magic on enemy summons
-			if unit:IsSummoned() and unit:GetTeamNumber() ~= caster:GetTeamNumber() then
+			local bEnemy = unit:GetTeamNumber() ~= teamNumber
+			if unit:IsSummoned() and bEnemy then
 				target = unit
 			
-			elseif not IsCustomBuilding(unit) and UnitHasPurgableModifiers(unit,caster) then
+			elseif not IsCustomBuilding(unit) and unit:HasPurgableModifiers(bEnemy) then
 				target = unit
 				break
 			end
@@ -51,28 +53,4 @@ function AbolishMagicAutocast( event )
 			caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
 		end
 	end
-end
-
-function UnitHasPurgableModifiers( unit, caster )
-	local allModifiers = unit:FindAllModifiers()
-
-	-- Only attempt to take buffs from enemies and debuffs from allies
-	if unit:GetTeamNumber() ~= caster:GetTeamNumber() then
-		for _,modifier in pairs(allModifiers) do
-			if IsPurgableModifier( modifier ) and not IsDebuff(modifier) then
-				return true
-			end
-		end
-	else
-		for _,modifier in pairs(allModifiers) do
-			if IsPurgableModifier( modifier ) and IsDebuff(modifier) then
-				return true
-			end
-		end
-
-		if unit:HasModifier("modifier_brewmaster_storm_cyclone") then
-			return true
-		end
-	end
-	return false
 end
