@@ -89,7 +89,7 @@ function SetupLocalisation(){
 	Root.FindChildTraverse("map_description_header").text = $.Localize("map_description")
 	Root.FindChildTraverse("suggested_players_header").text = $.Localize("suggested_players");
 };
-
+ 
 function HandleEvents(data){
 	var event = data.Event_Name;
 	var updateTable = data.Info;

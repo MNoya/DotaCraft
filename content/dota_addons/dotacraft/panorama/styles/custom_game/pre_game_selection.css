@@ -23,15 +23,15 @@
 	padding: 10px;
 	padding-top: 0px; 
 	
-	margin-left: 100px;	
 	margin-top: 100px;
 	
-	horizontal-align: middle;
+	horizontal-align: right;
 	vertical-align: middle;
 
 	opacity: 1;
 	
 	height: 100%;
+	width: 1200px;
 	overflow: scroll;
 }
 
@@ -166,7 +166,7 @@
 
 #HostPanel{
 	width: 200px;
-	height: 350px;
+	height: 100px;
 	
 	visibility: collapse;
 	horizontal-align: right;
@@ -199,12 +199,9 @@
 }
 
 .Button{
-	height: 10%;
+	height: 40px;
 	width: 80%; 
-	margin-top: 25px;
-	margin-bottom: 25px;
-	
-	vertical-align: middle;
+
 	horizontal-align: middle; 
 	
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #5A615Ecc ), to( #879695cc ));
@@ -372,6 +369,7 @@
 }
 
 #ReadyButton{
+	height: drop_down_height;
 	width: 90px;
 	margin-right: 5px;
 	margin-left: 5px;
@@ -460,10 +458,8 @@
 	transition-duration: 0.15s;
 	transition-timing-function: linear;
 }
-#ColorDropDown{
-	width: 45px;
-}
-#RaceDropDown{
+
+#RaceDropDown, #ColorDropDown{
 	width: 125px;
 }
 #TeamDropDown{
