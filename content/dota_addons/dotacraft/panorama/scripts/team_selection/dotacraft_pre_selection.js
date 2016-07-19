@@ -239,7 +239,7 @@ function SetupTeamContainers(){
 			return function(){
 				var foundPlayerPanel = FindPlayer(LocalPlayerID);
 
-				if( foundPlayerPanel != null )
+				if( foundPlayerPanel != null && !foundPlayerPanel.Ready )
 					foundPlayerPanel.SetTeam(caller.TeamID);			
 			}
 		}(TeamContainer));
@@ -385,22 +385,28 @@ function CreateAllPlayers(){
 	
 	var listOfPlayersInNettable = new Array();
 	for(var playerID in playerTable){
-		var playerDetails = playerTable[playerID];
-		
-		if( playerDetails.isNull != true && playerDetails != null){ // not empty nettable	
+		var playerDetails = playerTable[playerID].value;
+		$.Msg("creating player #"+playerID);
+		$.Msg(playerTable[playerID]);
+		$.Msg(playerDetails);
+		if( playerDetails.isNull == null){ // if isnull doesn't exist it means the nettable is not null
+			$.Msg("valid nettable for player");
 			var TeamContainer = Root.FindChildTraverse("Team_"+playerDetails.Team);
 			var PlayerPanel = $.CreatePanel("Panel", TeamContainer, "Player_"+playerID);
 			PlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/pre_game_player.xml", false, false);
-
-			PlayerPanel.Init(playerID, playerDetails.Team, playerDetails.Color, playerDetails.Race, playerDetails.Ready);
+ 
+			PlayerPanel.Init(parseInt(playerID), parseInt(playerDetails.Team), parseInt(playerDetails.Color), parseInt(playerDetails.Race), parseInt(playerDetails.Ready));
+			if( playerDetails.aiLVL != null )
+				PlayerPanel.SetBot(playerDetails.aiLVL);
 			
-			listOfPlayersInNettable.push(playerID);
+			
+			listOfPlayersInNettable.push(parseInt(playerID));
 		};
 	};
 	
 	var playerIDs = Game.GetAllPlayerIDs();
 	for(var playerIDInList of playerIDs){ // create all players from player id list that was not previously created by the nettable
-		if(	!contains(listOfPlayersInNettable, playerIDInList) ){
+		if(	!Contains(listOfPlayersInNettable, playerIDInList) ){
 			var playerID = playerIDInList;
 			var teamID = SelectedTeamIDBasedOnSmallestTeam();
 			var colorID = playerID;
@@ -414,7 +420,7 @@ function CreateAllPlayers(){
 	};
 };
 
-function contains(array, item){
+function Contains(array, item){
 	return ( array.indexOf(item) != -1 );
 };
 

@@ -496,8 +496,9 @@
 
 #OptionsDropDown:disabled{
 	background-image: none;
-	background-color: none;
-	border: 0px solid black;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
+	border: 2px solid #3b414266;
+	background-size: 0px;
 }
 
 .transparent{

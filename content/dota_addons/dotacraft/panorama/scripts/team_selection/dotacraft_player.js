@@ -40,15 +40,13 @@ Root.Lock = function(lock)
 };
 
 Root.SetBot = function(aiLVL){
-	if( isLocalPlayerHost() ) // host only
-		$("#OptionsDropDown").RemoveClass("hidden");
-	
 	Root.Bot = true;
 	Root.aiLVL = aiLVL;
 	$("#PlayerAvatar").visible = false;
 	$("#PlayerName").GetChild(0).text = Bot_Names[aiLVL];  
 	
 	if ( isLocalPlayerHost() ){
+		$("#OptionsDropDown").RemoveClass("hidden");
 		UpdatePlayer();
 	};
 };
@@ -183,8 +181,8 @@ function SetupLocalisation(){
 
 function HandleReadyStatus(ready){
 	Root.SetHasClass("Ready", ready);
-	UpdatePanelLockState(Boolise(ready));
-	Root.PlayerReady = ready;		
+	Root.PlayerReady = ready;	
+	SetDropDownStates(!ready);
 };
 
 // main logic behind updating players, this is called when net_table changed
@@ -322,7 +320,8 @@ function SetRaceBackgroundImage(race){
 var dotacraft_DropDowns = {
 	1: "ColorDropDown",
 //	2: "TeamDropDown",
-	3: "RaceDropDown"
+	3: "RaceDropDown",
+	4: "OptionsDropDown"
 };
 
 function PlayerPanelSetup(){
@@ -362,6 +361,9 @@ function PlayerPanelSetup(){
 	
 	UpdateColorDropDownColor();
 	
+	if( Root.PlayerID != LocalPlayerID && ( Root.Bot && !isLocalPlayerHost() ))
+		Root.FindChildTraverse("ReadyButton").enabled = false;
+		
 	// set dropdown enabled states
 	if( Root.PlayerID == LocalPlayerID || ( !Players.IsValidPlayerID(Root.PlayerID) && isLocalPlayerHost()) )
 		SetDropDownStates(true);
@@ -370,8 +372,10 @@ function PlayerPanelSetup(){
 };
 
 function UpdatePanelLockState(lock)
-{
-	if( (isLocalPlayerHost() && lock) || ( isLocalPlayerHost() && Root.Bot) ) // if host && locked, enable all panels
+{	
+	if( Root.PlayerReady )
+		SetDropDownStates(false)
+	else if( (isLocalPlayerHost() && lock) || ( isLocalPlayerHost() && Root.Bot) ) // if host && locked, enable all panels
 		SetDropDownStates(true);
 	else if( Root.PlayerID == LocalPlayerID && !lock ) // if panel belongs to local player && not locked, enable panel
 		SetDropDownStates(true);
@@ -397,11 +401,11 @@ function SetDropDownStates(Enabled){
 		var dropdown = Root.FindChildTraverse(dotacraft_DropDowns[index]);	
 		if( dropdown != null )
 			dropdown.enabled = Enabled;
-	};	
+	};
 };
 
 Root.LockEverything = function(){
-	SetDropDownStates(true);
+	SetDropDownStates(false);
 	Root.FindChildTraverse("ReadyButton").enabled = false;
 };
 
