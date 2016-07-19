@@ -362,9 +362,11 @@ function PlayerPanelSetup(){
 	UpdateColorDropDownColor();
 	
 	// set dropdown enabled states
-	if( Root.PlayerID == LocalPlayerID || ( !Players.IsValidPlayerID(Root.PlayerID) && isLocalPlayerHost()) ){
+	if( Root.PlayerID == LocalPlayerID ){
 		SetDropDownStates(true);
 		Root.FindChildTraverse("ReadyButton").RemoveClass("hidden");
+	}else if( !Players.IsValidPlayerID(Root.PlayerID) && isLocalPlayerHost()){
+		SetDropDownStates(true);	
 	}else  // if Root.Locked && !isHost()
 		SetDropDownStates(false);
 };
