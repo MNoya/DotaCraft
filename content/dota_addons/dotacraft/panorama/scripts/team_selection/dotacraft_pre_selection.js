@@ -141,7 +141,8 @@ function CreateBot(teamID)
 		var newTeamID = parseInt(teamID);
 		var newColorID = SelectUnusedColor();
 		//var newColorID = 1;
-		SendEventToServer("create_bot", { "ID" : newPlayerID, "TeamID" : newTeamID, "ColorID": newColorID });
+		CreateBotLocally({ "ID" : newPlayerID, "TeamID" : newTeamID, "ColorID": newColorID, "invokingPlayerID": -1 });
+		SendEventToServer("create_bot", { "ID" : newPlayerID, "TeamID" : newTeamID, "ColorID": newColorID, "invokingPlayerID": LocalPlayerID });
 	}
 };
 
@@ -180,7 +181,7 @@ function DeletePlayerByPanelID(panelID){
 function CreateBotLocally(data){
 	var newPlayerID = data.ID;
 	
-	if( FindPlayer(newPlayerID) == null){
+	if( FindPlayer(newPlayerID) == null && data.invokingPlayerID != LocalPlayerID ){
 		Game.EmitSound("Building.Placement");
 		var teamID = data.TeamID;
 		var colorID = data.ColorID;
@@ -192,7 +193,7 @@ function CreateBotLocally(data){
 		PlayerPanel.Init(newPlayerID, teamID, colorID, 0, false);
 		PlayerPanel.SetBot(1);
 	}else
-		$.Msg("[ERROR] REQUEST RECIEVED TO CREATE A PLAYER PANEL THAT ALREADY EXIST");
+		$.Msg("[ERROR] REQUEST RECIEVED TO CREATE A PLAYER PANEL THAT ALREADY EXIST OR PLAYER IS HOST(IGNORE IF THIS IS TRUE)");
 };
 
 function SelectedTeamIDBasedOnSmallestTeam(){
