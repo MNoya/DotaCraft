@@ -108,14 +108,22 @@ function stop_sacrifice ( keys )
 end
 
 function HauntGoldMine( event )
-    BuildingHelper:AddBuilding(event)
-
-    local ability = event.ability
+     local ability = event.ability
     local caster = event.caster
     local playerID = caster:GetPlayerOwnerID()
     local teamNumber = caster:GetTeamNumber()
     local building_name = "undead_haunted_gold_mine"
     local construction_size = BuildingHelper:GetConstructionSize(building_name)
+    local gold_cost = ability:GetSpecialValueFor("gold_cost")
+    local lumber_cost = ability:GetSpecialValueFor("lumber_cost")
+
+    Players:ModifyGold(playerID, gold_cost)
+
+    if not Players:HasEnoughLumber( playerID, lumber_cost ) then
+        return
+    end
+
+    BuildingHelper:AddBuilding(event)
     
     -- Callbacks
     event:OnPreConstruction(function(vPos)
@@ -134,19 +142,19 @@ function HauntGoldMine( event )
     end)
 
     -- Position for a building was confirmed and valid
-    event:OnBuildingPosChosen(function(vPos)
-
-        print("chosen")
-
-        return true
-
-    end)
+    event:OnBuildingPosChosen(function(vPos) return true end)
 
     event:OnConstructionFailed(function()
         SendErrorMessage(playerID, "#error_invalid_build_position")
     end)
 
-    event:OnConstructionCancelled(function(work) end)
+    event:OnConstructionCancelled(function(work)
+        -- Refund resources for this cancelled work
+        if work.refund then
+            Players:ModifyGold(playerID, gold_cost)
+            Players:ModifyLumber(playerID, lumber_cost)
+        end
+    end)
 
     event:OnConstructionStarted(function(unit)
 
