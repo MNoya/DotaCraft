@@ -293,22 +293,8 @@ function IsUndead( unit )
     return GetUnitRace(unit)=="undead"
 end
 
-function IsCustomBuilding( unit )
-    local ability_building = unit:FindAbilityByName("ability_building")
-    local ability_tower = unit:FindAbilityByName("ability_tower")
-    if ability_building or ability_tower then
-        return true
-    else
-        return false
-    end
-end
-
 function IsAltar( unit )
     return string.match(unit:GetUnitName(), "_altar_")
-end
-
-function IsCustomTower( unit )
-    return unit:HasAbility("ability_tower")
 end
 
 function IsCustomShop( unit )
@@ -452,6 +438,10 @@ function HasTrainAbility( unit )
         end
     end
     return false
+end
+
+function HasRallyPoint(building)
+    return HasTrainAbility(building) and not building:GetUnitName():match("_tower")
 end
 
 -- Returns if the builder is fully idle (not reparing or in a gathering process)

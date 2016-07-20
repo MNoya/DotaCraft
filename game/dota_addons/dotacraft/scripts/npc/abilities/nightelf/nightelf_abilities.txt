@@ -2395,13 +2395,7 @@
 
 	"OnSpellStart"
 	{
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_uprooted"
-			"Target" 		"CASTER"
-		}
-
-		// Remove ability_building and add an ability to root it back
+		// Add an ability to root it back
 		"RunScript"
 		{
 			"ScriptFile"	"units/nightelf/ancients.lua"

@@ -64,8 +64,7 @@ function RootStart( unit )
     local uproot_ability = unit:FindAbilityByName("nightelf_uproot")
     uproot_ability:ApplyDataDrivenModifier(unit, unit, "modifier_rooted_ancient", {})
 
-    unit:AddAbility("ability_building")
-    unit:FindAbilityByName("ability_building"):SetLevel(1)
+    BuildingHelper:AddModifierBuilding(unit)
     Queue:Init(unit)
 
     local cast_time = 2--ability:GetCastPoint()
@@ -99,7 +98,6 @@ function RootEnd( unit )
     -- Tower
     elseif unitName == "nightelf_ancient_protector" then
 
-        TeachAbility(unit, "ability_tower")
         unit:RemoveModifierByName("modifier_uprooted_ancient_protector")
         caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
     
@@ -112,7 +110,7 @@ end
 function AutoEntangle( event )
     local caster = event.caster
     -- If it's uprooted or already has an entangled mine, skip
-    if not caster:HasAbility("ability_building") or IsValidAlive(caster.entangled_gold_mine) then
+    if not IsCustomBuilding(caster) or IsValidAlive(caster.entangled_gold_mine) then
         return
     end
 
@@ -145,7 +143,7 @@ function UpRootStart( event )
     -- Remove building properties
     Queue:Remove(caster)
     BuildingHelper:RemoveBuilding( caster, false )
-    caster:RemoveAbility("ability_building")
+    caster:RemoveModifierByName("modifier_building")
 
     -- If the ancient had an entangled mine, remove the effect, which will trigger ShowGoldMine
     if IsValidEntity(caster.entangled_gold_mine) then
@@ -156,12 +154,13 @@ end
 -- Finished uprooting, the ancient is now a mobile unit
 function UpRoot( event )
     local caster = event.caster
+    local ability = event.ability
     local unitName = caster:GetUnitName()
+
+    ability:ApplyDataDrivenModifier(caster,caster,"modifier_uprooted",{})
 
     -- Tower: Reduce its damage by 20, (1.5 BAT) and make it melee (128 range)
     if unitName == "nightelf_ancient_protector" then
-        caster:RemoveAbility("ability_tower")
-        caster:RemoveModifierByName("modifier_tower")
 
         event.ability:ApplyDataDrivenModifier(caster, caster, "modifier_uprooted_ancient_protector", {})
         caster:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
@@ -172,7 +171,6 @@ function UpRoot( event )
         caster:RemoveModifierByName("modifier_shop")
     end
 
-    caster:RemoveModifierByName("modifier_disable_turning")
     caster:RemoveModifierByName("modifier_building")
 
     caster:SetArmorType("heavy")
@@ -214,8 +212,6 @@ function UpRoot( event )
     if item then
         caster:CastAbilityImmediately(item, caster:GetPlayerOwner():GetEntityIndex())
     end
-
-    FireGameEvent( 'ability_values_force_check', { player_ID = caster:GetPlayerOwnerID() })
 end
 
 -- Roots the tree next to a gold mine and starts the construction of a entangled mine

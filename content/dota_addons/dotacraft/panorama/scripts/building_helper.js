@@ -161,7 +161,7 @@ function StartBuildingHelper( params )
         entityGrid = []
         for (var i = 0; i < entities.length; i++)
         {
-            if (!Entities.IsAlive(entities[i]) || Entities.IsOutOfGame(entities[i])) continue
+            if (!Entities.IsAlive(entities[i]) || Entities.IsOutOfGame(entities[i]) || !HasModifier(entities[i], "modifier_building")) continue
             var entPos = Entities.GetAbsOrigin( entities[i] )
             var squares = GetConstructionSize(entities[i])
             
@@ -639,13 +639,13 @@ function WorldToGridPosY(y){
 
 function GetConstructionSize(entIndex) {
     var entName = Entities.GetUnitName(entIndex)
-    var table = CustomNetTables.GetTableValue( "construction_size", entName)
+    var table = CustomNetTables.GetTableValue("construction_size", entName)
     return table ? table.size : 0
 }
 
 function GetRequiredGridType(entIndex) {
     var entName = Entities.GetUnitName(entIndex)
-    var table = CustomNetTables.GetTableValue( "construction_size", entName)
+    var table = CustomNetTables.GetTableValue("construction_size", entName)
     if (table && table.requires !== undefined)
     {
         var types = table.requires.split(" ")
@@ -662,14 +662,14 @@ function GetRequiredGridType(entIndex) {
 
 function GetCustomGrid(entIndex) {
     var entName = Entities.GetUnitName(entIndex)
-    var table = CustomNetTables.GetTableValue( "construction_size", entName)
+    var table = CustomNetTables.GetTableValue("construction_size", entName)
     if (table && table.grid !== undefined)
         return table.grid
 }
 
 function HasGoldMineDistanceRestriction(entIndex) {
     var entName = Entities.GetUnitName(entIndex)
-    var table = CustomNetTables.GetTableValue( "construction_size", entName)
+    var table = CustomNetTables.GetTableValue("construction_size", entName)
     return table ? table.distance_to_gold_mine : 0
 }
 

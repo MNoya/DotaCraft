@@ -41,9 +41,7 @@ function ApplyCloud( event )
 	local cloud_duration = ability:GetLevelSpecialValueFor("cloud_duration", ability:GetLevel() - 1 )
 
 	for _,target in pairs(targets) do
-		local isBuilding = target:FindAbilityByName("ability_building")
-		local isTower = target:FindAbilityByName("ability_tower")
-		if target:IsRangedAttacker() and (isBuilding or isTower) then
+		if IsCustomBuilding(target) and target:IsRangedAttacker() then
 			ability:ApplyDataDrivenModifier(caster, target, "modifier_cloud", { duration = cloud_duration })
 		end
 	end

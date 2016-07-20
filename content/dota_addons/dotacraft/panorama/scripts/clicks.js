@@ -241,7 +241,7 @@ function IsBuilder(entIndex) {
 }
 
 function IsCustomBuilding(entIndex) {
-    return (Entities.GetAbilityByName( entIndex, "ability_building") != -1 || Entities.GetAbilityByName( entIndex, "ability_tower") != -1)
+    return HasModifier(entIndex, "modifier_building")
 }
 
 function IsMechanical(entIndex) {

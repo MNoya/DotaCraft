@@ -486,7 +486,7 @@ function dotacraft:OnBuildingRallyOrder( event )
         local building = EntIndexToHScript(v)
         if IsValidAlive(building) and IsCustomBuilding(building) then
 
-            if HasTrainAbility(building) and not IsCustomTower(building) then
+            if HasRallyPoint(building) then
                 EmitSoundOnClient("DOTA_Item.ObserverWard.Activate", player)
                 if rally_type == "position" then
                     --DebugDrawCircle(position, Vector(255,0,0), 255, 20, true, 3)

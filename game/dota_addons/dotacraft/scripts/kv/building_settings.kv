@@ -23,11 +23,17 @@
     // Min Height buildings are able to be placed, leave it empty for none. If a value is defined, all building placements strictly below this number will be invalid
     "HEIGHT_RESTRICTION"        ""
 
+    // Should buildings be immune to magic damage? Should also be careful with healing abilities targeting them.
+    "MAGIC_IMMUNE_BUILDINGS"    "true"
+
+    // Should buildings be deniable from 100% HP?
+    "DENIABLE_BUILDINGS"        "true"
+
     // Should we disable building turnrate by default? Defining a "DisableTurning" kv on the unit will still override the global setting
-    "DISABLE_BUILDING_TURNING" "true"
+    "DISABLE_BUILDING_TURNING"  "true"
 
     // Path of the builder callbacks, can be changed to somewhere else within vscripts
-    "BUILD_PATH"               "units/builder"
+    "BUILD_PATH"                "units/builder"
 
     // Should we try to tie allied building rightclick to a "RepairAbility" usage ?
     "RIGHT_CLICK_REPAIR"        "true"
