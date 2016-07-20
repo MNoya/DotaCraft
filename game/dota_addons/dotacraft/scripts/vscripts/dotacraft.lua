@@ -670,13 +670,12 @@ function dotacraft:OnPreGame()
     Teams:DetermineStartingPositions()
     Minimap:PrepareCamps()
     
-    local teamIDs = {2,3,6,7,8,9}
     local maxPlayers = dotacraft:GetMapMaxPlayers()
     for playerID = 0, maxPlayers do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
         if Players:IsValidNetTablePlayer(playerTable) then
             local color = playerTable.Color
-            local team = teamIDs[playerTable.Team]
+            local team = Teams:GetNthTeamID(playerTable.Team)
             local race = GameRules.raceTable[playerTable.Race] or GameRules.raceTable[RandomInt(1, 4)]
             local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
 

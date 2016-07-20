@@ -2,6 +2,8 @@ if not Teams then
     Teams = class({})
 end
 
+Teams.IDs = {2,3,6,7,8,9}
+
 function Teams:DetermineStartingPositions()
     self.unassignedPositions = {}
 
@@ -145,6 +147,10 @@ function Teams:GetPlayerTeam(playerID)
     return playerTable.Team
 end
 
+function Teams:GetNthTeamID(teamID)
+    return Teams.IDs[teamID]
+end
+
 -- Returns a list of teamIDs which have at least one players on them
 function Teams:GetValidTeams()
     local teams = {}
@@ -156,8 +162,8 @@ function Teams:GetValidTeams()
             teamTable[playerTable.Team] = true
         end
     end
-    for teamID,_ in pairs(teamTable) do
-        table.insert(teams, teamID)
+    for teamNum,_ in pairs(teamTable) do
+        table.insert(teams, Teams:GetNthTeamID(teamNum))
     end
     return teams
 end
