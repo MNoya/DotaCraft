@@ -118,21 +118,28 @@ function HauntGoldMine( event )
     local construction_size = BuildingHelper:GetConstructionSize(building_name)
     
     -- Callbacks
-    event:OnPreConstruction(function(vPos) end)
-
-    -- Position for a building was confirmed and valid
-    event:OnBuildingPosChosen(function(vPos)
-        -- Enemy unit check
+    event:OnPreConstruction(function(vPos)
+        -- Building check
         local target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
         local flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
-        local enemies = FindUnitsInRadius(teamNumber, vPos, nil, construction_size, DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, flags, FIND_ANY_ORDER, false)
-
-        if #enemies > 0 then
-            SendErrorMessage(caster:GetPlayerOwnerID(), "#error_invalid_build_position")
-            return false
+        local units = FindUnitsInRadius(teamNumber, vPos, nil, construction_size, DOTA_UNIT_TARGET_TEAM_BOTH, target_type, flags, FIND_ANY_ORDER, false)
+        for _,v in pairs(units) do
+            if IsCustomBuilding(v) then
+                SendErrorMessage(playerID, "#error_invalid_build_position")
+                return false
+            end
         end
 
         return true
+    end)
+
+    -- Position for a building was confirmed and valid
+    event:OnBuildingPosChosen(function(vPos)
+
+        print("chosen")
+
+        return true
+
     end)
 
     event:OnConstructionFailed(function()
@@ -150,7 +157,7 @@ function HauntGoldMine( event )
         unit:AddItem(item)
 
         -- Hide the targeted gold mine
-        local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, 100, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
+        local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, 100, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE+DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
         local mine = units[1]
         unit.mine = mine -- A reference to the mine that the haunted mine is associated with
         mine.building_on_top = unit -- A reference to the building that haunts this gold mine

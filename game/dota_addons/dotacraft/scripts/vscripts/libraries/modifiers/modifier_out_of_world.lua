@@ -21,7 +21,7 @@ if IsServer() then
 
     function modifier_out_of_world:OnCreated( params )
         local unit = self:GetParent()
-        self.serverside = params.clientside == 0
+        self.serverside = params.clientside ~= 1
         unit.originalDayVision = unit:GetDayTimeVisionRange()
         unit.originalNightVision = unit:GetDayTimeVisionRange()
         unit:SetDayTimeVisionRange(0)
