@@ -518,8 +518,8 @@ function dotacraft:InitializeUndead( hero, race_setup_table, building )
 
     -- Create blight
     Timers:CreateTimer(function() 
-        CreateBlight(haunted_gold_mine:GetAbsOrigin(), "small")
-        CreateBlight(building:GetAbsOrigin(), "large")
+        CreateBlight(haunted_gold_mine, "small")
+        CreateBlight(building, "large")
     end)
 
     haunted_gold_mine.mine = race_setup_table.closest_mine -- A reference to the mine that the haunted mine is associated with
@@ -1074,7 +1074,7 @@ function dotacraft:UpdateRallyFlagDisplays( playerID )
 
     for k,v in pairs(units) do
         local building = EntIndexToHScript(v)
-        if IsValidAlive(building) and IsCustomBuilding(building) and not IsCustomTower(building) then
+        if IsValidAlive(building) and IsCustomBuilding(building) and HasRallyPoint(building) then
             CreateRallyFlagForBuilding( building )
         end
     end

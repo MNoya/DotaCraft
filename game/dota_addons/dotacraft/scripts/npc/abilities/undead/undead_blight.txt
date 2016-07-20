@@ -1,36 +1,35 @@
 // All undead buildings generate Blight and require blight to be built except for Necropolis and Haunted Gold Mine
-// Everything uses undead_blight_growth_small except for the city center and its upgrades
 
 "undead_blight_regen"
 {
-	"BaseClass"					"ability_datadriven"
-	"MaxLevel"					"1"
-	"AbilityTextureName"		"undying_decay"	
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "BaseClass"                 "ability_datadriven"
+    "MaxLevel"                  "1"
+    "AbilityTextureName"        "undying_decay" 
+    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
-	"Modifiers"
-	{
-		"modifier_blight_thinker"
-		{
-			"ThinkInterval"  	"0.5"
-			"IsHidden"			"1"
-			"Passive"			"1"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/undead/blight.lua"
-					"Function"		"BlightRegen"
-				}
-			}
-		}
+    "Modifiers"
+    {
+        "modifier_blight_thinker"
+        {
+            "ThinkInterval"     "0.5"
+            "IsHidden"          "1"
+            "Passive"           "1"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "units/undead/blight.lua"
+                    "Function"      "BlightRegen"
+                }
+            }
+        }
 
-		"modifier_blight_regen"
-		{
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "2"
-			}
-		}
-	}
+        "modifier_blight_regen"
+        {
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "2"
+            }
+        }
+    }
 }

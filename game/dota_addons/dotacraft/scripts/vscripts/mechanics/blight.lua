@@ -1,5 +1,6 @@
 -- Undead Ground
-function CreateBlight(location, size)
+function CreateBlight(unit, size)
+    local location = unit:GetAbsOrigin()
 
     -- Radius should be an odd number for precision
     local radius = 960
@@ -8,6 +9,7 @@ function CreateBlight(location, size)
     elseif size == "item" then
         radius = 384
     end
+    BuildingHelper:SnapToGrid(radius, location)
     local particle_spread = 128
     local count = 0
 
@@ -36,24 +38,29 @@ function CreateBlight(location, size)
     end
 
     BuildingHelper:AddGridType(radius, location, "Blight", "radius")
+    unit:AddNewModifier(unit, nil, "modifier_grid_blight", {})
 
     print("Made "..count.." new blight particles")
-   
 end
 
 -- Blight can be dispelled once the building that generated it has been destroyed or unsummoned.
 function RemoveBlight( location, radius )
-    location.x = BuildingHelper:SnapToGrid64(location.x)
-    location.y = BuildingHelper:SnapToGrid64(location.y)
+    BuildingHelper:SnapToGrid(radius, location)
     radius = radius - (radius%64) + 256
 
+    -- For each point, check all buildings distance to it, if they are further than their grid radius, the blight point can be dispelled
     local count = 0
     for x = location.x - radius, location.x + radius, 64 do
         for y = location.y - radius, location.y + radius, 64 do
             local dispelBlight = true
-            local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, 900, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+            local dummies = {}
+            local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(x,y,0), nil, 900, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
             for _,unit in pairs(units) do
-                if IsCustomBuilding(unit) and IsUndead(unit) then
+                local bDummy = unit:GetUnitName() == "undead_blight_skull"
+                if bDummy then 
+                    dummies[unit:GetEntityIndex()] = unit
+                end
+                if IsCustomBuilding(unit) and IsUndead(unit) and not bDummy then
                     dispelBlight = false
                     break
                 end
@@ -62,17 +69,24 @@ function RemoveBlight( location, radius )
             -- No undead building was found nearby this gridnav position, remove blight around the position
             local position = Vector(x, y, location.z)
 
-            if dispelBlight and HasBlightParticle( position ) then
-                -- Clear this blight zone
-                local blight_index = GameRules.Blight[GridNav:WorldToGridPosX(position.x)..","..GridNav:WorldToGridPosY(position.y)]
-                ParticleManager:DestroyParticle(blight_index, false)
-                ParticleManager:ReleaseParticleIndex(blight_index)
-                count = count+1
-
-                for blight_x = x - 128, x + 128, 64 do
-                    for blight_y = y - 128, y + 128, 64 do
-                        GameRules.Blight[GridNav:WorldToGridPosX(blight_x)..","..GridNav:WorldToGridPosY(blight_y)] = nil
+            if dispelBlight then
+                if HasBlightParticle( position ) then
+                    -- Clear this blight zone
+                    for blight_x = x - 128, x + 128, 64 do
+                        for blight_y = y - 128, y + 128, 64 do
+                            local blight_index = GameRules.Blight[GridNav:WorldToGridPosX(blight_x)..","..GridNav:WorldToGridPosY(blight_y)]
+                            if blight_index then
+                                ParticleManager:DestroyParticle(blight_index, false)
+                                ParticleManager:ReleaseParticleIndex(blight_index)
+                                GameRules.Blight[GridNav:WorldToGridPosX(blight_x)..","..GridNav:WorldToGridPosY(blight_y)] = nil
+                                count = count+1
+                            end
+                        end
                     end
+                end
+
+                for _,v in pairs(dummies) do
+                    UTIL_Remove(v)
                 end
             end
         end

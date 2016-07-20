@@ -25,7 +25,6 @@
 	"Ability1"					"undead_train_acolyte"
 	"Ability2"					"undead_research_backpack"
 	"Ability6"					"undead_train_halls_of_the_dead"
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -122,7 +121,6 @@
 	"Ability2"					"undead_research_backpack"
 	"Ability3"					""	 //Reference: Afr2
 	"Ability6"					"undead_train_black_citadel"
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -225,7 +223,6 @@
 	"Ability1"					"undead_train_acolyte"	 //Reference: Abgl
 	"Ability2"					"undead_research_backpack"
 	"Ability3"					""	 //Reference: Afr2
-	"Ability10"					"ability_building"
 
 	// Armor
 	//----------------------------------------------------------------
@@ -323,7 +320,6 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_train_frost_wyrm"	 //Reference: Abgs
 	"Ability2"					"undead_research_freezing_breath"
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -419,7 +415,6 @@
 	"Ability2"					"undead_train_dread_lord1"
 	"Ability3"					"undead_train_lich1"
 	"Ability4"					"undead_train_crypt_lord1"
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -519,7 +514,6 @@
 	"Ability6"					"undead_research_ghoul_frenzy"
 	"Ability7"					"undead_research_stone_form"
 	"Ability8"					"undead_research_burrow"
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -609,7 +603,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
-	"Ability1"					"ability_building"
+	"Ability1"					"ability_hidden_filler"
 	"Ability2"					"undead_research_unholy_strength1"	 //Reference: Abgs
 	"Ability3"					"undead_research_unholy_armor1"	 //Reference: Agyd
 	"Ability4"					"undead_research_creature_attack1"	 //Reference: Arlm
@@ -712,7 +706,6 @@
 	"Ability4"					"undead_research_banshee_training1"
 	"Ability5"					"undead_research_skeletal_longevity"
 	"Ability6"					"undead_research_skeletal_mastery"
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -800,7 +793,6 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_haunt_mine" //Effects and logic
-	"Ability10"					"ability_building"
 
 	// Armor
 	//----------------------------------------------------------------
@@ -899,7 +891,6 @@
 	"Ability4"					"undead_research_exhume_corpses"
 	"Ability5"					"undead_research_disease_cloud"
 	"Ability6"					"undead_research_destroyer_form"
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -992,7 +983,6 @@
 	"Ability1"					""
 	"Ability2"					""	 //Reference: Abgs
 	"Ability3"					""	 //Reference: Apit
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1084,7 +1074,6 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_train_nerubian_tower"	 //Reference: Abgs
 	"Ability2"					"undead_train_spirit_tower"	 //Reference: Abgs
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1175,7 +1164,6 @@
 	"AbilityLayout"				"4"
 	"Ability1"					"undead_frost_attack"	 //Reference: Abgs
 	"Ability2"					""	 //Reference: Afra
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1271,7 +1259,6 @@
 	//----------------------------------------------------------------
 	"AbilityLayout"				"4"
 	"Ability1"					""	 //Reference: Abgs
-	"Ability10"					"ability_building"
 
 	// Armor
 	//----------------------------------------------------------------
@@ -1367,7 +1354,6 @@
 	//----------------------------------------------------------------
 	"Ability1"					"undead_sacrifice_pit"	 //Reference: Abgs
 	"Ability2"					""	 //Reference: Asac
-	"Ability10"					"ability_building"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1433,4 +1419,18 @@
 	
 	// Creature Data
 	//----------------------------------------------------------------
+}
+
+"undead_blight_skull"
+{
+	"BaseClass"					"npc_dota_creature"
+	"Building"					"1"
+	"Grid"
+	{
+		"Blight"
+		{
+			"Radius"			"384"
+			"RemoveOnDeath"		"true"
+		}
+	}
 }

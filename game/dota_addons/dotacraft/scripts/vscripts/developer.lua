@@ -148,22 +148,26 @@ function dotacraft:LightsOut()
     GameRules:SetTimeOfDay( 0.8 )
 end
 
-function dotacraft:GiveItem(playerID, item_name)
+function dotacraft:GiveItem(playerID, item_name, num)
     local selected = PlayerResource:GetMainSelectedEntity(playerID)
     if selected then
         selected = EntIndexToHScript(selected)
+        num = num or 1
 
-        local new_item = CreateItem(item_name, nil, nil)
-        if new_item then
-            if selected:IsRealHero() then
-                selected:AddItem(new_item)
+        for i=1,num do
+            local new_item = CreateItem(item_name, nil, nil)
+            if new_item then
+                if selected:IsRealHero() then
+                    selected:AddItem(new_item)
+                else
+                    local pos = selected:GetAbsOrigin()+RandomVector(200)
+                    CreateItemOnPositionSync(pos,new_item)
+                    new_item:LaunchLoot(false, 200, 0.75,pos)
+                end
             else
-                local pos = selected:GetAbsOrigin()+RandomVector(200)
-                CreateItemOnPositionSync(pos,new_item)
-                new_item:LaunchLoot(false, 200, 0.75,pos)
+                print("ERROR, can't find "..item_name)
+                return
             end
-        else
-            print("ERROR, can't find "..item_name)
         end
     end
 end

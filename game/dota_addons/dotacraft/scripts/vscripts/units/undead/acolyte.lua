@@ -177,8 +177,8 @@ function HauntGoldMine( event )
         -- Remove item_building_cancel and reorder
         RemoveItemByName(unit, "item_building_cancel")
 
-        -- Add blight if its an undead building
-        CreateBlight(unit:GetAbsOrigin(), "small")
+        -- Add blight
+        CreateBlight(unit, "small")
     end)
 end
 

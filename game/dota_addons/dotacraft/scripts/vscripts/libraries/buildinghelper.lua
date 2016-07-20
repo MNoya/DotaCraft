@@ -56,6 +56,7 @@ function BuildingHelper:Init()
     LinkLuaModifier("modifier_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_builder_repairing", "libraries/modifiers/repair_modifiers", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_tree_cut", "libraries/modifiers/modifier_tree_cut", LUA_MODIFIER_MOTION_NONE)
+    require("libraries/modifiers/grid_modifiers")
 
     -- Check KVs and set relevant construction_size nettable values
     self:ParseKV()
@@ -1736,12 +1737,6 @@ function BuildingHelper:SetGridTypeRadius(radius, location, grid_type, option)
     local upperBoundX = math.max(boundX1, boundX2)
     local lowerBoundY = math.min(boundY1, boundY2)
     local upperBoundY = math.max(boundY1, boundY2)
-
-    -- Adjust even size
-    if (size % 2) == 0 then
-        upperBoundX = upperBoundX-1
-        upperBoundY = upperBoundY-1
-    end
 
     -- Adjust to upper case
     grid_type = string.upper(grid_type)

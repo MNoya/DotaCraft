@@ -263,7 +263,7 @@ function Build( event )
             if unit:GetUnitName() == "undead_necropolis" then
                 size = "large"
             end
-            CreateBlight(unit:GetAbsOrigin(), size)
+            CreateBlight(unit, size)
         end
 
         -- Add ability_shop on buildings labeled with _shop
