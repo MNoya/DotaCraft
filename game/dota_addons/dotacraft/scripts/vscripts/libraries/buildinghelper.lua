@@ -1363,6 +1363,10 @@ function BuildingHelper:StartRepair(builder, target)
     table.insert(target.units_repairing, builder)
     builder.repair_target = target
 
+    -- Look towards the building
+    builder:Stop()
+    builder:SetForwardVector((target:GetAbsOrigin() - builder:GetAbsOrigin()):Normalized())
+
     local buildTime = target.buildTime or target:GetKeyValue("BuildTime")
     local costRatio = repair_ability and repair_ability:GetKeyValue("RepairCostRatio") or BuildingHelper.Settings.REPAIR_SETTINGS["RepairCostRatio"]
     local timeRatio = repair_ability and repair_ability:GetKeyValue("RepairTimeRatio") or BuildingHelper.Settings.REPAIR_SETTINGS["RepairTimeRatio"]
