@@ -590,7 +590,17 @@ function dotacraft:OnGameInProgress()
     local shops = Entities:FindAllByName("*shop*")
     for k,v in pairs(shops) do
         if v.AddAbility then
-          TeachAbility(v,"ability_shop")
+            local origin = v:GetAbsOrigin()
+            local name = v:GetUnitName()
+            local construction_size = BuildingHelper:GetConstructionSize(name)
+            BuildingHelper:SnapToGrid(construction_size, origin)
+            BuildingHelper:BlockGridSquares(construction_size, BuildingHelper:GetBlockPathingSize(name), origin)
+            v:SetAbsOrigin(GetGroundPosition(origin,v))
+            v:AddNewModifier(v,nil,"modifier_building",{})
+            TeachAbility(v,"ability_shop")
+            for _,teamID in pairs(Teams:GetValidTeams()) do
+                AddFOWViewer(teamID,origin,10,3,false)
+            end
         end
     end
 
