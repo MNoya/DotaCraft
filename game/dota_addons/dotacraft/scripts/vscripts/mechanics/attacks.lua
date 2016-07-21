@@ -143,6 +143,7 @@ function SplashAttackGround(attacker, position)
     -- Tree damage (NElves only deal ground damage with upgrade)
     if not IsNightElf(attacker) or attacker:HasAbility("nightelf_vorpal_blades") then
         local damage_to_trees = 10
+        local small_damage_radius = attacker:GetKeyValue("SplashSmallRadius") or 10
         local trees = GridNav:GetAllTreesAroundPoint(position, small_damage_radius, true)
 
         for _,tree in pairs(trees) do
