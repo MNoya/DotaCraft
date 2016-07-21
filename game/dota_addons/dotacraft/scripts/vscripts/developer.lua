@@ -16,7 +16,7 @@ CHEAT_CODES = {
 DEBUG_CODES = {
     ["debug_trees"] = function(...) Gatherer:DebugTrees() end,               -- Prints the trees marked as pathable
     ["debug_forests"] = function(...) Gatherer:DebugForests() end,           -- Prints the forest of each tree
-    ["debug_blight"] = function(...) dotacraft:DebugBlight(...) end,         -- Prints the positions marked for undead buildings
+    ["debug_blight"] = function(...) Blight:Debug() end,                     -- Prints the positions marked for undead buildings
     ["debug_food"] = function(...) dotacraft:DebugFood(...) end,             -- Prints the food count for all players, checking for inconsistencies
     ["debug_clear"] = function(...) DebugDrawClear() end,                    -- Clears all debug world elements
     ["debug_c"] = function(...) dotacraft:DebugCalls(...) end,               -- Spams the console with every lua call
@@ -186,21 +186,6 @@ function dotacraft:MapOverview(playerID, distance)
     Timers:CreateTimer(0.1, function()
         CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "map_overview", {center = dotacraft.center_unit:GetEntityIndex(), distance = distance})
     end)
-end
-
-function dotacraft:DebugBlight()
-    for y,v in pairs(BuildingHelper.Grid) do
-        for x,_ in pairs(v) do
-            if BuildingHelper:CellHasGridType(x,y,'BLIGHT') then
-                DrawGridSquare(x,y,Vector(128,0,128))
-            end
-            local pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
-            pos = GetGroundPosition(pos,nil)
-            if HasBlightParticle(pos) then
-                DebugDrawCircle(pos,Vector(128,0,128),100,32,true,10)
-            end
-        end
-    end
 end
 
 function dotacraft:DebugFood()

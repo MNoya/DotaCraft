@@ -41,7 +41,7 @@ function Disenchant( event )
 		unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
 	end
 
-	RemoveBlight(point, radius)
+	Blight:Dispel(point)
 end
 
 function SpiritLinkStart( event )

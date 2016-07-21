@@ -167,9 +167,6 @@ function dotacraft:InitGameMode()
 
     dotacraft:LoadKV()
 
-    -- Keeps the blighted gridnav positions
-    GameRules.Blight = {}
-
     -- Attack net table
     Attacks:Init()
 
@@ -518,8 +515,8 @@ function dotacraft:InitializeUndead( hero, race_setup_table, building )
 
     -- Create blight
     Timers:CreateTimer(function() 
-        CreateBlight(haunted_gold_mine, "small")
-        CreateBlight(building, "large")
+        Blight:Create(haunted_gold_mine, "small")
+        Blight:Create(building, "large")
     end)
 
     haunted_gold_mine.mine = race_setup_table.closest_mine -- A reference to the mine that the haunted mine is associated with
@@ -935,7 +932,7 @@ function dotacraft:OnEntityKilled( event )
     end
 
     -- Check for neutral item drops
-    if killed_teamNumber == DOTA_TEAM_NEUTRALS and killed:IsCreature() then
+    if killed_teamNumber == DOTA_TEAM_NEUTRALS and killed:IsCreature() and not IsCustomBuilding(killed) then
         Drops:Roll(killed)
 
         if attacker_playerID then
@@ -995,9 +992,14 @@ function dotacraft:OnEntityKilled( event )
             print("Hero Killed but player doesn't have an altar to revive it")
         end
     end
+
+    -- Remove blight area
+    if killed:HasModifier("modifier_grid_blight") then
+        Blight:Remove(killed)
+    end
     
     -- Building Killed
-    if IsCustomBuilding(killed) then
+    if IsCustomBuilding(killed) and killed_teamNumber ~= DOTA_TEAM_NEUTRALS then
 
         -- Cleanup building tables
         Players:RemoveStructure( killed_playerID, killed )

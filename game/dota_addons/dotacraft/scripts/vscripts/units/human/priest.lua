@@ -90,5 +90,5 @@ function DispelMagic( event )
 		target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
 	end
 
-	RemoveBlight(point, radius)
+	Blight:Dispel(point)
 end

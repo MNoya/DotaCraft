@@ -155,7 +155,7 @@ function Players:FixTable(list)
     local newList = {}
     for _,v in pairs(list) do
         if IsValidEntity(v) and v:IsAlive() then
-            table.insert(v, newList)
+            table.insert(newList, v)
         end
     end
     return newList
@@ -567,7 +567,7 @@ function Players:RevealToAllEnemies( playerID )
 
     for k,building in pairs(structures) do
         local origin = building:GetAbsOrigin()
-        local vision = buildling:GetDayTimeVisionRange()
+        local vision = building:GetDayTimeVisionRange()
         local ent = SpawnEntityFromTableSynchronous("ent_fow_revealer", {origin = origin, vision = vision, teamnumber = 0})
         building.revealer = ent
     end

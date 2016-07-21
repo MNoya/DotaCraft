@@ -45,7 +45,7 @@ function Build( event )
 
            -- Blight check
            if string.match(building_name, "undead") and building_name ~= "undead_necropolis" then
-               local bHasBlight = HasBlight(vPos)
+               local bHasBlight = BuildingHelper:PositionHasBlight(vPos)
                BuildingHelper:print("Blight check for "..building_name..":", bHasBlight)
                if not bHasBlight then
                    SendErrorMessage(playerID, "#error_must_build_on_blight")
@@ -257,23 +257,21 @@ function Build( event )
         -- Add the building handle to the list of structures
         Players:AddStructure(playerID, unit)
 
-        -- Add blight if its an undead building
+        -- If it's a city center, check for city_center_level updates
+        local bCityCenter = IsCityCenter(unit)
+        if bCityCenter then
+            Players:CheckCurrentCityCenters(playerID)
+        end
+
+        -- Add blight if its an undead building, dispel otherwise
+        local blightSize = bCityCenter and "large" or "small"
         if IsUndead(unit) then
-            local size = "small"
-            if unit:GetUnitName() == "undead_necropolis" then
-                size = "large"
-            end
-            CreateBlight(unit, size)
+            Blight:Create(unit, blightSize)
         end
 
         -- Add ability_shop on buildings labeled with _shop
-        if string.match( unit:GetUnitLabel(), "_shop") then
+        if string.match(unit:GetUnitLabel(), "_shop") then
             TeachAbility(unit, "ability_shop")
-        end
-
-        -- If it's a city center, check for city_center_level updates
-        if IsCityCenter(unit) then
-            Players:CheckCurrentCityCenters(playerID)
         end
 
         -- Add to the Food Limit if possible
@@ -298,19 +296,15 @@ function Build( event )
     -- These callbacks will only fire when the state between below half health/above half health changes.
     -- i.e. it won't fire multiple times unnecessarily.
     event:OnBelowHalfHealth(function(unit)
-        BuildingHelper:print("" .. unit:GetUnitName() .. " is below half health.")
+        BuildingHelper:print(unit:GetUnitName() .. " is below half health.")
                 
-        local item = CreateItem("item_apply_modifiers", nil, nil)
-        item:ApplyDataDrivenModifier(unit, unit, "modifier_onfire", {})
-        item = nil
-
+        ApplyModifier(unit, "item_apply_modifiers")
     end)
 
     event:OnAboveHalfHealth(function(unit)
-        BuildingHelper:print("" ..unit:GetUnitName().. " is above half health.")
+        BuildingHelper:print(unit:GetUnitName().. " is above half health.")
 
         unit:RemoveModifierByName("modifier_onfire")
-        
     end)
 end
 

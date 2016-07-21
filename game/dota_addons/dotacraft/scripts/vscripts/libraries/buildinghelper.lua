@@ -250,7 +250,7 @@ function BuildingHelper:OnEntityKilled(keys)
 
         if gridTable then
             for grid_type,v in pairs(gridTable) do
-                if tobool(v.RemoveOnDeath) then
+                if tobool(v.RemoveOnDeath) then --Only use if there is no overlapping!
                     local location = killed:GetAbsOrigin()
                     BuildingHelper:print("Clearing special grid of "..grid_type)
                     if (v.Radius) then
@@ -2642,8 +2642,9 @@ function getIndexTable(list, element)
     for k,v in pairs(list) do if v == element then return k end end
 end
 
-function DrawGridSquare(x, y, color)
+function DrawGridSquare(x, y, color, duration)
     local pos = Vector(GridNav:GridPosToWorldCenterX(x), GridNav:GridPosToWorldCenterY(y), 0)
+    duration = duration or 10
     BuildingHelper:SnapToGrid(1, pos)
     pos = GetGroundPosition(pos, nil)
         
@@ -2653,7 +2654,7 @@ function DrawGridSquare(x, y, color)
     ParticleManager:SetParticleControl(particle, 2, color)
     ParticleManager:SetParticleControl(particle, 3, Vector(90,0,0))
 
-    Timers:CreateTimer(10, function() 
+    Timers:CreateTimer(duration, function() 
         ParticleManager:DestroyParticle(particle, true)
     end)
 end

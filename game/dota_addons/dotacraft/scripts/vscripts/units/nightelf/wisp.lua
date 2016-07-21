@@ -15,12 +15,8 @@ function Detonate( event )
 
 		local bRemovePositiveBuffs = false
 		local bRemoveDebuffs = false
-		local bFrameOnly = false
-		local bRemoveStuns = false
-		local bRemoveExceptions = false
 
 		-- Remove buffs on enemies or debuffs on allies
-		print(unit)
 		if unit:GetTeamNumber() ~= caster:GetTeamNumber() then
 			bRemovePositiveBuffs = true
 			-- Mana Drain (no damage)
@@ -31,7 +27,7 @@ function Detonate( event )
 			bRemoveDebuffs = true
 		end
 
-		unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, bFrameOnly, bRemoveStuns, bRemoveExceptions)
+		unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
 	end
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(particle, 0, point)
@@ -43,7 +39,7 @@ function Detonate( event )
 	local particle3 = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(particle3, 0, point)
 
-	RemoveBlight(point, radius)
+	Blight:Dispel(point)
 
 	caster:EmitSound("Hero_Wisp.TeleportOut")
 	caster:ForceKill(true)

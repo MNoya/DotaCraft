@@ -193,7 +193,7 @@ function HauntGoldMine( event )
         RemoveItemByName(unit, "item_building_cancel")
 
         -- Add blight
-        CreateBlight(unit, "small")
+        Blight:Create(unit, "small")
     end)
 end
 
