@@ -9,7 +9,7 @@ function CDOTABaseAbility:IsAllowedTarget(target)
         return false,"error_must_target_organic"
     end
 
-    local bIgnoreBuilding = IsCustomBuilding(target) and not self:AffectsBuildings()
+    local bIgnoreBuilding = target.IsUnderConstruction and not self:AffectsBuildings()
     if bIgnoreBuilding then
         return false,"error_cant_target_buildings"
     end
