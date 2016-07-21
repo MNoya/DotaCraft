@@ -53,7 +53,7 @@ function Build( event )
                end
            end
 
-            -- Proximity to gold mine check for Human/Orc: Main Buildings can be as close as 768.015 towards the center of the Gold Mine.
+            -- Proximity to gold mine check for Human/Orc: Main Buildings can be as close as 768 towards the center of the Gold Mine.
             if HasGoldMineDistanceRestriction(building_name) then
                 local nearby_mine = Entities:FindAllByNameWithin("*gold_mine", vPos, 768)
                 if #nearby_mine > 0 then
@@ -333,12 +333,14 @@ function CancelBuilding( keys )
     end
 
     -- Refund items (In the item-queue system, units can be queued before the building is finished)
+    local time = 0
     for i=0,5 do
         local item = building:GetItemInSlot(i)
         if item then
             if item:GetAbilityName() == "item_building_cancel" then
                 item:RemoveSelf()
             else
+                time = time + i*1/30
                 Timers:CreateTimer(i*1/30, function() 
                     building:CastAbilityImmediately(item, playerID)
                 end)
@@ -348,11 +350,9 @@ function CancelBuilding( keys )
 
     Players:ModifyGold(playerID, gold_cost)
     Players:ModifyLumber(playerID, lumber_cost)
-    PopupGoldGain(building, gold_cost)
-    PopupLumber(building, lumber_cost)
 
     building.state = "canceled"
-    Timers:CreateTimer(1/5, function() 
+    Timers:CreateTimer(time+1/30, function() 
         building:ForceKill(true)
     end)
 end
