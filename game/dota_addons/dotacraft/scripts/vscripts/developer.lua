@@ -148,25 +148,34 @@ function dotacraft:LightsOut()
     GameRules:SetTimeOfDay( 0.8 )
 end
 
-function dotacraft:GiveItem(playerID, item_name, num)
+function dotacraft:GiveItem(playerID, itemName, num)
     local selected = PlayerResource:GetMainSelectedEntity(playerID)
     if selected then
         selected = EntIndexToHScript(selected)
         num = num or 1
+        itemName = itemName or "item_scroll_of_town_portal"
+
+        if not GetItemKV(itemName) then
+            for k,_ in pairs(KeyValues.ItemKV) do
+                if k:match(itemName) then
+                    itemName = k
+                end
+            end
+        end
+
+        if not GetItemKV(itemName) then
+            Say(nil,"No match for '"..itemName.."'", false)
+            return
+        end
 
         for i=1,num do
-            local new_item = CreateItem(item_name, nil, nil)
-            if new_item then
-                if selected:IsRealHero() then
-                    selected:AddItem(new_item)
-                else
-                    local pos = selected:GetAbsOrigin()+RandomVector(200)
-                    CreateItemOnPositionSync(pos,new_item)
-                    new_item:LaunchLoot(false, 200, 0.75,pos)
-                end
+            local new_item = CreateItem(itemName, nil, nil)
+            if selected:IsRealHero() then
+                selected:AddItem(new_item)
             else
-                print("ERROR, can't find "..item_name)
-                return
+                local pos = selected:GetAbsOrigin()+RandomVector(200)
+                CreateItemOnPositionSync(pos,new_item)
+                new_item:LaunchLoot(false, 200, 0.75,pos)
             end
         end
     end
@@ -263,9 +272,17 @@ function dotacraft:CreateUnits(pID, unitName, numUnits, bEnemy)
 
      -- Handle possible unit issues
     numUnits = tonumber(numUnits) or 1
-    if not GameRules.UnitKV[unitName] then
-        Say(nil,"["..unitName.."] <font color='#ff0000'> is not a valid unit name!</font>", false)
-        return
+    if not KeyValues.UnitKV[unitName] then
+        for k,_ in pairs(KeyValues.UnitKV) do
+            if k:match(unitName) then
+                unitName = k
+                break
+            end
+        end
+        if not KeyValues.UnitKV[unitName] then
+            Say(nil,"No match for '"..unitName.."'", false)
+            return
+        end
     end
 
     local gridPoints = GetGridAroundPoint(numUnits, pos)
@@ -293,10 +310,14 @@ function dotacraft:TestHero(playerID, heroName, bEnemy)
     local selected = PlayerResource:GetMainSelectedEntity(playerID)
     if not selected then return end
     selected = EntIndexToHScript(selected)
+    heroName = heroName or "human_archmage"
 
     local pos = selected:GetAbsOrigin()
     local unitName = GetRealHeroName(heroName)
     local team = bEnemy and DOTA_TEAM_BADGUYS or PlayerResource:GetTeam(playerID)
+    if not unitName then
+        Say(nil,"No match for '"..heroName.."'", false)
+    end
 
     PrecacheUnitByNameAsync(unitName, function()
         local hero = CreateUnitByName(unitName, pos, true, nil, nil, team)
@@ -367,12 +388,14 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
     local selected = PlayerResource:GetMainSelectedEntity(playerID)
     if not selected then return end
     selected = EntIndexToHScript(selected)
+    name = name or "human_footman"
 
     local pos = selected:GetAbsOrigin()
     local unitName
     for k,_ in pairs(KeyValues.UnitKV) do
         if k:match(name) then
             unitName = k
+            break
         end
     end
     if unitName:match('npc_dota_hero') then
@@ -457,17 +480,24 @@ function dotacraft:TestBuilding(playerID, name, bEnemy)
     local selected = PlayerResource:GetMainSelectedEntity(playerID)
     if not selected then return end
     selected = EntIndexToHScript(selected)
+    name = name or "human_barracks"
 
     local pos = selected:GetAbsOrigin() + RandomVector(300)
-    local unitName
-    for k,_ in pairs(KeyValues.UnitKV) do
-        if k:match(name) then
-            unitName = k
+    if not GetUnitKV(name) then
+        for k,_ in pairs(KeyValues.UnitKV) do
+            if k:match(name) then
+                name = k
+            end
         end
     end
+    if not GetUnitKV(name) then
+        Say(nil,"No match for '"..name.."'", false)
+        return
+    end
+
     local team = PlayerResource:GetTeam(playerID)
-    if unitName then
-        PrecacheUnitByNameAsync(unitName, function()
+    if name then
+        PrecacheUnitByNameAsync(name, function()
             local unit = BuildingHelper:PlaceBuilding(0, name, pos)
 
             if bEnemy then 
