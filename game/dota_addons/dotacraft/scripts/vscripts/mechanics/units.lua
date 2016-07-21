@@ -235,6 +235,10 @@ function GetRangedProjectileName( unit )
     return unit.projectileName or unit:GetKeyValue("ProjectileModel") or ""
 end
 
+function IsCustomBuilding(unit)
+    return unit:HasModifier("modifier_building") or unit:HasModifier("modifier_uprooted")
+end
+
 -- Checks the UnitLabel for "city_center"
 function IsCityCenter( unit )
     return IsCustomBuilding(unit) and string.match(unit:GetUnitLabel(), "city_center")

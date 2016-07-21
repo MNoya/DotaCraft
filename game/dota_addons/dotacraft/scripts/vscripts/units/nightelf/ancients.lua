@@ -143,7 +143,6 @@ function UpRootStart( event )
     -- Remove building properties
     Queue:Remove(caster)
     BuildingHelper:RemoveBuilding( caster, false )
-    caster:RemoveModifierByName("modifier_building")
 
     -- If the ancient had an entangled mine, remove the effect, which will trigger ShowGoldMine
     if IsValidEntity(caster.entangled_gold_mine) then
@@ -157,6 +156,7 @@ function UpRoot( event )
     local ability = event.ability
     local unitName = caster:GetUnitName()
 
+    caster:RemoveModifierByName("modifier_building")
     ability:ApplyDataDrivenModifier(caster,caster,"modifier_uprooted",{})
 
     -- Tower: Reduce its damage by 20, (1.5 BAT) and make it melee (128 range)
