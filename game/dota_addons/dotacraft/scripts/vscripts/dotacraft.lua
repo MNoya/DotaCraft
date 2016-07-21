@@ -324,7 +324,7 @@ function dotacraft:InitializePlayer( hero )
     end
 
     -- Spawn as many builders as this race requires
-    dotacraft:InitializeBuilders( hero, race_setup_table, building )
+    dotacraft:InitializeBuilders( hero, race_setup_table )
 
     -- Hide main hero under the main base
     -- Snap the camera to the created building and add it to selection
@@ -566,15 +566,8 @@ function dotacraft:InitializeTownHall( hero, position, building )
     Timers:CreateTimer(function() hero:SetAbsOrigin(Vector(position.x,position.y,position.z - 420 )) return 1 end)
     hero:AddNoDraw()
 
-    -- Snap the camera to the created building and add it to selection
-    for i=1,15 do
-        Timers:CreateTimer(i*0.03, function()
-            PlayerResource:SetCameraTarget(playerID, hero)
-        end)
-    end
-
+    -- Add it to selection
     Timers:CreateTimer(0.5, function()
-        PlayerResource:SetCameraTarget(playerID, nil)
         PlayerResource:NewSelection(playerID, building)
         PlayerResource:SetDefaultSelectionEntity(playerID, building)
     end)
@@ -693,6 +686,13 @@ function dotacraft:OnPreGame()
                 --Race Heroes are already precached
                 local player = PlayerResource:GetPlayer(playerID)
                 local hero = CreateHeroForPlayer(race, player)
+                local position = Teams:GetPositionForPlayer(playerID)
+                if position then
+                    local mine = Gatherer:GetClosestGoldMineToPosition(position)
+                    local mid_point = mine:GetAbsOrigin() + (position-mine:GetAbsOrigin())/2
+                    hero:SetAbsOrigin(mid_point)
+                end
+
                 hero.color_id = color
                 
                 print("[DOTACRAFT] CreateHeroForPlayer: ",playerID,race,team)

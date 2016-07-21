@@ -83,7 +83,7 @@ function OnPlayerFoodChanged ( args ) {
 		$('#UpkeepText').AddClass('Green');
 		$('#UpkeepText').RemoveClass('Yellow');
 		$('#UpkeepText').RemoveClass('Red');
-		$('#UpkeepText').text = "No Upkeep";
+		$('#UpkeepText').text = $.Localize( "#no_upkeep" );
 		
 		$('#UpkeepTextAnnounce').AddClass('Green');
 		$('#UpkeepTextAnnounce').RemoveClass('Yellow');
@@ -100,7 +100,8 @@ function OnMapOverview (args) {
 	GameEvents.Subscribe( "player_lumber_changed", OnPlayerLumberChanged );
 	GameEvents.Subscribe( "player_food_changed", OnPlayerFoodChanged );
 	GameEvents.Subscribe( "map_overview", OnMapOverview );
-	
+	$('#UpkeepText').AddClass('Green');
+	$('#UpkeepText').text = $.Localize( "#no_upkeep" );
 	UpdateGold();
 })();
 

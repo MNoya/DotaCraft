@@ -269,6 +269,10 @@ function IsNeutralUnit(entIndex) {
     return (Entities.GetTeamNumber(entIndex) == DOTATeam_t.DOTA_TEAM_NEUTRALS)
 }
 
+function OnCameraReposition(args) {
+    GameUI.SetCameraTargetPosition(args.position,0.1)
+}
+
 function OnMapOverview (args) {
     GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );
     GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );
@@ -285,14 +289,12 @@ function OnMapOverview (args) {
     //minCameraDistance = args.distance
     cameraInterval = 1000
     GameUI.SetCameraDistance( maxCameraDistance )
-
-    var center = args.center
-    GameUI.SetCameraTarget(center);
-    $.Schedule(1, function(){GameUI.SetCameraTarget(-1)} )
+    GameUI.SetCameraTargetPosition([0,0,0],0.1)
 }
 
 (function () {
     CustomNetTables.SubscribeNetTableListener( "attacks_enabled", OnAttacksEnabledChanged );
+    GameEvents.Subscribe( "camera_reposition", OnCameraReposition );
     GameEvents.Subscribe( "map_overview", OnMapOverview );
 
     GameUI.Keybinds.OnRotateLeft = function() { OnRotateLeft() }
