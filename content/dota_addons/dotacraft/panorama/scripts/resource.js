@@ -2,7 +2,7 @@
 
 var LOW_UPKEEP = 50
 var HIGH_UPKEEP = 80
-var currentUpkeep = 0 //1 for No, 2 for Low, 3 for High
+var currentUpkeep = 1 //1 for No, 2 for Low, 3 for High
 
 GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );
 GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_COURIER, false );

@@ -6,6 +6,7 @@ function Blight:Init()
     self.Grid = {} -- Blighted gridnav positions
     self.Dummies = {} -- Blight dummies, created after buildings fall
     self.Debug = false
+    BuildingHelper:NewGridType("BLIGHT")
 end
 
 -- Undead Ground

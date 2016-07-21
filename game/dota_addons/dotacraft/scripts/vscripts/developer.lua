@@ -181,10 +181,9 @@ function dotacraft:MapOverview(playerID, distance)
     SendToServerConsole("fog_enable 0")
     SendToServerConsole("dota_hud_healthbars 0")
 
-    dotacraft.center_unit = dotacraft.center_unit or CreateUnitByName("nightelf_wisp",Vector(0,0,0),true,nil,nil,0)
     dotacraft.center_unit:AddNoDraw()
     Timers:CreateTimer(0.1, function()
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "map_overview", {center = dotacraft.center_unit:GetEntityIndex(), distance = distance})
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "map_overview", {distance = distance})
     end)
 end
 
