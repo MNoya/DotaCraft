@@ -1,16 +1,16 @@
 function Retrain( event )
-    local item = event.ability
     local hero = event.caster
     local level = hero:GetLevel()
 
     for i=0,15 do
         local ability = hero:GetAbilityByIndex(i)
-        if ability then ability:SetLevel(0) end
+        if ability and ability:GetLevel() > 0 then
+            ability:SetLevel(0)
+        end
     end
 
-    hero:SetAbilityPoints(level)
-    UTIL_Remove(item)
-    -- Add particle effect on hero
+    hero:SetAbilityPoints(level)    
+    ParticleManager:CreateParticle("particles/custom/items/tome_of_retrain.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 end
 
 function StatTome(event)
