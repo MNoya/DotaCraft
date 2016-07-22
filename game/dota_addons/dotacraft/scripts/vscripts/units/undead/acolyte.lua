@@ -1,60 +1,9 @@
-function unsummon (keys)
+function unsummon(keys)
 	local caster = keys.caster
 	local target = keys.target
-	local playerID = caster:GetPlayerOwnerID()
-	local player = PlayerResource:GetPlayer(playerID)
-	local hero = player:GetAssignedHero()
-
-	-- target is already unsummoning
-	if target.unsummoning or not IsCustomBuilding(target) or caster:GetPlayerOwnerID() ~= target:GetPlayerOwnerID() or not target.constructionCompleted then
-		SendErrorMessage(playerID, "#error_invalid_unsummon_target")
-		return
-	end
-
-	-- set flag
-	target.unsummoning = true
-	
-	-- damage taken by building per tick	
-	local UNSUMMON_DAMAGE_PER_SECOND = keys.ability:GetSpecialValueFor("accumulation_step")
-	
-	-- 50% refund
-	local goldcost = (0.5 * GetGoldCost(target))
-	local lumbercost = (0.5 * GetLumberCost(target))
-	
-	-- calculate refund per tick
-	local StepsNeededToUnsummon = target:GetMaxHealth() / 50
-	local LumberGain = (lumbercost / StepsNeededToUnsummon)
-	local GoldGain = (goldcost / StepsNeededToUnsummon)
-	
-	Timers:CreateTimer(function()
-		if not IsValidEntity(target) then 
-			return 
-		end
-		
-		ParticleManager:CreateParticle("particles/base_destruction_fx/gbm_lvl3_glow.vpcf", 0, target)
-		
-		if target:GetHealth() <= 50 then -- refund resource + kill unit
-			GiveResources(GoldGain, LumberGain, playerID)
-			RemoveTarget(target)
-		else -- refund resource + apply damage
-			GiveResources(GoldGain, LumberGain, playerID)
-			target:SetHealth(target:GetHealth() - UNSUMMON_DAMAGE_PER_SECOND)
-		end
-
-		return 1
-	end)
-
-end
-
-function RemoveTarget(target)
-	target:ForceKill(true)
-	target:RemoveBuilding()
-	target:SetAbsOrigin(Vector(0,0,-9000))
-end
-
-function GiveResources(gold, lumber, playerID)
-	Players:ModifyGold(playerID, gold)
-	Players:ModifyLumber(playerID, lumber)
+    if caster:GetPlayerOwnerID() == target:GetPlayerOwnerID() then
+	   Unsummon(target, function() print("Finished unsummon") end)
+    end
 end
 
 function sacrifice ( keys )
@@ -108,7 +57,7 @@ function stop_sacrifice ( keys )
 end
 
 function HauntGoldMine( event )
-     local ability = event.ability
+    local ability = event.ability
     local caster = event.caster
     local playerID = caster:GetPlayerOwnerID()
     local teamNumber = caster:GetTeamNumber()
@@ -170,12 +119,15 @@ function HauntGoldMine( event )
         unit.mine = mine -- A reference to the mine that the haunted mine is associated with
         mine.building_on_top = unit -- A reference to the building that haunts this gold mine
         HideGoldMine({caster = unit})
+        unit:SetMana(mine:GetHealth())
 
         -- Particle effect
         ApplyModifier(unit, "modifier_construction")
 
         -- Add the building handle to the list of structures
         Players:AddStructure(playerID, unit)
+
+
     end)
 
     event:OnConstructionCompleted(function(unit)
@@ -226,40 +178,22 @@ function ShowGoldMine( event )
 	local city_center = building.city_center
 
 	print("Removing Haunted Gold Mine")
-
+    mine:RemoveNoDraw()
 	mine:RemoveModifierByName("modifier_unselectable")
 
 	-- Stop all builders
-	local builders = mine.builders
-	for i=1,5 do	
-		local acolyte
-		if builders and #builders > 0 then
-			acolyte = mine.builders[#builders]
-			mine.builders[#builders] = nil
-		else
-			break
-		end
-
-		-- Cancel gather effects
-		acolyte:RemoveModifierByName("modifier_on_order_cancel_gold")
-		acolyte:RemoveModifierByName("modifier_gathering_gold")
-		acolyte.state = "idle"
-
-		local ability = acolyte:FindAbilityByName("undead_gather")
-		ability.cancelled = true
-		ToggleOff(ability)
-	end
+	local acolytes = mine.gatherers
+	for _,acolyte in pairs(acolytes) do
+        acolyte:CancelGather()
+    end
 
 	if building.counter_particle then
 		ParticleManager:DestroyParticle(building.counter_particle, true)
 	end
 
-     -- Set the area back to GoldMine squares
+    -- Set the area back to GoldMine squares
     BuildingHelper:BlockGridSquares(8, 0, building:GetAbsOrigin(), "GoldMine")
-
-	building.sigil:RemoveSelf()
-	building:AddNoDraw()
-
+    building:AddNoDraw()
 	mine.building_on_top = nil
 
 	print("Removed Haunted Gold Mine successfully")

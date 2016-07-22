@@ -623,4 +623,41 @@ function CDOTA_BaseNPC:FindClearSpace(origin)
     FindClearSpaceForUnit(self, origin, true)
 end
 
+function Unsummon(target, callback)
+    local playerID = target:GetPlayerOwnerID()
+    if target.unsummoning or not IsCustomBuilding(target) or target:IsUnderConstruction() then
+        SendErrorMessage(playerID, "#error_invalid_unsummon_target")
+        return
+    end
+
+    -- set flag
+    target.unsummoning = true
+    
+    -- 50% refund
+    local goldCost = (0.5 * GetGoldCost(target))
+    local lumberCost = (0.5 * GetLumberCost(target))
+    
+    -- calculate refund per tick
+    local steps = target:GetMaxHealth() / 50
+    local lumberGain = (lumberCost / steps)
+    local goldGain = (goldCost / steps)
+    
+    Timers:CreateTimer(function()
+        if not IsValidEntity(target) then return end
+        
+        ParticleManager:CreateParticle("particles/base_destruction_fx/gbm_lvl3_glow.vpcf", 0, target)
+        
+        Players:ModifyGold(playerID, goldGain)
+        Players:ModifyLumber(playerID, lumberGain)
+        if target:GetHealth() <= 50 then -- refund resource + kill unit
+            target:AddNoDraw()
+            target:ForceKill(true)
+            callback()
+        else -- refund resource + apply damage
+            target:SetHealth(target:GetHealth() - 50)
+        end
+        return 1
+    end)
+end
+
 Units:start()

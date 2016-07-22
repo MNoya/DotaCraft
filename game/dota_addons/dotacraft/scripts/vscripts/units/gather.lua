@@ -184,13 +184,16 @@ function Gather( event )
 
             -- Particle Counter on overhead
             counter = #mine.builders
-            SetGoldMineCounter(mine, counter)
+            mine:SetCounter(counter)
         end
     end)
 
     -- For gathering without return
-    event:OnGoldGained(function(value)
-        Gatherer:print("Gained "..value.." gold")
+    event:OnGoldGained(function(value, mine)
+        Gatherer:print("Gained "..value.." gold from "..mine:GetUnitName().." "..mine:GetEntityIndex())
+        if IsValidEntity(mine.building_on_top) then
+            mine.building_on_top:SetMana(mine:GetHealth())
+        end
         local upkeep = Players:GetUpkeep(playerID)
         local gold_gain = value * upkeep
 
@@ -201,8 +204,33 @@ function Gather( event )
         PopupGoldGain(caster, gold_gain)
     end)
 
-    event:OnGoldMineCollapsed(function(mine)
-        Gatherer:print("OnGoldMineCollapsed")
+    event:OnGoldMineDepleted(function(mine)
+        Gatherer:print("OnGoldMineDepleted")
+
+        -- Stop builders
+        for _,gatherer in pairs(mine.gatherers) do
+            gatherer:CancelGather()
+            ExecuteOrderFromTable({UnitIndex = gatherer:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
+        end
+
+        local building_on_top = mine.building_on_top
+        if building_on_top then
+            if building_on_top:GetUnitName() == "undead_haunted_gold_mine" then
+                -- Unsummon, then destroy the gold mine with it
+                Unsummon(building_on_top, function()
+                    mine:ForceKill(true)
+                    mine:AddNoDraw()
+                end)
+            else
+                building_on_top:ForceKill(true)
+                building_on_top:AddNoDraw()
+                mine:ForceKill(true)
+                mine:AddNoDraw()
+            end
+        else
+            mine:AddNoDraw()
+            mine:ForceKill(true)
+        end
     end)
 
     event:OnCancelGather(function()
@@ -235,7 +263,7 @@ function Gather( event )
                         count=count+1
                     end
                     print("Count is ", count, "key removed was ",caster_key)
-                    SetGoldMineCounter(mine, count)
+                    mine:SetCounter(count)
                 end
             end
         end
@@ -291,82 +319,3 @@ function CancelReturn( event )
 end
 
 ----------------------------------------------------------------------------------
--- Code to refactor below
---[[
-    GatherLumber - Should be a timer iniside Gatherer, with a callback per tick
-    GatherGold - Should be a timer iniside Gatherer, with a callback per tick
-    LumberGain (Static)
-    GoldGain (Static)
-    SetGoldMineCounter (cosmetic)
-    SendBackToGather should be a gather unit method
-]]
-
--- Used in Nigh Elf and Undead Gather Gold
-function GoldGain( event )
-    local ability = event.ability
-    local caster = event.caster
-    local playerID = caster:GetPlayerOwnerID()
-    local race = GetUnitRace(caster)
-    local upkeep = Players:GetUpkeep(playerID)
-    local gold_base = ability:GetSpecialValueFor("gold_per_interval")
-    local gold_gain = gold_base * upkeep
-
-    Scores:IncrementGoldMined( playerID, gold_gain )
-    Scores:AddGoldLostToUpkeep( playerID, gold_base - gold_gain )
-
-    Players:ModifyGold(playerID, gold_gain)
-    PopupGoldGain( caster, gold_gain)
-
-    -- Reduce the health of the main and mana on the entangled/haunted mine to show the remaining gold
-    local mine = caster.target_mine
-    mine:SetHealth( mine:GetHealth() - gold_gain )
-    mine.building_on_top:SetMana( mine:GetHealth() - gold_gain )
-
-    -- If the gold mine has no health left for another harvest
-    if mine:GetHealth() < gold_gain then
-
-        -- Destroy the nav blockers associated with it
-        for k, v in pairs(mine.blockers) do
-          DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
-          DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
-        end
-        print("Gold Mine Collapsed at ", mine:GetHealth())
-
-        -- Stop all builders
-        local builders = mine.builders
-        for k,builder in pairs(builders) do
-
-            -- Cancel gather effects
-            builder:RemoveModifierByName("modifier_gathering_gold")
-            builder.state = "idle"
-            builder.GatherAbility:ToggleOff()
-
-            if race == "nightelf" then
-                FindClearSpaceForUnit(builder, mine.entrance, true)
-            end
-        end
-
-        ParticleManager:DestroyParticle(mine.building_on_top.counter_particle, true)
-        mine.building_on_top:RemoveSelf()
-
-        mine:RemoveModifierByName("modifier_invulnerable")
-        mine:Kill(nil, nil)
-        mine:AddNoDraw()
-
-        caster.target_mine = nil
-    end
-end
-
-function SetGoldMineCounter(mine, count)
-    local building_on_top = mine.building_on_top
-    print("SetGoldMineCounter ",count)
-
-    for i=1,count do
-        --print("Set ",i," turned on")
-        ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(1,0,0))
-    end
-    for i=count+1,5 do
-        --print("Set ",i," turned off")
-        ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(0,0,0))
-    end
-end

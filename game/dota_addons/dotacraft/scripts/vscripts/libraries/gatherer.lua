@@ -623,6 +623,7 @@ function Gatherer:InitGoldMines()
         local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
         BuildingHelper:AddGridType(construction_size, location, "GoldMine")
         gold_mine:SetAbsOrigin(location)
+        gold_mine:SetNeverMoveToClearSpace(true)
         gold_mine.blockers = gridNavBlockers
 
         -- Find and store the mine entrance
@@ -660,6 +661,20 @@ function Gatherer:InitGoldMines()
                     print("Removed Gatherer currently ", TableCount(gold_mine.gatherers))
                     break
                 end
+            end
+        end
+
+        function gold_mine:SetCounter(count)
+            local building_on_top = gold_mine.building_on_top
+            print("SetGoldMineCounter ",count)
+
+            for i=1,count do
+                --print("Set ",i," turned on")
+                ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(1,0,0))
+            end
+            for i=count+1,5 do
+                --print("Set ",i," turned off")
+                ParticleManager:SetParticleControl(building_on_top.counter_particle, i, Vector(0,0,0))
             end
         end
 
@@ -963,12 +978,13 @@ function Gatherer:Init(unit)
 
             -- If no return, gain the resource directly
             if not return_ability then
-                unit.GatherAbility.callbacks.OnGoldGained(gold_gain)
+                unit.GatherAbility.callbacks.OnGoldGained(gold_gain, mine)
                 return gold_interval
             else
                 -- Exit mine and return the resources
                 unit.mine = nil
                 mine:RemoveGatherer(unit)
+
                 unit:RemoveNoDraw()
                 unit:RemoveModifierByName("modifier_gatherer_hidden")
 
@@ -978,7 +994,7 @@ function Gatherer:Init(unit)
 
                 -- Set modifier_carrying_gold stacks
                 unit:SetCarriedResourceStacks("gold", gold_gain)
-                                
+
                 -- Find where to put the builder outside the mine
                 FindClearSpaceForUnit(unit, mine.entrance, true)
 
@@ -1042,28 +1058,19 @@ end
 -- Used in Human and Orc Gather Gold
 function Gatherer:DamageMine(unit, mine, value)
     local gold_gain = math.min(mine:GetHealth(), value)
-
-    mine:SetHealth(mine:GetHealth() - value)
     unit.gold_gathered = gold_gain
 
     -- If the gold mine has no health left for another harvest
-    if mine:GetHealth() < value then
-
-        -- TODO: DestroyGoldMine method
-        -- Destroy the nav blockers associated with it
-        for k, v in pairs(mine.blockers) do
-          DoEntFireByInstanceHandle(v, "Disable", "1", 0, nil, nil)
-          DoEntFireByInstanceHandle(v, "Kill", "1", 1, nil, nil)
-        end
-        print("Gold Mine Collapsed at ", mine:GetHealth())
-        mine:RemoveSelf()
-
-        unit.GatherAbility.callbacks.OnGoldMineCollapsed(mine)
+    if mine:GetHealth()-value <= 0 then
+        unit.GatherAbility.callbacks.OnGoldMineDepleted(mine)
         unit.target_mine = nil
+    else
+        mine:SetHealth(mine:GetHealth() - value)
     end
 
     return gold_gain
 end
+
 
 function Gatherer:CheckGatherCancel(order)
     local units = order.units
@@ -1372,8 +1379,8 @@ function Gatherer:SetGatherCallbacks(event)
         callbacks.OnGoldGained = callback
     end
 
-    function event:OnGoldMineCollapsed(callback)
-        callbacks.OnGoldMineCollapsed = callback
+    function event:OnGoldMineDepleted(callback)
+        callbacks.OnGoldMineDepleted = callback
     end
 
     -- Shared Callbacks
