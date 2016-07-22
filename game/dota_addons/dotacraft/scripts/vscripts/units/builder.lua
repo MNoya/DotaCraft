@@ -147,7 +147,7 @@ function Build( event )
         unit:SetBaseMaxHealth(maxHealth)
 
         if unit:RenderTeamColor() then
-            local color = TEAM_COLORS[teamNumber]
+            local color = dotacraft:ColorForTeam(teamNumber)
             unit:SetRenderColor(color[1], color[2], color[3])
         end
 

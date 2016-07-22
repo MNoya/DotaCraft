@@ -12,18 +12,6 @@ UNDER_ATTACK_WARNING_INTERVAL = 60
 STARTING_GOLD = 500
 STARTING_LUMBER = 150
 
-TEAM_COLORS = {}
-TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 52, 85, 255 }   --  Blue
-TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 255, 52, 85 }   --  Red
-TEAM_COLORS[DOTA_TEAM_CUSTOM_1] = { 61, 210, 150 }  --  Teal
-TEAM_COLORS[DOTA_TEAM_CUSTOM_2] = { 140, 42, 244 }  --  Purple
-TEAM_COLORS[DOTA_TEAM_CUSTOM_3] = { 243, 201, 9 }   --  Yellow
-TEAM_COLORS[DOTA_TEAM_CUSTOM_4] = { 255, 108, 0 }   --  Orange
-TEAM_COLORS[DOTA_TEAM_CUSTOM_5] = { 101, 212, 19 }  --  Green
-TEAM_COLORS[DOTA_TEAM_CUSTOM_6] = { 197, 77, 168 }  --  Pink
-TEAM_COLORS[DOTA_TEAM_CUSTOM_7] = { 129, 83, 54 }   --  Brown
-TEAM_COLORS[DOTA_TEAM_CUSTOM_8] = { 199, 228, 13 }  --  Olive
-
 --------------
 
 -- This function initializes the game mode and is called before anyone loads into the game
@@ -67,11 +55,6 @@ function dotacraft:InitGameMode()
     GameMode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
     GameMode:SetStashPurchasingDisabled( true )
     GameMode:SetMaximumAttackSpeed( 500 )
-
-    -- Team Colors
-    for team,color in pairs(TEAM_COLORS) do
-      SetTeamCustomHealthbarColor(team, color[1], color[2], color[3])
-    end
 
     print('[DOTACRAFT] Game Rules set')
 
@@ -152,16 +135,10 @@ function dotacraft:InitGameMode()
     -- Initialized tables for tracking state
     self.vUserIds = {}
     self.vPlayerUserIds = {}
-    self.vSteamIds = {}
     self.vBots = {}
     self.vBroadcasters = {}
 
-    self.vPlayers = {}
-    self.vRadiant = {}
-    self.vDire = {}
-
-    self.nRadiantKills = 0
-    self.nDireKills = 0
+    self.teamColors = {}
 
     GameRules.DefeatedTeamCount = 0
 
@@ -677,10 +654,13 @@ function dotacraft:OnPreGame()
             local color = playerTable.Color
             local team = Teams:GetNthTeamID(playerTable.Team)
             local race = GameRules.raceTable[playerTable.Race] or GameRules.raceTable[RandomInt(1, 4)]
-            local PlayerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
+            local playerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
 
-            PlayerResource:SetCustomPlayerColor(playerID, PlayerColor.r, PlayerColor.g, PlayerColor.b)
+            PlayerResource:SetCustomPlayerColor(playerID, playerColor.r, playerColor.g, playerColor.b)
             PlayerResource:SetCustomTeamAssignment(playerID, team)
+
+            local teamColor = dotacraft:ColorForTeam(team)
+            SetTeamCustomHealthbarColor(team,teamColor[1],teamColor[2],teamColor[3])
             
             if PlayerResource:IsValidPlayerID(playerID) then
                 --Race Heroes are already precached
@@ -1165,14 +1145,18 @@ end
 
 -- Returns a Vector with the color of the player
 function dotacraft:ColorForPlayer( playerID )
-    local Player_Table = CustomNetTables:GetTableValue(GameRules.UI_PLAYERTABLE, tostring(playerID))
-    local color = CustomNetTables:GetTableValue(GameRules.UI_COLORTABLE, tostring(Player_Table.color_id))
-    return Vector(color.r, color.g, color.b)
+    local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
+    local color = playerTable.Color
+    local playerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
+    return Vector(playerColor.r, playerColor.g, playerColor.b)
 end
 
 function dotacraft:ColorForTeam(teamID)
-    local color = TEAM_COLORS[teamID]
-    return Vector(color[1], color[2], color[3])
+    if not self.teamColors[teamID] then
+        local playerID = PlayerResource:GetNthPlayerIDOnTeam(teamID,1)
+        self.teamColors[teamID] = self:ColorForPlayer( playerID )
+    end
+    return self.teamColors[teamID]
 end
 
 function dotacraft:GetMapName()
