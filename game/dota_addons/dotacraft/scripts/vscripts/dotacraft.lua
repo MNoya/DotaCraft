@@ -935,7 +935,7 @@ function dotacraft:OnEntityKilled( event )
     if killed_teamNumber == DOTA_TEAM_NEUTRALS and killed:IsCreature() and not IsCustomBuilding(killed) then
         Drops:Roll(killed)
 
-        if attacker_playerID then
+        if attacker_playerID and PlayerResource:IsValidPlayerID(attacker_playerID) then
             Scores:IncrementItemsObtained( attacker_playerID )
         end
     end

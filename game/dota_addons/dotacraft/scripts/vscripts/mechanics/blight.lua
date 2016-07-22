@@ -5,7 +5,7 @@ end
 function Blight:Init()
     self.Grid = {} -- Blighted gridnav positions
     self.Dummies = {} -- Blight dummies, created after buildings fall
-    self.Debug = false
+    self.DebugDraw = false
     BuildingHelper:NewGridType("BLIGHT")
 end
 
@@ -81,7 +81,7 @@ end
 function Blight:Remove(unit)
     local location = unit:GetAbsOrigin()
     local radius = 768
-    if unit:GetUnitName() == "undead_blight_skull" then
+    if unit:GetUnitName() == "undead_blight_dummy" then
         radius = 384
     elseif IsCityCenter(unit) then
         radius = 960
@@ -144,7 +144,7 @@ function Blight:Remove(unit)
     end
     if unit:IsAlive() then
         self.Dummies[unit:GetEntityIndex()] = dummy
-        unit:RemoveModifierByName("undead_blight_skull")
+        unit:RemoveModifierByName("undead_blight_dummy")
         unit:ForceKill(false)
     end
 end
@@ -153,15 +153,14 @@ end
 function Blight:Dispel(location)
     local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, location, nil, 400, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
     for _,v in pairs(units) do
-        if v:GetUnitName() == "undead_blight_skull" then
+        if v:GetUnitName() == "undead_blight_dummy" then
             self:Remove(v)
         end
     end
 end
 
 function Blight:CreateDummy(position)
-    local dummy = CreateUnitByName("undead_blight_skull", position, false, nil, nil, 0)
-    dummy:AddNewModifier(dummy, nil, "modifier_building", {})
+    local dummy = CreateUnitByName("undead_blight_dummy", position, false, nil, nil, 0)
     dummy:AddNewModifier(dummy, nil, "modifier_out_of_world", {clientside = true})
     dummy:AddNewModifier(dummy, nil, "modifier_grid_blight", {})
     self.Dummies[dummy:GetEntityIndex()] = dummy
@@ -208,13 +207,13 @@ function Blight:Debug()
 end
 
 function Blight:DebugDrawCircle(v,c,a,r,b,d)
-    if self.Debug then
+    if self.DebugDraw then
         DebugDrawCircle(GetGroundPosition(v,nil),c,a,r,b,d)
     end
 end
 
 function Blight:DebugDrawLine(v,t,r,g,b,bo,d)
-    if self.Debug then
+    if self.DebugDraw then
         DebugDrawLine(GetGroundPosition(v,nil),t,r,g,b,bo,d)
     end
 end

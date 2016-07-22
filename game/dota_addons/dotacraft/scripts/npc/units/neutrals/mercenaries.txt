@@ -8,7 +8,7 @@
     //----------------------------------------------------------------
     "BaseClass"                 "npc_dota_creature"
     "Model"                     "models/heroes/techies/techies.vmdl"
-    "ModelScale"                "1"
+    "ModelScale"                "0.5"
     "Level"                     "4"
     "HealthBarOffset"           "140"
 
@@ -38,7 +38,7 @@
     
     // Bounds
     //----------------------------------------------------------------
-    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
     "RingRadius"                "32"
     "CollisionSize"             "32"
     "FormationRank"             "0"
@@ -85,7 +85,7 @@
             "3" { "ItemDef" "492" } // Techies Spleen Costume
             "4" { "ItemDef" "394" } // Techies Bomb Arsenal
             "5" { "ItemDef" "487" } // Techies Spoon Costume
-            "6" { "ItemDef" "489" } // Techies Slingshot
+            //"6" { "ItemDef" "489" } // Techies Slingshot
         }
     }
 }

@@ -162,11 +162,11 @@ function StartBuildingHelper( params )
         entityGrid = []
         for (var i = 0; i < entities.length; i++)
         {
-            if (!Entities.IsAlive(entities[i]) || Entities.IsOutOfGame(entities[i]) || !HasModifier(entities[i], "modifier_building")) continue
+            if (!Entities.IsAlive(entities[i]) || Entities.IsOutOfGame(entities[i])) continue
             var entPos = Entities.GetAbsOrigin( entities[i] )
             var squares = GetConstructionSize(entities[i])
             
-            if (squares > 0)
+            if (squares > 0 && HasModifier(entities[i], "modifier_building"))
             {
                 // Block squares centered on the origin
                 BlockGridSquares(entPos, squares, GRID_TYPES["BLOCKED"])
