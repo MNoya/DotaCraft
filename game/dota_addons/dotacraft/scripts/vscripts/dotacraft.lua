@@ -704,34 +704,6 @@ function dotacraft:OnPreGame()
         end
     end
     --]]
-    
-    -- Add gridnav blockers to the gold mines
-    GameRules.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
-    for k,gold_mine in pairs (GameRules.GoldMines) do
-        local location = gold_mine:GetAbsOrigin()
-        local construction_size = BuildingHelper:GetConstructionSize(gold_mine)
-        local pathing_size = BuildingHelper:GetBlockPathingSize(gold_mine)
-        BuildingHelper:SnapToGrid(construction_size, location)
-        gold_mine:AddNewModifier(gold_mine,nil,"modifier_building",{})
-
-        local gridNavBlockers = BuildingHelper:BlockGridSquares(construction_size, pathing_size, location)
-        BuildingHelper:AddGridType(construction_size, location, "GoldMine")
-        gold_mine:SetAbsOrigin(location)
-        gold_mine.blockers = gridNavBlockers
-
-        -- Find and store the mine entrance
-        local mine_entrance = Entities:FindAllByNameWithin("*mine_entrance", location, 300)
-        for k,v in pairs(mine_entrance) do
-            gold_mine.entrance = v:GetAbsOrigin()
-        end
-
-        -- Show gold mines (networks the entity to all clients)
-        for _,teamID in pairs(Teams:GetValidTeams()) do
-            AddFOWViewer(teamID,gold_mine:GetAbsOrigin(),10,3,false)
-        end
-
-        -- Find and store the mine light
-    end
 end
 
 -- An NPC has spawned somewhere in game.  This includes heroes

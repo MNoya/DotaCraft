@@ -631,6 +631,11 @@ function Gatherer:InitGoldMines()
             gold_mine.entrance = v:GetAbsOrigin()
         end
 
+        -- Show gold mines (networks the entity to all clients)
+        for _,teamID in pairs(Teams:GetValidTeams()) do
+            AddFOWViewer(teamID,gold_mine:GetAbsOrigin(),10,3,false)
+        end
+
         function gold_mine:SetCapacity(value)
             gold_mine.max_capacity = value
         end
