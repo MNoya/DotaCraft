@@ -97,10 +97,11 @@ function PopupNumbers(target, pfx, color, lifetime, number, presymbol, postsymbo
     local pfxPath = string.format("particles/msg_fx/msg_%s.vpcf", pfx)
     local pidx
     if pfx == "gold" or pfx == "lumber" then
-        pidx = ParticleManager:CreateParticleForTeam(pfxPath, PATTACH_ABSORIGIN_FOLLOW, target, target:GetTeamNumber())
+        pidx = ParticleManager:CreateParticleForTeam(pfxPath, PATTACH_CUSTOMORIGIN, nil, target:GetTeamNumber())
     else
-        pidx = ParticleManager:CreateParticle(pfxPath, PATTACH_ABSORIGIN_FOLLOW, target)
+        pidx = ParticleManager:CreateParticle(pfxPath, PATTACH_CUSTOMORIGIN, nil)
     end
+    ParticleManager:SetParticleControl(pidx, 0, target:GetAbsOrigin())
 
     local digits = 0
     if number ~= nil then
