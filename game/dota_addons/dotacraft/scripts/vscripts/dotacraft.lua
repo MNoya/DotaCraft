@@ -1091,7 +1091,7 @@ function dotacraft:UpdateRallyFlagDisplays( playerID )
 
     for k,v in pairs(units) do
         local building = EntIndexToHScript(v)
-        if IsValidAlive(building) and IsCustomBuilding(building) and HasRallyPoint(building) then
+        if IsValidAlive(building) and IsCustomBuilding(building) and not IsUprooted(building) and HasRallyPoint(building) then
             CreateRallyFlagForBuilding( building )
         end
     end

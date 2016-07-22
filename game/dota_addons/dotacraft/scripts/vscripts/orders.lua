@@ -330,7 +330,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     --              Rally Flag Order              --
     ------------------------------------------------
     if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and numBuildings > 0 then
-        if unit and IsCustomBuilding(unit) then
+        if unit and IsCustomBuilding(unit) and not IsUprooted(unit) then
 
             local event = { pID = issuer, mainSelected = unit:GetEntityIndex(), rally_type = "position", pos_x = x, pos_y = y, pos_z = z }
             dotacraft:OnBuildingRallyOrder( event )

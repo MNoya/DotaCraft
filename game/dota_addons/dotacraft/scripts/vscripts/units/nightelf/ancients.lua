@@ -77,6 +77,7 @@ end
 
 function RootEnd( unit )
     unit:SetArmorType("fortified")
+    unit:SetHullRadius(unit.collision_size)
 
     -- Show all train and research abilities
     for i=0,15 do
@@ -133,6 +134,7 @@ end
 -- Initial cast of the root ability
 function UpRootStart( event )
     local caster = event.caster
+    caster.collision_size = caster.collision_size or caster:GetHullRadius()
 
     -- Don't allow uprooting until the ancient has finished construction
     if caster:IsUnderConstruction() then
@@ -156,6 +158,7 @@ function UpRoot( event )
     local ability = event.ability
     local unitName = caster:GetUnitName()
 
+    caster:SetHullRadius(32)
     caster:RemoveModifierByName("modifier_building")
     ability:ApplyDataDrivenModifier(caster,caster,"modifier_uprooted",{})
 

@@ -236,7 +236,11 @@ function GetRangedProjectileName( unit )
 end
 
 function IsCustomBuilding(unit)
-    return unit:HasModifier("modifier_building") or unit:HasModifier("modifier_uprooted")
+    return unit:HasModifier("modifier_building") or IsUprooted(unit)
+end
+
+function IsUprooted(unit)
+    return unit:HasModifier("modifier_uprooted")
 end
 
 -- Checks the UnitLabel for "city_center"
