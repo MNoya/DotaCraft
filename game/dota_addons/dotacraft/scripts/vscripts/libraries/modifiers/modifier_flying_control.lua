@@ -2,7 +2,8 @@ modifier_flying_control = class({})
 
 function modifier_flying_control:OnCreated()
     if IsServer() then
-        self.baseGround = GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()).z + 200
+        local offset = self:GetParent():GetUnitName() == "undead_destroyer" and 120 or 200
+        self.baseGround = GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()).z + offset
         self:StartIntervalThink(0.03)
         self.treeHeight = 0
     end

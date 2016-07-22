@@ -9350,14 +9350,13 @@
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"
 		"Ability1"					"undead_gather_gold" // Only Gold and Repair
-		"Ability2"					"undead_restore"	 //Reference: Arst
-		"Ability3"					"undead_build_crypt"	 //Reference: Alam
-		"Ability4"					"undead_build_temple_of_the_damned_disabled"
-		"Ability5"					"undead_build_slaughterhouse_disabled"
-		"Ability6"					"undead_build_sacrificial_pit_disabled"
-		"Ability7"					"undead_build_boneyard_disabled"
-		"Ability8"					"undead_unsummon_building"	 //Reference: Auns	
-		"Ability9"					"build_undead_items"
+		"Ability2"					"undead_build_crypt"	 //Reference: Alam
+		"Ability3"					"undead_build_temple_of_the_damned_disabled"
+		"Ability4"					"undead_build_slaughterhouse_disabled"
+		"Ability5"					"undead_build_sacrificial_pit_disabled"
+		"Ability6"					"undead_build_boneyard_disabled"
+		"Ability7"					"undead_unsummon_building"	 //Reference: Auns	
+		"Ability10"					"build_undead_items"
 		"Ability11"					"undead_blight_regen"
 			
 		// Gatherer KeyValues
@@ -10070,7 +10069,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.8"
 		"Level"						"2"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"HealthBarOffset"			"180"
@@ -10181,7 +10180,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.vmdl"
-		"ModelScale"				"1"
+		"ModelScale"				"0.8"
 		"Level"						"5"
 		"HealthBarOffset"			"350"
 		"SoundSet"                  "Hero_ObsidianDestroyer"
