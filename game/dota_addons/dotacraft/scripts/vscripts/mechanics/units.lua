@@ -413,12 +413,13 @@ function ReplaceUnit( unit, new_unit_name )
     local playerID = hero:GetPlayerOwnerID()
 
     local position = unit:GetAbsOrigin()
-    local relative_health = unit:GetHealthPercent()
-
+    local relative_health = unit:GetHealthPercent() * 0.01
+    local fv = unit:GetForwardVector()
     local new_unit = CreateUnitByName(new_unit_name, position, true, hero, hero, hero:GetTeamNumber())
     new_unit:SetOwner(hero)
     new_unit:SetControllableByPlayer(playerID, true)
     new_unit:SetHealth(new_unit:GetMaxHealth() * relative_health)
+    new_unit:SetForwardVector(fv)
     FindClearSpaceForUnit(new_unit, position, true)
 
     if PlayerResource:IsUnitSelected(playerID, unit) then

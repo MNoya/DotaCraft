@@ -20732,99 +20732,129 @@
 	// Orders the peasants to move towards the nearest Town Hall and replace itself with a Militia unit for a duration
 	"human_call_to_arms"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_call_to_arms"
-		"MaxLevel" 						"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "human_call_to_arms"
+	    "MaxLevel"                      "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
-		"AbilityMultiOrder"				"1"
+	    "AbilityMultiOrder"             "1"
+	    "AbilityCastRange"              "3000"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"45"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "duration"          "45"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"units/human/peasant.lua"
-				"Function"		"CallToArms"
-			}
-		}
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/human/peasant.lua"
+	            "Function"      "CallToArms"
+	        }
+	    }
 	}
 	
+	// Single Target version
+	"human_call_to_arms_peasant"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "human_call_to_arms"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "duration"          "45"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/human/peasant.lua"
+	            "Function"      "CallToArmsPeasant"
+	        }
+	    }
+	}
 	
 	// Sends the Militia to the city center for swapping back to Peasant, prematurely
 	"human_back_to_work"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"human_back_to_work"
-		"MaxLevel" 						"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "human_back_to_work"
+	    "MaxLevel"                      "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	
-		"AbilityMultiOrder"				"1"
+	    "AbilityMultiOrder"             "1"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"45"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "duration"          "45"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"units/human/peasant.lua"
-				"Function"		"BackToWork"
-			}
-		}
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/human/peasant.lua"
+	            "Function"      "BackToWork"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_militia"
-			{
-				"Duration"			"%duration"
-				"Passive"			"1"
-				"TextureName"		"human_call_to_arms"
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "units/upgrades.lua"
-						"Function"      "ApplyMultiRankUpgrade"
-						"ResearchName"	"human_research_forged_swords"
-						"WearableType"	"weapon"
-					}
+	    "Modifiers"
+	    {
+	        "modifier_militia"
+	        {
+	            "Duration"          "%duration"
+	            "Passive"           "1"
+	            "TextureName"       "human_call_to_arms"
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "ApplyMultiRankUpgrade"
+	                    "ResearchName"  "human_research_forged_swords"
+	                    "WearableType"  "weapon"
+	                }
 	
-					"RunScript"
-					{
-						"ScriptFile"    "units/upgrades.lua"
-						"Function"      "ApplyMultiRankUpgrade"
-						"ResearchName"	"human_research_plating"
-						"WearableType"	"armor"
-					}
-				}
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/upgrades.lua"
+	                    "Function"      "ApplyMultiRankUpgrade"
+	                    "ResearchName"  "human_research_plating"
+	                    "WearableType"  "armor"
+	                }
+	            }
 	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/peasant.lua"
-						"Function"		"CallToArmsEnd"
-					}
-				}
-			}
-		}
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/human/peasant.lua"
+	                    "Function"      "CallToArmsEnd"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	"human_gather"
@@ -20836,7 +20866,7 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
 	    // Gatherer Key Values
 	    "LumberGainInterval"            "1"
@@ -26615,7 +26645,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
 		// Gatherer Key Values
 	    "LumberGainInterval"            "1"
@@ -39844,7 +39874,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
 		"RequiresEmptyTree"			"1"
 		"LumberGainInterval"		"8"
@@ -50703,7 +50733,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
 		// Gatherer Key Values
 		"LumberGainInterval"			"1"
@@ -62468,7 +62498,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
 		"GoldMineBuilding" 				"undead_haunted_gold_mine"
 		"GoldGainInterval"				"5"
