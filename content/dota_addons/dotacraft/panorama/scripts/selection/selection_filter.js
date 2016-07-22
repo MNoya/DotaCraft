@@ -124,15 +124,17 @@ function FirstBuildingEntityFromSelection( entityList ){
 }
 
 function IsCustomBuilding( entityIndex ){
-    var ability_building = Entities.GetAbilityByName( entityIndex, "ability_building")
-    var ability_tower = Entities.GetAbilityByName( entityIndex, "ability_tower")
-    return (ability_building != -1 || ability_tower != -1)
+    return HasModifier(entityIndex, "modifier_building")
 }
 
-function IsMechanical( entityIndex ) {
-    var ability_siege = Entities.GetAbilityByName( entityIndex, "ability_siege")
-    return (ability_siege != -1)
-}
+function HasModifier(entIndex, modifierName) {
+    var nBuffs = Entities.GetNumBuffs(entIndex)
+    for (var i = 0; i < nBuffs; i++) {
+        if (Buffs.GetName(entIndex, Entities.GetBuff(entIndex, i)) == modifierName)
+            return true
+    };
+    return false
+};
 
 function IsCityCenter( entityIndex ){
     return (Entities.GetUnitLabel( entityIndex ) == "city_center")
