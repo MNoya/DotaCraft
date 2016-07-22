@@ -31,7 +31,6 @@ function ManaShield( event )
 		ParticleManager:SetParticleControl(particle, 1, Vector(mana_needed,0,0))
 	else
 		local newHealth = oldHealth - damage
-		mana_needed =
 		caster:SpendMana(mana_needed, ability)
 		caster:SetHealth(newHealth)
 	end
