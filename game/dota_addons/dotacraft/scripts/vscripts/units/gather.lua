@@ -128,16 +128,13 @@ function Gather( event )
 
             if mine.building_on_top and mine.building_on_top:IsUnderConstruction() then
                 --print("Extraction Building is still in construction, wait...")
-                return self.ThinkInterval
+                return
             end
-
-            if not mine.builders then
-                mine.builders = {}
-            end
-
-            local counter = TableCount(mine.builders)
-            print(counter, "Builders inside")
-            if counter >= 5 then
+            
+            -- 5 positions = 72 degrees
+            local free_pos = mine:AddGatherer(caster)
+            print(free_pos)
+            if not free_pos then
                 print(" Mine full")
                 return
             end
@@ -150,20 +147,7 @@ function Gather( event )
                 distance = 100
                 height = 25
             end
-            
-            ability:ApplyDataDrivenModifier(caster, caster, "modifier_gathering_gold", {})
 
-            -- Find first empty position
-            local free_pos
-            for i=1,5 do
-                if not mine.builders[i] then
-                    mine.builders[i] = caster
-                    free_pos = i
-                    break
-                end
-            end        
-
-            -- 5 positions = 72 degrees
             local mine_origin = mine:GetAbsOrigin()
             local fv = mine:GetForwardVector()
             local front_position = mine_origin + fv * distance
@@ -183,7 +167,7 @@ function Gather( event )
             end
 
             -- Particle Counter on overhead
-            counter = #mine.builders
+            counter = #mine:GetGatherers()
             mine:SetCounter(counter)
         end
     end)
@@ -252,19 +236,9 @@ function Gather( event )
         end
 
         local mine = caster.target_mine
-        if mine and mine.builders then
+        if mine then
             if race == "nightelf" or race == "undead" then
-                local caster_key = TableFindKey(mine.builders, caster)
-                if caster_key then
-                    mine.builders[caster_key] = nil
-
-                    local count = 0
-                    for k,v in pairs(mine.builders) do
-                        count=count+1
-                    end
-                    print("Count is ", count, "key removed was ",caster_key)
-                    mine:SetCounter(count)
-                end
+                mine:RemoveGatherer(caster)
             end
         end
     end)

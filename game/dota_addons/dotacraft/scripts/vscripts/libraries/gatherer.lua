@@ -641,7 +641,7 @@ function Gatherer:InitGoldMines()
             gold_mine.max_capacity = value
         end
 
-        function gold_mine:GetMaxCapacity(value)
+        function gold_mine:GetMaxCapacity()
             return gold_mine.max_capacity
         end
 
@@ -649,9 +649,29 @@ function Gatherer:InitGoldMines()
             return TableCount(gold_mine.gatherers) < gold_mine:GetMaxCapacity()
         end
 
+        function gold_mine:GetGatherers()
+            return gold_mine.gatherers
+        end
+
         function gold_mine:AddGatherer(unit)
-            gold_mine.gatherers[#gold_mine.gatherers+1] = unit
-            print("Added Gatherer, currently ", TableCount(gold_mine.gatherers))
+            local free_pos
+            local max_capacity = gold_mine:GetMaxCapacity()
+
+            -- Find first empty position
+            for i=1,max_capacity do
+                if not gold_mine.gatherers[i] then
+                    gold_mine.gatherers[i] = unit
+                    free_pos = i
+                    break
+                end
+            end
+            if free_pos then
+                gold_mine.gatherers[free_pos] = unit
+                print("Added Gatherer, currently ", TableCount(gold_mine.gatherers))
+                return free_pos
+            else
+                return false
+            end
         end
 
         function gold_mine:RemoveGatherer(unit)

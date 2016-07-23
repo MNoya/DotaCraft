@@ -2069,7 +2069,7 @@ end
 function BuildingHelper:AddRepairToQueue(builder, building, bQueued)
     -- External pre repair checks
     local bResult = self:OnPreRepair(builder, building)
-    if bResult == false then return end
+    if not bResult then return end
 
     local playerID = builder:GetMainControllingPlayer()
     local player = PlayerResource:GetPlayer(playerID)

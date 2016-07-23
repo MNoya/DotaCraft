@@ -182,7 +182,7 @@ function ShowGoldMine( event )
 	mine:RemoveModifierByName("modifier_unselectable")
 
 	-- Stop all builders
-	local acolytes = mine.gatherers
+	local acolytes = mine:GetGatherers()
 	for _,acolyte in pairs(acolytes) do
         acolyte:CancelGather()
     end

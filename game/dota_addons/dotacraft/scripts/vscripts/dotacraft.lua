@@ -479,7 +479,7 @@ function dotacraft:InitializeUndead( hero, race_setup_table, building )
 
     haunted_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
     ParticleManager:SetParticleControl(haunted_gold_mine.counter_particle, 0, Vector(race_setup_table.closest_mine_pos.x,race_setup_table.closest_mine_pos.y,race_setup_table.closest_mine_pos.z+200))
-    haunted_gold_mine.builders = {}
+    race_setup_table.closest_mine:SetCapacity(5)
 
      -- Hide the targeted gold mine    
     ApplyModifier(race_setup_table.closest_mine, "modifier_unselectable")
@@ -518,7 +518,7 @@ function dotacraft:InitializeNightElf( hero, race_setup_table, building )
     entangled_gold_mine:SetControllableByPlayer(playerID, true)
     entangled_gold_mine.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, entangled_gold_mine)
     ParticleManager:SetParticleControl(entangled_gold_mine.counter_particle, 0, Vector(race_setup_table.closest_mine_pos.x,race_setup_table.closest_mine_pos.y,race_setup_table.closest_mine_pos.z+200))
-    entangled_gold_mine.builders = {}
+    race_setup_table.closest_mine:SetCapacity(5)
 
     entangled_gold_mine.mine = race_setup_table.closest_mine -- A reference to the mine that the entangled mine is associated with
     entangled_gold_mine.city_center = building -- A reference to the city center that entangles this mine

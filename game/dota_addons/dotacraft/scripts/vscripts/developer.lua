@@ -391,23 +391,33 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
     name = name or "human_footman"
 
     local pos = selected:GetAbsOrigin()
-    local unitName
-    for k,_ in pairs(KeyValues.UnitKV) do
-        if k:match(name) then
-            unitName = k
-            break
+
+    if not GetUnitKV(name) then
+        for k,_ in pairs(KeyValues.UnitKV) do
+            if k:match(name) then
+                name = k
+                break
+            end
         end
     end
-    if unitName:match('npc_dota_hero') then
-        dotacraft:TestHero(playerID, GetInternalHeroName(unitName), bEnemy)
+    if not GetUnitKV(name) then
+        Say(nil,"No match for '"..name.."'", false)
+        return
+    end
+    if GetUnitKV(name, "ConstructionSize") then
+        dotacraft:TestBuilding(playerID, name, bEnemy)
+        return
+    end
+    if name:match('npc_dota_hero') then
+        dotacraft:TestHero(playerID, GetInternalHeroName(name), bEnemy)
         return
     end
 
     local team = PlayerResource:GetTeam(playerID)
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
-    if unitName then
-        PrecacheUnitByNameAsync(unitName, function()
-            local unit = CreateUnitByName(unitName, pos, true, hero, hero, team)
+    if name then
+        PrecacheUnitByNameAsync(name, function()
+            local unit = CreateUnitByName(name, pos, true, hero, hero, team)
             unit:SetOwner(hero)
             unit:SetControllableByPlayer(playerID, true)
             unit:SetMana(unit:GetMaxMana())
