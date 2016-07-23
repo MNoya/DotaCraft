@@ -14,6 +14,28 @@ function ApplyFaerieFire(event)
 	print("Apply faerie fire for "..duration)
 end
 
+function FaerieFireAutocast(event)
+    local ability = event.ability
+    local caster = event.caster
+    local autocast_radius = ability:GetCastRange()
+    local modifier_name = "modifier_faerie_fire"
+    
+    if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
+        local target
+        local enemies = FindEnemiesInRadius(caster, autocast_radius)
+        for k,unit in pairs(enemies) do
+            if not IsCustomBuilding(unit) and not unit:HasModifier(modifier_name) then
+                target = unit
+                break
+            end
+        end
+
+        if target then
+            caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
+        end
+    end
+end
+
 -- Make vision every second (this is to prevent the vision staying if the modifier is purged)
 function FaerieFireVision( event )
 	local caster = event.caster

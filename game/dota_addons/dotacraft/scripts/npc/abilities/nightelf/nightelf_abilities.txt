@@ -1571,7 +1571,7 @@
 	"AbilityTextureName"		"nightelf_faerie_fire"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -1616,6 +1616,29 @@
 
 	"Modifiers"
 	{
+		"modifier_faerie_fire_autocast"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			"OnCreated"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "mechanics/abilities.lua"
+			        "Function"      "ToggleOnAutocast"
+			    }
+			}
+
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/nightelf/druid_of_the_talon.lua"
+			        "Function"      "FaerieFireAutocast"
+			    }
+			}
+		}
 		"modifier_faerie_fire"
 		{
 			"IsDebuff"			"1"
