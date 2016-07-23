@@ -1143,7 +1143,8 @@ function Gatherer:CastGatherAbility(event)
         -- idle
 
     -- If a tree is targeted and the caster is a valid lumber gatherer
-    if target_class == "ent_dota_tree" and caster:CanGatherLumber() then
+    if target_class == "ent_dota_tree" then
+        if not caster:CanGatherLumber() then return end
         local tree = target
 
         -- Check if it requires an empty tree to redirect

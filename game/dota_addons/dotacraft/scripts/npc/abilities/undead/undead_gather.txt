@@ -7,8 +7,9 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"CastFilterRejectCaster"    	"1"
 
 	"GoldMineBuilding" 				"undead_haunted_gold_mine"
 	"GoldGainInterval"				"5"
@@ -59,8 +60,9 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	"CastFilterRejectCaster"    	"1"
 
 	"LumberGainInterval"			"1"
 	"LumberPerInterval"				"2"
