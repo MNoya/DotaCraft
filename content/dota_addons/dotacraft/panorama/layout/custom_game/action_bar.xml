@@ -5,15 +5,15 @@
   <scripts>
     <include src="file://{resources}/scripts/action_bar/action_bar.js" />
   </scripts>
-	<Panel class="ActionBarRoot" >
-		<Button id="LevelUpButton" onactivate="OnLevelUpClicked()">
+	<Panel class="ActionBarRoot" hittest="false">
+		<!--<Button id="LevelUpButton" onactivate="OnLevelUpClicked()">
 			<Panel id="LevelUpButtonInset">
 				<Label text="#LevelUp" />
 			</Panel>
-		</Button>
+		</Button>-->
 		<Panel id="AbilityList" >
 			<Panel id="AbilityTopRow" />
 			<Panel id="AbilityBottomRow" />	
 		</Panel>
 	</Panel>
-</root>
+</root>  

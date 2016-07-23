@@ -1,268 +1,453 @@
 .ActionBarRoot{
+	margin-left: 340px;
 	height: 125px;
-	width: 500px;
+	width: 460px;
 	
-	margin-left: 360px;
-
-	horizontal-align: center;
+	horizontal-align: middle;
 	vertical-align: bottom;
-	
+	background-color: brown;
 	flow-children: down;
 }
 
 #AbilityList{
-	flow-children: down;
+
 	height: 100%;
 	width: 100%;
-	border: 2px solid black;
-	background-color: #272823;
-	
-	padding: 8px;
+	flow-children: down;
+	border: 1px solid white;
 }
 
-#AbilityBottomRow, #AbilityTopRow{ 
+#AbilityBottomRow, #AbilityTopRow{
 	height: 50%;
 	width: 100%;
-	
 	flow-children: right;
+	
+	padding-left: 10px;
 }
 
-.ActionBarAbilityRoot{ 
+.ability_layout_4{
+	width: 19%;
+	
+	margin-top: 20px;
+	margin-right: 12px;
+}  
+
+.ability_layout_5{
+	width: 14%;
+	
+	margin-top: 30px;
 	margin-right: 10px;
+}
+
+.ability_layout_6{
+	width: 14%;
+
+	margin-top: 30px;	
+	margin-right: 10px;
+}
+
+.ability_layout_6_2{
+	width: 11%;
+	
+	margin-top: 10px;
+	margin-right: 20px;
 }
 
 /*
 	Button Styling - Taken from ui_example
 */
-#LevelUpButton
+.Ability
 {
-	border: 1px solid black;
-    background-color: #c4a529;
-	width: 114px;
-	height: 28px;
-	margin-bottom: 6px;
-	visibility: collapse;
+    height: 100%;
 }
 
-.could_level_up #LevelUpButton
+#AbilityFrame
 {
-	visibility: visible;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center top;
 }
 
-#LevelUpButton:hover
+#AbilityFrame.Passive
 {
-    background-color: #9e8b2c;
+    background-image: none;
 }
 
-#LevelUpButtonInset
+.PipPadding
 {
-	width: 100%;
-	height: 100%;
-	border: 2px solid black;
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff ), color-stop( 0.1, #c4a529 ), color-stop( 0.75, #9e8b2c ), color-stop( 0.9, #c4a529 ), to( #ffffff ) );
-	margin: 1px;
+    width: 12%;
 }
 
-#LevelUpButton:hover #LevelUpButtonInset
-{
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff ), color-stop( 0.2, #c4a529 ), color-stop( 0.75, #9e8b2c ), color-stop( 0.8, #c4a529 ), to( #ffffff ) );
+.spacer {
+    width: 100%;
+    height: width-percentage(4%);
+    opacity: 0.2;
 }
 
-#LevelUpButton Label
+#AbilityButton 
 {
-	text-transform: uppercase;
-	text-shadow: 0px 1px 3px 2.5 #000000;
-	color: white;
-	vertical-align: center;
-	horizontal-align: center;
+    width: 90%;
+    height: width-percentage(100%);
+    tooltip-body-position: 50% 100%;
+    tooltip-position: left bottom;
+    horizontal-align: center;
+    //background-color: #00ff00;
+    overflow: noclip; /* NEED THIS */
 }
 
-#ButtonAndLevel
-{
-	flow-children: down;
+.AbilityLayout5 #AbilityButton {
+    width: 89%;
+    margin-top: 1px;
 }
 
-#AbilityButton
+#AbilityImage 
 {
-	width: 55px;
-	height: 55px;
-	border: 2px solid transparent;
+    width: 100%;
+    height: width-percentage(100%);
+    border-top: 3px solid #777777;
+    border-left: 3px solid #636363;
+    border-right: 3px solid #343434;
+    border-bottom: 3px solid #2c2c2c;
 }
 
-.is_passive #AbilityButton
+#AbilityFrame.Passive #AbilityImage 
 {
-	border: 2px solid #00000000;
+    border: 0px solid black;
 }
 
-#UpgradeBorder
+#AbilityImage.NotLearned 
 {
-	background-color: transparent;
+    saturation: 0;
+    brightness: 0.03;
+    border-top: 3px solid #ffffff;
+    border-left: 3px solid #bbbbbb;
+    border-right: 3px solid #999999;
+    border-bottom: 3px solid #999999;
 }
 
-.learnable_ability #UpgradeBorder
+#AbilityImage.Active 
 {
-   background-color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff ), color-stop( 0.1, #c4a529 ), color-stop( 0.75, #9e8b2c ), color-stop( 0.9, #c4a529 ), to( #ffffff ) );
+    brightness: 1.6;
+    border-color: #999999;
+    padding-top: 3px;
 }
 
-#AbilityButton:hover
+#AbilityImage.AbilityPhase
 {
-	border: 2px solid white;
+    padding-top: 3px;
+    brightness: 1.6;
 }
 
-#AbilityButton:active
+#AbilityImage.Cooldown
 {
-	border: 4px solid white;
+    border-top-color: #282828;
+    border-left-color: #212121;
+    border-right-color: #171717;
+    border-bottom-color: #141414;
+    padding: 2px;
 }
 
-.no_level DOTAAbilityImage
+.abilitycooldowncontainer
 {
-	saturation: 0;
-	wash-color: #303030;
+    width: 100%;
+    height: width-percentage(100%);
 }
 
-.insufficient_mana DOTAAbilityImage
+#cooldownswipe
 {
-	saturation: 0;
-	wash-color: #1569be;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #000000;
+    opacity: 0;
+    transition-timing-function: linear;
+    transition-property: clip;
 }
 
-.potential_upgrade.no_level DOTAAbilityImage
+.EmptyPip 
 {
-	saturation: 1;
-	wash-color: white;
+    width: 17px;
+    height: 100%;
+    margin-left: -1px;
+    margin-right: 0px;
+
+    background-image: url("s2r://panorama/images/hud/pip_off_png.vtex");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
-#AbilityStatusBorder
-{
-	border: 2px solid transparent;
+.AbilityLayout6 .EmptyPip.Small,
+.EmptyPip.Small {
+    width: 9px;
+    margin-top: 1px;
 }
 
-.auto_cast_enabled #AbilityStatusBorder
-{
-	border: 4px solid orange;
+.AbilityLayout6 .EmptyPip {
+    width: 13px;
 }
 
-.toggle_enabled #AbilityStatusBorder
-{
-	border: 4px solid green;
+.AvailablePip {
+    width: 16px;
+    height: 100%;
+    margin-left: -1px;
+    margin-right: 0px;
+
+    background-image: url("s2r://panorama/images/hud/pip_outline_png.vtex");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
-#AbilityLevelContainer
-{
-	horizontal-align: center;
-	flow-children: right;
+.AbilityLayout6 .AvailablePip.Small,
+.AvailablePip.Small {
+    width: 7px;
+    margin-top: 1px;
 }
 
-.LevelPanel
-{
-	width: 12px;
-	height: 12px;
-	margin-left: 1px;
-	margin-right: 1px;
-
-	border-radius: 3px;
-
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2e2716 ), to( #020302 ) );
-	border: 2px solid #ffffff05;
+.AbilityLayout6 .AvailablePip {
+    width: 13px;
 }
 
-.active_level.LevelPanel
+.LeveledPip
 {
-	background-color: #ceaa31;
-	border: 2px solid #734918;
+    width: 11px !important;
+    height: 12px !important;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
 }
 
-/* ability shared */
-#CooldownOverlay
-{
-	height: 100%;
-	background-color: #000000DD;
+.AbilityLayout6 .LeveledPip.Small,
+.LeveledPip.Small {
+    width: 6px;
 }
 
-#CooldownTimer
+#PipContainer
 {
-	color: white;
-    font-size: 24px;
-	text-shadow: 0px 0px 6px 6 #000000;
+    width: fit-children;
+    height: 100%;
+    flow-children: right;
+    horizontal-align: center;
+    margin-top: 7%;
+}
+
+#HoverHighlight 
+{
+    width: 100%;
+    height: width-percentage(100%);
+}
+
+#AbilityButton:hover #HoverHighlight 
+{
+    background-color: gradient( linear, 0% 0%, 0% 40%, from( #ffffff08 ), to( #ffffff00 ) );
+}
+
+#AbilityFrame.Passive #PassiveMask
+{
+    width: 100%;
+    height: 100%;
+    background-image: url("s2r://panorama/images/hud/passive_ability_border_png.vtex");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#ManaLabel
+{
+    background-color: gradient( linear, 100% 100%, 10% -10%, from( #1D4B81ff ), to( #1D4B8100 ) );
+    font-size: 12px;
+    color: #ffffff;
+    font-family: Arial;
+    width: 35px;
+    height: 12px;
+    horizontal-align: right;
+    vertical-align: bottom;
+    text-align: right;
+    padding-right: 3px;
+}
+
+#HotkeyLabel
+{
+    background-color: gradient( linear, 0% 0%, 100% 20%, from( #202020 ), to( #3c3c3c ) );
+    font-size: 12px;
+    color: #ffeedd;
+    font-family: Tahoma;
+    width: 21px;
+    height: 21px;
+    padding-left: 4px;
+    padding-top: 2px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: -6px;
+    margin-top: -6px;
+    border-top: 1px solid #444444;
+    border-right: 1px solid #222222;
+    border-bottom: 1px solid #222222;
+    border-left: 1px solid #333333;
+    box-shadow: #000f 0px 0px 2px 0px;
+    text-shadow: 0px 0px 2px 2.0 #000000ff;
+}
+
+#LearnOverlay {
+    width: 108%;
+    height: 110%;
+    margin-top: -4%;
+    margin-left: -4%;
+    background-image: url("s2r://panorama/images/hud/learnspell_png.vtex");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    visibility: collapse;
+}
+
+#AbilityPhaseMask {
+    width: 100%;
+    height: 100%;
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #00bb00ff ), to( #00bb0000 ) );
+    opacity-mask: url("s2r://panorama/images/hud/passive_ability_border_png.vtex");
+    background-size: 100% 100%;
+    opacity: 0.9;
+    visibility: collapse;
+}
+
+#CooldownLabel {
     horizontal-align: center;
     vertical-align: center;
+    color: #fff;
+    font-size: 24px;
+    text-shadow: 0px 0px 2px 2.0 #ff00aa;
+    font-family: Liberation;
+    visibility: collapse;
 }
 
-#Cooldown
-{
-	width: 100%;
-	height: 100%;
-	visibility: collapse;
+#SilencedMask {
+    width: 100%;
+    height: 100%;
+    background-image: url("s2r://panorama/images/hud/spells_silenced_png.vtex");
+    background-size: 100% 100%;
+    visibility: collapse;
 }
 
-.in_cooldown #Cooldown
+@define animC: #ffffffbb;
+
+@keyframes 'shineAnim'
 {
-	visibility: visible;
+    0%
+    {
+        opacity: 0;
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( -0.1, animC ), color-stop( 0.0, animC ), to( #ffffff00 ) );
+    }
+
+    20%
+    {
+        opacity: 1;
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( -0.1, animC ), color-stop( 0.0, animC ), to( #ffffff00 ) );
+    }
+
+    50%
+    {
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( 0.45, animC ), color-stop( 0.55, animC ), to( #ffffff00 ) );
+    }
+
+    80%
+    {
+        opacity: 1;
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( 1, animC ), color-stop( 1.1, animC ), to( #ffffff00 ) );
+    }
+
+    100%
+    {
+        opacity: 0;
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( 1, animC ), color-stop( 1.2, animC ), to( #ffffff00 ) );
+    }
 }
 
-#ManaCost
-{
-	color: #c0e8fb;
-    font-size: 14px;
-    font-weight: bold;
-	text-shadow: 0px 0px 6px 8 #245191;
-	margin-right: -2px;
-	margin-bottom: -4px;
-
-	vertical-align: bottom;
-	horizontal-align: right;
+.CooldownEndShine {
+    width: 100%;
+    height: 100%;
+    animation-name: shineAnim;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
 }
 
-.no_mana_cost #ManaCost
-{
-	visibility: collapse;
+#AutocastPanel {
+    width: 118%;
+    height: 118%;
+    margin-top: -9%;
+    margin-left: -9%;
+    background-image: url("s2r://panorama/images/hud/autocastable_ability_border_png.vtex");
+    background-size: 100% 100%;
+    visibility: collapse;
 }
 
-#ActiveAbility
-{
-	width: 100%;
-	height: 100%;
-	background-color: gradient( radial, 50% -20%, 0% 0%, 80% 80%, from( #FFFFFF ), to( #FFFFFF00 ) );
-	border: 4px solid #FFFFFF40;
-	opacity: 0;
+#AutocastMask {
+    width: 113%;
+    height: 112%;
+    margin-top: -6%;
+    margin-left: -6%;
+    opacity-mask: url("s2r://materials/vgui/hud/ui_skill_autocast_channel_psd_69d3a99b.vtex"); 
+    overflow: clip;
+    visibility: collapse;
 }
 
-.is_active #ActiveAbility
+@define autocastMaskC: #ffA130ee;
+@define autocastMaskC2: #ff000044;
+
+@keyframes 'autocastAnim'
 {
-	opacity: 1;
+    0%
+    {
+        transform: rotateZ(45deg);
+    }
+    50%
+    {
+        transform: rotateZ(135deg);
+    }
+    100%
+    {
+        transform: rotateZ(225deg);
+
+    }
 }
 
-#Hotkey
+@keyframes 'autocastAnim2'
 {
-	margin-left: -4px;
-
-	vertical-align: top;
-	horizontal-align: left;
-	min-width: 18px;
-	min-height: 18px;
-
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #393939 ), to( #414849 ) );
-	border: 1px solid #ffffff05;
-	box-shadow: fill black 1px 1px 2px 2px;
+    0%
+    {
+        transform: rotateZ(225deg);
+    }
+    50%
+    {
+        transform: rotateZ(315deg);
+    }
+    100%
+    {
+        transform: rotateZ(405deg);
+    }
 }
 
-#HotkeyText
-{
-	color: #bba995;
- 	text-shadow: 1px 1px 2px 2 #000000;
-    font-size: 14px;
-    font-weight: bold;
-	vertical-align: center;
-	text-align: center;
-	width: 100%;
-	margin: -2px;
+#AutocastMaskInner {
+    width: 200%;
+    height: 200%;
+    background-color: gradient( linear, 0% 30%, 0% 100%, from( autocastMaskC ), to( autocastMaskC2 ) );
+    opacity-mask: url("s2r://panorama/images/textures/radialsweep_psd.vtex");
+    animation-name: autocastAnim;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    vertical-align: center;
+    horizontal-align: center;
+    opacity: 0.7;
 }
 
-.no_level #Hotkey,
-.no_item #Hotkey,
-.is_passive #Hotkey,
-#stash_row #Hotkey,
-.no_hotkey #Hotkey
-{
-	visibility: collapse;
+#AutocastMaskInner2 {
+    width: 200%;
+    height: 200%;
+    background-color: gradient( linear, 0% 30%, 0% 100%, from( autocastMaskC ), to( autocastMaskC2 ) );
+    opacity-mask: url("s2r://panorama/images/textures/radialsweep_psd.vtex");
+    animation-name: autocastAnim2;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    vertical-align: center;
+    horizontal-align: center;
+    opacity: 0.7;
 }
