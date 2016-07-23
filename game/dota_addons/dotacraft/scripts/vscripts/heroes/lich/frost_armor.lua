@@ -1,7 +1,6 @@
 --[[
 	Handles the AutoCast Logic
 	Author: Noya
-	Date: 18.01.2015.
 
 	Auto-Cast can interrupt current orders and forget the next queued command. Following queued commands are not forgotten
 	Cannot occur while channeling a spell.
@@ -15,18 +14,15 @@ function FrostArmorAutocast( event )
 	local modifier = "modifier_frost_armor"
 
 	-- Get if the ability is on autocast mode and cast the ability on the attacked target if it doesn't have the modifier
-	if ability:GetAutoCastState() then
-		if not IsChanneling( caster ) then
-			if not target:HasModifier(modifier) then
-				caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
-			end
+	if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
+		if not IsChanneling(caster) and not target:HasModifier(modifier) then
+			caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
 		end	
 	end	
 end
 
 --[[
 	Author: Noya
-	Date: 18.1.2015.
 	Plays the lich_frost_armor particle and destroys it later
 ]]
 function FrostArmorParticle( event )

@@ -52,25 +52,18 @@ function Web_Destroy(event)
     target:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 end
 
--- timer that's initialised on crypt fiend spawn
 function Web_AutoCast(keys)
     local caster = keys.caster
     local ability = keys.ability
     local radius = ability:GetCastRange()+caster:GetHullRadius()
-
-    Timers:CreateTimer(function()
-        if not IsValidEntity(caster) or not caster:IsAlive() then return end
         
-        if ability:IsCooldownReady() and ability:GetAutoCastState() then
-            local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)                   
-            for k,unit in pairs(units) do
-                if unit:HasFlyMovementCapability() then -- found unit to web
-                    caster:CastAbilityOnTarget(unit, ability, caster:GetPlayerOwnerID())
-                    break
-                end
+    if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
+        local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)                   
+        for k,unit in pairs(units) do
+            if unit:HasFlyMovementCapability() then -- found unit to web
+                caster:CastAbilityOnTarget(unit, ability, caster:GetPlayerOwnerID())
+                break
             end
         end
-        
-        return 0.2
-    end)
+    end
 end

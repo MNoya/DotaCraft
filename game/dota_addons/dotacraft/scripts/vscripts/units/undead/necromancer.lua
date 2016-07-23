@@ -51,13 +51,7 @@ function RaiseDead_AutoCast(keys)
 	local ability = keys.ability
 	local playerID = caster:GetPlayerOwnerID()
 	
-	Timers:CreateTimer(function()	
-		if not IsValidEntity(caster) or not caster:IsAlive() then return end
-
-		if ability:GetAutoCastState() and ability:IsCooldownReady() and Corpses:AreAnyInRadius(playerID, caster:GetAbsOrigin(), ability:GetCastRange()) then
-			caster:CastAbilityNoTarget(ability,playerID)
-		end
-		return 1
-	end)
-	
+	if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() and Corpses:AreAnyInRadius(playerID, caster:GetAbsOrigin(), ability:GetCastRange()) then
+		caster:CastAbilityNoTarget(ability,playerID)
+	end	
 end

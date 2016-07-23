@@ -30,7 +30,7 @@ function AbolishMagicAutocast( event )
 	local teamNumber = caster:GetTeamNumber()
 	
 	-- Get if the ability is on autocast mode and cast the ability on a target
-	if ability:GetAutoCastState() and ability:IsFullyCastable() then
+	if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
 		
 		-- Find targets in radius
 		local target

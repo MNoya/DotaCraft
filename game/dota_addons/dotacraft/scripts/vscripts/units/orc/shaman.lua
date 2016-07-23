@@ -9,7 +9,7 @@ function BloodlustAutocast_Attack( event )
     local modifier = "modifier_bloodlust"
 
     -- Get if the ability is on autocast mode and cast the ability on the attacked target if it doesn't have the modifier
-    if not attacker:IsMagicImmune() and ability:GetAutoCastState() and ability:IsFullyCastable() then
+    if not attacker:IsMagicImmune() and ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
         if not attacker:HasModifier(modifier) then
             caster:CastAbilityOnTarget(attacker, ability, caster:GetPlayerOwnerID())
         end 
@@ -26,7 +26,7 @@ function BloodlustAutocast_Attacked( event )
     local modifier = "modifier_bloodlust"
 
     -- Get if the ability is on autocast mode and cast the ability on the attacked target if it doesn't have the modifier
-    if not target:IsMagicImmune() and ability:GetAutoCastState() and ability:IsFullyCastable() then
+    if not target:IsMagicImmune() and ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
         if not target:HasModifier(modifier) then
             caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
         end 

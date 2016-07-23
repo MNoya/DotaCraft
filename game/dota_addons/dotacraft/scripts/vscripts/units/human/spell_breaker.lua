@@ -27,15 +27,16 @@ function SpellSteal_AutoCast(event)
 
     Timers:CreateTimer(0.5, function()
         if not IsValidEntity(caster) or not caster:IsAlive() then return end
-        if not ability:GetAutoCastState() then return 0.5 end
+        if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
 
-        -- Find enemies to remove buffs or allies to remove debuffs
-        local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, flags, FIND_ANY_ORDER, false)  
-        for _,target in pairs(units) do
-            local bRemovePositiveBuffs = target:GetTeamNumber() ~= caster:GetTeamNumber()
-            if target:HasPurgableModifiers(bRemovePositiveBuffs) then
-                caster:CastAbilityOnTarget(target,ability,caster:GetPlayerOwnerID())
-                return ability:GetCooldown(1)
+            -- Find enemies to remove buffs or allies to remove debuffs
+            local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, flags, FIND_ANY_ORDER, false)  
+            for _,target in pairs(units) do
+                local bRemovePositiveBuffs = target:GetTeamNumber() ~= caster:GetTeamNumber()
+                if target:HasPurgableModifiers(bRemovePositiveBuffs) then
+                    caster:CastAbilityOnTarget(target,ability,caster:GetPlayerOwnerID())
+                    return ability:GetCooldown(1)
+                end
             end
         end
         return 0.5
