@@ -1,8 +1,16 @@
 modifier_flying_control = class({})
 
+fly_offsets = { ["undead_destroyer"]=120,
+                ["human_dragonhawk_rider"]=120,
+                ["orc_troll_batrider"]=150,
+                ["undead_frost_wyrm"]=160,
+                ["nightelf_chimaera"]=180,
+                ["nightelf_druid_of_the_talon"]=220,
+              }
+
 function modifier_flying_control:OnCreated()
     if IsServer() then
-        local offset = self:GetParent():GetUnitName() == "undead_destroyer" and 120 or 200
+        local offset = fly_offsets[self:GetParent():GetUnitName()] or 200
         self.baseGround = GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()).z + offset
         self:StartIntervalThink(0.03)
         self.treeHeight = 0

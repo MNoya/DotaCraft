@@ -22,12 +22,10 @@ function FaerieFireVision( event )
 	AddFOWViewer( target.faerie_fire_team, target:GetAbsOrigin(), 500, 0.75, true)
 end
 
-
 function CrowFormOn( event )
     local caster = event.caster
     local playerID = caster:GetPlayerOwnerID()
     caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
-    --caster:EmitSound("Hero_LoneDruid.TrueForm.Cast")
 
     -- Disable cyclone
     local cyclone = caster:FindAbilityByName("nightelf_cyclone")
@@ -46,14 +44,13 @@ function CrowFormOff( event )
     local caster = event.caster
     local playerID = caster:GetPlayerOwnerID()
     caster:StartGesture(ACT_DOTA_IDLE_RARE)
-    --caster:EmitSound("Hero_LoneDruid.TrueForm.Recast")
     
     -- Enable cyclone if the research is valid
     if Players:HasResearch(playerID, "nightelf_research_druid_of_the_talon_training1") then
         local cyclone = caster:FindAbilityByName("nightelf_cyclone")
         cyclone:SetHidden(false)
     else
-        CheckAbilityRequirements( caster, player )
+        CheckAbilityRequirements( caster, playerID )
     end
 
     -- Enable faerie fire
@@ -70,6 +67,9 @@ function CrowFormStart( event )
 
     -- Sets the new model
     caster:AddNewModifier(caster, nil, "modifier_druid_crow_model", {})
+    if not caster:HasModifier("modifier_flying_control") then
+        caster:AddNewModifier(caster,nil,"modifier_flying_control",{})
+    end
 
     -- Add weapon/armor upgrade benefits
     local player = caster:GetPlayerOwner()
