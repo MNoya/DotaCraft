@@ -13744,7 +13744,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/nightelf/shared.lua"
+						"ScriptFile"	"mechanics/abilities.lua"
 						"Function"		"ToggleOnAutocast"
 					}
 				}
@@ -14305,12 +14305,6 @@
 				"var_type"		"FIELD_INTEGER"
 				"move_speed"	"-20"
 			}
-	
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"autocast_radius"	"500"
-			}
 		}
 	
 		"precache"
@@ -14382,7 +14376,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/sorceress.lua"
+						"ScriptFile"	"mechanics/abilities.lua"
 						"Function"		"ToggleOnAutocast"
 					}
 				}
@@ -14571,7 +14565,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/priest.lua"
+						"ScriptFile"	"mechanics/abilities.lua"
 						"Function"		"ToggleOnAutocast"
 					}
 				}
@@ -14697,12 +14691,6 @@
 				"var_type"		"FIELD_INTEGER"
 				"damage_bonus"	"10"
 			}
-	
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"autocast_radius"	"500"
-			}
 		}
 	
 		"OnSpellStart"
@@ -14747,14 +14735,6 @@
 			{
 				"Passive"		"1"
 				"IsHidden"		"1"
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/priest.lua"
-						"Function"		"ToggleOnAutocast"
-					}
-				}
 	
 				"ThinkInterval" "1.0"
 				"OnIntervalThink"
@@ -33016,7 +32996,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/nightelf/shared.lua"
+						"ScriptFile"	"mechanics/abilities.lua"
 						"Function"		"ToggleOnAutocast"
 					}
 				}
@@ -34358,7 +34338,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"units/nightelf/shared.lua"
+						"ScriptFile"		"mechanics/abilities.lua"
 						"Function"			"ToggleOnAutocast"
 					}
 				}
@@ -34369,7 +34349,6 @@
 					{
 						"ScriptFile"		"units/nightelf/faerie_dragon.lua"
 						"Function"			"PhaseShiftAutocast"
-						"Damage"			"%attack_damage"
 					}
 				}
 			}
@@ -34888,19 +34867,10 @@
 	
 		"Modifiers"
 		{
-			"modifier_replenish_autocast"
+			"modifier_replenish_autocast" //Not automatically enabled
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-				
-				//"OnCreated"
-				//{
-				//	"RunScript"
-				//	{
-				//		"ScriptFile"	"units/nightelf/shared.lua"
-				//		"Function"		"ToggleOnAutocast"
-				//	}
-				//}
 	
 				"ThinkInterval" "1.0"
 				"OnIntervalThink"
@@ -44612,7 +44582,7 @@
 	            {
 	                "RunScript"
 	                {
-	                    "ScriptFile"    "units/orc/shaman.lua"
+	                    "ScriptFile"    "mechanics/abilities.lua"
 	                    "Function"      "ToggleOnAutocast"
 	                }
 	            }
@@ -55569,16 +55539,20 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile" "units/undead/crypt_fiend.lua"
+						"ScriptFile" "mechanics/abilities.lua"
 						"Function"	"ToggleOnAutocast"
 					}
+				}
 	
-					"RunScript"
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+				    "RunScript"
 					{
 						"ScriptFile" "units/undead/crypt_fiend.lua"
-						"Function"	"Web_AutoCast"
-					}				
-				}	
+						"Function"	 "Web_AutoCast"
+					}
+				}
 			}
 		}
 	}
@@ -56147,9 +56121,10 @@
 				"Passive" "1"
 				"IsHidden" "1"
 				
-				"OnCreated"
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
 				{
-					"RunScript"
+				    "RunScript"
 					{
 						"ScriptFile" 	"units/undead/necromancer.lua"
 						"Function"		"RaiseDead_AutoCast"
@@ -56433,12 +56408,12 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	
 		"TargetsAllowed"            "organic"
 			
 		"AbilityCastRange"			"700"
-		"AbilityCastPoint"			"0"
+		"AbilityCastPoint"			"0.1"
 		"AbilityCooldown"			"1"
 		"AbilityManaCost"			"40"
 			
@@ -56459,11 +56434,6 @@
 				"var_type"		"FIELD_INTEGER"
 				"miss_chance"		"33"
 			}
-			"04"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"cast_range"		"700"
-			}
 		}
 		
 		"precache"
@@ -56474,29 +56444,35 @@
 		
 		"OnSpellStart"
 		{			
-			"RunScript"
+			"ApplyModifier"
 			{
-				"Target"				"TARGET"
-				"Caster"				"CASTER"
-				"ScriptFile"			"units/undead/banshee.lua"
-				"Function"				"undead_curse"
-			}			
-		}
-		
-		"OnOwnerSpawned"
-		{
-			"RunScript"
+			    "ModifierName"  "modifier_undead_curse"
+			    "Target"
+			    {
+			        "Center"    "TARGET"
+			        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			        "Types"     "DOTA_UNIT_TARGET_HERO"
+			    }
+			    "Duration"      "%hero_duration"
+			}
+			
+			"ApplyModifier"
 			{
-				"caster"				"CASTER"
-				"ScriptFile"			"units/undead/banshee.lua"
-				"Function"				"BansheeCurseAutoCast"
-			}	
+			    "ModifierName"  "modifier_undead_curse"
+			    "Target"
+			    {
+			        "Center"    "TARGET"
+			        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			        "Types"     "DOTA_UNIT_TARGET_BASIC"
+			    }
+			    "Duration"      "%unit_duration"
+			}		
 		}
 	
 		"Modifiers"
 		{
 			"modifier_undead_curse"
-			{			
+			{
 				"EffectName" 		"particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead.vpcf"
 				"EffectAttachType" 	"follow_overhead"
 				"IsPurgable"      	"1"
@@ -56518,15 +56494,20 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/undead/banshee.lua"
+						"ScriptFile"	"mechanics/abilities.lua"
 						"Function"		"ToggleOnAutocast"
 					}
-					"RunScript"
+				}
+	
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+				    "RunScript"
 					{
 						"ScriptFile"	"units/undead/banshee.lua"
-						"Function"		"BansheeCurseAutoCast"
-					}	
-				}			
+						"Function"		"CurseAutocast"
+					}
+				}		
 			}		
 		}
 	}
@@ -57146,16 +57127,20 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"units/undead/obsidian_statue.lua"
-						"Function"		"undead_essence_of_blight_autocast"
-					}
-					
-					"RunScript"
+						"ScriptFile"	"mechanics/abilities.lua"
+						"Function"		"ToggleOnAutocast"
+					}		
+				}
+	
+				"ThinkInterval"  "0.8"
+				"OnIntervalThink"
+				{
+				    "RunScript"
 					{
 						"ScriptFile"	"units/undead/obsidian_statue.lua"
-						"Function"		"ToggleOnAutocast"
-					}				
-				}			
+						"Function"		"EssenceAutocast"
+					}
+				}
 			}		
 		}
 	}

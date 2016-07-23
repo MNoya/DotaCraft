@@ -2,7 +2,7 @@
 function HealAutocast( event )
 	local caster = event.caster
 	local ability = event.ability
-	local autocast_radius = ability:GetSpecialValueFor("autocast_radius")
+	local autocast_radius = ability:GetCastRange()
 
 	-- Get if the ability is on autocast mode and cast the ability on a valid target
 	local lowestPercent = 100
@@ -27,7 +27,7 @@ end
 function InnerFireAutocast( event )
 	local caster = event.caster
 	local ability = event.ability
-	local autocast_radius = ability:GetSpecialValueFor("autocast_radius")
+	local autocast_radius = ability:GetCastRange()
 	local modifier_name = "modifier_inner_fire"
 	
 	-- Get if the ability is on autocast mode and cast the ability on a target that doesn't have the modifier
@@ -46,14 +46,6 @@ function InnerFireAutocast( event )
 			caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
 		end
 	end
-end
-
--- Automatically toggled on
-function ToggleOnAutocast( event )
-	local caster = event.caster
-	local ability = event.ability
-
-	ability:ToggleAutoCast()
 end
 
 -- Dispel Magic removes buffs from enemy units, removes debuffs from allies, and deals damage to summoned units

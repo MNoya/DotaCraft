@@ -33,11 +33,6 @@ function BloodlustAutocast_Attacked( event )
     end 
 end
 
-function ToggleOnAutocast( event )
-    event.ability:ToggleAutoCast()
-end
-
-
 function LightningShieldOnSpellStart(event)
     local caster = event.caster
     local ability = event.ability

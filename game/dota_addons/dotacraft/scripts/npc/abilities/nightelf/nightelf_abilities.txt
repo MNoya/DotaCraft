@@ -690,7 +690,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/nightelf/shared.lua"
+					"ScriptFile"	"mechanics/abilities.lua"
 					"Function"		"ToggleOnAutocast"
 				}
 			}
@@ -2032,7 +2032,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"		"units/nightelf/shared.lua"
+					"ScriptFile"		"mechanics/abilities.lua"
 					"Function"			"ToggleOnAutocast"
 				}
 			}
@@ -2043,7 +2043,6 @@
 				{
 					"ScriptFile"		"units/nightelf/faerie_dragon.lua"
 					"Function"			"PhaseShiftAutocast"
-					"Damage"			"%attack_damage"
 				}
 			}
 		}
@@ -2562,19 +2561,10 @@
 
 	"Modifiers"
 	{
-		"modifier_replenish_autocast"
+		"modifier_replenish_autocast" //Not automatically enabled
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			
-			//"OnCreated"
-			//{
-			//	"RunScript"
-			//	{
-			//		"ScriptFile"	"units/nightelf/shared.lua"
-			//		"Function"		"ToggleOnAutocast"
-			//	}
-			//}
 
 			"ThinkInterval" "1.0"
 			"OnIntervalThink"

@@ -78,82 +78,26 @@ function PossessionEnd( keys )
     end)    
 end
 
-function undead_curse ( keys )
-    -- Caster & Target
-    local target = keys.target
-    local caster = keys.caster
-    
-    -- durations have be inverted due to some weird parsing bug
-    local UNIT_DURATION = keys.ability:GetSpecialValueFor("unit_duration")
-    local HERO_DURATION = keys.ability:GetSpecialValueFor("hero_duration")
-    
-    caster:Stop()
-    caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
-    
-    if target:IsHero() or target:IsConsideredHero() then
-    --  print(HERO_DURATION)
-        keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_undead_curse", {duration=HERO_DURATION})
-    else
-    --  print(UNIT_DURATION)
-        keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_undead_curse", {duration=UNIT_DURATION})
-    end
-end
-
-function BansheeCurseAutoCast (keys)
-    local caster = keys.caster
-    local ability = keys.ability
-    
-    Timers:CreateTimer(function()   
-        if not IsValidEntity(caster) or not caster:IsAlive() then return end
-            
-        if ability:GetAutoCastState() and caster:IsIdle() and not IsChanneling(caster) then
-            BansheeCurseAuto_Cast(keys)
-        end
-        
-        return 1
-    end)
-end
-
-function BansheeCurseAuto_Cast(keys)
+function CurseAutocast(keys)
     local ability = keys.ability
     local caster = keys.caster
-    local AUTOCAST_RANGE = ability:GetSpecialValueFor("cast_range")
-    local MODIFIER_NAME = "modifier_undead_curse"
+    local autocast_radius = ability:GetCastRange()
+    local modifier_name = "modifier_undead_curse"
     
-    local COOLDOWN = ability:GetCooldown(1)
-    local MANA_COST = ability:GetManaCost(-1)
-    
-    local target = nil
-    
-    -- find all units within 300 range that are enemey
-    local units = FindUnitsInRadius(caster:GetTeamNumber(), 
-                                caster:GetAbsOrigin(), 
-                                nil, 
-                                AUTOCAST_RANGE, 
-                                DOTA_UNIT_TARGET_TEAM_ENEMY, 
-                                DOTA_UNIT_TARGET_ALL, 
-                                DOTA_UNIT_TARGET_FLAG_NONE, 
-                                FIND_CLOSEST, 
-                                false)
-            
-    for k,unit in pairs(units) do
-        if not unit:HasModifier(MODIFIER_NAME) and not IsCustomBuilding(unit) and not unit:IsMechanical() then
-            target = unit
-            break
+    if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
+        local target
+        local enemies = FindEnemiesInRadius(caster, autocast_radius)
+        for k,unit in pairs(enemies) do
+            if not IsCustomBuilding(unit) and not unit:IsMechanical() and not unit:HasModifier("modifier_undead_curse") then
+                target = unit
+                break
+            end
+        end
+
+        if target then
+            caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
         end
     end
-    
-    if target ~= nil then
-        caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())  
-    end
-end
-
--- Automatically toggled on
-function ToggleOnAutocast( event )
-    local caster = event.caster
-    local ability = event.ability
-
-    ability:ToggleAutoCast()
 end
 
 -- Puts a variable at 0 for the damage filter to take it

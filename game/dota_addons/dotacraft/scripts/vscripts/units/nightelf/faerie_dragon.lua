@@ -27,13 +27,6 @@ function StopSound( event )
 	StopSoundEvent( event.sound_name, event.target )
 end
 
--- Automatically toggled on
-function ToggleOnAutocast( event )
-	local ability = event.ability
-
-	ability:ToggleAutoCast()
-end
-
 -- Make the visuals and initialize targets mana
 function ManaFlareStart( event )
 	local caster = event.caster

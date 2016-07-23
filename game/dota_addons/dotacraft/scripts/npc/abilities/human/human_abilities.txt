@@ -205,12 +205,6 @@
 			"var_type"		"FIELD_INTEGER"
 			"move_speed"	"-20"
 		}
-
-		"05"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"autocast_radius"	"500"
-		}
 	}
 
 	"precache"
@@ -282,7 +276,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human/sorceress.lua"
+					"ScriptFile"	"mechanics/abilities.lua"
 					"Function"		"ToggleOnAutocast"
 				}
 			}
@@ -471,7 +465,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/human/priest.lua"
+					"ScriptFile"	"mechanics/abilities.lua"
 					"Function"		"ToggleOnAutocast"
 				}
 			}
@@ -597,12 +591,6 @@
 			"var_type"		"FIELD_INTEGER"
 			"damage_bonus"	"10"
 		}
-
-		"04"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"autocast_radius"	"500"
-		}
 	}
 
 	"OnSpellStart"
@@ -647,14 +635,6 @@
 		{
 			"Passive"		"1"
 			"IsHidden"		"1"
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/human/priest.lua"
-					"Function"		"ToggleOnAutocast"
-				}
-			}
 
 			"ThinkInterval" "1.0"
 			"OnIntervalThink"

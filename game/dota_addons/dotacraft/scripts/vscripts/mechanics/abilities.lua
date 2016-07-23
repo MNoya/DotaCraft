@@ -299,3 +299,10 @@ function GetAbilityOnVisibleSlot( unit, slot )
         end
     end
 end
+
+-- Used by abilities that should be automatically toggled on spawn
+function ToggleOnAutocast(event)
+    if not event.ability:GetAutoCastState() then
+        event.ability:ToggleAutoCast()
+    end
+end

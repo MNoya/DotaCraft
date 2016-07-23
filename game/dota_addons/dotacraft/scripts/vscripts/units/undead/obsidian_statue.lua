@@ -1,47 +1,35 @@
-function undead_essence_of_blight_autocast( keys )
+function EssenceAutocast( keys )
 	local caster = keys.caster
 	local mana_ability = caster:FindAbilityByName("undead_spirit_touch")
 	local heal_ability = caster:FindAbilityByName("undead_essence_of_blight")
 	AbilityState = 0 -- set initial state to essence_of_blight(since it's the starting autocast)
 	
+	-- check that ability is not on cooldown
+	if heal_ability:GetCooldownTimeRemaining() == 0 then
 	
-	Timers:CreateTimer(function()
-	-- kill timer if unit dies
-	if not IsValidEntity(caster) or not caster:IsAlive() then 
-		print("deleting obsidian statue timer, unit is dead")
-		return
-	end
-				
-		-- check that ability is not on cooldown
-		if heal_ability:GetCooldownTimeRemaining() == 0 then
-		
-			-- toggle ability off if the other is true and vice versa
-			if heal_ability:GetAutoCastState() and mana_ability:GetAutoCastState() and AbilityState == 0 then -- toggle on mana, toggle off health
-				-- toggle off health
-				heal_ability:ToggleAutoCast()
-				-- set ability to mana
-				keys.ability = mana_ability
-				-- set state for next toggle
-				AbilityState = 1 
-			elseif heal_ability:GetAutoCastState() and mana_ability:GetAutoCastState() and AbilityState == 1 then  -- toggle on health, toggle off mana
-				-- toggle off mana
-				mana_ability:ToggleAutoCast()
-				-- set ability to heal 
-				keys.ability = heal_ability
-				-- set state for next toggle
-				AbilityState = 0 
-			end
-			
-			-- cast only if autocast is on for any of the two abilities
-			if heal_ability:GetAutoCastState() or mana_ability:GetAutoCastState() then
-				caster:SetMana(caster:GetMana() - 2)
-				undead_essence_of_blight(keys)
-			end
-			
+		-- toggle ability off if the other is true and vice versa
+		if heal_ability:GetAutoCastState() and mana_ability:GetAutoCastState() and AbilityState == 0 then -- toggle on mana, toggle off health
+			-- toggle off health
+			heal_ability:ToggleAutoCast()
+			-- set ability to mana
+			keys.ability = mana_ability
+			-- set state for next toggle
+			AbilityState = 1 
+		elseif heal_ability:GetAutoCastState() and mana_ability:GetAutoCastState() and AbilityState == 1 then  -- toggle on health, toggle off mana
+			-- toggle off mana
+			mana_ability:ToggleAutoCast()
+			-- set ability to heal 
+			keys.ability = heal_ability
+			-- set state for next toggle
+			AbilityState = 0 
 		end
 		
-		return 0.8
-	end)	
+		-- cast only if autocast is on for any of the two abilities
+		if heal_ability:GetAutoCastState() or mana_ability:GetAutoCastState() then
+			caster:SetMana(caster:GetMana() - 2)
+			undead_essence_of_blight(keys)
+		end
+	end
 end
 
 function undead_essence_of_blight(keys)
@@ -163,14 +151,6 @@ function undead_essence_of_blight(keys)
 		partnerability:EndCooldown()		
 	end
 	
-end
-
--- Automatically toggled on
-function ToggleOnAutocast( event )
-	local caster = event.caster
-	local ability = event.ability
-
-	ability:ToggleAutoCast()
 end
 
 function morph_into_destroyer(keys)
