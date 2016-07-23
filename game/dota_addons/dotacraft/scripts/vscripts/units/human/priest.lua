@@ -5,22 +5,20 @@ function HealAutocast( event )
 	local autocast_radius = ability:GetSpecialValueFor("autocast_radius")
 
 	-- Get if the ability is on autocast mode and cast the ability on a valid target
-	local highestDeficit = 0
-	if ability:GetAutoCastState() and ability:IsFullyCastable() then
+	local lowestPercent = 100
+	if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
 		-- Find damaged targets in radius
 		local target
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 		for k,unit in pairs(allies) do
 			-- Target the lowest health ally
-			if not IsCustomBuilding(unit) and not unit:IsMechanical() and unit:GetHealthDeficit() > highestDeficit then
+			if not IsCustomBuilding(unit) and not unit:IsMechanical() and unit:GetHealthPercent() < lowestPercent then
 				target = unit
-				highestDeficit = unit:GetHealthDeficit()
+				lowestPercent = unit:GetHealthPercent()
 			end
 		end
 
-		if not target then
-			return
-		else
+		if target then
 			caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
 		end
 	end	
@@ -33,20 +31,18 @@ function InnerFireAutocast( event )
 	local modifier_name = "modifier_inner_fire"
 	
 	-- Get if the ability is on autocast mode and cast the ability on a target that doesn't have the modifier
-	if ability:GetAutoCastState() and ability:IsFullyCastable() then
+	if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
 		-- Find non buffed targets in radius
 		local target
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 		for k,unit in pairs(allies) do
-			if not IsCustomBuilding(unit) and unit:HasModifier(modifier_name) then
+			if not IsCustomBuilding(unit) and not unit:HasModifier(modifier_name) then
 				target = unit
 				break
 			end
 		end
 
-		if not target then
-			return
-		else
+		if target then
 			caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
 		end
 	end
