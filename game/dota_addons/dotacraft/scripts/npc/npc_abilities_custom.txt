@@ -45241,24 +45241,18 @@
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
 			
 		"AbilityCastRange"			"120"
-		"AbilityCastPoint"			"0.1"
+		"AbilityCastPoint"			"0.5"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
 	
 		"TargetsAllowed"			"ground,organic"
+		"MaxCreepLevel"             "5"
 			
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"max_creep_level"			"5"
-			}
 			"02"
 			{
 				"var_type"		"FIELD_FLOAT"
@@ -45274,6 +45268,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage_per_second"		"5"
 			}
+		}
+	
+		"precache"
+		{
+		    "particle"  "particles/units/heroes/hero_doom_bringer/doom_bringer_devour.vpcf"
+		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
 		}
 	
 		"OnAbilityPhaseStart"
@@ -45305,18 +45305,6 @@
 	
 		"Modifiers"
 		{
-	
-			"modifier_devour_swallow"
-			{
-				"IsHidden"			"1"
-				"Duration"			"%delay"
-	
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
 			"modifier_devour_devouring"
 			{
 				"OnDeath"
@@ -45332,7 +45320,7 @@
 			"modifier_devour_debuff"
 			{
 				"IsDebuff"			"1"
-				"ThinkInterval"  "1"
+				"ThinkInterval"  	"1"
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -45342,20 +45330,13 @@
 					}
 				}
 	
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"units/orc/kodobeast.lua"
-						"Function"		"NotificationFix"
-					}
-				}
-	
 				"States"
 				{
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_OUT_OF_WORLD"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_PASSIVES_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	

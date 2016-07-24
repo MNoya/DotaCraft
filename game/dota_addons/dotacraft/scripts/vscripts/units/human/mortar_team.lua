@@ -27,6 +27,6 @@ function UnlockFragmentationShards(event)
     function caster:FragmentationShard(target, position)
         local particle = ParticleManager:CreateParticle("particles/custom/human/mortar_team_fragmentation_shard.vpcf", PATTACH_CUSTOMORIGIN, caster)
         ParticleManager:SetParticleControl(particle, 0, position)
-        ParticleManager:SetParticleControl(particle, 1, target:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_hitloc")))
+        ParticleManager:SetParticleControl(particle, 1, target:GetAttachmentOrigin(target:ScriptLookupAttachment("attach_hitloc")))
     end
 end
