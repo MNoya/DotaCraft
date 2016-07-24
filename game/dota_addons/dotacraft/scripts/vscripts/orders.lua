@@ -306,7 +306,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                             errorMsg = "#dota_hud_error_target_magic_immune"
                         elseif unit:GetAttackType() ~= "magic" and target:IsEthereal() then
                             errorMsg = "#error_ethereal_target"
-                        elseif GetAttacksEnabled(unit) == "building" and not IsCustomBuilding(target) then
+                        elseif unit:GetAttacksEnabled() == "building" and not IsCustomBuilding(target) then
                             errorMsg = "#error_must_target_buildings"
                         else
                             local error_type = GetMovementCapability(target)

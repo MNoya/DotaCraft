@@ -1,11 +1,8 @@
 -- Removes the ground attack restriction
 function AllowGroundAttack( event )
 	local caster = event.caster
-
-	caster:RemoveAbility("ability_prevent_attack_ground")
-	caster:RemoveModifierByName("modifier_prevent_attack_ground")
+	caster:SetAttacksEnabled("ground, air")
 end
-
 
 -- Launches projectiles at units in radius of the main target
 function FireFlakCannons( event )
@@ -35,7 +32,6 @@ function FireFlakCannons( event )
 				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
 			}
 			ProjectileManager:CreateTrackingProjectile( projTable )
-			print("Flak Cannon Launched to "..enemy:GetUnitName().." number ".. enemy:GetEntityIndex())
 		end
 	end
 end

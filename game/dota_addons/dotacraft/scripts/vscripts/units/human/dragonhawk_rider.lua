@@ -1,60 +1,88 @@
---[[
-	Author: Noya
-	Date: April 2, 2015
-	Creates a dummy unit to apply the Cloud thinker modifier
-]]
+-- Creates a dummy unit to apply the cloud aura
 function CloudStart( event )
-	-- Variables
-	local caster = event.caster
-	local point = event.target_points[1]
+    local caster = event.caster
+    local point = event.target_points[1]
 
-	caster.cloud_dummy = CreateUnitByName("dummy_unit_vulnerable", point, false, caster, caster, caster:GetTeam())
-	event.ability:ApplyDataDrivenModifier(caster, caster.cloud_dummy, "modifier_cloud_thinker", nil)
+    caster.cloud_dummy = CreateUnitByName("dummy_unit", point, false, caster, caster, caster:GetTeam())
+    caster.cloud_dummy:AddNewModifier(caster, event.ability, "modifier_cloud_aura", {})
 end
 
 function CloudEnd( event )
-	local caster = event.caster
-	local ability = event.ability
-	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1 )
-	local origin = caster.cloud_dummy:GetAbsOrigin()
-
-	local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, radius, 
-						   DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-
-
-	print("Found ",#targets," units in "..radius.." radius of ",origin)
-
-	for _,target in pairs(targets) do
-		target:RemoveModifierByName("modifier_cloud")  -- This has the issue of not being able to detect different clouds
-		-- If one is cancelled but there are others channeling over the same place, the whole effect is lost :(
-		-- Use multiple stacks instead?
-	end
-	caster.cloud_dummy:RemoveSelf()
+    local caster = event.caster
+    local ability = event.ability
+    if IsValidEntity(caster.cloud_dummy) then
+        caster.cloud_dummy:ForceKill(true)
+    end
 end
 
+------------------------------------------------
 
--- Applies the cloud modifier only to ranged buildings (i.e. towers)
-function ApplyCloud( event )
-	local caster = event.caster
-	local ability = event.ability
-	local targets = event.target_entities
-	local cloud_duration = ability:GetLevelSpecialValueFor("cloud_duration", ability:GetLevel() - 1 )
+modifier_cloud_aura = class({})
 
-	for _,target in pairs(targets) do
-		if IsCustomBuilding(target) and target:IsRangedAttacker() then
-			ability:ApplyDataDrivenModifier(caster, target, "modifier_cloud", { duration = cloud_duration })
-		end
-	end
+LinkLuaModifier("modifier_cloud", "units/human/dragonhawk_rider", LUA_MODIFIER_MOTION_NONE)
+
+function modifier_cloud_aura:OnCreated()
+    if IsServer() then
+        local radius = self:GetAbility():GetSpecialValueFor("radius")
+        self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_riki/riki_smokebomb.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+        ParticleManager:SetParticleControl(self.particle,1,Vector(10,radius,radius))
+        self:AddParticle(self.particle, false, false, 1, false, false)
+    end
 end
+
+function modifier_cloud_aura:IsAura() return true end
+function modifier_cloud_aura:IsHidden() return true end
+function modifier_cloud_aura:IsPurgable() return false end
+
+function modifier_cloud_aura:GetAuraRadius()
+    return self:GetAbility():GetSpecialValueFor("radius")
+end
+
+function modifier_cloud_aura:GetModifierAura()
+    return "modifier_cloud"
+end
+   
+function modifier_cloud_aura:GetAuraSearchTeam()
+    return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
+
+function modifier_cloud_aura:GetAuraEntityReject(target)
+    return not IsCustomBuilding(target) and not target:IsRangedAttacker()
+end
+
+function modifier_cloud_aura:GetAuraSearchFlags()
+    return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+end
+
+function modifier_cloud_aura:GetAuraSearchType()
+    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_cloud_aura:GetAuraDuration()
+    return 0.5
+end
+
+--------------------------------------------------------------------------------
+
+modifier_cloud = class({})
+
+function modifier_cloud:CheckState()
+    return { [MODIFIER_STATE_DISARMED] = true }
+end
+
+function modifier_cloud:IsPurgable() return false end
+function modifier_cloud:IsDebuff() return true end
+
+--------------------------------------------------------------------------------
 
 -- Loses flying capability
 function LoseFlying( event )
-	local target = event.target
-	target:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+    local target = event.target
+    target:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 end
 
 -- Gains flying capability
 function ReGainFlying( event )
-	local target = event.target
-	target:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+    local target = event.target
+    target:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 end

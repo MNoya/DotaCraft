@@ -1,11 +1,11 @@
 -- Gives vision over an area and shows dust particle to the team
 function Flare(event)
-	local caster = event.caster
-	local ability = event.ability
-	local level = ability:GetLevel()
-	local reveal_radius = ability:GetLevelSpecialValueFor( "radius", level - 1 )
-	local duration = ability:GetLevelSpecialValueFor( "duration", level - 1 )
-	local target = event.target_points[1]
+    local caster = event.caster
+    local ability = event.ability
+    local level = ability:GetLevel()
+    local reveal_radius = ability:GetLevelSpecialValueFor( "radius", level - 1 )
+    local duration = ability:GetLevelSpecialValueFor( "duration", level - 1 )
+    local target = event.target_points[1]
 
     local fxIndex = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare_illumination.vpcf",PATTACH_WORLDORIGIN,nil,caster:GetTeamNumber())
     ParticleManager:SetParticleControl(fxIndex, 0, target)
@@ -18,19 +18,15 @@ function Flare(event)
     Timers:CreateTimer(duration, function() UTIL_Remove(visiondummy) return end)
 end
 
--- Deal extra damage to  Unarmored and Medium armor units in AoE
-function FragmentationShard( event )
-	local caster = event.caster
-	local target = event.target
-	local targets = event.target_entities
-	local extra_damage = caster:GetAverageTrueAttackDamage() -- Double damage to unarmored/medium armored units
-
-	for _,enemy in pairs(targets) do
-		local armor_type = enemy:GetArmorType()
-		if armor_type == "unarmored" or armor_type == "medium" then
-			-- Do extra damage to this unit
-			ApplyDamage({ victim = enemy, attacker = caster, damage = extra_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES})
-			print("FragmentationShard dealt extra damage to "..unit_name)
-		end
-	end
+function UnlockFragmentationShards(event)
+    local caster = event.caster
+    local ability = event.ability
+    local radius = ability:GetSpecialValueFor("radius")
+    SetRangedProjectileName(caster, "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf")
+    
+    function caster:FragmentationShard(target, position)
+        local particle = ParticleManager:CreateParticle("particles/custom/human/mortar_team_fragmentation_shard.vpcf", PATTACH_CUSTOMORIGIN, caster)
+        ParticleManager:SetParticleControl(particle, 0, position)
+        ParticleManager:SetParticleControl(particle, 1, target:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_hitloc")))
+    end
 end

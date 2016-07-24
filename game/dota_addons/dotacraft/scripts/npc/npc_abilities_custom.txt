@@ -14815,7 +14815,7 @@
 		"AbilityCastPoint"			"0.1"
 		"AbilityCastRange"			"700"
 		"AbilityCooldown"			"5"
-		"AbilityManaCost"			"25"
+		"AbilityManaCost"			"0"
 	
 		//Mana cost is .45 mana per hit point.
 		"AbilitySpecial"
@@ -15029,7 +15029,7 @@
 	}
 	
 	"human_flying_machine_bombs"
-	// Allows Flying Machines to attack land units. Removes ability_prevent_attack_ground
+	// Allows Flying Machines to attack land units.
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_flying_machine_bombs"
@@ -15171,8 +15171,6 @@
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-		"TargetsAllowed"                "ground"
-	
 		"AbilitySpecial"
 		{
 			"01"
@@ -15187,31 +15185,16 @@
 			"modifier_fragmentation_shards"
 			{
 				"Passive"			"1"
-				"IsHidden"			"1"
+				"IsHidden"			"0"
 		
-				"Orb"
+				"OnCreated"
 				{
-					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"    "particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
-					"CastAttack"		"0"
-				}
-				
-				"OnOrbImpact"
-				{
-					"RunScript"
+				    "RunScript"
 					{
 						"ScriptFile"	"units/human/mortar_team.lua"
-						"Function"		"FragmentationShard"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
+						"Function"		"UnlockFragmentationShards"
 					}
-				}
-				
+				}	
 			}
 		}
 	}
@@ -15251,7 +15234,7 @@
 			"modifier_barrage"
 			{
 				"Passive"			"1"
-				"IsHidden"			"0"	//"1"
+				"IsHidden"			"1"
 		
 				"Orb"
 				{
@@ -15329,15 +15312,14 @@
 	}
 	"human_cloud"
 	// Cast on enemy buildings with ranged attacks to stop the buildings from attacking. Lasts 30 seconds.
-	// TODO: More dense particle, recolor blue
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_cloud"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING" //Just for tooltip
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
 	
 		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"20.0"
@@ -15367,12 +15349,6 @@
 				"Function"		"CloudStart"
 				"Target"		"POINT"
 			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_cloud_channelling"
-				"Target" 		"CASTER"
-			}
 		}
 	
 	    "OnChannelFinish"
@@ -15382,102 +15358,6 @@
 	    		"ScriptFile"	"units/human/dragonhawk_rider.lua"
 				"Function"		"CloudEnd"
 	    	}
-	
-	    	"RemoveModifier"
-			{
-				"ModifierName"	"modifier_cloud_channelling"
-				"Target" 		"CASTER"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_channeling_animation"
-				"Target" 		"CASTER"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_cloud_thinker"
-			{
-				"IsHidden"			"1"
-		
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"            "TARGET"
-						"ControlPoints"
-						{
-							"01"	"%radius %radius %radius"
-						}
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"units/human/dragonhawk_rider.lua"
-						"Function"		"ApplyCloud"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BASIC" //Filter for ranged buildings
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_cloud"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BASIC"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-				}	
-			}
-	
-			"modifier_cloud"
-			{
-				"IsDebuff"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"			
-				}
-			}
-	
-			"modifier_cloud_channelling"
-			{
-				"Ishidden"			"1"	
-				"ThinkInterval"  "1.2"
-				"OnIntervalThink"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_channeling_animation"
-						"Target" 		"CASTER"
-						"Duration"		"1.1"
-					}
-				}
-			
-				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
-			}
-			"modifier_channeling_animation"
-			{
-				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"
-			}
 		}
 	}
 	

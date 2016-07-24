@@ -109,6 +109,7 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_druid_crow_model", "units/nightelf/modifier_druid_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_crypt_fiend_burrow_model", "units/undead/modifier_crypt_fiend_burrow_model", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_bloodlust", "units/orc/modifier_bloodlust", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_cloud_aura", "units/human/dragonhawk_rider", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_healing_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_sentry_ward", "items/wards", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_true_sight_aura", "libraries/modifiers/modifier_true_sight_aura", LUA_MODIFIER_MOTION_NONE)
@@ -1247,7 +1248,7 @@ function dotacraft:FilterModifier( filterTable )
         return false
     end
 
-    local bIgnoreMechanical = target:IsMechanical() and not ability:AffectsMechanical()
+    local bIgnoreMechanical = target ~= caster and target:IsMechanical() and not ability:AffectsMechanical()
     if bIgnoreMechanical then
         return false
     end

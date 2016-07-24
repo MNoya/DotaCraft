@@ -222,9 +222,14 @@ function GetMovementCapability (entIndex) {
 }
 
 function GetAttacksEnabled (unit) {
-    var unitName = Entities.GetUnitName(unit)
-    var attackTypes = CustomNetTables.GetTableValue( "attacks_enabled", unitName)
-    return attackTypes ? attackTypes.enabled : "ground"
+    var indexEntry = CustomNetTables.GetTableValue( "attacks_enabled", unit)
+    if (indexEntry) return indexEntry.enabled
+    else
+    {
+        var unitName = Entities.GetUnitName(unit)
+        var attackTypes = CustomNetTables.GetTableValue( "attacks_enabled", unitName)
+        return attackTypes ? attackTypes.enabled : "ground"
+    }
 }
 
 function UnitCanPurchase(entIndex) {

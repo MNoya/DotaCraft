@@ -14,7 +14,7 @@ function CDOTABaseAbility:IsAllowedTarget(target)
         return false,"error_cant_target_buildings"
     end
 
-    local bIgnoreGround = target:IsFlyingUnit() and not self:AffectsGround()
+    local bIgnoreGround = not target:IsFlyingUnit() and not self:AffectsGround() and self:AffectsAir()
     if bIgnoreGround then
         return false,"error_must_target_air"
     end

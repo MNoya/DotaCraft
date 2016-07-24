@@ -3,12 +3,15 @@ function ManaBreak( keys )
     local target = keys.target
     local caster = keys.caster
     local ability = keys.ability
-    local manaBurn = ability:GetLevelSpecialValueFor("mana_per_hit", (ability:GetLevel() - 1))
-    local manaDamage = ability:GetLevelSpecialValueFor("damage_per_burn", (ability:GetLevel() - 1))
+    local manaBurn = ability:GetSpecialValueFor("mana_per_hit")
+    local manaDamage = ability:GetSpecialValueFor("damage_per_burn")
+    if target:IsHero() then
+        manaBurn = ability:GetSpecialValueFor("mana_per_hit_heroes")
+    end
 
     if target:IsMagicImmune() or target:IsMechanical() then return end
-
-    local damage = math.min(target:GetMana(), manaDamage)
+    
+    local damage = math.min(target:GetMana(), manaBurn)
     target:ReduceMana(damage)
     ApplyDamage({attacker = caster, victim = target, damage_type = ability:GetAbilityDamageType(), ability = ability, damage = damage})
 
@@ -103,9 +106,8 @@ function ControlMagicCheck( event )
     else
         local targetHP = target:GetHealth()
         local casterMana = caster:GetMana()
-        local mana_control_rate = ability:GetLevelSpecialValueFor("mana_control_rate", ability:GetLevel() - 1 )
-        local mana_cost = math.floor(targetHP*mana_control_rate + ability:GetManaCost(ability:GetLevel() - 1))
-        print("Need "..mana_cost.." Have "..casterMana)
+        local mana_control_rate = ability:GetSpecialValueFor("mana_control_rate")
+        local mana_cost = math.floor(targetHP*mana_control_rate)
         if mana_cost > casterMana then
             caster:Interrupt()
             SendErrorMessage(pID, "Need at least "..mana_cost.." Mana")
@@ -117,13 +119,20 @@ end
 function ControlMagic( event )
     local caster = event.caster
     local target = event.target
+    local ability = event.ability
+    local targetHP = target:GetHealth()
+    local mana_control_rate = ability:GetSpecialValueFor("mana_control_rate")
+    local mana_cost = math.floor(targetHP*mana_control_rate)
+    local playerID = caster:GetPlayerOwnerID()
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
     -- Change ownership
-    print("Control Magic")
     target:Stop()
-    target:SetTeam( caster:GetTeamNumber() )
-    target:SetOwner(caster)
-    target:SetControllableByPlayer( caster:GetPlayerOwnerID(), true )
+    target:SetTeam(caster:GetTeamNumber())
+    target:SetOwner(hero)
+    target:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
     target:RespawnUnit()
-    target:SetHealth(target:GetHealth())
+    target:SetHealth(targetHP)
+    caster:Stop()
+    caster:SpendMana(mana_cost,ability)
 end

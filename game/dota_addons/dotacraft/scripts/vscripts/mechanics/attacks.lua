@@ -14,7 +14,7 @@ end
 -- Ground/Air Attack mechanics
 function UnitCanAttackTarget( unit, target )
     if not target.IsCreature then return true end -- filter item drops
-    local attacks_enabled = GetAttacksEnabled(unit)
+    local attacks_enabled = unit:GetAttacksEnabled()
     local target_type = GetMovementCapability(target)
     
     if attacks_enabled == "building" and not IsCustomBuilding(target) then return false end
@@ -171,6 +171,7 @@ function SplashAttackUnit(attacker, position)
     local medium_damage = full_damage * attacker:GetKeyValue("SplashMediumDamage") or 0
     local small_damage = full_damage * attacker:GetKeyValue("SplashSmallDamage") or 0
     medium_damage = medium_damage + small_damage -- Small damage gets added to the mid aoe
+
     local splash_targets = FindAllUnitsAroundPoint(attacker, position, small_damage_radius)
     if DEBUG then
         DebugDrawCircle(position, Vector(255,0,0), 50, full_damage_radius, true, 3)
@@ -179,15 +180,44 @@ function SplashAttackUnit(attacker, position)
     end
 
     -- Damage each unit only once
-    for _,unit in pairs(splash_targets) do
-        if not unit:HasFlyMovementCapability() then
-            local distance_from_impact = (unit:GetAbsOrigin() - position):Length2D()
-            if distance_from_impact <= full_damage_radius then
-                ApplyDamage({ victim = unit, attacker = attacker, damage = full_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
-            elseif distance_from_impact <= medium_damage_radius then
-                ApplyDamage({ victim = unit, attacker = attacker, damage = medium_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
-            else
-                ApplyDamage({ victim = unit, attacker = attacker, damage = small_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
+    if attacker.FragmentationShard then
+        for _,unit in pairs(splash_targets) do
+            if not unit:HasFlyMovementCapability() then
+                local distance_from_impact = (unit:GetAbsOrigin() - position):Length2D()
+                local damage
+                
+                if attacker:IsOpposingTeam(unit:GetTeamNumber()) and unit:GetArmorType() == "unarmored" or unit:GetArmorType() == "medium" then
+                    attacker:FragmentationShard(unit, position)
+                    if distance_from_impact <= full_damage_radius then
+                        damage = full_damage + 25
+                    elseif distance_from_impact <= medium_damage_radius then
+                        damage = medium_damage + 18
+                    else
+                        damage = small_damage + 12
+                    end
+                else
+                    if distance_from_impact <= full_damage_radius then
+                        damage = full_damage
+                    elseif distance_from_impact <= medium_damage_radius then
+                        damage = medium_damage
+                    else
+                        damage = small_damage
+                    end
+                end
+                ApplyDamage({ victim = unit, attacker = attacker, damage = damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
+            end
+        end
+    else
+        for _,unit in pairs(splash_targets) do
+            if not unit:HasFlyMovementCapability() then
+                local distance_from_impact = (unit:GetAbsOrigin() - position):Length2D()
+                if distance_from_impact <= full_damage_radius then
+                    ApplyDamage({ victim = unit, attacker = attacker, damage = full_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
+                elseif distance_from_impact <= medium_damage_radius then
+                    ApplyDamage({ victim = unit, attacker = attacker, damage = medium_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
+                else
+                    ApplyDamage({ victim = unit, attacker = attacker, damage = small_damage, ability = GameRules.Applier, damage_type = DAMAGE_TYPE_PHYSICAL})
+                end
             end
         end
     end
@@ -196,18 +226,4 @@ end
 -- Returns "air" if the unit can fly
 function GetMovementCapability( unit )
     return unit:HasFlyMovementCapability() and "air" or "ground"
-end
-
--- Searches for "AttacksEnabled" in the KV files
--- Default by omission is "none", other possible returns should be "ground,air" or "air"
-function GetAttacksEnabled( unit )
-    return unit:GetKeyValue("AttacksEnabled") or "none"
-end
-
-function SetAttacksEnabled( unit, attack_string )
-    local unitName = unit:GetUnitName()
-    local unitTable = GameRules.UnitKV[unitName] or GameRules.HeroKV[unitName]
-    
-    unitTable["AttacksEnabled"] = attack_string
-    CustomNetTables:SetTableValue("attacks_enabled", unitName, {enabled = attack_string})
 end

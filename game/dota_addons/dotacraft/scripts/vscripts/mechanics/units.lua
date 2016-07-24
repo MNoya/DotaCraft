@@ -81,7 +81,7 @@ function Units:Init( unit )
     end
 
     -- Attack system, only applied to units and buildings with an attack
-    local attacks_enabled = GetAttacksEnabled(unit)
+    local attacks_enabled = unit:GetAttacksEnabled()
     if attacks_enabled ~= "none" then
         if bBuilder then
             ApplyModifier(unit, "modifier_attack_system_passive")
@@ -541,6 +541,17 @@ function CDOTA_BaseNPC:GetAttackFactorAgainstTarget( unit )
     return damageTable[attack_type] and damageTable[attack_type][armor_type] or 1
 end
 
+-- Default by omission is "none", other possible returns should be "ground,air" or "air"
+function CDOTA_BaseNPC:GetAttacksEnabled()
+    return self.attacksEnabled or self:GetKeyValue("AttacksEnabled") or "none"
+end
+
+-- Overrides the keyvalue and sets nettable index for that unit
+function CDOTA_BaseNPC:SetAttacksEnabled( attacks )
+    self.attacksEnabled = attacks
+    CustomNetTables:SetTableValue("attacks_enabled", tostring(self:GetEntityIndex()), {enabled = attacks})
+end
+
 function CDOTA_BaseNPC:FindItemByName(item_name)
     for i=0,5 do
         local item = self:GetItemInSlot(i)
@@ -659,5 +670,7 @@ function Unsummon(target, callback)
         return 1
     end)
 end
+
+
 
 Units:start()
