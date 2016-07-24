@@ -45135,43 +45135,71 @@
 			}
 			"02"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"lower_duration"	"0.6"
-			}
-			// The duration in which the target is lowered.
-			"03"
-			{
 				"var_type"			"FIELD_INTEGER"
-				"lower_height"		"200"
+				"hero_duration"		"2"
 			}
-			// The height to which the target is lowered.
-			// A third value called "Melee Attack Range" apparently doesn't affect anything at all so I've removed it.
 		}
 	
 		"precache"
 		{
-			"particle"  "particles/neutral_fx/dark_troll_ensnare.vpcf"
+			"particle"  "particles/units/heroes/hero_siren/siren_net.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
 		}
 	
 		"OnSpellStart"
 		{
-			"RunScript"
+			"FireSound"
 			{
-				"ScriptFile"	"units/orc/ensnare.lua"
-				"Function"		"OnSpellStart"
+			    "EffectName"    "Hero_NagaSiren.Ensnare.Cast"
+			    "Target"        "CASTER"
 			}
+	
+			"TrackingProjectile"
+			{
+			    "Target"            "TARGET"
+			    "EffectName"        "particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+			    "Dodgeable"         "1"
+			    "ProvidesVision"    "0"
+			    "MoveSpeed"         "1000"
+			    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+		    "DeleteOnHit"    "1"
+		    "ApplyModifier"
+		    {
+		        "ModifierName"  "modifier_ensnare"
+		        "Target"
+		        {
+		            "Center"    "TARGET"
+		            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		            "Types"     "DOTA_UNIT_TARGET_HERO"
+		        }
+		        "Duration"      "%hero_duration"
+		    }
+		    
+		    "ApplyModifier"
+		    {
+		        "ModifierName"  "modifier_ensnare"
+		        "Target"
+		        {
+		            "Center"    "TARGET"
+		            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		            "Types"     "DOTA_UNIT_TARGET_BASIC"
+		        }
+		        "Duration"      "%duration"
+		    }
 		}
 	
 		"Modifiers"
 		{
 			"modifier_ensnare"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
 				"IsDebuff"			"1"
 		
-				"EffectName"		"particles/neutral_fx/dark_troll_ensnare.vpcf"
+				"EffectName"		"particles/units/heroes/hero_siren/siren_net.vpcf"
 				"EffectAttachType"	"follow_origin"
 		
 				"States"
@@ -45179,12 +45207,21 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	
+				"OnCreated"
+				{
+				    "RunScript"
+				    {
+				        "ScriptFile"	"units/orc/ensnare.lua"
+						"Function"		"Ensnare"
+				    }
+				}
+	
 				"OnDestroy"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"units/orc/ensnare.lua"
-						"Function"		"OnModifierDestroy"
+						"Function"		"EnsnareDestroy"
 					}
 				}
 			}
