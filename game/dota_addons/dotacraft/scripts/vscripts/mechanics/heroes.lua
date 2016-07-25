@@ -40,8 +40,9 @@ function Heroes:DistributeXP(killed, attacker)
     -- Heroes gain experience for attacking buildings with attacks such as towers.
     if IsCustomBuilding(killed) and not killed:HasAttackCapability() then return end
 
-    local XPGain = killed:IsRealHero() and XP_HERO_BOUNTY_TABLE[killed:GetLevel()] or XP_CREEP_BOUNTY_TABLE[killed:GetLevel()]
-    if not XPGain then return end
+    local level = killed:GetKeyValue("Level") or killed:GetLevel()
+    local XPGain = killed:IsRealHero() and XP_HERO_BOUNTY_TABLE[level] or XP_CREEP_BOUNTY_TABLE[level]
+    if not XPGain or XPGain == 0 then return end
 
     -- You can receive experience for killing units of dropped players, but not get experience if your Heroes are over level 5
     local bDisconnectedOwner = false

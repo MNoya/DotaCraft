@@ -308,6 +308,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
                             errorMsg = "#error_ethereal_target"
                         elseif unit:GetAttacksEnabled() == "building" and not IsCustomBuilding(target) then
                             errorMsg = "#error_must_target_buildings"
+                        elseif unit:IsDisarmed() then
+                            errorMsg = "#dota_hud_error_unit_disarmed"
                         else
                             local error_type = GetMovementCapability(target)
                             if error_type == "air" then
@@ -316,7 +318,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
                                 errorMsg = "#error_must_target_air"
                             end
                         end
-
                         SendErrorMessage( unit:GetPlayerOwnerID(), errorMsg )
                     end
                 end
