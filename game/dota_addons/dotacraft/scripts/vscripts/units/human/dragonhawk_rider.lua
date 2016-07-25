@@ -5,6 +5,8 @@ function CloudStart( event )
 
     caster.cloud_dummy = CreateUnitByName("dummy_unit", point, false, caster, caster, caster:GetTeam())
     caster.cloud_dummy:AddNewModifier(caster, event.ability, "modifier_cloud_aura", {})
+
+    caster:StartGesture(ACT_DOTA_CAST_ABILITY_2)
 end
 
 function CloudEnd( event )
@@ -27,6 +29,13 @@ function modifier_cloud_aura:OnCreated()
         self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_riki/riki_smokebomb.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
         ParticleManager:SetParticleControl(self.particle,1,Vector(10,radius,radius))
         self:AddParticle(self.particle, false, false, 1, false, false)
+        self:StartIntervalThink(1)
+    end
+end
+
+function modifier_cloud_aura:OnIntervalThink()
+    if self:GetAbility():IsChanneling() then
+        self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_1)
     end
 end
 
@@ -74,6 +83,10 @@ function modifier_cloud:IsPurgable() return false end
 function modifier_cloud:IsDebuff() return true end
 
 --------------------------------------------------------------------------------
+
+function ChannelingAnimation(event)
+    event.caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
+end
 
 -- Loses flying capability
 function LoseFlying( event )
