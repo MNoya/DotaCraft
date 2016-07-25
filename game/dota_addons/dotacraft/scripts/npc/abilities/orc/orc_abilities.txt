@@ -968,10 +968,9 @@
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		
 	"AbilityCastRange"			"350"
-	"AbilityCastPoint"			"0"
+	"AbilityCastPoint"			"0.1"
 	"AbilityCooldown"			"30"
 	"AbilityManaCost"			"250"
 		
@@ -979,15 +978,14 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"life_restored"			"1"
+			"var_type"			"FIELD_INTEGER"
+			"life_restored"		"100"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"mana_restored"			"0.25"
+			"var_type"			"FIELD_INTEGER"
+			"mana_restored"		"25"
 		}
-		// Both are percentages.
 	}
 
 	"precache"
@@ -1004,7 +1002,6 @@
 			"Function"		"AncestralSpiritPrecast"
 		}
 	}
-	
 
 	"OnSpellStart"
 	{
@@ -1012,13 +1009,6 @@
 		{
 			"EffectName"		"Hero_Abaddon.AphoticShield.Cast"
 			"Target"			"CASTER"
-		}
-
-		"FireEffect"
-		{
-			"EffectName"        "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
-			"EffectAttachType"  "follow_origin"
-			"Target"            "CASTER"
 		}
 
 		"RunScript"
@@ -1564,7 +1554,8 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	
+	"TargetsAllowed"			"air"
 		
 	"AbilityCastRange"			"400"
 	"AbilityCastPoint"			"0"
@@ -1573,28 +1564,26 @@
 		
 	"AbilitySpecial"
 	{
-		// NOTE: Causes a powerful explosion that deals 600 damage to a target air unit and 140 damage to nearby air units. Using this ability destroys the Troll Batrider. The splash radius is 20. ????
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"partial_damage_amount"			"200"
+			"full_damage_amount"			"600"
 		}
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"partial_damage_radius"			"140"
+			"partial_damage_amount"			"140"
 		}
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"full_damage_amount"			"600"
+			"partial_damage_radius"			"200"
 		}
 		"04"
 		{
 			"var_type"		"FIELD_INTEGER"
 			"speed_bonus"			"280"
 		}
-		// The unit will move towards the target unit with an increased speed (base + bonus).
 	}
 
 	"precache"
@@ -1602,7 +1591,6 @@
 		"particle"  "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_life_break.vpcf"
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
-		
 	}
 
 	"OnSpellStart"
@@ -1618,8 +1606,7 @@
 	{
 		"modifier_unstable_concoction"
 		{
-			"IsPurgable"		"0"
-			"IsBuff"			"1"
+			"IsHidden"			"1"
 
 			"EffectName"		"particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_life_break.vpcf"
 			"EffectAttachType"	"follow_origin"

@@ -37,17 +37,21 @@ function DevourThink( event )
     local caster = event.caster
     local target = event.target
     local ability = event.ability
+    local damage = ability:GetSpecialValueFor('damage_per_second')
 
-    ApplyDamage({
-        victim = target,
-        attacker = caster,
-        damage = ability:GetSpecialValueFor('damage_per_second'),
-        damage_type = DAMAGE_TYPE_PURE,
-        ability = ability,
-        damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY,
-    })
+    if target:GetHealth() > damage then
+        target:SetHealth(target:GetHealth()-damage)
+    else
+        target:SetModelScale(0)
+        target:SetParent(nil,"")
+        target:SetAbsOrigin(caster:GetAbsOrigin())
+        target:RemoveModifierByName('modifier_devour_debuff')
+        target:RemoveNoDraw()
+        target:Kill(ability,caster)
+    end
 end
 
+-- Kodo dies, eject target
 function DevourDeath( event )
     local caster = event.caster
     local ability = event.ability
