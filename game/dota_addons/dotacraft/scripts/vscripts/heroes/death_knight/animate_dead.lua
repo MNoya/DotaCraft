@@ -3,6 +3,7 @@ function AnimateDead( event )
     local caster = event.caster
     local ability = event.ability
     local playerID = caster:GetPlayerOwnerID()
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
     local team = caster:GetTeamNumber()
     local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
     local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
@@ -17,16 +18,18 @@ function AnimateDead( event )
         if units_resurrected < max_units_resurrected then
 
             -- The corpse has a unit_name associated.
-            local resurected = CreateUnitByName(corpse.unit_name, corpse:GetAbsOrigin(), true, caster, caster, team)
-            resurected:SetControllableByPlayer(playerID, true)
+            local unit = CreateUnitByName(corpse.unit_name, corpse:GetAbsOrigin(), true, caster, caster, team)
+            unit:SetControllableByPlayer(playerID, true)
+            unit:SetOwner(hero)
+            unit:SetForwardVector(corpse:GetForwardVector())
             FindClearSpaceForUnit(resurrected,corpse:GetAbsOrigin(),true)
 
             -- Apply modifiers for the summon properties
-            resurected:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
-            ability:ApplyDataDrivenModifier(caster, resurected, "modifier_animate_dead", nil)
+            unit:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+            ability:ApplyDataDrivenModifier(caster, unit, "modifier_animate_dead", nil)
 
             -- Leave no corpses
-            resurected:SetNoCorpse()
+            unit:SetNoCorpse()
             corpse:RemoveCorpse()
 
             -- Increase the counter of units resurrected

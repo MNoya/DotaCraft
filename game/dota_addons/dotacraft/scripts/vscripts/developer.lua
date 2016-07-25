@@ -394,15 +394,11 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
 
     if not GetUnitKV(name) then
         for k,_ in pairs(KeyValues.UnitKV) do
-            if k:match(name) then
+            if k:match(name) or GetInternalHeroName(k) and GetInternalHeroName(k):match(name) then
                 name = k
                 break
             end
         end
-    end
-    if not GetUnitKV(name) then
-        Say(nil,"No match for '"..name.."'", false)
-        return
     end
     if GetUnitKV(name, "ConstructionSize") then
         dotacraft:TestBuilding(playerID, name, bEnemy)
@@ -410,6 +406,10 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
     end
     if name:match('npc_dota_hero') then
         dotacraft:TestHero(playerID, GetInternalHeroName(name), bEnemy)
+        return
+    end
+    if not GetUnitKV(name) then
+        Say(nil,"No match for '"..name.."'", false)
         return
     end
 

@@ -9,16 +9,22 @@ function Corpses:CreateFromUnit(killed)
     if LeavesCorpse( killed ) then
         local name = killed:GetUnitName()
         local position = killed:GetAbsOrigin()
+        local fv = killed:GetForwardVector()
         local team = killed:GetTeamNumber()
+        local corpse = Corpses:CreateByNameOnPosition(name, position, team)
+        corpse:SetForwardVector(fv)
+        corpse:AddNoDraw()
+        UTIL_Remove(killed)
         Timers:CreateTimer(CORPSE_APPEAR_DELAY, function()
-            Corpses:CreateByNameOnPosition(name, position, team)
-            UTIL_Remove(killed)
+            if IsValidEntity(corpse) then
+                corpse:RemoveNoDraw()
+            end
         end)
     end
 end
 
 function Corpses:CreateByNameOnPosition(name, position, team)
-    local corpse = CreateUnitByName("dotacraft_corpse", position, true, nil, nil, team)
+    local corpse = CreateUnitByName("dotacraft_corpse", position, false, nil, nil, team)
     corpse.unit_name = name -- Keep a reference to its name
 
     -- Remove the corpse from the game at any point

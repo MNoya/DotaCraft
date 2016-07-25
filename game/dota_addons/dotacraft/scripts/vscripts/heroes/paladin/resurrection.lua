@@ -43,6 +43,7 @@ function Resurrection( event )
         local resurrected = CreateUnitByName(corpse.unit_name, position, true, hero, hero, team)
         resurrected:SetControllableByPlayer(playerID, true)
         resurrected:SetOwner(hero)
+        resurrected:SetForwardVector(corpse:GetForwardVector())
         FindClearSpaceForUnit(resurrected, position, true)
 
         Players:AddUnit(playerID, resurrected)
