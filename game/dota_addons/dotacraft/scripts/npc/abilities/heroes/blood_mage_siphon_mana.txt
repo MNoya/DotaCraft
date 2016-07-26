@@ -14,7 +14,6 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
 	"RequiresTargetMana"            "1"
 
@@ -74,6 +73,13 @@
 
 		"ApplyModifier"
 		{
+		    "ModifierName"  "modifier_siphon_mana_channeling"
+		    "Target"        "CASTER"
+		    "Duration"      "%duration"
+		}
+
+		"ApplyModifier"
+		{
 			"ModifierName"	"modifier_siphon_mana"
 			"Target" 		"TARGET"
 			"Duration"		"%duration"
@@ -94,10 +100,22 @@
 			"ModifierName"		"modifier_siphon_mana"
 			"Target"			"TARGET"
 		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"		"modifier_siphon_mana_channeling"
+			"Target"			"CASTER"
+		}
 	}
 
 	"Modifiers"
 	{
+		"modifier_siphon_mana_channeling"
+		{
+			"IsHidden"			"1"
+			"OverrideAnimation" "ACT_DOTA_TELEPORT"
+		}
+
 		"modifier_siphon_mana"
 		{
 			"Passive"			"0"

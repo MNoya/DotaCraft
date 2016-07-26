@@ -737,6 +737,7 @@
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	"AbilityCastAnimation"		"ACT_DOTA_OVERRIDE_ABILITY_2"
+	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
@@ -791,6 +792,7 @@
 				"Radius"	"%radius"
 				"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 			}
 			"Action"
 			{

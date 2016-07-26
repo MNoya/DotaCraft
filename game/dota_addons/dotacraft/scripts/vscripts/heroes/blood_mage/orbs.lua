@@ -9,3 +9,13 @@ function AttachOrbs( event )
         ParticleManager:SetParticleControlEnt(hero.orbs[i], 1, hero, PATTACH_POINT_FOLLOW, "attach_orb"..i, origin, false)
     end
 end
+
+function RemoveOrbs(event)
+    local hero = event.caster
+    local origin = hero:GetAbsOrigin()
+    
+    for i=1,3 do
+        ParticleManager:DestroyParticle(hero.orbs[i],false)
+    end
+    hero.orbs = {}
+end
