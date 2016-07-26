@@ -2020,24 +2020,16 @@
 				"RunScript"
 				{
 					"ScriptFile"		"units/nightelf/faerie_dragon.lua"
-					"Function"			"HideCaster"
+					"Function"			"PhaseShiftStart"
 				}
 			}
 			
 			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/faerie_dragon.lua"
-					"Function"		"StopSound"
-					"Target"		"CASTER"
-					"sound_name"	"Hero_Puck.Phase_Shift"
-				}
-				
+			{				
 				"RunScript"
 				{
 					"ScriptFile"		"units/nightelf/faerie_dragon.lua"
-					"Function"			"ShowCaster"
+					"Function"			"PhaseShiftEnd"
 				}
 			}
 			
@@ -2046,6 +2038,7 @@
 				"MODIFIER_STATE_ATTACK_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 
@@ -2068,6 +2061,7 @@
 				{
 					"ScriptFile"		"units/nightelf/faerie_dragon.lua"
 					"Function"			"PhaseShiftAutocast"
+					"Damage"			"%attack_damage"
 				}
 			}
 		}

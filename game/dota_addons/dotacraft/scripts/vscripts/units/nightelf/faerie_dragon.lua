@@ -4,28 +4,28 @@ function PhaseShiftAutocast( event )
 	local ability = event.ability
 	
 	if ability:GetAutoCastState() and ability:IsFullyCastable() then
-		
-		local damage = event.Damage
-		caster:Heal(damage, caster)
+		caster:Heal(event.Damage, ability)
 
 		caster:CastAbilityImmediately(ability, caster:GetPlayerOwnerID())
 	end
 end
 
 -- Hide caster's model.
-function HideCaster( event )
-	event.caster:AddEffects(EF_NODRAW)
+function PhaseShiftStart( event )
+    local caster = event.caster
+    local ability = event.ability
+	caster:AddEffects(EF_NODRAW)
 end
 
---Show caster's model.
-function ShowCaster( event )
-	event.caster:RemoveEffects(EF_NODRAW)
+-- Show caster's model, stops sound
+function PhaseShiftEnd( event )
+    local caster = event.caster
+    local ability = event.ability
+	caster:RemoveEffects(EF_NODRAW)
+    StopSoundEvent("Hero_Puck.Phase_Shift", caster)
 end
 
--- Stop a sound on the target unit.
-function StopSound( event )
-	StopSoundEvent( event.sound_name, event.target )
-end
+-----------------------------------------------------------
 
 -- Make the visuals and initialize targets mana
 function ManaFlareStart( event )
