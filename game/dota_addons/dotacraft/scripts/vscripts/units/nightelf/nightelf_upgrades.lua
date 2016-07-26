@@ -5,8 +5,6 @@ function ApplyModifierUpgrade( event )
 	local unit_name = caster:GetUnitName()
 	local ability_name = ability:GetAbilityName()
 
-	print("Applying "..ability_name.." to "..unit_name)
-
 	-- Strength of the Moon
 	if string.find(ability_name,"strength_of_the_moon") then
 		if unit_name == "nightelf_glaive_thrower" then
@@ -17,7 +15,9 @@ function ApplyModifierUpgrade( event )
 
 	-- Strength of the Wild
 	elseif string.find(ability_name,"strength_of_the_wild") then
-		if unit_name == "nightelf_mountain_giant" or unit_name ==  "nightelf_druid_of_the_claw" or unit_name ==  "nightelf_druid_of_the_talon" then
+		if unit_name == "nightelf_mountain_giant" or 
+		   unit_name == "nightelf_druid_of_the_claw" and caster:HasModifier("modifier_bear_form") 
+		   or unit_name == "nightelf_druid_of_the_talon" and caster:HasModifier("modifier_crow_form") then
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_druids_mountain_giant_damage", {})
 		elseif unit_name == "nightelf_chimaera" then
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_chimaera_damage", {})

@@ -104,7 +104,6 @@ function CrowFormStart( event )
     local main_ability_name = ability:GetAbilityName()
 
     caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
-    print("Start: Swapped "..main_ability_name.." with " ..sub_ability_name)
 end
 
 -- Reverts back to the original model, swaps abilities, removes modifier passed
@@ -140,7 +139,6 @@ function CrowFormEnd( event )
     local sub_ability_name = ability:GetAbilityName()
 
     caster:SwapAbilities(sub_ability_name, main_ability_name, false, true)
-    print("Swapped "..sub_ability_name.." with " ..main_ability_name)
 
     -- Remove modifier
     caster:RemoveModifierByName("modifier_crow_form")
