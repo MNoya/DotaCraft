@@ -1169,14 +1169,14 @@
 	"MaxLevel" 						"1"
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 
 	"OnProjectileHitUnit"
 	{
 		"DeleteOnHit"	"1"
 		"RunScript"
 		{
-			"ScriptFile"	"units/gryphon_rider.lua"
+			"ScriptFile"	"units/human/gryphon_rider.lua"
 			"Function"		"StormHammerDamage"
 		}
 	}
@@ -1192,7 +1192,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"units/gryphon_rider.lua"
+					"ScriptFile"	"units/human/gryphon_rider.lua"
 					"Function"		"StormHammer"
 					"Target"
 					{
@@ -1204,6 +1204,7 @@
 						}
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
 				}
 			}	

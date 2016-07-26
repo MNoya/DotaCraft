@@ -3101,7 +3101,6 @@
 	"blood_mage_orbs"
 	{
 		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"hero_ability_name"
 		"MaxLevel" 						"1"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
@@ -3117,7 +3116,6 @@
 			{
 				"IsHidden"			"1"
 				"Passive"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 				"OnCreated"
 				{
 					"RunScript"
@@ -8135,111 +8133,127 @@
 	
 	"mountain_king_bash"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"mountain_king_bash"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "mountain_king_bash"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	
-		"AbilityDamage"					"25"
 	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-			"particle"	"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"20 30 40"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_hero_duration"	"1.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_creep_duration"	"5.0"
-			}
-		}
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+	        "particle"  "particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+	        "particle"  "particles/generic_gameplay/generic_stunned.vpcf"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bash_chance"           "20 30 40"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "stun_hero_duration"    "1.0"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "stun_creep_duration"   "5.0"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_bash"	
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
+	    "Modifiers"
+	    {
+	        "modifier_bash" 
+	        {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
 	
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"		"%bash_chance"
-						"PseudoRandom"	"DOTA_PSEUDO_RANDOM_FACELESS_BASH"
+	            "OnAttackLanded"
+	            {
+	                "Random"
+	                {
+	                    "Chance"        "%bash_chance"
+	                    "PseudoRandom"  "DOTA_PSEUDO_RANDOM_FACELESS_BASH"
 	
-						"OnSuccess"
-						{
-							"FireSound"
-							{
-								"EffectName"	"Hero_FacelessVoid.TimeLockImpact"
-								"Target"		"TARGET"
-							}
+	                    "OnSuccess"
+	                    {                        
+	                        "ApplyModifier"
+	                        {
+	                            "ModifierName"  "modifier_bash_stun"
+	                            "Target"
+	                            {
+	                                "Center"    "TARGET"
+	                                "Types"     "DOTA_UNIT_TARGET_HERO"
+	                                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                            }
+	                            "Duration"      "%stun_hero_duration"   
+	                        }
 	
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_bash_stun"
-								"Target"
-								{
-									"Center"	"TARGET"
-									"Types"		"DOTA_UNIT_TARGET_HERO"
-								}
-								"Duration"		"%stun_hero_duration"	
-							}
+	                        "ApplyModifier"
+	                        {
+	                            "ModifierName"  "modifier_bash_stun"
+	                            "Target"
+	                            {
+	                                "Center"    "TARGET"
+	                                "Types"     "DOTA_UNIT_TARGET_BASIC"
+	                                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                            }
+	                            "Duration"      "%stun_creep_duration"
+	                        }
 	
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_bash_stun"
-								"Target"
-								{
-									"Center"	"TARGET"
-									"Types"		"DOTA_UNIT_TARGET_BASIC"
-								}
-								"Duration"		"%stun_creep_duration"
-							}
+	                        "ActOnTargets"
+	                        {
+	                            "Target"
+	                            {
+	                                "Center"    "TARGET"
+	                                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                            }
+	                        
+	                            "Action"    
+	                            {
+	                                "FireSound"
+	                                {
+	                                    "EffectName"    "Hero_FacelessVoid.TimeLockImpact"
+	                                    "Target"        "TARGET"
+	                                }
 	
-							"Damage"
-							{
-								"Target"	"TARGET"
-								"Type"		"DAMAGE_TYPE_MAGICAL"
-								"Damage"	"%AbilityDamage"
-							}
-						}
-					}
-				}
-			}
+	                                "Damage"
+	                                {
+	                                    "Target"    "TARGET"
+	                                    "Type"      "DAMAGE_TYPE_MAGICAL"
+	                                    "Damage"    "%AbilityDamage"
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
 	
-			"modifier_bash_stun"
-			{
-				"IsDebuff"			"1"
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
+	        "modifier_bash_stun"
+	        {
+	            "IsDebuff"          "1"
+	            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+	            "EffectAttachType"  "follow_overhead"
 	
-				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-				"StatusEffectPriority"	"1"
+	            "StatusEffectName"      "particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+	            "StatusEffectPriority"  "1"
 	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+	            "OverrideAnimation"     "ACT_DOTA_DISABLED"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"    "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
 	}
 	// Mountain King Storm Bolt
 	// Author: Noya
