@@ -3,7 +3,7 @@
     Bounces from the main target to nearby targets in range. Avoids bouncing to full health units
 ]]
 function HealingWave( event )
-    local hero = event.caster
+    local caster = event.caster
     local target = event.target
     local ability = event.ability
     local bounces = ability:GetLevelSpecialValueFor("max_bounces", ability:GetLevel()-1)

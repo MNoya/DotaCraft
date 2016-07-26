@@ -21,9 +21,19 @@ function dotacraft:FilterExecuteOrder( filterTable )
     local point = Vector(x,y,z)
     local queue = filterTable["queue"] == 1
 
+    local unit
     local numUnits = 0
     local numBuildings = 0
     if units then
+        -- Skip Prevents order loops
+        unit = EntIndexToHScript(units["0"])
+        if unit then
+            if unit.skip then
+                unit.skip = false
+                return true
+            end
+        end
+
         for n,unit_index in pairs(units) do
             local unit = EntIndexToHScript(unit_index)
             if unit and IsValidEntity(unit) then
@@ -36,15 +46,6 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     numBuildings = numBuildings + 1
                 end
             end
-        end
-    end
-
-    -- Skip Prevents order loops
-    local unit = EntIndexToHScript(units["0"])
-    if unit then
-        if unit.skip then
-            unit.skip = false
-            return true
         end
     end
 

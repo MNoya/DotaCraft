@@ -14,9 +14,9 @@ function Corpses:CreateFromUnit(killed)
         local corpse = Corpses:CreateByNameOnPosition(name, position, team)
         corpse:SetForwardVector(fv)
         corpse:AddNoDraw()
-        UTIL_Remove(killed)
         Timers:CreateTimer(CORPSE_APPEAR_DELAY, function()
             if IsValidEntity(corpse) then
+                UTIL_Remove(killed)
                 corpse:RemoveNoDraw()
             end
         end)
