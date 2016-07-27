@@ -55,7 +55,13 @@
         {
             "EffectName"        "Hero_Treant.Overgrowth.Cast"
             "Target"            "TARGET"
-        }   
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "mechanics/abilities.lua"
+            "Function"      "Interrupt"
+        }
 
         "ApplyModifier"
         {
@@ -111,7 +117,22 @@
                     "Target"            "TARGET"
                     "EffectName"        "particles/econ/items/lone_druid/lone_druid_cauldron/lone_druid_bear_entangle_cauldron.vpcf"
                     "EffectAttachType"  "attach_hitloc"
-                }           
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_truesight"
+                    "Target"        "TARGET"
+                }
+            }
+
+            "OnDestroy"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_truesight"
+                    "Target"        "TARGET"
+                }
             }
 
             "ThinkInterval" "1"

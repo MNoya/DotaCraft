@@ -217,6 +217,12 @@
 			"ScriptFile" "units/undead/crypt_fiend.lua"
 			"Function"	"Web"
 		}
+
+		"RunScript"
+        {
+            "ScriptFile"    "mechanics/abilities.lua"
+            "Function"      "Interrupt"
+        }
 		
 		"FireEffect"
         {
@@ -239,12 +245,27 @@
 			"EffectName"			"particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_webs.vpcf"
 			"EffectAttachType"		"follow_origin"
 
+			"OnCreated"
+			{
+			    "ApplyModifier"
+			    {
+			        "ModifierName"  "modifier_truesight"
+			        "Target"        "TARGET"
+			    }
+			}
+
 			"OnDestroy"
 			{
 			    "RunScript"
 			    {
 			        "ScriptFile"    "units/undead/crypt_fiend.lua"
 			        "Function"      "Web_Destroy"
+			    }
+
+			    "RemoveModifier"
+			    {
+			        "ModifierName"  "modifier_truesight"
+			        "Target"        "TARGET"
 			    }
 			}
 			

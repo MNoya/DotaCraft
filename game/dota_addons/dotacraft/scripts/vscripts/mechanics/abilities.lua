@@ -1,12 +1,20 @@
 function CDOTABaseAbility:IsAllowedTarget(target)
     local bIgnoreAir = target:HasFlyMovementCapability() and not self:AffectsAir()
     if bIgnoreAir then
-        return false,"error_cant_target_air"
+        if not self:AffectsMechanical() then
+            return false,"error_must_target_organic_ground"
+        else
+            return false,"error_cant_target_air"
+        end
     end
 
     local bIgnoreMechanical = target:IsMechanical() and not self:AffectsMechanical()
     if bIgnoreMechanical then
-        return false,"error_must_target_organic"
+        if not self:AffectsAir() then
+            return false,"error_must_target_organic_ground"
+        else
+            return false,"error_must_target_organic"
+        end
     end
 
     local bIgnoreBuilding = IsCustomBuilding(target) and not self:AffectsBuildings()
@@ -305,4 +313,9 @@ function ToggleOnAutocast(event)
     if not event.ability:GetAutoCastState() then
         event.ability:ToggleAutoCast()
     end
+end
+
+-- Used by root abilities
+function Interrupt(event)
+    event.target:Interrupt()
 end

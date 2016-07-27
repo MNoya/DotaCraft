@@ -1156,7 +1156,7 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"				"FIELD_FLOAT"
 				"bear_regen_tooltip"	"0.5 1 1.5"
 			}
 			"04"
@@ -7152,7 +7152,13 @@
 	        {
 	            "EffectName"        "Hero_Treant.Overgrowth.Cast"
 	            "Target"            "TARGET"
-	        }   
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "mechanics/abilities.lua"
+	            "Function"      "Interrupt"
+	        }
 	
 	        "ApplyModifier"
 	        {
@@ -7208,7 +7214,22 @@
 	                    "Target"            "TARGET"
 	                    "EffectName"        "particles/econ/items/lone_druid/lone_druid_cauldron/lone_druid_bear_entangle_cauldron.vpcf"
 	                    "EffectAttachType"  "attach_hitloc"
-	                }           
+	                }
+	
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_truesight"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_truesight"
+	                    "Target"        "TARGET"
+	                }
 	            }
 	
 	            "ThinkInterval" "1"
@@ -23782,8 +23803,10 @@
 					// Level up the creature to the appropiate train level
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/human_upgrades.lua"
-						"Function"		"TrainSorceress"
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"human_research_sorceress_training"
+						"wearable_type"	"training"
 					}
 				}
 			}
@@ -23883,8 +23906,10 @@
 					// Level up the creature to the appropiate train level
 					"RunScript"
 					{
-						"ScriptFile"	"units/human/human_upgrades.lua"
-						"Function"		"TrainPriest"
+						"ScriptFile"    "units/upgrades.lua"
+						"Function"      "ApplyMultiRankUpgrade"
+						"ResearchName"	"human_research_priest_training"
+						"wearable_type"	"training"
 					}
 				}
 			}
@@ -45190,6 +45215,12 @@
 		"OnProjectileHitUnit"
 		{
 		    "DeleteOnHit"    "1"
+		    "RunScript"
+	        {
+	            "ScriptFile"    "mechanics/abilities.lua"
+	            "Function"      "Interrupt"
+	        }
+	
 		    "ApplyModifier"
 		    {
 		        "ModifierName"  "modifier_ensnare"
@@ -45236,6 +45267,12 @@
 				        "ScriptFile"	"units/orc/ensnare.lua"
 						"Function"		"Ensnare"
 				    }
+	
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_truesight"
+				        "Target"        "TARGET"
+				    }
 				}
 	
 				"OnDestroy"
@@ -45245,6 +45282,12 @@
 						"ScriptFile"	"units/orc/ensnare.lua"
 						"Function"		"EnsnareDestroy"
 					}
+	
+					"RemoveModifier"
+				    {
+				        "ModifierName"  "modifier_truesight"
+				        "Target"        "TARGET"
+				    }
 				}
 			}
 		}
@@ -55433,6 +55476,12 @@
 				"ScriptFile" "units/undead/crypt_fiend.lua"
 				"Function"	"Web"
 			}
+	
+			"RunScript"
+	        {
+	            "ScriptFile"    "mechanics/abilities.lua"
+	            "Function"      "Interrupt"
+	        }
 			
 			"FireEffect"
 	        {
@@ -55455,12 +55504,27 @@
 				"EffectName"			"particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_webs.vpcf"
 				"EffectAttachType"		"follow_origin"
 	
+				"OnCreated"
+				{
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_truesight"
+				        "Target"        "TARGET"
+				    }
+				}
+	
 				"OnDestroy"
 				{
 				    "RunScript"
 				    {
 				        "ScriptFile"    "units/undead/crypt_fiend.lua"
 				        "Function"      "Web_Destroy"
+				    }
+	
+				    "RemoveModifier"
+				    {
+				        "ModifierName"  "modifier_truesight"
+				        "Target"        "TARGET"
 				    }
 				}
 				
@@ -56696,6 +56760,15 @@
 			{
 				"Passive" 	"1"
 				"IsHidden" 	"1"
+	
+				"OnCreated"
+				{
+				    "RunScript"
+				    {
+				        "ScriptFile"    "units/undead/frost_wyrm.lua"
+				        "Function"      "FreezingBreathUnlock"
+				    }
+				}
 			
 				"OnAttackLanded"
 				{
@@ -65658,14 +65731,6 @@
 						"Function"      "ApplyMultiRankUpgrade"
 						"ResearchName"	"undead_research_creature_carapace"
 						"WearableType"	"armor"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "units/upgrades.lua"
-						"Function"      "ApplySingleRankUpgrade"
-						"ResearchName"	"undead_research_freezing_breath"
-						"WearableType"	"training"
 					}
 				}
 			}

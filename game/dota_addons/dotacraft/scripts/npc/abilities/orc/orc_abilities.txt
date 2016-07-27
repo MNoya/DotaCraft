@@ -1198,6 +1198,12 @@
 	"OnProjectileHitUnit"
 	{
 	    "DeleteOnHit"    "1"
+	    "RunScript"
+        {
+            "ScriptFile"    "mechanics/abilities.lua"
+            "Function"      "Interrupt"
+        }
+
 	    "ApplyModifier"
 	    {
 	        "ModifierName"  "modifier_ensnare"
@@ -1244,6 +1250,12 @@
 			        "ScriptFile"	"units/orc/ensnare.lua"
 					"Function"		"Ensnare"
 			    }
+
+			    "ApplyModifier"
+			    {
+			        "ModifierName"  "modifier_truesight"
+			        "Target"        "TARGET"
+			    }
 			}
 
 			"OnDestroy"
@@ -1253,6 +1265,12 @@
 					"ScriptFile"	"units/orc/ensnare.lua"
 					"Function"		"EnsnareDestroy"
 				}
+
+				"RemoveModifier"
+			    {
+			        "ModifierName"  "modifier_truesight"
+			        "Target"        "TARGET"
+			    }
 			}
 		}
 	}
