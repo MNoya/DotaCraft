@@ -32,37 +32,15 @@ function ApplyMultiRankUpgrade( event )
     end
 end
 
-function ApplySingleRankUpgrade(event)
-    local caster = event.caster
-    local target = event.target
-    local playerID = caster:GetPlayerOwnerID()
-    local upgrades = Players:GetUpgradeTable(playerID)
-    local research_name = event.ResearchName
-    local cosmetic_type = event.WearableType
-
-    if upgrades[research_name] then
-        if cosmetic_type then
-            UpgradeWearables(target, 1, cosmetic_type)
-        end
-    end
-end
-
 -- ManaGain and HPGain values are defined in the npc_units_custom file
 function ApplyTraining( event )
     local caster = event.caster
     local ability = event.ability
-    local hero = caster:GetOwner()
-    local player = hero:GetPlayerOwner()
     local training_level = ability:GetLevel()
     local levels = event.LevelUp - caster:GetLevel()
 
-    local bonus_health = event.ability:GetSpecialValueFor("bonus_health")
-    local bonus_mana = event.ability:GetSpecialValueFor("bonus_mana")
-
-    caster:SetHealth(caster:GetHealth() + bonus_health)
-    caster:CreatureLevelUp(levels)
-    caster:SetMana(caster:GetMana() + bonus_mana)
-
+    caster:LevelUp(levels)
+    
     UpgradeWearables(caster, training_level, "training")
 end
 

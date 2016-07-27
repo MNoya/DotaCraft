@@ -518,8 +518,10 @@
 				// Level up the creature to the appropiate train level
 				"RunScript"
 				{
-					"ScriptFile"	"units/human/human_upgrades.lua"
-					"Function"		"TrainSorceress"
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_sorceress_training"
+					"wearable_type"	"training"
 				}
 			}
 		}
@@ -619,8 +621,10 @@
 				// Level up the creature to the appropiate train level
 				"RunScript"
 				{
-					"ScriptFile"	"units/human/human_upgrades.lua"
-					"Function"		"TrainPriest"
+					"ScriptFile"    "units/upgrades.lua"
+					"Function"      "ApplyMultiRankUpgrade"
+					"ResearchName"	"human_research_priest_training"
+					"wearable_type"	"training"
 				}
 			}
 		}

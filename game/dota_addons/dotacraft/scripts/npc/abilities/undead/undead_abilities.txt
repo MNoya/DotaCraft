@@ -1501,6 +1501,15 @@
 		{
 			"Passive" 	"1"
 			"IsHidden" 	"1"
+
+			"OnCreated"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/undead/frost_wyrm.lua"
+			        "Function"      "FreezingBreathUnlock"
+			    }
+			}
 		
 			"OnAttackLanded"
 			{

@@ -552,6 +552,25 @@ function CDOTA_BaseNPC:SetAttacksEnabled( attacks )
     CustomNetTables:SetTableValue("attacks_enabled", tostring(self:GetEntityIndex()), {enabled = attacks})
 end
 
+-- MODIFIER_PROPERTY_HEALTH_BONUS doesn't work on npc_dota_creature
+function CDOTA_BaseNPC_Creature:IncreaseMaxHealth(bonus)
+    local newHP = self:GetMaxHealth() + bonus
+    local relativeHP = self:GetHealthPercent() * 0.01
+    self:SetMaxHealth(newHP)
+    self:SetBaseMaxHealth(newHP)
+    self:SetHealth(newHP * relativeHP)
+end
+
+-- Increases levels keeping up relative HP
+function CDOTA_BaseNPC_Creature:LevelUp(levels)
+    local relativeHP = self:GetHealthPercent() * 0.01
+    local relativeMana = self:GetMana()/self:GetMaxMana()
+
+    self:CreatureLevelUp(levels)
+    self:SetHealth(self:GetMaxHealth() * relativeHP)
+    self:SetMana(self:GetMaxMana() * relativeMana)
+end
+
 function CDOTA_BaseNPC:FindItemByName(item_name)
     for i=0,5 do
         local item = self:GetItemInSlot(i)

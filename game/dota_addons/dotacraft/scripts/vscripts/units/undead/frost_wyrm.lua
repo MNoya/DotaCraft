@@ -1,3 +1,7 @@
+function FreezingBreathUnlock(event)
+    UpgradeWearables(event.caster, 1, "training")
+end
+
 function FreezingAttack(event)
     local caster = event.caster
     local target = event.target

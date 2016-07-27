@@ -426,8 +426,8 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
                 unit:SetTeam(unit:GetOpposingTeamNumber())
             else
                 Players:AddUnit(playerID, unit)
-                CheckAbilityRequirements(unit, playerID)
             end
+            CheckAbilityRequirements(unit, playerID)
 
             FindClearSpaceForUnit(unit, selected:GetAbsOrigin()+RandomVector(100), true)
             unit:Hold()

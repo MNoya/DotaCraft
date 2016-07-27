@@ -71,6 +71,7 @@
     "AbilityCooldown"               "20"
     "AbilitySharedCooldown"         "dust"
     "AbilityManaCost"               "0"
+    "AbilityCastRange"              "1000"
         
     "Model"                         "models/props_gameplay/dust.vmdl"
     "Effect"                        "particles/generic_gameplay/dropped_dust.vpcf"
@@ -88,10 +89,10 @@
 
     // Shops
     "ItemCost"                      "75"
-    "StockMax"                  "1" 
-    "StockTime"                 "60"
-    "StockInitial"              "1"
-    "RequiresTier"              "1"
+    "StockMax"                      "1" 
+    "StockTime"                     "60"
+    "StockInitial"                  "1"
+    "RequiresTier"                  "1"
 
     "AbilitySpecial"
     {
