@@ -51,24 +51,23 @@ function PossessionEnd( keys )
                 Players:RemoveUnit(oldOwnerID, target)
             end
 
-            -- convert target unit information to match caster
-            local newOwner = caster:GetOwner()
             local newOwnerID = caster:GetPlayerOwnerID()
+            local newOwner = PlayerResource:GetSelectedHeroEntity(newOwnerID)
             local newTeam = PlayerResource:GetTeam(newOwnerID)
+            
+            caster:ForceKill(true)
+            caster:AddNoDraw()
+
+            -- convert target unit information to match caster
             target:SetOwner(newOwner)
             target:SetControllableByPlayer(newOwnerID, true)
             target:SetTeam(newTeam)
             target:EmitSound("Hero_DeathProphet.Death")
             target:RemoveModifierByName("modifier_possession_target")
             Players:AddUnit(newOwnerID, target)
-
-            -- kill and set selection
+            Players:ModifyFoodUsed(newOwnerID, GetFoodCost(target))
             PlayerResource:AddToSelection(newOwnerID, target)
-            caster:ForceKill(true)
-            caster:AddNoDraw()
-
-            --kill timer
-            return nil
+            return
         else
             
             -- update position, Caster moves towards Target
