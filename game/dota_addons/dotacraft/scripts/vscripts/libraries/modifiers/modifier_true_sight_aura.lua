@@ -3,7 +3,9 @@ modifier_true_sight_aura = class({})
 function modifier_true_sight_aura:OnCreated()
     local ability = self:GetAbility()
     local radius = ability and ability:GetSpecialValueFor("radius")
-    if radius == 0 then radius = 1600 end
+    if radius == 0 then
+        radius = (self:GetParent():GetDayTimeVisionRange()+self:GetParent():GetDayTimeVisionRange())/2
+    end
     self.radius = radius
 end
 
