@@ -1,255 +1,74 @@
 // Far Seer Feral Spirit
 // Author: Noya
-// Date: 25.01.2015.
-// Notes: Summons Spirit Wolves to fight enemies for a limited time.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	60 sec.	30 sec.	75	N/A	N/A	N/A	Summons Two Spirit Wolves	1
-//2	60 sec.	25 sec.	75	N/A	N/A	N/A	Summons Two Dire Wolves	3
-//3	60 sec.	25 sec.	75	N/A	N/A	N/A	Summons Two Shadow Wolves	5
+// Description: Summons Spirit Wolves to fight enemies for a limited time.
+// Level 1: Summons Two Spirit Wolves
+// Level 2: Summons Two Dire Wolves
+// Level 3: Summons Two Shadow Wolves
+
 "far_seer_feral_spirit"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"far_seer_feral_spirit"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "far_seer_feral_spirit"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"30.0 25.0 25.0"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "30.0 25.0 25.0"
 
-	"AbilityManaCost"				"75"
-	"AbilityDamage"					"75 130 200"
+    "AbilityManaCost"               "75"
+    "AbilityDamage"                 "75 130 200"
 
-	"precache"
-	{
-		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"		
-		"particle"		"particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"		
-		"particle"		"particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"wolf_duration"				"60"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"wolf_damage"				"11 16 21"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"wolf_hp"					"200 300 500"
-		}
-		"04"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"wolf_1_count"				"2 0 0"
-		}
-		"05"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"wolf_2_count"				"0 2 0"
-		}
-		"06"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"wolf_3_count"				"0 0 2"
-		}
-		"07"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"spawn_distance"			"150"
-		}
-	}
+    "precache"
+    {
+        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"     
+        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"       
+        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "wolf_duration"             "60"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "wolf_damage"               "11 16 21"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "wolf_hp"                   "200 300 500"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"	"Hero_Lycan.SummonWolves"
-			"Target"		"CASTER"
-		}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_Lycan.SummonWolves"
+            "Target"        "CASTER"
+        }
 
-		"AttachEffect"
-		{
-			"EffectName"        "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
-			"EffectAttachType"  "start_at_customorigin"
-			"Target"            "CASTER"
-			"ControlPointEntities"
-			{
-				"CASTER"	"attach_attack1"
-			}
-		}
-		
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/far_seer/feral_spirit.lua"
-			"Function"		"KillWolves"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"		"orc_spirit_wolf"
-			"Target"
-			{
-				"Center"		    "CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-					"Function"      "GetSummonPoints"
-					"Target"		"CASTER"
-					"Count"			"2"
-					"distance"		"%spawn_distance"
-				}
-			}
-			
-			"Duration"		"%wolf_duration"
-			"UnitCount"		"%wolf_1_count / 2"
-			"UnitLimit"		"2"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/far_seer/feral_spirit.lua"
-					"Function"		"SetUnitsMoveForward"
-				}				
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-		
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_feral_spirit"
-					"Target" 		"TARGET"
-					"Duration"		"%duration"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"		"orc_dire_wolf"
-			"Target"
-			{
-				"Center"		    "CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-					"Function"      "GetSummonPoints"
-					"Target"		"CASTER"
-					"Count"			"2"
-					"distance"		"%spawn_distance"
-				}
-			}
-			
-			"Duration"		"%wolf_duration"
-			"UnitCount"		"%wolf_2_count / 2"
-			"UnitLimit"		"2"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/far_seer/feral_spirit.lua"
-					"Function"		"SetUnitsMoveForward"
-				}				
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-		
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_feral_spirit"
-					"Target" 		"TARGET"
-					"Duration"		"%duration"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"		"orc_shadow_wolf"
-			"Target"
-			{
-				"Center"		    "CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-					"Function"      "GetSummonPoints"
-					"Target"		"CASTER"
-					"Count"			"2"
-					"distance"		"%spawn_distance"
-				}
-			}
-			
-			"Duration"		"%wolf_duration"
-			"UnitCount"		"%wolf_3_count / 2"
-			"UnitLimit"		"2"
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"
-			"SpawnRadius"	"10"
-			"OnSpawn"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/far_seer/feral_spirit.lua"
-					"Function"		"SetUnitsMoveForward"
-				}				
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-		
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_feral_spirit"
-					"Target" 		"TARGET"
-					"Duration"		"%duration"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_feral_spirit"
-		{
-			"Passive"			"0"
-			"IsHidden"			"1"
-			"IsDebuff"			"0"
-		
-			"OnCreated"
-			{
-				"FireEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-				}			
-			}			
-		}
-	}
+        "AttachEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
+            "EffectAttachType"  "start_at_customorigin"
+            "Target"            "CASTER"
+            "ControlPointEntities"
+            {
+                "CASTER"    "attach_attack1"
+            }
+        }
+        
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/far_seer/feral_spirit.lua"
+            "Function"      "SpawnWolves"
+        }
+    }
 }
-
-

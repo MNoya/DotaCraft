@@ -1,59 +1,31 @@
---[[
-	Author: Noya
-	Date: 20.01.2015.
-	Gets the summoning location for the new units
-]]
-function GetSummonPoints( event )
+local wolfNames = {
+    [1] = "orc_spirit_wolf",
+    [2] = "orc_dire_wolf",
+    [3] = "orc_shadow_wolf",
+}
+function SpawnWolves(event)
     local caster = event.caster
-    local fv = caster:GetForwardVector()
-    local origin = caster:GetAbsOrigin()
-    local distance = event.distance
+    local ability = event.ability
+    local duration = ability:GetLevelSpecialValueFor("wolf_duration", ability:GetLevel()-1)
+    local position = caster:GetAbsOrigin() + caster:GetForwardVector() * 150
 
+    -- Reset table
+    local wolves = caster.wolves or {}
+    for _,unit in pairs(wolves) do     
+        if unit and IsValidEntity(unit) then
+            unit:ForceKill(true) 
+        end
+    end
+    caster.wolves = {}
+    
     -- Gets 2 points facing a distance away from the caster origin and separated from each other at 30 degrees left and right
-  	ang_right = QAngle(0, -30, 0)
-    ang_left = QAngle(0, 30, 0)
-	local front_position = origin + fv * distance
-	point_left = RotatePosition(origin, ang_left, front_position)
-    point_right = RotatePosition(origin, ang_right, front_position)
+    local positions = {}
+    positions[1] = RotatePosition(caster:GetAbsOrigin(), QAngle(0, 30, 0), position)
+    positions[2] = RotatePosition(caster:GetAbsOrigin(), QAngle(0, -30, 0), position)
 
-    local result = { }
-    table.insert(result, point_right)
-    table.insert(result, point_left)
-
-    return result
-end
-
--- Set the units looking at the same point of the caster
-function SetUnitsMoveForward( event )
-	local caster = event.caster
-	local target = event.target
-    local fv = caster:GetForwardVector()
-    local origin = caster:GetAbsOrigin()
-	
-	target:SetForwardVector(fv)
-
-	-- Add the target to a table on the caster handle, to find them later
-	table.insert(caster.wolves, target)
-
-	-- Leave no corpse
-	target.no_corpse = true
-end
-
---[[
-	Kill wolves on resummon
-	Author: Noya
-	Date: 20.01.2015.
-]]
-function KillWolves( event )
-	local caster = event.caster
-	local targets = caster.wolves or {}
-
-	for _,unit in pairs(targets) do		
-	   	if unit and IsValidEntity(unit) then
-    	  	unit:ForceKill(true) 
-    	end
-	end
-
-	-- Reset table
-	caster.wolves = {}
+    -- Summon 2 wolves
+    for i=1,2 do
+        local wofl = caster:CreateSummon(wolfNames[ability:GetLevel()], positions[i], duration)
+        ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
+    end
 end

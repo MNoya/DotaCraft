@@ -1,360 +1,186 @@
 // Beastmaster Summon Hawk
 // Author: Noya
-// Date: 18.1.2015.
-// Notes: Summons a proud hawk to spy on your enemies.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	70 sec.	50	N/A	N/A	N/A	Summons Hawk	1
-//2	N/A	70 sec.	50	N/A	N/A	N/A	Summons Thunder Hawk with an attack	3
-//3	N/A	70 sec.	50	N/A	N/A	N/A	Summons Spirit Hawk with Invisibility	5
+// Description: Summons a proud hawk to spy on your enemies.
+// Level 1: Summons Hawk
+// Level 2: Summons Thunder Hawk with an attack
+// Level 3: Summons Spirit Hawk with Invisibility
 
-// TODO - Add Abilities
-	// True Sight
-	// Magic Attack AoE?
-	// Invisibility after not attacking
 "beastmaster_summon_hawk"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"beastmaster_summon_hawk"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "beastmaster_summon_hawk"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"75.0"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "75.0"
 
-	"AbilityManaCost"				"50"
+    "AbilityManaCost"               "50"
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
-		"model"		"models/heroes/beastmaster/beastmaster_bird.vmdl"
-		"particle"  "particles/status_fx/status_effect_slark_shadow_dance.vpcf"
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+        "model"     "models/heroes/beastmaster/beastmaster_bird.vmdl"
+        "particle"  "particles/status_fx/status_effect_slark_shadow_dance.vpcf"
+    }
 
-	"AbilitySpecial"
-	{
-		// This Values are mostly for tooltips, the unit stats are not affected
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"duration"				"70"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bird_hp"				"300 450 650"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bird_regen_tooltip"	"0.5 1 1.5"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bird_damage"			"0 23 52"	//MAGIC DAMAGE?
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bird_armor"			"0 3 5"
-		}	
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bird_1_count"			"1 0 0"
-		}
-		"07"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bird_2_count"			"0 1 0"
-		}
-		"08"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bird_3_count"			"0 0 1"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "70"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bird_hp"               "300 450 650"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "bird_regen"            "0.5 1 1.5"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bird_damage"           "0 23 52"
+        }
+        "05"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bird_armor"            "0 3 5"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-	    {
-	    	"EffectName"	"Hero_Beastmaster.Call.Hawk"
-	    	"Target"		"CASTER"
-	    }
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_Beastmaster.Call.Hawk"
+            "Target"        "CASTER"
+        }
 
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_hawk"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+            "Function"      "SpawnHawk"
+        }
+    }
 
-			"UnitCount"			"%bird_1_count"
-			"Duration"			"%duration"
+    "Modifiers"
+    {
+        "modifier_beastmaster_bird"
+        {
+            "IsHidden"      "1"
 
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
+            "OnCreated"
+            {
+                "FireEffect"
+                {
+                    "Target"            "TARGET"
+                    "EffectName"        "particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                }
+            }
 
-			// This makes sure units never get stuck
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
+            "OnDeath"
+            {
+                "FireEffect"
+                {
+                    "Target"            
+                    {
+                        "Center"    "UNIT"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
+                    "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                }
 
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_bird"
-					"Target"		"TARGET"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_thunder_hawk"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
-
-			"UnitCount"			"%bird_2_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_bird"
-					"Target"		"TARGET"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_spirit_hawk"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
-
-			"UnitCount"			"%bird_3_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_bird"
-					"Target"		"TARGET"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_beastmaster_bird"
-		{
-			"IsHidden"		"1"
-
-			"OnCreated"
-			{
-				"FireEffect"
-				{
-					"Target"			"TARGET"
-					"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
-
-				"ApplyModifier"
-				{
-				    "ModifierName"  "modifier_summoned"
-				    "Target"        "TARGET"
-				}
-			}
-
-			"OnDeath"
-			{
-				"FireEffect"
-				{
-					"Target"			
-					{
-						"Center"	"UNIT"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-					}
-					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
-
-				"FireSound"
-				{
-					"Target"			
-					{
-						"Center"	"UNIT"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-					}
-					"EffectName"	"Hero_Beastmaster_Bird.Death"
-				}
-			}
-		}
-	}
+                "FireSound"
+                {
+                    "Target"            
+                    {
+                        "Center"    "UNIT"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
+                    "EffectName"    "Hero_Beastmaster_Bird.Death"
+                }
+            }
+        }
+    }
 }
 
 
 // Sub Ability
 "beastmaster_hawk_invis"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"beastmaster_hawk_invisibility"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "beastmaster_hawk_invisibility"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"motionless_time"	"4"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_FLOAT"
-			"duration"		"3.0 4.0 5.0"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "motionless_time"   "4"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_hawk_think"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
+    "Modifiers"
+    {
+        "modifier_hawk_think"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
 
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/beastmaster/summon_hawk.lua"
-					"Function"		"HawkCreated"
-				}
+            "OnUnitMoved"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+                    "Function"      "HawkMoved"
+                }
 
-				"RunScript"
-				{
-					"ScriptFile"	"mechanics/corpses.lua"
-					"Function"		"SetNoCorpse"
-				}
-			}
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_invisible"
+                    "Target"        "CASTER"
+                }
+            }
 
-			"OnUnitMoved"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
-					"Function"		"HawkMoved"
-				}
+            "OnAttackStart"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+                    "Function"      "HawkAttacked"
+                }
 
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_hawk_invis"
-					"Target" 		"CASTER"
-				}
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_invisible"
+                    "Target"        "CASTER"
+                }
+            }
 
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_invisible"
-					"Target" 		"CASTER"
-				}
-			}
-
-			"OnAttackStart"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
-					"Function"		"HawkAttacked"
-				}
-
-				"RemoveModifier"
-				{
-					"ModifierName" 	"modifier_hawk_invis"
-					"Target"		"CASTER"
-				}
-
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_invisible"
-					"Target" 		"CASTER"
-				}
-			}
-
-			"ThinkInterval"  	"0.03"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
-					"Function"		"HawkInvisCheck"
-				}		
-			}
-		}
-
-		"modifier_hawk_invis"
-		{
-			"States"
-			{
-				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-	}	
+            "ThinkInterval"     "0.03"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+                    "Function"      "HawkInvisCheck"
+                }       
+            }
+        }
+    }   
 }

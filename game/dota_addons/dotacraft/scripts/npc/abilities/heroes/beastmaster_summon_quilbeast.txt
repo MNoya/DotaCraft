@@ -1,343 +1,205 @@
-// Beastmaster Summon Quillbeast
+// Beastmaster Summon Quilbeast
 // Author: Noya
-// Date: 18.1.2015.
-// Notes: Summons an angry Quilbeast to attack your enemies.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	25 sec.	75	N/A	N/A	N/A	Summons Quilbeast	1
-//2	N/A	25 sec.	75	N/A	N/A	N/A	Summons Dire Quilbeast with Frenzy	3
-//3	N/A	25 sec.	75	N/A	N/A	N/A	Summons Raging Quilbeast with area effect damage and Frenzy	5
+// Description: Summons an angry Quilbeast to attack your enemies.
+// Level 1 Summons Quilbeast
+// Level 2 Summons Dire Quilbeast with Frenzy
+// Level 3 Summons Raging Quilbeast with area effect damage and Frenzy
 
 "beastmaster_summon_quilbeast"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"beastmaster_summon_quilbeast"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "beastmaster_summon_quilbeast"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"25.0"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "25.0"
 
-	"AbilityManaCost"				"75"
+    "AbilityManaCost"               "75"
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-		"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
-		"model"		"models/heroes/beastmaster/beastmaster_beast.vmdl"
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+        "particle"  "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+        "model"     "models/heroes/beastmaster/beastmaster_beast.vmdl"
 
-		// Sub Abilities
-		"particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
-		"particle"  "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
-	}
+        // Sub Abilities
+        "particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+        "particle"  "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+    }
 
-	"AbilitySpecial"
-	{
-		// This Values are mostly for tooltips, the unit stats are not affected
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"duration"				"70"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"boar_hp"				"425 515 600"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"boar_regen_tooltip"	"0.5 1 1.5"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"boar_damage"			"14 28 42"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"boar_armor"			"0"
-		}	
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"boar_1_count"			"1 0 0"
-		}
-		"07"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"boar_2_count"			"0 1 0"
-		}
-		"08"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"boar_3_count"			"0 0 1"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "70"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "boar_hp"               "425 515 600"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "boar_regen_tooltip"    "0.5 1 1.5"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "boar_damage"           "14 28 42"
+        }
+        "05"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "boar_armor"            "0"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-	    {
-	    	"EffectName"	"Hero_Beastmaster.Call.Boar"
-	    	"Target"		"CASTER"
-	    }
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_Beastmaster.Call.Boar"
+            "Target"        "CASTER"
+        }
 
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_quilbeast"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/beastmaster/summon_quilbeast.lua"
+            "Function"      "SpawnQuilbeast"
+        }
+    }
 
-			"UnitCount"			"%boar_1_count"
-			"Duration"			"%duration"
+    "Modifiers"
+    {
+        "modifier_beastmaster_boar"
+        {
+            "IsHidden"      "1"
 
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
+            "OnCreated"
+            {
+                "FireEffect"
+                {
+                    "Target"            "TARGET"
+                    "EffectName"        "particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                }
+            }
 
-			// This makes sure units never get stuck
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_boar"
-					"Target"		"TARGET"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_dire_quilbeast"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
-
-			"UnitCount"			"%boar_2_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_boar"
-					"Target"		"TARGET"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_raging_quilbeast"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
-
-			"UnitCount"			"%boar_3_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_boar"
-					"Target"		"TARGET"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_beastmaster_boar"
-		{
-			"IsHidden"		"1"
-
-			"OnCreated"
-			{
-				"FireEffect"
-				{
-					"Target"			"TARGET"
-					"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
-				
-				"ApplyModifier"
-				{
-				    "ModifierName"  "modifier_summoned"
-				    "Target"        "TARGET"
-				}
-			}
-
-			"OnDeath"
-			{
-				"FireEffect"
-				{
-					"Target"			
-					{
-						"Center"	"UNIT"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-					}
-					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
-				
-				"FireSound"
-				{
-					"Target"			
-					{
-						"Center"	"UNIT"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-					}
-					"EffectName"	"Hero_Beastmaster_Boar.Death"
-				}
-			}
-		}
-	}
+            "OnDeath"
+            {
+                "FireEffect"
+                {
+                    "Target"            
+                    {
+                        "Center"    "UNIT"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
+                    "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                }
+                
+                "FireSound"
+                {
+                    "Target"            
+                    {
+                        "Center"    "UNIT"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
+                    "EffectName"    "Hero_Beastmaster_Boar.Death"
+                }
+            }
+        }
+    }
 }
 
 
 // Sub Abilities
 
-"beastmaster_quillbeast_frenzy"
+"beastmaster_quilbeast_frenzy"
 {
-	"BaseClass"						"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-	"AbilityTextureName"			"beastmaster_quillbeast_frenzy"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "AbilityTextureName"            "orc_bloodlust"
 
-	"AbilityCooldown"				"30"
-	"AbilityManaCost"				"0"
+    "AbilityCooldown"               "30"
+    "AbilityManaCost"               "0"
 
-	// Special
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"duration"			"20"
-		}
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "duration"          "20"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_movement_speed"  "25"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_attack_speed"    "40"
+        }
+    }
 
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"model_size"		"25"
-		}	
+    "OnSpellStart"
+    {
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_frenzy"
+            "Target"        "CASTER"
+            "Duration"      "%duration"
+        }
+    }
 
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_movement_speed"	"25"
-		}
+    "Modifiers"
+    {
+        "modifier_frenzy_autocast"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "IsDebuff"          "0"
+        
+            "OnAttackStart"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/beastmaster/summon_quilbeast.lua"
+                    "Function"      "FrenzyAutocast"
+                }
+            }
+        }
 
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_attack_speed"	"40"
-		}
-	}
+        "modifier_frenzy"
+        {
+            "EffectName"        "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+            "EffectAttachType"  "follow_origin"
+    
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+            }
 
-	"OnSpellStart"
-	{
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_frenzy"
-			"Target" 		"CASTER"
-			"Duration"		"%duration"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_frenzy_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"IsDebuff"			"0"
-		
-			"OnAttackStart"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
-					"Function"		"FrenzyAutocast"
-				}
-			}
-		}
-
-		"modifier_frenzy"
-		{
-			"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
-			"EffectAttachType"	"follow_origin"
-	
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
-			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
-			}
-
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
-					"Function"		"FrenzyResize"
-				}
-			}
-		}
-	}
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/beastmaster/summon_quilbeast.lua"
+                    "Function"      "FrenzyResize"
+                }
+            }
+        }
+    }
 }

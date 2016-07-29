@@ -1,408 +1,270 @@
 // Beastmaster Summon Bear
 // Author: Noya
-// Date: 18.01.2015.
-// Notes: Summons a powerful bear to attack your enemies.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	45 sec.	125	N/A	N/A	N/A	Summons Bear	1
-//2	N/A	40 sec.	125	N/A	N/A	N/A	Summons Raging Bear with Bash	3
-//3	N/A	40 sec.	125	N/A	N/A	N/A	Summons Spirit Bear with Bash and Blink	5
+// Description: Summons a powerful bear to attack your enemies.
+// Level 3: Summons Bear
+// Level 2: Summons Raging Bear with Bash
+// Level 3: Summons Spirit Bear with Bash and Blink
+
 "beastmaster_summon_bear"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"beastmaster_summon_bear"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "beastmaster_summon_bear"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"45.0 40.0 40"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "45.0 40.0 40"
 
-	"AbilityManaCost"				"125"
+    "AbilityManaCost"               "125"
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-		"particle"	"particles/status_fx/status_effect_spirit_bear.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
-		"model"		"models/heroes/lone_druid/spirit_bear.vmdl"
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+        "particle"  "particles/status_fx/status_effect_spirit_bear.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+        "model"     "models/heroes/lone_druid/spirit_bear.vmdl"
+    }
 
-	"AbilitySpecial"
-	{
-		// This Values are mostly for tooltips, the unit stats are not affected
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"duration"				"70"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bear_hp"				"600 900 1200"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"bear_regen_tooltip"	"0.5 1 1.5"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bear_damage"			"20 29 39"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bear_armor"			"0 1 2"
-		}	
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bear_1_count"			"1 0 0"
-		}
-		"07"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bear_2_count"			"0 1 0"
-		}
-		"08"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bear_3_count"			"0 0 1"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "70"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bear_hp"               "600 900 1200"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "bear_regen_tooltip"    "0.5 1 1.5"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bear_damage"           "20 29 39"
+        }
+        "05"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bear_armor"            "0 1 2"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-	    {
-	    	"EffectName"	"Hero_LoneDruid.SpiritBear.Cast" 
-	    	"Target"		"CASTER"
-	    }
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_LoneDruid.SpiritBear.Cast" 
+            "Target"        "CASTER"
+        }
 
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_bear"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/beastmaster/summon_bear.lua"
+            "Function"      "SpawnBear"
+        }
+    }
 
-			"UnitCount"			"%bear_1_count"
-			"Duration"			"%duration"
+    "Modifiers"
+    {
+        "modifier_beastmaster_bear"
+        {
+            "IsHidden"      "1"
 
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
+            "StatusEffectName"      "particles/status_fx/status_effect_spirit_bear.vpcf"
+            "StatusEffectPriority"  "1"
 
-			// This makes sure units never get stuck
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
+            "OnCreated"
+            {
+                "FireEffect"
+                {
+                    "Target"            "TARGET"
+                    "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                }
+            }
 
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_bear"
-					"Target"		"TARGET"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_raging_bear"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
-
-			"UnitCount"			"%bear_2_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_bear"
-					"Target"		"TARGET"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"neutral_beastmaster_spirit_bear"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-        			"Function"      "SummonLocation"
-					"Target"		"CASTER"
-				}
-			}
-
-			"UnitCount"			"%bear_3_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_bear"
-					"Target"		"TARGET"
-				}
-			}
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_beastmaster_bear"
-		{
-			"IsHidden"		"1"
-
-			"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
-			"StatusEffectPriority"	"1"
-
-			"OnCreated"
-			{
-				"FireEffect"
-				{
-					"Target"			"TARGET"
-					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
-
-				"ApplyModifier"
-				{
-				    "ModifierName"  "modifier_summoned"
-				    "Target"        "TARGET"
-				}
-			}
-
-			"OnDeath"
-			{
-				"FireEffect"
-				{
-					"Target"			
-					{
-						"Center"	"UNIT"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-					}
-					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
-			}
-		}
-	}
+            "OnDeath"
+            {
+                "FireEffect"
+                {
+                    "Target"            
+                    {
+                        "Center"    "UNIT"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
+                    "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                }
+            }
+        }
+    }
 }
 
-// Extra abilities for the level 2 and level 3 bears
-
-// Gives a 25% chance that an attack will do 25 bonus damage and stun an opponent for 1 second. Only Raging Bears and Spirit Bears have Bash.
+// Extra abilities for neutral_beastmaster_raging_bear and neutral_beastmaster_spirit_bear
+// Gives a 25% chance that an attack will do 25 bonus damage and stun an opponent for 1 second.
 "beastmaster_summon_bear_bash"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"mountain_king_bash"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "mountain_king_bash"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
-	"AbilityDamage"					"25"
+    "AbilityDamage"                 "25"
 
-	"precache"
-	{
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-		"particle"	"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-		"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bash_chance"			"25"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"stun_duration"			"1.0"
-		}
-	}
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+        "particle"  "particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+        "particle"  "particles/generic_gameplay/generic_stunned.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bash_chance"           "25"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "stun_duration"         "1.0"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_bash"	
-		{
-			"Passive"	"1"
-			"IsHidden"	"1"
+    "Modifiers"
+    {
+        "modifier_bash" 
+        {
+            "Passive"   "1"
+            "IsHidden"  "1"
 
-			"OnAttackLanded"
-			{
-				"Random"
-				{
-					"Chance"		"%bash_chance"
-					"PseudoRandom"	"DOTA_PSEUDO_RANDOM_FACELESS_BASH"
+            "OnSuccess"
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                    }
+                
+                    "Action"    
+                    {
+                        "FireSound"
+                        {
+                            "EffectName"    "Hero_FacelessVoid.TimeLockImpact"
+                            "Target"        "TARGET"
+                        }
 
-					"OnSuccess"
-					{
-						"FireSound"
-						{
-							"EffectName"	"Hero_FacelessVoid.TimeLockImpact"
-							"Target"		"TARGET"
-						}
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_bash_stun"
+                            "Target"        "TARGET"
+                            "Duration"      "%stun_duration"   
+                        }
 
-						"ApplyModifier"
-						{
-							"ModifierName"	"modifier_bash_stun"
-							"Target"		"TARGET"
-							"Duration"		"%stun_duration"	
-						}
+                        "Damage"
+                        {
+                            "Target"    "TARGET"
+                            "Type"      "DAMAGE_TYPE_MAGICAL"
+                            "Damage"    "%AbilityDamage"
+                        }
+                    }
+                }
+            }
+        }
 
-						"Damage"
-						{
-							"Target"	"TARGET"
-							"Type"		"DAMAGE_TYPE_MAGICAL"
-							"Damage"	"%AbilityDamage"
-						}
-					}
-				}
-			}
-		}
+        "modifier_bash_stun"
+        {
+            "IsDebuff"          "1"
+            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+            "EffectAttachType"  "follow_overhead"
 
-		"modifier_bash_stun"
-		{
-			"IsDebuff"			"1"
-			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-			"EffectAttachType"	"follow_overhead"
+            "StatusEffectName"      "particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+            "StatusEffectPriority"  "1"
 
-			"States"
-			{
-				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-	}
+            "OverrideAnimation"     "ACT_DOTA_DISABLED"
+
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
 }
 
-// Teleports the Bear a short distance, allowing it to move in and out of combat. Only Spirit Bears have this ability.
-//Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect
-//0.3 sec.	15 sec.	None	9999.9	Personal	Self	Teleports Bear to target location
+// Ability for neutral_beastmaster_spirit_bear
+// Teleports the Bear a short distance, allowing it to move in and out of combat.
 "beastmaster_summon_bear_blink"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"beastmaster_summon_bear_blink"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "beastmaster_summon_bear_blink"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-	"AbilityCastAnimation"			"ACT_DOTA_SPAWN"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+    "AbilityCastAnimation"          "ACT_DOTA_SPAWN"
 
-	"AbilityCastRange"				"1000"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"15"
+    "AbilityCastRange"              "1000"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "15"
 
-	"AbilityManaCost"				"0"
+    "AbilityManaCost"               "0"
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_end.vpcf"
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_start.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"blink_range"			"1000"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_end.vpcf"
+        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_start.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "blink_range"           "1000"
+        }
+    }
 
-	"OnSpellStart"
-	{
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"        "LoneDruid_SpiritBear.ReturnStart"
+            "Target"            "CASTER"
+        }
 
-		"FireSound"
-		{
-			"EffectName"		"LoneDruid_SpiritBear.ReturnStart"
-			"Target"			"CASTER"
-		}
+        "FireEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_start.vpcf"
+            "EffectAttachType"  "attach_hitloc"
+            "Target"            "CASTER"
+        }
 
-		"FireEffect"
-		{
-			"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_start.vpcf"
-			"EffectAttachType"	"attach_hitloc"
-			"Target"			"CASTER"
-		}
+        "RunScript"
+        {
+            "ScriptFile"        "heroes/beastmaster/summon_bear.lua"
+            "Function"          "Blink"
+            "Target"            "POINT"
+        }       
 
-		"RunScript"
-		{
-			"ScriptFile"		"heroes/beastmaster/summon_bear.lua"
-			"Function"			"Blink"
-			"Target"			"POINT"
-		}		
-
-		"FireSound"
-		{
-			"EffectName"		"LoneDruid_SpiritBear.Return"
-			"Target"			"CASTER"
-		}
-
-		// Need to wait a bit for the blink script to end
-		"DelayedAction"
-		{
-			"Delay"	"0.15"
-			"Action"
-			{
-				"FireEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_end.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"CASTER"
-				}
-			}
-		}
-	}
+        "FireSound"
+        {
+            "EffectName"        "LoneDruid_SpiritBear.Return"
+            "Target"            "CASTER"
+        }
+    }
 }

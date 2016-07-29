@@ -16,7 +16,6 @@ function CarrionBeetleSpawn( event )
     if corpse then
         -- If the caster has already hit the limit of beetles, kill the oldest, then continue
         if #caster.beetles >= beetle_limit then
-            print("Attempting to kill one beetle from "..#caster.beetles)
             for k,v in pairs(caster.beetles) do
                 if v and IsValidEntity(v) and v:IsAlive() then
                     v:ForceKill(false)
@@ -29,9 +28,8 @@ function CarrionBeetleSpawn( event )
         local beetle = CreateUnitByName("undead_carrion_beetle_"..level, corpse:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
         beetle:SetControllableByPlayer(playerID, true)
         ability:ApplyDataDrivenModifier(caster, beetle, "modifier_carrion_beetle", nil)
-        beetle:SetNoCorpse()
+        beetle:AddNewModifier(caster, ability, "modifier_summoned", {})
         table.insert(caster.beetles, beetle)
-        print("Spawned beetle, Current table size: ".. #caster.beetles)
         corpse:RemoveCorpse()
     end
 end
@@ -45,7 +43,6 @@ function RemoveDeadBeetle( event )
     for k,beetle in pairs(targets) do       
         if beetle and IsValidEntity(beetle) and beetle == unit then
             table.remove(caster.beetles,k)
-            print("Dead beetle, Current table size: ".. #caster.beetles)
         end
     end
 end
@@ -62,10 +59,8 @@ function Burrow( event )
     if move == "up" then
         position.z = position.z + 128
         caster:SetAbsOrigin(position)
-        print(position)
     else
         position.z = position.z - 128
         caster:SetAbsOrigin(position)
-        print(position)
     end
 end

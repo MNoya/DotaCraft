@@ -42,26 +42,25 @@
         {
             "var_type"                  "FIELD_INTEGER"
             "dark_minion_damage"        "10 16 18"
-        }
-        "04"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "dark_minion_1_count"       "1 0 0"
-        }
-        "05"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "dark_minion_2_count"       "0 1 0"
-        }
-        "06"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "dark_minion_3_count"       "0 0 1"
-        }   
+        } 
     }
 
     "Modifiers"
-    { 
+    {
+        "modifier_black_arrow_check"
+        {
+            "Passive"       "1"
+            "IsHidden"      "1"
+            "OnAttackStart"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/dark_ranger/black_arrow.lua"
+                    "Function"      "OrbCheck"
+                }
+            }
+        }
+
         "modifier_black_arrow"
         {
             "Passive"       "1"
@@ -86,7 +85,11 @@
                 "ApplyModifier"
                 {
                     "ModifierName"      "modifier_black_arrow_spawn"
-                    "Target"            "TARGET"
+                    "Target"
+                    {
+                        "Center"        "TARGET"
+                        "Types"         "DOTA_UNIT_TARGET_BASIC" //No minion spawns from heroes
+                    }
                 }
                 "FireSound"
                 {
@@ -108,68 +111,10 @@
             "Duration"  "0.1"
             "OnDeath"
             {
-                "SpawnUnit"
+                "RunScript"
                 {
-                    "UnitName"      "undead_black_arrow_minion_1"
-                    "UnitCount"     "%dark_minion_1_count"
-                    "SpawnRadius"   "1"
-                    "Duration"      "%duration"
-                    "Target"
-                    {
-                        "Center"    "UNIT"
-                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
-                    }
-
-                    "OnSpawn"
-                    {
-                        "FireSound"
-                        {
-                            "EffectName" "Hero_Medusa.MysticSnake.Return"
-                            "Target"            "CASTER"
-                        }
-                    }
-                }
-
-                "SpawnUnit"
-                {
-                    "UnitName"      "undead_black_arrow_minion_2"
-                    "UnitCount"     "%dark_minion_2_count"
-                    "SpawnRadius"   "1"
-                    "Duration"      "%duration"
-                    "Target"
-                    {
-                        "Center"    "UNIT"
-                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
-                    }
-
-                    "OnSpawn"
-                    {
-                        "FireSound"
-                        {
-                            "EffectName"    "Hero_Medusa.MysticSnake.Target"
-                            "Target"        "CASTER"
-                        }
-                    }
-                }
-                "SpawnUnit"
-                {
-                    "UnitName"      "undead_black_arrow_minion_3"
-                    "UnitCount"     "%dark_minion_3_count"
-                    "SpawnRadius"   "1"
-                    "Duration"      "%duration"
-                    "Target"
-                    {
-                        "Center"    "UNIT"
-                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
-                    }   
-                    "OnSpawn"
-                    {
-                        "FireSound"
-                        {
-                            "EffectName"    "Hero_Medusa.MysticSnake.Target"
-                            "Target"        "CASTER"
-                        }
-                    }
+                    "ScriptFile"    "heroes/dark_ranger/black_arrow.lua"
+                    "Function"      "SpawnMinion"
                 }
             }
         }
