@@ -15,6 +15,7 @@ function UpgradeBuilding( event )
     local flag = caster.flag
     local flag_type = caster.flag_type
     local angle = caster:GetAngles()
+    local bApplyBlight = caster:HasModifier("modifier_grid_blight")
 
     -- New building
     local building = BuildingHelper:UpgradeBuilding(caster, new_unit)
@@ -40,6 +41,11 @@ function UpgradeBuilding( event )
     if ancient_roots then
         ancient_roots:ApplyDataDrivenModifier(building, building, "modifier_rooted_ancient", {})
     end
+
+    -- Keep blight
+    if bApplyBlight then
+        building:AddNewModifier(building, nil, "modifier_grid_blight", {})
+    end
     
     -- If the upgraded building is a city center, update the city_center_level if required
     if IsCityCenter(building) then
@@ -51,16 +57,6 @@ function UpgradeBuilding( event )
         end
     end
 
-    -- Remove the old building from the structures list and add the new building to the structures list
-    Players:UpgradeStructure( playerID, caster, building )
-        
-    -- Remove old building entity
-    caster:RemoveSelf()
-
-    local newRelativeHP = building:GetMaxHealth() * currentHealthPercentage
-    if newRelativeHP == 0 then newRelativeHP = 1 end --just incase rounding goes wrong
-    building:SetHealth(newRelativeHP)
-
     -- Update the references to the new building
     local entangled_gold_mine = caster.entangled_gold_mine
     if IsValidAlive(entangled_gold_mine) then
@@ -68,6 +64,15 @@ function UpgradeBuilding( event )
         building.entangled_gold_mine = caster.entangled_gold_mine
         building:SwapAbilities("nightelf_entangle_gold_mine", "nightelf_entangle_gold_mine_passive", false, true)
     end
+
+    -- Remove the old building from the structures list and add the new building to the structures list
+    Players:UpgradeStructure( playerID, caster, building )
+        
+    -- Remove old building entity
+    caster:RemoveSelf()
+
+    local newRelativeHP = math.max(building:GetMaxHealth() * currentHealthPercentage, 1)
+    building:SetHealth(newRelativeHP)
 
     -- Update the abilities of the units and structures
     local playerUnits = Players:GetUnits(playerID)
