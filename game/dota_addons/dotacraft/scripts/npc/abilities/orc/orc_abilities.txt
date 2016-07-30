@@ -258,22 +258,12 @@
 		"03"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"summoned_unit_damage"			"400"
+			"damage_to_summons"			"400"
 		}
 		"04"
 		{
 			"var_type"		"FIELD_INTEGER"
 			"slow_per_stack"	"-20"	
-		}
-		"05"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"stack_multi"	"5"	
-		}
-		"06"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"think_interval"	"1"	
 		}
 	}
 
@@ -285,6 +275,11 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+		    "EffectName"    "DOTA_Item.DiffusalBlade.Target"
+		    "Target"        "TARGET"
+		}
 		"RunScript"
 		{
 			"ScriptFile"	"units/orc/shaman.lua"
@@ -296,7 +291,6 @@
 	{
 		"modifier_purge"
 		{
-			"IsHidden"			"0"
 			"TextureName" 		"orc_purge"
 			"IsDebuff"			"1"
 			"IsPurgable"		"1"
@@ -330,7 +324,7 @@
 			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_per_stack" 
 			}
 
-			"ThinkInterval"  "%think_interval"
+			"ThinkInterval"  "1"
 			"OnIntervalThink"
 			{
 				"RunScript"
@@ -794,8 +788,8 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	"AbilityCastAnimation"		"ACT_DOTA_ATTACK"
+	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		
 	"AbilityCastRange"			"750"
 	"AbilityCastPoint"			"0"
@@ -834,6 +828,12 @@
 			"ScriptFile"	"units/orc/spiritwalker.lua"
 			"Function"		"SpiritLinkStart"
 		}
+
+		"FireSound"
+		{
+		    "EffectName"    "Hero_Oracle.FortunesEnd.Target"
+		    "Target"        "TARGET"
+		}
 	}
 
 	"Modifiers"
@@ -843,8 +843,8 @@
 			"IsPurgable"		"1"
 			"IsBuff"			"1"
 			"Duration"			"%duration"
-			//"EffectName"		"particle_name"
-			//"EffectAttachType"	"follow_origin"
+			"EffectName"		"particles/custom/orc/spirit_link.vpcf"
+			"EffectAttachType"	"follow_origin"
 
 			"OnCreated"
 			{
@@ -926,21 +926,11 @@
 	"precache"
 	{
 		"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf"
+		"particle"  "particles/units/heroes/hero_oracle/oracle_false_promise_dmg_burst.vpcf"
 	}
 
 	"OnSpellStart"
 	{
-		"FireEffect"
-		{
-			"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
-			"EffectAttachType"  "world_origin"
-			"TargetPoint"       "POINT"
-			"ControlPoints"
-			{
-				"01"	"%radius 0 0"
-			}
-		}
-
 		"FireSound"
 		{
 			"EffectName"	"Brewmaster_Storm.DispelMagic"

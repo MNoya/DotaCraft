@@ -86,13 +86,14 @@ function PurgeStart( event )
     target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, true)
     target:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
     ParticleManager:CreateParticle('particles/generic_gameplay/generic_purge.vpcf', PATTACH_ABSORIGIN_FOLLOW, target)
+    target:EmitSound("DOTA_Item.DiffusalBlade.Target")
 
     if bRemovePositiveBuffs then
         if bSummoned then
             ApplyDamage({
                 victim = target,
                 attacker = caster,
-                damage = ability:GetSpecialValueFor('summoned_unit_damage'),
+                damage = ability:GetSpecialValueFor('damage_to_summons'),
                 damage_type = DAMAGE_TYPE_PURE, --Goes through MI
                 ability = ability
             })
@@ -112,8 +113,7 @@ function ApplyPurge( event )
     local duration = 0 
     local modifier = 'modifier_purge_slow'
     ability:ApplyDataDrivenModifier(caster, target, modifier, nil) 
-    local stacks = ability:GetSpecialValueFor('stack_multi')
-    target:SetModifierStackCount(modifier, ability, stacks)
+    target:SetModifierStackCount(modifier, ability, 5)
 end
 
 function PurgeThink( event )
