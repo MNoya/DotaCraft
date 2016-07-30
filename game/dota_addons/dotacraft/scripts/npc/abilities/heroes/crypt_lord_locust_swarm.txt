@@ -1,189 +1,187 @@
 // Crypt Lord Locust Swarm
 // Author: Noya
 // Date: 29.01.2015.
-// Notes: Creates a swarm of angry locusts that bite and tear at nearby enemy units. 
-//As they chew the enemy flesh, they convert it into a substance that restores hit points to the Crypt Lord when they return.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	30 sec.	180 sec.	150	N/A	80	Air, Ground, Building, Neutral, Enemy	Creates Locust Swarm	6
+// Description: Creates a swarm of angry locusts that bite and tear at nearby enemy units. 
+//  As they chew the enemy flesh, they convert it into a substance that restores hit points to the Crypt Lord when they return.
+//  Once "launched" the Locust Swarm will follow the Crypt Lord where he walks, heading out in an area around the Crypt Lord.
+//  20 Locusts are released. 0.2 second delay between releasing each Locust. Up to 7 Locusts can target an enemy unit at the same time. 
+//  Fraction of damage dealt by Locusts that will be returned and collected by Crypt Lord: 0.75.
+//  The Locust must collect 20 hit points before returning it to the Crypt Lord.
 
-// Once "launched" the Locust Swarm will follow the Crypt Lord where he walks, heading out in an area around the Crypt Lord.
-// 20 Locusts are released. 0.2 second delay between releasing each Locust. Up to 7 Locusts can target an enemy unit at the same time. 
-// Fraction of damage dealt by Locusts that will be returned and collected by Crypt Lord: 0.75.
-// The Locust must collect 20 hit points before returning it to the Crypt Lord.
 "crypt_lord_locust_swarm"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"crypt_lord_locust_swarm"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "crypt_lord_locust_swarm"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.5"
-	"AbilityCooldown"				"180.0"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.5"
+    "AbilityCooldown"               "180.0"
 
-	"AbilityManaCost"				"150"
+    "AbilityManaCost"               "150"
 
-	"precache"
-	{
-		"particle"  "particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
-		"particle"	"particles/units/heroes/hero_weaver/weaver_base_attack_explosion.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"800"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"locusts"				"20"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"duration"				"30"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"locusts_speed"			"400"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"max_distance"			"2000"	//teleports
-		}
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"give_up_distance"		"900" //Max distance to follow a target acquired
-		}
-		"07"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"delay_between_locusts"	"0.2"	//Means 4 seconds to spawn all 20 locusts
-		}
-		"08"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"locust_damage"			"13"	//Physical damage instance on each collision
-		}
-		"09"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"locust_heal_threshold"	"20"	//The amount of physical damage that needs to be done to return and heal the caster
-		}
-		"10"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"max_locusts_on_target"	"7"	//Max counter of units locked onto one target, find another or idle if this threshold is met
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
+        "particle"  "particles/units/heroes/hero_weaver/weaver_base_attack_explosion.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "800"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "locusts"               "20"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "30"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "locusts_speed"         "400"
+        }
+        "05"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "max_distance"          "2000"  //teleports
+        }
+        "06"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "give_up_distance"      "900" //Max distance to follow a target acquired
+        }
+        "07"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "delay_between_locusts" "0.2"   //Means 4 seconds to spawn all 20 locusts
+        }
+        "08"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "locust_damage"         "13"    //Physical damage instance on each collision
+        }
+        "09"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "locust_heal_threshold" "20"    //The amount of physical damage that needs to be done to return and heal the caster
+        }
+        "10"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "max_locusts_on_target" "7" //Max counter of units locked onto one target, find another or idle if this threshold is met
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_locust_swarm"
-			"Target" 		"CASTER"
-		}
+    "OnSpellStart"
+    {
+        "RemoveModifier"
+        {
+            "ModifierName"  "modifier_locust_swarm"
+            "Target"        "CASTER"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_locust_swarm"
-			"Target" 		"CASTER"
-			"Duration"		"%duration"
-		}
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_locust_swarm"
+            "Target"        "CASTER"
+            "Duration"      "%duration"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Weaver.SwarmCast"
-			"Target" 		"CASTER"
-		}
-	}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Weaver.SwarmCast"
+            "Target"        "CASTER"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_locust_swarm"
-		{	
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
-					"Function"		"LocustSwarmStart"
-				}
-			}
+    "Modifiers"
+    {
+        "modifier_locust_swarm"
+        {   
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/crypt_lord/locust_swarm.lua"
+                    "Function"      "LocustSwarmStart"
+                }
+            }
 
-			"OnDeath"
-			{
-				"FireSound"
-				{
-					"EffectName"	"Hero_NyxAssassin.Death"
-					"Target" 		"CASTER"
-				}
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
-					"Function"		"LocustSwarmDeath"
-				}
-			}
+            "OnDeath"
+            {
+                "FireSound"
+                {
+                    "EffectName"    "Hero_NyxAssassin.Death"
+                    "Target"        "CASTER"
+                }
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/crypt_lord/locust_swarm.lua"
+                    "Function"      "LocustSwarmDeath"
+                }
+            }
 
-			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
-					"Function"		"LocustSwarmEnd"
-				}
-			}
-		}
+            "OnDestroy"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/crypt_lord/locust_swarm.lua"
+                    "Function"      "LocustSwarmEnd"
+                }
+            }
+        }
 
-		"modifier_locust"
-		{	
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/crypt_lord/locust_swarm.lua"
-					"Function"		"LocustSwarmPhysics"
-				}
+        "modifier_locust"
+        {   
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/crypt_lord/locust_swarm.lua"
+                    "Function"      "LocustSwarmPhysics"
+                }
 
-				"AttachEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"            "TARGET"
-					"ControlPointEntities"
-					{
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-					}
-				}
-			}
-	
-			"States"
-			{
-				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_DISARMED"						"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-	}
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_weaver/weaver_base_attack_bug.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "TARGET"
+                    "ControlPointEntities"
+                    {
+                        "TARGET"    "attach_origin"
+                        "TARGET"    "attach_origin"
+                        "TARGET"    "attach_origin"
+                        "TARGET"    "attach_origin"
+                    }
+                }
+            }
+    
+            "States"
+            {
+                "MODIFIER_STATE_INVULNERABLE"                   "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_HEALTH_BAR"                  "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_UNIT_COLLISION"              "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NOT_ON_MINIMAP"                 "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_UNSELECTABLE"                   "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_FLYING"                         "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_DISARMED"                       "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
 }

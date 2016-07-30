@@ -10702,54 +10702,48 @@
 	}
 	// Priestess of the Moon Searing Arrows
 	// Author: Noya
-	// Date: 14.1.2015.
-	// Notes: Increases the damage of the Priestess' attack by adding fire. Searing Arrows will fire until the Priestess is out of mana. 
+	// Description: Increases the damage of the Priestess' attack by adding fire. Searing Arrows will fire until the Priestess is out of mana. 
 	// Manually casting Searing Arrows will allow the Priestess of the Moon to fire beyond her normal 60 range at level 2.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	N/A	N/A	8	60	Unit	N/A	10 bonus damage	1
-	//2	N/A	N/A	8	70	Unit	N/A	20 bonus damage	3
-	//3	N/A	N/A	8	70	Unit	N/A	30 bonus damage	5
 	
-	// BUG: Orb doesn't fire on Magic Immune targets
-	// Edit: August 2015, removed datadriven version in favor of the dota ability which properly fires to magic immune units
+	// "Orb" action doesn't fire on Magic Immune targets, removed datadriven version in favor of the dota ability which properly fires to magic immune units
 	"potm_searing_arrows"
 	{
-		"BaseClass"             		"clinkz_searing_arrows"
-		"AbilityTextureName"			"potm_searing_arrows"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "clinkz_searing_arrows"
+	    "AbilityTextureName"            "potm_searing_arrows"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"
+	    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
-		"AbilityCastPoint"          	"0"
-	    "AbilityCastRange"          	"600 700 700"
+	    "AbilityCastPoint"              "0"
+	    "AbilityCastRange"              "600 700 700"
 	
-		"AbilityManaCost"				"8"
+	    "AbilityManaCost"               "8"
 	
-		"precache"
-		{
-			"particle"				"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-			"soundfile"				"soundevents/voscripts/game_sounds_vo_clinkz.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_bonus"			"10 20 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"0 100 100"
-			}
-		}
+	    "precache"
+	    {
+	        "particle"              "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+	        "soundfile"             "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+	        "soundfile"             "soundevents/voscripts/game_sounds_vo_clinkz.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "damage_bonus"          "10 20 30"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_range"           "0 100 100"
+	        }
+	    }
 	}
 	// Priestess of the Moon Starfall
 	// Author: Noya

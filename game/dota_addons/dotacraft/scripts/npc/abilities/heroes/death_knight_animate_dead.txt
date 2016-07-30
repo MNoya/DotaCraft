@@ -4,101 +4,101 @@
 
 "death_knight_animate_dead"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"death_knight_animate_dead"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "death_knight_animate_dead"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
 
-	"AbilityCastRange"				"900"
-	"AbilityCastPoint"				"0.453"
+    "AbilityCastRange"              "900"
+    "AbilityCastPoint"              "0.453"
 
-	"AbilityCooldown" 				"180"
-	"AbilityManacost" 				"175"
+    "AbilityCooldown"               "180"
+    "AbilityManacost"               "175"
 
-	"RequiresCorpsesAround"			"900"
+    "RequiresCorpsesAround"         "900"
 
-	"precache"
-	{
-		"particle"	"particles/custom/abaddon_death_coil_explosion.vpcf"
-		"particle"	"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
-		"particle"  "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"duration"					"40"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"radius"					"900"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"max_units_resurrected"		"6"
-		}		
-	}
+    "precache"
+    {
+        "particle"  "particles/custom/abaddon_death_coil_explosion.vpcf"
+        "particle"  "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+        "particle"  "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "duration"                  "40"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "radius"                    "900"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "max_units_resurrected"     "6"
+        }       
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"		"Hero_Abaddon.AphoticShield.Cast"
-			"Target"			"CASTER"
-		}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"        "Hero_Abaddon.AphoticShield.Cast"
+            "Target"            "CASTER"
+        }
 
-		"FireEffect"
-		{
-			"EffectName"        "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
-			"EffectAttachType"  "follow_origin"
-			"Target"            "CASTER"
-		}
+        "FireEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "Target"            "CASTER"
+        }
 
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/death_knight/animate_dead.lua"
-			"Function"		"AnimateDead"
-		}		
-	}
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/death_knight/animate_dead.lua"
+            "Function"      "AnimateDead"
+        }       
+    }
 
-	"Modifiers"
-	{
-		"modifier_animate_dead"
-		{
-			"OnCreated"
-			{	
-				"AttachEffect"
-				{
-				 	"EffectName"		"particles/custom/abaddon_death_coil_explosion.vpcf"
-				 	"EffectAttachType"	"follow_origin"
-				 	"Target"			"TARGET"
+    "Modifiers"
+    {
+        "modifier_animate_dead"
+        {
+            "OnCreated"
+            {   
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/custom/abaddon_death_coil_explosion.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "TARGET"
 
-				 	"ControlPointEntities"
-		            {
-		                "TARGET"    "attach_origin" // Control Point 0
-		                "TARGET"    "attach_origin" // Control Point 1
-		            }
-				}
-			}
+                    "ControlPointEntities"
+                    {
+                        "TARGET"    "attach_origin" // Control Point 0
+                        "TARGET"    "attach_origin" // Control Point 1
+                    }
+                }
+            }
 
-			"StatusEffectName" 			"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
-			"StatusEffectPriority" 		"15"
+            "StatusEffectName"          "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+            "StatusEffectPriority"      "15"
 
-			"States"
-			{
-				"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-	}
+            "States"
+            {
+                "MODIFIER_STATE_INVULNERABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_DOMINATED"      "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
 }

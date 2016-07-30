@@ -4,104 +4,104 @@
 
 "mountain_king_avatar"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"mountain_king_avatar"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "mountain_king_avatar"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCooldown"				"180"
-	"AbilityManaCost"				"150"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityCooldown"               "180"
+    "AbilityManaCost"               "150"
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"duration"				"60"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"armor_bonus"			"5"	
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"20"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"health_bonus"			"500"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"model_size"			"20"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "60"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "armor_bonus"           "5" 
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_damage"          "20"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "health_bonus"          "500"
+        }
+        "05"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "model_size"            "20"
+        }
+    }
 
-	"precache"
-	{
-		"particle"				"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
-		"particle"				"particles/items_fx/black_king_bar_avatar.vpcf"
-		"particle"				"particles/status_fx/status_effect_chemical_rage.vpcf"
-	}
+    "precache"
+    {
+        "particle"              "particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+        "particle"              "particles/items_fx/black_king_bar_avatar.vpcf"
+        "particle"              "particles/status_fx/status_effect_chemical_rage.vpcf"
+    }
 
-	"OnSpellStart"
-	{
-		"ApplyModifier"
-		{
-			"Target"		"CASTER"
-			"ModifierName"	"modifier_avatar"
-		}
-		"FireSound"
-		{
-			"Target"		"CASTER"
-			"EffectName" 	"DOTA_Item.BlackKingBar.Activate"
-		}
-	}
-	
-	"Modifiers"
-	{
-		"modifier_avatar"
-		{
-			"Duration"			"%duration"
+    "OnSpellStart"
+    {
+        "ApplyModifier"
+        {
+            "Target"        "CASTER"
+            "ModifierName"  "modifier_avatar"
+        }
+        "FireSound"
+        {
+            "Target"        "CASTER"
+            "EffectName"    "DOTA_Item.BlackKingBar.Activate"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_avatar"
+        {
+            "Duration"          "%duration"
 
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"Target"			"CASTER"
-					"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
+            "OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "Target"            "CASTER"
+                    "EffectName"        "particles/items_fx/black_king_bar_avatar.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                }
 
-				"RunScript"
-				{
-					"ScriptFile"    "heroes/mountain_king/avatar.lua"
-					"Function"		"AvatarResize"
-				}
-			}
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/mountain_king/avatar.lua"
+                    "Function"      "AvatarResize"
+                }
+            }
 
-			"EffectName"			"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
-			"EffectAttachType"		"follow_origin"
+            "EffectName"            "particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+            "EffectAttachType"      "follow_origin"
 
-			"StatusEffectName"		"particles/status_fx/status_effect_chemical_rage.vpcf"
-			"StatusEffectPriority"	"5"
+            "StatusEffectName"      "particles/status_fx/status_effect_chemical_rage.vpcf"
+            "StatusEffectPriority"  "5"
 
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%bonus_damage"
-				"MODIFIER_PROPERTY_HEALTH_BONUS"			"%health_bonus"
-			}
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"    "%armor_bonus"
+                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"  "%bonus_damage"
+                "MODIFIER_PROPERTY_HEALTH_BONUS"            "%health_bonus"
+            }
 
-			"States"
-			{
-				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-	}
+            "States"
+            {
+                "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
 }

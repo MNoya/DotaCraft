@@ -5,122 +5,122 @@
 
 "blood_mage_banish"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"blood_mage_banish"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "blood_mage_banish"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_DEAFENING_BLAST"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_DEAFENING_BLAST"
 
-	"AbilityCastRange"				"800"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"0.0"
+    "AbilityCastRange"              "800"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "0.0"
 
-	"AbilityManaCost"				"75 60 50"
+    "AbilityManaCost"               "75 60 50"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"bonus_spell_damage"		"-66"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"bonus_movement_speed"		"-50"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"creep_duration"			"12 15 18"
-		}
-		"04"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"hero_duration"				"4 5 6"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "bonus_spell_damage"        "-66"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "bonus_movement_speed"      "-50"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "creep_duration"            "12 15 18"
+        }
+        "04"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "hero_duration"             "4 5 6"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"	"Hero_Pugna.Decrepify"
-			"Target" 		"TARGET"
-		}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_Pugna.Decrepify"
+            "Target"        "TARGET"
+        }
 
-		"RemoveModifier"
-		{
-		    "ModifierName"  "modifier_banish"
-		    "Target"        "TARGET"
-		}
-		
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_banish"
-			"Target"
-			{
-				"Center"	"TARGET"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Types"		"DOTA_UNIT_TARGET_HERO"
-			}
-			"Duration"		"%hero_duration"
-		}
-		
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_banish"
-			"Target"
-			{
-				"Center"	"TARGET"
-				"Teams"		"DOTA_UNIT_TARGET_TEAM_BOTHDOTA_UNIT_TARGET_TEAM_BOTH"
-				"Types"		"DOTA_UNIT_TARGET_BASIC"
-			}
-			"Duration"		"%creep_duration"
-		}
-	}
+        "RemoveModifier"
+        {
+            "ModifierName"  "modifier_banish"
+            "Target"        "TARGET"
+        }
+        
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_banish"
+            "Target"
+            {
+                "Center"    "TARGET"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+                "Types"     "DOTA_UNIT_TARGET_HERO"
+            }
+            "Duration"      "%hero_duration"
+        }
+        
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_banish"
+            "Target"
+            {
+                "Center"    "TARGET"
+                "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTHDOTA_UNIT_TARGET_TEAM_BOTH"
+                "Types"     "DOTA_UNIT_TARGET_BASIC"
+            }
+            "Duration"      "%creep_duration"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_banish"
-		{
-			"IsDebuff"			"1"
-			"IsPurgable"		"1"
-	
-			"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-			"EffectAttachType"	"follow_origin"
-	
-			"Properties"
-			{
-			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
-			}
+    "Modifiers"
+    {
+        "modifier_banish"
+        {
+            "IsDebuff"          "1"
+            "IsPurgable"        "1"
+    
+            "EffectName"        "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+            "EffectAttachType"  "follow_origin"
+    
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+            }
 
-			"OnCreated"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_ethereal"
-					"Target"		"TARGET"
-				}		
-			}
+            "OnCreated"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_ethereal"
+                    "Target"        "TARGET"
+                }       
+            }
 
-			"OnDestroy"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_ethereal"
-					"Target"		"TARGET"
-				}		
-			}
-		}
-	}	
+            "OnDestroy"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_ethereal"
+                    "Target"        "TARGET"
+                }       
+            }
+        }
+    }   
 }

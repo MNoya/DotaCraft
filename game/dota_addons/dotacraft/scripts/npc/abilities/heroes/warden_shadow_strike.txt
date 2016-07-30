@@ -4,87 +4,87 @@
 
 "warden_shadow_strike"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"warden_shadow_strike"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "warden_shadow_strike"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 
-	"TargetsAllowed"                "organic"
+    "TargetsAllowed"                "organic"
 
-	"AbilityCastRange"				"600"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+    "AbilityCastRange"              "600"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "8.0"
 
-	"AbilityManaCost"				"100"
-	"AbilityDamage"					"75 130 200"
+    "AbilityManaCost"               "100"
+    "AbilityDamage"                 "75 130 200"
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
-		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
-		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_impact.vpcf"
-		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
-		"particle"	"particles/units/heroes/hero_viper/viper_viper_strike_beam.vpcf"
-		"particle"	"particles/status_fx/status_effect_poison_viper.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"	"FIELD_INTEGER"
-			"duration"	"15"
-		}
-		"02"
-		{
-			"var_type"	"FIELD_INTEGER"
-			"initial_damage"	"75 150 225"
-		}
-		"03"
-		{
-			"var_type"	"FIELD_INTEGER"
-			"damage_every_3sec"	"10 30 45"
-		}
-		"04"
-		{
-			"var_type"	"FIELD_INTEGER"
-			"move_speed_slow"	"-50"
-		}
-	}
-
-	"OnAbilityPhaseStart"
-	{
-		"FireEffect"
-		{
-			// This particle is bugged, it has some unattached childs that always generates at 0 0 0 (because viper has 4 wing points)
-			"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
-			"EffectAttachType"	"attach_attack1"
-			"Target"			"CASTER"
-			"ControlPointEntities"
-			{
-				"CASTER"		"attach_attack1"
-				"CASTER"		"attach_attack1"
-			}
-		}		
-	}
-
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"		"hero_viper.viperStrike"
-			"Target"			"TARGET"
-		}
-
-		"TrackingProjectile"
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
+        "particle"  "particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+        "particle"  "particles/units/heroes/hero_viper/viper_viper_strike_impact.vpcf"
+        "particle"  "particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+        "particle"  "particles/units/heroes/hero_viper/viper_viper_strike_beam.vpcf"
+        "particle"  "particles/status_fx/status_effect_poison_viper.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
         {
-            "Target"			"TARGET"
+            "var_type"  "FIELD_INTEGER"
+            "duration"  "15"
+        }
+        "02"
+        {
+            "var_type"  "FIELD_INTEGER"
+            "initial_damage"    "75 150 225"
+        }
+        "03"
+        {
+            "var_type"  "FIELD_INTEGER"
+            "damage_every_3sec" "10 30 45"
+        }
+        "04"
+        {
+            "var_type"  "FIELD_INTEGER"
+            "move_speed_slow"   "-50"
+        }
+    }
+
+    "OnAbilityPhaseStart"
+    {
+        "FireEffect"
+        {
+            // This particle is bugged, it has some unattached childs that always generates at 0 0 0 (because viper has 4 wing points)
+            "EffectName"        "particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+            "EffectAttachType"  "attach_attack1"
+            "Target"            "CASTER"
+            "ControlPointEntities"
+            {
+                "CASTER"        "attach_attack1"
+                "CASTER"        "attach_attack1"
+            }
+        }       
+    }
+
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"        "hero_viper.viperStrike"
+            "Target"            "TARGET"
+        }
+
+        "TrackingProjectile"
+        {
+            "Target"            "TARGET"
             "EffectName"        "particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
             "Dodgeable"         "0"
             "ProvidesVision"    "1"
@@ -95,60 +95,60 @@
     }
 
     "OnProjectileHitUnit"
-	{
-		"DeleteOnHit"		"0"
-		"Damage"
-		{
-			"Type"          "DAMAGE_TYPE_MAGICAL"
-			"Damage"        "%initial_damage"
-			"Target"		"TARGET"
-		}
+    {
+        "DeleteOnHit"       "0"
+        "Damage"
+        {
+            "Type"          "DAMAGE_TYPE_MAGICAL"
+            "Damage"        "%initial_damage"
+            "Target"        "TARGET"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike"		
-			"Target"		"TARGET"
-		}
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_shadow_strike"        
+            "Target"        "TARGET"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Viper.viperStrikeImpact"
-			"Target"		"TARGET"
-		}
-	}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Viper.viperStrikeImpact"
+            "Target"        "TARGET"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_shadow_strike"	
-		{	
-			"Duration"	"%duration"
-			"IsDebuff"	"1"
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
-			}
+    "Modifiers"
+    {
+        "modifier_shadow_strike"    
+        {   
+            "Duration"  "%duration"
+            "IsDebuff"  "1"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
+            }
 
-			"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
+            "StatusEffectName"      "particles/status_fx/status_effect_poison_viper.vpcf"
 
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
-					"EffectAttachType"	"attach_hitloc"
-					"Target"			"TARGET"
-				}
-			}
-			"ThinkInterval"	"3"
-			"OnIntervalThink"
-			{
-				"Damage"
-				{
-					"Type"          "DAMAGE_TYPE_MAGICAL"
-					"Damage"        "%damage_every_3sec"
-					"Target"		"TARGET"
-				}
-			}
-		}
-	}
+            "OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+                    "EffectAttachType"  "attach_hitloc"
+                    "Target"            "TARGET"
+                }
+            }
+            "ThinkInterval" "3"
+            "OnIntervalThink"
+            {
+                "Damage"
+                {
+                    "Type"          "DAMAGE_TYPE_MAGICAL"
+                    "Damage"        "%damage_every_3sec"
+                    "Target"        "TARGET"
+                }
+            }
+        }
+    }
 }

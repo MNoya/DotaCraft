@@ -1,55 +1,52 @@
 // Tauren Chieftain Reincarnation
 // Author: Noya
-// Date: 13.1.2015.
-// Notes: When killed, the Tauren Chieftain will come back to life. The Tauren Chieftain will return with full mana.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	7 sec.	240 sec.	None	N/A	N/A	Self	Hero comes back to life	6
+// Description: When killed, the Tauren Chieftain will come back to life. The Tauren Chieftain will return with full mana.
 
 // Issues: "MODIFIER_PROPERTY_REINCARNATION" is Unhandled, this uses lua Kill and gives the gold back when the caster dies
-// 	      It still counts the death count for the player, because there's currently no way to decrease deaths (only lua IncrementDeaths)
+//        It still counts the death count for the player, because there's currently no way to decrease deaths (only lua IncrementDeaths)
 
 "tauren_chieftain_reincarnation"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityTextureName"			"tauren_chieftain_reincarnation"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "tauren_chieftain_reincarnation"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityCooldown"				"240"
-	"AbilityManaCost"				"0"
+    "AbilityCooldown"               "240"
+    "AbilityManaCost"               "0"
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"reincarnate_time"		"7.0"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "reincarnate_time"      "7.0"
+        }
+    }
 
-	"precache"
-	{
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
-		"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
-		"particle"	"particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf"
-	}
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+        "particle"  "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+        "particle"  "particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf"
+    }
 
-	"Modifiers"
-	{
-		"modifier_reincarnation"
-		{
-			"Passive"	"1"
-			"IsHidden"	"1"
+    "Modifiers"
+    {
+        "modifier_reincarnation"
+        {
+            "Passive"   "1"
+            "IsHidden"  "1"
 
-			"OnTakeDamage"
-			{
-				"RunScript"
-				{
-					"ScriptFile"		"heroes/tauren_chieftain/reincarnation.lua"
-					"Function"			"Reincarnation"
-				}
-			}
-		}
-	}
+            "OnTakeDamage"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"        "heroes/tauren_chieftain/reincarnation.lua"
+                    "Function"          "Reincarnation"
+                }
+            }
+        }
+    }
 }

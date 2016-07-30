@@ -4,61 +4,61 @@
 
 "warden_avatar_of_vengeance"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"warden_avatar_of_vengeance"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "warden_avatar_of_vengeance"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"180"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "180"
 
-	"AbilityManaCost"				"200"
+    "AbilityManaCost"               "200"
 
-	"precache"
-	{
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
-		"model"		"models/heroes/vengeful/vengeful.vmdl"
-		"model"		"models/items/vengeful/vengeful_immortal_weapon/vengeful_immortal_weapon.vmdl"
-		"model"		"models/items/vengefulspirit/fallenprincess_shoulders/fallenprincess_shoulders.vmdl"
-		"model"		"models/items/vengefulspirit/fallenprincess_legs/fallenprincess_legs.vmdl"
-		"model"		"models/items/vengefulspirit/fallenprincess_head/fallenprincess_head.vmdl"
-		"particle"  "particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
-		"particle"  "particles/econ/items/vengeful/vengeful_wing_fallenprincess/venge_wingsoffallenprincess_ambient.vpcf"
-		"particle"	"particles/units/heroes/hero_vengeful/vengeful_base_attack.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"	"FIELD_INTEGER"
-			"duration"	"180"
-		}
-	}
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+        "model"     "models/heroes/vengeful/vengeful.vmdl"
+        "model"     "models/items/vengeful/vengeful_immortal_weapon/vengeful_immortal_weapon.vmdl"
+        "model"     "models/items/vengefulspirit/fallenprincess_shoulders/fallenprincess_shoulders.vmdl"
+        "model"     "models/items/vengefulspirit/fallenprincess_legs/fallenprincess_legs.vmdl"
+        "model"     "models/items/vengefulspirit/fallenprincess_head/fallenprincess_head.vmdl"
+        "particle"  "particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+        "particle"  "particles/econ/items/vengeful/vengeful_wing_fallenprincess/venge_wingsoffallenprincess_ambient.vpcf"
+        "particle"  "particles/units/heroes/hero_vengeful/vengeful_base_attack.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"  "FIELD_INTEGER"
+            "duration"  "180"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"SpawnUnit"
-		{
-			"UnitName"		"nightelf_avatar_of_vengeance"
-			"UnitCount"		"1"
-			"SpawnRadius"	"100"
-			"Duration"		"%duration"
-			"Target"		"CASTER"
-			"OnSpawn"
-			{
-				"FireSound"
-				{
-					"EffectName" "Hero_Spectre.Haunt"
-					"Target"	 "CASTER"
-				}
-			}
-		}
-	}
+    "OnSpellStart"
+    {
+        "SpawnUnit"
+        {
+            "UnitName"      "nightelf_avatar_of_vengeance"
+            "UnitCount"     "1"
+            "SpawnRadius"   "100"
+            "Duration"      "%duration"
+            "Target"        "CASTER"
+            "OnSpawn"
+            {
+                "FireSound"
+                {
+                    "EffectName" "Hero_Spectre.Haunt"
+                    "Target"     "CASTER"
+                }
+            }
+        }
+    }
 }
 
 
@@ -66,172 +66,172 @@
 // No collision and calls a script OnDeath to kill all the summoned spirits
 "avatar_of_vengeance_passive"
 {
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE	| DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	"BaseClass" 					"ability_datadriven"
-	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE  | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+    }
 
-	"Modifiers"
-	{
-		"vengeance_modifier"
-		{
-			"IsHidden"	"1"
-			"Passive"	"1"
-			"States"
-			{	
-				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_DOMINATED"			"MODIFIER_STATE_VALUE_ENABLED"
-			}
+    "Modifiers"
+    {
+        "vengeance_modifier"
+        {
+            "IsHidden"  "1"
+            "Passive"   "1"
+            "States"
+            {   
+                "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_DOMINATED"          "MODIFIER_STATE_VALUE_ENABLED"
+            }
 
-			"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
-			"EffectAttachType"	"follow_origin"
+            "EffectName"        "particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+            "EffectAttachType"  "follow_origin"
 
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
-					"Function"		"InitializeSpiritCount"
-				}
-			}
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/warden/avatar_of_vengeance.lua"
+                    "Function"      "InitializeSpiritCount"
+                }
+            }
 
-			"OnDeath"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
-					"Function"		"KillVengeanceSpirits"
-				}
-			}
-		}
-	}
+            "OnDeath"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/warden/avatar_of_vengeance.lua"
+                    "Function"      "KillVengeanceSpirits"
+                }
+            }
+        }
+    }
 }
 
 // Spirit Spawn - Spaws a Spirit of Vengeance near a corpse
 "avatar_of_vengeance_spirit_spawn"
 {
 
-	"BaseClass" 			"ability_datadriven"
-	"MaxLevel"				"1"
-	"AbilityTextureName" 	"warden_spirit_of_vengeance"
+    "BaseClass"             "ability_datadriven"
+    "MaxLevel"              "1"
+    "AbilityTextureName"    "warden_spirit_of_vengeance"
 
-	"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 
-	"AbilityCooldown" 		"2"
-	"AbilityManacost" 		"25"
-	"AbilityCastRange"		"900"
+    "AbilityCooldown"       "2"
+    "AbilityManacost"       "25"
+    "AbilityCastRange"      "900"
 
-	"RequiresCorpsesAround"			"900"
+    "RequiresCorpsesAround"         "900"
 
-	"precache"
-	{
-		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
-	}
+    "precache"
+    {
+        "soundfile"             "soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+    }
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"spirit_limit"			"6"
-		}
-		"02"	
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"900"
-		}
-		"03"	
-		{
-			"var_type"				"FIELD_INTEGER"
-			"duration"				"50"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "spirit_limit"          "6"
+        }
+        "02"    
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "900"
+        }
+        "03"    
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "50"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
-			"Function"		"SpiritOfVengeanceSpawn"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/warden/avatar_of_vengeance.lua"
+            "Function"      "SpiritOfVengeanceSpawn"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_spirit_spawn_autocast"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-				
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"mechanics/abilities.lua"
-					"Function"		"ToggleOnAutocast"
-				}
-			}
+    "Modifiers"
+    {
+        "modifier_spirit_spawn_autocast"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+                
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "mechanics/abilities.lua"
+                    "Function"      "ToggleOnAutocast"
+                }
+            }
 
-			"ThinkInterval"  "0.5"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
-					"Function"		"SpiritOfVengeanceAutocast"
-				}
-			}
-		}
-	}		
+            "ThinkInterval"  "0.5"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/warden/avatar_of_vengeance.lua"
+                    "Function"      "SpiritOfVengeanceAutocast"
+                }
+            }
+        }
+    }       
 }
 
 // Spirit of Vengeance Passive
 // Invulnerable and some particle
 "spirit_of_vengeance_passive"
 {
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE	| DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	"BaseClass" 					"ability_datadriven"
-	"AbilityUnitTargetTeam" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE  | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+    }
 
-	"Modifiers"
-	{
-		"vengeance_modifier"
-		{
-			"IsHidden"	"1"
-			"Passive"	"1"
-			"States"
-			{
-				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
-					"EffectAttachType"	"attach_uppertorso"
-					"Target"			"CASTER"
-				}
-			}
-			"OnDeath"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/warden/avatar_of_vengeance.lua"
-					"Function"		"UpdateSpirits"
-				}
-			}
-		}
-	}
+    "Modifiers"
+    {
+        "vengeance_modifier"
+        {
+            "IsHidden"  "1"
+            "Passive"   "1"
+            "States"
+            {
+                "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_DOMINATED"      "MODIFIER_STATE_VALUE_ENABLED"
+            }
+            "OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_vengeful/vengeful_ambient.vpcf"
+                    "EffectAttachType"  "attach_uppertorso"
+                    "Target"            "CASTER"
+                }
+            }
+            "OnDeath"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/warden/avatar_of_vengeance.lua"
+                    "Function"      "UpdateSpirits"
+                }
+            }
+        }
+    }
 }

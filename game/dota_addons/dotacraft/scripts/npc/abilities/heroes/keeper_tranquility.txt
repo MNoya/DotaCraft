@@ -1,140 +1,138 @@
 // Keeper of the Grove Tranquility
 // Author: Noya
-// Date: 14.1.2015.
-// Notes: Causes a rain of healing energy to pour down in a large area, healing friendly allied units for 20 hit points per second.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	30 sec.	60 sec.	125	N/A	90	Air, Ground, Friend, Self	Heals 20 HP/sec	6
+// Description: Causes a rain of healing energy to pour down in a large area, healing friendly allied units for 20 hit points per second.
+
 "keeper_tranquility"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"keeper_tranquility"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "keeper_tranquility"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"60"
-	"AbilityChannelTime" 			"30"
+    "AbilityCastRange"              "700"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "60"
+    "AbilityChannelTime"            "30"
 
-	"AbilityManaCost"				"125"
+    "AbilityManaCost"               "125"
 
-	"precache"
-	{
-		"particle"				"particles/units/heroes/hero_luna/luna_eclipse.vpcf"
-		"particle"				"particles/neutral_fx/troll_heal.vpcf"
-	}
+    "precache"
+    {
+        "particle"              "particles/units/heroes/hero_luna/luna_eclipse.vpcf"
+        "particle"              "particles/neutral_fx/troll_heal.vpcf"
+    }
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"duration" 			"30"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"heal_per_second"	"20"
-		}
-		"03"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"radius"			"900"
-		}
-	}		
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "duration"          "30"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "heal_per_second"   "20"
+        }
+        "03"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "radius"            "900"
+        }
+    }       
 
-	"OnSpellStart"
-	{
-		"ApplyModifier"
-		{
-			"Target"			"CASTER"
-			"ModifierName"		"modifier_tranquility_aura"
-		}	
-	}
+    "OnSpellStart"
+    {
+        "ApplyModifier"
+        {
+            "Target"            "CASTER"
+            "ModifierName"      "modifier_tranquility_aura"
+        }   
+    }
 
-	"OnChannelFinish"
-	{
-		"RemoveModifier"
-		{
-			"Target"			"CASTER"
-			"ModifierName"		"modifier_tranquility_aura"
-		}	
-	}
+    "OnChannelFinish"
+    {
+        "RemoveModifier"
+        {
+            "Target"            "CASTER"
+            "ModifierName"      "modifier_tranquility_aura"
+        }   
+    }
 
-	"Modifiers"
-	{
-		"modifier_tranquility_aura"
-		{
-			"IsHidden" 			"1"
+    "Modifiers"
+    {
+        "modifier_tranquility_aura"
+        {
+            "IsHidden"          "1"
 
-			"Aura" 				"modifier_tranquility_aura_effect"
-			"Aura_Radius" 		"%radius"
-			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			"Aura_Types" 		"DOTA_UNIT_TARGET_ALL"
+            "Aura"              "modifier_tranquility_aura_effect"
+            "Aura_Radius"       "%radius"
+            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+            "Aura_Types"        "DOTA_UNIT_TARGET_ALL"
 
-			"EffectName"		"particles/items2_fx/tranquil_boots_healing.vpcf"
-			"EffectAttachType"	"follow_origin"
+            "EffectName"        "particles/items2_fx/tranquil_boots_healing.vpcf"
+            "EffectAttachType"  "follow_origin"
 
-			"OnCreated"
-			{
-				
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/keeper/tranquility.lua"
-					"Function"		"TranquilityStart"
-				}
+            "OnCreated"
+            {
+                
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/keeper/tranquility.lua"
+                    "Function"      "TranquilityStart"
+                }
 
-				"AttachEffect"
-				{
-					"Target" 			"CASTER"
-					"EffectName"		"particles/custom/nightelf/tranquility.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"ControlPoints"
-					{
-						"01"		"%radius 0 0"
-					}
-				}
+                "AttachEffect"
+                {
+                    "Target"            "CASTER"
+                    "EffectName"        "particles/custom/nightelf/tranquility.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "ControlPoints"
+                    {
+                        "01"        "%radius 0 0"
+                    }
+                }
 
-				"FireSound"
-				{
-					"Target" 		"CASTER"
-					"EffectName" 	"leshrac_lesh_respawn_09"
-				}
-			}
+                "FireSound"
+                {
+                    "Target"        "CASTER"
+                    "EffectName"    "leshrac_lesh_respawn_09"
+                }
+            }
 
-			"ThinkInterval"		"2"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/keeper/tranquility.lua"
-					"Function"		"TranquilityThink"
-				}
-			}
-		}
+            "ThinkInterval"     "2"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/keeper/tranquility.lua"
+                    "Function"      "TranquilityThink"
+                }
+            }
+        }
 
-		"modifier_tranquility_aura_effect"
-		{
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 	"%heal_per_second"
-			}
+        "modifier_tranquility_aura_effect"
+        {
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%heal_per_second"
+            }
 
-			"ThinkInterval"		"1"
-			"OnIntervalThink"
-			{
-				"AttachEffect"
-				{
-					"Target"			"TARGET"
-					"EffectName"		"particles/neutral_fx/troll_heal.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
-			}
-		}
-	}
+            "ThinkInterval"     "1"
+            "OnIntervalThink"
+            {
+                "AttachEffect"
+                {
+                    "Target"            "TARGET"
+                    "EffectName"        "particles/neutral_fx/troll_heal.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                }
+            }
+        }
+    }
 }

@@ -1,74 +1,70 @@
 // Warden Blink
 // Author: Noya
-// Date: 09.08.2015
-// Notes: Short distance teleportation that allows the Warden to move in and out of combat.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	N/A	10 sec.	50	9999.9	N/A	Self	Teleport	1
-//2	N/A	10 sec.	10	9999.9	N/A	Self	Teleport	3
-//3	N/A	1 sec.	10	9999.9	N/A	Self	Teleport	5
+// Description: Short distance teleportation that allows the Warden to move in and out of combat.
+
 "warden_blink"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"warden_blink"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "warden_blink"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"10.0 10.0 1.0"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "10.0 10.0 1.0"
 
-	"AbilityManaCost"				"50 10 10"
+    "AbilityManaCost"               "50 10 10"
 
-	"precache"
-	{
-		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
-		"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
-		"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"blink_range"			"1000"
-		}
-	}
+    "precache"
+    {
+        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+        "particle"      "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
+        "particle"      "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "blink_range"           "1000"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"		"heroes/warden/blink.lua"
-			"Function"			"Blink"
-			"Target"			"POINT"
-		}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"        "heroes/warden/blink.lua"
+            "Function"          "Blink"
+            "Target"            "POINT"
+        }
 
-		"FireSound"
-		{
-			"EffectName"		"Hero_Antimage.Blink_out"
-			"Target"			"CASTER"
-		}
+        "FireSound"
+        {
+            "EffectName"        "Hero_Antimage.Blink_out"
+            "Target"            "CASTER"
+        }
 
-		"AttachEffect"
-		{
-			"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
-			"Target"			"CASTER"
-			"EffectAttachType"	"attach_hitloc"
-		}
+        "AttachEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
+            "Target"            "CASTER"
+            "EffectAttachType"  "attach_hitloc"
+        }
 
-		"FireSound"
-		{
-			"EffectName"		"Hero_Antimage.Blink_in"
-			"Target"			"CASTER"
-		}
+        "FireSound"
+        {
+            "EffectName"        "Hero_Antimage.Blink_in"
+            "Target"            "CASTER"
+        }
 
-		"AttachEffect"
-		{
-			"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-			"Target"			"CASTER"
-			"EffectAttachType"	"follow_origin"
-		}
-	}
+        "AttachEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+            "Target"            "CASTER"
+            "EffectAttachType"  "follow_origin"
+        }
+    }
 }

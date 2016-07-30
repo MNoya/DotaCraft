@@ -1,156 +1,152 @@
 // Lich Frost Nova, Warcraft version
 // Author: Noya
-// Date: 18.1.2015.
-// Notes: Blasts enemy units around a target enemy unit with a wave of damaging frost that slows movement and attack rate.
-//Level	Duration (Heroes)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	4 (2) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 50 nova damage	1
-//2	6 (3) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 100 nova damage	3
-//3	8 (4) sec.	8 sec.	125	80	20	Air, Ground, Enemy	100 target damage, 150 nova damage	5
+// Description: Blasts enemy units around a target enemy unit with a wave of damaging frost that slows movement and attack rate.
+
 "lich_frost_nova_warcraft"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"lich_frost_nova_warcraft"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "lich_frost_nova_warcraft"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 
-	"AbilityCastRange"				"800"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"8.0"
+    "AbilityCastRange"              "800"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "8.0"
 
-	"AbilityManaCost"				"125"
-	"AbilityDamage"					"100"
+    "AbilityManaCost"               "125"
+    "AbilityDamage"                 "100"
 
-	"AoERadius"						"200"
+    "AoERadius"                     "200"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
-		"particle"	"particles/status_fx/status_effect_frost_lich.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{			
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"radius"				"200"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"slow_movement_speed"	"-30"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"slow_attack_speed"		"-20"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"aoe_damage"			"50 100 150"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"slow_hero_duration"	"2 3 4"
-		}
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"slow_creep_duration"	"4 6 8"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+        "particle"  "particles/status_fx/status_effect_frost_lich.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {           
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "200"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "slow_movement_speed"   "-30"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "slow_attack_speed"     "-20"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "aoe_damage"            "50 100 150"
+        }
+        "05"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "slow_hero_duration"    "2 3 4"
+        }
+        "06"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "slow_creep_duration"   "4 6 8"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireEffect"
-		{
-			"EffectName"		"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
-			"EffectAttachType"	"follow_origin"
-			"Target"			"TARGET"
-		}
+    "OnSpellStart"
+    {
+        "FireEffect"
+        {
+            "EffectName"        "particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+            "EffectAttachType"  "follow_origin"
+            "Target"            "TARGET"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Ability.FrostNova"
-			"Target"		"TARGET"
-		}
+        "FireSound"
+        {
+            "EffectName"    "Ability.FrostNova"
+            "Target"        "TARGET"
+        }
 
-		"Damage"
-		{
-			"Type"		"DAMAGE_TYPE_MAGICAL"
-			"Target"	"TARGET"
-			"Damage"	"%AbilityDamage"
-		}
+        "Damage"
+        {
+            "Type"      "DAMAGE_TYPE_MAGICAL"
+            "Target"    "TARGET"
+            "Damage"    "%AbilityDamage"
+        }
 
-		"ActOnTargets"
-		{
-			"Target"
-			{
-				"Center"  				"TARGET"
-				"Radius" 				"%radius"
-				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-			}
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"                "TARGET"
+                "Radius"                "%radius"
+                "Teams"                 "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Types"                 "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+            }
 
-			"Action"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"    "modifier_frost_nova_slow"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types"		"DOTA_UNIT_TARGET_HERO"
-					}
-					"Duration"		"%slow_hero_duration"
-				}
+            "Action"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"    "modifier_frost_nova_slow"
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                        "Types"     "DOTA_UNIT_TARGET_HERO"
+                    }
+                    "Duration"      "%slow_hero_duration"
+                }
 
-				"ApplyModifier"
-				{
-					"ModifierName"    "modifier_frost_nova_slow"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types"		"DOTA_UNIT_TARGET_BASIC"
-					}
-					"Duration"		"%slow_creep_duration"
-				}
+                "ApplyModifier"
+                {
+                    "ModifierName"    "modifier_frost_nova_slow"
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                        "Types"     "DOTA_UNIT_TARGET_BASIC"
+                    }
+                    "Duration"      "%slow_creep_duration"
+                }
 
-				"Damage"
-				{
-					"Type"		"DAMAGE_TYPE_MAGICAL"
-					"Target"	"TARGET"
-					"Damage"	"%aoe_damage"
-				}
+                "Damage"
+                {
+                    "Type"      "DAMAGE_TYPE_MAGICAL"
+                    "Target"    "TARGET"
+                    "Damage"    "%aoe_damage"
+                }
 
-			}
-		}
-	}
+            }
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_frost_nova_slow"
-		{
-			"IsDebuff"		"1"
+    "Modifiers"
+    {
+        "modifier_frost_nova_slow"
+        {
+            "IsDebuff"      "1"
 
-			"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
-			"StatusEffectPriority"	"10"
+            "StatusEffectName"      "particles/status_fx/status_effect_frost_lich.vpcf"
+            "StatusEffectPriority"  "10"
 
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
-			}
-		}
-	}
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%slow_movement_speed"
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"  "%slow_attack_speed"
+            }
+        }
+    }
 }

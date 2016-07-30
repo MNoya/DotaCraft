@@ -4,224 +4,224 @@
 
 "crypt_lord_carrion_beetles"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"crypt_lord_carrion_beetles"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "crypt_lord_carrion_beetles"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"900"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"6.0"
+    "AbilityCastRange"              "900"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "6.0"
 
-	"AbilityManaCost"				"30"
+    "AbilityManaCost"               "30"
 
-	"RequiresCorpsesAround"			"900"
+    "RequiresCorpsesAround"         "900"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
-		"model"		"models/heroes/weaver/weaver_bug.vmdl"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"beetle_limit"				"5"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"beetle_damage"				"8 16 24"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"beetle_hp"					"140 275 410"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
+        "model"     "models/heroes/weaver/weaver_bug.vmdl"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "beetle_limit"              "5"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "beetle_damage"             "8 16 24"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "beetle_hp"                 "140 275 410"
+        }
+    }
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
-			"Function"		"CarrionBeetlesPrecast"
-		}	
-	}
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
-			"Function"		"CarrionBeetleSpawn"
-		}
+    "OnAbilityPhaseStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/crypt_lord/carrion_beetles.lua"
+            "Function"      "CarrionBeetlesPrecast"
+        }   
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/crypt_lord/carrion_beetles.lua"
+            "Function"      "CarrionBeetleSpawn"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Weaver.SwarmCast"
-			"Target" 		"CASTER"
-		}
-		
-	}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Weaver.SwarmCast"
+            "Target"        "CASTER"
+        }
+        
+    }
 
-	"Modifiers"
-	{
-		"modifier_carrion_beetle"
-		{	
-			"OnCreated"
-			{
-				"FireEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-					"ControlPointEntities"
-					{
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-					}
-				}
+    "Modifiers"
+    {
+        "modifier_carrion_beetle"
+        {   
+            "OnCreated"
+            {
+                "FireEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "TARGET"
+                    "ControlPointEntities"
+                    {
+                        "TARGET"    "attach_origin"
+                        "TARGET"    "attach_origin"
+                    }
+                }
 
-				"RunScript"
-				{
-					"ScriptFile"	"mechanics/corpses.lua"
-					"Function"		"SetNoCorpse"
-				}				
-			}
+                "RunScript"
+                {
+                    "ScriptFile"    "mechanics/corpses.lua"
+                    "Function"      "SetNoCorpse"
+                }               
+            }
 
-			"States"
-			{
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-			}
-			
-			"OnDeath"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
-					"Function"		"RemoveDeadBeetle"
-				}
-			}		
-		}
-	}
+            "States"
+            {
+                "MODIFIER_STATE_DOMINATED"      "MODIFIER_STATE_VALUE_ENABLED"
+            }
+            
+            "OnDeath"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/crypt_lord/carrion_beetles.lua"
+                    "Function"      "RemoveDeadBeetle"
+                }
+            }       
+        }
+    }
 }
 
 
 // Burrow Sub Ability
 "crypt_lord_beetle_burrow"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"crypt_lord_beetle_burrow"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "crypt_lord_beetle_burrow"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastPoint"				"0.1"
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"hp_regen"				"2"
-		}
-	}
-	
-	"OnToggleOn"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
-			"Function"		"Burrow"
-			"Move"			"down"
-		}
+    "AbilityCastPoint"              "0.1"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "hp_regen"              "2"
+        }
+    }
+    
+    "OnToggleOn"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/crypt_lord/carrion_beetles.lua"
+            "Function"      "Burrow"
+            "Move"          "down"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_burrow"
-			"Target" 		"CASTER"
-		}
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_burrow"
+            "Target"        "CASTER"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Weaver.SwarmCast"
-			"Target" 		"CASTER"
-		}	
-	}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Weaver.SwarmCast"
+            "Target"        "CASTER"
+        }   
+    }
 
-	"OnToggleOff"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/crypt_lord/carrion_beetles.lua"
-			"Function"		"Burrow"
-			"Move"			"up"
-		}
+    "OnToggleOff"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/crypt_lord/carrion_beetles.lua"
+            "Function"      "Burrow"
+            "Move"          "up"
+        }
 
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_burrow"
-			"Target" 		"CASTER"
-		}
-	}
+        "RemoveModifier"
+        {
+            "ModifierName"  "modifier_burrow"
+            "Target"        "CASTER"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_burrow"
-		{	
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%hp_regen"
-			}
+    "Modifiers"
+    {
+        "modifier_burrow"
+        {   
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%hp_regen"
+            }
 
-			"States"
-			{
-				//"MODIFIER_STATE_NO_HEALTH_BAR" 				"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_ATTACK_IMMUNE"				"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_DISARMED"					"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_MAGIC_IMMUNE"				"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_ROOTED"						"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_PROVIDES_VISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-			}
+            "States"
+            {
+                //"MODIFIER_STATE_NO_HEALTH_BAR"                "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_ATTACK_IMMUNE"              "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_DISARMED"                   "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_MAGIC_IMMUNE"               "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_ROOTED"                     "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES" "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_PROVIDES_VISION"            "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_UNIT_COLLISION"          "MODIFIER_STATE_VALUE_ENABLED"
+            }
 
-			"OnCreated"
-			{
-				"FireEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-					"ControlPointEntities"
-					{
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-					}
-				}				
-			}
-			
-			"OnDestroy"
-			{
-				"FireEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-					"ControlPointEntities"
-					{
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-					}
-				}
-			}		
-		}
-	}
+            "OnCreated"
+            {
+                "FireEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "TARGET"
+                    "ControlPointEntities"
+                    {
+                        "TARGET"    "attach_origin"
+                        "TARGET"    "attach_origin"
+                    }
+                }               
+            }
+            
+            "OnDestroy"
+            {
+                "FireEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "TARGET"
+                    "ControlPointEntities"
+                    {
+                        "TARGET"    "attach_origin"
+                        "TARGET"    "attach_origin"
+                    }
+                }
+            }       
+        }
+    }
 }

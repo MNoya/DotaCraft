@@ -1,77 +1,76 @@
 // Tinker Engineering Upgrade
 // Author: Noya
-// Date: 03.02.2015.
-// Notes: Improves other Tinker abilities with each level learned:
-//Cluster Rockets - Larger Area.
-//Pocket Factory - Builds Clockwerk Goblins more quickly.
-//Robo-Goblin - Increases armor and Strength; enhances Demolish.
+// Description: Improves other Tinker abilities with each level learned:
+//  Cluster Rockets - Larger Area.
+//  Pocket Factory - Builds Clockwerk Goblins more quickly.
+//  Robo-Goblin - Increases armor and Strength; enhances Demolish.
 
 //Also gives bonus damage and increases the Tinker's movement speed.
 "tinker_engineering_upgrade"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"tinker_engineering_upgrade"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "tinker_engineering_upgrade"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"bonus_damage"					"2 4 6"
-		}
-		"02"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"bonus_movement_speed"			"10 20 30"
-		}
-		"03"
-		{
-			"var_type"					 	"FIELD_FLOAT"
-			"factory_spawn_time_reduced"	"1.0 2.0 3.0"
-		}
-		"04"
-		{	
-			"var_type"						"FIELD_INTEGER"
-			"cluster_extra_radius"			"30 60 90"
-		}
-		"05"
-		{	
-			"var_type"						"FIELD_INTEGER"
-			"robo_goblin_extra_str"			"2 4 6"
-		}
-		"05"
-		{	
-			"var_type"						"FIELD_INTEGER"
-			"robo_goblin_extra_armor"		"1 2 3"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                      "FIELD_INTEGER"
+            "bonus_damage"                  "2 4 6"
+        }
+        "02"
+        {
+            "var_type"                      "FIELD_INTEGER"
+            "bonus_movement_speed"          "10 20 30"
+        }
+        "03"
+        {
+            "var_type"                      "FIELD_FLOAT"
+            "factory_spawn_time_reduced"    "1.0 2.0 3.0"
+        }
+        "04"
+        {   
+            "var_type"                      "FIELD_INTEGER"
+            "cluster_extra_radius"          "30 60 90"
+        }
+        "05"
+        {   
+            "var_type"                      "FIELD_INTEGER"
+            "robo_goblin_extra_str"         "2 4 6"
+        }
+        "05"
+        {   
+            "var_type"                      "FIELD_INTEGER"
+            "robo_goblin_extra_armor"       "1 2 3"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_engineering_upgrade"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-	
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 		"%bonus_damage"
-			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%bonus_movement_speed" 
-			}
-		}
+    "Modifiers"
+    {
+        "modifier_engineering_upgrade"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+    
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_damage"
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%bonus_movement_speed" 
+            }
+        }
 
-		"modifier_robo_goblin_upgrade"
-		{
-			"IsHidden"			"1"
-	
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%robo_goblin_extra_str"
-			    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" 		"%robo_goblin_extra_armor" 
-			}
-		}
-	}
+        "modifier_robo_goblin_upgrade"
+        {
+            "IsHidden"          "1"
+    
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%robo_goblin_extra_str"
+                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"        "%robo_goblin_extra_armor" 
+            }
+        }
+    }
 }
