@@ -308,8 +308,9 @@
     "BaseClass"                     "item_datadriven"
     "AbilityTextureName"            "item_crystal_ball"
 
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
     "AbilityCooldown"               "60"
+    "AoERadius"                     "900"
     
     "AbilitySpecial"
     {
