@@ -25,7 +25,6 @@
 
     "precache"
     {
-        "particle"  "particles/newplayer_fx/npx_sleeping.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
     }
         
@@ -83,8 +82,11 @@
             "IsPurgable"    "1"
             "IsDebuff"      "1"
 
-            "EffectName"        "particles/newplayer_fx/npx_sleeping.vpcf"
+            "EffectName"       "particles/custom/undead/sleep.vpcf"
             "EffectAttachType" "follow_overhead"
+
+            "StatusEffectName"      "particles/status_fx/status_effect_nightmare.vpcf"        
+            "StatusEffectPriority"  "10"
 
             "States"
             {
