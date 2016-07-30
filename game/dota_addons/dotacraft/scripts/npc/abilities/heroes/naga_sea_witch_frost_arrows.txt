@@ -1,130 +1,122 @@
-// AbilityName
-// Author: 
-// Date: 13.1.2015.
-// Notes: Adds a cold effect to each attack, slowing a target enemy unit's attacks and movement.
-//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+5 bonus damage, 30% attack rate, 30% movement speed	1
-//2	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+10 bonus damage, 50% attack rate, 50% movement speed	3
-//3	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+15 bonus damage, 70% attack rate, 70% movement speed	5
+// Naga Sea Witch Frost Arrows
+// Author: Noya
+// Description: Adds a cold effect to each attack, slowing a target enemy unit's attacks and movement.
+
 "naga_sea_witch_frost_arrows"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"naga_sea_witch_frost_arrows"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "naga_sea_witch_frost_arrows"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
-    "AbilityCastPoint"          	"0"
-    "AbilityCastRange"          	"600"
+    "AbilityCastRange"              "600"
 
-	"AbilityManaCost"				"10"
-	"AbilityDamage"					"5 10 15"
+    "AbilityManaCost"               "10"
+    "AbilityDamage"                 "5 10 15"
 
-	"precache"
-	{
-		"particle"	"particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
-		"particle"	"particles/generic_gameplay/generic_slowed_cold.vpcf"
-		"particle"	"particles/status_fx/status_effect_frost.vpcf"	
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"						"FIELD_FLOAT"
-			"slow_hero_duration"			"1.5"
-		}
-		"02"
-		{
-			"var_type"						"FIELD_FLOAT"
-			"slow_creep_duration"			"5"
-		}
-		"03"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"slow_percentage"				"-20 -35 -50"		
-		}		
-	}
+    "precache"
+    {
+        "particle"  "particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
+        "particle"  "particles/generic_gameplay/generic_slowed_cold.vpcf"
+        "particle"  "particles/status_fx/status_effect_frost.vpcf"  
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                      "FIELD_FLOAT"
+            "slow_hero_duration"            "1.5"
+        }
+        "02"
+        {
+            "var_type"                      "FIELD_FLOAT"
+            "slow_creep_duration"           "5"
+        }
+        "03"
+        {
+            "var_type"                      "FIELD_INTEGER"
+            "slow_percentage"               "-20 -35 -50"       
+        }       
+    }
 
-	"Modifiers"
-	{
-		"modifier_frost_arrows"
-		{
-			"Passive"               "1" 
-			"IsHidden"				"1"
+    "Modifiers"
+    {
+        "modifier_frost_arrows"
+        {
+            "Passive"               "1" 
+            "IsHidden"              "1"
+            "Orb"
+            {
+                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+                "ProjectileName"    "particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
+                "CastAttack"        "1"
+            }
 
-			"Orb"
-			{
-				"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
-				"ProjectileName"    "particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
-				"CastAttack"		"1"
-			}
+            "OnOrbFire"
+            {
+                "SpendMana"
+                {
+                    "Mana"              "%AbilityManaCost"
+                }
+                "FireSound"
+                {
+                    "EffectName"        "Hero_DrowRanger.FrostArrows"
+                    "Target"            "CASTER"
+                }
+            }
+            
+            "OnOrbImpact"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_frost_arrows_slow"
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Types"     "DOTA_UNIT_TARGET_HERO"
+                    }
+                    "Duration"      "%slow_hero_duration"
+                }
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_frost_arrows_slow"
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Types"     "DOTA_UNIT_TARGET_BASIC"
+                    }
+                    "Duration"      "%slow_creep_duration"
+                }
+                "Damage"
+                {
+                    "Type"              "DAMAGE_TYPE_PHYSICAL"
+                    "Damage"            "%AbilityDamage"
+                    "Target"            "TARGET"
+                }
+            }
+        }
 
-			"OnOrbFire"
-			{
-				"SpendMana"
-				{
-					"Mana"    			"%AbilityManaCost"
-				}
-				"FireSound"
-				{
-					"EffectName"		"Hero_DrowRanger.FrostArrows"
-					"Target"			"CASTER"
-				}
-			}
-			
-			"OnOrbImpact"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_frost_arrows_slow"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Types"		"DOTA_UNIT_TARGET_HERO"
-					}
-					"Duration"		"%slow_hero_duration"
-				}
+        "modifier_frost_arrows_slow"
+        {
+            "IsDebuff"          "1"
+            "TextureName"       "naga_sea_witch_frost_arrows"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"      "%slow_percentage"
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"      "%slow_percentage"
 
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_frost_arrows_slow"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Types"		"DOTA_UNIT_TARGET_BASIC"
-					}
-					"Duration"		"%slow_creep_duration"
-				}
-
-				"Damage"
-				{
-					"Type"          	"DAMAGE_TYPE_PHYSICAL"
-					"Damage"        	"%AbilityDamage"
-					"Target"			"TARGET"
-				}
-			}
-		}
-
-		"modifier_frost_arrows_slow"
-		{
-			"IsDebuff" 			"1"
-			"TextureName"		"naga_sea_witch_frost_arrows"
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_percentage"
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow_percentage"
-
-			}
-			"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"EffectAttachType"      "attach_hitloc"
-			
-			"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
-			"StatusEffectPriority"	"10"
-		}
-	}
+            }
+            "EffectName"            "particles/generic_gameplay/generic_slowed_cold.vpcf"
+            "EffectAttachType"      "attach_hitloc"
+            
+            "StatusEffectName"      "particles/status_fx/status_effect_frost.vpcf"
+            "StatusEffectPriority"  "10"
+        }
+    }
 }

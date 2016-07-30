@@ -13,7 +13,7 @@
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-    "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
     "TargetsAllowed"                "organic"
 
@@ -26,7 +26,7 @@
     "precache"
     {
         "particle"  "particles/custom/ogre_magi_fireblast.vpcf"
-        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+        "particle"  "particles/econ/items/shadow_fiend/sf_desolation/sf_base_attack_desolation.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
     }
     
@@ -50,12 +50,26 @@
         "04"
         {
             "var_type"                      "FIELD_INTEGER"
-            "incineration_radius"           "100"
+            "incineration_radius"           "150"
         }
     }
 
     "Modifiers"
     {
+        "modifier_incinerate_orb_check"
+        {
+            "Passive"       "1"
+            "IsHidden"      "1"
+            "OnAttackStart"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/firelord/incinerate.lua"
+                    "Function"      "OrbCheck"
+                }
+            }
+        }
+
         "modifier_incinerate_orb"
         {   
             "Passive"                       "1"
@@ -64,7 +78,7 @@
             "Orb"
             {
                 "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
-                "ProjectileName"    "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+                "ProjectileName"    "particles/econ/items/shadow_fiend/sf_desolation/sf_base_attack_desolation_fire_arcana.vpcf"
                 "CastAttack"        "1" 
             }
 
@@ -98,28 +112,10 @@
 
             "OnDeath"
             {
-                "FireEffect"
+                "RunScript"
                 {
-                    "EffectName"        "particles/custom/ogre_magi_fireblast.vpcf"
-                    "EffectAttachType"  "follow_origin"
-                    "Target"
-                    {
-                       "Center" "UNIT"
-                       "Flags"  "DOTA_UNIT_TARGET_FLAG_DEAD"
-                    }
-                }
-
-                "Damage"
-                {
-                    "Target"
-                    {
-                        "Center"    "TARGET"
-                        "Radius"    "%incineration_radius"
-                        "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                    }
-                    "Type"          "DAMAGE_TYPE_MAGICAL"
-                    "Damage"        "%incineration_damage"
+                    "ScriptFile"    "heroes/firelord/incinerate.lua"
+                    "Function"      "IncinerateDeath"
                 }
             }
         }
