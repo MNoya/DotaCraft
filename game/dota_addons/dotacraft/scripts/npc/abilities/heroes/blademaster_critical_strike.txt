@@ -1,104 +1,100 @@
 // Blademaster Critical Strike
-// Author: 
-// Date: 13.1.2015.
+// Author: Noya
 // Notes: Gives a 15% chance that the Blademaster will do more damage on his attacks.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	Unlimited	N/A	N/A	N/A	N/A	Self	2 times normal damage	1
-//2	Unlimited	N/A	N/A	N/A	N/A	Self	3 times normal damage	3
-//3	Unlimited	N/A	N/A	N/A	N/A	Self	4 times normal damage	5
+
 "blademaster_critical_strike"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"blademaster_critical_strike"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "blademaster_critical_strike"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
-		"particle"	"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"crit_bonus"				"200 300 400"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"crit_chance"				"15"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/econ/items/juggernaut/jugg_sword_fireborn_odachi/jugg_crit_blur_fb_odachi.vpcf"
+        "particle"  "particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "crit_bonus"                "200 300 400"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "crit_chance"               "15"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_critical_strike"
-		{
-		    "Passive"   "1"
-		    "IsHidden"  "1"
-		    "OnAttackStart"
-		    {
-		        "RemoveModifier"
-		        {
-		            "ModifierName" 	"modifier_critical_strike_crit"
-		            "Target" 		"CASTER"
-		        }
+    "Modifiers"
+    {
+        "modifier_critical_strike"
+        {
+            "Passive"   "1"
+            "IsHidden"  "1"
+            "OnAttackStart"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_critical_strike_crit"
+                    "Target"        "CASTER"
+                }
 
-		        "Random"
-		        {
-		            "Chance" "%crit_chance"
-		            "OnSuccess"
-		            {
-		            	"FireSound"
-				        {
-				        	"EffectName"	"Hero_SkeletonKing.CriticalStrike"
-				        	"Target"		"CASTER"
-				        }
+                "Random"
+                {
+                    "Chance" "%crit_chance"
+                    "OnSuccess"
+                    {
+                        "FireSound"
+                        {
+                            "EffectName"    "Hero_SkeletonKing.CriticalStrike"
+                            "Target"        "CASTER"
+                        }
 
-				        "FireEffect"
-				        {
-				       		"EffectName" 		"particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
-				            "EffectAttachType"  "attach_sword"
-				            "Target"    		"CASTER"
-				        }
+                        "FireEffect"
+                        {
+                            "EffectName"        "particles/econ/items/juggernaut/jugg_sword_fireborn_odachi/jugg_crit_blur_fb_odachi.vpcf"
+                            "EffectAttachType"  "attach_sword"
+                            "Target"            "CASTER"
+                        }
 
-		                "ApplyModifier"
-		                {
-		                    "ModifierName" 	"modifier_critical_strike_crit"
-		                    "Target"    	"CASTER"    
-		                }        
-		            }
-		        }
-		    }
-		}
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_critical_strike_crit"
+                            "Target"        "CASTER"    
+                        }        
+                    }
+                }
+            }
+        }
 
-		"modifier_critical_strike_crit"
-		{
-		    "IsHidden"  "1"
-		    "Properties"
-		    {
-		        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
-		    }
+        "modifier_critical_strike_crit"
+        {
+            "IsHidden"  "1"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
+            }
 
-		    "OnAttackLanded"
-		    {
-		    	"FireEffect"
-		    	{
-		    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
-		    		"EffectAttachType"	"attach_hitloc"
-		    		"Target"			"TARGET"
-		    	}
-		        "RemoveModifier"
-		        {
-		            "ModifierName"  	"modifier_critical_strike_crit"
-		            "Target"   			"CASTER"    
-		        }
-		    }
-		}
-	}
+            "OnAttackLanded"
+            {
+                "FireEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+                    "EffectAttachType"  "attach_hitloc"
+                    "Target"            "TARGET"
+                }
+                "RemoveModifier"
+                {
+                    "ModifierName"      "modifier_critical_strike_crit"
+                    "Target"            "CASTER"    
+                }
+            }
+        }
+    }
 }

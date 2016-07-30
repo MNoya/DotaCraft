@@ -4,7 +4,8 @@
 
 "lich_dark_ritual_warcraft"
 {
-    "BaseClass"                     "ability_datadriven"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/lich/dark_ritual.lua"
     "AbilityTextureName"            "lich_dark_ritual_warcraft"
     "MaxLevel"                      "3"
 
@@ -12,8 +13,6 @@
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
     "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
-
-    "TargetsAllowed"                "organic"
 
     "AbilityCastRange"              "800"
     "AbilityCastPoint"              "0.4"
@@ -33,33 +32,6 @@
         {
             "var_type"              "FIELD_INTEGER"
             "health_conversion"     "33 66 100"
-        }
-    }
-
-    "OnSpellStart"
-    {
-        "FireSound"
-        {
-            "EffectName"    "Ability.DarkRitual"
-            "Target"        "CASTER"
-        }
-
-        "FireEffect"
-        {
-            "EffectName"        "particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
-            "EffectAttachType"  "follow_origin"
-            "Target"            "TARGET"
-            "ControlPointEntities"
-            {
-                "TARGET"    "attach_hitloc"
-                "CASTER"    "attach_hitloc"
-            }
-        }
-
-        "RunScript"
-        {
-            "ScriptFile"    "heroes/lich/dark_ritual.lua"
-            "Function"      "DarkRitual"
         }
     }
 }

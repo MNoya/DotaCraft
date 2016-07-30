@@ -1,137 +1,61 @@
 // Shadow Hunter Serpent Ward
 // Author: Noya
-// Date: 15.01.2015.
-// Notes: Summons an immobile serpentine ward to attack the Shadow Hunter's enemies. The ward has 75/135/135 hit points and is immune to magic. Lasts 40 seconds.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//1	40 sec.	6.5 sec.	30	50	N/A	N/A	11-13 damage	1
-//2	40 sec.	6.5 sec.	30	80	N/A	N/A	23-26 damage	3
-//3	40 sec.	6.5 sec.	30	80	N/A	N/A	41-45 damage	5
+// Description: Summons an immobile serpentine ward to attack the Shadow Hunter's enemies. The ward has 75/135/135 hit points and is immune to magic. Lasts 40 seconds.
+
 "shadow_hunter_serpent_ward"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"shadow_hunter_serpent_ward"
-	"MaxLevel" 						"3"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "shadow_hunter_serpent_ward"
+    "MaxLevel"                      "3"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-	"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
-	"AbilityCastRange"				"500 800 800"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"6.5"
+    "AbilityCastRange"              "500 800 800"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "6.5"
 
-	"AbilityManaCost"				"30"
+    "AbilityManaCost"               "30"
 
-	"precache"
-	{
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
-		"particle"	"particles/units/heroes/hero_venomancer/venomancer_ward_cast.vpcf"
-		"particle"	"particles/units/heroes/hero_venomancer/venomancer_ward_spawn.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"duration"				"40.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"ward_hp_tooltip"		"75 135 135"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"ward_damage_tooltip"	"12 24 43"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"plague_ward_1_count"	"1 0 0"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"plague_ward_2_count"	"0 1 0"
-		}
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"plague_ward_3_count"	"0 0 1"
-		}
-	}
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+        "particle"  "particles/units/heroes/hero_venomancer/venomancer_ward_cast.vpcf"
+        "particle"  "particles/units/heroes/hero_venomancer/venomancer_ward_spawn.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "duration"              "40.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "ward_hp"               "75 135 135"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "ward_damage"           "12 24 43"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"		"Hero_Venomancer.Plague_Ward"
-			"Target"			"CASTER"
-		}
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"        "Hero_Venomancer.Plague_Ward"
+            "Target"            "CASTER"
+        }
 
-		"SpawnUnit"
-		{
-			"UnitName"			"orc_serpent_ward_1"
-			"Target"			"POINT"
-			"UnitCount"			"%plague_ward_1_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			// This makes sure units never get stuck
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"orc_serpent_ward_2"
-			"Target"			"POINT"
-			"UnitCount"			"%plague_ward_2_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"orc_serpent_ward_3"
-			"Target"			"POINT"
-			"UnitCount"			"%plague_ward_3_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-			}
-		}
-	}
+        "RunScript"
+        {
+            "ScriptFile"        "heroes/shadow_hunter/serpent_ward.lua"
+            "Function"          "SpawnSerpentWard"
+            "Target"            "POINT"
+        }
+    }
 }

@@ -46,11 +46,6 @@
             "var_type"              "FIELD_INTEGER"
             "wave_heal"             "40 55 70"
         }
-        "05"
-        {
-            "var_type"              "FIELD_FLOAT"
-            "wave_interval"         "1.0"
-        }
     }
 
     "precache"
@@ -122,7 +117,7 @@
 
         "modifier_healing_spray_thinker"
         {
-            "ThinkInterval"  "%wave_interval"
+            "ThinkInterval"  "1.0"
             "OnIntervalThink"
             {
                 "FireSound"

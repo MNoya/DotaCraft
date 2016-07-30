@@ -76,7 +76,6 @@ function dotacraft:InitGameMode()
     ListenToGameEvent('npc_spawned', Dynamic_Wrap(dotacraft, 'OnNPCSpawned'), self)
     ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(dotacraft, 'OnGameRulesStateChange'), self)
     ListenToGameEvent('entity_hurt', Dynamic_Wrap(dotacraft, 'OnEntityHurt'), self)
-    ListenToGameEvent('tree_cut', Dynamic_Wrap(dotacraft, 'OnTreeCut'), self)
     ListenToGameEvent('player_chat', Dynamic_Wrap(dotacraft, 'OnPlayerChat'), self)
 
     -- Filters
@@ -116,6 +115,7 @@ function dotacraft:InitGameMode()
     LinkLuaModifier("modifier_ethereal", "libraries/modifiers/modifier_ethereal", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_demon_form", "heroes/demon_hunter/demon_form", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_robot_form", "heroes/tinker/robo_goblin", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_earthquake_aura", "heroes/far_seer/earthquake", LUA_MODIFIER_MOTION_NONE)
 
     -- Remove building invulnerability
     local allBuildings = Entities:FindAllByClassname('npc_dota_building')
@@ -821,24 +821,6 @@ function dotacraft:OnPlayerReconnect(keys)
     end)   
     
     UI:HandlePlayerReconnect(player)
-end
-
--- A tree was cut down
-function dotacraft:OnTreeCut(keys)
-    print ('[DOTACRAFT] OnTreeCut')
-
-    local treeX = keys.tree_x
-    local treeY = keys.tree_y
-    local treePos = Vector(treeX,treeY,0)
-    
-    -- Check for Night Elf Sentinels and Wisps
-    local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, treePos, nil, 64, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
-    for _,v in pairs(units) do
-        local unit_name = v:GetUnitName()
-        if unit_name == "nightelf_sentinel_owl" then
-            v:ForceKill(false)
-        end
-    end
 end
 
 -- An entity died

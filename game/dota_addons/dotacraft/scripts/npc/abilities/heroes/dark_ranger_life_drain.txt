@@ -104,15 +104,15 @@
                 // Looping Animation
                 "ApplyModifier"
                 {
-                    "ModifierName"  "channelling_animation"
+                    "ModifierName"  "modifier_channelling_animation"
                     "Target"        "CASTER"
                 }
             }
         }
 
-        "channelling_animation"
+        "modifier_channelling_animation"
         {
-            "IsHidden"          "0"
+            "IsHidden"          "1"
             "Duration"          "0.9"
             "OverrideAnimation" "ACT_DOTA_CAST_ABILITY_2"
         }

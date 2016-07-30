@@ -84,7 +84,7 @@
         "RunScript"
         {
             "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
-            "Function"      "FlameStrikeAnimation"
+            "Function"      "FlameStrikeStart"
             "Target"        "POINT"
         }
 
@@ -92,19 +92,6 @@
         {
             "EffectName"    "Hero_Invoker.SunStrike.Charge"
             "Target"        "CASTER"
-        }
-
-        "DelayedAction"
-        {
-            "Delay"     "%delay"
-            "Action"    
-            {
-                "CreateThinker"
-                {
-                    "ModifierName"  "modifier_flame_strike_thinker1"
-                    "Target"        "POINT"
-                }
-            }
         }
         
         "DestroyTrees"
@@ -180,10 +167,10 @@
 
             "OnDestroy"
             {
-                "CreateThinker"
+                "RunScript"
                 {
-                    "ModifierName"  "modifier_flame_strike_thinker2"
-                    "Target"        "TARGET"
+                    "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
+                    "Function"      "FlameStrikeSecond"
                 }
             }
         }

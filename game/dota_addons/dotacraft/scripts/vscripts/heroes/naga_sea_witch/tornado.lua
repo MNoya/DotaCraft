@@ -1,5 +1,6 @@
 function TornadoThink(event)
     local caster = event.caster
+    if not caster:IsAlive() then return end -- Linger aura prevention
     local ability = event.ability
     local radius = ability:GetSpecialValueFor("slow_radius")
     local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST,false)
@@ -20,11 +21,21 @@ function TornadoThink(event)
     end
 end
 
+function TornadoCreated(event)
+    local tornado = event.target
+    event.ability.tornado = tornado
+
+    tornado.ambient = ParticleManager:CreateParticle("particles/custom/tornado_ambient.vpcf", PATTACH_CUSTOMORIGIN, nil)
+    ParticleManager:SetParticleControlEnt(tornado.ambient, 0, tornado, PATTACH_POINT_FOLLOW, "attachto_ghost_attach", tornado:GetAbsOrigin(), true)
+
+    tornado:SetNoCorpse()
+end
+
 -- Shows tornado particles on a target and destroys later
 function TornadoParticle(event)
     local target = event.target
     target.tornado = ParticleManager:CreateParticle("particles/neutral_fx/tornado_ambient.vpcf", PATTACH_WORLDORIGIN, event.caster)
-    ParticleManager:SetParticleControl(target.tornado, 0, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z - 50 ))
+    ParticleManager:SetParticleControl(target.tornado, 0, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z - 50))
 end
 
 function EndTornadoParticle(event)
@@ -32,10 +43,10 @@ function EndTornadoParticle(event)
     ParticleManager:DestroyParticle(target.tornado,false)
 end
 
--- Finds and kills the tornado
 function TornadoEnd( event )
-    local tornado = Entities:FindByModel(nil, "models/heroes/attachto_ghost/attachto_ghost.vmdl")
-    tornado:RemoveSelf()
+    local tornado = event.ability.tornado
+    ParticleManager:DestroyParticle(tornado.ambient,false)
+    tornado:ForceKill(true)
 end
 
 -- Rotates by an angle degree
@@ -52,9 +63,10 @@ function TornadoHeight( event )
     local ability = event.ability
     local duration_hero = ability:GetLevelSpecialValueFor( "duration_hero" , ability:GetLevel() - 1 )
     local duration_unit = ability:GetLevelSpecialValueFor( "duration_unit" , ability:GetLevel() - 1 )
-    local cyclone_height = ability:GetLevelSpecialValueFor( "cyclone_height" , ability:GetLevel() - 1 )
-    local cyclone_min_height = ability:GetLevelSpecialValueFor( "cyclone_min_height" , ability:GetLevel() - 1 )
-    local cyclone_max_height = ability:GetLevelSpecialValueFor( "cyclone_max_height" , ability:GetLevel() - 1 )
+    local ground_z = GetGroundPosition(target:GetAbsOrigin(),caster).z
+    local cyclone_height = 400 + ground_z
+    local cyclone_min_height = 300 + ground_z
+    local cyclone_max_height = 450 + ground_z
     local tornado_start = GameRules:GetGameTime()
 
     -- Position variables
@@ -72,11 +84,9 @@ function TornadoHeight( event )
     -- Height per time calculation
     local time_to_reach_max_height = duration / 10
     local height_per_frame = cyclone_height * 0.03
-    print(height_per_frame)
 
     -- Time to go down
     local time_to_stop_fly = duration - time_to_reach_max_height
-    print(time_to_stop_fly)
 
     -- Loop up and down
     local going_up = true
@@ -127,7 +137,8 @@ function TornadoHeight( event )
 
         -- End
         else
-            print("End TornadoHeight")
+            position.z = ground_z
+            target:SetAbsOrigin(position)
         end
     end)
 end

@@ -68,7 +68,7 @@ function modifier_thorns_aura_buff:OnAttacked(event)
     if target == self:GetParent() then
         local attacker = event.attacker
         -- Apply the damage only to ranged attacker
-        if not IsCustomBuilding(attacker) and not attacker:IsRangedAttacker() then
+        if not IsCustomBuilding(attacker) and not attacker:IsRangedAttacker() and self:GetParent():IsOpposingTeam(target:GetTeamNumber()) then
             local ability = self:GetAbility()
             local return_damage = ability:GetSpecialValueFor("melee_damage_return") * event.damage * 0.01
             local abilityDamageType = ability:GetAbilityDamageType()

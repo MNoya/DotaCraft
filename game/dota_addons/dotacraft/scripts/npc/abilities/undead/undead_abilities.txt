@@ -91,31 +91,6 @@
 }			
 
 //=================================================================================
-// Ability: Destroyer Spell Immunity
-// Description: "This unit is unaffected by magical abilities"
-//=================================================================================
-"undead_spell_immunity"
-{
-	"BaseClass"					"ability_datadriven"
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityTextureName"		"generic_spell_immunity"
-	"MaxLevel"					"1"
-	
-	"Modifiers"
-	{
-		"modifier_spell_immunity"
-		{
-			"Passive" "1"
-			
-			"States"
-			{
-				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-	}
-}
-
-//=================================================================================
 // Ability: Ghoul Frenzy
 // Description: "Increases the attack rate of Ghouls by <Rugf,base1,%>%, and increases their movement speed."
 //=================================================================================

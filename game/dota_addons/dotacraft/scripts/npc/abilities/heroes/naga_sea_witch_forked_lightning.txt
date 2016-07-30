@@ -35,7 +35,6 @@
     "precache"
     {
         "particle"  "particles/items_fx/chain_lightning.vpcf"
-        "particle"  "particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
     }
 
@@ -44,16 +43,22 @@
         "LinearProjectile"
         {
             "Target"         "TARGET"
-            "EffectName"     ""
+            "EffectName"     "particles/custom/linear_projectile.vpcf"
             "MoveSpeed"      "3000"
             "StartRadius"    "50"
             "EndRadius"      "500"
             "StartPosition"  "attach_attack1"
-            "FixedDistance"  "600"
+            "FixedDistance"  "700"
             "TargetTeams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
             "TargetTypes"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
             "HasFrontalCone" "1"
             "ProvidesVision" "0"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/naga_sea_witch/forked_lightning.lua"
+            "Function"      "ForkedLightningStart"
         }
     }
 

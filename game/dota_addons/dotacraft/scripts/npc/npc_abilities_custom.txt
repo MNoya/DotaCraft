@@ -318,11 +318,6 @@
 	            "var_type"              "FIELD_INTEGER"
 	            "wave_heal"             "40 55 70"
 	        }
-	        "05"
-	        {
-	            "var_type"              "FIELD_FLOAT"
-	            "wave_interval"         "1.0"
-	        }
 	    }
 	
 	    "precache"
@@ -394,7 +389,7 @@
 	
 	        "modifier_healing_spray_thinker"
 	        {
-	            "ThinkInterval"  "%wave_interval"
+	            "ThinkInterval"  "1.0"
 	            "OnIntervalThink"
 	            {
 	                "FireSound"
@@ -746,154 +741,54 @@
 	}
 	// Archmage Summon Water Elemental
 	// Author: Noya
-	// Date: 13.1.2015.
-	// Notes: Summons a Water Elemental to attack the Archmage's enemies.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	60 sec.	20 sec.	125	N/A	N/A	N/A	525 hit points, light damage	1
-	//2	60 sec.	20 sec.	125	N/A	N/A	N/A	675 hit points, moderate damage	3
-	//3	60 sec.	20 sec.	125	N/A	N/A	N/A	900 hit points, heavy damage	5
+	// Description: Summons a Water Elemental to attack the Archmage's enemies.
+	// Level 1: 525 hit points, light damage
+	// Level 2: 675 hit points, moderate damage
+	// Level 3: 900 hit points, heavy damage
+	
 	"archmage_summon_water_elemental"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"archmage_summon_water_elemental"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "archmage_summon_water_elemental"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCooldown"				"20"
-		"AbilityManaCost"				"125"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"               "20"
+	    "AbilityManaCost"               "125"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"60"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hit_points"			"525 675 900"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"20 35 45"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lvl1_unit_count"		"1 0 0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lvl2_unit_count"		"0 1 0"
-			}			
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lvl3_unit_count"		"0 0 1"
-			}		
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "60"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "hit_points"            "525 675 900"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "damage"                "20 35 45"
+	        }       
+	    }
 	
-		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_morphling/morphling_replicate_finish.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_morphling.vsndevts"
-		}
+	    "precache"
+	    {
+	        "particle"                  "particles/units/heroes/hero_morphling/morphling_replicate_finish.vpcf"
+	        "soundfile"                 "soundevents/game_sounds_heroes/game_sounds_morphling.vsndevts"
+	    }
 	
-		"OnSpellStart"
-		{
-			"SpawnUnit"
-			{
-				"UnitName"		"human_water_elemental_1"
-				"UnitCount"		"%lvl1_unit_count"
-				"SpawnRadius"	"100"
-				"Duration"		"%duration"
-				"Target"		"CASTER"
-				"GrantsGold" 	"1"
-		        "GrantsXP" 		"1"
-				"OnSpawn"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_morphling/morphling_replicate_finish.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-					}
-					"FireSound"
-					{
-						"EffectName" "Hero_Morphling.Replicate"
-						"Target"			"CASTER"
-					}
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_summoned"
-						"Target" 		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"human_water_elemental_2"
-				"UnitCount"		"%lvl2_unit_count"
-				"SpawnRadius"	"100"
-				"Duration"		"%duration"
-				"Target"		"CASTER"
-				"GrantsGold" 	"1"
-		        "GrantsXP" 		"1"
-				"OnSpawn"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_morphling/morphling_replicate_finish.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-					}
-					"FireSound"
-					{
-						"EffectName" "Hero_Morphling.Replicate"
-						"Target"			"CASTER"
-					}
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_summoned"
-						"Target" 		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"human_water_elemental_3"
-				"UnitCount"		"%lvl3_unit_count"
-				"SpawnRadius"	"100"
-				"Duration"		"%duration"
-				"Target"		"CASTER"
-				"GrantsGold" 	"1"
-		        "GrantsXP" 		"1"
-				"OnSpawn"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_morphling/morphling_replicate_finish.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-					}
-					"FireSound"
-					{
-						"EffectName" "Hero_Morphling.Replicate"
-						"Target"			"CASTER"
-					}
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_summoned"
-						"Target" 		"TARGET"
-					}
-				}
-			}
-		}
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/archmage/summon_water_elemental.lua"
+	            "Function"      "SummonElemental"
+	        }
+	    }
 	}
 	// Beastmaster Stampede
 	// Author: Noya
@@ -1111,1114 +1006,664 @@
 	}
 	// Beastmaster Summon Bear
 	// Author: Noya
-	// Date: 18.01.2015.
-	// Notes: Summons a powerful bear to attack your enemies.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	N/A	45 sec.	125	N/A	N/A	N/A	Summons Bear	1
-	//2	N/A	40 sec.	125	N/A	N/A	N/A	Summons Raging Bear with Bash	3
-	//3	N/A	40 sec.	125	N/A	N/A	N/A	Summons Spirit Bear with Bash and Blink	5
+	// Description: Summons a powerful bear to attack your enemies.
+	// Level 3: Summons Bear
+	// Level 2: Summons Raging Bear with Bash
+	// Level 3: Summons Spirit Bear with Bash and Blink
+	
 	"beastmaster_summon_bear"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"beastmaster_summon_bear"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "beastmaster_summon_bear"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"45.0 40.0 40"
+	    "AbilityCastRange"              "700"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "45.0 40.0 40"
 	
-		"AbilityManaCost"				"125"
+	    "AbilityManaCost"               "125"
 	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
-			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-			"particle"	"particles/status_fx/status_effect_spirit_bear.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
-			"model"		"models/heroes/lone_druid/spirit_bear.vmdl"
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+	        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+	        "particle"  "particles/status_fx/status_effect_spirit_bear.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+	        "model"     "models/heroes/lone_druid/spirit_bear.vmdl"
+	    }
 	
-		"AbilitySpecial"
-		{
-			// This Values are mostly for tooltips, the unit stats are not affected
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"70"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bear_hp"				"600 900 1200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bear_regen_tooltip"	"0.5 1 1.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bear_damage"			"20 29 39"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bear_armor"			"0 1 2"
-			}	
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bear_1_count"			"1 0 0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bear_2_count"			"0 1 0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bear_3_count"			"0 0 1"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "70"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bear_hp"               "600 900 1200"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "bear_regen_tooltip"    "0.5 1 1.5"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bear_damage"           "20 29 39"
+	        }
+	        "05"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bear_armor"            "0 1 2"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-		    {
-		    	"EffectName"	"Hero_LoneDruid.SpiritBear.Cast" 
-		    	"Target"		"CASTER"
-		    }
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_LoneDruid.SpiritBear.Cast" 
+	            "Target"        "CASTER"
+	        }
 	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_bear"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/beastmaster/summon_bear.lua"
+	            "Function"      "SpawnBear"
+	        }
+	    }
 	
-				"UnitCount"			"%bear_1_count"
-				"Duration"			"%duration"
+	    "Modifiers"
+	    {
+	        "modifier_beastmaster_bear"
+	        {
+	            "IsHidden"      "1"
 	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
+	            "StatusEffectName"      "particles/status_fx/status_effect_spirit_bear.vpcf"
+	            "StatusEffectPriority"  "1"
 	
-				// This makes sure units never get stuck
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
+	            "OnCreated"
+	            {
+	                "FireEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
+	            }
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_bear"
-						"Target"		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_raging_bear"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-	
-				"UnitCount"			"%bear_2_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_bear"
-						"Target"		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_spirit_bear"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-	
-				"UnitCount"			"%bear_3_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_bear"
-						"Target"		"TARGET"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_beastmaster_bear"
-			{
-				"IsHidden"		"1"
-	
-				"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
-				"StatusEffectPriority"	"1"
-	
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-	
-					"ApplyModifier"
-					{
-					    "ModifierName"  "modifier_summoned"
-					    "Target"        "TARGET"
-					}
-				}
-	
-				"OnDeath"
-				{
-					"FireEffect"
-					{
-						"Target"			
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-				}
-			}
-		}
+	            "OnDeath"
+	            {
+	                "FireEffect"
+	                {
+	                    "Target"            
+	                    {
+	                        "Center"    "UNIT"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+	                    }
+	                    "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
+	            }
+	        }
+	    }
 	}
 	
-	// Extra abilities for the level 2 and level 3 bears
-	
-	// Gives a 25% chance that an attack will do 25 bonus damage and stun an opponent for 1 second. Only Raging Bears and Spirit Bears have Bash.
+	// Extra abilities for neutral_beastmaster_raging_bear and neutral_beastmaster_spirit_bear
+	// Gives a 25% chance that an attack will do 25 bonus damage and stun an opponent for 1 second.
 	"beastmaster_summon_bear_bash"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"mountain_king_bash"
-		"MaxLevel" 						"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "mountain_king_bash"
+	    "MaxLevel"                      "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	
-		"AbilityDamage"					"25"
+	    "AbilityDamage"                 "25"
 	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-			"particle"	"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"25"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.0"
-			}
-		}
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+	        "particle"  "particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+	        "particle"  "particles/generic_gameplay/generic_stunned.vpcf"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bash_chance"           "25"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "stun_duration"         "1.0"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_bash"	
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
+	    "Modifiers"
+	    {
+	        "modifier_bash" 
+	        {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
 	
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"		"%bash_chance"
-						"PseudoRandom"	"DOTA_PSEUDO_RANDOM_FACELESS_BASH"
+	            "OnSuccess"
+	            {
+	                "ActOnTargets"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                    }
+	                
+	                    "Action"    
+	                    {
+	                        "FireSound"
+	                        {
+	                            "EffectName"    "Hero_FacelessVoid.TimeLockImpact"
+	                            "Target"        "TARGET"
+	                        }
 	
-						"OnSuccess"
-						{
-							"FireSound"
-							{
-								"EffectName"	"Hero_FacelessVoid.TimeLockImpact"
-								"Target"		"TARGET"
-							}
+	                        "ApplyModifier"
+	                        {
+	                            "ModifierName"  "modifier_bash_stun"
+	                            "Target"        "TARGET"
+	                            "Duration"      "%stun_duration"   
+	                        }
 	
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_bash_stun"
-								"Target"		"TARGET"
-								"Duration"		"%stun_duration"	
-							}
+	                        "Damage"
+	                        {
+	                            "Target"    "TARGET"
+	                            "Type"      "DAMAGE_TYPE_MAGICAL"
+	                            "Damage"    "%AbilityDamage"
+	                        }
+	                    }
+	                }
+	            }
+	        }
 	
-							"Damage"
-							{
-								"Target"	"TARGET"
-								"Type"		"DAMAGE_TYPE_MAGICAL"
-								"Damage"	"%AbilityDamage"
-							}
-						}
-					}
-				}
-			}
+	        "modifier_bash_stun"
+	        {
+	            "IsDebuff"          "1"
+	            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+	            "EffectAttachType"  "follow_overhead"
 	
-			"modifier_bash_stun"
-			{
-				"IsDebuff"			"1"
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
+	            "StatusEffectName"      "particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+	            "StatusEffectPriority"  "1"
 	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+	            "OverrideAnimation"     "ACT_DOTA_DISABLED"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"    "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
 	}
 	
-	// Teleports the Bear a short distance, allowing it to move in and out of combat. Only Spirit Bears have this ability.
-	//Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect
-	//0.3 sec.	15 sec.	None	9999.9	Personal	Self	Teleports Bear to target location
+	// Ability for neutral_beastmaster_spirit_bear
+	// Teleports the Bear a short distance, allowing it to move in and out of combat.
 	"beastmaster_summon_bear_blink"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"beastmaster_summon_bear_blink"
-		"MaxLevel" 						"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "beastmaster_summon_bear_blink"
+	    "MaxLevel"                      "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityCastAnimation"			"ACT_DOTA_SPAWN"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	    "AbilityCastAnimation"          "ACT_DOTA_SPAWN"
 	
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"15"
+	    "AbilityCastRange"              "1000"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "15"
 	
-		"AbilityManaCost"				"0"
+	    "AbilityManaCost"               "0"
 	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_end.vpcf"
-			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_start.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blink_range"			"1000"
-			}
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_end.vpcf"
+	        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_start.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "blink_range"           "1000"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"        "LoneDruid_SpiritBear.ReturnStart"
+	            "Target"            "CASTER"
+	        }
 	
-			"FireSound"
-			{
-				"EffectName"		"LoneDruid_SpiritBear.ReturnStart"
-				"Target"			"CASTER"
-			}
+	        "FireEffect"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_start.vpcf"
+	            "EffectAttachType"  "attach_hitloc"
+	            "Target"            "CASTER"
+	        }
 	
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_start.vpcf"
-				"EffectAttachType"	"attach_hitloc"
-				"Target"			"CASTER"
-			}
+	        "RunScript"
+	        {
+	            "ScriptFile"        "heroes/beastmaster/summon_bear.lua"
+	            "Function"          "Blink"
+	            "Target"            "POINT"
+	        }       
 	
-			"RunScript"
-			{
-				"ScriptFile"		"heroes/beastmaster/summon_bear.lua"
-				"Function"			"Blink"
-				"Target"			"POINT"
-			}		
-	
-			"FireSound"
-			{
-				"EffectName"		"LoneDruid_SpiritBear.Return"
-				"Target"			"CASTER"
-			}
-	
-			// Need to wait a bit for the blink script to end
-			"DelayedAction"
-			{
-				"Delay"	"0.15"
-				"Action"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_blink_end.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"CASTER"
-					}
-				}
-			}
-		}
+	        "FireSound"
+	        {
+	            "EffectName"        "LoneDruid_SpiritBear.Return"
+	            "Target"            "CASTER"
+	        }
+	    }
 	}
 	// Beastmaster Summon Hawk
 	// Author: Noya
-	// Date: 18.1.2015.
-	// Notes: Summons a proud hawk to spy on your enemies.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	N/A	70 sec.	50	N/A	N/A	N/A	Summons Hawk	1
-	//2	N/A	70 sec.	50	N/A	N/A	N/A	Summons Thunder Hawk with an attack	3
-	//3	N/A	70 sec.	50	N/A	N/A	N/A	Summons Spirit Hawk with Invisibility	5
+	// Description: Summons a proud hawk to spy on your enemies.
+	// Level 1: Summons Hawk
+	// Level 2: Summons Thunder Hawk with an attack
+	// Level 3: Summons Spirit Hawk with Invisibility
 	
-	// TODO - Add Abilities
-		// True Sight
-		// Magic Attack AoE?
-		// Invisibility after not attacking
 	"beastmaster_summon_hawk"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"beastmaster_summon_hawk"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "beastmaster_summon_hawk"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"75.0"
+	    "AbilityCastRange"              "700"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "75.0"
 	
-		"AbilityManaCost"				"50"
+	    "AbilityManaCost"               "50"
 	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
-			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
-			"model"		"models/heroes/beastmaster/beastmaster_bird.vmdl"
-			"particle"  "particles/status_fx/status_effect_slark_shadow_dance.vpcf"
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+	        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+	        "model"     "models/heroes/beastmaster/beastmaster_bird.vmdl"
+	        "particle"  "particles/status_fx/status_effect_slark_shadow_dance.vpcf"
+	    }
 	
-		"AbilitySpecial"
-		{
-			// This Values are mostly for tooltips, the unit stats are not affected
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"70"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bird_hp"				"300 450 650"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bird_regen_tooltip"	"0.5 1 1.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bird_damage"			"0 23 52"	//MAGIC DAMAGE?
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bird_armor"			"0 3 5"
-			}	
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bird_1_count"			"1 0 0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bird_2_count"			"0 1 0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bird_3_count"			"0 0 1"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "70"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bird_hp"               "300 450 650"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "bird_regen"            "0.5 1 1.5"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bird_damage"           "0 23 52"
+	        }
+	        "05"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bird_armor"            "0 3 5"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-		    {
-		    	"EffectName"	"Hero_Beastmaster.Call.Hawk"
-		    	"Target"		"CASTER"
-		    }
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Beastmaster.Call.Hawk"
+	            "Target"        "CASTER"
+	        }
 	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_hawk"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+	            "Function"      "SpawnHawk"
+	        }
+	    }
 	
-				"UnitCount"			"%bird_1_count"
-				"Duration"			"%duration"
+	    "Modifiers"
+	    {
+	        "modifier_beastmaster_bird"
+	        {
+	            "IsHidden"      "1"
 	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
+	            "OnCreated"
+	            {
+	                "FireEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
+	            }
 	
-				// This makes sure units never get stuck
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
+	            "OnDeath"
+	            {
+	                "FireEffect"
+	                {
+	                    "Target"            
+	                    {
+	                        "Center"    "UNIT"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+	                    }
+	                    "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_bird"
-						"Target"		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_thunder_hawk"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-	
-				"UnitCount"			"%bird_2_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_bird"
-						"Target"		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_spirit_hawk"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-	
-				"UnitCount"			"%bird_3_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_bird"
-						"Target"		"TARGET"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_beastmaster_bird"
-			{
-				"IsHidden"		"1"
-	
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-	
-					"ApplyModifier"
-					{
-					    "ModifierName"  "modifier_summoned"
-					    "Target"        "TARGET"
-					}
-				}
-	
-				"OnDeath"
-				{
-					"FireEffect"
-					{
-						"Target"			
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-	
-					"FireSound"
-					{
-						"Target"			
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-						"EffectName"	"Hero_Beastmaster_Bird.Death"
-					}
-				}
-			}
-		}
+	                "FireSound"
+	                {
+	                    "Target"            
+	                    {
+	                        "Center"    "UNIT"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+	                    }
+	                    "EffectName"    "Hero_Beastmaster_Bird.Death"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	
 	// Sub Ability
 	"beastmaster_hawk_invis"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"beastmaster_hawk_invisibility"
-		"MaxLevel" 						"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "beastmaster_hawk_invisibility"
+	    "MaxLevel"                      "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"motionless_time"	"4"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"		"3.0 4.0 5.0"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "motionless_time"   "4"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_hawk_think"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
+	    "Modifiers"
+	    {
+	        "modifier_hawk_think"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
 	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/beastmaster/summon_hawk.lua"
-						"Function"		"HawkCreated"
-					}
+	            "OnUnitMoved"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+	                    "Function"      "HawkMoved"
+	                }
 	
-					"RunScript"
-					{
-						"ScriptFile"	"mechanics/corpses.lua"
-						"Function"		"SetNoCorpse"
-					}
-				}
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_invisible"
+	                    "Target"        "CASTER"
+	                }
+	            }
 	
-				"OnUnitMoved"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
-						"Function"		"HawkMoved"
-					}
+	            "OnAttackStart"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+	                    "Function"      "HawkAttacked"
+	                }
 	
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_hawk_invis"
-						"Target" 		"CASTER"
-					}
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_invisible"
+	                    "Target"        "CASTER"
+	                }
+	            }
 	
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_invisible"
-						"Target" 		"CASTER"
-					}
-				}
-	
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
-						"Function"		"HawkAttacked"
-					}
-	
-					"RemoveModifier"
-					{
-						"ModifierName" 	"modifier_hawk_invis"
-						"Target"		"CASTER"
-					}
-	
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_invisible"
-						"Target" 		"CASTER"
-					}
-				}
-	
-				"ThinkInterval"  	"0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
-						"Function"		"HawkInvisCheck"
-					}		
-				}
-			}
-	
-			"modifier_hawk_invis"
-			{
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}	
+	            "ThinkInterval"     "0.03"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/beastmaster/summon_hawk.lua"
+	                    "Function"      "HawkInvisCheck"
+	                }       
+	            }
+	        }
+	    }   
 	}
-	// Beastmaster Summon Quillbeast
+	// Beastmaster Summon Quilbeast
 	// Author: Noya
-	// Date: 18.1.2015.
-	// Notes: Summons an angry Quilbeast to attack your enemies.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	N/A	25 sec.	75	N/A	N/A	N/A	Summons Quilbeast	1
-	//2	N/A	25 sec.	75	N/A	N/A	N/A	Summons Dire Quilbeast with Frenzy	3
-	//3	N/A	25 sec.	75	N/A	N/A	N/A	Summons Raging Quilbeast with area effect damage and Frenzy	5
+	// Description: Summons an angry Quilbeast to attack your enemies.
+	// Level 1 Summons Quilbeast
+	// Level 2 Summons Dire Quilbeast with Frenzy
+	// Level 3 Summons Raging Quilbeast with area effect damage and Frenzy
 	
 	"beastmaster_summon_quilbeast"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"beastmaster_summon_quilbeast"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "beastmaster_summon_quilbeast"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"25.0"
+	    "AbilityCastRange"              "700"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "25.0"
 	
-		"AbilityManaCost"				"75"
+	    "AbilityManaCost"               "75"
 	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
-			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-			"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
-			"model"		"models/heroes/beastmaster/beastmaster_beast.vmdl"
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+	        "particle"  "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+	        "particle"  "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+	        "model"     "models/heroes/beastmaster/beastmaster_beast.vmdl"
 	
-			// Sub Abilities
-			"particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
-			"particle"  "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
-		}
+	        // Sub Abilities
+	        "particle"  "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+	        "particle"  "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+	    }
 	
-		"AbilitySpecial"
-		{
-			// This Values are mostly for tooltips, the unit stats are not affected
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"70"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"boar_hp"				"425 515 600"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"boar_regen_tooltip"	"0.5 1 1.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"boar_damage"			"14 28 42"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"boar_armor"			"0"
-			}	
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"boar_1_count"			"1 0 0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"boar_2_count"			"0 1 0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"boar_3_count"			"0 0 1"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "70"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "boar_hp"               "425 515 600"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "boar_regen_tooltip"    "0.5 1 1.5"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "boar_damage"           "14 28 42"
+	        }
+	        "05"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "boar_armor"            "0"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-		    {
-		    	"EffectName"	"Hero_Beastmaster.Call.Boar"
-		    	"Target"		"CASTER"
-		    }
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Beastmaster.Call.Boar"
+	            "Target"        "CASTER"
+	        }
 	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_quilbeast"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/beastmaster/summon_quilbeast.lua"
+	            "Function"      "SpawnQuilbeast"
+	        }
+	    }
 	
-				"UnitCount"			"%boar_1_count"
-				"Duration"			"%duration"
+	    "Modifiers"
+	    {
+	        "modifier_beastmaster_boar"
+	        {
+	            "IsHidden"      "1"
 	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
+	            "OnCreated"
+	            {
+	                "FireEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
+	            }
 	
-				// This makes sure units never get stuck
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_boar"
-						"Target"		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_dire_quilbeast"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-	
-				"UnitCount"			"%boar_2_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_boar"
-						"Target"		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"			"neutral_beastmaster_raging_quilbeast"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/beastmaster/summon_bear.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-	
-				"UnitCount"			"%boar_3_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beastmaster_boar"
-						"Target"		"TARGET"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_beastmaster_boar"
-			{
-				"IsHidden"		"1"
-	
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-					
-					"ApplyModifier"
-					{
-					    "ModifierName"  "modifier_summoned"
-					    "Target"        "TARGET"
-					}
-				}
-	
-				"OnDeath"
-				{
-					"FireEffect"
-					{
-						"Target"			
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-					
-					"FireSound"
-					{
-						"Target"			
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-						"EffectName"	"Hero_Beastmaster_Boar.Death"
-					}
-				}
-			}
-		}
+	            "OnDeath"
+	            {
+	                "FireEffect"
+	                {
+	                    "Target"            
+	                    {
+	                        "Center"    "UNIT"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+	                    }
+	                    "EffectName"        "particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
+	                
+	                "FireSound"
+	                {
+	                    "Target"            
+	                    {
+	                        "Center"    "UNIT"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+	                    }
+	                    "EffectName"    "Hero_Beastmaster_Boar.Death"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	
 	// Sub Abilities
 	
-	"beastmaster_quillbeast_frenzy"
+	"beastmaster_quilbeast_frenzy"
 	{
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName"			"beastmaster_quillbeast_frenzy"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	    "AbilityTextureName"            "orc_bloodlust"
 	
-		"AbilityCooldown"				"30"
-		"AbilityManaCost"				"0"
+	    "AbilityCooldown"               "30"
+	    "AbilityManaCost"               "0"
 	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"20"
-			}
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "duration"          "20"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_movement_speed"  "25"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_attack_speed"    "40"
+	        }
+	    }
 	
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"model_size"		"25"
-			}	
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_frenzy"
+	            "Target"        "CASTER"
+	            "Duration"      "%duration"
+	        }
+	    }
 	
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"25"
-			}
+	    "Modifiers"
+	    {
+	        "modifier_frenzy_autocast"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            "IsDebuff"          "0"
+	        
+	            "OnAttackStart"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/beastmaster/summon_quilbeast.lua"
+	                    "Function"      "FrenzyAutocast"
+	                }
+	            }
+	        }
 	
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"40"
-			}
-		}
+	        "modifier_frenzy"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	    
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+	            }
 	
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_frenzy"
-				"Target" 		"CASTER"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_frenzy_autocast"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-			
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
-						"Function"		"FrenzyAutocast"
-					}
-				}
-			}
-	
-			"modifier_frenzy"
-			{
-				"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
-				"EffectAttachType"	"follow_origin"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
-				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
-				}
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/beastmaster/summon_quillbeast.lua"
-						"Function"		"FrenzyResize"
-					}
-				}
-			}
-		}
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/beastmaster/summon_quilbeast.lua"
+	                    "Function"      "FrenzyResize"
+	                }
+	            }
+	        }
+	    }
 	}
 	// Blademaster Bladestorm
 	// Author: Noya
@@ -2338,108 +1783,104 @@
 	    }   
 	}
 	// Blademaster Critical Strike
-	// Author: 
-	// Date: 13.1.2015.
+	// Author: Noya
 	// Notes: Gives a 15% chance that the Blademaster will do more damage on his attacks.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	Unlimited	N/A	N/A	N/A	N/A	Self	2 times normal damage	1
-	//2	Unlimited	N/A	N/A	N/A	N/A	Self	3 times normal damage	3
-	//3	Unlimited	N/A	N/A	N/A	N/A	Self	4 times normal damage	5
+	
 	"blademaster_critical_strike"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"blademaster_critical_strike"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "blademaster_critical_strike"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
-			"particle"	"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_bonus"				"200 300 400"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"15"
-			}
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/econ/items/juggernaut/jugg_sword_fireborn_odachi/jugg_crit_blur_fb_odachi.vpcf"
+	        "particle"  "particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "crit_bonus"                "200 300 400"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "crit_chance"               "15"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_critical_strike"
-			{
-			    "Passive"   "1"
-			    "IsHidden"  "1"
-			    "OnAttackStart"
-			    {
-			        "RemoveModifier"
-			        {
-			            "ModifierName" 	"modifier_critical_strike_crit"
-			            "Target" 		"CASTER"
-			        }
+	    "Modifiers"
+	    {
+	        "modifier_critical_strike"
+	        {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
+	            "OnAttackStart"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_critical_strike_crit"
+	                    "Target"        "CASTER"
+	                }
 	
-			        "Random"
-			        {
-			            "Chance" "%crit_chance"
-			            "OnSuccess"
-			            {
-			            	"FireSound"
-					        {
-					        	"EffectName"	"Hero_SkeletonKing.CriticalStrike"
-					        	"Target"		"CASTER"
-					        }
+	                "Random"
+	                {
+	                    "Chance" "%crit_chance"
+	                    "OnSuccess"
+	                    {
+	                        "FireSound"
+	                        {
+	                            "EffectName"    "Hero_SkeletonKing.CriticalStrike"
+	                            "Target"        "CASTER"
+	                        }
 	
-					        "FireEffect"
-					        {
-					       		"EffectName" 		"particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
-					            "EffectAttachType"  "attach_sword"
-					            "Target"    		"CASTER"
-					        }
+	                        "FireEffect"
+	                        {
+	                            "EffectName"        "particles/econ/items/juggernaut/jugg_sword_fireborn_odachi/jugg_crit_blur_fb_odachi.vpcf"
+	                            "EffectAttachType"  "attach_sword"
+	                            "Target"            "CASTER"
+	                        }
 	
-			                "ApplyModifier"
-			                {
-			                    "ModifierName" 	"modifier_critical_strike_crit"
-			                    "Target"    	"CASTER"    
-			                }        
-			            }
-			        }
-			    }
-			}
+	                        "ApplyModifier"
+	                        {
+	                            "ModifierName"  "modifier_critical_strike_crit"
+	                            "Target"        "CASTER"    
+	                        }        
+	                    }
+	                }
+	            }
+	        }
 	
-			"modifier_critical_strike_crit"
-			{
-			    "IsHidden"  "1"
-			    "Properties"
-			    {
-			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
-			    }
+	        "modifier_critical_strike_crit"
+	        {
+	            "IsHidden"  "1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
+	            }
 	
-			    "OnAttackLanded"
-			    {
-			    	"FireEffect"
-			    	{
-			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
-			    		"EffectAttachType"	"attach_hitloc"
-			    		"Target"			"TARGET"
-			    	}
-			        "RemoveModifier"
-			        {
-			            "ModifierName"  	"modifier_critical_strike_crit"
-			            "Target"   			"CASTER"    
-			        }
-			    }
-			}
-		}
+	            "OnAttackLanded"
+	            {
+	                "FireEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+	                    "EffectAttachType"  "attach_hitloc"
+	                    "Target"            "TARGET"
+	                }
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"      "modifier_critical_strike_crit"
+	                    "Target"            "CASTER"    
+	                }
+	            }
+	        }
+	    }
 	}
 	// Blademaster Mirror Image
 	// Author: Noya
@@ -2911,7 +2352,7 @@
 	        "RunScript"
 	        {
 	            "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
-	            "Function"      "FlameStrikeAnimation"
+	            "Function"      "FlameStrikeStart"
 	            "Target"        "POINT"
 	        }
 	
@@ -2919,19 +2360,6 @@
 	        {
 	            "EffectName"    "Hero_Invoker.SunStrike.Charge"
 	            "Target"        "CASTER"
-	        }
-	
-	        "DelayedAction"
-	        {
-	            "Delay"     "%delay"
-	            "Action"    
-	            {
-	                "CreateThinker"
-	                {
-	                    "ModifierName"  "modifier_flame_strike_thinker1"
-	                    "Target"        "POINT"
-	                }
-	            }
 	        }
 	        
 	        "DestroyTrees"
@@ -3007,10 +2435,10 @@
 	
 	            "OnDestroy"
 	            {
-	                "CreateThinker"
+	                "RunScript"
 	                {
-	                    "ModifierName"  "modifier_flame_strike_thinker2"
-	                    "Target"        "TARGET"
+	                    "ScriptFile"    "heroes/blood_mage/flame_strike.lua"
+	                    "Function"      "FlameStrikeSecond"
 	                }
 	            }
 	        }
@@ -3371,147 +2799,141 @@
 	
 	"blood_mage_siphon_mana"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"blood_mage_siphon_mana"
-		"MaxLevel" 						"3"
-		"CastFilterRejectCaster"		"1"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "blood_mage_siphon_mana"
+	    "MaxLevel"                      "3"
+	    "CastFilterRejectCaster"        "1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	
-		"RequiresTargetMana"            "1"
+	    "RequiresTargetMana"            "1"
 	
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"6.0"
-		"AbilityChannelTime"			"6"
+	    "AbilityCastRange"              "600"
+	    "AbilityCastPoint"              "0.1"
+	    "AbilityCooldown"               "6.0"
+	    "AbilityChannelTime"            "6"
 	
-		"AbilityManaCost"				"10"
+	    "AbilityManaCost"               "10"
 	
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
-			"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"6.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mana_per_second"			"15 30 45"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"break_distance"			"800"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_interval"				"1.0"
-			}
-		}
+	    "precache"
+	    {
+	        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+	        "particle"          "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_FLOAT"
+	            "duration"                  "6.0"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "mana_per_second"           "15 30 45"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "break_distance"            "800"
+	        }
+	    }
 	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/blood_mage/siphon_mana.lua"
-				"Function"		"SiphonManaStart"
-			}		
-		}
-		
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Lion.ManaDrain"
-				"Target"		"TARGET"
-			}
+	    "OnAbilityPhaseStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/blood_mage/siphon_mana.lua"
+	            "Function"      "SiphonManaStart"
+	        }       
+	    }
+	    
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Lion.ManaDrain"
+	            "Target"        "TARGET"
+	        }
 	
-			"ApplyModifier"
-			{
-			    "ModifierName"  "modifier_siphon_mana_channeling"
-			    "Target"        "CASTER"
-			    "Duration"      "%duration"
-			}
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_siphon_mana_channeling"
+	            "Target"        "CASTER"
+	            "Duration"      "%duration"
+	        }
 	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_siphon_mana"
-				"Target" 		"TARGET"
-				"Duration"		"%duration"
-			}			
-		}
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_siphon_mana"
+	            "Target"        "TARGET"
+	            "Duration"      "%duration"
+	        }           
+	    }
 	
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"heroes/blood_mage/siphon_mana.lua"
-				"Function"			"SiphonManaEnd"
-				"sound"				"Hero_Lion.ManaDrain"
-			}
+	    "OnChannelFinish"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"        "heroes/blood_mage/siphon_mana.lua"
+	            "Function"          "SiphonManaEnd"
+	            "sound"             "Hero_Lion.ManaDrain"
+	        }
 	
-			"RemoveModifier"
-			{
-				"ModifierName"		"modifier_siphon_mana"
-				"Target"			"TARGET"
-			}
+	        "RemoveModifier"
+	        {
+	            "ModifierName"      "modifier_siphon_mana"
+	            "Target"            "TARGET"
+	        }
 	
-			"RemoveModifier"
-			{
-				"ModifierName"		"modifier_siphon_mana_channeling"
-				"Target"			"CASTER"
-			}
-		}
+	        "RemoveModifier"
+	        {
+	            "ModifierName"      "modifier_siphon_mana_channeling"
+	            "Target"            "CASTER"
+	        }
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_siphon_mana_channeling"
-			{
-				"IsHidden"			"1"
-				"OverrideAnimation" "ACT_DOTA_TELEPORT"
-			}
+	    "Modifiers"
+	    {
+	        "modifier_siphon_mana_channeling"
+	        {
+	            "IsHidden"          "1"
+	            "OverrideAnimation" "ACT_DOTA_TELEPORT"
+	        }
 	
-			"modifier_siphon_mana"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-		
-				"ThinkInterval"	"%tick_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/blood_mage/siphon_mana.lua"
-						"Function"		"SiphonMana"
-					}
-				}
-			}
+	        "modifier_siphon_mana"
+	        {
+	            "Passive"           "0"
+	            "IsHidden"          "0"
+	            "IsDebuff"          "1"
+	    
+	            "ThinkInterval" "1.0"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/blood_mage/siphon_mana.lua"
+	                    "Function"      "SiphonMana"
+	                }
+	            }
+	        }
 	
-			"modifier_siphon_mana_extra"
-			{
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-				"IsHidden"			"1"
+	        "modifier_siphon_mana_extra"
+	        {
+	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            "IsHidden"          "1"
 	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS" "%mana_per_second" 
-				}
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MANA_BONUS" "%mana_per_second" 
+	            }
 	
-				"Duration"			"%duration"
-			}
-		}	
+	            "Duration"          "%duration"
+	        }
+	    }   
 	}
 	// Crypt Lord Carrion Beetles
 	// Author: Noya
@@ -3746,177 +3168,116 @@
 	
 	"crypt_lord_impale"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"crypt_lord_impale"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "crypt_lord_impale"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 	
-		"TargetsAllowed"                "ground,organic"
+	    "TargetsAllowed"                "ground,organic"
 	
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"9.0"
+	    "AbilityCastRange"              "700"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "9.0"
 	
-		"AbilityManaCost"				"100"
-		"AbilityDamage"					"50 80 110"
+	    "AbilityManaCost"               "100"
+	    "AbilityDamage"                 "50 80 110"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"width"				"125"
-			}
-			"02"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"hero_duration"		"1 2 3"
-			}
-			"02"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"creep_duration"	"2 3 4"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"length"			"700"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"1600"
-			}
-			// Extra variables
-			"05"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"air_time"			"0.52"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
-			"particle"				"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
-		}
-		
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"Target"			"CASTER"
-				"EffectName"		"Hero_NyxAssassin.Impale"
-			}
-		
-			"LinearProjectile"
-			{
-				"Target"			"POINT"
-				"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
-				"StartRadius"		"%width"
-				"EndRadius"			"%width"
-				"MoveSpeed"			"%speed"
-				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"FixedDistance"		"%length"
-				"ProvidesVision"	"0"
-				"HasFrontalCone"	"0"
-			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"			"0"
-		
-			"FireSound"
-			{
-				"Target"			"TARGET"
-				"EffectName"		"Hero_NyxAssassin.Impale.Target" 
-			}
-		
-			"RemoveModifier"
-			{
-				"Target"			"TARGET"
-				"ModifierName"		"modifier_knockback"
-			}
-			
-			"Knockback"
-			{
-				"Target"			"TARGET"
-				"Center"			"CASTER"
-				"Distance"			"0"
-				"Duration"			"%air_time"
-				"Height"			"200"
-				"IsFixedDistance"	"1"
-			}
-			
-			"ApplyModifier"
-			{
-				"ModifierName"    "modifier_impale"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_HERO"
-				}
-				"Duration"		"%hero_duration"
-			}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "width"             "125"
+	        }
+	        "02"
+	        {   
+	            "var_type"          "FIELD_FLOAT"
+	            "hero_duration"     "1 2 3"
+	        }
+	        "02"
+	        {   
+	            "var_type"          "FIELD_FLOAT"
+	            "creep_duration"    "2 3 4"
+	        }
+	        "03"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "length"            "700"
+	        }
+	        "04"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "speed"             "1600"
+	        }
+	        // Extra variables
+	        "05"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "air_time"          "0.52"
+	        }
+	    }
+	    
+	    // Data driven
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+	    {
+	        "soundfile"             "soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+	        "particle"              "particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+	    }
+	    
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "Target"            "CASTER"
+	            "EffectName"        "Hero_NyxAssassin.Impale"
+	        }
+	    
+	        "LinearProjectile"
+	        {
+	            "Target"            "POINT"
+	            "EffectName"        "particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+	            "StartRadius"       "%width"
+	            "EndRadius"         "%width"
+	            "MoveSpeed"         "%speed"
+	            "TargetTeams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	            "TargetTypes"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            "FixedDistance"     "%length"
+	            "ProvidesVision"    "0"
+	            "HasFrontalCone"    "0"
+	        }
+	    }
+	    
+	    "OnProjectileHitUnit"
+	    {
+	        "DeleteOnHit"           "0"
+	    
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/crypt_lord/impale.lua"
+	            "Function"      "Impale"
+	        }
+	    }
 	
-			"ApplyModifier"
-			{
-				"ModifierName"    "modifier_impale"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_BASIC"
-				}
-				"Duration"		"%creep_duration"
-			}
-			
-			"DelayedAction"
-			{
-				"Delay"				"%air_time"
-				"Action"
-				{
-					"FireSound"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"Hero_NyxAssassin.Impale.TargetLand" 
-					}
-				
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Damage"			"%AbilityDamage"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_impale"
-			{
-				"IsDebuff"	"1"
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"			
-				}
-				"OverrideAnimation"	"ACT_DOTA_DISABLED"
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
-			}
-		}
+	    "Modifiers"
+	    {
+	        "modifier_impale"
+	        {
+	            "IsDebuff"  "1"
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"         
+	            }
+	            "OverrideAnimation" "ACT_DOTA_DISABLED"
+	            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+	            "EffectAttachType"  "follow_overhead"
+	        }
+	    }
 	}
 	// Crypt Lord Locust Swarm
 	// Author: Noya
@@ -4215,26 +3576,25 @@
 	        {
 	            "var_type"                  "FIELD_INTEGER"
 	            "dark_minion_damage"        "10 16 18"
-	        }
-	        "04"
-	        {
-	            "var_type"                  "FIELD_INTEGER"
-	            "dark_minion_1_count"       "1 0 0"
-	        }
-	        "05"
-	        {
-	            "var_type"                  "FIELD_INTEGER"
-	            "dark_minion_2_count"       "0 1 0"
-	        }
-	        "06"
-	        {
-	            "var_type"                  "FIELD_INTEGER"
-	            "dark_minion_3_count"       "0 0 1"
-	        }   
+	        } 
 	    }
 	
 	    "Modifiers"
-	    { 
+	    {
+	        "modifier_black_arrow_check"
+	        {
+	            "Passive"       "1"
+	            "IsHidden"      "1"
+	            "OnAttackStart"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/dark_ranger/black_arrow.lua"
+	                    "Function"      "OrbCheck"
+	                }
+	            }
+	        }
+	
 	        "modifier_black_arrow"
 	        {
 	            "Passive"       "1"
@@ -4259,7 +3619,11 @@
 	                "ApplyModifier"
 	                {
 	                    "ModifierName"      "modifier_black_arrow_spawn"
-	                    "Target"            "TARGET"
+	                    "Target"
+	                    {
+	                        "Center"        "TARGET"
+	                        "Types"         "DOTA_UNIT_TARGET_BASIC" //No minion spawns from heroes
+	                    }
 	                }
 	                "FireSound"
 	                {
@@ -4281,68 +3645,10 @@
 	            "Duration"  "0.1"
 	            "OnDeath"
 	            {
-	                "SpawnUnit"
+	                "RunScript"
 	                {
-	                    "UnitName"      "undead_black_arrow_minion_1"
-	                    "UnitCount"     "%dark_minion_1_count"
-	                    "SpawnRadius"   "1"
-	                    "Duration"      "%duration"
-	                    "Target"
-	                    {
-	                        "Center"    "UNIT"
-	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
-	                    }
-	
-	                    "OnSpawn"
-	                    {
-	                        "FireSound"
-	                        {
-	                            "EffectName" "Hero_Medusa.MysticSnake.Return"
-	                            "Target"            "CASTER"
-	                        }
-	                    }
-	                }
-	
-	                "SpawnUnit"
-	                {
-	                    "UnitName"      "undead_black_arrow_minion_2"
-	                    "UnitCount"     "%dark_minion_2_count"
-	                    "SpawnRadius"   "1"
-	                    "Duration"      "%duration"
-	                    "Target"
-	                    {
-	                        "Center"    "UNIT"
-	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
-	                    }
-	
-	                    "OnSpawn"
-	                    {
-	                        "FireSound"
-	                        {
-	                            "EffectName"    "Hero_Medusa.MysticSnake.Target"
-	                            "Target"        "CASTER"
-	                        }
-	                    }
-	                }
-	                "SpawnUnit"
-	                {
-	                    "UnitName"      "undead_black_arrow_minion_3"
-	                    "UnitCount"     "%dark_minion_3_count"
-	                    "SpawnRadius"   "1"
-	                    "Duration"      "%duration"
-	                    "Target"
-	                    {
-	                        "Center"    "UNIT"
-	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
-	                    }   
-	                    "OnSpawn"
-	                    {
-	                        "FireSound"
-	                        {
-	                            "EffectName"    "Hero_Medusa.MysticSnake.Target"
-	                            "Target"        "CASTER"
-	                        }
-	                    }
+	                    "ScriptFile"    "heroes/dark_ranger/black_arrow.lua"
+	                    "Function"      "SpawnMinion"
 	                }
 	            }
 	        }
@@ -4505,15 +3811,15 @@
 	                // Looping Animation
 	                "ApplyModifier"
 	                {
-	                    "ModifierName"  "channelling_animation"
+	                    "ModifierName"  "modifier_channelling_animation"
 	                    "Target"        "CASTER"
 	                }
 	            }
 	        }
 	
-	        "channelling_animation"
+	        "modifier_channelling_animation"
 	        {
-	            "IsHidden"          "0"
+	            "IsHidden"          "1"
 	            "Duration"          "0.9"
 	            "OverrideAnimation" "ACT_DOTA_CAST_ABILITY_2"
 	        }
@@ -5692,268 +4998,126 @@
 	
 	"far_seer_earthquake"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"far_seer_earthquake"
-		"MaxLevel"						"1"
-		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "far_seer_earthquake"
+	    "MaxLevel"                      "1"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"			"ACT_DOTA_SPAWN"
-		
-		"TargetsAllowed"                "ground"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "AbilityCastAnimation"          "ACT_DOTA_STATIC_STORM" //Channelled abilities don't seem to use this during cast point
+	    
+	    "TargetsAllowed"                "ground"
 	
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.5"
-		"AbilityCooldown"				"90.0"
+	    "AbilityCastRange"              "1000"
+	    "AbilityCastPoint"              "0.5"
+	    "AbilityCooldown"               "90.0"
 	
-		"AbilityManaCost"				"150"
-		"AbilityChannelTime"			"25.0"
+	    "AbilityManaCost"               "150"
+	    "AbilityChannelTime"            "25.0"
 	
-		"AOERadius"						"%radius"
+	    "AOERadius"                     "%radius"
 	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
-			"particle"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
-			"particle"	"particles/units/heroes/hero_earthshaker/temp_eruption_dirt.vpcf"
-			"particle"	"particles/dire_fx/dire_lava_falling_rocks.vpcf"
-			"particle"	"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_fallback_mid.vpcf"
-			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_egset.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"25"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"building_damage_per_sec"	"50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"250"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed_slow_pct"	"-75"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"wave_interval"				"1.0"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/far_seer/earthquake.lua"
-				"Function"		"EarthquakeStart"
-				"Target"		"POINT"
-			}
-	
-			"DestroyTrees"
-			{
-				"Target" 		"POINT"
-				"Radius"		"%radius"
-			}		
-	
-			// Animation needs to start half a second later to sync with the damage
-			"DelayedAction"
-			{
-				"Delay"     "0.5"
-				"Action"    
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_earthquake_channelling"
-						"Target" 		"CASTER"
-					}
-				}
-			}	
-		}
-	
-		"OnChannelFinish"
+	    "precache"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"heroes/far_seer/earthquake.lua"
-				"Function"		"EarthquakeEnd"
-	    	} 
+	        "particle"  "particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
+	        "particle"  "particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_egset.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "duration"                  "25"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "building_damage_per_sec"   "50"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "radius"                    "250"
+	        }
+	        "04"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "movement_speed_slow_pct"   "-75"
+	        }
+	    }
 	
-	    	"RemoveModifier"
-			{
-				"ModifierName"	"modifier_earthquake_channelling"
-				"Target" 		"CASTER"
-			}  			
+	    "OnAbilityPhaseStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_earthquake_channelling"
+	            "Target"        "CASTER"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/far_seer/earthquake.lua"
+	            "Function"      "EarthquakeStart"
+	            "Target"        "POINT"
+	        }
+	    }
+	
+	    "OnChannelFinish"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/far_seer/earthquake.lua"
+	            "Function"      "EarthquakeEnd"
+	        }
+	
+	        "RemoveModifier"
+	        {
+	            "ModifierName"  "modifier_earthquake_channelling"
+	            "Target"        "CASTER"
+	        }
 	    }
 	
 	    "Modifiers"
 	    {
 	        "modifier_earthquake_channelling"
 	        {
-	        	"IsHidden"			"1"
-	            "ThinkInterval"		"1.0"
-	            "OverrideAnimation"     "ACT_DOTA_KINETIC_FIELD"
-	            "OnIntervalThink"
-	         	{
-	 				"ApplyModifier"
-	         		{
-	         			"ModifierName"	"modifier_channeling"
-	         			"Target" 		"CASTER"
-	         			"Duration"		"0.9"
-	         		}    		
-				}
-			}
+	            "IsHidden"              "1"
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/far_seer/earthquake.lua"
+	                    "Function"      "StartChannelingAnimation"
+	                }
+	            }
 	
-			"modifier_channeling"
-			{
-				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_KINETIC_FIELD"
-			}
+	            "OnOrder"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_earthquake_channelling"
+	                    "Target"        "CASTER"
+	                }
+	            }
 	
-			"modifier_earthquake_thinker"
-			{
-				"Aura"          "modifier_eartquake_slow"
-				"Aura_Radius"   "%radius"
-				"Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
-	
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Leshrac.Split_Earth"
-						"Target" 		"TARGET"
-					}
-	
-					"AttachEffect"
-					{
-						"EffectName"        "particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_egset.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-					}
-					
-	
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectAttachType" 	"follow_origin"
-						"EffectName"		"particles/units/heroes/hero_earth_spirit/espirit_spawn.vpcf"
-						"ControlPointEntities"
-						{
-							"TARGET"	"attach_origin"
-							"TARGET"	"attach_origin"
-						}
-					}
-	
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectAttachType" 	"follow_origin"
-						"EffectName"		"particles/dire_fx/dire_lava_falling_rocks.vpcf"
-					}
-	
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectAttachType" 	"follow_origin"
-						"EffectName"		"particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
-					}
-				}
-	
-				"ThinkInterval"  "%wave_interval"
-				"OnIntervalThink"
-				{
-					// Custom Building Damage
-					"RunScript"
-					{
-						"ScriptFile"	"buildings/damage.lua"
-						"Function"		"DoBuildingDamage"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-						"Damage"		"%building_damage_per_sec"
-					}
-	
-					"FireSound"
-					{
-						"EffectName"	"Hero_Leshrac.Split_Earth"
-						"Target" 		"TARGET"
-					}
-	
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
-						"EffectAttachType" 	"follow_origin"
-						"Target" 			"TARGET"
-					}
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_earthshaker/temp_eruption_dirt.vpcf"
-						"EffectAttachType" 	"follow_origin"
-						"Target" 			"TARGET"
-					}
-					"AttachEffect"
-					{
-						"Target"	"TARGET"
-						"EffectAttachType" "follow_origin"
-						"EffectName"	"particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
-						"ControlPoints"
-						{
-							"01"		"%radius 50 50"
-						}
-					}
-	
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectAttachType" 	"follow_origin"
-						"EffectName"		"particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
-						"ControlPoints"
-						{
-							"01"	"%radius 0 %radius"
-						}
-					}
-	
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectAttachType" 	"follow_origin"
-						"EffectName"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_fallback_mid.vpcf"
-						"ControlPoints"
-						{
-							"01"	"1 0 0"
-						}		
-					}
-				}
-			}
-	
-			"modifier_eartquake_slow"
-			{
-				"IsDebuff"		"1"
-				"Properties"
-				{
-				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_slow_pct" 
-				}		
-			}
-		}
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/far_seer/earthquake.lua"
+	                    "Function"      "StopChannelingAnimation"
+	                }
+	            }
+	        }
+	    }
 	}
 	// Far Seer Far Sight
 	// Author: Noya
@@ -6009,259 +5173,78 @@
 	}
 	// Far Seer Feral Spirit
 	// Author: Noya
-	// Date: 25.01.2015.
-	// Notes: Summons Spirit Wolves to fight enemies for a limited time.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	60 sec.	30 sec.	75	N/A	N/A	N/A	Summons Two Spirit Wolves	1
-	//2	60 sec.	25 sec.	75	N/A	N/A	N/A	Summons Two Dire Wolves	3
-	//3	60 sec.	25 sec.	75	N/A	N/A	N/A	Summons Two Shadow Wolves	5
+	// Description: Summons Spirit Wolves to fight enemies for a limited time.
+	// Level 1: Summons Two Spirit Wolves
+	// Level 2: Summons Two Dire Wolves
+	// Level 3: Summons Two Shadow Wolves
+	
 	"far_seer_feral_spirit"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"far_seer_feral_spirit"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "far_seer_feral_spirit"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"30.0 25.0 25.0"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "30.0 25.0 25.0"
 	
-		"AbilityManaCost"				"75"
-		"AbilityDamage"					"75 130 200"
+	    "AbilityManaCost"               "75"
+	    "AbilityDamage"                 "75 130 200"
 	
-		"precache"
-		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"		
-			"particle"		"particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"		
-			"particle"		"particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wolf_duration"				"60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wolf_damage"				"11 16 21"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wolf_hp"					"200 300 500"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wolf_1_count"				"2 0 0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wolf_2_count"				"0 2 0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wolf_3_count"				"0 0 2"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spawn_distance"			"150"
-			}
-		}
+	    "precache"
+	    {
+	        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"     
+	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"       
+	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "wolf_duration"             "60"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "wolf_damage"               "11 16 21"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "wolf_hp"                   "200 300 500"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Lycan.SummonWolves"
-				"Target"		"CASTER"
-			}
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Lycan.SummonWolves"
+	            "Target"        "CASTER"
+	        }
 	
-			"AttachEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-				"Target"            "CASTER"
-				"ControlPointEntities"
-				{
-					"CASTER"	"attach_attack1"
-				}
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/far_seer/feral_spirit.lua"
-				"Function"		"KillWolves"
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"orc_spirit_wolf"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-						"Function"      "GetSummonPoints"
-						"Target"		"CASTER"
-						"Count"			"2"
-						"distance"		"%spawn_distance"
-					}
-				}
-				
-				"Duration"		"%wolf_duration"
-				"UnitCount"		"%wolf_1_count / 2"
-				"UnitLimit"		"2"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/far_seer/feral_spirit.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_feral_spirit"
-						"Target" 		"TARGET"
-						"Duration"		"%duration"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"orc_dire_wolf"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-						"Function"      "GetSummonPoints"
-						"Target"		"CASTER"
-						"Count"			"2"
-						"distance"		"%spawn_distance"
-					}
-				}
-				
-				"Duration"		"%wolf_duration"
-				"UnitCount"		"%wolf_2_count / 2"
-				"UnitLimit"		"2"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/far_seer/feral_spirit.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_feral_spirit"
-						"Target" 		"TARGET"
-						"Duration"		"%duration"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"orc_shadow_wolf"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-						"Function"      "GetSummonPoints"
-						"Target"		"CASTER"
-						"Count"			"2"
-						"distance"		"%spawn_distance"
-					}
-				}
-				
-				"Duration"		"%wolf_duration"
-				"UnitCount"		"%wolf_3_count / 2"
-				"UnitLimit"		"2"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/far_seer/feral_spirit.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_feral_spirit"
-						"Target" 		"TARGET"
-						"Duration"		"%duration"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_feral_spirit"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-			
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-					}			
-				}			
-			}
-		}
+	        "AttachEffect"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
+	            "EffectAttachType"  "start_at_customorigin"
+	            "Target"            "CASTER"
+	            "ControlPointEntities"
+	            {
+	                "CASTER"    "attach_attack1"
+	            }
+	        }
+	        
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/far_seer/feral_spirit.lua"
+	            "Function"      "SpawnWolves"
+	        }
+	    }
 	}
-	
-	
 	// Fire Lord Incinerate
 	// Author: Noya
 	// Description: Each attack made is enchanced with living flames that cling to the target. 
@@ -6277,7 +5260,7 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	    "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	
 	    "TargetsAllowed"                "organic"
 	
@@ -6290,7 +5273,7 @@
 	    "precache"
 	    {
 	        "particle"  "particles/custom/ogre_magi_fireblast.vpcf"
-	        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+	        "particle"  "particles/econ/items/shadow_fiend/sf_desolation/sf_base_attack_desolation.vpcf"
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 	    }
 	    
@@ -6314,12 +5297,26 @@
 	        "04"
 	        {
 	            "var_type"                      "FIELD_INTEGER"
-	            "incineration_radius"           "100"
+	            "incineration_radius"           "150"
 	        }
 	    }
 	
 	    "Modifiers"
 	    {
+	        "modifier_incinerate_orb_check"
+	        {
+	            "Passive"       "1"
+	            "IsHidden"      "1"
+	            "OnAttackStart"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/firelord/incinerate.lua"
+	                    "Function"      "OrbCheck"
+	                }
+	            }
+	        }
+	
 	        "modifier_incinerate_orb"
 	        {   
 	            "Passive"                       "1"
@@ -6328,7 +5325,7 @@
 	            "Orb"
 	            {
 	                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
-	                "ProjectileName"    "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
+	                "ProjectileName"    "particles/econ/items/shadow_fiend/sf_desolation/sf_base_attack_desolation_fire_arcana.vpcf"
 	                "CastAttack"        "1" 
 	            }
 	
@@ -6362,28 +5359,10 @@
 	
 	            "OnDeath"
 	            {
-	                "FireEffect"
+	                "RunScript"
 	                {
-	                    "EffectName"        "particles/custom/ogre_magi_fireblast.vpcf"
-	                    "EffectAttachType"  "follow_origin"
-	                    "Target"
-	                    {
-	                       "Center" "UNIT"
-	                       "Flags"  "DOTA_UNIT_TARGET_FLAG_DEAD"
-	                    }
-	                }
-	
-	                "Damage"
-	                {
-	                    "Target"
-	                    {
-	                        "Center"    "TARGET"
-	                        "Radius"    "%incineration_radius"
-	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                    }
-	                    "Type"          "DAMAGE_TYPE_MAGICAL"
-	                    "Damage"        "%incineration_damage"
+	                    "ScriptFile"    "heroes/firelord/incinerate.lua"
+	                    "Function"      "IncinerateDeath"
 	                }
 	            }
 	        }
@@ -6514,271 +5493,339 @@
 	
 	"firelord_summon_lava_spawn"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"firelord_summon_lava_spawn"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "firelord_summon_lava_spawn"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"			"ACT_DOTA_RAZE_2"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastAnimation"          "ACT_DOTA_RAZE_2"
 	
-		"AbilityCastPoint"				"0.5"
-		"AbilityCooldown"				"32.0"
+	    "AbilityCastPoint"              "0.5"
+	    "AbilityCooldown"               "32.0"
 	
-		"AbilityManaCost"				"150"
+	    "AbilityManaCost"               "150"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
-			"particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze.vpcf"
-			"particle"  "particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
-			"model"		"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+	        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze.vpcf"
+	        "particle"  "particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+	        "model"     "models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "lava_spawn_duration"       "70"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "attacks_to_split"          "15"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "lava_spawn_damage"         "11 16 21"
+	        }
+	        "04"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "lava_spawn_hp"             "425 550 700"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Invoker.ForgeSpirit"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/firelord/summon_lava_spawn.lua"
+	            "Function"      "LavaSpawn"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_lava_spawn"
+	        {
+	            "IsHidden"          "1"
+	        
+	            "EffectName"        "particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	
+	            "OnDeath"
+	            {
+	                "AttachEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "Target"
+	                    {
+	                       "Center" "UNIT"
+	                       "Flags"  "DOTA_UNIT_TARGET_FLAG_DEAD"
+	                    }
+	                    "ControlPoints"
+	                    {
+	                        "03"    "1 0 0"
+	                    }
+	                }
+	            }
+	        }
+	
+	        "modifier_lava_spawn_replicate"
+	        {
+	            "IsHidden"  "1"
+	            "OnAttackLanded"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/firelord/summon_lava_spawn.lua"
+	                    "Function"      "LavaSpawnAttackCounter"
+	                }
+	            }
+	        }
+	    }
+	}
+	//------------------------------------------------------------------------------------
+	//- Units for firelord_summon_lava_spawn ability 								     -
+	//------------------------------------------------------------------------------------
+	
+	"neutral_lava_spawn1"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
+		"ModelScale"		"1"
+		"Level"				"4"
+		"FormationRank"				"1"
+		"IsSummoned"				"1"
+	
+		"AttacksEnabled"			"ground,air"
+	
+		// Abilities
+		//----------------------------------------------------------------
 		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lava_spawn_duration"		"70"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attacks_to_split"			"15"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lava_spawn_damage"			"11 16 21"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lava_spawn_hp"				"425 550 700"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lava_spawn_1_count"		"1 0 0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lava_spawn_2_count"		"0 1 0"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lava_spawn_3_count"		"0 0 1"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spawn_distance"			"250"
-			}
-		}
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"0"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"		"11.0"
+		"AttackDamageMax"		"27.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1.5"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"			"300"
+		"ProjectileModel"		"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+		"ProjectileSpeed"		"1000"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"32.0"
+		"BountyGoldMax"			"46.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"300"
+		"MovementTurnRate"		"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"425"
+		"StatusHealthRegen"		"0.25"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+		
+		// Attack Damage types
+		//----------------------------------------------------------------
+		"TeamName"				"DOTA_TEAM_BADGUYS"
+		"AttackType"		"pierce"
+		"ArmorType"			"heavy"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Invoker.ForgeSpirit"
-				"Target"		"CASTER"
-			}		
+	"neutral_lava_spawn2"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
+		"ModelScale"		"1.1"
+		"Level"				"5"
+		"FormationRank"				"1"
+		"IsSummoned"				"1"
 	
-			"SpawnUnit"
-			{
-				"UnitName"		"neutral_lava_spawn1"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/firelord/summon_lava_spawn.lua"
-						"Function"      "GetSummonPoints"
-						"Target"		"CASTER"
-						"Count"			"1"
-						"distance"		"%spawn_distance"
-					}
-				}
-				
-				"Duration"		"%lava_spawn_duration"
-				"UnitCount"		"%lava_spawn_1_count"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/firelord/summon_lava_spawn.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
+		"AttacksEnabled"			"ground,air"
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_lava_spawn"
-						"Target" 		"TARGET"
-					}
+		// Abilities
+		//----------------------------------------------------------------
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"1"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"		"21.0"
+		"AttackDamageMax"		"45.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1.5"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"			"300"
+		"ProjectileModel"		"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+		"ProjectileSpeed"		"1000"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"32.0"
+		"BountyGoldMax"			"46.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"300"
+		"MovementTurnRate"		"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"550"
+		"StatusHealthRegen"		"0.25"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"10"
+		
+		// Attack Damage types
+		//----------------------------------------------------------------
+		"AttackType"		"pierce"
+		"ArmorType"			"heavy"
+		
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_lava_spawn_replicate"
-						"Target" 		"TARGET"
-					}
-				}
-			}
+	"neutral_lava_spawn3"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"			"npc_dota_creature"
+		"Model"				"models/items/invoker/forge_spirit/cadenza_spirit/cadenza_spirit.vmdl"
+		"ModelScale"		"1.2"
+		"Level"				"6"
+		"FormationRank"				"1"
+		"IsSummoned"				"1"
 	
-			"SpawnUnit"
-			{
-				"UnitName"		"neutral_lava_spawn2"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/firelord/summon_lava_spawn.lua"
-						"Function"      "GetSummonPoints"
-						"Target"		"CASTER"
-						"Count"			"1"
-						"distance"		"%spawn_distance"
-					}
-				}
-				
-				"Duration"		"%lava_spawn_duration"
-				"UnitCount"		"%lava_spawn_2_count"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/firelord/summon_lava_spawn.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
+		"AttacksEnabled"			"ground,air"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"			"2"
+		"MagicalResistance"		"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"		"32.0"
+		"AttackDamageMax"		"56.0"
+		"AttackDamageType"		"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"			"1.5"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"			"300"
+		"ProjectileModel"		"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+		"ProjectileSpeed"		"1000"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"			"32.0"
+		"BountyGoldMax"			"46.0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"			"300"
+		"MovementTurnRate"		"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"			"700"
+		"StatusHealthRegen"		"0.25"
+		"StatusMana"			"0"
+		"StatsManaRegen"		"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"10"
+		
+		// Attack Damage types
+		//----------------------------------------------------------------
+		"AttackType"		"pierce"
+		"ArmorType"			"heavy"
+		"ProjectileModel"		"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+		"BoundsHullName"		"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"		"140"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+	}
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_lava_spawn"
-						"Target" 		"TARGET"
-					}
+	//------------------------------------------------------------------------------------
+	//- Unit for firelord_volcano ability 								     			 -
+	//------------------------------------------------------------------------------------
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_lava_spawn_replicate"
-						"Target" 		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"neutral_lava_spawn3"
-				"Target"
-				{
-					"Center"		    "CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/firelord/summon_lava_spawn.lua"
-						"Function"      "GetSummonPoints"
-						"Target"		"CASTER"
-						"Count"			"1"
-						"distance"		"%spawn_distance"
-					}
-				}
-				
-				"Duration"		"%lava_spawn_duration"
-				"UnitCount"		"%lava_spawn_3_count"
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/firelord/summon_lava_spawn.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_lava_spawn"
-						"Target" 		"TARGET"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_lava_spawn_replicate"
-						"Target" 		"TARGET"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_lava_spawn"
-			{
-				"IsHidden"			"1"
-			
-				"EffectName"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"OnDeath"
-				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"
-					    {
-					       "Center" "UNIT"
-					       "Flags"	"DOTA_UNIT_TARGET_FLAG_DEAD"
-					   	}
-					   	"ControlPoints"
-					   	{
-					   		"03"	"1 0 0"
-					   	}
-					}
-				}
-			}
-	
-			"modifier_lava_spawn_replicate"
-			{
-				"IsHidden"	"1"
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/firelord/summon_lava_spawn.lua"
-						"Function"		"LavaSpawnAttackCounter"
-					}
-				}
-			}
-		}
+	"neutral_volcano"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/particle/soil_rupture.vmdl"
+		"UnitLabel"					"dummy"
+		"ModelScale"				"5"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"VisionDaytimeRange"		"0"	
+		"VisionNighttimeRange"		"0"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER" 
 	}
 	// Fire Lord Volcano
 	// Author: Noya
@@ -6899,7 +5946,7 @@
 	    {
 	        "modifier_volcano_channelling"
 	        {
-	            "IsHidden"              "0"
+	            "IsHidden"              "1"
 	            "OnCreated"
 	            {
 	                "RunScript"
@@ -7504,7 +6551,8 @@
 	
 	"lich_dark_ritual_warcraft"
 	{
-	    "BaseClass"                     "ability_datadriven"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/lich/dark_ritual.lua"
 	    "AbilityTextureName"            "lich_dark_ritual_warcraft"
 	    "MaxLevel"                      "3"
 	
@@ -7512,8 +6560,6 @@
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
 	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
-	
-	    "TargetsAllowed"                "organic"
 	
 	    "AbilityCastRange"              "800"
 	    "AbilityCastPoint"              "0.4"
@@ -7535,212 +6581,120 @@
 	            "health_conversion"     "33 66 100"
 	        }
 	    }
-	
-	    "OnSpellStart"
-	    {
-	        "FireSound"
-	        {
-	            "EffectName"    "Ability.DarkRitual"
-	            "Target"        "CASTER"
-	        }
-	
-	        "FireEffect"
-	        {
-	            "EffectName"        "particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
-	            "EffectAttachType"  "follow_origin"
-	            "Target"            "TARGET"
-	            "ControlPointEntities"
-	            {
-	                "TARGET"    "attach_hitloc"
-	                "CASTER"    "attach_hitloc"
-	            }
-	        }
-	
-	        "RunScript"
-	        {
-	            "ScriptFile"    "heroes/lich/dark_ritual.lua"
-	            "Function"      "DarkRitual"
-	        }
-	    }
 	}
 	// Lich Death and Decay
 	// Author: Noya
-	// Date: 29.01.2015.
-	// Notes: Damages everything in its area of effect by 4% of its base hit points per second.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//N/A	35 sec.	150 sec.	250	100	30	Air, Ground, Wards, Buildings, Trees	Damage to 4% of base HP/sec	6
+	// Description: Damages everything in its area of effect by 4% of its base hit points per second.
+	
 	"lich_death_and_decay"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"lich_death_and_decay"
-		"MaxLevel"						"1"
-		"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "lich_death_and_decay"
+	    "MaxLevel"                      "1"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"150.0"
+	    "AbilityCastRange"              "1000"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "150.0"
 	
-		"AbilityManaCost"				"250"
-		
-		"AOERadius"     				"%radius"
-		"AbilityChannelTime"			"35.0"
+	    "AbilityManaCost"               "250"
+	    
+	    "AOERadius"                     "%radius"
+	    "AbilityChannelTime"            "35.0"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
-			"particle"  "particles/custom/enigma_midnight_pulse.vpcf"
-			"particle"  "particles/custom/enigma_malefice.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_percent_damage_per_sec"	"4"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"300"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"35.0"
-			}	
-			"04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"wave_interval"		"1.0"
-			}
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+	        "particle"  "particles/custom/enigma_midnight_pulse.vpcf"
+	        "particle"  "particles/custom/enigma_malefice.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "health_percent_damage_per_sec" "4"
+	        }
+	        "02"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "radius"            "300"
+	        }
+	        "03"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "duration"          "35.0"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/lich/death_and_decay.lua"
-				"Function"		"DeathAndDecayStart"
-				"Target"		"POINT"
-			}
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/lich/death_and_decay.lua"
+	            "Function"      "DeathAndDecayStart"
+	            "Target"        "POINT"
+	        }
 	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_death_and_decay_channelling"
-				"Target" 		"CASTER"
-			}
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Lich.ChainFrostLoop"
+	            "Target"        "CASTER"
+	        }
 	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Lich.ChainFrostLoop"
-				"Target" 		"CASTER"
-			}
-	
-			"DestroyTrees"
-			{
-				"Target" 		"POINT"
-				"Radius"		"%radius"
-			}
+	        "DestroyTrees"
+	        {
+	            "Target"        "POINT"
+	            "Radius"        "%radius"
+	        }
 	    }
 	
 	    "OnChannelFinish"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"heroes/lich/death_and_decay.lua"
-				"Function"		"DeathAndDecayEnd"
-	    	} 
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/lich/death_and_decay.lua"
+	            "Function"      "DeathAndDecayEnd"
+	        }
 	
-	    	"RemoveModifier"
-			{
-				"ModifierName"	"modifier_death_and_decay_channelling"
-				"Target" 		"CASTER"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Lich.ChainFrostImpact.LF"
-				"Target" 		"CASTER"
-			}
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Lich.ChainFrostImpact.LF"
+	            "Target"        "CASTER"
+	        }
 	    }
 	    
 	    "Modifiers"
 	    {
-	        "modifier_death_and_decay_channelling"
+	        "modifier_death_and_decay_thinker"
 	        {
-	        	"IsHidden"			"1"
-	            "ThinkInterval"		"1.0"
+	            "IsHidden"       "1"
+	            "ThinkInterval"  "1.0"
 	            "OnIntervalThink"
-	         	{
-	         		"ApplyModifier"
-	         		{
-	         			"ModifierName"	"modifier_channeling"
-	         			"Target" 		"CASTER"
-	         			"Duration"		"0.9"
-	         		}
-				}
-			}
-	
-			"modifier_channeling"
-			{
-				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_SPAWN"
-			}
-	
-			"modifier_death_and_decay_thinker"
-			{
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_enigma/enigma_blackhole_n.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-						"ControlPointEntities"
-						{
-							"TARGET"	"attach_origin"
-							"TARGET"	"attach_origin"
-						}
-					}
-	
-					"AttachEffect"
-					{
-						"EffectName"        "particles/custom/enigma_midnight_pulse.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-						"ControlPoints"
-						{
-							"01"	"%radius 0 0"
-						}
-					}
-				}
-	
-				"ThinkInterval"  "%wave_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/lich/death_and_decay.lua"
-						"Function"		"DeathAndDecayDamage"
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-				}		
-			}
-		}
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/lich/death_and_decay.lua"
+	                    "Function"      "DeathAndDecayDamage"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Radius"    "%radius"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                    }
+	                }
+	            }       
+	        }
+	    }
 	}
 	// Lich Frost Armor
 	// Author: Noya
@@ -7756,6 +6710,7 @@
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	
 	    "AbilityCastRange"              "800"
 	    "AbilityCastPoint"              "0.4"
@@ -7895,7 +6850,8 @@
 	            "Aura"              "modifier_frost_armor_autocast_attacked"
 	            "Aura_Radius"       "%autocast_radius"
 	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            "Aura_Flags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	        }
 	
 	        "modifier_frost_armor_autocast_attacked"
@@ -8640,7 +7596,6 @@
 	    "precache"
 	    {
 	        "particle"  "particles/items_fx/chain_lightning.vpcf"
-	        "particle"  "particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf"
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 	    }
 	
@@ -8649,16 +7604,22 @@
 	        "LinearProjectile"
 	        {
 	            "Target"         "TARGET"
-	            "EffectName"     ""
+	            "EffectName"     "particles/custom/linear_projectile.vpcf"
 	            "MoveSpeed"      "3000"
 	            "StartRadius"    "50"
 	            "EndRadius"      "500"
 	            "StartPosition"  "attach_attack1"
-	            "FixedDistance"  "600"
+	            "FixedDistance"  "700"
 	            "TargetTeams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	            "TargetTypes"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	            "HasFrontalCone" "1"
 	            "ProvidesVision" "0"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/naga_sea_witch/forked_lightning.lua"
+	            "Function"      "ForkedLightningStart"
 	        }
 	    }
 	
@@ -8672,244 +7633,196 @@
 	        }
 	    }
 	}
-	// AbilityName
-	// Author: 
-	// Date: 13.1.2015.
-	// Notes: Adds a cold effect to each attack, slowing a target enemy unit's attacks and movement.
-	//Level	Duration (Hero)	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+5 bonus damage, 30% attack rate, 30% movement speed	1
-	//2	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+10 bonus damage, 50% attack rate, 50% movement speed	3
-	//3	5 (1.5) sec.	N/A	10	70	Unit	Air, Ground, Enemy, Neutral	+15 bonus damage, 70% attack rate, 70% movement speed	5
+	// Naga Sea Witch Frost Arrows
+	// Author: Noya
+	// Description: Adds a cold effect to each attack, slowing a target enemy unit's attacks and movement.
+	
 	"naga_sea_witch_frost_arrows"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"naga_sea_witch_frost_arrows"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "naga_sea_witch_frost_arrows"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	
-	    "AbilityCastPoint"          	"0"
-	    "AbilityCastRange"          	"600"
+	    "AbilityCastRange"              "600"
 	
-		"AbilityManaCost"				"10"
-		"AbilityDamage"					"5 10 15"
+	    "AbilityManaCost"               "10"
+	    "AbilityDamage"                 "5 10 15"
 	
-		"precache"
-		{
-			"particle"	"particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
-			"particle"	"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"	"particles/status_fx/status_effect_frost.vpcf"	
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"slow_hero_duration"			"1.5"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"slow_creep_duration"			"5"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"slow_percentage"				"-20 -35 -50"		
-			}		
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
+	        "particle"  "particles/generic_gameplay/generic_slowed_cold.vpcf"
+	        "particle"  "particles/status_fx/status_effect_frost.vpcf"  
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "slow_hero_duration"            "1.5"
+	        }
+	        "02"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "slow_creep_duration"           "5"
+	        }
+	        "03"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "slow_percentage"               "-20 -35 -50"       
+	        }       
+	    }
 	
-		"Modifiers"
-		{
-			"modifier_frost_arrows"
-			{
-				"Passive"               "1" 
-				"IsHidden"				"1"
+	    "Modifiers"
+	    {
+	        "modifier_frost_arrows"
+	        {
+	            "Passive"               "1" 
+	            "IsHidden"              "1"
+	            "Orb"
+	            {
+	                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+	                "ProjectileName"    "particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
+	                "CastAttack"        "1"
+	            }
 	
-				"Orb"
-				{
-					"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
-					"ProjectileName"    "particles/econ/items/drow/drow_bow_monarch/drow_frost_arrow_monarch.vpcf"
-					"CastAttack"		"1"
-				}
+	            "OnOrbFire"
+	            {
+	                "SpendMana"
+	                {
+	                    "Mana"              "%AbilityManaCost"
+	                }
+	                "FireSound"
+	                {
+	                    "EffectName"        "Hero_DrowRanger.FrostArrows"
+	                    "Target"            "CASTER"
+	                }
+	            }
+	            
+	            "OnOrbImpact"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_frost_arrows_slow"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO"
+	                    }
+	                    "Duration"      "%slow_hero_duration"
+	                }
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_frost_arrows_slow"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Types"     "DOTA_UNIT_TARGET_BASIC"
+	                    }
+	                    "Duration"      "%slow_creep_duration"
+	                }
+	                "Damage"
+	                {
+	                    "Type"              "DAMAGE_TYPE_PHYSICAL"
+	                    "Damage"            "%AbilityDamage"
+	                    "Target"            "TARGET"
+	                }
+	            }
+	        }
 	
-				"OnOrbFire"
-				{
-					"SpendMana"
-					{
-						"Mana"    			"%AbilityManaCost"
-					}
-					"FireSound"
-					{
-						"EffectName"		"Hero_DrowRanger.FrostArrows"
-						"Target"			"CASTER"
-					}
-				}
-				
-				"OnOrbImpact"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_frost_arrows_slow"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Types"		"DOTA_UNIT_TARGET_HERO"
-						}
-						"Duration"		"%slow_hero_duration"
-					}
+	        "modifier_frost_arrows_slow"
+	        {
+	            "IsDebuff"          "1"
+	            "TextureName"       "naga_sea_witch_frost_arrows"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"      "%slow_percentage"
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"      "%slow_percentage"
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_frost_arrows_slow"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Types"		"DOTA_UNIT_TARGET_BASIC"
-						}
-						"Duration"		"%slow_creep_duration"
-					}
-	
-					"Damage"
-					{
-						"Type"          	"DAMAGE_TYPE_PHYSICAL"
-						"Damage"        	"%AbilityDamage"
-						"Target"			"TARGET"
-					}
-				}
-			}
-	
-			"modifier_frost_arrows_slow"
-			{
-				"IsDebuff" 			"1"
-				"TextureName"		"naga_sea_witch_frost_arrows"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_percentage"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow_percentage"
-	
-				}
-				"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
-				"EffectAttachType"      "attach_hitloc"
-				
-				"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
-				"StatusEffectPriority"	"10"
-			}
-		}
+	            }
+	            "EffectName"            "particles/generic_gameplay/generic_slowed_cold.vpcf"
+	            "EffectAttachType"      "attach_hitloc"
+	            
+	            "StatusEffectName"      "particles/status_fx/status_effect_frost.vpcf"
+	            "StatusEffectPriority"  "10"
+	        }
+	    }
 	}
 	// Naga Sea Witch Mana Shield
 	// Author: Noya
-	// Date: 24.1.2015.
-	// Notes: Creates a shield that absorbs damage by using the Sea Witch's mana. Blocks 100% of incoming damage.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	N/A	10 sec.	25	N/A	Personal	Self	1 damage per point of mana	1
-	//2	N/A	10 sec.	25	N/A	Personal	Self	1.5 damage per point of mana	3
-	//3	N/A	10 sec.	25	N/A	Personal	Self	2 damage per point of mana	5
+	// Description: Creates a shield that absorbs damage by using the Sea Witch's mana. Blocks 100% of incoming damage before any mitigation.
 	
-	// Notes: Post mitigation.
 	"naga_sea_witch_mana_shield"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"naga_sea_witch_mana_shield"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "naga_sea_witch_mana_shield"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	
-		"AbilityManaCost"				"25"
-		"AbilityCooldown"				"10"
+	    "AbilityManaCost"               "25"
+	    "AbilityCooldown"               "10"
 	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_per_mana"		"1 1.5 2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"absorption_percent"	"100"
-			}
-		}
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "damage_per_mana"       "1 1.5 2"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "absorption_percent"    "100"
+	        }
+	    }
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
-			"particle"	"particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+	        "particle"  "particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
+	    }
 	
-		"OnToggleOn"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_mana_shield"
-				"Target" 		"CASTER"
-			}
+	    "OnToggleOn"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/naga_sea_witch/mana_shield.lua"
+	            "Function"      "ManaShieldToggle"
+	        }
+	    }
 	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Medusa.ManaShield.On"
-				"Target" 		"CASTER"
-			}		
-		}
+	    "OnToggleOff"
+	    {
+	        "RemoveModifier"
+	        {
+	            "ModifierName"  "modifier_mana_shield"
+	            "Target"        "CASTER"
+	        }
 	
-		"OnToggleOff"
-		{
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_mana_shield"
-				"Target" 		"CASTER"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Medusa.ManaShield.Off"
-				"Target" 		"CASTER"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_mana_shield"
-			{
-				"IsHidden"			"0"
-		
-				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
-				"EffectAttachType"	"follow_origin"
-		
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/naga_sea_witch/mana_shield.lua"
-						"Function"		"ManaShield"
-						"Damage"		"%attack_damage"
-					}		
-	
-					"FireSound"
-					{
-						"EffectName"	"Hero_Medusa.ManaShield.Proc"
-						"Target" 		"CASTER"
-					}									
-				}
-	
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/naga_sea_witch/mana_shield.lua"
-						"Function"		"ManaShieldHealth"
-					}
-				}					
-			}
-		}	
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Medusa.ManaShield.Off"
+	            "Target"        "CASTER"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_mana_shield"
+	        {   
+	            "EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+	            "EffectAttachType"  "follow_origin"             
+	        }
+	    }   
 	}
 	// Naga Sea Witch Tornado
 	// Author: Noya
@@ -8999,21 +7912,6 @@
 	            "var_type"                  "FIELD_FLOAT"
 	            "duration_unit"             "12.0"
 	        }
-	        "010"
-	        {
-	            "var_type"                  "FIELD_INTEGER"
-	            "cyclone_height"            "550"
-	        }
-	        "11"
-	        {
-	            "var_type"                  "FIELD_INTEGER"
-	            "cyclone_min_height"        "500"
-	        }
-	        "12"
-	        {
-	            "var_type"                  "FIELD_INTEGER"
-	            "cyclone_max_height"        "650"
-	        }
 	    }
 	
 	    "OnSpellStart"
@@ -9036,6 +7934,15 @@
 	            "UnitCount"     "1"
 	            "SpawnRadius"   "1"
 	            "Target"        "POINT"
+	
+	            "OnSpawn"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/naga_sea_witch/tornado.lua"
+	                    "Function"      "TornadoCreated"
+	                }
+	            }
 	        }
 	
 	        "ApplyModifier"
@@ -9168,12 +8075,9 @@
 	            "IsHidden"              "1"
 	            "Passive"               "1"
 	
-	            "EffectName"        "particles/custom/tornado_ambient.vpcf"
-	            "EffectAttachType"  "attachto_ghost_attach"
-	
 	            "States"
 	            {   
-	                "MODIFIER_STATE_FLYING"             "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY" "MODIFIER_STATE_VALUE_ENABLED"
 	                "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
 	                "MODIFIER_STATE_DISARMED"           "MODIFIER_STATE_VALUE_ENABLED"
 	                "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
@@ -9194,7 +8098,7 @@
 	                    "ScriptFile"    "heroes/naga_sea_witch/tornado.lua"
 	                    "Function"      "TornadoThink"
 	                }
-	            }  
+	            }
 	
 	            "ThinkInterval"     "%duration_unit / 4"
 	            "OnIntervalThink"
@@ -9867,7 +8771,7 @@
 	            "Dodgeable"        "0"
 	            "ProvidesVision"   "0"
 	            "MoveSpeed"        "1300"
-	            "SourceAttachment" "attach_keg"
+	            "SourceAttachment" "DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
 	        }
 	
 	        "FireSound"
@@ -11722,230 +10626,79 @@
 	}
 	// Priestess of the Moon Scout
 	// Author: Noya
-	// Date: 24.1.2015.
-	// Notes: Temporarily summons an Owl Scout, which can be used to scout the map. Can see invisible units.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	60 sec.	20 sec.	100	N/A	N/A	N/A	Summons an Owl	1
-	//2	90 sec.	20 sec.	75	N/A	N/A	N/A	Summons an Owl	3
-	//3	120 sec.	20 sec.	50	N/A	N/A	N/A	Summons an Owl	5
+	// Description: Temporarily summons an Owl Scout, which can be used to scout the map. Can see invisible units.
+	
 	"potm_scout"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"potm_scout"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "potm_scout"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"20.0"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "20.0"
 	
-		"AbilityManaCost"				"100 75 50"
+	    "AbilityManaCost"               "100 75 50"
 	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_mirana/mirana_starfall_moonray.vpcf"
-			"particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
-			"model"		"models/items/courier/snowl/snowl_flying.vmdl"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"owl_duration"				"60 90 120"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"owl_hp"					"40"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"owl_vision"				"1000 1400 1800" //1000 1500 2200 originally
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"owl_movespeed"				"270 350 450"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"owl_1_count"				"1 0 0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"owl_2_count"				"0 1 0"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"owl_3_count"				"0 0 1"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spawn_distance"			"150"
-			}
-		}
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_mirana/mirana_starfall_moonray.vpcf"
+	        "particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+	        "model"     "models/items/courier/snowl/snowl_flying.vmdl"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "owl_duration"              "60 90 120"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "owl_vision"                "1000 1500 2200"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "owl_movespeed"             "270 350 450"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Mirana.Leap.Owlcat"
-				"Target"		"CASTER"
-			}
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Mirana.Leap.Owlcat"
+	            "Target"        "CASTER"
+	        }
 	
-			"SpawnUnit"
-			{
-				"UnitName"		"nightelf_owl_1"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/potm/scout.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-				
-				"Duration"		"%owl_duration"
-				"UnitCount"		"%owl_1_count"
-				"UnitLimit"		"0"
-				"GrantsGold"	"0"
-				"GrantsXP"		"0"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/potm/scout.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/potm/scout.lua"
+	            "Function"      "SpawnScout"
+	        }
+	    }
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_owl_scout"
-						"Target" 		"TARGET"
-					}
-				}
-			}
+	    "Modifiers"
+	    {
+	        "modifier_owl_scout"
+	        {
+	            "IsHidden"          "1"
+	        
+	            "States"
+	            {
+	                "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"
+	            }
 	
-			"SpawnUnit"
-			{
-				"UnitName"		"nightelf_owl_2"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/potm/scout.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-				
-				"Duration"		"%owl_duration"
-				"UnitCount"		"%owl_2_count"
-				"UnitLimit"		"0"
-				"GrantsGold"	"0"
-				"GrantsXP"		"0"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/potm/scout.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_owl_scout"
-						"Target" 		"TARGET"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"		"nightelf_owl_3"
-				"Target"
-				{
-					"Center"				"CASTER"
-					"ScriptSelectPoints"
-					{
-						"ScriptFile"    "heroes/potm/scout.lua"
-	        			"Function"      "SummonLocation"
-						"Target"		"CASTER"
-					}
-				}
-				
-				"Duration"		"%owl_duration"
-				"UnitCount"		"%owl_3_count"
-				"UnitLimit"		"0"
-				"GrantsGold"	"0"
-				"GrantsXP"		"0"
-				"SpawnRadius"	"10"
-				"OnSpawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/potm/scout.lua"
-						"Function"		"SetUnitsMoveForward"
-					}				
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-			
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_owl_scout"
-						"Target" 		"TARGET"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_owl_scout"
-			{
-				"IsHidden"			"1"
-			
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
-				"EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
-				"EffectAttachType"  "follow_overhead"
-			}
-		}
+	            "EffectName"        "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+	            "EffectAttachType"  "follow_overhead"
+	        }
+	    }
 	}
 	// Priestess of the Moon Searing Arrows
 	// Author: Noya
@@ -12531,140 +11284,64 @@
 	}
 	// Shadow Hunter Serpent Ward
 	// Author: Noya
-	// Date: 15.01.2015.
-	// Notes: Summons an immobile serpentine ward to attack the Shadow Hunter's enemies. The ward has 75/135/135 hit points and is immune to magic. Lasts 40 seconds.
-	//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-	//1	40 sec.	6.5 sec.	30	50	N/A	N/A	11-13 damage	1
-	//2	40 sec.	6.5 sec.	30	80	N/A	N/A	23-26 damage	3
-	//3	40 sec.	6.5 sec.	30	80	N/A	N/A	41-45 damage	5
+	// Description: Summons an immobile serpentine ward to attack the Shadow Hunter's enemies. The ward has 75/135/135 hit points and is immune to magic. Lasts 40 seconds.
+	
 	"shadow_hunter_serpent_ward"
 	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"shadow_hunter_serpent_ward"
-		"MaxLevel" 						"3"
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "shadow_hunter_serpent_ward"
+	    "MaxLevel"                      "3"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
-		"AbilityCastRange"				"500 800 800"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"6.5"
+	    "AbilityCastRange"              "500 800 800"
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "6.5"
 	
-		"AbilityManaCost"				"30"
+	    "AbilityManaCost"               "30"
 	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
-			"particle"	"particles/units/heroes/hero_venomancer/venomancer_ward_cast.vpcf"
-			"particle"	"particles/units/heroes/hero_venomancer/venomancer_ward_spawn.vpcf"
-		}
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"40.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"75 135 135"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_damage_tooltip"	"12 24 43"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"plague_ward_1_count"	"1 0 0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"plague_ward_2_count"	"0 1 0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"plague_ward_3_count"	"0 0 1"
-			}
-		}
+	    "precache"
+	    {
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+	        "particle"  "particles/units/heroes/hero_venomancer/venomancer_ward_cast.vpcf"
+	        "particle"  "particles/units/heroes/hero_venomancer/venomancer_ward_spawn.vpcf"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "duration"              "40.0"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "ward_hp"               "75 135 135"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "ward_damage"           "12 24 43"
+	        }
+	    }
 	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"		"Hero_Venomancer.Plague_Ward"
-				"Target"			"CASTER"
-			}
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"        "Hero_Venomancer.Plague_Ward"
+	            "Target"            "CASTER"
+	        }
 	
-			"SpawnUnit"
-			{
-				"UnitName"			"orc_serpent_ward_1"
-				"Target"			"POINT"
-				"UnitCount"			"%plague_ward_1_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				// This makes sure units never get stuck
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"			"orc_serpent_ward_2"
-				"Target"			"POINT"
-				"UnitCount"			"%plague_ward_2_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-				}
-			}
-	
-			"SpawnUnit"
-			{
-				"UnitName"			"orc_serpent_ward_3"
-				"Target"			"POINT"
-				"UnitCount"			"%plague_ward_3_count"
-				"Duration"			"%duration"
-	
-				"GrantsGold"		"1"
-				"GrantsXP"			"1"
-	
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_phased"
-						"Target"		"TARGET"
-						"Duration"		"0.03"
-					}
-				}
-			}
-		}
+	        "RunScript"
+	        {
+	            "ScriptFile"        "heroes/shadow_hunter/serpent_ward.lua"
+	            "Function"          "SpawnSerpentWard"
+	            "Target"            "POINT"
+	        }
+	    }
 	}
 	// Tauren Chieftain Endurance Aura
 	// Author: Noya
@@ -32593,6 +31270,15 @@
 			"particle"  "particles/status_fx/status_effect_wraithking_ghosts.vpcf"
 		}
 	
+		"OnAbilityPhaseStart"
+		{
+		    "RunScript"
+		    {
+		        "ScriptFile"    "units/nightelf/huntress.lua"
+		        "Function"      "SentinelCheck"
+		    }
+		}
+	
 		// Sentinel is invulnerable and destroyed after the tree it is attached to its cut down
 		"OnSpellStart"
 		{
@@ -32612,6 +31298,7 @@
 				"EffectAttachType"		"follow_origin"
 				"StatusEffectName" 		"particles/status_fx/status_effect_wraithking_ghosts.vpcf" 	   
 				"StatusEffectPriority"  "10"
+				"Attributes"        	"MODIFIER_ATTRIBUTE_PERMANENT"
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -32622,7 +31309,6 @@
 					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"  "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 				"OnCreated"
 				{
@@ -32630,6 +31316,15 @@
 				    {
 				        "ModifierName"  "modifier_true_sight_aura"
 				        "Target"        "CASTER"
+				    }
+				}
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+				    "RunScript"
+				    {
+				        "ScriptFile"	"units/nightelf/huntress.lua"
+						"Function"		"SentinelTreeCheck"
 				    }
 				}
 			}
@@ -34801,6 +33496,9 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 			
 		"AbilityCastRange"			"500"
+	
+		"RequiresAnyDeficit"		"1"
+		"TargetsAllowed"            "organic"
 	
 		"AbilitySpecial"
 		{
@@ -39626,7 +38324,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityCastAnimation"			"ACT_DOTA_IDLE"
 	
 		"AbilityCastRange"				"900"
@@ -44275,22 +42973,12 @@
 			"03"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"summoned_unit_damage"			"400"
+				"damage_to_summons"			"400"
 			}
 			"04"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"slow_per_stack"	"-20"	
-			}
-			"05"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"stack_multi"	"5"	
-			}
-			"06"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"think_interval"	"1"	
 			}
 		}
 	
@@ -44302,6 +42990,11 @@
 	
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+			    "EffectName"    "DOTA_Item.DiffusalBlade.Target"
+			    "Target"        "TARGET"
+			}
 			"RunScript"
 			{
 				"ScriptFile"	"units/orc/shaman.lua"
@@ -44313,7 +43006,6 @@
 		{
 			"modifier_purge"
 			{
-				"IsHidden"			"0"
 				"TextureName" 		"orc_purge"
 				"IsDebuff"			"1"
 				"IsPurgable"		"1"
@@ -44347,7 +43039,7 @@
 				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_per_stack" 
 				}
 	
-				"ThinkInterval"  "%think_interval"
+				"ThinkInterval"  "1"
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -44811,8 +43503,8 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_ATTACK"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 			
 		"AbilityCastRange"			"750"
 		"AbilityCastPoint"			"0"
@@ -44851,6 +43543,12 @@
 				"ScriptFile"	"units/orc/spiritwalker.lua"
 				"Function"		"SpiritLinkStart"
 			}
+	
+			"FireSound"
+			{
+			    "EffectName"    "Hero_Oracle.FortunesEnd.Target"
+			    "Target"        "TARGET"
+			}
 		}
 	
 		"Modifiers"
@@ -44860,8 +43558,8 @@
 				"IsPurgable"		"1"
 				"IsBuff"			"1"
 				"Duration"			"%duration"
-				//"EffectName"		"particle_name"
-				//"EffectAttachType"	"follow_origin"
+				"EffectName"		"particles/custom/orc/spirit_link.vpcf"
+				"EffectAttachType"	"follow_origin"
 	
 				"OnCreated"
 				{
@@ -44943,21 +43641,11 @@
 		"precache"
 		{
 			"particle"  "particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf"
+			"particle"  "particles/units/heroes/hero_oracle/oracle_false_promise_dmg_burst.vpcf"
 		}
 	
 		"OnSpellStart"
 		{
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
-				"EffectAttachType"  "world_origin"
-				"TargetPoint"       "POINT"
-				"ControlPoints"
-				{
-					"01"	"%radius 0 0"
-				}
-			}
-	
 			"FireSound"
 			{
 				"EffectName"	"Brewmaster_Storm.DispelMagic"
@@ -55348,31 +54036,6 @@
 			}
 		}
 	}			
-	
-	//=================================================================================
-	// Ability: Destroyer Spell Immunity
-	// Description: "This unit is unaffected by magical abilities"
-	//=================================================================================
-	"undead_spell_immunity"
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"		"generic_spell_immunity"
-		"MaxLevel"					"1"
-		
-		"Modifiers"
-		{
-			"modifier_spell_immunity"
-			{
-				"Passive" "1"
-				
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
 	
 	//=================================================================================
 	// Ability: Ghoul Frenzy

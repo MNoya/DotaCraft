@@ -5,145 +5,139 @@
 
 "blood_mage_siphon_mana"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"blood_mage_siphon_mana"
-	"MaxLevel" 						"3"
-	"CastFilterRejectCaster"		"1"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "blood_mage_siphon_mana"
+    "MaxLevel"                      "3"
+    "CastFilterRejectCaster"        "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 
-	"RequiresTargetMana"            "1"
+    "RequiresTargetMana"            "1"
 
-	"AbilityCastRange"				"600"
-	"AbilityCastPoint"				"0.1"
-	"AbilityCooldown"				"6.0"
-	"AbilityChannelTime"			"6"
+    "AbilityCastRange"              "600"
+    "AbilityCastPoint"              "0.1"
+    "AbilityCooldown"               "6.0"
+    "AbilityChannelTime"            "6"
 
-	"AbilityManaCost"				"10"
+    "AbilityManaCost"               "10"
 
-	"precache"
-	{
-		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
-		"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"duration"					"6.0"
-		}
-		"02"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"mana_per_second"			"15 30 45"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"break_distance"			"800"
-		}
-		"04"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"tick_interval"				"1.0"
-		}
-	}
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+        "particle"          "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "duration"                  "6.0"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "mana_per_second"           "15 30 45"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "break_distance"            "800"
+        }
+    }
 
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/blood_mage/siphon_mana.lua"
-			"Function"		"SiphonManaStart"
-		}		
-	}
-	
-	"OnSpellStart"
-	{
-		"FireSound"
-		{
-			"EffectName"	"Hero_Lion.ManaDrain"
-			"Target"		"TARGET"
-		}
+    "OnAbilityPhaseStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/blood_mage/siphon_mana.lua"
+            "Function"      "SiphonManaStart"
+        }       
+    }
+    
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_Lion.ManaDrain"
+            "Target"        "TARGET"
+        }
 
-		"ApplyModifier"
-		{
-		    "ModifierName"  "modifier_siphon_mana_channeling"
-		    "Target"        "CASTER"
-		    "Duration"      "%duration"
-		}
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_siphon_mana_channeling"
+            "Target"        "CASTER"
+            "Duration"      "%duration"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_siphon_mana"
-			"Target" 		"TARGET"
-			"Duration"		"%duration"
-		}			
-	}
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_siphon_mana"
+            "Target"        "TARGET"
+            "Duration"      "%duration"
+        }           
+    }
 
-	"OnChannelFinish"
-	{
-		"RunScript"
-		{
-			"ScriptFile"		"heroes/blood_mage/siphon_mana.lua"
-			"Function"			"SiphonManaEnd"
-			"sound"				"Hero_Lion.ManaDrain"
-		}
+    "OnChannelFinish"
+    {
+        "RunScript"
+        {
+            "ScriptFile"        "heroes/blood_mage/siphon_mana.lua"
+            "Function"          "SiphonManaEnd"
+            "sound"             "Hero_Lion.ManaDrain"
+        }
 
-		"RemoveModifier"
-		{
-			"ModifierName"		"modifier_siphon_mana"
-			"Target"			"TARGET"
-		}
+        "RemoveModifier"
+        {
+            "ModifierName"      "modifier_siphon_mana"
+            "Target"            "TARGET"
+        }
 
-		"RemoveModifier"
-		{
-			"ModifierName"		"modifier_siphon_mana_channeling"
-			"Target"			"CASTER"
-		}
-	}
+        "RemoveModifier"
+        {
+            "ModifierName"      "modifier_siphon_mana_channeling"
+            "Target"            "CASTER"
+        }
+    }
 
-	"Modifiers"
-	{
-		"modifier_siphon_mana_channeling"
-		{
-			"IsHidden"			"1"
-			"OverrideAnimation" "ACT_DOTA_TELEPORT"
-		}
+    "Modifiers"
+    {
+        "modifier_siphon_mana_channeling"
+        {
+            "IsHidden"          "1"
+            "OverrideAnimation" "ACT_DOTA_TELEPORT"
+        }
 
-		"modifier_siphon_mana"
-		{
-			"Passive"			"0"
-			"IsHidden"			"0"
-			"IsDebuff"			"1"
-	
-			"ThinkInterval"	"%tick_interval"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/blood_mage/siphon_mana.lua"
-					"Function"		"SiphonMana"
-				}
-			}
-		}
+        "modifier_siphon_mana"
+        {
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "IsDebuff"          "1"
+    
+            "ThinkInterval" "1.0"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/blood_mage/siphon_mana.lua"
+                    "Function"      "SiphonMana"
+                }
+            }
+        }
 
-		"modifier_siphon_mana_extra"
-		{
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			"IsHidden"			"1"
+        "modifier_siphon_mana_extra"
+        {
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "IsHidden"          "1"
 
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MANA_BONUS" "%mana_per_second" 
-			}
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MANA_BONUS" "%mana_per_second" 
+            }
 
-			"Duration"			"%duration"
-		}
-	}	
+            "Duration"          "%duration"
+        }
+    }   
 }

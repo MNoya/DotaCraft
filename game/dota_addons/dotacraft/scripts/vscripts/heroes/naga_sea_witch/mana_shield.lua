@@ -1,45 +1,37 @@
 --[[
-	Author: Noya
-	Date: 24.01.2015.
-	After taking damage, checks the mana of the caster and prevents as many damage as possible.
-
-	Note: This is post-reduction, because there's currently no easy way to get pre-mitigation damage.
+    Author: Noya
+    Used from damage filter, recieves damage pre mitigation, checks the mana of the caster and uses it to prevent as much as possible. 
 ]]
-function ManaShield( event )
-	local caster = event.caster
-	local ability = event.ability
-	local damage_per_mana = ability:GetLevelSpecialValueFor("damage_per_mana", ability:GetLevel() - 1 )
-	local absorption_percent = ability:GetLevelSpecialValueFor("absorption_percent", ability:GetLevel() - 1 ) * 0.01
-	local damage = event.Damage * absorption_percent
+function ManaShieldToggle(event)
+    local caster = event.caster
+    local ability = event.ability
+    local damage_per_mana = ability:GetLevelSpecialValueFor("damage_per_mana", ability:GetLevel()-1)
+    local absorption_percent = ability:GetLevelSpecialValueFor("absorption_percent", ability:GetLevel()-1) * 0.01
 
-	local caster_mana = caster:GetMana()
-	local mana_needed = damage / damage_per_mana
+    ability:ApplyDataDrivenModifier(caster,caster,"modifier_mana_shield",{})
+    caster:EmitSound("Hero_Medusa.ManaShield.On")
 
-	local oldHealth = caster.OldHealth
+    function caster:OnIncomingDamage(damage)
+        if not caster:HasModifier("modifier_mana_shield") then return damage end
+        local caster_mana = caster:GetMana()
+        local mana_needed = damage / damage_per_mana
+    
+        -- If the caster has enough mana, fully heal for the damage done
+        damage = damage - math.min(mana_needed, caster_mana)
+        caster:SpendMana(mana_needed, ability)
+        if mana_needed <= caster_mana then
+            caster:EmitSound("Hero_Medusa.ManaShield.Proc")
+            
+            -- Impact particle based on damage absorbed
+            local particleName = "particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
+            local particle = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN_FOLLOW, caster)
+            ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+            ParticleManager:SetParticleControl(particle, 1, Vector(mana_needed,0,0))
+        else
+            ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mana_shield_oom.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+            ToggleOff(ability)
+        end
 
-	print("Damage taken "..damage.." | Mana needed: "..mana_needed.." | Current Mana: "..caster_mana)
-
-	-- If the caster has enough mana, fully heal for the damage done
-	if mana_needed <= caster_mana then
-		caster:SpendMana(mana_needed, ability)
-		caster:SetHealth(oldHealth)
-		
-		-- Impact particle based on damage absorbed
-		local particleName = "particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
-		local particle = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle, 1, Vector(mana_needed,0,0))
-	else
-		local newHealth = oldHealth - damage
-		caster:SpendMana(mana_needed, ability)
-		caster:SetHealth(newHealth)
-	end
-	
-end
-
--- Keeps track of the targets health
-function ManaShieldHealth( event )
-	local caster = event.caster
-
-	caster.OldHealth = caster:GetHealth()
+        return damage
+    end
 end

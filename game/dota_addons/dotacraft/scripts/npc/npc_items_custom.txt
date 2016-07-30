@@ -244,7 +244,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityTextureName"            "item_sentry_wards"
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	    
 	    "AbilityCastRange"              "500"
 	    "ItemCost"                      "150"
@@ -1657,8 +1657,9 @@
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityTextureName"            "item_crystal_ball"
 	
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	    "AbilityCooldown"               "60"
+	    "AoERadius"                     "900"
 	    
 	    "AbilitySpecial"
 	    {

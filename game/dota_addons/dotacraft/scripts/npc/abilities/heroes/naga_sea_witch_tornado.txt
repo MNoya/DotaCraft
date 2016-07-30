@@ -86,21 +86,6 @@
             "var_type"                  "FIELD_FLOAT"
             "duration_unit"             "12.0"
         }
-        "010"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "cyclone_height"            "550"
-        }
-        "11"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "cyclone_min_height"        "500"
-        }
-        "12"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "cyclone_max_height"        "650"
-        }
     }
 
     "OnSpellStart"
@@ -123,6 +108,15 @@
             "UnitCount"     "1"
             "SpawnRadius"   "1"
             "Target"        "POINT"
+
+            "OnSpawn"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/naga_sea_witch/tornado.lua"
+                    "Function"      "TornadoCreated"
+                }
+            }
         }
 
         "ApplyModifier"
@@ -255,12 +249,9 @@
             "IsHidden"              "1"
             "Passive"               "1"
 
-            "EffectName"        "particles/custom/tornado_ambient.vpcf"
-            "EffectAttachType"  "attachto_ghost_attach"
-
             "States"
             {   
-                "MODIFIER_STATE_FLYING"             "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY" "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_DISARMED"           "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
@@ -281,7 +272,7 @@
                     "ScriptFile"    "heroes/naga_sea_witch/tornado.lua"
                     "Function"      "TornadoThink"
                 }
-            }  
+            }
 
             "ThinkInterval"     "%duration_unit / 4"
             "OnIntervalThink"

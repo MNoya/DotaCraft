@@ -1,179 +1,114 @@
 // Lich Death and Decay
 // Author: Noya
-// Date: 29.01.2015.
-// Notes: Damages everything in its area of effect by 4% of its base hit points per second.
-//Level	Duration	Cooldown	Mana Cost	Range	Area of Effect	Allowed Targets	Effect	Hero Level Req
-//N/A	35 sec.	150 sec.	250	100	30	Air, Ground, Wards, Buildings, Trees	Damage to 4% of base HP/sec	6
+// Description: Damages everything in its area of effect by 4% of its base hit points per second.
+
 "lich_death_and_decay"
 {
-	"BaseClass"             		"ability_datadriven"
-	"AbilityTextureName"			"lich_death_and_decay"
-	"MaxLevel"						"1"
-	"AbilityType" 					"DOTA_ABILITY_TYPE_ULTIMATE"
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "lich_death_and_decay"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 
-	"AbilityCastRange"				"1000"
-	"AbilityCastPoint"				"0.3"
-	"AbilityCooldown"				"150.0"
+    "AbilityCastRange"              "1000"
+    "AbilityCastPoint"              "0.3"
+    "AbilityCooldown"               "150.0"
 
-	"AbilityManaCost"				"250"
-	
-	"AOERadius"     				"%radius"
-	"AbilityChannelTime"			"35.0"
+    "AbilityManaCost"               "250"
+    
+    "AOERadius"                     "%radius"
+    "AbilityChannelTime"            "35.0"
 
-	"precache"
-	{
-		"particle" 	"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
-		"particle"  "particles/custom/enigma_midnight_pulse.vpcf"
-		"particle"  "particles/custom/enigma_malefice.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-	}
-	
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"health_percent_damage_per_sec"	"4"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"radius"			"300"
-		}
-		"03"
-		{
-			"var_type"			"FIELD_FLOAT"
-			"duration"			"35.0"
-		}	
-		"04"
-		{
-			"var_type"			"FIELD_FLOAT"
-			"wave_interval"		"1.0"
-		}
-	}
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+        "particle"  "particles/custom/enigma_midnight_pulse.vpcf"
+        "particle"  "particles/custom/enigma_malefice.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                      "FIELD_INTEGER"
+            "health_percent_damage_per_sec" "4"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "radius"            "300"
+        }
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "35.0"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/lich/death_and_decay.lua"
-			"Function"		"DeathAndDecayStart"
-			"Target"		"POINT"
-		}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/lich/death_and_decay.lua"
+            "Function"      "DeathAndDecayStart"
+            "Target"        "POINT"
+        }
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_death_and_decay_channelling"
-			"Target" 		"CASTER"
-		}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Lich.ChainFrostLoop"
+            "Target"        "CASTER"
+        }
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Lich.ChainFrostLoop"
-			"Target" 		"CASTER"
-		}
-
-		"DestroyTrees"
-		{
-			"Target" 		"POINT"
-			"Radius"		"%radius"
-		}
+        "DestroyTrees"
+        {
+            "Target"        "POINT"
+            "Radius"        "%radius"
+        }
     }
 
     "OnChannelFinish"
     {
-    	"RunScript"
-    	{
-    		"ScriptFile"	"heroes/lich/death_and_decay.lua"
-			"Function"		"DeathAndDecayEnd"
-    	} 
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/lich/death_and_decay.lua"
+            "Function"      "DeathAndDecayEnd"
+        }
 
-    	"RemoveModifier"
-		{
-			"ModifierName"	"modifier_death_and_decay_channelling"
-			"Target" 		"CASTER"
-		}
-
-		"FireSound"
-		{
-			"EffectName"	"Hero_Lich.ChainFrostImpact.LF"
-			"Target" 		"CASTER"
-		}
+        "FireSound"
+        {
+            "EffectName"    "Hero_Lich.ChainFrostImpact.LF"
+            "Target"        "CASTER"
+        }
     }
     
     "Modifiers"
     {
-        "modifier_death_and_decay_channelling"
+        "modifier_death_and_decay_thinker"
         {
-        	"IsHidden"			"1"
-            "ThinkInterval"		"1.0"
+            "IsHidden"       "1"
+            "ThinkInterval"  "1.0"
             "OnIntervalThink"
-         	{
-         		"ApplyModifier"
-         		{
-         			"ModifierName"	"modifier_channeling"
-         			"Target" 		"CASTER"
-         			"Duration"		"0.9"
-         		}
-			}
-		}
-
-		"modifier_channeling"
-		{
-			"IsHidden"				"1"
-			"OverrideAnimation"     "ACT_DOTA_SPAWN"
-		}
-
-		"modifier_death_and_decay_thinker"
-		{
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_enigma/enigma_blackhole_n.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-					"ControlPointEntities"
-					{
-						"TARGET"	"attach_origin"
-						"TARGET"	"attach_origin"
-					}
-				}
-
-				"AttachEffect"
-				{
-					"EffectName"        "particles/custom/enigma_midnight_pulse.vpcf"
-					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-					"ControlPoints"
-					{
-						"01"	"%radius 0 0"
-					}
-				}
-			}
-
-			"ThinkInterval"  "%wave_interval"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/lich/death_and_decay.lua"
-					"Function"		"DeathAndDecayDamage"
-					"Target"
-					{
-						"Center"  	"TARGET"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-					}
-				}
-			}		
-		}
-	}
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/lich/death_and_decay.lua"
+                    "Function"      "DeathAndDecayDamage"
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Radius"    "%radius"
+                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                    }
+                }
+            }       
+        }
+    }
 }

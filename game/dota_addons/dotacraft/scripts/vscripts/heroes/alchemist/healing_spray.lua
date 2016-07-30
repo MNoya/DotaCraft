@@ -1,6 +1,5 @@
 --[[
 	Author: Noya
-	Date: 25.01.2015.
 	Creates a dummy unit to apply the HealingSpray thinker modifier which does the waves
 ]]
 function HealingSprayStart( event )
@@ -41,6 +40,7 @@ end
 
 function HealingSprayEnd( event )
 	local caster = event.caster
-
-	caster.healing_spray_dummy:RemoveSelf()
+	if IsValidEntity(caster.healing_spray_dummy) then
+	   caster.healing_spray_dummy:ForceKill(true)
+    end
 end

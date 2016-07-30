@@ -41,7 +41,7 @@ function FlameStrikeOrbThrow(event)
     end)
 end
 
-function FlameStrikeAnimation(event)
+function FlameStrikeStart(event)
     local caster = event.caster
     local point = event.target_points[1]
     StartAnimation(caster, {duration=1, activity=ACT_DOTA_CAST_TORNADO, rate=1})
@@ -51,6 +51,25 @@ function FlameStrikeAnimation(event)
 
     local particle2 = ParticleManager:CreateParticle("particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf",PATTACH_CUSTOMORIGIN,caster)
     ParticleManager:SetParticleControl(particle2,0,point)
+
+    local ability = event.ability
+    Timers:CreateTimer(ability:GetSpecialValueFor("delay"), function()
+        local flame_strike = CreateUnitByName("dummy_unit_vulnerable", point, false, caster, caster, caster:GetTeam())
+        event.ability:ApplyDataDrivenModifier(caster, flame_strike, "modifier_flame_strike_thinker1", nil)
+        Timers:CreateTimer(2.1, function()
+            if IsValidEntity(flame_strike) then flame_strike:ForceKill(true) end
+        end)
+    end)
+end
+
+function FlameStrikeSecond(event)
+    local caster = event.caster
+    local origin = event.target:GetAbsOrigin()
+    local flame_strike = CreateUnitByName("dummy_unit_vulnerable", origin, false, caster, caster, caster:GetTeam())
+    event.ability:ApplyDataDrivenModifier(caster, flame_strike, "modifier_flame_strike_thinker2", nil)
+    Timers:CreateTimer(6.0, function()
+        if IsValidEntity(flame_strike) then flame_strike:ForceKill(true) end
+    end)
 end
 
 function FlameStrikeDamage(event)

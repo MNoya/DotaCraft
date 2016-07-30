@@ -132,7 +132,7 @@ modifier_immolation_aura_debuff = class({})
 
 function modifier_immolation_aura_debuff:OnCreated()
     local unit = self:GetParent()
-    local particle = ParticleManager:CreateParticle("particles/particles/custom/nightelf/demon_hunter/immolation_damage.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, unit)
+    local particle = ParticleManager:CreateParticle("particles/custom/nightelf/demon_hunter/immolation_damage.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, unit)
     ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
     ParticleManager:SetParticleControlEnt(particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
     self:AddParticle(particle, false, false, 1, false, false)
