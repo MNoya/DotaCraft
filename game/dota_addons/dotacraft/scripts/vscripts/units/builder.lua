@@ -245,7 +245,7 @@ function Build( event )
                         builder:GatherFromNearestTree(builder:GetAbsOrigin(), 2000)
                     end
                 end
-            elseif Gatherer:IsUnitValidDepositForResource(unit, "gold") then
+            elseif Gatherer:IsUnitValidDepositForResource(unit, "gold") and (unit:GetRace() == "human" or unit:GetRace() == "orc") then
                 for k,builder in pairs(builders) do
                     if not builder.work then -- If it doesnt have anything else to do
                         builder:GatherFromNearestGoldMine()

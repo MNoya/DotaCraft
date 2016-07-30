@@ -117,13 +117,14 @@ function AutoEntangle( event )
 
     local free_mine_in_range = FindGoldMineForEntangling(caster)
     if free_mine_in_range then
+        print("Auto Entangling Gold Mine")
         EntangleGoldMine({caster = caster, target = free_mine_in_range})
     end
 end
 
 function FindGoldMineForEntangling( unit )
     local radius = 900+unit:GetHullRadius()
-    local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
+    local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
     for k,gold_mine in pairs(units) do
         if not gold_mine.building_on_top then
             return gold_mine
@@ -134,6 +135,7 @@ end
 -- Initial cast of the root ability
 function UpRootStart( event )
     local caster = event.caster
+    local ability = event.ability
     caster.collision_size = caster.collision_size or caster:GetHullRadius()
 
     -- Don't allow uprooting until the ancient has finished construction
@@ -145,10 +147,12 @@ function UpRootStart( event )
     -- Remove building properties
     Queue:Remove(caster)
     BuildingHelper:RemoveBuilding( caster, false )
+    ability:ApplyDataDrivenModifier(caster,caster,"modifier_uprooted",{})
 
-    -- If the ancient had an entangled mine, remove the effect, which will trigger ShowGoldMine
+    -- If the ancient had an entangled mine, remove it, which will trigger ShowGoldMine
     if IsValidEntity(caster.entangled_gold_mine) then
-        caster.entangled_gold_mine:RemoveModifierByName("modifier_entangled_mine")
+        caster.entangled_gold_mine:AddNoDraw()
+        caster.entangled_gold_mine:ForceKill(true)
     end
 end
 
@@ -160,7 +164,6 @@ function UpRoot( event )
 
     caster:SetHullRadius(32)
     caster:RemoveModifierByName("modifier_building")
-    ability:ApplyDataDrivenModifier(caster,caster,"modifier_uprooted",{})
 
     -- Tower: Reduce its damage by 20, (1.5 BAT) and make it melee (128 range)
     if unitName == "nightelf_ancient_protector" then
@@ -173,8 +176,6 @@ function UpRoot( event )
         caster:RemoveAbility("ability_shop")
         caster:RemoveModifierByName("modifier_shop")
     end
-
-    caster:RemoveModifierByName("modifier_building")
 
     caster:SetArmorType("heavy")
 
@@ -192,7 +193,7 @@ function UpRoot( event )
     for i=0,15 do
         local ability = caster:GetAbilityByIndex(i)
         if ability then
-            if ( string.match(ability:GetAbilityName(), "train_") or string.match(ability:GetAbilityName(), "research_")) then
+            if (string.match(ability:GetAbilityName(), "train_") or string.match(ability:GetAbilityName(), "research_")) then
                 ability:SetHidden(true)
             elseif ability:GetAbilityName() == "nightelf_eat_tree" or ability:GetAbilityName() == "nightelf_entangle_gold_mine" then
                 ability:SetHidden(false)
@@ -256,42 +257,72 @@ function EntangleGoldMine( event )
             ApplyModifier(target, "modifier_unselectable")
 
             local entangle_ability = caster:FindAbilityByName("nightelf_entangle_gold_mine")
-            local build_time = entangle_ability:GetSpecialValueFor("build_time")
-            local hit_points = building:GetMaxHealth()
+            local buildTime = entangle_ability:GetSpecialValueFor("build_time")
 
-            -- Start building construction ---
-            local initial_health = 0.10 * hit_points
-            local time_completed = GameRules:GetGameTime()+build_time
-            local update_health_interval = build_time / math.floor(hit_points-initial_health) -- health to add every tick
-            building:SetHealth(initial_health)
-            building.bUpdatingHealth = true
+            -- Start building construction
+            local startTime = GameRules:GetGameTime()
+            local fTimeBuildingCompleted = startTime+buildTime -- the gametime when the building should be completed
+            local fMaxHealth = building:GetMaxHealth()
+            local fserverFrameRate = 1/30
+            local nInitialHealth = math.floor(0.1 * (fMaxHealth))
+            local fUpdateHealthInterval = math.max(fserverFrameRate, buildTime / math.floor(fMaxHealth-nInitialHealth)) -- health tick interval
+            building:SetHealth(nInitialHealth)
+
+            local fAddedHealth = 0
+            local nHealthInterval = (fMaxHealth-nInitialHealth) / (buildTime / fserverFrameRate)
+            local fSmallHealthInterval = nHealthInterval - math.floor(nHealthInterval) -- just the floating point component
+            nHealthInterval = math.floor(nHealthInterval)
+            local fHPAdjustment = 0
 
             -- Particle effect
-            NightElfConstructionParticle({target=building})
+            local construction_particle = ParticleManager:CreateParticle("particles/custom/nightelf/lucent_beam_impact_shared_ti_5.vpcf", PATTACH_ABSORIGIN, building)
             function building:IsUnderConstruction() return true end
             building.updateHealthTimer = Timers:CreateTimer(function()
                 if not IsValidAlive(caster) then
+                    ParticleManager:DestroyParticle(construction_particle, true)
                     building:ForceKill(true)
                     return
                 end
 
-                if IsValidAlive(building) then
-                    local timesUp = GameRules:GetGameTime() >= time_completed
+                if IsValidEntity(building) and building:IsAlive() then
+                    local timesUp = GameRules:GetGameTime() >= fTimeBuildingCompleted or building:GetHealth() == building:GetMaxHealth()
                     if not timesUp then
-                        if building.bUpdatingHealth then
-                              if building:GetHealth() < hit_points then
-                                building:SetHealth(building:GetHealth() + 1)
-                              else
-                                building.bUpdatingHealth = false
-                             end
+                        -- Use +1 every frame or float adjustment
+                        local hpGain = 0
+                        if fUpdateHealthInterval <= fserverFrameRate then
+                            fHPAdjustment = fHPAdjustment + fSmallHealthInterval
+                            if fHPAdjustment > 1 then
+                                hpGain = nHealthInterval + 1
+                                fHPAdjustment = fHPAdjustment - 1
+                            else
+                                hpGain = nHealthInterval
+                            end
+                        else
+                            hpGain = 1
+                        end
+
+                        -- Fasten up
+                        if GameRules.WarpTen then
+                            hpGain = hpGain * 42
+                        end
+
+                        if hpGain > 0 then
+                            fAddedHealth = fAddedHealth + hpGain
+                            building:SetHealth(building:GetHealth() + hpGain)
                         end
                     else
+                        local adjustment = fMaxHealth - fAddedHealth - nInitialHealth
+                        if adjustment > 0 then
+                            building:SetHealth(building:GetHealth() + fMaxHealth - fAddedHealth - nInitialHealth) -- round up the last little bit
+                        end
+                        BuildingHelper:print(string.format("Finished %s in %.2f seconds. HP was off by %.2f",building:GetUnitName(),GameRules:GetGameTime()-startTime,adjustment))
+
                         -- Show the gold counter and initialize the mine builders list
                         building.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, building)
                         ParticleManager:SetParticleControl(building.counter_particle, 0, Vector(mine_pos.x,mine_pos.y,mine_pos.z+200))
-                        ParticleManager:DestroyParticle(target.construction_particle, true)
-                        target.construction_particle = nil
+                        ParticleManager:DestroyParticle(construction_particle, true)
 
+                        BuildingHelper:AddBuildingToPlayerTable(playerID, building)
                         building.constructionCompleted = true
                         building.state = "complete"
                         function building:IsUnderConstruction() return false end
@@ -301,12 +332,12 @@ function EntangleGoldMine( event )
                 else
                     -- Building destroyed
                     print("Entangled gold mine was destroyed during the construction process!")
-
+                    ParticleManager:DestroyParticle(construction_particle, true)
                     return
                 end
-                return update_health_interval
-             end)
-             ---------------------------------
+                return fUpdateHealthInterval
+            end)
+            ---------------------------------
 
             target:SetCapacity(5)
             building.mine = target -- A reference to the mine that the entangled mine is associated with
@@ -335,6 +366,7 @@ function ShowGoldMine( event )
     print("Removing Entangled Gold Mine")
     mine:RemoveNoDraw()
     mine:RemoveModifierByName("modifier_unselectable")
+    BuildingHelper:BlockGridSquares(BuildingHelper:GetConstructionSize(mine), 0, mine:GetAbsOrigin())
 
     -- Eject all wisps 
     local wisps = mine:GetGatherers()

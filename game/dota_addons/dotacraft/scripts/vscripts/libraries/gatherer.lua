@@ -625,6 +625,7 @@ function Gatherer:InitGoldMines()
         gold_mine:SetAbsOrigin(location)
         gold_mine:SetNeverMoveToClearSpace(true)
         gold_mine.blockers = gridNavBlockers
+        BuildingHelper:AddModifierBuilding(gold_mine)
 
         -- Find and store the mine entrance
         local mine_entrance = Entities:FindAllByNameWithin("*mine_entrance", location, 300)
