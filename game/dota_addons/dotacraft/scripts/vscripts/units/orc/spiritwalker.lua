@@ -29,16 +29,20 @@ function Disenchant( event )
     -- Find targets in radius
     local units = FindUnitsInRadius(caster:GetTeamNumber(), point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
     for k,unit in pairs(units) do
-        if unit:IsSummoned() then
-            local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
-            ApplyDamage({victim = unit, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
-            ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
-        end
+        if not IsCustomBuilding(unit) then
+            if unit:IsSummoned() then
+                local damage_to_summons = event.ability:GetSpecialValueFor("damage_to_summons")
+                ApplyDamage({victim = unit, attacker = caster, damage = damage_to_summons, damage_type = DAMAGE_TYPE_PURE})
+                ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_death_lodestar_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+            end
 
-        -- This ability removes both positive and negative buffs from units.
-        local bRemovePositiveBuffs = true
-        local bRemoveDebuffs = true
-        unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
+            ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+
+            -- This ability removes both positive and negative buffs from units.
+            local bRemovePositiveBuffs = true
+            local bRemoveDebuffs = true
+            unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
+        end
     end
 
     Blight:Dispel(point)
@@ -50,22 +54,35 @@ function SpiritLinkStart( event )
     local ability = event.ability
     local radius = ability:GetSpecialValueFor('radius')
 
-    local units = 1
+    local units = 0
     local max = ability:GetSpecialValueFor('max_unit')
-    local allies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+    local allies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, FIND_CLOSEST, false)
     if caster.linked == nil then
         caster.linked = {}
     end
     ability:ApplyDataDrivenModifier(caster, target, 'modifier_spirit_link', {})
     local anyunit = false
+    local linked = {}
     while units < max do
         for k,ally in pairs(allies) do
             if units < max and (not ally:FindModifierByName('modifier_spirit_link') or anyunit or ally ~= caster) then
+                ParticleManager:CreateParticle("particles/custom/orc/spirit_link_cast.vpcf", PATTACH_ABSORIGIN, ally)
                 ability:ApplyDataDrivenModifier(caster, ally, 'modifier_spirit_link', {})
                 units = units + 1
+                table.insert(linked, ally)
             end
         end
         anyunit = true
+    end
+
+    for _,unit in pairs(linked) do
+        for _,otherUnit in pairs(linked) do
+            if otherUnit ~= unit then
+                local particle = ParticleManager:CreateParticle("particles/custom/dazzle_shadow_wave_b.vpcf", PATTACH_CUSTOMORIGIN, nil)
+                ParticleManager:SetParticleControl(particle, 0, unit:GetAbsOrigin())
+                ParticleManager:SetParticleControl(particle, 1, otherUnit:GetAbsOrigin())
+            end
+        end
     end
 end
 
