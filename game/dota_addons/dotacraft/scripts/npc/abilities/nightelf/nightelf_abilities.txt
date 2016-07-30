@@ -346,6 +346,15 @@
 		"particle"  "particles/status_fx/status_effect_wraithking_ghosts.vpcf"
 	}
 
+	"OnAbilityPhaseStart"
+	{
+	    "RunScript"
+	    {
+	        "ScriptFile"    "units/nightelf/huntress.lua"
+	        "Function"      "SentinelCheck"
+	    }
+	}
+
 	// Sentinel is invulnerable and destroyed after the tree it is attached to its cut down
 	"OnSpellStart"
 	{
@@ -365,6 +374,7 @@
 			"EffectAttachType"		"follow_origin"
 			"StatusEffectName" 		"particles/status_fx/status_effect_wraithking_ghosts.vpcf" 	   
 			"StatusEffectPriority"  "10"
+			"Attributes"        	"MODIFIER_ATTRIBUTE_PERMANENT"
 			"States"
 			{
 				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -375,7 +385,6 @@
 				"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NO_HEALTH_BAR"  "MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
 			"OnCreated"
 			{
@@ -383,6 +392,15 @@
 			    {
 			        "ModifierName"  "modifier_true_sight_aura"
 			        "Target"        "CASTER"
+			    }
+			}
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"	"units/nightelf/huntress.lua"
+					"Function"		"SentinelTreeCheck"
 			    }
 			}
 		}
