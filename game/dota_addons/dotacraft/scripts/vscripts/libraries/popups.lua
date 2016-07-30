@@ -95,6 +95,7 @@ end
 -- Customizable version.
 function PopupNumbers(target, pfx, color, lifetime, number, presymbol, postsymbol)
     local pfxPath = string.format("particles/msg_fx/msg_%s.vpcf", pfx)
+    number = math.floor(number+0.5)
     local pidx
     if pfx == "gold" or pfx == "lumber" then
         pidx = ParticleManager:CreateParticleForTeam(pfxPath, PATTACH_CUSTOMORIGIN, nil, target:GetTeamNumber())

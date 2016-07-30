@@ -38,9 +38,13 @@ function CDOTABaseAbility:IsAllowedTarget(target)
         return false,"error_must_target_mana_unit"
     end
 
-    local bNeedsAnyDeficit = self:GetKeyValue("RequiresManaDeficit")
+    local bNeedsAnyDeficit = self:GetKeyValue("RequiresAnyDeficit")
     if bNeedsAnyDeficit and target:GetHealthDeficit() == 0 and target:GetMana() == maxMana then
-        return false,"error_full_mana_health"
+        if maxMana > 0 then
+            return false,"error_full_mana_health"
+        else
+            return false,"error_full_health"
+        end
     end
 
     local bNeedsHealthDeficit = self:GetKeyValue("RequiresHealthDeficit")

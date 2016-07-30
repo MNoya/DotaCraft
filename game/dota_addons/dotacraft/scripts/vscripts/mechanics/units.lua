@@ -494,7 +494,7 @@ function CDOTA_BaseNPC:HasSplashAttack()
 end
 
 function CDOTA_BaseNPC:IsDummy()
-    return self:GetUnitName():match("dummy_")
+    return self:GetUnitName():match("dummy_") or self:GetUnitLabel():match("dummy")
 end
 
 -- Default 0 (melee)

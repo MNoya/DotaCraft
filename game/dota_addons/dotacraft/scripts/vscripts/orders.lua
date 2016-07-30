@@ -77,16 +77,23 @@ function dotacraft:FilterExecuteOrder( filterTable )
         if not ability then return true end
         local playerID = unit:GetPlayerOwnerID()
         
-        -- Check health requirements
+        -- Check health/manarequirements
+        local manaDeficit = unit:GetMana() == unit:GetMaxMana()
+        local healthDeficit = unit:GetHealthDeficit() == 0
+        local bNeedsAnyDeficit = ability:GetKeyValue("RequiresAnyDeficit")
         local requiresHealthDeficit = ability:GetKeyValue("RequiresHealthDeficit")
-        if requiresHealthDeficit and unit:GetHealthDeficit() == 0 then
+        local requiresManaDeficit = ability:GetKeyValue("RequiresManaDeficit")
+        if bNeedsAnyDeficit and not healthDeficit and not manaDeficit then
+            if unit:GetMaxMana() > 0 then
+                SendErrorMessage(issuer, "#error_full_mana_health")
+            else
+                SendErrorMessage(issuer, "#error_full_health")
+            end
+            return false
+        elseif requiresHealthDeficit and not healthDeficit then
             SendErrorMessage(issuer, "#error_full_health")
             return false
-        end
-
-        -- Check mana requirements
-        local requiresManaDeficit = ability:GetKeyValue("RequiresManaDeficit")
-        if requiresManaDeficit and unit:GetMana() == unit:GetMaxMana() then
+        elseif requiresManaDeficit and not manaDeficit then
             SendErrorMessage(issuer, "#error_full_mana")
             return false
         end

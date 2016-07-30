@@ -30,7 +30,14 @@ function dotacraft:FilterDamage( filterTable )
 
     -- Revert damage from MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
     if inflictor and attacker:IsHero() then
-        filterTable["damage"] = filterTable["damage"]/(1+((attacker:GetIntellect()/16)/100))
+        filterTable["damage"] = math.floor(filterTable["damage"]/(1+((attacker:GetIntellect()/16)/100))+0.5)
+    end
+
+    local value = filterTable["damage"] --Post reduction
+    local damage,reduction = dotacraft:GetPreMitigationDamage(value, victim, attacker, damagetype) --Pre reduction
+
+    if victim.OnIncomingDamage then
+        damage = victim:OnIncomingDamage(damage)
     end
 
     -- Physical attack damage filtering
@@ -42,20 +49,16 @@ function dotacraft:FilterDamage( filterTable )
             return false
         end
 
-        local original_damage = filterTable["damage"] --Post reduction
-
-        local armor = victim:GetPhysicalArmorValue()
-        local damage_reduction = ((armor)*0.06) / (1+0.06*(armor))
-
-        --Remake the full damage to apply our custom handling
-        local attack_damage = original_damage / (1 - damage_reduction)
-        --print(original_damage,"=",attack_damage,"*",1-damage_reduction)
-
+        -- Apply custom armor reduction
+        local attack_damage = damage
         local attack_type  = attacker:GetAttackType()
         local armor_type = victim:GetArmorType()
         local multiplier = attacker:GetAttackFactorAgainstTarget(victim)
+        local armor = victim:GetPhysicalArmorValue()
 
-        local damage = (attack_damage * (1 - damage_reduction)) * multiplier
+        damage = (attack_damage * (1 - reduction)) * multiplier
+        
+        --print(string.format("Damage (%s attack vs %.f %s armor): (%.f * %.2f) * %.2f = %.f", attack_type, armor, armor_type, attack_damage, 1-reduction, multiplier, damage))
 
         -- Extra rules for certain ability modifiers
         -- modifier_defend (50% less damage from Piercing attacks)
@@ -71,15 +74,12 @@ function dotacraft:FilterDamage( filterTable )
         if victim:HasModifier("modifier_ethereal") and attack_type == "magic" then
             damage = damage * 1.66
         end
-
-        --print("Damage ("..attack_type.." vs "..armor_type.." armor ["..math.floor(armor).."]): ("  .. attack_damage .. " * "..1-damage_reduction..") * ".. multiplier.. " = " .. damage )
         
         -- Reassign the new damage
         filterTable["damage"] = damage
     
     -- Magic damage filtering
     elseif damagetype == DAMAGE_TYPE_MAGICAL then
-        local damage = filterTable["damage"] --Pre reduction
 
         -- Extra rules for certain ability modifiers
         -- modifier-anti_magic_shell (Absorbs 300 magic damage)
@@ -112,6 +112,24 @@ function dotacraft:FilterDamage( filterTable )
     end
 
     return true
+end
+
+function dotacraft:GetPreMitigationDamage(value, victim, attacker, damagetype)
+    if damagetype == DAMAGE_TYPE_PHYSICAL then
+        local armor = victim:GetPhysicalArmorValue()
+        local reduction = ((armor)*0.06) / (1+0.06*(armor))
+        local damage = value / (1 - reduction)
+
+        return damage,reduction
+
+    elseif damagetype == DAMAGE_TYPE_MAGICAL then
+        local reduction = victim:GetMagicalArmorValue()*0.01
+        local damage = value / (1 - reduction)
+
+        return damage,reduction
+    else
+        return value,0
+    end
 end
 
 function DamageBuilding(target, damage, ability, caster)

@@ -147,7 +147,7 @@ function LeavesCorpse(unit)
         return false
 
     -- Ignore units that start with dummy keyword   
-    elseif unit:GetUnitName():match("dummy") then
+    elseif unit:IsDummy() then
         return false
 
     -- Ignore units that were specifically set to leave no corpse
