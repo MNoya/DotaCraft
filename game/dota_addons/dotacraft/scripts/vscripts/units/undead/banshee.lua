@@ -45,28 +45,16 @@ function PossessionEnd( keys )
             -- particle management
             ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf", 1, target)
 
-            -- Remove the unit from the enemy player unit list
-            local oldOwnerID = target:GetPlayerOwnerID()
-            if oldOwnerID then
-                Players:RemoveUnit(oldOwnerID, target)
-            end
-
-            local newOwnerID = caster:GetPlayerOwnerID()
-            local newOwner = PlayerResource:GetSelectedHeroEntity(newOwnerID)
-            local newTeam = PlayerResource:GetTeam(newOwnerID)
-            
+            local reselect = PlayerResource:IsUnitSelected(newOwnerID, caster)
+            target:TransferOwnership(caster:GetPlayerOwnerID())
+            caster:EmitSound("Hero_DeathProphet.Death")
             caster:ForceKill(true)
             caster:AddNoDraw()
 
-            -- convert target unit information to match caster
-            target:SetOwner(newOwner)
-            target:SetControllableByPlayer(newOwnerID, true)
-            target:SetTeam(newTeam)
-            target:EmitSound("Hero_DeathProphet.Death")
-            target:RemoveModifierByName("modifier_possession_target")
-            Players:AddUnit(newOwnerID, target)
-            Players:ModifyFoodUsed(newOwnerID, GetFoodCost(target))
-            PlayerResource:AddToSelection(newOwnerID, target)
+            if reselect then
+                PlayerResource:AddToSelection(newOwnerID, target)
+            end
+
             return
         else
             
@@ -83,7 +71,7 @@ function CurseAutocast(keys)
     local autocast_radius = ability:GetCastRange()
     local modifier_name = "modifier_undead_curse"
     
-    if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
+    if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() and not IsChanneling(caster) then
         local target
         local enemies = FindEnemiesInRadius(caster, autocast_radius)
         for k,unit in pairs(enemies) do

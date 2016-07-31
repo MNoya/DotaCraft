@@ -571,6 +571,23 @@ function CDOTA_BaseNPC_Creature:LevelUp(levels)
     self:SetMana(self:GetMaxMana() * relativeMana)
 end
 
+function CDOTA_BaseNPC_Creature:TransferOwnership(newOwnerID)
+    local oldOwnerID = self:GetPlayerOwnerID()
+
+    -- Remove the unit from the enemy player unit list
+    local foodCost = GetFoodCost(self) or 0
+    if PlayerResource:IsValidPlayer(oldOwnerID) and oldOwnerID ~= newOwnerID then
+        Players:RemoveUnit(oldOwnerID, self)
+        Players:ModifyFoodUsed(newOwnerID, -foodCost)
+    end
+    
+    self:SetOwner(PlayerResource:GetSelectedHeroEntity(newOwnerID))
+    self:SetControllableByPlayer(newOwnerID, true)
+    self:SetTeam(PlayerResource:GetTeam(newOwnerID))
+    Players:AddUnit(newOwnerID, self)
+    Players:ModifyFoodUsed(newOwnerID, foodCost)            
+end
+
 function CDOTA_BaseNPC:FindItemByName(item_name)
     for i=0,5 do
         local item = self:GetItemInSlot(i)

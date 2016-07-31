@@ -2,11 +2,7 @@
 function Charm( event )
     local caster = event.caster
     local target = event.target
-
-    target:Stop()
-    target:SetTeam(caster:GetTeamNumber())
-    target:SetOwner(caster)
-    target:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
-    target:RespawnUnit()
-    target:SetHealth(target:GetHealth())
+    local hp = target:GetHealth()
+    target:TransferOwnership(caster:GetPlayerOwnerID())
+    ExecuteOrderFromTable({UnitIndex = target:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false})
 end
