@@ -1,6 +1,5 @@
 // Crypt Lord Locust Swarm
 // Author: Noya
-// Date: 29.01.2015.
 // Description: Creates a swarm of angry locusts that bite and tear at nearby enemy units. 
 //  As they chew the enemy flesh, they convert it into a substance that restores hit points to the Crypt Lord when they return.
 //  Once "launched" the Locust Swarm will follow the Crypt Lord where he walks, heading out in an area around the Crypt Lord.
@@ -18,7 +17,7 @@
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-    "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL" //Locusts have magic attack type, but still physical damage
     "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
 
     "AbilityCastRange"              "700"
@@ -181,6 +180,7 @@
                 "MODIFIER_STATE_UNSELECTABLE"                   "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_FLYING"                         "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_DISARMED"                       "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY" "MODIFIER_STATE_VALUE_ENABLED"
             }
         }
     }

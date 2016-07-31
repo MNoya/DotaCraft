@@ -19847,7 +19847,6 @@
 	    "AttackAnimationPoint"      "0"
 	    "AttackAcquisitionRange"    "900"
 	    "AttackRange"           "10"
-	    "ProjectileModel"       ""   //Add projectile models
 	    "ProjectileSpeed"       "500"
 	    
 	    // Bounty
@@ -19857,7 +19856,7 @@
 	    
 	    // Movement
 	    //----------------------------------------------------------------
-	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+	    "MovementCapabilities"  "DOTA_UNIT_CAP_MOVE_GROUND"
 	    "MovementSpeed"         "400"
 	    "MovementTurnRate"      "0.2"
 	    
@@ -19870,7 +19869,7 @@
 	    // Vision
 	    //----------------------------------------------------------------
 	    "VisionDaytimeRange"        "0"
-	    "VisionNighttimeRange"      "10"
+	    "VisionNighttimeRange"      "0"
 	    
 	    // Attack Damage types
 	    //----------------------------------------------------------------
