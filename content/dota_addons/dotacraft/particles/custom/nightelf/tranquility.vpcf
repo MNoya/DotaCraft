@@ -3,19 +3,9 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 10
-	m_BoundingBoxMin =
-	[
-		-100.000000,
-		-100.000000,
-		-100.000000,
-	]
-	m_BoundingBoxMax =
-	[
-		100.000000,
-		100.000000,
-		200.000000,
-	]
-	m_Children =
+	m_BoundingBoxMin = [ -100.0, -100.0, -100.0 ]
+	m_BoundingBoxMax = [ 100.0, 100.0, 200.0 ]
+	m_Children = 
 	[
 		{
 			m_ChildRef = resource:"particles/custom/nightelf/tranquility_cast.vpcf"

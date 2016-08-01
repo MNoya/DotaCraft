@@ -6158,7 +6158,8 @@
 	
 	"keeper_tranquility"
 	{
-	    "BaseClass"                     "ability_datadriven"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/keeper/tranquility.lua"
 	    "AbilityTextureName"            "keeper_tranquility"
 	    "MaxLevel"                      "1"
 	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
@@ -6166,7 +6167,6 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
 	    "AbilityCastRange"              "700"
 	    "AbilityCastPoint"              "0.3"
@@ -6198,97 +6198,7 @@
 	            "var_type"          "FIELD_INTEGER"
 	            "radius"            "900"
 	        }
-	    }       
-	
-	    "OnSpellStart"
-	    {
-	        "ApplyModifier"
-	        {
-	            "Target"            "CASTER"
-	            "ModifierName"      "modifier_tranquility_aura"
-	        }   
-	    }
-	
-	    "OnChannelFinish"
-	    {
-	        "RemoveModifier"
-	        {
-	            "Target"            "CASTER"
-	            "ModifierName"      "modifier_tranquility_aura"
-	        }   
-	    }
-	
-	    "Modifiers"
-	    {
-	        "modifier_tranquility_aura"
-	        {
-	            "IsHidden"          "1"
-	
-	            "Aura"              "modifier_tranquility_aura_effect"
-	            "Aura_Radius"       "%radius"
-	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	            "Aura_Types"        "DOTA_UNIT_TARGET_ALL"
-	
-	            "EffectName"        "particles/items2_fx/tranquil_boots_healing.vpcf"
-	            "EffectAttachType"  "follow_origin"
-	
-	            "OnCreated"
-	            {
-	                
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "heroes/keeper/tranquility.lua"
-	                    "Function"      "TranquilityStart"
-	                }
-	
-	                "AttachEffect"
-	                {
-	                    "Target"            "CASTER"
-	                    "EffectName"        "particles/custom/nightelf/tranquility.vpcf"
-	                    "EffectAttachType"  "follow_origin"
-	                    "ControlPoints"
-	                    {
-	                        "01"        "%radius 0 0"
-	                    }
-	                }
-	
-	                "FireSound"
-	                {
-	                    "Target"        "CASTER"
-	                    "EffectName"    "leshrac_lesh_respawn_09"
-	                }
-	            }
-	
-	            "ThinkInterval"     "2"
-	            "OnIntervalThink"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "heroes/keeper/tranquility.lua"
-	                    "Function"      "TranquilityThink"
-	                }
-	            }
-	        }
-	
-	        "modifier_tranquility_aura_effect"
-	        {
-	            "Properties"
-	            {
-	                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%heal_per_second"
-	            }
-	
-	            "ThinkInterval"     "1"
-	            "OnIntervalThink"
-	            {
-	                "AttachEffect"
-	                {
-	                    "Target"            "TARGET"
-	                    "EffectName"        "particles/neutral_fx/troll_heal.vpcf"
-	                    "EffectAttachType"  "follow_origin"
-	                }
-	            }
-	        }
-	    }
+	    } 
 	}
 	// Lich Dark Ritual, Warcraft version
 	// Author: Noya
@@ -10605,15 +10515,15 @@
 	
 	"shadow_hunter_big_bad_voodoo"
 	{
-	    "BaseClass"                     "ability_datadriven"
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/shadow_hunter/big_bad_voodoo.lua"
 	    "AbilityTextureName"            "shadow_hunter_big_bad_voodoo"
 	    "MaxLevel"                      "1"
 	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 	
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 	
 	    "AbilityCastRange"              "800"
 	    "AbilityCastPoint"              "0.5"
@@ -10644,142 +10554,6 @@
 	        {
 	            "var_type"      "FIELD_INTEGER"
 	            "radius"        "800"
-	        }
-	    }
-	
-	    "OnSpellStart"
-	    {
-	        "ApplyModifier"
-	        {
-	            "ModifierName"  "modifier_big_bad_voodoo"
-	            "Target"        "CASTER"
-	            "Duration"      "%duration"
-	        }
-	
-	        "ApplyModifier"
-	        {
-	            "ModifierName"  "modifier_big_bad_voodoo_channeling"
-	            "Target"        "CASTER"
-	        }
-	
-	        "FireSound"
-	        {
-	            "EffectName"    "shadowshaman_shad_ability_shackle_08"
-	            "Target"        "CASTER"
-	        }
-	    }
-	
-	    "OnChannelFinish"
-	    {
-	        "RemoveModifier"
-	        {
-	            "ModifierName"  "modifier_big_bad_voodoo"
-	            "Target"        "CASTER"
-	        }
-	
-	        "RemoveModifier"
-	        {
-	            "ModifierName"  "modifier_big_bad_voodoo_channeling"
-	            "Target"        "CASTER"
-	        }
-	    }
-	
-	    "Modifiers"
-	    {
-	        "modifier_big_bad_voodoo_channeling"
-	        {
-	            "IsHidden"          "1"
-	            "ThinkInterval"     "1.0"
-	            "OnIntervalThink"
-	            {
-	                "ApplyModifier"
-	                {
-	                    "ModifierName"  "modifier_channeling"
-	                    "Target"        "CASTER"
-	                    "Duration"      "0.9"
-	                }
-	            }
-	        }
-	
-	        "modifier_channeling"
-	        {
-	            "IsHidden"              "1"
-	            "OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"
-	        }
-	
-	        "modifier_big_bad_voodoo"
-	        {
-	            "EffectName"        "particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
-	            "EffectAttachType"  "follow_origin"
-	    
-	            "OnCreated"
-	            {
-	                "AttachEffect"
-	                {
-	                    "EffectName"        "particles/custom/witchdoctor_voodoo_restoration_aura.vpcf"
-	                    "EffectAttachType"  "follow_origin"
-	                    "Target"            "CASTER"
-	                }
-	
-	                "AttachEffect"
-	                {
-	                    "EffectName"        "particles/custom/warlock_shadow_word_buff_copy.vpcf"
-	                    "EffectAttachType"  "follow_origin"
-	                    "Target"            "CASTER"
-	                }
-	
-	                "AttachEffect"
-	                {
-	                    "EffectName"        "particles/custom/witchdoctor_voodoo_restoration.vpcf"
-	                    "EffectAttachType"  "start_at_customorigin"
-	                    "Target"            "CASTER"
-	                    "ControlPoints"
-	                    {
-	                        "01"    "%radius 0 0"
-	                    }               
-	                }
-	
-	                "FireSound"
-	                {
-	                    "EffectName"    "Hero_WitchDoctor.Maledict_Loop"
-	                    "Target"        "CASTER"
-	                }
-	            }
-	
-	            "OnDestroy"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "heroes/shadow_hunter/big_bad_voodoo.lua"
-	                    "Function"      "MaledictStop"
-	                }
-	            }
-	
-	            "OnDeath"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "heroes/shadow_hunter/big_bad_voodoo.lua"
-	                    "Function"      "MaledictStop"
-	                }
-	            }
-	
-	            "Aura"              "modifier_big_bad_voodoo_invulnerability"
-	            "Aura_Radius"       "%radius"
-	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	            "Aura_ApplyToCaster" "0"
-	        }
-	
-	        "modifier_big_bad_voodoo_invulnerability"
-	        {
-	            "EffectName"        "particles/custom/warlock_shadow_word_buff_c.vpcf"
-	            "EffectAttachType"  "follow_origin"
-	    
-	            "States"
-	            {
-	                "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
-	            }
 	        }
 	    }
 	}

@@ -1,0 +1,48 @@
+// Shadow Hunter Big Bad Voodoo
+// Author: Noya
+// Notes: Turns all friendly units invulnerable in an area around the Shadow Hunter. The Shadow Hunter does not turn invulnerable. Lasts 30 seconds.
+
+"shadow_hunter_big_bad_voodoo"
+{
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/shadow_hunter/big_bad_voodoo.lua"
+    "AbilityTextureName"            "shadow_hunter_big_bad_voodoo"
+    "MaxLevel"                      "1"
+    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+    "AbilityCastRange"              "800"
+    "AbilityCastPoint"              "0.5"
+    "AbilityCooldown"               "180.0"
+
+    "AbilityManaCost"               "200"
+    "AbilityChannelTime"            "30.0"
+
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_shadowshaman/unused_field_4.vpcf"
+        "particle"  "particles/custom/warlock_shadow_word_buff_c.vpcf"
+        "particle"  "particles/custom/witchdoctor_voodoo_restoration_aura.vpcf"
+        "particle"  "particles/custom/witchdoctor_voodoo_restoration.vpcf"
+        "particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
+    }
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "duration"      "30"
+        }
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "radius"        "800"
+        }
+    }
+}

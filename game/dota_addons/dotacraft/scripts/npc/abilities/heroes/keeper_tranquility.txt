@@ -4,7 +4,8 @@
 
 "keeper_tranquility"
 {
-    "BaseClass"                     "ability_datadriven"
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "heroes/keeper/tranquility.lua"
     "AbilityTextureName"            "keeper_tranquility"
     "MaxLevel"                      "1"
     "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
@@ -12,7 +13,6 @@
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 
     "AbilityCastRange"              "700"
     "AbilityCastPoint"              "0.3"
@@ -44,95 +44,5 @@
             "var_type"          "FIELD_INTEGER"
             "radius"            "900"
         }
-    }       
-
-    "OnSpellStart"
-    {
-        "ApplyModifier"
-        {
-            "Target"            "CASTER"
-            "ModifierName"      "modifier_tranquility_aura"
-        }   
-    }
-
-    "OnChannelFinish"
-    {
-        "RemoveModifier"
-        {
-            "Target"            "CASTER"
-            "ModifierName"      "modifier_tranquility_aura"
-        }   
-    }
-
-    "Modifiers"
-    {
-        "modifier_tranquility_aura"
-        {
-            "IsHidden"          "1"
-
-            "Aura"              "modifier_tranquility_aura_effect"
-            "Aura_Radius"       "%radius"
-            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-            "Aura_Types"        "DOTA_UNIT_TARGET_ALL"
-
-            "EffectName"        "particles/items2_fx/tranquil_boots_healing.vpcf"
-            "EffectAttachType"  "follow_origin"
-
-            "OnCreated"
-            {
-                
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/keeper/tranquility.lua"
-                    "Function"      "TranquilityStart"
-                }
-
-                "AttachEffect"
-                {
-                    "Target"            "CASTER"
-                    "EffectName"        "particles/custom/nightelf/tranquility.vpcf"
-                    "EffectAttachType"  "follow_origin"
-                    "ControlPoints"
-                    {
-                        "01"        "%radius 0 0"
-                    }
-                }
-
-                "FireSound"
-                {
-                    "Target"        "CASTER"
-                    "EffectName"    "leshrac_lesh_respawn_09"
-                }
-            }
-
-            "ThinkInterval"     "2"
-            "OnIntervalThink"
-            {
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/keeper/tranquility.lua"
-                    "Function"      "TranquilityThink"
-                }
-            }
-        }
-
-        "modifier_tranquility_aura_effect"
-        {
-            "Properties"
-            {
-                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%heal_per_second"
-            }
-
-            "ThinkInterval"     "1"
-            "OnIntervalThink"
-            {
-                "AttachEffect"
-                {
-                    "Target"            "TARGET"
-                    "EffectName"        "particles/neutral_fx/troll_heal.vpcf"
-                    "EffectAttachType"  "follow_origin"
-                }
-            }
-        }
-    }
+    } 
 }
