@@ -9532,6 +9532,7 @@
 	
 	            "OnCreated"
 	            {
+	                "RunScript"
 	                {
 	                    "ScriptFile"    "heroes/pit_lord/doom.lua"
 	                    "Function"      "DoomStart"
@@ -9559,6 +9560,7 @@
 	    //-------------------------------------------------------------------------------------------------------------
 	    "BaseClass"                     "ability_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	    "MaxLevel"                      "1"
 	    "AbilityTextureName"            "doom_guard_war_stomp"
@@ -9718,8 +9720,8 @@
 	        }
 	        "04"
 	        {
-	            "var_type"                  "FIELD_FLOAT"
-	            "creep_duration"            "60"
+	            "var_type"      "FIELD_INTEGER"
+	            "movement_speed_reduction"          "-75"
 	        }
 	        "05"
 	        {
@@ -9777,7 +9779,7 @@
 	            
 	            "EffectName"        "particles/units/heroes/hero_oracle/oracle_fatesedict_repel.vpcf"
 	            "EffectAttachType"  "follow_origin"
-	    
+	            
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"               "%damage_reduction"
@@ -9896,8 +9898,7 @@
 	        {
 	            "ModifierName"  "modifier_rain_of_fire_channelling"
 	            "Target"        "CASTER"
-	        }
-	            
+	        }   
 	    }
 	    
 	    "Modifiers"
@@ -9935,8 +9936,7 @@
 	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
 	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 	                    }
-	                    "Type"          "DAMAGE_TYPE_MAGICAL"
-	                    "Damage"        "%wave_damage / 2"
+	                    "ModifierName"  "modifier_rain_of_fire_burn"
 	                }
 	            }
 	            "ThinkInterval"  "1.0"
@@ -11407,8 +11407,8 @@
 	    {
 	        "FireSound"
 	        {
-	            "Target"            "CASTER"
-	            "EffectName"        "Hero_Tinker.Heat-Seeking_Missile"
+	            "Target"        "CASTER"
+	            "EffectName"    "Hero_Tinker.Heat-Seeking_Missile"
 	        }
 	
 	        "ApplyModifier"
@@ -11453,32 +11453,10 @@
 	            }
 	        }
 	
-	        "ActOnTargets"
+	        "RunScript"
 	        {
-	            "Target"
-	            {
-	                "Center"    "PROJECTILE"
-	                "Radius"    "%projectile_radius"
-	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	            }
-	        
-	            "Action"    
-	            {
-	                "Damage"
-	                {
-	                    "Target"    "TARGET"
-	                    "Damage"    "%AbilityDamage"
-	                    "Type"      "DAMAGE_TYPE_MAGICAL"
-	                }
-	
-	                "ApplyModifier"
-	                {
-	                    "ModifierName"  "modifier_cluster_rocket_stun"
-	                    "Target"        "TARGET"
-	                    "Duration"      "%stun_duration"
-	                }
-	            }
+	            "ScriptFile"    "heroes/tinker/cluster_rockets.lua"
+	            "Function"      "ClusterRocketHit"
 	        }
 	    }
 	
@@ -11505,11 +11483,10 @@
 	            "ThinkInterval"  "0.1"
 	            "OnIntervalThink"
 	            {
-	                "FireEffect"
+	                "FireSound"
 	                {
-	                    "EffectName"        "Hero_Gyrocopter.Rocket_Barrage.Launch"
-	                    "EffectAttachType"  "follow_origin"
-	                    "Target"            "CASTER"
+	                    "EffectName"    "Hero_Gyrocopter.Rocket_Barrage.Launch"
+	                    "Target"        "CASTER"
 	                }
 	
 	                "RunScript"
@@ -11527,6 +11504,8 @@
 	            "IsDebuff"          "1"
 	            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
 	            "EffectAttachType"  "follow_overhead"
+	
+	            "OverrideAnimation"     "ACT_DOTA_DISABLED"
 	
 	            "States"
 	            {
@@ -11632,6 +11611,7 @@
 	
 	    "precache"
 	    {
+	        "particle"  "particles/units/heroes/hero_tinker/tinker_base_attack.vpcf"
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
 	
 	        //Factory
@@ -11738,6 +11718,8 @@
 	    "AbilityCastRange"      "100"
 	    "AbilityCastPoint"      "0.0"
 	
+	    "TargetsAllowed"        "ground"
+	
 	    "AbilityDamage"         "30 60 80"
 	
 	    "AbilitySpecial"
@@ -11745,19 +11727,7 @@
 	        "01"
 	        {
 	            "var_type"          "FIELD_INTEGER"
-	            "small_radius"      "100"
-	        }
-	
-	        "02"
-	        {
-	            "var_type"          "FIELD_INTEGER"
-	            "big_radius"        "250"
-	        }
-	
-	        "03"
-	        {
-	            "var_type"          "FIELD_FLOAT"
-	            "big_radius_dmg"    "0.5"
+	            "radius"            "150"
 	        }
 	    }
 	
@@ -11765,15 +11735,22 @@
 	    {
 	        "FireEffect"
 	        {
-	            "Target"        "CASTER"
-	            "EffectName"    "particles/units/heroes/hero_techies/techies_suicide.vpcf"
+	            "Target"            "CASTER"
+	            "EffectName"        "particles/units/heroes/hero_techies/techies_suicide_fire.vpcf"
 	            "EffectAttachType"  "follow_origin"
+	            "ControlPointEntities"
+	            {
+	                "CASTER" "attach_hitloc"
+	                "CASTER" "attach_hitloc"
+	                "CASTER" "attach_hitloc"
+	                "CASTER" "attach_hitloc"
+	            }
 	        }
 	
 	        "FireSound"
 	        {
 	            "EffectName"    "Hero_Techies.Suicide"
-	            "Target"    "CASTER"
+	            "Target"        "CASTER"
 	        }
 	
 	        "Damage"
@@ -11781,25 +11758,12 @@
 	            "Target"
 	            {
 	                "Center"    "CASTER"
-	                "Radius"    "%small_radius"
+	                "Radius"    "%radius"
 	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	            }
-	            "Damage"    "%AbilityDamage * %big_radius_dmg"
-	            "Type"  "DAMAGE_TYPE_MAGICAL"
-	        }
-	        
-	        "Damage"
-	        {
-	            "Target"
-	            {
-	                "Center"    "CASTER"
-	                "Radius"    "%big_radius"
-	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	            }
-	            "Damage"    "%AbilityDamage * %big_radius_dmg"
-	            "Type"  "DAMAGE_TYPE_MAGICAL"
+	            "Damage"        "%AbilityDamage"
+	            "Type"          "DAMAGE_TYPE_MAGICAL"
 	        }
 	        
 	        "Damage"
@@ -12354,7 +12318,7 @@
 	
 	    "TargetsAllowed"                "organic"
 	
-	    "AbilityCastRange"              "600"
+	    "AbilityCastRange"              "300"
 	    "AbilityCastPoint"              "0.3"
 	    "AbilityCooldown"               "8.0"
 	
@@ -12376,23 +12340,23 @@
 	    {
 	        "01"
 	        {
-	            "var_type"  "FIELD_INTEGER"
-	            "duration"  "15"
+	            "var_type"          "FIELD_INTEGER"
+	            "duration"          "15"
 	        }
 	        "02"
 	        {
-	            "var_type"  "FIELD_INTEGER"
+	            "var_type"          "FIELD_INTEGER"
 	            "initial_damage"    "75 150 225"
 	        }
 	        "03"
 	        {
-	            "var_type"  "FIELD_INTEGER"
+	            "var_type"          "FIELD_INTEGER"
 	            "damage_every_3sec" "10 30 45"
 	        }
 	        "04"
 	        {
-	            "var_type"  "FIELD_INTEGER"
-	            "move_speed_slow"   "-50"
+	            "var_type"          "FIELD_INTEGER"
+	            "initial_move_speed_slow"   "-50" //Regains 10 every 3 sec
 	        }
 	    }
 	
@@ -12442,6 +12406,12 @@
 	            "Target"        "TARGET"
 	        }
 	
+	        "RemoveModifier"
+	        {
+	            "ModifierName"  "modifier_shadow_strike"
+	            "Target"        "TARGET"
+	        }
+	
 	        "ApplyModifier"
 	        {
 	            "ModifierName"  "modifier_shadow_strike"        
@@ -12461,10 +12431,6 @@
 	        {   
 	            "Duration"  "%duration"
 	            "IsDebuff"  "1"
-	            "Properties"
-	            {
-	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
-	            }
 	
 	            "StatusEffectName"      "particles/status_fx/status_effect_poison_viper.vpcf"
 	
@@ -12476,6 +12442,11 @@
 	                    "EffectAttachType"  "attach_hitloc"
 	                    "Target"            "TARGET"
 	                }
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/warden/shadow_strike.lua"
+	                    "Function"      "ShadowStrikeSlow"
+	                }
 	            }
 	            "ThinkInterval" "3"
 	            "OnIntervalThink"
@@ -12486,6 +12457,30 @@
 	                    "Damage"        "%damage_every_3sec"
 	                    "Target"        "TARGET"
 	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/warden/shadow_strike.lua"
+	                    "Function"      "ShadowStrikeSlowDecay"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_shadow_strike_slow_stack"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	        }
+	
+	        "modifier_shadow_strike_slow_stack"
+	        {
+	            "IsHidden"  "1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "-5"
 	            }
 	        }
 	    }

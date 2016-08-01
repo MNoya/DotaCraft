@@ -19,6 +19,7 @@
 
     "precache"
     {
+        "particle"  "particles/units/heroes/hero_tinker/tinker_base_attack.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
 
         //Factory
@@ -125,6 +126,8 @@
     "AbilityCastRange"      "100"
     "AbilityCastPoint"      "0.0"
 
+    "TargetsAllowed"        "ground"
+
     "AbilityDamage"         "30 60 80"
 
     "AbilitySpecial"
@@ -132,19 +135,7 @@
         "01"
         {
             "var_type"          "FIELD_INTEGER"
-            "small_radius"      "100"
-        }
-
-        "02"
-        {
-            "var_type"          "FIELD_INTEGER"
-            "big_radius"        "250"
-        }
-
-        "03"
-        {
-            "var_type"          "FIELD_FLOAT"
-            "big_radius_dmg"    "0.5"
+            "radius"            "150"
         }
     }
 
@@ -152,15 +143,22 @@
     {
         "FireEffect"
         {
-            "Target"        "CASTER"
-            "EffectName"    "particles/units/heroes/hero_techies/techies_suicide.vpcf"
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_techies/techies_suicide_fire.vpcf"
             "EffectAttachType"  "follow_origin"
+            "ControlPointEntities"
+            {
+                "CASTER" "attach_hitloc"
+                "CASTER" "attach_hitloc"
+                "CASTER" "attach_hitloc"
+                "CASTER" "attach_hitloc"
+            }
         }
 
         "FireSound"
         {
             "EffectName"    "Hero_Techies.Suicide"
-            "Target"    "CASTER"
+            "Target"        "CASTER"
         }
 
         "Damage"
@@ -168,25 +166,12 @@
             "Target"
             {
                 "Center"    "CASTER"
-                "Radius"    "%small_radius"
+                "Radius"    "%radius"
                 "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
                 "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
             }
-            "Damage"    "%AbilityDamage * %big_radius_dmg"
-            "Type"  "DAMAGE_TYPE_MAGICAL"
-        }
-        
-        "Damage"
-        {
-            "Target"
-            {
-                "Center"    "CASTER"
-                "Radius"    "%big_radius"
-                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-            }
-            "Damage"    "%AbilityDamage * %big_radius_dmg"
-            "Type"  "DAMAGE_TYPE_MAGICAL"
+            "Damage"        "%AbilityDamage"
+            "Type"          "DAMAGE_TYPE_MAGICAL"
         }
         
         "Damage"
