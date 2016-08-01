@@ -214,7 +214,8 @@
 
             // Update all abilities.
             for (var ab in abilities) {
-                abilities[ab].update();
+				if( Abilities.IsDisplayedAbility(abilities[ab].ability) )
+					abilities[ab].update();
             }
         }
 
