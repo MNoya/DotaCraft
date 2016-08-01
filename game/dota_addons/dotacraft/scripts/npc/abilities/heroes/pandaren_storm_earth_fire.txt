@@ -8,7 +8,7 @@
     "MaxLevel"                      "1"
     "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
     "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 
     "AbilityCastPoint"              "0.65"
@@ -18,7 +18,6 @@
     
     "AbilitySpecial"
     {
-        
         "01"
         {
             "var_type"                  "FIELD_FLOAT"
@@ -94,7 +93,7 @@
 
             "States"
             {
-                "MODIFIER_STATE_COMMAND_RESTRICTED"     "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_STUNNED"     "MODIFIER_STATE_VALUE_ENABLED"
             }
 
             "OnDestroy"         
@@ -116,8 +115,8 @@
 
         "modifier_primal_split_duration"
         {
-            "IsHidden"          "0"
-
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
             "States"
             {
                 "MODIFIER_STATE_STUNNED"            "MODIFIER_STATE_VALUE_ENABLED"
@@ -126,6 +125,9 @@
                 "MODIFIER_STATE_UNSELECTABLE"       "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_OUT_OF_GAME"        "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_NO_HEALTH_BAR"      "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_MAGIC_IMMUNE"       "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_ATTACK_IMMUNE"       "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
             }
 
             "OnCreated"
@@ -181,8 +183,6 @@
 }
 
 // Pandaren Sub Abilities
-// Author: Noya
-// Date: 08.12.2015.
 
 "pandaren_earth_taunt"
 {
@@ -467,22 +467,6 @@
             "var_type"                  "FIELD_FLOAT"
             "duration_unit"             "20.0"
         }
-        // Extra
-        "03"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "cyclone_height"            "550"
-        }
-        "04"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "cyclone_min_height"        "500"
-        }
-        "05"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "cyclone_max_height"        "650"
-        }
     }
 
     "OnSpellStart"
@@ -494,7 +478,7 @@
         }
         "ApplyModifier"
         {
-            "ModifierName"  "modifier_storm_cyclone" //modifier_cyclone is built-in
+            "ModifierName"  "modifier_brewmaster_storm_cyclone"
             "Target"
             {
                 "Center"    "TARGET"
@@ -506,7 +490,7 @@
         
         "ApplyModifier"
         {
-            "ModifierName"  "modifier_storm_cyclone"
+            "ModifierName"  "modifier_brewmaster_storm_cyclone"
             "Target"
             {
                 "Center"    "TARGET"
@@ -514,54 +498,6 @@
                 "Types"     "DOTA_UNIT_TARGET_BASIC"
             }
             "Duration"      "%duration_unit"
-        }
-    }
-
-    "Modifiers"
-    {
-        "modifier_storm_cyclone"
-        {
-            "IsDebuff"          "1"
-
-            "States"
-            {   
-                "MODIFIER_STATE_FLYING"             "MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_STATE_STUNNED"            "MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_STATE_ROOTED"             "MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_STATE_DISARMED"           "MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_STATE_NO_HEALTH_BAR"      "MODIFIER_STATE_VALUE_ENABLED"
-            }
-    
-            "OnCreated"
-            {
-                "AttachEffect"
-                {
-                    "EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
-                    "EffectAttachType"  "world_origin"
-                    "Target"            "TARGET"
-                }
-
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/pandaren/storm_earth_fire.lua"
-                    "Function"      "TornadoHeight"
-                }
-            }   
-
-            "ThinkInterval"     "0.03"
-            "OnIntervalThink"
-            {
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/pandaren/storm_earth_fire.lua"
-                    "Function"      "Spin"
-                    "Angle"         "20"
-                }
-            }
-
-            "OverrideAnimation"     "ACT_DOTA_FLAIL"
         }
     }
 }
@@ -575,16 +511,11 @@
     "AbilityTextureName"            "pandaren_storm_wind_walk"
     "MaxLevel"                      "1"
 
-    // Time     
-    //-------------------------------------------------------------------------------------------------------------
     "AbilityCooldown"               "7.0"
+    "AbilityManaCost"               "75"
 
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               "75"        
+    "TargetsAllowed"                "ground,organic"
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
     "AbilitySpecial"
     {
         "01"
