@@ -16,7 +16,7 @@
 
     "TargetsAllowed"                "organic"
 
-    "AbilityCastRange"              "600"
+    "AbilityCastRange"              "300"
     "AbilityCastPoint"              "0.3"
     "AbilityCooldown"               "8.0"
 
@@ -38,23 +38,23 @@
     {
         "01"
         {
-            "var_type"  "FIELD_INTEGER"
-            "duration"  "15"
+            "var_type"          "FIELD_INTEGER"
+            "duration"          "15"
         }
         "02"
         {
-            "var_type"  "FIELD_INTEGER"
+            "var_type"          "FIELD_INTEGER"
             "initial_damage"    "75 150 225"
         }
         "03"
         {
-            "var_type"  "FIELD_INTEGER"
+            "var_type"          "FIELD_INTEGER"
             "damage_every_3sec" "10 30 45"
         }
         "04"
         {
-            "var_type"  "FIELD_INTEGER"
-            "move_speed_slow"   "-50"
+            "var_type"          "FIELD_INTEGER"
+            "initial_move_speed_slow"   "-50" //Regains 10 every 3 sec
         }
     }
 
@@ -104,6 +104,12 @@
             "Target"        "TARGET"
         }
 
+        "RemoveModifier"
+        {
+            "ModifierName"  "modifier_shadow_strike"
+            "Target"        "TARGET"
+        }
+
         "ApplyModifier"
         {
             "ModifierName"  "modifier_shadow_strike"        
@@ -123,10 +129,6 @@
         {   
             "Duration"  "%duration"
             "IsDebuff"  "1"
-            "Properties"
-            {
-                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%move_speed_slow"
-            }
 
             "StatusEffectName"      "particles/status_fx/status_effect_poison_viper.vpcf"
 
@@ -138,6 +140,11 @@
                     "EffectAttachType"  "attach_hitloc"
                     "Target"            "TARGET"
                 }
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/warden/shadow_strike.lua"
+                    "Function"      "ShadowStrikeSlow"
+                }
             }
             "ThinkInterval" "3"
             "OnIntervalThink"
@@ -148,6 +155,30 @@
                     "Damage"        "%damage_every_3sec"
                     "Target"        "TARGET"
                 }
+
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/warden/shadow_strike.lua"
+                    "Function"      "ShadowStrikeSlowDecay"
+                }
+            }
+
+            "OnDestroy"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_shadow_strike_slow_stack"
+                    "Target"        "TARGET"
+                }
+            }
+        }
+
+        "modifier_shadow_strike_slow_stack"
+        {
+            "IsHidden"  "1"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "-5"
             }
         }
     }
