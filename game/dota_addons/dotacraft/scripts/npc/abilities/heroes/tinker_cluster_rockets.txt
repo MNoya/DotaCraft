@@ -52,19 +52,14 @@
             "var_type"              "FIELD_INTEGER"
             "projectile_speed"      "900"
         }
-        "04"
-        {
-            "var_type"              "FIELD_INTEGER"
-            "projectile_radius"     "100"
-        }
     }
 
     "OnSpellStart"
     {
         "FireSound"
         {
-            "Target"            "CASTER"
-            "EffectName"        "Hero_Tinker.Heat-Seeking_Missile"
+            "Target"        "CASTER"
+            "EffectName"    "Hero_Tinker.Heat-Seeking_Missile"
         }
 
         "ApplyModifier"
@@ -109,32 +104,10 @@
             }
         }
 
-        "ActOnTargets"
+        "RunScript"
         {
-            "Target"
-            {
-                "Center"    "PROJECTILE"
-                "Radius"    "%projectile_radius"
-                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-            }
-        
-            "Action"    
-            {
-                "Damage"
-                {
-                    "Target"    "TARGET"
-                    "Damage"    "%AbilityDamage"
-                    "Type"      "DAMAGE_TYPE_MAGICAL"
-                }
-
-                "ApplyModifier"
-                {
-                    "ModifierName"  "modifier_cluster_rocket_stun"
-                    "Target"        "TARGET"
-                    "Duration"      "%stun_duration"
-                }
-            }
+            "ScriptFile"    "heroes/tinker/cluster_rockets.lua"
+            "Function"      "ClusterRocketHit"
         }
     }
 
@@ -161,11 +134,10 @@
             "ThinkInterval"  "0.1"
             "OnIntervalThink"
             {
-                "FireEffect"
+                "FireSound"
                 {
-                    "EffectName"        "Hero_Gyrocopter.Rocket_Barrage.Launch"
-                    "EffectAttachType"  "follow_origin"
-                    "Target"            "CASTER"
+                    "EffectName"    "Hero_Gyrocopter.Rocket_Barrage.Launch"
+                    "Target"        "CASTER"
                 }
 
                 "RunScript"
@@ -183,6 +155,8 @@
             "IsDebuff"          "1"
             "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
             "EffectAttachType"  "follow_overhead"
+
+            "OverrideAnimation"     "ACT_DOTA_DISABLED"
 
             "States"
             {
