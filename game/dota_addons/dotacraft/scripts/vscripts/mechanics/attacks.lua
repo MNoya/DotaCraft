@@ -110,7 +110,7 @@ end
 -- Attack Ground for Artillery attacks, redirected from FilterProjectile
 function AttackGroundPos(attacker, position)
     local speed = attacker:GetProjectileSpeed()
-    local projectile = ParticleManager:CreateParticle(GetRangedProjectileName(attacker), PATTACH_CUSTOMORIGIN, attacker)
+    local projectile = ParticleManager:CreateParticle(GetRangedProjectileName(attacker), PATTACH_CUSTOMORIGIN, nil)
     ParticleManager:SetParticleControl(projectile, 0, attacker:GetAttachmentOrigin(attacker:ScriptLookupAttachment("attach_attack1")))
     ParticleManager:SetParticleControl(projectile, 1, position)
     ParticleManager:SetParticleControl(projectile, 2, Vector(speed, 0, 0))
