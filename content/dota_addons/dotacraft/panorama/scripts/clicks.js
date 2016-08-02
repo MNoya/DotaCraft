@@ -178,8 +178,6 @@ function OnRightButtonPressed()
 
 // Handle Left Button events
 function OnLeftButtonPressed() {
-    $.Msg("OnLeftButtonPressed")
-
     var iPlayerID = Players.GetLocalPlayer()
     var mainSelected = Players.GetLocalPlayerPortraitUnit() 
     var mainSelectedName = Entities.GetUnitName( mainSelected )

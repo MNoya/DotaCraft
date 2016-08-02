@@ -143,7 +143,7 @@ function OnShopToggle() {
 }
 
 function Hide_All_Shops(){
-	$.Msg("Hide_All_Shops")
+	//$.Msg("Hide_All_Shops")
 	shop_state = "off"
 	for(var key in Shops){
 		var Shop = Root.FindChildTraverse(key)

@@ -13,18 +13,18 @@ function Selection_New(msg)
         else
             GameUI.SelectUnit(entities[i], true) //Add
     };
-    OnUpdateSelectedUnit()
+    $.Schedule(0.03, SendSelectedEntities);
 }
 
 // Recieves a list of entities to add to the current selection
 function Selection_Add(msg)
 {
     var entities = msg.entities
-    //$.Msg("Selection_Add ", entities)
     for (var i in entities) {
+        //$.Msg("Selection_Add ", entities[i], " to ",GetSelectedEntities())
         GameUI.SelectUnit(entities[i], true)
     };
-    OnUpdateSelectedUnit()
+    $.Schedule(0.03, SendSelectedEntities);
 }
 
 // Removes a list of entities from the current selection
@@ -51,7 +51,7 @@ function Selection_Remove(msg)
         else
             GameUI.SelectUnit(selected_entities[i], true) //Add
     };
-    OnUpdateSelectedUnit()
+    $.Schedule(0.03, SendSelectedEntities);
 }
 
 // Fall back to the default selection
@@ -60,13 +60,13 @@ function Selection_Reset(msg)
     var playerID = Players.GetLocalPlayer()
     var heroIndex = Players.GetPlayerHeroEntityIndex(playerID)
     GameUI.SelectUnit(heroIndex, false)
-    OnUpdateSelectedUnit()
+    $.Schedule(0.03, SendSelectedEntities);
 }
 
 // Filter & Sending
 function OnUpdateSelectedUnit()
 {
-    //$.Msg( "OnUpdateSelectedUnit ", Players.GetLocalPlayerPortraitUnit() );
+    //$.Msg( "OnUpdateSelectedUnit ", Entities.GetUnitName(Players.GetLocalPlayerPortraitUnit()), " ", Players.GetLocalPlayerPortraitUnit() );
     if (skip == true){
         skip = false;
         return
