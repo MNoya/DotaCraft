@@ -41,7 +41,7 @@ function demon_hunter_immolation:OnToggleOff()
     -- Reapply cloak of flames
     local cloak_of_flames = caster:FindItemByName("item_cloak_of_flames")
     if cloak_of_flames then
-        caster:Script_TakeItem(cloak_of_flames)
+        caster:TakeItem(cloak_of_flames)
         caster:AddItem(cloak_of_flames)
     end
 end
