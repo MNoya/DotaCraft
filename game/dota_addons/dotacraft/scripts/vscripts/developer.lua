@@ -34,6 +34,8 @@ TEST_CODES = {
     ["testunits"] = function(...) dotacraft:TestAllUnits(...) end,     -- Creates all army units, optional race parameter
     ["testcorpses"] = function(...) dotacraft:TestCorpses(...) end,    -- Creates many corpses around
     ["kill"] = function(...) dotacraft:ForceKill(...) end,             -- Kills the currently selected units
+    ["damage"] = function(...) dotacraft:Damage(...) end,              -- Deals damage to the currently selected units
+    ["respawn"] = function(...) dotacraft:Respawn(...) end,            -- Respawns the currently selected units
 }
 
 function dotacraft:DeveloperMode(player)
@@ -564,7 +566,28 @@ function dotacraft:ForceKill(playerID)
             unit:ForceKill(false)
         end
     end
-    
+end
+
+function dotacraft:Damage(playerID, value)
+    local entityList = PlayerResource:GetSelectedEntities(playerID)
+    local attacker = PlayerResource:GetSelectedHeroEntity(playerID)
+    for k,v in pairs(entityList) do
+        local unit = EntIndexToHScript(v)
+        if IsValidAlive(unit) then
+            local damage = value or unit:GetHealth()/2
+            ApplyDamage({victim = unit, attacker = attacker, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+        end
+    end
+end
+
+function dotacraft:Respawn(playerID)
+    local entityList = PlayerResource:GetSelectedEntities(playerID)
+    for k,v in pairs(entityList) do
+        local unit = EntIndexToHScript(v)
+        if IsValidAlive(unit) then
+            unit:RespawnUnit()
+        end
+    end
 end
 
 function dotacraft:LevelUp(playerID, lvl)
