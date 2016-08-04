@@ -17,7 +17,7 @@
 	"UnitLabel"					"builder"
 
 	"LeavesCorpse"				"0"
-	
+
 	// Abilities
 	//----------------------------------------------------------------
 	"AbilityLayout"				"6"
@@ -125,6 +125,13 @@
 	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 
 	"AttacksEnabled"			"ground,air"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_moon" 	"weapon"
+		"nightelf_research_moon_armor" 				"armor"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -232,6 +239,13 @@
 	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 	
 	"AttacksEnabled"			"ground"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_moon" 	"weapon"
+		"nightelf_research_moon_armor" 				"armor"
+	}
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -351,6 +365,12 @@
 	"SplashMediumDamage"		"0.4" //65%
 	"SplashSmallRadius"			"150"
 	"SplashSmallDamage"			"0.25"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_moon" 	"weapon"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -447,6 +467,13 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_enchantress.vsndevts"
 
 	"AttacksEnabled"			"ground,air"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_wild" 	"weapon"
+		"nightelf_research_reinforced_hides" 		"armor"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -556,6 +583,12 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
 
 	"AttacksEnabled"			"ground"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_druid_of_the_claw_training" 	"training"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -664,6 +697,13 @@
 
 	"AttacksEnabled"			"ground"
 	"LeavesCorpse"				"0"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_wild" 	"weapon"
+		"nightelf_research_reinforced_hides"		"armor"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -779,6 +819,13 @@
 
 	"AttacksEnabled"			"ground"
 	"LeavesCorpse"				"0"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_wild" 	"weapon"
+		"nightelf_research_reinforced_hides"		"armor"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -882,6 +929,12 @@
     "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
 
 	"AttacksEnabled"			"ground,air"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_druid_of_the_talon_training" 	"training"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -995,6 +1048,13 @@
 
 	"AttacksEnabled"			"ground,air"
 	"LeavesCorpse"				"0"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_wild" 	"weapon"
+		"nightelf_research_reinforced_hides"		"armor"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1081,122 +1141,6 @@
 }
 
 //=================================================================================
-// Creature: Chimaera
-// Description: "Flying two headed Dragon. Can learn Corrosive Breath. \n\n|cffffcc00Attacks land units.|r"
-//=================================================================================
-"nightelf_chimaera"
-{
-	// General
-	//----------------------------------------------------------------
-	"BaseClass"					"npc_dota_creature"
-	"Model"						"models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl"
-	"ModelScale"				"1"
-	"Level"						"5"
-	"HealthBarOffset"			"140"
-    "SoundSet"                  "Hero_Jakiro"
-    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-
-	"AttacksEnabled"			"ground"
-	"LeavesCorpse"				"0"
-
-	"SplashAttack"				"1"
-	"SplashFullRadius"			"25"
-	"SplashMediumRadius"		"125"
-	"SplashMediumDamage"		"0.4" //50%
-	"SplashSmallRadius"			"200"
-	"SplashSmallDamage"			"0.1"
-	
-	// Abilities
-	//----------------------------------------------------------------
-	"AbilityLayout"				"4"
-	"Ability1"					"nightelf_corrosive_breath_disabled"	 //Reference: Acor
-	"Ability2"					"nightelf_chimaera_attack"	 //Reference: Alit //Lightning Attack
-	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
-	"Ability11"					"nightelf_night_regen"
-	
-	// Armor
-	//----------------------------------------------------------------
-	"ArmorPhysical"				"2"
-	"MagicalResistance"			"0"
-	
-	// Attack - GROUND
-	//----------------------------------------------------------------
-	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-	"AttackDamageMin"			"70.0"
-	"AttackDamageMax"			"80.0"
-	"AttackRate"				"2.5"
-	"AttackAnimationPoint"		"0.7"
-	"AttackAcquisitionRange"	"900"
-	"AttackRange"				"450" //850 vs buildings
-	"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
-	"ProjectileSpeed"			"1200"
-
-	// Secondary Attack - GROUND(BUILDINGS), SIEGE
-	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"SecondaryAttackType"			"siege"
-	"SecondaryAttackDamageMin"			"45.0"
-	"SecondaryAttackDamageMax"			"55.0"
-	"SecondaryAttackRate"				"2.5"
-	"SecondaryAttackAnimationPoint"		"0.7"
-	"SecondaryAttackAcquisitionRange"	"850"
-	"SecondaryAttackRange"				"850"
-	"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
-	"ProjectileSpeed"			"1000"
-
-
-	// Bounty
-	//----------------------------------------------------------------
-	"BountyGoldMin"				"38.0"
-	"BountyGoldMax"				"54.0"
-	
-	// Bounds
-	//----------------------------------------------------------------
-	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-	"RingRadius"				"40"
-	"CollisionSize"				"8"
-	"FormationRank"				"2"
-	
-	// Building Cost Stats
-	//----------------------------------------------------------------
-	"GoldCost"					"330"
-	"LumberCost"				"70"
-	"FoodCost"					"5"
-	"BuildTime"					"60"
-	
-	// Movement
-	//----------------------------------------------------------------
-	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-	"MovementSpeed"				"250"
-	"MovementTurnRate"			"0.5"
-	
-	// Status
-	//----------------------------------------------------------------
-	"StatusHealth"				"1000"
-	"StatusHealthRegen"			"0.5"
-	"StatusMana"				"0"
-	"StatusManaRegen"			"0"
-	
-	// Vision
-	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1600"
-	"VisionNighttimeRange"		"800"
-	
-	// Attack Damage types
-	//----------------------------------------------------------------
-	"AttackType"				"magic"
-	"ArmorType"					"light"
-	
-	// Creature Data
-	//----------------------------------------------------------------
-	"Creature"
-	{
-		"DisableClumpingBehavior"	"1"
-	}
-}
-
-//=================================================================================
 // Creature: Hippogryph
 // Description: "Flying melee attack beast. Can learn the Hippogryph Taming ability. \n\n|cffffcc00Attacks air units.|r"
 //=================================================================================
@@ -1212,6 +1156,13 @@
 
 	"AttacksEnabled"			"air"
 	"LeavesCorpse"				"0"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_wild" 	"weapon"
+		"nightelf_research_reinforced_hides"		"armor"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1304,6 +1255,13 @@
 
 	"AttacksEnabled"			"ground,air"
 	"LeavesCorpse"				"0"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_wild" 	"weapon"
+		"nightelf_research_reinforced_hides"		"armor"
+	}
 	
 	// Abilities
 	//----------------------------------------------------------------
@@ -1372,6 +1330,129 @@
 	// Attack Damage types
 	//----------------------------------------------------------------
 	"AttackType"				"pierce"
+	"ArmorType"					"light"
+	
+	// Creature Data
+	//----------------------------------------------------------------
+	"Creature"
+	{
+		"DisableClumpingBehavior"	"1"
+	}
+}
+
+//=================================================================================
+// Creature: Chimaera
+// Description: "Flying two headed Dragon. Can learn Corrosive Breath. \n\n|cffffcc00Attacks land units.|r"
+//=================================================================================
+"nightelf_chimaera"
+{
+	// General
+	//----------------------------------------------------------------
+	"BaseClass"					"npc_dota_creature"
+	"Model"						"models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl"
+	"ModelScale"				"1"
+	"Level"						"5"
+	"HealthBarOffset"			"140"
+    "SoundSet"                  "Hero_Jakiro"
+    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+
+	"AttacksEnabled"			"ground"
+	"LeavesCorpse"				"0"
+
+	"SplashAttack"				"1"
+	"SplashFullRadius"			"25"
+	"SplashMediumRadius"		"125"
+	"SplashMediumDamage"		"0.4" //50%
+	"SplashSmallRadius"			"200"
+	"SplashSmallDamage"			"0.1"
+
+	// Research
+	"Upgrades"
+	{
+		"nightelf_research_strength_of_the_wild" 	"weapon"
+		"nightelf_research_reinforced_hides"		"armor"
+	}
+	
+	// Abilities
+	//----------------------------------------------------------------
+	"AbilityLayout"				"4"
+	"Ability1"					"nightelf_corrosive_breath_disabled"	 //Reference: Acor
+	"Ability2"					"nightelf_chimaera_attack"	 //Reference: Alit //Lightning Attack
+	"Ability3"					"nightelf_ultravision_disabled"	 //Reference: Ault - Ultravision
+	"Ability11"					"nightelf_night_regen"
+	
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"2"
+	"MagicalResistance"			"0"
+	
+	// Attack - GROUND
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackDamageMin"			"70.0"
+	"AttackDamageMax"			"80.0"
+	"AttackRate"				"2.5"
+	"AttackAnimationPoint"		"0.7"
+	"AttackAcquisitionRange"	"900"
+	"AttackRange"				"450" //850 vs buildings
+	"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
+	"ProjectileSpeed"			"1200"
+
+	// Secondary Attack - GROUND(BUILDINGS), SIEGE
+	//----------------------------------------------------------------
+	"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"SecondaryAttackType"			"siege"
+	"SecondaryAttackDamageMin"			"45.0"
+	"SecondaryAttackDamageMax"			"55.0"
+	"SecondaryAttackRate"				"2.5"
+	"SecondaryAttackAnimationPoint"		"0.7"
+	"SecondaryAttackAcquisitionRange"	"850"
+	"SecondaryAttackRange"				"850"
+	"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
+	"ProjectileSpeed"			"1000"
+
+
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyGoldMin"				"38.0"
+	"BountyGoldMax"				"54.0"
+	
+	// Bounds
+	//----------------------------------------------------------------
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"40"
+	"CollisionSize"				"8"
+	"FormationRank"				"2"
+	
+	// Building Cost Stats
+	//----------------------------------------------------------------
+	"GoldCost"					"330"
+	"LumberCost"				"70"
+	"FoodCost"					"5"
+	"BuildTime"					"60"
+	
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+	"MovementSpeed"				"250"
+	"MovementTurnRate"			"0.5"
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"1000"
+	"StatusHealthRegen"			"0.5"
+	"StatusMana"				"0"
+	"StatusManaRegen"			"0"
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1600"
+	"VisionNighttimeRange"		"800"
+	
+	// Attack Damage types
+	//----------------------------------------------------------------
+	"AttackType"				"magic"
 	"ArmorType"					"light"
 	
 	// Creature Data
