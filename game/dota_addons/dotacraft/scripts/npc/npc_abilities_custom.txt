@@ -19434,7 +19434,7 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_masonry2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
@@ -19506,7 +19506,7 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_masonry3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
@@ -20088,7 +20088,7 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_ranged_weapons2"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"2"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
@@ -20160,7 +20160,7 @@
 	{
 		"BaseClass"             		"ability_datadriven"
 		"AbilityTextureName"			"human_research_ranged_weapons3"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"3"
 	
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	
@@ -40284,13 +40284,6 @@
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
 					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "units/upgrades.lua"
-						"Function"      "ApplyMultiRankUpgrade"
-						"ResearchName"	"nightelf_research_strength_of_the_moon"
-					}
 				}
 			}
 		}
@@ -40883,22 +40876,6 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "units/upgrades.lua"
-						"Function"      "ApplyMultiRankUpgrade"
-						"ResearchName"	"nightelf_research_strength_of_the_wild"
-						"WearableType"	"weapon"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "units/upgrades.lua"
-						"Function"      "ApplyMultiRankUpgrade"
-						"ResearchName"	"nightelf_research_reinforced_hides"
-						"WearableType"	"armor"
 					}
 				}
 			}
@@ -62880,13 +62857,6 @@
 					{
 						"ScriptFile"    "buildings/rally_point.lua"
 						"Function"      "MoveToRallyPoint"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"    "units/upgrades.lua"
-						"Function"      "ApplyMultiRankUpgrade"
-						"ResearchName"	"undead_research_unholy_strength"
 					}
 				}
 			}
