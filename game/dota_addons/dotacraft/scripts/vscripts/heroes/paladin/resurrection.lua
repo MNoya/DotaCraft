@@ -51,7 +51,7 @@ function Resurrection( event )
 
         local foodCost = GetFoodCost(resurrected)
         if foodCost and foodCost > 0 then
-            Players:ModifyFoodLimit(playerID, foodCost)
+            Players:ModifyFoodUsed(playerID, foodCost)
         end
 
         -- Apply modifiers for the summon properties

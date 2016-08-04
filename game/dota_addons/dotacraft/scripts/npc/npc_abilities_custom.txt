@@ -8048,7 +8048,6 @@
 	
 	    "precache"
 	    {
-	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
 	        "particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
 	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
@@ -8092,13 +8091,6 @@
 	
 	            "OnCreated"
 	            {
-	                "AttachEffect"
-	                {
-	                    "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-	                    "EffectAttachType"  "follow_overhead"
-	                    "Target"            "TARGET"
-	                }
-	
 	                "ApplyModifier"
 	                {
 	                    "ModifierName"  "modifier_resurrection_fx"
@@ -18772,25 +18764,6 @@
 	            "Duration"          "%duration"
 	            "Passive"           "1"
 	            "TextureName"       "human_call_to_arms"
-	            "OnCreated"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "units/upgrades.lua"
-	                    "Function"      "ApplyMultiRankUpgrade"
-	                    "ResearchName"  "human_research_forged_swords"
-	                    "WearableType"  "weapon"
-	                }
-	
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "units/upgrades.lua"
-	                    "Function"      "ApplyMultiRankUpgrade"
-	                    "ResearchName"  "human_research_plating"
-	                    "WearableType"  "armor"
-	                }
-	            }
-	
 	            "OnDestroy"
 	            {
 	                "RunScript"

@@ -95,25 +95,6 @@
             "Duration"          "%duration"
             "Passive"           "1"
             "TextureName"       "human_call_to_arms"
-            "OnCreated"
-            {
-                "RunScript"
-                {
-                    "ScriptFile"    "units/upgrades.lua"
-                    "Function"      "ApplyMultiRankUpgrade"
-                    "ResearchName"  "human_research_forged_swords"
-                    "WearableType"  "weapon"
-                }
-
-                "RunScript"
-                {
-                    "ScriptFile"    "units/upgrades.lua"
-                    "Function"      "ApplyMultiRankUpgrade"
-                    "ResearchName"  "human_research_plating"
-                    "WearableType"  "armor"
-                }
-            }
-
             "OnDestroy"
             {
                 "RunScript"
