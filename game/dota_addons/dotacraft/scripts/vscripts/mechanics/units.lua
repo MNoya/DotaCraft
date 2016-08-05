@@ -55,7 +55,7 @@ end
 
 -- Initializes one unit with all its required modifiers and functions
 function Units:Init( unit )
-    if unit.bFirstSpawned then return
+    if unit.bFirstSpawned and not unit:IsRealHero() then return
     else unit.bFirstSpawned = true end
 
     -- Apply armor and damage modifier (for visuals)

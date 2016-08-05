@@ -1,91 +1,69 @@
---[[Author: Noya
-	Date: 12.01.2015.
-	Attempts to reincarnate the target if the caster has enough mana and ability is not on cooldown
-	For the respawn time if you use any custom rule you'll have to change it.
-	Bug: can't reduce death count. However, all the other interactions should be correct (gold/xp/messages)
-
-	Note: Warcraft 3 Heroes don't have a respawn time. We'll have to review this spell later
+--[[
+    Author: Noya
+    Reincarnates the target if the ability is not on cooldown
 ]]
 function Reincarnation( event )
-	local caster = event.caster
-	local attacker = event.attacker
-	local ability = event.ability
-	local cooldown = ability:GetCooldown(ability:GetLevel() - 1)
-	local casterHP = caster:GetHealth()
-	local casterMana = caster:GetMana()
-	local abilityManaCost = ability:GetManaCost( ability:GetLevel() - 1 )
+    local caster = event.caster
+    local attacker = event.attacker
+    local ability = event.ability
+    local cooldown = ability:GetCooldown(ability:GetLevel() - 1)
+    local casterHP = caster:GetHealth()
+    
+    if casterHP == 0 and ability:IsCooldownReady() then
+        local respawnPosition = caster:GetAbsOrigin()
+        local reincarnate_time = ability:GetLevelSpecialValueFor("reincarnate_time", ability:GetLevel() - 1)
+        
+        -- Start cooldown on the passive
+        ability:StartCooldown(cooldown)
 
-	-- Change it to your game needs
-	local respawnTimeFormula = caster:GetLevel() * 4
-	
-	if casterHP == 0 and ability:IsCooldownReady() and casterMana >= abilityManaCost  then
-		print("Reincarnate")
-		-- Variables for Reincarnation
-		local reincarnate_time = ability:GetLevelSpecialValueFor( "reincarnate_time", ability:GetLevel() - 1 )
-		local casterGold = caster:GetGold()
-		local respawnPosition = caster:GetAbsOrigin()
-		
-		-- Start cooldown on the passive
-		ability:StartCooldown(cooldown)
+        -- Kill, counts as death for the player but doesn't count the kill for the killer unit
+        caster.reincarnating = true -- Filter OnEntityKilled
+        caster:SetHealth(1)
+        caster:Kill(nil, nil)
 
-		-- Kill, counts as death for the player but doesn't count the kill for the killer unit
-		caster:SetHealth(1)
-		caster:Kill(nil, nil)
+        -- Particle
+        local particleName = "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+        caster.ReincarnateParticle = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
+        ParticleManager:SetParticleControl(caster.ReincarnateParticle, 0, respawnPosition)
+        ParticleManager:SetParticleControl(caster.ReincarnateParticle, 1, Vector(500,0,0))
+        ParticleManager:SetParticleControl(caster.ReincarnateParticle, 1, Vector(500,500,0))
 
-		-- Set the gold back
-		caster:SetGold(casterGold, false)
+        -- Grave and rock particles
+        -- The parent "particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf" misses the grave model
+        local model = "models/props_gameplay/tombstoneb01.vmdl"
+        local grave = Entities:CreateByClassname("prop_dynamic")
+        grave:SetModel(model)
+        grave:SetAbsOrigin(respawnPosition)
 
-		-- Set the short respawn time and respawn position
-		caster:SetTimeUntilRespawn(reincarnate_time) 
-		caster:SetRespawnPosition(respawnPosition) 
+        local particleName = "particles/units/heroes/hero_skeletonking/skeleton_king_death_bits.vpcf"
+        local particle1 = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN, caster )
+        ParticleManager:SetParticleControl(particle1, 0, respawnPosition)
 
-		-- Particle
-		local particleName = "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
-		caster.ReincarnateParticle = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
-		ParticleManager:SetParticleControl(caster.ReincarnateParticle, 0, respawnPosition)
-		ParticleManager:SetParticleControl(caster.ReincarnateParticle, 1, Vector(500,0,0))
-		ParticleManager:SetParticleControl(caster.ReincarnateParticle, 1, Vector(500,500,0))
+        local particleName = "particles/units/heroes/hero_skeletonking/skeleton_king_death_dust.vpcf"
+        local particle2 = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
+        ParticleManager:SetParticleControl(particle2, 0, respawnPosition)
 
-		-- End Particle after reincarnating
-		Timers:CreateTimer(reincarnate_time, function() 
-			ParticleManager:DestroyParticle(caster.ReincarnateParticle, false)
-		end)
+        local particleName = "particles/units/heroes/hero_skeletonking/skeleton_king_death_dust_reincarnate.vpcf"
+        local particle3 = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
+        ParticleManager:SetParticleControl(particle3 , 0, respawnPosition)
 
-		-- Grave and rock particles
-		-- The parent "particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf" misses the grave model
-		local model = "models/props_gameplay/tombstoneb01.vmdl"
-		local grave = Entities:CreateByClassname("prop_dynamic")
-    	grave:SetModel(model)
-    	grave:SetAbsOrigin(respawnPosition)
+        -- Respawn
+        Timers:CreateTimer(reincarnate_time, function()
+            ParticleManager:DestroyParticle(caster.ReincarnateParticle, false)
+            caster.reincarnating =  nil
+            grave:RemoveSelf()
+            caster:RespawnUnit()
+            caster:AddNewModifier(caster,ability,"modifier_phased",{duration=0.03})
+            Timers:CreateTimer(0.03, function()
+                caster:FindClearSpace(respawnPosition)
+            end)
+            caster:EmitSound("Hero_SkeletonKing.Reincarnate.Stinger")
+        end)     
 
-    	local particleName = "particles/units/heroes/hero_skeletonking/skeleton_king_death_bits.vpcf"
-		local particle1 = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN, caster )
-		ParticleManager:SetParticleControl(particle1, 0, respawnPosition)
-
-		local particleName = "particles/units/heroes/hero_skeletonking/skeleton_king_death_dust.vpcf"
-		local particle2 = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
-		ParticleManager:SetParticleControl(particle2, 0, respawnPosition)
-
-		local particleName = "particles/units/heroes/hero_skeletonking/skeleton_king_death_dust_reincarnate.vpcf"
-		local particle3 = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
-		ParticleManager:SetParticleControl(particle3 , 0, respawnPosition)
-
-    	-- End grave after reincarnating
-    	Timers:CreateTimer(reincarnate_time, function() grave:RemoveSelf() end)		
-
-		-- Sounds
-		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
-		caster:EmitSound("Hero_SkeletonKing.Death")
-		Timers:CreateTimer(reincarnate_time, function()
-			caster:EmitSound("Hero_SkeletonKing.Reincarnate.Stinger")
-		end)
-
-	elseif casterHP == 0 then
-		-- On Death without reincarnation, set the respawn time to the respawn time formula
-		caster:SetTimeUntilRespawn(respawnTimeFormula)
-	end	
-
-
+        -- Sounds
+        caster:EmitSound("Hero_SkeletonKing.Reincarnate")
+        caster:EmitSound("Hero_SkeletonKing.Death")
+    end
 end
 
-	
+    

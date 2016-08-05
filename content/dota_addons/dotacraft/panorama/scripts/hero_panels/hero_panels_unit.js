@@ -3,7 +3,7 @@ var unit = Root.entityIndex;
 var playerID = Game.GetLocalPlayerID();
 
 function ReviveHero(){
-	GameEvents.SendCustomGameEventToServer( "revive_hero", { "heroname" : Root.name, "heroindex" : Root.entityIndex} );
+	GameEvents.SendCustomGameEventToServer( "revive_hero", {"heroindex" : Root.entityIndex} );
 };
 
 function SelectHero(){

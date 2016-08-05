@@ -1,4 +1,15 @@
-	-- The first Hero is free, only costs 5 supply and comes with a free Town Portal Scroll and a free skill point.
+if not Altars then
+	Altars = class({})
+end
+
+function Altars:Init()
+	-- register panaroma listener
+	CustomGameEventManager:RegisterListener("center_hero_camera", Dynamic_Wrap(Altars, 'CenterCamera'))
+	CustomGameEventManager:RegisterListener("revive_hero", Dynamic_Wrap(Altars, 'Revive_Hero'))
+	self.initialized = true
+end
+
+-- The first Hero is free, only costs 5 supply and comes with a free Town Portal Scroll and a free skill point.
 -- Additional Heroes require resources, and come with one skill point but do not have additional Town Portal Scrolls. 
 -- To build a second Hero, you must upgrade your Town Hall to a Keep instead of a Town Hall. 
 -- To build a third Hero you must have a third level Town Hall building such as a Castle.
@@ -50,15 +61,9 @@ function BuildHero( event )
 		for _,altar in pairs(playerAltars) do
 			AddAcquiredAbilityToAltar(altar, ability_name)
 		end
-
-		FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 		
 		CreateHeroPanel(new_hero)
 	end, playerID)
-	
-	-- register panaroma listener
-	CustomGameEventManager:RegisterListener( "center_hero_camera", CenterCamera)
-	CustomGameEventManager:RegisterListener( "revive_hero", Revive_Hero)
 end
 
 function AddAcquiredAbilityToAltar(altar, ability_name)
@@ -92,11 +97,15 @@ function CreateAttachmentsForPlayerHero(playerID, hero)
 end
 
 -- Panorama action: Click on the Revive button
-function Revive_Hero(unusedPlayerID, data)
-	local heroname = data.heroname
+function Altars:Revive_Hero(data)
 	local playerID = data.PlayerID
-	local hero_internal_name = GetInternalHeroName(heroname)
+	local hero = EntIndexToHScript(data.heroindex)
+	local hero_internal_name = GetInternalHeroName(hero:GetUnitName())
 	local player = PlayerResource:GetPlayer(playerID)
+
+	if hero.reincarnating then
+		SendErrorMessage(playerID, "error_hero_reincarnating")
+	end
 
 	-- Find a valid ability to revive this hero on the altar
 	local revive_ability
@@ -108,7 +117,6 @@ function Revive_Hero(unusedPlayerID, data)
 				local ability_name = ability:GetAbilityName()
 				ability_name = string.gsub(ability_name, "_revive" , "")
 				ability_name = string.gsub(ability_name, "_train" , "")
-				print(ability_name, hero_internal_name, "revive")
 				if string.match(ability_name, hero_internal_name) and not ability:IsHidden() and ability:IsFullyCastable() then
 					revive_ability = ability
 					break
@@ -221,10 +229,6 @@ function UpdateAltar(altar, altar_level, abilityOnProgress)
 	CheckAbilityRequirements(altar, playerID)
 
 	AdjustAbilityLayout(altar)
-
-	local hero = altar:GetPlayerOwner():GetAssignedHero()
-	local playerID = hero:GetPlayerID()
-	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 
 	PrintAbilities(altar)
 end
@@ -498,8 +502,6 @@ function ReviveHero( event )
 	
 	-- remove hero panel when revived
 	unit_shops:RemoveHeroPanel(GameRules.HeroTavernEntityID, caster:GetPlayerOwnerID(), hero_name)
-	
-	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
 -- Hide the revive ability on every altar
@@ -520,8 +522,6 @@ function HideReviveAbility( event )
 			revive_ability:SetHidden(true)
 		end
 	end
-
-	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
 -- Show the revive ability on every altar after cancelling a revive
@@ -544,6 +544,6 @@ function ShowReviveAbility( event )
 			acquired_ability:SetHidden(false)
 		end
 	end
-
-	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
+
+if not Altars.initialized then Altars:Init() end
