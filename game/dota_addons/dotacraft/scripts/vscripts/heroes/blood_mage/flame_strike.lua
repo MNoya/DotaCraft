@@ -52,6 +52,10 @@ function FlameStrikeStart(event)
     local particle2 = ParticleManager:CreateParticle("particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf",PATTACH_CUSTOMORIGIN,caster)
     ParticleManager:SetParticleControl(particle2,0,point)
 
+    local particle3 = ParticleManager:CreateParticle("particles/neutral_fx/black_dragon_fireball_lava_scorch.vpcf", PATTACH_CUSTOMORIGIN, nil)
+    ParticleManager:SetParticleControl(particle3, 0, point)
+    ParticleManager:SetParticleControl(particle3, 2, Vector(11,0,0))
+
     local ability = event.ability
     Timers:CreateTimer(ability:GetSpecialValueFor("delay"), function()
         local flame_strike = CreateUnitByName("dummy_unit_vulnerable", point, false, caster, caster, caster:GetTeam())
