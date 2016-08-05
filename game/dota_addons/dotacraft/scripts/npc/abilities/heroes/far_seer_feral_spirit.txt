@@ -25,6 +25,7 @@
         "soundfile"     "soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"     
         "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"       
         "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+        "particle"      "particles/units/heroes/hero_lycan/lycan_claw_blur.vpcf"
     }
     
     "AbilitySpecial"
@@ -69,6 +70,78 @@
         {
             "ScriptFile"    "heroes/far_seer/feral_spirit.lua"
             "Function"      "SpawnWolves"
+        }
+    }
+}
+
+//20% double damage crit (Level 2 and 3 Wolves)
+"far_seer_wolves_critical_strike"
+{
+    "BaseClass"                     "ability_datadriven"
+    "AbilityTextureName"            "lycan_summon_wolves_critical_strike"
+    "MaxLevel"                      "1"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "crit_bonus"                "200"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "crit_chance"               "20"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_critical_strike"
+        {
+            "Passive"   "1"
+            "IsHidden"  "1"
+            "OnAttackStart"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_critical_strike_crit"
+                    "Target"        "CASTER"
+                }
+
+                "Random"
+                {
+                    "Chance" "%crit_chance"
+                    "OnSuccess"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_critical_strike_crit"
+                            "Target"        "CASTER"    
+                        }        
+                    }
+                }
+            }
+        }
+
+        "modifier_critical_strike_crit"
+        {
+            "IsHidden"  "1"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
+            }
+
+            "OnAttackLanded"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "modifier_critical_strike_crit"
+                    "Target"            "CASTER"    
+                }
+            }
         }
     }
 }

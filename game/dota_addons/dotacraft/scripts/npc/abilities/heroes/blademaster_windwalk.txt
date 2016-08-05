@@ -8,7 +8,7 @@
     "AbilityTextureName"            "blademaster_windwalk"
     "MaxLevel"                      "3"
 
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
     "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"
 
     "AbilityCastPoint"              "0"
@@ -43,24 +43,10 @@
 
     "OnSpellStart"
     {
-        "FireEffect"
-        {
-            "Target"            "CASTER"
-            "EffectName"        "particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
-            "EffectAttachType"  "attach_origin"
-        }
-
         "FireSound"
         {
             "Target"        "CASTER"
             "EffectName"    "Hero_BountyHunter.WindWalk"
-        }
-
-        "ApplyModifier"
-        {
-            "ModifierName"  "modifier_invisible"
-            "Target"        "CASTER"
-            "Duration"      "%duration"
         }
 
         "ApplyModifier"
@@ -75,10 +61,25 @@
     {
         "modifier_windwalk"
         {
-            "IsBuff"            "1"
             "Duration"          "%duration"
-            //"EffectName"      "particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
-            //"EffectAttachType"    "follow_origin"
+
+            "OnCreated"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_invisibility"
+                    "Target"        "TARGET"
+                }
+            }
+
+            "OnDestroy"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_invisibility"
+                    "Target"        "CASTER"
+                }
+            }
 
             "Properties"
             {
@@ -87,18 +88,11 @@
             
             "States"
             {
-                "MODIFIER_STATE_INVISIBLE"          "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
             }
             
             "OnAttackLanded"
             {
-                "RemoveModifier"
-                {
-                    "ModifierName"  "modifier_invisible"
-                    "Target"        "CASTER"
-                }
-
                 "RemoveModifier"
                 {
                     "ModifierName"  "modifier_windwalk"
@@ -120,20 +114,14 @@
                     "ControlPoints"
                     {
                         "01"        "9 %bonus_damage 4" //pre number post
-                        "02"        "1 4 0"                 //lifetime digits
-                        "03"        "255 0 0"               //color
+                        "02"        "1 4 0"             //lifetime digits
+                        "03"        "255 0 0"           //color
                     }
                 }
             }
 
             "OnAbilityExecuted"
             {
-                "RemoveModifier"
-                {
-                    "ModifierName"  "modifier_invisible"
-                    "Target"        "CASTER"
-                }
-
                 "RemoveModifier"
                 {
                     "ModifierName"  "modifier_windwalk"

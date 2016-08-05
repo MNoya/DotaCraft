@@ -25,7 +25,7 @@ function SpawnWolves(event)
 
     -- Summon 2 wolves
     for i=1,2 do
-        local wofl = caster:CreateSummon(wolfNames[ability:GetLevel()], positions[i], duration)
-        ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
+        caster.wolves[i] = caster:CreateSummon(wolfNames[ability:GetLevel()], positions[i], duration)
+        ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster.wolves[i])
     end
 end

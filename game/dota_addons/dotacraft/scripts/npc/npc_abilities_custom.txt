@@ -1996,7 +1996,7 @@
 	    "AbilityTextureName"            "blademaster_windwalk"
 	    "MaxLevel"                      "3"
 	
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"
 	
 	    "AbilityCastPoint"              "0"
@@ -2031,24 +2031,10 @@
 	
 	    "OnSpellStart"
 	    {
-	        "FireEffect"
-	        {
-	            "Target"            "CASTER"
-	            "EffectName"        "particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
-	            "EffectAttachType"  "attach_origin"
-	        }
-	
 	        "FireSound"
 	        {
 	            "Target"        "CASTER"
 	            "EffectName"    "Hero_BountyHunter.WindWalk"
-	        }
-	
-	        "ApplyModifier"
-	        {
-	            "ModifierName"  "modifier_invisible"
-	            "Target"        "CASTER"
-	            "Duration"      "%duration"
 	        }
 	
 	        "ApplyModifier"
@@ -2063,10 +2049,25 @@
 	    {
 	        "modifier_windwalk"
 	        {
-	            "IsBuff"            "1"
 	            "Duration"          "%duration"
-	            //"EffectName"      "particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
-	            //"EffectAttachType"    "follow_origin"
+	
+	            "OnCreated"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_invisibility"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_invisibility"
+	                    "Target"        "CASTER"
+	                }
+	            }
 	
 	            "Properties"
 	            {
@@ -2075,18 +2076,11 @@
 	            
 	            "States"
 	            {
-	                "MODIFIER_STATE_INVISIBLE"          "MODIFIER_STATE_VALUE_ENABLED"
 	                "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
 	            }
 	            
 	            "OnAttackLanded"
 	            {
-	                "RemoveModifier"
-	                {
-	                    "ModifierName"  "modifier_invisible"
-	                    "Target"        "CASTER"
-	                }
-	
 	                "RemoveModifier"
 	                {
 	                    "ModifierName"  "modifier_windwalk"
@@ -2108,20 +2102,14 @@
 	                    "ControlPoints"
 	                    {
 	                        "01"        "9 %bonus_damage 4" //pre number post
-	                        "02"        "1 4 0"                 //lifetime digits
-	                        "03"        "255 0 0"               //color
+	                        "02"        "1 4 0"             //lifetime digits
+	                        "03"        "255 0 0"           //color
 	                    }
 	                }
 	            }
 	
 	            "OnAbilityExecuted"
 	            {
-	                "RemoveModifier"
-	                {
-	                    "ModifierName"  "modifier_invisible"
-	                    "Target"        "CASTER"
-	                }
-	
 	                "RemoveModifier"
 	                {
 	                    "ModifierName"  "modifier_windwalk"
@@ -5177,6 +5165,7 @@
 	        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"     
 	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"       
 	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+	        "particle"      "particles/units/heroes/hero_lycan/lycan_claw_blur.vpcf"
 	    }
 	    
 	    "AbilitySpecial"
@@ -5221,6 +5210,78 @@
 	        {
 	            "ScriptFile"    "heroes/far_seer/feral_spirit.lua"
 	            "Function"      "SpawnWolves"
+	        }
+	    }
+	}
+	
+	//20% double damage crit (Level 2 and 3 Wolves)
+	"far_seer_wolves_critical_strike"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "lycan_summon_wolves_critical_strike"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "crit_bonus"                "200"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "crit_chance"               "20"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_critical_strike"
+	        {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
+	            "OnAttackStart"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_critical_strike_crit"
+	                    "Target"        "CASTER"
+	                }
+	
+	                "Random"
+	                {
+	                    "Chance" "%crit_chance"
+	                    "OnSuccess"
+	                    {
+	                        "ApplyModifier"
+	                        {
+	                            "ModifierName"  "modifier_critical_strike_crit"
+	                            "Target"        "CASTER"    
+	                        }        
+	                    }
+	                }
+	            }
+	        }
+	
+	        "modifier_critical_strike_crit"
+	        {
+	            "IsHidden"  "1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_bonus"
+	            }
+	
+	            "OnAttackLanded"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"      "modifier_critical_strike_crit"
+	                    "Target"            "CASTER"    
+	                }
+	            }
 	        }
 	    }
 	}
