@@ -55,6 +55,8 @@ end
 
 -- Initializes one unit with all its required modifiers and functions
 function Units:Init( unit )
+    if unit.bFirstSpawned then return
+    else unit.bFirstSpawned = true end
 
     -- Apply armor and damage modifier (for visuals)
     local attack_type = unit:GetAttackType()
@@ -120,6 +122,10 @@ function Units:Init( unit )
         -- Building Queue
         if unit:GetKeyValue("HasQueue") then
             Queue:Init(unit)
+        end
+
+        if unit:IsCreature() and PlayerResource:IsValidPlayerID(unit:GetPlayerOwnerID()) then
+            unit:ApplyRankUpgrades()
         end
     end)
 end
@@ -707,6 +713,81 @@ function Unsummon(target, callback)
     end)
 end
 
+
+-- Removes the modifiers associated to an ability name on this unit
+function CDOTA_BaseNPC:RemoveModifiersAssociatedWith(ability_name)
+    local modifiers = self:FindAllModifiers()
+
+    for _,modifier in pairs(modifiers) do
+        local ability = modifier:GetAbility()
+        if IsValidEntity(ability) and ability:GetAbilityName() == ability_name then
+            modifier:Destroy()
+        end
+    end
+end
+
+-- Checks all rank upgrades and set them to the correct ability level
+function CDOTA_BaseNPC_Creature:ApplyRankUpgrades()
+    local upgrades = self:GetKeyValue("Upgrades")
+    if not upgrades then return end
+    local playerID = self:GetPlayerOwnerID()
+    for research_name,wearable_type in pairs(upgrades) do
+        local level = Players:GetCurrentResearchRank(playerID, research_name)
+        if level > 0 then
+            local ability_name = Upgrades:GetBaseAbilityName(research_name)
+            if not self:HasAbility(ability_name..level) and self:BenefitsFrom(research_name) then
+                self:AddAbility(ability_name..level):SetLevel(level)
+                if wearable_type then
+                    self:UpgradeWearables(wearable_type, level)
+                end
+            end
+        end
+    end
+end
+
+function CDOTA_BaseNPC_Creature:BenefitsFrom(research_name)
+    local upgrades = self:GetKeyValue("Upgrades")
+    if not upgrades then return false end
+
+    -- Handle modifier requirements
+    if upgrades["RequiresModifier"] then
+        for name,modifier in pairs(upgrades["RequiresModifier"]) do
+            if name == research_name and not self:HasModifier(modifier) then
+                return false
+            end
+        end
+    end
+
+    return upgrades[research_name] ~= nil
+end
+
+-- Read the wearables.kv, check the unit name, swap all models to the correct level
+function CDOTA_BaseNPC_Creature:UpgradeWearables(wearable_type, level)
+    local unit_table = GameRules.Wearables[self:GetUnitName()]
+    if unit_table then
+        local sub_table = unit_table[wearable_type]
+        if not sub_table then return end
+        local wearables = self:GetChildren()
+        for k,v in pairs(sub_table) do
+            local original_wearable = v[tostring(0)]
+            local old_wearable = v[tostring((level)-1)]
+            local new_wearable = v[tostring(level)]
+            
+            for _,wearable in pairs(wearables) do
+                if wearable:GetClassname() == "dota_item_wearable" then
+                    -- Unit just spawned, it has the default weapon
+                    if wearable:GetModelName() == original_wearable then
+                        wearable:SetModel(new_wearable)
+
+                    -- In this case, the unit is already on the field and might have an upgrade
+                    elseif old_wearable and old_wearable == wearable:GetModelName() then
+                        wearable:SetModel(new_wearable)
+                    end
+                end
+            end
+        end
+    end
+end
 
 
 Units:start()

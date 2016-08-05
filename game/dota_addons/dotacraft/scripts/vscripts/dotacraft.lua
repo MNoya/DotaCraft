@@ -157,7 +157,6 @@ end
 function dotacraft:LoadKV()
     GameRules.Requirements = LoadKeyValues("scripts/kv/tech_tree.kv")
     GameRules.Wearables = LoadKeyValues("scripts/kv/wearables.kv")
-    GameRules.UnitUpgrades = LoadKeyValues("scripts/kv/unit_upgrades.kv")
     GameRules.Abilities = LoadKeyValues("scripts/kv/abilities.kv")
     GameRules.Damage = LoadKeyValues("scripts/kv/damage_table.kv")
 end

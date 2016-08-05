@@ -64,3 +64,16 @@ function PrintWearables( unit )
         wearable = wearable:NextMovePeer()
     end
 end
+
+function PrecacheWearables( context )
+    local hats = LoadKeyValues("scripts/kv/wearables.kv")
+    for k1,unit_table in pairs(hats) do
+        for k2,sub_table in pairs(unit_table) do
+            for k3,wearables in pairs(sub_table) do
+                for k4,model in pairs (wearables) do
+                    PrecacheModel(model, context)
+                end
+            end
+        end
+    end
+end

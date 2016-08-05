@@ -9,6 +9,7 @@ function Players:Init( playerID, hero )
     hero.structures = {} -- This keeps the handle of the constructed units, to iterate for unlocking upgrades
     hero.heroes = {} -- Owned hero units (not this assigned hero, which will be a fake)
     hero.altar_structures = {} -- Keeps altars linked
+    hero.altar_queue = {}  -- Heroes queued
 
     hero.buildings = {} -- This keeps the name and quantity of each building
     hero.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
@@ -425,18 +426,32 @@ end
 
 ---------------------------------------------------------------
 
--- Returns bool
-function Players:HasResearch( playerID, research_name )
-    local upgrades = Players:GetUpgradeTable(playerID)
-    return upgrades[research_name]
+function Players:SetResearchLevel(playerID, research_name, level)
+    local upgradeTable = Players:GetUpgradeTable(playerID)
+    level = (upgradeTable[research_name] and math.max(upgradeTable[research_name], level)) or level
+    upgradeTable[research_name] = level
+end
+
+function Players:GetCurrentResearchRank(playerID, research_name)
+    local upgradeTable = Players:GetUpgradeTable(playerID)
+    return upgradeTable[research_name] or 0
 end
 
 -- Returns bool
-function Players:HasRequirementForAbility( playerID, ability_name )
+function Players:HasResearch(playerID, research_name)
+    return Players:GetCurrentResearchRank(playerID, research_name) > 0
+end
+
+-- Returns bool
+function Players:HasRequirementForAbility(playerID, ability_name)
     local requirements = GameRules.Requirements
     local buildings = Players:GetBuildingTable(playerID)
     local upgrades = Players:GetUpgradeTable(playerID)
-    local requirement_failed = false
+
+    -- Unlock all abilities cheat
+    if GameRules.Synergy then
+        return true
+    end
 
     if requirements[ability_name] then
 
@@ -445,8 +460,8 @@ function Players:HasRequirementForAbility( playerID, ability_name )
 
             -- If it's an ability tied to a research, check the upgrades table
             if requirements[ability_name].research then
-                if k ~= "research" and (not upgrades[k] or upgrades[k] == 0) then
-                    --print("Failed the research requirements for "..ability_name..", no "..k.." found")
+                if k ~= "research" and Players:GetCurrentResearchRank(playerID, k) < v then
+                    --print("Failed the research requirements for "..ability_name..", no "..k.." "..v.." found")
                     return false
                 end
             else
@@ -503,26 +518,6 @@ function Players:FindAbilityOnUnits( playerID, ability_name )
         end
     end
     return nil
-end
-
-
--- Returns int, 0 if the player doesnt have the research
-function Players:GetCurrentResearchRank( playerID, research_name )
-    local upgrades = Players:GetUpgradeTable(playerID)
-    local max_rank = MaxResearchRank(research_name)
-
-    local current_rank = 0
-    if max_rank > 0 then
-        for i=1,max_rank do
-            local ability_len = string.len(research_name)
-            local this_research = string.sub(research_name, 1 , ability_len - 1)..i
-            if Players:HasResearch(playerID, this_research) then
-                current_rank = i
-            end
-        end
-    end
-
-    return current_rank
 end
 
 -- Goes through the structures of the player, checking for the max level city center

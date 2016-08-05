@@ -146,11 +146,6 @@ end
 function dotacraft:IncreaseAltarTier( playerID, abilityOnProgress )
 	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
-	-- Keep simple track of the abilities being queued, these can't be removed/upgraded else the channeling wont go off
-	if not hero.altar_queue then
-		hero.altar_queue = {}
-	end
-
 	-- Simple track of the current global rank
 	local altar_level = hero.altar_level + 1
 	hero.altar_level = altar_level
@@ -355,7 +350,7 @@ function ReorderAbilities( unit )
 	for i=1,4 do
 		local ability_string = unit_table["Ability"..i]
 		local ability_in_slot = GetAbilityOnVisibleSlot(unit, i)
-		local ability_name = GetResearchAbilityName(ability_string)
+		local ability_name = Upgrades:GetBaseAbilityName(ability_string)
 		local ability = FindAbilityWithName(unit, ability_name) -- Get an ability with a similar name
 		if ability then
 			unit:SwapAbilities(ability:GetAbilityName(), ability_in_slot:GetAbilityName(), true, true)
@@ -484,7 +479,7 @@ function ReviveHero( event )
 	local playerAltars = Players:GetAltars(playerID)
 	for _,altar in pairs(playerAltars) do
 		local new_ability_name = string.gsub(ability_name, "_revive" , "")
-		new_ability_name = GetResearchAbilityName(new_ability_name) --Take away numbers or research
+		new_ability_name = Upgrades:GetBaseAbilityName(new_ability_name) --Take away numbers or research
 		new_ability_name = new_ability_name.."_acquired"
 
 		print("new_ability_name is "..new_ability_name.." finding it")

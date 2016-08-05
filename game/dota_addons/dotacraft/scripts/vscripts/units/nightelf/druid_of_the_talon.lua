@@ -68,9 +68,11 @@ function CrowFormOff( event )
     caster:StartGesture(ACT_DOTA_IDLE_RARE)
     
     -- Enable cyclone if the research is valid
-    if Players:HasResearch(playerID, "nightelf_research_druid_of_the_talon_training1") then
+    if Players:GetCurrentResearchRank(playerID, "nightelf_research_druid_of_the_talon_training") >= 1 then
         local cyclone = caster:FindAbilityByName("nightelf_cyclone")
-        cyclone:SetHidden(false)
+        if cyclone then
+            cyclone:SetHidden(false)
+        end
     else
         CheckAbilityRequirements( caster, playerID )
     end
@@ -94,10 +96,7 @@ function CrowFormStart( event )
     end
 
     -- Add weapon/armor upgrade benefits
-    local player = caster:GetPlayerOwner()
-    local upgrades = player.upgrades
-    ApplyMultiRankUpgrade(caster, "nightelf_research_strength_of_the_wild", "weapon")
-    ApplyMultiRankUpgrade(caster, "nightelf_research_reinforced_hides", "armor")
+    caster:ApplyRankUpgrades()
 
     -- Swap sub_ability
     local sub_ability_name = event.sub_ability_name

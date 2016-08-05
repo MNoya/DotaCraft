@@ -25,7 +25,7 @@ function CreateUnit(caster, location, ability, duration)
 
 	for i=1, 2 do
 		local unitname = "undead_skeleton_warrior"
-		if not ability:IsItem() and i == 1 and Players:HasResearch( playerID, "undead_research_skeletal_mastery" ) then
+		if not ability:IsItem() and i == 1 and Players:HasResearch(playerID, "undead_research_skeletal_mastery") then
 			unitname = "undead_skeletal_mage"
 		end
 	
@@ -41,8 +41,6 @@ function CreateUnit(caster, location, ability, duration)
 
 		-- Apply upgrades
 		CheckAbilityRequirements(unit, playerID)
-		ApplyMultiRankUpgrade(unit, "undead_research_unholy_strength", "weapon")
-		ApplyMultiRankUpgrade(unit, "undead_research_unholy_armor", "armor")
 	end
 end
 

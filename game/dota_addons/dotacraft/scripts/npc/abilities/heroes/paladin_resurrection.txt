@@ -61,9 +61,6 @@
     {
         "modifier_resurrection"
         {
-            "StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
-            "StatusEffectPriority" "10"
-
             "OnCreated"
             {
                 "ApplyModifier"
@@ -80,7 +77,7 @@
             "Duration"      "0.5"
             "OnCreated"
             {
-                "AttachEffect"
+                "FireEffect"
                 {
                     "Target"            "TARGET"
                     "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"

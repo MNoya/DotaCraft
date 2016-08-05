@@ -84,13 +84,6 @@ function UpgradeBuilding( event )
     for k,structure in pairs(playerStructures) do
         CheckAbilityRequirements( structure, playerID )
     end
-
-    -- Apply the current level of Masonry to the newly upgraded building
-    local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
-    if masonry_rank and masonry_rank > 0 then
-        print("Applying masonry rank "..masonry_rank.." to this building upgrade")
-        UpdateUnitUpgrades( building, playerID, "human_research_masonry"..masonry_rank )
-    end 
 end
 
 --[[

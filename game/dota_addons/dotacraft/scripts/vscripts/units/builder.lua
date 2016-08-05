@@ -141,7 +141,7 @@ function Build( event )
         -- Play construction sound
 
         -- Adjust health for human research
-        local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
+        local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry")
         local maxHealth = unit:GetMaxHealth() * (1 + 0.2 * masonry_rank)
         unit:SetMaxHealth(maxHealth)
         unit:SetBaseMaxHealth(maxHealth)
@@ -196,13 +196,6 @@ function Build( event )
         local ancient_roots = unit:FindAbilityByName("nightelf_uproot")
         if ancient_roots then
             ancient_roots:ApplyDataDrivenModifier(unit, unit, "modifier_rooted_ancient", {})
-        end
-
-        -- Apply the current level of Masonry to the newly upgraded building
-        local masonry_rank = Players:GetCurrentResearchRank(playerID, "human_research_masonry1")
-        if masonry_rank and masonry_rank > 0 then
-            BuildingHelper:print("Applying masonry rank "..masonry_rank.." to this building construction")
-            UpdateUnitUpgrades( unit, playerID, "human_research_masonry"..masonry_rank )
         end
 
         -- Apply altar linking

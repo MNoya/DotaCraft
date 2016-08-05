@@ -5,8 +5,6 @@ function ApplyModifierUpgrade( event )
 	local unit_name = caster:GetUnitName()
 	local ability_name = ability:GetAbilityName()
 
-	print("Applying "..ability_name.." to "..unit_name)
-
 	-- Forged Swords
 	-- Militia, Footmen and SpellBreakers get +2
 	-- Knights get +3 damage

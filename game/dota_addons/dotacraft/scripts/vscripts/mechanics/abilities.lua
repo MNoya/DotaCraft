@@ -135,31 +135,6 @@ function CDOTABaseAbility:ApplyDamageUnitsMax(damage, units, maxDamage)
     end
 end
 
--- Returns int, 0 if it doesnt exist
-function MaxResearchRank( research_name )
-    local unit_upgrades = GameRules.UnitUpgrades
-    local upgrade_name = GetResearchAbilityName( research_name )
-
-    if unit_upgrades[upgrade_name] and unit_upgrades[upgrade_name].max_rank then
-        return tonumber(unit_upgrades[upgrade_name].max_rank)
-    else
-        return 0
-    end
-end
-
--- Returns string with the "short" ability name, without any rank or suffix
-function GetResearchAbilityName( research_name )
-
-    local ability_name = string.gsub(research_name, "_research" , "")
-    ability_name = string.gsub(ability_name, "_disabled" , "")
-    ability_name = string.gsub(ability_name, "0" , "")
-    ability_name = string.gsub(ability_name, "1" , "")
-    ability_name = string.gsub(ability_name, "2" , "")
-    ability_name = string.gsub(ability_name, "3" , "")
-
-    return ability_name
-end
-
 -- A BuildingHelper ability is identified by the "Building" key.
 function IsBuildingAbility( ability )
     if not IsValidEntity(ability) then

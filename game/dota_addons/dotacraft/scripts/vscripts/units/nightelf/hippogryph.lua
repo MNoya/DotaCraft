@@ -77,26 +77,10 @@ function PickUpArcher( event )
 					end)
 
 					PlayerResource:AddToSelection(playerID, new_hippo)
+					PlayerResource:RemoveFromSelection(playerID, archer)
 
 					-- Add the archer upgrades to the new hippo rider
 					Players:AddUnit(playerID, new_hippo)
-
-					local upgrades = Players:GetUpgradeTable(playerID)
-				    if upgrades["nightelf_research_strength_of_the_moon3"] then
-				        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_strength_of_the_moon3" )      
-				    elseif upgrades["nightelf_research_strength_of_the_moon2"] then
-				        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_strength_of_the_moon2" )     
-				    elseif upgrades["nightelf_research_strength_of_the_moon1"] then
-				        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_strength_of_the_moon1" )
-				    end
-
-				   if upgrades["nightelf_research_moon_armor3"] then
-				        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_moon_armor3" )      
-				    elseif upgrades["nightelf_research_moon_armor2"] then
-				        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_moon_armor2" )     
-				    elseif upgrades["nightelf_research_moon_armor1"] then
-				        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_moon_armor1" )
-				    end
 
 				    -- Marksmanship, Improved Bows
 				    CheckAbilityRequirements( new_hippo, playerID )
@@ -162,7 +146,6 @@ function Dismount( event )
 		if archer then
 			local origin = archer:GetAbsOrigin()
 			local ground = GetGroundHeight(origin, archer)
-			print(origin.x, origin.y, ground)
 			archer:RemoveModifierByName("modifier_mounted_archer")
 			archer:SetAbsOrigin(Vector(origin.x, origin.y, ground))
 			archer:SetParent(nil, "")
@@ -179,28 +162,10 @@ function Dismount( event )
 			end
 		end
 		PlayerResource:AddToSelection(playerID, new_hippo)
-		PlayerResource:AddToSelection(playerID, archer)
+		PlayerResource:RemoveFromSelection(playerID, archer)
 	
-
 		-- Add weapon/armor upgrade benefits
 	    Players:AddUnit(playerID, new_hippo)
-
-	    local upgrades = Players:GetUpgradeTable()
-	    if upgrades["nightelf_research_strength_of_the_wild3"] then
-	        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_strength_of_the_wild3" )      
-	    elseif upgrades["nightelf_research_strength_of_the_wild2"] then
-	        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_strength_of_the_wild2" )     
-	    elseif upgrades["nightelf_research_strength_of_the_wild1"] then
-	        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_strength_of_the_wild1" )
-	    end
-
-	   if upgrades["nightelf_research_reinforced_hides3"] then
-	        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_reinforced_hides3" )      
-	    elseif upgrades["nightelf_research_reinforced_hides2"] then
-	        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_reinforced_hides2" )     
-	    elseif upgrades["nightelf_research_reinforced_hides1"] then
-	        UpdateUnitUpgrades( new_hippo, playerID, "nightelf_research_reinforced_hides1" )
-	    end
 
 		caster:RemoveSelf()
 	end)

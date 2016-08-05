@@ -165,9 +165,6 @@ function morph_into_destroyer(keys)
 		CreatedUnit:SetControllableByPlayer(playerID, true)
 		CreatedUnit:SetForwardVector(fv)
 		
-		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_creature_attack", "weapon")
-		ApplyMultiRankUpgrade(CreatedUnit, "undead_research_creature_carapace", "armor")
-
 		caster.no_corpse = true
 		Players:AddUnit(playerID, CreatedUnit)
 		

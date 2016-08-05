@@ -2073,7 +2073,7 @@
 		// Research
 		"Upgrades"
 		{
-			"training" 	"human_research_sorceress_training"
+			"human_research_sorceress_training" 	"training"
 		}
 	
 		// Abilities
@@ -2188,7 +2188,7 @@
 		// Research
 		"Upgrades"
 		{
-			"training" 	"human_research_priest_training"
+			"human_research_priest_training" 	"training"
 		}
 		
 		// Abilities
@@ -4846,6 +4846,13 @@
 		"Upgrades"
 		{
 			"nightelf_research_druid_of_the_claw_training" 	"training"
+			"nightelf_research_strength_of_the_wild" 		""
+			"nightelf_research_reinforced_hides"			""
+			"RequiresModifier"
+			{
+				"nightelf_research_strength_of_the_wild" 	"modifier_bear_form"
+				"nightelf_research_reinforced_hides" 		"modifier_bear_form"
+			}
 		}
 		
 		// Abilities
@@ -5192,6 +5199,13 @@
 		"Upgrades"
 		{
 			"nightelf_research_druid_of_the_talon_training" 	"training"
+			"nightelf_research_strength_of_the_wild" 		""
+			"nightelf_research_reinforced_hides"			""
+			"RequiresModifier"
+			{
+				"nightelf_research_strength_of_the_wild" 	"modifier_crow_form"
+				"nightelf_research_reinforced_hides" 		"modifier_crow_form"
+			}
 		}
 		
 		// Abilities

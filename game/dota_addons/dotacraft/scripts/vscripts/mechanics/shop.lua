@@ -516,7 +516,7 @@ function TavernReviveHeroForPlayer(playerID, shopID, HeroName)
 	local altarStructures = Players:GetAltars(playerID)
 	for _,altar in pairs(altarStructures) do
 		local new_ability_name = string.gsub(ability_name, "_revive" , "")
-		new_ability_name = GetResearchAbilityName(new_ability_name) --Take away numbers or research
+		new_ability_name = Upgrades:GetBaseAbilityName(new_ability_name) --Take away numbers or research
 		new_ability_name = new_ability_name.."_acquired"
 
 		unit_shops:print("new_ability_name is "..new_ability_name..", it will replace: "..ability_name)

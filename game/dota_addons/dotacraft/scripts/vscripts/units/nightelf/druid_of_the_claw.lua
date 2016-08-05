@@ -41,9 +41,11 @@ function BearFormOff( event )
     ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
 
     -- Enable rejuvenation if the research is valid
-    if Players:HasResearch(playerID, "nightelf_research_druid_of_the_claw_training1") then
+    if Players:GetCurrentResearchRank(playerID, "nightelf_research_druid_of_the_claw_training") >= 1 then
         local rejuvenation = caster:FindAbilityByName("nightelf_rejuvenation")
-        rejuvenation:SetHidden(false)
+        if rejuvenation then
+            rejuvenation:SetHidden(false)
+        end
     else
         CheckAbilityRequirements( caster, playerID )
     end
@@ -75,8 +77,7 @@ function TrueFormStart( event )
     caster:SetHealth(newCurrentHp)
 
     -- Add weapon/armor upgrade benefits
-    ApplyMultiRankUpgrade(caster, "nightelf_research_strength_of_the_wild", "weapon")
-    ApplyMultiRankUpgrade(caster, "nightelf_research_reinforced_hides", "armor")
+    caster:ApplyRankUpgrades()
 
     -- Swap sub_ability
     local sub_ability_name = event.sub_ability_name
@@ -107,7 +108,7 @@ function TrueFormEnd( event )
         local ability = caster:GetAbilityByIndex(i)
         if ability then
             local ability_name = ability:GetAbilityName()
-            if ( string.match(ability_name, "nightelf_strength_of_the_wild") or string.match(ability_name, "nightelf_reinforced_hides") ) then
+            if (string.match(ability_name, "nightelf_strength_of_the_wild") or string.match(ability_name, "nightelf_reinforced_hides")) then
                 caster:RemoveAbility(ability:GetAbilityName())
             end
         end

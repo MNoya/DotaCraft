@@ -3,15 +3,15 @@ function ResearchComplete( event )
 	local caster = event.caster
 	local playerID = caster:GetPlayerOwnerID()
 	local ability = event.ability
-	local research_name = ability:GetAbilityName()
+	local ability_name = ability:GetAbilityName()
+	local research_name = Upgrades:GetBaseResearchName(ability_name)
 
-	-- It shouldn't be possible to research the same upgrade more than once.
-	local upgrades = Players:GetUpgradeTable(playerID)
-	upgrades[research_name] = 1
+	--print("ResearchComplete",research_name,ability:GetLevel())
+	Players:SetResearchLevel(playerID, research_name, ability:GetLevel())
 
-	print("Player current upgrades list:")
-	DeepPrintTable(upgrades)
-	print("==========================")
+	--[[print("Player current upgrades list:")
+	DeepPrintTable(Players:GetUpgradeTable(playerID))
+	print("==========================")]]
 	
 	-- Go through all the upgradeable units and upgrade with the research
 	-- These are just abilities set as lvl 0 _disabled until the tech is researched
@@ -19,14 +19,14 @@ function ResearchComplete( event )
 	local playerUnits = Players:GetUnits(playerID)
 	for _,unit in pairs(playerUnits) do
 		CheckAbilityRequirements( unit, playerID )
-		UpdateUnitUpgrades( unit, playerID, research_name)
+		UpdateUnitUpgrades(unit, playerID, research_name)
 	end
 
 	-- Also, on the buildings that have the upgrade, disable the upgrade and/or apply the next rank.
 	local playerStructures = Players:GetStructures(playerID)
 	for _,structure in pairs(playerStructures) do
 		CheckAbilityRequirements( structure, playerID )
-		UpdateUnitUpgrades( structure, playerID, research_name)
+		UpdateUnitUpgrades(structure, playerID, research_name)
 	end
 
 	Scores:IncrementTechPercentage( playerID )
@@ -35,13 +35,7 @@ end
 -- When queing a research, disable it to prevent from being queued again
 function DisableResearch( event )
 	local ability = event.ability
-	print("Set Hidden "..ability:GetAbilityName())
 	ability:SetHidden(true)
-
-	local caster = event.caster
-	local playerID = caster:GetPlayerOwnerID()
-	print("##Firing ability_values_force_check for "..caster:GetUnitName())
-	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end
 
 -- Reenable the parent ability without item_ in its name
@@ -51,12 +45,6 @@ function ReEnableResearch( event )
 	local item_name = ability:GetAbilityName()
 	local research_ability_name = string.gsub(item_name, "item_", "")
 
-	print("Unhide "..research_ability_name)
 	local research_ability = caster:FindAbilityByName(research_ability_name)
 	research_ability:SetHidden(false)
-
-	local caster = event.caster
-	local playerID = caster:GetPlayerOwnerID()
-	print("##Firing ability_values_force_check for "..caster:GetUnitName())
-	FireGameEvent( 'ability_values_force_check', { player_ID = playerID })
 end

@@ -197,8 +197,6 @@ function AncestralSpirit( event )
     tauren:SetMana(tauren:GetMaxMana() * mana_factor)
     Players:ModifyFoodUsed(playerID, GetFoodCost(tauren))
     Players:AddUnit(playerID, tauren)
-    ApplyMultiRankUpgrade(tauren, "orc_research_melee_weapons", "weapon")
-    ApplyMultiRankUpgrade(tauren, "orc_research_unit_armor", "armor")
     CheckAbilityRequirements(tauren, playerID)
 
     local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf", PATTACH_CUSTOMORIGIN, nil)
