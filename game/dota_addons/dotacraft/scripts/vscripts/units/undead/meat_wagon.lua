@@ -39,6 +39,7 @@ end
 -- Adds one corpse handle to the meat wagon
 function AddCorpse(meat_wagon, corpse)
 	corpse.meat_wagon = meat_wagon
+	corpse.playerID = meat_wagon:GetPlayerOwnerID()
 	corpse:AddNoDraw()
 	corpse:StopExpiration()
 	corpse:SetParent(meat_wagon,"attach_hitloc")

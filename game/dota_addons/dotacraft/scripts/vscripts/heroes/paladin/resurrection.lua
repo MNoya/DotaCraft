@@ -41,17 +41,18 @@ function Resurrection( event )
         -- The corpse has a unit_name associated.
         local position = corpse:GetAbsOrigin()
         local resurrected = CreateUnitByName(corpse.unit_name, position, true, hero, hero, team)
-        resurrected:SetControllableByPlayer(playerID, true)
+        local pID = corpse.playerID and PlayerResource:IsValidPlayerID(corpse.playerID) or playerID -- Units of other friendly players should belong to those players
+        resurrected:SetControllableByPlayer(pID, true)
         resurrected:SetOwner(hero)
         resurrected:SetForwardVector(corpse:GetForwardVector())
         FindClearSpaceForUnit(resurrected, position, true)
 
-        Players:AddUnit(playerID, resurrected)
-        CheckAbilityRequirements(resurrected, playerID)
+        Players:AddUnit(pID, resurrected)
+        CheckAbilityRequirements(resurrected, pID)
 
         local foodCost = GetFoodCost(resurrected)
         if foodCost and foodCost > 0 then
-            Players:ModifyFoodUsed(playerID, foodCost)
+            Players:ModifyFoodUsed(pID, foodCost)
         end
 
         -- Apply modifiers for the summon properties

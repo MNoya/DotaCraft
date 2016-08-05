@@ -26,6 +26,7 @@ function ExhumeCorpse(event)
         for k,corpse in pairs(graveyard.corpses) do
             if not corpse then
                 graveyard.corpses[k] = Corpses:CreateByNameOnPosition("undead_ghoul", graveyard.corpse_positions[k], graveyard:GetTeamNumber())
+                graveyard.corpses[k].playerID = graveyard:GetPlayerOwnerID()
                 break
             end
         end
