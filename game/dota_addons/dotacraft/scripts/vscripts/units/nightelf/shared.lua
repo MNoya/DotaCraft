@@ -5,15 +5,14 @@ function ShadowMeld( event )
 	local fade_time = ability:GetSpecialValueFor("fade_time")
 
 	if GameRules:IsDaytime() then
-		SendErrorMessage(caster:GetPlayerOwnerID(), "Can only Shadow Meld at night!")
-	elseif caster:HasModifier("modifier_shadow_meld") then
+		SendErrorMessage(caster:GetPlayerOwnerID(), "error_shadowmeld_night")
+	elseif caster:HasModifier("modifier_shadow_meld") and caster:IsInvisible() then
 		ShadowMeldAnimation(caster, fade_time)
-		
-		caster:AddNewModifier(caster, ability, "modifier_invisible", {})
-	elseif not GameRules:IsDaytime() and not caster:HasModifier("modifier_shadow_meld_fade") then
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_active", {})
+	elseif not GameRules:IsDaytime() then
 		ShadowMeldAnimation(caster, fade_time)
 
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_fade", {duration = fade_time})
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld", {})
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_active", {})
 
 		ToggleOn(ability)
@@ -47,8 +46,8 @@ function ShadowMeldThink( event )
 		end
 
 		-- If idle on night time, passively apply the fade out
-		if caster:IsIdle() and not caster:GetAttackTarget() and not caster:HasModifier("modifier_shadow_meld_fade") and not caster:HasModifier("modifier_shadow_meld") and not caster:HasModifier("modifier_mounted_archer") then
-			ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld_fade", {duration = fade_time})
+		if caster:IsIdle() and not caster:GetAttackTarget() and not caster:IsStunned() and not caster:HasModifier("modifier_shadow_meld") and not caster:HasModifier("modifier_mounted_archer") then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld", {})
 		end
 	else
 		-- Turn off in day time
@@ -59,6 +58,17 @@ function ShadowMeldThink( event )
 			end
 		end
 	end
+
+	if caster:IsStunned() then
+		ShadowMeldRemove(event)
+	end
+end
+
+-- Modifier created, start fade time
+function ShadowMeldApply(event)
+	local caster = event.caster
+	local ability = event.ability
+	caster:AddNewModifier(caster,ability,"modifier_invisibility",{fade_time = 1.5})
 end
 
 function ShadowMeldRemove( event )
@@ -71,9 +81,8 @@ function ShadowMeldRemove( event )
 		return
 	else
 		caster:RemoveModifierByName("modifier_shadow_meld_active")
-		caster:RemoveModifierByName("modifier_shadow_meld_fade")
 		caster:RemoveModifierByName("modifier_shadow_meld")
-		caster:RemoveModifierByName("modifier_invisible")
+		caster:RemoveModifierByName("modifier_invisibility")
 		ToggleOff(ability)
 	end
 end

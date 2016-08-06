@@ -2,7 +2,7 @@ modifier_invisibility = class({})
 
 function modifier_invisibility:OnCreated(event)
     if IsServer() then
-        modifier_invisibility.fadeTime = event.fade_time or 1
+        self.fadeTime = event.fade_time or 1
     end
 end
 
@@ -29,8 +29,12 @@ function modifier_invisibility:GetModifierInvisibilityLevel(params)
         return self:GetStackCount() / 100
     else
         local level = self:CalculateInvisibilityLevel()
-        
-        self:SetStackCount(math.ceil(level * 100))
+        if level > 0.45 then -- Adjust visual past 45% because the transparency starts acting up
+            level = 1
+            self:SetStackCount(100)
+        else
+            self:SetStackCount(math.ceil(level * 100))
+        end
         return level
     end
 end

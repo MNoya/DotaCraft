@@ -3307,13 +3307,6 @@
 	
 		"OnSpellStart"
 		{
-			"FireEffect"
-			{
-				"Target"			"CASTER"
-				"EffectName"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
-				"EffectAttachType"	"attach_origin"
-			}
-	
 			"FireSound"
 			{
 				"Target"		"CASTER"
@@ -3322,10 +3315,54 @@
 	
 			"ApplyModifier"
 			{
-				"ModifierName" 	"modifier_invisible"
+				"ModifierName" 	"modifier_invisibility_potion"
 				"Target"		"CASTER"
 				"Duration"		"%duration"
 			}
+		}
+	
+		"Modifiers"
+		{
+		    "modifier_invisibility_potion"
+		    {
+		        "IsPurgable"        "1"
+		
+		        "OnCreated"
+		        {
+		            "ApplyModifier"
+		            {
+		                "ModifierName"  "modifier_invisibility"
+		                "Target"        "TARGET"
+		            }
+		        }
+	
+		        "OnDestroy"
+		        {
+		            "RemoveModifier"
+		            {
+		                "ModifierName"  "modifier_invisibility"
+		                "Target"        "TARGET"
+		            }
+		        }
+	
+		        "OnAttackLanded"
+		        {
+		            "RemoveModifier"
+		            {
+		                "ModifierName"  "modifier_human_invisibility"
+		                "Target"        "TARGET"
+		            }
+		        }
+	
+		        "OnAbilityExecuted"
+		        {
+		            "RemoveModifier"
+		            {
+		                "ModifierName"  "modifier_human_invisibility"
+		                "Target"        "TARGET"
+		            }
+		        }
+		    }
 		}
 	}
 	

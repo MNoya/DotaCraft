@@ -286,12 +286,62 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"Target"		"CASTER"
+			"EffectName"	"Hero_BountyHunter.WindWalk"
+		}
+		
 		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_invisible"
+			"ModifierName"	"modifier_human_invisibility"
 			"Target" 		"TARGET"
 			"Duration"		"%duration"
 		}
+	}
+
+	"Modifiers"
+	{
+	    "modifier_human_invisibility"
+	    {
+	        "IsPurgable"        "1"
+	
+	        "OnCreated"
+	        {
+	            "ApplyModifier"
+	            {
+	                "ModifierName"  "modifier_invisibility"
+	                "Target"        "TARGET"
+	            }
+	        }
+
+	        "OnDestroy"
+	        {
+	            "RemoveModifier"
+	            {
+	                "ModifierName"  "modifier_invisibility"
+	                "Target"        "TARGET"
+	            }
+	        }
+
+	        "OnAttackLanded"
+	        {
+	            "RemoveModifier"
+	            {
+	                "ModifierName"  "modifier_human_invisibility"
+	                "Target"        "TARGET"
+	            }
+	        }
+
+	        "OnAbilityExecuted"
+	        {
+	            "RemoveModifier"
+	            {
+	                "ModifierName"  "modifier_human_invisibility"
+	                "Target"        "TARGET"
+	            }
+	        }
+	    }
 	}
 }
 

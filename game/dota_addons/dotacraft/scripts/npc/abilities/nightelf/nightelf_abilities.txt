@@ -146,33 +146,16 @@
 			}
 		}
 
-		"modifier_shadow_meld_fade"
-		{
-			"IsHidden"		"1"
-			"OnDestroy"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_shadow_meld"
-					"Target" 		"CASTER"
-				}
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_invisible"
-					"Target" 		"CASTER"
-				}
-			}
-		}
-
 		"modifier_shadow_meld"
 		{
 			"IsHidden"			"1"
-			"IsBuff"			"1"
-			"IsPurgable"		"1"
-
-			"States"
+			"OnCreated"
 			{
-				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+			    "RunScript"
+				{
+					"ScriptFile"	"units/nightelf/shared.lua"
+					"Function"		"ShadowMeldApply"
+				}
 			}
 		}
 
