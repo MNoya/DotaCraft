@@ -1,6 +1,5 @@
 "human_defend"
-//Activate to take 50% less damage from Piercing attacks, but have 30% reduced movement speed. 
-//Defend does not reflect attacks to buildings, and its chance of reflection against units is 30%.
+//Activate to take 50% less damage from Piercing attacks, but have 30% reduced movement speed.
 {
 	"BaseClass"             		"ability_datadriven"
 	"AbilityTextureName"			"human_research_defend"
@@ -15,17 +14,12 @@
 		"01"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"piercing_damage_reduction"	"30"
+			"piercing_damage_reduction"	"50"
 		}
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
 			"movement_speed_reduction"	"-30"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"reflect_chance"			"30"
 		}
 	}
 
@@ -56,40 +50,12 @@
 	{
 		"modifier_defend"
 		{
-			"Passive"			"0"
-			"IsHidden"			"0"
-			"IsDebuff"			"0"
-
 			"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield_snakeskin.vpcf"
 			"EffectAttachType"	"follow_origin"
 
 			"Properties"
 			{
-			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_reduction" 
-			}
-			"OnAttacked"
-			// "%attack_damage" is set to the damage value after mitigation
-			{
-				"Random"
-				{
-					"Chance"			"%reflect_chance"
-					"OnSuccess"
-					{
-						"Damage"
-						{
-							"Target"
-							{
-								"Center"  	"ATTACKER"
-								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							}
-							"Type"			"DAMAGE_TYPE_MAGICAL"
-							"Damage"		"%attack_damage"
-						}
-					}
-				}
-
-				//Check the type of the attack, if its piercing, reduce it by piercing_damage_reduction
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_reduction"
 			}
 		}
 	}
