@@ -1,5 +1,6 @@
 function Detonate( event )
 	local caster = event.caster
+	if caster:HasModifier("modifier_builder_hidden") then caster:Interrupt() return end
 	local point = event.target_points[1]
 	local ability = event.ability
 	local radius = ability:GetSpecialValueFor("radius")
