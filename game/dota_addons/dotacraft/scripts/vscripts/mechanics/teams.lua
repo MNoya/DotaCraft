@@ -3,6 +3,7 @@ if not Teams then
 end
 
 Teams.IDs = {2,3,6,7,8,9}
+Teams.NumberToIDs = {[2]=1,[3]=2,[6]=3,[7]=4,[8]=5,[9]=6}
 
 function Teams:DetermineStartingPositions()
     self.unassignedPositions = {}
@@ -21,7 +22,7 @@ function Teams:DetermineStartingPositions()
         local teams = self:GetValidTeams()
         for _,teamID in pairs(teams) do
             local assigned = 0
-            local players = self:GetPlayersOnTeam(teamID)
+            local players = self:GetPlayersOnTeam(Teams.IDs[teamID])
             self:print("Assigning positions to players in team",teamID)
             for _,playerID in pairs(players) do
                 -- Choose the first position at random
@@ -110,6 +111,7 @@ end
 -- Gets a list of playerIDs on a team
 function Teams:GetPlayersOnTeam(teamID)
     local players = {}
+    teamID = Teams.NumberToIDs[teamID]
     local maxPlayers = dotacraft:GetMapMaxPlayers()
     for playerID = 0, maxPlayers do
         local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
@@ -134,7 +136,7 @@ end
 function Teams:IsFFAMatch()
     local teams = self:GetValidTeams()
     for _,teamID in pairs(teams) do
-        if #self:GetPlayersOnTeam(teamID) > 1 then
+        if #self:GetPlayersOnTeam(Teams.IDs[teamID]) > 1 then
             return false
         end
     end
