@@ -3,7 +3,7 @@ modifier_demon_form = class({})
 function modifier_demon_form:DeclareFunctions()
     return { MODIFIER_PROPERTY_MODEL_CHANGE, 
              MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-             MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+             MODIFIER_PROPERTY_HEALTH_BONUS,
              MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT, }
 end
 
@@ -63,7 +63,7 @@ function modifier_demon_form:GetModifierAttackRangeBonus()
     return self:GetAbility():GetSpecialValueFor("bonus_range")
 end
 
-function modifier_demon_form:GetModifierExtraHealthBonus()
+function modifier_demon_form:GetModifierHealthBonus()
     return self:GetAbility():GetSpecialValueFor("bonus_health")
 end
 
