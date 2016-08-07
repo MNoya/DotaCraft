@@ -44,7 +44,7 @@ function modifier_thorns_aura:GetAuraSearchTeam()
 end
 
 function modifier_thorns_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:IsWard() 
 end
 
 function modifier_thorns_aura:GetAuraSearchType()

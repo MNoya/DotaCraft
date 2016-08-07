@@ -166,7 +166,7 @@ function LocustSwarmPhysics( event )
                     enemy.locusts_locked = 0 
                 end
 
-                if not target_enemy and not enemy:IsDummy() and not IsCustomBuilding(enemy) and enemy ~= unit.current_target and enemy.locusts_locked < max_locusts_on_target then
+                if not target_enemy and not enemy:IsDummy() and not IsCustomBuilding(enemy) and not enemy:IsWard() and enemy ~= unit.current_target and enemy.locusts_locked < max_locusts_on_target then
                     target_enemy = enemy
                     enemy.locusts_locked = enemy.locusts_locked + 1
                 end

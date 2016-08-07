@@ -3,7 +3,7 @@ function LifestealApply( event )
 	local target = event.target
 	local ability = event.ability
 
-	if not IsCustomBuilding(target) and not target:IsMechanical() then
+	if not IsCustomBuilding(target) and not target:IsMechanical() and not target:IsWard() then
 		ability:ApplyDataDrivenModifier(attacker, attacker, "modifier_vampiric_aura_lifesteal", {duration = 0.03})
 	end
 end

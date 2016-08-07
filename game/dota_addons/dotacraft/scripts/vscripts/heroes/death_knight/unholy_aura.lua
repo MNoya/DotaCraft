@@ -44,7 +44,7 @@ function modifier_unholy_aura:GetAuraSearchTeam()
 end
 
 function modifier_unholy_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:IsWard()
 end
 
 function modifier_unholy_aura:GetAuraSearchType()

@@ -6,7 +6,7 @@ function StormHammer( event )
 
     local next_target
     for _,v in pairs(targets) do
-        if v ~= target and not v:HasFlyMovementCapability() and not IsCustomBuilding(v) then
+        if v ~= target and not v:HasFlyMovementCapability() and not IsCustomBuilding(v) and not v:IsWard() then
             next_target = v
             break
         end

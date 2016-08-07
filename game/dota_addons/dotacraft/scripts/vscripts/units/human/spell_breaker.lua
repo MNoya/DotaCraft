@@ -10,6 +10,7 @@ function ManaBreak( keys )
     end
 
     if target:IsMagicImmune() or target:IsMechanical() then return end
+    if target:GetMaxMana() == 0 then return end
     
     local damage = math.min(target:GetMana(), manaBurn)
     target:ReduceMana(damage)

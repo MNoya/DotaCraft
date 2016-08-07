@@ -319,6 +319,10 @@ function CDOTA_BaseNPC:IsMechanical()
     return self:GetUnitLabel():match("mechanical")
 end
 
+function CDOTA_BaseNPC:IsWard()
+    return self:GetUnitLabel():match("ward")
+end
+
 function CDOTA_BaseNPC:IsEthereal()
     return self:HasModifier("modifier_ethereal")
 end

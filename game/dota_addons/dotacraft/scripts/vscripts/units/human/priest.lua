@@ -12,7 +12,7 @@ function HealAutocast( event )
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 		for k,unit in pairs(allies) do
 			-- Target the lowest health ally
-			if not IsCustomBuilding(unit) and not unit:IsMechanical() and unit:GetHealthPercent() < lowestPercent then
+			if not IsCustomBuilding(unit) and not unit:IsMechanical() and not unit:IsWard() and unit:GetHealthPercent() < lowestPercent then
 				target = unit
 				lowestPercent = unit:GetHealthPercent()
 			end

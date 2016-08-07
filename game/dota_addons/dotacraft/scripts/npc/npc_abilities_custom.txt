@@ -8920,20 +8920,14 @@
 	    "MaxLevel"                      "1"
 	
 	    "AbilityCastRange"              "500"
-	
 	    "AOERadius"                     "%radius"
 	
-	    // Time     
-	    //-------------------------------------------------------------------------------------------------------------
 	    "AbilityCooldown"               "8.0"
 	    "AbilityCastPoint"              "0.4"
+	    "AbilityManaCost"               "75"      
 	
-	    // Cost
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityManaCost"               "75"        
+	    "TargetsAllowed"                "ward"
 	
-	    // Special
-	    //-------------------------------------------------------------------------------------------------------------
 	    "AbilitySpecial"
 	    {
 	        "01"
@@ -12762,20 +12756,14 @@
 		"MaxLevel"						"1"
 	
 		"AbilityCastRange"				"500"
-	
 		"AOERadius"						"%radius"
 	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"8.0"
 		"AbilityCastPoint"				"0.4"
+		"AbilityManaCost"				"75"
 	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"		
+		"TargetsAllowed"            	"ward"
 	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -12976,11 +12964,12 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	
-		//Need parity values
 		"AbilityCastPoint"			"0.1"
 		"AbilityCastRange"			"700"
 		"AbilityCooldown"			"5"
 		"AbilityManaCost"			"0"
+	
+		"TargetsAllowed"            "ward"
 	
 		//Mana cost is .45 mana per hit point.
 		"AbilitySpecial"
@@ -30816,6 +30805,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"50"
+	
+		"TargetsAllowed"			"ward"
 			
 		"AbilitySpecial"
 		{
@@ -42060,6 +42051,8 @@
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 	
+		"TargetsAllowed"            "ward"
+	
 		"AbilityCastRange"			"700"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"1"
@@ -42729,7 +42722,9 @@
 		"AbilityCastPoint"			"0.35"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"100"
-			
+		
+		"TargetsAllowed"            "ward"
+	
 		"AOERadius"					"%radius"
 		"AbilitySpecial"
 		{

@@ -99,7 +99,7 @@ end
 function FindClosestUnitToTeleport( caster, position )
     local units = FindUnitsInRadius(caster:GetTeamNumber(), position, nil, 2000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
     for _,unit in pairs(units) do
-        if IsValidAlive(unit) and not IsCustomBuilding(unit) and not unit:IsFlyingUnit() then
+        if IsValidAlive(unit) and not unit:IsWard() and not IsCustomBuilding(unit) and not unit:IsFlyingUnit() then
             return unit
         end
     end

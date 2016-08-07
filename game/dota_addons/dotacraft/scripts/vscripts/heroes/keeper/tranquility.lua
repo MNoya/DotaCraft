@@ -65,7 +65,7 @@ function modifier_tranquility_aura:GetAuraSearchTeam()
 end
 
 function modifier_tranquility_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:IsWard()
 end
 
 function modifier_tranquility_aura:GetAuraSearchType()

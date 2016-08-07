@@ -48,7 +48,7 @@ function modifier_vampiric_aura:GetAuraSearchFlags()
 end
 
 function modifier_vampiric_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:IsWard()
 end
 
 function modifier_vampiric_aura:GetAuraSearchType()
@@ -71,7 +71,7 @@ function modifier_vampiric_aura_buff:OnAttackLanded(event)
     local attacker = event.attacker
     if attacker == self:GetParent() then
         local target = event.target
-        if not IsCustomBuilding(target) and not target:IsMechanical() then
+        if not IsCustomBuilding(target) and not target:IsMechanical() and not target:IsWard() then
             local lifesteal = self:GetAbility():GetSpecialValueFor("lifesteal") * event.damage * 0.01
             attacker:Heal(lifesteal,self)
             local particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, self:GetParent())

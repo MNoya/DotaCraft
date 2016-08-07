@@ -22,7 +22,7 @@ function SummoningStart(event)
     local grabbed = 0
 
     for _,ally in pairs(allies) do
-        if not IsCustomBuilding(ally) and ally ~= caster and not ally:IsUnselectable() then
+        if not IsCustomBuilding(ally) and not ally:IsWard() and ally ~= caster and not ally:IsUnselectable() then
             table.insert(teleport_units, ally)
             grabbed = grabbed + 1
             if grabbed == max_teleport_units then break end

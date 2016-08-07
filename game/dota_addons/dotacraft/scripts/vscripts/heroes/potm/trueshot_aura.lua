@@ -48,7 +48,7 @@ function modifier_trueshot_aura:GetAuraSearchFlags()
 end
 
 function modifier_trueshot_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:IsWard()
 end
 
 function modifier_trueshot_aura:GetAuraSearchType()

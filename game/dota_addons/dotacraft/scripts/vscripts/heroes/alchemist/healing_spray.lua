@@ -28,7 +28,7 @@ function HealingSprayWave( event )
 	local heal = ability:GetLevelSpecialValueFor("wave_heal",ability:GetLevel()-1)
 	local allies = FindAllUnitsInRadius(caster, radius, point)
 	for _,target in pairs(allies) do
-		if not IsCustomBuilding(target) and not target:IsMechanical() then
+		if not IsCustomBuilding(target) and not target:IsMechanical() and not target:IsWard() then
 			local heal = math.min(heal, target:GetHealthDeficit())
 			if heal > 0 then
 				target:Heal(heal,ability)

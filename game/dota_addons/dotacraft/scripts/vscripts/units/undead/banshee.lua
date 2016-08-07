@@ -75,7 +75,7 @@ function CurseAutocast(keys)
         local target
         local enemies = FindEnemiesInRadius(caster, autocast_radius)
         for k,unit in pairs(enemies) do
-            if not IsCustomBuilding(unit) and not unit:IsMechanical() and not unit:HasModifier(modifier_name) then
+            if not IsCustomBuilding(unit) and not unit:IsMechanical() and not unit:IsWard() and not unit:HasModifier(modifier_name) then
                 target = unit
                 break
             end

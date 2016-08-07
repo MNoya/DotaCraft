@@ -60,7 +60,7 @@ function VolcanoKnockback( event )
     }
 
     for _,unit in pairs(targets) do
-        if unit ~= caster and not IsCustomBuilding(unit) and not unit:HasFlyMovementCapability() then
+        if unit ~= caster and not IsCustomBuilding(unit) and not unit:HasFlyMovementCapability() and not unit:IsWard() then
             unit:AddNewModifier( caster, ability, "modifier_knockback", knockbackModifierTable )
         end
     end         
@@ -76,7 +76,7 @@ function VolcanoWave( event )
     local abilityDamageType = ability:GetAbilityDamageType()
 
     for _,unit in pairs(targets) do
-        if unit ~= caster and not IsCustomBuilding(unit) and not unit:HasFlyMovementCapability() then
+        if unit ~= caster and not IsCustomBuilding(unit) and not unit:IsWard() and not unit:HasFlyMovementCapability() then
             ability:ApplyDataDrivenModifier(caster, unit, "modifier_volcano_stun", {duration = stun_duration})
             ApplyDamage({ victim = unit, attacker = caster, ability = ability, damage = wave_damage, damage_type = abilityDamageType })
         end

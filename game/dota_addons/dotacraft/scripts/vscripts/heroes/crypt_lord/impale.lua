@@ -2,7 +2,7 @@ function Impale(event)
     local caster = event.caster
     local target = event.target
     local ability = event.ability
-    if target:HasFlyMovementCapability() or target:IsMechanical() then return end
+    if target:HasFlyMovementCapability() or target:IsMechanical() or target:IsWard() then return end
     local air_time = ability:GetSpecialValueFor("air_time")
     local duration = ability:GetLevelSpecialValueFor("hero_duration",ability:GetLevel()-1)
     if not target:IsHero() then

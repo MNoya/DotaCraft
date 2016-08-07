@@ -27,6 +27,11 @@ function CDOTABaseAbility:IsAllowedTarget(target)
         return false,"error_must_target_air"
     end
 
+    local bIgnoreWard = target:IsWard() and not self:AffectsWards()
+    if bIgnoreWard then
+        return false,"error_cant_target_wards"
+    end
+
     local maxLevel = self:GetKeyValue("MaxCreepLevel")
     if maxLevel and target:GetLevel() > maxLevel then
         return false,"error_cant_target_level6"
@@ -89,6 +94,12 @@ end
 function CDOTABaseAbility:AffectsGround()
     local targets = self:GetKeyValue("TargetsAllowed") or ""
     return not targets:match("air")
+end
+
+-- Keyword 'ward'
+function CDOTABaseAbility:AffectsWards()
+    local targets = self:GetKeyValue("TargetsAllowed") or ""
+    return targets:match("ward")
 end
 
 function CDOTABaseAbility:HasTargetType(flag)

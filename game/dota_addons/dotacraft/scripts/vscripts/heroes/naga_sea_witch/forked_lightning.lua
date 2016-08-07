@@ -10,7 +10,7 @@ function ForkedLightning( event )
     local max_units = event.ability:GetLevelSpecialValueFor("max_units", (ability:GetLevel() - 1))
     
     -- add the target if we haven't hit the max unit count yet
-    if ability.forked_units_hit < max_units and not ability.targets[target:GetEntityIndex()] and not IsCustomBuilding(target) and not target:IsMechanical() then
+    if ability.forked_units_hit < max_units and not ability.targets[target:GetEntityIndex()] and not IsCustomBuilding(target) and not target:IsMechanical() and not target:IsWard()  then
         ability.targets[target:GetEntityIndex()] = target
 
         -- add 1 to the units hit

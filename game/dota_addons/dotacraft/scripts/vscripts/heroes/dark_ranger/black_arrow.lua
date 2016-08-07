@@ -2,7 +2,7 @@ function OrbCheck(event)
     local target = event.target
     local caster = event.caster
 
-    if target:IsMechanical() or IsCustomBuilding(target) then
+    if target:IsMechanical() or IsCustomBuilding(target) or target:IsWard() then
         caster:RemoveModifierByName("modifier_black_arrow")
     else
         if not caster:HasModifier("modifier_black_arrow") then

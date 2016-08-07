@@ -238,6 +238,8 @@
 	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 
+	"TargetsAllowed"            "ward"
+
 	"AbilityCastRange"			"700"
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"1"
@@ -907,7 +909,9 @@
 	"AbilityCastPoint"			"0.35"
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"100"
-		
+	
+	"TargetsAllowed"            "ward"
+
 	"AOERadius"					"%radius"
 	"AbilitySpecial"
 	{

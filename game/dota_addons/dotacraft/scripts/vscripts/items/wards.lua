@@ -142,7 +142,7 @@ function modifier_healing_ward:GetAuraSearchTeam()
 end
 
 function modifier_healing_ward:GetAuraEntityReject(target)
-    return IsCustomBuilding(target) or target:IsMechanical()
+    return IsCustomBuilding(target) or target:IsMechanical() or target:IsWard() 
 end
 
 function modifier_healing_ward:GetAuraSearchType()

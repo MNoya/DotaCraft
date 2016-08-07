@@ -7,7 +7,7 @@ function TornadoThink(event)
     local modifierName = "modifier_tornado_flying_debuff"
     local valid_targets = {}
     for k,v in pairs(targets) do
-        if not IsCustomBuilding(v) and not v:HasFlyMovementCapability() and not v:HasModifier(modifierName) then
+        if not IsCustomBuilding(v) and not v:IsWard() and not v:HasFlyMovementCapability() and not v:HasModifier(modifierName) then
             table.insert(valid_targets, v)
         end
     end

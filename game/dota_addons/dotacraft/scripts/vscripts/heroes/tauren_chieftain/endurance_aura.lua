@@ -44,7 +44,7 @@ function modifier_endurance_aura:GetAuraSearchTeam()
 end
 
 function modifier_endurance_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target)
+    return IsCustomBuilding(target) or target:IsWard()
 end
 
 function modifier_endurance_aura:GetAuraSearchType()

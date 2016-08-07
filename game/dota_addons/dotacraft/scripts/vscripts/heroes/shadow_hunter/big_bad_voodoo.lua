@@ -69,7 +69,7 @@ function modifier_big_bad_voodoo:GetAuraSearchTeam()
 end
 
 function modifier_big_bad_voodoo:GetAuraEntityReject(target)
-    return IsCustomBuilding(target) or target == self:GetCaster()
+    return IsCustomBuilding(target) or target == self:GetCaster() or target:IsWard()
 end
 
 function modifier_big_bad_voodoo:GetAuraSearchType()
