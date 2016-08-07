@@ -61,18 +61,12 @@ function Heroes:DistributeXP(killed, attacker)
     -- If one Hero is nearby, but another is not, only the nearby Hero gains experience
     local heroList = FindUnitsInRadius(teamNumber, killed:GetAbsOrigin(), nil, XP_FIND_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-    -- Kills made when no Hero is nearby result in all your Heroes' (even allies) receiving experience
-    if #heroList == 0 then
-        heroList = Heroes:TeamHeroList(teamNumber)
-    end
+    -- Validate heroes
+    local validHeroes = Heroes:FilterValidXPHeroes(heroList, bNeutral)    
 
-    local validHeroes = {}
-    for _,hero in pairs(heroList) do
-        local heroLevel = hero:GetLevel()
-         -- Don't split experience if the heroes can't gain it (Improvement over wc3, where the XP is just lost)
-        if hero:IsAlive() and ((bNeutral and heroLevel < 5) or (not bNeutral and heroLevel < 10)) then
-            table.insert(validHeroes, hero)
-        end
+    -- Kills made when no Hero is nearby result in all your Heroes' (even allies) receiving experience
+    if #validHeroes == 0 then
+        validHeroes = Heroes:FilterValidXPHeroes(Heroes:TeamHeroList(teamNumber), bNeutral)
     end
 
     local heroCount = #validHeroes
@@ -105,6 +99,18 @@ function Heroes:DistributeXP(killed, attacker)
             print("  Granted "..xp.." XP"..bonus.." to "..hero:GetUnitName())
         end 
     end
+end
+
+-- Don't split experience if the heroes can't gain it (Improvement over wc3, where the XP is just lost)
+function Heroes:FilterValidXPHeroes(heroList, bNeutral)
+    local validHeroes = {}
+    for _,hero in pairs(heroList) do
+        local heroLevel = hero:GetLevel()
+        if hero:IsAlive() and hero:IsRealHero() and ((bNeutral and heroLevel < 5) or (not bNeutral and heroLevel < 10)) then
+            table.insert(validHeroes, hero)
+        end
+    end
+    return validHeroes
 end
 
 -- Returns a list of all heroes trained by this team, to use when spliting XP globally
