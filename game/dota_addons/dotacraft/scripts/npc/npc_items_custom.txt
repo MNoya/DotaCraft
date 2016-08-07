@@ -3305,12 +3305,17 @@
 			}
 		}
 	
+		"precache"
+		{
+		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		}
+	
 		"OnSpellStart"
 		{
 			"FireSound"
 			{
 				"Target"		"CASTER"
-				"EffectName"	"Hero_BountyHunter.WindWalk"
+				"EffectName"	"Hero_Invoker.GhostWalk"
 			}
 	
 			"ApplyModifier"

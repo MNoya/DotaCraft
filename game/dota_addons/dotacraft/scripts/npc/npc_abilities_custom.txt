@@ -12527,12 +12527,17 @@
 			}
 		}
 	
+		"precache"
+		{
+		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		}
+	
 		"OnSpellStart"
 		{
 			"FireSound"
 			{
-				"Target"		"CASTER"
-				"EffectName"	"Hero_BountyHunter.WindWalk"
+				"Target"		"TARGET"
+				"EffectName"	"Hero_Invoker.GhostWalk"
 			}
 			
 			"ApplyModifier"
@@ -42608,7 +42613,7 @@
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 			
 		"AbilityCastRange"			"750"
-		"AbilityCastPoint"			"0"
+		"AbilityCastPoint"			"0.3"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"75"
 			
@@ -42839,9 +42844,11 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
-		"AbilityCastPoint"			"0.7"
-		"AbilityCooldown"			"30"
+		"AbilityCastPoint"			"0.0"
+		"AbilityCooldown"			"0" //Can always go into ethereal form
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"				"1"
 			
 		"AbilitySpecial"
 		{
@@ -42850,11 +42857,17 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_spell_damage"		"-66"
 			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"transformation_time"		"0.7"
+			}
 		}
 	
 		"precache"
 		{
 			"particle" 	"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_spirit_breaker.vsndevts"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
 		}
 		
@@ -42862,13 +42875,33 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/orc/spiritwalker.lua"
-				"Function"		"EtherStart"
+			    "ScriptFile"    "units/orc/spiritwalker.lua"
+			    "Function"      "EtherealStart"
 			}
 		}
 	
 		"Modifiers"
 		{
+			"modifier_ethereal_form_transform"
+			{
+				"IsHidden"  "1"
+	            "Duration"  "%transformation_time"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+					{
+						"ScriptFile"	"units/orc/spiritwalker.lua"
+						"Function"		"EtherealForm"
+					}
+	            }
+			}
+	
 			"modifier_ethereal_form"
 			{
 				"OnCreated"
@@ -42921,22 +42954,56 @@
 	"orc_corporeal_form"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"orc_ethereal_form"
+		"AbilityTextureName"		"orc_corporeal_form"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
-		"AbilityCastPoint"			"0.7"
+		"AbilityCastPoint"			"0.0"
 		"AbilityCooldown"			"30"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"				"1"
+	
+		"AbilitySpecial"
+		{
+		    "01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"transformation_time"		"0.7"
+			}
+		}
 				
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"units/orc/spiritwalker.lua"
-				"Function"		"EtherEnd"
+			    "ScriptFile"    "units/orc/spiritwalker.lua"
+			    "Function"      "CorporealStart"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_corporeal_form_transform"
+			{
+				"IsHidden"  "1"
+	            "Duration"  "%transformation_time"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+					{
+						"ScriptFile"	"units/orc/spiritwalker.lua"
+						"Function"		"CorporealForm"
+					}
+	            }
 			}
 		}
 	}
