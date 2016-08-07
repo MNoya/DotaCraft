@@ -48,6 +48,10 @@ function lich_dark_ritual_warcraft:CastFilterResultTarget( target )
     local ability = self
     local caster = ability:GetCaster()
 
+    if target:IsHero() then
+        return UF_FAIL_HERO
+    end
+
     -- Check missing mana
     if caster:GetMana() == caster:GetMaxMana() then
         return UF_FAIL_CUSTOM
