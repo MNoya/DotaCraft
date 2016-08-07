@@ -1,63 +1,42 @@
 <!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
 {
 	_class = "CParticleSystemDefinition"
-	m_ConstantColor =
-	[
-		255,
-		217,
-		156,
-		255,
-	]
-	m_ConstantNormal =
-	[
-		1.000000,
-		0.000000,
-		0.000000,
-	]
+	m_ConstantColor = [ 255, 217, 156, 255 ]
+	m_ConstantNormal = [ 1.0, 0.0, 0.0 ]
 	m_nConstantSequenceNumber = 4
 	m_nMaxParticles = 32
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_BasicMovement"
-			m_Gravity =
-			[
-				0.000000,
-				0.000000,
-				-3000.000000,
-			]
+			m_Gravity = [ 0.0, 0.0, -3000.0 ]
 		},
 		{
 			_class = "C_OP_Decay"
 		},
 		{
 			_class = "C_OP_InterpolateRadius"
-			m_flStartTime = 0.600000
-			m_flStartScale = 2.000000
-			m_flEndScale = 0.500000
+			m_flStartTime = 0.6
+			m_flStartScale = 2.0
+			m_flEndScale = 0.5
 			m_bEaseInAndOut = true
-			m_flBias = 5.000000
+			m_flBias = 5.0
 		},
 		{
 			_class = "C_OP_ColorInterpolate"
-			m_ColorFade =
-			[
-				32,
-				54,
-				168,
-				255,
-			]
+			m_ColorFade = [ 32, 54, 168, 255 ]
 		},
 		{
 			_class = "C_OP_OrientTo2dDirection"
 			m_nFieldOutput = 12
+			m_flRotOffset = 180.0
 		},
 	]
-	m_Renderers =
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderModels"
-			m_ModelList =
+			m_ModelList = 
 			[
 				{
 					m_model = resource:"models/particle/phantom_assassin_dagger_model.vmdl"
@@ -65,74 +44,47 @@
 			]
 			m_bIgnoreNormal = true
 			m_bOrientZ = true
-			m_flAnimationRate = 0.000000
+			m_flAnimationRate = 0.0
 			m_bAnimated = true
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMin = 1.000000
-			m_fLifetimeMax = 1.000000
+			m_fLifetimeMin = 1.0
+			m_fLifetimeMax = 1.0
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMax = 2.000000
+			m_flRadiusMax = 2.0
 		},
 		{
 			_class = "C_INIT_RandomColor"
-			m_ColorMin =
-			[
-				255,
-				231,
-				168,
-				255,
-			]
-			m_ColorMax =
-			[
-				101,
-				65,
-				19,
-				255,
-			]
+			m_ColorMin = [ 255, 231, 168, 255 ]
+			m_ColorMax = [ 101, 65, 19, 255 ]
 			m_nTintBlendMode = "2"
 		},
 		{
 			_class = "C_INIT_PositionOffset"
-			m_OffsetMin =
-			[
-				0.000000,
-				0.000000,
-				50.000000,
-			]
-			m_OffsetMax =
-			[
-				0.000000,
-				0.000000,
-				50.000000,
-			]
+			m_OffsetMin = [ 0.0, 0.0, 50.0 ]
+			m_OffsetMax = [ 0.0, 0.0, 50.0 ]
 		},
 		{
 			_class = "C_INIT_RingWave"
-			m_flParticlesPerOrbit = 32.000000
-			m_flInitialRadius = 20.000000
-			m_flThickness = 10.000000
-			m_flInitialSpeedMin = 800.000000
-			m_flInitialSpeedMax = 500.000000
+			m_flParticlesPerOrbit = 32.0
+			m_flInitialRadius = 20.0
+			m_flThickness = 10.0
+			m_flInitialSpeedMin = 800.0
+			m_flInitialSpeedMax = 500.0
 			m_bEvenDistribution = true
 		},
 		{
 			_class = "C_INIT_VelocityRandom"
-			m_LocalCoordinateSystemSpeedMax =
-			[
-				0.000000,
-				0.000000,
-				1000.000000,
-			]
+			m_LocalCoordinateSystemSpeedMax = [ 0.0, 0.0, 1000.0 ]
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
