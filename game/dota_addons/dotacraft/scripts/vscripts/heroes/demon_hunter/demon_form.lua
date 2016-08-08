@@ -18,6 +18,7 @@ function modifier_demon_form:OnCreated()
         SetRangedProjectileName(target, "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf")
         target:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
         target:SetAttackType("chaos")
+        target:SetAttacksEnabled("ground,air")
     end
 end
 
@@ -27,6 +28,9 @@ function modifier_demon_form:OnDestroy()
         SetRangedProjectileName(target, target.old_attack_projectile)
         target:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
         target:SetAttackType("hero")
+        if not target.hasOrb then
+            target:SetAttacksEnabled("ground")
+        end
         target.old_attack_projectile = nil
     end
 end

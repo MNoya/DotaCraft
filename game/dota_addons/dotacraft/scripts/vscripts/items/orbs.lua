@@ -5,6 +5,7 @@ function EquipOrb( event )
             caster.original_attack = caster:GetAttacksEnabled()
         end
         caster:SetAttacksEnabled("ground, air")
+        caster.hasOrb = true
     end
 end
 
@@ -14,6 +15,7 @@ function UnequipOrb( event )
         caster:SetAttacksEnabled(caster.original_attack)
         if caster.original_attack_type then
             caster:SetAttackCapability(caster.original_attack_type)
+            caster.hasOrb = nil
         end
     end
 end
