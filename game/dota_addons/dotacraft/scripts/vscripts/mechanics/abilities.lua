@@ -78,7 +78,7 @@ function CDOTABaseAbility:AffectsBuildings()
     return self:HasTargetType(DOTA_UNIT_TARGET_BUILDING)
 end
 
--- Keyword 'organic' in TargetsAllowed will prevent the ability from affecting (targeting/damaging/modifying) units marked with "Mechanical" "1"
+-- Keyword 'organic' in TargetsAllowed will prevent the ability from affecting (targeting/damaging/modifying) units marked labeled "mechanical"
 function CDOTABaseAbility:AffectsMechanical()
     local targets = self:GetKeyValue("TargetsAllowed") or ""
     return not targets:match("organic")
@@ -96,7 +96,7 @@ function CDOTABaseAbility:AffectsGround()
     return not targets:match("air")
 end
 
--- Keyword 'ward'
+-- Keyword 'ward' in TargetsAllowed will allow the ability to affect units marked labeled "ward"
 function CDOTABaseAbility:AffectsWards()
     local targets = self:GetKeyValue("TargetsAllowed") or ""
     return targets:match("ward")

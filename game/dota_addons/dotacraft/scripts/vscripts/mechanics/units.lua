@@ -2,57 +2,6 @@ if not Units then
     Units = class({})
 end
 
-function Units:start()
-    self.Races = LoadKeyValues("scripts/kv/races.kv")
-
-    -- Validate BoundsHullName with CollisionSize
-    local builds = {}
-    local units = {}
-    for k,v in pairs(KeyValues.UnitKV) do
-        local hullName = GetUnitKV(k, "BoundsHullName")
-        local collisionSize = GetUnitKV(k, "CollisionSize")
-        if hullName and collisionSize and HULL_SIZES[hullName] then
-            if HULL_SIZES[hullName] ~= collisionSize and HULL_SIZES[hullName]+10 <= collisionSize then
-                local bestHull = 999
-                local bestName
-                for name,value in pairs(HULL_SIZES) do
-                    if value >= collisionSize then
-                        local difference = value-collisionSize
-                        if difference < bestHull-collisionSize then
-                            bestHull = value
-                            bestName = name
-                        end
-                    end
-                end
-                if bestName then
-                    if bestName ~= hullName then
-                        if GetUnitKV(k, "MovementSpeed") == 0 then
-                            table.insert(builds, string.format("%-40s -> %-23s", k, bestName))
-                        else
-                            table.insert(units, string.format("%-40s -> %-23s", k, bestName))
-                        end
-                    end
-                elseif hullName ~= "DOTA_HULL_SIZE_BARRACKS" then
-                    if GetUnitKV(k, "MovementSpeed") == 0 then
-                        table.insert(builds, string.format("%-40s -> %-23s", k, "DOTA_HULL_SIZE_BARRACKS"))
-                    else
-                        table.insert(units, string.format("%-40s -> %-23s", k, "DOTA_HULL_SIZE_BARRACKS"))
-                    end
-                end
-            end
-        end
-    end
-    if #units > 0 or #builds > 0 then
-        print("Problematic BoundsHullName-CollisionSize values found.\nProposed changes:")
-        for k,v in pairs(units) do
-            print(v)
-        end
-        for k,v in pairs(builds) do
-            print(v)
-        end
-    end
-end
-
 -- Initializes one unit with all its required modifiers and functions
 function Units:Init( unit )
     if unit.bFirstSpawned and not unit:IsRealHero() then return
@@ -108,6 +57,12 @@ function Units:Init( unit )
         unit:SetHullRadius(collision_size)
     end
 
+    -- Disable Gold Bounty for non-neutral kills
+    if unit:GetTeamNumber() ~= DOTA_TEAM_NEUTRALS then
+        unit:SetMaximumGoldBounty(0)
+        unit:SetMinimumGoldBounty(0)
+    end
+
     -- Special Tree-Attacking units
     if unit:GetKeyValue("AttacksTrees") then
         unit:SetCanAttackTrees(true)
@@ -129,6 +84,58 @@ function Units:Init( unit )
         end
     end)
 end
+
+function Units:start()
+    self.Races = LoadKeyValues("scripts/kv/races.kv")
+
+    -- Validate BoundsHullName with CollisionSize
+    local builds = {}
+    local units = {}
+    for k,v in pairs(KeyValues.UnitKV) do
+        local hullName = GetUnitKV(k, "BoundsHullName")
+        local collisionSize = GetUnitKV(k, "CollisionSize")
+        if hullName and collisionSize and HULL_SIZES[hullName] then
+            if HULL_SIZES[hullName] ~= collisionSize and HULL_SIZES[hullName]+10 <= collisionSize then
+                local bestHull = 999
+                local bestName
+                for name,value in pairs(HULL_SIZES) do
+                    if value >= collisionSize then
+                        local difference = value-collisionSize
+                        if difference < bestHull-collisionSize then
+                            bestHull = value
+                            bestName = name
+                        end
+                    end
+                end
+                if bestName then
+                    if bestName ~= hullName then
+                        if GetUnitKV(k, "MovementSpeed") == 0 then
+                            table.insert(builds, string.format("%-40s -> %-23s", k, bestName))
+                        else
+                            table.insert(units, string.format("%-40s -> %-23s", k, bestName))
+                        end
+                    end
+                elseif hullName ~= "DOTA_HULL_SIZE_BARRACKS" then
+                    if GetUnitKV(k, "MovementSpeed") == 0 then
+                        table.insert(builds, string.format("%-40s -> %-23s", k, "DOTA_HULL_SIZE_BARRACKS"))
+                    else
+                        table.insert(units, string.format("%-40s -> %-23s", k, "DOTA_HULL_SIZE_BARRACKS"))
+                    end
+                end
+            end
+        end
+    end
+    if #units > 0 or #builds > 0 then
+        print("Problematic BoundsHullName-CollisionSize values found.\nProposed changes:")
+        for k,v in pairs(units) do
+            print(v)
+        end
+        for k,v in pairs(builds) do
+            print(v)
+        end
+    end
+end
+
 
 function Units:GetBaseHeroNameForRace(raceName)
     return Units.Races[raceName]["BaseHero"]
