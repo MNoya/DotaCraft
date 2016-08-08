@@ -74,6 +74,11 @@ function dotacraft:FilterDamage( filterTable )
         if victim:HasModifier("modifier_ethereal") and attack_type == "magic" then
             damage = damage * 1.66
         end
+
+        -- Deal no autoattack damage during bladestorm
+        if attacker:HasModifier("modifier_bladestorm") and victim:IsOpposingTeam(attacker:GetTeamNumber()) then
+            damage = 0
+        end
         
         -- Reassign the new damage
         filterTable["damage"] = damage
