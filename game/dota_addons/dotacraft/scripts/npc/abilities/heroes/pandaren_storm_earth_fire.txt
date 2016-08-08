@@ -642,7 +642,11 @@
                 {
                     "EffectName"        "particles/msg_fx/msg_crit.vpcf"
                     "EffectAttachType"  "follow_overhead"
-                    "Target"            "TARGET"
+                    "Target"
+                    {
+                        "Center"    "TARGET"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+                    }
                     "ControlPoints"
                     {
                         "01"        "9 %bonus_damage 4" //pre number post
