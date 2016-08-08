@@ -1463,6 +1463,7 @@
 			{
 				"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -1559,6 +1560,15 @@
 				{
 					"ScriptFile"	"units/nightelf/hippogryph.lua"
 					"Function"		"FakeArcherAttack"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+				    "ScriptFile"    "units/nightelf/hippogryph.lua"
+				    "Function"      "KillArcher"
 				}
 			}
 		}
