@@ -79,8 +79,10 @@ function PickUpArcher(event)
                         archer:SetAngles(90,30,0)
                     end)
 
-                    PlayerResource:AddToSelection(playerID, new_hippo)
-                    PlayerResource:RemoveFromSelection(playerID, archer)
+                    if PlayerResource:IsUnitSelected(playerID, archer) then
+                        PlayerResource:AddToSelection(playerID, new_hippo)
+                        PlayerResource:RemoveFromSelection(playerID, archer)
+                    end
 
                     -- Add hippogryph rider to table (archer remains, so that upgrades are also added in the back)
                     Players:AddUnit(playerID, new_hippo)
