@@ -50,13 +50,21 @@
 
 		// *************** ERROR MESSAGES ****************
 
+		"error_invalid_build_position"          	"You can't build there"
 		"error_full_health"							"Already on full health"
 		"error_full_mana"							"Already on full mana"
 		"error_cant_target_self"					"Unable to target self"
 		"error_need_target_with_mana"				"Must target a unit with mana"
 		"error_cant_target_undead_allies"			"Must target friendly living units or enemy Undead units"
 		"error_must_target_undead_allies"			"Must target enemy living units or friendly Undead units"
+		"error_must_target_undead"					"Must target an Undead unit"
+		"error_must_target_organic"             	"Must target organic units"
 
+		// *************** UI ABILITY PLACEHOLER *********
+		"DOTA_Tooltip_ability_UI_UNITSHOPS_PLACEHOLDER_Hero_Revive"                      "Revive This Hero"
+        "DOTA_Tooltip_ability_UI_UNITSHOPS_PLACEHOLDER_Hero_Revive_Description"          "Instantly revives this hero with half Health & Mana"
+		
+		
 		// ******************** UNITS ********************	
 		"firelord_lava_spawn1"                                                            "Lava Spawn"
 		"firelord_lava_spawn2"                                                            "Lava Spawn"
@@ -310,7 +318,7 @@
 
 		//Overriden alchemist_chemical_rage modifier
 		"DOTA_Tooltip_modifier_alchemist_chemical_rage"             "Legacy Chemical Rage"
-		"DOTA_Tooltip_modifier_alchemist_chemical_rage_Description"	"Increasing attack spell and movement speed."
+		"DOTA_Tooltip_modifier_alchemist_chemical_rage_Description"	"Increasing attack and movement speed."
 
 		// **************************************************************************************
 		// =======================================  -HEROES-  ===================================
@@ -835,7 +843,7 @@
 		"DOTA_Tooltip_ability_pandaren_breath_of_fire_speed"                              "SPEED:"
 		
 		"DOTA_Tooltip_ability_pandaren_drunken_brawler"                                   "Drunken Brawler"
-		"DOTA_Tooltip_ability_pandaren_drunken_brawler_Description"                       "Gives a percent chance to avoid attacks and a 10% chance to deal additional damage."
+		"DOTA_Tooltip_ability_pandaren_drunken_brawler_Description"                       "Gives a chance to avoid attacks and a 10% chance to deal additional damage."
 		"DOTA_Tooltip_ability_pandaren_drunken_brawler_miss_chance"                       "MISS CHANCE:"
 		"DOTA_Tooltip_ability_pandaren_drunken_brawler_crit_chance"                       "CRIT CHANCE:"
 		"DOTA_Tooltip_ability_pandaren_drunken_brawler_crit_bonus"                        "CRIT BONUS:"
@@ -2373,16 +2381,14 @@
 		"DOTA_Tooltip_ability_human_research_defend_disabled_Description"                 "Allows Footmen to use the Defend ability, which increases their defensive capabilities against Piercing attacks."
 
 		"DOTA_Tooltip_ability_human_defend_disabled"                                      "Defend"
-		"DOTA_Tooltip_ability_human_defend_disabled_Description"                          "<b><font color='#eedd44'>Requires:\n - Defend</font></b>\nActivate to take %piercing_damage_reduction%%% less damage from Piercing attacks, but have %movement_speed_reduction%%% reduced movement speed. Defend does not reflect attacks to buildings, and its chance of reflection against units is %reflect_chance%%%."
+		"DOTA_Tooltip_ability_human_defend_disabled_Description"                          "<b><font color='#eedd44'>Requires:\n - Defend</font></b>\nActivate to take %piercing_damage_reduction%%% less damage from Piercing attacks, but have %movement_speed_reduction%%% reduced movement speed."
 		"DOTA_Tooltip_ability_human_defend_disabled_piercing_damage_reduction"            "PIERCING DAMAGE REDUCTION:"
 		"DOTA_Tooltip_ability_human_defend_disabled_movement_speed_reduction"             "MOVEMENT SPEED REDUCTION:"
-		"DOTA_Tooltip_ability_human_defend_disabled_reflect_chance"                       "REFLECT CHANCE:"
 
 		"DOTA_Tooltip_ability_human_defend"                                               "Defend"
-		"DOTA_Tooltip_ability_human_defend_Description"                                   "Activate to take %piercing_damage_reduction%%% less damage from Piercing attacks, but have %movement_speed_reduction%%% reduced movement speed. Defend does not reflect attacks to buildings, and its chance of reflection against units is %reflect_chance%%%."
+		"DOTA_Tooltip_ability_human_defend_Description"                                   "Activate to take %piercing_damage_reduction%%% less damage from Piercing attacks, but have %movement_speed_reduction%%% reduced movement speed."
 		"DOTA_Tooltip_ability_human_defend_piercing_damage_reduction"                     "PIERCING DAMAGE REDUCTION:"
 		"DOTA_Tooltip_ability_human_defend_movement_speed_reduction"                      "MOVEMENT SPEED REDUCTION:"
-		"DOTA_Tooltip_ability_human_defend_reflect_chance"                                "REFLECT CHANCE:"
 
 		"DOTA_Tooltip_ability_human_research_long_rifles_disabled"                        "Research Long Rifles"
 		"DOTA_Tooltip_ability_human_research_long_rifles_disabled_Description"            "<b><font color='#eedd44'>Requires:\n - Keep</font></b>\nIncreases the range of Riflemen attacks."
@@ -2681,6 +2687,9 @@
         "DOTA_Tooltip_ability_human_true_sight"                                           "True Sight"
         "DOTA_Tooltip_ability_human_true_sight_Description"                               "Reveals nearby invisible units."
 
+        "DOTA_Tooltip_ability_true_sight"                                           "True Sight"
+        "DOTA_Tooltip_ability_true_sight_Description"                               "Reveals nearby invisible units."
+
         "DOTA_Tooltip_ability_human_flying_machine_bombs"                                 "Flying Machine Bombs"
         "DOTA_Tooltip_ability_human_flying_machine_bombs_Description"                     "Allows Flying Machines to attack land units."
 
@@ -2710,9 +2719,13 @@
         "DOTA_Tooltip_ability_human_fragmentation_shards_disabled"                        "Fragmentation Shards"
         "DOTA_Tooltip_ability_human_fragmentation_shards_disabled_Description"            "<b><font color='#eedd44'>Requires:\n - Research Fragmentation Shards</font></b>\nUses fragmentation mortars to increase damage dealt to Unarmored and Medium armor units."
 
-        "DOTA_Tooltip_ability_human_barrage"                                              "Barrage"
-        "DOTA_Tooltip_ability_human_barrage_Description"                                  "Fires powerful Dwarven rockets at nearby enemy air units, dealing 25 damage per hit for a range of 50. 9 rockets can be fired at once. 2 second cooldown."
-        "DOTA_Tooltip_ability_human_barrage_radius"                                       "RADIUS:"
+        "DOTA_Tooltip_ability_human_flare"                                                "Flare"
+        "DOTA_Tooltip_ability_human_flare_Description"                                    "Launches a Dwarven flare above a target point, which reveals that area for 15 seconds. Reveals invisible units."
+        "DOTA_Tooltip_ability_human_flare_reveal_radius"                                  "REVEAL RADIUS:"
+        "DOTA_Tooltip_ability_human_flare_duration"                                       "DURATION:"
+
+        "DOTA_Tooltip_ability_minimum_range"                                              "Minimum Range"
+        "DOTA_Tooltip_ability_minimum_range_Description"                                  "This unit cannot attack target that is closer than 250 range."
 
         "DOTA_Tooltip_ability_human_barrage_disabled"                                     "Barrage"
         "DOTA_Tooltip_ability_human_barrage_disabled_Description"                         "<b><font color='#eedd44'>Requires:\n - Research Barrage</font></b>\nFires powerful Dwarven rockets at nearby enemy air units, dealing 25 damage per hit for a range of 50. 9 rockets can be fired at once. 2 second cooldown."
@@ -6330,7 +6343,7 @@
         "DOTA_Tooltip_ability_undead_raise_dead_radius"                                   "RADIUS:"
 
         "DOTA_Tooltip_ability_undead_unholy_frenzy"                                       "Unholy Frenzy"
-        "DOTA_Tooltip_ability_undead_unholy_frenzy_Description"                           "Increases the attack rate of a target unit by %attack_speed_increase%%%, but drains %damage_per_second%%% hit points per second.\nLasts %duration% seconds."
+        "DOTA_Tooltip_ability_undead_unholy_frenzy_Description"                           "Increases the attack rate of a target unit by %attack_speed_increase%%%, but drains %damage_per_second% hit points per second.\nLasts %duration% seconds."
         "DOTA_Tooltip_ability_undead_unholy_frenzy_duration"                              "DURATION:"
         "DOTA_Tooltip_ability_undead_unholy_frenzy_attack_speed_increase"                 "ATTACK SPEED INCREASE:"
         "DOTA_Tooltip_ability_undead_unholy_frenzy_damage_per_second"                     "DAMAGE PER SECOND:"
@@ -6403,7 +6416,7 @@
         "DOTA_Tooltip_ability_undead_freezing_splash_movement_speed_reduction"            "MOVEMENT SPEED REDUCTION:"
 
         "DOTA_Tooltip_ability_undead_true_sight"                                          "True Sight"
-        "DOTA_Tooltip_ability_undead_true_sight_Description"                              ""
+        "DOTA_Tooltip_ability_undead_true_sight_Description"                              "Reveals nearby invisible units"
 
         "DOTA_Tooltip_ability_undead_frost_attack"                                        "Frost Attack"
         "DOTA_Tooltip_ability_undead_frost_attack_Description"                            "Adds a cold effect to this unit's attacks that slows enemy units' movement speed."
@@ -6781,22 +6794,22 @@
         "DOTA_Tooltip_ability_undead_research_unholy_armor1_disabled_Description"         "Increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
 
         "DOTA_Tooltip_ability_undead_research_unholy_armor2"                              "Research Improved Unholy Armor"
-        "DOTA_Tooltip_ability_undead_research_unholy_armor2_Description"                  "<b><font color='#eedd44'>Requires:\n - Halls of the Dead</font></b>\nFurther increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
+        "DOTA_Tooltip_ability_undead_research_unholy_armor2_Description"                  "Further increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
         "DOTA_Tooltip_ability_undead_research_unholy_armor2_research_time"                "RESEARCH TIME:"
         "DOTA_Tooltip_ability_undead_research_unholy_armor2_gold_cost"                    "GOLD COST:"
         "DOTA_Tooltip_ability_undead_research_unholy_armor2_lumber_cost"                  "LUMBER COST:"
 
         "DOTA_Tooltip_ability_undead_research_unholy_armor2_disabled"                     "Research Improved Unholy Armor"
-        "DOTA_Tooltip_ability_undead_research_unholy_armor2_disabled_Description"         "Further increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
+        "DOTA_Tooltip_ability_undead_research_unholy_armor2_disabled_Description"         "<b><font color='#eedd44'>Requires:\n - Halls of the Dead</font></b>\nFurther increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
 
         "DOTA_Tooltip_ability_undead_research_unholy_armor3"                              "Research Advanced Unholy Armor"
-        "DOTA_Tooltip_ability_undead_research_unholy_armor3_Description"                  "<b><font color='#eedd44'>Requires:\n - Black Citadel</font></b>\nFurther increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
+        "DOTA_Tooltip_ability_undead_research_unholy_armor3_Description"                  "Further increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
         "DOTA_Tooltip_ability_undead_research_unholy_armor3_research_time"                "RESEARCH TIME:"
         "DOTA_Tooltip_ability_undead_research_unholy_armor3_gold_cost"                    "GOLD COST:"
         "DOTA_Tooltip_ability_undead_research_unholy_armor3_lumber_cost"                  "LUMBER COST:"
 
         "DOTA_Tooltip_ability_undead_research_unholy_armor3_disabled"                     "Research Advanced Unholy Armor"
-        "DOTA_Tooltip_ability_undead_research_unholy_armor3_disabled_Description"         "Further increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
+        "DOTA_Tooltip_ability_undead_research_unholy_armor3_disabled_Description"         "<b><font color='#eedd44'>Requires:\n - Black Citadel</font></b>\nFurther increases the armor of Ghouls, Abominations, Skeleton Warriors, and Skeletal Mages."
 
         "DOTA_Tooltip_ability_undead_research_creature_attack1"                           "Research Creature Attack"
         "DOTA_Tooltip_ability_undead_research_creature_attack1_Description"               "Increases the attack damage of Crypt Fiends, Gargoyles, Destroyers, and Frost Wyrms."

@@ -53804,7 +53804,7 @@
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 			
 		"AbilityCastRange"			"900 900"
 		"AbilityCastPoint"			"0 0"
@@ -53885,7 +53885,7 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	
 		"TargetsAllowed"            "organic"
 			
@@ -53915,7 +53915,6 @@
 		
 		"precache"
 		{
-			"particle" 		"particles/status_fx/status_effect_gods_strength"
 			"soundfile" 	"sounds/items/mask_of_madness.vsnd"
 		}
 		
@@ -53924,7 +53923,7 @@
 			"ApplyModifier"
 			{
 				"ModifierName" 	"modifier_unholy_frenzy"
-				"Target" 		"TARGET"	
+				"Target" 		"TARGET"
 				"Duration" 		"%duration"
 			}
 			"FireSound"
@@ -53938,8 +53937,9 @@
 		{
 			"modifier_unholy_frenzy"
 			{
-				"StatusEffectName" "particles/status_fx/status_effect_gods_strength"
-				"StatusEffectPriority" "10"	
+				"EffectName"		"particles/items_fx/armlet.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"IsPurgable" "1"
 	
 				"Properties"
@@ -53976,12 +53976,12 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 	
 		"TargetsAllowed"            "organic"
 			
 		"AbilityCastRange"			"600"
-		"AbilityCastPoint"			"0"
+		"AbilityCastPoint"			"0.3"
 		"AbilityCooldown"			"10"
 		"AbilityManaCost"			"175"
 			
