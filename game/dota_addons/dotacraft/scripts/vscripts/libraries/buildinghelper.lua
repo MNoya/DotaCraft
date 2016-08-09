@@ -2500,7 +2500,7 @@ function BuildingHelper:ShowBuilder(unit)
 end
 
 -- Find the closest position of construction_size, within maxDistance
-function BuildingHelper:FindClosestEmptyPositionNearby(location, construction_size, maxDistance)
+function BuildingHelper:FindClosestEmptyPositionNearby(location, construction_size, maxDistance, avoidUnits)
     local originX = GridNav:WorldToGridPosX(location.x)
     local originY = GridNav:WorldToGridPosY(location.y)
 
@@ -2537,8 +2537,16 @@ function BuildingHelper:FindClosestEmptyPositionNearby(location, construction_si
                 if BuildingHelper:MeetsHeightCondition(pos) and not BuildingHelper:IsAreaBlocked(construction_size, pos) then
                     local distance = (pos - location):Length2D()
                     if distance < closestDistance then
-                        towerPos = pos
-                        closestDistance = distance
+                        if avoidUnits then
+                            local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, pos, nil, 64, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC+DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+                            if #units == 0 then
+                                towerPos = pos
+                                closestDistance = distance
+                            end
+                        else
+                            towerPos = pos
+                            closestDistance = distance
+                        end                        
                     end
                 end
             end
