@@ -53388,74 +53388,115 @@
 		"AbilityTextureName"		"undead_research_stone_form"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
+	
+		"AbilityMultiOrder"			"1"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"0.5"
-			}
-			// The Gargoyle'll only be able to move after this duration.
-			"02"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"regeneration"	"8"
+				"var_type"			"FIELD_INTEGER"
+				"regeneration"		"8"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"transition_start"			"0.7"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_armor"		"12"		
 			}
-			// The Gargoyle'll start descending/ascending after this duration.
-			"04"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"transition_duration"			"0.5"
-			}
-			// The Gargoyle's height will raise or lower over this duration.
-			// The process is uninterruptable. Just like the standard Dota 2 Stone Form without the stun.
-			"05"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"bonus_armor"			"12"		
-			}
+		}
+	
+		"precache"
+		{
+		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_visage.vsndevts"
 		}
 		
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
-				"ScriptFile" "units/undead/gargoyle.lua"
-				"Function"	"stone_form"
+				"ScriptFile" 	"units/undead/gargoyle.lua"
+				"Function"		"StoneForm"
 			}
 		}
 	
 		"Modifiers"
 		{
-			"modifier_stone_form_freeze"
+			"modifier_stone_form_order"
 			{
-				"IsHidden"		"1"
-				
+				"IsHidden"	"1"
 				"States"
 				{
-					"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
+				    "MODIFIER_STATE_COMMAND_RESTRICTED"   "MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
-			
+			"modifier_stone_form_transform"
+			{
+				"IsHidden"	"1"
+				"Duration"	"0.7"
+				"States"
+				{
+				    "MODIFIER_STATE_STUNNED"   "MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OnCreated"
+				{
+				    "RunScript"
+					{
+						"ScriptFile" 	"units/undead/gargoyle.lua"
+						"Function"		"StoneFormStart"
+					}
+				}
+				"OnDestroy"
+				{
+				    "ApplyModifier"
+				    {
+				        "ModifierName"  "modifier_stone_form"
+				        "Target"        "TARGET"
+				    }
+				}
+			}
+	
+			"modifier_stone_form_transform_end"
+			{
+				"IsHidden"	"1"
+				"Duration"	"0.5"
+				"States"
+				{
+				    "MODIFIER_STATE_STUNNED"   "MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OnDestroy"
+				{
+				    "RunScript"
+					{
+						"ScriptFile" 	"units/undead/gargoyle.lua"
+						"Function"		"StoneFormEnd"
+					}
+				}
+			}
+	
 			"modifier_stone_form"
 			{
-				
+				"OnCreated"
+				{
+				    "FireSound"
+				    {
+				        "EffectName"    "Visage_Familar.StoneForm.Cast"
+				        "Target"        "TARGET"
+				    }
+				}
+	
+				"StatusEffectName"      "particles/status_fx/status_effect_medusa_stone_gaze.vpcf"        
+				"StatusEffectPriority"  "5"
+	
 				"States"
 				{
 					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 				
 				"Properties"
