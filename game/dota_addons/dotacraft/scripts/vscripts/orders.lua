@@ -148,7 +148,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     elseif order_type == DOTA_UNIT_ORDER_CAST_TARGET then
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = order_type, TargetIndex = targetIndex, AbilityIndex = abil:GetEntityIndex(), Queue = queue})
 
-                    else --order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET or order_type == DOTA_UNIT_ORDER_CAST_TOGGLE or order_type == DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO
+                    elseif order_type == DOTA_UNIT_ORDER_CAST_TOGGLE then
+                        if abil:GetToggleState() == ability:GetToggleState() then --order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET or order_type == DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO
+                            ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = DOTA_UNIT_ORDER_CAST_TOGGLE, AbilityIndex = abil:GetEntityIndex(), Queue = queue})    
+                        end
+                    else
                         ExecuteOrderFromTable({ UnitIndex = entityIndex, OrderType = order_type, AbilityIndex = abil:GetEntityIndex(), Queue = queue})
                     end
                 end
