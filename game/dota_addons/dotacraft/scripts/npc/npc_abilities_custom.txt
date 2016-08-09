@@ -12268,17 +12268,12 @@
 			}
 		}
 	
-		"precache"
-		{
-			"particle"  "particles/units/heroes/hero_medusa/medusa_mana_shield_snakeskin.vpcf"
-		}
-	
 		"OnToggleOn"
 		{
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"	"modifier_defend"
-				"Target"		"CASTER"
+			    "ScriptFile"    "units/human/footman.lua"
+			    "Function"      "Defend"
 			}
 		}
 	
@@ -12295,8 +12290,8 @@
 		{
 			"modifier_defend"
 			{
-				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield_snakeskin.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"EffectName"		"particles/custom/human/defend.vpcf"
+				"EffectAttachType"	"follow_overhead"
 	
 				"Properties"
 				{
