@@ -288,7 +288,7 @@
 	"AbilityTextureName"		"crypt_lord_beetle_burrow"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"0"
@@ -299,13 +299,6 @@
 	"AbilitySpecial"
 	{
 		"01"
-		{
-			"var_type"		"FIELD_FLOAT"
-			"duration"		"1.45"
-		}
-		// Cast time.
-		// The process is uninterruptable.
-		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
 			"regeneration"	"5"
@@ -325,23 +318,16 @@
 	
 	"OnSpellStart"
 	{
-       "ApplyModifier"
-        {
-            "ModifierName"  "modifier_burrowing"
-            "Target"        "CASTER"
-			"Duration"		"%duration"
-        }
-
-		"RunScript"
+       	"RunScript"
 		{
 			"ScriptFile"	"units/undead/crypt_fiend.lua"
-			"Function"		"BurrowVisual"
+			"Function"		"BurrowStart"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"modifier_burrowing"
+		"modifier_burrowing" //transition
 		{
             "IsHidden"  "1"
 

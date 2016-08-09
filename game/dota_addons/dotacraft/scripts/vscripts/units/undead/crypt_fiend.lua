@@ -1,19 +1,24 @@
-function BurrowVisual ( keys )
-    local caster = keys.caster
-    local duration = keys.ability:GetSpecialValueFor("duration") - 0.1
+function BurrowStart(event)
+    local caster = event.caster
+    local duration = 1.45
+    local ability = event.ability
 
     -- end any animation
     EndAnimation(caster)
+
+    ability:ApplyDataDrivenModifier(caster,caster,"modifier_burrowing",{duration=duration})
     
     if not caster:FindModifierByName("modifier_crypt_fiend_burrow") then -- if not burrowed, burrow
         StartAnimation(caster, {duration=duration, activity=ACT_DOTA_CAST_ABILITY_4, rate=0.6, translate="stalker_exo"})
-        ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_burrow.vpcf", 1, caster)
+        ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_burrow.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+    else
+        ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_burrow_exit.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
     end
 end
 
-function Burrow ( keys )
-    local caster = keys.caster
-    local ability = keys.ability
+function Burrow(event)
+    local caster = event.caster
+    local ability = event.ability
 
     -- toggle state(purely visual)
     ability:ToggleAbility()
@@ -23,17 +28,30 @@ function Burrow ( keys )
         ability:ApplyDataDrivenModifier(caster, caster, "modifier_crypt_fiend_burrow", nil)
         caster:NotifyWearablesOfModelChange(false)
 
+        -- disable web
+        local web = caster:FindAbilityByName("undead_web")
+        if web then
+            web:SetActivated(false)
+        end
+
     else -- if burrowed, revert
         caster:RemoveModifierByName("modifier_crypt_fiend_burrow_model")
         caster:RemoveModifierByName("modifier_crypt_fiend_burrow")
         caster:NotifyWearablesOfModelChange(true)
         
-        ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_burrow_exit.vpcf", 1, caster)
         StartAnimation(caster, {duration=1, activity=ACT_DOTA_TELEPORT_END, rate=1})
+
+        -- enable web
+        local web = caster:FindAbilityByName("undead_web")
+        if web then
+            web:SetActivated(true)
+        end
     end
 
     caster:Stop()
 end
+
+------------------------------------------------------------
 
 -- on spell start call / autocast call
 function Web(keys)
@@ -56,8 +74,8 @@ function Web_AutoCast(keys)
     local caster = keys.caster
     local ability = keys.ability
     local radius = ability:GetCastRange()+caster:GetHullRadius()
-        
-    if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
+    
+    if ability:GetAutoCastState() and ability:IsActivated() and ability:IsFullyCastable() and not caster:IsMoving() then
         local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)                   
         for k,unit in pairs(units) do
             if unit:HasFlyMovementCapability() then -- found unit to web
