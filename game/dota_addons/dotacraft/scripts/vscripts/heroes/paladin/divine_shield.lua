@@ -1,3 +1,3 @@
 function DivineShieldPurge(event)
-    event.caster:Purge(false, true, false, false, false)
+    event.caster:QuickPurge(false, true)
 end

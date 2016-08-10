@@ -24,6 +24,8 @@ function HealAutocast( event )
 	end	
 end
 
+----------------------------------------------------------------
+
 function InnerFireAutocast( event )
 	local caster = event.caster
 	local ability = event.ability
@@ -47,6 +49,8 @@ function InnerFireAutocast( event )
 		end
 	end
 end
+
+----------------------------------------------------------------
 
 -- Dispel Magic removes buffs from enemy units, removes debuffs from allies, and deals damage to summoned units
 -- Used on human_dispel_magic and pandaren_storm_dispel_magic
@@ -74,8 +78,7 @@ function DispelMagic( event )
 		else
 			bRemoveDebuffs = true
 		end
-		target:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
-		target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
+		target:QuickPurge(bRemovePositiveBuffs, bRemoveDebuffs)
 	end
 
 	Blight:Dispel(point)

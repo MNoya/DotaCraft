@@ -42,8 +42,7 @@ function Purge(event)
     local duration = ability:GetSpecialValueFor('duration')
     local bSummoned = target:IsSummoned()
 
-    target:Purge(true, false, false, false, true)
-    target:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
+    target:QuickPurge(true, false)
     ParticleManager:CreateParticle('particles/generic_gameplay/generic_purge.vpcf', PATTACH_ABSORIGIN_FOLLOW, target)
     target:EmitSound("DOTA_Item.DiffusalBlade.Target")
 

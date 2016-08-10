@@ -59,9 +59,7 @@ function Disenchant(event)
             ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
 
             -- This ability removes both positive and negative buffs from units.
-            local bRemovePositiveBuffs = true
-            local bRemoveDebuffs = true
-            unit:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
+            unit:QuickPurge(true, true)
         end
     end
 

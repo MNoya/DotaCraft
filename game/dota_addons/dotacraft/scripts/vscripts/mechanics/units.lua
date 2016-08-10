@@ -800,5 +800,10 @@ function CDOTA_BaseNPC_Creature:UpgradeWearables(wearable_type, level)
     end
 end
 
+function CDOTA_BaseNPC:QuickPurge(bRemovePositiveBuffs, bRemoveDebuffs)
+    self:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
+    self:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
+end
+
 
 Units:start()

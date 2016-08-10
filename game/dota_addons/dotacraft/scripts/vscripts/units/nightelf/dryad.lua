@@ -17,8 +17,7 @@ function AbolishMagic( event )
 	else
 		bRemoveDebuffs = true
 	end
-	target:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
-	target:Purge(bRemovePositiveBuffs, bRemoveDebuffs, false, false, false)
+	target:QuickPurge(bRemovePositiveBuffs, bRemoveDebuffs)
 
 	ParticleManager:CreateParticle("particles/econ/items/enchantress/enchantress_lodestar/ench_lodestar_transform.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 end
