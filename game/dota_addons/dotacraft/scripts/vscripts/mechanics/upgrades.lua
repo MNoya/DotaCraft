@@ -167,8 +167,8 @@ end
 
 function CDOTABaseAbility:Disable()
     local unit = self:GetCaster()
-    local disabled_ability_name = self:GetAbilityName()
-    local enabled_ability_name = disabled_ability_name.."_disabled"
+    local enabled_ability_name = self:GetAbilityName()
+    local disabled_ability_name = enabled_ability_name.."_disabled"
     unit:AddAbility(disabled_ability_name):SetLevel(0)                   
     unit:SwapAbilities(enabled_ability_name, disabled_ability_name, false, true)
     unit:RemoveAbility(enabled_ability_name)

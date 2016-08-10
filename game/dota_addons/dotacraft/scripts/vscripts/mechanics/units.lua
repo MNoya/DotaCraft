@@ -81,6 +81,8 @@ function Units:Init( unit )
     end
     
     Timers:CreateTimer(0.03, function()
+        if not IsValidAlive(unit) then return end
+        
         -- Flying Height Z control
         if unit:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY" then
             unit:AddNewModifier(unit,nil,"modifier_flying_control",{})

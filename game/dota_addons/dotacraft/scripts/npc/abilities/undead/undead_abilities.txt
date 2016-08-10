@@ -1799,100 +1799,61 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 
 	"TargetsAllowed"            "organic"
 		
 	"AbilityCastRange"			"600"
-	"AbilityCastPoint"			"0"
+	"AbilityCastPoint"			"0" //1 second backswing
 	"AbilityCooldown"			"1"
-	"AbilityManaCost"			"2"
+	"AbilityManaCost"			"10" //2 min used, 10 max
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"duration"		"1"
+			"var_type"				"FIELD_INTEGER"
+			"health_restore"		"10"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"600"
+			"var_type"				"FIELD_INTEGER"
+			"max_unit"				"6"
 		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"health_restore"			"10"
-		}
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"max_unit"			"6"
-		}
-		"05"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"mana_per_unit_healed"			"2"
-		}
-		// This does not include the caster, the caster is always healed.
-	}
-	"precache"
-	{
-		// caster particle
-		"particle" "particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf"
-		
-		// target particle
-		"particle"   "particles/items_fx/healing_flask.vpcf"
 	}
 	
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
-			"ScriptFile"			"units/undead/obsidian_statue.lua"
-			"Function"				"undead_essence_of_blight"
+			"ScriptFile"	"units/undead/obsidian_statue.lua"
+			"Function"		"Heal"
 		}	
 	}
 				
 	"Modifiers"
 	{
-		"modifier_blight_heal_caster"
-		{			
-			"IsHidden" "1"
-			"EffectName" "particles/units/heroes/hero_death_prophet/death_prophet_excorcism_attack_impact_death.vpcf"
-			"EffectAttachType" "follow_origin"
-		}
-		
-		"modifier_blight_heal_target"
+		"modifier_essence_of_blight"
 		{
-			"IsHidden" "1"
-			"Duration" 			"%duration"
-			"EffectName" 		"particles/items_fx/healing_flask.vpcf"
-			"EffectAttachType" 	"follow_origin"		
+			"OnCreated"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/undead/obsidian_statue.lua"
+			        "Function"      "EssenceOfBlight"
+			    }
+			}
 		}
-
-		"modifier_blight_heal_autocast"
+		"modifier_essence_of_blight_autocast"
 		{
 			"Passive"		"1"
 			"IsHidden"		"1"
-			
-			"OnCreated"
+			"ThinkInterval" "0.1"
+			"OnIntervalThink"
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"mechanics/abilities.lua"
-					"Function"		"ToggleOnAutocast"
-				}		
-			}
-
-			"ThinkInterval"  "0.8"
-			"OnIntervalThink"
-			{
-			    "RunScript"
-				{
 					"ScriptFile"	"units/undead/obsidian_statue.lua"
-					"Function"		"EssenceAutocast"
+					"Function"		"HealAutocast"
 				}
 			}
 		}		
@@ -1913,54 +1874,33 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 
 	"TargetsAllowed"            "organic"
 		
 	"AbilityCastRange"			"600"
 	"AbilityCastPoint"			"0"
 	"AbilityCooldown"			"1"
-	"AbilityManaCost"			"2"
+	"AbilityManaCost"			"10"
 		
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"duration"		"1"
+			"var_type"			"FIELD_INTEGER"
+			"mana_restore"		"3"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"600"
-		}
-		"03"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"mana_restore"		"3"
-		}
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
+			"var_type"			"FIELD_INTEGER"
 			"max_unit"			"6"
 		}
-		"05"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"mana_per_unit_healed"			"2"
-		}
-		// Doesn't include the caster, just like Essence Of Blight.
 	}
 	
-		"precache"
+	"precache"
 	{
-		// caster particle
-		"particle" "particles/units/heroes/hero_medusa/medusa_mana_shield_shatter.vpcf"
-		
-		// target particle
-		"particle" "particles/items_fx/healing_clarity.vpcf"
-	
+		"particle" 	"particles/units/heroes/hero_medusa/medusa_mana_shield_shatter.vpcf"
+		"particle"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
+		"particle" 	"particles/items_fx/healing_clarity.vpcf"
 	}
 	
 	"OnSpellStart"
@@ -1968,26 +1908,37 @@
 		"RunScript"
 		{
 			"ScriptFile"			"units/undead/obsidian_statue.lua"
-			"Function"				"undead_essence_of_blight"
+			"Function"				"Mana"
 		}
 	}
 			
 	"Modifiers"
 	{
-		"modifier_spirit_touch_caster"
-		{		
-			"IsHidden" "1"
-			"EffectName" "particles/units/heroes/hero_medusa/medusa_mana_shield_shatter.vpcf"
-			"EffectAttachType" "follow_origin"
+		"modifier_spirit_touch"
+		{
+			"OnCreated"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/undead/obsidian_statue.lua"
+			        "Function"      "SpiritTouch"
+			    }
+			}
 		}
-		
-		"modifier_spirit_touch_target"
-		{	
-			"IsHidden" "1"
-			"Duration" 			"%duration"
-			"EffectName" 		"particles/items_fx/healing_clarity.vpcf"
-			"EffectAttachType" 	"follow_origin"		
-		}		
+		"modifier_spirit_touch_autocast"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+			"ThinkInterval" "0.1"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/obsidian_statue.lua"
+					"Function"		"ManaAutocast"
+				}
+			}
+		}
 	}
 }
 
