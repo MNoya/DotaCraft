@@ -66,8 +66,15 @@ function CDOTABaseAbility:IsAllowedTarget(target)
     end
 
     local bNeedsManaDeficit = self:GetKeyValue("RequiresManaDeficit")
-    if bNeedsManaDeficit and target:GetMana() == maxMana then
-        return false,"error_full_mana"
+    if bNeedsManaDeficit then
+        if bNeedsManaDeficit == "self" then
+            if self:GetCaster():GetMaxMana() == self:GetCaster():GetMana() then
+                return false,"error_full_mana"
+            end
+
+        elseif target:GetMana() == maxMana then
+            return false,"error_full_mana"
+        end
     end
 
     return true
@@ -197,7 +204,6 @@ function GenerateAbilityString(player, ability_table)
         end
         index = index + 1
         if ability_available then
-            print(index,ability_name,ability_available)
             abilities_string = abilities_string.."1,"
         else
             abilities_string = abilities_string.."0,"

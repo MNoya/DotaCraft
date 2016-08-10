@@ -150,38 +150,41 @@ function undead_essence_of_blight(keys)
 		ability:EndCooldown()
 		partnerability:EndCooldown()		
 	end
-	
 end
 
-function morph_into_destroyer(keys)
-	local caster = keys.caster
+----------------------------------------------------------------
+
+function DestroyerMorph(event)
+	local caster = event.caster
 	local playerID = caster:GetPlayerOwnerID()
-	local player = PlayerResource:GetPlayer(playerID)
-	StartAnimation(caster, {duration=5, activity=ACT_DOTA_SPAWN, rate=1.1, translate="loadout"})
-	local fv = caster:GetForwardVector()
+	local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+	caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
 
 	Timers:CreateTimer(1.1, function() -- wait	
-		local CreatedUnit = CreateUnitByName("undead_destroyer", caster:GetAbsOrigin(), true, player:GetAssignedHero(),  player:GetAssignedHero(), caster:GetTeamNumber())
-		CreatedUnit:SetControllableByPlayer(playerID, true)
-		CreatedUnit:SetForwardVector(fv)
+		local destroyer = CreateUnitByName("undead_destroyer", caster:GetAbsOrigin(), true, hero,  hero, caster:GetTeamNumber())
+		destroyer:SetControllableByPlayer(playerID, true)
+		destroyer:SetForwardVector(caster:GetForwardVector())
 		
-		caster.no_corpse = true
-		Players:AddUnit(playerID, CreatedUnit)
+		caster:SetNoCorpse()
+		Players:AddUnit(playerID, destroyer)
+		Players:RemoveUnit(playerID, caster)
 		
-		ParticleManager:CreateParticle("particles/siege_fx/siege_bad_death_01.vpcf", 0, CreatedUnit)
-		PlayerResource:AddToSelection(playerID, CreatedUnit)
+		ParticleManager:CreateParticle("particles/siege_fx/siege_bad_death_01.vpcf", PATTACH_ABSORIGIN, destroyer)
+
+		if PlayerResource:IsUnitSelected(playerID, caster) then
+			PlayerResource:AddToSelection(playerID, destroyer)
+		end
+
 		caster:RemoveSelf()
 	end)
 end
 
 
 -- Attaches a catapult
-function Model( event )
+function Model(event)
 	local caster = event.caster
 	local ability = event.ability
 
-	--models/creeps/lane_creeps/creep_bad_siege/creep_bad_siege.vmdl
-	
 	local statue = CreateUnitByName("undead_obsidian_statue_dummy", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber())
 	ability:ApplyDataDrivenModifier(caster, statue, "modifier_disable_statue", {})
 
@@ -192,5 +195,4 @@ function Model( event )
 	statue:SetAbsOrigin(Vector(origin.x, origin.y, origin.z-130))
 	statue:SetParent(caster, "attach_hitloc")
 	statue:SetAngles(0,0,0)
-
 end

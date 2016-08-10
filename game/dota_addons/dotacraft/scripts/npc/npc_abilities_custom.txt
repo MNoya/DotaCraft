@@ -54994,31 +54994,11 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
 		"AbilityMultiOrder"			"1"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"1.1"
-			}
-			// The unit will be able to move after this duration.
-			"02"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"transition"	"1"
-			}
-			// The unit will start ascending after 1s, then ascend over 1s.
-			// The process is uninterruptable. The unit immediately gains flying capability.
-			// The change is PERMANENT, there is no changing back.
-			// The Destroyer also has a health regeneration of 8.
-		}
 		
 		"precache"
 		{
@@ -55044,7 +55024,7 @@
 			"modifier_destroyer_morph"
 			{
 				"IsHidden"		"1"
-				"Duration"		"%duration"
+				"Duration"		"1.1"
 							
 				"States"
 				{
@@ -55056,12 +55036,11 @@
 					"RunScript"
 					{
 						"ScriptFile" 	"units/undead/obsidian_statue.lua"
-						"Function" 		"morph_into_destroyer"		
+						"Function" 		"DestroyerMorph"		
 					}
 				}						
 			}	
 		}
-		
 	}
 	
 	//=================================================================================
@@ -55072,35 +55051,28 @@
 	"undead_absorb_mana"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"undead_absorb_magic"
+		"AbilityTextureName"		"undead_absorb_mana"
 		"MaxLevel"					"1"
 			
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	
+		"CastFilterRejectCaster"    "1"
+	
 		"RequiresTargetMana"        "1"
+		"RequiresManaDeficit"      	"self"
 			
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
 			
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"0.5"
-			}
-		}
-		
 		"precache"
 		{
-			//caster particle
-			"particle" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"
+			"particle" 	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_base_attack.vpcf"
 			"soundfile" "sounds/weapons/hero/terrorblade/sunder_target.vsnd"
 		}
 		
@@ -55108,43 +55080,14 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"units/undead/destroyer.lua"
-				"Function"				"undead_absorb_mana"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName" "absorb_mana_caster"
-				"Target" "CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName" "absorb_mana_target"
-				"Target" "TARGET"
+				"ScriptFile"		"units/undead/destroyer.lua"
+				"Function"			"AbsorbMana"
 			}
 			"FireSound"
 			{
 				"EffectName"		"Hero_Terrorblade.Sunder.Target"
 				"Target"			"TARGET"
 			}
-		}
-		
-		"Modifiers"
-		{
-			"absorb_mana_target"
-			{
-				"IsHidden" "1"
-				"Effectname" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"
-				"EffectAttachType" "follow_origin"
-				"Duration" "%duration"
-			}
-		
-			"absorb_mana_caster"
-			{
-				"IsHidden" "1"
-				"Effectname" "particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_explode_e_warp_ti_5.vpcf"
-				"EffectAttachType" "follow_origin"
-				"Duration" "%duration"
-			}	
 		}
 	}
 	
@@ -55175,18 +55118,18 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"radius"		"200"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"200"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"health_restore"		"50"
+				"var_type"			"FIELD_INTEGER"
+				"health_restore"	"50"
 			}
 			"03"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"mana_restore"			"75"
+				"var_type"			"FIELD_INTEGER"
+				"mana_restore"		"75"
 			}
 			// The restoration is per UNIT AFFECTED, not per BUFF DEVOURED.
 			"04"
@@ -55215,32 +55158,10 @@
 		{
 			"RunScript"
 			{
-				"Target" 		"POINT"
 				"ScriptFile" 	"units/undead/destroyer.lua"
-				"Function" 		"undead_devour_magic"
+				"Function" 		"DevourMagic"
+				"Target" 		"POINT"
 			}
-			"FireSound"
-			{
-				"EffectName"		"Hero_Antimage.ManaVoidCast"
-				"Target"			"TARGET"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_devour_magic_target"
-			{
-				"IsHidden" "1"
-				"EffectName" 		"particles/generic_gameplay/generic_purge.vpcf"
-				"EffectAttachType" 	"follow_origin"	
-			}
-		
-			"modifier_devour_magic_caster"
-			{
-				"IsHidden" "1"
-				"EffectName" 		"particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf"
-				"EffectAttachType" 	"follow_origin"	
-			}	
 		}
 	}
 	
@@ -55255,12 +55176,11 @@
 		"AbilityTextureName"		"undead_orb_of_annihilation"
 		"MaxLevel"					"1"
 			
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES" //Must be able to cast on buildings, but not on other magic immune units
 			
 		"AbilityCastRange"			"450"
 		"AbilityCastPoint"			"0"
@@ -55283,13 +55203,19 @@
 		}
 	
 		"precache"
-		{
-			// normal projectile
-			"particle" "particles/units/heroes/hero_bane/bane_projectile.vpcf"
-			
+		{		
 			// orb projectile
 			"particle" "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+		    "RunScript"
+		    {
+		        "ScriptFile"    "units/undead/destroyer.lua"
+		        "Function"      "OrbManualCast"
+		    }
 		}
 	
 		"Modifiers"
