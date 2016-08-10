@@ -62,6 +62,10 @@ function death_knight_death_coil:CastFilterResultTarget( target )
     local allied = casterTeam == targetTeam
     local bUndead = string.match(target:GetUnitName(),"undead") or string.match(target:GetUnitLabel(),"undead")
 
+    if target:IsMagicImmune() and not allied then
+        return UF_FAIL_MAGIC_IMMUNE_ENEMY
+    end
+
     -- Check self-target
     if caster == target then 
         return UF_FAIL_CUSTOM
