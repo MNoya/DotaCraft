@@ -12,6 +12,7 @@ function OrbManualCast(event)
     end
 
     ability.orbAttack = true
+    ability.manualCast = true
     caster:SetRangedProjectileName("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf")
     caster:PerformAttack(target,true,true,false,false,true)
     caster:EmitSound("Hero_ObsidianDestroyer.ArcaneOrb")
@@ -24,17 +25,26 @@ function OrbStart(event)
     ability.orbAttack = false
 
     if ability:GetAutoCastState() then
-        local manaCost = ability:GetManaCost(1)
-        if caster:GetMana() >= manaCost then
+        if caster:GetMana() >= ability:GetManaCost(1) then
             ability.orbAttack = true
             caster:SetRangedProjectileName("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf")
-            caster:SpendMana(manaCost,ability)
-            caster:EmitSound("Hero_ObsidianDestroyer.ArcaneOrb")
         end
     end
     
     if not ability.orbAttack then
         caster:SetRangedProjectileName("particles/units/heroes/hero_bane/bane_projectile.vpcf")
+    end
+end
+
+function OrbFire(event)
+    local caster = event.caster
+    local ability = event.ability
+    if ability.orbAttack then
+        caster:EmitSound("Hero_ObsidianDestroyer.ArcaneOrb")
+        if not ability.manualCast then
+            caster:SpendMana(ability:GetManaCost(1),ability)
+        end
+        ability.manualCast = false
     end
 end
 
@@ -100,8 +110,8 @@ function DevourMagic(keys)
 
     caster:EmitSound("Hero_Antimage.ManaVoidCast")
     
-    -- find all units within 300 radius that are enemey
-    local units = FindUnitsInRadius(teamNumber, point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+    -- find all units within 300 radius
+    local units = FindUnitsInRadius(teamNumber, point, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
     
     -- add unit to table if meets requirements
     for k,unit in pairs(units) do
@@ -113,26 +123,23 @@ function DevourMagic(keys)
 
     if count == 0 then return end
     
-    local removed_buffs = 0
-    local removed_debuffs = 0
+    local devoured_units = 0
     for k,unit in pairs(targets) do
         local modifiers = unit:FindAllModifiers()
-        local removed_something = false
+        local devoured_something = false
         for k,modifier in pairs(modifiers) do -- for all modifiers found
 
             if modifier:IsPurgableModifier() then
-                removed_something = true
                 local bDebuff = modifier:IsDebuff()
-                if unit:IsOpposingTeam(teamNumber) then
-                    removed_debuffs = removed_debuffs + 1
-                elseif bDebuff then
-                    removed_debuffs = removed_debuffs + 1
+                if unit:IsOpposingTeam(teamNumber) or bDebuff then
+                    devoured_something = true
                 end
 
                 unit:RemoveModifierByName(modifier:GetName())
             end
         end
-        if removed_something then
+        if devoured_something then
+            devoured_units = devoured_units + 1
             ParticleManager:CreateParticle("particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_lightning_ti_5.vpcf",PATTACH_ABSORIGIN_FOLLOW,unit)
         end
 
@@ -144,9 +151,9 @@ function DevourMagic(keys)
     end
 
     -- if debuffs were removed, give mana and health
-    if removed_debuffs > 0 then
-        caster:SetMana(caster:GetMana() + mana_restore * removed_debuffs)
-        caster:SetHealth(caster:GetHealth() + health_restore * removed_debuffs)
+    if devoured_units > 0 then
+        caster:SetMana(caster:GetMana() + mana_restore * devoured_units)
+        caster:SetHealth(caster:GetHealth() + health_restore * devoured_units)
 
         ParticleManager:CreateParticle("particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf",PATTACH_ABSORIGIN_FOLLOW,caster)
     end

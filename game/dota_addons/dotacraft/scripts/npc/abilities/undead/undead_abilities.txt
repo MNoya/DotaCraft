@@ -2236,12 +2236,30 @@
 			"Passive"		"1"
 			"IsHidden"	 	"1"
 
+			"OnCreated"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "mechanics/abilities.lua"
+			        "Function"      "ToggleOnAutocast"
+			    }
+			}
+
 			"OnAttackStart"
 			{
 			    "RunScript"
 			    {
 			        "ScriptFile"    "units/undead/destroyer.lua"
 			        "Function"      "OrbStart"
+			    }
+			}
+
+			"OnAttack"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/undead/destroyer.lua"
+			        "Function"      "OrbFire"
 			    }
 			}
 
