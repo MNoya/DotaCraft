@@ -36,7 +36,6 @@ function CheckAbilityRequirements( unit, playerID )
             -- If the ability exists
             if ability and IsValidEntity(ability) then
                 local ability_name = ability:GetAbilityName()
-                local base_name = ability:GetBaseAbilityName()
                 local disabled = false
 
                 if ability:IsDisabled() then
@@ -49,19 +48,12 @@ function CheckAbilityRequirements( unit, playerID )
                 local player_has_requirements = Players:HasRequirementForAbility(playerID, ability_name)
                 
                 if disabled then
-                    if player_has_requirements then --Enable
-                        local ability = unit:AddAbility(ability_name)
-                        local disabled_ability_name = ability_name.."_disabled"
-                        unit:SwapAbilities(disabled_ability_name, ability_name, false, true)
-                        unit:RemoveAbility(disabled_ability_name)
-                        ability:SetLevel(ability:GetMaxLevel())
+                    if player_has_requirements then
+                        ability:Enable()
                     end
                 else
-                    if not player_has_requirements then --Disable
-                        local disabled_ability_name = ability_name.."_disabled"
-                        unit:AddAbility(disabled_ability_name):SetLevel(0)                   
-                        unit:SwapAbilities(ability_name, disabled_ability_name, false, true)
-                        unit:RemoveAbility(ability_name)
+                    if not player_has_requirements then
+                        ability:Disable()
                     end
                 end
             end
@@ -158,6 +150,29 @@ function UpdateUnitUpgrades(unit, playerID, research_name)
 end
 
 -------------------------------------------------------------
+
+function CDOTABaseAbility:Enable()
+    local unit = self:GetCaster()
+    local disabled_ability_name = self:GetAbilityName()
+    local enabled_ability_name = disabled_ability_name:gsub("_disabled","")
+    local ability = unit:AddAbility(enabled_ability_name)
+    unit:SwapAbilities(disabled_ability_name, enabled_ability_name, false, true)
+    unit:RemoveAbility(disabled_ability_name)
+    ability:SetLevel(ability:GetMaxLevel())
+    if ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_AUTOCAST) then
+        unit.autocast_abilities = unit.autocast_abilities or {}
+        table.insert(unit.autocast_abilities, ability)
+    end
+end
+
+function CDOTABaseAbility:Disable()
+    local unit = self:GetCaster()
+    local disabled_ability_name = self:GetAbilityName()
+    local enabled_ability_name = disabled_ability_name.."_disabled"
+    unit:AddAbility(disabled_ability_name):SetLevel(0)                   
+    unit:SwapAbilities(enabled_ability_name, disabled_ability_name, false, true)
+    unit:RemoveAbility(enabled_ability_name)
+end
 
 function CDOTABaseAbility:IsResearch()
     return self:GetAbilityName():match("research_")

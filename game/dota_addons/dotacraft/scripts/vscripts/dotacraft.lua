@@ -319,7 +319,7 @@ function dotacraft:InitializePlayer( hero )
     dotacraft:TrackIdleWorkers( hero )
 
     -- Toggle Autocast as a group
-    dotacraft:AutoCastTimer(hero)
+    dotacraft:AutoCastTimer(playerID)
 
     --------------------------------------------
     -- Test game logic on the model overview map
@@ -381,30 +381,35 @@ function dotacraft:TrackIdleWorkers( hero )
     end)
 end
 
-function dotacraft:AutoCastTimer(hero)
-    local playerID = hero:GetPlayerID()
+function dotacraft:AutoCastTimer(playerID)
     Timers:CreateTimer(0.1, function()
         local selectedEntities = PlayerResource:GetSelectedEntities(playerID)
         if selectedEntities["0"] then
             local unit = EntIndexToHScript(selectedEntities["0"])
-            if IsValidAlive(unit) then
+            if IsValidAlive(unit) and unit.autocast_abilities then
 
                 -- Check autocast abilities and their last state to toggle as a group
-                for i=0,15 do
-                    local ability = unit:GetAbilityByIndex(i)
-                    if ability and ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_AUTOCAST) then
+                for _,ability in pairs(unit.autocast_abilities) do
+                    if IsValidEntity(ability) and ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_AUTOCAST) then
                         local state = ability:GetAutoCastState()
                         if not ability.last_autocast_state then
                             ability.last_autocast_state = state
                             if state then
+                                ability.autocast_toggled = GameRules:GetGameTime()
                                 GroupToggleAutoCast(selectedEntities, unit, ability:GetAbilityName(), state)
                             end
                         elseif ability.last_autocast_state ~= state then
                             ability.last_autocast_state = state
+                            if state then
+                                ability.autocast_toggled = GameRules:GetGameTime()
+                            end
                             GroupToggleAutoCast(selectedEntities, unit, ability:GetAbilityName(), state)
                         end
                     end
                 end
+
+                -- If more than 1 ability is in autocast mode, deactivate the oldest
+                CheckDoubleToggle(unit)
             end
         end
 
@@ -418,15 +423,36 @@ function GroupToggleAutoCast(entityList, mainUnit, abilityName, state)
     for _,entIndex in pairs(entityList) do
         local unit = EntIndexToHScript(entIndex)
         if unit ~= mainUnit and IsValidAlive(unit) and unit:GetUnitName() == unitName then
-            for i=0,15 do
-                local ability = unit:GetAbilityByIndex(i)
-                if ability and ability:GetAbilityName() == abilityName then
+            for _,ability in pairs(unit.autocast_abilities) do
+                if IsValidEntity(ability) and ability:GetAbilityName() == abilityName then
                     if ability:GetAutoCastState() ~= state then
                         ability:ToggleAutoCast()
+                        if state then
+                            ability.autocast_toggled = GameRules:GetGameTime()
+                            CheckDoubleToggle(unit)
+                        end
                     end
                 end
             end
         end
+    end
+end
+
+function CheckDoubleToggle(unit)
+    local toggled_count = 0
+    local oldest_time = GameRules:GetGameTime()
+    local oldest_ability
+    for _,ability in pairs(unit.autocast_abilities) do
+        if IsValidEntity(ability) and ability:GetAutoCastState() then
+            toggled_count = toggled_count + 1
+            if ability.autocast_toggled <= oldest_time then
+                oldest_ability = ability
+                oldest_time = ability.autocast_toggled
+            end
+        end
+    end
+    if toggled_count == 2 then
+        oldest_ability:ToggleAutoCast()
     end
 end
 

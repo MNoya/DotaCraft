@@ -67,6 +67,18 @@ function Units:Init( unit )
     if unit:GetKeyValue("AttacksTrees") then
         unit:SetCanAttackTrees(true)
     end
+
+    -- Store autocast abilities to iterate over them later. Note that we also need to store more abilities after research
+    local autocast_abilities = {}
+    for i=0,15 do
+        local ability = unit:GetAbilityByIndex(i)
+        if ability and ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_AUTOCAST) then
+            table.insert(autocast_abilities, ability)
+        end
+    end
+    if #autocast_abilities > 0 then
+        unit.autocast_abilities = autocast_abilities
+    end
     
     Timers:CreateTimer(0.03, function()
         -- Flying Height Z control

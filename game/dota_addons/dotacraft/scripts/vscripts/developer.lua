@@ -302,6 +302,7 @@ function dotacraft:CreateUnits(pID, unitName, numUnits, bEnemy)
                 Players:AddUnit(pID, unit)
             end
 
+            CheckAbilityRequirements(unit, pID)
             FindClearSpaceForUnit(unit, gridPoints[i], true)
             unit:Hold()
         end
