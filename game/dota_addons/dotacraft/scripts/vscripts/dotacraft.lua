@@ -445,6 +445,7 @@ function CheckDoubleToggle(unit)
     for _,ability in pairs(unit.autocast_abilities) do
         if IsValidEntity(ability) and ability:GetAutoCastState() then
             toggled_count = toggled_count + 1
+            ability.autocast_toggled = ability.autocast_toggled or GameRules:GetGameTime()
             if ability.autocast_toggled <= oldest_time then
                 oldest_ability = ability
                 oldest_time = ability.autocast_toggled

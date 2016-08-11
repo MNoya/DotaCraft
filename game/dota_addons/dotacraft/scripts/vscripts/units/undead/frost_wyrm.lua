@@ -1,5 +1,5 @@
 function FreezingBreathUnlock(event)
-    UpgradeWearables(event.caster, 1, "training")
+    event.caster:UpgradeWearables(1, "training")
 end
 
 function FreezingAttack(event)
