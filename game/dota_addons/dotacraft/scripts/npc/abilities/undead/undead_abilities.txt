@@ -107,9 +107,8 @@
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"attack_speed_bonus"	"0.25"
+			"base_attack_time"		"1.05"
 		}
-		// This is -0.25 B.A.T
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
@@ -127,20 +126,11 @@
 		
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%movement_speed_bonus"		
-			}
-			
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/undead/ghoul.lua"
-					"Function"		"frenzy"
-				}
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%movement_speed_bonus"
+				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%base_attack_time"
 			}
 		}	
 	}
-
 }
 
 //=================================================================================
