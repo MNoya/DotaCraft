@@ -6,6 +6,7 @@ function AggroFilter( unit )
             -- The unit acquired a new attack target
             if target ~= unit.attack_target then
                 if bCanAttackTarget then
+                    unit:CheckSecondaryAttackAgainst(target)
                     unit.attack_target = target --Update the target, keep the aggro
                     return
                 else
@@ -14,7 +15,6 @@ function AggroFilter( unit )
                     if #enemies > 0 then
                         for _,enemy in pairs(enemies) do
                             if UnitCanAttackTarget(unit, enemy) and ShouldAggroNeutral(unit, enemy) then
-                                --print("[ATTACK] attacking unit from modifier_autoattack thinker")
                                 Attack(unit, enemy)
                                 return
                             end
@@ -55,6 +55,7 @@ function Attack( unit, target )
     -- if siege unit is attacking, let OnSiegeAttackStart control the behavior
     if unit:GetKeyValue("MinimumRange") then return end
 
+    unit:CheckSecondaryAttackAgainst(target)
     unit:AlertNearbyUnits(target, nil)
     unit:MoveToTargetToAttack(target)
     unit.attack_target = target

@@ -664,6 +664,7 @@
 	
 	// Armor
 	//----------------------------------------------------------------
+	"ArmorType"					"heavy"
 	"ArmorPhysical"				"4"
 	"MagicalResistance"			"0"
 	
@@ -672,12 +673,24 @@
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 	"AttackDamageMin"			"29.0"
 	"AttackDamageMax"			"33.0"
-	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackType"				"normal"
 	"AttackRate"				"1.35"
 	"AttackAnimationPoint"		"0.3"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"100"
+	"ProjectileModel"			"particles/neutral_fx/mud_golem_hurl_boulder.vpcf"
 	"ProjectileSpeed"			"1000"
+
+	"SecondaryAttack"
+	{
+		"UsedAgainst"			"air"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackType"			"pierce"
+		"AttackDamageMin"		"29.0"
+		"AttackDamageMax"		"33.0"
+		"AttackRate"			"2.0"
+		"AttackRange"			"500"
+	}
 	
 	// Bounty
 	//----------------------------------------------------------------
@@ -706,11 +719,6 @@
 	//----------------------------------------------------------------
 	"VisionDaytimeRange"		"1400"
 	"VisionNighttimeRange"		"800"
-	
-	// Attack Damage types
-	//----------------------------------------------------------------
-	"AttackType"				"normal"
-	"ArmorType"					"heavy"
 	
 	// Creature Data
 	//----------------------------------------------------------------

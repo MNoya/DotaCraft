@@ -1,22 +1,22 @@
 function EquipOrb( event )
     local caster = event.caster
-    if caster:IsHero() then
+    if caster:IsRealHero() then
         if not caster.original_attack then
             caster.original_attack = caster:GetAttacksEnabled()
         end
         caster:SetAttacksEnabled("ground, air")
-        caster.hasOrb = true
+        caster.hasOrb = (caster.hasOrb and caster.hasOrb + 1) or 1
     end
 end
 
 function UnequipOrb( event )
     local caster = event.caster
-    if caster:IsHero() then
-        caster:SetAttacksEnabled(caster.original_attack)
-        if caster.original_attack_type then
-            caster:SetAttackCapability(caster.original_attack_type)
-            caster.hasOrb = nil
+    if caster:IsRealHero() then
+        if not caster:HasModifier("modifier_demon_form") then
+            caster:SetAttacksEnabled(caster.original_attack)
         end
+        caster.hasOrb = caster.hasOrb - 1
+        if caster.hasOrb == 0 then caster.hasOrb = false end
     end
 end
 

@@ -372,7 +372,7 @@
 	"AttackAnimationPoint"		"0.64"
 	"AttackAcquisitionRange"	"700"
 	"AttackRange"				"550"
-	"ProjectileModel"			"particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"
 	"ProjectileSpeed"			"500"
 	
 	// Bounty
@@ -467,31 +467,34 @@
 	
 	// Armor
 	//----------------------------------------------------------------
+	"ArmorType"					"unarmored"
 	"ArmorPhysical"				"3"
 	"MagicalResistance"			"0"
 	
-	// Attack - AIR
+	// Attack
 	//----------------------------------------------------------------
-	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-	"AttackDamageMin"			"61.0"
-	"AttackDamageMax"			"70.0"
-	"AttackRate"				"1.4"
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackType"				"pierce"
+	"AttackDamageMin"			"18.0"
+	"AttackDamageMax"			"21.0"
+	"AttackRate"				"2.2"
+	"AttackRange"				"300"
 	"AttackAnimationPoint"		"0.33"
 	"AttackAcquisitionRange"	"500"
-	"AttackRange"				"128"
+	"ProjectileModel"			"particles/units/heroes/hero_visage/visage_familiar_base_attack.vpcf"
+	"ProjectileSpeed"			"900"
 
-	// Secondary Attack - GROUND
-	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"SecondaryAttackType"			"pierce"
-	"SecondaryAttackDamageMin"			"18.0"
-	"SecondaryAttackDamageMax"			"21.0"
-	"SecondaryAttackRate"				"2.2"
-	"SecondaryAttackAnimationPoint"		"0.33"
-	"SecondaryAttackAcquisitionRange"	"500"
-	"SecondaryAttackRange"				"300"
-
+	"SecondaryAttack"
+	{
+		"UsedAgainst"			"air"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackType"			"normal"
+		"AttackDamageMin"		"61.0"
+		"AttackDamageMax"		"70.0"
+		"AttackRate"			"1.4"
+		"AttackRange"			"128"
+	}
+	
 	// Bounty
 	//----------------------------------------------------------------
 	"BountyGoldMin"				"26.0"
@@ -528,11 +531,6 @@
 	//----------------------------------------------------------------
 	"VisionDaytimeRange"		"1600"
 	"VisionNighttimeRange"		"800"
-	
-	// Attack Damage types
-	//----------------------------------------------------------------
-	"AttackType"				"normal"
-	"ArmorType"					"unarmored"
 	
 	// Creature Data
 	//----------------------------------------------------------------
@@ -712,7 +710,7 @@
 	"AttackAcquisitionRange"	"1150"
 	"AttackRange"				"1150"
 	"MinimumRange"				"250"
-	"ProjectileModel"			"particles/neutral_fx/mud_golem_hurl_boulder.vpcf"	 //Add projectile
+	"ProjectileModel"			"particles/neutral_fx/mud_golem_hurl_boulder.vpcf"
 	"ProjectileSpeed"			"700"
 	
 	// Bounty
@@ -809,7 +807,7 @@
 	"AttackAnimationPoint"		"0.53"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"575"
-	"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
 	"ProjectileSpeed"			"700"
 	
 	// Bounty
@@ -925,7 +923,7 @@
 	"AttackAnimationPoint"		"0.633"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"450"
-	"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	"ProjectileSpeed"			"700"
 	
 	// Bounty
@@ -1038,7 +1036,7 @@
 	"AttackAnimationPoint"		"0.53"
 	"AttackAcquisitionRange"	"600"
 	"AttackRange"				"600"
-	"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka.vpcf"	 //Add projectile
+	"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka.vpcf"
 	"ProjectileSpeed"			"700"
 	
 	// Bounty
@@ -1155,7 +1153,7 @@
 	"AttackAnimationPoint"		"0.56"
 	"AttackAcquisitionRange"	"700"
 	"AttackRange"				"600"
-	"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"	 //Add projectile
+	"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"
 	"ProjectileSpeed"			"900"
 	
 	// Bounty
@@ -1466,13 +1464,14 @@
 	
 	// Armor
 	//----------------------------------------------------------------
+	"ArmorType"					"light"
 	"ArmorPhysical"				"1"
-	"MagicalResistance"			"0"
+	"MagicalResistance"			"0"	
 	
-	// Attack - GROUND
+	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackType"				"pierce"
 	"AttackDamageMin"			"93.0"
 	"AttackDamageMax"			"115.0"
 	"AttackRate"				"3"
@@ -1482,16 +1481,16 @@
 	"ProjectileModel"			"particles/units/heroes/hero_winter_wyvern/winter_wyvern_arctic_attack.vpcf"
 	"ProjectileSpeed"			"800"
 
-	// Secondary Attack - AIR
-	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"SecondaryAttackType"				"pierce"
-	"SecondaryAttackDamageMin"			"84.0"
-	"SecondaryAttackDamageMax"			"94.0"
-	"SecondaryAttackRate"				"3"
-	"SecondaryAttackAnimationPoint"		"0.5"
-	"SecondaryAttackAcquisitionRange"	"500"
-	"SecondaryAttackRange"				"300"
+	"SecondaryAttack"
+	{
+		"UsedAgainst"			"air"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackType"			"pierce"
+		"AttackDamageMin"		"84.0"
+		"AttackDamageMax"		"94.0"
+		"AttackRate"			"3"
+		"AttackRange"			"300"
+	}
 
 	// Bounty
 	//----------------------------------------------------------------
@@ -1529,11 +1528,6 @@
 	//----------------------------------------------------------------
 	"VisionDaytimeRange"		"1600"
 	"VisionNighttimeRange"		"800"
-	
-	// Attack Damage types
-	//----------------------------------------------------------------
-	"AttackType"				"pierce"
-	"ArmorType"					"light"
 	
 	// Creature Data
 	//----------------------------------------------------------------

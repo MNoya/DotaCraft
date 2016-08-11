@@ -326,8 +326,8 @@ function dotacraft:FilterExecuteOrder( filterTable )
                             local error_type = GetMovementCapability(target)
                             if error_type == "air" then
                                 errorMsg = "#error_cant_target_air"
-                            elseif error_type == "ground" then
-                                errorMsg = "#error_must_target_air"
+                            else
+                                errorMsg = "#error_cant_attack_that"
                             end
                         end
                         SendErrorMessage( unit:GetPlayerOwnerID(), errorMsg )

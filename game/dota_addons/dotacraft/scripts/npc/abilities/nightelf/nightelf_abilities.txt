@@ -2230,7 +2230,7 @@
 		"02"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"bonus_range"		"400"
+			"attack_range"		"850"
 		}
 		// Attack range increased by 400, from 450 to 850, only against buildings
 	}
@@ -2245,37 +2245,25 @@
 		"modifier_corrosive_breath"
 		{
 			"Passive"			"1"
-			
-			"Properties"
+			"IsHidden"			"1"
+			"OnCreated"
 			{
-				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_range"
-			}
-
-			"OnAttackStart"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/chimaera.lua"
-					"Function"		"CorrosiveBreathAttack"
-				}
-			}
-
-			"OnAttackLanded"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/nightelf/chimaera.lua"
-					"Function"		"CorrosiveBreathDamage"
-				}
-			}
-		}
-
-		"modifier_corrosive_breath_adjustment"
-		{
-			"IsHidden"		"1"
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "-400"
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/nightelf/chimaera.lua"
+			        "Function"      "UnlockCorrosiveBreath"
+			        "SecondaryAttackTable"
+					{
+						"UsedAgainst"			"building"
+						"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+						"AttackType"			"siege"
+						"AttackDamageMin"		"45.0"
+						"AttackDamageMax"		"55.0"
+						"AttackRate"			"2.5"
+						"AttackRange"			"850"
+						"ProjectileModel"		"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+					}
+			    }
 			}
 		}
 	}

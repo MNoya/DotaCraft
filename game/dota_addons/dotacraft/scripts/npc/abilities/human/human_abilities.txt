@@ -985,7 +985,7 @@
 				"RunScript"
 				{
 					"ScriptFile"	"units/human/flying_machine.lua"
-					"Function"		"AllowGroundAttack"
+					"Function"		"UnlockGroundAttack"
 				}
 			}
 		}
@@ -1145,6 +1145,7 @@
 
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityDamage"					"25"
+	"AbilityCastRange"				"%radius"
 
 	"AbilitySpecial"
 	{
@@ -1172,27 +1173,22 @@
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-	
-			"Orb"
+
+			"OnCreated"
 			{
-				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
-				"ProjectileName"    "particles/base_attacks/ranged_siege_good.vpcf"
-				"CastAttack"		"0"
+			    "RunScript"
+				{
+					"ScriptFile"	"units/human/siege_engine.lua"
+					"Function"		"UnlockAirAttack"
+				}
 			}
-			
-			"OnOrbFire"
+				
+			"OnAttack"
 			{
 				"RunScript"
 				{
 					"ScriptFile"	"units/human/siege_engine.lua"
 					"Function"		"Barrage"
-					"Target"
-					{
-						"Center"  	"CASTER"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_BASIC"
-					}
 				}
 			}			
 		}

@@ -16,15 +16,94 @@ function UnitCanAttackTarget( unit, target )
     if not target.IsCreature then return true end -- filter item drops
     local attacks_enabled = unit:GetAttacksEnabled()
     local target_type = GetMovementCapability(target)
-    
-    if attacks_enabled == "building" and not IsCustomBuilding(target) then return false end
   
     if not unit:HasAttackCapability() or unit:IsDisarmed() or target:IsInvulnerable() or target:IsAttackImmune() or not unit:CanEntityBeSeenByMyTeam(target)
         or (unit:GetAttackType() == "magic" and target:IsMagicImmune() and not IsCustomBuilding(target)) or (target:IsEthereal() and unit:GetAttackType() ~= "magic") then
             return false
     end
 
+    -- Buildings are special ground unit targets
+    if attacks_enabled:match("building") and target_type == "ground" then
+        return IsCustomBuilding(target)
+    end
+
     return string.match(attacks_enabled, target_type)
+end
+
+function CDOTA_BaseNPC:CheckSecondaryAttackAgainst(target)
+    local secondaryAttackTable = self:GetSecondaryAttackTable()
+    if secondaryAttackTable then
+        local used_against = secondaryAttackTable["UsedAgainst"]
+        if used_against == "building" and IsCustomBuilding(target) then
+            self:SwapToSecondaryAttack()
+            return
+        end
+        local target_type = GetMovementCapability(target)
+        if used_against == target_type then
+            self:SwapToSecondaryAttack()
+            return
+        end
+        self:SwapToPrimaryAttack()
+    end
+
+    if self:IsRealHero() and self.hasOrb then
+        local target_type = GetMovementCapability(target)
+        if target_type == "air" then
+            self:SwapToRangedOrbAttack()
+        else
+            self:SwapToPrimaryAttack()
+        end
+    end
+end
+
+AttackCapabilities = {
+    ["DOTA_UNIT_CAP_NO_ATTACK"] = 0,
+    ["DOTA_UNIT_CAP_MELEE_ATTACK"] = 1,
+    ["DOTA_UNIT_CAP_RANGED_ATTACK"] = 2,
+}
+
+function CDOTA_BaseNPC:SwapToSecondaryAttack()
+    if self.usingSecondaryAttack then return end
+    local secondaryAttackTable = self:GetSecondaryAttackTable()
+    self:SetAttackCapability(AttackCapabilities[secondaryAttackTable.AttackCapabilities])
+    self:SetAttackType(secondaryAttackTable.AttackType)
+    self:SetBaseDamageMin(secondaryAttackTable.AttackDamageMin)
+    self:SetBaseDamageMax(secondaryAttackTable.AttackDamageMax)
+    self:SetBaseAttackTime(secondaryAttackTable.AttackRate)
+    self:SetAttackRange(secondaryAttackTable.AttackRange)
+    if secondaryAttackTable.ProjectileModel then
+        self:SetRangedProjectileName(secondaryAttackTable.ProjectileModel)
+    end
+    self.usingSecondaryAttack = true
+end
+
+function CDOTA_BaseNPC:SwapToPrimaryAttack()
+    if not self.usingSecondaryAttack then return end
+    self:SetAttackCapability(AttackCapabilities[self:GetKeyValue("AttackCapabilities")])
+    self:SetAttackType(self:GetKeyValue("AttackType"))
+    self:SetBaseDamageMin(self:GetKeyValue("AttackDamageMin"))
+    self:SetBaseDamageMax(self:GetKeyValue("AttackDamageMax"))
+    self:SetBaseAttackTime(self:GetKeyValue("AttackRate"))
+    self:SetAttackRange(self:GetKeyValue("AttackRange"))
+    if self:GetKeyValue("ProjectileModel") then
+        self:SetRangedProjectileName(self:GetKeyValue("ProjectileModel"))
+    end
+    self.usingSecondaryAttack = false
+end
+
+function CDOTA_BaseNPC:SwapToRangedOrbAttack()
+    if self.usingSecondaryAttack then return end
+    self:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+    self:SetAttackRange(600)
+    self.usingSecondaryAttack = true
+end
+
+function CDOTA_BaseNPC:SetSecondaryAttackTable(attackTable)
+    self.secondaryAttackTable = attackTable
+end
+
+function CDOTA_BaseNPC:GetSecondaryAttackTable()
+    return self.secondaryAttackTable or self:GetKeyValue("SecondaryAttack")
 end
 
 -- Don't aggro a neutral if its not a direct order or is idle/sleeping

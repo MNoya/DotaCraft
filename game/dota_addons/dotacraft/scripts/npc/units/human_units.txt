@@ -945,15 +945,16 @@
 	
 	// Armor
 	//----------------------------------------------------------------
+	"ArmorType"					"heavy"
 	"ArmorPhysical"				"2"
 	"MagicalResistance"			"0"
 	
-	// Attack - AIR
+	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackType"				"siege"
 	"AttackDamageMin"			"14.0"
 	"AttackDamageMax"			"15.0"
-	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"2"
 	"AttackAnimationPoint"		"0.03"
 	"AttackAcquisitionRange"	"500"
@@ -961,17 +962,18 @@
 	"ProjectileModel"			"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
 	"ProjectileSpeed"			"2000" //"2000,900"
 
-	// Secondary Attack - GROUND
-	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-	"SecondaryAttackType"				"siege"
-	"SecondaryAttackDamageMin"			"7.0"
-	"SecondaryAttackDamageMax"			"8.0"
-	"SecondaryAttackRate"				"2"
-	"SecondaryAttackAnimationPoint"		"0.03"
-	"SecondaryAttackAcquisitionRange"	"500"
-	"SecondaryAttackRange"				"128"
-	"SecondaryAttackAgainst"			"ground"
+	"SecondaryAttack"
+	{
+		"UsedAgainst"			"ground"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackType"			"pierce"
+		"AttackDamageMin"		"7.0"
+		"AttackDamageMax"		"8.0"
+		"AttackRate"			"2"
+		"AttackRange"			"100"
+		"ProjectileModel"		"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
+		"ProjectileSpeed"		"900"
+	}
 
 	// Bounds
 	//----------------------------------------------------------------
@@ -1004,12 +1006,7 @@
 	//----------------------------------------------------------------
 	"VisionDaytimeRange"		"1800"
 	"VisionNighttimeRange"		"1100"
-	
-	// Attack Damage types
-	//----------------------------------------------------------------
-	"AttackType"				"pierce"
-	"ArmorType"					"heavy"
-	
+		
 	// Creature Data
 	//----------------------------------------------------------------
 	"Creature"
@@ -1293,31 +1290,30 @@
 	"ArmorPhysical"				"2"
 	"MagicalResistance"			"0"
 	
-	// Attack - GROUND
+	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackType"				"siege"
 	"AttackDamageMin"			"45.0"
 	"AttackDamageMax"			"55.0"
-	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 	"AttackRate"				"2.1"
 	"AttackAnimationPoint"		"0.5"
 	"AttackAcquisitionRange"	"500"
 	"AttackRange"				"192"
 	"ProjectileModel"			"particles/base_attacks/ranged_siege_good.vpcf"
-	"ProjectileSpeed"			"2500"
+	"ProjectileSpeed"			"1500"
 	
-	// Secondary Attack - AIR
-	//----------------------------------------------------------------
-	"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"SecondaryAttackType"			"pierce"
-	"SecondaryAttackDamageMin"			"13.0"
-	"SecondaryAttackDamageMax"			"14.0"
-	"SecondaryAttackRate"				"2.1"
-	"SecondaryAttackAnimationPoint"		"0.03"
-	"SecondaryAttackAcquisitionRange"	"800"
-	"SecondaryAttackRange"				"500"
-	"ProjectileModel"			"particles/base_attacks/ranged_siege_good.vpcf"
-	"ProjectileSpeed"			"1000"
+	"SecondaryAttack"
+	{
+		"UsedAgainst"			"air"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackType"			"pierce"
+		"AttackDamageMin"		"13.0"
+		"AttackDamageMax"		"14.0"
+		"AttackRate"			"2.0"
+		"AttackRange"			"500"
+		"ProjectileModel"		"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
+	}
 
 	// Bounty
 	//----------------------------------------------------------------

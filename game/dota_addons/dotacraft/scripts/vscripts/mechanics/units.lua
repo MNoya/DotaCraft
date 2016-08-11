@@ -819,5 +819,10 @@ function CDOTA_BaseNPC:QuickPurge(bRemovePositiveBuffs, bRemoveDebuffs)
     self:RemoveModifierByName("modifier_brewmaster_storm_cyclone")
 end
 
+function CDOTA_BaseNPC:SetAttackRange(value)
+    if self:HasModifier("modifier_attack_range") then self:RemoveModifierByName("modifier_attack_range") end
+    self:AddNewModifier(self,nil,"modifier_attack_range",{range=value})
+end
+
 
 Units:start()

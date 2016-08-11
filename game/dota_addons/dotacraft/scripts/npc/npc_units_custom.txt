@@ -2430,15 +2430,16 @@
 		
 		// Armor
 		//----------------------------------------------------------------
+		"ArmorType"					"heavy"
 		"ArmorPhysical"				"2"
 		"MagicalResistance"			"0"
 		
-		// Attack - AIR
+		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackType"				"siege"
 		"AttackDamageMin"			"14.0"
 		"AttackDamageMax"			"15.0"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2"
 		"AttackAnimationPoint"		"0.03"
 		"AttackAcquisitionRange"	"500"
@@ -2446,17 +2447,18 @@
 		"ProjectileModel"			"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
 		"ProjectileSpeed"			"2000" //"2000,900"
 	
-		// Secondary Attack - GROUND
-		//----------------------------------------------------------------
-		"SecondaryAttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"SecondaryAttackType"				"siege"
-		"SecondaryAttackDamageMin"			"7.0"
-		"SecondaryAttackDamageMax"			"8.0"
-		"SecondaryAttackRate"				"2"
-		"SecondaryAttackAnimationPoint"		"0.03"
-		"SecondaryAttackAcquisitionRange"	"500"
-		"SecondaryAttackRange"				"128"
-		"SecondaryAttackAgainst"			"ground"
+		"SecondaryAttack"
+		{
+			"UsedAgainst"			"ground"
+			"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+			"AttackType"			"pierce"
+			"AttackDamageMin"		"7.0"
+			"AttackDamageMax"		"8.0"
+			"AttackRate"			"2"
+			"AttackRange"			"100"
+			"ProjectileModel"		"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
+			"ProjectileSpeed"		"900"
+		}
 	
 		// Bounds
 		//----------------------------------------------------------------
@@ -2489,12 +2491,7 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1800"
 		"VisionNighttimeRange"		"1100"
-		
-		// Attack Damage types
-		//----------------------------------------------------------------
-		"AttackType"				"pierce"
-		"ArmorType"					"heavy"
-		
+			
 		// Creature Data
 		//----------------------------------------------------------------
 		"Creature"
@@ -2778,31 +2775,30 @@
 		"ArmorPhysical"				"2"
 		"MagicalResistance"			"0"
 		
-		// Attack - GROUND
+		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackType"				"siege"
 		"AttackDamageMin"			"45.0"
 		"AttackDamageMax"			"55.0"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2.1"
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"192"
 		"ProjectileModel"			"particles/base_attacks/ranged_siege_good.vpcf"
-		"ProjectileSpeed"			"2500"
+		"ProjectileSpeed"			"1500"
 		
-		// Secondary Attack - AIR
-		//----------------------------------------------------------------
-		"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"SecondaryAttackType"			"pierce"
-		"SecondaryAttackDamageMin"			"13.0"
-		"SecondaryAttackDamageMax"			"14.0"
-		"SecondaryAttackRate"				"2.1"
-		"SecondaryAttackAnimationPoint"		"0.03"
-		"SecondaryAttackAcquisitionRange"	"800"
-		"SecondaryAttackRange"				"500"
-		"ProjectileModel"			"particles/base_attacks/ranged_siege_good.vpcf"
-		"ProjectileSpeed"			"1000"
+		"SecondaryAttack"
+		{
+			"UsedAgainst"			"air"
+			"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+			"AttackType"			"pierce"
+			"AttackDamageMin"		"13.0"
+			"AttackDamageMax"		"14.0"
+			"AttackRate"			"2.0"
+			"AttackRange"			"500"
+			"ProjectileModel"		"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_base_attack.vpcf"
+		}
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -4986,7 +4982,7 @@
 		"ArmorPhysical"				"4"
 		"MagicalResistance"			"0"
 		
-		// Attack - GROUND
+		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
@@ -4996,18 +4992,6 @@
 		"AttackAnimationPoint"		"0.49"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"128"
-	
-		// Secondary Attack - GROUND(war club)
-		//----------------------------------------------------------------
-		"SecondaryAttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"SecondaryAttackType"				"siege"
-		"SecondaryAttackDamageMin"			"34"
-		"SecondaryAttackDamageMax"			"48"
-		"SecondaryAttackRate"				"2.5"
-		"SecondaryAttackAnimationPoint"		"0.49"
-		"SecondaryAttackAcquisitionRange"	"500"
-		"SecondaryAttackRange"				"250"
-		"SecondaryAttackAgainst"			"ground"
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -5655,35 +5639,22 @@
 		
 		// Armor
 		//----------------------------------------------------------------
+		"ArmorType"					"light"
 		"ArmorPhysical"				"2"
 		"MagicalResistance"			"0"
 		
-		// Attack - GROUND
+		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackType"				"magic"
 		"AttackDamageMin"			"70.0"
 		"AttackDamageMax"			"80.0"
 		"AttackRate"				"2.5"
 		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"900"
-		"AttackRange"				"450" //850 vs buildings
+		"AttackRange"				"450"
 		"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
 		"ProjectileSpeed"			"1200"
-	
-		// Secondary Attack - GROUND(BUILDINGS), SIEGE
-		//----------------------------------------------------------------
-		"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"SecondaryAttackType"			"siege"
-		"SecondaryAttackDamageMin"			"45.0"
-		"SecondaryAttackDamageMax"			"55.0"
-		"SecondaryAttackRate"				"2.5"
-		"SecondaryAttackAnimationPoint"		"0.7"
-		"SecondaryAttackAcquisitionRange"	"850"
-		"SecondaryAttackRange"				"850"
-		"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
-		"ProjectileSpeed"			"1000"
-	
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -5721,11 +5692,6 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1600"
 		"VisionNighttimeRange"		"800"
-		
-		// Attack Damage types
-		//----------------------------------------------------------------
-		"AttackType"				"magic"
-		"ArmorType"					"light"
 		
 		// Creature Data
 		//----------------------------------------------------------------
@@ -10055,7 +10021,7 @@
 		"AttackAnimationPoint"		"0.64"
 		"AttackAcquisitionRange"	"700"
 		"AttackRange"				"550"
-		"ProjectileModel"			"particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"
 		"ProjectileSpeed"			"500"
 		
 		// Bounty
@@ -10150,31 +10116,34 @@
 		
 		// Armor
 		//----------------------------------------------------------------
+		"ArmorType"					"unarmored"
 		"ArmorPhysical"				"3"
 		"MagicalResistance"			"0"
 		
-		// Attack - AIR
+		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackDamageMin"			"61.0"
-		"AttackDamageMax"			"70.0"
-		"AttackRate"				"1.4"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackType"				"pierce"
+		"AttackDamageMin"			"18.0"
+		"AttackDamageMax"			"21.0"
+		"AttackRate"				"2.2"
+		"AttackRange"				"300"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"128"
+		"ProjectileModel"			"particles/units/heroes/hero_visage/visage_familiar_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
 	
-		// Secondary Attack - GROUND
-		//----------------------------------------------------------------
-		"SecondaryAttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"SecondaryAttackType"			"pierce"
-		"SecondaryAttackDamageMin"			"18.0"
-		"SecondaryAttackDamageMax"			"21.0"
-		"SecondaryAttackRate"				"2.2"
-		"SecondaryAttackAnimationPoint"		"0.33"
-		"SecondaryAttackAcquisitionRange"	"500"
-		"SecondaryAttackRange"				"300"
-	
+		"SecondaryAttack"
+		{
+			"UsedAgainst"			"air"
+			"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+			"AttackType"			"normal"
+			"AttackDamageMin"		"61.0"
+			"AttackDamageMax"		"70.0"
+			"AttackRate"			"1.4"
+			"AttackRange"			"128"
+		}
+		
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyGoldMin"				"26.0"
@@ -10211,11 +10180,6 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1600"
 		"VisionNighttimeRange"		"800"
-		
-		// Attack Damage types
-		//----------------------------------------------------------------
-		"AttackType"				"normal"
-		"ArmorType"					"unarmored"
 		
 		// Creature Data
 		//----------------------------------------------------------------
@@ -10395,7 +10359,7 @@
 		"AttackAcquisitionRange"	"1150"
 		"AttackRange"				"1150"
 		"MinimumRange"				"250"
-		"ProjectileModel"			"particles/neutral_fx/mud_golem_hurl_boulder.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/neutral_fx/mud_golem_hurl_boulder.vpcf"
 		"ProjectileSpeed"			"700"
 		
 		// Bounty
@@ -10492,7 +10456,7 @@
 		"AttackAnimationPoint"		"0.53"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"575"
-		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
 		"ProjectileSpeed"			"700"
 		
 		// Bounty
@@ -10608,7 +10572,7 @@
 		"AttackAnimationPoint"		"0.633"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"450"
-		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 		"ProjectileSpeed"			"700"
 		
 		// Bounty
@@ -10721,7 +10685,7 @@
 		"AttackAnimationPoint"		"0.53"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"600"
-		"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/econ/items/necrolyte/necronub_base_attack/necrolyte_base_attack_ka.vpcf"
 		"ProjectileSpeed"			"700"
 		
 		// Bounty
@@ -10838,7 +10802,7 @@
 		"AttackAnimationPoint"		"0.56"
 		"AttackAcquisitionRange"	"700"
 		"AttackRange"				"600"
-		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"	 //Add projectile
+		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"
 		"ProjectileSpeed"			"900"
 		
 		// Bounty
@@ -11149,13 +11113,14 @@
 		
 		// Armor
 		//----------------------------------------------------------------
+		"ArmorType"					"light"
 		"ArmorPhysical"				"1"
-		"MagicalResistance"			"0"
+		"MagicalResistance"			"0"	
 		
-		// Attack - GROUND
+		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackType"				"pierce"
 		"AttackDamageMin"			"93.0"
 		"AttackDamageMax"			"115.0"
 		"AttackRate"				"3"
@@ -11165,16 +11130,16 @@
 		"ProjectileModel"			"particles/units/heroes/hero_winter_wyvern/winter_wyvern_arctic_attack.vpcf"
 		"ProjectileSpeed"			"800"
 	
-		// Secondary Attack - AIR
-		//----------------------------------------------------------------
-		"SecondaryAttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"SecondaryAttackType"				"pierce"
-		"SecondaryAttackDamageMin"			"84.0"
-		"SecondaryAttackDamageMax"			"94.0"
-		"SecondaryAttackRate"				"3"
-		"SecondaryAttackAnimationPoint"		"0.5"
-		"SecondaryAttackAcquisitionRange"	"500"
-		"SecondaryAttackRange"				"300"
+		"SecondaryAttack"
+		{
+			"UsedAgainst"			"air"
+			"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+			"AttackType"			"pierce"
+			"AttackDamageMin"		"84.0"
+			"AttackDamageMax"		"94.0"
+			"AttackRate"			"3"
+			"AttackRange"			"300"
+		}
 	
 		// Bounty
 		//----------------------------------------------------------------
@@ -11212,11 +11177,6 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1600"
 		"VisionNighttimeRange"		"800"
-		
-		// Attack Damage types
-		//----------------------------------------------------------------
-		"AttackType"				"pierce"
-		"ArmorType"					"light"
 		
 		// Creature Data
 		//----------------------------------------------------------------
@@ -11897,6 +11857,7 @@
 		
 		// Armor
 		//----------------------------------------------------------------
+		"ArmorType"					"heavy"
 		"ArmorPhysical"				"4"
 		"MagicalResistance"			"0"
 		
@@ -11905,12 +11866,24 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"29.0"
 		"AttackDamageMax"			"33.0"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackType"				"normal"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"100"
+		"ProjectileModel"			"particles/neutral_fx/mud_golem_hurl_boulder.vpcf"
 		"ProjectileSpeed"			"1000"
+	
+		"SecondaryAttack"
+		{
+			"UsedAgainst"			"air"
+			"AttackCapabilities"	"DOTA_UNIT_CAP_RANGED_ATTACK"
+			"AttackType"			"pierce"
+			"AttackDamageMin"		"29.0"
+			"AttackDamageMax"		"33.0"
+			"AttackRate"			"2.0"
+			"AttackRange"			"500"
+		}
 		
 		// Bounty
 		//----------------------------------------------------------------
@@ -11939,11 +11912,6 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1400"
 		"VisionNighttimeRange"		"800"
-		
-		// Attack Damage types
-		//----------------------------------------------------------------
-		"AttackType"				"normal"
-		"ArmorType"					"heavy"
 		
 		// Creature Data
 		//----------------------------------------------------------------
@@ -21480,21 +21448,33 @@
 	    
 	    // Armor
 	    //----------------------------------------------------------------
+	    "ArmorType"                 "unarmored"
 	    "ArmorPhysical"             "3"         // Physical protection.
-	    //"MagicalResistance"           "0"         // Magical protection.
+	    "MagicalResistance"         "0"         // Magical protection.
 	
 	    // Attack
 	    //----------------------------------------------------------------
 	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackType"                "chaos"
 	    "AttackDamageMin"           "41"        // Damage range min.
 	    "AttackDamageMax"           "48"        // Damage range max.
-	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical" //CHAOS
 	    "AttackRate"                "1.8"           // Speed of attack.
 	    "AttackAnimationPoint"      "0.467"     // Normalized time in animation cycle to attack.
 	    "AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
 	    "AttackRange"               "128"       // Range within a target can be attacked.
-	    "ProjectileModel"           ""          // Particle system model for projectile.
-	    "ProjectileSpeed"           ""          // Speed of projectile.
+	    "ProjectileModel"           "particles/econ/items/shadow_fiend/sf_desolation/sf_base_attack_desolation_fire_arcana.vpcf"
+	    "ProjectileSpeed"           "900"          // Speed of projectile.
+	
+	    "SecondaryAttack"
+	    {
+	        "UsedAgainst"           "air"
+	        "AttackCapabilities"    "DOTA_UNIT_CAP_RANGED_ATTACK"
+	        "AttackType"            "chaos"
+	        "AttackDamageMin"       "35.0"
+	        "AttackDamageMax"       "42.0"
+	        "AttackRate"            "1.35"
+	        "AttackRange"           "500"
+	    }
 	
 	    // Bounty
 	    //----------------------------------------------------------------
@@ -21508,12 +21488,6 @@
 	    "StatusHealthRegen"         "0.2"       // Health regeneration rate.
 	    "StatusMana"                "500"           // Base mana.
 	    "StatusManaRegen"           "1.25"          // Mana regeneration rate.
-	
-	    // Attack Damage types
-	    //----------------------------------------------------------------
-	    "TeamName"                  "DOTA_TEAM_BADGUYS"         // Attack Damage types name.
-	    "AttackType"                "normal"
-	    "ArmorType"                     "unarmored"
 	    
 	    // Vision
 	    //-------------------------------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 -- Removes the ground attack restriction
-function AllowGroundAttack( event )
+function UnlockGroundAttack( event )
 	local caster = event.caster
 	caster:SetAttacksEnabled("ground, air")
 end
@@ -56,5 +56,4 @@ function FlakCannonDamage( event )
 	end
 
 	ApplyDamage({ victim = target, attacker = caster, damage = flak_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES}) 
-		
 end
