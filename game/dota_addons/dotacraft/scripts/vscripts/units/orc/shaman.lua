@@ -1,37 +1,58 @@
 -- Handles the autocast logic
-function BloodlustAutocast_Attack( event )
+function BloodlustAutocast(event)
+    local ability = event.ability
+    ability:ToggleAutoCast()
+    event.caster.bloodlustAbility = ability
+end
+
+function BloodlustAutocast_Attack(event)
     local caster = event.caster
     local attacker = event.attacker
-    local ability = event.ability
-    if not ability then return end
+    local unitName = caster:GetUnitName()
+    local playerID = caster:GetPlayerOwnerID()
 
-    -- Name of the modifier to avoid casting the spell on targets that were already buffed
-    local modifier = "modifier_bloodlust"
+    if attacker:IsMagicImmune() or attacker:HasModifier("modifier_bloodlust") then return end
 
-    -- Get if the ability is on autocast mode and cast the ability on the attacked target if it doesn't have the modifier
-    if not attacker:IsMagicImmune() and ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
-        if not attacker:HasModifier(modifier) then
-            caster:CastAbilityOnTarget(attacker, ability, caster:GetPlayerOwnerID())
-        end 
-    end 
+    -- Check all units and see if there's one valid cast the ability
+    local units = Players:GetUnits(playerID)
+    local radius = 600
+    for _,v in pairs(units) do
+        if IsValidEntity(v) and v.bloodlustAbility then
+            local ability = v.bloodlustAbility
+
+            -- Get if the ability is on autocast mode and cast the ability on the attacked target
+            if ability:GetAutoCastState() and ability:IsFullyCastable() and not v:IsMoving() and v:GetRangeToUnit(attacker) <= radius then
+                v:CastAbilityOnTarget(attacker, ability, playerID)
+                return
+            end
+        end
+    end
 end
 
-function BloodlustAutocast_Attacked( event )
+function BloodlustAutocast_Attacked(event)
     local caster = event.caster
     local target = event.target
-    local ability = event.ability
-    if not ability then return end
+    local playerID = caster:GetPlayerOwnerID()
 
-    -- Name of the modifier to avoid casting the spell on targets that were already buffed
-    local modifier = "modifier_bloodlust"
+    if target:IsMagicImmune() or target:HasModifier("modifier_bloodlust") then return end
 
-    -- Get if the ability is on autocast mode and cast the ability on the attacked target if it doesn't have the modifier
-    if not target:IsMagicImmune() and ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
-        if not target:HasModifier(modifier) then
-            caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
-        end 
-    end 
+    -- Check all units and see if there's one valid to cast the ability
+    local units = Players:GetUnits(playerID)
+    local radius = 600
+    for _,v in pairs(units) do
+        if IsValidEntity(v) and v.bloodlustAbility then
+            local ability = v.bloodlustAbility
+
+            -- Get if the ability is on autocast mode and cast the ability on the attacked target
+            if ability:GetAutoCastState() and ability:IsFullyCastable() and not v:IsMoving() and v:GetRangeToUnit(target) <= radius then
+                v:CastAbilityOnTarget(target, ability, playerID)
+                return
+            end
+        end
+    end
 end
+
+----------------------------------------------------------------
 
 function LightningShieldOnSpellStart(event)
     local caster = event.caster

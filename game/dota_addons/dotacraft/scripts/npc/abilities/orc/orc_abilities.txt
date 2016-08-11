@@ -521,15 +521,15 @@
             {
                 "RunScript"
                 {
-                    "ScriptFile"    "mechanics/abilities.lua"
-                    "Function"      "ToggleOnAutocast"
+                    "ScriptFile"    "units/orc/shaman.lua"
+                    "Function"      "BloodlustAutocast"
                 }
             }
         }
 
         "modifier_bloodlust_autocast_attackstart"
         {
-            "IsHidden"  "1"
+            "IsHidden" 	 "1"
             "OnAttack"
             {
                 "RunScript"
@@ -546,7 +546,7 @@
                     "ScriptFile"    "units/orc/shaman.lua"
                     "Function"      "BloodlustAutocast_Attacked"
                 }
-            }      
+            }
         }
     }
 }
