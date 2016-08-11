@@ -1548,12 +1548,13 @@
 }
 
 //=================================================================================
-// Ability: Freezing Splash - HIDDEN
+// Ability: Frost Breath - HIDDEN
+// 10 second slow splash, innate of frost wyrms and other blue dragons
 //=================================================================================
-"undead_freezing_splash"
+"undead_frost_breath"
 {
 	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_frost_attack"
+	"AbilityTextureName"		"undead_frost_breath"
 	"MaxLevel"					"1"
 		
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
@@ -1564,18 +1565,18 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"duration"		"10"
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"10"
 		}
 		"02"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"100"
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"100"
 		}
 		"03"
 		{
-			"var_type"		"FIELD_FLOAT"
-			"movement_speed_reduction"		"-25"
+			"var_type"			"FIELD_FLOAT"
+			"movement_speed_reduction"	"-25"
 		}
 	}
 
@@ -1588,7 +1589,7 @@
 	
 	"Modifiers"
 	{
-		"modifier_freezing_splash_passive"
+		"modifier_frost_breath_passive"
 		{
 			"Passive" "1"
 			"IsHidden" "1"
@@ -1598,20 +1599,15 @@
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_freezing_attack"
-					"Duration" "%duration"
+					"Duration" 		"%duration"
 					"Target"
 					{
 						"Center"  	"TARGET"
 						"Radius" 	"%radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types" 	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
-				}
-				
-				"FireEffect"
-				{
-					"EffectName" "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast_explosion.vpcf"
-					"Target" "TARGET"
 				}
 			}
 		}
@@ -1697,7 +1693,6 @@
 // Ability: Frost Attack
 // Description: "Adds a cold effect to this unit's attacks that slows enemy units' movement speed."
 // Code Reference: Afra
-// NOTE: Can't find anyone using this ability, maybe it's replaced by Frost Breath?
 //=================================================================================
 "undead_frost_attack"
 {
@@ -1705,7 +1700,7 @@
 	"AbilityTextureName"		"undead_frost_attack"
 	"MaxLevel"					"1"
 		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	
@@ -1721,13 +1716,11 @@
 			"var_type"		"FIELD_INTEGER"
 			"duration"		"5"
 		}
-		// The real "Frost Breath" for Frost Wyrms actually slow units for 10 seconds and SPLASH across units.
 		"02"
 		{
 			"var_type"		"FIELD_FLOAT"
 			"movement_speed_reduction"		"-50"
 		}
-		// I dug through Hive Workshop forums and gameplay constants for this at 2:43AM, holy crap what am I doing with my life.
 	}
 
 	"precache"
@@ -1738,26 +1731,30 @@
 	
 	"Modifiers"
 	{
-	
 		"modifier_frost_attack_passive"
 		{
-			"Passive" "1"
-			"IsHidden" "1"
+			"Passive" 	"1"
+			"IsHidden" 	"1"
 		
 			"OnAttackLanded"
 			{
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_frost_attack"
-					"Duration" "%duration"
-					"Target" "TARGET"
+					"Duration" 		"%duration"
+					"Target"
+					{
+					    "Center"    "TARGET"
+					    "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+					    "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					    "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
 				}
 			}
 		}
 	
 		"modifier_frost_attack"
 		{
-			"IsPurgable" 	"1"
 			"IsDebuff"		"1"
 			
 			"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
