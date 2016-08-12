@@ -110,7 +110,13 @@
                 {
                     "ModifierName"  "modifier_ethereal"
                     "Target"        "TARGET"
-                }       
+                }
+
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/blood_mage/banish.lua"
+                    "Function"      "Banish"
+                }
             }
 
             "OnDestroy"
@@ -119,7 +125,13 @@
                 {
                     "ModifierName"  "modifier_ethereal"
                     "Target"        "TARGET"
-                }       
+                }
+
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/blood_mage/banish.lua"
+                    "Function"      "BanishEnd"
+                }
             }
         }
     }   

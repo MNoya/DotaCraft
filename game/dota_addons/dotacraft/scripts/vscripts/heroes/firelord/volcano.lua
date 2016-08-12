@@ -48,7 +48,7 @@ function VolcanoWave( event )
     local radius = ability:GetSpecialValueFor("radius")
     local abilityDamageType = ability:GetAbilityDamageType()
     local teamNumber = caster:GetTeamNumber()
-    local position = caster:GetAbsOrigin()
+    local position = caster.volcano_dummy:GetAbsOrigin()
     local targets = FindUnitsInRadius(teamNumber, position, nil, radius/2, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 
     local knockbackModifierTable =

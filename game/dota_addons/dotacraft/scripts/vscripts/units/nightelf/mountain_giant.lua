@@ -69,10 +69,19 @@ end
 
 function Taunt( event )
     local caster = event.caster
-    local targets = event.target_entities
-    caster:StartGesture(ACT_TINY_GROWL)
+    local ability = event.ability
+    local radius = ability:GetSpecialValueFor("radius")
+    local max_units = ability:GetSpecialValueFor("max_units")
 
+    caster:StartGesture(ACT_TINY_GROWL)
+    
+    local count = 0
+    local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
     for _,unit in pairs(targets) do
-        unit:MoveToTargetToAttack(caster)
+        if not IsCustomBuilding(unit) and unit:HasAttackCapability() and not IsChanneling(unit) and not unit:HasModifier("modifier_repairing") then
+            count = count + 1
+            unit:MoveToTargetToAttack(caster)
+        end
+        if count == max_units then return end
     end
 end
