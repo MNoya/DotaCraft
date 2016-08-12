@@ -32,7 +32,7 @@ function modifier_vampiric_aura:GetModifierAura()
 end
 
 function modifier_vampiric_aura:GetEffectName()
-    return "particles/items_fx/aura_vlads.vpcf"
+    return "particles/custom/aura_vampiric.vpcf"
 end
 
 function modifier_vampiric_aura:GetEffectAttachType()

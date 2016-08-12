@@ -1,47 +1,36 @@
 <!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
 {
 	_class = "CParticleSystemDefinition"
-	m_ConstantColor =
-	[
-		250,
-		186,
-		74,
-		255,
-	]
-	m_flConstantRadius = 120.000000
+	m_ConstantColor = [ 250, 186, 74, 255 ]
+	m_flConstantRadius = 120.0
 	m_nMaxParticles = 8
-	m_Children =
+	m_Children = 
 	[
 		{
 			m_ChildRef = resource:"particles/custom/aura_thorns_b.vpcf"
 		},
 	]
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_SetToCP"
-			m_vecOffset =
-			[
-				0.000000,
-				0.000000,
-				20.000000,
-			]
+			m_vecOffset = [ 0.0, 0.0, 20.0 ]
 		},
 		{
 			_class = "C_OP_OscillateScalarSimple"
-			m_Rate = 0.750000
-			m_Frequency = 0.500000
+			m_Rate = 0.75
+			m_Frequency = 0.5
 			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_EndCapTimedDecay"
-			m_flDecayTime = 0.250000
+			m_flDecayTime = 0.25
 		},
 		{
 			_class = "C_OP_LerpEndCapScalar"
 			m_nFieldOutput = 16
-			m_flOutput = 0.000000
-			m_flLerpTime = 0.250000
+			m_flOutput = 0.0
+			m_flLerpTime = 0.25
 			m_bDisableOperator = true
 		},
 		{
@@ -57,11 +46,11 @@
 		},
 		{
 			_class = "C_OP_InterpolateRadius"
-			m_flStartScale = 0.500000
-			m_flBias = 0.600000
+			m_flStartScale = 0.5
+			m_flBias = 0.6
 		},
 	]
-	m_Renderers =
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderSprites"
@@ -72,13 +61,13 @@
 			m_hTexture = resource:"materials/thorns.vtex"
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_CreateWithinSphere"
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
@@ -87,7 +76,7 @@
 		},
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 1.000000
+			m_flEmitRate = 1.0
 		},
 	]
 }

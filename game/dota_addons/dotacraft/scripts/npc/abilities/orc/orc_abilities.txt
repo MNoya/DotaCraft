@@ -1460,7 +1460,8 @@
 //=================================================================================
 "orc_war_drums"
 {
-	"BaseClass"					"ability_datadriven"
+	"BaseClass"					"ability_lua"
+	"ScriptFile"				"units/orc/kodobeast.lua"
 	"AbilityTextureName"		"orc_research_improved_war_drums"
 	"MaxLevel"					"1"
 		
@@ -1469,7 +1470,6 @@
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	
 	"AbilityCastRange"			"900"
-	// Added for visual indication.
 	
 	"AbilitySpecial"
 	{
@@ -1483,43 +1483,7 @@
 			"var_type"				"FIELD_INTEGER"
 			"damage_increase"		"10 20"
 		}
-		// The damage increase applies to both melee and ranged.
 	}
-
-	"precache"
-	{
-		"particle"  "particles/custom/aura_endurance.vpcf"
-	}
-
-	"Modifiers"
-	{
-		"modifier_war_drums_aura"
-		{
-
-			"Passive"			"1"
-			"IsHidden"			"1"
-			"EffectName"		"particles/custom/aura_endurance.vpcf"
-			"EffectAttachType"	"follow_origin"
-
-			"Aura"          	"modifier_war_drums"
-			"Aura_Radius"   	"%radius"
-			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
-			"Aura_ApplyToCaster" "1"
-		}
-
-		"modifier_war_drums"
-		{
-			"IsBuff"			"1"
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_increase"
-			}
-		}
-	}
-	// Done
 }
 
 //=================================================================================

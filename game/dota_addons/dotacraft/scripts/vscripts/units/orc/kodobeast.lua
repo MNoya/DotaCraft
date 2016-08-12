@@ -65,3 +65,71 @@ function DevourDeath( event )
         ability.target = nil
     end
 end
+
+---------------------------------------------------------------------
+
+orc_war_drums = class({})
+
+-- Stacks with command aura
+LinkLuaModifier("modifier_war_drums_aura", "units/orc/kodobeast", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_war_drums", "units/orc/kodobeast", LUA_MODIFIER_MOTION_NONE)
+
+function orc_war_drums:GetIntrinsicModifierName()
+    return "modifier_war_drums_aura"
+end
+
+--------------------------------------------------------------------------------
+
+modifier_war_drums_aura = class({})
+
+function modifier_war_drums_aura:IsAura()
+    return true
+end
+
+function modifier_war_drums_aura:IsHidden()
+    return true
+end
+
+function modifier_war_drums_aura:GetAuraRadius()
+    return self:GetAbility():GetSpecialValueFor("radius")
+end
+
+function modifier_war_drums_aura:GetModifierAura()
+    return "modifier_war_drums"
+end
+
+function modifier_war_drums_aura:GetEffectName()
+    return "particles/custom/aura_command.vpcf"
+end
+
+function modifier_war_drums_aura:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW
+end
+   
+function modifier_war_drums_aura:GetAuraSearchTeam()
+    return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
+
+function modifier_war_drums_aura:GetAuraEntityReject(target)
+    return IsCustomBuilding(target) or target:IsWard()
+end
+
+function modifier_war_drums_aura:GetAuraSearchType()
+    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_war_drums_aura:GetAuraDuration()
+    return 0.5
+end
+
+--------------------------------------------------------------------------------
+
+modifier_war_drums = class({})
+
+function modifier_war_drums:DeclareFunctions()
+    return { MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE }
+end
+
+function modifier_war_drums:GetModifierBaseDamageOutgoing_Percentage()
+    return self:GetAbility():GetSpecialValueFor("damage_increase")
+end
