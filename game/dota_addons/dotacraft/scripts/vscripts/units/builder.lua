@@ -191,6 +191,7 @@ function Build( event )
 
         -- Check the abilities of this building, disabling those that don't meet the requirements
         CheckAbilityRequirements( unit, playerID )
+        unit:ApplyRankUpgrades()
 
         -- Add roots to ancient
         local ancient_roots = unit:FindAbilityByName("nightelf_uproot")
@@ -291,7 +292,7 @@ function Build( event )
     event:OnBelowHalfHealth(function(unit)
         BuildingHelper:print(unit:GetUnitName() .. " is below half health.")
                 
-        ApplyModifier(unit, "item_apply_modifiers")
+        ApplyModifier(unit, "modifier_onfire")
     end)
 
     event:OnAboveHalfHealth(function(unit)

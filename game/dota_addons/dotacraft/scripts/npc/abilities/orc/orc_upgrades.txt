@@ -960,9 +960,6 @@
 	}
 }
 
-// Troll Headhunters, Troll Berserkers, Wind Riders get 3 
-// Troll Batriders 2
-// Demolishers 9
 "orc_spiked_barricades1"
 {
 	"BaseClass"				"ability_datadriven"
@@ -987,13 +984,11 @@
 			"IsHidden"			"0"
 
 			"OnAttacked"
-			// "%attack_damage" is set to the damage value after mitigation
 			{
-				"Damage"
+				"RunScript"
 				{
-					"Target"		"ATTACKER"
-					"Type"			"DAMAGE_TYPE_PHYSICAL"
-					"Damage"		"%damage_to_attackers"
+				    "ScriptFile"    "units/orc/orc_upgrades.lua"
+				    "Function"      "SpikedBarricadeDamage"
 				}
 			}
 
@@ -1039,13 +1034,11 @@
 			"IsHidden"			"0"
 
 			"OnAttacked"
-			// "%attack_damage" is set to the damage value after mitigation
 			{
-				"Damage"
+				"RunScript"
 				{
-					"Target"		"ATTACKER"
-					"Type"			"DAMAGE_TYPE_PHYSICAL"
-					"Damage"		"%damage_to_attackers"
+				    "ScriptFile"    "units/orc/orc_upgrades.lua"
+				    "Function"      "SpikedBarricadeDamage"
 				}
 			}
 
@@ -1091,13 +1084,11 @@
 			"IsHidden"			"0"
 
 			"OnAttacked"
-			// "%attack_damage" is set to the damage value after mitigation
 			{
-				"Damage"
+				"RunScript"
 				{
-					"Target"		"ATTACKER"
-					"Type"			"DAMAGE_TYPE_PHYSICAL"
-					"Damage"		"%damage_to_attackers"
+				    "ScriptFile"    "units/orc/orc_upgrades.lua"
+				    "Function"      "SpikedBarricadeDamage"
 				}
 			}
 
