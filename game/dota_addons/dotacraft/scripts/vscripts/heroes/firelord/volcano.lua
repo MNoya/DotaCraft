@@ -39,13 +39,17 @@ function VolcanoEnd( event )
     end
 end
 
--- Apply modifier knockback to all units except the caster.
-function VolcanoKnockback( event )
+-- Apply knockback, damage and stun to all units but the caster
+function VolcanoWave( event )
     local caster = event.caster
-    local targets = event.target_entities
-
     local ability = event.ability
-    local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
+    local wave_damage = ability:GetSpecialValueFor("wave_damage")
+    local stun_duration = ability:GetSpecialValueFor("stun_duration")
+    local radius = ability:GetSpecialValueFor("radius")
+    local abilityDamageType = ability:GetAbilityDamageType()
+    local teamNumber = caster:GetTeamNumber()
+    local position = caster:GetAbsOrigin()
+    local targets = FindUnitsInRadius(teamNumber, position, nil, radius/2, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 
     local knockbackModifierTable =
     {
@@ -61,24 +65,21 @@ function VolcanoKnockback( event )
 
     for _,unit in pairs(targets) do
         if unit ~= caster and not IsCustomBuilding(unit) and not unit:HasFlyMovementCapability() and not unit:IsWard() then
-            unit:AddNewModifier( caster, ability, "modifier_knockback", knockbackModifierTable )
+            unit:AddNewModifier(caster, ability, "modifier_knockback", knockbackModifierTable)
         end
-    end         
-end
+    end  
 
--- Apply damage and stun to all units but the caster
-function VolcanoWave( event )
-    local caster = event.caster
-    local targets = event.target_entities
-    local ability = event.ability
-    local wave_damage = ability:GetLevelSpecialValueFor( "wave_damage", ability:GetLevel() - 1 )
-    local stun_duration = ability:GetLevelSpecialValueFor( "stun_duration", ability:GetLevel() - 1 )
-    local abilityDamageType = ability:GetAbilityDamageType()
-
-    for _,unit in pairs(targets) do
-        if unit ~= caster and not IsCustomBuilding(unit) and not unit:IsWard() and not unit:HasFlyMovementCapability() then
-            ability:ApplyDataDrivenModifier(caster, unit, "modifier_volcano_stun", {duration = stun_duration})
-            ApplyDamage({ victim = unit, attacker = caster, ability = ability, damage = wave_damage, damage_type = abilityDamageType })
+    Timers:CreateTimer(0.5, function()
+        local targets = FindUnitsInRadius(teamNumber, position, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+        for _,unit in pairs(targets) do
+            if unit ~= caster then
+                if IsCustomBuilding(unit) then
+                    DamageBuilding(unit, wave_damage * 2, ability, caster)
+                elseif not unit:IsWard() and not unit:HasFlyMovementCapability() then
+                    ability:ApplyDataDrivenModifier(caster, unit, "modifier_volcano_stun", {duration = stun_duration})
+                    ApplyDamage({ victim = unit, attacker = caster, ability = ability, damage = wave_damage, damage_type = abilityDamageType })
+                end
+            end
         end
-    end         
+    end)   
 end

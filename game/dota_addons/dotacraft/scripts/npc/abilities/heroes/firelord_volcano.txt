@@ -151,38 +151,25 @@
             "States"
             {
                 //"MODIFIER_STATE_NO_UNIT_COLLISION"    "MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_STATE_NO_TEAM_MOVE_TO"    "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_TEAM_MOVE_TO"  "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_NO_TEAM_SELECT" "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_MAGIC_IMMUNE"   "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_UNSELECTABLE"   "MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_STATE_NO_HEALTH_BAR"         "MODIFIER_STATE_VALUE_ENABLED"   
+                "MODIFIER_STATE_NO_HEALTH_BAR"  "MODIFIER_STATE_VALUE_ENABLED"   
             }
 
             "EffectName"        "particles/custom/sf_fire_arcana_wings.vpcf"
             "EffectAttachType"  "follow_origin"
-            "Target"            "TARGET"
-            "ControlPointEntities"
-            {
-                "TARGET"    "attach_origin"
-                "TARGET"    "attach_origin"
-            }
 
             "OnCreated"
             {
                 "RunScript"
                 {
                     "ScriptFile"    "heroes/firelord/volcano.lua"
-                    "Function"      "VolcanoKnockback"
-                    "Target"
-                    {
-                        "Center"    "TARGET"
-                        "Radius"    "%radius / 2"
-                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //Exclude self in the code
-                    }
+                    "Function"      "VolcanoWave"
                 }
 
                 "FireEffect"
@@ -196,42 +183,6 @@
                 {
                     "EffectName"    "Hero_Nevermore.RequiemOfSouls"
                     "Target"        "CASTER"
-                }
-
-                "DelayedAction"
-                {
-                    "Delay"     "0.5"
-                    "Action"    
-                    {
-                        "RunScript"
-                        {
-                            "ScriptFile"    "heroes/firelord/volcano.lua"
-                            "Function"      "VolcanoWave"
-                            "Target"
-                            {
-                                "Center"    "TARGET"
-                                "Radius"    "%radius"
-                                "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-                                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                            }
-                        }
-
-                        // Custom Building Damage
-                        "RunScript"
-                        {
-                            "ScriptFile"    "buildings/damage.lua"
-                            "Function"      "DoBuildingDamage"
-                            "Target"
-                            {
-                                "Center"    "TARGET"
-                                "Radius"    "%radius"
-                                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                                "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-                            }
-                            "Damage"        "%wave_damage * 2"
-                        }
-                    }
                 }
             }
 
@@ -251,42 +202,12 @@
                     "Target"        "CASTER"
                 }
 
-                "DelayedAction"
+                "RunScript"
                 {
-                    "Delay"     "0.5"
-                    "Action"    
-                    {
-                        "RunScript"
-                        {
-                            "ScriptFile"    "heroes/firelord/volcano.lua"
-                            "Function"      "VolcanoWave"
-                            "Target"
-                            {
-                                "Center"    "TARGET"
-                                "Radius"    "%radius"
-                                "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-                                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                            }
-                        }
-
-                        // Custom Building Damage
-                        "RunScript"
-                        {
-                            "ScriptFile"    "buildings/damage.lua"
-                            "Function"      "DoBuildingDamage"
-                            "Target"
-                            {
-                                "Center"    "TARGET"
-                                "Radius"    "%radius"
-                                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                                "Types"     "DOTA_UNIT_TARGET_BASIC"
-                                "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-                            }
-                            "Damage"        "%wave_damage * 2"
-                        }
-                    }
+                    "ScriptFile"    "heroes/firelord/volcano.lua"
+                    "Function"      "VolcanoWave"
                 }
-            }           
+            }
         }
 
         "modifier_volcano_stun"
@@ -311,5 +232,5 @@
             }
             "OverrideAnimation"     "ACT_DOTA_DISABLED"
         }
-    }   
+    }
 }

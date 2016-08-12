@@ -1,150 +1,28 @@
-<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
-CParticleSystemDefinition CParticleSystemDefinition_0
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
 {
-	int m_nInitialParticles = 0
-	float(3) m_BoundingBoxMin = ( -10.000000, -10.000000, -10.000000 )
-	float(3) m_BoundingBoxMax = ( 10.000000, 10.000000, 10.000000 )
-	int m_nSnapshotControlPoint = 0
-	string m_pszSnapshotName = ""
-	string m_pszTargetLayerID = ""
-	string m_hReferenceReplacement = ""
-	string m_pszCullReplacementName = ""
-	float m_flCullRadius = 0.000000
-	float m_flCullFillCost = 1.000000
-	int m_nCullControlPoint = 0
-	float m_flMaxRecreationTime = 0.000000
-	string m_hFallback = ""
-	int m_nFallbackMaxCount = -1
-	string m_hLowViolenceDef = ""
-	uint(4) m_ConstantColor = ( 255, 255, 255, 255 )
-	float(3) m_ConstantNormal = ( 0.000000, 0.000000, 1.000000 )
-	float m_flConstantRadius = 5.000000
-	float m_flConstantRotation = 0.000000
-	float m_flConstantRotationSpeed = 0.000000
-	float m_flConstantLifespan = 1.000000
-	int m_nConstantSequenceNumber = 0
-	int m_nConstantSequenceNumber1 = 0
-	int m_nGroupID = 0
-	float m_flMaximumTimeStep = 0.100000
-	float m_flMaximumSimTime = 0.000000
-	float m_flMinimumSimTime = 0.000000
-	float m_flMinimumTimeStep = 0.000000
-	int m_nMinimumFrames = 0
-	int m_nMinCPULevel = 0
-	int m_nMinGPULevel = 0
-	bool m_bViewModelEffect = false
-	bool m_bScreenSpaceEffect = false
-	float m_flMaxDrawDistance = 100000.000000
-	float m_flStartFadeDistance = 200000.000000
-	float m_flNoDrawTimeToGoToSleep = 8.000000
-	int m_nMaxParticles = 2
-	int m_nSkipRenderControlPoint = -1
-	int m_nAllowRenderControlPoint = -1
-	int m_nAggregationMinAvailableParticles = 0
-	float m_flAggregateRadius = 0.000000
-	float m_flStopSimulationAfterTime = 1000000000.000000
-	float(3) m_vControlPoint1DefaultOffsetRelativeToControlPoint0 = ( 0.000000, 0.000000, 0.000000 )
-	string m_Name = ""
-	ParticleChildrenInfo_t[] m_Children = 
+	_class = "CParticleSystemDefinition"
+	m_nMaxParticles = 2
+	m_Children = 
 	[
-		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/sf_fire_arcana_wings_soul_hands.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = false
+			m_ChildRef = resource:"particles/custom/sf_fire_arcana_wings_soul_hands.vpcf"
 		},
-		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/sf_fire_arcana_wings_soul_hands.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = true
-		}
+			m_ChildRef = resource:"particles/custom/sf_fire_arcana_wings_soul_hands.vpcf"
+			m_bDisableChild = true
+		},
 	]
-	bool m_bShouldSort = true
-	bool m_bShouldBatch = false
-	float m_flDepthSortBias = 0.000000
-	bool m_bShouldHitboxesFallbackToRenderBounds = false
-	CParticleOperatorInstance*[] m_Operators = 
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_Operators = 
 	[
-		&C_OP_SetParentControlPointsToChildCP_0,
-		&C_OP_SetSingleControlPointPosition_1
+		{
+			_class = "C_OP_SetParentControlPointsToChildCP"
+			m_nNumControlPoints = 0
+		},
+		{
+			_class = "C_OP_SetSingleControlPointPosition"
+			m_nCP1 = 8
+			m_vecCP1Pos = [ 0.0, 0.0, 150.0 ]
+		},
 	]
-	CParticleOperatorInstance*[] m_Renderers = 
-	[
-		
-	]
-	CParticleOperatorInstance*[] m_Initializers = 
-	[
-		
-	]
-	CParticleOperatorInstance*[] m_Emitters = 
-	[
-		
-	]
-	CParticleOperatorInstance*[] m_ForceGenerators = 
-	[
-		
-	]
-	CParticleOperatorInstance*[] m_Constraints = 
-	[
-		
-	]
-}
-
-C_OP_SetParentControlPointsToChildCP C_OP_SetParentControlPointsToChildCP_0
-{
-	int m_nChildGroupID = 0
-	int m_nChildControlPoint = 0
-	int m_nNumControlPoints = 2
-	int m_nFirstSourcePoint = 5
-	bool m_bSetOrientation = false
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = false
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_OP_SetSingleControlPointPosition C_OP_SetSingleControlPointPosition_1
-{
-	bool m_bUseWorldLocation = false
-	bool m_bSetOnce = false
-	int m_nCP1 = 8
-	float(3) m_vecCP1Pos = ( 0.000000, 0.000000, 150.000000 )
-	int m_nHeadLocation = 0
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = false
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
 }
