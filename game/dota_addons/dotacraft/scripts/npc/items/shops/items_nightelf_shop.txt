@@ -63,62 +63,11 @@
     }
 }
 
-"item_dust_of_appearance"
-{
-    "BaseClass"                     "item_dust"
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-    "AbilityTextureName"            "item_dust_of_appearance"
-    "AbilityCooldown"               "20"
-    "AbilitySharedCooldown"         "dust"
-    "AbilityManaCost"               "0"
-    "AbilityCastRange"              "1000"
-        
-    "Model"                         "models/props_gameplay/dust.vmdl"
-    "Effect"                        "particles/generic_gameplay/dropped_dust.vpcf"
-    
-    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
-    "ItemShopTags"                  "invis"
-    "ItemQuality"                   "common"
-    "ItemPermanent"                 "0"
-    "ItemStackable"                 "0"
-    "ItemKillable"                  "1"
-    "ItemSellable"                  "1"
-    "ItemDroppable"                 "1"
-    "ItemInitialCharges"            "2"
-    "ItemAlertable"                 "1" 
-
-    // Shops
-    "ItemCost"                      "75"
-    "StockMax"                      "1" 
-    "StockTime"                     "60"
-    "StockInitial"                  "1"
-    "RequiresTier"                  "1"
-
-    "AbilitySpecial"
-    {
-        "01"
-        {
-            "var_type"              "FIELD_INTEGER"
-            "duration"              "20"
-        }
-        "02"
-        {
-            "var_type"              "FIELD_INTEGER"
-            "radius"                "1000"
-        }
-        "03"
-        {
-            "var_type"              "FIELD_INTEGER"
-            "movespeed"             "0"
-        }
-    }
-}
-
 // Teleports a target friendly unit to its highest level town hall. This item won't affect allied units (due to abuse reasons).
 "item_staff_of_preservation"
 {
     "BaseClass"                     "item_datadriven"
-    "AbilityTextureName"            "item_staff_of_sanctuary"
+    "AbilityTextureName"            "item_staff_of_preservation"
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -146,11 +95,11 @@
     "ItemAlertable"                 "1" 
 
     "ItemCost"                      "150"
-    "StockMax"                  "1" 
-    "StockTime"                 "120"
-    "StockInitial"              "1"
+    "StockMax"                      "1" 
+    "StockTime"                     "120"
+    "StockInitial"                  "1"
 
-    "RequiresTier"              "2"
+    "RequiresTier"                  "2"
 
     "precache"
     {
@@ -162,7 +111,7 @@
         "RunScript"
         {
             "ScriptFile"    "items/staff_of_preservation.lua"
-            "Function"      "Teleport"
+            "Function"      "Preservation"
         }          
     }
 }

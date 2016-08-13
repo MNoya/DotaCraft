@@ -1,0 +1,381 @@
+// Regenerates the Hero's mana by 100 over 30 seconds when used. Cancel on damage
+"item_lesser_clarity_potion"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_lesser_clarity_potion"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+    
+    "AbilityCooldown"               "60"
+    "AbilitySharedCooldown"         "clarity_potion"
+
+    "UIPickupSound"                 "Item.PickUpRingShop"
+    "UIDropSound"                   "Item.DropRingShop"
+    "WorldDropSound"                "Item.DropRingWorld"
+        
+    "Model"                         "models/props_gameplay/clarity.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+    
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "potion"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "1"
+    "ItemAlertable"                 "1" 
+
+    "RequiresManaDeficit"           "1"
+
+    // Shops
+    "ItemCost"                      "70"
+    "StockMax"                      "2" 
+    "StockTime"                     "30"
+    "StockInitial"                  "2"
+    "RequiresTier"                  "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "total_mana_regen"      "100"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "30"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "mana_per_second"       "3.33"
+        }
+    }
+    
+    "OnSpellStart"
+    {           
+        "ApplyModifier"
+        {
+            "Target"            "CASTER"
+            "ModifierName"      "modifier_lesser_clarity"
+            "Duration"          "%duration"
+        }
+        
+        "FireSound"
+        {
+            "EffectName"        "DOTA_Item.ClarityPotion.Activate"
+            "Target"            "CASTER"
+        }
+        "SpendCharge"
+        {}
+    }
+    
+    "Modifiers"
+    {
+        "modifier_lesser_clarity"
+        {
+            "EffectName"                "particles/items_fx/healing_clarity.vpcf"
+            "EffectAttachType"          "follow_origin"
+            "TextureName"               "item_lesser_clarity_potion"
+                    
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" "%mana_per_second"
+            }
+            
+            "OnTakeDamage"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "modifier_lesser_clarity"
+                    "Target"            "UNIT"
+                }
+            }
+        }
+    }
+}
+
+"item_dust_of_appearance"
+{
+    "BaseClass"                     "item_dust"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityTextureName"            "item_dust_of_appearance"
+    "AbilityCooldown"               "20"
+    "AbilitySharedCooldown"         "dust"
+    "AbilityManaCost"               "0"
+    "AbilityCastRange"              "1000"
+        
+    "Model"                         "models/props_gameplay/dust.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_dust.vpcf"
+    
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "invis"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "2"
+    "ItemAlertable"                 "1" 
+
+    // Shops
+    "ItemCost"                      "75"
+    "StockMax"                      "1" 
+    "StockTime"                     "60"
+    "StockInitial"                  "1"
+    "RequiresTier"                  "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "20"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "1000"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "movespeed"             "0"
+        }
+    }
+}
+
+"item_potion_of_healing"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_potion_of_healing"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+    
+    "AbilityCooldown"               "60"
+    "AbilitySharedCooldown"         "healing"
+
+    "Model"                         "models/props_gameplay/salve.vmdl" //Green
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+
+    "UIPickupSound"                 "Item.PickUpRingShop"
+    "UIDropSound"                   "Item.DropRingShop"
+    "WorldDropSound"                "Item.DropRingWorld"  
+            
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "potion"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "1"
+    "ItemAlertable"                 "1" 
+
+    // Shops
+    "ItemCost"                      "150"
+    "StockMax"                      "3" 
+    "StockTime"                     "120"
+    "StockInitial"                  "3"
+    "RequiresTier"                  "2"
+
+    "RequiresHealthDeficit"         "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "heal_amount"           "250"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "Heal"
+        {
+            "Target"            "CASTER"
+            "HealAmount"        "%heal_amount"
+        }
+        "FireEffect"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "particles/units/heroes/hero_treant/treant_overgrowth_vine_glows_corerope.vpcf"
+            "EffectAttachType"  "follow_origin"
+        }
+        "FireSound"
+        {
+            "Target"            "CASTER"
+            "EffectName"        "DOTA_Item.HealingSalve.Activate"
+        }
+        "SpendCharge"
+        {}      
+    }
+}
+
+"item_potion_of_mana"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_potion_of_mana"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+    
+    "AbilityCooldown"               "60"
+    "AbilitySharedCooldown"         "mana_regain"
+
+    "Model"                         "models/props_gameplay/clarity.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+
+    "UIPickupSound"                 "Item.PickUpRingShop"
+    "UIDropSound"                   "Item.DropRingShop"
+    "WorldDropSound"                "Item.DropRingWorld"  
+            
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "potion"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "1"
+    "ItemAlertable"                 "1" 
+
+    // Shops
+    "ItemCost"                      "200"
+    "StockMax"                      "2" 
+    "StockTime"                     "120"
+    "StockInitial"                  "2"
+    "RequiresTier"                  "2"
+
+    "RequiresManaDeficit"           "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "mana_restored"         "150"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"        "items/mana.lua"
+            "Function"          "GiveMana"
+            "mana_amount"       "%mana_restored"
+        }
+        "FireEffect"
+        {
+            "Target"                "CASTER"
+            "EffectName"            "particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
+            "EffectAttachType"      "follow_origin"
+        }
+        "FireSound"
+        {
+            "Target"        "UNIT"
+            "EffectName"    "DOTA_Item.ClarityPotion.Activate"
+        }
+        "SpendCharge"
+        {}  
+    }
+}
+
+// Teleports the Hero and any of its nearby troops to a target friendly town hall.
+"item_scroll_of_town_portal"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_scroll_of_town_portal"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
+    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+    
+    "Model"                         "models/props_gameplay/tpscroll01.vmdl"
+    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"
+
+    "UIPickupSound"                 "Item.PickUpRingShop"
+    "UIDropSound"                   "Item.DropRingShop"
+    "WorldDropSound"                "Item.DropRingWorld"  
+            
+    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
+    "ItemShopTags"                  "tp;teleport"
+    "ItemQuality"                   "common"
+    "ItemPermanent"                 "0"
+    "ItemStackable"                 "0"
+    "ItemKillable"                  "1"
+    "ItemSellable"                  "1"
+    "ItemDroppable"                 "1"
+    "ItemInitialCharges"            "1"
+    "ItemAlertable"                 "1" 
+
+    // Shops
+    "ItemCost"                      "350"
+    "StockMax"                      "2" 
+    "StockTime"                     "120"
+    "StockInitial"                  "2"
+    "RequiresTier"                  "2"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "1100"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "teleport_delay"        "3.0"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/tpscroll.lua"
+            "Function"      "TeleportStart"
+            "Target"        "POINT"
+        }
+    }
+
+    "Modifiers"
+    {
+        // Can't be cancelled - Caster is invulnerable
+        "modifier_scroll_of_town_portal_caster"
+        {
+            "OverrideAnimation" "ACT_DOTA_TELEPORT"
+            "States"
+            {
+                "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"  
+                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+
+        // If the building dies, the teleport gets interrupted
+        "modifier_scroll_of_town_portal_target"
+        {
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "IsHidden"          "1"
+            "OnDestroy"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "items/tpscroll.lua"
+                    "Function"      "TeleportEnd"
+                }
+            }
+        }
+    }
+}
