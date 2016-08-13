@@ -1349,14 +1349,18 @@
 	}
 	// Permanent Active Items
 	
+	// Self teleport to target allied building or unit
 	"item_staff_of_teleportation"
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	    "AbilityTextureName"            "item_staff_of_teleportation"
 	    
+	    "CastFilterRejectCaster"        "1"
+	    "TargetsAllowed"                "ground"
+	
 	    "ItemCost"                      "150"
 	    "AbilityCooldown"               "90"
 	    "ItemQuality"                   "common"
@@ -1368,6 +1372,7 @@
 	        {
 	            "ScriptFile"    "items/staffs.lua"
 	            "Function"      "TeleportationStart"
+	            "Target"        "POINT"
 	        }
 	    }
 	
@@ -1385,7 +1390,30 @@
 	        "RunScript"
 	        {
 	            "ScriptFile"    "items/staffs.lua"
-	            "Function"      "TeleportationEnd"
+	            "Function"      "TeleportationSuccess"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_staff_of_teleportation_caster"
+	        {
+	            "OverrideAnimation" "ACT_DOTA_TELEPORT"
+	        }
+	
+	        // If the building dies, the teleport gets interrupted
+	        "modifier_staff_of_teleportation_target"
+	        {
+	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            "IsHidden"          "1"
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "items/tpscroll.lua"
+	                    "Function"      "TeleportEnd"
+	                }
+	            }
 	        }
 	    }
 	}
@@ -17329,13 +17357,6 @@
 	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
 	    "ItemShopTags"                  "teleport"
 	    "ItemQuality"                   "common"
-	    "ItemPermanent"                 "0"
-	    "ItemStackable"                 "0"
-	    "ItemKillable"                  "1"
-	    "ItemSellable"                  "1"
-	    "ItemDroppable"                 "1"
-	    "ItemInitialCharges"            "1"
-	    "ItemAlertable"                 "1" 
 	
 	    // Shops
 	    "ItemCost"                      "350"
@@ -17356,7 +17377,7 @@
 	    "precache"
 	    {
 	        "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
-	        "particle"  "particles/units/heroes/hero_oracle/oracle_false_promise_bot_steam.vpcf"
+	        "particle"  "particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 	    }
 	
@@ -17365,7 +17386,7 @@
 	        "RunScript"
 	        {
 	            "ScriptFile"    "items/staffs.lua"
-	            "Function"      "Preservation"
+	            "Function"      "Sanctuary"
 	        }          
 	    }
 	
@@ -17373,12 +17394,13 @@
 	    {
 	        "modifier_staff_of_sanctuary_heal"
 	        {
-	            "EffectName"        "particles/units/heroes/hero_oracle/oracle_false_promise_bot_steam.vpcf"
+	            "EffectName"        "particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
 	            "EffectAttachType"  "follow_origin"
 	            "States"
 	            {
 	                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
 	            }
+	            "OverrideAnimation"     "ACT_DOTA_DISABLED"
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%heal_per_second"
@@ -17388,7 +17410,7 @@
 	            {
 	                "RunScript"
 	                {
-	                    "ScriptFile"    "items/staff_of_sanctuary.lua"
+	                    "ScriptFile"    "items/staffs.lua"
 	                    "Function"      "HealCheck"
 	                }
 	            }
@@ -17469,8 +17491,10 @@
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+	    "CastFilterRejectCaster"        "1"
 	
 	    "AbilityCooldown"               "30"
+	    "AbilityCastPoint"              "0.2"
 	    "AbilityCastRange"              "700"
 	    
 	    "Model"                         "models/props_gameplay/red_box.vmdl"
@@ -17483,13 +17507,6 @@
 	    "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
 	    "ItemShopTags"                  "teleport"
 	    "ItemQuality"                   "common"
-	    "ItemPermanent"                 "0"
-	    "ItemStackable"                 "0"
-	    "ItemKillable"                  "1"
-	    "ItemSellable"                  "1"
-	    "ItemDroppable"                 "1"
-	    "ItemInitialCharges"            "1"
-	    "ItemAlertable"                 "1" 
 	
 	    "ItemCost"                      "150"
 	    "StockMax"                      "1" 
@@ -17507,7 +17524,7 @@
 	    {
 	        "RunScript"
 	        {
-	            "ScriptFile"    "items/staff_of_preservation.lua"
+	            "ScriptFile"    "items/staffs.lua"
 	            "Function"      "Preservation"
 	        }          
 	    }
@@ -18424,8 +18441,7 @@
 	    "AbilityTextureName"            "item_scroll_of_town_portal"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
-	    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	    
 	    "Model"                         "models/props_gameplay/tpscroll01.vmdl"
 	    "Effect"                        "particles/generic_gameplay/dropped_item.vpcf"

@@ -17,8 +17,11 @@ function TeleportStart( event )
 
     -- If no target handle, it was ground targeted
     -- If self-targeted, find the greatest town hall level of the player
-    if target == nil or selfTarget then
-        target = Players:FindHighestLevelCityCenter(caster)
+    local playerID = caster:GetPlayerOwnerID()
+    if not target then
+        target = Players:FindClosestFriendlyCityCenter(playerID, point)
+    elseif selfTarget then
+        target = Players:FindHighestLevelCityCenter(playerID)
     end
     
     -- Start teleport
@@ -30,10 +33,10 @@ function TeleportStart( event )
     ability:ApplyDataDrivenModifier(caster, caster, "modifier_scroll_of_town_portal_caster", {duration=teleport_delay})
 
     local caster_modifier = caster:FindModifierByNameAndCaster("modifier_scroll_of_town_portal_caster", caster)
-    local caster_particle = ParticleManager:CreateParticle("particles/items2_fx/teleport_end.vpcf", PATTACH_ABSORIGIN, caster)
+    local caster_particle = ParticleManager:CreateParticle("particles/items2_fx/teleport_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
     ParticleManager:SetParticleControl(caster_particle, 0, caster:GetAbsOrigin())
     ParticleManager:SetParticleControl(caster_particle, 1, caster:GetAbsOrigin())
-    ParticleManager:SetParticleControl(caster_particle, 2, dotacraft:ColorForPlayer(caster:GetPlayerOwnerID()))
+    ParticleManager:SetParticleControl(caster_particle, 2, dotacraft:ColorForPlayer(playerID))
     ParticleManager:SetParticleControl(caster_particle, 4, caster:GetAbsOrigin())
     caster_modifier:AddParticle(caster_particle, false, false, 1, false, false)
 
@@ -41,10 +44,10 @@ function TeleportStart( event )
     ability:ApplyDataDrivenModifier(caster, target, "modifier_scroll_of_town_portal_target", {duration=teleport_delay})
 
     local target_modifier = target:FindModifierByNameAndCaster("modifier_scroll_of_town_portal_target", caster)
-    local target_particle = ParticleManager:CreateParticle("particles/items2_fx/teleport_end.vpcf", PATTACH_ABSORIGIN, target)
+    local target_particle = ParticleManager:CreateParticle("particles/items2_fx/teleport_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
     ParticleManager:SetParticleControl(target_particle, 0, target:GetAbsOrigin())
     ParticleManager:SetParticleControl(target_particle, 1, target:GetAbsOrigin())
-    ParticleManager:SetParticleControl(target_particle, 2, dotacraft:ColorForPlayer(caster:GetPlayerOwnerID()))
+    ParticleManager:SetParticleControl(target_particle, 2, dotacraft:ColorForPlayer(playerID))
     ParticleManager:SetParticleControl(target_particle, 4, target:GetAbsOrigin())
     target_modifier:AddParticle(target_particle, false, false, 1, false, false)
 

@@ -6,13 +6,7 @@ function MassTeleportStart( event )
 	local radius = ability:GetSpecialValueFor("radius")
 	local target = event.target
     if not target then
-        target = FindClosestUnitToTeleport(caster, event.target_points[1] )
-    end
-    if not target then
-        ability:RefundManaCost()
-        ability:EndCooldown()
-        ability:OnChannelFinish(true)
-        return
+        target = Players:FindClosestFriendlyUnit(playerID, event.target_points[1], function(unit) return not unit:IsFlyingUnit() end)
     end
 	
 	ability.teleport_target = target
@@ -94,14 +88,4 @@ function MassTeleport( event )
     end
     caster:FindClearSpace(target:GetAbsOrigin())
     MassTeleportStop(event)
-end
-
-function FindClosestUnitToTeleport( caster, position )
-    local units = FindUnitsInRadius(caster:GetTeamNumber(), position, nil, 2000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-    for _,unit in pairs(units) do
-        if IsValidAlive(unit) and not unit:IsWard() and not IsCustomBuilding(unit) and not unit:IsFlyingUnit() then
-            return unit
-        end
-    end
-    return nil
 end

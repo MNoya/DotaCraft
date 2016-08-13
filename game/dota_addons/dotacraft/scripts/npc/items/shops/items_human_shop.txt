@@ -291,13 +291,6 @@
     "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
     "ItemShopTags"                  "teleport"
     "ItemQuality"                   "common"
-    "ItemPermanent"                 "0"
-    "ItemStackable"                 "0"
-    "ItemKillable"                  "1"
-    "ItemSellable"                  "1"
-    "ItemDroppable"                 "1"
-    "ItemInitialCharges"            "1"
-    "ItemAlertable"                 "1" 
 
     // Shops
     "ItemCost"                      "350"
@@ -318,7 +311,7 @@
     "precache"
     {
         "particle"  "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
-        "particle"  "particles/units/heroes/hero_oracle/oracle_false_promise_bot_steam.vpcf"
+        "particle"  "particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
     }
 
@@ -327,7 +320,7 @@
         "RunScript"
         {
             "ScriptFile"    "items/staffs.lua"
-            "Function"      "Preservation"
+            "Function"      "Sanctuary"
         }          
     }
 
@@ -335,12 +328,13 @@
     {
         "modifier_staff_of_sanctuary_heal"
         {
-            "EffectName"        "particles/units/heroes/hero_oracle/oracle_false_promise_bot_steam.vpcf"
+            "EffectName"        "particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
             "EffectAttachType"  "follow_origin"
             "States"
             {
                 "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
             }
+            "OverrideAnimation"     "ACT_DOTA_DISABLED"
             "Properties"
             {
                 "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%heal_per_second"
@@ -350,7 +344,7 @@
             {
                 "RunScript"
                 {
-                    "ScriptFile"    "items/staff_of_sanctuary.lua"
+                    "ScriptFile"    "items/staffs.lua"
                     "Function"      "HealCheck"
                 }
             }

@@ -1,22 +1,70 @@
 // Permanent Active Items
 
+// Self teleport to target allied building or unit
 "item_staff_of_teleportation"
 {
     "BaseClass"                     "item_datadriven"
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
     "AbilityTextureName"            "item_staff_of_teleportation"
     
+    "CastFilterRejectCaster"        "1"
+    "TargetsAllowed"                "ground"
+
     "ItemCost"                      "150"
+    "AbilityCooldown"               "90"
     "ItemQuality"                   "common"
+    "AbilityChannelTime"            "3.0"
     
     "OnSpellStart"
     {
         "RunScript"
         {
-            "ScriptFile"    "items/staff_of_teleportation.lua"
-            "Function"      "SelfTeleport"
+            "ScriptFile"    "items/staffs.lua"
+            "Function"      "TeleportationStart"
+            "Target"        "POINT"
+        }
+    }
+
+    "OnChannelInterrupted"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/staffs.lua"
+            "Function"      "TeleportationInterrupted"
+        }
+    }
+
+    "OnChannelSucceeded"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/staffs.lua"
+            "Function"      "TeleportationSuccess"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_staff_of_teleportation_caster"
+        {
+            "OverrideAnimation" "ACT_DOTA_TELEPORT"
+        }
+
+        // If the building dies, the teleport gets interrupted
+        "modifier_staff_of_teleportation_target"
+        {
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "IsHidden"          "1"
+            "OnDestroy"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "items/tpscroll.lua"
+                    "Function"      "TeleportEnd"
+                }
+            }
         }
     }
 }

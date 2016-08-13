@@ -72,8 +72,10 @@
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
     "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+    "CastFilterRejectCaster"        "1"
 
     "AbilityCooldown"               "30"
+    "AbilityCastPoint"              "0.2"
     "AbilityCastRange"              "700"
     
     "Model"                         "models/props_gameplay/red_box.vmdl"
@@ -86,13 +88,6 @@
     "ItemShareability"              "ITEM_FULLY_SHAREABLE"      
     "ItemShopTags"                  "teleport"
     "ItemQuality"                   "common"
-    "ItemPermanent"                 "0"
-    "ItemStackable"                 "0"
-    "ItemKillable"                  "1"
-    "ItemSellable"                  "1"
-    "ItemDroppable"                 "1"
-    "ItemInitialCharges"            "1"
-    "ItemAlertable"                 "1" 
 
     "ItemCost"                      "150"
     "StockMax"                      "1" 
@@ -110,7 +105,7 @@
     {
         "RunScript"
         {
-            "ScriptFile"    "items/staff_of_preservation.lua"
+            "ScriptFile"    "items/staffs.lua"
             "Function"      "Preservation"
         }          
     }
