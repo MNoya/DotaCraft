@@ -593,18 +593,18 @@ function Players:GetRace( playerID )
     return hero:GetRace()
 end
 
-function Players:FindHighestLevelCityCenter( unit )
+function Players:FindHighestLevelCityCenter(unit)
     local playerID = unit:GetPlayerOwnerID()
     local position = unit:GetAbsOrigin()
-    local buildings = Players:GetStructures( playerID )
+    local buildings = Players:GetStructures(playerID)
     local level = 0 --Priority to the highest level city center
-    local distance = 20000
-    local closest_building = nil
+    local distance = math.huge
+    local closest_building
 
     for _,building in pairs(buildings) do
-        if IsValidAlive(building) and IsCityCenter(building) and building.state == "complete" and building:GetLevel() > level then
+        if IsValidAlive(building) and IsCityCenter(building) and not building:IsUnderConstruction() and building:GetLevel() > level then
             level = building:GetLevel()
-            local this_distance = (position - building:GetAbsOrigin()):Length()
+            local this_distance = (position - building:GetAbsOrigin()):Length2D()
             if this_distance < distance then
                 distance = this_distance
                 closest_building = building
@@ -614,7 +614,98 @@ function Players:FindHighestLevelCityCenter( unit )
     return closest_building
 end
 
-function Players:SetMainCityCenter( playerID, building )
+function Players:FindClosestCityCenter(playerID, position)
+    local structures = Players:GetStructures(playerID)
+    local distance = math.huge
+    local closest_building
+
+    for _,building in pairs(structures) do
+        if IsValidAlive(building) and IsCityCenter(building) and not building:IsUnderConstruction() then
+            local this_distance = (position - building:GetAbsOrigin()):Length2D()
+            if this_distance < distance then
+                distance = this_distance
+                closest_building = building
+            end
+        end
+    end
+    return closest_building
+end
+
+-- FindClosestCityCenter for all team members and returns the best
+function Players:FindClosestFriendlyCityCenter(playerID, position)
+    local teamMembers = Teams:GetPlayersOnTeam(PlayerResource:GetTeam(playerID))
+    local distance = math.huge
+    local closest
+    for _,pID in pairs(teamMembers) do
+        local unit = self:FindClosestCityCenter(pID, position)
+        local this_distance = (position - unit:GetAbsOrigin()):Length2D()
+        if this_distance < distance then
+            distance = this_distance
+            closest = unit
+        end
+    end
+    return closest
+end
+
+function Players:FindClosestUnit(playerID, position, filterFunction)
+    local units = Players:GetUnits(playerID)
+    local heroes = Players:GetHeroes(playerID)
+    local structures = Players:GetStructures(playerID)
+    local distance = math.huge
+    local closest
+    if not filterFunction then 
+        filterFunction = function(...) return true end
+    end
+
+    for _,unit in pairs(units) do
+        if IsValidAlive(unit) and filterFunction(unit) then
+            local this_distance = (position - unit:GetAbsOrigin()):Length2D()
+            if this_distance < distance then
+                distance = this_distance
+                closest = unit
+            end
+        end
+    end
+
+    for _,hero in pairs(heroes) do
+        if IsValidAlive(hero) then
+            local this_distance = (position - hero:GetAbsOrigin()):Length2D()
+            if this_distance < distance then
+                distance = this_distance
+                closest = hero
+            end
+        end
+    end
+
+    for _,structures in pairs(structures) do
+        if IsValidAlive(structures) then
+            local this_distance = (position - structures:GetAbsOrigin()):Length2D()
+            if this_distance < distance then
+                distance = this_distance
+                closest = structures
+            end
+        end
+    end
+    return closest
+end
+
+-- FindClosestUnit for all team members and returns the best
+function Players:FindClosestFriendlyUnit(playerID, position, filterFunction)
+    local teamMembers = Teams:GetPlayersOnTeam(PlayerResource:GetTeam(playerID))
+    local distance = math.huge
+    local closest
+    for _,pID in pairs(teamMembers) do
+        local unit = self:FindClosestUnit(pID, position, filterFunction)
+        local this_distance = (position - unit:GetAbsOrigin()):Length2D()
+        if this_distance < distance then
+            distance = this_distance
+            closest = unit
+        end
+    end
+    return closest
+end
+
+function Players:SetMainCityCenter(playerID, building)
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
     PlayerResource:SetDefaultSelectionEntity(playerID, building)
