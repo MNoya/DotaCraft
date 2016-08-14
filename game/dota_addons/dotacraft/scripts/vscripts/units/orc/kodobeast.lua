@@ -59,6 +59,7 @@ function DevourDeath( event )
 
     if IsValidEntity(target) then
         target:SetParent(nil,"")
+        target:SetForwardVector(Vector(1,0,0))
         target:SetAbsOrigin(caster:GetAbsOrigin())
         target:RemoveModifierByName('modifier_devour_debuff')
         target:RemoveNoDraw()
