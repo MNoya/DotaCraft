@@ -1808,7 +1808,6 @@
 
 	"precache"
 	{
-		"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_egset.vpcf"
 		"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_totem_buff_egset.vpcf"
 	}
 
@@ -1844,7 +1843,35 @@
 		"modifier_pulverize_attack"
 		{
 			"IsHidden"	"1"
-			"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
+
+			"OnCreated"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/orc/tauren.lua"
+			        "Function"      "PulverizeStart"
+			    }
+			    "AttachEffect"
+			    {
+			        "EffectName"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_totem_buff_egset.vpcf"
+			        "EffectAttachType"  "attach_customorigin"
+			        "Target"            "TARGET"
+			        "ControlPointEntities"
+			        {
+			            "TARGET" "attach_totem"
+			            "TARGET" "attach_totem"
+			            "TARGET" "attach_totem"
+			        }
+			    }
+			}
+			"OnDestroy"
+			{
+			    "RunScript"
+			    {
+			        "ScriptFile"    "units/orc/tauren.lua"
+			        "Function"      "PulverizeEnd"
+			    }
+			}
 			"OnAttackLanded"
 			{	
 				"Damage"
@@ -1855,6 +1882,7 @@
 						"Radius" 	"%half_damage_radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
 					"Type"				"DAMAGE_TYPE_PHYSICAL"
 					"Damage"			"%extra_damage / 2"
@@ -1868,13 +1896,14 @@
 						"Radius" 	"%full_damage_radius"
 						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 					}
 					"Type"				"DAMAGE_TYPE_PHYSICAL"
 					"Damage"			"%extra_damage / 2"
 				}
 				"FireEffect"
 				{
-					"EffectName"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_egset.vpcf"
+					"EffectName"		"particles/custom/orc/pulverize.vpcf"
 					"EffectAttachType"	"follow_origin"
 					"Target"			"TARGET"
 					"ControlPoints"
