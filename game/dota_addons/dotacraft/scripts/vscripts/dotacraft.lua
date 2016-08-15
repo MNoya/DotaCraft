@@ -1128,6 +1128,7 @@ end
 -- Returns a Vector with the color of the player
 function dotacraft:ColorForPlayer( playerID )
     local playerTable = CustomNetTables:GetTableValue("dotacraft_pregame_table", tostring(playerID))
+    if not playerTable or not playerTable.Color then return Vector(255,255,255) end
     local color = playerTable.Color
     local playerColor = CustomNetTables:GetTableValue("dotacraft_color_table", tostring(color))
     return Vector(playerColor.r, playerColor.g, playerColor.b)
