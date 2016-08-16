@@ -91,7 +91,7 @@ function nightelf_moon_glaive:OnProjectileHit_ExtraData(target, vLocation, extra
 
     -- If there are bounces remaining, find a new target
     if extraData.bounces_left > 0 then
-        extraData.targets_hit = extraData.targets_hit .. "," .. target:GetEntityIndex()
+        extraData[tostring(target:GetEntityIndex())] = 1
         extraData.damage = extraData.damage * self.reduction
         CreateMoonGlaive(self, target, extraData)
     end
@@ -100,11 +100,9 @@ end
 function CreateMoonGlaive(ability, originalTarget, extraData)
     local caster = ability:GetCaster()
     local enemies = FindUnitsInRadius(caster:GetTeamNumber(), originalTarget:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO+DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
-    local targets_hit = split(extraData.targets_hit, ",")
     local target
     for _,enemy in pairs(enemies) do
-        bAlreadyHit = getIndexTable(targets_hit, tostring(enemy:GetEntityIndex()))
-        if not bAlreadyHit and not enemy:IsWard() and not enemy:HasFlyMovementCapability() and not enemy:IsAttackImmune() then
+        if extraData[tostring(enemy:GetEntityIndex())] ~= 1 and not enemy:IsWard() and not enemy:HasFlyMovementCapability() and not enemy:IsAttackImmune() then
             target = enemy
             break
         end
@@ -144,7 +142,7 @@ function modifier_moon_glaive:OnAttackLanded(event)
         local ability = self:GetAbility()
         local target = event.target
         target:EmitSound("Hero_Luna.MoonGlaive.Impact")
-        CreateMoonGlaive(ability, target, {bounces_left = ability:GetSpecialValueFor("bounces"), damage = event.damage*ability.reduction, targets_hit = tostring(target:GetEntityIndex())})
+        CreateMoonGlaive(ability, target, {bounces_left = ability:GetSpecialValueFor("bounces"), damage = event.damage*ability.reduction, [tostring(target:GetEntityIndex())]=1})
     end
 end
 
@@ -179,7 +177,7 @@ function nightelf_upgraded_moon_glaive:OnProjectileHit_ExtraData(target, vLocati
 
     -- If there are bounces remaining, find a new target
     if extraData.bounces_left > 0 then
-        extraData.targets_hit = extraData.targets_hit .. "," .. target:GetEntityIndex()
+        extraData[tostring(target:GetEntityIndex())] = 1
         extraData.damage = extraData.damage * self.reduction
         CreateMoonGlaive(self, target, extraData)
     end
