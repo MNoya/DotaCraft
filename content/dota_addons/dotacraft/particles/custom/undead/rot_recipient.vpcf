@@ -1,0 +1,153 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 64
+	m_flCullRadius = 90.0
+	m_flMaxDrawDistance = 2000.0
+	m_flNoDrawTimeToGoToSleep = 2.0
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			VisibilityInputs = 
+			{
+				m_flInputMin = 1.0
+			}
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_flStartFadeSize = 0.675
+			m_flEndFadeSize = 0.75
+			m_flMaxSize = 0.85
+			m_flOverbrightFactor = 1.5
+			m_flAddSelfAmount = 2.0
+			m_bBlendFramesSeq0 = false
+			m_bSaturateColorPreAlphaBlend = false
+			m_hTexture = resource:"materials/particle/spray1/spray1.vtex"
+			m_flAnimationRate2 = 0.1
+			m_flAnimationRate = 2.0
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.015
+			m_Gravity = [ 0.0, 0.0, -600.0 ]
+		},
+		{
+			_class = "C_OP_Decay"
+			m_nOpEndCapState = 0
+		},
+		{
+			_class = "C_OP_FadeIn"
+			m_flFadeInTimeMax = 0.5
+		},
+		{
+			_class = "C_OP_FadeOut"
+			m_flFadeOutTimeMax = 0.5
+			m_flFadeOutTimeMin = 0.5
+			m_bEaseInAndOut = false
+			m_flFadeBias = 0.75
+		},
+		{
+			_class = "C_OP_AlphaDecay"
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_nOpEndCapState = 1
+			m_nField = 16
+			m_Rate = -2.0
+			m_flEndTime = 99999.0
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndScale = 1.5
+		},
+		{
+			_class = "C_OP_LockToBone"
+			m_flLifeTimeFadeEnd = 0.35
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 2
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMax = 132
+			m_nAlphaMin = 32
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 1.0
+			m_fLifetimeMin = 0.5
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMax = [ 128, 3, 3, 255 ]
+			m_ColorMin = [ 128, 3, 3, 255 ]
+			m_TintMin = [ 21, 27, 15, 255 ]
+			m_TintMax = [ 85, 108, 60, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMax = 64.0
+			m_flRadiusMin = 24.0
+		},
+		{
+			_class = "C_INIT_RandomTrailLength"
+			m_flMaxLength = 0.5
+			m_flMinLength = 0.5
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMax = [ 0.0, 0.0, 32.0 ]
+		},
+		{
+			_class = "C_INIT_CreateOnModel"
+			m_vecDirectionBias = [ 0.0, 0.0, 0.5 ]
+		},
+		{
+			_class = "C_INIT_InitialVelocityNoise"
+			m_vecOutputMin = [ -64.0, -64.0, 132.0 ]
+			m_vecOutputMax = [ 64.0, 64.0, 264.0 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_NoiseEmitter"
+			m_flOutputMax = 18.0
+			m_flOutputMin = 1.0
+			m_flNoiseScale = 1.0
+			m_flOpFadeOscillatePeriod = 1.0
+			m_flOpEndFadeOutTime = 0.2
+			m_flOpStartFadeOutTime = 0.1
+		},
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flEmitRate = 3.0
+		},
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 10
+		},
+	]
+	m_ForceGenerators = 
+	[
+		{
+			_class = "C_OP_AttractToControlPoint"
+			m_fForceAmount = -150.0
+			m_fFalloffPower = 0.0
+		},
+	]
+}

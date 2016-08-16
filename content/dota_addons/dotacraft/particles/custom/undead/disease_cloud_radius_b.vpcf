@@ -1,0 +1,128 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 1
+	m_flCullRadius = 90.0
+	m_ConstantColor = [ 85, 170, 0, 255 ]
+	m_flMaxDrawDistance = 20000.0
+	m_flNoDrawTimeToGoToSleep = 2.0
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderProjected"
+			m_hProjectedMaterial = resource:"materials/particle/pool_01_projected.vmat"
+			m_bFlipHorizontal = true
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_FadeIn"
+			m_flFadeInTimeMax = 1.0
+			m_flFadeInTimeMin = 1.0
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_nOpEndCapState = 0
+			m_flBias = 0.85
+			m_flStartScale = 0.0
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 0, 170, 0, 255 ]
+			m_flFadeStartTime = 0.3
+		},
+		{
+			_class = "C_OP_AlphaDecay"
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_nOpEndCapState = 1
+			m_nField = 16
+			m_Rate = -1.5
+			m_flEndTime = 99999.0
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_flEndTime = 999999.0
+			m_Rate = 200.0
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_SetToCP"
+			m_vecOffset = [ 0.0, 0.0, 16.0 ]
+		},
+		{
+			_class = "C_OP_EndCapTimedDecay"
+			m_flDecayTime = 0.2
+		},
+		{
+			_class = "C_OP_BasicMovement"
+		},
+		{
+			_class = "C_OP_ClampScalar"
+			m_nFieldOutput = 13
+			m_flOutputMin = 0.125
+		},
+		{
+			_class = "C_OP_RampScalarLinear"
+			m_bProportionalOp = false
+			m_flEndTime_max = 9999999827968.0
+			m_flEndTime_min = 9999999827968.0
+			m_RateMax = 0.25
+			m_RateMin = -0.25
+			m_nField = 4
+		},
+		{
+			_class = "C_OP_OscillateScalar"
+			m_bProportionalOp = false
+			m_flEndTime_max = 999999984306749440.0
+			m_flEndTime_min = 999999984306749440.0
+			m_bProportional = false
+			m_FrequencyMin = 0.5
+			m_RateMax = 1.0
+			m_RateMin = 0.25
+			m_nField = 13
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_flOutput = 0.0
+			m_nFieldOutput = 7
+			m_flLerpTime = 0.2
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 0.5
+			m_fLifetimeMin = 0.5
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_nCPInput = 1
+			m_flInputMax = 10000.0
+			m_flOutputMax = 11000.0
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+		},
+		{
+			_class = "C_INIT_RandomAlphaWindowThreshold"
+			m_flMax = 1.0
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 1
+		},
+	]
+}
