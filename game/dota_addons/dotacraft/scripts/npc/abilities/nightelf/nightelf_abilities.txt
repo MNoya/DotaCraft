@@ -393,7 +393,8 @@
 // Huntress have 1 jump on moon glaive innate, the upgrade gives a second jump
 "nightelf_moon_glaive"
 {
-	"BaseClass"					"luna_moon_glaive"
+	"BaseClass"					"ability_lua"
+	"ScriptFile"				"units/nightelf/huntress.lua"
 	"AbilityTextureName"		"nightelf_moon_glaive"
 	"MaxLevel"					"1"
 		
@@ -425,7 +426,8 @@
 // New name, different icon, replaces the basic ability
 "nightelf_upgraded_moon_glaive"
 {
-	"BaseClass"					"luna_moon_glaive"
+	"BaseClass"					"ability_lua"
+	"ScriptFile"				"units/nightelf/huntress.lua"
 	"AbilityTextureName"		"nightelf_research_upgraded_moon_glaive"
 	"MaxLevel"					"1"
 		

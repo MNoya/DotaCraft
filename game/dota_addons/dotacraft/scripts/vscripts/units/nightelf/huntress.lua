@@ -67,3 +67,115 @@ function SentinelTreeCheck(event)
         event.caster:ForceKill(false)
     end
 end
+
+--------------------------------------------------
+
+nightelf_moon_glaive = class({})
+
+LinkLuaModifier("modifier_moon_glaive", "units/nightelf/huntress.lua", LUA_MODIFIER_MOTION_NONE)
+
+function nightelf_moon_glaive:GetIntrinsicModifierName()
+    return "modifier_moon_glaive"
+end
+
+function nightelf_moon_glaive:OnUpgrade()
+    self.reduction = self:GetSpecialValueFor("damage_reduction_percent") * 0.01
+end
+
+function nightelf_moon_glaive:OnProjectileHit_ExtraData(target, vLocation, extraData)
+    ApplyDamage({victim = target, attacker = self:GetCaster(), damage = extraData.damage, ability = self, damage_type = DAMAGE_TYPE_PHYSICAL})
+    extraData.bounces_left = extraData.bounces_left - 1
+
+    local impact = ParticleManager:CreateParticle("particles/custom/nightelf/luna_moon_glaive_impact_point1.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+    ParticleManager:SetParticleControlEnt(impact, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+
+    -- If there are bounces remaining, find a new target
+    if extraData.bounces_left > 0 then
+        extraData.targets_hit = extraData.targets_hit .. "," .. target:GetEntityIndex()
+        extraData.damage = extraData.damage * self.reduction
+        CreateMoonGlaive(self, target, extraData)
+    end
+end
+
+function CreateMoonGlaive(ability, originalTarget, extraData)
+    local caster = ability:GetCaster()
+    local enemies = FindUnitsInRadius(caster:GetTeamNumber(), originalTarget:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO+DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+    local targets_hit = split(extraData.targets_hit, ",")
+    local target
+    for _,enemy in pairs(enemies) do
+        bAlreadyHit = getIndexTable(targets_hit, tostring(enemy:GetEntityIndex()))
+        if not bAlreadyHit and not enemy:IsWard() and not enemy:HasFlyMovementCapability() and not enemy:IsAttackImmune() then
+            target = enemy
+            break
+        end
+    end
+
+    if target then
+        local impact = ParticleManager:CreateParticle("particles/custom/nightelf/luna_moon_glaive_impact_point1.vpcf", PATTACH_ABSORIGIN_FOLLOW, originalTarget)
+        ParticleManager:SetParticleControlEnt(impact, 1, originalTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", originalTarget:GetAbsOrigin(), true)
+        local projectile = {
+            Target = target,
+            Source = originalTarget,
+            Ability = ability,
+            EffectName = "particles/units/heroes/hero_luna/luna_moon_glaive_bounce.vpcf",
+            bDodgable = true,
+            bProvidesVision = false,
+            iMoveSpeed = 900,
+            iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+            ExtraData = extraData
+        }
+        ProjectileManager:CreateTrackingProjectile(projectile)
+    end
+end
+
+--------------------------------------------------
+
+modifier_moon_glaive = class({})
+
+function modifier_moon_glaive:IsHidden() return true end
+function modifier_moon_glaive:IsPurgable() return false end
+
+function modifier_moon_glaive:DeclareFunctions()
+    return {MODIFIER_EVENT_ON_ATTACK_LANDED}
+end
+
+function modifier_moon_glaive:OnAttackLanded(event)
+    if event.attacker == self:GetParent() then
+        local ability = self:GetAbility()
+
+        CreateMoonGlaive(ability, event.target, {bounces_left = ability:GetSpecialValueFor("bounces"), damage = event.damage*ability.reduction, targets_hit = tostring(event.target:GetEntityIndex())})
+    end
+end
+
+function modifier_moon_glaive:OnCreated()
+    if IsServer() then
+        local target = self:GetParent()
+        local ambient = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_ambient_moon_glaive.vpcf", PATTACH_CUSTOMORIGIN, target)
+        ParticleManager:SetParticleControlEnt(ambient, 0, target, PATTACH_POINT_FOLLOW, "attach_weapon", target:GetAbsOrigin(), true)
+        self:AddParticle(ambient,false,false,1,false,false)
+    end 
+end
+
+--------------------------------------------------
+
+nightelf_upgraded_moon_glaive = class({})
+
+function nightelf_upgraded_moon_glaive:GetIntrinsicModifierName()
+    return "modifier_moon_glaive"
+end
+
+function nightelf_upgraded_moon_glaive:OnUpgrade()
+    self.reduction = self:GetSpecialValueFor("damage_reduction_percent") * 0.01
+end
+
+function nightelf_upgraded_moon_glaive:OnProjectileHit_ExtraData(target, vLocation, extraData)
+    ApplyDamage({victim = target, attacker = self:GetCaster(), damage = extraData.damage, ability = self, damage_type = DAMAGE_TYPE_PHYSICAL})
+    extraData.bounces_left = extraData.bounces_left - 1
+
+    -- If there are bounces remaining, find a new target
+    if extraData.bounces_left > 0 then
+        extraData.targets_hit = extraData.targets_hit .. "," .. target:GetEntityIndex()
+        extraData.damage = extraData.damage * self.reduction
+        CreateMoonGlaive(self, target, extraData)
+    end
+end
