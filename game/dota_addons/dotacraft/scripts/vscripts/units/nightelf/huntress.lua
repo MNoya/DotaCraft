@@ -142,15 +142,20 @@ end
 function modifier_moon_glaive:OnAttackLanded(event)
     if event.attacker == self:GetParent() then
         local ability = self:GetAbility()
-
-        CreateMoonGlaive(ability, event.target, {bounces_left = ability:GetSpecialValueFor("bounces"), damage = event.damage*ability.reduction, targets_hit = tostring(event.target:GetEntityIndex())})
+        local target = event.target
+        target:EmitSound("Hero_Luna.MoonGlaive.Impact")
+        CreateMoonGlaive(ability, target, {bounces_left = ability:GetSpecialValueFor("bounces"), damage = event.damage*ability.reduction, targets_hit = tostring(target:GetEntityIndex())})
     end
 end
 
 function modifier_moon_glaive:OnCreated()
     if IsServer() then
         local target = self:GetParent()
-        local ambient = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_ambient_moon_glaive.vpcf", PATTACH_CUSTOMORIGIN, target)
+        local particleName = "particles/units/heroes/hero_luna/luna_ambient_moon_glaive.vpcf"
+        if self:GetAbility():GetAbilityName() == "nightelf_upgraded_moon_glaive" then
+            particleName = "particles/econ/items/luna/luna_lucent_rider/luna_ambient_glaive_lucent_rider.vpcf"
+        end
+        local ambient = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, target)
         ParticleManager:SetParticleControlEnt(ambient, 0, target, PATTACH_POINT_FOLLOW, "attach_weapon", target:GetAbsOrigin(), true)
         self:AddParticle(ambient,false,false,1,false,false)
     end 
