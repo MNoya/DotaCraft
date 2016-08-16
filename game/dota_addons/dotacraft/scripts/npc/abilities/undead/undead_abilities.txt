@@ -498,7 +498,8 @@
 //=================================================================================
 "undead_disease_cloud"
 {
-	"BaseClass"					"ability_datadriven"
+	"BaseClass"					"ability_lua"
+	"ScriptFile"				"units/undead/abomination.lua"
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastRange"			"%radius"
@@ -522,58 +523,7 @@
 		"03"
 		{
 			"var_type"			"FIELD_FLOAT"
-			"debuff_duration"	"1"
-		}
-	}
-
-	"precache"
-	{
-		"particle"  "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
-	}
-
-	"Modifiers"
-	{
-		"modifier_disease_cloud_aura"
-		{
-			"Passive"			"1"
-			"IsHidden"			"1"
-
-			"OnCreated"
-			{
-				"AttachEffect"
-				{
-					"Target"			"CASTER"
-					"EffectName"		"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"ControlPoints"
-					{
-						"00"	"0 0 0"
-						"01"	"%radius 0 0"
-					}
-				}
-			}
-
-			"Aura"          	"modifier_disease_cloud_debuff"
-			"Aura_Radius"   	"%radius"
-			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
-		}
-
-		"modifier_disease_cloud_debuff"
-		{
-			"Duration"			"%debuff_duration"
-			"IsDebuff"			"1"
-			"ThinkInterval"  	"1"
-			"OnIntervalThink"
-			{
-				"Damage"
-				{
-					"Target"		"TARGET"
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%damage_per_second"
-				}
-			}
+			"debuff_duration"	"120"
 		}
 	}
 }
@@ -597,36 +547,28 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"maximum_clouds"		"3"
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"10"
 		}
 	}
-	
-	"precache"
-	{
-		"particle"  "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
-	}
-	
+		
 	"Modifiers"
 	{	
 		"modifier_disease_orb"
-		{	
+		{
 			"Passive"						"1"
 			"IsHidden"						"1"
 		
-
-			"OnAttackLanded"
+			"OnCreated"
 			{
-				"RunScript"
+			    "RunScript"
 				{
-					"Target"		"TARGET"
 					"ScriptFile"	"units/undead/meat_wagon.lua"
-					"Function"		"meat_wagon_disease_cloud"
+					"Function"		"UnlockDiseaseCloud"
 				}
 			}
 		}
 	}
-
 }
 
 

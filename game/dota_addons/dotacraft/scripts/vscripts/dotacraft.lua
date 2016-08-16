@@ -886,7 +886,7 @@ function dotacraft:OnEntityKilled( event )
     end
 
     -- Don't leave corpses if the target was killed by an aoe splash
-    if IsValidEntity(attacker) and attacker:HasArtilleryAttack() then
+    if IsValidEntity(attacker) and attacker:HasArtilleryAttack() and LeavesCorpse(killed) then
         killed:SetNoCorpse()
         killed:AddNoDraw()
         local particle = ParticleManager:CreateParticle("particles/custom/effects/corpse_blood_explosion.vpcf",PATTACH_CUSTOMORIGIN,nil)

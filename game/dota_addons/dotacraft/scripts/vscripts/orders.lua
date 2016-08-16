@@ -90,10 +90,10 @@ function dotacraft:FilterExecuteOrder( filterTable )
                 SendErrorMessage(issuer, "#error_full_health")
             end
             return false
-        elseif requiresHealthDeficit and not healthDeficit then
+        elseif requiresHealthDeficit and healthDeficit then
             SendErrorMessage(issuer, "#error_full_health")
             return false
-        elseif requiresManaDeficit and not manaDeficit then
+        elseif requiresManaDeficit and manaDeficit then
             SendErrorMessage(issuer, "#error_full_mana")
             return false
         end
