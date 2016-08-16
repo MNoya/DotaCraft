@@ -27,26 +27,27 @@ function ApplyModifierUpgrade(event)
 end
 
 
--- Puts War Drums at level 2 if the player has the research
+-- Swaps the Kodo's War Drums ability to the upgraded version
 function ApplyWarDrumsUpgrade(event)
     local caster = event.caster
     local target = event.target
     local playerID = caster:GetPlayerOwnerID()
-    local upgrades = Players:GetUpgradeTable(playerID)
+    local upgrades = Players:GetUpgradeTable( playerID )
     
     if upgrades["orc_research_improved_war_drums"] then
-        caster:RemoveModifierByName("modifier_war_drums_aura")
-        
+        target:RemoveModifierByName("modifier_war_drums_aura")
         -- Find all units nearby and remove the buff to re-apply
-        local allies_nearby = FindAlliesInRadius(caster, 900)
+        local allies_nearby = FindAlliesInRadius(target, 900)
         for _,ally in pairs(allies_nearby) do
             if ally:HasModifier("modifier_war_drums") then
                 ally:RemoveModifierByName("modifier_war_drums")
             end
         end
 
-        local ability = target:FindAbilityByName("orc_war_drums")
-        ability:UpgradeAbility(true)
+        local war_drums = target:AddAbility("orc_improved_war_drums")
+        target:SwapAbilities("orc_improved_war_drums", "orc_war_drums", true, false)
+        target:RemoveAbility("orc_war_drums")
+        war_drums:SetLevel(1)
     end
 end
 
@@ -59,7 +60,6 @@ function UpgradeWarDrums(event)
     for _,unit in pairs(playerUnits) do
         if IsValidEntity(unit) and unit:HasAbility("orc_war_drums") then
             unit:RemoveModifierByName("modifier_war_drums_aura")
-
             -- Find all units nearby and remove the buff to re-apply
             local allies_nearby = FindAlliesInRadius(unit, 900)
             for _,ally in pairs(allies_nearby) do
@@ -68,8 +68,10 @@ function UpgradeWarDrums(event)
                 end
             end
 
-            local ability = unit:FindAbilityByName("orc_war_drums")
-            ability:UpgradeAbility(true)
+            local war_drums = unit:AddAbility("orc_improved_war_drums")
+            unit:SwapAbilities("orc_improved_war_drums", "orc_war_drums", true, false)
+            unit:RemoveAbility("orc_war_drums")
+            war_drums:SetLevel(1)
         end
     end
 end

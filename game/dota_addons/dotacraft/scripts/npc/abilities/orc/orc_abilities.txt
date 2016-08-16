@@ -1462,6 +1462,34 @@
 {
 	"BaseClass"					"ability_lua"
 	"ScriptFile"				"units/orc/kodobeast.lua"
+	"AbilityTextureName"		"orc_war_drums"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	
+	"AbilityCastRange"			"900"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"900"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_increase"	"10"
+		}
+	}
+}
+
+"orc_improved_war_drums"
+{
+	"BaseClass"					"ability_lua"
+	"ScriptFile"				"units/orc/kodobeast.lua"
 	"AbilityTextureName"		"orc_research_improved_war_drums"
 	"MaxLevel"					"1"
 		
@@ -1475,13 +1503,13 @@
 	{
 		"01"
 		{
-			"var_type"		"FIELD_INTEGER"
-			"radius"		"900"
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"900"
 		}
 		"02"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"damage_increase"		"10 20"
+			"var_type"			"FIELD_INTEGER"
+			"damage_increase"	"20"
 		}
 	}
 }

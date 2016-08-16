@@ -70,12 +70,17 @@ end
 ---------------------------------------------------------------------
 
 orc_war_drums = class({})
+orc_improved_war_drums = class({})
 
 -- Stacks with command aura
 LinkLuaModifier("modifier_war_drums_aura", "units/orc/kodobeast", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_war_drums", "units/orc/kodobeast", LUA_MODIFIER_MOTION_NONE)
 
 function orc_war_drums:GetIntrinsicModifierName()
+    return "modifier_war_drums_aura"
+end
+
+function orc_improved_war_drums:GetIntrinsicModifierName()
     return "modifier_war_drums_aura"
 end
 
