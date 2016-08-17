@@ -33,6 +33,15 @@ function Players:Init( playerID, hero )
     end
 end
 
+function ForAllPlayerIDs(callback)
+    local maxPlayers = dotacraft:GetMapMaxPlayers()
+    for playerID = 0, maxPlayers do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            callback(playerID)
+        end
+    end
+end
+
 ---------------------------------------------------------------
 
 function Players:GetUnits( playerID )

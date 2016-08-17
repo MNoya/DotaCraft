@@ -263,6 +263,11 @@ function Build( event )
             Blight:Create(unit, blightSize)
         end
 
+        -- Enable night regeneration
+        if not GameRules:IsDaytime() and IsNightElfAncient(unit) then
+            unit:SetBaseHealthRegen(0.5)
+        end
+
         -- Add ability_shop on buildings labeled with _shop
         if string.match(unit:GetUnitLabel(), "_shop") then
             TeachAbility(unit, "ability_shop")

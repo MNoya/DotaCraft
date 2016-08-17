@@ -270,6 +270,10 @@ function IsUprooted(unit)
     return unit:HasModifier("modifier_uprooted")
 end
 
+function IsNightElfAncient(unit)
+    return unit:HasAbility("nightelf_eat_tree")
+end
+
 -- Checks the UnitLabel for "city_center"
 function IsCityCenter( unit )
     return IsCustomBuilding(unit) and string.match(unit:GetUnitLabel(), "city_center")

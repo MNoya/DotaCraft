@@ -144,10 +144,12 @@ end
 
 function dotacraft:RiseAndShine()
     GameRules:SetTimeOfDay( 0.3 )
+    RiseAndShine()
 end
 
 function dotacraft:LightsOut()
     GameRules:SetTimeOfDay( 0.8 )
+    LightsOut()
 end
 
 function dotacraft:GiveItem(playerID, itemName, num)

@@ -617,12 +617,27 @@ end
 function LightsOut()
     print("[DOTACRAFT] Night Time")
     GameRules.DayTime = false
+
+    dotacraft:SetNightElfAncientRegen(0.5)
 end
 
 -- Wake up creeps
 function RiseAndShine()
     print("[DOTACRAFT] Day Time")
     GameRules.DayTime = true
+
+    dotacraft:SetNightElfAncientRegen(0)
+end
+
+function dotacraft:SetNightElfAncientRegen(value)
+    ForAllPlayerIDs(function(playerID)
+        local playerBuildings = Players:GetStructures(playerID)
+        for _,building in pairs(playerBuildings) do
+            if IsValidEntity(building) and IsNightElfAncient(building) then
+                building:SetBaseHealthRegen(value)
+            end
+        end
+    end)
 end
 
 -- Cleanup a player when they leave
