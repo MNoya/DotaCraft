@@ -13,6 +13,8 @@ if IsServer() then
             [MODIFIER_STATE_INVULNERABLE] = true,
             [MODIFIER_STATE_NO_TEAM_MOVE_TO] = true,
             [MODIFIER_STATE_NO_TEAM_SELECT] = true,
+            [MODIFIER_STATE_STUNNED] = true,
+            [MODIFIER_STATE_BLIND] = true,
             [MODIFIER_STATE_COMMAND_RESTRICTED] = true,
         }
 
@@ -22,16 +24,6 @@ if IsServer() then
     function modifier_out_of_world:OnCreated( params )
         local unit = self:GetParent()
         self.serverside = params.clientside ~= 1
-        unit.originalDayVision = unit:GetDayTimeVisionRange()
-        unit.originalNightVision = unit:GetDayTimeVisionRange()
-        unit:SetDayTimeVisionRange(0)
-        unit:SetNightTimeVisionRange(0)
-    end
-
-    function modifier_out_of_world:OnDestroy( params )
-        local unit = self:GetParent()
-        unit:SetDayTimeVisionRange(unit.originalDayVision)
-        unit:SetNightTimeVisionRange(unit.originalNightVision)
     end
 
     function modifier_out_of_world:IsPurgable()
